@@ -102,6 +102,12 @@ In this tab there are the following settings:
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
+### Tab "Additional Layout Settings"
+
+#### Footnote
+
+Whatever you add to this textarea will be displayed in the footer (not the floating footer) on every page that renders the theme standard (for layouts "drawers", "columns2", and "login"). Content in this 
+area could be for example the copyright, the terms of use and the name of your organisation.
 
 How this theme works
 --------------------

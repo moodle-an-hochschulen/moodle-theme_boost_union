@@ -166,4 +166,19 @@ if ($ADMIN->fulltree) {
 
     // Add tab to settings page.
     $settings->add($page);
+
+    // Create additional layout settings tab.
+    $name = 'theme_boost_union_additionallayout';
+    $title = get_string('additionallayoutsettings', 'theme_boost_union', null, true);
+    $page = new admin_settingpage($name, $title);
+
+    // Footnote setting.
+    $name = 'theme_boost_union/footnote';
+    $title = get_string('footnotesetting', 'theme_boost_union', null, true);
+    $description = get_string('footnotesetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_confightmleditor($name, $title, $description, '');
+    $page->add($setting);
+
+    // Add tab to settings page.
+    $settings->add($page);
 }
