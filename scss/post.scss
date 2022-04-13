@@ -1,0 +1,8 @@
+/*
+ * Info banner.
+ */
+/* This is needed because otherwise the top and bottom margin are not equal within the alert box. */
+#themeboostunionperpinfobanner p,
+#themeboostuniontimedinfobanner p {
+    margin-bottom: 0;
+}

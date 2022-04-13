@@ -166,4 +166,196 @@ if ($ADMIN->fulltree) {
 
     // Add tab to settings page.
     $settings->add($page);
+
+    // Create info banner settings tab.
+    $page = new admin_settingpage('theme_boost_union_infobanner', get_string('infobannersettings',
+        'theme_boost_union', null, true));
+
+    // Settings title to group perpetual information banner settings together with a common heading and description.
+    $name = 'theme_boost_union/perpetualinfobannerheading';
+    $title = get_string('perpetualinfobannerheadingsetting', 'theme_boost_union', null, true);
+    $description = get_string('perpetualinfobannerheadingsetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_heading($name, $title, $description);
+    $page->add($setting);
+
+    // Activate perpetual information banner.
+    $name = 'theme_boost_union/perpibenable';
+    $title = get_string('perpibenablesetting', 'theme_boost_union', null, true);
+    $description = get_string('perpibenablesetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
+    $page->add($setting);
+
+    // Perpetual information banner content.
+    $name = 'theme_boost_union/perpibcontent';
+    $title = get_string('perpibcontent', 'theme_boost_union', null, true);
+    $description = get_string('perpibcontent_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_confightmleditor($name, $title, $description, '');
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/perpibcontent',
+        'theme_boost_union/perpibenable', 'notchecked');
+
+    // Select pages on which the perpetual information banner should be shown.
+    $name = 'theme_boost_union/perpibshowonpages';
+    $title = get_string('perpibshowonpagessetting', 'theme_boost_union', null, true);
+    $description = get_string('perpibshowonpagessetting_desc', 'theme_boost_union', null, true);
+    $perpibshowonpageoptions = [
+        // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+        // PHP warning otherwise.
+        'mydashboard' => get_string('myhome', 'core', null, false),
+        'frontpage' => get_string('sitehome', 'core', null, false),
+        'course' => get_string('course', 'core', null, false),
+        'login' => get_string('login_page', 'theme_boost_union', null, false)
+    ];
+    $setting = new admin_setting_configmultiselect($name, $title, $description,
+        array($perpibshowonpageoptions['mydashboard']), $perpibshowonpageoptions);
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/perpibshowonpages',
+        'theme_boost_union/perpibenable', 'notchecked');
+
+    // Select the bootstrap class that should be used for the perpetual info banner.
+    $name = 'theme_boost_union/perpibcss';
+    $title = get_string('perpibcsssetting', 'theme_boost_union', null, true);
+    $description = get_string('perpibcsssetting_desc', 'theme_boost_union', null, true).'<br />'.
+        get_string('ibcsssetting_nobootstrap', 'theme_boost_union',
+            array('bootstrapnone' => get_string('bootstrapnone', 'theme_boost_union')));
+    $perpibcssoptions = [
+        // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+        // PHP warning otherwise.
+        'primary' => get_string('bootstrapprimarycolor', 'theme_boost_union', null, false),
+        'secondary' => get_string('bootstrapsecondarycolor', 'theme_boost_union', null, false),
+        'success' => get_string('bootstrapsuccesscolor', 'theme_boost_union', null, false),
+        'danger' => get_string('bootstrapdangercolor', 'theme_boost_union', null, false),
+        'warning' => get_string('bootstrapwarningcolor', 'theme_boost_union', null, false),
+        'info' => get_string('bootstrapinfocolor', 'theme_boost_union', null, false),
+        'light' => get_string('bootstraplightcolor', 'theme_boost_union', null, false),
+        'dark' => get_string('bootstrapdarkcolor', 'theme_boost_union', null, false),
+        'none' => get_string('bootstrapnone', 'theme_boost_union', null, false)
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, $perpibcssoptions['primary'],
+        $perpibcssoptions);
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/perpibcss',
+        'theme_boost_union/perpibenable', 'notchecked');
+
+    // Perpetual information banner dismissible.
+    $name = 'theme_boost_union/perpibdismiss';
+    $title = get_string('perpibdismisssetting', 'theme_boost_union', null, true);
+    $description = get_string('perpibdismisssetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/perpibdismiss',
+        'theme_boost_union/perpibenable', 'notchecked');
+
+    // Perpetual information banner show confirmation dialogue when dismissing.
+    $name = 'theme_boost_union/perpibconfirm';
+    $title = get_string('perpibconfirmsetting', 'theme_boost_union', null, true);
+    $description = get_string('perpibconfirmsetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/perpibconfirm',
+        'theme_boost_union/perpibenable', 'notchecked');
+    $settings->hide_if('theme_boost_union/perpibconfirm',
+        'theme_boost_union/perpibdismiss', 'notchecked');
+
+    // Reset the user preference for all users.
+    $name = 'theme_boost_union/perpibresetvisibility';
+    $title = get_string('perpetualinfobannerresetvisiblitysetting', 'theme_boost_union', null, true);
+    $description = get_string('perpetualinfobannerresetvisiblitysetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
+    $setting->set_updatedcallback('theme_boost_union_infobanner_reset_visibility');
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/perpibresetvisibility',
+        'theme_boost_union/perpibenable', 'notchecked');
+    $settings->hide_if('theme_boost_union/perpibresetvisibility',
+        'theme_boost_union/perpibdismiss', 'notchecked');
+
+    // Settings title to group time controlled information banner settings together with a common heading and description.
+    $name = 'theme_boost_union/timedinfobannerheading';
+    $title = get_string('timedinfobannerheadingsetting', 'theme_boost_union', null, true);
+    $description = get_string('timedinfobannerheadingsetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_heading($name, $title, $description);
+    $page->add($setting);
+
+    // Activate time controlled information banner.
+    $name = 'theme_boost_union/timedibenable';
+    $title = get_string('timedibenablesetting', 'theme_boost_union', null, true);
+    $description = get_string('timedibenablesetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
+    $page->add($setting);
+
+    // Time controlled information banner content.
+    $name = 'theme_boost_union/timedibcontent';
+    $title = get_string('timedibcontent', 'theme_boost_union', null, true);
+    $description = get_string('timedibcontent_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_confightmleditor($name, $title, $description, '');
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/timedibcontent',
+        'theme_boost_union/timedibenable', 'notchecked');
+
+    // Select pages on which the time controlled information banner should be shown.
+    $name = 'theme_boost_union/timedibshowonpages';
+    $title = get_string('timedibshowonpagessetting', 'theme_boost_union', null, true);
+    $description = get_string('timedibshowonpagessetting_desc', 'theme_boost_union', null, true);
+    $timedibpageoptions = [
+        // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+        // PHP warning otherwise.
+        'mydashboard' => get_string('myhome', 'core', null, false),
+        'frontpage' => get_string('sitehome', 'core', null, false),
+        'course' => get_string('course', 'core', null, false),
+        'login' => get_string('login_page', 'theme_boost_union', null, false)
+    ];
+    $setting = new admin_setting_configmultiselect($name, $title, $description,
+        array($timedibpageoptions['mydashboard']), $timedibpageoptions);
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/timedibshowonpages',
+        'theme_boost_union/timedibenable', 'notchecked');
+
+    // Select the bootstrap class that should be used for the perpetual info banner.
+    $name = 'theme_boost_union/timedibcss';
+    $title = get_string('timedibcsssetting', 'theme_boost_union', null, true);
+    $description = get_string('timedibcsssetting_desc', 'theme_boost_union', null, true).'<br />'.
+        get_string('ibcsssetting_nobootstrap', 'theme_boost_union',
+            array('bootstrapnone' => get_string('bootstrapnone', 'theme_boost_union')));
+    $timedibcssoptions = [
+        // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+        // PHP warning otherwise.
+        'primary' => get_string('bootstrapprimarycolor', 'theme_boost_union', null, false),
+        'secondary' => get_string('bootstrapsecondarycolor', 'theme_boost_union', null, false),
+        'success' => get_string('bootstrapsuccesscolor', 'theme_boost_union', null, false),
+        'danger' => get_string('bootstrapdangercolor', 'theme_boost_union', null, false),
+        'warning' => get_string('bootstrapwarningcolor', 'theme_boost_union', null, false),
+        'info' => get_string('bootstrapinfocolor', 'theme_boost_union', null, false),
+        'light' => get_string('bootstraplightcolor', 'theme_boost_union', null, false),
+        'dark' => get_string('bootstrapdarkcolor', 'theme_boost_union', null, false),
+        'none' => get_string('bootstrapnone', 'theme_boost_union', null, false)
+    ];
+    $setting = new admin_setting_configselect($name, $title, $description, $timedibcssoptions['primary'],
+        $timedibcssoptions);
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/timedibcss',
+        'theme_boost_union/timedibenable', 'notchecked');
+
+    // This will check for the desired date time format YYYY-MM-DD HH:MM:SS.
+    $timeregex = '/(20[0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9])|^$/';
+
+    // Start time for controlled information banner.
+    $name = 'theme_boost_union/timedibstart';
+    $title = get_string('timedibstartsetting', 'theme_boost_union', null, true);
+    $description = get_string('timedibstartsetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configtext($name, $title, $description, '', $timeregex);
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/timedibstart',
+        'theme_boost_union/timedibenable', 'notchecked');
+
+    // End time for controlled information banner.
+    $name = 'theme_boost_union/timedibend';
+    $title = get_string('timedibendsetting', 'theme_boost_union', null, true);
+    $description = get_string('timedibendsetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configtext($name, $title, $description, '', $timeregex);
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/timedibend',
+        'theme_boost_union/timedibenable', 'notchecked');
+
+    // Add tab to settings page.
+    $settings->add($page);
 }

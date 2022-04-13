@@ -146,3 +146,42 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         send_file_not_found();
     }
 }
+
+/**
+ * If setting is updated, use this callback to reset the theme_boost_union_infobanner_dismissed user preferences.
+ */
+function theme_boost_union_infobanner_reset_visibility() {
+    global $DB;
+
+    if (get_config('theme_boost_union', 'perpibresetvisibility') == 1) {
+        // Get all users that have dismissed the info banner once and therefore the user preference.
+        $whereclause = 'name = :name AND value = :value';
+        $params = ['name' => 'theme_boost_union_infobanner_dismissed', 'value' => '1'];
+        $users = $DB->get_records_select('user_preferences', $whereclause, $params, '', 'userid');
+
+        // Initialize variable for feedback messages.
+        $somethingwentwrong = false;
+        // Store coding exception.
+        $codingexception[] = array();
+
+        foreach ($users as $user) {
+            try {
+                unset_user_preference('theme_boost_union_infobanner_dismissed', $user->userid);
+            } catch (coding_exception $e) {
+                $somethingwentwrong = true;
+                $codingexception['message'] = $e->getMessage();
+                $codingexception['stacktrace'] = $e->getTraceAsString();
+            }
+        }
+
+        if (!$somethingwentwrong) {
+            \core\notification::success(get_string('resetperpetualinfobannersuccess', 'theme_boost_union'));
+        } else {
+            \core\notification::error(get_string('resetperpetualinfobannervisibilityerror',
+                'theme_boost_union', $codingexception));
+        }
+
+        // Reset the checkbox.
+        set_config('perpibresetvisibility', 0, 'theme_boost_union');
+    }
+}
