@@ -94,9 +94,10 @@ function theme_boost_union_get_extra_scss($theme) {
 
     // Sets the background image, and its settings.
     if (!empty($imageurl)) {
+        $content .= '@media (min-width: 768px) {';
         $content .= 'body { ';
         $content .= "background-image: url('$imageurl'); background-size: cover;";
-        $content .= ' }';
+        $content .= ' } }';
     }
 
     // Sets the login background image.
