@@ -15,19 +15,27 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Version file
+ * Behat grade-related step definition overrides for the Boost Union theme.
  *
  * @package    theme_boost_union
- * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
+ * @category   test
+ * @copyright  2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+// NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
 
-$plugin->component = 'theme_boost_union';
-$plugin->version = 2022031702;
-$plugin->release = 'v4.0-r1';
-$plugin->requires = 2022041900;
-$plugin->supported = [400, 400];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = array('theme_boost' => 2022041900);
+require_once(__DIR__ . '/../../../../grade/tests/behat/behat_grade.php');
+
+use Behat\Gherkin\Node\TableNode as TableNode;
+
+/**
+ * Grade-related step definition overrides for the Boost Union theme.
+ *
+ * @package    theme_boost_union
+ * @category   test
+ * @copyright  2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class behat_theme_boost_union_behat_grade extends behat_grade {
+}
