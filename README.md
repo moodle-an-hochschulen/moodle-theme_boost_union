@@ -42,6 +42,66 @@ After installing the theme, it does not do anything to Moodle yet.
 To configure the theme and its behaviour, please visit:
 Site administration -> Appearance -> Themes -> Boost Union.
 
+There, you find multiple settings tabs:
+
+### Tab "General settings"
+
+In this tab there are the following settings:
+
+#### Theme presets
+
+##### Theme preset
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+##### Additional theme preset files
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+### Tab "Advanced settings"
+
+In this tab there are the following settings:
+
+#### Raw SCSS
+
+##### Raw initial SCSS
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+##### Raw SCSS
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+### Tab "Branding"
+
+In this tab there are the following settings:
+
+#### Background images
+
+##### Background image
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+##### Login background image
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+#### Brand colors
+
+##### Brand color
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+### Tab "Blocks"
+
+In this tab there are the following settings:
+
+#### General blocks
+
+##### Unneeded blocks
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
 
 How this theme works
 --------------------
