@@ -166,4 +166,24 @@ if ($ADMIN->fulltree) {
 
     // Add tab to settings page.
     $settings->add($page);
+
+
+    // Create footer tab.
+    $page = new admin_settingpage('theme_boost_union_footer', get_string('footertab', 'theme_boost_union', null, true));
+
+    // Create footnote heading.
+    $name = 'theme_boost_union/footnoteheading';
+    $title = get_string('footnoteheading', 'theme_boost_union', null, true);
+    $setting = new admin_setting_heading($name, $title, null);
+    $page->add($setting);
+
+    // Footnote setting.
+    $name = 'theme_boost_union/footnote';
+    $title = get_string('footnotesetting', 'theme_boost_union', null, true);
+    $description = get_string('footnotesetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_confightmleditor($name, $title, $description, '');
+    $page->add($setting);
+
+    // Add tab to settings page.
+    $settings->add($page);
 }

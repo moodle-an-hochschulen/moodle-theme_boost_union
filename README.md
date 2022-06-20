@@ -102,6 +102,16 @@ In this tab there are the following settings:
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
+### Tab "Footer"
+
+In this tab there are the following settings:
+
+#### Footnote
+
+##### Footnote
+
+Whatever you add to this textarea will be displayed at the end of a page, in the footer. Refer to the setting description on the settings page for further instructions.
+
 
 How this theme works
 --------------------

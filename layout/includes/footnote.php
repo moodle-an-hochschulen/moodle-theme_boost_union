@@ -15,19 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Version file
+ * Theme Boost Union - Footnote layout include.
  *
- * @package    theme_boost_union
- * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   theme_boost_union
+ * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
+ * @copyright based on code from theme_boost by Damyon Wiese
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'theme_boost_union';
-$plugin->version = 2022031703;
-$plugin->release = 'v4.0-r1';
-$plugin->requires = 2022041900;
-$plugin->supported = [400, 400];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = array('theme_boost' => 2022041900);
+$footnotesetting = get_config('theme_boost_union', 'footnote');
+
+// Only proceed if text area does not only contains empty tags.
+if (!html_is_blank($footnotesetting)) {
+    // Use format_text function to enable multilanguage filtering.
+    $footnotesetting = format_text($footnotesetting);
+
+    // Add footnote to templatecontext.
+    $templatecontext['footnotesetting'] = $footnotesetting;
+}
