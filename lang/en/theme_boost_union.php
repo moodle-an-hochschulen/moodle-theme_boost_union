@@ -24,7 +24,25 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// General.
 $string['pluginname'] = 'Boost Union';
 $string['choosereadme'] = 'Theme Boost Union is an enhanced child theme of Boost provided by Moodle an Hochschulen e.V.';
 $string['configtitle'] = 'Boost Union';
+
+// Settings: General settings tab.
+$string['presetheading'] = 'Theme presets';
+
+// Settings: Advances settings tab.
+$string['scssheading'] = 'Raw SCSS';
+
+// Settings: Branding tab.
+$string['brandingtab'] = 'Branding';
+$string['backgroundimagesheading'] = 'Background images';
+$string['brandcolorsheading'] = 'Brand colors';
+
+// Settings: Blocks tab.
+$string['blockstab'] = 'Blocks';
+$string['blocksgeneralheading'] = 'General blocks';
+
+// Privacy API.
 $string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
