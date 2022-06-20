@@ -108,7 +108,7 @@ if ($ADMIN->fulltree) {
     $page = new admin_settingpage('theme_boost_union_branding', get_string('brandingtab', 'theme_boost_union', null, true));
 
     // Create background images heading.
-    $name = 'theme_boost_union/backgroundimages';
+    $name = 'theme_boost_union/backgroundimagesheading';
     $title = get_string('backgroundimagesheading', 'theme_boost_union', null, true);
     $setting = new admin_setting_heading($name, $title, null);
     $page->add($setting);
@@ -130,7 +130,7 @@ if ($ADMIN->fulltree) {
     $page->add($setting);
 
     // Create brand colors heading.
-    $name = 'theme_boost_union/brandcolors';
+    $name = 'theme_boost_union/brandcolorsheading';
     $title = get_string('brandcolorsheading', 'theme_boost_union', null, true);
     $setting = new admin_setting_heading($name, $title, null);
     $page->add($setting);
@@ -151,7 +151,7 @@ if ($ADMIN->fulltree) {
     $page = new admin_settingpage('theme_boost_union_blocks', get_string('blockstab', 'theme_boost_union', null, true));
 
     // Create blocks general heading.
-    $name = 'theme_boost_union/blocks';
+    $name = 'theme_boost_union/blocksgeneralheading';
     $title = get_string('blocksgeneralheading', 'theme_boost_union', null, true);
     $setting = new admin_setting_heading($name, $title, null);
     $page->add($setting);
