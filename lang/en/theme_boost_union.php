@@ -44,5 +44,11 @@ $string['brandcolorsheading'] = 'Brand colors';
 $string['blockstab'] = 'Blocks';
 $string['blocksgeneralheading'] = 'General blocks';
 
+// Settings: Footer tab.
+$string['footertab'] = 'Footer';
+$string['footnoteheading'] = 'Footnote';
+$string['footnotesetting'] = 'Footnote';
+$string['footnotesetting_desc'] = 'Whatever you add to this textarea will be displayed at the end of a page, in the footer (not the floating footer) on every page which uses the layouts "drawers", "columns2" or "login". Content in this area could be for example the copyright, the terms of use or the name of your organisation. <br/> If you want to remove the footnote again, just empty the text area.';
+
 // Privacy API.
 $string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
