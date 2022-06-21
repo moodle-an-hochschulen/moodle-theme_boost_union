@@ -22,6 +22,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// Constants which are use throughout this theme.
+define('THEME_BOOST_UNION_SETTING_SELECT_YES', 'yes');
+define('THEME_BOOST_UNION_SETTING_SELECT_NO', 'no');
+
+
 /**
  * Returns the main SCSS content.
  *
@@ -58,6 +63,11 @@ function theme_boost_union_get_pre_scss($theme) {
     global $CFG;
 
     $scss = '';
+
+    // Add SCSS constants for evaluating select setting values in SCSS code.
+    $scss .= '$boostunionsettingyes: '.THEME_BOOST_UNION_SETTING_SELECT_YES. ";\n";
+    $scss .= '$boostunionsettingno: '.THEME_BOOST_UNION_SETTING_SELECT_NO. ";\n";
+
     $configurable = [
         // Config key => [variableName, ...].
             'brandcolor' => ['primary'],

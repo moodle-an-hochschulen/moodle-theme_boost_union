@@ -34,6 +34,9 @@ defined('MOODLE_INTERNAL') || die();
 user_preference_allow_ajax_update('drawer-open-nav', PARAM_ALPHA);
 require_once($CFG->libdir . '/behat/lib.php');
 
+// Require own locallib.php.
+require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+
 // Add block button in editing mode.
 $addblockbutton = $OUTPUT->addblockbutton();
 
@@ -81,6 +84,12 @@ $templatecontext = [
     'overflow' => $overflow,
     'addblockbutton' => $addblockbutton,
 ];
+
+// Get and use the course related hints HTML code, if any hints are configured.
+$courserelatedhintshtml = theme_boost_union_get_course_related_hints();
+if ($courserelatedhintshtml) {
+    $templatecontext['courserelatedhints'] = $courserelatedhintshtml;
+}
 
 // Set the template content for the footnote.
 require_once(__DIR__ . '/includes/footnote.php');

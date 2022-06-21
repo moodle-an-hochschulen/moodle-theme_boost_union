@@ -102,6 +102,28 @@ In this tab there are the following settings:
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
+### Tab "Courses"
+
+In this tab there are the following settings:
+
+#### Course related hints
+
+##### Position of switch role information
+
+With this setting a hint will appear in the course header if the user has switched the role in the course.
+
+##### Show hint in hidden courses
+
+With this setting a hint will appear in the course header as long as the visibility of the course is hidden.
+
+##### Show hint for guest access
+
+With this setting a hint will appear in the course header when a user is accessing it with the guest access feature.
+
+##### Show hint for self enrolment without enrolment key
+
+With this setting a hint will appear in the course header if the course is visible and an enrolment without enrolment key is currently possible.
+
 ### Tab "Footer"
 
 In this tab there are the following settings:
