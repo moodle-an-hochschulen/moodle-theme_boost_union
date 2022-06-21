@@ -15,17 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Columns2 page layout.
+ * A two column layout for the boost theme.
  *
- * This layoutfile is based on theme/boost/layout/columns2.php
- *
- * Modifications compared to this layout file:
- * * Include footnote
- * * Render theme_boost_union/columns2 instead of theme_boost/colums2 template
- *
- * @package   theme_boost_union
- * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
- * @copyright based on code from theme_boost by Damyon Wiese
+ * @package   theme_boost
+ * @copyright 2016 Damyon Wiese
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -82,8 +75,4 @@ $templatecontext = [
     'addblockbutton' => $addblockbutton,
 ];
 
-// Set the template content for the footnote.
-require_once(__DIR__ . '/includes/footnote.php');
-
-// Render columns2.mustache from boost_union.
-echo $OUTPUT->render_from_template('theme_boost_union/columns2', $templatecontext);
+echo $OUTPUT->render_from_template('theme_boost/columns2', $templatecontext);

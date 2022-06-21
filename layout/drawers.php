@@ -17,6 +17,12 @@
 /**
  * Theme Boost Union - Drawers page layout.
  *
+ * This layoutfile is based on theme/boost/layout/drawers.php
+ *
+ * Modifications compared to this layout file:
+ * * Include footnote
+ * * Render theme_boost_union/drawers instead of theme_boost/drawers template
+ *
  * @package   theme_boost_union
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
  * @copyright based on code from theme_boost by Bas Brands
@@ -109,16 +115,8 @@ $templatecontext = [
     'addblockbutton' => $addblockbutton
 ];
 
-
-// MODIFICATION START.
 // Set the template content for the footnote.
 require_once(__DIR__ . '/includes/footnote.php');
 
 // Render drawers.mustache from boost_union.
 echo $OUTPUT->render_from_template('theme_boost_union/drawers', $templatecontext);
-// MODIFICATION END.
-// @codingStandardsIgnoreStart
-/* ORIGINAL START.
-echo $OUTPUT->render_from_template('theme_boost/drawers', $templatecontext);
-ORIGINAL END. */
-// @codingStandardsIgnoreEnd
