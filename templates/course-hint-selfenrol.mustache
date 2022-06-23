@@ -1,0 +1,47 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/course-hint-selfenrol
+
+    Boost Union template for outputting the selfenrol course hint.
+
+    Context variables required for this template:
+    * selfenrolhintstart - The string which is displayed at the start of this hint
+    * selfenrolinstances - The array of self enrolment instance strings
+    * calltoaction - The fact if the call to action should be shown or not
+
+    Example context (json):
+    {
+        "selfenrolhintstart": "This course is currently visible and <strong>self enrolment without enrolment key</strong> is currently possible.",
+        "selfenrolinstances": [ "The <strong>Foo</strong> enrolment instance allows unrestricted self enrolment infinitely." ],
+        "calltoaction": true
+    }
+}}
+<div class="course-hint-selfenrol alert alert-info">
+    <div class="media">
+        <div class="mr-3 icon-size-5"><i class="fa fa-exclamation-circle fa-3x"></i></div>
+        <div class="media-body align-self-center">
+            {{{selfenrolhintstart}}}
+            {{#selfenrolinstances}}
+                <br />{{{.}}}
+            {{/selfenrolinstances}}
+            {{#calltoaction}}
+                <br />{{#str}} showhintcourseselfenrolinstancecallforaction, theme_boost_union {{/str}}
+            {{/calltoaction}}
+        </div>
+    </div>
+</div>

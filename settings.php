@@ -24,7 +24,15 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// Require the necessary libraries.
+require_once($CFG->dirroot.'/theme/boost_union/lib.php');
+
 if ($ADMIN->fulltree) {
+
+    // Prepare options array for select settings.
+    // Due to MDL-58376, we will use binary select settings instead of checkbox settings throughout this theme.
+    $yesnooption = array(THEME_BOOST_UNION_SETTING_SELECT_YES => get_string('yes'),
+            THEME_BOOST_UNION_SETTING_SELECT_NO => get_string('no'));
 
     // Create settings page with tabs.
     $settings = new theme_boost_admin_settingspage_tabs('themesettingboost_union',
@@ -168,6 +176,48 @@ if ($ADMIN->fulltree) {
     $settings->add($page);
 
 
+    // Create courses tab.
+    $page = new admin_settingpage('theme_boost_union_courses', get_string('coursestab', 'theme_boost_union', null, true));
+
+    // Create course related hints heading.
+    $name = 'theme_boost_union/courserelatedhintsheading';
+    $title = get_string('courserelatedhintsheading', 'theme_boost_union', null, true);
+    $setting = new admin_setting_heading($name, $title, null);
+    $page->add($setting);
+
+    // Setting: Position of switch role information.
+    $name = 'theme_boost_union/showswitchedroleincourse';
+    $title = get_string('showswitchedroleincoursesetting', 'theme_boost_union', null, true);
+    $description = get_string('showswitchedroleincoursesetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Setting: Show hint in hidden courses.
+    $name = 'theme_boost_union/showhintcoursehidden';
+    $title = get_string('showhintcoursehiddensetting', 'theme_boost_union', null, true);
+    $description = get_string('showhintcoursehiddensetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+    $page->add($setting);
+
+    // Setting: Show hint guest for access.
+    $name = 'theme_boost_union/showhintcourseguestaccess';
+    $title = get_string('showhintcoursguestaccesssetting', 'theme_boost_union', null, true);
+    $description = get_string('showhintcourseguestaccesssetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+    $page->add($setting);
+
+    // Setting: Show hint for self enrolment without enrolment key.
+    $name = 'theme_boost_union/showhintcourseselfenrol';
+    $title = get_string('showhintcourseselfenrolsetting', 'theme_boost_union', null, true);
+    $description = get_string('showhintcourseselfenrolsetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+    $page->add($setting);
+
+    // Add tab to settings page.
+    $settings->add($page);
+
+
     // Create footer tab.
     $page = new admin_settingpage('theme_boost_union_footer', get_string('footertab', 'theme_boost_union', null, true));
 
@@ -177,7 +227,7 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_heading($name, $title, null);
     $page->add($setting);
 
-    // Footnote setting.
+    // Setting: Footnote.
     $name = 'theme_boost_union/footnote';
     $title = get_string('footnotesetting', 'theme_boost_union', null, true);
     $description = get_string('footnotesetting_desc', 'theme_boost_union', null, true);

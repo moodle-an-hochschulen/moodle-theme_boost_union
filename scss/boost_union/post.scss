@@ -1,2 +1,15 @@
-/* This file is empty by purpose.
-You can add your SCSS code here if you really need to. */
+/*=======================================
+ * Settings: Course.
+ ======================================*/
+
+/*---------------------------------------
+ * Setting: Course related hints.
+ --------------------------------------*/
+
+.course-hint-hidden,
+.course-hint-guestaccess,
+.course-hint-selfenrol,
+.course-hint-switchedrole {
+    margin-left: 15px;
+    margin-right: 15px;
+}

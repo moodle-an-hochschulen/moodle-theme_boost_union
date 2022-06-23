@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Version file
+ * Theme Boost Union - Capability definitions.
  *
  * @package    theme_boost_union
  * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
@@ -24,10 +24,25 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'theme_boost_union';
-$plugin->version = 2022031705;
-$plugin->release = 'v4.0-r1';
-$plugin->requires = 2022041900;
-$plugin->supported = [400, 400];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = array('theme_boost' => 2022041900);
+$capabilities = array(
+
+    // Ability to see a hint for unrestricted self enrolment in a visible course.
+        'theme/boost_union:viewhintcourseselfenrol' => array(
+                'captype' => 'read',
+                'contextlevel' => CONTEXT_COURSE,
+                'archetypes' => array(
+                        'teacher' => CAP_ALLOW,
+                        'editingteacher' => CAP_ALLOW,
+                        'manager' => CAP_ALLOW )
+        ),
+    // Ability to see a hint in a hidden course.
+        'theme/boost_union:viewhintinhiddencourse' => array(
+                'captype' => 'read',
+                'contextlevel' => CONTEXT_COURSE,
+                'archetypes' => array(
+                        'teacher' => CAP_ALLOW,
+                        'editingteacher' => CAP_ALLOW,
+                        'manager' => CAP_ALLOW
+                )
+        )
+);
