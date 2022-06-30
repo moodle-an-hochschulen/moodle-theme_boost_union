@@ -26,6 +26,9 @@
  * Build the course related hints HTML code.
  * This function evaluates and composes all course related hints which may appear on a course page below the course header.
  *
+ * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
+ * @copyright  based on code from theme_boost_campus by Kathrin Osswald.
+ *
  * @return string.
  */
 function theme_boost_union_get_course_related_hints() {

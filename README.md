@@ -217,3 +217,9 @@ The copyright of this plugin is held by\
 Moodle an Hochschulen e.V.
 
 Individual copyrights of individual developers are tracked in PHPDoc comments and Git commits.
+
+
+Credits
+-------
+
+This theme is a successor of and heavily inspired by the former theme theme_boost_campus by Kathrin Osswald and Alexander Bias from Ulm University which was maintained until Moodle 3.11 on https://github.com/moodle-an-hochschulen/moodle-theme_boost_campus.
