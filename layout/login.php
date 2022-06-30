@@ -39,7 +39,7 @@ $templatecontext = [
     'bodyattributes' => $bodyattributes
 ];
 
-// Set the template content for the footnote.
+// Include the template content for the footnote.
 require_once(__DIR__ . '/includes/footnote.php');
 
 // Render login.mustache from boost_union.

@@ -125,7 +125,10 @@ if ($courserelatedhintshtml) {
     $templatecontext['courserelatedhints'] = $courserelatedhintshtml;
 }
 
-// Set the template content for the footnote.
+// Include the template content for the course related hints.
+require_once(__DIR__ . '/includes/courserelatedhints.php');
+
+// Include the template content for the footnote.
 require_once(__DIR__ . '/includes/footnote.php');
 
 // Render drawers.mustache from boost_union.
