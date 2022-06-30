@@ -22,6 +22,7 @@
  * Modifications compared to this layout file:
  * * Include footnote
  * * Render theme_boost_union/drawers instead of theme_boost/drawers template
+ * * Include course related hints
  *
  * @package   theme_boost_union
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
