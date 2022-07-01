@@ -34,9 +34,10 @@ if ($ADMIN->fulltree) {
     $yesnooption = array(THEME_BOOST_UNION_SETTING_SELECT_YES => get_string('yes'),
             THEME_BOOST_UNION_SETTING_SELECT_NO => get_string('no'));
 
-    // Create settings page with tabs.
+    // Create settings page with tabs (and allow users with the theme/boost_union:configure capability to access it).
     $settings = new theme_boost_admin_settingspage_tabs('themesettingboost_union',
-            get_string('configtitle', 'theme_boost_union', null, true));
+            get_string('configtitle', 'theme_boost_union', null, true),
+            'theme/boost_union:configure');
 
 
     // Create general settings tab.
@@ -257,4 +258,30 @@ if ($ADMIN->fulltree) {
 
     // Add tab to settings page.
     $settings->add($page);
+}
+
+// Above, we made the theme setting not only available to admins but also
+// to non-admins who have the theme/boost_union:configure as well.
+// This was done when the theme_boost_admin_settingspage_tabs object is instantiated.
+// However, for unknown reasons, Moodle allows users with this capability to access the theme settings on
+// /admin/settings.php?section=themesettingboost_union without any problems,
+// but it does not add the settings page to the site administration tree
+// (even though and especially if the user has the moodle/site:configview capability as well).
+// This means that these users won't find the theme settings unless they have the direct URL.
+//
+// To overcome this strange issue, we add an external admin page link to the site navigation
+// for all non-admin users with this capability. This is only necessary if the Admin fulltree
+// is not expanded yet.
+$systemcontext = context_system::instance();
+if ($ADMIN->fulltree == false &&
+        has_capability('moodle/site:config', $systemcontext) == false&&
+        has_capability('theme/boost_union:configure', $systemcontext) == true) {
+    // Create new external settings page.
+    $externalpage = new admin_externalpage('themesettingboost_union_formanagers',
+            get_string('configtitle', 'theme_boost_union', null, true),
+            new moodle_url('/admin/settings.php', array('section' => 'themesettingboost_union')),
+            'theme/boost_union:configure');
+
+    // Add external settings page to themes category.
+    $ADMIN->add('themes', $externalpage);
 }

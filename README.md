@@ -150,6 +150,10 @@ Capabilities
 
 This plugin also introduces these additional capabilities:
 
+### theme/boost_union:configure
+
+This capability is used to control who is able to configure the theme as non-admin. By default, it is assigned to no role at all.
+
 ### theme/boost_union:viewhintcourseselfenrol
 
 This capability is used to control who is able to see a hint for unrestricted self enrolment in a visible course (if this feature was enabled in the theme settings). By default, it is assigned to teachers, non-editing teachers and managers.
