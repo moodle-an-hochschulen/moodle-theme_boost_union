@@ -35,6 +35,13 @@ $string['presetheading'] = 'Theme presets';
 // Settings: Advances settings tab.
 $string['scssheading'] = 'Raw SCSS';
 
+// Settings: Page tab.
+$string['pagetab'] = 'Page';
+$string['navigationheading'] = 'Navigation';
+$string['backtotop'] = 'Back to top';
+$string['backtotopbuttonsetting'] = 'Back to top button';
+$string['backtotopbuttonsetting_desc'] = 'With this setting a back to top button will appear in the bottom right corner of the page as soon as the user scrolls down the page. A button like this existed already on Boost in Moodle Core until Moodle 3.11, but was removed in 4.0. With Boost Union, you can bring it back.';
+
 // Settings: Branding tab.
 $string['brandingtab'] = 'Branding';
 $string['backgroundimagesheading'] = 'Background images';

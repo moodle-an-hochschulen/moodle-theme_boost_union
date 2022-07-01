@@ -72,6 +72,16 @@ This setting is already available in the Moodle core theme Boost. For more infor
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
+### Tab "Page"
+
+In this tab there are the following settings:
+
+#### Navigation
+
+##### Back to top button
+
+With this setting a back to top button will appear in the bottom right corner of the page as soon as the user scrolls down the page. A button like this existed already on Boost in Moodle Core until Moodle 3.11, but was removed in 4.0. With Boost Union, you can bring it back.
+
 ### Tab "Branding"
 
 In this tab there are the following settings:

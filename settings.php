@@ -112,6 +112,27 @@ if ($ADMIN->fulltree) {
     $settings->add($page);
 
 
+    // Create page tab.
+    $page = new admin_settingpage('theme_boost_union_page', get_string('pagetab', 'theme_boost_union', null, true));
+
+    // Create navigation heading.
+    $name = 'theme_boost_union/navigationheading';
+    $title = get_string('navigationheading', 'theme_boost_union', null, true);
+    $setting = new admin_setting_heading($name, $title, null);
+    $page->add($setting);
+
+    // Setting: back to top button.
+    $name = 'theme_boost_union/backtotopbutton';
+    $title = get_string('backtotopbuttonsetting', 'theme_boost_union', null, true);
+    $description = get_string('backtotopbuttonsetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Add tab to settings page.
+    $settings->add($page);
+
+
     // Create branding tab.
     $page = new admin_settingpage('theme_boost_union_branding', get_string('brandingtab', 'theme_boost_union', null, true));
 

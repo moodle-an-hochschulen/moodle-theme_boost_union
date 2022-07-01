@@ -23,6 +23,7 @@
  * * Include footnote
  * * Render theme_boost_union/columns2 instead of theme_boost/colums2 template
  * * Include course related hints
+ * * Include back to top button
  *
  * @package   theme_boost_union
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
@@ -87,6 +88,9 @@ $templatecontext = [
 
 // Include the template content for the course related hints.
 require_once(__DIR__ . '/includes/courserelatedhints.php');
+
+// Include the content for the back to top button.
+require_once(__DIR__ . '/includes/backtotopbutton.php');
 
 // Include the template content for the footnote.
 require_once(__DIR__ . '/includes/footnote.php');
