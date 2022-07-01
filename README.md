@@ -135,6 +135,20 @@ In this tab there are the following settings:
 Whatever you add to this textarea will be displayed at the end of a page, in the footer. Refer to the setting description on the settings page for further instructions.
 
 
+Capabilities
+------------
+
+This plugin also introduces these additional capabilities:
+
+### theme/boost_union:viewhintcourseselfenrol
+
+This capability is used to control who is able to see a hint for unrestricted self enrolment in a visible course (if this feature was enabled in the theme settings). By default, it is assigned to teachers, non-editing teachers and managers.
+
+### theme/boost_union:viewhintinhiddencourse
+
+This capability is used to control who is able to see a hint in a hidden course (if this feature was enabled in the theme settings). By default, it is assigned to teachers, non-editing teachers and managers.
+
+
 How this theme works
 --------------------
 
