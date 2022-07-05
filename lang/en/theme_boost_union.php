@@ -47,9 +47,9 @@ $string['blocksgeneralheading'] = 'General blocks';
 // Settings: Courses tab.
 $string['coursestab'] = 'Courses';
 $string['courserelatedhintsheading'] = 'Course related hints';
-// ... Setting: Position of switch role information setting.
-$string['showswitchedroleincoursesetting'] = 'Position of switch role information';
-$string['showswitchedroleincoursesetting_desc'] = 'With this setting a hint will appear in the course header if the user has switched the role in the course. By default, this information is only displayed right near the user\'s name in the user menu. By enabling this option, you can show this information - together with a link to switch back - within the course page as well.';
+// ... Setting: Show hint for switched role setting.
+$string['showswitchedroleincoursesetting'] = 'Show hint for switched role';
+$string['showswitchedroleincoursesetting_desc'] = 'With this setting a hint will appear in the course header if the user has switched the role in the course. By default, this information is only displayed right near the user\'s avatar in the user menu. By enabling this option, you can show this information - together with a link to switch back - within the course page as well.';
 $string['switchedroleto'] = 'You are viewing this course currently with the role: <strong>{$a->role}</strong>';
 // ... Setting: Show hint for hidden course.
 $string['showhintcoursehiddensetting'] = 'Show hint in hidden courses';

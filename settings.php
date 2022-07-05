@@ -185,7 +185,7 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_heading($name, $title, null);
     $page->add($setting);
 
-    // Setting: Position of switch role information.
+    // Setting: Show hint for switched role.
     $name = 'theme_boost_union/showswitchedroleincourse';
     $title = get_string('showswitchedroleincoursesetting', 'theme_boost_union', null, true);
     $description = get_string('showswitchedroleincoursesetting_desc', 'theme_boost_union', null, true);

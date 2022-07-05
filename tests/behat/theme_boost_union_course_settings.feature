@@ -17,7 +17,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
 
-  Scenario: Enable "Position of switch role information"
+  Scenario: Enable "Show hint for switched role"
     Given the following config values are set as admin:
       | config                   | value | plugin             |
       | showswitchedroleincourse | yes   | theme_boost_union |

@@ -108,7 +108,7 @@ In this tab there are the following settings:
 
 #### Course related hints
 
-##### Position of switch role information
+##### Show hint for switched role
 
 With this setting a hint will appear in the course header if the user has switched the role in the course.
 
