@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2022-07-05 - Adopt changes in Boost core for MDL-74634
 * 2022-06-21 - Add course related hints feature, solves #5
 * 2022-04-30 - Added footnote functionality, helps to resolve #6.
 * 2022-06-20 - Allow full Behat runs with Boost Campus suite, fixes #14.
