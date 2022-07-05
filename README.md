@@ -86,6 +86,12 @@ With this setting a back to top button will appear in the bottom right corner of
 
 In this tab there are the following settings:
 
+#### Favicon
+
+##### Favicon
+
+Here, you can upload a custom image (.ico or .png format) that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.
+
 #### Background images
 
 ##### Background image

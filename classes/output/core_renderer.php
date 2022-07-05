@@ -33,4 +33,19 @@ namespace theme_boost_union\output;
  */
 class core_renderer extends \theme_boost\output\core_renderer {
 
+    /**
+     * Returns the moodle_url for the favicon.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * @since Moodle 2.5.1 2.6
+     * @return moodle_url The moodle_url for the favicon
+     */
+    public function favicon() {
+        if (!empty($this->page->theme->settings->favicon)) {
+            return $this->page->theme->setting_file_url('favicon', 'favicon');
+        } else {
+            return $this->image_url('favicon', 'theme');
+        }
+    }
 }

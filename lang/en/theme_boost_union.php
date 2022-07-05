@@ -44,6 +44,9 @@ $string['backtotopbuttonsetting_desc'] = 'With this setting a back to top button
 
 // Settings: Branding tab.
 $string['brandingtab'] = 'Branding';
+$string['faviconheading'] = 'Favicon';
+$string['faviconsetting'] = 'Favicon';
+$string['faviconsetting_desc'] = 'Here, you can upload a custom image (.ico or .png format) that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.';
 $string['backgroundimagesheading'] = 'Background images';
 $string['brandcolorsheading'] = 'Brand colors';
 
