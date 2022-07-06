@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 // Require the necessary libraries.
 require_once($CFG->dirroot.'/theme/boost_union/lib.php');
+require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
 
 if ($ADMIN->fulltree) {
 
@@ -270,6 +271,64 @@ if ($ADMIN->fulltree) {
     $description = get_string('footnotesetting_desc', 'theme_boost_union', null, true);
     $setting = new admin_setting_confightmleditor($name, $title, $description, '');
     $page->add($setting);
+
+    // Add tab to settings page.
+    $settings->add($page);
+
+
+    // Create static pages tab.
+    $page = new admin_settingpage('theme_boost_union_staticpages', get_string('staticpagestab', 'theme_boost_union', null, true));
+
+    // Create imprint heading.
+    $name = 'theme_boost_union/imprintheading';
+    $title = get_string('imprintheading', 'theme_boost_union', null, true);
+    $setting = new admin_setting_heading($name, $title, null);
+    $page->add($setting);
+
+    // Setting: Enable imprint.
+    $name = 'theme_boost_union/enableimprint';
+    $title = get_string('enableimprintsetting', 'theme_boost_union', null, true);
+    $description = '';
+    $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+    $page->add($setting);
+
+    // Setting: Imprint content.
+    $name = 'theme_boost_union/imprintcontent';
+    $title = get_string('imprintcontentsetting', 'theme_boost_union', null, true);
+    $description = get_string('imprintcontentsetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_confightmleditor($name, $title, $description, '');
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/imprintcontent', 'theme_boost_union/enableimprint', 'neq', 'yes');
+
+    // Setting: Imprint page title.
+    $name = 'theme_boost_union/imprintpagetitle';
+    $title = get_string('imprintpagetitlesetting', 'theme_boost_union', null, true);
+    $description = get_string('imprintpagetitlesetting_desc', 'theme_boost_union', null, true);
+    $default = get_string('imprintpagetitledefault', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/imprintpagetitle', 'theme_boost_union/enableimprint', 'neq', 'yes');
+
+    // Setting: Imprint link position.
+    $name = 'theme_boost_union/imprintlinkposition';
+    $title = get_string('imprintlinkpositionsetting', 'theme_boost_union', null, true);
+    $imprinturl = theme_boost_union_get_imprint_link();
+    $description = get_string('imprintlinkpositionsetting_desc', 'theme_boost_union', array('url' => $imprinturl), true);
+    $imprintlinkpositionoption =
+            // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+            // PHP warning otherwise.
+            array(THEME_BOOST_UNION_SETTING_IMPRINTLINKPOSITION_NONE =>
+                    get_string('imprintlinkpositionnone', 'theme_boost_union', null, false),
+                  THEME_BOOST_UNION_SETTING_IMPRINTLINKPOSITION_FOOTNOTE =>
+                    get_string('imprintlinkpositionfootnote', 'theme_boost_union', null, false),
+                  THEME_BOOST_UNION_SETTING_IMPRINTLINKPOSITION_FOOTER =>
+                    get_string('imprintlinkpositionfooter', 'theme_boost_union', null, false),
+                  THEME_BOOST_UNION_SETTING_IMPRINTLINKPOSITION_BOTH =>
+                    get_string('imprintlinkpositionboth', 'theme_boost_union', null, false));
+    $default = 'none';
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $imprintlinkpositionoption);
+    $page->add($setting);
+    $settings->hide_if('theme_boost_union/imprintlinkposition', 'theme_boost_union/enableimprint', 'neq', 'yes');
 
     // Add tab to settings page.
     $settings->add($page);

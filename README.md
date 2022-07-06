@@ -150,6 +150,14 @@ In this tab there are the following settings:
 
 Whatever you add to this textarea will be displayed at the end of a page, in the footer. Refer to the setting description on the settings page for further instructions.
 
+### Tab "Static pages"
+
+In this tab there are the following settings:
+
+#### Imprint
+
+With these settings, you can add rich text content which will be shown on the imprint page.
+
 
 Capabilities
 ------------

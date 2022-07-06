@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2022-07-06 - Feature: Built-in imprint, solves #32
 * 2022-07-05 - Feature: Configurable favicon, solves #34
 * 2022-07-05 - Feature: Allow non-admins to edit theme settings, solves #28
 * 2022-07-05 - Feature: Back to top button, solves #7

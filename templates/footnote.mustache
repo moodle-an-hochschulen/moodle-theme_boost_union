@@ -20,20 +20,29 @@
     Boost Union footnote layout template.
 
     Context variables required for this template:
-    * footnotesetting - The text entered in the setting widget.
+    * showfootnote - The fact if the footnote should be shown or not
 
     Example context (json):
     {
-        "footnotesetting": "<a href='https://moodle.org'>Moodle</a>"
+        "showfootnote": true,
+        "footnotesetting": "This is my nice footnote",
+        "imprintlinkpositionfootnote": true,
+        "imprintlink": "https://localhost/theme/boost_union/pages/imprint.php",
+        "imprintpagetitle": "Imprint"
     }
 }}
 
-{{# footnotesetting }}
+{{# showfootnote }}
     <div id="footnote" class="mt-3 pt-3 pb-6 pr-6 border-top">
         <div class="container-fluid">
             <div class="row">
                 {{{ footnotesetting }}}
             </div>
+            {{# imprintlinkpositionfootnote }}
+                <div class="imprintlink row{{# footnotesetting }} mt-1{{/ footnotesetting }}">
+                    <a href="{{ imprintlink }}">{{ imprintpagetitle }}</a>
+                </div>
+            {{/ imprintlinkpositionfootnote }}
         </div>
     </div>
-{{/ footnotesetting }}
+{{/ showfootnote }}

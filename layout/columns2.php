@@ -95,5 +95,8 @@ require_once(__DIR__ . '/includes/backtotopbutton.php');
 // Include the template content for the footnote.
 require_once(__DIR__ . '/includes/footnote.php');
 
+// Include the template content for the static pages.
+require_once(__DIR__ . '/includes/staticpages.php');
+
 // Render columns2.mustache from boost_union.
 echo $OUTPUT->render_from_template('theme_boost_union/columns2', $templatecontext);
