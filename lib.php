@@ -89,6 +89,12 @@ function theme_boost_union_get_pre_scss($theme) {
         }, (array) $targets);
     }
 
+    // Overwrite Boost core SCSS variables which need units and thus couldn't be added to $configurable above.
+    // Set variables which are influenced by the coursecontentmaxwidth setting.
+    if (isset($theme->settings->coursecontentmaxwidth)) {
+        $scss .= '$course-content-maxwidth: '.$theme->settings->coursecontentmaxwidth.";\n";
+    }
+
     // Prepend pre-scss.
     if (!empty($theme->settings->scsspre)) {
         $scss .= $theme->settings->scsspre;

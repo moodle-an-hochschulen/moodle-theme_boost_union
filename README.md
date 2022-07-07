@@ -76,6 +76,12 @@ This setting is already available in the Moodle core theme Boost. For more infor
 
 In this tab there are the following settings:
 
+#### Layout
+
+##### Course content max width
+
+With this setting, you can override Moodle's default content width without manual SCSS modifications.
+
 #### Navigation
 
 ##### Back to top button

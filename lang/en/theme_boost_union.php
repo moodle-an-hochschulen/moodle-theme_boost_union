@@ -37,6 +37,9 @@ $string['scssheading'] = 'Raw SCSS';
 
 // Settings: Page tab.
 $string['pagetab'] = 'Page';
+$string['layoutheading'] = 'Layout';
+$string['coursecontentmaxwidthsetting'] = 'Course content max width';
+$string['coursecontentmaxwidthsetting_desc'] = 'With this setting, you can override Moodle\'s default content width without manual SCSS modifications. By default, Moodle uses a course content max width of 830px. You can enter other pixel-based values like 1200px, but you can also enter a percentage-based value like 100% or a viewport-width value like 90vw.';
 $string['navigationheading'] = 'Navigation';
 $string['backtotop'] = 'Back to top';
 $string['backtotopbuttonsetting'] = 'Back to top button';

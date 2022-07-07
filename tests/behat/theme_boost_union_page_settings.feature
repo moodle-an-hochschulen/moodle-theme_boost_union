@@ -17,6 +17,9 @@ Feature: Configuring the theme_boost_union plugin for the "Page" tab
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
 
+  # Unfortunately, this can't be tested with Behat yet
+  # Scenario: Overwrite the course content max width setting
+
   @javascript
   Scenario: Enable "Back to top button"
     Given the following config values are set as admin:
