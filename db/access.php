@@ -26,6 +26,12 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
+    // Ability to configure the theme as non-admin.
+        'theme/boost_union:configure' => array(
+                'captype' => 'write',
+                'contextlevel' => CONTEXT_SYSTEM,
+                'riskbitmask' => RISK_XSS | RISK_CONFIG
+        ),
     // Ability to see a hint for unrestricted self enrolment in a visible course.
         'theme/boost_union:viewhintcourseselfenrol' => array(
                 'captype' => 'read',

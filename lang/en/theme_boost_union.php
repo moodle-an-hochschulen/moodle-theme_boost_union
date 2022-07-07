@@ -92,5 +92,6 @@ $string['footnotesetting_desc'] = 'Whatever you add to this textarea will be dis
 $string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
 
 // Capabilities.
+$string['boost_union:configure'] = 'To be able to configure the theme as non-admin';
 $string['boost_union:viewhintcourseselfenrol'] = 'To be able to see a hint for unrestricted self enrolment in a visible course.';
 $string['boost_union:viewhintinhiddencourse'] = 'To be able to see a hint in a hidden course.';
