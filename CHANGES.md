@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2022-07-07 - Feature: Show a warning banner if JavaScript is disabled, solves #46
 * 2022-07-07 - Feature: Make the course content column width configurable, helps to resolve #18.
 * 2022-07-06 - Feature: Built-in imprint, solves #32
 * 2022-07-05 - Feature: Configurable favicon, solves #34

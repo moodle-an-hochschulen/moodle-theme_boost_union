@@ -115,6 +115,14 @@ $string['imprintlinkpositionboth'] = 'Add a link to the imprint page to the foot
 $string['imprintlinkpositionsetting'] = 'Imprint link position';
 $string['imprintlinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the imprint page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
 
+// Settings: Misc tab.
+$string['misctab'] = 'Miscellaneous';
+$string['javascriptheading'] = 'JavaScript';
+// ... Setting: JavaScript disabled hint:
+$string['javascriptdisabledhint'] = 'JavaScript disabled hint';
+$string['javascriptdisabledhint_desc'] = 'With this setting, a hint will appear at the top of the Moodle page if JavaScript is not enabled. This is particularly helpful as several Moodle features do not work without JavaScript.';
+$string['javascriptdisabledhinttext'] = 'JavaScript is disabled in your browser.<br />Many features of Moodle will be not usable or will appear to be broken.<br />Please enable JavaScript for the full Moodle experience.';
+
 // Privacy API.
 $string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
 

@@ -137,5 +137,8 @@ require_once(__DIR__ . '/includes/footnote.php');
 // Include the template content for the static pages.
 require_once(__DIR__ . '/includes/staticpages.php');
 
+// Include the template content for the JavaScript disabled hint.
+require_once(__DIR__ . '/includes/javascriptdisabledhint.php');
+
 // Render drawers.mustache from boost_union.
 echo $OUTPUT->render_from_template('theme_boost_union/drawers', $templatecontext);
