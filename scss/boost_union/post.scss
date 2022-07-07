@@ -1,4 +1,34 @@
 /*=======================================
+ * Settings: Page.
+ ======================================*/
+
+/*---------------------------------------
+ * Setting: Back to top button.
+ --------------------------------------*/
+
+#back-to-top {
+    /* Hide the back to top icon initially. It will be unhidden by JS only. */
+    display: none;
+    /* Place the back to top button at a fixed place. */
+    position: fixed;
+    right: 2rem;
+    /* As a start = on really small screens, the back to top button is shown in the bottom right corner. */
+    bottom: 2rem;
+    /* On larger screens, there is the footer button already in the bottom right corner and
+       the back to top button has to be shown above of the footer button. */
+    @include media-breakpoint-up(sm) {
+        bottom: 5rem;
+    }
+    /* Make sure that the back to top button is not covered by anything else. */
+    z-index: $zindex-dropdown;
+}
+#back-to-top i::before {
+    /* Move the caret icon slightly up for a nicer look. */
+    vertical-align: 0.3rem;
+}
+
+
+/*=======================================
  * Settings: Course.
  ======================================*/
 
