@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2022-07-05 - Feature: Configurable favicon, solves #34
 * 2022-07-05 - Feature: Allow non-admins to edit theme settings, solves #28
 * 2022-07-05 - Feature: Back to top button, solves #7
 * 2022-07-05 - Adopt changes in Boost core for MDL-74634
