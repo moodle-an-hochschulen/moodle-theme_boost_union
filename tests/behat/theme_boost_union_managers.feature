@@ -12,7 +12,7 @@ Feature: Configuring the theme_boost_union plugin as manager
       | user    | role    | contextlevel |
       | manager | manager | System       |
 
-  Scenario: Allow managers to configure Boost Union
+  Scenario: Capabilities - Allow managers to configure Boost Union
     Given the following "permission overrides" exist:
       | capability                  | permission | role    | contextlevel | reference |
       | theme/boost_union:configure | Allow      | manager | System       |           |
@@ -24,7 +24,7 @@ Feature: Configuring the theme_boost_union plugin as manager
     And I should see "Boost Union" in the "#region-main" "css_element"
     And I should see "General settings" in the "#region-main" "css_element"
 
-  Scenario: Do not allow managers to configure Boost Union (countercheck)
+  Scenario: Capabilities - Do not allow managers to configure Boost Union (countercheck)
     Given the following "permission overrides" exist:
       | capability                  | permission | role    | contextlevel | reference |
       | theme/boost_union:configure | Prevent    | manager | System       |           |

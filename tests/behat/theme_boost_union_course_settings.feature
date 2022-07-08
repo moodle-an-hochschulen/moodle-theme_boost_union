@@ -17,7 +17,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
 
-  Scenario: Enable "Show hint for switched role"
+  Scenario: Setting: Show hint for switched role - Enable the setting
     Given the following config values are set as admin:
       | config                   | value | plugin             |
       | showswitchedroleincourse | yes   | theme_boost_union |
@@ -30,7 +30,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab
     Then I should not see "You are viewing this course currently with the role:"
     And ".course-hint-switchedrole" "css_element" should not exist
 
-  Scenario: Enable "Show hint in hidden courses"
+  Scenario: Setting: Show hint in hidden courses - Enable the setting
     Given the following config values are set as admin:
       | config               | value | plugin             |
       | showhintcoursehidden | yes   | theme_boost_union |
@@ -49,7 +49,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab
     Then I should not see "This course is currently hidden. Only enrolled teachers can access this course when hidden."
     And ".course-hint-hidden" "css_element" should not exist
 
-  Scenario: Enable "Show hint for guest access"
+  Scenario: Setting: Show hint guest for access - Enable the setting
     Given the following config values are set as admin:
       | config                    | value | plugin             |
       | showhintcourseguestaccess | yes   | theme_boost_union |
@@ -91,7 +91,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab
     Then I should not see "You are currently viewing this course as Guest."
     And ".course-hint-guestaccess" "css_element" should not exist
 
-  Scenario: Enable "Show hint for self enrolment without enrolment key"
+  Scenario: Setting: Show hint for self enrolment without enrolment key - Enable the setting
     Given the following config values are set as admin:
       | config                  | value | plugin             |
       | showhintcourseselfenrol | yes   | theme_boost_union |
@@ -110,7 +110,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab
     Then I should not see "This course is currently visible and self enrolment without enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
 
-  Scenario: Enable "Show hint for self enrolment without enrolment key" and check that the call for action is shown
+  Scenario: Setting: Show hint for self enrolment without enrolment key - Enable the setting and check that the call for action is shown
     Given the following config values are set as admin:
       | config                  | value | plugin             |
       | showhintcourseselfenrol | yes   | theme_boost_union |
@@ -144,7 +144,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab
     And I should not see "If you don't want that any Moodle user can enrol into this course freely, please restrict the self enrolment settings."
     And ".course-hint-selfenrol" "css_element" should not exist
 
-  Scenario: Enable "Show hint for self enrolment without enrolment key" and check that it is hidden when new enrolments are disabled
+  Scenario: Setting: Show hint for self enrolment without enrolment key - Enable the setting and check that it is hidden when new enrolments are disabled
     Given the following config values are set as admin:
       | config                  | value | plugin             |
       | showhintcourseselfenrol | yes   | theme_boost_union |
@@ -165,7 +165,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab
     Then I should not see "This course is currently visible and self enrolment without enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
 
-  Scenario: Enable "Show hint for self enrolment without enrolment key" and check that it is hidden when a password is set
+  Scenario: Setting: Show hint for self enrolment without enrolment key - Enable the setting and check that it is hidden when a password is set
     Given the following config values are set as admin:
       | config                  | value | plugin             |
       | showhintcourseselfenrol | yes   | theme_boost_union |
@@ -186,7 +186,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab
     Then I should not see "This course is currently visible and self enrolment without enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
 
-  Scenario: Enable "Show hint for self enrolment without enrolment key" and check the hints depending on the configured start and / or end dates
+  Scenario: Setting: Show hint for self enrolment without enrolment key - Enable the setting and check the hints depending on the configured start and / or end dates
     Given the following config values are set as admin:
       | config                  | value | plugin             |
       | showhintcourseselfenrol | yes   | theme_boost_union |
@@ -328,7 +328,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab
     Then I should not see "This course is currently visible and self enrolment without enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
 
-  Scenario: Enable "Show hint for self enrolment without enrolment key" and add more than one self enrolment instance
+  Scenario: Setting: Show hint for self enrolment without enrolment key - Enable the setting and add more than one self enrolment instance
     Given the following config values are set as admin:
       | config                  | value | plugin             |
       | showhintcourseselfenrol | yes   | theme_boost_union |

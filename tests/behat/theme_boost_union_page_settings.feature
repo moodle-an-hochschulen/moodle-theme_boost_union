@@ -18,10 +18,10 @@ Feature: Configuring the theme_boost_union plugin for the "Page" tab
       | student1 | C1     | student        |
 
   # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Overwrite the course content max width setting
+  # Scenario: Setting: Course content max width - Overwrite the course content max width setting
 
   @javascript
-  Scenario: Enable "Back to top button"
+  Scenario: Setting: back to top button - Enable "Back to top button"
     Given the following config values are set as admin:
       | config          | value | plugin            |
       | backtotopbutton | yes   | theme_boost_union |
@@ -40,7 +40,7 @@ Feature: Configuring the theme_boost_union plugin for the "Page" tab
     And "#back-to-top" "css_element" should not be visible
 
   @javascript
-  Scenario: Disable "Back to top button" (countercheck)
+  Scenario: Setting: back to top button - Disable "Back to top button" (countercheck)
     Given the following config values are set as admin:
       | config          | value | plugin            |
       | backtotopbutton | no    | theme_boost_union |

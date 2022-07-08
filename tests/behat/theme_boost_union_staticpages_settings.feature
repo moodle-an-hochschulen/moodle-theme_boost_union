@@ -5,7 +5,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab
   I need to be able to configure the theme Boost Union plugin
 
   @javascript
-  Scenario: Do not enable the imprint page
+  Scenario: Setting: Enable imprint - Do not enable the imprint page
     Given the following config values are set as admin:
       | config        | value                     | plugin            |
       | enableimprint | no                        | theme_boost_union |
@@ -19,7 +19,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
     And ".imprintlink" "css_element" should not exist in the ".footer .popover-body" "css_element"
 
-  Scenario: Enable and fill the imprint page with content
+  Scenario: Setting: Enable imprint - Enable and fill the imprint page with content
     Given the following config values are set as admin:
       | config         | value              | plugin            |
       | enableimprint  | yes                | theme_boost_union |
@@ -31,7 +31,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab
     And I should see "Imprint" in the "div[role='main'] h2" "css_element"
 
   @javascript
-  Scenario: Do not automatically add the imprint link
+  Scenario: Setting: Imprint link position - Do not automatically add the imprint link
     Given the following config values are set as admin:
       | config              | value                     | plugin            |
       | enableimprint       | yes                       | theme_boost_union |
@@ -47,7 +47,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab
     And ".imprintlink" "css_element" should not exist in the ".footer .popover-body" "css_element"
 
   @javascript
-  Scenario: Add the imprint link to the footnote automatically (even if the footnote is empty otherwise)
+  Scenario: Setting: Imprint link position - Add the imprint link to the footnote automatically (even if the footnote is empty otherwise)
     Given the following config values are set as admin:
       | config              | value              | plugin            |
       | enableimprint       | yes                | theme_boost_union |
@@ -62,7 +62,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab
     And ".imprintlink" "css_element" should not exist in the ".footer .popover-body" "css_element"
 
   @javascript
-  Scenario: Add the imprint link to the footnote automatically (if the footnote contains some content already)
+  Scenario: Setting: Imprint link position - Add the imprint link to the footnote automatically (if the footnote contains some content already)
     Given the following config values are set as admin:
       | config              | value                     | plugin            |
       | enableimprint       | yes                       | theme_boost_union |
@@ -78,7 +78,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab
     And ".imprintlink" "css_element" should not exist in the ".footer .popover-body" "css_element"
 
   @javascript
-  Scenario: Add the imprint link to the footer automatically
+  Scenario: Setting: Imprint link position - Add the imprint link to the footer automatically
     Given the following config values are set as admin:
       | config              | value                     | plugin            |
       | enableimprint       | yes                       | theme_boost_union |
@@ -93,7 +93,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab
     And ".imprintlink" "css_element" should not exist in the "#footnote" "css_element"
 
   @javascript
-  Scenario: Add the imprint link to the footnote and the footer automatically
+  Scenario: Setting: Imprint link position - Add the imprint link to the footnote and the footer automatically
     Given the following config values are set as admin:
       | config              | value                     | plugin            |
       | enableimprint       | yes                       | theme_boost_union |
@@ -108,7 +108,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab
     And ".imprintlink" "css_element" should exist in the "#footnote" "css_element"
 
   @javascript
-  Scenario: Set an empty imprint page title (and trigger the fallback string)
+  Scenario: Setting: Imprint page title - Set an empty imprint page title (and trigger the fallback string)
     Given the following config values are set as admin:
       | config              | value              | plugin            |
       | enableimprint       | yes                | theme_boost_union |
@@ -131,7 +131,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab
     Then I should see "Imprint" in the ".footer .popover-body .imprintlink" "css_element"
 
   @javascript
-  Scenario: Set a custom imprint page title
+  Scenario: Setting: Imprint page title - Set a custom imprint page title
     Given the following config values are set as admin:
       | config              | value              | plugin            |
       | enableimprint       | yes                | theme_boost_union |

@@ -17,7 +17,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
 
-  Scenario: Use the footnote setting to show a string in the page footer on the Dashboard, on the course pages and on the login page
+  Scenario: Setting: Footnote - Use the footnote setting to show a string in the page footer on the Dashboard, on the course pages and on the login page
     Given the following config values are set as admin:
       | config   | value             | plugin            |
       | footnote | Whatever footnote | theme_boost_union |
