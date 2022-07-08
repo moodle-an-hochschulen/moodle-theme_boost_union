@@ -30,51 +30,63 @@ $string['choosereadme'] = 'Theme Boost Union is an enhanced child theme of Boost
 $string['configtitle'] = 'Boost Union';
 
 // Settings: General settings tab.
+// ... Section: Theme presets.
 $string['presetheading'] = 'Theme presets';
 
 // Settings: Advances settings tab.
+// ... Section: Raw SCSS.
 $string['scssheading'] = 'Raw SCSS';
 
 // Settings: Page tab.
 $string['pagetab'] = 'Page';
+// ... Section: Layout.
 $string['layoutheading'] = 'Layout';
+// ... ... Setting: Course content max width.
 $string['coursecontentmaxwidthsetting'] = 'Course content max width';
 $string['coursecontentmaxwidthsetting_desc'] = 'With this setting, you can override Moodle\'s default content width without manual SCSS modifications. By default, Moodle uses a course content max width of 830px. You can enter other pixel-based values like 1200px, but you can also enter a percentage-based value like 100% or a viewport-width value like 90vw.';
+// ... Section: Navigation.
 $string['navigationheading'] = 'Navigation';
+// ... ... Setting: Back to top button.
 $string['backtotop'] = 'Back to top';
 $string['backtotopbuttonsetting'] = 'Back to top button';
 $string['backtotopbuttonsetting_desc'] = 'With this setting a back to top button will appear in the bottom right corner of the page as soon as the user scrolls down the page. A button like this existed already on Boost in Moodle Core until Moodle 3.11, but was removed in 4.0. With Boost Union, you can bring it back.';
 
 // Settings: Branding tab.
 $string['brandingtab'] = 'Branding';
+// ... Section: Favicon.
 $string['faviconheading'] = 'Favicon';
+// ... ... Setting: Favicon
 $string['faviconsetting'] = 'Favicon';
 $string['faviconsetting_desc'] = 'Here, you can upload a custom image (.ico or .png format) that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.';
+// ... Section: Background images.
 $string['backgroundimagesheading'] = 'Background images';
+// ... Section: Brand colors.
 $string['brandcolorsheading'] = 'Brand colors';
 
 // Settings: Blocks tab.
 $string['blockstab'] = 'Blocks';
+// ... Section: General blocks.
 $string['blocksgeneralheading'] = 'General blocks';
 
 // Settings: Courses tab.
 $string['coursestab'] = 'Courses';
+// ... Section: Course related hints.
 $string['courserelatedhintsheading'] = 'Course related hints';
-// ... Setting: Show hint for switched role setting.
+// ... ... Setting: Show hint for switched role setting.
 $string['showswitchedroleincoursesetting'] = 'Show hint for switched role';
 $string['showswitchedroleincoursesetting_desc'] = 'With this setting a hint will appear in the course header if the user has switched the role in the course. By default, this information is only displayed right near the user\'s avatar in the user menu. By enabling this option, you can show this information - together with a link to switch back - within the course page as well.';
 $string['switchedroleto'] = 'You are viewing this course currently with the role: <strong>{$a->role}</strong>';
-// ... Setting: Show hint for hidden course.
+// ... ... Setting: Show hint for hidden course.
 $string['showhintcoursehiddensetting'] = 'Show hint in hidden courses';
 $string['showhintcoursehiddensetting_desc'] = 'With this setting a hint will appear in the course header as long as the visibility of the course is hidden. This helps to identify the visibility state of a course at a glance without the need for looking at the course settings.';
 $string['showhintcoursehiddengeneral'] = 'This course is currently <strong>hidden</strong>. Only enrolled teachers can access this course when hidden.';
 $string['showhintcoursehiddensettingslink'] = 'You can change the visibility in the <a href="{$a->url}">course settings</a>.';
-// ... Setting: Show hint for guest access.
+// ... ... Setting: Show hint for guest access.
 $string['showhintcoursguestaccesssetting'] = 'Show hint for guest access';
 $string['showhintcourseguestaccesssetting_desc'] = 'With this setting a hint will appear in the course header when a user is accessing it with the guest access feature. If the course provides an active self enrolment, a link to that page is also presented to the user.';
 $string['showhintcourseguestaccessgeneral'] = 'You are currently viewing this course as <strong>{$a->role}</strong>.';
 $string['showhintcourseguestaccesslink'] = 'To have full access to the course, you can <a href="{$a->url}">self enrol into this course</a>.';
-// ... Setting: Show hint for unrestricted self enrolment.
+// ... ... Setting: Show hint for unrestricted self enrolment.
 $string['showhintcourseselfenrolsetting'] = 'Show hint for self enrolment without enrolment key';
 $string['showhintcourseselfenrolsetting_desc'] = 'With this setting a hint will appear in the course header if the course is visible and an enrolment without enrolment key is currently possible.';
 $string['showhintcourseselfenrolstartcurrently'] = 'This course is currently visible and <strong>self enrolment without enrolment key</strong> is currently possible.';
@@ -89,25 +101,27 @@ $string['showhintcourseselfenrolinstancecallforaction'] = 'If you don\'t want th
 
 // Settings: Footer tab.
 $string['footertab'] = 'Footer';
+// ... Section: Footnote.
 $string['footnoteheading'] = 'Footnote';
-// ... Setting: Footnote:
+// ... ... Setting: Footnote.
 $string['footnotesetting'] = 'Footnote';
 $string['footnotesetting_desc'] = 'Whatever you add to this textarea will be displayed at the end of a page, in the footer (not the floating footer) on every page which uses the layouts "drawers", "columns2" or "login". Content in this area could be for example the copyright, the terms of use or the name of your organisation. <br/> If you want to remove the footnote again, just empty the text area.';
 
 // Settings: Static pages tab.
 $string['staticpagestab'] = 'Static pages';
+// ... Section: Imprint.
 $string['imprintheading'] = 'Imprint';
-// ... Setting: Enable imprint:
+// ... ... Setting: Enable imprint.
 $string['enableimprintsetting'] = 'Enable imprint';
 $string['imprintdisabled'] = 'The imprint is disabled for this site. There is nothing to see here.';
-// ... Setting: Imprint content:
+// ... ... Setting: Imprint content.
 $string['imprintcontentsetting'] = 'Imprint content';
 $string['imprintcontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the imprint page.';
-// ... Setting: Imprint page title:
+// ... ... Setting: Imprint page title.
 $string['imprintpagetitledefault'] = 'Imprint';
 $string['imprintpagetitlesetting'] = 'Imprint page title';
 $string['imprintpagetitlesetting_desc'] = 'In this setting, you can define the title of the imprint page. This text will be used as link text to the imprint page as well if you configure \'Imprint link position\' accordingly.';
-// ... Setting: Imprint link position:
+// ... ... Setting: Imprint link position.
 $string['imprintlinkpositionnone'] = 'Do not automatically show a link to the imprint page';
 $string['imprintlinkpositionfootnote'] = 'Add a link to the imprint page to the footnote';
 $string['imprintlinkpositionfooter'] = 'Add a link to the imprint page to the footer (questionmark) icon';
@@ -117,8 +131,9 @@ $string['imprintlinkpositionsetting_desc'] = 'In this setting, you can configure
 
 // Settings: Misc tab.
 $string['misctab'] = 'Miscellaneous';
+// ... Section: JavaScript.
 $string['javascriptheading'] = 'JavaScript';
-// ... Setting: JavaScript disabled hint:
+// ... ... Setting: JavaScript disabled hint.
 $string['javascriptdisabledhint'] = 'JavaScript disabled hint';
 $string['javascriptdisabledhint_desc'] = 'With this setting, a hint will appear at the top of the Moodle page if JavaScript is not enabled. This is particularly helpful as several Moodle features do not work without JavaScript.';
 $string['javascriptdisabledhinttext'] = 'JavaScript is disabled in your browser.<br />Many features of Moodle will be not usable or will appear to be broken.<br />Please enable JavaScript for the full Moodle experience.';
