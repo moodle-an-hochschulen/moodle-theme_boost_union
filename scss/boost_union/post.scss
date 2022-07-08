@@ -21,10 +21,16 @@
     }
     /* Make sure that the back to top button is not covered by anything else. */
     z-index: $zindex-dropdown;
+    /* Animate position together with footer button. */
+    @include transition(0.2s);
 }
 #back-to-top i::before {
     /* Move the caret icon slightly up for a nicer look. */
     vertical-align: 0.3rem;
+}
+#page.drawers.show-drawer-right #back-to-top {
+    /* Move the back to top button when right drawer is shown. */
+    right: calc(#{$drawer-right-width} + 2rem);
 }
 
 
