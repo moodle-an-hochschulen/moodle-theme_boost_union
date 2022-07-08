@@ -51,4 +51,14 @@ class behat_theme_boost_union extends behat_base {
             throw new \Exception("Scrolling the page to given coordinates failed");
         }
     }
+
+    /**
+     * Open the imprint page.
+     *
+     * @Given /^I am on imprint page$/
+     */
+    public function i_am_on_imprint_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/imprint.php']);
+    }
+
 }

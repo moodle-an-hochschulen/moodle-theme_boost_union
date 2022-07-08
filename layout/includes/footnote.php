@@ -32,6 +32,9 @@ if (!html_is_blank($footnotesetting)) {
     // Use format_text function to enable multilanguage filtering.
     $footnotesetting = format_text($footnotesetting);
 
+    // Add marker to show the footnote to templatecontext.
+    $templatecontext['showfootnote'] = true;
+
     // Add footnote to templatecontext.
     $templatecontext['footnotesetting'] = $footnotesetting;
 }

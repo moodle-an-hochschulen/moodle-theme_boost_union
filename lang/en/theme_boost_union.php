@@ -91,6 +91,27 @@ $string['footnoteheading'] = 'Footnote';
 $string['footnotesetting'] = 'Footnote';
 $string['footnotesetting_desc'] = 'Whatever you add to this textarea will be displayed at the end of a page, in the footer (not the floating footer) on every page which uses the layouts "drawers", "columns2" or "login". Content in this area could be for example the copyright, the terms of use or the name of your organisation. <br/> If you want to remove the footnote again, just empty the text area.';
 
+// Settings: Static pages tab.
+$string['staticpagestab'] = 'Static pages';
+$string['imprintheading'] = 'Imprint';
+// ... Setting: Enable imprint:
+$string['enableimprintsetting'] = 'Enable imprint';
+$string['imprintdisabled'] = 'The imprint is disabled for this site. There is nothing to see here.';
+// ... Setting: Imprint content:
+$string['imprintcontentsetting'] = 'Imprint content';
+$string['imprintcontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the imprint page.';
+// ... Setting: Imprint page title:
+$string['imprintpagetitledefault'] = 'Imprint';
+$string['imprintpagetitlesetting'] = 'Imprint page title';
+$string['imprintpagetitlesetting_desc'] = 'In this setting, you can define the title of the imprint page. This text will be used as link text to the imprint page as well if you configure \'Imprint link position\' accordingly.';
+// ... Setting: Imprint link position:
+$string['imprintlinkpositionnone'] = 'Do not automatically show a link to the imprint page';
+$string['imprintlinkpositionfootnote'] = 'Add a link to the imprint page to the footnote';
+$string['imprintlinkpositionfooter'] = 'Add a link to the imprint page to the footer (questionmark) icon';
+$string['imprintlinkpositionboth'] = 'Add a link to the imprint page to the footnote and to the footer (questionmark) icon';
+$string['imprintlinkpositionsetting'] = 'Imprint link position';
+$string['imprintlinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the imprint page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+
 // Privacy API.
 $string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
 

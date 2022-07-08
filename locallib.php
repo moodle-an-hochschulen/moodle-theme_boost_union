@@ -277,3 +277,37 @@ function theme_boost_union_get_course_related_hints() {
     // Return HTML code.
     return $html;
 }
+
+/**
+ * Build the link to the imprint page.
+ *
+ * @return string.
+ */
+function theme_boost_union_get_imprint_link() {
+    // Compose the URL object.
+    $url = new moodle_url('/theme/boost_union/pages/imprint.php');
+
+    // Return the string representation of the URL.
+    return $url->out();
+}
+
+/**
+ * Build the page title of the imprint page.
+ *
+ * @return string.
+ */
+function theme_boost_union_get_imprint_pagetitle() {
+    // Get the configured page title.
+    $imprintpagetitleconfig = get_config('theme_boost_union', 'imprintpagetitle');
+
+    // If there is a string configured.
+    if ($imprintpagetitleconfig) {
+        // Return this setting.
+        return $imprintpagetitleconfig;
+
+        // Otherwise.
+    } else {
+        // Return the default string.
+        return get_string('imprintpagetitledefault', 'theme_boost_union');
+    }
+}
