@@ -117,6 +117,24 @@ if ($ADMIN->fulltree) {
     // Create page tab.
     $page = new admin_settingpage('theme_boost_union_page', get_string('pagetab', 'theme_boost_union', null, true));
 
+    // Create layout heading.
+    $name = 'theme_boost_union/layoutheading';
+    $title = get_string('layoutheading', 'theme_boost_union', null, true);
+    $setting = new admin_setting_heading($name, $title, null);
+    $page->add($setting);
+
+    // Setting: Course content max width.
+    $name = 'theme_boost_union/coursecontentmaxwidth';
+    $title = get_string('coursecontentmaxwidthsetting', 'theme_boost_union', null, true);
+    $description = get_string('coursecontentmaxwidthsetting_desc', 'theme_boost_union', null, true);
+    $default = '830px';
+    // Regular expression for checking if the value is a percent number (from 0% to 100%) or a pixel number (with 3 or 4 digits)
+    // or a viewport width number (from 0 to 100).
+    $regex = '/^((\d{1,2}|100)%)|((\d{1,2}|100)vw)|(\d{3,4}px)$/';
+    $setting = new admin_setting_configtext($name, $title, $description, $default, $regex, 6);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
     // Create navigation heading.
     $name = 'theme_boost_union/navigationheading';
     $title = get_string('navigationheading', 'theme_boost_union', null, true);
