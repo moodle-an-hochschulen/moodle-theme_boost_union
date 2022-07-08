@@ -164,6 +164,16 @@ In this tab there are the following settings:
 
 With these settings, you can add rich text content which will be shown on the imprint page.
 
+### Tab "Miscellaneous"
+
+In this tab there are the following settings:
+
+#### JavaScript
+
+##### JavaScript disabled hint
+
+With this setting, a hint will appear at the top of the Moodle page if JavaScript is not enabled. This is particularly helpful as several Moodle features do not work without JavaScript.
+
 
 Capabilities
 ------------

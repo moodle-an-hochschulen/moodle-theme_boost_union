@@ -350,6 +350,26 @@ if ($ADMIN->fulltree) {
 
     // Add tab to settings page.
     $settings->add($page);
+
+
+    // Create misc tab.
+    $page = new admin_settingpage('theme_boost_union_misc', get_string('misctab', 'theme_boost_union', null, true));
+
+    // Create JavaScript heading.
+    $name = 'theme_boost_union/javascriptheading';
+    $title = get_string('javascriptheading', 'theme_boost_union', null, true);
+    $setting = new admin_setting_heading($name, $title, null);
+    $page->add($setting);
+
+    // Setting: JavaScript disabled hint.
+    $name = 'theme_boost_union/javascriptdisabledhint';
+    $title = get_string('javascriptdisabledhint', 'theme_boost_union', null, true);
+    $description = get_string('javascriptdisabledhint_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+    $page->add($setting);
+
+    // Add tab to settings page.
+    $settings->add($page);
 }
 
 // Above, we made the theme setting not only available to admins but also
