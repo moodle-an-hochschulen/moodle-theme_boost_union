@@ -95,6 +95,34 @@ function theme_boost_union_get_pre_scss($theme) {
         $scss .= '$course-content-maxwidth: '.$theme->settings->coursecontentmaxwidth.";\n";
     }
 
+    // Overwrite Boost core SCSS variables which are stored in a SCSS map and thus couldn't be added to $configurable above.
+    // Set variables for the activity icon colors.
+    $activityiconcolors = array();
+    if (!empty($theme->settings->activityiconcoloradministration)) {
+        $activityiconcolors[] = '"administration": '.$theme->settings->activityiconcoloradministration;
+    }
+    if (!empty($theme->settings->activityiconcolorassessment)) {
+        $activityiconcolors[] = '"assessment": '.$theme->settings->activityiconcolorassessment;
+    }
+    if (!empty($theme->settings->activityiconcolorcollaboration)) {
+        $activityiconcolors[] = '"collaboration": '.$theme->settings->activityiconcolorcollaboration;
+    }
+    if (!empty($theme->settings->activityiconcolorcommunication)) {
+        $activityiconcolors[] = '"communication": '.$theme->settings->activityiconcolorcommunication;
+    }
+    if (!empty($theme->settings->activityiconcolorcontent)) {
+        $activityiconcolors[] = '"content": '.$theme->settings->activityiconcolorcontent;
+    }
+    if (!empty($theme->settings->activityiconcolorinterface)) {
+        $activityiconcolors[] = '"interface": '.$theme->settings->activityiconcolorinterface;
+    }
+    if (count($activityiconcolors) > 0) {
+        $activityiconscss = '$activity-icon-colors: ('."\n";
+        $activityiconscss .= implode(",\n", $activityiconcolors);
+        $activityiconscss .= ');';
+        $scss .= $activityiconscss."\n";
+    }
+
     // Prepend pre-scss.
     if (!empty($theme->settings->scsspre)) {
         $scss .= $theme->settings->scsspre;

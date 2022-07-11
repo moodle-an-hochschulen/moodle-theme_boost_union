@@ -62,6 +62,26 @@ $string['faviconsetting_desc'] = 'Here, you can upload a custom image (.ico or .
 $string['backgroundimagesheading'] = 'Background images';
 // ... Section: Brand colors.
 $string['brandcolorsheading'] = 'Brand colors';
+// ... Section: Activity icon colors.
+$string['activityiconcolorsheading'] = 'Activity icon colors';
+// ... ... Setting: Activity icon color for 'Administration'.
+$string['activityiconcoloradministrationsetting'] = 'Activity icon color for "Administration"';
+$string['activityiconcoloradministrationsetting_desc'] = 'The activity icon color for "Administration"';
+// ... ... Setting: Activity icon color for 'Assessment'.
+$string['activityiconcolorassessmentsetting'] = 'Activity icon color for "Assessment"';
+$string['activityiconcolorassessmentsetting_desc'] = 'The activity icon color for "Assessment"';
+// ... ... Setting: Activity icon color for 'Collaboration'.
+$string['activityiconcolorcollaborationsetting'] = 'Activity icon color for "Collaboration"';
+$string['activityiconcolorcollaborationsetting_desc'] = 'The activity icon color for "Collaboration"';
+// ... ... Setting: Activity icon color for 'Communication'.
+$string['activityiconcolorcommunicationsetting'] = 'Activity icon color for "Communication"';
+$string['activityiconcolorcommunicationsetting_desc'] = 'The activity icon color for "Communication"';
+// ... ... Setting: Activity icon color for 'Content'.
+$string['activityiconcolorcontentsetting'] = 'Activity icon color for "Content"';
+$string['activityiconcolorcontentsetting_desc'] = 'The activity icon color for "Content"';
+// ... ... Setting: Activity icon color for 'Interface'.
+$string['activityiconcolorinterfacesetting'] = 'Activity icon color for "Interface"';
+$string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for "Interface"';
 
 // Settings: Blocks tab.
 $string['blockstab'] = 'Blocks';
