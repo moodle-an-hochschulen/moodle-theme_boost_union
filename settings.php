@@ -316,7 +316,8 @@ if ($ADMIN->fulltree) {
     $description = get_string('imprintcontentsetting_desc', 'theme_boost_union', null, true);
     $setting = new admin_setting_confightmleditor($name, $title, $description, '');
     $page->add($setting);
-    $settings->hide_if('theme_boost_union/imprintcontent', 'theme_boost_union/enableimprint', 'neq', 'yes');
+    $settings->hide_if('theme_boost_union/imprintcontent', 'theme_boost_union/enableimprint', 'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES);
 
     // Setting: Imprint page title.
     $name = 'theme_boost_union/imprintpagetitle';
@@ -325,7 +326,8 @@ if ($ADMIN->fulltree) {
     $default = get_string('imprintpagetitledefault', 'theme_boost_union', null, true);
     $setting = new admin_setting_configtext($name, $title, $description, $default);
     $page->add($setting);
-    $settings->hide_if('theme_boost_union/imprintpagetitle', 'theme_boost_union/enableimprint', 'neq', 'yes');
+    $settings->hide_if('theme_boost_union/imprintpagetitle', 'theme_boost_union/enableimprint', 'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES);
 
     // Setting: Imprint link position.
     $name = 'theme_boost_union/imprintlinkposition';
@@ -346,7 +348,8 @@ if ($ADMIN->fulltree) {
     $default = 'none';
     $setting = new admin_setting_configselect($name, $title, $description, $default, $imprintlinkpositionoption);
     $page->add($setting);
-    $settings->hide_if('theme_boost_union/imprintlinkposition', 'theme_boost_union/enableimprint', 'neq', 'yes');
+    $settings->hide_if('theme_boost_union/imprintlinkposition', 'theme_boost_union/enableimprint', 'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES);
 
     // Add tab to settings page.
     $settings->add($page);
