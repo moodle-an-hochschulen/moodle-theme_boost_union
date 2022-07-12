@@ -60,5 +60,4 @@ class behat_theme_boost_union extends behat_base {
     public function i_am_on_imprint_page() {
         $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/imprint.php']);
     }
-
 }

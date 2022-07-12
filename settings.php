@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use \theme_boost_union\admin_setting_configdatetime;
+
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig || has_capability('theme/boost_union:configure', context_system::instance())) {
@@ -466,6 +468,169 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $tab->add($setting);
         $page->hide_if('theme_boost_union/imprintlinkposition', 'theme_boost_union/enableimprint', 'neq',
                 THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
+        // Create info banner tab.
+        $tab = new admin_settingpage('theme_boost_union_infobanners_infobanner',
+                get_string('infobannertab', 'theme_boost_union', null, true));
+
+        // Prepare options for the pages settings.
+        $infobannerpages = array(
+            // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+            // PHP warning otherwise.
+                THEME_BOOST_UNION_SETTING_INFOBANNERPAGES_MY => get_string('myhome', 'core', null, false),
+                THEME_BOOST_UNION_SETTING_INFOBANNERPAGES_SITEHOME => get_string('sitehome', 'core', null, false),
+                THEME_BOOST_UNION_SETTING_INFOBANNERPAGES_COURSE => get_string('course', 'core', null, false),
+                THEME_BOOST_UNION_SETTING_INFOBANNERPAGES_LOGIN =>
+                        get_string('infobannerpageloginpage', 'theme_boost_union', null, false)
+        );
+
+        // Prepare options for the bootstrap class settings.
+        $infobannerbsclasses = array(
+            // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+            // PHP warning otherwise.
+                'primary' => get_string('bootstrapprimarycolor', 'theme_boost_union', null, false),
+                'secondary' => get_string('bootstrapsecondarycolor', 'theme_boost_union', null, false),
+                'success' => get_string('bootstrapsuccesscolor', 'theme_boost_union', null, false),
+                'danger' => get_string('bootstrapdangercolor', 'theme_boost_union', null, false),
+                'warning' => get_string('bootstrapwarningcolor', 'theme_boost_union', null, false),
+                'info' => get_string('bootstrapinfocolor', 'theme_boost_union', null, false),
+                'light' => get_string('bootstraplightcolor', 'theme_boost_union', null, false),
+                'dark' => get_string('bootstrapdarkcolor', 'theme_boost_union', null, false),
+                'none' => get_string('bootstrapnone', 'theme_boost_union', null, false)
+        );
+
+        // Prepare options for the order settings.
+        $infobannerorders = array();
+        for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_INFOBANNER_COUNT; $i++) {
+            $infobannerorders[$i] = $i;
+        }
+
+        // Prepare options for the mode settings.
+        $infobannermodes = array(
+            // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+            // PHP warning otherwise.
+                THEME_BOOST_UNION_SETTING_INFOBANNERMODE_PERPETUAL =>
+                        get_string('infobannermodeperpetual', 'theme_boost_union', null, false),
+                THEME_BOOST_UNION_SETTING_INFOBANNERMODE_TIMEBASED =>
+                        get_string('infobannermodetimebased', 'theme_boost_union', null, false)
+        );
+
+        // Create the hardcoded amount of information banners without code duplication.
+        for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_INFOBANNER_COUNT; $i++) {
+
+            // Create Infobanner heading.
+            $name = 'theme_boost_union/infobanner'.$i.'heading';
+            $title = get_string('infobannerheading', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_heading($name, $title, null);
+            $tab->add($setting);
+
+            // Setting: Infobanner enabled.
+            $name = 'theme_boost_union/infobanner'.$i.'enabled';
+            $title = get_string('infobannerenabledsetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('infobannerenabledsetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
+                    $yesnooption);
+            $tab->add($setting);
+
+            // Setting: Infobanner content.
+            $name = 'theme_boost_union/infobanner'.$i.'content';
+            $title = get_string('infobannercontentsetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('infobannercontentsetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_confightmleditor($name, $title, $description, '');
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/infobanner'.$i.'content', 'theme_boost_union/infobanner'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Infobanner pages.
+            $name = 'theme_boost_union/infobanner'.$i.'pages';
+            $title = get_string('infobannerpagessetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('infobannerpagessetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_configmultiselect($name, $title, $description,
+                    array($infobannerpages[THEME_BOOST_UNION_SETTING_INFOBANNERPAGES_MY]), $infobannerpages);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/infobanner'.$i.'pages', 'theme_boost_union/infobanner'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Infobanner bootstrap class.
+            $name = 'theme_boost_union/infobanner'.$i.'bsclass';
+            $title = get_string('infobannerbsclasssetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('infobannerbsclasssetting_desc',
+                    'theme_boost_union',
+                    array('no' => $i, 'bootstrapnone' => get_string('bootstrapnone', 'theme_boost_union')),
+                    true);
+            $setting = new admin_setting_configselect($name, $title, $description,
+                    'primary', $infobannerbsclasses);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/infobanner'.$i.'bsclass', 'theme_boost_union/infobanner'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Infobanner order.
+            $name = 'theme_boost_union/infobanner'.$i.'order';
+            $title = get_string('infobannerordersetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('infobannerordersetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_configselect($name, $title, $description,
+                    $i, $infobannerorders);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/infobanner'.$i.'order', 'theme_boost_union/infobanner'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Infobanner mode.
+            $name = 'theme_boost_union/infobanner'.$i.'mode';
+            $title = get_string('infobannermodesetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('infobannermodesetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_configselect($name, $title, $description,
+                    THEME_BOOST_UNION_SETTING_INFOBANNERMODE_PERPETUAL, $infobannermodes);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/infobanner'.$i.'mode', 'theme_boost_union/infobanner'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Infobanner start time.
+            $name = 'theme_boost_union/infobanner'.$i.'start';
+            $title = get_string('infobannerstartsetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('infobannerstartsetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_configdatetime($name, $title, $description, '');
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/infobanner'.$i.'start', 'theme_boost_union/infobanner'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+            $page->hide_if('theme_boost_union/infobanner'.$i.'start', 'theme_boost_union/infobanner'.$i.'mode', 'neq',
+                    THEME_BOOST_UNION_SETTING_INFOBANNERMODE_TIMEBASED);
+
+            // Setting: Infobanner end time.
+            $name = 'theme_boost_union/infobanner'.$i.'end';
+            $title = get_string('infobannerendsetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('infobannerendsetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_configdatetime($name, $title, $description, '');
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/infobanner'.$i.'end', 'theme_boost_union/infobanner'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+            $page->hide_if('theme_boost_union/infobanner'.$i.'end', 'theme_boost_union/infobanner'.$i.'mode', 'neq',
+                    THEME_BOOST_UNION_SETTING_INFOBANNERMODE_TIMEBASED);
+
+            // Setting: Infobanner dismissible.
+            $name = 'theme_boost_union/infobanner'.$i.'dismissible';
+            $title = get_string('infobannerdismissiblesetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('infobannerdismissiblesetting_desc', 'theme_boost_union', array('no' => $i), true);
+            // Add Reset button if the info banner is already configured to be dismissible.
+            if (get_config('theme_boost_union', 'infobanner'.$i.'dismissible') == true) {
+                $reseturl = new moodle_url('/theme/boost_union/settings_infobanner_resetdismissed.php',
+                        array('sesskey' => sesskey(), 'no' => $i));
+                $description .= html_writer::empty_tag('br');
+                $description .= html_writer::link($reseturl,
+                        get_string('infobannerdismissresetbutton', 'theme_boost_union', array('no' => $i), true),
+                        array('class' => 'btn btn-secondary mt-3', 'role' => 'button'));
+            }
+            $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
+                    $yesnooption);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/infobanner'.$i.'dismissible', 'theme_boost_union/infobanner'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+            $page->hide_if('theme_boost_union/infobanner'.$i.'dismissible', 'theme_boost_union/infobanner'.$i.'mode', 'neq',
+                    THEME_BOOST_UNION_SETTING_INFOBANNERMODE_PERPETUAL);
+        }
 
         // Add tab to settings page.
         $page->add($tab);

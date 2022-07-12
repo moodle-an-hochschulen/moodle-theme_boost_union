@@ -159,6 +159,10 @@ In this tab there are the following settings:
 
 With these settings, you can add rich text content which will be shown on the imprint page.
 
+#### Tab "Information banners"
+
+In this tab, you can enable and configure multiple information banners to be shown on selected pages.
+
 ### Settings page "Functionality"
 
 #### Tab "Courses"

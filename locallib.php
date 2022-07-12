@@ -311,3 +311,148 @@ function theme_boost_union_get_imprint_pagetitle() {
         return get_string('imprintpagetitledefault', 'theme_boost_union');
     }
 }
+
+/**
+ * Helper function to check if a given info banner should be shown on this page.
+ * This function checks
+ * a) if the banner is enabled at all
+ * b) if the banner has any content (i.e. is not empty)
+ * b) if the banner is configured to be shown on the given page
+ * c) if the banner is configured to be shown now (in case it is a time-based banner)
+ *
+ * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
+ * @copyright  based on code from theme_boost_campus by Kathrin Osswald.
+ *
+ * @param int $bannerno The counting number of the info banner.
+ *
+ * @return boolean.
+ */
+function theme_boost_union_infobanner_is_shown_on_page($bannerno) {
+    global $PAGE;
+
+    // Get theme config.
+    $config = get_config('theme_boost_union');
+
+    // If the info banner is enabled.
+    $enabledsettingname = 'infobanner'.$bannerno.'enabled';
+    if ($config->{$enabledsettingname} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // If the info banner has any content.
+        $contentsettingname = 'infobanner'.$bannerno.'content';
+        if (!empty($config->{$contentsettingname})) {
+            // If the info banner should be shown on this page.
+            $pagessettingname = 'infobanner'.$bannerno.'pages';
+            $showonpage = false;
+            $pages = explode(',', $config->{$pagessettingname});
+            foreach ($pages as $page) {
+                if ($PAGE->pagelayout == $page) {
+                    $showonpage = true;
+                    break;
+                }
+            }
+            if ($showonpage == true) {
+                // If this is a time-based-banner.
+                $modesettingname = 'infobanner'.$bannerno.'mode';
+                if ($config->{$modesettingname} == THEME_BOOST_UNION_SETTING_INFOBANNERMODE_TIMEBASED) {
+                    $startsettingname = 'infobanner'.$bannerno.'start';
+                    $endsettingname = 'infobanner'.$bannerno.'end';
+                    // Check if time settings are empty and try to convert the time strings to a unix timestamp.
+                    if (empty($config->{$startsettingname})) {
+                        $startempty = true;
+                        $start = 0;
+                    } else {
+                        $startempty = false;
+                        $start = $config->{$startsettingname};
+                    }
+                    if (empty($config->{$endsettingname})) {
+                        $endempty = true;
+                        $end = 0;
+                    } else {
+                        $endempty = false;
+                        $end = $config->{$endsettingname};
+                    }
+
+                    // The banner is shown if
+                    // a) now is between start and end time OR
+                    // b) start is not set but end is not reached yet OR
+                    // c) end is not set, but start lies in the past OR
+                    // d) no dates are set, so there's no time restriction.
+                    $now = time();
+                    if (($now >= $start && $now <= $end ||
+                            ($now <= $end && $startempty) ||
+                            ($now >= $start && $endempty) ||
+                            ($startempty && $endempty))) {
+                        return true;
+                    }
+
+                    // Otherwise this is a perpetual banner.
+                } else {
+                    // If the banner was not dismissed by the user.
+                    if (get_user_preferences('theme_boost_union_infobanner'.$bannerno.'_dismissed') != true) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+    // Apparently, the banner should not be shown on this page.
+    return false;
+}
+
+/**
+ * Helper function to compare two infobanner orders.
+ *
+ * @param int $a The first value
+ * @param int $b The second value
+ *
+ * @return boolean.
+ */
+function theme_boost_union_infobanner_compare_order($a, $b) {
+    if ($a->order == $b->order) {
+        // Basically, we should return 0 in this case.
+        // But due to the way how usort works internally, info banners with the same order would end up in the result array
+        // in reversed order (compared to the numbering order on the theme settings page).
+        // Thus, we do a little trick and tell the sorting algorithm that the first item is greater than the second one
+        // by returning a positive number.
+        return 1;
+    }
+    return ($a->order < $b->order) ? -1 : 1;
+}
+
+/**
+ * Helper function to reset the visibility of a given info banner.
+ *
+ * @param int $no The number of the info banner.
+ *
+ * @return bool True if everything went fine, false if at least one user couldn't be resetted.
+ */
+function theme_boost_union_infobanner_reset_visibility($no) {
+    global $DB;
+
+    // Clean the no parameter, just to be sure as we will use it within a user preference label (hence in a SQL query).
+    $no = clean_param($no, PARAM_INT);
+
+    // Get all users that have dismissed the info banner once and therefore the user preference.
+    $whereclause = 'name = :name AND value = :value';
+    $params = ['name' => 'theme_boost_union_infobanner'.$no.'_dismissed', 'value' => '1'];
+    $users = $DB->get_records_select('user_preferences', $whereclause, $params, '', 'userid');
+
+    // Initialize variable for feedback messages.
+    $somethingwentwrong = false;
+    // Store coding exception.
+    $codingexception[] = array();
+
+    foreach ($users as $user) {
+        try {
+            unset_user_preference('theme_boost_union_infobanner'.$no.'_dismissed', $user->userid);
+        } catch (coding_exception $e) {
+            $somethingwentwrong = true;
+        }
+    }
+
+    if (!$somethingwentwrong) {
+        return true;
+    } else {
+        return false;
+    }
+}

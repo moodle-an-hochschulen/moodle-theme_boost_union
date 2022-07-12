@@ -56,6 +56,7 @@
     * Include theme_boost_union/footnote template
     * Include theme_boost_union/footer template instead of theme_boost/footer
     * Added the possibility to show course related hints.
+    * Added the possibility to show info banners.
 }}
 {{> theme_boost/head }}
 
@@ -135,6 +136,7 @@
                 {{/hasblocks}}
             </div>
             {{> theme_boost_union/javascriptdisabledhint }}
+            {{> theme_boost_union/infobanners }}
             {{{ output.full_header }}}
             {{#secondarymoremenu}}
                 <div class="secondary-navigation d-print-none">

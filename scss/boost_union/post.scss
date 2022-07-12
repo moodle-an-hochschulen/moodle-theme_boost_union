@@ -49,3 +49,13 @@
     margin-left: 15px;
     margin-right: 15px;
 }
+
+
+/*=======================================
+ * Settings: Information banners.
+ ======================================*/
+
+/* Remove margin after last paragraph for a nicer look. */
+.themeboostunioninfobanner p:last-child {
+    margin-bottom: 0;
+}
