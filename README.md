@@ -114,6 +114,10 @@ This setting is already available in the Moodle core theme Boost. For more infor
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
+#### Activity icon colors
+
+With these settings, you can overwrite the activity icon colors which are used within courses.
+
 ### Tab "Blocks"
 
 In this tab there are the following settings:

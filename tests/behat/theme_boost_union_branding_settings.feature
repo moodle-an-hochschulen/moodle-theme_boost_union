@@ -33,3 +33,21 @@ Feature: Configuring the theme_boost_union plugin for the "Branding" tab
     When I log in as "admin"
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'theme/image.php/boost_union/theme')][contains(@href, 'favicon')]" "xpath_element" should exist
     And "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/favicon')][contains(@href, 'favicon.ico')]" "xpath_element" should not exist
+
+  # Unfortunately, this can't be tested with Behat yet
+  # Scenario: Setting: Activity icon color for "Administration" - Setting the color
+
+  # Unfortunately, this can't be tested with Behat yet
+  # Scenario: Setting: Activity icon color for "Assessment" - Setting the color
+
+  # Unfortunately, this can't be tested with Behat yet
+  # Scenario: Setting: Activity icon color for "Collaboration" - Setting the color
+
+  # Unfortunately, this can't be tested with Behat yet
+  # Scenario: Setting: Activity icon color for "Communication" - Setting the color
+
+  # Unfortunately, this can't be tested with Behat yet
+  # Scenario: Setting: Activity icon color for "Content" - Setting the color
+
+  # Unfortunately, this can't be tested with Behat yet
+  # Scenario: Setting: Activity icon color for "Interface" - Setting the color

@@ -207,6 +207,60 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
+    // Create activity icon colors heading.
+    $name = 'theme_boost_union/activityiconcolorsheading';
+    $title = get_string('activityiconcolorsheading', 'theme_boost_union', null, true);
+    $setting = new admin_setting_heading($name, $title, null);
+    $page->add($setting);
+
+    // Setting: Activity icon color for 'administration'.
+    $name = 'theme_boost_union/activityiconcoloradministration';
+    $title = get_string('activityiconcoloradministrationsetting', 'theme_boost_union', null, true);
+    $description = get_string('activityiconcoloradministrationsetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Setting: Activity icon color for 'assessment'.
+    $name = 'theme_boost_union/activityiconcolorassessment';
+    $title = get_string('activityiconcolorassessmentsetting', 'theme_boost_union', null, true);
+    $description = get_string('activityiconcolorassessmentsetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Setting: Activity icon color for 'collaboration'.
+    $name = 'theme_boost_union/activityiconcolorcollaboration';
+    $title = get_string('activityiconcolorcollaborationsetting', 'theme_boost_union', null, true);
+    $description = get_string('activityiconcolorcollaborationsetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Setting: Activity icon color for 'communication'.
+    $name = 'theme_boost_union/activityiconcolorcommunication';
+    $title = get_string('activityiconcolorcommunicationsetting', 'theme_boost_union', null, true);
+    $description = get_string('activityiconcolorcommunicationsetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Setting: Activity icon color for 'content'.
+    $name = 'theme_boost_union/activityiconcolorcontent';
+    $title = get_string('activityiconcolorcontentsetting', 'theme_boost_union', null, true);
+    $description = get_string('activityiconcolorcontentsetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    // Setting: Activity icon color for 'interface'.
+    $name = 'theme_boost_union/activityiconcolorinterface';
+    $title = get_string('activityiconcolorinterfacesetting', 'theme_boost_union', null, true);
+    $description = get_string('activityiconcolorinterfacesetting_desc', 'theme_boost_union', null, true);
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
     // Add tab to settings page.
     $settings->add($page);
 
