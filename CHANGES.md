@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2022-07-13 - Release: Add UPGRADE.md, solves #29
 * 2022-07-08 - Feature: Customize activity icon background colors, solves #49
 * 2022-07-07 - Feature: Show a warning banner if JavaScript is disabled, solves #46
 * 2022-07-07 - Feature: Make the course content column width configurable, helps to resolve #18.
