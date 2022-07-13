@@ -278,3 +278,18 @@ Credits
 -------
 
 This theme is a successor of and heavily inspired by the former theme theme_boost_campus by Kathrin Osswald and Alexander Bias from Ulm University which was maintained until Moodle 3.11 on https://github.com/moodle-an-hochschulen/moodle-theme_boost_campus.
+
+
+Contributors
+------------
+
+This theme is a collaboration result of multiple organisations.
+
+Moodle an Hochschulen e.V. would like to thank these main contributors (in alphabetical order) for their work:
+
+* Bern University of Applied Sciences (BFH), Luca Bösch: Code, Peer Review, Ideating
+* lern.link GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
+* University of Lübeck, Christian Wolters: Peer Review, Ideating
+* Zurich University of Applied Sciences (ZHAW): Funding
+
+Additionally, we thank all other contributors who contributed ideas, feedback and code snippets within the Github issues and pull requests.
