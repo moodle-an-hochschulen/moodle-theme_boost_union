@@ -6,13 +6,6 @@ moodle-theme_boost_union
 Theme Boost Union is an enhanced child theme of Boost provided by Moodle an Hochschulen e.V.
 
 
-Work in progress
-----------------
-
-This theme is still work in progress and requirements are still discussed.
-Please join the discussion on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues.
-
-
 Requirements
 ------------
 
