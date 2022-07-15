@@ -20,7 +20,7 @@ Feature: Configuring the theme_boost_union plugin for the "Branding" tab
   @javascript @_file_upload
   Scenario: Setting: Favicon - Upload a custom favicon
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union" in site administration
+    And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Branding" "link"
     And I upload "theme/boost_union/tests/fixtures/favicon.ico" file to "Favicon" filemanager
     And I press "Save changes"
