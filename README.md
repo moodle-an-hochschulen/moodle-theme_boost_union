@@ -35,141 +35,153 @@ After installing the theme, it does not do anything to Moodle yet.
 To configure the theme and its behaviour, please visit:
 Site administration -> Appearance -> Themes -> Boost Union.
 
-There, you find multiple settings tabs:
+There, you find multiple setting pages:
 
-### Tab "General settings"
+### Settings page "Look"
 
-In this tab there are the following settings:
-
-#### Theme presets
-
-##### Theme preset
-
-This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
-
-##### Additional theme preset files
-
-This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
-
-### Tab "Advanced settings"
+#### Tab "General settings"
 
 In this tab there are the following settings:
 
-#### Raw SCSS
+##### Theme presets
 
-##### Raw initial SCSS
+###### Theme preset
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+###### Additional theme preset files
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+#### Tab "Advanced settings"
+
+In this tab there are the following settings:
 
 ##### Raw SCSS
 
+###### Raw initial SCSS
+
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
-### Tab "Page"
+###### Raw SCSS
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+#### Tab "Page"
 
 In this tab there are the following settings:
 
-#### Layout
+##### Layout
 
-##### Course content max width
+###### Course content max width
 
 With this setting, you can override Moodle's default content width without manual SCSS modifications.
 
-#### Navigation
-
-##### Back to top button
-
-With this setting a back to top button will appear in the bottom right corner of the page as soon as the user scrolls down the page. A button like this existed already on Boost in Moodle Core until Moodle 3.11, but was removed in 4.0. With Boost Union, you can bring it back.
-
-### Tab "Branding"
+#### Tab "Branding"
 
 In this tab there are the following settings:
-
-#### Favicon
 
 ##### Favicon
 
+###### Favicon
+
 Here, you can upload a custom image (.ico or .png format) that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.
 
-#### Background images
+##### Background images
 
-##### Background image
-
-This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
-
-##### Login background image
+###### Background image
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
-#### Brand colors
-
-##### Brand color
+###### Login background image
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
-#### Activity icon colors
+##### Brand colors
+
+###### Brand color
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+##### Activity icon colors
 
 With these settings, you can overwrite the activity icon colors which are used within courses.
 
-### Tab "Blocks"
+### Settings page "Feel"
+
+#### Tab "Navigation"
 
 In this tab there are the following settings:
 
-#### General blocks
+##### Navigation
 
-##### Unneeded blocks
+###### Back to top button
+
+With this setting a back to top button will appear in the bottom right corner of the page as soon as the user scrolls down the page. A button like this existed already on Boost in Moodle Core until Moodle 3.11, but was removed in 4.0. With Boost Union, you can bring it back.
+
+#### Tab "Blocks"
+
+In this tab there are the following settings:
+
+##### General blocks
+
+###### Unneeded blocks
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
-### Tab "Courses"
+#### Tab "Miscellaneous"
 
 In this tab there are the following settings:
 
-#### Course related hints
+##### JavaScript
 
-##### Show hint for switched role
+###### JavaScript disabled hint
 
-With this setting a hint will appear in the course header if the user has switched the role in the course.
+With this setting, a hint will appear at the top of the Moodle page if JavaScript is not enabled. This is particularly helpful as several Moodle features do not work without JavaScript.
 
-##### Show hint in hidden courses
+### Settings page "Content"
 
-With this setting a hint will appear in the course header as long as the visibility of the course is hidden.
-
-##### Show hint for guest access
-
-With this setting a hint will appear in the course header when a user is accessing it with the guest access feature.
-
-##### Show hint for self enrolment without enrolment key
-
-With this setting a hint will appear in the course header if the course is visible and an enrolment without enrolment key is currently possible.
-
-### Tab "Footer"
+#### Tab "Footer"
 
 In this tab there are the following settings:
-
-#### Footnote
 
 ##### Footnote
 
+###### Footnote
+
 Whatever you add to this textarea will be displayed at the end of a page, in the footer. Refer to the setting description on the settings page for further instructions.
 
-### Tab "Static pages"
+#### Tab "Static pages"
 
 In this tab there are the following settings:
 
-#### Imprint
+##### Imprint
 
 With these settings, you can add rich text content which will be shown on the imprint page.
 
-### Tab "Miscellaneous"
+### Settings page "Functionality"
+
+#### Tab "Courses"
 
 In this tab there are the following settings:
 
-#### JavaScript
+##### Course related hints
 
-##### JavaScript disabled hint
+###### Show hint for switched role
 
-With this setting, a hint will appear at the top of the Moodle page if JavaScript is not enabled. This is particularly helpful as several Moodle features do not work without JavaScript.
+With this setting a hint will appear in the course header if the user has switched the role in the course.
+
+###### Show hint in hidden courses
+
+With this setting a hint will appear in the course header as long as the visibility of the course is hidden.
+
+###### Show hint for guest access
+
+With this setting a hint will appear in the course header when a user is accessing it with the guest access feature.
+
+###### Show hint for self enrolment without enrolment key
+
+With this setting a hint will appear in the course header if the course is visible and an enrolment without enrolment key is currently possible.
 
 
 Capabilities
