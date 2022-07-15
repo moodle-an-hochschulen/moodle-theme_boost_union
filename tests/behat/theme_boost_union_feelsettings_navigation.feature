@@ -1,5 +1,5 @@
-@theme @theme_boost_union @theme_boost_union_page_settings
-Feature: Configuring the theme_boost_union plugin for the "Page" tab
+@theme @theme_boost_union @theme_boost_union_feelsettings @theme_boost_union_feelsettings_navigation
+Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on the "Feel" page
   In order to use the features
   As admin
   I need to be able to configure the theme Boost Union plugin
@@ -16,9 +16,6 @@ Feature: Configuring the theme_boost_union plugin for the "Page" tab
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
-
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Course content max width - Overwrite the course content max width setting
 
   @javascript
   Scenario: Setting: back to top button - Enable "Back to top button"

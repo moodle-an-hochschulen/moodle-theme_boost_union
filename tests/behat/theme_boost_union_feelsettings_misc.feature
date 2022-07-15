@@ -1,5 +1,5 @@
-@theme @theme_boost_union @theme_boost_union_misc_settings
-Feature: Configuring the theme_boost_union plugin for the "Miscellaneous" tab
+@theme @theme_boost_union @theme_boost_union_feelsetttings @theme_boost_union_feelsetttings_misc
+Feature: Configuring the theme_boost_union plugin for the "Miscellaneous" tab on the "Feel" page
   In order to use the features
   As admin
   I need to be able to configure the theme Boost Union plugin

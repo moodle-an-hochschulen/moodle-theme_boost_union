@@ -1,5 +1,5 @@
-@theme @theme_boost_union @theme_boost_union_footer_settings
-Feature: Configuring the theme_boost_union plugin for the "Footer" tab
+@theme @theme_boost_union @theme_boost_union_contentsettings @theme_boost_union_contentsettings_footer
+Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "Content" page
   In order to use the features
   As admin
   I need to be able to configure the theme Boost Union plugin

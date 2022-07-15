@@ -1,5 +1,5 @@
-@theme @theme_boost_union @theme_boost_union_branding_settings
-Feature: Configuring the theme_boost_union plugin for the "Branding" tab
+@theme @theme_boost_union @theme_boost_union_looksettings @theme_boost_union_looksettings_branding
+Feature: Configuring the theme_boost_union plugin for the "Branding" tab on the "Look" page
   In order to use the features
   As admin
   I need to be able to configure the theme Boost Union plugin

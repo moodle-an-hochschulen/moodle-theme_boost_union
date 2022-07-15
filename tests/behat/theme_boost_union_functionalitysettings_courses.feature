@@ -1,5 +1,5 @@
-@theme @theme_boost_union @theme_boost_union_course_settings
-Feature: Configuring the theme_boost_union plugin for the "Course" tab
+@theme @theme_boost_union @theme_boost_union_functionalitysettings @theme_boost_union_functionalitysettings_courses
+Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "Functionality" page
   In order to use the features
   As admin
   I need to be able to configure the theme Boost Union plugin
