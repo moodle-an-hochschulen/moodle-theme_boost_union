@@ -19,9 +19,9 @@ Feature: Configuring the theme_boost_union plugin as manager
     And I log in as "manager"
     And I follow "Site administration"
     Then ".secondary-navigation li[data-key='appearance']" "css_element" should exist
-    And I navigate to "Appearance > Themes > Boost Union" in site administration
-    And "body#page-admin-setting-themesettingboost_union" "css_element" should exist
-    And I should see "Boost Union" in the "#region-main" "css_element"
+    And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
+    And "body#page-admin-setting-theme_boost_union_look" "css_element" should exist
+    And I should see "Look" in the "#region-main" "css_element"
     And I should see "General settings" in the "#region-main" "css_element"
 
   Scenario: Capabilities - Do not allow managers to configure Boost Union (countercheck)
