@@ -45,5 +45,8 @@ require_once(__DIR__ . '/includes/footnote.php');
 // Include the template content for the static pages.
 require_once(__DIR__ . '/includes/staticpages.php');
 
+// Include the template content for the info banners.
+require_once(__DIR__ . '/includes/infobanners.php');
+
 // Render login.mustache from boost_union.
 echo $OUTPUT->render_from_template('theme_boost_union/login', $templatecontext);

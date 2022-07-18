@@ -35,6 +35,7 @@
     Modifications compared to this template:
     * Include theme_boost_union/footnote template
     * Include theme_boost_union/footer template instead of theme_boost/footer
+    * Added the possibility to show info banners.
 }}
 {{> theme_boost/head }}
 
@@ -46,6 +47,7 @@
     {{{ output.standard_top_of_body_html }}}
 
     <div id="page" class="container-fluid pt-5 mt-0">
+        {{> theme_boost_union/infobanners }}
         <div id="page-content" class="row">
             <div id="region-main-box" class="col-12">
                 <section id="region-main" class="col-12 h-100" aria-label="{{#str}}content{{/str}}">
