@@ -59,6 +59,20 @@ $string['faviconsetting_desc'] = 'Here, you can upload a custom image (.ico or .
 $string['backgroundimagesheading'] = 'Background images';
 // ... Section: Brand colors.
 $string['brandcolorsheading'] = 'Brand colors';
+// ... Section: Bootstrap colors.
+$string['bootstrapcolorsheading'] = 'Bootstrap colors';
+// ... ... Setting: Bootstrap color for 'Success'.
+$string['bootstrapcolorsuccesssetting'] = 'Bootstrap color for "Success"';
+$string['bootstrapcolorsuccesssetting_desc'] = 'The Bootstrap color for "Success"';
+// ... ... Setting: Bootstrap color for 'Info'.
+$string['bootstrapcolorinfosetting'] = 'Bootstrap color for "Info"';
+$string['bootstrapcolorinfosetting_desc'] = 'The Bootstrap color for "Info"';
+// ... ... Setting: Bootstrap color for 'Warning'.
+$string['bootstrapcolorwarningsetting'] = 'Bootstrap color for "Warning"';
+$string['bootstrapcolorwarningsetting_desc'] = 'The Bootstrap color for "Warning"';
+// ... ... Setting: Bootstrap color for 'Danger'.
+$string['bootstrapcolordangersetting'] = 'Bootstrap color for "Danger"';
+$string['bootstrapcolordangersetting_desc'] = 'The Bootstrap color for "Danger"';
 // ... Section: Activity icon colors.
 $string['activityiconcolorsheading'] = 'Activity icon colors';
 // ... ... Setting: Activity icon color for 'Administration'.
