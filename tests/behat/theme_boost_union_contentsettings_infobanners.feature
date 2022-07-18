@@ -19,15 +19,17 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
 
   Scenario: Setting: Information banners - Display info banner no. 1 on all available pages
     Given the following config values are set as admin:
-      | config             | value                              | plugin            |
-      | infobanner1enabled | yes                                | theme_boost_union |
-      | infobanner1content | "This is a test content"           | theme_boost_union |
-      | infobanner1pages   | mydashboard,frontpage,course,login | theme_boost_union |
-      | infobanner1mode    | perp                               | theme_boost_union |
+      | config             | value                                        | plugin            |
+      | infobanner1enabled | yes                                          | theme_boost_union |
+      | infobanner1content | "This is a test content"                     | theme_boost_union |
+      | infobanner1pages   | mydashboard,mycourses,frontpage,course,login | theme_boost_union |
+      | infobanner1mode    | perp                                         | theme_boost_union |
     When I log in as "teacher1"
     And I am on site homepage
     Then I should see "This is a test content" in the "#themeboostunioninfobanner1" "css_element"
     And I follow "Dashboard"
+    Then I should see "This is a test content" in the "#themeboostunioninfobanner1" "css_element"
+    And I follow "My courses"
     Then I should see "This is a test content" in the "#themeboostunioninfobanner1" "css_element"
     When I am on "Course 1" course homepage
     Then I should see "This is a test content" in the "#themeboostunioninfobanner1" "css_element"

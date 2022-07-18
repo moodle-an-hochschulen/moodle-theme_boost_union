@@ -482,6 +482,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             // Don't use string lazy loading (= false) because the string will be directly used and would produce a
             // PHP warning otherwise.
                 THEME_BOOST_UNION_SETTING_INFOBANNERPAGES_MY => get_string('myhome', 'core', null, false),
+                THEME_BOOST_UNION_SETTING_INFOBANNERPAGES_MYCOURSES => get_string('mycourses', 'core', null, false),
                 THEME_BOOST_UNION_SETTING_INFOBANNERPAGES_SITEHOME => get_string('sitehome', 'core', null, false),
                 THEME_BOOST_UNION_SETTING_INFOBANNERPAGES_COURSE => get_string('course', 'core', null, false),
                 THEME_BOOST_UNION_SETTING_INFOBANNERPAGES_LOGIN =>
