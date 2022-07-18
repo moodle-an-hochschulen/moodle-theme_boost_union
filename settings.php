@@ -251,6 +251,44 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Create Bootstrap colors heading.
+        $name = 'theme_boost_union/bootstrapcolorsheading';
+        $title = get_string('bootstrapcolorsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Bootstrap color for 'success'.
+        $name = 'theme_boost_union/bootstrapcolorsuccess';
+        $title = get_string('bootstrapcolorsuccesssetting', 'theme_boost_union', null, true);
+        $description = get_string('bootstrapcolorsuccesssetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Bootstrap color for 'info'.
+        $name = 'theme_boost_union/bootstrapcolorinfo';
+        $title = get_string('bootstrapcolorinfosetting', 'theme_boost_union', null, true);
+        $description = get_string('bootstrapcolorinfosetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Bootstrap color for 'warning'.
+        $name = 'theme_boost_union/bootstrapcolorwarning';
+        $title = get_string('bootstrapcolorwarningsetting', 'theme_boost_union', null, true);
+        $description = get_string('bootstrapcolorwarningsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Bootstrap color for 'danger'.
+        $name = 'theme_boost_union/bootstrapcolordanger';
+        $title = get_string('bootstrapcolordangersetting', 'theme_boost_union', null, true);
+        $description = get_string('bootstrapcolordangersetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Create activity icon colors heading.
         $name = 'theme_boost_union/activityiconcolorsheading';
         $title = get_string('activityiconcolorsheading', 'theme_boost_union', null, true);

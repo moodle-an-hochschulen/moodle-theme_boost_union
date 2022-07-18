@@ -35,6 +35,18 @@ Feature: Configuring the theme_boost_union plugin for the "Branding" tab on the 
     And "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/favicon')][contains(@href, 'favicon.ico')]" "xpath_element" should not exist
 
   # Unfortunately, this can't be tested with Behat yet
+  # Scenario: Setting: Bootstrap color for "Success" - Setting the color
+
+  # Unfortunately, this can't be tested with Behat yet
+  # Scenario: Setting: Bootstrap color for "Info" - Setting the color
+
+  # Unfortunately, this can't be tested with Behat yet
+  # Scenario: Setting: Bootstrap color for "Warning" - Setting the color
+
+  # Unfortunately, this can't be tested with Behat yet
+  # Scenario: Setting: Bootstrap color for "Danger" - Setting the color
+
+  # Unfortunately, this can't be tested with Behat yet
   # Scenario: Setting: Activity icon color for "Administration" - Setting the color
 
   # Unfortunately, this can't be tested with Behat yet

@@ -85,6 +85,10 @@ function theme_boost_union_get_pre_scss($theme) {
     $configurable = [
         // Config key => [variableName, ...].
         'brandcolor' => ['primary'],
+        'bootstrapcolorsuccess' => ['success'],
+        'bootstrapcolorinfo' => ['info'],
+        'bootstrapcolorwarning' => ['warning'],
+        'bootstrapcolordanger' => ['danger'],
     ];
 
     // Prepend variables first.
