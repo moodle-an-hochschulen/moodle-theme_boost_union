@@ -105,7 +105,9 @@ $string['navigationheading'] = 'Navigation';
 $string['backtotop'] = 'Back to top';
 $string['backtotopbuttonsetting'] = 'Back to top button';
 $string['backtotopbuttonsetting_desc'] = 'With this setting a back to top button will appear in the bottom right corner of the page as soon as the user scrolls down the page. A button like this existed already on Boost in Moodle Core until Moodle 3.11, but was removed in 4.0. With Boost Union, you can bring it back.';
-
+// Settings: Dark navbar implementation.
+$string['darknavbarsetting'] = 'Dark navbar';
+$string['darknavbarsetting_desc'] = 'By checking this setting you can invert the default light navbar to a dark one with white links.';
 // Settings: Blocks tab.
 $string['blockstab'] = 'Blocks';
 // ... Section: General blocks.

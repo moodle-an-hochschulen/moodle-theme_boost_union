@@ -46,3 +46,15 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And I press "Purge all caches"
     And I am on "Course 1" course homepage
     Then "#back-to-top" "css_element" should not exist
+
+  Scenario: Setting: Dark navbar - Enable "Back to top button" (countercheck)
+    Given the following config values are set as admin:
+      | config          | value | plugin            |
+      | darknavbar      | yes   | theme_boost_union |
+    When I log in as "admin"
+    And I navigate to "Development > Purge caches" in site administration
+    And I press "Purge all caches"
+    And the top navigation bar has black as background with all links in white.
+    And the active link greyish in color.
+    When I hover  over the links their background is white while text is in black.
+
