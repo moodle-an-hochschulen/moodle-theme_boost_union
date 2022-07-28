@@ -383,6 +383,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Setting: Darknavbar Feature
+        $name = 'theme_boost_union/darknavbar';
+        $title = get_string('darknavbarsetting', 'theme_boost_union', null, true);
+        $description = get_string('darknavbarsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcheckbox($name, $title, $description, 'no', 'yes', 'no' );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        
         // Add tab to settings page.
         $page->add($tab);
 

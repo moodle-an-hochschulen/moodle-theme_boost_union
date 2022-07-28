@@ -110,6 +110,9 @@ $string['scrollspy'] = 'Scroll-spy';
 $string['scrollspysetting'] = 'Scroll-spy';
 $string['scrollspysetting_desc'] = 'Remember position on document when switching between editing and non-editing mode.';
 
+// Settings: Dark navbar implementation.
+$string['darknavbarsetting'] = 'Dark navbar';
+$string['darknavbarsetting_desc'] = 'By checking this setting you can invert the default light navbar to a dark one with white links.';
 // Settings: Blocks tab.
 $string['blockstab'] = 'Blocks';
 // ... Section: General blocks.
