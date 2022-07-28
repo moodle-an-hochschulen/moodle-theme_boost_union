@@ -57,6 +57,11 @@ This setting is already available in the Moodle core theme Boost. For more infor
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
+#### Background image
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+Please note: This will not override the setting "theme_boost_campus | loginbackgroundimage" which means that the pictures uploaded to the login page background will be displayed anyway.
+
 #### Tab "Advanced settings"
 
 In this tab there are the following settings:
@@ -96,10 +101,30 @@ Here, you can upload a custom image (.ico or .png format) that the browser will 
 ###### Background image
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+Please note: This will not override the setting "theme_boost_campus | loginbackgroundimage" which means that the pictures uploaded to the login page background will be displayed anyway.
 
-###### Login background image
+
+#### Login Page
+
+##### Login page background images
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+In this setting you can add up to 25 files as a background image for the login page. One of these images will be picked randomly and delivered when the user visits the login page.
+
+Please note: These images will *not* be rendered on small screens. We prevent the loading of the images for several reasons:
+* The login field takes most of the space on small screens, so the background image is hidden behind it and therefore it is not really needed there.
+* Smalls screens indicate that the user is visiting the page with a mobile device. Not loading the background image in this cases will also save data traffic for the user.
+
+##### Display text for login background images
+
+With this optional setting you can add text, e.g. a copyright notice to your uploaded background images.
+Each line consists of the file identifier (the file name) and the text that should be displayed, separated by a pipe character. Each declaration needs to be written in a new line.
+
+For example:
+``background-image-1.jpg|Copyright: CC0``
+
+You can declare texts for a arbitrary amount of your uploaded background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.
 
 ##### Brand colors
 

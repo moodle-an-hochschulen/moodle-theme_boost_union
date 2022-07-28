@@ -4,6 +4,8 @@ moodle-theme_boost_union
 Changes
 -------
 
+* 2022-09-28 - Add feature "login background image with text", solves #36
+
 ### v4.0-r2
 
 * 2022-09-27 - Improvement: Align the fallback CSS file with theme_boost.

@@ -48,4 +48,35 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return $this->image_url('favicon', 'theme');
         }
     }
+
+    /**
+     * Override to add additional class for the random login image to the body.
+     *
+     * Returns HTML attributes to use within the body tag. This includes an ID and classes.
+     *
+     * KIZ MODIFICATION: This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * @since Moodle 2.5.1 2.6
+     * @param string|array $additionalclasses Any additional classes to give the body tag,
+     * @return string
+     */
+    public function body_attributes($additionalclasses = array()) {
+        global $CFG;
+        require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+
+        if (!is_array($additionalclasses)) {
+            $additionalclasses = explode(' ', $additionalclasses);
+        }
+
+        // MODIFICATION START.
+        // Only add classes for the login page.
+        if ($this->page->bodyid == 'page-login-index') {
+            $additionalclasses[] = 'loginbackgroundimage';
+            // Generating a random class for displaying a random image for the login page.
+            $additionalclasses[] = theme_boost_union_get_random_loginbackgroundimage_class();
+        }
+        // MODIFICATION END.
+
+        return ' id="'. $this->body_id().'" class="'.$this->body_css_classes($additionalclasses).'"';
+    }
 }

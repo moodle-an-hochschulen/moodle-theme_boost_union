@@ -75,6 +75,9 @@ function theme_boost_union_get_main_scss_content($theme) {
  */
 function theme_boost_union_get_pre_scss($theme) {
     global $CFG;
+    // MODIFICATION START.
+    require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+    // MODIFICATION END.
 
     $scss = '';
 
@@ -135,6 +138,10 @@ function theme_boost_union_get_pre_scss($theme) {
         $activityiconscss .= ');';
         $scss .= $activityiconscss."\n";
     }
+
+    // MODIFICATION START: Add login background images that are uploaded to the setting 'loginbackgroundimage' to CSS.
+    $scss .= theme_boost_union_get_loginbackgroundimage_scss();
+    // MODIFICATION END.
 
     // Prepend pre-scss.
     if (!empty($theme->settings->scsspre)) {

@@ -91,3 +91,169 @@
     margin-left: 15px;
     margin-right: 15px;
 }
+
+/*=======================================
+ * Settings: Information banners.
+ ======================================*/
+
+/* Remove margin after last paragraph for a nicer look. */
+.themeboostunioninfobanner p:last-child {
+    margin-bottom: 0;
+}
+
+/*------------------------------------
+  Login page
+  -------------------------------------*/
+
+body.pagelayout-login.loginbackgroundimage #page {
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+/* Add media breakpoint to only load images on screens with a medium size and up.
+ * Check if variable exists to only add code to images that were uploaded.
+ * Note: Building this code with a @for loop did not work. */
+@include media-breakpoint-up(md) {
+    @if variable-exists(loginbackgroundimage1) {
+        body.pagelayout-login.loginbackgroundimage1 #page {
+            background-image: url($loginbackgroundimage1);
+        }
+    }
+    @if variable-exists(loginbackgroundimage2) {
+        body.pagelayout-login.loginbackgroundimage2 #page {
+            background-image: url($loginbackgroundimage2);
+        }
+    }
+    @if variable-exists(loginbackgroundimage3) {
+        body.pagelayout-login.loginbackgroundimage3 #page {
+            background-image: url($loginbackgroundimage3);
+        }
+    }
+    @if variable-exists(loginbackgroundimage4) {
+        body.pagelayout-login.loginbackgroundimage4 #page {
+            background-image: url($loginbackgroundimage4);
+        }
+    }
+    @if variable-exists(loginbackgroundimage5) {
+        body.pagelayout-login.loginbackgroundimage5 #page {
+            background-image: url($loginbackgroundimage5);
+        }
+    }
+    @if variable-exists(loginbackgroundimage6) {
+        body.pagelayout-login.loginbackgroundimage6 #page {
+            background-image: url($loginbackgroundimage6);
+        }
+    }
+    @if variable-exists(loginbackgroundimage7) {
+        body.pagelayout-login.loginbackgroundimage7 #page {
+            background-image: url($loginbackgroundimage7);
+        }
+    }
+    @if variable-exists(loginbackgroundimage8) {
+        body.pagelayout-login.loginbackgroundimage8 #page {
+            background-image: url($loginbackgroundimage8);
+        }
+    }
+    @if variable-exists(loginbackgroundimage9) {
+        body.pagelayout-login.loginbackgroundimage9 #page {
+            background-image: url($loginbackgroundimage9);
+        }
+    }
+    @if variable-exists(loginbackgroundimage10) {
+        body.pagelayout-login.loginbackgroundimage10 #page {
+            background-image: url($loginbackgroundimage10);
+        }
+    }
+    @if variable-exists(loginbackgroundimage11) {
+        body.pagelayout-login.loginbackgroundimage11 #page {
+            background-image: url($loginbackgroundimage11);
+        }
+    }
+    @if variable-exists(loginbackgroundimage12) {
+        body.pagelayout-login.loginbackgroundimage12 #page {
+            background-image: url($loginbackgroundimage12);
+        }
+    }
+    @if variable-exists(loginbackgroundimage13) {
+        body.pagelayout-login.loginbackgroundimage13 #page {
+            background-image: url($loginbackgroundimage13);
+        }
+    }
+    @if variable-exists(loginbackgroundimage14) {
+        body.pagelayout-login.loginbackgroundimage14 #page {
+            background-image: url($loginbackgroundimage14);
+        }
+    }
+    @if variable-exists(loginbackgroundimage15) {
+        body.pagelayout-login.loginbackgroundimage15 #page {
+            background-image: url($loginbackgroundimage15);
+        }
+    }
+    @if variable-exists(loginbackgroundimage16) {
+        body.pagelayout-login.loginbackgroundimage16 #page {
+            background-image: url($loginbackgroundimage16);
+        }
+    }
+    @if variable-exists(loginbackgroundimage17) {
+        body.pagelayout-login.loginbackgroundimage17 #page {
+            background-image: url($loginbackgroundimage17);
+        }
+    }
+    @if variable-exists(loginbackgroundimage18) {
+        body.pagelayout-login.loginbackgroundimage18 #page {
+            background-image: url($loginbackgroundimage18);
+        }
+    }
+    @if variable-exists(loginbackgroundimage19) {
+        body.pagelayout-login.loginbackgroundimage19 #page {
+            background-image: url($loginbackgroundimage19);
+        }
+    }
+    @if variable-exists(loginbackgroundimage20) {
+        body.pagelayout-login.loginbackgroundimage20 #page {
+            background-image: url($loginbackgroundimage20);
+        }
+    }
+    @if variable-exists(loginbackgroundimage21) {
+        body.pagelayout-login.loginbackgroundimage21 #page {
+            background-image: url($loginbackgroundimage21);
+        }
+    }
+    @if variable-exists(loginbackgroundimage22) {
+        body.pagelayout-login.loginbackgroundimage22 #page {
+            background-image: url($loginbackgroundimage22);
+        }
+    }
+    @if variable-exists(loginbackgroundimage23) {
+        body.pagelayout-login.loginbackgroundimage23 #page {
+            background-image: url($loginbackgroundimage23);
+        }
+    }
+    @if variable-exists(loginbackgroundimage24) {
+        body.pagelayout-login.loginbackgroundimage24 #page {
+            background-image: url($loginbackgroundimage24);
+        }
+    }
+    @if variable-exists(loginbackgroundimage25) {
+        body.pagelayout-login.loginbackgroundimage25 #page {
+            background-image: url($loginbackgroundimage25);
+        }
+    }
+}
+
+/* Design for the text that can be added to the background images of the login page. */
+#loginbackgroundimagetext span {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, .125);
+}
+/* This will only be needed if the setting "loginform" is checked */
+@if variable-exists(loginform) {
+    @if $loginform == 'yes' {
+        /* Adjust the design for the loginbackgroundimagetext. */
+        #loginbackgroundimagetext span {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 3px;
+        }
+    }
+}
