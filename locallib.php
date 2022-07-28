@@ -456,3 +456,141 @@ function theme_boost_union_infobanner_reset_visibility($no) {
         return false;
     }
 }
+
+/**
+ * Get the random number for displaying the background image on the login page randomly.
+ *
+ * @return int|null
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_boost_union_get_random_loginbackgroundimage_number() {
+
+    // Static variable.
+    static $number = null;
+
+    if ($number == null) {
+        // Get all files for loginbackgroundimages.
+        $files = theme_boost_union_get_loginbackgroundimage_files();
+
+        // Get count of array elements.
+        $filecount = count($files);
+
+        // We only return a number if images are uploaded to the loginbackgroundimage file area.
+        if ($filecount > 0) {
+            // Generate random number.
+            $number = rand(1, $filecount);
+        }
+    }
+
+    return $number;
+}
+
+/**
+ * Get a random class for body tag for the background image of the login page.
+ *
+ * @return string
+ */
+function theme_boost_union_get_random_loginbackgroundimage_class() {
+    // Get the static random number.
+    $number = theme_boost_union_get_random_loginbackgroundimage_number();
+
+    // Only create the class name with the random number if there is a number (=files uploaded to the file area).
+    if ($number != null) {
+        return "loginbackgroundimage" . $number;
+    } else {
+        return "";
+    }
+}
+
+/**
+ * Return the files from the loginbackgroundimage file area.
+ * This function always loads the files from the filearea that is not really performant.
+ * However, we accept this at the moment as it is only invoked on the login page.
+ *
+ * @return array|null
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_boost_union_get_loginbackgroundimage_files() {
+
+    // Static variable to remember the files for subsequent calls of this function.
+    static $files = null;
+
+    if ($files == null) {
+        // Get the system context.
+        $systemcontext = \context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get all files from filearea.
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'loginbackgroundimage',
+                false, 'itemid', false);
+    }
+
+    return $files;
+}
+
+/**
+ * Add background images from setting 'loginbackgroundimage' to SCSS.
+ *
+ * @return string
+ */
+function theme_boost_union_get_loginbackgroundimage_scss() {
+    $count = 0;
+    $scss = '';
+
+    // Get all files from filearea.
+    $files = theme_boost_union_get_loginbackgroundimage_files();
+
+    // Add URL of uploaded images to eviqualent class.
+    foreach ($files as $file) {
+        $count++;
+        // Get url from file.
+        $url = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+        // Add this url to the body class loginbackgroundimage[n] as a background image.
+        $scss .= '$loginbackgroundimage' . $count.': "' . $url . '";';
+    }
+
+    file_put_contents('/var/tmp/moodle.log', date("Y-m-d H:i:s").' scss: '.serialize($scss)."\n", FILE_APPEND);
+    return $scss;
+}
+/**
+ * Get the text that should be displayed for the randomly displayed background image on the login page.
+ *
+ * @return string
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_boost_union_get_loginbackgroundimage_text() {
+    // Get the random number.
+    $number = theme_boost_union_get_random_loginbackgroundimage_number();
+
+    // Only search for the text if there's a background image.
+    if ($number != null) {
+
+        // Get the files from the filearea loginbackgroundimage.
+        $files = theme_boost_union_get_loginbackgroundimage_files();
+        // Get the file for the selected random number.
+        $file = array_slice($files, ($number - 1), 1, false);
+        // Get the filename.
+        $filename = array_pop($file)->get_filename();
+
+        // Get the config for loginbackgroundimagetext and make array out of the lines.
+        $lines = explode("\n", get_config('theme_boost_union', 'loginbackgroundimagetext'));
+
+        // Proceed the lines.
+        foreach ($lines as $line) {
+            $settings = explode("|", $line);
+            // Compare the filenames for a match and return the text that belongs to the randomly selected image.
+            if (strcmp($filename, $settings[0]) == 0) {
+                return format_string($settings[1]);
+                break;
+            }
+        }
+    } else {
+        return "";
+    }
+}

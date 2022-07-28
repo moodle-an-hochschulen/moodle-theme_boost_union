@@ -57,6 +57,14 @@ $string['faviconsetting'] = 'Favicon';
 $string['faviconsetting_desc'] = 'Here, you can upload a custom image (.ico or .png format) that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.';
 // ... Section: Background images.
 $string['backgroundimagesheading'] = 'Background images';
+$string['loginbackgroundimage'] = 'Login page background images';
+$string['loginbackgroundimage_desc'] = 'Images uploaded in this setting will be randomly displayed on the login page as background images.';
+$string['loginbackgroundimagetextsetting'] = 'Display text for login background images';
+$string['loginbackgroundimagetextsetting_desc'] = 'With this optional setting you can add text, e.g. a copyright notice to your uploaded background images.<br/>
+Each line consists of the file identifier (the file name) and the text that should be displayed, separated by a pipe character. Each declaration needs to be written in a new line. <br/>
+For example:<br/>
+background-image-1.jpg|Copyright: CC0<br/>
+You can declare texts for a arbitrary amount of your uploaded background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.';
 // ... Section: Brand colors.
 $string['brandcolorsheading'] = 'Brand colors';
 // ... Section: Activity icon colors.
