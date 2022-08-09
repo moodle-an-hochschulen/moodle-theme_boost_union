@@ -1,5 +1,5 @@
 /*=======================================
- * Settings: Page.
+ * Settings: Feel -> Navigation.
  ======================================*/
 
 /*---------------------------------------
@@ -35,7 +35,17 @@
 
 
 /*=======================================
- * Settings: Course.
+ * Settings: Content -> Info banner.
+ ======================================*/
+
+/* Remove margin after last paragraph for a nicer look. */
+.themeboostunioninfobanner p:last-child {
+    margin-bottom: 0;
+}
+
+
+/*=======================================
+ * Settings: Functionality -> Courses.
  ======================================*/
 
 /*---------------------------------------
@@ -48,14 +58,4 @@
 .course-hint-switchedrole {
     margin-left: 15px;
     margin-right: 15px;
-}
-
-
-/*=======================================
- * Settings: Information banners.
- ======================================*/
-
-/* Remove margin after last paragraph for a nicer look. */
-.themeboostunioninfobanner p:last-child {
-    margin-bottom: 0;
 }
