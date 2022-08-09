@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.0-r1
 
 * 2022-07-18 - Feature: Bootstrap colors, solves #35
 * 2022-07-15 - Feature: Information banners (base functionality), helps to resolve #4.
