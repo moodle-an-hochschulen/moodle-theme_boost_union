@@ -35,6 +35,38 @@
 
 
 /*=======================================
+ * Settings: Content -> Footnote.
+ ======================================*/
+
+/* Add horizontal margin to align the footnote with the main page content. */
+#footnote {
+    /* On larger screens. */
+    @include media-breakpoint-up(md) {
+        margin-left: calc(15px + .5rem);
+        margin-right: calc(15px + .5rem);
+    }
+    /* And on smaller screens. */
+    @include media-breakpoint-down(sm) {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    /* And on really small screens, a left padding is added as well as the footer links appear then instead of the
+       footer icons and everything should align well. */
+    @include media-breakpoint-down(sm) {
+        padding-left: 1rem;
+    }
+}
+/* On the login page, the footnote does not need a border-top as the login page has a grey background already.
+   Only on really small screens, the border top is helpful there. */
+@include media-breakpoint-up(sm) {
+    #page-login-index #footnote {
+        /* stylelint-disable-next-line declaration-no-important */
+        border-top: none !important;
+    }
+}
+
+
+/*=======================================
  * Settings: Content -> Info banner.
  ======================================*/
 
