@@ -85,14 +85,11 @@ function theme_boost_union_get_pre_scss($theme) {
     $configurable = [
         // Config key => [variableName, ...].
         'brandcolor' => ['primary'],
-<<<<<<< HEAD
         'bootstrapcolorsuccess' => ['success'],
         'bootstrapcolorinfo' => ['info'],
         'bootstrapcolorwarning' => ['warning'],
         'bootstrapcolordanger' => ['danger'],
-=======
         'darknavbar' => ['darknavbar'],
->>>>>>> a1d92a1 (Feature Darknavbar implementation)
     ];
 
     // Prepend variables first.
