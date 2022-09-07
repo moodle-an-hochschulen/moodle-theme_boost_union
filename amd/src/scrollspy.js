@@ -25,11 +25,11 @@
 /**
  * Runs once at initial load, and once at editmode-switch toggle.
  * Incase of initial load, checks sessionStorage whether a position was set and jumps to the appropriate position.
- * 
+ *
  * Incase of a click on the switch, iterates over central elements (selector .section.main), determines element
  * with minimal distance between pixel-toprow of view and pixel-toprow of the element.
  * Writes element ID + distance of view from element into session storage.
- * 
+ *
  * Saving a reference point + relative distance grants leeway for varying page elements.
  * (See original implementation: https://raw.githubusercontent.com/dbnschools/moodle-theme_fordson/master/javascript/scrollspy.js)
  */
@@ -84,8 +84,8 @@ const initScrollSpy = () => {
  * Ensures the passed function will be called after the DOM is ready/loaded:
  * Incase DOM is fully loaded when JS is called, call within next tick.
  * Otherwise sets an eventlistener for DOMEventLoaded
- * 
- * @param {*} callback 
+ *
+ * @param {*} callback
  */
 const docReady = (callback) => {
     if (document.readyState === "complete" || document.readyState === "interactive") {

@@ -24,6 +24,8 @@
 
 require_once(__DIR__.'/../../../../lib/behat/behat_base.php');
 
+use Behat\Behat\Tester\Exception\PendingException as PendingException;
+
 /**
  * Class behat_theme_boost_union
  *
@@ -59,5 +61,49 @@ class behat_theme_boost_union extends behat_base {
      */
     public function i_am_on_imprint_page() {
         $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/imprint.php']);
+    }
+
+    /**
+     * Toggle the edit mode
+     *
+     * @When /^I toggle editing mode$/
+     */
+    public function i_toggle_edit_mode() {
+        throw new PendingException();
+    }
+
+    /**
+     * Page reload
+     *
+     * @Then /^The page will be reloaded$/
+     */
+    public function the_page_will_be_reloaded() {
+        throw new PendingException();
+    }
+
+    /**
+     * Page view scrolling
+     *
+     * @Then /^The page view will scroll back to$/
+     *
+     * @throws PendingException
+     * @param int $arg1 An x pixel dimensinovalue
+     * @param int $arg2 An y pixel dimension value
+     */
+    public function the_page_view_will_scroll_back_to($arg1, $arg2) {
+        throw new PendingException();
+    }
+
+    /**
+     * Page view stops
+     *
+     * @Then /^The page view will remain at$/
+     *
+     * @throws PendingException
+     * @param int $arg1 An x pixel dimensinovalue
+     * @param int $arg2 An y pixel dimension value
+     */
+    public function the_page_view_will_remain_at($arg1, $arg2) {
+        throw new PendingException();
     }
 }
