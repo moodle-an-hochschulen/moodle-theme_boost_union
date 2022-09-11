@@ -92,6 +92,9 @@ require_once(__DIR__ . '/includes/courserelatedhints.php');
 // Include the content for the back to top button.
 require_once(__DIR__ . '/includes/backtotopbutton.php');
 
+// Include the content for the scrollspy.
+require_once(__DIR__ . '/includes/scrollspy.php');
+
 // Include the template content for the footnote.
 require_once(__DIR__ . '/includes/footnote.php');
 

@@ -46,3 +46,31 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And I press "Purge all caches"
     And I am on "Course 1" course homepage
     Then "#back-to-top" "css_element" should not exist
+
+  @javascript
+  Scenario: Setting: Scrollspy - Enable "Scrollspy"
+    Given the following config values are set as admin:
+      | config          | value | plugin             |
+      | scrollspy       | yes   | theme_boost_union  |
+    When I log in as "admin"
+    And I navigate to "Development > Purge caches" in site administration
+    And I press "Purge all caches"
+    And I am on "Course 1" course homepage
+    And I scroll page to x "0" y "250"
+    And I toggle editing mode
+    Then The page will be reloaded
+    And The page view will scroll back to x "0" y "250"
+
+  @javascript
+  Scenario: Setting: Scrollspy - Disable "Scrollspy" (countercheck)
+    Given the following config values are set as admin:
+      | config          | value | plugin             |
+      | scrollspy       | no    | theme_boost_union  |
+    When I log in as "admin"
+    And I navigate to "Development > Purge caches" in site administration
+    And I press "Purge all caches"
+    And I am on "Course 1" course homepage
+    And I scroll page to x "0" y "250"
+    And I toggle editing mode
+    Then The page will be reloaded
+    And The page view will remain at x "0" y "0"
