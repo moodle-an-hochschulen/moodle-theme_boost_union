@@ -14,9 +14,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - JS code back to top button
+ * Theme Boost Union - JS code infobanner
  *
- * @module     theme_boost_union/backtotopbutton
+ * @module     theme_boost_union/infobanner
  * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
  * @copyright  based on code from theme_boost_campus by Kathrin Osswald.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
