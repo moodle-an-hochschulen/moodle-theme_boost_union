@@ -57,9 +57,13 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And I press "Purge all caches"
     And I am on "Course 1" course homepage
     And I scroll page to x "0" y "250"
-    And I toggle editing mode
-    Then The page will be reloaded
-    And The page view will scroll back to x "0" y "250"
+    And I turn editing mode on
+    # The rest of this scenario isn't tested yet as the necessary steps still have to be implemented:
+    # Then The page will be reloaded
+    # And The page view will scroll back to x "0" y "250"
+    # And I turn editing mode off
+    # Then The page will be reloaded
+    # And The page view will scroll back to x "0" y "250"
 
   @javascript
   Scenario: Setting: Scrollspy - Disable "Scrollspy" (countercheck)
@@ -71,6 +75,11 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And I press "Purge all caches"
     And I am on "Course 1" course homepage
     And I scroll page to x "0" y "250"
-    And I toggle editing mode
-    Then The page will be reloaded
-    And The page view will remain at x "0" y "0"
+    And I turn editing mode on
+    # The rest of this scenario isn't tested yet as the necessary steps still have to be implemented:
+    # Then The page will be reloaded
+    # And The page view will remain at x "0" y "0"
+    # And I turn editing mode off
+    # Then The page will be reloaded
+    # And The page view will scroll back to x "0" y "250"
+    # And The page view will remain at x "0" y "0"

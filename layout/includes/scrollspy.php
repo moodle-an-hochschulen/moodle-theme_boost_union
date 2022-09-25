@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - back to top button include.
+ * Theme Boost Union - scrollspy include.
  *
  * @package   theme_boost_union
  * @copyright 2022 Josha Bartsch <bartsch@itc.rwth-aachen.de>
