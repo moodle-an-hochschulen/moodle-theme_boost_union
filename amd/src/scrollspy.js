@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - JS code back to top button
+ * Theme Boost Union - JS code scroll-spy
  *
  * @module     theme_boost_union/scrollspy
  * @copyright  2022 Josha Bartsch <bartsch@itc.rwth-aachen.de>
@@ -25,11 +25,11 @@
 /**
  * Runs once at initial load, and once at editmode-switch toggle.
  * Incase of initial load, checks sessionStorage whether a position was set and jumps to the appropriate position.
- * 
+ *
  * Incase of a click on the switch, iterates over central elements (selector .section.main), determines element
  * with minimal distance between pixel-toprow of view and pixel-toprow of the element.
  * Writes element ID + distance of view from element into session storage.
- * 
+ *
  * Saving a reference point + relative distance grants leeway for varying page elements.
  * (See original implementation: https://raw.githubusercontent.com/dbnschools/moodle-theme_fordson/master/javascript/scrollspy.js)
  */
@@ -39,44 +39,44 @@ const initScrollSpy = () => {
 
     editToggle.addEventListener('click', () => {
 
-        window.sessionStorage.setItem('edit_toggled', true);
+        window.sessionStorage.setItem('edittoggled', true);
 
-        let viewport_top = document.getElementById('page').scrollTop;
+        let viewporttop = document.getElementById('page').scrollTop;
         let closest = null;
-        let closest_offset = null;
+        let closestoffset = null;
 
         document.querySelectorAll('.section.main').forEach((node) => {
-            let this_offset = node.offsetTop;
+            let thisoffset = node.offsetTop;
 
             if (closest && closest.offsetTop) {
-                closest_offset = closest.offsetTop;
+                closestoffset = closest.offsetTop;
             }
-            if (closest === null || Math.abs(this_offset - viewport_top) < Math.abs(closest_offset - viewport_top)) {
+            if (closest === null || Math.abs(thisoffset - viewporttop) < Math.abs(closestoffset - viewporttop)) {
                 closest = node;
             }
         });
 
-        window.sessionStorage.setItem('closest_id', closest.id);
-        window.sessionStorage.setItem('closest_delta', viewport_top - closest.offsetTop);
+        window.sessionStorage.setItem('closestid', closest.id);
+        window.sessionStorage.setItem('closestdelta', viewporttop - closest.offsetTop);
     });
 
-    let edit_toggled = window.sessionStorage.getItem('edit_toggled');
+    let edittoggled = window.sessionStorage.getItem('edittoggled');
 
-    if (edit_toggled) {
+    if (edittoggled) {
 
-        let closest_id = window.sessionStorage.getItem('closest_id');
-        let closest_delta = window.sessionStorage.getItem('closest_delta');
+        let closestid = window.sessionStorage.getItem('closestid');
+        let closestdelta = window.sessionStorage.getItem('closestdelta');
 
-        if (closest_id && closest_delta) {
-            let closest = document.getElementById(closest_id);
-            let y = closest.offsetTop + parseInt(closest_delta);
+        if (closestid && closestdelta) {
+            let closest = document.getElementById(closestid);
+            let y = closest.offsetTop + parseInt(closestdelta);
 
             document.getElementById('page').scrollTo(0, y);
         }
 
-        window.sessionStorage.removeItem('edit_toggled');
-        window.sessionStorage.removeItem('closest_id');
-        window.sessionStorage.removeItem('closest_delta');
+        window.sessionStorage.removeItem('edittoggled');
+        window.sessionStorage.removeItem('closestid');
+        window.sessionStorage.removeItem('closestdelta');
     }
 };
 
@@ -84,8 +84,8 @@ const initScrollSpy = () => {
  * Ensures the passed function will be called after the DOM is ready/loaded:
  * Incase DOM is fully loaded when JS is called, call within next tick.
  * Otherwise sets an eventlistener for DOMEventLoaded
- * 
- * @param {*} callback 
+ *
+ * @param {*} callback
  */
 const docReady = (callback) => {
     if (document.readyState === "complete" || document.readyState === "interactive") {

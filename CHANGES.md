@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2022-09-07 - Feature: Scrollspy, solves #19
+
 ### v4.0-r1
 
 * 2022-07-18 - Feature: Bootstrap colors, solves #35

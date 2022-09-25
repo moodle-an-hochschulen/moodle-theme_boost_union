@@ -108,7 +108,7 @@ $string['backtotopbuttonsetting_desc'] = 'With this setting a back to top button
 // ... ... Setting: Scroll-spy
 $string['scrollspy'] = 'Scroll-spy';
 $string['scrollspysetting'] = 'Scroll-spy';
-$string['scrollspysetting_desc'] = 'Remember position on document when switching between editing and non-editing mode.';
+$string['scrollspysetting_desc'] = 'With this setting, upon toggling edit mode on and off, the scroll position at where the user was when performing the toggle is preserved.';
 
 // Settings: Blocks tab.
 $string['blockstab'] = 'Blocks';
