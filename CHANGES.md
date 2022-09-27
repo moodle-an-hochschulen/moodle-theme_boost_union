@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.0-r2
 
 * 2022-09-27 - Improvement: Align the fallback CSS file with theme_boost.
 * 2022-09-27 - Improvement: Align the theme's config.php even more with theme_boost. 
