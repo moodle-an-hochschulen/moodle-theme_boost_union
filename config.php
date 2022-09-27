@@ -36,5 +36,12 @@ $THEME->scss = function($theme) {
     return theme_boost_union_get_main_scss_content($theme);
 };
 $THEME->yuicssmodules = array();
+$THEME->requiredblocks = '';
 $THEME->usefallback = true;
 $THEME->haseditswitch = true;
+$THEME->usescourseindex = true;
+// By default, all boost theme do not need their titles displayed.
+$THEME->activityheaderconfig = [
+    'notitle' => true
+];
+

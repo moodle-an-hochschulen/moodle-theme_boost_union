@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2022-09-26 - Bugfix: Adopt config.php, solves #67 #82.
 * 2022-09-07 - Feature: Scrollspy, solves #19
 
 ### v4.0-r1
