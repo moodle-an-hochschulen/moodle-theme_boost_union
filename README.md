@@ -127,6 +127,10 @@ In this tab there are the following settings:
 
 With this setting a back to top button will appear in the bottom right corner of the page as soon as the user scrolls down the page. A button like this existed already on Boost in Moodle Core until Moodle 3.11, but was removed in 4.0. With Boost Union, you can bring it back.
 
+###### Scrollspy
+
+With this setting, upon toggling edit mode on and off, the scroll position at where the user was when performing the toggle is preserved.
+
 #### Tab "Blocks"
 
 In this tab there are the following settings:

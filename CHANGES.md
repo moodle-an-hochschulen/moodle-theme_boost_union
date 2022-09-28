@@ -4,6 +4,13 @@ moodle-theme_boost_union
 Changes
 -------
 
+### v4.0-r2
+
+* 2022-09-27 - Improvement: Align the fallback CSS file with theme_boost.
+* 2022-09-27 - Improvement: Align the theme's config.php even more with theme_boost. 
+* 2022-09-26 - Bugfix: Adopt config.php, solves #67 #82.
+* 2022-09-07 - Feature: Scrollspy, solves #19
+
 ### v4.0-r1
 
 * 2022-07-28 - Feature Dark navbar , solves #39.
