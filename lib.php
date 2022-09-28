@@ -89,6 +89,7 @@ function theme_boost_union_get_pre_scss($theme) {
         'bootstrapcolorinfo' => ['info'],
         'bootstrapcolorwarning' => ['warning'],
         'bootstrapcolordanger' => ['danger'],
+        'darknavbar' => ['darknavbar'],
     ];
 
     // Prepend variables first.

@@ -91,3 +91,50 @@
     margin-left: 15px;
     margin-right: 15px;
 }
+
+/*=======================================
+ * Settings: Information banners.
+ ======================================*/
+
+/* Remove margin after last paragraph for a nicer look. */
+.themeboostunioninfobanner p:last-child {
+    margin-bottom: 0;
+}
+/*---------------------------------------
+ * Setting: Dark navbar
+ --------------------------------------*/
+
+ @if variable-exists(darknavbar) {
+    @if $darknavbar == 'yes' {
+        .navbar {
+            .navbar-nav .nav-link .icon,
+            .navbar-nav .nav-link,
+            .usertext,
+            .dropdown-toggle,
+            .site-name,
+            .login,
+            .login a {
+                color: #fff;
+            }
+            .nav-link.active {
+                color: rgb(191, 201, 202);
+            }
+            .label .darkedit {
+                color: #fff;
+            }
+            .navbar-nav .nav-link:hover,
+            .usertext:hover,
+            .dropdown-toggle:hover,
+            .site-name:hover
+            .darkedit:hover {
+                color: rgb(0, 0, 0);
+            }
+            .editmode-switch-form {
+                color: #fff;
+            }
+            .navbar-brand {
+                color: #fff;
+            }
+        }
+    }
+}

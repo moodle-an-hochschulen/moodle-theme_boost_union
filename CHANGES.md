@@ -13,6 +13,7 @@ Changes
 
 ### v4.0-r1
 
+* 2022-07-28 - Feature Dark navbar , solves #39.
 * 2022-07-18 - Feature: Bootstrap colors, solves #35
 * 2022-07-15 - Feature: Information banners (base functionality), helps to resolve #4.
 * 2022-07-15 - Settings: Divide theme settings into multiple pages, solves #52

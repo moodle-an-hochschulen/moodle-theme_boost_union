@@ -110,6 +110,9 @@ $string['scrollspy'] = 'Scroll-spy';
 $string['scrollspysetting'] = 'Scroll-spy';
 $string['scrollspysetting_desc'] = 'With this setting, upon toggling edit mode on and off, the scroll position at where the user was when performing the toggle is preserved.';
 
+// Settings: Dark navbar implementation.
+$string['darknavbarsetting'] = 'Dark navbar';
+$string['darknavbarsetting_desc'] = 'By checking this setting you can invert the default light navbar to a dark one with white links.';
 // Settings: Blocks tab.
 $string['blockstab'] = 'Blocks';
 // ... Section: General blocks.

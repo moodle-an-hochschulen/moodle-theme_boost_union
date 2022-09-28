@@ -97,6 +97,13 @@ $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settin
 $header = $PAGE->activityheader;
 $headercontent = $header->export_for_template($renderer);
 
+// Setting 'darknavbar'.
+if (get_config('theme_boost_union', 'darknavbar') == 'yes') {
+    $darknavbar = true;
+} else {
+    $darknavbar = false;
+}
+
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
@@ -104,6 +111,7 @@ $templatecontext = [
     'hasblocks' => $hasblocks,
     'bodyattributes' => $bodyattributes,
     'courseindexopen' => $courseindexopen,
+    'darknavbar' => $darknavbar,
     'blockdraweropen' => $blockdraweropen,
     'courseindex' => $courseindex,
     'primarymoremenu' => $primarymenu['moremenu'],

@@ -83,3 +83,14 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     # Then The page will be reloaded
     # And The page view will scroll back to x "0" y "250"
     # And The page view will remain at x "0" y "0"
+    
+  @javascript  
+  Scenario: Setting: Dark navbar - Enable "Back to top button" (countercheck)
+    Given the following config values are set as admin:
+      | config          | value | plugin            |
+      | darknavbar      | yes   | theme_boost_union |
+    When I log in as "admin"
+    And I navigate to "Development > Purge caches" in site administration
+    And I press "Purge all caches"
+    Then the "class" attribute of "navbar" "css_element" should contain "bg-dark"
+
