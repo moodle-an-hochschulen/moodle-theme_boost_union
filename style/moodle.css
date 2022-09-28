@@ -13862,8 +13862,8 @@ body:not(.editing) .sitetopic ul.section {
     color: #6a737b; }
   .section .activity a.stealth,
   .section .activity a.stealth:hover {
-    color: #5babf2 !important;
-    /* stylelint-disable-line declaration-no-important */ }
+    /* stylelint-disable-line declaration-no-important */
+    color: #5babf2 !important; }
 
 .section .label .contentwithoutlink,
 .section .label .activityinstance {
