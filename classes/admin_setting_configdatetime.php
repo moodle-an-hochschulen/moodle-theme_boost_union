@@ -101,8 +101,7 @@ class admin_setting_configdatetime extends \admin_setting {
         for ($i = 1; $i <= 12; $i++) {
             $sel = ($i == $data['M'] ? ' selected="selected"' : '');
             $dateobj = \DateTime::createFromFormat('!m', $i);
-            $month = $dateobj->format('F');
-            $return .= '<option value="'.$i.'"'.$sel.'>'.$month.'</option>';
+            $return .= '<option value="'.$i.'"'.$sel.'>'.userdate($dateobj->getTimestamp(), '%B').'</option>';
         }
         $return .= '</select>';
 
@@ -116,7 +115,7 @@ class admin_setting_configdatetime extends \admin_setting {
         $return .= '<select id="'.$this->get_id().'h" name="'.$this->get_full_name().'[h]" class="custom-select mr-1">';
         for ($i = 0; $i < 24; $i++) {
             $sel = ($i == $data['h'] ? ' selected="selected"' : '');
-            $return .= '<option value="'.$i.'"'.$sel.'>'.$i.'</option>';
+            $return .= '<option value="'.$i.'"'.$sel.'>'.sprintf('%02d', $i).'</option>';
         }
         $return .= '</select>';
 
@@ -125,7 +124,7 @@ class admin_setting_configdatetime extends \admin_setting {
         $return .= '<select id="'.$this->get_id().'m" name="'.$this->get_full_name().'[m]" class="custom-select mr-2">';
         for ($i = 0; $i < 60; $i += 5) {
             $sel = ($i == $data['m'] ? ' selected="selected"' : '');
-            $return .= '<option value="'.$i.'"'.$sel.'>'.$i.'</option>';
+            $return .= '<option value="'.$i.'"'.$sel.'>'.sprintf('%02d', $i).'</option>';
         }
         $return .= '</select>';
 

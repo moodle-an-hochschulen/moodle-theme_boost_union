@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2022-09-30 - Improvement: Localize month names for time-controlled info banners, solves #75.
+
 ### v4.0-r2
 
 * 2022-09-27 - Improvement: Align the fallback CSS file with theme_boost.
