@@ -317,6 +317,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 
 * Bern University of Applied Sciences (BFH), Luca Bösch: Code, Peer Review, Ideating
 * lern.link GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
+* RWTH Aachen, Josha Bartsch: Code
 * University of Lübeck, Christian Wolters: Peer Review, Ideating
 * Zurich University of Applied Sciences (ZHAW): Funding
 
