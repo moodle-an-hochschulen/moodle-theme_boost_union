@@ -24,6 +24,7 @@
  * * Render theme_boost_union/drawers instead of theme_boost/drawers template
  * * Include course related hints
  * * Include back to top button
+ * * Include activity navigation
  *
  * @package   theme_boost_union
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
@@ -38,6 +39,12 @@ require_once($CFG->dirroot . '/course/lib.php');
 
 // Require own locallib.php.
 require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+
+// Add activity navigation if the feature is enabled.
+$activitynavigation = get_config('theme_boost_union', 'activitynavigation');
+if ($activitynavigation == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    $PAGE->theme->usescourseindex = false;
+}
 
 // Add block button in editing mode.
 $addblockbutton = $OUTPUT->addblockbutton();

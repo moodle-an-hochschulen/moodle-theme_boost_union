@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2022-10-12 - Feature: Configurable activity navigation, solves #100.
 * 2022-09-30 - Improvement: Localize month names for time-controlled info banners, solves #75.
 
 ### v4.0-r2

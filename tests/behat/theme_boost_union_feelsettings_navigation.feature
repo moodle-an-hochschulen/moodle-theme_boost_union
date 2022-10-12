@@ -83,3 +83,35 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     # Then The page will be reloaded
     # And The page view will scroll back to x "0" y "250"
     # And The page view will remain at x "0" y "0"
+
+  @javascript
+  Scenario: Setting: Activity navigation - Enable "Activity navigation"
+    Given the following config values are set as admin:
+      | config             | value | plugin            |
+      | activitynavigation | yes   | theme_boost_union |
+    And the following "activities" exist:
+      | activity | name    | course | idnumber |
+      | forum    | Forum 1 | C1     | forum1   |
+      | forum    | Forum 2 | C1     | forum2   |
+      | forum    | Forum 3 | C1     | forum3   |
+    Given I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    When I follow "Forum 2"
+    Then I should see "Forum 1" in the "#prev-activity-link" "css_element"
+    And I should see "Forum 3" in the "#next-activity-link" "css_element"
+
+  @javascript
+  Scenario: Setting: Activity navigation - Disable "Activity navigation" (countercheck)
+    Given the following config values are set as admin:
+      | config             | value | plugin            |
+      | activitynavigation | no    | theme_boost_union |
+    And the following "activities" exist:
+      | activity | name    | course | idnumber |
+      | forum    | Forum 1 | C1     | forum1   |
+      | forum    | Forum 2 | C1     | forum2   |
+      | forum    | Forum 3 | C1     | forum3   |
+    Given I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    When I follow "Forum 2"
+    Then "#prev-activity-link" "css_element" should not exist
+    And "#next-activity-link" "css_element" should not exist
