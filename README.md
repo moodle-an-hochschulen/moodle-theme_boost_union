@@ -131,6 +131,10 @@ With this setting a back to top button will appear in the bottom right corner of
 
 With this setting, upon toggling edit mode on and off, the scroll position at where the user was when performing the toggle is preserved.
 
+###### Activity navigation
+
+With this setting the elements to jump to the previous and next activity/resource as well as the pull down menu to jump to a distinct activity/resource become displayed. UI elements like this existed already on Boost in Moodle Core until Moodle 3.11, but were removed in 4.0. With Boost Union, you can bring them back.
+
 #### Tab "Blocks"
 
 In this tab there are the following settings:

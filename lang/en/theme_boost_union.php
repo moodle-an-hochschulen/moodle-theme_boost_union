@@ -109,6 +109,10 @@ $string['backtotopbuttonsetting_desc'] = 'With this setting a back to top button
 $string['scrollspy'] = 'Scroll-spy';
 $string['scrollspysetting'] = 'Scroll-spy';
 $string['scrollspysetting_desc'] = 'With this setting, upon toggling edit mode on and off, the scroll position at where the user was when performing the toggle is preserved.';
+// ... ... Setting: Activity navigation
+$string['activitynavigation'] = 'Activity navigation';
+$string['activitynavigationsetting'] = 'Activity navigation elements';
+$string['activitynavigationsetting_desc'] = 'With this setting the elements to jump to the previous and next activity/resource as well as the pull down menu to jump to a distinct activity/resource become displayed. UI elements like this existed already on Boost in Moodle Core until Moodle 3.11, but were removed in 4.0. With Boost Union, you can bring them back.';
 
 // Settings: Blocks tab.
 $string['blockstab'] = 'Blocks';
