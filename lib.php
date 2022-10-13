@@ -152,26 +152,19 @@ function theme_boost_union_get_pre_scss($theme) {
  */
 function theme_boost_union_get_extra_scss($theme) {
     $content = '';
-    $imageurl = $theme->setting_file_url('backgroundimage', 'backgroundimage');
 
-    // Sets the background image, and its settings.
-    if (!empty($imageurl)) {
-        $content .= '@media (min-width: 768px) {';
-        $content .= 'body { ';
-        $content .= "background-image: url('$imageurl'); background-size: cover;";
-        $content .= ' } }';
-    }
+    // You might think that this extra SCSS function is only called for the activated theme.
+    // However, due to the way how the theme_*_get_extra_scss callback functions are searched and called within Boost child theme
+    // hierarchy Boost Union not only gets the extra SCSS from this function here but only from theme_boost_get_extra_scss as well.
+    //
+    // There, the CSS snippets for the background image and the login background images are added already to the SCSS codebase.
+    // Additionally, the custom SCSS from $theme->settings->scss (which hits the SCSS settings from theme_boost_union even though
+    // the code is within theme_boost) is already added to the SCSS codebase as well.
+    //
+    // We have to accept this fact here and must not copy the code from theme_boost_get_extra_scss into this function.
+    // Instead, we must only add additionally CSS code which is based on any Boost Union-only functionality.
 
-    // Sets the login background image.
-    $loginbackgroundimageurl = $theme->setting_file_url('loginbackgroundimage', 'loginbackgroundimage');
-    if (!empty($loginbackgroundimageurl)) {
-        $content .= 'body.pagelayout-login #page { ';
-        $content .= "background-image: url('$loginbackgroundimageurl'); background-size: cover;";
-        $content .= ' }';
-    }
-
-    // Always return the background image with the scss when we have it.
-    return !empty($theme->settings->scss) ? $theme->settings->scss . ' ' . $content : $content;
+    return $content;
 }
 
 /**
