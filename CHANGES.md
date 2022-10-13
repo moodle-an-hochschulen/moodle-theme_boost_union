@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2022-10-12 - Settings: screenshot image for theme chooser solves #33.
+
 ### v4.0-r3
 
 * 2022-10-12 - Feature: Configurable activity navigation, solves #100.
