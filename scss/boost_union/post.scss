@@ -38,24 +38,74 @@
  * Settings: Content -> Footnote.
  ======================================*/
 
-/* Add horizontal margin to align the footnote with the main page content. */
-#footnote {
-    /* On larger screens. */
-    @include media-breakpoint-up(md) {
+/* The footnote styles are different on larger and smaller screens. */
+/* On larger screens. */
+@include media-breakpoint-up(md) {
+    /* If there is a background image configured. */
+    body.backgroundimage #footnote {
+        /* Add horizontal padding to align the footnote with the main page content.
+           The numbers are basically adopted from the main content areas of the Moodle page. */
+        padding-left: calc(15px + .5rem);
+        padding-right: calc(15px + .5rem);
+
+        /* Add white background color, border radius and a small bottom margin
+           to make the footnote work with background images. */
+        @include border-radius();
+        background-color: $white;
+        margin-bottom: 1rem;
+    }
+
+    /* If there isn't a background image configured. */
+    body:not(.backgroundimage) #footnote {
+        /* Add horizontal margin to align the footnote with the main page content.
+           The numbers are basically adopted from the main content areas of the Moodle page. */
         margin-left: calc(15px + .5rem);
         margin-right: calc(15px + .5rem);
-    }
-    /* And on smaller screens. */
-    @include media-breakpoint-down(sm) {
-        margin-left: 15px;
-        margin-right: 15px;
-    }
-    /* And on really small screens, a left padding is added as well as the footer links appear then instead of the
-       footer icons and everything should align well. */
-    @include media-breakpoint-down(sm) {
-        padding-left: 1rem;
+
+        /* Add top border. */
+        border-top: $border-width solid $border-color;
     }
 }
+
+
+/* And on smaller screens. */
+@include media-breakpoint-only(sm) {
+    #footnote {
+        /* On smaller screens, there isn't any background image, so there's no need for a white background. */
+
+        /* Add horizontal margin and padding to align the footnote with the main page content.
+           The numbers are adopted from the main content areas of the Moodle page.
+           Add another right padding as well to avoid that the content gets covered by the footer and back-to-top
+           buttons. */
+        margin-left: .5rem;
+        padding-left: 15px;
+        margin-right: .5rem;
+        padding-right: 51px; /* The underlying calculation is 15px + 36px. */
+
+        /* Add top border. */
+        border-top: $border-width solid $border-color;
+    }
+}
+
+/* And on really small screens. */
+@include media-breakpoint-down(xs) {
+    #footnote {
+        /* On really small screens, there isn't any background image, so there's no need for a white background. */
+
+        /* Add horizontal margin and padding to align the footnote with the main page content.
+           The numbers are adopted from the main content areas of the Moodle page.
+           Add another right padding as well to avoid that the content gets covered by the footer and back-to-top
+           buttons. */
+        margin-left: 15px;
+        padding-left: 1rem;
+        margin-right: 15px;
+        padding-right: calc(1rem + 36px);
+
+        /* Add top border. */
+        border-top: $border-width solid $border-color;
+    }
+}
+
 /* On the login page, the footnote does not need a border-top as the login page has a grey background already.
    Only on really small screens, the border top is helpful there. */
 @include media-breakpoint-up(sm) {

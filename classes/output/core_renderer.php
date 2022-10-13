@@ -48,4 +48,27 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return $this->image_url('favicon', 'theme');
         }
     }
+
+    /**
+     * Returns HTML attributes to use within the body tag. This includes an ID and classes.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * @since Moodle 2.5.1 2.6
+     * @param string|array $additionalclasses Any additional classes to give the body tag,
+     * @return string
+     */
+    public function body_attributes($additionalclasses = array()) {
+        if (!is_array($additionalclasses)) {
+            $additionalclasses = explode(' ', $additionalclasses);
+        }
+
+        // If the page has a background image, add a class to the body attributes.
+        if (!empty(get_config('theme_boost_union', 'backgroundimage'))) {
+            $additionalclasses[] = 'backgroundimage';
+        }
+
+        return ' id="'. $this->body_id().'" class="'.$this->body_css_classes($additionalclasses).'"';
+    }
+
 }
