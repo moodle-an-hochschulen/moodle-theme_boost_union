@@ -15,18 +15,20 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost_union/course-hint-hidden
+    @template theme_boost_union/course-hint-hidden-forum
 
-    Boost Union template for outputting the hidden course hint.
+    Boost Union template for outputting the hidden course hint on forum pages.
 
     Context variables required for this template:
     * courseid - The course ID
+    * showhintcoursehiddennotificationforum - The info text shown at forum pages inside hidden courses
     * showcoursesettingslink - The fact if a link to the course settings should be shown or not
 
     Example context (json):
     {
         "courseid": "123",
-        "showcoursesettingslink": true
+        "showcoursesettingslink": true,
+        "showhintcoursehiddennotificationforum": "This course is currently <strong>hidden</strong>. Please note that because of this, students will not be notified of messages online or via email that you post in this forum.""
     }
 }}
 <div class="course-hint-hidden alert alert-warning">
