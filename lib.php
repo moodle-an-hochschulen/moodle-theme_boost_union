@@ -164,6 +164,38 @@ function theme_boost_union_get_extra_scss($theme) {
     // We have to accept this fact here and must not copy the code from theme_boost_get_extra_scss into this function.
     // Instead, we must only add additionally CSS code which is based on any Boost Union-only functionality.
 
+    // In contrast to Boost core, Boost Union should add the login page background to the body element as well.
+    // That's why we first have to revert the background which is set to #page on the login page by Boost core already as soon as a
+    // login background image is set. Doing this, we also have to make the background of the #page element transparent on the login
+    // page.
+    $loginbackgroundimageurl = $theme->setting_file_url('loginbackgroundimage', 'loginbackgroundimage');
+    if (!empty($loginbackgroundimageurl)) {
+        $content .= 'body.pagelayout-login #page { ';
+        $content .= "background-image: none !important;";
+        $content .= "background-color: transparent !important;";
+        $content .= '}';
+        $content .= 'body.pagelayout-login { ';
+        $content .= "background-image: url('$loginbackgroundimageurl'); background-size: cover;";
+        $content .= '}';
+    }
+
+    // Boost core has the behaviour that the normal background image is not shown on the login page, only the login background image
+    // is shown on the login page.
+    // This is fine, but it is done improperly as the normal background image is still there on the login page and just overlaid
+    // with a grey color in the #page element. This can result in flickering during the page load.
+    // We try to avoid this by removing the background image from the body tag if no login background image is set.
+    if (empty($loginbackgroundimageurl)) {
+        $content .= 'body.pagelayout-login { ';
+        $content .= "background-image: none !important;";
+        $content .= '}';
+    }
+
+    // Lastly, we make sure that the background image is fixed and not repeated. Just to be sure.
+    $content .= 'body { ';
+    $content .= "background-repeat: no-repeat;";
+    $content .= "background-attachment: fixed;";
+    $content .= '}';
+
     return $content;
 }
 
