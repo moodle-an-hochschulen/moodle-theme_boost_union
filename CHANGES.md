@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2022-10-14 - Bugfix: Make login page background and footnote work together, solves #107.
 * 2022-10-13 - Bugfix: Footnote did not have a white background, solves #106.
 * 2022-10-13 - Bugfix: Custom SCSS and background image SCSS was included twice, solves #103 #104.
 * 2022-10-12 - Settings: screenshot image for theme chooser solves #33.

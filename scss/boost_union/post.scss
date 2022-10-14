@@ -38,11 +38,16 @@
  * Settings: Content -> Footnote.
  ======================================*/
 
-/* The footnote styles are different on larger and smaller screens. */
+/* The footnote styles are different on the login page and on all non-login pages.
+   They are also different on larger and smaller screens.
+   We will deal with the overall cases for all screen sizes first and will then overwrite the things which need
+   to be different on the login page. */
+
 /* On larger screens. */
 @include media-breakpoint-up(md) {
-    /* If there is a background image configured. */
-    body.backgroundimage #footnote {
+    /* If there is a background image or a loginbackground image configured. */
+    body.backgroundimage #footnote,
+    body.loginbackgroundimage #footnote {
         /* Add horizontal padding to align the footnote with the main page content.
            The numbers are basically adopted from the main content areas of the Moodle page. */
         padding-left: calc(15px + .5rem);
@@ -55,8 +60,8 @@
         margin-bottom: 1rem;
     }
 
-    /* If there isn't a background image configured. */
-    body:not(.backgroundimage) #footnote {
+    /* If there isn't a background image nor a loginbackground image configured. */
+    body:not(.backgroundimage):not(.loginbackgroundimage) #footnote {
         /* Add horizontal margin to align the footnote with the main page content.
            The numbers are basically adopted from the main content areas of the Moodle page. */
         margin-left: calc(15px + .5rem);
@@ -66,7 +71,6 @@
         border-top: $border-width solid $border-color;
     }
 }
-
 
 /* And on smaller screens. */
 @include media-breakpoint-only(sm) {
@@ -94,8 +98,7 @@
 
         /* Add horizontal margin and padding to align the footnote with the main page content.
            The numbers are adopted from the main content areas of the Moodle page.
-           Add another right padding as well to avoid that the content gets covered by the footer and back-to-top
-           buttons. */
+           Add another right padding as well to avoid that the content gets covered by the back-to-top button. */
         margin-left: 15px;
         padding-left: 1rem;
         margin-right: 15px;
@@ -106,13 +109,64 @@
     }
 }
 
-/* On the login page, the footnote does not need a border-top as the login page has a grey background already.
-   Only on really small screens, the border top is helpful there. */
+/* As said, the login needs some more adjustments. */
+
+/* On larger screens. */
 @include media-breakpoint-up(sm) {
-    #page-login-index #footnote {
-        /* stylelint-disable-next-line declaration-no-important */
-        border-top: none !important;
+    /* If there is a loginbackground image configured. */
+    body.pagelayout-login.loginbackgroundimage #footnote {
+        /* Add a box shadow to the footnote to match the look of the login box. */
+        box-shadow: $logincontainer-shadow;
+
+        /* Add horizontal margin as the page does not have a margin itself. */
+        margin-left: 15px;
+        margin-right: 15px;
+
+        /* Add another right padding as well to avoid that the content gets covered by the footer button. */
+        padding-right: calc(.5rem + 51px); /* The underlying calculation is 15px + .5rem + 36px. */
     }
+}
+
+/* On smaller screens. */
+@include media-breakpoint-only(sm) {
+    /* If there is a loginbackground image configured. */
+    body.pagelayout-login.loginbackgroundimage #footnote {
+        /* Add white background color and a small bottom margin
+           to make the footnote work with background images.
+           This is necessary as this isn't covered by the normal background styles already
+           (which are only applied to pages > 768px.
+           Note that there isn't a border-radius added as the login box doesn't have a border radius as well
+           on this screen size. */
+        background-color: $white;
+        margin-bottom: 1rem;
+    }
+}
+
+/* And on really small screens. */
+@include media-breakpoint-down(xs) {
+    body.pagelayout-login.loginbackgroundimage #footnote {
+        /* Add white background color and a small bottom margin
+           to make the footnote work with background images.
+           This is necessary as this isn't covered by the normal background styles already
+           (which are only applied to pages > 768px. */
+        background-color: $white;
+
+        /* Change horizontal margin and padding to
+           to make the footnote work with background images.
+           We do not need any additional right padding as there isn't a back-to-top button nor a footer button
+           on the login page on this screen size. */
+        margin-left: 0;
+        padding-left: calc(15px + 1rem);
+        margin-right: 0;
+        padding-right: calc(15px + 1rem);
+    }
+}
+
+/* On all screen sizes. */
+/* If there isn't a loginbackground image configured. */
+body.pagelayout-login:not(.loginbackgroundimage) #footnote {
+    /* Remove the top border as there is the gradient in #page. */
+    border-top: none;
 }
 
 

@@ -63,9 +63,16 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $additionalclasses = explode(' ', $additionalclasses);
         }
 
-        // If the page has a background image, add a class to the body attributes.
-        if (!empty(get_config('theme_boost_union', 'backgroundimage'))) {
-            $additionalclasses[] = 'backgroundimage';
+        // If this isn't the login page and the page has a background image, add a class to the body attributes.
+        if ($this->page->pagelayout != 'login') {
+            if (!empty(get_config('theme_boost_union', 'backgroundimage'))) {
+                $additionalclasses[] = 'backgroundimage';
+            }
+        }
+
+        // If this is the login page and the page has a login background image, add a class to the body attributes.
+        if ($this->page->pagelayout == 'login' && !empty(get_config('theme_boost_union', 'loginbackgroundimage'))) {
+            $additionalclasses[] = 'loginbackgroundimage';
         }
 
         return ' id="'. $this->body_id().'" class="'.$this->body_css_classes($additionalclasses).'"';
