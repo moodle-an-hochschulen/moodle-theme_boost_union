@@ -47,7 +47,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     And I click on "Save and display" "button"
     Then I should see "This course is currently hidden. Only enrolled teachers can access this course when hidden." in the ".course-hint-hidden" "css_element"
     When I am on the "Announcements" "forum activity" page
-    Then I should see "This course is currently hidden. Therefore students will not get any notifications from here." in the ".course-hint-hidden" "css_element"
+    Then I should see "This course is currently hidden. Please note that because of this, students will not be notified of messages online or via email that you post in this forum." in the ".course-hint-hidden" "css_element"
     When I am on "Course 1" course homepage
     And I navigate to "Settings" in current page administration
     And I set the following fields to these values:
