@@ -57,6 +57,11 @@ This setting is already available in the Moodle core theme Boost. For more infor
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
+#### Background image
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+Please note: This will not override the setting "theme_boost_campus | loginbackgroundimage" which means that the pictures uploaded to the login page background will be displayed anyway.
+
 #### Tab "Advanced settings"
 
 In this tab there are the following settings:
@@ -93,13 +98,29 @@ Here, you can upload a custom image (.ico or .png format) that the browser will 
 
 ##### Background images
 
-###### Background image
+###### General background image
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+Please note: This will not interfere with the setting "theme_boost_union | loginbackgroundimage" which means that the pictures uploaded here will be shown on all pages except the login page.
 
-###### Login background image
+##### Login page background images
 
-This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+###### Login page background images
+
+This setting is already available in the Moodle core theme Boost.
+However, in Boost Union you can not only add one but up to 25 files as a background image for the login page. One of these images will be picked randomly and shown when the user visits the login page.
+
+###### Display text for login background images
+
+With this optional setting you can add text, e.g. a copyright notice to your uploaded login background images.
+Each line consists of the file identifier (the file name) and the text that should be displayed, separated by a pipe character. Each declaration needs to be written in a new line.
+
+For example:
+``background-image-1.jpg|Copyright: CC0|dark``
+
+As text color, you can use the values "dark" or "light".
+
+You can declare texts for a arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.
 
 ##### Brand colors
 

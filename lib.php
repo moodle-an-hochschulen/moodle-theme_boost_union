@@ -76,6 +76,9 @@ function theme_boost_union_get_main_scss_content($theme) {
 function theme_boost_union_get_pre_scss($theme) {
     global $CFG;
 
+    // Require local library.
+    require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+
     $scss = '';
 
     // Add SCSS constants for evaluating select setting values in SCSS code.
@@ -151,6 +154,7 @@ function theme_boost_union_get_pre_scss($theme) {
  * @return string
  */
 function theme_boost_union_get_extra_scss($theme) {
+    // Initialize extra SCSS.
     $content = '';
 
     // You might think that this extra SCSS function is only called for the activated theme.
@@ -165,18 +169,23 @@ function theme_boost_union_get_extra_scss($theme) {
     // Instead, we must only add additionally CSS code which is based on any Boost Union-only functionality.
 
     // In contrast to Boost core, Boost Union should add the login page background to the body element as well.
-    // That's why we first have to revert the background which is set to #page on the login page by Boost core already as soon as a
-    // login background image is set. Doing this, we also have to make the background of the #page element transparent on the login
-    // page.
-    $loginbackgroundimageurl = $theme->setting_file_url('loginbackgroundimage', 'loginbackgroundimage');
-    if (!empty($loginbackgroundimageurl)) {
+    // Thus, check if a login background image is set.
+    $loginbackgroundimagepresent = get_config('theme_boost_union', 'loginbackgroundimage');
+    if (!empty($loginbackgroundimagepresent)) {
+        // We first have to revert the background which is set to #page on the login page by Boost core already.
+        // Doing this, we also have to make the background of the #page element transparent on the login page.
         $content .= 'body.pagelayout-login #page { ';
         $content .= "background-image: none !important;";
         $content .= "background-color: transparent !important;";
         $content .= '}';
+
+        // Afterwards, we set the background-size attribute for the body element again.
         $content .= 'body.pagelayout-login { ';
-        $content .= "background-image: url('$loginbackgroundimageurl'); background-size: cover;";
+        $content .= "background-size: cover;";
         $content .= '}';
+
+        // Finally, we add all possible background image urls which will be picked based on the (random) loginpageimage class.
+        $content .= theme_boost_union_get_loginbackgroundimage_scss();
     }
 
     // Boost core has the behaviour that the normal background image is not shown on the login page, only the login background image
@@ -184,7 +193,7 @@ function theme_boost_union_get_extra_scss($theme) {
     // This is fine, but it is done improperly as the normal background image is still there on the login page and just overlaid
     // with a grey color in the #page element. This can result in flickering during the page load.
     // We try to avoid this by removing the background image from the body tag if no login background image is set.
-    if (empty($loginbackgroundimageurl)) {
+    if (empty($loginbackgroundimagepresent)) {
         $content .= 'body.pagelayout-login { ';
         $content .= "background-image: none !important;";
         $content .= '}';

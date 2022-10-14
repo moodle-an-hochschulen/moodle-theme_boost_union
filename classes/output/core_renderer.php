@@ -59,6 +59,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     public function body_attributes($additionalclasses = array()) {
+        global $CFG;
+
+        // Require local library.
+        require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+
         if (!is_array($additionalclasses)) {
             $additionalclasses = explode(' ', $additionalclasses);
         }
@@ -71,11 +76,19 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         // If this is the login page and the page has a login background image, add a class to the body attributes.
-        if ($this->page->pagelayout == 'login' && !empty(get_config('theme_boost_union', 'loginbackgroundimage'))) {
-            $additionalclasses[] = 'loginbackgroundimage';
+        if ($this->page->pagelayout == 'login') {
+            // Generate the background image class for displaying a random image for the login page.
+            $loginimageclass = theme_boost_union_get_random_loginbackgroundimage_class();
+
+            // If the background image class was returned, we can expect that a background image was set.
+            // In this case, add both the general loginbackgroundimage class as well as the generated
+            // class to the body tag.
+            if ($loginimageclass != '') {
+                $additionalclasses[] = 'loginbackgroundimage';
+                $additionalclasses[] = $loginimageclass;
+            }
         }
 
         return ' id="'. $this->body_id().'" class="'.$this->body_css_classes($additionalclasses).'"';
     }
-
 }

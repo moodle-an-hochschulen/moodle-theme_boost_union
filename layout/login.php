@@ -32,11 +32,14 @@
 defined('MOODLE_INTERNAL') || die();
 
 $bodyattributes = $OUTPUT->body_attributes();
+list($loginbackgroundimagetext, $loginbackgroundimagetextcolor) = theme_boost_union_get_loginbackgroundimage_text();
 
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
-    'bodyattributes' => $bodyattributes
+    'bodyattributes' => $bodyattributes,
+    'loginbackgroundimagetext' => $loginbackgroundimagetext,
+    'loginbackgroundimagetextcolor' => $loginbackgroundimagetextcolor
 ];
 
 // Include the template content for the footnote.
