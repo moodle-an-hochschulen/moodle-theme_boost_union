@@ -218,7 +218,7 @@ $string['switchedroleto'] = 'You are viewing this course currently with the role
 $string['showhintcoursehiddensetting'] = 'Show hint in hidden courses';
 $string['showhintcoursehiddensetting_desc'] = 'With this setting a hint will appear in the course header as long as the visibility of the course is hidden. This helps to identify the visibility state of a course at a glance without the need for looking at the course settings.';
 $string['showhintcoursehiddengeneral'] = 'This course is currently <strong>hidden</strong>. Only enrolled teachers can access this course when hidden.';
-$string['showhintcoursehiddennotificationforum'] = 'This course is currently <strong>hidden</strong>. Therefore students will not get any notifications from here.';
+$string['showhintcoursehiddennotificationforum'] = 'This course is currently <strong>hidden</strong>. Please note that because of this, students will not be notified of messages online or via email that you post in this forum.';
 $string['showhintcoursehiddensettingslink'] = 'You can change the visibility in the <a href="{$a->url}">course settings</a>.';
 // ... ... Setting: Show hint for guest access.
 $string['showhintcoursguestaccesssetting'] = 'Show hint for guest access';
