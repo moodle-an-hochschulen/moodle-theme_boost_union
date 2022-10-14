@@ -56,7 +56,18 @@ $string['faviconheading'] = 'Favicon';
 $string['faviconsetting'] = 'Favicon';
 $string['faviconsetting_desc'] = 'Here, you can upload a custom image (.ico or .png format) that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.';
 // ... Section: Background images.
-$string['backgroundimagesheading'] = 'Background images';
+$string['backgroundimagesheading'] = 'General background images';
+// ... Section: Login page background images.
+$string['loginbackgroundimagesheading'] = 'Login page background images';
+$string['loginbackgroundimage'] = 'Login page background images';
+$string['loginbackgroundimage_desc'] = 'The images to display as a background of the login page. One of these images will be picked randomly and shown when the user visits the login page.';
+$string['loginbackgroundimagetextsetting'] = 'Display text for login background images';
+$string['loginbackgroundimagetextsetting_desc'] = 'With this optional setting you can add text, e.g. a copyright notice to your uploaded background images. This text will appear on top of the page footer on the login page. However, for screen real estate reasons, it is only shown on larger screen sizes.<br/>
+Each line consists of the file identifier (the file name), the text that should be displayed and the text color, separated by a pipe character. Each declaration needs to be written in a new line. <br/>
+For example:<br/>
+background-image-1.jpg|Copyright: CC0|dark<br/>
+As text color, you can use the values "dark" or "light".<br />
+You can declare texts for a arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.';
 // ... Section: Brand colors.
 $string['brandcolorsheading'] = 'Brand colors';
 // ... Section: Bootstrap colors.

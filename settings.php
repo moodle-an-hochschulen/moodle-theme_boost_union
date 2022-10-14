@@ -229,12 +229,26 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Replicate the Login Background image setting from theme_boost.
+        // Create login page background images heading.
+        $name = 'theme_boost_union/loginbackgroundimagesheading';
+        $title = get_string('loginbackgroundimagesheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Create Login background image setting.
         $name = 'theme_boost_union/loginbackgroundimage';
-        $title = get_string('loginbackgroundimage', 'theme_boost', null, true);
-        $description = get_string('loginbackgroundimage_desc', 'theme_boost', null, true);
-        $setting = new admin_setting_configstoredfile($name, $title, $description, 'loginbackgroundimage');
+        $title = get_string('loginbackgroundimage', 'theme_boost_union', null, true);
+        $description = get_string('loginbackgroundimage_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configstoredfile($name, $title, $description, 'loginbackgroundimage', 0,
+                array('maxfiles' => 25, 'accepted_types' => 'web_image'));
         $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Create Login background image text setting.
+        $name = 'theme_boost_union/loginbackgroundimagetext';
+        $title = get_string('loginbackgroundimagetextsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginbackgroundimagetextsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtextarea($name, $title, $description, null, PARAM_TEXT);
         $tab->add($setting);
 
         // Create brand colors heading.
