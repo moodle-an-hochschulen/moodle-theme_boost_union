@@ -86,6 +86,9 @@ define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK', 'dark');
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYLIGHT', 'primarylight');
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYDARK', 'primarydark');
 
+define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT', 0);
+define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEARWINDOW', 1);
+
 /**
  * Returns the main SCSS content.
  *
@@ -436,4 +439,24 @@ function theme_boost_union_before_standard_html_head() {
 
     // Return an empty string to keep the caller happy.
     return $html;
+}
+
+/**
+ * Post-Process CSS for the theme.
+ *
+ * @param string $css
+ * @param theme_config $theme
+ * @return string css
+ */
+function theme_boost_union_postprocess_css($css, $theme) {
+    // Replace the placeholders for the right and left block region widths.
+    $leftregionwidth = (isset($theme->settings->leftregionwidth) &&
+            ($theme->settings->leftregionwidth != '')) ? $theme->settings->leftregionwidth : '300px';
+    $rightregionwidth = (isset($theme->settings->rightregionwidth) &&
+            ($theme->settings->rightregionwidth != '')) ? $theme->settings->rightregionwidth : '300px';
+    $css = str_replace('[[leftregionwidth]]', $leftregionwidth, $css);
+    $css = str_replace('[[rightregionwidth]]', $rightregionwidth, $css);
+
+    // Return post-processed CSS.
+    return $css;
 }

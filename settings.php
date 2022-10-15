@@ -1023,6 +1023,55 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_TEXT);
         $tab->add($setting);
 
+        // Create block regions heading.
+        $name = 'theme_boost_union/blockregionsheading';
+        $title = get_string('blockregionsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Information: Create intro for block regions.
+        $name = 'theme_boost_union/blockregionsintro';
+        $title = get_string('blockregionsintro', 'theme_boost_union', null, true);
+        $description = '<p>'.get_string('blockregionsintro_desc', 'theme_boost_union', null, true).'</p>';
+        $description .= '<p>'.get_string('blockregionsintro_desc2', 'theme_boost_union', null, true).'</p>';
+        $setting = new admin_setting_description($name, $title, $description);
+        $tab->add($setting);
+
+        // Setting: Outside (left) block region width.
+        $name = 'theme_boost_union/leftregionwidth';
+        $title = get_string('leftregionwidth', 'theme_boost_union', null, true);
+        $description = get_string('leftregionwidth_desc', 'theme_boost_union', null, true);
+        $default = '300px';
+        $setting = new admin_setting_configtext($name, $title, $description, $default);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Outside (right) block region width.
+        $name = 'theme_boost_union/rightregionwidth';
+        $title = get_string('rightregionwidth', 'theme_boost_union', null, true);
+        $description = get_string('rightregionwidth_desc', 'theme_boost_union', null, true);
+        $default = '300px';
+        $setting = new admin_setting_configtext($name, $title, $description, $default);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Prepare options for the outside regions placement settings.
+        $outsideregionsplacementoptions = array(
+            // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+            // PHP warning otherwise.
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT =>
+                        get_string('outsideregionsplacementnextmaincontent', 'theme_boost_union', null, false),
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEARWINDOW =>
+                        get_string('outsideregionsplacementnearwindowedges', 'theme_boost_union', null, false));
+
+        // Setting: Outside regions placement on larger screens.
+        $name = 'theme_boost_union/outsideregionsplacement';
+        $title = get_string('outsideregionsplacement', 'theme_boost_union', null, true);
+        $description = get_string('outsideregionsplacement_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT, $outsideregionsplacementoptions);
+        $tab->add($setting);
+
         // Add tab to settings page.
         $page->add($tab);
 

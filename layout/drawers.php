@@ -24,12 +24,17 @@
  * * Include activity navigation
  * * Include course related hints
  * * Include back to top button
+<<<<<<< HEAD
  * * Include scroll spy
  * * Include footnote
  * * Include static pages
  * * Include Jvascript disabled hint
  * * Include advertisement tiles
  * * Include info banners
+=======
+ * * Include activity navigation
+ * * Include additional block regions
+>>>>>>> 952a601 (Implemented additional block regions)
  *
  * @package   theme_boost_union
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
@@ -128,11 +133,18 @@ $templatecontext = [
     'hasregionmainsettingsmenu' => !empty($regionmainsettingsmenu),
     'overflow' => $overflow,
     'headercontent' => $headercontent,
-    'addblockbutton' => $addblockbutton
+    'addblockbutton' => $addblockbutton,
+    'user_is_editing' => $OUTPUT->page->user_is_editing(),
+    'outsideregionsplacement' => get_config('theme_boost_union', 'outsideregionsplacement') ==
+            THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT ?
+                    'blocks-next-maincontent' : 'blocks-near-windowedges',
 ];
 
 // Include the template content for the course related hints.
 require_once(__DIR__ . '/includes/courserelatedhints.php');
+
+// Include the template content for the block regions.
+require_once(__DIR__ . '/includes/blockregions.php');
 
 // Include the content for the back to top button.
 require_once(__DIR__ . '/includes/backtotopbutton.php');

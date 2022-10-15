@@ -259,6 +259,24 @@ In this tab there are the following settings:
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
+##### Block regions
+
+Boost Union provides a large number of additional block regions which can be used to add and show blocks over the whole Moodle page. There are block regions next to the main content area, there are footer block regions, there is a header top block region which is shown directly below the navigation drawer with full width and, finally, there is a off-canvas block region which hovers over the whole page as a drawer. 
+
+By default, all block regions are visible for all authenticated users and editable by teachers and managers (depending on the fact if the particular user is allowed to edit the particular Moodle page, of course). But there are also theme/boost_union:viewregion* and theme/boost_union:editregion* capabilities which allow you to fine-tune the usage of the block regions according to your needs.
+
+###### Outside (left) block region width
+
+With this setting, you can set the width of the Outside (left) block region which is shown on the left hand side of the main content area.
+
+###### Outside (right) block region width
+
+With this setting, you can set the width of the Outside (right) block region which is shown on the right hand side of the main content area.
+
+###### Outside regions placement on larger screens
+
+With this setting, you can control if, on larger screens, the outside blocks regions should be placed near the main content area or rather near the window edges.
+
 #### Tab "Miscellaneous"
 
 In this tab there are the following settings:
@@ -354,6 +372,14 @@ This capability is used to control who is able to see a hint for unrestricted se
 ### theme/boost_union:viewhintinhiddencourse
 
 This capability is used to control who is able to see a hint in a hidden course (if this feature was enabled in the theme settings). By default, it is assigned to teachers, non-editing teachers and managers.
+
+### theme/boost_union:viewregion*
+
+These capabilities are used to control who is allowed to see a particular block region. By default, they are assigned to all authenticated users, teachers, non-editing teachers and managers
+
+### theme/boost_union:editregion*
+
+These capabilities are used to control who is allowed to edit a particular block region. By default, they are assigned to teachers, non-editing teachers and managers.
 
 
 How this theme works
@@ -459,6 +485,7 @@ This theme is a collaboration result of multiple organisations.
 
 Moodle an Hochschulen e.V. would like to thank these main contributors (in alphabetical order of the institutions) for their work:
 
+* bdecent GmbH, Stefan Scholz: Code, Ideating, Funding
 * Bern University of Applied Sciences (BFH), Luca Bösch: Code, Peer Review, Ideating
 * FernUniversität in Hagen, Daniel Poggenpohl: Code, Ideating
 * Käferfreie Software, Nina Herrmann: Code

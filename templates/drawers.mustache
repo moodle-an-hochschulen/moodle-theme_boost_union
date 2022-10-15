@@ -59,12 +59,13 @@
     * Added the possibility to show course related hints.
     * Added the possibility to show info banners.
     * Include theme_boost_union/advertisementtiles template
+    * Added additional block regions (including JS for offcanvas region)
 }}
 {{> theme_boost/head }}
 
 <body {{{ bodyattributes }}}>
 {{> core/local/toast/wrapper}}
-<div id="page-wrapper" class="d-print-block">
+<div id="page-wrapper" class="d-print-block region-block-elements">
 
     {{{ output.standard_top_of_body_html }}}
 
@@ -100,8 +101,52 @@
             {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
-    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
-        <div id="topofscroll" class="main-inner">
+
+    {{^user_is_editing}}
+    {{#regions.offcanvas.hasblocks}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost_union-drawers-offcanvas{{/id}}
+            {{$drawerclasses}}drawer drawer-top {{/drawerclasses}}
+            {{$drawercontent}}
+                {{> theme_boost_union/offcanvas}}
+            {{/drawercontent}}
+            {{$forceopen}}0{{/forceopen}}
+            {{$drawerstate}}show-drawer-offcanvas{{/drawerstate}}
+            {{$tooltipplacement}}top{{/tooltipplacement}}
+            {{$drawercloseonresize}}1{{/drawercloseonresize}}
+            {{$closebuttontext}}{{#str}}closeoffcanvas, theme_boost_union{{/str}}{{/closebuttontext}}
+        {{/ theme_boost/drawer}}
+    {{/regions.offcanvas.hasblocks}}
+    {{/user_is_editing}}
+
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container {{{outsideregionsplacement}}}">
+        {{# user_is_editing}}
+        {{> theme_boost_union/offcanvas}}
+        {{/user_is_editing}}
+
+        {{#regions.top.hasblocks}}
+            <section class="theme-block-region block-region-top" id="topregion" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.top.addblockbutton }}}
+                {{{ regions.top.regionhtml }}}
+            </section>
+        {{/regions.top.hasblocks}}
+
+        {{#regions.headertop.hasblocks}}
+            <section class="theme-block-region block-region-headertop" id="headertopregion" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.headertop.addblockbutton }}}
+                {{{ regions.headertop.regionhtml }}}
+            </section>
+        {{/regions.headertop.hasblocks}}
+
+        <div class="main-content-region {{mainregionclass}}">
+            {{#regions.left.hasblocks}}
+                <section data-region="blocks-column" class=" {{#regions.left.hasblocks}}pre-side-block block-region-left{{/regions.left.hasblocks}}" id="leftblock" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.left.addblockbutton }}}
+                    {{{ regions.left.regionhtml }}}
+                 </section>
+            {{/regions.left.hasblocks}}
+
+        <div id="topofscroll" class="main-inner {{regionclass}}">
             <div class="drawer-toggles d-flex">
                 {{#courseindex}}
                     <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
@@ -183,6 +228,49 @@
                 </div>
             </div>
         </div>
+
+        {{#regions.right.hasblocks}}
+            <section data-region="blocks-column" class="{{#regions.right.hasblocks}}post-side-block block-region-right{{/regions.right.hasblocks}}" id="rightblock" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.right.addblockbutton }}}
+                {{{ regions.right.regionhtml }}}
+            </section>
+        {{/regions.right.hasblocks}}
+        </div>
+
+        {{#regions.bottom.hasblocks}}
+            <section class="theme-block-region block-region-bottom" id="bottomregion" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.bottom.addblockbutton }}}
+                {{{ regions.bottom.regionhtml }}}
+            </section>
+        {{/regions.bottom.hasblocks}}
+        <div class="block-region-footer">
+            <div class="row">
+                 {{#regions.footerleft.hasblocks}}
+                    <div class="{{footerclass}}">
+                        <section class="theme-block-region block-region-footer-left" id="footerleft" aria-label="{{#str}}blocks{{/str}}">
+                            {{{ regions.footerleft.addblockbutton }}}
+                            {{{ regions.footerleft.regionhtml }}}
+                        </section>
+                    </div>
+                {{/regions.footerleft.hasblocks}}
+                {{#regions.footercenter.hasblocks}}
+                    <div class="{{footerclass}}">
+                        <section class="theme-block-region block-region-footer-center" id="footercenter" aria-label="{{#str}}blocks{{/str}}">
+                            {{{ regions.footercenter.addblockbutton }}}
+                            {{{ regions.footercenter.regionhtml }}}
+                        </section>
+                    </div>
+                {{/regions.footercenter.hasblocks}}
+                {{#regions.footerright.hasblocks}}
+                    <div class="{{footerclass}}">
+                        <section class="theme-block-region block-region-footer-right" id="footerright" aria-label="{{#str}}blocks{{/str}}">
+                            {{{ regions.footerright.addblockbutton }}}
+                            {{{ regions.footerright.regionhtml }}}
+                        </section>
+                    </div>
+                {{/regions.footerright.hasblocks}}
+            </div>
+        </div>
         {{> theme_boost_union/footer }}
         {{> theme_boost_union/footnote }}
     </div>
@@ -193,8 +281,9 @@
 </html>
 {{#js}}
 M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
+require(['theme_boost/loader', 'theme_boost/drawer', 'theme_boost_union/offcanvas'], function(Loader, Drawer, OffCanvas) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
+    OffCanvas.init();
 });
 {{/js}}

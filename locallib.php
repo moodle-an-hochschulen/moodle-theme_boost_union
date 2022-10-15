@@ -1272,14 +1272,14 @@ function theme_boost_union_get_course_header_image_url() {
 
         // Get all files from filearea.
         $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'courseheaderimagefallback',
-            false, 'itemid', false);
+                false, 'itemid', false);
 
         // Just pick the first file - we are sure that there is just one file.
         $file = reset($files);
 
         // Build and return the image URL.
         return moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
-            $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+                $file->get_itemid(), $file->get_filepath(), $file->get_filename());
     }
 
     // As no picture was found, return null.
@@ -1312,4 +1312,28 @@ function theme_boost_union_set_mobilecss_url() {
         // Clear the $CFG->mobilecssurl setting.
         set_config('mobilecssurl', '');
     }
+}
+
+/**
+ * Returns an array of the defined additional block regions.
+ *
+ * @param array $pageregions List of page regions.
+ * @return array $regions
+ */
+function theme_boost_union_get_additional_regions($pageregions=[]) {
+    $regions = [
+            'top' => 'outside-top',
+            'footerleft' => 'footer-left',
+            'footerright' => 'footer-right',
+            'footercenter' => 'footer-center',
+            'offcanvasleft' => 'offcanvas-left',
+            'offcanvasright' => 'offcanvas-right',
+            'offcanvascenter' => 'offcanvas-center',
+            'left' => 'outside-left',
+            'right' => 'outside-right',
+            'bottom' => 'outside-bottom',
+            'headertop' => 'header-top'
+    ];
+
+    return ($pageregions) ? array_intersect($regions, $pageregions) : $regions;
 }
