@@ -76,13 +76,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 get_string('configtitlefunctionality', 'theme_boost_union', null, true),
                 'theme/boost_union:configure');
         $ADMIN->add('theme_boost_union', $tab);
-
-        // Create Block Regions settings page
-        // (and allow users with the theme/boost_union:configure capability to access it).
-        $tab = new admin_settingpage('theme_boost_union_blockregion',
-                get_string('configtitleblockregion', 'theme_boost_union', null, true),
-                'theme/boost_union:configure');
-        $ADMIN->add('theme_boost_union', $tab);
     }
 
     // Create full settings page structure.
@@ -381,6 +374,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
+
         // Setting: scroll-spy.
         $name = 'theme_boost_union/scrollspy';
         $title = get_string('scrollspysetting', 'theme_boost_union', null, true);
@@ -748,47 +742,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Add tab to settings page.
         $page->add($tab);
 
-        // Create Block region settings page with tabs.
-        // (and allow users with the theme/boost_union:configure capability to access it).
-        $page = new theme_boost_admin_settingspage_tabs('theme_boost_union_blockregion',
-                get_string('configtitleblockregion', 'theme_boost_union', null, true),
-                'theme/boost_union:configure');
-
-        // Create Block region tab.
-        $tab = new admin_settingpage('theme_boost_union_blockregion',
-               get_string('blockregiontab', 'theme_boost_union', null, true));
-
-        // Left block Region width.
-        $name = 'theme_boost_union/leftregionwidth';
-        $title = get_string('leftregionwidth', 'theme_boost_union');
-        $description = get_string('leftregionwidthdesc', 'theme_boost_union');
-        $default = '300px';
-        $setting = new admin_setting_configtext($name, $title, $description, $default);
-        $setting->set_updatedcallback('theme_reset_all_caches');
-        $tab->add($setting);
-
-        // Right block Region width.
-        $name = 'theme_boost_union/rightregionwidth';
-        $title = get_string('rightregionwidth', 'theme_boost_union');
-        $description = get_string('rightregionwidthdesc', 'theme_boost_union');
-        $default = '300px';
-        $setting = new admin_setting_configtext($name, $title, $description, $default);
-        $setting->set_updatedcallback('theme_reset_all_caches');
-        $tab->add($setting);
-
-        // Right block Region width.
-        $name = 'theme_boost_union/regionplacement';
-        $title = get_string('regionplacement', 'theme_boost_union');
-        $description = get_string('regionplacementdesc', 'theme_boost_union');
-        $options = [
-            0 => get_string('nextmaincontent', 'theme_boost_union'),
-            1 => get_string('nearwindow', 'theme_boost_union')
-        ];
-        $setting = new admin_setting_configselect($name, $title, $description, 0, $options);
-        $tab->add($setting);
-
-         // Add tab to settings page.
-        $page->add($tab);
 
         // Add settings page to the admin settings category.
         $ADMIN->add('theme_boost_union', $page);
