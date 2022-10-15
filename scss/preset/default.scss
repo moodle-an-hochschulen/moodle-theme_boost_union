@@ -134,6 +134,10 @@ body {
     border-radius: 50%;
 }
 
+:root {
+    --course-content-maxwidth: #{$course-content-maxwidth};
+}
+
 // Reset the default styling back to the bootstrap defaults for
 // the secondary outline button because gray-200 is much too light
 // for an outline button.

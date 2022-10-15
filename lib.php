@@ -202,3 +202,56 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         send_file_not_found();
     }
 }
+
+/**
+ * Process css for theme.
+ * @param string $css
+ * @param theme_config $theme
+ * @return string css
+ */
+function theme_boost_union_process_css($css, $theme) {
+    global $OUTPUT, $CFG;
+    $css = theme_boost_union_blockregion($css, $theme);
+    return $css;
+}
+
+/**
+ * Get the Blocks region width.
+ * @param string $css
+ * @param theme_config $theme
+ * @return string css
+ */
+function theme_boost_union_blockregion($css, $theme) {
+
+    $leftregionwidth = (isset($theme->settings->leftregionwidth) &&
+                ($theme->settings->leftregionwidth != '')) ? $theme->settings->leftregionwidth : '300px';
+    $rightregionwidth = (isset($theme->settings->rightregionwidth) &&
+                 ($theme->settings->rightregionwidth != '')) ? $theme->settings->rightregionwidth : '300px';
+    $css = str_replace('[[leftregionwidth]]', $leftregionwidth, $css);
+    $css = str_replace('[[rightregionwidth]]', $rightregionwidth, $css);
+    return $css;
+}
+
+/**
+ * Define additional block regions.
+ *
+ * @param array $pageregions List of page regions.
+ * @return array $regions
+ */
+function theme_boost_union_additional_regions($pageregions=[]) {
+    $regions = [
+        'top' => 'outside-top',
+        'footerleft' => 'footer-left',
+        'footerright' => 'footer-right',
+        'footercenter' => 'footer-center',
+        'offcanvasleft' => 'offcanvas-left',
+        'offcanvasright' => 'offcanvas-right',
+        'offcanvascenter' => 'offcanvas-center',
+        'left' => 'outside-left',
+        'right' => 'outside-right',
+        'bottom' => 'outside-bottom',
+        'headertop' => 'header-top'
+    ];
+
+    return ($pageregions) ? array_intersect($regions, $pageregions) : $regions;
+}

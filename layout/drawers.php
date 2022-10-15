@@ -40,6 +40,7 @@ require_once($CFG->dirroot . '/course/lib.php');
 // Require own locallib.php.
 require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
+global $PAGE;
 // Add activity navigation if the feature is enabled.
 $activitynavigation = get_config('theme_boost_union', 'activitynavigation');
 if ($activitynavigation == THEME_BOOST_UNION_SETTING_SELECT_YES) {
@@ -104,11 +105,13 @@ $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settin
 $header = $PAGE->activityheader;
 $headercontent = $header->export_for_template($renderer);
 
+
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
     'sidepreblocks' => $blockshtml,
     'hasblocks' => $hasblocks,
+    'user_is_editing' => $OUTPUT->page->user_is_editing(),
     'bodyattributes' => $bodyattributes,
     'courseindexopen' => $courseindexopen,
     'blockdraweropen' => $blockdraweropen,
@@ -123,7 +126,9 @@ $templatecontext = [
     'hasregionmainsettingsmenu' => !empty($regionmainsettingsmenu),
     'overflow' => $overflow,
     'headercontent' => $headercontent,
-    'addblockbutton' => $addblockbutton
+    'addblockbutton' => $addblockbutton,
+    'regionplacement' => get_config('theme_boost_union', 'regionplacement') == 0 ?
+            'blocks-next-maincontent' : 'blocks-near-window',
 ];
 
 // Get and use the course related hints HTML code, if any hints are configured.
@@ -131,7 +136,8 @@ $courserelatedhintshtml = theme_boost_union_get_course_related_hints();
 if ($courserelatedhintshtml) {
     $templatecontext['courserelatedhints'] = $courserelatedhintshtml;
 }
-
+// Includes Addtional Block regions.
+require_once(__DIR__ . '/includes/blockregions.php');
 // Include the template content for the course related hints.
 require_once(__DIR__ . '/includes/courserelatedhints.php');
 

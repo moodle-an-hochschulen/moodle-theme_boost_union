@@ -62,11 +62,11 @@
 
 <body {{{ bodyattributes }}}>
 {{> core/local/toast/wrapper}}
-<div id="page-wrapper" class="d-print-block">
+<div id="page-wrapper" class="d-print-block region-block-elements">
 
     {{{ output.standard_top_of_body_html }}}
 
-    {{> theme_boost/navbar }}
+    {{> theme_boost_union/navbar }}
     {{#courseindex}}
         {{< theme_boost/drawer }}
             {{$id}}theme_boost-drawers-courseindex{{/id}}
@@ -98,81 +98,173 @@
             {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
-    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
-        <div id="topofscroll" class="main-inner">
-            <div class="drawer-toggles d-flex">
-                {{#courseindex}}
-                    <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
-                        <button
-                            class="btn icon-no-margin"
-                            data-toggler="drawers"
-                            data-action="toggle"
-                            data-target="theme_boost-drawers-courseindex"
-                            data-toggle="tooltip"
-                            data-placement="right"
-                            title="{{#str}}opendrawerindex, core{{/str}}"
-                        >
-                            <span class="sr-only">{{#str}}opendrawerindex, core{{/str}}</span>
-                            {{#pix}} t/index_drawer, moodle {{/pix}}
-                        </button>
-                    </div>
-                {{/courseindex}}
-                {{#hasblocks}}
-                    <div class="drawer-toggler drawer-right-toggle ml-auto d-print-none">
-                        <button
-                            class="btn icon-no-margin"
-                            data-toggler="drawers"
-                            data-action="toggle"
-                            data-target="theme_boost-drawers-blocks"
-                            data-toggle="tooltip"
-                            data-placement="right"
-                            title="{{#str}}opendrawerblocks, core{{/str}}"
-                        >
-                            <span class="sr-only">{{#str}}opendrawerblocks, core{{/str}}</span>
-                            <span class="dir-rtl-hide">{{#pix}}t/blocks_drawer, core{{/pix}}</span>
-                            <span class="dir-ltr-hide">{{#pix}}t/blocks_drawer_rtl, core{{/pix}}</span>
-                        </button>
-                    </div>
-                {{/hasblocks}}
-            </div>
-            {{> theme_boost_union/javascriptdisabledhint }}
-            {{> theme_boost_union/infobanners }}
-            {{{ output.full_header }}}
-            {{#secondarymoremenu}}
-                <div class="secondary-navigation d-print-none">
-                    {{> core/moremenu}}
-                </div>
-            {{/secondarymoremenu}}
-            <div id="page-content" class="pb-3 d-print-block">
-                <div id="region-main-box">
-                    {{#hasregionmainsettingsmenu}}
-                    <div id="region-main-settings-menu" class="d-print-none">
-                        <div> {{{ regionmainsettingsmenu }}} </div>
-                    </div>
-                    {{/hasregionmainsettingsmenu}}
-                    <section id="region-main" aria-label="{{#str}}content{{/str}}">
 
+    {{^user_is_editing}}
+    {{#regions.offcanvas.hasblocks}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost-drawers-offcanvas{{/id}}
+            {{$drawerclasses}}drawer drawer-top {{/drawerclasses}}
+            {{$drawercontent}}
+                {{> theme_boost_union/offcanvas}}
+            {{/drawercontent}}
+            {{$forceopen}}0{{/forceopen}}
+            {{$drawerstate}}show-drawer-offcanvas{{/drawerstate}}
+            {{$tooltipplacement}}top{{/tooltipplacement}}
+            {{$drawercloseonresize}}1{{/drawercloseonresize}}
+            {{$closebuttontext}}{{#str}}closeoffcanvas, theme_boost_union{{/str}}{{/closebuttontext}}
+        {{/ theme_boost/drawer}}
+    {{/regions.offcanvas.hasblocks}}
+    {{/user_is_editing}}
+    
+    <div id="page" data-region="mainpage" data-usertour="scroller" 
+        class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} 
+        {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container
+        {{{regionplacement}}}
+        ">
+        {{# user_is_editing}}
+        {{> theme_boost_union/offcanvas}}
+        {{/user_is_editing}}
+
+        {{#regions.top.hasblocks}}
+            <section class="theme-block-region block-region-top" id="topregion" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.top.addblockbutton }}}
+                    {{{ regions.top.regionhtml }}} 
+            </section>
+        {{/regions.top.hasblocks}}
+        
+        {{#regions.headertop.hasblocks}}
+            <section class="theme-block-region block-region-headertop" id="headertopregion" aria-label="{{#str}}blocks{{/str}}">        
+                {{{ regions.headertop.addblockbutton }}}
+                {{{ regions.headertop.regionhtml }}} 
+            </section>
+        {{/regions.headertop.hasblocks}}
+
+        <div class="main-content-region {{mainregionclass}}">
+            {{#regions.left.hasblocks}}
+                <section data-region="blocks-column" class=" {{#regions.left.hasblocks}}pre-side-block block-region-left{{/regions.left.hasblocks}}" id="leftblock" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.left.addblockbutton }}}
+                    {{{ regions.left.regionhtml }}} 
+                 </section>
+            {{/regions.left.hasblocks}}
+
+            <div id="topofscroll" class="main-inner {{regionclass}}">
+                <div class="drawer-toggles d-flex">
+                    {{#courseindex}}
+                        <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
+                            <button
+                                class="btn icon-no-margin"
+                                data-toggler="drawers"
+                                data-action="toggle"
+                                data-target="theme_boost-drawers-courseindex"
+                                data-toggle="tooltip"
+                                data-placement="right"
+                                title="{{#str}}opendrawerindex, core{{/str}}"
+                            >
+                                <span class="sr-only">{{#str}}opendrawerindex, core{{/str}}</span>
+                                {{#pix}} t/index_drawer, moodle {{/pix}}
+                            </button>
+                        </div>
+                    {{/courseindex}}
+                    {{#hasblocks}}
+                        <div class="drawer-toggler drawer-right-toggle ml-auto d-print-none">
+                            <button
+                                class="btn icon-no-margin"
+                                data-toggler="drawers"
+                                data-action="toggle"
+                                data-target="theme_boost-drawers-blocks"
+                                data-toggle="tooltip"
+                                data-placement="right"
+                                title="{{#str}}opendrawerblocks, core{{/str}}"
+                            >
+                                <span class="sr-only">{{#str}}opendrawerblocks, core{{/str}}</span>
+                                <span class="dir-rtl-hide">{{#pix}}t/blocks_drawer, core{{/pix}}</span>
+                                <span class="dir-ltr-hide">{{#pix}}t/blocks_drawer_rtl, core{{/pix}}</span>
+                            </button>
+                        </div>
+                    {{/hasblocks}}
+                </div>
+                {{> theme_boost_union/javascriptdisabledhint }}
+                {{> theme_boost_union/infobanners }}
+                {{{ output.full_header }}}
+                {{#secondarymoremenu}}
+                    <div class="secondary-navigation d-print-none">
+                        {{> core/moremenu}}
+                    </div>
+                {{/secondarymoremenu}}
+                <div id="page-content" class="pb-3 d-print-block">
+                    <div id="region-main-box">
                         {{#hasregionmainsettingsmenu}}
-                            <div class="region_main_settings_menu_proxy"></div>
+                        <div id="region-main-settings-menu" class="d-print-none">
+                            <div> {{{ regionmainsettingsmenu }}} </div>
+                        </div>
                         {{/hasregionmainsettingsmenu}}
-                        {{{ output.course_content_header }}}
-                        {{#headercontent}}
-                            {{> core/activity_header }}
-                        {{/headercontent}}
-                        {{#overflow}}
-                            <div class="container-fluid tertiary-navigation">
-                                <div class="navitem">
-                                    {{> core/url_select}}
-                                </div>
-                            </div>
-                        {{/overflow}}
-                        {{{courserelatedhints}}}
-                        {{{ output.main_content }}}
-                        {{{ output.activity_navigation }}}
-                        {{{ output.course_content_footer }}}
+                        <section id="region-main" aria-label="{{#str}}content{{/str}}">
 
-                    </section>
+                            {{#hasregionmainsettingsmenu}}
+                                <div class="region_main_settings_menu_proxy"></div>
+                            {{/hasregionmainsettingsmenu}}
+                            {{{ output.course_content_header }}}
+                            {{#headercontent}}
+                                {{> core/activity_header }}
+                            {{/headercontent}}
+                            {{#overflow}}
+                                <div class="container-fluid tertiary-navigation">
+                                    <div class="navitem">
+                                        {{> core/url_select}}
+                                    </div>
+                                </div>
+                            {{/overflow}}
+                            {{{courserelatedhints}}}
+                            {{{ output.main_content }}}
+                            {{{ output.activity_navigation }}}
+                            {{{ output.course_content_footer }}}
+
+                        </section>
+                    </div>
                 </div>
+            </div>
+
+            {{#regions.right.hasblocks}}
+                <section data-region="blocks-column" class="{{#regions.right.hasblocks}}post-side-block block-region-right{{/regions.right.hasblocks}}" id="rightblock" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.right.addblockbutton }}}
+                    {{{ regions.right.regionhtml }}} 
+                 </section>
+            {{/regions.right.hasblocks}}
+
+        </div>
+
+        {{#regions.bottom.hasblocks}}
+            <section class="theme-block-region block-region-bottom" id="bottomregion" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.bottom.addblockbutton }}}
+                {{{ regions.bottom.regionhtml }}} 
+            </section>
+        {{/regions.bottom.hasblocks}}
+        <div class="block-region-footer">
+            <div class="row">
+                 {{#regions.footerleft.hasblocks}}
+                    <div class="{{footerclass}}">   
+                        <section class="theme-block-region block-region-footer-left" id="footerleft" aria-label="{{#str}}blocks{{/str}}">
+                            {{{ regions.footerleft.addblockbutton }}}
+                            {{{ regions.footerleft.regionhtml }}} 
+                        </section>
+                    </div>
+                {{/regions.footerleft.hasblocks}}
+                {{#regions.footercenter.hasblocks}}
+                    <div class="{{footerclass}}">   
+                        <section class="theme-block-region block-region-footer-center" id="footercenter" aria-label="{{#str}}blocks{{/str}}">
+                            {{{ regions.footercenter.addblockbutton }}}
+                            {{{ regions.footercenter.regionhtml }}} 
+                        </section>
+                    </div>
+                {{/regions.footercenter.hasblocks}}
+                {{#regions.footerright.hasblocks}}
+                    <div class="{{footerclass}}">
+                        <section class="theme-block-region block-region-footer-right" id="footerright" aria-label="{{#str}}blocks{{/str}}">
+                            {{{ regions.footerright.addblockbutton }}}
+                            {{{ regions.footerright.regionhtml }}}
+                        </section>
+                    </div>
+                {{/regions.footerright.hasblocks}}
             </div>
         </div>
         {{> theme_boost_union/footer }}
@@ -185,8 +277,9 @@
 </html>
 {{#js}}
 M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
+require(['theme_boost/loader', 'theme_boost/drawer', 'theme_boost_union/offcanvas'], function(Loader, Drawer, OffCanvas) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
+    OffCanvas.init();
 });
 {{/js}}

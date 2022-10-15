@@ -1,0 +1,22 @@
+{{#regions.offcanvas.hasblocks}}
+    <div class="row">
+    {{#regions.offcanvasleft.hasblocks}}
+    <section class="theme-block-region block-region-offcanvasleft {{regions.offcanvas.class}}" id="offcanvasregionleft" aria-label="{{#str}}blocks{{/str}}">
+        {{{ regions.offcanvasleft.addblockbutton }}}
+        {{{ regions.offcanvasleft.regionhtml }}} 
+    </section>
+    {{/regions.offcanvasleft.hasblocks}}
+    {{#regions.offcanvascenter.hasblocks}}
+    <section class="theme-block-region block-region-offcanvascenter {{regions.offcanvas.class}}" id="offcanvasregioncenter" aria-label="{{#str}}blocks{{/str}}">
+        {{{ regions.offcanvascenter.addblockbutton }}}
+        {{{ regions.offcanvascenter.regionhtml }}} 
+    </section>
+    {{/regions.offcanvascenter.hasblocks}}
+    {{#regions.offcanvasright.hasblocks}}
+    <section class="theme-block-region block-region-offcanvasright {{regions.offcanvas.class}}" id="offcanvasregionright" aria-label="{{#str}}blocks{{/str}}">
+        {{{ regions.offcanvasright.addblockbutton }}}
+        {{{ regions.offcanvasright.regionhtml }}}
+    </section>
+    {{/regions.offcanvasright.hasblocks}}
+    </div>        
+{{/regions.offcanvas.hasblocks}}
