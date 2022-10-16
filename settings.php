@@ -361,6 +361,48 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
+        // Create resources tab.
+        $tab = new admin_settingpage('theme_boost_union_look_resources',
+                get_string('resourcestab', 'theme_boost_union', null, true));
+
+        // Create additional resources heading.
+        $name = 'theme_boost_union/additionalresourcesheading';
+        $title = get_string('additionalresourcesheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Additional resources.
+        $name = 'theme_boost_union/additionalresources';
+        $title = get_string('additionalresourcessetting', 'theme_boost_union', null, true);
+        $description = get_string('additionalresourcessetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configstoredfile($name, $title, $description, 'additionalresources', 0,
+                array('maxfiles' => -1));
+        $tab->add($setting);
+
+        // Information: Additional resources list.
+        // If there is at least one file uploaded.
+        if (!empty(get_config('theme_boost_union', 'additionalresources'))) {
+            // Prepare the widget.
+            $name = 'theme_boost_union/additionalresourceslist';
+            $title = get_string('additionalresourceslistsetting', 'theme_boost_union', null, true);
+            $description = get_string('additionalresourceslistsetting_desc', 'theme_boost_union', null, true).'<br /><br />'.
+                    get_string('resourcescachecontrolnote', 'theme_boost_union', null, true);
+
+            // Append the file list to the description.
+            $templatecontext = array('files' => theme_boost_union_get_additionalresources_templatecontext());
+            $description .= $OUTPUT->render_from_template('theme_boost_union/settings-additionalresources-filelist',
+                    $templatecontext);
+
+            // Finish the widget.
+            $setting = new admin_setting_description($name, $title, $description);
+            $tab->add($setting);
+
+        }
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
         // Add settings page to the admin settings category.
         $ADMIN->add('theme_boost_union', $page);
 
