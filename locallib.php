@@ -610,3 +610,47 @@ function theme_boost_union_get_loginbackgroundimage_text() {
 
     return '';
 }
+
+/**
+ * Return the files from the additionalresources file area as templatecontext structure.
+ * It was designed to compose the files for the settings-additionalresources-filelist.mustache template.
+ * This function always loads the files from the filearea which is not really performant.
+ * Thus, you have to take care where and how often you use it (or add some caching).
+ *
+ * @return array|null
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_boost_union_get_additionalresources_templatecontext() {
+    global $OUTPUT;
+
+    // Static variable to remember the files for subsequent calls of this function.
+    static $filesforcontext = null;
+
+    if ($filesforcontext == null) {
+        // Get the system context.
+        $systemcontext = \context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get all files from filearea.
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'additionalresources', false, 'itemid', false);
+
+        // Iterate over the files and fill the templatecontext of the file list.
+        $filesforcontext = array();
+        foreach ($files as $af) {
+            $urlpersistent = new moodle_url('/pluginfile.php/1/theme_boost_union/additionalresources/0/'.$af->get_filename());
+            $urlrevisioned = new moodle_url('/pluginfile.php/1/theme_boost_union/additionalresources/'.theme_get_revision().
+                    '/'.$af->get_filename());
+            $filesforcontext[] = array('filename' => $af->get_filename(),
+                                        'filetype' => $af->get_mimetype(),
+                                        'filesize' => display_size($af->get_filesize()),
+                                        'fileicon' => $OUTPUT->image_icon(file_file_icon($af, 64), get_mimetype_description($af)),
+                                        'fileurlpersistent' => $urlpersistent->out(),
+                                        'fileurlrevisioned' => $urlrevisioned->out());
+        }
+    }
+
+    return $filesforcontext;
+}

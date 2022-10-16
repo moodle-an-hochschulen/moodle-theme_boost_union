@@ -1,4 +1,19 @@
 /*=======================================
+ * Settings: Look -> Branding
+ ======================================*/
+
+/*---------------------------------------
+ * Setting: Additional resources.
+ --------------------------------------*/
+
+/* Enlarge the icons in the settings file list. */
+.settings-additionalresources-filelist .icon {
+    height: 64px;
+    width: 64px;
+}
+
+
+/*=======================================
  * Settings: Feel -> Navigation.
  ======================================*/
 

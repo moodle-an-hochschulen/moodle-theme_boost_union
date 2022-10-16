@@ -104,6 +104,19 @@ $string['activityiconcolorcontentsetting_desc'] = 'The activity icon color for "
 // ... ... Setting: Activity icon color for 'Interface'.
 $string['activityiconcolorinterfacesetting'] = 'Activity icon color for "Interface"';
 $string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for "Interface"';
+// Settings: Resources.
+$string['resourcestab'] = 'Resources';
+$string['resourcescachecontrolnote'] = 'Please note that the files are shipped to the browser with the \'Cache-Control\' header set which tells the browser to cache the file. If you are sure that you won\'t change the file in the near future, you can use the persistent URL to link to the file. However, if you plan to modify a file but keep the same filename every now and then, you should rather use the revisioned URL and re-link the file where you have used it everytime you update the file to avoid that the browsers will show cached outdated versions of the file.';
+// ... Section: Additional resources.
+$string['additionalresourcesheading'] = 'Additional resources';
+// ... ... Setting: Additional resources.
+$string['additionalresourcessetting'] = 'Additional resources';
+$string['additionalresourcessetting_desc'] = 'With this setting you can upload additional resources to the theme. The advantage of uploading files to this file area is that those files can be delivered without a check if the user is logged in. This is also why you should only add files that are uncritical and everyone should be allowed to access and don\'t need be protected with a valid login. As soon as you have uploaded at least one file to this filearea and have stored the settings, a list will appear underneath which will give you the URL which you can use to reference a particular file.';
+// ... ... Information: Additional resources list.
+$string['additionalresourceslistsetting'] = 'Additional resources list';
+$string['additionalresourceslistsetting_desc'] = 'This is the list of files which you have uploaded to the additional resources filearea. The given URLs can be used to link to these files from within your custom CSS, from the footnote or whereever you need to use uploaded files but can\'t upload files in place.';
+$string['additionalresourcesfileurlpersistent'] = 'URL (persistent)';
+$string['additionalresourcesfileurlrevisioned'] = 'URL (revisioned)';
 
 // Settings: Feel page.
 $string['configtitlefeel'] = 'Feel';

@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2022-10-15 - Feature: Filearea for additional resources, solves #113.
+
 ### v4.0-r4
 
 * 2022-10-15 - Feature: Random login background image with text, solves #36.
