@@ -40,7 +40,7 @@ function theme_boost_union_get_course_related_hints() {
     // Initialize HTML code.
     $html = '';
 
-    // If the setting showhintcoursehidden is set and the visibility of the course is hidden and
+    // If the setting showhintcoursehidden is set and the visibility of the course is hidden
     // a hint for the visibility will be shown.
     if (get_config('theme_boost_union', 'showhintcoursehidden') == THEME_BOOST_UNION_SETTING_SELECT_YES
             && has_capability('theme/boost_union:viewhintinhiddencourse', \context_course::instance($COURSE->id))
@@ -62,8 +62,8 @@ function theme_boost_union_get_course_related_hints() {
         $html .= $OUTPUT->render_from_template('theme_boost_union/course-hint-hidden', $templatecontext);
     }
 
-    // If the setting showhintcoursehidden is set and the visibility of the course is hidden and
-    // a hint for the visibility will be shown.
+    // If the setting showhintcoursehidden is set and the visibility of the course is hidden
+    // a hint will be shown that no notifications via forums will be sent out to students.
     if (get_config('theme_boost_union', 'showhintcoursehidden') == THEME_BOOST_UNION_SETTING_SELECT_YES
             && has_capability('theme/boost_union:viewhintinhiddencourse', \context_course::instance($COURSE->id))
             && $PAGE->has_set_url()
