@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.0-r4
 
 * 2022-10-15 - Feature: Random login background image with text, solves #36.
 * 2022-10-14 - Bugfix: Make login page background and footnote work together, solves #107.
