@@ -399,6 +399,38 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         }
 
+        // Create custom fonts heading.
+        $name = 'theme_boost_union/customfontsheading';
+        $title = get_string('customfontsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Custom fonts.
+        $name = 'theme_boost_union/customfonts';
+        $title = get_string('customfontssetting', 'theme_boost_union', null, true);
+        $description = get_string('customfontssetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configstoredfile($name, $title, $description, 'customfonts', 0,
+                array('maxfiles' => -1));
+        $tab->add($setting);
+
+        // Information: Custom fonts list.
+        // If there is at least one file uploaded.
+        if (!empty(get_config('theme_boost_union', 'customfonts'))) {
+            // Prepare the widget.
+            $name = 'theme_boost_union/customfontslist';
+            $title = get_string('customfontslistsetting', 'theme_boost_union', null, true);
+            $description = get_string('customfontslistsetting_desc', 'theme_boost_union', null, true);
+
+            // Append the file list to the description.
+            $templatecontext = array('files' => theme_boost_union_get_customfonts_templatecontext());
+            $description .= $OUTPUT->render_from_template('theme_boost_union/settings-customfonts-filelist', $templatecontext);
+
+            // Finish the widget.
+            $setting = new admin_setting_description($name, $title, $description);
+            $tab->add($setting);
+
+        }
+
         // Add tab to settings page.
         $page->add($tab);
 

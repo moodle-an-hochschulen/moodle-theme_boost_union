@@ -31,3 +31,26 @@ Feature: Configuring the theme_boost_union plugin for the "Resources" tab on the
     And I click on "Resources" "link"
     Then I should not see "Additional resources list"
     And ".settings-additionalresources-filelist" "css_element" should not exist
+
+  @javascript @_file_upload
+  Scenario: Setting: Custom fonts - Upload custom fonts files
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Resources" "link"
+    And I upload "theme/boost_union/tests/fixtures/roboto-v30-latin-regular.woff" file to "Custom fonts" filemanager
+    And I press "Save changes"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Resources" "link"
+    Then I should see "Custom fonts list"
+    And ".settings-customfonts-filelist" "css_element" should exist
+    And I should see "roboto-v30-latin-regular.woff" in the ".settings-customfonts-filelist h6" "css_element"
+    And I should see "@font-face" in the ".settings-customfonts-filelist" "css_element"
+    And I should see "/pluginfile.php/1/theme_boost_union/customfonts/0/roboto-v30-latin-regular.woff" in the ".settings-customfonts-filelist" "css_element"
+
+  @javascript @_file_upload
+  Scenario: Setting: Custom fonts - Do not upload any file (countercheck)
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Resources" "link"
+    Then I should not see "Custom fonts list"
+    And ".settings-customfonts-filelist" "css_element" should not exist

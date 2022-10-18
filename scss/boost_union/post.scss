@@ -6,8 +6,9 @@
  * Setting: Additional resources.
  --------------------------------------*/
 
-/* Enlarge the icons in the settings file list. */
-.settings-additionalresources-filelist .icon {
+/* Enlarge the icons in the settings file lists. */
+.settings-additionalresources-filelist .icon,
+.settings-customfonts-filelist .icon {
     height: 64px;
     width: 64px;
 }
