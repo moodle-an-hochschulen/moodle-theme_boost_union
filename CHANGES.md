@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2022-10-18 - Feature: Filearea for custom fonts, helps to solve #38.
 * 2022-10-15 - Feature: Filearea for additional resources, solves #113.
 
 ### v4.0-r4

@@ -117,6 +117,16 @@ $string['additionalresourceslistsetting'] = 'Additional resources list';
 $string['additionalresourceslistsetting_desc'] = 'This is the list of files which you have uploaded to the additional resources filearea. The given URLs can be used to link to these files from within your custom CSS, from the footnote or whereever you need to use uploaded files but can\'t upload files in place.';
 $string['additionalresourcesfileurlpersistent'] = 'URL (persistent)';
 $string['additionalresourcesfileurlrevisioned'] = 'URL (revisioned)';
+// ... Section: Custom fonts.
+$string['customfontsheading'] = 'Custom fonts';
+// ... ... Setting: Custom fonts.
+$string['customfontssetting'] = 'Custom fonts';
+$string['customfontssetting_desc'] = 'With this setting you can upload custom fonts to the theme. The advantage of uploading fonts to this file area is that those fonts can be delivered without a check if the user is logged in and can be used as locally installed fonts everywhere on the site. As soon as you have uploaded at least one font to this filearea and have stored the settings, a list will appear underneath which will give you CSS code snippets which you can use as a boilerplate to reference particular fonts in your custom SCSS.';
+// ... ... Information: Custom fonts list.
+$string['customfontslistsetting'] = 'Custom fonts list';
+$string['customfontslistsetting_desc'] = 'This is the list of fonts which you have uploaded to the custom fonts filearea. The given CSS snippets can be used to add these fonts to your custom SCSS. Please note that you will have to take care of the font format value as well as the font-family, font-style and font-weight CSS properties yourself for now as Boost Union is not able yet to parse the font files.';
+$string['customfontsfileurlpersistent'] = 'URL (persistent)';
+$string['customfontsfileurlrevisioned'] = 'URL (revisioned)';
 
 // Settings: Feel page.
 $string['configtitlefeel'] = 'Feel';
