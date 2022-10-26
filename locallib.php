@@ -692,3 +692,63 @@ function theme_boost_union_get_customfonts_templatecontext() {
 
     return $filesforcontext;
 }
+
+/**
+ * Helper function which makes sure that all webfont file types are registered in the system.
+ * The webfont file types need to be registered in the system, otherwise the admin settings filepicker wouldn't allow restricting
+ * the uploadable file types to webfonts only.
+ *
+ * @return void
+ * @throws coding_exception
+ */
+function theme_boost_union_register_webfonts_filetypes() {
+    // Our array of webfont file types to register.
+    // As we want to keep things simple, we do not set a particular icon for these file types.
+    // Likewise, we do not set any type groups or use descriptions from the language pack.
+    $webfonts = array(
+            'eot' => array(
+                    'extension' => 'eot',
+                    'mimetype' => 'application/vnd.ms-fontobject',
+                    'coreicon' => 'unknown'
+            ),
+            'otf' => array(
+                    'extension' => 'otf',
+                    'mimetype' => 'font/otf',
+                    'coreicon' => 'unknown'
+            ),
+            'svg' => array(
+                    'extension' => 'svg',
+                    'mimetype' => 'image/svg+xml',
+                    'coreicon' => 'unknown'
+            ),
+            'ttf' => array(
+                    'extension' => 'ttf',
+                    'mimetype' => 'font/ttf',
+                    'coreicon' => 'unknown'
+            ),
+            'woff' => array(
+                    'extension' => 'woff',
+                    'mimetype' => 'font/woff',
+                    'coreicon' => 'unknown'
+            ),
+            'woff2' => array(
+                    'extension' => 'woff2',
+                    'mimetype' => 'font/woff2',
+                    'coreicon' => 'unknown'
+            ),
+    );
+
+    // First, get the list of currently registered file types.
+    $currenttypes = core_filetypes::get_types();
+
+    // Iterate over the webfonts file types.
+    foreach ($webfonts as $f) {
+        // If the file type is already registered, skip it.
+        if (array_key_exists($f['extension'], $currenttypes)) {
+            continue;
+        }
+
+        // Otherwise, register the file type.
+        core_filetypes::add_type($f['extension'], $f['mimetype'], $f['coreicon']);
+    }
+}
