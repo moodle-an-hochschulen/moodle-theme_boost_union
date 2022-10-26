@@ -405,12 +405,15 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
+        // Register the webfonts file types for filtering the uploads in the subsequent admin setting.
+        theme_boost_union_register_webfonts_filetypes();
+
         // Setting: Custom fonts.
         $name = 'theme_boost_union/customfonts';
         $title = get_string('customfontssetting', 'theme_boost_union', null, true);
         $description = get_string('customfontssetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configstoredfile($name, $title, $description, 'customfonts', 0,
-                array('maxfiles' => -1));
+                array('maxfiles' => -1, 'accepted_types' => array('.eot', '.otf', '.svg', '.ttf', '.woff', '.woff2')));
         $tab->add($setting);
 
         // Information: Custom fonts list.

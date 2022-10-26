@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2022-10-26 - Improvement: Restrict uploadable file types in custom fonts filearea, solves #120.
+
 ### v4.0-r5
 
 * 2022-10-18 - Feature: Filearea for custom fonts, helps to solve #38.
