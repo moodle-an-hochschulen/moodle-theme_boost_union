@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2022-11-08 - Feature: Allow admins to override the email templates within the theme, solves #60.
+
 ### v4.0-r7
 
 * 2022-11-09 - Bugfix: Site administration was broken if customfiletypes were set in config.php, solves #133.

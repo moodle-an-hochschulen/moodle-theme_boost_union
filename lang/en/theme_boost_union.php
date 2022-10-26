@@ -104,6 +104,52 @@ $string['activityiconcolorcontentsetting_desc'] = 'The activity icon color for "
 // ... ... Setting: Activity icon color for 'Interface'.
 $string['activityiconcolorinterfacesetting'] = 'Activity icon color for "Interface"';
 $string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for "Interface"';
+// Settings: E-Mail branding.
+$string['emailbrandingtab'] = 'E-Mail branding';
+$string['templateemailhtmlprefix'] = '';
+$string['templateemailhtmlsuffix'] = '';
+$string['templateemailtextprefix'] = '';
+$string['templateemailtextsuffix'] = '';
+// ... Section: E-Mails introduction.
+$string['emailbrandingintroheading'] = 'Introduction';
+$string['emailbrandingintronote'] = 'Please note: This is an advanced functionality which uses some workarounds to provide E-Mail branding options. Please follow the instructions closely.';
+$string['emailbrandinginstruction'] = 'How-to';
+$string['emailbrandinginstruction0'] = 'With this Boost Union feature, you can apply branding to all E-Mails which Moodle is sending out.';
+$string['emailbrandinginstructionli1'] = 'Go to the <a href="{$a->url}" target="_blank">language customization settings page</a> to open the <em>{$a->lang}</em> language pack for editing.';
+$string['emailbrandinginstructionli2'] = 'Search for and modify these strings in the <code>theme_boost_union language</code> pack:';
+$string['emailbrandinginstructionli2li1'] = '<code>templateemailhtmlprefix</code>: This snippet will be added <em>at the beginning / before the body</em> of all <em>HTML E-Mails</em> which Moodle is sending out.';
+$string['emailbrandinginstructionli2li2'] = '<code>templateemailhtmlsuffix</code>: This snippet will be added <em>at the end / after the body</em> of all <em>HTML E-Mails</em> which Moodle is sending out.';
+$string['emailbrandinginstructionli2li3'] = '<code>templateemailtextprefix</code>: This snippet will be added <em>at the beginning / before the body</em> of all <em>plaintext E-Mails</em> which Moodle is sending out.';
+$string['emailbrandinginstructionli2li4'] = '<code>templateemailtextsuffix</code>: This snippet will be added <em>at the end / after the body</em> of all <em>plaintext E-Mails</em> which Moodle is sending out.';
+$string['emailbrandinginstructionli3'] = 'Save the changes to the language pack.';
+$string['emailbrandinginstructionli4'] = 'Come back to this page and have a look at the E-Mail previews below.';
+$string['emailbrandingpitfalls'] = 'Pitfalls';
+$string['emailbrandingpitfalls0'] = 'Using this feature, there are some pitfalls which you should be aware of:';
+$string['emailbrandingpitfallsli1'] = 'It is mandatory that you modify the language pack strings of the <em>current default language</em> of this site. Even if you have multiple language packs installed, only changes to the default language will have an effect.';
+$string['emailbrandingpitfallsli2'] = 'Respecting the receipient\'s language is not possible. Thus, you should use language-agnostic terms within your E-Mail branding snippets.';
+$string['emailbrandingpitfallsli3'] = 'If you ever change the site\'s default language in the future, you will have to migrate the modified language pack strings to the new default language pack.';
+$string['emailbrandingpitfallsli4'] = 'In plaintext E-Mails, there is a line break and an empty line added automatically after the prefix and an empty line added automatically before the suffix snippet. This is to make sure that the suffix and prefix do not stick directly to the E-Mail body.';
+$string['emailbrandingpitfallsli5'] = 'In HTML E-Mails, the prefix and the suffix are directly added before and above the E-Mail body. This is to make sure that you can work with HTML tags easily, however you will have to handle all spacing around the body yourself.';
+$string['emailbrandingpitfallsli6'] = 'In HTML E-Mails, you can open a HTML tag in the prefix snippet and close the tag in the suffix snippet without problems. Just remember to create valid HTML in the resulting mail.';
+
+// ... Section: HTML E-Mails.
+$string['emailbrandinghtmlheading'] = 'HTML E-Mail preview';
+$string['emailbrandinghtmlintro'] = 'This is a preview of a HTML E-Mail based on the branding prefixes and suffixes which are currently set in the language pack.';
+$string['emailbrandinghtmlnopreview'] = 'Up to now, the HTML E-Mails haven\'t been customized within this feature. E-Mails will be composed and sent out normally.';
+$string['emailbrandinghtmldemobody'] = '<p>E-Mail body starts here.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><p>Id donec ultrices tincidunt arcu non sodales. Id volutpat lacus laoreet non curabitur gravida arcu.</p><p>Cursus turpis massa tincidunt dui. Pellentesque nec nam aliquam sem et tortor consequat id. In ornare quam viverra orci sagittis eu volutpat. Sem nulla pharetra diam sit amet nisl suscipit. Justo donec enim diam vulputate ut pharetra.</p><p>E-Mail body ends here.</p>';
+// ... Section: Plaintext E-Mails.
+$string['emailbrandingtextheading'] = 'Plaintext E-Mail preview';
+$string['emailbrandingtextintro'] = 'This is a preview of a plaintext E-Mail based on the branding prefixes and suffixes which are currently set in the language pack.';
+$string['emailbrandingtextnopreview'] = 'Up to now, the plaintext E-Mails haven\'t been customized within this feature. E-Mails will be composed and sent out normally.';
+$string['emailbrandingtextdemobody'] = 'E-Mail body starts here.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+Id donec ultrices tincidunt arcu non sodales. Id volutpat lacus laoreet non curabitur gravida arcu.
+
+Cursus turpis massa tincidunt dui. Pellentesque nec nam aliquam sem et tortor consequat id. In ornare quam viverra orci sagittis eu volutpat. Sem nulla pharetra diam sit amet nisl suscipit. Justo donec enim diam vulputate ut pharetra.
+
+E-Mail body ends here.';
 // Settings: Resources.
 $string['resourcestab'] = 'Resources';
 $string['resourcescachecontrolnote'] = 'Please note that the files are shipped to the browser with the \'Cache-Control\' header set which tells the browser to cache the file. If you are sure that you won\'t change the file in the near future, you can use the persistent URL to link to the file. However, if you plan to modify a file but keep the same filename every now and then, you should rather use the revisioned URL and re-link the file where you have used it everytime you update the file to avoid that the browsers will show cached outdated versions of the file.';
