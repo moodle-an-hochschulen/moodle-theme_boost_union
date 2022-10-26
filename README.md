@@ -136,6 +136,12 @@ With these settings, you can overwrite the Bootstrap colors which are used withi
 
 With these settings, you can overwrite the activity icon colors which are used within courses.
 
+#### Tab "E-Mail branding"
+
+In this tab, you find a feature which you can use to apply branding to all E-Mails which Moodle is sending out.
+
+Please note: This is an advanced functionality which uses some workarounds to provide E-Mail branding options. Please follow the instructions closely.
+
 #### Tab "Resources"
 
 ##### Additional resources

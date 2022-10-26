@@ -789,3 +789,66 @@ function theme_boost_union_register_webfonts_filetypes() {
 
     return true;
 }
+
+/**
+ * Helper function to render a preview of a HTML email to be shown on the theme settings page.
+ *
+ * If E-Mails have been branded, an E-Mail preview will be returned as string.
+ * Otherwise, null will be returned.
+ *
+ * @return string|null
+ */
+function theme_boost_union_get_emailbrandinghtmlpreview() {
+    global $OUTPUT;
+
+    // Get branding snippets.
+    $htmlprefix = get_string('templateemailhtmlprefix', 'theme_boost_union');
+    $htmlsuffix = get_string('templateemailhtmlsuffix', 'theme_boost_union');
+
+    // If no snippet was customized, return null.
+    if (trim($htmlprefix) == '' && trim($htmlsuffix) == '') {
+        return null;
+    }
+
+    // Otherwise, compose mail text.
+    $mailtemplatecontext = array('body' => get_string('emailbrandinghtmldemobody', 'theme_boost_union'));
+    $mail = $OUTPUT->render_from_template('core/email_html', $mailtemplatecontext);
+
+    // And compose mail preview.
+    $previewtemplatecontext = array('mail' => $mail);
+    $preview = $OUTPUT->render_from_template('theme_boost_union/emailpreview', $previewtemplatecontext);
+
+    return $preview;
+}
+
+/**
+ * Helper function to render a preview of a plaintext email to be shown on the theme settings page.
+ *
+ * If E-Mails have been branded, an E-Mail preview will be returned as string.
+ * Otherwise, null will be returned.
+ *
+ * @return string|null
+ */
+function theme_boost_union_get_emailbrandingtextpreview() {
+    global $OUTPUT;
+
+    // Get branding snippets.
+    $textprefix = get_string('templateemailtextprefix', 'theme_boost_union');
+    $textsuffix = get_string('templateemailtextsuffix', 'theme_boost_union');
+
+    // If no snippet was customized, return null.
+    if (trim($textprefix) == '' && trim($textsuffix) == '') {
+        return null;
+    }
+
+    // Otherwise, compose mail text.
+    $mailtemplatecontext = array('body' => get_string('emailbrandingtextdemobody', 'theme_boost_union'));
+    $mail = nl2br($OUTPUT->render_from_template('core/email_text', $mailtemplatecontext));
+    $mail = '<div class="text-monospace">'.$mail.'</div>';
+
+    // And compose mail preview.
+    $previewtemplatecontext = array('mail' => $mail);
+    $preview = $OUTPUT->render_from_template('theme_boost_union/emailpreview', $previewtemplatecontext);
+
+    return $preview;
+}

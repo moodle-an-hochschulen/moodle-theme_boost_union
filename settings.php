@@ -361,6 +361,128 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
+        // Create E_Mail branding tab.
+        $tab = new admin_settingpage('theme_boost_union_look_emailbranding',
+                get_string('emailbrandingtab', 'theme_boost_union', null, true));
+
+        // Create E_Mail branding introduction heading.
+        $name = 'theme_boost_union/emailbrandingintroheading';
+        $title = get_string('emailbrandingintroheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Create E-Mail branding introduction note.
+        $name = 'theme_boost_union/emailbrandingintronote';
+        $title = '';
+        $description = '<div class="alert alert-info" role="alert">'.
+                get_string('emailbrandingintronote', 'theme_boost_union', null, true).'</div>';
+        $setting = new admin_setting_description($name, $title, $description);
+        $tab->add($setting);
+
+        // Create E-Mail branding instruction.
+        $name = 'theme_boost_union/emailbrandinginstruction';
+        $title = '';
+        $description = '<h4>'.get_string('emailbrandinginstruction', 'theme_boost_union', null, true).'</h4>';
+        $description .= '<p>'.get_string('emailbrandinginstruction0', 'theme_boost_union', null, true).'</p>';
+        $emailbrandinginstructionli1url = new moodle_url('/admin/tool/customlang/index.php', array('lng' => $CFG->lang));
+        $description .= '<ul><li>'.get_string('emailbrandinginstructionli1', 'theme_boost_union',
+                array('url' => $emailbrandinginstructionli1url->out(), 'lang' => $CFG->lang), true).'</li>';
+        $description .= '<li>'.get_string('emailbrandinginstructionli2', 'theme_boost_union', null, true).'</li>';
+        $description .= '<ul><li>'.get_string('emailbrandinginstructionli2li1', 'theme_boost_union', null, true).'</li>';
+        $description .= '<li>'.get_string('emailbrandinginstructionli2li2', 'theme_boost_union', null, true).'</li>';
+        $description .= '<li>'.get_string('emailbrandinginstructionli2li3', 'theme_boost_union', null, true).'</li>';
+        $description .= '<li>'.get_string('emailbrandinginstructionli2li4', 'theme_boost_union', null, true).'</li></ul>';
+        $description .= '<li>'.get_string('emailbrandinginstructionli3', 'theme_boost_union', null, true).'</li>';
+        $description .= '<li>'.get_string('emailbrandinginstructionli4', 'theme_boost_union', null, true).'</li></ul>';
+        $description .= '<h4>'.get_string('emailbrandingpitfalls', 'theme_boost_union', null, true).'</h4>';
+        $description .= '<p>'.get_string('emailbrandingpitfalls0', 'theme_boost_union', null, true).'</p>';
+        $description .= '<ul><li>'.get_string('emailbrandingpitfallsli1', 'theme_boost_union', null, true).'</li>';
+        $description .= '<li>'.get_string('emailbrandingpitfallsli2', 'theme_boost_union', null, true).'</li>';
+        $description .= '<li>'.get_string('emailbrandingpitfallsli3', 'theme_boost_union', null, true).'</li>';
+        $description .= '<li>'.get_string('emailbrandingpitfallsli4', 'theme_boost_union', null, true).'</li>';
+        $description .= '<li>'.get_string('emailbrandingpitfallsli5', 'theme_boost_union', null, true).'</li>';
+        $description .= '<li>'.get_string('emailbrandingpitfallsli6', 'theme_boost_union', null, true).'</li></ul>';
+        $setting = new admin_setting_description($name, $title, $description);
+        $tab->add($setting);
+
+        // Create HTML E-Mails heading.
+        $name = 'theme_boost_union/emailbrandinghtmlheading';
+        $title = get_string('emailbrandinghtmlheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Get HTML E-Mail preview.
+        $htmlpreview = theme_boost_union_get_emailbrandinghtmlpreview();
+
+        // If the HTML E-Mails are customized.
+        if ($htmlpreview != null) {
+            // Create HTML E-Mail intro.
+            $name = 'theme_boost_union/emailbrandinghtmlintro';
+            $title = '';
+            $description = '<div class="alert alert-info" role="alert">'.
+                    get_string('emailbrandinghtmlintro', 'theme_boost_union', null, true).'</div>';
+            $setting = new admin_setting_description($name, $title, $description);
+            $tab->add($setting);
+
+            // Create HTML E-Mail preview.
+            $name = 'theme_boost_union/emailbrandinghtmlpreview';
+            $title = '';
+            $description = $htmlpreview;
+            $setting = new admin_setting_description($name, $title, $description);
+            $tab->add($setting);
+
+            // Otherwise.
+        } else {
+            // Create HTML E-Mail intro.
+            $name = 'theme_boost_union/emailbrandinghtmlnopreview';
+            $title = '';
+            $description = '<div class="alert alert-info" role="alert">'.
+                    get_string('emailbrandinghtmlnopreview', 'theme_boost_union', null, true).'</div>';
+            $setting = new admin_setting_description($name, $title, $description);
+            $tab->add($setting);
+        }
+
+        // Create Plaintext E-Mails heading.
+        $name = 'theme_boost_union/emailbrandingtextheading';
+        $title = get_string('emailbrandingtextheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Get Plaintext E-Mail preview.
+        $textpreview = theme_boost_union_get_emailbrandingtextpreview();
+
+        // If the Plaintext E-Mails are customized.
+        if ($textpreview != null) {
+            // Create Plaintext E-Mail intro.
+            $name = 'theme_boost_union/emailbrandingtextintro';
+            $title = '';
+            $description = '<div class="alert alert-info" role="alert">'.
+                    get_string('emailbrandingtextintro', 'theme_boost_union', null, true).'</div>';
+            $setting = new admin_setting_description($name, $title, $description);
+            $tab->add($setting);
+
+            // Create Plaintext E-Mail preview.
+            $name = 'theme_boost_union/emailbrandingtextpreview';
+            $title = '';
+            $description = $textpreview;
+            $setting = new admin_setting_description($name, $title, $description);
+            $tab->add($setting);
+
+            // Otherwise.
+        } else {
+            // Create Plaintext E-Mail intro.
+            $name = 'theme_boost_union/emailbrandingtextnopreview';
+            $title = '';
+            $description = '<div class="alert alert-info" role="alert">'.
+                    get_string('emailbrandingtextnopreview', 'theme_boost_union', null, true).'</div>';
+            $setting = new admin_setting_description($name, $title, $description);
+            $tab->add($setting);
+        }
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
         // Create resources tab.
         $tab = new admin_settingpage('theme_boost_union_look_resources',
                 get_string('resourcestab', 'theme_boost_union', null, true));
