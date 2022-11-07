@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.0-r6
 
 * 2022-11-03 - Bugfix: Let favicon() always return a moodle_url object, solves #130.
 * 2022-10-26 - Improvement: Restrict uploadable file types in custom fonts filearea, solves #120.
