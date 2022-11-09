@@ -681,11 +681,26 @@ function theme_boost_union_get_customfonts_templatecontext() {
         // Get all files from filearea.
         $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'customfonts', false, 'itemid', false);
 
-        // Iterate over the files and fill the templatecontext of the file list.
+        // Get the webfonts extensions list.
+        $webfonts = theme_boost_union_get_webfonts_extensions();
+
+        // Iterate over the files.
         $filesforcontext = array();
         foreach ($files as $af) {
-            $urlpersistent = new moodle_url('/pluginfile.php/1/theme_boost_union/customfonts/0/'.$af->get_filename());
-            $filesforcontext[] = array('filename' => $af->get_filename(),
+            // Get the filename.
+            $filename = $af->get_filename();
+
+            // Check if the file is really a font file (as we can't really rely on the upload restriction in settings.php)
+            // according to its file suffix (as the filetype might not have a known mimetype).
+            // If it isn't a font file, skip it.
+            $filenamesuffix = pathinfo($filename, PATHINFO_EXTENSION);
+            if (!in_array('.'.$filenamesuffix, $webfonts)) {
+                continue;
+            }
+
+            // Otherwise, fill the templatecontext of the file list.
+            $urlpersistent = new moodle_url('/pluginfile.php/1/theme_boost_union/customfonts/0/'.$filename);
+            $filesforcontext[] = array('filename' => $filename,
                     'fileurlpersistent' => $urlpersistent->out());
         }
     }
@@ -694,14 +709,34 @@ function theme_boost_union_get_customfonts_templatecontext() {
 }
 
 /**
+ * Helper function which returns an array of accepted webfonts extensions (including the dots).
+ *
+ * @return array
+ */
+function theme_boost_union_get_webfonts_extensions() {
+    return array('.eot', '.otf', '.svg', '.ttf', '.woff', '.woff2');
+}
+
+/**
  * Helper function which makes sure that all webfont file types are registered in the system.
  * The webfont file types need to be registered in the system, otherwise the admin settings filepicker wouldn't allow restricting
  * the uploadable file types to webfonts only.
  *
- * @return void
+ * Please note: If custom filetypes are defined in config.php, registering additional filetypes is not possible
+ * due to a restriction in the set_custom_types() function in Moodle core. In this case, this function does not
+ * register anything and will return false.
+ *
+ * @return boolean true if the filetypes were registered, false if not.
  * @throws coding_exception
  */
 function theme_boost_union_register_webfonts_filetypes() {
+    global $CFG;
+
+    // If customfiletypes are set in config.php, we can't do anything.
+    if (array_key_exists('customfiletypes', $CFG->config_php_settings)) {
+        return false;
+    }
+
     // Our array of webfont file types to register.
     // As we want to keep things simple, we do not set a particular icon for these file types.
     // Likewise, we do not set any type groups or use descriptions from the language pack.
@@ -751,4 +786,6 @@ function theme_boost_union_register_webfonts_filetypes() {
         // Otherwise, register the file type.
         core_filetypes::add_type($f['extension'], $f['mimetype'], $f['coreicon']);
     }
+
+    return true;
 }
