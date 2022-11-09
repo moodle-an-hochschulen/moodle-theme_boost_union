@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.0-r7
 
 * 2022-11-09 - Bugfix: Site administration was broken if customfiletypes were set in config.php, solves #133.
 
