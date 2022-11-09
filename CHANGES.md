@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2022-11-09 - Bugfix: Site administration was broken if customfiletypes were set in config.php, solves #133.
+
 ### v4.0-r6
 
 * 2022-11-03 - Bugfix: Let favicon() always return a moodle_url object, solves #130.
