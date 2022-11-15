@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Version file
+ * Theme Boost Union - Cache definitions.
  *
  * @package    theme_boost_union
  * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
@@ -24,10 +24,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'theme_boost_union';
-$plugin->version = 2022080913;
-$plugin->release = 'v4.0-r7';
-$plugin->requires = 2022041900;
-$plugin->supported = [400, 400];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = array('theme_boost' => 2022041900);
+$definitions = array(
+        'fontawesome' => array(
+                'mode' => cache_store::MODE_APPLICATION,
+                'simplekeys' => true,
+                'simpledata' => true,
+                'staticacceleration' => true,
+        )
+);

@@ -40,6 +40,11 @@ define('THEME_BOOST_UNION_SETTING_INFOBANNERPAGES_LOGIN', 'login');
 define('THEME_BOOST_UNION_SETTING_INFOBANNERMODE_PERPETUAL', 'perp');
 define('THEME_BOOST_UNION_SETTING_INFOBANNERMODE_TIMEBASED', 'time');
 
+define('THEME_BOOST_UNION_SETTING_FAVERSION_NONE', 'none');
+define('THEME_BOOST_UNION_SETTING_FAVERSION_FA6FREE', 'fa6free');
+define('THEME_BOOST_UNION_SETTING_FAFILES_MANDATORY', 'm');
+define('THEME_BOOST_UNION_SETTING_FAFILES_OPTIONAL', 'o');
+
 
 /**
  * Returns the main SCSS content.
@@ -233,7 +238,7 @@ function theme_boost_union_get_precompiled_css() {
 function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
     if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'logo' || $filearea === 'backgroundimage' ||
         $filearea === 'loginbackgroundimage' || $filearea === 'favicon' || $filearea === 'additionalresources' ||
-                $filearea === 'customfonts')) {
+                $filearea === 'customfonts' || $filearea === 'fontawesome')) {
         $theme = theme_config::load('boost_union');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {
@@ -243,4 +248,27 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
     } else {
         send_file_not_found();
     }
+}
+
+/**
+ * Callback to add head elements.
+ *
+ * We use this callback to inject the FontAwesome CSS code to the page.
+ *
+ * @return string
+ */
+function theme_boost_union_before_standard_html_head() {
+    global $CFG;
+
+    // Require local library.
+    require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+
+    // Initialize HTML (even though we do not add any HTML at this stage of the implementation).
+    $html = '';
+
+    // Add the FontAwesome icons to the page.
+    theme_boost_union_add_fontawesome_to_page();
+
+    // Return an empty string to keep the caller happy.
+    return $html;
 }
