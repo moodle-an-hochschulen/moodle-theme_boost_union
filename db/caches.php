@@ -25,6 +25,43 @@
 defined('MOODLE_INTERNAL') || die();
 
 $definitions = array(
+        // This cache stores the flavours which apply to a particular user in his user session.
+        // It is there to avoid that the flavour which applies has to be calculated on every page load.
+        // The cache key is the page category ID (and 0 for all non-category pages).
+        // The cache value is the full flavour object.
+        //
+        // This is a session cache by purpose. It isn't an application cache as it contains user-specific data.
+        // And it isn't a user preference as we have to store multiple values per user (one value per page category ID).
+        // A benefit of the session cache is that it is invalidated on each login which means that, if the cache misbehaves for any
+        // reason, everything should be fine again after logging out and in again.
+        //
+        // Beyond that, the cache has to invalidated based on several events:
+        // 1. When a flavour is created / edited / deleted
+        // -- (this is realized in flavours/edit.php where cache_helper::purge_by_event is called with an invalidationevent
+        // -- which purges the cache for all users).
+        // 2. When the flavours are re-sorted
+        // -- (this is realized in flavours/overview.php where cache_helper::purge_by_event is called with an invalidationevent
+        // -- which purges the cache for all users).
+        // 3. When a cohort is deleted
+        // -- (this is realized with an event observer where cache_helper::purge_by_event is called with an invalidationevent
+        // -- which purges the cache for all users).
+        // 4. When a user is added to / removed from a category
+        // -- (this is realized with an event observer which sets a user preference flag, followed by a check in
+        // -- theme_boost_union_get_flavour_which_applies() which purges the cache for the affected user).
+        'flavours' => array(
+                'mode' => cache_store::MODE_SESSION,
+                'simplekeys' => true,
+                'simpledata' => false,
+                'invalidationevents' => array(
+                    'theme_boost_union_flavours_resorted',
+                    'theme_boost_union_flavours_created',
+                    'theme_boost_union_flavours_edited',
+                    'theme_boost_union_flavours_deleted',
+                    'theme_boost_union_cohort_deleted'
+                )
+        ),
+        // This cache stores the FontAwesome files (which are uploaded in the Boost Union settings)
+        // to avoid that the files have to be read from the filearea on every page load.
         'fontawesome' => array(
                 'mode' => cache_store::MODE_APPLICATION,
                 'simplekeys' => true,

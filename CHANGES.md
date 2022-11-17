@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2022-12-31 - Feature: Allow admins to define 'flavours' (i.e. special designs) which are applied to cohorts and / or course categories, solves #25.
 * 2022-12-19 - Feature: Allow admins to hide primary navigation items, solves #65.
 * 2022-12-14 - Feature: Built-in contact, help and maintenance pages, solves #150.
 * 2022-11-28 - Updated Moodle Plugin CI to latest upstream recommendations

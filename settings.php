@@ -77,6 +77,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 get_string('configtitlefunctionality', 'theme_boost_union', null, true),
                 'theme/boost_union:configure');
         $ADMIN->add('theme_boost_union', $tab);
+
+        // Create Flavours settings page as external page
+        // (and allow users with the theme/boost_union:configure capability to access it).
+        $flavourspage = new admin_externalpage('theme_boost_union_flavours',
+                get_string('configtitleflavours', 'theme_boost_union', null, true),
+                new moodle_url('/theme/boost_union/flavours/overview.php'),
+                'theme/boost_union:configure');
+        $ADMIN->add('theme_boost_union', $flavourspage);
     }
 
     // Create full settings page structure.
@@ -1081,5 +1089,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Add settings page to the admin settings category.
         $ADMIN->add('theme_boost_union', $page);
+
+
+        // Create Flavours settings page as external page
+        // (and allow users with the theme/boost_union:configure capability to access it).
+        $flavourspage = new admin_externalpage('theme_boost_union_flavours',
+                get_string('configtitleflavours', 'theme_boost_union', null, true),
+                new moodle_url('/theme/boost_union/flavours/overview.php'),
+                'theme/boost_union:configure');
+        $ADMIN->add('theme_boost_union', $flavourspage);
     }
 }

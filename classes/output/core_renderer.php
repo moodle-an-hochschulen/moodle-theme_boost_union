@@ -39,7 +39,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * Returns the moodle_url for the favicon.
      *
      * This renderer function is copied and modified from /lib/outputrenderers.php
-     * It uses the same logic as Moodle 4.1dev already which introduced a Moodle core favicon setting,
+     *
+     * It checks if the favicon is overridden in a flavour and, if yes, it serves this favicon.
+     * If there isn't a favicon in any flavour set, it continues with the logic from Moodle core.
+
+     * Doing this, it uses the same logic as Moodle 4.1 which introduces a Moodle core favicon setting,
      * but picks the favicon from the theme_boost_union settings for the time being.
      *
      * @since Moodle 2.5.1 2.6
@@ -47,6 +51,51 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @throws \moodle_exception
      */
     public function favicon() {
+        global $CFG;
+
+        // Initialize static variable for the flavour favicon as this function might be called (for whatever reason) multiple times
+        // during a page output.
+        static $hasflavourfavicon, $flavourfaviconurl;
+
+        // If the flavour favicon has already been checked.
+        if ($hasflavourfavicon != null) {
+            // If there is a flavour favicon.
+            if ($hasflavourfavicon == true) {
+                // Directly return the flavour favicon.
+                return $flavourfaviconurl;
+            }
+            // Otherwise, if there isn't a flavour favicon, this function will continue to run the logic from Moodle core later.
+
+            // Otherwise.
+        } else {
+            // Require flavours library.
+            require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+
+            // If any flavour applies to this page.
+            $flavour = theme_boost_union_get_flavour_which_applies();
+            if ($flavour != null) {
+                // If the flavour has a favicon set.
+                if ($flavour->look_favicon != null) {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasflavourfavicon = true;
+
+                    // Compose the URL to the flavour's favicon.
+                    $flavourfaviconurl = moodle_url::make_pluginfile_url(
+                            context_system::instance()->id, 'theme_boost_union', 'flavours_look_favicon', $flavour->id,
+                            '/'.theme_get_revision(), '/'.$flavour->look_favicon);
+
+                    // Return the URL.
+                    return $flavourfaviconurl;
+
+                    // Otherwise.
+                } else {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasflavourfavicon = false;
+                }
+            }
+        }
+
+        // Apparently, there isn't any flavour favicon set. Let's continue with the logic adopted from Moodle 4.1 core.
         $logo = null;
         if (!during_initial_install()) {
             $logo = get_config('theme_boost_union', 'favicon');
@@ -61,6 +110,128 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     /**
+     * Return the site's logo URL, if any.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * It checks if the logo is overridden in a flavour and, if yes, it serves this logo.
+     * If there isn't a logo in any flavour set, it continues with the logic from Moodle core.
+     *
+     * @param int $maxwidth The maximum width, or null when the maximum width does not matter.
+     * @param int $maxheight The maximum height, or null when the maximum height does not matter.
+     * @return moodle_url|false
+     */
+    public function get_logo_url($maxwidth = null, $maxheight = 200) {
+        global $CFG;
+
+        // Initialize static variable for the flavour logo as this function might be called (for whatever reason) multiple times
+        // during a page output.
+        static $hasflavourlogo, $flavourlogourl;
+
+        // If the flavour logo has already been checked.
+        if ($hasflavourlogo != null) {
+            // If there is a flavour logo.
+            if ($hasflavourlogo == true) {
+                // Directly return the flavour logo.
+                return $flavourlogourl;
+            }
+            // Otherwise, if there isn't a flavour logo, this function will continue to run the logic from Moodle core later.
+
+            // Otherwise.
+        } else {
+            // Require flavours library.
+            require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+
+            // If any flavour applies to this page.
+            $flavour = theme_boost_union_get_flavour_which_applies();
+            if ($flavour != null) {
+                // If the flavour has a logo set.
+                if ($flavour->look_logo != null) {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasflavourlogo = true;
+
+                    // Compose the URL to the flavour's logo.
+                    $flavourlogourl = moodle_url::make_pluginfile_url(
+                            context_system::instance()->id, 'theme_boost_union', 'flavours_look_logo', $flavour->id,
+                            '/'.theme_get_revision(), '/'.$flavour->look_logo);
+
+                    // Return the URL.
+                    return $flavourlogourl;
+
+                    // Otherwise.
+                } else {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasflavourlogo = false;
+                }
+            }
+        }
+
+        // Apparently, there isn't any flavour logo set. Let's continue with the logic from Moodle core.
+        return parent::get_logo_url($maxwidth, $maxheight);
+    }
+
+    /**
+     * Return the site's compact logo URL, if any.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * It checks if the logo is overridden in a flavour and, if yes, it serves this logo.
+     * If there isn't a logo in any flavour set, it continues with the logic from Moodle core.
+     *
+     * @param int $maxwidth The maximum width, or null when the maximum width does not matter.
+     * @param int $maxheight The maximum height, or null when the maximum height does not matter.
+     * @return moodle_url|false
+     */
+    public function get_compact_logo_url($maxwidth = 300, $maxheight = 300) {
+        global $CFG;
+
+        // Initialize static variable for the flavour logo as this function is called (for whatever reason) multiple times
+        // during a page output.
+        static $hasflavourlogo, $flavourlogourl;
+
+        // If the flavour logo has already been checked.
+        if ($hasflavourlogo != null) {
+            // If there is a flavour logo.
+            if ($hasflavourlogo == true) {
+                // Directly return the flavour logo.
+                return $flavourlogourl;
+            }
+            // Otherwise, if there isn't a flavour logo, this function will continue to run the logic from Moodle core later.
+
+            // Otherwise.
+        } else {
+            // Require flavours library.
+            require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+
+            // If any flavour applies to this page.
+            $flavour = theme_boost_union_get_flavour_which_applies();
+            if ($flavour != null) {
+                // If the flavour has a compact logo set.
+                if ($flavour->look_logocompact != null) {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasflavourlogo = true;
+
+                    // Compose the URL to the flavour's compact logo.
+                    $flavourlogourl = moodle_url::make_pluginfile_url(
+                            context_system::instance()->id, 'theme_boost_union', 'flavours_look_logocompact', $flavour->id,
+                            '/'.theme_get_revision(), '/'.$flavour->look_logocompact);
+
+                    // Return the URL.
+                    return $flavourlogourl;
+
+                    // Otherwise.
+                } else {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasflavourlogo = false;
+                }
+            }
+        }
+
+        // Apparently, there isn't any flavour logo set. Let's continue with the logic from Moodle core.
+        return parent::get_compact_logo_url($maxwidth, $maxheight);
+    }
+
+    /**
      * Returns HTML attributes to use within the body tag. This includes an ID and classes.
      *
      * This renderer function is copied and modified from /lib/outputrenderers.php
@@ -72,8 +243,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function body_attributes($additionalclasses = array()) {
         global $CFG;
 
-        // Require local library.
+        // Require local libraries.
         require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+        require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
 
         if (!is_array($additionalclasses)) {
             $additionalclasses = explode(' ', $additionalclasses);
@@ -98,6 +270,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $additionalclasses[] = 'loginbackgroundimage';
                 $additionalclasses[] = $loginimageclass;
             }
+        }
+
+        // If there is a flavour applied to this page, add the flavour ID as additional body class.
+        // Boost Union itself does not need this class for applying the flavour to the page (yet).
+        // However, theme designers might want to use it.
+        $flavour = theme_boost_union_get_flavour_which_applies();
+        if ($flavour != null) {
+            $additionalclasses[] = 'flavour'.'-'.$flavour->id;
         }
 
         return ' id="'. $this->body_id().'" class="'.$this->body_css_classes($additionalclasses).'"';
