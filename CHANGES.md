@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.0-r8
 
 * 2022-11-21 - Improvement: Restrict accepted file types for background images, solves #147.
 * 2022-11-15 - Feature: Possibility to upload FontAwesome 6 Free to the theme, solves #59.
