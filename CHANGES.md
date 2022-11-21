@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2022-11-21 - Improvement: Restrict accepted file types for background images, solves #147.
 * 2022-11-15 - Feature: Possibility to upload FontAwesome 6 Free to the theme, solves #59.
 * 2022-11-08 - Feature: Allow admins to override the email templates within the theme, solves #60.
 

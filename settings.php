@@ -226,7 +226,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/backgroundimage';
         $title = get_string('backgroundimage', 'theme_boost', null, true);
         $description = get_string('backgroundimage_desc', 'theme_boost', null, true);
-        $setting = new admin_setting_configstoredfile($name, $title, $description, 'backgroundimage');
+        $setting = new admin_setting_configstoredfile($name, $title, $description, 'backgroundimage', 0,
+                array('maxfiles' => 1, 'accepted_types' => 'web_image'));
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
