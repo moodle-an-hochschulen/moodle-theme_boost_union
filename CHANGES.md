@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2022-11-28 - Updated Moodle Plugin CI to latest upstream recommendations
+
 ### v4.0-r8
 
 * 2022-11-21 - Improvement: Restrict accepted file types for background images, solves #147.
