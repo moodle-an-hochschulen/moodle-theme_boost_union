@@ -420,11 +420,11 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('courseheaderimageheight', 'theme_boost_union', null, true);
         $description = get_string('courseheaderimageheight_desc', 'theme_boost_union', null, true);
         $courseheaderimageheightoptions = array(
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEHEIGHT_100PX => THEME_BOOST_UNION_SETTING_COURSEIMAGEHEIGHT_100PX,
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEHEIGHT_150PX => THEME_BOOST_UNION_SETTING_COURSEIMAGEHEIGHT_150PX,
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEHEIGHT_200PX => THEME_BOOST_UNION_SETTING_COURSEIMAGEHEIGHT_200PX,
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEHEIGHT_250PX => THEME_BOOST_UNION_SETTING_COURSEIMAGEHEIGHT_250PX);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_COURSEIMAGEHEIGHT_150PX,
+                THEME_BOOST_UNION_SETTING_HEIGHT_100PX => THEME_BOOST_UNION_SETTING_HEIGHT_100PX,
+                THEME_BOOST_UNION_SETTING_HEIGHT_150PX => THEME_BOOST_UNION_SETTING_HEIGHT_150PX,
+                THEME_BOOST_UNION_SETTING_HEIGHT_200PX => THEME_BOOST_UNION_SETTING_HEIGHT_200PX,
+                THEME_BOOST_UNION_SETTING_HEIGHT_250PX => THEME_BOOST_UNION_SETTING_HEIGHT_250PX);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_HEIGHT_150PX,
                 $courseheaderimageheightoptions);
         $tab->add($setting);
         $page->hide_if('theme_boost_union/courseheaderimageheight', 'theme_boost_union/courseheaderimageenabled', 'neq',
@@ -435,26 +435,26 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('courseheaderimageposition', 'theme_boost_union', null, true);
         $description = get_string('courseheaderimageposition_desc', 'theme_boost_union', null, true);
         $courseheaderimagepositionoptions = array(
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_CENTER_CENTER =>
-                        THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_CENTER_CENTER,
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_CENTER_TOP =>
-                        THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_CENTER_TOP,
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_CENTER_BOTTOM =>
-                        THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_CENTER_BOTTOM,
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_LEFT_TOP =>
-                        THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_LEFT_TOP,
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_LEFT_CENTER =>
-                        THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_LEFT_CENTER,
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_LEFT_BOTTOM =>
-                        THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_LEFT_BOTTOM,
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_RIGHT_TOP =>
-                        THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_RIGHT_TOP,
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_RIGHT_CENTER =>
-                        THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_RIGHT_CENTER,
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_RIGHT_BOTTOM =>
-                        THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_RIGHT_BOTTOM);
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM);
         $setting = new admin_setting_configselect($name, $title, $description,
-                THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_CENTER_CENTER, $courseheaderimagepositionoptions);
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER, $courseheaderimagepositionoptions);
         $tab->add($setting);
         $page->hide_if('theme_boost_union/courseheaderimageposition', 'theme_boost_union/courseheaderimageenabled', 'neq',
                 THEME_BOOST_UNION_SETTING_SELECT_YES);
@@ -1121,6 +1121,182 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                     THEME_BOOST_UNION_SETTING_SELECT_YES);
             $page->hide_if('theme_boost_union/infobanner'.$i.'dismissible', 'theme_boost_union/infobanner'.$i.'mode', 'neq',
                     THEME_BOOST_UNION_SETTING_INFOBANNERMODE_PERPETUAL);
+        }
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
+        // Create advertisement tiles tab.
+        $tab = new admin_settingpage('theme_boost_union_tiles',
+            get_string('tilestab', 'theme_boost_union', null, true));
+
+        // Create advertisement tiles general heading.
+        $name = 'theme_boost_union/tilesgeneralheading';
+        $title = get_string('tilesgeneralheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Position of the advertisement tiles on the frontpage.
+        $tilefrontpagepositionoptions = array(
+                THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_FRONTPAGEPOSITION_BEFORE =>
+                        get_string('tilefrontpagepositionsetting_before', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_FRONTPAGEPOSITION_AFTER =>
+                        get_string('tilefrontpagepositionsetting_after', 'theme_boost_union'));
+        $name = 'theme_boost_union/tilefrontpageposition';
+        $title = get_string('tilefrontpagepositionsetting', 'theme_boost_union', null, true);
+        $url = new moodle_url('/admin/settings.php', array('section' => 'frontpagesettings'));
+        $description = get_string('tilefrontpagepositionsetting_desc', 'theme_boost_union', array('url' => $url), true);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_FRONTPAGEPOSITION_BEFORE, $tilefrontpagepositionoptions);
+        $tab->add($setting);
+
+        // Setting: Number of advertisement tile columns per row.
+        $tilecolumnsoptions = array();
+        for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COLUMN_COUNT; $i++) {
+            $tilecolumnsoptions[$i] = $i;
+        }
+        $name = 'theme_boost_union/tilecolumns';
+        $title = get_string('tilecolumnssetting', 'theme_boost_union', null, true);
+        $description = get_string('tilecolumnssetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, 2, $tilecolumnsoptions);
+        $tab->add($setting);
+
+        // Setting: Advertisement tiles height.
+        $name = 'theme_boost_union/tileheight';
+        $title = get_string('tileheightsetting', 'theme_boost_union', null, true);
+        $description = get_string('tileheightsetting_desc', 'theme_boost_union', null, true);
+        $tileheightoptions = array(
+                THEME_BOOST_UNION_SETTING_HEIGHT_100PX => THEME_BOOST_UNION_SETTING_HEIGHT_100PX,
+                THEME_BOOST_UNION_SETTING_HEIGHT_150PX => THEME_BOOST_UNION_SETTING_HEIGHT_150PX,
+                THEME_BOOST_UNION_SETTING_HEIGHT_200PX => THEME_BOOST_UNION_SETTING_HEIGHT_200PX,
+                THEME_BOOST_UNION_SETTING_HEIGHT_250PX => THEME_BOOST_UNION_SETTING_HEIGHT_250PX);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_HEIGHT_150PX, $tileheightoptions);
+        $tab->add($setting);
+
+        // Prepare options for the order settings.
+        $tilesorders = array();
+        for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
+            $tilesorders[$i] = $i;
+        }
+
+        // Create the hardcoded amount of advertisement tiles without code duplication.
+        for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
+
+            // Create advertisement tile heading.
+            $name = 'theme_boost_union/tile'.$i.'heading';
+            $title = get_string('tileheading', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_heading($name, $title, null);
+            $tab->add($setting);
+
+            // Setting: Advertisement tile enabled.
+            $name = 'theme_boost_union/tile'.$i.'enabled';
+            $title = get_string('tileenabledsetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('tileenabledsetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
+                    $yesnooption);
+            $tab->add($setting);
+
+            // Setting: Advertisement tile title.
+            $name = 'theme_boost_union/tile'.$i.'title';
+            $title = get_string('tiletitlesetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('tiletitlesetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_configtext($name, $title, $description, '');
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/tile'.$i.'title', 'theme_boost_union/tile'.$i.'enabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Advertisement tile content.
+            $name = 'theme_boost_union/tile'.$i.'content';
+            $title = get_string('tilecontentsetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('tilecontentsetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_confightmleditor($name, $title, $description, '');
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/tile'.$i.'content', 'theme_boost_union/tile'.$i.'enabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Advertisement tile background image.
+            $name = 'theme_boost_union/tile'.$i.'backgroundimage';
+            $title = get_string('tilebackgroundimagesetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('tilebackgroundimagesetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_configstoredfile($name, $title, $description, 'tilebackgroundimage'.$i, 0,
+                array('maxfiles' => 1, 'accepted_types' => 'web_image'));
+            $setting->set_updatedcallback('theme_reset_all_caches');
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/tile'.$i.'backgroundimage', 'theme_boost_union/tile'.$i.'enabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Course header image position.
+            $name = 'theme_boost_union/tile'.$i.'backgroundimageposition';
+            $title = get_string('tilebackgroundimagepositionsetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('tilebackgroundimagepositionsetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $tilebackgroundimagepositionoptions = array(
+                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER =>
+                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER,
+                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP =>
+                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP,
+                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM =>
+                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM,
+                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP =>
+                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP,
+                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER =>
+                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER,
+                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM =>
+                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM,
+                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP =>
+                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP,
+                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER =>
+                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER,
+                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
+                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM);
+            $setting = new admin_setting_configselect($name, $title, $description,
+                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER, $tilebackgroundimagepositionoptions);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/tile'.$i.'backgroundimageposition', 'theme_boost_union/tile'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Advertisement tile link URL.
+            $name = 'theme_boost_union/tile'.$i.'link';
+            $title = get_string('tilelinksetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('tilelinksetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/tile'.$i.'link', 'theme_boost_union/tile'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Advertisement tile link title.
+            $name = 'theme_boost_union/tile'.$i.'linktitle';
+            $title = get_string('tilelinktitlesetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('tilelinktitlesetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_configtext($name, $title, $description, '');
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/tile'.$i.'linktitle', 'theme_boost_union/tile'.$i.'enabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Advertisement tile link target.
+            $name = 'theme_boost_union/tile'.$i.'linktarget';
+            $title = get_string('tilelinktargetsetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('tilelinktargetsetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $tilelinktargetnoptions = array(
+                    THEME_BOOST_UNION_SETTING_LINKTARGET_SAMEWINDOW =>
+                            get_string('tilelinktargetsetting_samewindow', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_LINKTARGET_NEWTAB =>
+                            get_string('tilelinktargetsetting_newtab', 'theme_boost_union'));
+            $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_LINKTARGET_SAMEWINDOW,
+                    $tilelinktargetnoptions);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/tile'.$i.'linktarget', 'theme_boost_union/tile'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Advertisement tile order position.
+            $name = 'theme_boost_union/tile'.$i.'order';
+            $title = get_string('tileordersetting', 'theme_boost_union', array('no' => $i), true);
+            $description = get_string('tileordersetting_desc', 'theme_boost_union', array('no' => $i), true);
+            $setting = new admin_setting_configselect($name, $title, $description, $i, $tilesorders);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/tile'.$i.'order', 'theme_boost_union/tile'.$i.'enabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
         }
 
         // Add tab to settings page.

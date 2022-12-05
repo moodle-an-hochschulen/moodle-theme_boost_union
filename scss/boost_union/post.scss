@@ -225,6 +225,26 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     margin-bottom: 0;
 }
 
+/*=======================================
+ * Settings: Content -> Advertisement tiles.
+ ======================================*/
+
+/* Remove horizontal paddings on the tile container on smaller screens to align it with the main frontpage content. */
+@include media-breakpoint-down(sm) {
+    #themeboostunionadvtiles {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+/* Style the advertisement tile cards. */
+#themeboostunionadvtiles [class*="col-"] .card {
+    background-size: cover;
+    /* d-flex align-items-stretch align-self-stretch classes in mustache template require to set width to inherit
+       (Otherwise width is flexible dependent on content). */
+    width: inherit;
+}
+
 
 /*=======================================
  * Settings: Functionality -> Courses.

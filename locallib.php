@@ -402,14 +402,14 @@ function theme_boost_union_infobanner_is_shown_on_page($bannerno) {
 }
 
 /**
- * Helper function to compare two infobanner orders.
+ * Helper function to compare either infobanner or tiles orders.
  *
  * @param int $a The first value
  * @param int $b The second value
  *
  * @return boolean.
  */
-function theme_boost_union_infobanner_compare_order($a, $b) {
+function theme_boost_union_compare_order($a, $b) {
     // If the same 'order' attribute is given to both items.
     if ($a->order == $b->order) {
         // We have to compare the 'no' attribute.
@@ -537,6 +537,53 @@ function theme_boost_union_get_loginbackgroundimage_files() {
     }
 
     return $files;
+}
+
+/**
+ *
+ * Get the advertisement tile's background image URL from the filearea 'tilebackgroundimage'.tileno.
+ *
+ * Note:
+ * Calling this function for each tile separately is maybe not performant. Originally it was planed to put
+ * all files in one filearea. However, at the time of development
+ * https://github.com/moodle/moodle/blob/master/lib/outputlib.php#L2062
+ * did not support itemids in setting-files of themes.
+ *
+ * @param int $tileno The tile number.
+ * @return string|null
+ */
+function theme_boost_union_get_urloftilebackgroundimage($tileno) {
+    // If the tile number is apparently not valid, return.
+    // Note: We just check the tile's number, we do not check if the tile is enabled or not.
+    if ($tileno < 0 || $tileno > THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT) {
+        return null;
+    }
+
+    // Get the background image config for this tile.
+    $bgconfig = get_config('theme_boost_union', 'tile'.$tileno.'backgroundimage');
+
+    // If a background image is configured.
+    if (!empty($bgconfig)) {
+        // Get the system context.
+        $systemcontext = context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get all files from filearea.
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'tilebackgroundimage'.$tileno,
+                false, 'itemid', false);
+
+        // Just pick the first file - we are sure that there is just one file.
+        $file = reset($files);
+
+        // Build and return the image URL.
+        return moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+    }
+
+    // As no image was found, return null.
+    return null;
 }
 
 /**
