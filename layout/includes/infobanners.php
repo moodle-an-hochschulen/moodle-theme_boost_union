@@ -87,7 +87,7 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_INFOBANNER_COUNT; $i++) {
 }
 
 // Reorder the info banners based on their order settings.
-usort($infobanners, 'theme_boost_union_infobanner_compare_order');
+usort($infobanners, 'theme_boost_union_compare_order');
 
 // Add info banners data to templatecontext.
 $templatecontext['infobanners'] = $infobanners;

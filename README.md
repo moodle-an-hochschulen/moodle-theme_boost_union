@@ -262,6 +262,10 @@ With these settings, you can add rich text content which will be shown on a main
 
 In this tab, you can enable and configure multiple information banners to be shown on selected pages.
 
+#### Tab "Advertisement tiles"
+
+In this tab, you can enable and configure multiple advertisement tiles to be shown on site home.
+
 ### Settings page "Functionality"
 
 #### Tab "Courses"
