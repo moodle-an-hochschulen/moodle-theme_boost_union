@@ -136,6 +136,30 @@ With these settings, you can overwrite the Bootstrap colors which are used withi
 
 With these settings, you can overwrite the activity icon colors which are used within courses.
 
+#### Tab "Course"
+
+##### Course Header
+
+###### Display the course image in the course header
+
+When enabled, the course image (which can be uploaded in a course's course settings) is displayed in the header of a course. The course images are shown there in addition to the 'My courses' page where they are always shown.
+
+###### Fallback course header image
+
+If you upload an image in this setting, it is used as fallback image and is displayed in the course header if no course image is uploaded in a particular course's course settings. If you do not upload an image here, a course header image is only shown in a particular course if a course image is uploaded in this particular course's course settings.
+
+###### Course header image height
+
+With this setting, you control the height of the presented course header image.
+
+###### Course header image layout
+
+With this setting, you control the layout of the course header image and the course title.
+
+###### Course header image position
+
+With this setting, you control the positioning of the course header image within the course header container. The first value is the horizontal position, the second value is the vertical position.
+
 #### Tab "E-Mail branding"
 
 In this tab, you find a feature which you can use to apply branding to all E-Mails which Moodle is sending out.

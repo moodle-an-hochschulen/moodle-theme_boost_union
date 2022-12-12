@@ -1185,3 +1185,51 @@ function theme_boost_union_add_flavourcss_to_page() {
         $PAGE->requires->css($flavourcssurl);
     }
 }
+
+/**
+ * Helper function which returns the course header image url, picking the current course from the course settings
+ * or the fallback image from the theme.
+ * If no course header image can should be shown for the current course, the function returns null.
+ *
+ * @return null | string
+ */
+function theme_boost_union_get_course_header_image_url() {
+    global $PAGE;
+
+    // If the current course is the frontpage course (which means that we are not within any real course),
+    // directly return null.
+    if (isset($PAGE->course->id) && $PAGE->course->id == SITEID) {
+        return null;
+    }
+
+    // Get the course image.
+    $courseimage = \core_course\external\course_summary_exporter::get_course_image($PAGE->course);
+
+    // If the course has a course image.
+    if ($courseimage) {
+        // Then return it directly.
+        return $courseimage;
+
+        // Otherwise, if a fallback image is configured.
+    } else if (get_config('theme_boost_union', 'courseheaderimagefallback')) {
+        // Get the system context.
+        $systemcontext = \context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get all files from filearea.
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'courseheaderimagefallback',
+            false, 'itemid', false);
+
+        // Just pick the first file - we are sure that there is just one file.
+        $file = reset($files);
+
+        // Build and return the image URL.
+        return moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+            $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+    }
+
+    // As no picture was found, return null.
+    return null;
+}

@@ -1,4 +1,24 @@
 /*=======================================
+ * Settings: Look -> Course
+ ======================================*/
+
+/*---------------------------------------
+ * Setting: Course header image.
+ --------------------------------------*/
+#courseheaderimage {
+    background-size: cover;
+    @include border-radius();
+}
+.courseheaderimage-dark {
+    color: white;
+    text-shadow: 0 0 5px black;
+}
+.courseheaderimage-light {
+    color: black;
+    text-shadow: 0 0 5px white;
+}
+
+/*=======================================
  * Settings: Look -> Resources
  ======================================*/
 

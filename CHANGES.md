@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2022-12-31 - Feature: Add settings and layouts to enable/disable showing course images or a fallback image in the header of the course page, solves #77.
 * 2022-12-31 - Feature: Allow admins to define 'flavours' (i.e. special designs) which are applied to cohorts and / or course categories, solves #25.
 * 2022-12-19 - Feature: Allow admins to hide primary navigation items, solves #65.
 * 2022-12-14 - Feature: Built-in contact, help and maintenance pages, solves #150.
