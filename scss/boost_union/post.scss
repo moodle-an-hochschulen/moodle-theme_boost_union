@@ -54,6 +54,16 @@
  * Settings: Content -> Footnote.
  ======================================*/
 
+/* Static pages links dividers. */
+#footnote {
+    .theme_boost_union_footnote_link {
+        border-right: 2px solid $nav-divider-color;
+    }
+    .theme_boost_union_footnote_link:last-of-type {
+        border-right: none;
+    }
+}
+
 /* The footnote styles are different on the login page and on all non-login pages.
    They are also different on larger and smaller screens.
    We will deal with the overall cases for all screen sizes first and will then overwrite the things which need

@@ -216,6 +216,18 @@ In this tab there are the following settings:
 
 With these settings, you can add rich text content which will be shown on the imprint page.
 
+##### Contact
+
+With these settings, you can add rich text content which will be shown on the contact page.
+
+##### Help
+
+With these settings, you can add rich text content which will be shown on the help page.
+
+##### Maintenance
+
+With these settings, you can add rich text content which will be shown on the maintenance page.
+
 #### Tab "Information banners"
 
 In this tab, you can enable and configure multiple information banners to be shown on selected pages.

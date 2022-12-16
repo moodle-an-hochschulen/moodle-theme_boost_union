@@ -279,36 +279,38 @@ function theme_boost_union_get_course_related_hints() {
 }
 
 /**
- * Build the link to the imprint page.
+ * Build the link to a static page.
  *
+ * @param string $page The static page's identifier.
  * @return string.
  */
-function theme_boost_union_get_imprint_link() {
+function theme_boost_union_get_staticpage_link($page) {
     // Compose the URL object.
-    $url = new moodle_url('/theme/boost_union/pages/imprint.php');
+    $url = new moodle_url('/theme/boost_union/pages/'.$page.'.php');
 
     // Return the string representation of the URL.
     return $url->out();
 }
 
 /**
- * Build the page title of the imprint page.
+ * Build the page title of a static page.
  *
+ * @param string $page The static page's identifier.
  * @return string.
  */
-function theme_boost_union_get_imprint_pagetitle() {
+function theme_boost_union_get_staticpage_pagetitle($page) {
     // Get the configured page title.
-    $imprintpagetitleconfig = get_config('theme_boost_union', 'imprintpagetitle');
+    $pagetitleconfig = get_config('theme_boost_union', $page.'pagetitle');
 
     // If there is a string configured.
-    if ($imprintpagetitleconfig) {
+    if ($pagetitleconfig) {
         // Return this setting.
-        return $imprintpagetitleconfig;
+        return $pagetitleconfig;
 
         // Otherwise.
     } else {
         // Return the default string.
-        return get_string('imprintpagetitledefault', 'theme_boost_union');
+        return get_string($page.'pagetitledefault', 'theme_boost_union');
     }
 }
 

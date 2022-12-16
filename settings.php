@@ -774,59 +774,68 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $tab = new admin_settingpage('theme_boost_union_content_staticpages',
                 get_string('staticpagestab', 'theme_boost_union', null, true));
 
-        // Create imprint heading.
-        $name = 'theme_boost_union/imprintheading';
-        $title = get_string('imprintheading', 'theme_boost_union', null, true);
-        $setting = new admin_setting_heading($name, $title, null);
-        $tab->add($setting);
+        // The static pages to be supported.
+        $staticpages = array('imprint', 'contact', 'help', 'maintenance');
 
-        // Setting: Enable imprint.
-        $name = 'theme_boost_union/enableimprint';
-        $title = get_string('enableimprintsetting', 'theme_boost_union', null, true);
-        $description = '';
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $tab->add($setting);
+        // Iterate over the pages.
+        foreach ($staticpages as $staticpage) {
 
-        // Setting: Imprint content.
-        $name = 'theme_boost_union/imprintcontent';
-        $title = get_string('imprintcontentsetting', 'theme_boost_union', null, true);
-        $description = get_string('imprintcontentsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_confightmleditor($name, $title, $description, '');
-        $tab->add($setting);
-        $page->hide_if('theme_boost_union/imprintcontent', 'theme_boost_union/enableimprint', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
+            // Create page heading.
+            $name = 'theme_boost_union/'.$staticpage.'heading';
+            $title = get_string($staticpage.'heading', 'theme_boost_union', null, true);
+            $setting = new admin_setting_heading($name, $title, null);
+            $tab->add($setting);
 
-        // Setting: Imprint page title.
-        $name = 'theme_boost_union/imprintpagetitle';
-        $title = get_string('imprintpagetitlesetting', 'theme_boost_union', null, true);
-        $description = get_string('imprintpagetitlesetting_desc', 'theme_boost_union', null, true);
-        $default = get_string('imprintpagetitledefault', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configtext($name, $title, $description, $default);
-        $tab->add($setting);
-        $page->hide_if('theme_boost_union/imprintpagetitle', 'theme_boost_union/enableimprint', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
+            // Setting: Enable page.
+            $name = 'theme_boost_union/enable'.$staticpage;
+            $title = get_string('enable'.$staticpage.'setting', 'theme_boost_union', null, true);
+            $description = '';
+            $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
+                    $yesnooption);
+            $tab->add($setting);
 
-        // Setting: Imprint link position.
-        $name = 'theme_boost_union/imprintlinkposition';
-        $title = get_string('imprintlinkpositionsetting', 'theme_boost_union', null, true);
-        $imprinturl = theme_boost_union_get_imprint_link();
-        $description = get_string('imprintlinkpositionsetting_desc', 'theme_boost_union', array('url' => $imprinturl), true);
-        $imprintlinkpositionoption =
-                // Don't use string lazy loading (= false) because the string will be directly used and would produce a
-                // PHP warning otherwise.
-                array(THEME_BOOST_UNION_SETTING_IMPRINTLINKPOSITION_NONE =>
-                        get_string('imprintlinkpositionnone', 'theme_boost_union', null, false),
-                        THEME_BOOST_UNION_SETTING_IMPRINTLINKPOSITION_FOOTNOTE =>
-                                get_string('imprintlinkpositionfootnote', 'theme_boost_union', null, false),
-                        THEME_BOOST_UNION_SETTING_IMPRINTLINKPOSITION_FOOTER =>
-                                get_string('imprintlinkpositionfooter', 'theme_boost_union', null, false),
-                        THEME_BOOST_UNION_SETTING_IMPRINTLINKPOSITION_BOTH =>
-                                get_string('imprintlinkpositionboth', 'theme_boost_union', null, false));
-        $default = 'none';
-        $setting = new admin_setting_configselect($name, $title, $description, $default, $imprintlinkpositionoption);
-        $tab->add($setting);
-        $page->hide_if('theme_boost_union/imprintlinkposition', 'theme_boost_union/enableimprint', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
+            // Setting: Page content.
+            $name = 'theme_boost_union/'.$staticpage.'content';
+            $title = get_string($staticpage.'contentsetting', 'theme_boost_union', null, true);
+            $description = get_string($staticpage.'contentsetting_desc', 'theme_boost_union', null, true);
+            $setting = new admin_setting_confightmleditor($name, $title, $description, '');
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/'.$staticpage.'content', 'theme_boost_union/enable'.$staticpage, 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Page title.
+            $name = 'theme_boost_union/'.$staticpage.'pagetitle';
+            $title = get_string($staticpage.'pagetitlesetting', 'theme_boost_union', null, true);
+            $description = get_string($staticpage.'pagetitlesetting_desc', 'theme_boost_union', null, true);
+            $default = get_string($staticpage.'pagetitledefault', 'theme_boost_union', null, true);
+            $setting = new admin_setting_configtext($name, $title, $description, $default);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/'.$staticpage.'pagetitle', 'theme_boost_union/enable'.$staticpage, 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Page link position.
+            $name = 'theme_boost_union/'.$staticpage.'linkposition';
+            $title = get_string($staticpage.'linkpositionsetting', 'theme_boost_union', null, true);
+            $staticpageurl = theme_boost_union_get_staticpage_link($staticpage);
+            $description = get_string($staticpage.'linkpositionsetting_desc', 'theme_boost_union', array('url' => $staticpageurl),
+                    true);
+            $linkpositionoption =
+                    // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+                    // PHP warning otherwise.
+                    array(THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_NONE =>
+                            get_string($staticpage.'linkpositionnone', 'theme_boost_union', null, false),
+                            THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTNOTE =>
+                                    get_string($staticpage.'linkpositionfootnote', 'theme_boost_union', null, false),
+                            THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTER =>
+                                    get_string($staticpage.'linkpositionfooter', 'theme_boost_union', null, false),
+                            THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_BOTH =>
+                                    get_string($staticpage.'linkpositionboth', 'theme_boost_union', null, false));
+            $default = 'none';
+            $setting = new admin_setting_configselect($name, $title, $description, $default, $linkpositionoption);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/'.$staticpage.'linkposition', 'theme_boost_union/enable'.$staticpage, 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+        }
 
         // Add tab to settings page.
         $page->add($tab);
