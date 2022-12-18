@@ -18,7 +18,8 @@
  * Theme Boost Union - Reset dismissed info banner visibility.
  *
  * @package    theme_boost_union
- * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @copyright  on behalf of Zurich University of Applied Sciences (ZHAW)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

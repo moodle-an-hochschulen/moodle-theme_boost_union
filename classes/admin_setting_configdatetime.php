@@ -18,7 +18,8 @@
  * Theme Boost Union - Settings class file
  *
  * @package    theme_boost_union
- * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @copyright  on behalf of Zurich University of Applied Sciences (ZHAW)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,8 +29,9 @@ namespace theme_boost_union;
  * Class used for picking a date and time.
  *
  * @package    theme_boost_union
- * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
- *             based on code by Valery Fremaux (valery.fremaux@gmail.com) in block_use_stats.
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @copyright  on behalf of Zurich University of Applied Sciences (ZHAW)
+ * @copyright  based on code by Valery Fremaux (valery.fremaux@gmail.com) in block_use_stats.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
  * Valery's original class comment:
