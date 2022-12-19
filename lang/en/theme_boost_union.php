@@ -290,7 +290,7 @@ $string['enablecontactsetting'] = 'Enable contact page';
 $string['contactdisabled'] = 'The contact page is disabled for this site. There is nothing to see here.';
 // ... ... Setting: Contact page content.
 $string['contactcontentsetting'] = 'Contact page content';
-$string['contactcontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the contact page.';
+$string['contactcontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on a contact page (which is not the same as the built-in Moodle \'Contact site support\' page).';
 // ... ... Setting: Contact page title.
 $string['contactpagetitledefault'] = 'Contact';
 $string['contactpagetitlesetting'] = 'Contact page title';
@@ -309,7 +309,7 @@ $string['enablehelpsetting'] = 'Enable help page';
 $string['helpdisabled'] = 'The help page is disabled for this site. There is nothing to see here.';
 // ... ... Setting: Help page content.
 $string['helpcontentsetting'] = 'Help page content';
-$string['helpcontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the help page.';
+$string['helpcontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on a help page.';
 // ... ... Setting: Help page title.
 $string['helppagetitledefault'] = 'Help';
 $string['helppagetitlesetting'] = 'Help page title';
@@ -324,22 +324,22 @@ $string['helplinkpositionsetting_desc'] = 'In this setting, you can configure if
 // ... Section: Maintenance page.
 $string['maintenanceheading'] = 'Maintenance';
 // ... ... Setting: Enable maintenance page.
-$string['enablemaintenancesetting'] = 'Enable maintenance page';
-$string['maintenancedisabled'] = 'The maintenance page is disabled for this site. There is nothing to see here.';
+$string['enablemaintenancesetting'] = 'Enable maintenance information page';
+$string['maintenancedisabled'] = 'The maintenance information page is disabled for this site. There is nothing to see here.';
 // ... ... Setting: Maintenance page content.
-$string['maintenancecontentsetting'] = 'Maintenance page content';
-$string['maintenancecontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the maintenance page.';
+$string['maintenancecontentsetting'] = 'Maintenance information page content';
+$string['maintenancecontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on a maintenance information page (which is not the same as the built-in Moodle maintenance mode page).';
 // ... ... Setting: Maintenance page title.
 $string['maintenancepagetitledefault'] = 'Maintenance';
-$string['maintenancepagetitlesetting'] = 'Maintenance page title';
-$string['maintenancepagetitlesetting_desc'] = 'In this setting, you can define the title of the maintenance page. This text will be used as link text to the maintenance page as well if you configure \'Maintenance page link position\' accordingly.';
+$string['maintenancepagetitlesetting'] = 'Maintenance information page title';
+$string['maintenancepagetitlesetting_desc'] = 'In this setting, you can define the title of the maintenance information page. This text will be used as link text to the maintenance information page as well if you configure \'Maintenance information page link position\' accordingly.';
 // ... ... Setting: Maintenance page link position.
-$string['maintenancelinkpositionnone'] = 'Do not automatically show a link to the maintenance page';
-$string['maintenancelinkpositionfootnote'] = 'Add a link to the maintenance page to the footnote';
-$string['maintenancelinkpositionfooter'] = 'Add a link to the maintenance page to the footer (questionmark) icon';
-$string['maintenancelinkpositionboth'] = 'Add a link to the maintenance page to the footnote and to the footer (questionmark) icon';
-$string['maintenancelinkpositionsetting'] = 'Maintenance page link position';
-$string['maintenancelinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the maintenance page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+$string['maintenancelinkpositionnone'] = 'Do not automatically show a link to the maintenance information page';
+$string['maintenancelinkpositionfootnote'] = 'Add a link to the maintenance information page to the footnote';
+$string['maintenancelinkpositionfooter'] = 'Add a link to the maintenance information page to the footer (questionmark) icon';
+$string['maintenancelinkpositionboth'] = 'Add a link to the maintenance information page to the footnote and to the footer (questionmark) icon';
+$string['maintenancelinkpositionsetting'] = 'Maintenance information page link position';
+$string['maintenancelinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the maintenance information page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
 // Settings: Info banners tab.
 $string['infobannertab'] = 'Info banner';
 // ... Section: Info banners.

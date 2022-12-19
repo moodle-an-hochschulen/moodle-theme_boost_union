@@ -218,15 +218,15 @@ With these settings, you can add rich text content which will be shown on the im
 
 ##### Contact
 
-With these settings, you can add rich text content which will be shown on the contact page.
+With these settings, you can add rich text content which will be shown on a contact page (which is not the same as the built-in Moodle 'Contact site support' page).
 
 ##### Help
 
-With these settings, you can add rich text content which will be shown on the help page.
+With these settings, you can add rich text content which will be shown on a help page.
 
 ##### Maintenance
 
-With these settings, you can add rich text content which will be shown on the maintenance page.
+With these settings, you can add rich text content which will be shown on a maintenance information page (which is not the same as the built-in Moodle maintenance page).
 
 #### Tab "Information banners"
 
