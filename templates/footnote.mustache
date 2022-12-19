@@ -28,7 +28,16 @@
         "footnotesetting": "This is my nice footnote",
         "imprintlinkpositionfootnote": true,
         "imprintlink": "https://localhost/theme/boost_union/pages/imprint.php",
-        "imprintpagetitle": "Imprint"
+        "imprinttitle": "Imprint",
+        "contactlinkpositionfootnote": true,
+        "contactlink": "https://localhost/theme/boost_union/pages/contact.php",
+        "contacttitle": "Contact",
+        "helplinkpositionfootnote": true,
+        "helplink": "https://localhost/theme/boost_union/pages/help.php",
+        "helplinktitle": "Help",
+        "maintenancelinkpositionfootnote": true,
+        "maintenancelink": "https://localhost/theme/boost_union/pages/maintenance.php",
+        "maintenancetitle": "Maintenance"
     }
 }}
 
@@ -38,11 +47,28 @@
             <div class="row">
                 {{{ footnotesetting }}}
             </div>
-            {{# imprintlinkpositionfootnote }}
-                <div class="imprintlink row{{# footnotesetting }} mt-1{{/ footnotesetting }}">
-                    <a href="{{ imprintlink }}">{{ imprintpagetitle }}</a>
-                </div>
-            {{/ imprintlinkpositionfootnote }}
+            <div class="row{{# footnotesetting }} mt-1{{/ footnotesetting }}">
+                {{# imprintlinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_imprintlink pr-2 mr-2">
+                        <a href="{{ imprintlink }}">{{ imprintpagetitle }}</a>
+                    </span>
+                {{/ imprintlinkpositionfootnote }}
+                {{# contactlinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_contactlink pr-2 mr-2">
+                        <a href="{{ contactlink }}">{{ contactpagetitle }}</a>
+                    </span>
+                {{/ contactlinkpositionfootnote }}
+                {{# helplinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_helplink pr-2 mr-2">
+                        <a href="{{ helplink }}">{{ helppagetitle }}</a>
+                    </span>
+                {{/ helplinkpositionfootnote }}
+                {{# maintenancelinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_maintenancelink pr-2 mr-2">
+                        <a href="{{ maintenancelink }}">{{ maintenancepagetitle }}</a>
+                    </span>
+                {{/ maintenancelinkpositionfootnote }}
+            </div>
         </div>
     </div>
 {{/ showfootnote }}

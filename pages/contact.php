@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Imprint page.
+ * Theme Boost Union - Contact page.
  *
  * @package    theme_boost_union
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -34,7 +34,7 @@ require_once($CFG->dirroot.'/theme/boost_union/lib.php');
 require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
 
 // Set page URL.
-$PAGE->set_url('/theme/boost_union/pages/imprint.php');
+$PAGE->set_url('/theme/boost_union/pages/contact.php');
 
 // Set page layout.
 $PAGE->set_pagelayout('standard');
@@ -43,15 +43,15 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_context(context_system::instance());
 
 // Add page name as body class.
-$PAGE->add_body_class('theme_boost_union-imprint');
+$PAGE->add_body_class('theme_boost_union-contact');
 
 // Get theme config.
 $config = get_config('theme_boost_union');
 
-// If the imprint is disabled, we just show a short friendly warning page and are done.
-if ($config->enableimprint != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+// If the contact page is disabled, we just show a short friendly warning page and are done.
+if ($config->enablecontact != THEME_BOOST_UNION_SETTING_SELECT_YES) {
     echo $OUTPUT->header();
-    $notification = new \core\output\notification(get_string('imprintdisabled', 'theme_boost_union'),
+    $notification = new \core\output\notification(get_string('contactdisabled', 'theme_boost_union'),
             \core\output\notification::NOTIFY_INFO);
     $notification->set_show_closebutton(false);
     echo $OUTPUT->render($notification);
@@ -60,16 +60,16 @@ if ($config->enableimprint != THEME_BOOST_UNION_SETTING_SELECT_YES) {
 }
 
 // Set page title.
-$PAGE->set_title(theme_boost_union_get_staticpage_pagetitle('imprint'));
+$PAGE->set_title(theme_boost_union_get_staticpage_pagetitle('contact'));
 
 // Start page output.
 echo $OUTPUT->header();
 
 // Show page heading.
-echo $OUTPUT->heading(theme_boost_union_get_staticpage_pagetitle('imprint'));
+echo $OUTPUT->heading(theme_boost_union_get_staticpage_pagetitle('contact'));
 
-// Output imprint content.
-echo format_text($config->imprintcontent);
+// Output contact page content.
+echo format_text($config->contactcontent);
 
 // Finish page.
 echo $OUTPUT->footer();

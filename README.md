@@ -216,6 +216,18 @@ In this tab there are the following settings:
 
 With these settings, you can add rich text content which will be shown on the imprint page.
 
+##### Contact
+
+With these settings, you can add rich text content which will be shown on a contact page (which is not the same as the built-in Moodle 'Contact site support' page).
+
+##### Help
+
+With these settings, you can add rich text content which will be shown on a help page.
+
+##### Maintenance
+
+With these settings, you can add rich text content which will be shown on a maintenance information page (which is not the same as the built-in Moodle maintenance page).
+
 #### Tab "Information banners"
 
 In this tab, you can enable and configure multiple information banners to be shown on selected pages.

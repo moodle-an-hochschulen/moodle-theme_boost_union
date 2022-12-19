@@ -60,4 +60,31 @@ class behat_theme_boost_union extends behat_base {
     public function i_am_on_imprint_page() {
         $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/imprint.php']);
     }
+
+    /**
+     * Open the contact page.
+     *
+     * @Given /^I am on contact page$/
+     */
+    public function i_am_on_contact_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/contact.php']);
+    }
+
+    /**
+     * Open the help page.
+     *
+     * @Given /^I am on help page$/
+     */
+    public function i_am_on_help_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/help.php']);
+    }
+
+    /**
+     * Open the maintenance page.
+     *
+     * @Given /^I am on maintenance page$/
+     */
+    public function i_am_on_maintenance_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/maintenance.php']);
+    }
 }

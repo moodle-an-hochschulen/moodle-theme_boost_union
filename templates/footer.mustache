@@ -31,7 +31,16 @@
         },
         "imprintlinkpositionfooter": true,
         "imprintlink": "https://localhost/theme/boost_union/pages/imprint.php",
-        "imprintpagetitle": "Imprint"
+        "imprinttitle": "Imprint",
+        "contactlinkpositionfooter": true,
+        "contactlink": "https://localhost/theme/boost_union/pages/contact.php",
+        "contacttitle": "Contact",
+        "helplinkpositionfooter": true,
+        "helplink": "https://localhost/theme/boost_union/pages/help.php",
+        "helplinktitle": "Help",
+        "maintenancelinkpositionfooter": true,
+        "maintenancelink": "https://localhost/theme/boost_union/pages/maintenance.php",
+        "maintenancetitle": "Maintenance"
     }
 }}
 {{!
@@ -39,6 +48,9 @@
 
     Modifications compared to this template:
     * Added the possibility to show the imprint page link.
+    * Added the possibility to show the contact page link.
+    * Added the possibility to show the help page link.
+    * Added the possibility to show the maintenance page link.
 }}
 
 <footer id="page-footer" class="footer-popover bg-white">
@@ -63,10 +75,25 @@
                 {{/ output.supportemail }}
 
                 {{# imprintlinkpositionfooter }}
-                    <div class="imprintlink">
+                    <div class="theme_boost_union_footer_imprintlink">
                         <a href="{{ imprintlink }}"><i class="icon fa fa-building-o fa-fw " aria-hidden="true"></i>{{ imprintpagetitle }}</a>
                     </div>
                 {{/ imprintlinkpositionfooter }}
+                {{# contactlinkpositionfooter }}
+                    <div class="theme_boost_union_footer_contactlink">
+                        <a href="{{ contactlink }}"><i class="icon fa fa-address-card fa-fw " aria-hidden="true"></i>{{ contactpagetitle }}</a>
+                    </div>
+                {{/ contactlinkpositionfooter }}
+                {{# helplinkpositionfooter }}
+                    <div class="theme_boost_union_footer_helplink">
+                        <a href="{{ helplink }}"><i class="icon fa fa-question-circle-o fa-fw " aria-hidden="true"></i>{{ helppagetitle }}</a>
+                    </div>
+                {{/ helplinkpositionfooter }}
+                {{# maintenancelinkpositionfooter }}
+                    <div class="theme_boost_union_footer_maintenancelink">
+                        <a href="{{ maintenancelink }}"><i class="icon fa fa-wrench fa-fw " aria-hidden="true"></i>{{ maintenancepagetitle }}</a>
+                    </div>
+                {{/ maintenancelinkpositionfooter }}
             </div>
         {{/ output.has_popover_links }}
         <div class="footer-section p-3 border-bottom">
