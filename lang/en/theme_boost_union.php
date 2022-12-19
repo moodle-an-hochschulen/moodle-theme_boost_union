@@ -222,6 +222,11 @@ $string['configtitlefeel'] = 'Feel';
 
 // Settings: Navigation tab.
 $string['navigationtab'] = 'Navigation';
+// ... Section: Primary navigation.
+$string['primarynavigationheading'] = 'Primary navigation';
+// ... ... Settings: Hide nodes in primary navigation.
+$string['hidenodesprimarynavigationsetting'] = 'Hide nodes in primary navigation';
+$string['hidenodesprimarynavigationsetting_desc'] = 'With this setting, you can hide one or multiple nodes from the primary navigation.';
 // ... Section: Navigation.
 $string['navigationheading'] = 'Navigation';
 // ... ... Setting: Back to top button.
