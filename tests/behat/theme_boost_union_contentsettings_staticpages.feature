@@ -25,7 +25,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
       | imprint     | Imprint     |
       | contact     | Contact     |
       | help        | Help        |
-      | maintenance | Maintenance |
+      | maintenance information | Maintenance |
 
   Scenario Outline: Setting: Enable static page - Enable and fill the static page with content
     Given the following config values are set as admin:
