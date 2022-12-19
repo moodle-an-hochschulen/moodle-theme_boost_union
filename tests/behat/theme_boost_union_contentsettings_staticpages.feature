@@ -15,17 +15,17 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
     Then ".theme_boost_union_footer_<page>link" "css_element" should not exist
     And ".theme_boost_union_footnote_<page>link" "css_element" should not exist
     And I am on <page> page
-    Then I should see "The <pagenamealternative> page is disabled for this site. There is nothing to see here."
+    Then I should see "The <pagedisabled> page is disabled for this site. There is nothing to see here."
     And ".theme_boost_union_footnote_<page>link" "css_element" should not exist in the "#footnote" "css_element"
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
     And ".theme_boost_union_footer_<page>link" "css_element" should not exist in the ".footer .popover-body" "css_element"
 
     Examples:
-      | page        | pagetitle   | pagenamealternative     |
-      | imprint     | Imprint     | imprint                 |
-      | contact     | Contact     | contact                 |
-      | help        | Help        | help                    |
-      | maintenance | Maintenance | maintenance information |
+      | page        | pagedisabled            |
+      | imprint     | imprint                 |
+      | contact     | contact                 |
+      | help        | help                    |
+      | maintenance | maintenance information |
 
   Scenario Outline: Setting: Enable static page - Enable and fill the static page with content
     Given the following config values are set as admin:
@@ -62,11 +62,11 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
     And ".theme_boost_union_footer_<page>link" "css_element" should not exist in the ".footer .popover-body" "css_element"
 
     Examples:
-      | page        | pagetitle   |
-      | imprint     | Imprint     |
-      | contact     | Contact     |
-      | help        | Help        |
-      | maintenance | Maintenance |
+      | page        |
+      | imprint     |
+      | contact     |
+      | help        |
+      | maintenance |
 
   @javascript
   Scenario Outline: Setting: Static page link position - Add the static page link to the footnote automatically (even if the footnote is empty otherwise)
@@ -211,8 +211,8 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
     Then I should see "Custom" in the ".footer .popover-body .theme_boost_union_footer_<page>link" "css_element"
 
     Examples:
-      | page        | pagetitle   |
-      | imprint     | Imprint     |
-      | contact     | Contact     |
-      | help        | Help        |
-      | maintenance | Maintenance |
+      | page        |
+      | imprint     |
+      | contact     |
+      | help        |
+      | maintenance |
