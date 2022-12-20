@@ -294,6 +294,19 @@ With this setting, you can set the width of the 'Outside (bottom)' block region 
 ###### Outside regions horizontal placement
 
 With this setting, you can control if, on larger screens, the 'Outside (left)' and 'Outside (right)' block regions should be placed near the main content area or rather near the window edges.
+##### Site home right-hand block drawer
+
+###### Show right-hand block drawer of site home on visit
+
+With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who are not logged in and does not overwrite the toggle state of each individual user.
+
+###### Show right-hand block drawer of site home on first login
+
+With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in for the very first time and does not overwrite the toggle state of each individual user.
+
+###### Show right-hand block drawer of site home on guest login
+
+With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in as a guest.
 
 #### Tab "Miscellaneous"
 

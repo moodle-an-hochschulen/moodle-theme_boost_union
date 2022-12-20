@@ -639,6 +639,18 @@ $string['tileordersetting_desc'] = 'With this setting, you define the order posi
 $string['tiletitlesetting'] = 'Advertisement tile {$a->no} title';
 $string['tiletitlesetting_desc'] = 'Here, you enter the title which should be displayed in the advertisement tile {$a->no}. This is an optional setting, the advertisement tile will be shown even if you do not set a title.';
 
+// ... Section: Site home right-hand block drawer behaviour.
+$string['sitehomerighthandblockdrawerbehaviour'] = 'Site home right-hand block drawer';
+// ... ... Setting: Show site home right-hand blocks drawer on visit setting.
+$string['showsitehomerighthandblockdraweronvisitsetting'] = 'Show right-hand block drawer of site home on visit';
+$string['showsitehomerighthandblockdraweronvisitsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who are not logged in and does not overwrite the toggle state of each individual user.';
+// ... ... Setting: Show site home right-hand block drawer on first login setting.
+$string['showsitehomerighthandblockdraweronfirstloginsetting'] = 'Show right-hand block drawer of site home on first login';
+$string['showsitehomerighthandblockdraweronfirstloginsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in for the very first time and does not overwrite the toggle state of each individual user.';
+// ... ... Setting: Show site home right-hand block drawer on guest login setting.
+$string['showsitehomerighthandblockdraweronguestloginsetting'] = 'Show right-hand block drawer of site home on guest login';
+$string['showsitehomerighthandblockdraweronguestloginsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in as a guest.';
+
 // Privacy API.
 $string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
 
