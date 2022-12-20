@@ -60,14 +60,38 @@ user_preference_allow_ajax_update('drawer-open-block', PARAM_BOOL);
 
 if (isloggedin()) {
     $courseindexopen = (get_user_preferences('drawer-open-index', true) == true);
-    $blockdraweropen = (get_user_preferences('drawer-open-block') == true);
+
+    if (isguestuser()) {
+        $sitehomerighthandblockdrawerserverconfig = get_config('theme_boost_union', 'showsitehomerighthandblockdraweronguestlogin');
+    } else {
+        $sitehomerighthandblockdrawerserverconfig = get_config('theme_boost_union', 'showsitehomerighthandblockdraweronfirstlogin');
+    }
+
+    $isadminsettingyes = ($sitehomerighthandblockdrawerserverconfig == THEME_BOOST_UNION_SETTING_SELECT_YES);
+    $blockdraweropen = (get_user_preferences('drawer-open-block', $isadminsettingyes)) == true;
 } else {
     $courseindexopen = false;
     $blockdraweropen = false;
+
+    if (get_config('theme_boost_union', 'showsitehomerighthandblockdraweronvisit') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        $blockdraweropen = true;
+    }
 }
 
 if (defined('BEHAT_SITE_RUNNING')) {
-    $blockdraweropen = true;
+    try {
+        if (
+            get_config('theme_boost_union', 'showsitehomerighthandblockdraweronvisit') === false &&
+            get_config('theme_boost_union', 'showsitehomerighthandblockdraweronguestlogin') === false &&
+            get_config('theme_boost_union', 'showsitehomerighthandblockdraweronfirstlogin') === false
+        ) {
+            $blockdraweropen = true;
+        }
+    } catch (Exception $e) {
+        echo $e->getMessage();
+
+        $blockdraweropen = true;
+    }
 }
 
 $extraclasses = ['uses-drawers'];
