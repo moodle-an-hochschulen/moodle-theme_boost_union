@@ -487,3 +487,109 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     And "#page-content" "css_element" should appear before "#theme-block-region-content-lower" "css_element"
     And "#theme-block-region-footer-left" "css_element" should appear before "#theme-block-region-footer-center" "css_element"
     And "#theme-block-region-footer-center" "css_element" should appear before "#theme-block-region-footer-right" "css_element"
+
+  Scenario: Test-Scenario 1.1: When the "showsitehomerighthandblockdraweronfirstlogin" setting is set to "yes" and I log in as a user for the first time I should see the drawer and the containing text block
+    Given the following config values are set as admin:
+      | config                               | value | plugin            |
+      | showsitehomerighthandblockdraweronfirstlogin | yes   | theme_boost_union |
+    And I log in as "admin"
+    And I am on site homepage
+    And I turn editing mode on
+    And I add the "Text" block
+    And I configure the "(new text block)" block
+    And I set the following fields to these values:
+      | Text block title | Text on all pages            |
+      | Content          | This is visible on all pages |
+    And I press "Save changes"
+    And I log out
+    When I log in as "student1"
+    And I am on site homepage
+    Then the "class" attribute of ".drawer-right" "css_element" should contain "show"
+
+  Scenario: Test-Scenario 1.2: When the "showsitehomerighthandblockdraweronfirstlogin" setting is set to "no" and I log in as a user for the first time I should not see the drawer and the containing text block
+    Given the following config values are set as admin:
+      | config                               | value | plugin            |
+      | showsitehomerighthandblockdraweronfirstlogin | no    | theme_boost_union |
+    And I log in as "admin"
+    And I am on site homepage
+    And I turn editing mode on
+    And I add the "Text" block
+    And I configure the "(new text block)" block
+    And I set the following fields to these values:
+      | Text block title | Text on all pages            |
+      | Content          | This is visible on all pages |
+    And I press "Save changes"
+    And I log out
+    When I log in as "student1"
+    And I am on site homepage
+    Then the "class" attribute of ".drawer-right" "css_element" should not contain "show"
+
+  Scenario: Test-Scenario 2.1: When the "showsitehomerighthandblockdraweronvisit" setting is set to "yes" and I visit the site I should see the drawer and the containing text block
+    Given the following config values are set as admin:
+      | config                          | value | plugin            |
+      | showsitehomerighthandblockdraweronvisit | yes   | theme_boost_union |
+    And I log in as "admin"
+    And I am on site homepage
+    And I turn editing mode on
+    And I add the "Text" block
+    And I configure the "(new text block)" block
+    And I set the following fields to these values:
+      | Text block title | Text on all pages            |
+      | Content          | This is visible on all pages |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    Then the "class" attribute of ".drawer-right" "css_element" should contain "show"
+
+  Scenario: Test-Scenario 2.2: When the "showsitehomerighthandblockdraweronvisit" setting is set to "no" and I visit the site I should not see the drawer and the containing text block
+    Given the following config values are set as admin:
+      | config                          | value | plugin            |
+      | showsitehomerighthandblockdraweronvisit | no    | theme_boost_union |
+    And I log in as "admin"
+    And I am on site homepage
+    And I turn editing mode on
+    And I add the "Text" block
+    And I configure the "(new text block)" block
+    And I set the following fields to these values:
+      | Text block title | Text on all pages            |
+      | Content          | This is visible on all pages |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    Then the "class" attribute of ".drawer-right" "css_element" should not contain "show"
+
+  Scenario: Test-Scenario 3.1: When the "showsitehomerighthandblockdraweronguestlogin" setting is set to "yes" and I log in as a guest I should see the drawer and the containing text block
+    Given the following config values are set as admin:
+      | config                               | value | plugin            |
+      | showsitehomerighthandblockdraweronguestlogin | yes   | theme_boost_union |
+    And I log in as "admin"
+    And I am on site homepage
+    And I turn editing mode on
+    And I add the "Text" block
+    And I configure the "(new text block)" block
+    And I set the following fields to these values:
+      | Text block title | Text on all pages            |
+      | Content          | This is visible on all pages |
+    And I press "Save changes"
+    And I log out
+    When I log in as "guest"
+    And I am on site homepage
+    Then the "class" attribute of ".drawer-right" "css_element" should contain "show"
+
+  Scenario: Test-Scenario 3.2: When the "showsitehomerighthandblockdraweronguestlogin" setting is set to "no" and I log in as a guest I should not see the drawer and the containing text block
+    Given the following config values are set as admin:
+      | config                               | value | plugin            |
+      | showsitehomerighthandblockdraweronguestlogin | no    | theme_boost_union |
+    And I log in as "admin"
+    And I am on site homepage
+    And I turn editing mode on
+    And I add the "Text" block
+    And I configure the "(new text block)" block
+    And I set the following fields to these values:
+      | Text block title | Text on all pages            |
+      | Content          | This is visible on all pages |
+    And I press "Save changes"
+    And I log out
+    When I log in as "guest"
+    And I am on site homepage
+    Then the "class" attribute of ".drawer-right" "css_element" should not contain "show"
