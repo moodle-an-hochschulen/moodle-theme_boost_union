@@ -17,6 +17,35 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
 
+  Scenario Outline: Setting: Hide a single node in primary navigation.
+    Given the following config values are set as admin:
+      | config                     | value      | plugin            |
+      | hidenodesprimarynavigation | <nodename> | theme_boost_union |
+    When I log in as "admin"
+    And I am on homepage
+    Then I should not see "<nodetitle>" in the ".primary-navigation" "css_element"
+
+    Examples:
+      | nodename      | nodetitle           |
+      | home          | Home                |
+      | myhome        | Dashboard           |
+      | courses       | My courses          |
+      | siteadminnode | Site administration |
+
+  Scenario Outline: Setting: Hide multiple nodes in primary navigation.
+    Given the following config values are set as admin:
+      | config                     | value       | plugin            |
+      | hidenodesprimarynavigation | <nodenames> | theme_boost_union |
+    When I log in as "admin"
+    And I am on homepage
+    Then I should not see "<firstnodetitle>" in the ".primary-navigation" "css_element"
+    And I should not see "<secondnodetitle>" in the ".primary-navigation" "css_element"
+
+    Examples:
+      | nodenames             | firstnodetitle | secondnodetitle     |
+      | home,myhome           | Home           | Dashboard           |
+      | courses,siteadminnode | My courses     | Site administration |
+
   @javascript
   Scenario: Setting: back to top button - Enable "Back to top button"
     Given the following config values are set as admin:

@@ -162,6 +162,12 @@ Moodle core ships with FontAwesome 4 icons which are fine, but FontAwesome has e
 
 In this tab there are the following settings:
 
+##### Primary navigation
+
+###### Hide nodes in primary navigation
+
+With this setting, you can hide one or multiple nodes from the primary navigation.
+
 ##### Navigation
 
 ###### Back to top button

@@ -666,6 +666,28 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $tab = new admin_settingpage('theme_boost_union_feel_navigation',
                 get_string('navigationtab', 'theme_boost_union', null, true));
 
+        // Create primary navigation heading.
+        $name = 'theme_boost_union/primarynavigationheading';
+        $title = get_string('primarynavigationheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Prepare hide nodes options.
+        $hidenodesoptions = array(
+                THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_HOME => get_string('home'),
+                THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_MYHOME => get_string('myhome'),
+                THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_MYCOURSES => get_string('mycourses'),
+                THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_SITEADMIN => get_string('administrationsite')
+        );
+
+        // Setting: Hide nodes in primary navigation.
+        $name = 'theme_boost_union/hidenodesprimarynavigation';
+        $title = get_string('hidenodesprimarynavigationsetting', 'theme_boost_union', null, true);
+        $description = get_string('hidenodesprimarynavigationsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configmulticheckbox($name, $title, $description, array(), $hidenodesoptions);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Create navigation heading.
         $name = 'theme_boost_union/navigationheading';
         $title = get_string('navigationheading', 'theme_boost_union', null, true);
