@@ -104,7 +104,8 @@ $string['activityiconcolorcontentsetting_desc'] = 'The activity icon color for "
 // ... ... Setting: Activity icon color for 'Interface'.
 $string['activityiconcolorinterfacesetting'] = 'Activity icon color for "Interface"';
 $string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for "Interface"';
-// Settings: E-Mail branding.
+
+// Settings: E-Mail branding tab.
 $string['emailbrandingtab'] = 'E-Mail branding';
 $string['templateemailhtmlprefix'] = '';
 $string['templateemailhtmlsuffix'] = '';
@@ -131,7 +132,6 @@ $string['emailbrandingpitfallsli3'] = 'If you ever change the site\'s default la
 $string['emailbrandingpitfallsli4'] = 'In plaintext E-Mails, there is a line break and an empty line added automatically after the prefix and an empty line added automatically before the suffix snippet. This is to make sure that the suffix and prefix do not stick directly to the E-Mail body.';
 $string['emailbrandingpitfallsli5'] = 'In HTML E-Mails, the prefix and the suffix are directly added before and above the E-Mail body. This is to make sure that you can work with HTML tags easily, however you will have to handle all spacing around the body yourself.';
 $string['emailbrandingpitfallsli6'] = 'In HTML E-Mails, you can open a HTML tag in the prefix snippet and close the tag in the suffix snippet without problems. Just remember to create valid HTML in the resulting mail.';
-
 // ... Section: HTML E-Mails.
 $string['emailbrandinghtmlheading'] = 'HTML E-Mail preview';
 $string['emailbrandinghtmlintro'] = 'This is a preview of a HTML E-Mail based on the branding prefixes and suffixes which are currently set in the language pack.';
@@ -150,7 +150,8 @@ Id donec ultrices tincidunt arcu non sodales. Id volutpat lacus laoreet non cura
 Cursus turpis massa tincidunt dui. Pellentesque nec nam aliquam sem et tortor consequat id. In ornare quam viverra orci sagittis eu volutpat. Sem nulla pharetra diam sit amet nisl suscipit. Justo donec enim diam vulputate ut pharetra.
 
 E-Mail body ends here.';
-// Settings: Resources.
+
+// Settings: Resources tab.
 $string['resourcestab'] = 'Resources';
 $string['resourcescachecontrolnote'] = 'Please note that the files are shipped to the browser with the \'Cache-Control\' header set which tells the browser to cache the file. If you are sure that you won\'t change the file in the near future, you can use the persistent URL to link to the file. However, if you plan to modify a file but keep the same filename every now and then, you should rather use the revisioned URL and re-link the file where you have used it everytime you update the file to avoid that the browsers will show cached outdated versions of the file.';
 // ... Section: Additional resources.
