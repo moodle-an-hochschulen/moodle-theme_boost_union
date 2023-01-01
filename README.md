@@ -376,10 +376,11 @@ Contributors
 
 This theme is a collaboration result of multiple organisations.
 
-Moodle an Hochschulen e.V. would like to thank these main contributors (in alphabetical order) for their work:
+Moodle an Hochschulen e.V. would like to thank these main contributors (in alphabetical order of the institutions) for their work:
 
 * Bern University of Applied Sciences (BFH), Luca Bösch: Code, Peer Review, Ideating
 * lern.link GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
+* Ruhr University Bochum, Melanie Treitinger: Code
 * RWTH Aachen, Josha Bartsch: Code
 * University of Lübeck, Christian Wolters: Peer Review, Ideating
 * Zurich University of Applied Sciences (ZHAW): Funding
