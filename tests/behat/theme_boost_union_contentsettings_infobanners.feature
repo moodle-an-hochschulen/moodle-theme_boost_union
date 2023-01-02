@@ -200,7 +200,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
       | debug          | 0 |
       | debugdisplay   | 0 |
     And I navigate to "Appearance > Boost Union > Content" in site administration
-    And I click on "Info banner" "link"
+    And I click on "Info banner" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I click on "Reset visibility of info banner no. 1" "link"
     And I click on "Confirm" "link"
     Then I should see "The visibility of info banner no. 1 has been reset"

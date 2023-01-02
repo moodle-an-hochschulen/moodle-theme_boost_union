@@ -8,11 +8,11 @@ Feature: Configuring the theme_boost_union plugin for the "Resources" tab on the
   Scenario: Setting: Additional resources - Upload additional resources files
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Resources" "link"
+    And I click on "Resources" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Additional resources" filemanager
     And I press "Save changes"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Resources" "link"
+    And I click on "Resources" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then I should see "Additional resources list"
     And ".settings-additionalresources-filelist" "css_element" should exist
     And ".settings-additionalresources-filelist .list-group-item .icon[title='Image (JPEG)']" "css_element" should exist
@@ -28,7 +28,7 @@ Feature: Configuring the theme_boost_union plugin for the "Resources" tab on the
   Scenario: Setting: Additional resources - Do not upload any file (countercheck)
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Resources" "link"
+    And I click on "Resources" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then I should not see "Additional resources list"
     And ".settings-additionalresources-filelist" "css_element" should not exist
 
@@ -36,11 +36,11 @@ Feature: Configuring the theme_boost_union plugin for the "Resources" tab on the
   Scenario: Setting: Custom fonts - Upload custom fonts files
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Resources" "link"
+    And I click on "Resources" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/roboto-v30-latin-regular.woff" file to "Custom fonts" filemanager
     And I press "Save changes"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Resources" "link"
+    And I click on "Resources" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then I should see "Custom fonts list"
     And ".settings-customfonts-filelist" "css_element" should exist
     And I should see "roboto-v30-latin-regular.woff" in the ".settings-customfonts-filelist h6" "css_element"
@@ -51,7 +51,7 @@ Feature: Configuring the theme_boost_union plugin for the "Resources" tab on the
   Scenario: Setting: Custom fonts - Do not upload any file (countercheck)
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Resources" "link"
+    And I click on "Resources" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then I should not see "Custom fonts list"
     And ".settings-customfonts-filelist" "css_element" should not exist
 
@@ -63,7 +63,7 @@ Feature: Configuring the theme_boost_union plugin for the "Resources" tab on the
     When I log in as "admin"
     Then "head > link[rel='stylesheet'][href~='theme_boost_union/fontawesome']" "css_element" should not exist
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Resources" "link"
+    And I click on "Resources" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then I should not see "FontAwesome files list"
     And ".settings-fontawesome-filelist" "css_element" should not exist
     Then I should not see "FontAwesome checks"

@@ -21,7 +21,7 @@ Feature: Configuring the theme_boost_union plugin for the "Branding" tab on the 
   Scenario: Setting: Favicon - Upload a custom favicon
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Branding" "link"
+    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/favicon.ico" file to "Favicon" filemanager
     And I press "Save changes"
     # We can't check the uploaded favicon visually, but we can verify that the site's favicon is not shipped by pluginfile.php (for uploaded files) and not by theme/image.php (for image files from disk) anymore.
@@ -45,7 +45,7 @@ Feature: Configuring the theme_boost_union plugin for the "Branding" tab on the 
   Scenario: Setting: Login page background images - Upload one custom login background image
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Branding" "link"
+    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I press "Save changes"
     And I log out
@@ -58,7 +58,7 @@ Feature: Configuring the theme_boost_union plugin for the "Branding" tab on the 
   Scenario: Setting: Login page background images - Upload multiple custom login background image (and have one picked randomly)
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Branding" "link"
+    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I upload "theme/boost_union/tests/fixtures/login_bg2.jpg" file to "Login page background images" filemanager
     And I upload "theme/boost_union/tests/fixtures/login_bg3.jpg" file to "Login page background images" filemanager
@@ -76,7 +76,7 @@ Feature: Configuring the theme_boost_union plugin for the "Branding" tab on the 
   Scenario: Setting: Display text for login background images - Add a text to the login background image
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Branding" "link"
+    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I set the field "Display text for login background images" to "login_bg1.jpg|Copyright by SplitShire on pexels.com|dark"
     And I press "Save changes"
@@ -88,7 +88,7 @@ Feature: Configuring the theme_boost_union plugin for the "Branding" tab on the 
   Scenario Outline: Setting: Display text for login background images - Match the text to the filename
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Branding" "link"
+    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I set the field "Display text for login background images" to "<filename>.jpg|Copyright by SplitShire on pexels.com|dark"
     And I press "Save changes"
@@ -105,7 +105,7 @@ Feature: Configuring the theme_boost_union plugin for the "Branding" tab on the 
   Scenario Outline: Setting: Display text for login background images - Set the color for the text of the login background image
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Branding" "link"
+    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I set the field "Display text for login background images" to "login_bg1.jpg|Copyright by SplitShire on pexels.com|<color>"
     And I press "Save changes"

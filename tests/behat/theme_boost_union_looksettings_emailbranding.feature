@@ -14,7 +14,7 @@ Feature: Configuring the theme_boost_union plugin for the "E-Mail branding" tab 
 #      | theme_boost_union | templateemailhtmlsuffix | My HTML suffix |
 #    When I log in as "admin"
 #    And I navigate to "Appearance > Boost Union > Look" in site administration
-#    And I click on "E-Mail branding" "link"
+#    And I click on "E-Mail branding" "link" in the "#adminsettings .nav-tabs" "css_element"
 #    Then I should not see "Up to now, the HTML E-Mails haven't been customized within this feature"
 #    And I should see "This is a preview of a HTML E-Mail"
 #    And "My HTML prefix" "text" should appear after "HTML E-Mail preview" "text"
@@ -28,7 +28,7 @@ Feature: Configuring the theme_boost_union plugin for the "E-Mail branding" tab 
   Scenario: Setting: HTML E-Mail branding (countercheck)
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "E-Mail branding" "link"
+    And I click on "E-Mail branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then I should see "Up to now, the HTML E-Mails haven't been customized within this feature"
     And I should not see "This is a preview of a HTML E-Mail"
 
@@ -42,7 +42,7 @@ Feature: Configuring the theme_boost_union plugin for the "E-Mail branding" tab 
 #      | theme_boost_union | templateemailtextsuffix | My plaintext suffix |
 #    When I log in as "admin"
 #    And I navigate to "Appearance > Boost Union > Look" in site administration
-#    And I click on "E-Mail branding" "link"
+#    And I click on "E-Mail branding" "link" in the "#adminsettings .nav-tabs" "css_element"
 #    Then I should not see "Up to now, the plaintext E-Mails haven't been customized within this feature"
 #    And I should see "This is a preview of a plaintext E-Mail"
 #    And "My plaintext prefix" "text" should appear after "Plaintext E-Mail preview" "text"
@@ -56,6 +56,6 @@ Feature: Configuring the theme_boost_union plugin for the "E-Mail branding" tab 
   Scenario: Setting: Plaintext E-Mail branding (countercheck)
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "E-Mail branding" "link"
+    And I click on "E-Mail branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then I should see "Up to now, the plaintext E-Mails haven't been customized within this feature"
     And I should not see "This is a preview of a plaintext E-Mail"
