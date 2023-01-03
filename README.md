@@ -262,6 +262,10 @@ With this setting a hint will appear in the course header when a user is accessi
 
 With this setting a hint will appear in the course header if the course is visible and an enrolment without enrolment key is currently possible.
 
+### Settings page "Flavours"
+
+Boost Union's flavours offer a possibility to override particular Moodle look & feel settings in particular contexts. On this page, you can create and manage flavours.
+
 
 Capabilities
 ------------

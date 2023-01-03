@@ -423,6 +423,51 @@ $string['showhintcourseselfenrolfromuntil'] = 'The <strong>{$a->name}</strong> e
 $string['showhintcourseselfenrolsinceuntil'] = 'The <strong>{$a->name}</strong> enrolment instance allows unrestricted self enrolment until {$a->until}.';
 $string['showhintcourseselfenrolinstancecallforaction'] = 'If you don\'t want that any Moodle user can enrol into this course freely, please restrict the self enrolment settings.';
 
+// Settings: Flavours page.
+$string['configtitleflavours'] = 'Flavours';
+$string['flavoursappliesto'] = 'Applies to';
+$string['flavoursapplytocategories'] = 'Apply to course categories';
+$string['flavoursapplytocategories_help'] = 'Here, you define if this flavour should be applied to course categories.';
+$string['flavoursapplytocategories_ids'] = 'Course categories';
+$string['flavoursapplytocategories_ids_help'] = 'Here, you define one or more particular course categories which this flavour should be applied to. As soon as the rendered Moodle page is located within one of the configured course categories, the flavour is applied.';
+$string['flavoursapplytocohorts'] = 'Apply to cohorts';
+$string['flavoursapplytocohorts_help'] = 'Here, you define if this flavour should be applied to cohorts.';
+$string['flavoursapplytocohorts_ids'] = 'Cohorts';
+$string['flavoursapplytocohorts_ids_help'] = 'Here, you define one or more particular cohorts which this flavour should be applied to. As soon as the user is a member of one of the configured cohorts, the flavour is applied.<br /><br />Please note that, if you define more than one cohorts, there is no need for the user to be a member of all of them at the same time.<br /><br />Please also note that at the current state of implementation category cohorts are treated just as if they were system cohorts.';
+$string['flavoursbackgroundimage'] = 'Background image';
+$string['flavoursbackgroundimage_help'] = 'With this setting, the flavour will override the background image which is configured in Boost Union\'s look settings.';
+$string['flavoursbacktooverview'] = 'Back to flavour overview';
+$string['flavourscreateflavour'] = 'Create flavour';
+$string['flavourscustomcss'] = 'Custom CSS';
+$string['flavourscustomcss_help'] = 'With this setting, you can write custom CSS for the flavour. It will be appended to the stack of CSS code which is shipped to the browser as soon as the flavour applies. Please note that in the current state of implementation, this setting only allows the usage of custom CSS, not SCSS.';
+$string['flavoursdelete'] = 'Delete';
+$string['flavoursdeleteflavour'] = 'Delete flavour';
+$string['flavoursdeleteconfirmation'] = 'Do you really want to delete the flavour <em>{$a}</em>?';
+$string['flavoursdescription'] = 'Description';
+$string['flavoursdescription_help'] = 'The flavour\'s description is just used internally to allow you to identify a particular flavour in the list of flavours.';
+$string['flavoursedit'] = 'Edit';
+$string['flavourseditflavour'] = 'Edit flavour';
+$string['flavoursfavicon'] = 'Favicon';
+$string['flavoursfavicon_help'] = 'With this setting, the flavour will override the favicon which is configured in Boost Union\'s look settings.';
+$string['flavoursflavours'] = 'Flavours';
+$string['flavoursgeneralsettings'] = 'General settings';
+$string['flavoursincludesubcategories'] = 'Include subcategories';
+$string['flavoursincludesubcategories_help'] = 'If checked, the flavour will also be applied to the subcategories of the chosen categories.';
+$string['flavourslogo'] = 'Logo';
+$string['flavourslogo_help'] = 'With this setting, the flavour will override the logo which is configured in Moodle\'s global appearance settings.';
+$string['flavourslogocompact'] = 'Compact logo';
+$string['flavourslogocompact_help'] = 'With this setting, the flavour will override the logo which is configured in Moodle\'s global appearance settings.';
+$string['flavoursnotificationcreated'] = 'The flavour was created successfully';
+$string['flavoursnotificationdeleted'] = 'The flavour was deleted successfully';
+$string['flavoursnotificationedited'] = 'The flavour was edited successfully';
+$string['flavoursnothingtodisplay'] = 'There aren\'t any flavours created yet. Please create your first flavour to get things going.';
+$string['flavoursoverview_desc'] = '<p>Boost Union\'s flavours offer a possibility to override particular Moodle look & feel settings in particular contexts. On this page, you can create and manage flavours.</p><p>Within each flavour, you define if it should be applied to particular course categories or particular cohorts. Afterwards, during each Moodle page rendering, Boost Union checks if any flavour applies. Please note that, for each Moodle page rendering, only the first matching flavour in the list is applied and the remaining flavours are ignored. Thus, the order of the flavours on this page is key.</p><p>Please note as well that after each change which you make to the set of flavours, the theme cache is purged. This is necessary to make sure that all assets are shipped properly and up-to-date to the browser.</p>';
+$string['flavourspreview'] = 'Preview';
+$string['flavourspreviewflavour'] = 'Preview flavour';
+$string['flavourspreviewblindtext'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam eleifend mi in nulla. Felis imperdiet proin fermentum leo vel orci porta. Sed nisi lacus sed viverra tellus in hac habitasse. Vivamus arcu felis bibendum ut. Nisi porta lorem mollis aliquam ut porttitor. Odio euismod lacinia at quis risus sed vulputate odio. Sed felis eget velit aliquet sagittis id consectetur purus. Nec ullamcorper sit amet risus nullam eget. Pellentesque sit amet porttitor eget dolor. Cursus mattis molestie a iaculis at erat pellentesque.';
+$string['flavourstitle'] = 'Title';
+$string['flavourstitle_help'] = 'The flavour\'s title is just used internally to allow you to document a particular flavour in the list of flavours.';
+
 // Privacy API.
 $string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
 
@@ -433,3 +478,4 @@ $string['boost_union:viewhintinhiddencourse'] = 'To be able to see a hint in a h
 
 // Caches.
 $string['cachedef_fontawesome'] = 'FontAwesome files (which are uploaded in the Boost Union settings)';
+$string['cachedef_flavours'] = 'Flavours which apply to a given page category ID for the current user';

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Version file
+ * Theme Boost Union - Event handlers.
  *
  * @package    theme_boost_union
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
@@ -24,10 +24,17 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'theme_boost_union';
-$plugin->version = 2022080916;
-$plugin->release = 'v4.0-r8';
-$plugin->requires = 2022041900;
-$plugin->supported = [400, 400];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = array('theme_boost' => 2022041900);
+$observers = array(
+        array(
+                'eventname' => '\core\event\cohort_deleted',
+                'callback' => '\theme_boost_union\eventobservers::cohort_deleted'
+        ),
+        array(
+                'eventname' => '\core\event\cohort_member_added',
+                'callback' => '\theme_boost_union\eventobservers::cohort_member_added'
+        ),
+        array(
+                'eventname' => '\core\event\cohort_member_removed',
+                'callback' => '\theme_boost_union\eventobservers::cohort_member_removed'
+        ),
+);
