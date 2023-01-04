@@ -50,6 +50,24 @@ define('THEME_BOOST_UNION_SETTING_FAVERSION_FA6FREE', 'fa6free');
 define('THEME_BOOST_UNION_SETTING_FAFILES_MANDATORY', 'm');
 define('THEME_BOOST_UNION_SETTING_FAFILES_OPTIONAL', 'o');
 
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGEHEIGHT_100PX', '100px');
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGEHEIGHT_150PX', '150px');
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGEHEIGHT_200PX', '200px');
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGEHEIGHT_250PX', '250px');
+
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_CENTER_CENTER', 'center center');
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_CENTER_TOP', 'center top');
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_CENTER_BOTTOM', 'center bottom');
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_LEFT_TOP', 'left top');
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_LEFT_CENTER', 'left center');
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_LEFT_BOTTOM', 'left bottom');
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_RIGHT_TOP', 'right top');
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_RIGHT_CENTER', 'right center');
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGEPOSITION_RIGHT_BOTTOM', 'right bottom');
+
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGELAYOUT_STACKEDDARK', 'stackeddark');
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGELAYOUT_STACKEDLIGHT', 'stackedlight');
+define('THEME_BOOST_UNION_SETTING_COURSEIMAGELAYOUT_HEADINGABOVE', 'headingabove');
 
 /**
  * Returns the main SCSS content.
@@ -251,7 +269,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
     // Serve the files from the admin settings.
     if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'logo' || $filearea === 'backgroundimage' ||
         $filearea === 'loginbackgroundimage' || $filearea === 'favicon' || $filearea === 'additionalresources' ||
-                $filearea === 'customfonts' || $filearea === 'fontawesome')) {
+                $filearea === 'customfonts' || $filearea === 'fontawesome' || $filearea === 'courseheaderimagefallback')) {
         $theme = theme_config::load('boost_union');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {

@@ -105,6 +105,25 @@ $string['activityiconcolorcontentsetting_desc'] = 'The activity icon color for "
 $string['activityiconcolorinterfacesetting'] = 'Activity icon color for "Interface"';
 $string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for "Interface"';
 
+// Settings: Course tab.
+$string['coursetab'] = 'Course';
+// ... Section: Course header.
+$string['courseheaderheading'] = 'Course Header';
+// ... ... Setting: Course header.
+$string['courseheaderimageenabled'] = 'Display the course image in the course header';
+$string['courseheaderimageenabled_desc'] = 'When enabled, the course image (which can be uploaded in a course\'s course settings) is displayed in the header of a course. The course images are shown there in addition to the \'My courses\' page where they are always shown.';
+$string['courseheaderimagefallback'] = 'Fallback course header image';
+$string['courseheaderimagefallback_desc'] = 'If you upload an image in this setting, it is used as fallback image and is displayed in the course header if no course image is uploaded in a particular course\'s course settings. If you do not upload an image here, a course header image is only shown in a particular course if a course image is uploaded in this particular course\'s course settings.';
+$string['courseheaderimageheight'] = 'Course header image height';
+$string['courseheaderimageheight_desc'] = 'With this setting, you control the height of the presented course header image.';
+$string['courseheaderimagelayout'] = 'Course header image layout';
+$string['courseheaderimagelayout_desc'] = 'With this setting, you control the layout of the course header image and the course title.';
+$string['courseheaderimagelayoutstackeddark'] = 'Course title stacked on course image (white font color for dark background images)';
+$string['courseheaderimagelayoutstackedlight'] = 'Course title stacked on course image (black font color for light background images)';
+$string['courseheaderimagelayoutheadingabove'] = 'Course title above of course image';
+$string['courseheaderimageposition'] = 'Course header image position';
+$string['courseheaderimageposition_desc'] = 'With this setting, you control the positioning of the course header image within the course header image container. The first value is the horizontal position, the second value is the vertical position.';
+
 // Settings: E-Mail branding tab.
 $string['emailbrandingtab'] = 'E-Mail branding';
 $string['templateemailhtmlprefix'] = '';
