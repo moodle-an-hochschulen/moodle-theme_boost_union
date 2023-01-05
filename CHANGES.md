@@ -4,6 +4,9 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+* 2023-01-05 - Bugfix: Unparsable JSON in templates/core/full_header.mustache
+
 ### v4.0-r9
 
 * 2022-12-31 - Feature: Add settings and layouts to enable/disable showing course images or a fallback image in the header of the course page, solves #77.
