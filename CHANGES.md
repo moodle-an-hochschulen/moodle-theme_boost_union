@@ -5,6 +5,7 @@ Changes
 -------
 
 ### Unreleased
+* 2023-01-06 - Improvement: Small language tweaks in self enrolment course banners
 * 2023-01-05 - Bugfix: Unparsable JSON in templates/core/full_header.mustache
 
 ### v4.0-r9
