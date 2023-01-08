@@ -5,6 +5,8 @@ Changes
 -------
 
 ### Unreleased
+
+* 2023-01-08 - Bugfix: Infobanners were sometimes incorrectly ordered if the same order was given to multiple banners, solves #181.
 * 2023-01-06 - Improvement: Small language tweaks in self enrolment course banners
 * 2023-01-05 - Bugfix: Unparsable JSON in templates/core/full_header.mustache
 

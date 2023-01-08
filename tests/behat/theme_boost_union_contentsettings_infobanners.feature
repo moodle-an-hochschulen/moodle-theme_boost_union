@@ -254,15 +254,21 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
       | infobanner3pages   | mydashboard                  | theme_boost_union |
       | infobanner3order   | 1                            | theme_boost_union |
       | infobanner3mode    | perp                         | theme_boost_union |
+      | infobanner4enabled | yes                          | theme_boost_union |
+      | infobanner4content | "This is the fourth content" | theme_boost_union |
+      | infobanner4pages   | mydashboard                  | theme_boost_union |
+      | infobanner4order   | 2                            | theme_boost_union |
+      | infobanner4mode    | perp                         | theme_boost_union |
     When I log in as "teacher1"
     And I follow "Dashboard"
     Then I should see "This is the third content" in the "#themeboostunioninfobanner1" "css_element"
     And I should see "This is the first content" in the "#themeboostunioninfobanner2" "css_element"
     And I should see "This is the second content" in the "#themeboostunioninfobanner3" "css_element"
-    And "#themeboostunioninfobanner4" "css_element" should not exist
+    And I should see "This is the fourth content" in the "#themeboostunioninfobanner4" "css_element"
     And "#themeboostunioninfobanner5" "css_element" should not exist
     And "This is the first content" "text" should appear before "This is the second content" "text"
     And "This is the second content" "text" should appear before "This is the third content" "text"
+    And "This is the third content" "text" should appear before "This is the fourth content" "text"
 
   Scenario: Setting: Information banners - Display info banner no. 1 on a time based setting, don't show it yet as the display time is not reached yet.
     Given the following config values are set as admin:
