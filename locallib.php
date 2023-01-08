@@ -410,14 +410,15 @@ function theme_boost_union_infobanner_is_shown_on_page($bannerno) {
  * @return boolean.
  */
 function theme_boost_union_infobanner_compare_order($a, $b) {
+    // If the same 'order' attribute is given to both items.
     if ($a->order == $b->order) {
-        // Basically, we should return 0 in this case.
-        // But due to the way how usort works internally, info banners with the same order would end up in the result array
-        // in reversed order (compared to the numbering order on the theme settings page).
-        // Thus, we do a little trick and tell the sorting algorithm that the first item is greater than the second one
-        // by returning a positive number.
-        return 1;
+        // We have to compare the 'no' attribute.
+        // This way, we make sure that the item which is presented first in the admin settings is still placed first in the
+        // ordered list even if the same order is configured.
+        return ($a->no < $b->no) ? -1 : 1;
     }
+
+    // Otherwise, compare both items based on their 'order' attribute.
     return ($a->order < $b->order) ? -1 : 1;
 }
 
