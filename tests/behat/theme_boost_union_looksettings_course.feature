@@ -189,11 +189,10 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
     And "//div[@id='courseheaderimage' and contains(@style, 'min-height: <height>')]" "xpath_element" should exist
 
+    # We do not want to burn too much CPU time by testing all available options. We just test the default value and one non-default value.
     Examples:
       | height |
-      | 100px  |
       | 150px  |
-      | 200px  |
       | 250px  |
 
   @javascript @_file_upload
@@ -211,17 +210,11 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
     And "//div[@id='courseheaderimage' and contains(@style, 'background-position: <position>')]" "xpath_element" should exist
 
+    # We do not want to burn too much CPU time by testing all available options. We just test the default value and one non-default value.
     Examples:
       | position      |
       | center center |
-      | center top    |
-      | center bottom |
-      | left center   |
       | left top      |
-      | left bottom   |
-      | right center  |
-      | right top     |
-      | right bottom  |
 
   @javascript @_file_upload
   Scenario Outline: Setting: Course header image - Define the course header image layout.
