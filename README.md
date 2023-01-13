@@ -103,6 +103,22 @@ Here, you can upload a custom image (.ico or .png format) that the browser will 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 Please note: This will not interfere with the setting "theme_boost_union | loginbackgroundimage" which means that the pictures uploaded here will be shown on all pages except the login page.
 
+##### Brand colors
+
+###### Brand color
+
+This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+##### Bootstrap colors
+
+With these settings, you can overwrite the Bootstrap colors which are used within the Moodle GUI.
+
+##### Activity icon colors
+
+With these settings, you can overwrite the activity icon colors which are used within courses.
+
+#### Tab "Login page"
+
 ##### Login page background images
 
 ###### Login page background images
@@ -122,19 +138,13 @@ As text color, you can use the values "dark" or "light".
 
 You can declare texts for a arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.
 
-##### Brand colors
+##### Login form position
 
-###### Brand color
+With this setting, you can optimize the login form to fit to a greater variety of background images. By default, the login form is displayed centered on the login page. Alternatively, you can move it to the left or to the right of the login page to let other parts of the background image shine through. Of course, you can also change this setting if no background images are uploaded at all.
 
-This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+##### Login form transparency
 
-##### Bootstrap colors
-
-With these settings, you can overwrite the Bootstrap colors which are used within the Moodle GUI.
-
-##### Activity icon colors
-
-With these settings, you can overwrite the activity icon colors which are used within courses.
+With this setting, you can make the login form slightly transparent to let the background image shine through even more.
 
 #### Tab "Course"
 
