@@ -29,12 +29,16 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
 
   Scenario Outline: Setting: Enable static page - Enable and fill the static page with content
     Given the following config values are set as admin:
-      | config        | value              | plugin            |
-      | enable<page>  | yes                | theme_boost_union |
-      | <page>content | <p>Lorem ipsum</p> | theme_boost_union |
+      | config        | value                                                                                                              | plugin            |
+      | enable<page>  | yes                                                                                                                | theme_boost_union |
+      | <page>content | <p><span lang="en" class="multilang">Lorem ipsum</span><span lang="de" class="multilang">Dolor sit amet</span></p> | theme_boost_union |
+    And the "multilang" filter is "on"
+    And the "multilang" filter applies to "content and headings"
     When I log in as "admin"
     And I am on <page> page
     Then I should see "Lorem ipsum" in the "div[role='main']" "css_element"
+    And I should not see "<span lang=\"en\" class=\"multilang\">Lorem ipsum</span>" in the "div[role='main']" "css_element"
+    And I should not see "Lorem ipsumDolor sit amet" in the "div[role='main']" "css_element"
     And I should see "<pagetitle>" in the "title" "css_element"
     And I should see "<pagetitle>" in the "div[role='main'] h2" "css_element"
 
