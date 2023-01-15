@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-01-15 - Improvement: Note to assure matching login image/login image text.
 * 2023-01-15 - Feature: Login page layouts, solves #37.
 * 2023-01-14 - Improvement: Add Behat test steps for multilanguage static page content.
 * 2023-01-13 - Improvement: static pages headings and on the links to the static pages support multilang, solves #188;
