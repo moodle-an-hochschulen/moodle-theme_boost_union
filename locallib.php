@@ -647,14 +647,17 @@ function theme_boost_union_get_loginbackgroundimage_text() {
                 continue;
             }
             // Compare the filenames for a match.
-            if (strcmp($filename, $settings[0]) == 0) {
+            if (strcmp($filename, trim($settings[0])) == 0) {
+                // Trim the second parameter as we need it more than once.
+                $settings[2] = trim($settings[2]);
+
                 // If the color value is not acceptable, replace it with dark.
                 if ($settings[2] != 'dark' && $settings[2] != 'light') {
                     $settings[2] = 'dark';
                 }
 
                 // Return the text + text color that belongs to the randomly selected image.
-                return array(format_string($settings[1]), $settings[2]);
+                return array(format_string(trim($settings[1])), $settings[2]);
             }
         }
     }
