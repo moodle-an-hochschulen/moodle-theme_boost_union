@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-01-15 - Improvement: Trim 'dark' and 'light' for login bg images, solves #192.
 * 2023-01-15 - Improvement: Note to assure matching login image/login image text.
 * 2023-01-15 - Feature: Login page layouts, solves #37.
 * 2023-01-14 - Improvement: Add Behat test steps for multilanguage static page content.
