@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.0-r10
 
 * 2023-01-15 - Improvement: Trim 'dark' and 'light' for login bg images, solves #192.
 * 2023-01-15 - Improvement: Note to assure matching login image/login image text.
