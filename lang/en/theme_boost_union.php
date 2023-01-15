@@ -106,6 +106,15 @@ $string['activityiconcolorcontentsetting_desc'] = 'The activity icon color for "
 // ... ... Setting: Activity icon color for 'Interface'.
 $string['activityiconcolorinterfacesetting'] = 'Activity icon color for "Interface"';
 $string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for "Interface"';
+// ... Section: Navbar.
+$string['navbarheading'] = 'Navbar';
+// ... ... Setting: Navbar color.
+$string['navbarcolorsetting'] = 'Navbar color';
+$string['navbarcolorsetting_desc'] = 'With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one.';
+$string['navbarcolorsetting_light'] = 'Light navbar with dark font color (unchanged as presented by Moodle core)';
+$string['navbarcolorsetting_dark'] = 'Dark navbar with light font color';
+$string['navbarcolorsetting_primarydark'] = 'Primary color navbar with light font color';
+$string['navbarcolorsetting_primarylight'] = 'Primary color navbar with dark font color';
 
 // Settings: Login page tab.
 $string['loginpagetab'] = 'Login page';

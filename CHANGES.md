@@ -6,6 +6,7 @@ Changes
 
 ### v4.0-r13
 
+* 2023-02-12 - Feature: Allow admin to change the navbar color, solves #39, helps to resolve #110.
 * 2023-02-12 - Feature: Enable admins to upload css code for mod_h5p and mod_hvp, solves #166 #207.
 * 2023-02-12 - Cleanup: Change the "Advanced settings" tab to "SCSS", solves #226.
 * 2023-02-12 - Cleanup: Create a dedicated "H5P" tab, solves #227.

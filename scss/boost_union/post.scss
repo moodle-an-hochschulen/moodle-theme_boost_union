@@ -14,6 +14,89 @@
     width: auto;
 }
 
+/*---------------------------------------
+ * Setting: Navbar color
+ --------------------------------------*/
+
+/* Moodle core already presents the light navbar with dark font color (.navbar-light.bg-white) perfectly.
+   There is nothing to change here. */
+
+/* Tweak the dark navbar with light font color
+   and the primary color navbar with light font color. */
+.navbar.navbar-dark.bg-dark,
+.navbar.navbar-dark.bg-primary {
+    /* Remove the white border at the bottom of the navbar as it looks odd with a dark navbar. */
+    border-bottom: none;
+
+    /* Change the color of the site name in the navbar to light grey and to white when active. */
+    .navbar-brand {
+        color: #c8c8c8;
+    }
+    .navbar-brand:hover {
+        color: #fff;
+    }
+
+    /* Change the color of the navigation items in the navbar to light grey, to white when active
+       and to black when hovered (as Moodle core will then show a white background). */
+    .nav-link {
+        color: #c8c8c8;
+    }
+    .nav-link.active {
+        color: #fff;
+    }
+    .nav-link:hover {
+        color: #000;
+    }
+
+    /* Change the color of the icons in the navbar to a light grey and to white when hovered.
+       This has to use !important as Moodle core already uses !important for the icon colors. */
+    .nav-link .icon,
+    .nav-link a .icon,
+    .dropdown-toggle {
+        color: #c8c8c8 !important; /* stylelint-disable-line declaration-no-important */
+    }
+    .nav-link:hover .icon,
+    .nav-link:hover a .icon,
+    .dropdown-toggle:hover {
+        color: #fff !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    /* Change the color of the edit switch label in the navbar to light grey and to white when hovered.
+       This has to use !important as Moodle core would change the color to text-primary as soon as editing is on. */
+    .editmode-switch-form,
+    .editmode-switch-form label {
+        color: #c8c8c8 !important; /* stylelint-disable-line declaration-no-important */
+    }
+    .editmode-switch-form label:hover {
+        color: #fff !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    /* Adapt the color of the edit switch widget to fit onto the dark background. */
+    .custom-control-input:checked ~ .custom-control-label::before {
+        border-color: #c8c8c8;
+    }
+    .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+        background-color: #c8c8c8;
+    }
+
+    /* Change the color of the login link in the navbar to a light grey and to white when hovered. */
+    .login,
+    .login a {
+        color: #c8c8c8;
+    }
+    .login a:hover {
+        color: #fff;
+    }
+}
+
+/* Tweak the primary color navbar with dark font color. */
+.navbar.navbar-light.bg-primary {
+    /* Change the color of the active nav items's bottom border to white as this would be presented in the
+       primary color as well otherwise. */
+    .nav-link.active {
+        border-bottom-color: white;
+    }
+}
 
 /*=======================================
  * Settings: Look -> Login page
