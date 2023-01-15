@@ -8,8 +8,8 @@ Changes
 
 * 2023-01-15 - Improvement: Note to assure matching login image/login image text.
 * 2023-01-15 - Feature: Login page layouts, solves #37.
-* 2023-01-14 - Improvement: Add Behat test steps for multilanguage static page content.
-* 2023-01-13 - Improvement: static pages headings and on the links to the static pages support multilang, solves #188;
+* 2023-01-14 - Tests: Add Behat test steps for multilanguage static page content.
+* 2023-01-13 - Improvement: Static pages headings and the links to the static pages now support multilang, solves #188.
 * 2023-01-09 - Feature: Add advertisement tiles which can be displayed on site home, solves #161.
 * 2023-01-08 - Tests: Avoid to burn too much CPU time by testing all available course image options.
 * 2023-01-08 - Bugfix: Infobanners were sometimes incorrectly ordered if the same order was given to multiple banners, solves #181.
