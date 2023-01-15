@@ -136,7 +136,7 @@ For example:
 
 As text color, you can use the values "dark" or "light".
 
-You can declare texts for a arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.
+You can declare texts for an arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.
 
 ##### Login form position
 

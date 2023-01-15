@@ -108,7 +108,7 @@ Each line consists of the file identifier (the file name), the text that should 
 For example:<br/>
 background-image-1.jpg|Copyright: CC0|dark<br/>
 As text color, you can use the values "dark" or "light".<br />
-You can declare texts for a arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.';
+You can declare texts for an arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.';
 // ... Section: Login form.
 $string['loginformheading'] = 'Login form';
 // ... ... Setting: login form position.
