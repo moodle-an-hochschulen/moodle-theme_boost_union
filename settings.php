@@ -239,28 +239,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create login page background images heading.
-        $name = 'theme_boost_union/loginbackgroundimagesheading';
-        $title = get_string('loginbackgroundimagesheading', 'theme_boost_union', null, true);
-        $setting = new admin_setting_heading($name, $title, null);
-        $tab->add($setting);
-
-        // Create Login background image setting.
-        $name = 'theme_boost_union/loginbackgroundimage';
-        $title = get_string('loginbackgroundimage', 'theme_boost_union', null, true);
-        $description = get_string('loginbackgroundimage_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configstoredfile($name, $title, $description, 'loginbackgroundimage', 0,
-                array('maxfiles' => 25, 'accepted_types' => 'web_image'));
-        $setting->set_updatedcallback('theme_reset_all_caches');
-        $tab->add($setting);
-
-        // Create Login background image text setting.
-        $name = 'theme_boost_union/loginbackgroundimagetext';
-        $title = get_string('loginbackgroundimagetextsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginbackgroundimagetextsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configtextarea($name, $title, $description, null, PARAM_TEXT);
-        $tab->add($setting);
-
         // Create brand colors heading.
         $name = 'theme_boost_union/brandcolorsheading';
         $title = get_string('brandcolorsheading', 'theme_boost_union', null, true);
@@ -365,6 +343,61 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('activityiconcolorinterfacesetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
+        // Create login page tab.
+        $tab = new admin_settingpage('theme_boost_union_look_loginpage',
+                get_string('loginpagetab', 'theme_boost_union', null, true));
+
+        // Create login page background images heading.
+        $name = 'theme_boost_union/loginbackgroundimagesheading';
+        $title = get_string('loginbackgroundimagesheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Create login page background image setting.
+        $name = 'theme_boost_union/loginbackgroundimage';
+        $title = get_string('loginbackgroundimage', 'theme_boost_union', null, true);
+        $description = get_string('loginbackgroundimage_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configstoredfile($name, $title, $description, 'loginbackgroundimage', 0,
+                array('maxfiles' => 25, 'accepted_types' => 'web_image'));
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Create login page background image text setting.
+        $name = 'theme_boost_union/loginbackgroundimagetext';
+        $title = get_string('loginbackgroundimagetextsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginbackgroundimagetextsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtextarea($name, $title, $description, null, PARAM_TEXT);
+        $tab->add($setting);
+
+        // Create login form heading.
+        $name = 'theme_boost_union/loginformheading';
+        $title = get_string('loginformheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Create login form position setting.
+        $name = 'theme_boost_union/loginformposition';
+        $title = get_string('loginformpositionsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginformpositionsetting_desc', 'theme_boost_union', null, true);
+        $loginformoptions = array(
+                THEME_BOOST_UNION_SETTING_LOGINFORMPOS_CENTER => get_string('loginformpositionsetting_center', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_LOGINFORMPOS_LEFT => get_string('loginformpositionsetting_left', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_LOGINFORMPOS_RIGHT => get_string('loginformpositionsetting_right', 'theme_boost_union'));
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_LOGINFORMPOS_CENTER,
+                $loginformoptions);
+        $tab->add($setting);
+
+        // Create login form transparency setting.
+        $name = 'theme_boost_union/loginformtransparency';
+        $title = get_string('loginformtransparencysetting', 'theme_boost_union', null, true);
+        $description = get_string('loginformtransparencysetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
         // Add tab to settings page.

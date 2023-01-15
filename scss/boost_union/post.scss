@@ -1,4 +1,32 @@
 /*=======================================
+ * Settings: Look -> Login page
+ ======================================*/
+
+/*---------------------------------------
+ * Setting: Login form position
+ --------------------------------------*/
+
+/* Move the login window to the side based on the theme settings.
+   While the classes login-wrapper-left and login-wrapper-right are set here,
+   the class login-wrapper-center is not set here as the login form is already centered by Moodle core. */
+.login-wrapper.login-wrapper-left {
+    justify-content: left;
+}
+.login-wrapper.login-wrapper-right {
+    justify-content: right;
+}
+
+/*---------------------------------------
+ * Setting: Login form transparency
+ --------------------------------------*/
+
+/* Make background of login panel slightly transparent. */
+.login-container.login-container-80t {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+
+/*=======================================
  * Settings: Look -> Course
  ======================================*/
 

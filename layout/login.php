@@ -39,7 +39,11 @@ $templatecontext = [
     'output' => $OUTPUT,
     'bodyattributes' => $bodyattributes,
     'loginbackgroundimagetext' => $loginbackgroundimagetext,
-    'loginbackgroundimagetextcolor' => $loginbackgroundimagetextcolor
+    'loginbackgroundimagetextcolor' => $loginbackgroundimagetextcolor,
+    'loginwrapperclass' => 'login-wrapper-'.$this->page->theme->settings->loginformposition,
+    'logincontainerclass' =>
+            ($this->page->theme->settings->loginformtransparency == THEME_BOOST_UNION_SETTING_SELECT_YES) ?
+                    'login-container-80t' : ''
 ];
 
 // Include the template content for the footnote.
