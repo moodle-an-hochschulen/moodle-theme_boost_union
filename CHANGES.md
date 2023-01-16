@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-01-16 - Improvement: Remove Boost Union's own fallback CSS file for now, relates to #89.
+
 ### v4.0-r10
 
 * 2023-01-15 - Improvement: Trim 'dark' and 'light' for login bg images, solves #192.

@@ -260,7 +260,8 @@ function theme_boost_union_get_extra_scss($theme) {
  */
 function theme_boost_union_get_precompiled_css() {
     global $CFG;
-    return file_get_contents($CFG->dirroot . '/theme/boost_union/style/moodle.css');
+    // Get the fallback CSS file from Boost Core as long as Boost Union does not use a fallback file of its own.
+    return file_get_contents($CFG->dirroot . '/theme/boost/style/moodle.css');
 }
 
 /**
