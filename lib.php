@@ -320,6 +320,12 @@ function theme_boost_union_get_extra_scss($theme) {
     // Setting: Mark external links.
     $content .= theme_boost_union_get_scss_to_mark_external_links($theme);
 
+    // Setting: Mark mailto links.
+    $content .= theme_boost_union_get_scss_to_mark_mailto_links($theme);
+
+    // Setting: Mark broken links.
+    $content .= theme_boost_union_get_scss_to_mark_broken_links($theme);
+
     // Setting: Course overview block.
     $content .= theme_boost_union_get_scss_courseoverview_block($theme);
 
