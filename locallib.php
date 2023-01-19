@@ -1396,6 +1396,71 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
 }
 
 /**
+ * Returns the SCSS to add a broken-chain symbol in front of broken links and make the font red to mark them visually.
+ *
+ * @param theme_config $theme The theme config object.
+ * @return string
+ */
+function theme_boost_union_get_scss_to_mark_broken_links($theme) {
+    // Initialize SCSS snippet.
+    $scss = '';
+
+    // If the corresponding setting is set to 'yes'.
+    if ($theme->settings->markbrokenlinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Set font color to the 'danger' color.
+        $scss .= 'a[href*="/brokenfile.php"] {
+            color: $danger;
+        }';
+
+        // SCSS to add broken-chain icon in front of the link and respect LTR and RTL while doing this.
+        $scss .= 'body.dir-ltr a[href*="/brokenfile.php"]::before {
+            font-family: "#{$fa-style-family}";
+            content: "\f127" !important;
+            font-weight: 900;
+            padding-right: 0.25rem;
+        }';
+        $scss .= 'body.dir-rtl a[href*="/brokenfile.php"]::after {
+            font-family: "#{$fa-style-family}";
+            content: "\f127" !important;
+            font-weight: 900;
+            padding-left: 0.25rem;
+        }';
+    }
+
+    return $scss;
+}
+
+/**
+ * Returns the SCSS to add an envelope symbol in front of mailto links to mark them visually.
+ *
+ * @param theme_config $theme The theme config object.
+ * @return string
+ */
+function theme_boost_union_get_scss_to_mark_mailto_links($theme) {
+    // Initialize SCSS snippet.
+    $scss = '';
+
+    // If the corresponding setting is set to 'yes'.
+    if ($theme->settings->markmailtolinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // SCSS to add envelope icon in front of the link and respect LTR and RTL while doing this.
+        $scss .= 'body.dir-ltr a[href^="mailto"]::before {
+            font-family: "#{$fa-style-family}";
+            content: "\f003" !important;
+            font-weight: 400;
+            padding-right: 0.25rem;
+        }';
+        $scss .= 'body.dir-rtl a[href^="mailto"]::after {
+            font-family: "#{$fa-style-family}";
+            content: "\f003" !important;
+            font-weight: 400;
+            padding-left: 0.25rem;
+        }';
+    }
+
+    return $scss;
+}
+
+/**
  * Returns the SCSS code to hide the course image and/or the course progress in the course overview block, depending
  * on the theme settings courseoverviewshowcourseimages and courseoverviewshowcourseprogress respectively.
  *

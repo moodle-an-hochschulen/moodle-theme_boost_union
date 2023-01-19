@@ -385,6 +385,14 @@ In this tab there are the following settings:
 
 Adds an "external link" icon after external links (which lead the user to a target outside Moodle).
 
+###### Mark mailto links
+
+Adds an "envelope" icon in front of mailto links.
+
+###### Mark broken links
+
+Adds a "broken chain" icon in front of broken links (which lead to uploaded draft files which have not been properly processed) and marks the link in the bootstrap color for "danger".
+
 #### Tab "Miscellaneous"
 
 In this tab there are the following settings:
