@@ -25,6 +25,7 @@
 require_once(__DIR__.'/../../../../lib/behat/behat_base.php');
 
 use Behat\Mink\Exception\ExpectationException;
+use Behat\Mink\Exception\DriverException;
 
 /**
  * Class behat_theme_boost_union_base_general
@@ -190,6 +191,60 @@ class behat_theme_boost_union_base_general extends behat_base {
         if ($positionelement > $positionviewport + 50 ||
                 $positionelement < $positionviewport - 50) { // Allow some deviation of 50px of the scrolling position.
             throw new ExpectationException('The DOM element \''.$selector.'\' is not a the top of the page', $this->getSession());
+        }
+    }
+
+    /**
+     * Checks if a property of a pseudo-class of an element contains a certain value.
+     *
+     * @Then /^element "(?P<s>.*?)" pseudo-class "(?P<ps>.*?)" should contain "(?P<pr>.*?)": "(?P<v>.*?)"$/
+     * @param string $s selector
+     * @param string $ps pseudo
+     * @param string $pr property
+     * @param string $v value
+     * @throws ExpectationException
+     * @throws DriverException
+     */
+    public function i_check_for_pseudoclass_content($s, $ps, $pr, $v) {
+        if (!$this->running_javascript()) {
+            throw new DriverException("Pseudo-classes can only be evaluated with Javascript enabled.");
+        }
+
+        $getvalueofpseudoelementjs = "return (
+            window.getComputedStyle(document.querySelector(\"". $s ."\"), ':".$ps."').getPropertyValue(\"".$pr."\")
+        )";
+
+        $result = Normalizer::normalize($this->evaluate_script($getvalueofpseudoelementjs), Normalizer::FORM_C);
+        $eq = Normalizer::normalize('"'.$v.'"', Normalizer::FORM_C);
+
+        if (!($result == $eq)) {
+            throw new ExpectationException("Didn't find ".$v." in ".$s.":".$ps.".", $this->getSession());
+        }
+    }
+
+    /**
+     * Checks if a property of a pseudo-class of an element contains 'none'.
+     *
+     * @Then /^element "(?P<s>(?:[^"]|\\")*)" pseudo-class "(?P<ps>(?:[^"]|\\")*)" should contain "(?P<pr>(?:[^"]|\\")*)": none$/
+     * @param string $s selector
+     * @param string $ps pseudo
+     * @param string $pr property
+     * @throws ExpectationException
+     * @throws DriverException
+     */
+    public function pseudoclass_should_not_exist($s, $ps, $pr) {
+        if (!$this->running_javascript()) {
+            throw new DriverException("Pseudo-classes can only be evaluated with Javascript enabled.");
+        }
+
+        $pseudoelementcontent = "return (
+            window.getComputedStyle(document.querySelector(\"". $s ."\"), ':".$ps."').getPropertyValue(\"".$pr."\")
+        )";
+
+        $result = $this->evaluate_script($pseudoelementcontent);
+
+        if ($result != "none") {
+            throw new ExpectationException($s.":".$ps.".content contains: ".$result, $this->getSession());
         }
     }
 }
