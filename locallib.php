@@ -1394,3 +1394,52 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
     }
     return $scss;
 }
+
+/**
+ * Adds a broken-chain symbol in front of mailto links to mark them visually.
+ *
+ * @param theme_config $theme The theme config object.
+ * @return string
+ */
+function theme_boost_union_get_scss_to_mark_broken_links($theme) {
+     // Initialize SCSS snippet.
+    $content = '';
+
+    // If the corresponding setting is set to 'yes'.
+    if ($theme->settings->markbrokenlinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Set font color to the 'danger' color.
+        $content .= 'a[href*="/brokenfile.php"] {color: var(--danger);}';
+
+        // Add broken-chain symbol in front of link.
+        $content .= 'a[href*="/brokenfile.php"]::before {
+            font-family: FontAwesome;
+            content: "\f127" !important;
+            padding-right: 5px;
+        }';
+    }
+    return $content;
+}
+
+/**
+ * Adds an envelope symbol in front of broken links and make the font red to mark them visually
+ *
+ * @param theme_config $theme The theme config object.
+ * @return string
+ */
+function theme_boost_union_get_scss_to_mark_mailto_links($theme) {
+     // Initialize SCSS snippet.
+    $scss = '';
+
+    // If the corresponding setting is set to 'yes'.
+    if ($theme->settings->markmailtolinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+
+        // Add envelope symbol in front of link.
+        $scss .= 'a[href^="mailto"]::before {
+            font-family: FontAwesome;
+            content: "\f003" !important;
+            padding-right: 5px;
+        }';
+    }
+
+    return $scss;
+}

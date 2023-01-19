@@ -416,9 +416,15 @@ $string['showsitehomerighthandblockdraweronguestloginsetting_desc'] = 'With this
 $string['linkstab'] = 'Links';
 // ... Section: Special links markup.
 $string['speciallinksmarkupheading'] = 'Special links markup';
+// ... ... Setting: Mark broken links.
+$string['markbrokenlinkssetting'] = 'Mark broken links';
+$string['markbrokenlinkssetting_desc'] = 'Adds a "broken chain" icon in front of a broken link and marks the link in the bootstrap color for "danger".';
 // ... ... Setting: Mark external links.
 $string['markexternallinkssetting'] = 'Mark external links';
 $string['markexternallinkssetting_desc'] = 'Adds an "external link" icon after external links (which lead the user to a target outside Moodle).';
+// ... ... Setting: Mark mailto links.
+$string['markmailtolinkssetting'] = 'Mark mailto links';
+$string['markmailtolinkssetting_desc'] = 'Adds an "envelope" icon in front of every mailto link.';
 
 // Settings: Misc tab.
 $string['misctab'] = 'Miscellaneous';

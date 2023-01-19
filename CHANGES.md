@@ -3,6 +3,9 @@ moodle-theme_boost_union
 
 Changes
 -------
+### Unreleased
+
+* 2023-06-20 - Feature: Add admin option to mark broken links and mailto links, solves #163 #164.
 
 ### v4.3-r2
 

@@ -353,9 +353,17 @@ In this tab there are the following settings:
 
 ##### Special links markup
 
+###### Mark broken links
+
+Adds an "broken chain" icon before broken links.
+
 ###### Mark external links
 
 Adds an "external link" icon after external links (which lead the user to a target outside Moodle).
+
+###### Mark mailto links
+
+Adds an "envelope" icon before mailto links.
 
 #### Tab "Miscellaneous"
 
