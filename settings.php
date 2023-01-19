@@ -1443,6 +1443,20 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Setting: Mark mailto links.
+        $name = 'theme_boost_union/markmailtolinks';
+        $title = get_string('markmailtolinkssetting', 'theme_boost_union', null, true);
+        $description = get_string('markmailtolinkssetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Setting: Mark broken links.
+        $name = 'theme_boost_union/markbrokenlinks';
+        $title = get_string('markbrokenlinkssetting', 'theme_boost_union', null, true);
+        $description = get_string('markbrokenlinkssetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
         // Add tab to settings page.
         $page->add($tab);
 
