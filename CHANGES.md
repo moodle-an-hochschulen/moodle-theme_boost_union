@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-02-04 - Upgrade: Fix Behat tests which broke with Moodle 4.1.
 * 2023-02-04 - Prepare compatibility for Moodle 4.1.
 
 ### v4.0-r12

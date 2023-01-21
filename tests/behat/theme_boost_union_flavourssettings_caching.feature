@@ -253,7 +253,8 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I am on "Course 1" course homepage
     And I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
     And I navigate to "Users > Accounts > Cohorts" in site administration
-    And I click on "Delete" "link" in the "Cohort 1" "table_row"
+    And I open the action menu in "Cohort 1" "table_row"
+    And I choose "Delete" in the open action menu
     And I press "Continue"
     And I am on "Course 1" course homepage
     Then I should see "Course 1" in the "#page-header .page-header-headings" "css_element"
@@ -307,7 +308,8 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I am on "Course 1" course homepage
     And I should see "Course 1" in the "#page-header .page-header-headings" "css_element"
     And I navigate to "Users > Accounts > Cohorts" in site administration
-    And I click on "Assign" "link" in the "Cohort 1" "table_row"
+    And I open the action menu in "Cohort 1" "table_row"
+    And I choose "Assign" in the open action menu
     And I set the field "Potential users" to "Admin User (moodle@example.com)"
     And I press "Add"
     And I press "Back to cohorts"
@@ -364,7 +366,8 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I am on "Course 1" course homepage
     And I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
     And I navigate to "Users > Accounts > Cohorts" in site administration
-    And I click on "Assign" "link" in the "Cohort 1" "table_row"
+    And I open the action menu in "Cohort 1" "table_row"
+    And I choose "Assign" in the open action menu
     And I set the field "Current users" to "Admin User (moodle@example.com)"
     And I press "Remove"
     And I press "Back to cohorts"
