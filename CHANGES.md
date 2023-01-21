@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-02-04 - Prepare compatibility for Moodle 4.1.
+
 ### v4.0-r12
 
 * 2023-01-30 - Feature: Allow the admin to set CSS rules for the Moodle Mobile App, solves #195.
