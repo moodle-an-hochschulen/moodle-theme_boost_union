@@ -203,6 +203,15 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Setting: Medium content max width.
+        $name = 'theme_boost_union/mediumcontentmaxwidth';
+        $title = get_string('mediumcontentmaxwidthsetting', 'theme_boost_union', null, true);
+        $description = get_string('mediumcontentmaxwidthsetting_desc', 'theme_boost_union', null, true);
+        $default = '1120px';
+        $setting = new admin_setting_configtext($name, $title, $description, $default, $widthregex, 6);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Create content width heading.
         $name = 'theme_boost_union/contentwidthheading';
         $title = get_string('contentwidthheading', 'theme_boost_union', null, true);

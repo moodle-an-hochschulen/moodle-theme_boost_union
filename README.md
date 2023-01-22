@@ -88,6 +88,10 @@ In this tab there are the following settings:
 
 With this setting, you can override Moodle's course content width without manual SCSS modifications.
 
+###### Medium content max width
+
+With this setting, you can override Moodle's default medium width without manual SCSS modifications.
+
 ##### Content width
 
 ###### H5P content bank max width

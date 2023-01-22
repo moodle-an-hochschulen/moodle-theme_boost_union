@@ -150,6 +150,10 @@ function theme_boost_union_get_pre_scss($theme) {
     if (isset($theme->settings->coursecontentmaxwidth)) {
         $scss .= '$course-content-maxwidth: '.$theme->settings->coursecontentmaxwidth.";\n";
     }
+    // Set variables which are influenced by the mediumcontentmaxwidth setting.
+    if (isset($theme->settings->mediumcontentmaxwidth)) {
+        $scss .= '$medium-content-maxwidth: ' . $theme->settings->mediumcontentmaxwidth . ";\n";
+    }
     // Set variables which are influenced by the h5pcontentmaxwidth setting.
     if (isset($theme->settings->h5pcontentmaxwidth)) {
         $scss .= '$h5p-content-maxwidth: '.$theme->settings->h5pcontentmaxwidth.";\n";
