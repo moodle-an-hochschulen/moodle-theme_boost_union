@@ -42,11 +42,16 @@ $string['scssheading'] = 'Raw SCSS';
 
 // Settings: Page tab.
 $string['pagetab'] = 'Page';
-// ... Section: Layout.
-$string['layoutheading'] = 'Layout';
+// ... Section: Page width.
+$string['pagewidthheading'] = 'Page width';
 // ... ... Setting: Course content max width.
 $string['coursecontentmaxwidthsetting'] = 'Course content max width';
-$string['coursecontentmaxwidthsetting_desc'] = 'With this setting, you can override Moodle\'s default content width without manual SCSS modifications. By default, Moodle uses a course content max width of 830px. You can enter other pixel-based values like 1200px, but you can also enter a percentage-based value like 100% or a viewport-width value like 90vw.';
+$string['coursecontentmaxwidthsetting_desc'] = 'With this setting, you can override Moodle\'s course content width without manual SCSS modifications. This width is used as page width of course pages and within several activities. By default, Moodle uses a course content max width of 830px. You can enter other pixel-based values like 1200px, but you can also enter a percentage-based value like 100% or a viewport-width value like 90vw.';
+// ... Section: Content width.
+$string['contentwidthheading'] = 'Content width';
+// ... ... Setting: H5P content bank max width.
+$string['h5pcontentmaxwidthsetting'] = 'H5P content bank max width';
+$string['h5pcontentmaxwidthsetting_desc'] = 'With this setting, you can override Moodle\'s H5P content bank width without manual SCSS modifications. This width is used for the H5P editor within the content bank. It is <em>not</em> used for the width of the H5P activity. By default, Moodle uses a H5P content bank max width of 960px. You can enter other pixel-based values like 1200px, but you can also enter a percentage-based value like 100% or a viewport-width value like 90vw.';
 
 // Settings: Branding tab.
 $string['brandingtab'] = 'Branding';

@@ -82,11 +82,17 @@ This setting is already available in the Moodle core theme Boost. For more infor
 
 In this tab there are the following settings:
 
-##### Layout
+##### Page width
 
 ###### Course content max width
 
-With this setting, you can override Moodle's default content width without manual SCSS modifications.
+With this setting, you can override Moodle's course content width without manual SCSS modifications.
+
+##### Content width
+
+###### H5P content bank max width
+
+With this setting, you can override Moodle's H5P content bank width without manual SCSS modifications.
 
 #### Tab "Branding"
 
