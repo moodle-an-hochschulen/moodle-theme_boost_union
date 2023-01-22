@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-01-22 - Feature: Allow the admin to change the H5P content bank width, solves #201.
+
 ### v4.0-r11
 
 * 2023-01-21 - Improvement: Add note about grandchild themes to the README file, solves #122.
