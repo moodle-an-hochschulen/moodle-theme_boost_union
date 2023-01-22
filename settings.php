@@ -100,6 +100,10 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $yesnooption = array(THEME_BOOST_UNION_SETTING_SELECT_YES => get_string('yes'),
                 THEME_BOOST_UNION_SETTING_SELECT_NO => get_string('no'));
 
+        // Prepare regular expression for checking if the value is a percent number (from 0% to 100%) or a pixel number
+        // (with 3 or 4 digits) or a viewport width number (from 0 to 100).
+        $widthregex = '/^((\d{1,2}|100)%)|((\d{1,2}|100)vw)|(\d{3,4}px)$/';
+
 
         // Create Look settings page with tabs
         // (and allow users with the theme/boost_union:configure capability to access it).
@@ -184,9 +188,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create page tab.
         $tab = new admin_settingpage('theme_boost_union_look_page', get_string('pagetab', 'theme_boost_union', null, true));
 
-        // Create layout heading.
-        $name = 'theme_boost_union/layoutheading';
-        $title = get_string('layoutheading', 'theme_boost_union', null, true);
+        // Create page width heading.
+        $name = 'theme_boost_union/pagewidthheading';
+        $title = get_string('pagewidthheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
@@ -195,10 +199,22 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('coursecontentmaxwidthsetting', 'theme_boost_union', null, true);
         $description = get_string('coursecontentmaxwidthsetting_desc', 'theme_boost_union', null, true);
         $default = '830px';
-        // Regular expression for checking if the value is a percent number (from 0% to 100%) or a pixel number (with 3 or 4 digits)
-        // or a viewport width number (from 0 to 100).
-        $regex = '/^((\d{1,2}|100)%)|((\d{1,2}|100)vw)|(\d{3,4}px)$/';
-        $setting = new admin_setting_configtext($name, $title, $description, $default, $regex, 6);
+        $setting = new admin_setting_configtext($name, $title, $description, $default, $widthregex, 6);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Create content width heading.
+        $name = 'theme_boost_union/contentwidthheading';
+        $title = get_string('contentwidthheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: H5P content bank max width.
+        $name = 'theme_boost_union/h5pcontentmaxwidth';
+        $title = get_string('h5pcontentmaxwidthsetting', 'theme_boost_union', null, true);
+        $description = get_string('h5pcontentmaxwidthsetting_desc', 'theme_boost_union', null, true);
+        $default = '960px';
+        $setting = new admin_setting_configtext($name, $title, $description, $default, $widthregex, 6);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
