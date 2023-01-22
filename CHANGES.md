@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-02-04 - Upgrade: Add .footer-support-link class to Boost Union's footer links to align them with Boost Core in 4.1 again
 * 2023-02-04 - Upgrade: Allow the admin to change medium width pages which were introduced for the database activity in 4.1 as well.
 * 2023-02-04 - Upgrade: Adopt upstream changes in footer.mustache
 * 2023-02-04 - Upgrade: Fix Behat tests which broke with Moodle 4.1.
