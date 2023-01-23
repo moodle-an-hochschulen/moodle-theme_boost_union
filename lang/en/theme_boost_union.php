@@ -57,6 +57,9 @@ $string['faviconsetting'] = 'Favicon';
 $string['faviconsetting_desc'] = 'Here, you can upload a custom image (.ico or .png format) that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.';
 // ... Section: Background images.
 $string['backgroundimagesheading'] = 'General background images';
+// ... ... Setting: Background image
+$string['backgroundimagesetting'] = 'Background image';
+$string['backgroundimagesetting_desc'] = 'Here, you can upload a custom image to display as a background of the site. The background image you upload here will override the background image in your theme preset files.';
 // ... Section: Brand colors.
 $string['brandcolorsheading'] = 'Brand colors';
 // ... Section: Bootstrap colors.
