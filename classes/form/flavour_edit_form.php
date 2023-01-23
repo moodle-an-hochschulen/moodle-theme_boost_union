@@ -112,7 +112,7 @@ class flavour_edit_form extends \moodleform {
 
         // Add backgroundimage as filemanager element.
         $mform->addElement('filemanager', 'flavours_look_backgroundimage',
-                get_string('backgroundimage', 'theme_boost'), null, [
+                get_string('backgroundimagesetting', 'theme_boost_union'), null, [
                         'subdirs' => 0,
                         'maxfiles' => 1,
                         'accepted_types' => 'web_image',
