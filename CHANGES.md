@@ -12,6 +12,7 @@ Changes
 
 ### v4.0-r11
 
+* 2023-01-24 - Feature: Add Setting (textfield) to upload css rules for the layout in the mobile App, solves #195.
 * 2023-01-21 - Improvement: Add note about grandchild themes to the README file, solves #122.
 * 2023-01-16 - Improvement: Remove Boost Union's own fallback CSS file for now, relates to #89.
 

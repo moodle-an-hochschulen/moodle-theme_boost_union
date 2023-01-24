@@ -1285,3 +1285,21 @@ function theme_boost_union_get_course_header_image_url() {
     // As no picture was found, return null.
     return null;
 }
+
+/**
+ * Helper function which adds the CSS file from the Look->mobile setting to the Moodle page.
+ * It's meant to be called when changing the setting only.
+ * *
+ * @throws coding_exception
+ * @throws dml_exception
+ * @throws moodle_exception
+ */
+function theme_boost_union_add_mobile_css_url() {
+    global $CFG;
+
+    // Build the flavour CSS file URL.
+    $mobilecssurl = new moodle_url('/theme/boost_union/mobile/styles.php');
+
+    // Not sure why, but $CFG->mobilecssurl is not accepted.
+    set_config('mobilecssurl', $mobilecssurl->out());
+}
