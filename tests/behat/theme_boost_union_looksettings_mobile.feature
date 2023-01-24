@@ -56,3 +56,27 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile app" tab on th
 
   # Unfortunately, this can't be tested with Behat yet as Mobile App testing is not added to this plugin yet.
   # Scenario: Setting: Additional CSS for Mobile app - Verify that the CSS code has an effect in the Mobile app.
+
+  @javascript @_file_upload
+  Scenario: Setting: Additional mobile images
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Mobile" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/apple-icon-152x152.jpeg" file to "Touch Icon Files" filemanager
+    And I press "Save changes"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Mobile" "link" in the "#adminsettings .nav-tabs" "css_element"
+    Then I should see "Icon Files for Devices"
+    And ".settings-touchicon-filelist" "css_element" should exist
+    And I should see "apple-icon-152x152" in the ".apple-icon-152x152" "css_element"
+    And I should see "It is an optional file to display the icon on iOS devices and was uploaded." in the ".apple-icon-152x152" "css_element"
+    And I should see "It is an optional file to display the icon on iOS devices, but it was not uploaded properly." in the ".apple-icon-57x57" "css_element"
+    And I should see "It is a recommended file to display the icon on iOS devices, but it was not uploaded properly." in the ".apple-icon-180x180" "css_element"
+    # Icons should also be tested - however, mobile testing is a tobe done when there is more time https://docs.moodle.org/dev/Acceptance_testing_for_the_Moodle_App.
+
+  @javascript @_file_upload
+  Scenario: Setting: Additional mobile images countercheck no list
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Mobile" "link" in the "#adminsettings .nav-tabs" "css_element"
+    Then I should not see "Icon Files for Devices"
