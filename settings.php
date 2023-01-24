@@ -825,10 +825,34 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $setting = new admin_setting_description($name, $title, $description);
             $tab->add($setting);
         }
+        $page->add($tab);
+
+        // Create mobile settings tab.
+        $tab = new admin_settingpage('theme_boost_union_look_mobile',
+            get_string('mobiletab', 'theme_boost_union', null, true));
+
+        // Create mobilecss heading.
+        $name = 'theme_boost_union/mobilecssheading';
+        $title = get_string('mobilecssheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Create a textfield for Raw CSS for mobile.
+        $name = 'theme_boost_union/mobilecss';
+        $title = get_string('mobilecss', 'theme_boost_union', null, true);
+        $description = get_string('mobilecss_desc', 'theme_boost_union', null, true);
+        // In case another URL is set (in the mobilecssurl setting), we add a hint to the description.
+        if (isset($CFG->mobilecssurl) && strpos($CFG->mobilecssurl, '/boost_union/mobile/styles.php') == false
+            && !empty($CFG->mobilecssurl)) {
+            $description .= html_writer::div(get_string('mobilecss_overwrite', 'theme_boost_union',
+                $CFG->mobilecssurl), 'alert alert-danger');
+        }
+        $setting = new admin_setting_scsscode($name, $title, $description, '', PARAM_RAW);
+        $setting->set_updatedcallback('theme_boost_union_add_mobile_css_url');
+        $tab->add($setting);
 
         // Add tab to settings page.
         $page->add($tab);
-
 
         // Add settings page to the admin settings category.
         $ADMIN->add('theme_boost_union', $page);

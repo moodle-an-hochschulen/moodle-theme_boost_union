@@ -269,6 +269,13 @@ $string['fontawesomecheck-fa6free-newstuff-title'] = 'FontAwesome 6 icons';
 $string['fontawesomecheck-fa6free-newstuff-description'] = 'Newer FontAwesome versions ship with additional icons compared to the FontAwesome 4 iconset. If you see a virus icon on the left hand side, your FontAwesome 6 version is properly showing new icons which are new in FontAwesome 6.';
 $string['fontawesomecheck-fa6free-filter-title'] = 'FontAwesome filter';
 $string['fontawesomecheck-fa6free-filter-description'] = 'As you have the FontAwesome filter plugin installed, you should be sure that the filter handles the new FontAwesome 6 icons correctly as well. If you see a users icon on the left hand side, the filter is working properly with the FontAwesome 6 version icons.';
+// Settings: Mobile tab.
+$string['mobiletab'] = 'Mobile';
+// ... Section: Additional mobile css.
+$string['mobilecssheading'] = 'Supplementary Mobile Settings';
+$string['mobilecss'] = 'Additional CSS';
+$string['mobilecss_desc'] = 'CSS-Rules will be only applied in the depiction of the Moodle instance in the Moodle App. This setting overwrites the setting mobilecssurl in Mobile App -> Mobile Appearance.';
+$string['mobilecss_overwrite'] = 'Currently the setting is set to the file {$a} and the setting will be overwritten.';
 
 // Settings: Feel page.
 $string['configtitlefeel'] = 'Feel';
