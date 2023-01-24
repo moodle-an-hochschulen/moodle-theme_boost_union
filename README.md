@@ -269,6 +269,10 @@ With this setting, you can override Moodle's H5P content bank width without manu
 
 With this setting, you can write custom CSS code to customise your mobile app interface. The CSS code will be only added to the Mobile app depiction of this Moodle instance and will not be shown in the webbrowser version.
 
+###### Touch Icon Files
+
+Files which are displayed when a link to the website is made on a mobile device.
+
 ### Settings page "Feel"
 
 #### Tab "Navigation"
