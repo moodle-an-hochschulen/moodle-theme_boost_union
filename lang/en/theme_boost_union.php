@@ -368,6 +368,17 @@ $string['mobilecss_desc'] = 'With this setting, you can write custom CSS code to
 $string['mobilecss_set'] = 'As soon as you add any CSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically set to a URL of the Boost Union theme.';
 $string['mobilecss_overwrite'] = 'As soon as you add any CSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically overwritten with a URL of the Boost Union theme. Currently this setting is set to <a href="{$a->value}">{$a->value}</a>.';
 $string['mobilecss_donotchange'] = 'This step is necessary to ship the CSS code to the Mobile app. Do not change the URL there unless you really want to remove the CSS code from the Mobile app again.';
+// ... Section: Touch icons.
+$string['touchiconfiles'] = 'Touch Icon Files';
+$string['touchiconfiles_desc'] = 'Files which are displayed when a link to the website is made on a mobile device.';
+$string['touchiconfiles_desc_types_ios'] = 'Possible files: apple-icon-[57x57 | 60x60 | 72x72 | 76x76 | 114x114 | 120x120 | 144x144 | 152x152 | 180x180].png/.jpg/.jpeg.';
+$string['touchiconfileslistsetting'] = 'Icon Files for Devices';
+$string['touchiconfileslistsetting_desc'] = 'The recommended file has a good size to be shown on every device. Optional files can improve or decrease performance, which highly depends on the traffic of your webpage, devices used, and many more.';
+$string['touchiconlistrecommendeduploaded'] = 'It is a recommended file to display the icon on iOS devices and was uploaded.';
+$string['touchiconlistrecommendedmissing'] = 'It is a recommended file to display the icon on iOS devices, but it was not uploaded properly.';
+$string['touchiconlistoptionaluploaded'] = 'It is an optional file to display the icon on iOS devices and was uploaded.';
+$string['touchiconlistoptionalmissing'] = 'It is an optional file to display the icon on iOS devices, but it was not uploaded properly.';
+$string['ios'] = 'iOS';
 
 // Settings: Feel page.
 $string['configtitlefeel'] = 'Feel';
