@@ -1451,3 +1451,75 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
 
     return $scss;
 }
+/**
+ * Helper function which returns the visual checks for the configured FontAwesome version.
+ *
+ * @return array|null The array of checks or null if an invalid FontAwesome version is configured.
+ */
+function theme_boost_union_check_mobile_touchimages() {
+    // Get touchicons files.
+    $systemcontext = \context_system::instance();
+    $fs = get_file_storage();
+    $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'touchicons',
+        false, 'itemid', false);
+    $uploadedfiles = array();
+    $possiblefiles = array('apple-icon-57x57', 'apple-icon-60x60', 'apple-icon-72x72', 'apple-icon-76x76',
+        'apple-icon-114x114', 'apple-icon-120x120', 'apple-icon-144x144', 'apple-icon-152x152', 'apple-icon-180x180');
+    // Listing all files which are accepted.
+    foreach ($possiblefiles as $file) {
+        $templatefile = new stdClass();
+        $templatefile->exist = false;
+        $trimmedfilename = str_replace(array('57x57', '60x60', '72x72', '76x76', '114x114', '120x120', '144x144',
+            '152x152', '180x180'), "",  $file);
+        if ('apple-icon-180x180' == $file) {
+            $templatefile->recommended = true;
+        } else {
+            $templatefile->recommended = false;
+        }
+        $templatefile->filename = $file;
+        array_push($uploadedfiles, $templatefile);
+    }
+    // In case the file is uploaded mark it as exists and filepath.
+    foreach ($files as $posfile) {
+        foreach ($uploadedfiles as $file) {
+            $posfilename = $posfile->get_filename();
+            $trimmedfilename = str_replace(array('.png', '.jpg', '.jpeg'), "",  $posfilename);
+            if ($trimmedfilename == $file->filename) {
+                $file->exists = true;
+            }
+        }
+    }
+
+    // Return the checks structure.
+    return $uploadedfiles;
+}
+/**
+ * Return html for linkfiles.
+ *
+ * @return string $appiconstring
+ */
+function theme_boost_union_upload_touchicons_to_page() {
+    $appiconstring = '';
+    // Get the system context.
+    $systemcontext = \context_system::instance();
+    // Get filearea.
+    $fs = get_file_storage();
+    // Get touchicons files.
+    $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'touchicons',
+        false, 'itemid', false);
+    foreach ($files as $file) {
+        $trimmefiletypename = str_replace(array('.png', '.jpg', '.jpeg'), "",  $file->get_filename());
+        // Have only the OS left as string.
+        $trimmedsizeandtypename = str_replace(array('.png', '.jpg', '.jpeg', '57x57', '60x60', '72x72', '76x76', '114x114',
+            '120x120', '144x144', '152x152', '180x180'), "",  $file->get_filename());
+        if ($trimmedsizeandtypename == 'apple-icon-') {
+            // Handle iOS (rel differs). Not using the HTML writer as not want to write anything in the tag.
+            $appiconstring .= '<link rel="apple-touch-icon" sizes="';
+            $appiconstring .= str_replace('apple-icon-', "",  $trimmefiletypename);
+            $appiconstring .= '" href="' . moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(),
+                    $file->get_filearea(), $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+            $appiconstring .= '">';
+        }
+    }
+    return $appiconstring;
+}

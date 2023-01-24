@@ -419,6 +419,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
     } else if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'backgroundimage' ||
         $filearea === 'loginbackgroundimage' || $filearea === 'additionalresources' ||
                 $filearea === 'customfonts' || $filearea === 'courseheaderimagefallback' ||
+                $filearea === 'touchicons' ||
                 preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea))) {
         $theme = theme_config::load('boost_union');
         // By default, theme files must be cache-able by both browsers and proxies.
@@ -500,6 +501,8 @@ function theme_boost_union_before_standard_html_head() {
 
     // Add the flavour CSS to the page.
     theme_boost_union_add_flavourcss_to_page();
+
+    $html .= theme_boost_union_upload_touchicons_to_page();
 
     // Return an empty string to keep the caller happy.
     return $html;

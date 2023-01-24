@@ -1071,6 +1071,36 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_boost_union_set_mobilecss_url');
         $tab->add($setting);
 
+        // Setting: image upload for touchimages.
+        $name = 'theme_boost_union/touchiconfiles';
+        $title = get_string('touchiconfiles', 'theme_boost_union', null, true);
+        $description = get_string('touchiconfiles_desc', 'theme_boost_union', null, true) .
+            '<br />' . get_string('touchiconfiles_desc_types_ios', 'theme_boost_union', null, true);
+        // Use our enhanced implementation of admin_setting_configstoredfile to circumvent MDL-59082.
+        // This can be changed back to admin_setting_configstoredfile as soon as MDL-59082 is fixed.
+        $setting = new admin_setting_configstoredfilealwayscallback($name, $title, $description, 'touchicons', 0,
+            array('maxfiles' => -1, 'subdirs' => 0, 'accepted_types' => ['.jpg', '.png']));
+        $tab->add($setting);
+
+        // Information: Touchicons list.
+        $faconfig = get_config('theme_boost_union', 'fontawesomeversion');
+        // If there is at least one file uploaded we show a list of files which are accepted...
+        // ...and flag them is they are uploaded.
+        if (!empty(get_config('theme_boost_union', 'touchiconfiles'))) {
+            // Prepare the widget.
+            $name = 'theme_boost_union/touchiconfileslist';
+            $title = get_string('touchiconfileslistsetting', 'theme_boost_union', null, true);
+            $description = get_string('touchiconfileslistsetting_desc', 'theme_boost_union', null, true);
+
+            // Append the icon list.
+            $templatecontext = array('files' => theme_boost_union_check_mobile_touchimages());
+            $description .= $OUTPUT->render_from_template('theme_boost_union/settings-touchicon-filelist', $templatecontext);
+
+            // Finish the widget.
+            $setting = new admin_setting_description($name, $title, $description);
+            $tab->add($setting);
+        }
+
         // Add tab to settings page.
         $page->add($tab);
 
