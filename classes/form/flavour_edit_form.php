@@ -85,7 +85,7 @@ class flavour_edit_form extends \moodleform {
                 get_string('logo', 'admin'), null, [
                         'subdirs' => 0,
                         'maxfiles' => 1,
-                        'accepted_types' => ['.jpg', '.png'],
+                        'accepted_types' => 'web_image',
                         'return_types' => FILE_INTERNAL
                 ]);
         $mform->addHelpButton('flavours_look_logo', 'flavourslogo', 'theme_boost_union');
@@ -95,7 +95,7 @@ class flavour_edit_form extends \moodleform {
                 get_string('logocompact', 'admin'), null, [
                         'subdirs' => 0,
                         'maxfiles' => 1,
-                        'accepted_types' => ['.jpg', '.png'],
+                        'accepted_types' => 'web_image',
                         'return_types' => FILE_INTERNAL
                 ]);
         $mform->addHelpButton('flavours_look_logocompact', 'flavourslogocompact', 'theme_boost_union');

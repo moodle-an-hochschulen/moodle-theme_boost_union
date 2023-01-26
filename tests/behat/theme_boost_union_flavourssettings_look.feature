@@ -30,7 +30,8 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   @javascript @_file_upload
   Scenario: Flavours: Compact logo - Upload a compact logo (with a global compact logo being overridden)
     When I log in as "admin"
-    And I navigate to "Appearance > Logos" in site administration
+    And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
+    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
     And I click on "Save changes" "button"
     And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
@@ -47,7 +48,8 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   @javascript @_file_upload
   Scenario: Flavours: Compact logo - Do not upload a compact logo (with a global compact logo being served properly)
     When I log in as "admin"
-    And I navigate to "Appearance > Logos" in site administration
+    And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
+    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
     And I click on "Save changes" "button"
     And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
@@ -57,8 +59,8 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
     And I click on "Preview" "button" in the "#region-main table" "css_element"
-    # We can't check the uploaded image file visually, but we can verify that the compact logo is shipped from the core_admin filearea.
-    Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/core_admin/logocompact')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
+    # We can't check the uploaded image file visually, but we can verify that the compact logo is shipped from the theme_boost_union global logo filearea.
+    Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
 
   @javascript @_file_upload
   Scenario: Flavours: Favicon - Upload a favicon (with a global favicon not having been uploaded before)

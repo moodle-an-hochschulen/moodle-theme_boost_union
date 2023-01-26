@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-01-26 - Feature: Add dedicated logo settings to Boost Union, solves #211.
 * 2023-01-22 - Feature: Allow the admin to change the H5P content bank width, solves #201.
 
 ### v4.0-r11

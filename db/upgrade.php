@@ -67,5 +67,53 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2022080916, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2022080922) {
+
+        // Copy the global logo and compact logo to Boost Union's new logo fileareas.
+        $logocopied = false;
+        foreach (['logo', 'logocompact'] as $setting) {
+            $logo = get_config('core_admin', $setting);
+            if (!empty($logo)) {
+                // Get the system context.
+                $systemcontext = \context_system::instance();
+
+                // Get file storage.
+                $fs = get_file_storage();
+
+                // Get the files.
+                $files = $fs->get_area_files($systemcontext->id, 'core_admin', $setting, false, 'itemid', false);
+                if ($files) {
+                    // Just pick the first file - we are sure that there is just one file.
+                    $file = reset($files);
+
+                    // Create the filerecord with the modified information.
+                    $filerecord = array(
+                            'component' => 'theme_boost_union',
+                            'filearea' => $setting,
+                    );
+
+                    // Copy the logo file to Boost Union.
+                    $newfile = $fs->create_file_from_storedfile($filerecord, $file);
+
+                    // Set the theme config to the file name.
+                    set_config($setting, '/'.$newfile->get_filename(), 'theme_boost_union');
+
+                    // Remember this fact.
+                    $logocopied = true;
+                }
+            }
+        }
+
+        // If at least one logo has been copied.
+        if ($logocopied == true) {
+            // Show a notification to inform the admin.
+            $message = get_string('upgradenotice_2022080922', 'theme_boost_union');
+            \core\notification::success($message);
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2022080922, 'theme', 'boost_union');
+    }
+
     return true;
 }

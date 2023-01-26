@@ -225,6 +225,35 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create branding tab.
         $tab = new admin_settingpage('theme_boost_union_look_branding', get_string('brandingtab', 'theme_boost_union', null, true));
 
+        // Create logos heading.
+        $name = 'theme_boost_union/logosheading';
+        $title = get_string('logosheading', 'theme_boost_union', null, true);
+        $notificationurl = new moodle_url('/admin/settings.php', array('section' => 'logos'));
+        $notification = new \core\output\notification(get_string('logosheading_desc', 'theme_boost_union', $notificationurl->out()),
+                \core\output\notification::NOTIFY_INFO);
+        $notification->set_show_closebutton(false);
+        $description = $OUTPUT->render($notification);
+        $setting = new admin_setting_heading($name, $title, $description);
+        $tab->add($setting);
+
+        // Replicate the logo setting from theme_boost.
+        $name = 'theme_boost_union/logo';
+        $title = get_string('logosetting', 'theme_boost_union', null, true);
+        $description = get_string('logosetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configstoredfile($name, $title, $description, 'logo', 0,
+                array('maxfiles' => 1, 'accepted_types' => 'web_image'));
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Replicate the compact logo setting from theme_boost.
+        $name = 'theme_boost_union/logocompact';
+        $title = get_string('logocompactsetting', 'theme_boost_union', null, true);
+        $description = get_string('logocompactsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configstoredfile($name, $title, $description, 'logocompact', 0,
+                array('maxfiles' => 1, 'accepted_types' => 'web_image'));
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Create favicon heading.
         $name = 'theme_boost_union/faviconheading';
         $title = get_string('faviconheading', 'theme_boost_union', null, true);
