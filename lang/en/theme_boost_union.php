@@ -55,6 +55,15 @@ $string['h5pcontentmaxwidthsetting_desc'] = 'With this setting, you can override
 
 // Settings: Branding tab.
 $string['brandingtab'] = 'Branding';
+// ... Section: Logos.
+$string['logosheading'] = 'Logos';
+$string['logosheading_desc'] = 'Please note: Boost Union has its own logo upload and does not use the logo from <a href="{$a}">Moodle core\'s logo setting</a>.<br />Boost Union especially allows you to upload more image formats that Moodle core allows and allows you to override the uploaded logos within its flavours.';
+// ... ... Setting: Logo.
+$string['logosetting'] = 'Logo';
+$string['logosetting_desc'] = 'Here, you can upload a full logo to be used as decoration. This image is especially used on the login page. This image can be quite high resolution because it will be scaled down for use.';
+// ... ... Setting: Compact logo.
+$string['logocompactsetting'] = 'Compact logo';
+$string['logocompactsetting_desc'] = 'Here, you can upload a compact version of the same logo as above, such as an emblem, shield or icon. This image is especially used in the navigation bar at the top of each Moodle page. The image should be clear even at small sizes.';
 // ... Section: Favicon.
 $string['faviconheading'] = 'Favicon';
 // ... ... Setting: Favicon
@@ -497,9 +506,9 @@ $string['flavoursgeneralsettings'] = 'General settings';
 $string['flavoursincludesubcategories'] = 'Include subcategories';
 $string['flavoursincludesubcategories_help'] = 'If checked, the flavour will also be applied to the subcategories of the chosen categories.';
 $string['flavourslogo'] = 'Logo';
-$string['flavourslogo_help'] = 'With this setting, the flavour will override the logo which is configured in Moodle\'s global appearance settings.';
+$string['flavourslogo_help'] = 'With this setting, the flavour will override the logo which is configured in Boost Union\'s look settings.';
 $string['flavourslogocompact'] = 'Compact logo';
-$string['flavourslogocompact_help'] = 'With this setting, the flavour will override the logo which is configured in Moodle\'s global appearance settings.';
+$string['flavourslogocompact_help'] = 'With this setting, the flavour will override the logo which is configured in Boost Union\'s look settings.';
 $string['flavoursnotificationcreated'] = 'The flavour was created successfully';
 $string['flavoursnotificationdeleted'] = 'The flavour was deleted successfully';
 $string['flavoursnotificationedited'] = 'The flavour was edited successfully';
@@ -558,3 +567,6 @@ $string['boost_union:viewhintinhiddencourse'] = 'To be able to see a hint in a h
 // Caches.
 $string['cachedef_fontawesome'] = 'FontAwesome files (which are uploaded in the Boost Union settings)';
 $string['cachedef_flavours'] = 'Flavours which apply to a given page category ID for the current user';
+
+// Upgrade notices.
+$string['upgradenotice_2022080922'] = 'From this release on, Boost Union has its own logo settings and does not use the logo settings from Moodle core anymore. The existing logo(s) from the Moodle core settings has/have been copied to the Boost Union settings during this upgrade. Please double-check the result.';

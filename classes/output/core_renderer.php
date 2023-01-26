@@ -115,7 +115,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * This renderer function is copied and modified from /lib/outputrenderers.php
      *
      * It checks if the logo is overridden in a flavour and, if yes, it serves this logo.
-     * If there isn't a logo in any flavour set, it continues with the logic from Moodle core.
+     * If there isn't a logo in any flavour set, it serves the general logo.
      *
      * @param int $maxwidth The maximum width, or null when the maximum width does not matter.
      * @param int $maxheight The maximum height, or null when the maximum height does not matter.
@@ -166,8 +166,21 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
         }
 
-        // Apparently, there isn't any flavour logo set. Let's continue with the logic from Moodle core.
-        return parent::get_logo_url($maxwidth, $maxheight);
+        // Apparently, there isn't any flavour logo set. Let's continue to serve the general logo.
+        $logo = get_config('theme_boost_union', 'logo');
+        if (empty($logo)) {
+            return false;
+        }
+
+        // 200px high is the default image size which should be displayed at 100px in the page to account for retina displays.
+        // It's not worth the overhead of detecting and serving 2 different images based on the device.
+
+        // Hide the requested size in the file path.
+        $filepath = ((int) $maxwidth . 'x' . (int) $maxheight) . '/';
+
+        // Use $CFG->themerev to prevent browser caching when the file changes.
+        return moodle_url::make_pluginfile_url(context_system::instance()->id, 'theme_boost_union', 'logo', $filepath,
+                theme_get_revision(), $logo);
     }
 
     /**
@@ -176,7 +189,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * This renderer function is copied and modified from /lib/outputrenderers.php
      *
      * It checks if the logo is overridden in a flavour and, if yes, it serves this logo.
-     * If there isn't a logo in any flavour set, it continues with the logic from Moodle core.
+     * If there isn't a logo in any flavour set, it serves the general compact logo.
      *
      * @param int $maxwidth The maximum width, or null when the maximum width does not matter.
      * @param int $maxheight The maximum height, or null when the maximum height does not matter.
@@ -227,8 +240,18 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
         }
 
-        // Apparently, there isn't any flavour logo set. Let's continue with the logic from Moodle core.
-        return parent::get_compact_logo_url($maxwidth, $maxheight);
+        // Apparently, there isn't any flavour logo set. Let's continue to service the general compact logo.
+        $logo = get_config('theme_boost_union', 'logocompact');
+        if (empty($logo)) {
+            return false;
+        }
+
+        // Hide the requested size in the file path.
+        $filepath = ((int) $maxwidth . 'x' . (int) $maxheight) . '/';
+
+        // Use $CFG->themerev to prevent browser caching when the file changes.
+        return moodle_url::make_pluginfile_url(context_system::instance()->id, 'theme_boost_union', 'logocompact', $filepath,
+                theme_get_revision(), $logo);
     }
 
     /**
