@@ -98,6 +98,16 @@ With this setting, you can override Moodle's H5P content bank width without manu
 
 In this tab there are the following settings:
 
+##### Logos
+
+###### Logo
+
+Here, you can upload a full logo to be used as decoration. This image is especially used on the login page. This image can be quite high resolution because it will be scaled down for use.
+
+###### Compact logo
+
+Here, you can upload a compact version of the same logo as above, such as an emblem, shield or icon. This image is especially used in the navigation bar at the top of each Moodle page. The image should be clear even at small sizes.
+
 ##### Favicon
 
 ###### Favicon
