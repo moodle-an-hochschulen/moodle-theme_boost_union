@@ -113,6 +113,21 @@ $string['activityiconcolorcontentsetting_desc'] = 'The activity icon color for "
 // ... ... Setting: Activity icon color for 'Interface'.
 $string['activityiconcolorinterfacesetting'] = 'Activity icon color for "Interface"';
 $string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for "Interface"';
+// ... Section: Mod Icons.
+$string['modiconsheading'] = 'Custom Icons for Activities and Resources';
+// ... ... Setting: Mod Icon Filepicker.
+$string['modiconsfiles'] = 'Icons for Activities and Resources';
+$string['modiconsfiles_desc'] = 'Please upload files for Activities and Resources in a folder named as the activity! A picture for mod_choice is inside the folder choice. Filenames have to be icon or monologo and have to be of type png or svg. As an example it would be okay to upload two files icon.png and monologo.svg in the folder assign.';
+$string['errorcreatingpath'] = 'The path moodledataroot/pix_plugins could not be created: {$a}.';
+// ... ... Setting: Mod Icon List.
+$string['modiconlistsetting'] = 'Icons/Images uploaded';
+$string['modiconlistsetting_desc'] = 'Is Icon/Image valid or not? Needs to be in folder and named monologo(version > 4.0)/icon(version < 4.0) png/svg.';
+$string['modiconsuccess40'] = 'The icon uploaded is suitable for Moodle versions >= 4.0 for the activity {$a}.';
+$string['modiconsuccess3x'] = 'The icon uploaded is suitable for Moodle versions <= 3.11 for the activity {$a}.';
+$string['modiconnamefail40'] = 'The icon uploaded is in a suitable folder {$a}, but the filename has to be monologo for Moodle versions >= 4.0 or icon for Moodle versions <= 3.11.';
+$string['modiconnotexist'] = 'No suitable Activity was found for the image uploaded in the path {$a}.';
+$string['gtmoodle4'] = 'Moodle versions >= 4.0';
+$string['ltmoodle311'] = 'Moodle versions <= 3.11';
 // ... Section: Navbar.
 $string['navbarheading'] = 'Navbar';
 // ... ... Setting: Navbar color.

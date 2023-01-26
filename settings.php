@@ -389,6 +389,38 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Add setting for custom mod icons.
+        $name = 'theme_boost_union/modicons';
+        $title = get_string('modiconsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: ModIcons files.
+        $name = 'theme_boost_union/modiconsfiles';
+        $title = get_string('modiconsfiles', 'theme_boost_union', null, true);
+        $description = get_string('modiconsfiles_desc', 'theme_boost_union', null, true);
+        // Use our enhanced implementation of admin_setting_configstoredfile to circumvent MDL-59082.
+        // This can be changed back to admin_setting_configstoredfile as soon as MDL-59082 is fixed.
+        $setting = new admin_setting_configstoredfilealwayscallback($name, $title, $description, 'modicons', 0,
+                array('maxfiles' => -1, 'subdirs' => 1, 'accepted_types' => ['.png', '.svg']));
+
+        $setting->set_updatedcallback('theme_boost_union_load_mod_icons');
+        $tab->add($setting);
+        if (!empty(get_config('theme_boost_union', 'modiconsfiles'))) {
+            // Prepare the widget.
+            $name = 'theme_boost_union/modiconlist';
+            $title = get_string('modiconlistsetting', 'theme_boost_union', null, true);
+            $description = get_string('modiconlistsetting_desc', 'theme_boost_union', null, true);
+
+            // Append the file list to the description.
+            $templatecontext = array('files' => theme_boost_union_get_modicon_templatecontext());
+            $description .= $OUTPUT->render_from_template('theme_boost_union/settings-modicon-filelist', $templatecontext);
+
+            // Finish the widget.
+            $setting = new admin_setting_description($name, $title, $description);
+            $tab->add($setting);
+        }
+
         // Create navbar heading.
         $name = 'theme_boost_union/navbarheading';
         $title = get_string('navbarheading', 'theme_boost_union', null, true);

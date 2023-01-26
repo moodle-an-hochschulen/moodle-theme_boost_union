@@ -128,6 +128,10 @@ With these settings, you can overwrite the Bootstrap colors which are used withi
 
 With these settings, you can overwrite the activity icon colors which are used within courses.
 
+##### Icons for Activities and Resources
+
+With this setting, Activity and Resource icons can be overwritten.
+
 #### Tab "Login page"
 
 ##### Login page background images

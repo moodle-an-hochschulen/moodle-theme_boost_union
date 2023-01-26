@@ -168,6 +168,26 @@ Feature: Configuring the theme_boost_union plugin for the "Branding" tab on the 
   # Unfortunately, this can't be tested with Behat yet
   # Scenario: Setting: Activity icon color for "Interface" - Setting the color
 
+  @javascript @_file_upload
+  Scenario: Setting: mod-icon - Upload a custom mod icon
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I click on ".fa-folder-o" "css_element" in the "#admin-modiconsfiles .fp-btn-mkdir" "css_element"
+    And I set the field "New folder name" to "assign"
+    And I click on ".fp-dlg-butcreate" "css_element" in the ".moodle-dialogue .fp-mkdir-dlg" "css_element"
+    And I click on ".aabtn" "css_element" in the "#admin-modiconsfiles .fp-folder" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/monologo.png" file to "Icons for Activities and Resources" filemanager
+    And I press "Save changes"
+    Then "#admin-modiconsfiles" "css_element" should exist
+    And ".settings-modicons-filelist" "css_element" should exist
+    # Ideally we could distinguish images - however the path linked at the page is similar to "normal" icons.
+    # And I log in as "teacher1"
+    # And I am on "Course 1" course homepage
+    # And I turn editing mode on
+    # And I click on "Add an activity or resource" "button" in the "Topic 1" "section"
+    # Then "//div[contains(@class, 'modchoosercontainer')]//div[contains(@class, 'optionscontainer')]//a[contains(@title, 'Add a new Assignment')]//img[contains(@src, 'boost_union/assign']" "xpath_element" should exist
+
   Scenario Outline: Setting: Navbar color - Set the navbar color
     Given the following config values are set as admin:
       | config      | value     | plugin            |

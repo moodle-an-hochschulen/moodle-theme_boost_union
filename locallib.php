@@ -1360,3 +1360,142 @@ function theme_boost_union_get_block_regions($layout) {
     // Return.
     return $regions;
 }
+
+/**
+ * Remove recursively all files in the directory.
+ * @param string $src folderpath
+ * @param bool $del delete the folder itself?
+ */
+function theme_boost_union_rrmdir($src , $del) {
+    $dir = opendir($src);
+    while (false !== ($file = readdir($dir))) {
+        if (($file != '.') && ($file != '..')) {
+            $full = $src . '/' . $file;
+            if (is_dir($full)) {
+                theme_boost_union_rrmdir($full, true);
+            } else {
+                unlink($full);
+            }
+        }
+    }
+    closedir($dir);
+    if ($del) {
+        rmdir($src);
+    }
+}
+
+/**
+ * First delete all icons that are placed in dataroot->pix_plugin->mod
+ * (https://github.com/moodle/moodle/blob/15d4ea81e003439c528004a8d555a07cad0f02d3/lib/outputlib.php#L2151-L2169,
+ * Used as third fallback for mod icons- first look in theme - second in parent theme)
+ * Then checks the files and ONLY upload files which are in a folder called as the activity and
+ * are namen icon/monologo.png/svg.
+ *
+ * @throws coding_exception
+ * @throws dml_exception
+ * @throws moodle_exception
+ */
+function theme_boost_union_load_mod_icons() {
+    global $CFG;
+    // Delete all previous files:
+    // If Behat tests are running.
+    $pixpluginpath = $CFG->dataroot . DIRECTORY_SEPARATOR . 'pix_plugins';
+    if (is_dir($pixpluginpath)) {
+        theme_boost_union_rrmdir($pixpluginpath, false);
+    }
+    // Get the system context.
+    $systemcontext = \context_system::instance();
+    // Get filearea.
+    $fs = get_file_storage();
+    // Get all files from filearea.
+    $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'modicons',
+            false, 'itemid', true);
+    $filesnottransferedending = array();
+    $filesnottransferedname = array();
+    $filesnottransferedfolder = array();
+    foreach ($files as $file) {
+        // Is filename icon/monologo.svg/png ?
+        $trimmedfilename = str_replace(array('icon', 'monologo'), "",  $file->get_filename());
+        if (!($trimmedfilename === '.png' || $trimmedfilename === '.svg')) {
+            array_push($filesnottransferedending, $file->get_filename());
+            continue;
+        }
+        $trimmedfilename = str_replace(array('.png', '.svg'), "",  $file->get_filename());
+        if (!($trimmedfilename === 'icon' || $trimmedfilename === 'monologo')) {
+            array_push($filesnottransferedname, $file->get_filename());
+            continue;
+        }
+        // Do we have a filepath? In case we have exactly one folder this will result in three entries in the array.
+        $checksize = count(explode(DIRECTORY_SEPARATOR, $file->get_filepath()));
+        if (empty($file->get_filepath()) || $checksize != 3) {
+            array_push($filesnottransferedfolder, $file->get_filename());
+            continue;
+        }
+        // Write file to moodledata.
+        $foldername = trim($file->get_filepath(), DIRECTORY_SEPARATOR);
+
+        $path = $pixpluginpath . DIRECTORY_SEPARATOR . 'mod' . DIRECTORY_SEPARATOR . $foldername;
+        if (!is_dir($path)) {
+            umask(0000);
+            // Create the directory for Backups.
+            if (!mkdir($path, $CFG->directorypermissions, true)) {
+                $mkdirerrorarray = error_get_last();
+                throw new \moodle_exception(get_string('errorcreatingpath', 'theme_boost_union', $mkdirerrorarray['message']));
+            }
+        }
+        if (!empty($file)) {
+            $file->copy_content_to($path . DIRECTORY_SEPARATOR . $file->get_filename());
+        }
+    }
+}
+
+/**
+ * Return the template data for all uploaded files for
+ * settings-modicon-filelist.mustache
+ *
+ * @return array
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_boost_union_get_modicon_templatecontext () {
+    global $DB;
+    $systemcontext = \context_system::instance();
+    // Get filearea.
+    $fs = get_file_storage();
+    // Get all files from filearea.
+    $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'modicons',
+            false, 'itemid', true);
+
+    $modules = $DB->get_records('modules', array(), '', 'name');
+
+    $templatedata = array();
+    foreach ($files as $file) {
+        // Is filename [icon|monologo] ?
+        // Dismiss png/svg check is already restricted by moodle.
+        $templateobject = new stdClass();
+        $trimmedfilename = str_replace(array('.png', '.svg'), "", $file->get_filename());
+        if (!($trimmedfilename === 'icon' || $trimmedfilename === 'monologo')) {
+            $templateobject->invalidname = true;
+        } else if ($trimmedfilename === 'monologo') {
+            $templateobject->moodle4 = true;
+        } else if ($trimmedfilename === 'icon') {
+            $templateobject->moodle3 = true;
+        }
+        // Do we have a filepath? In case we have exactly one folder this will result in three entries in the array.
+        $checksize = count(explode(DIRECTORY_SEPARATOR, $file->get_filepath()));
+        // Skip Folders.
+        if ($checksize < 2 || $file->get_filename() == '.') {
+            continue;
+        }
+        $templateobject->path = $file->get_filepath() . $file->get_filename();
+        // We have exactly one folder - Check if the folder has a valid name.
+        if (!empty($file->get_filepath()) || $checksize == 3) {
+            $foldername = trim($file->get_filepath(), DIRECTORY_SEPARATOR);
+            if (array_key_exists($foldername, $modules)) {
+                $templateobject->mod = get_string('modulename', $foldername);
+            }
+        }
+        array_push($templatedata, $templateobject);
+    }
+    return $templatedata;
+}

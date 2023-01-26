@@ -380,7 +380,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
     } else if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'backgroundimage' ||
         $filearea === 'loginbackgroundimage' || $filearea === 'additionalresources' ||
                 $filearea === 'customfonts' || $filearea === 'fontawesome' || $filearea === 'courseheaderimagefallback' ||
-                preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea))) {
+                preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea) || $filearea === 'modicons')) {
         $theme = theme_config::load('boost_union');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {
