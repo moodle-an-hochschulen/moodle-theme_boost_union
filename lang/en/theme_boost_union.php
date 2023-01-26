@@ -40,6 +40,12 @@ $string['presetheading'] = 'Theme presets';
 $string['scsstab'] = 'SCSS';
 // ... Section: Raw SCSS.
 $string['scssheading'] = 'Raw SCSS';
+// ... Section: Raw CSS.
+$string['cssheading'] = 'Raw CSS';
+// ... Setting: Raw CSS for H5P.
+$string['cssh5psetting'] = 'Raw CSS for H5P';
+$string['cssh5psetting_desc'] = 'Enter Raw CSS-Code which is applied to the depiction of H5P content integrated with mod/h5p and mod/hvp. Inspect the Activities for choosing suitable css-classes.';
+$string['errorcreatingpath'] = 'Due to permissions path could not be created details: {$a}.';
 
 // Settings: Page tab.
 $string['pagetab'] = 'Page';

@@ -180,7 +180,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_scsscode($name, $title, $description, $default, PARAM_RAW);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
+        $name = 'theme_boost_union/scssheading';
+        $title = get_string('scssheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
 
+        // Create Raw CSS heading.
+        $name = 'theme_boost_union/cssheading';
+        $title = get_string('cssheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Raw CSS.
+        $name = 'theme_boost_union/cssh5p';
+        $title = get_string('cssh5psetting', 'theme_boost_union', null, true);
+        $description = get_string('cssh5psetting_desc', 'theme_boost_union', null, true);
+        $default = '';
+        $setting = new admin_setting_scsscode($name, $title, $description, $default, PARAM_RAW);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
         // Add tab to settings page.
         $page->add($tab);
 

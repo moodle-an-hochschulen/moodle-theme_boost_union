@@ -57,6 +57,7 @@ jobs:
 
       - name: Install moodle-plugin-ci
         run: |
+          moodle-plugin-ci add-plugin --branch master h5p/moodle-mod_hvp
           moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1
         env:
           DB: ${{ matrix.database }}

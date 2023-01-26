@@ -78,6 +78,12 @@ This setting is already available in the Moodle core theme Boost. For more infor
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
+##### Raw CSS
+
+###### Raw CSS for H5P
+
+CSS-Code which is appended to the header of mod_h5p and mod_hvp iFrames.
+
 #### Tab "Page"
 
 In this tab there are the following settings:
