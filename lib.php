@@ -311,9 +311,9 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         $fs = get_file_storage();
 
         // Get the file from the filestorage.
-        $filename = array_pop($args);
+        $filename = clean_param(array_pop($args), PARAM_FILE);
         array_pop($args); // This is the themerev number in the $args array which is used for browser caching, here we ignore it.
-        $itemid = array_pop($args);
+        $itemid = clean_param(array_pop($args), PARAM_INT);
         if ((!$file = $fs->get_file($context->id, 'theme_boost_union', $filearea, $itemid, '/', $filename)) ||
                 $file->is_directory()) {
             send_file_not_found();
