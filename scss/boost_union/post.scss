@@ -1,4 +1,20 @@
 /*=======================================
+ * Settings: Look -> Branding
+ ======================================*/
+
+/*---------------------------------------
+ * Setting: Compact logo
+ --------------------------------------*/
+
+/* Add an explicit height to the logo in the navbar.
+   This is necessary to render SVG logos properly as their size is calculated different than pixel-based images. */
+.navbar-brand .logo {
+    height: 100%;
+    width: auto;
+}
+
+
+/*=======================================
  * Settings: Look -> Login page
  ======================================*/
 

@@ -172,11 +172,23 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return false;
         }
 
-        // 200px high is the default image size which should be displayed at 100px in the page to account for retina displays.
-        // It's not worth the overhead of detecting and serving 2 different images based on the device.
+        // If the logo is a SVG image, do not add a size to the path.
+        $logoextension = pathinfo($logo, PATHINFO_EXTENSION);
+        if (in_array($logoextension, ['svg', 'svgz'])) {
+            // The theme_boost_union_pluginfile() function will look for a filepath and will try to extract the size from that.
+            // Thus, we cannot drop the filepath from the URL completely.
+            // But we can add a path without an 'x' in it which will then be interpreted by theme_boost_union_pluginfile()
+            // as "no resize requested".
+            $filepath = '1/';
 
-        // Hide the requested size in the file path.
-        $filepath = ((int) $maxwidth . 'x' . (int) $maxheight) . '/';
+            // Otherwise, add a size to the path.
+        } else {
+            // 200px high is the default image size which should be displayed at 100px in the page to account for retina displays.
+            // It's not worth the overhead of detecting and serving 2 different images based on the device.
+
+            // Hide the requested size in the file path.
+            $filepath = ((int) $maxwidth . 'x' . (int) $maxheight) . '/';
+        }
 
         // Use $CFG->themerev to prevent browser caching when the file changes.
         return moodle_url::make_pluginfile_url(context_system::instance()->id, 'theme_boost_union', 'logo', $filepath,
@@ -246,8 +258,20 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return false;
         }
 
-        // Hide the requested size in the file path.
-        $filepath = ((int) $maxwidth . 'x' . (int) $maxheight) . '/';
+        // If the logo is a SVG image, do not add a size to the path.
+        $logoextension = pathinfo($logo, PATHINFO_EXTENSION);
+        if (in_array($logoextension, ['svg', 'svgz'])) {
+            // The theme_boost_union_pluginfile() function will look for a filepath and will try to extract the size from that.
+            // Thus, we cannot drop the filepath from the URL completely.
+            // But we can add a path without an 'x' in it which will then be interpreted by theme_boost_union_pluginfile()
+            // as "no resize requested".
+            $filepath = '1/';
+
+            // Otherwise, add a size to the path.
+        } else {
+            // Hide the requested size in the file path.
+            $filepath = ((int)$maxwidth . 'x' . (int)$maxheight) . '/';
+        }
 
         // Use $CFG->themerev to prevent browser caching when the file changes.
         return moodle_url::make_pluginfile_url(context_system::instance()->id, 'theme_boost_union', 'logocompact', $filepath,
