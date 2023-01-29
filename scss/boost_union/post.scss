@@ -113,6 +113,17 @@
     right: calc(#{$drawer-right-width} + 2rem);
 }
 
+/* As soon as the sticky footer is shown (especially in the database activity),
+   the back to top button has to be moved further up.
+   Again, we have to distinguish between really small screens and larger screens
+   (where the fotter button is shown as well). */
+body.hasstickyfooter #back-to-top {
+    bottom: 5rem;
+    @include media-breakpoint-up(sm) {
+        bottom: 9rem;
+    }
+}
+
 
 /*=======================================
  * Settings: Content -> Footnote.
