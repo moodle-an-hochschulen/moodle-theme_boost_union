@@ -269,13 +269,16 @@ $string['fontawesomecheck-fa6free-newstuff-title'] = 'FontAwesome 6 icons';
 $string['fontawesomecheck-fa6free-newstuff-description'] = 'Newer FontAwesome versions ship with additional icons compared to the FontAwesome 4 iconset. If you see a virus icon on the left hand side, your FontAwesome 6 version is properly showing new icons which are new in FontAwesome 6.';
 $string['fontawesomecheck-fa6free-filter-title'] = 'FontAwesome filter';
 $string['fontawesomecheck-fa6free-filter-description'] = 'As you have the FontAwesome filter plugin installed, you should be sure that the filter handles the new FontAwesome 6 icons correctly as well. If you see a users icon on the left hand side, the filter is working properly with the FontAwesome 6 version icons.';
-// Settings: Mobile tab.
-$string['mobiletab'] = 'Mobile';
-// ... Section: Additional mobile css.
-$string['mobilecssheading'] = 'Supplementary Mobile Settings';
-$string['mobilecss'] = 'Additional CSS';
-$string['mobilecss_desc'] = 'CSS-Rules will be only applied in the depiction of the Moodle instance in the Moodle App. This setting overwrites the setting mobilecssurl in Mobile App -> Mobile Appearance.';
-$string['mobilecss_overwrite'] = 'Currently the setting is set to the file {$a} and the setting will be overwritten.';
+// Settings: Mobile app tab.
+$string['mobiletab'] = 'Mobile app';
+// ... Section: Mobile appearance.
+$string['mobileappearanceheading'] = 'Mobile appearance';
+// ... ... Setting: Additional CSS for Mobile app.
+$string['mobilecss'] = 'Additional CSS for Mobile app';
+$string['mobilecss_desc'] = 'With this setting, you can write custom CSS code to customise your mobile app interface. The CSS code will be only added to the Mobile app depiction of this Moodle instance and will not be shown in the webbrowser version. Read more about this feature in the <a href="https://moodledev.io/general/app/customisation/remote-themes#how-do-remote-themes-work">Moodle dev docs</a>.';
+$string['mobilecss_set'] = 'As soon as you add any CSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically set to a URL of the Boost Union theme.';
+$string['mobilecss_overwrite'] = 'As soon as you add any CSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically overwritten with a URL of the Boost Union theme. Currently this setting is set to <a href="{$a->value}">{$a->value}</a>.';
+$string['mobilecss_donotchange'] = 'This step is necessary to ship the CSS code to the Mobile app. Do not change the URL there unless you really want to remove the CSS code from the Mobile app again.';
 
 // Settings: Feel page.
 $string['configtitlefeel'] = 'Feel';

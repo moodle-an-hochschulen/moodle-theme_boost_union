@@ -6,13 +6,13 @@ Changes
 
 ### Unreleased
 
+* 2023-01-30 - Feature: Allow the admin to set CSS rules for the Moodle Mobile App, solves #195.
 * 2023-01-28 - Improvement: Do not resize SVG logo files during serving, helps to solve #160.
 * 2023-01-26 - Feature: Add dedicated logo settings to Boost Union, solves #211.
 * 2023-01-22 - Feature: Allow the admin to change the H5P content bank width, solves #201.
 
 ### v4.0-r11
 
-* 2023-01-24 - Feature: Add Setting (textfield) to upload css rules for the layout in the mobile App, solves #195.
 * 2023-01-21 - Improvement: Add note about grandchild themes to the README file, solves #122.
 * 2023-01-16 - Improvement: Remove Boost Union's own fallback CSS file for now, relates to #89.
 
