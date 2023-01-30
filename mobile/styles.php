@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Mobile styles serving. Logic copied from flavours/style.php.
+ * Theme Boost Union - Mobile App styles serving.
  *
  * @package    theme_boost_union
  * @copyright  2023 Nina Herrmann <nina.herrmann@gmx.de>
@@ -40,18 +40,26 @@ require(__DIR__.'/../../../config.php');
 require_once($CFG->dirroot.'/lib/csslib.php');
 require_once($CFG->dirroot.'/lib/configonlylib.php');
 
-// Initialize CSS code.
-$css = '';
+// Initialize SCSS code.
+$scss = '';
 
-// Get the css fro the setting.
+// Get the raw SCSS from the admin setting,
+// throw an exception if get_config throws an exception which happens only if something is really wrong.
 try {
-    $configmobilecss = get_config('theme_boost_union', 'mobilecss');
+    // Note: In the current state of implementation, this setting only allows the usage of custom CSS, not SCSS.
+    // There is a follow-up issue on Github to add SCSS support.
+    // However, to ease this future improvement, the setting has already been called 'mobilescss'.
+    $configmobilescss = get_config('theme_boost_union', 'mobilescss');
+
+    // Catch the exception.
 } catch (\Exception $e) {
-    // Should not happen but in case...
+    // Just die, there is no use to output any error message, it would even be counter-productive if the browser
+    // tries to interpret it as CSS code.
     die;
 }
 
-// Always add the css-code in case it is empty - maybe it is supposed to be deleted.
-$css .= $configmobilecss;
+// Always add the CSS code even if it is empty.
+$scss .= $configmobilescss;
+
 // Send out the resulting CSS code. The theme revision will be set as etag to support the browser caching.
-css_send_cached_css_content($css, theme_get_revision());
+css_send_cached_css_content($scss, theme_get_revision());

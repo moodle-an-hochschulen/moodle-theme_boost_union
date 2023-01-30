@@ -825,34 +825,56 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $setting = new admin_setting_description($name, $title, $description);
             $tab->add($setting);
         }
+
+        // Add tab to settings page.
         $page->add($tab);
 
-        // Create mobile settings tab.
-        $tab = new admin_settingpage('theme_boost_union_look_mobile',
-            get_string('mobiletab', 'theme_boost_union', null, true));
 
-        // Create mobilecss heading.
-        $name = 'theme_boost_union/mobilecssheading';
-        $title = get_string('mobilecssheading', 'theme_boost_union', null, true);
+        // Create mobile app tab.
+        $tab = new admin_settingpage('theme_boost_union_look_mobile',
+                get_string('mobiletab', 'theme_boost_union', null, true));
+
+        // Create Mobile appearance heading.
+        $name = 'theme_boost_union/mobileappearanceheading';
+        $title = get_string('mobileappearanceheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
-        // Create a textfield for Raw CSS for mobile.
-        $name = 'theme_boost_union/mobilecss';
+        // Setting: Additional CSS for Mobile app.
+        $name = 'theme_boost_union/mobilescss';
         $title = get_string('mobilecss', 'theme_boost_union', null, true);
         $description = get_string('mobilecss_desc', 'theme_boost_union', null, true);
-        // In case another URL is set (in the mobilecssurl setting), we add a hint to the description.
-        if (isset($CFG->mobilecssurl) && strpos($CFG->mobilecssurl, '/boost_union/mobile/styles.php') == false
-            && !empty($CFG->mobilecssurl)) {
-            $description .= html_writer::div(get_string('mobilecss_overwrite', 'theme_boost_union',
-                $CFG->mobilecssurl), 'alert alert-danger');
+        $mobilecssurl = new moodle_url('/admin/settings.php', array('section' => 'mobileappearance'));
+        // If another Mobile App CSS URL is set already (in the $CFG->mobilecssurl setting), we add a warning to the description.
+        if (isset($CFG->mobilecssurl) && !empty($CFG->mobilecssurl) &&
+                strpos($CFG->mobilecssurl, '/boost_union/mobile/styles.php') == false) {
+            $mobilescssnotification = new \core\output\notification(
+                    get_string('mobilecss_overwrite', 'theme_boost_union',
+                            array('url' => $mobilecssurl->out(), 'value' => $CFG->mobilecssurl)).' '.
+                    get_string('mobilecss_donotchange', 'theme_boost_union'),
+                    \core\output\notification::NOTIFY_WARNING);
+            $mobilescssnotification->set_show_closebutton(false);
+            $description .= $OUTPUT->render($mobilescssnotification);
+
+            // Otherwise, we just add a note to the description.
+        } else {
+            $mobilescssnotification = new \core\output\notification(
+                    get_string('mobilecss_set', 'theme_boost_union',
+                            array('url' => $mobilecssurl->out())).' '.
+                    get_string('mobilecss_donotchange', 'theme_boost_union'),
+                    \core\output\notification::NOTIFY_INFO);
+            $mobilescssnotification->set_show_closebutton(false);
+            $description .= $OUTPUT->render($mobilescssnotification);
         }
+        // Using admin_setting_scsscode is not 100% right here as this setting does not support SCSS.
+        // However, is shouldn't harm if the CSS code is parsed by the setting.
         $setting = new admin_setting_scsscode($name, $title, $description, '', PARAM_RAW);
-        $setting->set_updatedcallback('theme_boost_union_add_mobile_css_url');
+        $setting->set_updatedcallback('theme_boost_union_set_mobilecss_url');
         $tab->add($setting);
 
         // Add tab to settings page.
         $page->add($tab);
+
 
         // Add settings page to the admin settings category.
         $ADMIN->add('theme_boost_union', $page);

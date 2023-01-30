@@ -208,11 +208,13 @@ With this setting you can upload custom fonts to the theme. The advantage of upl
 
 Moodle core ships with FontAwesome 4 icons which are fine, but FontAwesome has evolved since then. If you want to use more recent FontAwesome icons, you can do this with this setting. As soon as you choose another version than FontAwesome 4, additional settings will appear where you can upload more recent FontAwesome versions.
 
-#### Tab "Mobile"
+#### Tab "Mobile app"
 
-##### Supplementary Mobile Settings
+##### Mobile appearance 
 
-With this setting you can upload css rules for the mobile layout. This setting overwrites the filepath in the setting mobilecssurl.
+###### Additional CSS for Mobile app
+
+With this setting, you can write custom CSS code to customise your mobile app interface. The CSS code will be only added to the Mobile app depiction of this Moodle instance and will not be shown in the webbrowser version.
 
 ### Settings page "Feel"
 
