@@ -1285,3 +1285,31 @@ function theme_boost_union_get_course_header_image_url() {
     // As no picture was found, return null.
     return null;
 }
+
+/**
+ * Helper function which sets the URL to the CSS file as soon as the theme's mobilescss setting has any CSS code.
+ * It's meant to be called as callback when changing the admin setting only.
+ * *
+ * @throws coding_exception
+ * @throws dml_exception
+ * @throws moodle_exception
+ */
+function theme_boost_union_set_mobilecss_url() {
+    // Check if the admin has set any CSS code for the Mobile app.
+    $csscode = get_config('theme_boost_union', 'mobilescss');
+    if (!empty($csscode)) {
+        // Build the Mobile app CSS file URL and especially add the current time as rev parameter.
+        // This parameter isn't the theme revision as the theme cache is not cleared when this setting is stored.
+        // It is just the time when the setting is saved.
+        // This is the best we can do to make the Mobile app load the new styles when needed.
+        $mobilescssurl = new moodle_url('/theme/boost_union/mobile/styles.php', array('rev' => time()));
+
+        // Set the $CFG->mobilecssurl setting.
+        set_config('mobilecssurl', $mobilescssurl->out());
+
+        // Otherwise.
+    } else {
+        // Clear the $CFG->mobilecssurl setting.
+        set_config('mobilecssurl', '');
+    }
+}
