@@ -40,7 +40,7 @@ function theme_boost_union_get_course_related_hints() {
     // Initialize HTML code.
     $html = '';
 
-    // If the setting showhintcoursehidden is set and the visibility of the course is hidden and
+    // If the setting showhintcoursehidden is set and the visibility of the course is hidden
     // a hint for the visibility will be shown.
     if (get_config('theme_boost_union', 'showhintcoursehidden') == THEME_BOOST_UNION_SETTING_SELECT_YES
             && has_capability('theme/boost_union:viewhintinhiddencourse', \context_course::instance($COURSE->id))
@@ -60,6 +60,28 @@ function theme_boost_union_get_course_related_hints() {
 
         // Render template and add it to HTML code.
         $html .= $OUTPUT->render_from_template('theme_boost_union/course-hint-hidden', $templatecontext);
+    }
+
+    // If the setting showhintcoursehidden is set and the visibility of the course is hidden
+    // a hint will be shown that no notifications via forums will be sent out to students.
+    if (get_config('theme_boost_union', 'showhintcoursehidden') == THEME_BOOST_UNION_SETTING_SELECT_YES
+            && has_capability('theme/boost_union:viewhintinhiddencourse', \context_course::instance($COURSE->id))
+            && $PAGE->has_set_url()
+            && $PAGE->url->compare(new moodle_url('/mod/forum/view.php'), URL_MATCH_BASE)
+            && $COURSE->visible == false) {
+
+        // Prepare template context.
+        $templatecontext = array('courseid' => $COURSE->id);
+
+        // If the user has the capability to change the course settings, an additional link to the course settings is shown.
+        if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
+            $templatecontext['showcoursesettingslink'] = true;
+        } else {
+            $templatecontext['showcoursesettingslink'] = false;
+        }
+
+        // Render template and add it to HTML code.
+        $html .= $OUTPUT->render_from_template('theme_boost_union/course-hint-hidden-forum', $templatecontext);
     }
 
     // If the setting showhintcourseguestaccess is set and the user is accessing the course with guest access,
