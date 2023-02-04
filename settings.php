@@ -266,15 +266,20 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create favicon heading.
         $name = 'theme_boost_union/faviconheading';
         $title = get_string('faviconheading', 'theme_boost_union', null, true);
-        $setting = new admin_setting_heading($name, $title, null);
+        $notificationurl = new moodle_url('/admin/settings.php', array('section' => 'logos'));
+        $notification = new \core\output\notification(get_string('faviconheading_desc', 'theme_boost_union',
+                $notificationurl->out()), \core\output\notification::NOTIFY_INFO);
+        $notification->set_show_closebutton(false);
+        $description = $OUTPUT->render($notification);
+        $setting = new admin_setting_heading($name, $title, $description);
         $tab->add($setting);
 
-        // Setting: Favicon.
+        // Replicate the favicon setting from theme_boost.
         $name = 'theme_boost_union/favicon';
         $title = get_string('faviconsetting', 'theme_boost_union', null, true);
         $description = get_string('faviconsetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configstoredfile($name, $title, $description, 'favicon', 0,
-                array('maxfiles' => 1, 'accepted_types' => array('.ico', '.png')));
+                array('maxfiles' => 1, 'accepted_types' => 'image'));
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 

@@ -287,9 +287,9 @@ function theme_boost_union_get_precompiled_css() {
 function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
     global $CFG;
 
-    // Serve the (general) logo files from the theme settings.
+    // Serve the (general) logo files or favicon file from the theme settings.
     // This code is copied and modified from core_admin_pluginfile() in admin/lib.php.
-    if (in_array($filearea, ['logo', 'logocompact'])) {
+    if (in_array($filearea, ['logo', 'logocompact', 'favicon'])) {
         $size = array_shift($args); // The path hides the size.
         $itemid = clean_param(array_shift($args), PARAM_INT);
         $filename = clean_param(array_shift($args), PARAM_FILE);
@@ -356,7 +356,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         // Serve all other (general) image and resource files from the theme settings.
         // This code is copied and modified from theme_boost_pluginfile() in theme/boost/lib.php.
     } else if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'backgroundimage' ||
-        $filearea === 'loginbackgroundimage' || $filearea === 'favicon' || $filearea === 'additionalresources' ||
+        $filearea === 'loginbackgroundimage' || $filearea === 'additionalresources' ||
                 $filearea === 'customfonts' || $filearea === 'fontawesome' || $filearea === 'courseheaderimagefallback' ||
                 preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea))) {
         $theme = theme_config::load('boost_union');

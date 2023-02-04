@@ -116,7 +116,7 @@ Here, you can upload a compact version of the same logo as above, such as an emb
 
 ###### Favicon
 
-Here, you can upload a custom image (.ico or .png format) that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.
+Here, you can upload a custom image that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.
 
 ##### Background images
 

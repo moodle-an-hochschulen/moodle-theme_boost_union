@@ -105,7 +105,7 @@ class flavour_edit_form extends \moodleform {
                 get_string('faviconsetting', 'theme_boost_union'), null, [
                         'subdirs' => 0,
                         'maxfiles' => 1,
-                        'accepted_types' => ['.ico', '.png'],
+                        'accepted_types' => 'image',
                         'return_types' => FILE_INTERNAL
                 ]);
         $mform->addHelpButton('flavours_look_favicon', 'flavoursfavicon', 'theme_boost_union');

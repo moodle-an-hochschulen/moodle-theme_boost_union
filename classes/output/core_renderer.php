@@ -41,10 +41,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * This renderer function is copied and modified from /lib/outputrenderers.php
      *
      * It checks if the favicon is overridden in a flavour and, if yes, it serves this favicon.
-     * If there isn't a favicon in any flavour set, it continues with the logic from Moodle core.
-
-     * Doing this, it uses the same logic as Moodle 4.1 which introduces a Moodle core favicon setting,
-     * but picks the favicon from the theme_boost_union settings for the time being.
+     * If there isn't a favicon in any flavour set, it serves the general favicon.
      *
      * @since Moodle 2.5.1 2.6
      * @return moodle_url The moodle_url for the favicon
@@ -95,7 +92,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
         }
 
-        // Apparently, there isn't any flavour favicon set. Let's continue with the logic adopted from Moodle 4.1 core.
+        // Apparently, there isn't any flavour favicon set. Let's continue with the logic to serve the general favicon.
         $logo = null;
         if (!during_initial_install()) {
             $logo = get_config('theme_boost_union', 'favicon');
@@ -105,7 +102,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         // Use $CFG->themerev to prevent browser caching when the file changes.
-        return moodle_url::make_pluginfile_url(context_system::instance()->id, 'theme_boost_union', 'favicon', '',
+        return moodle_url::make_pluginfile_url(context_system::instance()->id, 'theme_boost_union', 'favicon', '64x64/',
                 theme_get_revision(), $logo);
     }
 

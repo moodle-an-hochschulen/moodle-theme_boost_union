@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-02-04 - Upgrade: Persist the dedicated favicon setting in Boost Union even though Moodle core has a favicon setting in 4.1 as well, solves #78.
 * 2023-02-04 - Upgrade: The back-top-top button must respect the presence of the new sticky footer, solves #186.
 * 2023-02-04 - Upgrade: Add .footer-support-link class to Boost Union's footer links to align them with Boost Core in 4.1 again
 * 2023-02-04 - Upgrade: Allow the admin to change medium width pages which were introduced for the database activity in 4.1 as well.
