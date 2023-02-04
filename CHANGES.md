@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.0-r12
 
 * 2023-01-30 - Feature: Allow the admin to set CSS rules for the Moodle Mobile App, solves #195.
 * 2023-01-28 - Improvement: Do not resize SVG logo files during serving, helps to solve #160.
