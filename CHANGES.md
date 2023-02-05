@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r1
 
 * 2023-02-04 - Upgrade: Persist the dedicated favicon setting in Boost Union even though Moodle core has a favicon setting in 4.1 as well, solves #78.
 * 2023-02-04 - Upgrade: The back-top-top button must respect the presence of the new sticky footer, solves #186.
