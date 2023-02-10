@@ -276,7 +276,15 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
  * Settings: Content -> Info banner.
  ======================================*/
 
-/* Remove margin after last paragraph for a nicer look. */
+/* Adjust the margins to the info banners are aligned like the header and the main content. */
+@include media-breakpoint-up(md) {
+    .themeboostunioninfobanner {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+}
+
+    /* Remove margin after last paragraph for a nicer look. */
 .themeboostunioninfobanner p:last-child {
     margin-bottom: 0;
 }
