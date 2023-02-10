@@ -276,7 +276,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
  * Settings: Content -> Info banner.
  ======================================*/
 
-/* Adjust the margins of the info banners to align with the header and main content. */
+/* Adjust the margins of the info banners to align with the header and main content on larger screens. */
 @include media-breakpoint-up(md) {
     .themeboostunioninfobanner {
         margin-left: 15px;
