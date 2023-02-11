@@ -17,7 +17,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
 
-  Scenario: Setting: Information banners - Display info banner no. 1 on all available pages
+  Scenario: Setting: Information banners - Display info banner 1 on all available pages
     Given the following config values are set as admin:
       | config             | value                                        | plugin            |
       | infobanner1enabled | yes                                          | theme_boost_union |
@@ -37,7 +37,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     Then I should see "This is a test content" in the "#themeboostunioninfobanner1" "css_element"
 
-  Scenario: Setting: Information banners - Display info banner no. 1 only on one available page
+  Scenario: Setting: Information banners - Display info banner 1 only on one available page
     Given the following config values are set as admin:
       | config             | value                    | plugin            |
       | infobanner1enabled | yes                      | theme_boost_union |
@@ -55,7 +55,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     Then I should not see "This is a test content"
 
-  Scenario: Setting: Information banners - Display info banner no. 1 with the different bootstrap color classes
+  Scenario: Setting: Information banners - Display info banner 1 with the different bootstrap color classes
     Given the following config values are set as admin:
       | config             | value                    | plugin            |
       | infobanner1enabled | yes                      | theme_boost_union |
@@ -133,7 +133,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And the "class" attribute of "#themeboostunioninfobanner1" "css_element" should contain "none"
     And I log out
 
-  Scenario: Setting: Information banners - Do not enable the info banner no. 1 at all.
+  Scenario: Setting: Information banners - Do not enable the info banner 1 at all.
     Given the following config values are set as admin:
       | config             | value                              | plugin            |
       | infobanner1enabled | no                                 | theme_boost_union |
@@ -145,7 +145,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     Then I should not see "This is a test content"
 
   @javascript
-  Scenario: Setting: Information banners - Make the info banner no. 1 dismissible
+  Scenario: Setting: Information banners - Make the info banner 1 dismissible
     Given the following config values are set as admin:
       | config                 | value                    | plugin            |
       | infobanner1enabled     | yes                      | theme_boost_union |
@@ -162,7 +162,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And I should not see "This is a test content"
 
   @javascript
-  Scenario: Setting: Information banners - Do not make the info banner no. 1 dismissible (countercheck)
+  Scenario: Setting: Information banners - Do not make the info banner 1 dismissible (countercheck)
     Given the following config values are set as admin:
       | config                 | value                    | plugin            |
       | infobanner1enabled     | yes                      | theme_boost_union |
@@ -176,7 +176,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And "#themeboostunioninfobanner1close" "css_element" should not exist
 
   @javascript
-  Scenario: Setting: Information banners - Reset dismissed info banner no. 1
+  Scenario: Setting: Information banners - Reset dismissed info banner 1
     Given the following config values are set as admin:
       | config                 | value                    | plugin            |
       | infobanner1enabled     | yes                      | theme_boost_union |
@@ -201,9 +201,9 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
       | debugdisplay   | 0 |
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Info banner" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I click on "Reset visibility of info banner no. 1" "link"
+    And I click on "Reset visibility of info banner 1" "link"
     And I click on "Confirm" "link"
-    Then I should see "The visibility of info banner no. 1 has been reset"
+    Then I should see "The visibility of info banner 1 has been reset"
     # We reactivate debugging again.
     And the following config values are set as admin:
       | debug          | 32767 |
@@ -270,7 +270,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And "This is the second content" "text" should appear before "This is the third content" "text"
     And "This is the third content" "text" should appear before "This is the fourth content" "text"
 
-  Scenario: Setting: Information banners - Display info banner no. 1 on a time based setting, don't show it yet as the display time is not reached yet.
+  Scenario: Setting: Information banners - Display info banner 1 on a time based setting, don't show it yet as the display time is not reached yet.
     Given the following config values are set as admin:
       | config             | value                       | plugin            |
       | infobanner1enabled | yes                         | theme_boost_union |
@@ -283,7 +283,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And I follow "Dashboard"
     Then I should not see "This is a test content"
 
-  Scenario: Setting: Information banners - Display info banner no. 1 on a time based setting, show it as we are within the display time.
+  Scenario: Setting: Information banners - Display info banner 1 on a time based setting, show it as we are within the display time.
     Given the following config values are set as admin:
       | config             | value                       | plugin            |
       | infobanner1enabled | yes                         | theme_boost_union |
@@ -296,7 +296,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And I follow "Dashboard"
     Then I should see "This is a test content" in the "#themeboostunioninfobanner1" "css_element"
 
-  Scenario: Setting: Information banners - Display info banner no. 1 on a time based setting, don't show it anymore as the display time is already over.
+  Scenario: Setting: Information banners - Display info banner 1 on a time based setting, don't show it anymore as the display time is already over.
     Given the following config values are set as admin:
       | config             | value                       | plugin            |
       | infobanner1enabled | yes                         | theme_boost_union |
