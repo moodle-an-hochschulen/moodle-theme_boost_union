@@ -461,6 +461,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * Lower Saxony (Federal state of Germany): Funding
 * moodleSCHULE e.V., Ralf Krause: German translation and curation
 * Ruhr University Bochum, Melanie Treitinger: Code
+* RWTH Aachen, Amrita Deb Dutta: Code
 * RWTH Aachen, Josha Bartsch: Code
 * University of Graz, André Menrath: Code
 * University of Lübeck, Christian Wolters: Peer Review, Ideating
