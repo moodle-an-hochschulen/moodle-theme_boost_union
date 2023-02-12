@@ -50,11 +50,6 @@ $string['coursecontentmaxwidthsetting_desc'] = 'With this setting, you can overr
 // ... ... Setting: Medium content max width.
 $string['mediumcontentmaxwidthsetting'] = 'Medium content max width';
 $string['mediumcontentmaxwidthsetting_desc'] = 'With this setting, you can override Moodle\'s medium content width without manual SCSS modifications. This page width is used in certain activities like the database activity. By default, Moodle uses a medium content max width of 1120px. You can enter other pixel-based values like 1200px, but you can also enter a percentage-based value like 100% or a viewport-width value like 90vw.';
-// ... Section: Content width.
-$string['contentwidthheading'] = 'Content width';
-// ... ... Setting: H5P content bank max width.
-$string['h5pcontentmaxwidthsetting'] = 'H5P content bank max width';
-$string['h5pcontentmaxwidthsetting_desc'] = 'With this setting, you can override Moodle\'s H5P content bank width without manual SCSS modifications. This width is used for the H5P editor within the content bank. It is <em>not</em> used for the width of the H5P activity. By default, Moodle uses a H5P content bank max width of 960px. You can enter other pixel-based values like 1200px, but you can also enter a percentage-based value like 100% or a viewport-width value like 90vw.';
 
 // Settings: Branding tab.
 $string['brandingtab'] = 'Branding';
@@ -273,6 +268,15 @@ $string['fontawesomecheck-fa6free-newstuff-title'] = 'FontAwesome 6 icons';
 $string['fontawesomecheck-fa6free-newstuff-description'] = 'Newer FontAwesome versions ship with additional icons compared to the FontAwesome 4 iconset. If you see a virus icon on the left hand side, your FontAwesome 6 version is properly showing new icons which are new in FontAwesome 6.';
 $string['fontawesomecheck-fa6free-filter-title'] = 'FontAwesome filter';
 $string['fontawesomecheck-fa6free-filter-description'] = 'As you have the FontAwesome filter plugin installed, you should be sure that the filter handles the new FontAwesome 6 icons correctly as well. If you see a users icon on the left hand side, the filter is working properly with the FontAwesome 6 version icons.';
+
+// Settings: H5P tab.
+$string['h5ptab'] = 'H5P';
+// ... Section: Content width.
+$string['contentwidthheading'] = 'Content width';
+// ... ... Setting: H5P content bank max width.
+$string['h5pcontentmaxwidthsetting'] = 'H5P content bank max width';
+$string['h5pcontentmaxwidthsetting_desc'] = 'With this setting, you can override Moodle\'s H5P content bank width without manual SCSS modifications. This width is used for the H5P editor within the content bank. It is <em>not</em> used for the width of the H5P activity. By default, Moodle uses a H5P content bank max width of 960px. You can enter other pixel-based values like 1200px, but you can also enter a percentage-based value like 100% or a viewport-width value like 90vw.';
+
 // Settings: Mobile app tab.
 $string['mobiletab'] = 'Mobile app';
 // ... Section: Mobile appearance.
