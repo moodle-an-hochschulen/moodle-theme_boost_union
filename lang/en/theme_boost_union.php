@@ -36,7 +36,8 @@ $string['configtitlelook'] = 'Look';
 // ... Section: Theme presets.
 $string['presetheading'] = 'Theme presets';
 
-// Settings: Advances settings tab.
+// Settings: SCSS tab.
+$string['scsstab'] = 'SCSS';
 // ... Section: Raw SCSS.
 $string['scssheading'] = 'Raw SCSS';
 
