@@ -131,12 +131,6 @@ $templatecontext = [
     'addblockbutton' => $addblockbutton
 ];
 
-// Get and use the course related hints HTML code, if any hints are configured.
-$courserelatedhintshtml = theme_boost_union_get_course_related_hints();
-if ($courserelatedhintshtml) {
-    $templatecontext['courserelatedhints'] = $courserelatedhintshtml;
-}
-
 // Include the template content for the course related hints.
 require_once(__DIR__ . '/includes/courserelatedhints.php');
 
