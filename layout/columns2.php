@@ -20,11 +20,15 @@
  * This layoutfile is based on theme/boost/layout/columns2.php
  *
  * Modifications compared to this layout file:
- * * Include footnote
- * * Render theme_boost_union/columns2 instead of theme_boost/colums2 template
+ * * Render theme_boost_union/columns2 instead of theme_boost/columns2 template
+ * * Include activity navigation
  * * Include course related hints
  * * Include back to top button
- * * Include activity navigation
+ * * Include scroll spy
+ * * Include footnote
+ * * Include static pages
+ * * Include Jvascript disabled hint
+ * * Include info banners
  *
  * @package   theme_boost_union
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
