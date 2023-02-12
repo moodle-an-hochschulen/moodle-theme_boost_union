@@ -184,7 +184,7 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
       | debugdisplay   | 0 |
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Advertisement tiles" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Advertisement tile no. 1 background image" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Advertisement tile 1 background image" filemanager
     And I press "Save changes"
     And I am on site homepage
     And I log out
@@ -227,7 +227,7 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
       | debugdisplay   | 0 |
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Advertisement tiles" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Advertisement tile no. 1 background image" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Advertisement tile 1 background image" filemanager
     And I press "Save changes"
     And I am on site homepage
     # We reactivate debugging again.
@@ -248,7 +248,7 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
       | left top      |
 
   @javascript
-  Scenario: Setting: Advertisement tiles - Show and hide the admin settings based on the main "Enable advertisement tile no. x" setting
+  Scenario: Setting: Advertisement tiles - Show and hide the admin settings based on the main "Enable advertisement tile x" setting
     Given the following config values are set as admin:
       | config       | value | plugin            |
       | tile1enabled | yes   | theme_boost_union |
@@ -264,11 +264,11 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
     Then "#admin-tile1title" "css_element" should be visible
     Then "#admin-tile3title" "css_element" should not be visible
     Then "#admin-tile4title" "css_element" should not be visible
-    And I select "Yes" from the "Enable advertisement tile no. 4" singleselect
+    And I select "Yes" from the "Enable advertisement tile 4" singleselect
     Then "#admin-tile1title" "css_element" should be visible
     Then "#admin-tile3title" "css_element" should not be visible
     Then "#admin-tile4title" "css_element" should be visible
-    And I select "No" from the "Enable advertisement tile no. 1" singleselect
+    And I select "No" from the "Enable advertisement tile 1" singleselect
     Then "#admin-tile1title" "css_element" should not be visible
     Then "#admin-tile3title" "css_element" should not be visible
     Then "#admin-tile4title" "css_element" should be visible
