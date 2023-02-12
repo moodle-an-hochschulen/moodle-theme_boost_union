@@ -154,8 +154,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create advanced settings tab.
-        $tab = new admin_settingpage('theme_boost_union_look_advanced', get_string('advancedsettings', 'theme_boost', null, true));
+        // Create SCSS tab.
+        $tab = new admin_settingpage('theme_boost_union_look_scss', get_string('scsstab', 'theme_boost_union', null, true));
 
         // Create Raw SCSS heading.
         $name = 'theme_boost_union/scssheading';
