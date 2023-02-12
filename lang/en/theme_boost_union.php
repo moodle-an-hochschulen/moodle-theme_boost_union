@@ -40,12 +40,6 @@ $string['presetheading'] = 'Theme presets';
 $string['scsstab'] = 'SCSS';
 // ... Section: Raw SCSS.
 $string['scssheading'] = 'Raw SCSS';
-// ... Section: Raw CSS.
-$string['cssheading'] = 'Raw CSS';
-// ... Setting: Raw CSS for H5P.
-$string['cssh5psetting'] = 'Raw CSS for H5P';
-$string['cssh5psetting_desc'] = 'Enter Raw CSS-Code which is applied to the depiction of H5P content integrated with mod/h5p and mod/hvp. Inspect the Activities for choosing suitable css-classes.';
-$string['errorcreatingpath'] = 'Due to permissions path could not be created details: {$a}.';
 
 // Settings: Page tab.
 $string['pagetab'] = 'Page';
@@ -278,6 +272,11 @@ $string['fontawesomecheck-fa6free-filter-description'] = 'As you have the FontAw
 
 // Settings: H5P tab.
 $string['h5ptab'] = 'H5P';
+// ... Section: Raw CSS for H5P.
+$string['cssh5pheading'] = 'Raw CSS for H5P';
+// ... ... Setting: Raw CSS for H5P.
+$string['cssh5psetting'] = 'Raw CSS for H5P';
+$string['cssh5psetting_desc'] = 'Use this field to provide CSS code which will be applied to the presentation of H5P content by mod_h5p and mod_hvp. Please inspect the H5P content types to find the necessary CSS selectors.';
 // ... Section: Content width.
 $string['contentwidthheading'] = 'Content width';
 // ... ... Setting: H5P content bank max width.

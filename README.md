@@ -78,12 +78,6 @@ This setting is already available in the Moodle core theme Boost. For more infor
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
-##### Raw CSS
-
-###### Raw CSS for H5P
-
-CSS-Code which is appended to the header of mod_h5p and mod_hvp iFrames.
-
 #### Tab "Page"
 
 In this tab there are the following settings:
@@ -213,6 +207,12 @@ With this setting you can upload custom fonts to the theme. The advantage of upl
 Moodle core ships with FontAwesome 4 icons which are fine, but FontAwesome has evolved since then. If you want to use more recent FontAwesome icons, you can do this with this setting. As soon as you choose another version than FontAwesome 4, additional settings will appear where you can upload more recent FontAwesome versions.
 
 #### Tab "H5P"
+
+##### Raw CSS for H5P
+
+###### Raw CSS for H5P
+
+Use this field to provide CSS code which will be applied to the presentation of H5P content by mod_h5p and mod_hvp. Please inspect the H5P content types to find the necessary CSS selectors.
 
 ##### Content width
 
