@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-02-09 - Bugfix: Fix svg logo display problem in Firefox, solves #160.
+
 ### v4.0-r12
 
 * 2023-01-30 - Feature: Allow the admin to set CSS rules for the Moodle Mobile App, solves #195.
