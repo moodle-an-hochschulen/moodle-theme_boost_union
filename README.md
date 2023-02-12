@@ -64,7 +64,7 @@ This setting is already available in the Moodle core theme Boost. For more infor
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 Please note: This will not override the setting "theme_boost_campus | loginbackgroundimage" which means that the pictures uploaded to the login page background will be displayed anyway.
 
-#### Tab "Advanced settings"
+#### Tab "SCSS"
 
 In this tab there are the following settings:
 
@@ -91,12 +91,6 @@ With this setting, you can override Moodle's course content width without manual
 ###### Medium content max width
 
 With this setting, you can override Moodle's default medium width without manual SCSS modifications.
-
-##### Content width
-
-###### H5P content bank max width
-
-With this setting, you can override Moodle's H5P content bank width without manual SCSS modifications.
 
 #### Tab "Branding"
 
@@ -211,6 +205,14 @@ With this setting you can upload custom fonts to the theme. The advantage of upl
 ##### FontAwesome
 
 Moodle core ships with FontAwesome 4 icons which are fine, but FontAwesome has evolved since then. If you want to use more recent FontAwesome icons, you can do this with this setting. As soon as you choose another version than FontAwesome 4, additional settings will appear where you can upload more recent FontAwesome versions.
+
+#### Tab "H5P"
+
+##### Content width
+
+###### H5P content bank max width
+
+With this setting, you can override Moodle's H5P content bank width without manual SCSS modifications.
 
 #### Tab "Mobile app"
 
