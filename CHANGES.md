@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-02-12 - Cleanup: Create a dedicated "H5P" tab, solves #227.
 * 2023-02-11 - Cleanup: Course related hints feature was handled twice in drawers.php, solves #223.
 * 2023-02-11 - Improvement: Remove the 'no.' suffix from the info banners and tiles, solves #203.
 * 2023-02-10 - Bugfix: Align horizontal margins for the info banners, solves #218.
