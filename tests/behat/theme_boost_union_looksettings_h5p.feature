@@ -19,5 +19,15 @@ Feature: Configuring the theme_boost_union plugin for the "H5P" tab on the "Look
 
   # Unfortunately, this can't be tested with Behat yet
   # And as this feature file for this tab can't be empty, we just add a dummy step.
+  Scenario: Setting: Raw CSS for H5P - Add custom SCSS to a mod_h5p content type
+    When I log in as "admin"
+
+  # Unfortunately, this can't be tested with Behat yet
+  # And as this feature file for this tab can't be empty, we just add a dummy step.
+  Scenario: Setting: Raw CSS for H5P - Add custom SCSS to a mod_hvp content type
+    When I log in as "admin"
+
+  # Unfortunately, this can't be tested with Behat yet
+  # And as this feature file for this tab can't be empty, we just add a dummy step.
   Scenario: Setting: H5P content bank max width - Overwrite the H5P content bank max width setting
     When I log in as "admin"
