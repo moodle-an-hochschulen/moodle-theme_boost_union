@@ -204,6 +204,12 @@ Moodle core ships with FontAwesome 4 icons which are fine, but FontAwesome has e
 
 #### Tab "H5P"
 
+##### Raw CSS for H5P
+
+###### Raw CSS for H5P
+
+Use this field to provide CSS code which will be applied to the presentation of H5P content by mod_h5p and mod_hvp. Please inspect the H5P content types to find the necessary CSS selectors.
+
 ##### Content width
 
 ###### H5P content bank max width

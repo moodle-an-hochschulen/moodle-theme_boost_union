@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-02-12 - Feature: Enable admins to upload css code for mod_h5p and mod_hvp, solves #166 #207.
 * 2023-02-12 - Cleanup: Change the "Advanced settings" tab to "SCSS", solves #226.
 * 2023-02-12 - Cleanup: Create a dedicated "H5P" tab, solves #227.
 * 2023-02-11 - Cleanup: Course related hints feature was handled twice in drawers.php, solves #223.

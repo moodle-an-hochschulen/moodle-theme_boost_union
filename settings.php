@@ -819,6 +819,21 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $tab = new admin_settingpage('theme_boost_union_look_h5p',
                 get_string('h5ptab', 'theme_boost_union', null, true));
 
+        // Create Raw CSS for H5P heading.
+        $name = 'theme_boost_union/cssh5pheading';
+        $title = get_string('cssh5pheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Raw CSS for H5P.
+        $name = 'theme_boost_union/cssh5p';
+        $title = get_string('cssh5psetting', 'theme_boost_union', null, true);
+        $description = get_string('cssh5psetting_desc', 'theme_boost_union', null, true);
+        $default = '';
+        $setting = new admin_setting_scsscode($name, $title, $description, $default, PARAM_RAW);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Create content bank width heading.
         $name = 'theme_boost_union/contentwidthheading';
         $title = get_string('contentwidthheading', 'theme_boost_union', null, true);

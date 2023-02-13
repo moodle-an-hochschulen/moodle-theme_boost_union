@@ -268,6 +268,11 @@ $string['fontawesomecheck-fa6free-filter-description'] = 'As you have the FontAw
 
 // Settings: H5P tab.
 $string['h5ptab'] = 'H5P';
+// ... Section: Raw CSS for H5P.
+$string['cssh5pheading'] = 'Raw CSS for H5P';
+// ... ... Setting: Raw CSS for H5P.
+$string['cssh5psetting'] = 'Raw CSS for H5P';
+$string['cssh5psetting_desc'] = 'Use this field to provide CSS code which will be applied to the presentation of H5P content by mod_h5p and mod_hvp. Please inspect the H5P content types to find the necessary CSS selectors.';
 // ... Section: Content width.
 $string['contentwidthheading'] = 'Content width';
 // ... ... Setting: H5P content bank max width.
