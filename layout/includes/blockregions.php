@@ -18,7 +18,7 @@
  * Theme Boost Union - Additional regions.
  *
  * @package   theme_boost_union
- * @copyright 2022 rajalmsace <raja.lmsace@gmail.com>
+ * @copyright 2022 bdecent gmbh <https://bdecent.de>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -34,7 +34,7 @@ require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
  * Add to the additional block regions.
  *
  * @package    theme_boost_union
- * @copyright  2022 rajalmsace <raja.lmsace@gmail.com>
+ * @copyright  2022 bdecent gmbh <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class additionalregions {

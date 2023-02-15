@@ -103,25 +103,27 @@
     {{/hasblocks}}
 
     {{^user_is_editing}}
-    {{#regions.offcanvas.hasblocks}}
-        {{< theme_boost/drawer }}
-            {{$id}}theme_boost_union-drawers-offcanvas{{/id}}
-            {{$drawerclasses}}drawer drawer-top {{/drawerclasses}}
-            {{$drawercontent}}
-                {{> theme_boost_union/offcanvas}}
-            {{/drawercontent}}
-            {{$forceopen}}0{{/forceopen}}
-            {{$drawerstate}}show-drawer-offcanvas{{/drawerstate}}
-            {{$tooltipplacement}}top{{/tooltipplacement}}
-            {{$drawercloseonresize}}1{{/drawercloseonresize}}
-            {{$closebuttontext}}{{#str}}closeoffcanvas, theme_boost_union{{/str}}{{/closebuttontext}}
-        {{/ theme_boost/drawer}}
-    {{/regions.offcanvas.hasblocks}}
+        {{#regions.offcanvas.hasblocks}}
+            {{< theme_boost/drawer }}
+                {{$id}}theme_boost_union-drawers-offcanvas{{/id}}
+                {{$drawerclasses}}drawer drawer-top {{/drawerclasses}}
+                {{$drawercontent}}
+                    {{> theme_boost_union/offcanvas}}
+                {{/drawercontent}}
+                {{$forceopen}}0{{/forceopen}}
+                {{$drawerstate}}show-drawer-offcanvas{{/drawerstate}}
+                {{$tooltipplacement}}top{{/tooltipplacement}}
+                {{$drawercloseonresize}}1{{/drawercloseonresize}}
+                {{$closebuttontext}}{{#str}}closeoffcanvas, theme_boost_union{{/str}}{{/closebuttontext}}
+            {{/ theme_boost/drawer}}
+        {{/regions.offcanvas.hasblocks}}
     {{/user_is_editing}}
 
     <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container {{{outsideregionsplacement}}}">
         {{# user_is_editing}}
-        {{> theme_boost_union/offcanvas}}
+            <div class="block-region-top-offcanvas" id="theme_boost_union-offcanvas">
+                {{> theme_boost_union/offcanvas}}
+            </div>
         {{/user_is_editing}}
 
         {{#regions.top.hasblocks}}

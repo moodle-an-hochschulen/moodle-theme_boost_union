@@ -1072,9 +1072,74 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT, $outsideregionsplacementoptions);
         $tab->add($setting);
 
+        // Block regions settings.
+        // List of regions.
+        $regionstr = (array) get_strings([
+            'region-outside-top',
+            'region-outside-left',
+            'region-outside-right',
+            'region-outside-bottom',
+            'region-header-top',
+            'region-footer-left',
+            'region-footer-right',
+            'region-footer-center',
+            'region-offcanvas-left',
+            'region-offcanvas-right',
+            'region-offcanvas-center'
+        ], 'theme_boost_union');
+
+        // List of all available regions.
+        $availableregions = array(
+            'outside-top' => $regionstr['region-outside-top'],
+            'outside-left' => $regionstr['region-outside-left'],
+            'outside-right' => $regionstr['region-outside-right'],
+            'outside-bottom' => $regionstr['region-outside-bottom'],
+            'footer-left' => $regionstr['region-footer-left'],
+            'footer-right' => $regionstr['region-footer-right'],
+            'footer-center' => $regionstr['region-footer-center'],
+            'offcanvas-left' => $regionstr['region-offcanvas-left'],
+            'offcanvas-right' => $regionstr['region-offcanvas-right'],
+            'offcanvas-center' => $regionstr['region-offcanvas-center'],
+            'header-top' => $regionstr['region-header-top']
+        );
+
+        // List of some specified regions used on multiple layouts.
+        $partialregions = [
+            'outside-top' => $regionstr['region-outside-top'],
+            'footer-left' => $regionstr['region-footer-left'],
+            'footer-right' => $regionstr['region-footer-right'],
+            'footer-center' => $regionstr['region-footer-center'],
+            'offcanvas-left' => $regionstr['region-offcanvas-left'],
+            'offcanvas-right' => $regionstr['region-offcanvas-right'],
+            'offcanvas-center' => $regionstr['region-offcanvas-center']
+        ];
+
+        // Page layouts.
+        $pagelayouts = [
+            'standard' => $partialregions,
+            'admin' => $partialregions,
+            'coursecategory' => $partialregions,
+            'incourse' => $partialregions,
+            'mypublic' => $partialregions,
+            'report' => $partialregions,
+            'course' => $availableregions,
+            'frontpage' => $availableregions
+        ];
+        $pagelayouts['mydashboard'] = array_filter($availableregions, function($key) {
+            return ($key != 'header-top') ? true : false;
+        }, ARRAY_FILTER_USE_KEY);
+
+        foreach ($pagelayouts as $layout => $regions) {
+            // Setting: Set a block regions for each page layout.
+            $name = 'theme_boost_union/'.$layout.'regions';
+            $title = get_string($layout.'regions', 'theme_boost_union', null, true);
+            $description = get_string($layout.'regions_desc', 'theme_boost_union', null, true);
+            $setting = new admin_setting_configmultiselect($name, $title, $description, array_keys($regions), $regions);
+            $tab->add($setting);
+        }
+
         // Add tab to settings page.
         $page->add($tab);
-
 
         // Create misc tab.
         $tab = new admin_settingpage('theme_boost_union_feel_misc', get_string('misctab', 'theme_boost_union', null, true));

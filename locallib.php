@@ -1337,3 +1337,18 @@ function theme_boost_union_get_additional_regions($pageregions=[]) {
 
     return ($pageregions) ? array_intersect($regions, $pageregions) : $regions;
 }
+
+/**
+ * Get the defined regions for the page layout.
+ *
+ * @param string $layout Pagelayout name.
+ * @return array $regions
+ */
+function theme_boost_union_get_block_regions($layout) {
+
+    $regionsettings = get_config('theme_boost_union', $layout.'regions');
+    $settings = !empty($regionsettings) ? explode(',', $regionsettings) : [];
+    // Used the side-pre as default region for layouts.
+    $regions = array_merge(['side-pre'], $settings);
+    return $regions;
+}

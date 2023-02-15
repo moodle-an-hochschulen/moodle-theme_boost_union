@@ -27,6 +27,8 @@
 
 require_once(__DIR__ . '/../../../../blocks/tests/behat/behat_blocks.php');
 
+use Behat\Mink\Exception\ExpectationException as ExpectationException;
+
 /**
  * Blocks-related step definition overrides for the Boost Union theme.
  *
@@ -36,4 +38,25 @@ require_once(__DIR__ . '/../../../../blocks/tests/behat/behat_blocks.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_boost_union_behat_blocks extends behat_blocks {
+    /**
+     * Checks if theme boost union style exist or not.
+     *
+     * @Given Boostunion :arg1 should contain style :arg2 :arg3
+     * @throws \Behat\Mink\Exception\ElementNotFoundException Thrown by behat_base::find
+     * @throws \Behat\Mink\Exception\ExpectationException
+     * @param string $selector
+     * @param string $style
+     * @param string $value
+     * @return string The style of the image container
+     */
+    public function boostunion_should_contain_style($selector, $style, $value) {
+        $stylejs = "
+            return (
+                Y.one('{$selector}').getComputedStyle('$style')
+            )
+        ";
+        if ($this->evaluate_script($stylejs) != $value) {
+            throw new ExpectationException("Doesn't working correct designer style", $this->getSession());
+        }
+    }
 }

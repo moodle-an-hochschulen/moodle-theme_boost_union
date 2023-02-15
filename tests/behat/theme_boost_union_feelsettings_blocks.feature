@@ -137,7 +137,7 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     And I turn editing mode on
     And I navigate to "Appearance > Default Dashboard page" in site administration
     And I turn editing mode on
-    #And I click on "#usernavigation .drawer-offcanvas-toggle" "css_element"
+    Then I click on "#theme_boost_union-offcanvas-btn" "css_element"
     And I should see "Add a block" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     Then I click on "Add a block" "link" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     Then I should see "Online users"
@@ -146,68 +146,62 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     And I should see "All Dashboard pages have been reset to default."
     Then I press "Continue"
     And I turn editing mode off
-    And I click on "#usernavigation .drawer-offcanvas-toggle" "css_element"
+    Then I click on "#theme_boost_union-offcanvas-btn" "css_element"
     Then I should see "Online users" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     And I am on site homepage
     And I turn editing mode on
-    #And I click on "#usernavigation .drawer-offcanvas-toggle" "css_element"
+    Then I click on "#theme_boost_union-offcanvas-btn" "css_element"
     And I should see "Add a block" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     Then I click on "Add a block" "link" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     And I should see "Calendar" in the ".modal-body" "css_element"
     Then I click on "Calendar" "link" in the ".modal-body" "css_element"
     And I turn editing mode off
-    And I click on "#usernavigation .drawer-offcanvas-toggle" "css_element"
+    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
     Then I should see "Calendar" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     And I am on "Course 1" course homepage
     And I turn editing mode on
-    #And I click on "#usernavigation .drawer-offcanvas-toggle" "css_element"
+    Then I click on "#theme_boost_union-offcanvas-btn" "css_element"
     And I should see "Add a block" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     Then I click on "Add a block" "link" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     Then I should see "Activities"
     Then I click on "Activities" "link"
     And I turn editing mode off
-    And I click on "#usernavigation .drawer-offcanvas-toggle" "css_element"
+    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
     Then I should see "Activities" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     And the following "permission overrides" exist:
       | capability                                | permission | role    | contextlevel | reference |
       | theme/boost_union:editregionoffcanvasleft | Allow      | user    | System       |           |
     And I log in as "student1"
     Then I follow "Dashboard"
-    And I click on "#usernavigation .drawer-offcanvas-toggle" "css_element"
+    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
     Then I should see "Online users" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     And I am on site homepage
     Then I follow "Dashboard"
     And I turn editing mode on
-    #And I click on "#usernavigation .drawer-offcanvas-toggle" "css_element"
+    Then I click on "#theme_boost_union-offcanvas-btn" "css_element"
     And I should see "Add a block" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     Then I click on "Add a block" "link" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     Then I should see "Logged in user"
     And I click on "Logged in user" "link"
     And I turn editing mode off
-    And I click on "#usernavigation .drawer-offcanvas-toggle" "css_element"
+    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
     Then I should see "Logged in user" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     And I am on site homepage
-    And I click on "#usernavigation .drawer-offcanvas-toggle" "css_element"
+    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
     Then I should see "Calendar" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     And I am on "Course 1" course homepage
-    And I click on "#usernavigation .drawer-offcanvas-toggle" "css_element"
+    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
     Then I should see "Activities" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
     And the following "permission overrides" exist:
       | capability                                | permission | role    | contextlevel | reference |
       | theme/boost_union:viewregionoffcanvasleft | Prevent    | user    | System       |           |
     And I log in as "student1"
     Then I follow "Dashboard"
-    And "#usernavigation .drawer-offcanvas-toggle" "css_element" should not exist
+    And "#theme_boost_union-offcanvas-btn" "css_element" should not exist
     And I am on site homepage
-    And "#usernavigation .drawer-offcanvas-toggle" "css_element" should not exist
+    And "#theme_boost_union-offcanvas-btn" "css_element" should not exist
     And I am on "Course 1" course homepage
-    And "#usernavigation .drawer-offcanvas-toggle" "css_element" should not exist
-
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Outside (left) block region width - Setting the width
-
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Outside (right) block region width - Setting the width
+    And "#theme_boost_union-offcanvas-btn" "css_element" should not exist
 
   Scenario: Setting: Outside regions placement on larger screens
     Given the following config values are set as admin:
@@ -225,3 +219,55 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     And I am on site homepage
     Then the "class" attribute of "#page" "css_element" should contain "blocks-near-windowedges"
     And the "class" attribute of "#page" "css_element" should not contain "blocks-next-maincontent"
+
+  @javascript
+  Scenario: Setting: Outside (left) block region width - Setting the width
+    Given I log in as "admin"
+    And I turn editing mode on
+    And I navigate to "Appearance > Themes > Boost Union > Feel" in site administration
+    Then I click on "Blocks" "link"
+    And I should see "Block regions for dashboard layout"
+    And I set the following fields to these values:
+      | Block regions for dashboard layout| outside-left, outside-right|
+      | Outside (left) block region width | 400px                      |
+    Then I press "Save changes"
+    And I follow "Dashboard"
+    Then I click on "Add a block" "link" in the ".block-region-left#leftblock" "css_element"
+    Then I should see "Online users"
+    Then I click on "Online users" "link"
+    Then I should see "Online users" in the ".block-region-left#leftblock" "css_element"
+    Then Boostunion ".block-region-left.pre-side-block" should contain style "width" "400px"
+    And I navigate to "Appearance > Themes > Boost Union > Feel" in site administration
+    Then I click on "Blocks" "link"
+    And I set the following fields to these values:
+      | Outside (left) block region width | 500px |
+    Then I press "Save changes"
+    And I follow "Dashboard"
+    Then I should see "Online users" in the ".block-region-left#leftblock" "css_element"
+    Then Boostunion ".block-region-left.pre-side-block" should contain style "width" "500px"
+
+  @javascript
+  Scenario: Setting: Outside (right) block region width - Setting the width
+    Given I log in as "admin"
+    And I turn editing mode on
+    And I navigate to "Appearance > Themes > Boost Union > Feel" in site administration
+    Then I click on "Blocks" "link"
+    And I should see "Block regions for dashboard layout"
+    And I set the following fields to these values:
+      | Block regions for dashboard layout| outside-left, outside-right|
+      | Outside (right) block region width | 400px                     |
+    Then I press "Save changes"
+    And I follow "Dashboard"
+    Then I click on "Add a block" "link" in the ".block-region-right#rightblock" "css_element"
+    Then I should see "Online users"
+    Then I click on "Online users" "link"
+    Then I should see "Online users" in the ".block-region-right#rightblock" "css_element"
+    Then Boostunion ".block-region-right.post-side-block" should contain style "width" "400px"
+    And I navigate to "Appearance > Themes > Boost Union > Feel" in site administration
+    Then I click on "Blocks" "link"
+    And I set the following fields to these values:
+      | Outside (right) block region width | 500px |
+    Then I press "Save changes"
+    And I follow "Dashboard"
+    Then I should see "Online users" in the ".block-region-right#rightblock" "css_element"
+    Then Boostunion ".block-region-right.post-side-block" should contain style "width" "500px"

@@ -112,6 +112,8 @@ function theme_boost_union_get_main_scss_content($theme) {
     }
     $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/post.scss');
 
+    $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/blockregion.scss');
+
     return $scss;
 }
 
@@ -123,7 +125,6 @@ function theme_boost_union_get_main_scss_content($theme) {
  */
 function theme_boost_union_get_pre_scss($theme) {
     global $CFG;
-
     // Require local library.
     require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
@@ -140,6 +141,8 @@ function theme_boost_union_get_pre_scss($theme) {
         'bootstrapcolorinfo' => ['info'],
         'bootstrapcolorwarning' => ['warning'],
         'bootstrapcolordanger' => ['danger'],
+        'leftregionwidth' => ['leftregionwidthval'],
+        'rightregionwidth' => ['rightregionwidthval']
     ];
 
     // Prepend variables first.
@@ -439,24 +442,4 @@ function theme_boost_union_before_standard_html_head() {
 
     // Return an empty string to keep the caller happy.
     return $html;
-}
-
-/**
- * Post-Process CSS for the theme.
- *
- * @param string $css
- * @param theme_config $theme
- * @return string css
- */
-function theme_boost_union_postprocess_css($css, $theme) {
-    // Replace the placeholders for the right and left block region widths.
-    $leftregionwidth = (isset($theme->settings->leftregionwidth) &&
-            ($theme->settings->leftregionwidth != '')) ? $theme->settings->leftregionwidth : '300px';
-    $rightregionwidth = (isset($theme->settings->rightregionwidth) &&
-            ($theme->settings->rightregionwidth != '')) ? $theme->settings->rightregionwidth : '300px';
-    $css = str_replace('[[leftregionwidth]]', $leftregionwidth, $css);
-    $css = str_replace('[[rightregionwidth]]', $rightregionwidth, $css);
-
-    // Return post-processed CSS.
-    return $css;
 }

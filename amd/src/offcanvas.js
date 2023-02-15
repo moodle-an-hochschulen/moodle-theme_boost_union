@@ -17,7 +17,7 @@
  * Theme Boost Union - JS code off-canvas
  *
  * @module     theme_boost_union/offcanvas
- * @copyright  2022 rajalmsace <raja.lmsace@gmail.com>
+ * @copyright  2022 bdecent gmbh <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -48,13 +48,12 @@ define(['jquery', 'theme_boost/drawers', 'core/modal'], function($, Drawers, Mod
      */
     function initOffCanvasEventListeners() {
         document.addEventListener(Drawers.eventTypes.drawerShown, function(e) {
-            if (e.target.id != 'theme_boost-drawers-offcanvas') {
+            if (e.target.id != 'theme_boost_union-drawers-offcanvas') {
                 return null;
             }
             getDrawerBackdrop().then(backdrop => {
                 backdrop.show();
-                const pageWrapper = document.getElementById('page');
-                pageWrapper.style.overflow = 'hidden';
+                $('body').addClass('top-offcanvas-drawer');
                 return backdrop;
             })
             .catch();
@@ -65,11 +64,15 @@ define(['jquery', 'theme_boost/drawers', 'core/modal'], function($, Drawers, Mod
         document.addEventListener(Drawers.eventTypes.drawerHide, function() {
             getDrawerBackdrop().then(backdrop => {
                 backdrop.hide();
-                const pageWrapper = document.getElementById('page');
-                pageWrapper.style.overflow = 'auto';
+                $('body').removeClass('top-offcanvas-drawer');
                 return;
             })
             .catch();
+        });
+
+        // Display the offcanvas block in top of the header when the turn editing mode is on.
+        $('#theme_boost_union-offcanvas-btn').click(function() {
+            $('#theme_boost_union-offcanvas').toggleClass('show');
         });
     }
 

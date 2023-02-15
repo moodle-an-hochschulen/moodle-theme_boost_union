@@ -334,6 +334,7 @@ $string['blockstab'] = 'Blocks';
 $string['blocksgeneralheading'] = 'General blocks';
 // ... Section: Block regions.
 $string['blockregionsheading'] = 'Block regions';
+$string['region-none'] = 'None';
 $string['region-outside-left'] = 'Outside (left)';
 $string['region-outside-top'] = 'Outside (top)';
 $string['region-outside-bottom'] = 'Outside (bottom)';
@@ -362,6 +363,25 @@ $string['outsideregionsplacement'] = 'Outside regions placement on larger screen
 $string['outsideregionsplacement_desc'] = 'With this setting, you can control if, on larger screens, the outside blocks regions should be placed near the main content area or rather near the window edges.';
 $string['outsideregionsplacementnextmaincontent'] = 'Display blocks next to the main content area';
 $string['outsideregionsplacementnearwindowedges'] = 'Display blocks near to the window edges';
+// ... ... Setting: Set a additional block regions for each page layouts.
+$string['standardregions'] = 'Block regions for standard layout';
+$string['standardregions_desc'] = 'With this setting, you can set the additional block regions for standard layout';
+$string['courseregions'] = 'Block regions for course layout';
+$string['courseregions_desc'] = 'With this setting, you can set the additional block regions for course layout';
+$string['coursecategoryregions'] = 'Block regions for course category layout';
+$string['coursecategoryregions_desc'] = 'With this setting, you can set the additional block regions for course category layout';
+$string['incourseregions'] = 'Block regions for incourse layout';
+$string['incourseregions_desc'] = 'With this setting, you can set the additional block regions for incourse layout';
+$string['frontpageregions'] = 'Block regions for frontpage layout';
+$string['frontpageregions_desc'] = 'With this setting, you can set the additional block regions for frontpage layout';
+$string['adminregions'] = 'Block regions for admin layout';
+$string['adminregions_desc'] = 'With this setting, you can set the additional block regions for admin layout';
+$string['mydashboardregions'] = 'Block regions for dashboard layout';
+$string['mydashboardregions_desc'] = 'With this setting, you can set the additional block regions for dashboard layout';
+$string['mypublicregions'] = 'Block regions for mypublic layout';
+$string['mypublicregions_desc'] = 'With this setting, you can set the additional block regions for mypublic layout';
+$string['reportregions'] = 'Block regions for report layout';
+$string['reportregions_desc'] = 'With this setting, you can set the additional block regions for report layout';
 
 // Settings: Misc tab.
 $string['misctab'] = 'Miscellaneous';
