@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-03-01 - Tests: Updated Moodle Plugin CI to use PHP 8.1 and Postgres 13 from Moodle 4.1 on.
 * 2023-02-12 - Feature: Allow admin to change the navbar color, solves #39, helps to resolve #110.
 
 ### v4.1-r2
