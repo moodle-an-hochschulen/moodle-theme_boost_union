@@ -167,3 +167,17 @@ Feature: Configuring the theme_boost_union plugin for the "Branding" tab on the 
 
   # Unfortunately, this can't be tested with Behat yet
   # Scenario: Setting: Activity icon color for "Interface" - Setting the color
+
+  Scenario Outline: Setting: Navbar color - Set the navbar color
+    Given the following config values are set as admin:
+      | config      | value     | plugin            |
+      | navbarcolor | <setting> | theme_boost_union |
+    When I log in as "admin"
+    Then the "class" attribute of ".navbar" "css_element" should contain "<classes>"
+
+    Examples:
+      | setting      | classes                 |
+      | light        | navbar-light bg-white   |
+      | dark         | navbar-dark bg-dark     |
+      | primarylight | navbar-light bg-primary |
+      | primarydark  | navbar-dark bg-primary  |

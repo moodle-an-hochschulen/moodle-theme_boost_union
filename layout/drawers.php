@@ -152,6 +152,9 @@ require_once(__DIR__ . '/includes/javascriptdisabledhint.php');
 // Include the template content for the info banners.
 require_once(__DIR__ . '/includes/infobanners.php');
 
+// Include the template content for the navbar styling.
+require_once(__DIR__ . '/includes/navbar.php');
+
 // Include the template content for the advertisement tiles, but only if we are on the frontpage.
 if ($PAGE->pagelayout == 'frontpage') {
     require_once(__DIR__ . '/includes/advertisementtiles.php');
