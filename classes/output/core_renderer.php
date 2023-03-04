@@ -377,7 +377,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $header->courseheaderimageposition = get_config('theme_boost_union', 'courseheaderimageposition');
             // Additionally, get the template context attributes for the course header image layout.
             $courseheaderimagelayout = get_config('theme_boost_union', 'courseheaderimagelayout');
-            switch ($courseheaderimagelayout) {
+            switch($courseheaderimagelayout) {
                 case THEME_BOOST_UNION_SETTING_COURSEIMAGELAYOUT_HEADINGABOVE:
                     $header->courseheaderimagelayoutheadingabove = true;
                     $header->courseheaderimagelayoutstackedclass = '';
@@ -436,7 +436,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $context->content = $bc->content;
         $context->annotation = $bc->annotation;
         $context->footer = $bc->footer;
-
         $context->hascontrols = !empty($bc->controls);
 
         // Hide edit control options for the regions based on the capabilities.
@@ -445,6 +444,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if (!empty($regioncapname) && $context->hascontrols) {
             $context->hascontrols = has_capability('theme/boost_union:editregion'.$regioncapname, $this->page->context);
         }
+
         if ($context->hascontrols) {
             $context->controls = $this->block_controls($bc->controls, $id);
         }

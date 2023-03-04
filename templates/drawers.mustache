@@ -65,7 +65,7 @@
 
 <body {{{ bodyattributes }}}>
 {{> core/local/toast/wrapper}}
-<div id="page-wrapper" class="d-print-block region-block-elements">
+<div id="page-wrapper" class="d-print-block">
 
     {{{ output.standard_top_of_body_html }}}
 
@@ -102,11 +102,11 @@
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
 
-    {{^user_is_editing}}
+    {{^userisediting}}
         {{#regions.offcanvas.hasblocks}}
             {{< theme_boost/drawer }}
                 {{$id}}theme_boost_union-drawers-offcanvas{{/id}}
-                {{$drawerclasses}}drawer drawer-top {{/drawerclasses}}
+                {{$drawerclasses}}drawer drawer-top{{/drawerclasses}}
                 {{$drawercontent}}
                     {{> theme_boost_union/offcanvas}}
                 {{/drawercontent}}
@@ -117,38 +117,40 @@
                 {{$closebuttontext}}{{#str}}closeoffcanvas, theme_boost_union{{/str}}{{/closebuttontext}}
             {{/ theme_boost/drawer}}
         {{/regions.offcanvas.hasblocks}}
-    {{/user_is_editing}}
+    {{/userisediting}}
 
-    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container {{{outsideregionsplacement}}}">
-        {{# user_is_editing}}
-            <div class="block-region-top-offcanvas" id="theme_boost_union-offcanvas">
-                {{> theme_boost_union/offcanvas}}
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+        {{#userisediting}}
+            <div id="theme-block-region-offcanvas-editing" class="collapse">
+                <div id="theme-block-region-offcanvas-editing-inner">
+                    {{> theme_boost_union/offcanvas}}
+                </div>
             </div>
-        {{/user_is_editing}}
+        {{/userisediting}}
 
-        {{#regions.top.hasblocks}}
-            <section class="theme-block-region block-region-top" id="topregion" aria-label="{{#str}}blocks{{/str}}">
-                {{{ regions.top.addblockbutton }}}
-                {{{ regions.top.regionhtml }}}
+        {{#regions.outsidetop.hasblocks}}
+            <section id="theme-block-region-outside-top" class="theme-block-region {{{outsidetopwidth}}}" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.outsidetop.addblockbutton }}}
+                {{{ regions.outsidetop.regionhtml }}}
             </section>
-        {{/regions.top.hasblocks}}
+        {{/regions.outsidetop.hasblocks}}
 
-        {{#regions.headertop.hasblocks}}
-            <section class="theme-block-region block-region-headertop" id="headertopregion" aria-label="{{#str}}blocks{{/str}}">
-                {{{ regions.headertop.addblockbutton }}}
-                {{{ regions.headertop.regionhtml }}}
+        {{#regions.header.hasblocks}}
+            <section id="theme-block-region-header" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.header.addblockbutton }}}
+                {{{ regions.header.regionhtml }}}
             </section>
-        {{/regions.headertop.hasblocks}}
+        {{/regions.header.hasblocks}}
 
-        <div class="main-content-region {{mainregionclass}}">
-            {{#regions.left.hasblocks}}
-                <section data-region="blocks-column" class=" {{#regions.left.hasblocks}}pre-side-block block-region-left{{/regions.left.hasblocks}}" id="leftblock" aria-label="{{#str}}blocks{{/str}}">
-                    {{{ regions.left.addblockbutton }}}
-                    {{{ regions.left.regionhtml }}}
+        <div class="main-inner-wrapper {{{maininnerwrapperclass}}} {{{outsideregionsplacement}}}">
+            {{#regions.outsideleft.hasblocks}}
+                <section id="theme-block-region-outside-left" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.outsideleft.addblockbutton }}}
+                    {{{ regions.outsideleft.regionhtml }}}
                  </section>
-            {{/regions.left.hasblocks}}
+            {{/regions.outsideleft.hasblocks}}
 
-        <div id="topofscroll" class="main-inner {{regionclass}}">
+        <div id="topofscroll" class="main-inner">
             <div class="drawer-toggles d-flex">
                 {{#courseindex}}
                     <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
@@ -192,6 +194,12 @@
                     {{> core/moremenu}}
                 </div>
             {{/secondarymoremenu}}
+            {{#regions.contentupper.hasblocks}}
+                <section id="theme-block-region-content-upper" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.contentupper.addblockbutton }}}
+                    {{{ regions.contentupper.regionhtml }}}
+                </section>
+            {{/regions.contentupper.hasblocks}}
             <div id="page-content" class="pb-3 d-print-block">
                 <div id="region-main-box">
                     {{#advtilespositionbefore}}
@@ -229,50 +237,54 @@
                     {{/advtilespositionafter}}
                 </div>
             </div>
+            {{#regions.contentlower.hasblocks}}
+                <section id="theme-block-region-content-lower" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.contentlower.addblockbutton }}}
+                    {{{ regions.contentlower.regionhtml }}}
+                </section>
+            {{/regions.contentlower.hasblocks}}
         </div>
 
-        {{#regions.right.hasblocks}}
-            <section data-region="blocks-column" class="{{#regions.right.hasblocks}}post-side-block block-region-right{{/regions.right.hasblocks}}" id="rightblock" aria-label="{{#str}}blocks{{/str}}">
-                {{{ regions.right.addblockbutton }}}
-                {{{ regions.right.regionhtml }}}
+        {{#regions.outsideright.hasblocks}}
+            <section id="theme-block-region-outside-right" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.outsideright.addblockbutton }}}
+                {{{ regions.outsideright.regionhtml }}}
             </section>
-        {{/regions.right.hasblocks}}
+        {{/regions.outsideright.hasblocks}}
         </div>
 
-        {{#regions.bottom.hasblocks}}
-            <section class="theme-block-region block-region-bottom" id="bottomregion" aria-label="{{#str}}blocks{{/str}}">
-                {{{ regions.bottom.addblockbutton }}}
-                {{{ regions.bottom.regionhtml }}}
+        {{#regions.outsidebottom.hasblocks}}
+            <section id="theme-block-region-outside-bottom" class="theme-block-region {{{outsidebottomwidth}}}" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.outsidebottom.addblockbutton }}}
+                {{{ regions.outsidebottom.regionhtml }}}
             </section>
-        {{/regions.bottom.hasblocks}}
-        <div class="block-region-footer">
-            <div class="row">
-                 {{#regions.footerleft.hasblocks}}
-                    <div class="{{footerclass}}">
-                        <section class="theme-block-region block-region-footer-left" id="footerleft" aria-label="{{#str}}blocks{{/str}}">
+        {{/regions.outsidebottom.hasblocks}}
+
+        {{#regions.footer.hasblocks}}
+            <div id="theme-block-region-footer">
+                <div class="row">
+                     {{#regions.footerleft.hasblocks}}
+                        <section id="theme-block-region-footer-left" class="theme-block-region {{regions.footer.class}}" aria-label="{{#str}}blocks{{/str}}">
                             {{{ regions.footerleft.addblockbutton }}}
                             {{{ regions.footerleft.regionhtml }}}
                         </section>
-                    </div>
-                {{/regions.footerleft.hasblocks}}
-                {{#regions.footercenter.hasblocks}}
-                    <div class="{{footerclass}}">
-                        <section class="theme-block-region block-region-footer-center" id="footercenter" aria-label="{{#str}}blocks{{/str}}">
+                    {{/regions.footerleft.hasblocks}}
+                    {{#regions.footercenter.hasblocks}}
+                        <section id="theme-block-region-footer-center" class="theme-block-region {{regions.footer.class}}" aria-label="{{#str}}blocks{{/str}}">
                             {{{ regions.footercenter.addblockbutton }}}
                             {{{ regions.footercenter.regionhtml }}}
                         </section>
-                    </div>
-                {{/regions.footercenter.hasblocks}}
-                {{#regions.footerright.hasblocks}}
-                    <div class="{{footerclass}}">
-                        <section class="theme-block-region block-region-footer-right" id="footerright" aria-label="{{#str}}blocks{{/str}}">
+                    {{/regions.footercenter.hasblocks}}
+                    {{#regions.footerright.hasblocks}}
+                        <section id="theme-block-region-footer-right" class="theme-block-region {{regions.footer.class}}" aria-label="{{#str}}blocks{{/str}}">
                             {{{ regions.footerright.addblockbutton }}}
                             {{{ regions.footerright.regionhtml }}}
                         </section>
-                    </div>
-                {{/regions.footerright.hasblocks}}
+                    {{/regions.footerright.hasblocks}}
+                </div>
             </div>
-        </div>
+        {{/regions.footer.hasblocks}}
+
         {{> theme_boost_union/footer }}
         {{> theme_boost_union/footnote }}
     </div>

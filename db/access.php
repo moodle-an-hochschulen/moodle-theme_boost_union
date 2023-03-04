@@ -52,8 +52,8 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         ),
     ),
-    // Ability to see the headertop block region.
-    'theme/boost_union:viewregionheadertop' => array(
+    // Ability to see the header block region.
+    'theme/boost_union:viewregionheader' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -63,8 +63,8 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         ),
     ),
-    // Ability to edit the headertop block region.
-    'theme/boost_union:editregionheadertop' => array(
+    // Ability to edit the header block region.
+    'theme/boost_union:editregionheader' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -73,8 +73,8 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         ),
     ),
-    // Ability to see the left block region.
-    'theme/boost_union:viewregionleft' => array(
+    // Ability to see the outsideleft block region.
+    'theme/boost_union:viewregionoutsideleft' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -84,8 +84,8 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         ),
     ),
-    // Ability to edit the left block region.
-    'theme/boost_union:editregionleft' => array(
+    // Ability to edit the outsideleft block region.
+    'theme/boost_union:editregionoutsideleft' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -94,8 +94,8 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         ),
     ),
-    // Ability to see the right block region.
-    'theme/boost_union:viewregionright' => array(
+    // Ability to see the outsideright block region.
+    'theme/boost_union:viewregionoutsideright' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -105,8 +105,8 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         ),
     ),
-    // Ability to edit the right block region.
-    'theme/boost_union:editregionright' => array(
+    // Ability to edit the outsideright block region.
+    'theme/boost_union:editregionoutsideright' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -115,8 +115,8 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         ),
     ),
-    // Ability to see the top block region.
-    'theme/boost_union:viewregiontop' => array(
+    // Ability to see the outsidetop block region.
+    'theme/boost_union:viewregionoutsidetop' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -126,8 +126,8 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         ),
     ),
-    // Ability to edit the top block region.
-    'theme/boost_union:editregiontop' => array(
+    // Ability to edit the outsidetop block region.
+    'theme/boost_union:editregionoutsidetop' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -136,8 +136,8 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         ),
     ),
-    // Ability to see the bottom block region.
-    'theme/boost_union:viewregionbottom' => array(
+    // Ability to see the outsidebottom block region.
+    'theme/boost_union:viewregionoutsidebottom' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -147,8 +147,50 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         ),
     ),
-    // Ability to edit the bottom block region.
-    'theme/boost_union:editregionbottom' => array(
+    // Ability to edit the outsidebottom block region.
+    'theme/boost_union:editregionoutsidebottom' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        ),
+    ),
+    // Ability to see the contentupper block region.
+    'theme/boost_union:viewregioncontentupper' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'user' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        ),
+    ),
+    // Ability to edit the contentupper block region.
+    'theme/boost_union:editregioncontentupper' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        ),
+    ),
+    // Ability to see the contentlower block region.
+    'theme/boost_union:viewregioncontentlower' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'user' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        ),
+    ),
+    // Ability to edit the contentlower block region.
+    'theme/boost_union:editregioncontentlower' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(

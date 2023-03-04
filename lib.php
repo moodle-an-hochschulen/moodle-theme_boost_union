@@ -86,8 +86,11 @@ define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK', 'dark');
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYLIGHT', 'primarylight');
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYDARK', 'primarydark');
 
-define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT', 0);
-define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEARWINDOW', 1);
+define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT', 'nextmaincontent');
+define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEARWINDOW', 'nearwindowedges');
+define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH', 'fullwidth');
+define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_COURSECONTENTWIDTH', 'coursecontentwidth');
+define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_HEROWIDTH', 'herowidth');
 
 /**
  * Returns the main SCSS content.
@@ -112,8 +115,6 @@ function theme_boost_union_get_main_scss_content($theme) {
     }
     $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/post.scss');
 
-    $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/blockregion.scss');
-
     return $scss;
 }
 
@@ -125,6 +126,7 @@ function theme_boost_union_get_main_scss_content($theme) {
  */
 function theme_boost_union_get_pre_scss($theme) {
     global $CFG;
+
     // Require local library.
     require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
@@ -141,8 +143,6 @@ function theme_boost_union_get_pre_scss($theme) {
         'bootstrapcolorinfo' => ['info'],
         'bootstrapcolorwarning' => ['warning'],
         'bootstrapcolordanger' => ['danger'],
-        'leftregionwidth' => ['leftregionwidthval'],
-        'rightregionwidth' => ['rightregionwidthval']
     ];
 
     // Prepend variables first.
@@ -196,6 +196,15 @@ function theme_boost_union_get_pre_scss($theme) {
         $activityiconscss .= implode(",\n", $activityiconcolors);
         $activityiconscss .= ');';
         $scss .= $activityiconscss."\n";
+    }
+
+    // Set custom Boost Union SCSS variables.
+    if (get_config('theme_boost_union', 'blockregionoutsideleftwidth')) {
+        $scss .= '$blockregionoutsideleftwidth: '.get_config('theme_boost_union', 'blockregionoutsideleftwidth').";\n";
+    }
+    if (get_config('theme_boost_union', 'blockregionoutsiderightwidth')) {
+        $scss .= '$blockregionoutsiderightwidth: '.get_config('theme_boost_union', 'blockregionoutsiderightwidth').
+                ";\n";
     }
 
     // Prepend pre-scss.

@@ -9,265 +9,481 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | username |
       | student1 |
       | teacher1 |
+    And the following "categories" exist:
+      | name        | category | idnumber |
+      | Category A  | 0        | CATA     |
     And the following "courses" exist:
       | fullname | shortname | format |
       | Course 1 | C1        | topics |
-    And the following "activities" exist:
-      | activity   | name                   | intro                         | course | idnumber    | section |
-      | assign     | Test assignment name   | Test assignment description   | C1     | assign1     | 0       |
-      | book       | Test book name         | Test book description         | C1     | book1       | 0       |
-      | chat       | Test chat name         | Test chat description         | C1     | chat1       | 1       |
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
 
   @javascript
-  Scenario Outline: Additional Boost Union block regions: left, right, top, bottom, footerleft, footerright, footercenter.
+  Scenario Outline: Setting: Enable additional block regions (on a course page and the frontpage where all regions are offered)
     When I log in as "admin"
-    And I turn editing mode on
-    And I navigate to "Appearance > Default Dashboard page" in site administration
-    And I turn editing mode on
-    And I should see "Add a block" in the "<regionselectorwithanchor>" "css_element"
-    Then I click on "Add a block" "link" in the "<regionselectorwithanchor>" "css_element"
-    Then I should see "Online users"
-    Then I click on "Online users" "link"
-    And I press "Reset Dashboard for all users"
-    And I should see "All Dashboard pages have been reset to default."
-    Then I press "Continue"
-    Then I should see "Online users" in the "<regionselectorwithanchor>" "css_element"
     And I am on site homepage
-    And I should see "Add a block" in the "<regionselectorwithanchor>" "css_element"
-    Then I click on "Add a block" "link" in the "<regionselectorwithanchor>" "css_element"
-    And I should see "Calendar" in the ".modal-body" "css_element"
-    Then I click on "Calendar" "link" in the ".modal-body" "css_element"
-    Then I should see "Calendar" in the "<regionselectorwithanchor>" "css_element"
-    And I am on "Course 1" course homepage
-    And I should see "Add a block" in the "<regionselectorwithanchor>" "css_element"
-    Then I click on "Add a block" "link" in the "<regionselectorwithanchor>" "css_element"
-    Then I should see "Activities"
-    Then I click on "Activities" "link"
-    Then I should see "Activities" in the "<regionselectorwithanchor>" "css_element"
-    And the following "permission overrides" exist:
-      | capability                         | permission | role    | contextlevel | reference |
-      | theme/boost_union:<editcapability> | Allow      | user    | System       |           |
-    And I log in as "student1"
-    Then I follow "Dashboard"
-    Then I should see "Online users" in the "<regionselectorwithanchor>" "css_element"
     And I turn editing mode on
-    And I should see "Add a block" in the "<regionselectorwithanchor>" "css_element"
-    Then I click on "Add a block" "link" in the "<regionselectorwithanchor>" "css_element"
-    Then I should see "Logged in user"
-    And I click on "Logged in user" "link"
-    Then I should see "Logged in user" in the "<regionselectorwithanchor>" "css_element"
-    And I am on site homepage
-    Then I should see "Calendar" in the "<regionselectorwithanchor>" "css_element"
+    Then "#theme-block-region-<region>" "css_element" should not exist
+    And the following config values are set as admin:
+      | config                   | value          | plugin            |
+      | blockregionsforfrontpage | <settingvalue> | theme_boost_union |
+    And I reload the page
+    Then "#theme-block-region-<region>" "css_element" <should> exist
     And I am on "Course 1" course homepage
-    Then I should see "Activities" in the "<regionselectorwithanchor>" "css_element"
-    And the following "permission overrides" exist:
-      | capability                         | permission | role    | contextlevel | reference |
-      | theme/boost_union:<viewcapability> | Prevent    | user    | System       |           |
-    And I log in as "student1"
-    Then I follow "Dashboard"
-    Then I should not see "Online users"
-    Then "<regionselectorwithanchor>" "css_element" should not exist
-    And I am on site homepage
-    Then I should not see "Calendar"
-    Then "<regionselectorwithanchor>" "css_element" should not exist
-    And I am on "Course 1" course homepage
-    Then I should not see "Activities"
-    Then "<regionselectorwithanchor>" "css_element" should not exist
+    And I turn editing mode on
+    Then "#theme-block-region-<region>" "css_element" should not exist
+    And the following config values are set as admin:
+      | config                | value          | plugin            |
+      | blockregionsforcourse | <settingvalue> | theme_boost_union |
+    And I reload the page
+    Then "#theme-block-region-<region>" "css_element" <should> exist
 
     Examples:
-      | regionselectorwithanchor                 | viewcapability         | editcapability         |
-      | .block-region-left#leftblock             | viewregionleft         | editregionleft         |
-      | .block-region-right#rightblock           | viewregionright        | editregionright        |
-      | .block-region-top#topregion              | viewregiontop          | editregiontop          |
-      | .block-region-bottom#bottomregion        | viewregionbottom       | editregionbottom       |
-      | .block-region-footer-left#footerleft     | viewregionfooterleft   | editregionfooterleft   |
-      | .block-region-footer-right#footerright   | viewregionfooterright  | editregionfooterright  |
-      | .block-region-footer-center#footercenter | viewregionfootercenter | editregionfootercenter |
+      | region           | settingvalue                                                                                                                                                                    | should     |
+      | outside-top      | outside-top                                                                                                                                                                     | should     |
+      | outside-left     | outside-left                                                                                                                                                                    | should     |
+      | outside-right    | outside-right                                                                                                                                                                   | should     |
+      | outside-bottom   | outside-bottom                                                                                                                                                                  | should     |
+      | footer-left      | footer-left                                                                                                                                                                     | should     |
+      | footer-right     | footer-right                                                                                                                                                                    | should     |
+      | footer-center    | footer-center                                                                                                                                                                   | should     |
+      | content-upper    | content-upper                                                                                                                                                                   | should     |
+      | content-lower    | content-lower                                                                                                                                                                   | should     |
+      | header           | header                                                                                                                                                                          | should     |
+      | outside-top      | outside-top,outside-bottom                                                                                                                                                      | should     |
+      | outside-top      | outside-top,outside-left,outside-right,outside-bottom,footer-left,footer-right,footer-center,offcanvas-left,offcanvas-right,offcanvas-center,content-upper,content-lower,header | should     |
+      | outside-top      | outside-bottom                                                                                                                                                                  | should not |
+      | outside-top      | footer-left,footer-right                                                                                                                                                        | should not |
 
   @javascript
-  Scenario: Additional Boost Union block region: headertop (Compared to the outside and footer regions, this test is more compact and thus not included in the Scenario outline above).
+  Scenario Outline: Setting: Enable additional block regions (on the Dashboard page where all but the content-* regions are offered)
     When I log in as "admin"
+    And I follow "Dashboard"
     And I turn editing mode on
-    And I navigate to "Appearance > Default Dashboard page" in site administration
-    And I turn editing mode on
-    Then ".block-region-headertop#headertopregion" "css_element" should not exist
-    And I am on site homepage
-    And I should see "Add a block" in the ".block-region-headertop#headertopregion" "css_element"
-    Then I click on "Add a block" "link" in the ".block-region-headertop#headertopregion" "css_element"
-    And I should see "Calendar" in the ".modal-body" "css_element"
-    Then I click on "Calendar" "link" in the ".modal-body" "css_element"
-    Then I should see "Calendar" in the ".block-region-headertop#headertopregion" "css_element"
-    And I am on "Course 1" course homepage
-    And I should see "Add a block" in the ".block-region-headertop#headertopregion" "css_element"
-    Then I click on "Add a block" "link" in the ".block-region-headertop#headertopregion" "css_element"
-    Then I should see "Activities"
-    Then I click on "Activities" "link"
-    Then I should see "Activities" in the ".block-region-headertop#headertopregion" "css_element"
-    And the following "permission overrides" exist:
-      | capability                            | permission | role    | contextlevel | reference |
-      | theme/boost_union:editregionheadertop | Allow      | user    | System       |           |
-    And I log in as "student1"
-    Then I follow "Dashboard"
-    Then ".block-region-headertop#headertopregion" "css_element" should not exist
-    And I am on site homepage
-    Then I should see "Calendar" in the ".block-region-headertop#headertopregion" "css_element"
-    And I am on "Course 1" course homepage
-    Then I should see "Activities" in the ".block-region-headertop#headertopregion" "css_element"
-    And the following "permission overrides" exist:
-      | capability                            | permission | role    | contextlevel | reference |
-      | theme/boost_union:viewregionheadertop | Prevent    | user    | System       |           |
-    And I log in as "student1"
-    Then I follow "Dashboard"
-    Then I should not see "Online users"
-    Then ".block-region-headertop#headertopregion" "css_element" should not exist
-    And I am on site homepage
-    Then I should not see "Calendar"
-    Then ".block-region-headertop#headertopregion" "css_element" should not exist
-    And I am on "Course 1" course homepage
-    Then I should not see "Activities"
-    Then ".block-region-headertop#headertopregion" "css_element" should not exist
-
-  @javascript
-  Scenario: Additional Boost Union block region: offcanvas (Compared to the outside and footer regions, this test is slightly different and thus not included in the Scenario outline above).
-    When I log in as "admin"
-    And I turn editing mode on
-    And I navigate to "Appearance > Default Dashboard page" in site administration
-    And I turn editing mode on
-    Then I click on "#theme_boost_union-offcanvas-btn" "css_element"
-    And I should see "Add a block" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    Then I click on "Add a block" "link" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    Then I should see "Online users"
-    Then I click on "Online users" "link"
-    And I press "Reset Dashboard for all users"
-    And I should see "All Dashboard pages have been reset to default."
-    Then I press "Continue"
-    And I turn editing mode off
-    Then I click on "#theme_boost_union-offcanvas-btn" "css_element"
-    Then I should see "Online users" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    And I am on site homepage
-    And I turn editing mode on
-    Then I click on "#theme_boost_union-offcanvas-btn" "css_element"
-    And I should see "Add a block" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    Then I click on "Add a block" "link" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    And I should see "Calendar" in the ".modal-body" "css_element"
-    Then I click on "Calendar" "link" in the ".modal-body" "css_element"
-    And I turn editing mode off
-    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
-    Then I should see "Calendar" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    And I am on "Course 1" course homepage
-    And I turn editing mode on
-    Then I click on "#theme_boost_union-offcanvas-btn" "css_element"
-    And I should see "Add a block" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    Then I click on "Add a block" "link" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    Then I should see "Activities"
-    Then I click on "Activities" "link"
-    And I turn editing mode off
-    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
-    Then I should see "Activities" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    And the following "permission overrides" exist:
-      | capability                                | permission | role    | contextlevel | reference |
-      | theme/boost_union:editregionoffcanvasleft | Allow      | user    | System       |           |
-    And I log in as "student1"
-    Then I follow "Dashboard"
-    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
-    Then I should see "Online users" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    And I am on site homepage
-    Then I follow "Dashboard"
-    And I turn editing mode on
-    Then I click on "#theme_boost_union-offcanvas-btn" "css_element"
-    And I should see "Add a block" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    Then I click on "Add a block" "link" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    Then I should see "Logged in user"
-    And I click on "Logged in user" "link"
-    And I turn editing mode off
-    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
-    Then I should see "Logged in user" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    And I am on site homepage
-    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
-    Then I should see "Calendar" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    And I am on "Course 1" course homepage
-    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
-    Then I should see "Activities" in the ".block-region-offcanvasleft#offcanvasregionleft" "css_element"
-    And the following "permission overrides" exist:
-      | capability                                | permission | role    | contextlevel | reference |
-      | theme/boost_union:viewregionoffcanvasleft | Prevent    | user    | System       |           |
-    And I log in as "student1"
-    Then I follow "Dashboard"
-    And "#theme_boost_union-offcanvas-btn" "css_element" should not exist
-    And I am on site homepage
-    And "#theme_boost_union-offcanvas-btn" "css_element" should not exist
-    And I am on "Course 1" course homepage
-    And "#theme_boost_union-offcanvas-btn" "css_element" should not exist
-
-  Scenario: Setting: Outside regions placement on larger screens
-    Given the following config values are set as admin:
-      | config                  | value | plugin            |
-      | outsideregionsplacement | 0     | theme_boost_union |
-    When I log in as "admin"
-    And I am on site homepage
-    Then the "class" attribute of "#page" "css_element" should contain "blocks-next-maincontent"
-    And the "class" attribute of "#page" "css_element" should not contain "blocks-near-windowedges"
+    Then "#theme-block-region-<region>" "css_element" should not exist
     And the following config values are set as admin:
-      | config                  | value | plugin            |
-      | outsideregionsplacement | 1     | theme_boost_union |
+      | config                     | value          | plugin            |
+      | blockregionsformydashboard | <settingvalue> | theme_boost_union |
+    And I reload the page
+    Then "#theme-block-region-<region>" "css_element" <should> exist
+
+    Examples:
+      | region           | settingvalue                                                                                                                                        | should     |
+      | outside-top      | outside-top                                                                                                                                         | should     |
+      | outside-left     | outside-left                                                                                                                                        | should     |
+      | outside-right    | outside-right                                                                                                                                       | should     |
+      | outside-bottom   | outside-bottom                                                                                                                                      | should     |
+      | footer-left      | footer-left                                                                                                                                         | should     |
+      | footer-right     | footer-right                                                                                                                                        | should     |
+      | footer-center    | footer-center                                                                                                                                       | should     |
+      | content-upper    | outside-top                                                                                                                                         | should not |
+      | content-lower    | outside-top                                                                                                                                         | should not |
+      | header           | header                                                                                                                                              | should     |
+      | outside-top      | outside-top,outside-bottom                                                                                                                          | should     |
+      | outside-top      | outside-top,outside-left,outside-right,outside-bottom,footer-left,footer-right,footer-center,offcanvas-left,offcanvas-right,offcanvas-center,header | should     |
+      | outside-top      | outside-bottom                                                                                                                                      | should not |
+      | outside-top      | footer-left,footer-right                                                                                                                            | should not |
+
+  @javascript
+  Scenario Outline: Setting: Enable additional block regions (on a category overview page where not all regions are offered)
+    When I log in as "admin"
+    And I am on course index
+    And I follow "Category A"
+    And I turn editing mode on
+    Then "#theme-block-region-<region>" "css_element" should not exist
+    And the following config values are set as admin:
+      | config                        | value          | plugin            |
+      | blockregionsforcoursecategory | <settingvalue> | theme_boost_union |
+    And I reload the page
+    Then "#theme-block-region-<region>" "css_element" <should> exist
+
+    Examples:
+      | region           | settingvalue                                                                                                      | should     |
+      | outside-top      | outside-top                                                                                                       | should     |
+      | outside-bottom   | outside-bottom                                                                                                    | should     |
+      | footer-left      | footer-left                                                                                                       | should     |
+      | footer-right     | footer-right                                                                                                      | should     |
+      | footer-center    | footer-center                                                                                                     | should     |
+      | outside-left     | outside-top                                                                                                       | should not |
+      | outside-right    | outside-top                                                                                                       | should not |
+      | content-upper    | outside-top                                                                                                       | should not |
+      | content-lower    | outside-top                                                                                                       | should not |
+      | header           | outside-top                                                                                                       | should not |
+      | outside-top      | outside-top,outside-bottom                                                                                        | should     |
+      | outside-top      | outside-top,outside-bottom,footer-left,footer-right,footer-center,offcanvas-left,offcanvas-right,offcanvas-center | should     |
+      | outside-top      | outside-bottom                                                                                                    | should not |
+      | outside-top      | footer-left,footer-right                                                                                          | should not |
+
+  @javascript
+  Scenario Outline: Setting: Use additional block regions (on a course page and the frontpage where all regions are offered)
+    Given the following config values are set as admin:
+      | config                   | value          | plugin            |
+      | blockregionsforfrontpage | <settingvalue> | theme_boost_union |
+      | blockregionsforcourse    | <settingvalue> | theme_boost_union |
+    When I log in as "admin"
+    And I am on site homepage
+    And I turn editing mode on
+    And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
+    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
+    And I should see "Online users" in the ".modal-body" "css_element"
+    And I click on "Online users" "link" in the ".modal-body" "css_element"
+    And I am on site homepage
+    And I turn editing mode off
+    Then I should see "Online users" in the "#theme-block-region-<region>" "css_element"
+    And I am on "Course 1" course homepage
+    And I turn editing mode on
+    And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
+    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
+    And I should see "Calendar" in the ".modal-body" "css_element"
+    And I click on "Calendar" "link" in the ".modal-body" "css_element"
+    And I am on "Course 1" course homepage
+    And I turn editing mode off
+    Then I should see "Calendar" in the "#theme-block-region-<region>" "css_element"
+
+    Examples:
+      | region         | settingvalue   |
+      | outside-top    | outside-top    |
+      | outside-left   | outside-left   |
+      | outside-right  | outside-right  |
+      | outside-bottom | outside-bottom |
+      | footer-left    | footer-left    |
+      | footer-right   | footer-right   |
+      | footer-center  | footer-center  |
+      | content-upper  | content-upper  |
+      | content-lower  | content-lower  |
+      | header         | header         |
+
+  @javascript
+  Scenario Outline: Setting: Use additional block regions (on the Dashboard page where all but the content-* regions are offered)
+    Given the following config values are set as admin:
+      | config                     | value          | plugin            |
+      | blockregionsformydashboard | <settingvalue> | theme_boost_union |
+    When I log in as "admin"
+    And I follow "Dashboard"
+    And I turn editing mode on
+    And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
+    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
+    And I should see "Online users" in the ".modal-body" "css_element"
+    And I click on "Online users" "link" in the ".modal-body" "css_element"
+    And I follow "Dashboard"
+    And I turn editing mode off
+    Then I should see "Online users" in the "#theme-block-region-<region>" "css_element"
+
+    Examples:
+      | region         | settingvalue   |
+      | outside-top    | outside-top    |
+      | outside-left   | outside-left   |
+      | outside-right  | outside-right  |
+      | outside-bottom | outside-bottom |
+      | footer-left    | footer-left    |
+      | footer-right   | footer-right   |
+      | footer-center  | footer-center  |
+      | header         | header         |
+
+  @javascript
+  Scenario Outline: Setting: Use additional block regions (on a category overview page where not all regions are offered)
+    Given the following config values are set as admin:
+      | config                        | value          | plugin            |
+      | blockregionsforcoursecategory | <settingvalue> | theme_boost_union |
+    When I log in as "admin"
+    And I am on course index
+    And I follow "Category A"
+    And I turn editing mode on
+    And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
+    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
+    And I should see "Online users" in the ".modal-body" "css_element"
+    And I click on "Online users" "link" in the ".modal-body" "css_element"
+    And I am on course index
+    And I follow "Category A"
+    And I turn editing mode off
+    Then I should see "Online users" in the "#theme-block-region-<region>" "css_element"
+
+    Examples:
+      | region         | settingvalue   |
+      | outside-top    | outside-top    |
+      | outside-bottom | outside-bottom |
+      | footer-left    | footer-left    |
+      | footer-right   | footer-right   |
+      | footer-center  | footer-center  |
+
+  @javascript
+  Scenario Outline: Setting: Enable and use the off-canvas block regions (Compared to the other regions, these regions are slightly different and thus they are not covered in the Scenario outlines above).
+    When I log in as "admin"
+    And I am on site homepage
+    Then "#theme_boost_union-offcanvas-btn" "css_element" should not exist
+    And "#theme_boost_union-drawers-offcanvas" "css_element" should not exist
+    And "#theme-block-region-offcanvas-editing" "css_element" should not be visible
+    And "#theme-block-region-<region>" "css_element" should not exist
+    And I turn editing mode on
+    Then "#theme_boost_union-offcanvas-btn" "css_element" should not exist
+    And "#theme_boost_union-drawers-offcanvas" "css_element" should not exist
+    And "#theme-block-region-offcanvas-editing" "css_element" should not be visible
+    And "#theme-block-region-<region>" "css_element" should not exist
+    And I turn editing mode off
+    And the following config values are set as admin:
+      | config                   | value          | plugin            |
+      | blockregionsforfrontpage | <settingvalue> | theme_boost_union |
+    And I reload the page
+    Then "#theme_boost_union-offcanvas-btn" "css_element" should not exist
+    And "#theme_boost_union-drawers-offcanvas" "css_element" should not exist
+    And "#theme-block-region-offcanvas-editing" "css_element" should not be visible
+    And "#theme-block-region-<region>" "css_element" should not exist
+    And I turn editing mode on
+    Then "#theme_boost_union-offcanvas-btn" "css_element" should exist
+    And "#theme_boost_union-drawers-offcanvas" "css_element" should not exist
+    And "#theme-block-region-offcanvas-editing" "css_element" should not be visible
+    And "#theme-block-region-<region>" "css_element" should exist
+    And "#theme-block-region-<region>" "css_element" should not be visible
+    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
+    And "#theme_boost_union-drawers-offcanvas" "css_element" should not exist
+    And "#theme-block-region-offcanvas-editing" "css_element" should be visible
+    And "#theme-block-region-<region>" "css_element" should exist
+    And "#theme-block-region-<region>" "css_element" should be visible
+    And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
+    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
+    And I should see "Online users" in the ".modal-body" "css_element"
+    And I click on "Online users" "link" in the ".modal-body" "css_element"
+    And I am on site homepage
+    And I turn editing mode off
+    Then "#theme_boost_union-offcanvas-btn" "css_element" should exist
+    And "#theme_boost_union-drawers-offcanvas" "css_element" should exist
+    And "#theme-block-region-offcanvas-editing" "css_element" should not be visible
+    And "#theme-block-region-<region>" "css_element" should exist
+    And "#theme-block-region-<region>" "css_element" should not be visible
+    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
+    Then "#theme_boost_union-drawers-offcanvas" "css_element" should exist
+    And "#theme-block-region-offcanvas-editing" "css_element" should not be visible
+    And "#theme-block-region-<region>" "css_element" should exist
+    And "#theme-block-region-<region>" "css_element" should be visible
+    And I should see "Online users" in the "#theme-block-region-<region>" "css_element"
+
+    Examples:
+      | region           | settingvalue                                                                                                                                 |
+      | offcanvas-left   | offcanvas-left                                                                                                                               |
+      | offcanvas-right  | offcanvas-right                                                                                                                              |
+      | offcanvas-center | offcanvas-center                                                                                                                             |
+      | offcanvas-left   | outside-top,outside-left,outside-right,outside-bottom,footer-left,footer-right,footer-center,offcanvas-left,offcanvas-center,offcanvas-right |
+
+  @javascript
+  Scenario Outline: Setting: Set capabilities to control the editability of additional block regions (for all regions except offcanvas regions)
+    Given the following config values are set as admin:
+      | config                | value    | plugin            |
+      | blockregionsforcourse | <region> | theme_boost_union |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I turn editing mode on
+    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
+    And I should see "Online users" in the ".modal-body" "css_element"
+    And I click on "Online users" "link" in the ".modal-body" "css_element"
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I turn editing mode on
+    Then "#theme-block-region-<region>" "css_element" should exist
+    And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
+    And the following "permission overrides" exist:
+      | capability                         | permission | role           | contextlevel | reference |
+      | theme/boost_union:<editcapability> | Prevent    | editingteacher | System       |           |
+    And I reload the page
+    Then "#theme-block-region-<region>" "css_element" should exist
+    And I should not see "Add a block" in the "#theme-block-region-<region>" "css_element"
+
+    Examples:
+      | region         | editcapability          |
+      | outside-left   | editregionoutsideleft   |
+      | outside-right  | editregionoutsideright  |
+      | outside-top    | editregionoutsidetop    |
+      | outside-bottom | editregionoutsidebottom |
+      | footer-left    | editregionfooterleft    |
+      | footer-right   | editregionfooterright   |
+      | footer-center  | editregionfootercenter  |
+      | content-upper  | editregioncontentupper  |
+      | content-lower  | editregioncontentlower  |
+      | header         | editregionheader        |
+
+  @javascript
+  Scenario Outline: Setting: Set capabilities to control the editability of additional block regions (for offcanvas regions)
+    Given the following config values are set as admin:
+      | config                | value    | plugin            |
+      | blockregionsforcourse | <region> | theme_boost_union |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I turn editing mode on
+    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
+    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
+    And I should see "Online users" in the ".modal-body" "css_element"
+    And I click on "Online users" "link" in the ".modal-body" "css_element"
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I turn editing mode on
+    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
+    Then "#theme-block-region-<region>" "css_element" should exist
+    And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
+    And the following "permission overrides" exist:
+      | capability                         | permission | role           | contextlevel | reference |
+      | theme/boost_union:<editcapability> | Prevent    | editingteacher | System       |           |
+    And I reload the page
+    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
+    Then "#theme-block-region-<region>" "css_element" should exist
+    And I should not see "Add a block" in the "#theme-block-region-<region>" "css_element"
+
+    Examples:
+      | region           | editcapability            |
+      | offcanvas-left   | editregionoffcanvasleft   |
+      | offcanvas-center | editregionoffcanvascenter |
+      | offcanvas-right  | editregionoffcanvasright  |
+
+  @javascript
+  Scenario Outline: Setting: Set capabilities to control the visibility of additional block regions (for all regions except offcanvas regions)
+    Given the following config values are set as admin:
+      | config                | value    | plugin            |
+      | blockregionsforcourse | <region> | theme_boost_union |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I turn editing mode on
+    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
+    And I should see "Online users" in the ".modal-body" "css_element"
+    And I click on "Online users" "link" in the ".modal-body" "css_element"
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    Then "#theme-block-region-<region>" "css_element" should exist
+    And I should see "Online users" in the "#theme-block-region-<region>" "css_element"
+    And the following "permission overrides" exist:
+      | capability                         | permission | role           | contextlevel | reference |
+      | theme/boost_union:<viewcapability> | Prevent    | user           | System       |           |
+      | theme/boost_union:<viewcapability> | Prevent    | editingteacher | System       |           |
+    And I reload the page
+    Then "#theme-block-region-<region>" "css_element" should not exist
+
+    Examples:
+      | region         | viewcapability          |
+      | outside-left   | viewregionoutsideleft   |
+      | outside-right  | viewregionoutsideright  |
+      | outside-top    | viewregionoutsidetop    |
+      | outside-bottom | viewregionoutsidebottom |
+      | footer-left    | viewregionfooterleft    |
+      | footer-right   | viewregionfooterright   |
+      | footer-center  | viewregionfootercenter  |
+      | content-upper  | viewregioncontentupper  |
+      | content-lower  | viewregioncontentlower  |
+      | header         | viewregionheader        |
+
+  @javascript
+  Scenario Outline: Setting: Set capabilities to control the visibility of additional block regions (for offcanvas regions)
+    Given the following config values are set as admin:
+      | config                | value    | plugin            |
+      | blockregionsforcourse | <region> | theme_boost_union |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I turn editing mode on
+    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
+    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
+    And I should see "Online users" in the ".modal-body" "css_element"
+    And I click on "Online users" "link" in the ".modal-body" "css_element"
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
+    Then "#theme-block-region-<region>" "css_element" should exist
+    And I should see "Online users" in the "#theme-block-region-<region>" "css_element"
+    And the following "permission overrides" exist:
+      | capability                         | permission | role           | contextlevel | reference |
+      | theme/boost_union:<viewcapability> | Prevent    | user           | System       |           |
+      | theme/boost_union:<viewcapability> | Prevent    | editingteacher | System       |           |
+    And I reload the page
+    Then "#theme_boost_union-offcanvas-btn" "css_element" should not exist
+    And "#theme-block-region-<region>" "css_element" should not exist
+
+    Examples:
+      | region           | viewcapability            |
+      | offcanvas-left   | viewregionoffcanvasleft   |
+      | offcanvas-center | viewregionoffcanvascenter |
+      | offcanvas-right  | viewregionoffcanvasright  |
+
+  @javascript
+  Scenario Outline: Setting: Block region width for 'Outside (left/right)' regions
+    Given the following config values are set as admin:
+      | config                | value          | plugin            |
+      | blockregionsforcourse | <region>       | theme_boost_union |
+      | <config>              | <settingvalue> | theme_boost_union |
+    When I log in as "admin"
     And I navigate to "Development > Purge caches" in site administration
     And I press "Purge all caches"
+    And I am on "Course 1" course homepage
+    And I turn editing mode on
+    And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
+    Then DOM element "#theme-block-region-<region>" should have computed style "width" "<settingvalue>"
+
+    Examples:
+      | region        | config                       | settingvalue |
+      | outside-left  | blockregionoutsideleftwidth  | 300px        |
+      | outside-left  | blockregionoutsideleftwidth  | 400px        |
+      | outside-right | blockregionoutsiderightwidth | 300px        |
+      | outside-right | blockregionoutsiderightwidth | 400px        |
+
+  Scenario Outline: Setting: Block region width for 'Outside (top/bottom)' regions
+    Given the following config values are set as admin:
+      | config                | value          | plugin            |
+      | blockregionsforcourse | <region>       | theme_boost_union |
+      | <config>              | <settingvalue> | theme_boost_union |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I turn editing mode on
+    And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
+    Then the "class" attribute of "#theme-block-region-<region>" "css_element" should contain "theme-block-region-outside-<settingvalue>"
+
+    Examples:
+      | region         | config                        | settingvalue       |
+      | outside-top    | blockregionoutsidetopwidth    | fullwidth          |
+      | outside-top    | blockregionoutsidetopwidth    | coursecontentwidth |
+      | outside-top    | blockregionoutsidetopwidth    | herowidth          |
+      | outside-bottom | blockregionoutsidebottomwidth | fullwidth          |
+      | outside-bottom | blockregionoutsidebottomwidth | coursecontentwidth |
+      | outside-bottom | blockregionoutsidebottomwidth | herowidth          |
+
+  Scenario Outline: Setting: Outside regions horizontal placement
+    Given the following config values are set as admin:
+      | config                  | value          | plugin            |
+      | outsideregionsplacement | <settingvalue> | theme_boost_union |
+    When I log in as "admin"
     And I am on site homepage
-    Then the "class" attribute of "#page" "css_element" should contain "blocks-near-windowedges"
-    And the "class" attribute of "#page" "css_element" should not contain "blocks-next-maincontent"
+    And I turn editing mode on
+    Then the "class" attribute of ".main-inner-wrapper" "css_element" should contain "<classcontain>"
+    And the "class" attribute of ".main-inner-wrapper" "css_element" should not contain "<classnotcontain>"
+
+    Examples:
+      | settingvalue    | classcontain                       | classnotcontain                    |
+      | nextmaincontent | main-inner-outside-nextmaincontent | main-inner-outside-nearwindowedges |
+      | nearwindowedges | main-inner-outside-nearwindowedges | main-inner-outside-nextmaincontent |
 
   @javascript
-  Scenario: Setting: Outside (left) block region width - Setting the width
-    Given I log in as "admin"
+  Scenario: Verify orders of all block regions
+    Given the following config values are set as admin:
+      | config                   | value                                                                                                                                                                           | plugin            |
+      | blockregionsforfrontpage | outside-top,outside-left,outside-right,outside-bottom,footer-left,footer-right,footer-center,offcanvas-left,offcanvas-right,offcanvas-center,content-upper,content-lower,header | theme_boost_union |
+    When I log in as "admin"
+    And I am on site homepage
     And I turn editing mode on
-    And I navigate to "Appearance > Themes > Boost Union > Feel" in site administration
-    Then I click on "Blocks" "link"
-    And I should see "Block regions for dashboard layout"
-    And I set the following fields to these values:
-      | Block regions for dashboard layout| outside-left, outside-right|
-      | Outside (left) block region width | 400px                      |
-    Then I press "Save changes"
-    And I follow "Dashboard"
-    Then I click on "Add a block" "link" in the ".block-region-left#leftblock" "css_element"
-    Then I should see "Online users"
-    Then I click on "Online users" "link"
-    Then I should see "Online users" in the ".block-region-left#leftblock" "css_element"
-    Then Boostunion ".block-region-left.pre-side-block" should contain style "width" "400px"
-    And I navigate to "Appearance > Themes > Boost Union > Feel" in site administration
-    Then I click on "Blocks" "link"
-    And I set the following fields to these values:
-      | Outside (left) block region width | 500px |
-    Then I press "Save changes"
-    And I follow "Dashboard"
-    Then I should see "Online users" in the ".block-region-left#leftblock" "css_element"
-    Then Boostunion ".block-region-left.pre-side-block" should contain style "width" "500px"
-
-  @javascript
-  Scenario: Setting: Outside (right) block region width - Setting the width
-    Given I log in as "admin"
-    And I turn editing mode on
-    And I navigate to "Appearance > Themes > Boost Union > Feel" in site administration
-    Then I click on "Blocks" "link"
-    And I should see "Block regions for dashboard layout"
-    And I set the following fields to these values:
-      | Block regions for dashboard layout| outside-left, outside-right|
-      | Outside (right) block region width | 400px                     |
-    Then I press "Save changes"
-    And I follow "Dashboard"
-    Then I click on "Add a block" "link" in the ".block-region-right#rightblock" "css_element"
-    Then I should see "Online users"
-    Then I click on "Online users" "link"
-    Then I should see "Online users" in the ".block-region-right#rightblock" "css_element"
-    Then Boostunion ".block-region-right.post-side-block" should contain style "width" "400px"
-    And I navigate to "Appearance > Themes > Boost Union > Feel" in site administration
-    Then I click on "Blocks" "link"
-    And I set the following fields to these values:
-      | Outside (right) block region width | 500px |
-    Then I press "Save changes"
-    And I follow "Dashboard"
-    Then I should see "Online users" in the ".block-region-right#rightblock" "css_element"
-    Then Boostunion ".block-region-right.post-side-block" should contain style "width" "500px"
+    Then "#theme-block-region-offcanvas-editing" "css_element" should appear before "#theme-block-region-outside-top" "css_element"
+    And "#theme-block-region-outside-top" "css_element" should appear before "#theme-block-region-header" "css_element"
+    And "#theme-block-region-header" "css_element" should appear before ".main-inner-wrapper" "css_element"
+    And ".main-inner-wrapper" "css_element" should appear before "#theme-block-region-outside-bottom" "css_element"
+    And "#theme-block-region-outside-bottom" "css_element" should appear before "#theme-block-region-footer" "css_element"
+    And "#theme-block-region-offcanvas-editing #theme-block-region-offcanvas-left" "css_element" should exist
+    And "#theme-block-region-offcanvas-editing #theme-block-region-offcanvas-center" "css_element" should exist
+    And "#theme-block-region-offcanvas-editing #theme-block-region-offcanvas-right" "css_element" should exist
+    And ".main-inner-wrapper #theme-block-region-content-upper" "css_element" should exist
+    And ".main-inner-wrapper #theme-block-region-content-lower" "css_element" should exist
+    And "#theme-block-region-footer #theme-block-region-footer-left" "css_element" should exist
+    And "#theme-block-region-footer #theme-block-region-footer-center" "css_element" should exist
+    And "#theme-block-region-footer #theme-block-region-footer-right" "css_element" should exist
+    And "#theme-block-region-offcanvas-left" "css_element" should appear before "#theme-block-region-offcanvas-center" "css_element"
+    And "#theme-block-region-offcanvas-center" "css_element" should appear before "#theme-block-region-offcanvas-right" "css_element"
+    And "#theme-block-region-content-upper" "css_element" should appear before "#page-content" "css_element"
+    And "#page-content" "css_element" should appear before "#theme-block-region-content-lower" "css_element"
+    And "#theme-block-region-footer-left" "css_element" should appear before "#theme-block-region-footer-center" "css_element"
+    And "#theme-block-region-footer-center" "css_element" should appear before "#theme-block-region-footer-right" "css_element"

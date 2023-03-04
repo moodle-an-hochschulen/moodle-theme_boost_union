@@ -259,23 +259,45 @@ In this tab there are the following settings:
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
-##### Block regions
+##### Additional block regions
 
-Boost Union provides a large number of additional block regions which can be used to add and show blocks over the whole Moodle page. There are block regions next to the main content area, there are footer block regions, there is a header top block region which is shown directly below the navigation drawer with full width and, finally, there is a off-canvas block region which hovers over the whole page as a drawer. 
+Boost Union provides a large number of additional block regions which can be used to add and show blocks over the whole Moodle page:
 
-By default, all block regions are visible for all authenticated users and editable by teachers and managers (depending on the fact if the particular user is allowed to edit the particular Moodle page, of course). But there are also theme/boost_union:viewregion* and theme/boost_union:editregion* capabilities which allow you to fine-tune the usage of the block regions according to your needs.
+* The Outside block regions are placed on all four sides of the Moodle page. They can be used to show blocks which accompany the shown Moodle page but do not directly belong to the main content.
+* The Header block region is placed between the Outside (top) area and the main content area. It can be used to show a block as course header information.
+* The Content block regions are placed directly over and under the main content in the main content area. They can be used to add blocks to the course content flow.
+* The Footer block regions are placed at the bottom of the page between the Outside (bottom) area and the footnote. You have three footer regions available to build columns if necessary.
+* The Off-canvas block region is somehow special as it hovers over the whole Moodle page as a drawer. The drawer is opened by the 9-dots icon at the very right side of the navigation bar. You have three off-canvas regions available to build columns if necessary.
 
-###### Outside (left) block region width
+Please note:
 
-With this setting, you can set the width of the Outside (left) block region which is shown on the left hand side of the main content area.
+* By default, all additional block regions are disabled. Please enable the particular block regions on the particular page layouts according to your needs. Try to be as focused as possible – too many block regions could overwhelm end users.
+* As soon as an additional block region is enabled, it is visible for all authenticated users and editable by teachers and managers (depending on the fact if the particular user is allowed to edit the particular Moodle page, of course). But there are also theme/boost_union:viewregion* and theme/boost_union:editregion* capabilities which allow you to fine-tune the usage of each block region according to your needs.
+* The Outside (left), Outside (right), Content (upper), Content (lower) and Header block regions are not available for all page layouts.
 
-###### Outside (right) block region width
+##### Outside regions
 
-With this setting, you can set the width of the Outside (right) block region which is shown on the right hand side of the main content area.
+Outside regions can not only be enabled with the layout settings above, their appearance can also be customized.
 
-###### Outside regions placement on larger screens
+###### Block region width for 'Outside (left)' region
 
-With this setting, you can control if, on larger screens, the outside blocks regions should be placed near the main content area or rather near the window edges.
+With this setting, you can set the width of the 'Outside (left)' block region which is shown on the left hand side of the main content area.
+
+###### Block region width for 'Outside (right)' region
+
+With this setting, you can set the width of the 'Outside (right)' block region which is shown on the right hand side of the main content area.
+
+###### Block region width for 'Outside (top)' region
+
+With this setting, you can set the width of the 'Outside (top)' block region which is shown at the very top of the page.
+
+###### Block region width for 'Outside (bottom)' region
+
+With this setting, you can set the width of the 'Outside (bottom)' block region which is shown below the main content.
+
+###### Outside regions horizontal placement
+
+With this setting, you can control if, on larger screens, the 'Outside (left)' and 'Outside (right)' block regions should be placed near the main content area or rather near the window edges.
 
 #### Tab "Miscellaneous"
 

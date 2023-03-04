@@ -39,9 +39,9 @@ use Behat\Mink\Exception\ExpectationException as ExpectationException;
  */
 class behat_theme_boost_union_behat_blocks extends behat_blocks {
     /**
-     * Checks if theme boost union style exist or not.
+     * Checks if the given DOM element has the given computed style.
      *
-     * @Given Boostunion :arg1 should contain style :arg2 :arg3
+     * @Given DOM element :arg1 should have computed style :arg2 :arg3
      * @throws \Behat\Mink\Exception\ElementNotFoundException Thrown by behat_base::find
      * @throws \Behat\Mink\Exception\ExpectationException
      * @param string $selector
@@ -49,14 +49,16 @@ class behat_theme_boost_union_behat_blocks extends behat_blocks {
      * @param string $value
      * @return string The style of the image container
      */
-    public function boostunion_should_contain_style($selector, $style, $value) {
+    public function dom_element_should_have_computed_style($selector, $style, $value) {
         $stylejs = "
             return (
-                Y.one('{$selector}').getComputedStyle('$style')
+                $('$selector').css('$style')
             )
         ";
-        if ($this->evaluate_script($stylejs) != $value) {
-            throw new ExpectationException("Doesn't working correct designer style", $this->getSession());
+        $computedstyle = $this->evaluate_script($stylejs);
+        if ($computedstyle != $value) {
+            throw new ExpectationException('The \''.$selector.'\' DOM element does not have the computed style \''.
+                    $style.'\'=\''.$value.'\', it has the computed style \''.$computedstyle.'\' instead.', $this->getSession());
         }
     }
 }

@@ -25,6 +25,12 @@ define(['jquery', 'theme_boost/drawers', 'core/modal'], function($, Drawers, Mod
 
     let modalBackdrop = null;
 
+    /**
+     * Helper function to get the OffCanvas backdrop and add an EventListener which closes
+     * the drawer as soon as the user clicks on the backdrop.
+     *
+     * @returns {object}
+     */
     const getDrawerBackdrop = function() {
         if (!modalBackdrop) {
              modalBackdrop = Modal.prototype.getBackdrop().then(backdrop => {
@@ -46,14 +52,17 @@ define(['jquery', 'theme_boost/drawers', 'core/modal'], function($, Drawers, Mod
     /**
      * Used this listener to hide the off canvas drawer from the page.
      */
-    function initOffCanvasEventListeners() {
+    function initOffcanvasBackdrop() {
+        // Add EventListener for showing a drawer.
         document.addEventListener(Drawers.eventTypes.drawerShown, function(e) {
+            // If the drawer which is shown is _not_ the offcanvas drawer, return.
             if (e.target.id != 'theme_boost_union-drawers-offcanvas') {
                 return null;
             }
+
+            // Get the drawer's backdrop and show it.
             getDrawerBackdrop().then(backdrop => {
                 backdrop.show();
-                $('body').addClass('top-offcanvas-drawer');
                 return backdrop;
             })
             .catch();
@@ -61,25 +70,26 @@ define(['jquery', 'theme_boost/drawers', 'core/modal'], function($, Drawers, Mod
             return true;
         });
 
-        document.addEventListener(Drawers.eventTypes.drawerHide, function() {
+        // Add EventListener for hiding a drawer.
+        document.addEventListener(Drawers.eventTypes.drawerHide, function(e) {
+            // If the drawer which is hidden is _not_ the offcanvas drawer, return.
+            if (e.target.id != 'theme_boost_union-drawers-offcanvas') {
+                return null;
+            }
+
             getDrawerBackdrop().then(backdrop => {
                 backdrop.hide();
-                $('body').removeClass('top-offcanvas-drawer');
-                return;
+                return backdrop;
             })
             .catch();
-        });
 
-        // Display the offcanvas block in top of the header when the turn editing mode is on.
-        $('#theme_boost_union-offcanvas-btn').click(function() {
-            $('#theme_boost_union-offcanvas').toggleClass('show');
+            return true;
         });
     }
 
     return {
         init: function() {
-            initOffCanvasEventListeners();
+            initOffcanvasBackdrop();
         }
     };
-
 });

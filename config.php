@@ -23,8 +23,10 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+
 // Require own locallib.php.
 require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+
 $THEME->name = 'boost_union';
 $THEME->sheets = [];
 $THEME->editor_sheets = [];
@@ -57,7 +59,7 @@ $THEME->layouts = [
     // Most backwards compatible layout without the blocks.
     'base' => array(
         'file' => 'drawers.php',
-        'regions' => array()
+        'regions' => array(),
     ),
     // Standard layout with blocks.
     'standard' => array(

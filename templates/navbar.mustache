@@ -106,10 +106,10 @@
         </div>
         {{{ output.edit_switch }}}
 
-        {{^user_is_editing}}
+        {{^userisediting}}
             {{#regions.offcanvas.hasblocks}}
                 <div class="divider border-left h-75 align-self-center mx-1"></div>
-                <div class="drawer-toggler drawer-offcanvas-toggle open-nav d-print-none">
+                <div class="drawer-offcanvas-toggle d-print-none">
                     <button
                         class="btn"
                         id="theme_boost_union-offcanvas-btn"
@@ -125,12 +125,26 @@
                     </button>
                 </div>
             {{/regions.offcanvas.hasblocks}}
-        {{/user_is_editing}}
-        {{#user_is_editing}}
+        {{/userisediting}}
+        {{#userisediting}}
             {{#regions.offcanvas.hasblocks}}
-                <button class="offcanvas-btn btn" id="theme_boost_union-offcanvas-btn"><i class="fa fa-th"></i></button>
+                <div class="divider border-left h-75 align-self-center mx-1"></div>
+                <div class="drawer-offcanvas-toggle d-print-none">
+                    <button
+                        class="btn"
+                        id="theme_boost_union-offcanvas-btn"
+                        data-toggle="collapse"
+                        title="{{#str}}openoffcanvas, theme_boost_union{{/str}}"
+                        data-target="#theme-block-region-offcanvas-editing"
+                        aria-expanded="false"
+                        aria-controls="theme-block-region-offcanvas-editing"
+                    >
+                        <span class="sr-only">{{#str}}openoffcanvas, theme_boost_union{{/str}}</span>
+                        <i class="fa fa-th"></i>
+                    </button>
+                </div>
             {{/regions.offcanvas.hasblocks}}
-        {{/user_is_editing}}
+        {{/userisediting}}
     </div>
 </nav>
 

@@ -24,14 +24,14 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->libdir . '/behat/lib.php');
+// Require course library.
 require_once($CFG->dirroot . '/course/lib.php');
 
 // Require own locallib.php.
 require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
 /**
- * Add to the additional block regions.
+ * Class for composing the additional block regions for the mustach templates.
  *
  * @package    theme_boost_union
  * @copyright  2022 bdecent gmbh <https://bdecent.de>
@@ -55,10 +55,12 @@ class additionalregions {
      * Get the block region HTML for additional block regions.
      * Checking the view and edit capability for additional block regions.
      * Added addblockbuttons for each block regions.
+     *
      * @return array $regionsdata
      */
     public function regionsdata() {
         global $OUTPUT, $PAGE;
+
         $regionsdata = [];
         foreach ($this->regions as $name => $region) {
 
@@ -80,26 +82,38 @@ class additionalregions {
     }
 
     /**
-     * Return some region classes for additional block regions.
+     * Return region class for main inner wrapper element based on the enabled additional block regions.
+     *
      * @param array $regionsdata
-     * @return array $regionsdata
+     * @return string $maininnerwrapperclass
      */
-    public function regionclass($regionsdata) {
+    public function maininnerwrapperclass($regionsdata) {
 
-        if ((!empty($regionsdata['left']['hasblocks'])) && (!empty($regionsdata['right']['hasblocks']))) {
-            $regionclass = 'main-content-region-block';
-        } else if (!empty($regionsdata['left']['hasblocks'])) {
-            $regionclass = 'main-content-left-region';
-        } else if (!empty($regionsdata['right']['hasblocks'])) {
-            $regionclass = 'main-content-right-region';
+        // If both outside-left and outside-right region is enabled.
+        if ((!empty($regionsdata['outsideleft']['hasblocks'])) &&
+                (!empty($regionsdata['outsideright']['hasblocks']))) {
+            $maininnerwrapperclass = 'main-inner-outside-left-right';
+
+            // If only outside-left region is enabled.
+        } else if (!empty($regionsdata['outsideleft']['hasblocks'])) {
+            $maininnerwrapperclass = 'main-inner-outside-left';
+
+            // If only outside-right region is enabled.
+        } else if (!empty($regionsdata['outsideright']['hasblocks'])) {
+            $maininnerwrapperclass = 'main-inner-outside-right';
+
+            // If neither outside-left nor outside-right regions are enabled.
+        } else {
+            $maininnerwrapperclass = 'main-inner-outside-none';
         }
 
-        return isset($regionclass) ? $regionclass : '';
+        return $maininnerwrapperclass;
     }
 
     /**
      * Calculate region hasblocks count and add column classes for additional block regions.
-     * @param array $regions List of regions to generate class. i.e Footer and Canvas regions
+     *
+     * @param array $regions List of regions to generate class. i.e Footer and Canvas regions.
      * @param array $regionsdata
      * @return array set of region contents
      */
@@ -110,6 +124,7 @@ class additionalregions {
                 $regioncount += ($regionsdata[$region]['hasblocks']) ? true : false;
             }
         }
+
         return [
             'count' => $regioncount,
             'class' => 'col-xl-'.(($regioncount > 0 ) ? round(12 / $regioncount) : '12' )
@@ -118,42 +133,65 @@ class additionalregions {
 
     /**
      * Add the offcanvas block region data to regionsdata.
+     *
      * @param array $regionsdata
      */
-    public function addcanvasdata(&$regionsdata) {
+    public function addoffcanvasdata(&$regionsdata) {
         $list = $this->countcolclass([
-            'offcanvasleft',
-            'offcanvasright',
-            'offcanvascenter'], $regionsdata);
+                'offcanvasleft',
+                'offcanvasright',
+                'offcanvascenter'], $regionsdata);
 
         $regionsdata['offcanvas'] = [
-            'hasblocks' => ($list['count'] > 0) ? true : false,
-            'class' => $list['class'],
+                'hasblocks' => ($list['count'] > 0) ? true : false,
+                'class' => $list['class'],
+        ];
+    }
+
+    /**
+     * Add the footer block region data to regionsdata.
+     *
+     * @param array $regionsdata
+     */
+    public function addfooterdata(&$regionsdata) {
+        $list = $this->countcolclass([
+                'footerleft',
+                'footerright',
+                'footercenter'], $regionsdata);
+
+        $regionsdata['footer'] = [
+                'hasblocks' => ($list['count'] > 0) ? true : false,
+                'class' => $list['class'],
         ];
     }
 
     /**
      * Generate data to export for layouts.
+     *
      * @return array region data
      */
     public function export_for_template() {
-        $regionsdata = $this->regionsdata();
-        $this->addcanvasdata($regionsdata);
+        global $PAGE;
 
-        $regionclass = $this->regionclass($regionsdata);
-        $footerclass = $this->countcolclass([
-            'footerleft',
-            'footerright',
-            'footercenter'
-        ], $regionsdata);
+        $regionsdata = $this->regionsdata();
+        $this->addoffcanvasdata($regionsdata);
+        $this->addfooterdata($regionsdata);
+
+        $maininnerwrapperclass = $this->maininnerwrapperclass($regionsdata);
+
         return [
             'regions' => $regionsdata,
-            'regionclass' => $regionclass,
-            'footerclass' => $footerclass['class'],
-            'mainregionclass' => 'main-region-block'
+            'userisediting' => $PAGE->user_is_editing(),
+            'maininnerwrapperclass' => $maininnerwrapperclass,
+            'outsideregionsplacement' => 'main-inner-outside-'.get_config('theme_boost_union', 'outsideregionsplacement'),
+            'outsidebottomwidth' => 'theme-block-region-outside-'.get_config('theme_boost_union', 'blockregionoutsidebottomwidth'),
+            'outsidetopwidth' => 'theme-block-region-outside-'.get_config('theme_boost_union', 'blockregionoutsidetopwidth'),
         ];
     }
 }
 
+// Compose additional block regions.
 $customregions = new additionalregions();
+
+// Add additional block regions to the template context.
 $templatecontext += $customregions->export_for_template();
