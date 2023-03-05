@@ -435,6 +435,12 @@ Maintainers
 The plugin is maintained by\
 Moodle an Hochschulen e.V.
 
+in cooperation with\
+lern.link GmbH
+
+together with\
+bdecent GmbH
+
 
 Copyright
 ---------
