@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-03-05 - Bugfix: Improve card header and footer of advertisement tiles with background images, solves #232.
 * 2023-02-12 - Feature: Allow admin to change the navbar color, solves #39, helps to resolve #110.
 
 ### v4.0-r13
