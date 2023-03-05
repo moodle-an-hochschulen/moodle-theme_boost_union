@@ -66,7 +66,7 @@
     <div class="row">
         {{#advtiles}}
         <div id="themeboostunionadvtile{{no}}" class="themeboostunionadvtile {{advtileslayoutclass}} d-flex align-items-stretch align-self-stretch py-3">
-            <div class="transparent-bg card"
+            <div class="transparent-bg card {{#backgroundimageurl}}themeboostunionadvtilebg{{/backgroundimageurl}}"
                 style="{{#backgroundimageurl}}background-image: url('{{{backgroundimageurl}}}');{{/backgroundimageurl}}
                         {{#backgroundimageposition}}background-position: {{{.}}};{{/backgroundimageposition}}
                         {{#tileheight}}min-height: {{{.}}};{{/tileheight}}">
