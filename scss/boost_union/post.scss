@@ -372,6 +372,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     margin-bottom: 0;
 }
 
+
 /*=======================================
  * Settings: Content -> Advertisement tiles.
  ======================================*/
@@ -390,6 +391,22 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     /* d-flex align-items-stretch align-self-stretch classes in mustache template require to set width to inherit
        (Otherwise width is flexible dependent on content). */
     width: inherit;
+}
+
+/* Improve the advertisement tile card if a background image is used. */
+.themeboostunionadvtilebg {
+    /* Remove the 1px border which is added around the card by default and which looks strange
+       with a background image. */
+    border: none;
+
+    /* Add a more solid background color so that the title remains readable. */
+    .card-header {
+        background-color: rgb(255, 255, 255, .8);
+    }
+    /* Remove the border-top from the footer. */
+    .card-footer {
+        border-top: none;
+    }
 }
 
 
