@@ -33,7 +33,7 @@
         color: #c8c8c8;
     }
     .navbar-brand:hover {
-        color: #fff;
+        color: $white;
     }
 
     /* Change the color of the navigation items in the navbar to light grey, to white when active
@@ -42,10 +42,10 @@
         color: #c8c8c8;
     }
     .nav-link.active {
-        color: #fff;
+        color: $white;
     }
     .nav-link:hover {
-        color: #000;
+        color: $black;
     }
 
     /* Change the color of the icons in the navbar to a light grey and to white when hovered.
@@ -58,7 +58,7 @@
     .nav-link:hover .icon,
     .nav-link:hover a .icon,
     .dropdown-toggle:hover {
-        color: #fff !important; /* stylelint-disable-line declaration-no-important */
+        color: $white !important; /* stylelint-disable-line declaration-no-important */
     }
 
     /* Change the color of the edit switch label in the navbar to light grey and to white when hovered.
@@ -68,12 +68,12 @@
         color: #c8c8c8 !important; /* stylelint-disable-line declaration-no-important */
     }
     .editmode-switch-form label:hover {
-        color: #fff !important; /* stylelint-disable-line declaration-no-important */
+        color: $white !important; /* stylelint-disable-line declaration-no-important */
     }
 
     /* Adapt the color of the edit switch widget to fit onto the dark background. */
     .custom-control-input:checked ~ .custom-control-label::before {
-        background-color: #fff;
+        background-color: $white;
         border-color: #c8c8c8;
     }
     .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
@@ -86,7 +86,7 @@
         color: #c8c8c8;
     }
     .login a:hover {
-        color: #fff;
+        color: $white;
     }
 }
 
@@ -95,22 +95,22 @@
     /* Change the color of the active nav items's bottom border to white as this would be presented in the
        primary color as well otherwise. */
     .nav-link.active {
-        border-bottom-color: white;
+        border-bottom-color: $white;
     }
 
     /* Change the color of the edit switch label in the navbar to dark grey.
        This has to use !important as Moodle core wants to use the color text-primary as soon as editing is on. */
     .editmode-switch-form,
     .editmode-switch-form label {
-        color: rgba(0,0,0,.6) !important; /* stylelint-disable-line declaration-no-important */
+        color: rgba($black, .6) !important; /* stylelint-disable-line declaration-no-important */
     }
     .editmode-switch-form label:hover {
-        color: rgba(0,0,0,.9) !important; /* stylelint-disable-line declaration-no-important */
+        color: rgba($black, .9) !important; /* stylelint-disable-line declaration-no-important */
     }
 
     /* Adapt the color of the edit switch widget to fit onto the dark background. */
     .custom-control-input:checked ~ .custom-control-label::before {
-        background-color: #fff;
+        background-color: $white;
         border-color: #c8c8c8;
     }
     .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
