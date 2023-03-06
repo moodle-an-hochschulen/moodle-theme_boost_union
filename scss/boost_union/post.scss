@@ -73,10 +73,11 @@
 
     /* Adapt the color of the edit switch widget to fit onto the dark background. */
     .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: #fff;
         border-color: #c8c8c8;
     }
     .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
-        background-color: #c8c8c8;
+        background-color: #8f959e;
     }
 
     /* Change the color of the login link in the navbar to a light grey and to white when hovered. */
@@ -95,6 +96,25 @@
        primary color as well otherwise. */
     .nav-link.active {
         border-bottom-color: white;
+    }
+
+    /* Change the color of the edit switch label in the navbar to dark grey.
+       This has to use !important as Moodle core wants to use the color text-primary as soon as editing is on. */
+    .editmode-switch-form,
+    .editmode-switch-form label {
+        color: rgba(0,0,0,.6) !important; /* stylelint-disable-line declaration-no-important */
+    }
+    .editmode-switch-form label:hover {
+        color: rgba(0,0,0,.9) !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    /* Adapt the color of the edit switch widget to fit onto the dark background. */
+    .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: #fff;
+        border-color: #c8c8c8;
+    }
+    .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+        background-color: #8f959e;
     }
 }
 
