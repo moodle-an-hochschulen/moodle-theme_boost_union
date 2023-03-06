@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.0-r14
 
 * 2023-03-05 - Release: Add lern.link GmbH and bdecent GmbH to the list of maintainers in README.md.
 * 2023-03-05 - Bugfix: Improve card header and footer of advertisement tiles with background images, solves #232.
