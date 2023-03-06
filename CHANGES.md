@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-03-06 - Bugfix: Fix edit switch color on dark navbars, solves #235.
+
 ### v4.1-r3
 
 * 2023-03-05 - Release: Add lern.link GmbH and bdecent GmbH to the list of maintainers in README.md.
