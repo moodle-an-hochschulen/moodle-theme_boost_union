@@ -71,6 +71,12 @@
         color: $white !important; /* stylelint-disable-line declaration-no-important */
     }
 
+    /* Revert color of the close icon in the search panel in the navbar as this icon is still dark on white
+       within the input form. */
+    #searchform-navbar .btn-close .icon {
+        color: #6a737b !important; /* stylelint-disable-line declaration-no-important */
+    }
+
     /* Change the color of the edit switch label in the navbar to light grey and to white when hovered.
        This has to use !important as Moodle core would change the color to text-primary as soon as editing is on. */
     .editmode-switch-form,
@@ -114,6 +120,11 @@
             background-color: #343a40;
         }
     }
+
+    /* Change the background color of the search panel in the navbar. */
+    #searchform-navbar {
+        background-color: #343a40;
+    }
 }
 
 /* Tweak the primary color navbar with light font color a little bit more. */
@@ -129,6 +140,11 @@
         a.dropdown-item:focus {
             background-color: $primary;
         }
+    }
+
+    /* Change the background color of the search panel in the navbar. */
+    #searchform-navbar {
+        background-color: $primary;
     }
 }
 
@@ -164,6 +180,11 @@
     }
     .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
         background-color: #8f959e;
+    }
+
+    /* Change the background color of the search panel in the navbar. */
+    #searchform-navbar {
+        background-color: $primary;
     }
 }
 
