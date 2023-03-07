@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r4
 
 * 2023-03-06 - Bugfix: Align the search bar with the dark navbar look, solves #234.
 * 2023-03-06 - Bugfix: Fix hover background color on dark navbars, solves #236.
