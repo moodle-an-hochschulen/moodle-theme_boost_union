@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-03-15 - Bugfix: $THEME->editor_scss referenced a non-existing sheet. Setting it also ignored Boost's sheets. This solves #242.
 * 2023-03-18 - Bugfix: Fix wrong rgba color definition for advertisement tile backgrounds, solves #244.
 
 ### v4.0-r15
