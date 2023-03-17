@@ -588,6 +588,44 @@ function theme_boost_union_get_urloftilebackgroundimage($tileno) {
 }
 
 /**
+ *
+ * Get the slider image URL from the filearea 'oneslideimage'.tileno.
+ *
+ * @param int $slideno The slide number.
+ * @return string|null
+ */
+function theme_boost_union_get_urlofsliderimage($slideno) {
+    // Only continue if slide number is valid.
+    if ($slideno < 0 || $slideno > THEME_BOOST_UNION_SETTING_SLIDES_COUNT) {
+        return null;
+    }
+    // Get the image config for this slide.
+    $bgconfig = get_config('theme_boost_union', 'oneslidepickimage'.$slideno);
+
+    if (!empty($bgconfig)) {
+        // Get the system context.
+        $systemcontext = context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get all files from filearea.
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'sliderbackgroundimage'.$slideno,
+                false, 'itemid', false);
+
+        // Just pick the first file - we are sure that there is just one file.
+        $file = reset($files);
+
+        // Build and return the image URL.
+        return moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+    }
+
+    // No file was found.
+    return null;
+}
+
+/**
  * Add background images from setting 'loginbackgroundimage' to SCSS.
  *
  * @return string
@@ -1393,4 +1431,17 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
         }';
     }
     return $scss;
+}
+
+/**
+ * Get the css settings for the slider feature.
+ */
+function theme_boost_union_get_slider_scss() {
+    $layout = ".carousel-caption { text-shadow: 0px 0px 2px black; }";
+    $layout .= ".carousel-control-prev, .carousel-control-next { filter: drop-shadow( 0px 0px 2px rgb(0, 0, 0)); }";
+    $layout .= ".carousel-indicators { filter: drop-shadow( 0px 0px 1px rgb(0, 0, 0)); }";
+    $layout .= ".carousel-inner { border-radius: 0.5rem; }";
+    $layout .= ".boost-union-frontpage-slider { padding: 15px; }";
+
+    return $layout;
 }

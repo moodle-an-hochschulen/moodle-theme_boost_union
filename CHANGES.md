@@ -48,6 +48,7 @@ Changes
 * 2023-09-22 - Make codechecker happier
 * 2023-09-24 - Test: Behat scenario 'Show hint for self enrolment without an enrolment key' was broken, solves #398.
 * 2023-09-22 - Improvement: Reuse Moodle core function remove_dir(), solves #369.
+* 2023-09-19 - Feature: Add slider which can be displayed on site home, solves #162.
 
 ### v4.2-r2
 

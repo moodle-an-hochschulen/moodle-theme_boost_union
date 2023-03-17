@@ -50,6 +50,10 @@ define('THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COLUMN_COUNT', 4);
 define('THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_FRONTPAGEPOSITION_BEFORE', 1);
 define('THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_FRONTPAGEPOSITION_AFTER', 2);
 
+define('THEME_BOOST_UNION_SETTING_SLIDES_COUNT', 6);
+define('THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFORE', 1);
+define('THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_AFTER', 2);
+
 define('THEME_BOOST_UNION_SETTING_FAVERSION_NONE', 'none');
 define('THEME_BOOST_UNION_SETTING_FAVERSION_FA6FREE', 'fa6free');
 define('THEME_BOOST_UNION_SETTING_FAFILES_MANDATORY', 'm');
@@ -289,6 +293,11 @@ function theme_boost_union_get_extra_scss($theme) {
     // Setting: Mark external links.
     $content .= theme_boost_union_get_scss_to_mark_external_links($theme);
 
+    // Load slider css if slider setting is enabled.
+    if (get_config("theme_boost_union", "slideractivatedsetting")) {
+        $content .= theme_boost_union_get_slider_scss();
+    }
+
     return $content;
 }
 
@@ -384,8 +393,9 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         // This code is copied and modified from theme_boost_pluginfile() in theme/boost/lib.php.
     } else if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'backgroundimage' ||
         $filearea === 'loginbackgroundimage' || $filearea === 'additionalresources' ||
-                $filearea === 'customfonts' || $filearea === 'courseheaderimagefallback' ||
-                preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea))) {
+                $filearea === 'customfonts' || $filearea === 'fontawesome' || $filearea === 'courseheaderimagefallback' ||
+                preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea) ||
+                preg_match("/sliderbackgroundimage[2-9]|1[0-2]?/", $filearea))) {
         $theme = theme_config::load('boost_union');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {

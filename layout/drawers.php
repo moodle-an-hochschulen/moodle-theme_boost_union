@@ -196,6 +196,11 @@ if ($PAGE->pagelayout == 'frontpage') {
     require_once(__DIR__ . '/includes/advertisementtiles.php');
 }
 
+// Include the template content for the slider, but only if we are on the frontpage.
+if ($PAGE->pagelayout == 'frontpage') {
+    require_once(__DIR__ . '/includes/slider.php');
+}
+
 // Include the template content for the smart menus.
 require_once(__DIR__ . '/includes/smartmenus.php');
 

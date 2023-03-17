@@ -1796,8 +1796,169 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
+        // Create Slider tab.
+        $tab = new admin_settingpage('theme_boost_union_slider',
+                get_string('slidertab', 'theme_boost_union', null, true));
+
+        // Create Slider general heading.
+        $name = 'theme_boost_union/slidergeneralheading';
+        $title = get_string('slidergeneralheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Toggle whether Slider is shown.
+        $title = get_string('slideractivatedsetting', 'theme_boost_union', null, true);
+        $description = get_string('slideractivatedsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcheckbox("theme_boost_union/slideractivatedsetting", $title, $description, 0);
+        $tab->add($setting);
+
+        // Setting: Pick where Slider is shown.
+        $choices = [
+                THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFORE =>
+                        get_string('sliderfrontpagepositionsetting_before', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_AFTER =>
+                        get_string('sliderfrontpagepositionsetting_after', 'theme_boost_union'),
+        ];
+        $name = 'theme_boost_union/sliderpositiononfrontpage';
+        $title = get_string('sliderpositiononfrontpage', 'theme_boost_union', null, true);
+        $url = new moodle_url('/admin/settings.php', ['section' => 'frontpagesettings']);
+        $description = get_string('sliderpositiononfrontpage_desc', 'theme_boost_union', ['url' => $url], true);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFORE, $choices);
+        $tab->add($setting);
+
+        // Setting: Toggle whether Slider Arrow Controls are shown.
+        $title = get_string('sliderarrownavsetting', 'theme_boost_union', null, true);
+        $description = get_string('sliderarrownavsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcheckbox("theme_boost_union/sliderarrownavsetting", $title, $description, 0);
+        $tab->add($setting);
+
+        // Setting: Toggle whether Slider Indicator Controls are shown.
+        $title = get_string('sliderindicatornavsetting', 'theme_boost_union', null, true);
+        $description = get_string('sliderindicatornavsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcheckbox("theme_boost_union/sliderindicatornavsetting", $title, $description, 0);
+        $tab->add($setting);
+
+        // Setting: Select a slide-animation.
+        $title = get_string('slideranimationsetting', 'theme_boost_union', null, true);
+        $description = get_string('slideranimationsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect("theme_boost_union/slideranimationsetting", $title, $description, 0,
+                [0 => 'slide', 1 => 'fade', 2 => 'none']);
+        $tab->add($setting);
+
+        // Setting: Set interval speed.
+        $title = get_string('sliderintervalsetting', 'theme_boost_union', null, true);
+        $description = get_string('sliderintervalsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtext("theme_boost_union/sliderintervalsetting",
+                $title, $description, 5000, PARAM_INT, 6);
+        $tab->add($setting);
+
+        // Setting: Toggle keyboard interaction.
+        $title = get_string('sliderkeybaordsetting', 'theme_boost_union', null, true);
+        $description = get_string('sliderkeybaordsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcheckbox("theme_boost_union/sliderkeyboardsetting", $title, $description, 1);
+        $tab->add($setting);
+
+        // Setting: Set pause behaviour.
+        $title = get_string('sliderpausesetting', 'theme_boost_union', null, true);
+        $description = get_string('sliderpausesetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcheckbox("theme_boost_union/sliderpausesetting", $title, $description, 1);
+        $tab->add($setting);
+
+        // Setting: Set ride behaviour.
+        $title = get_string('sliderridesetting', 'theme_boost_union', null, true);
+        $description = get_string('sliderridesetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect("theme_boost_union/sliderridesetting", $title, $description, 0,
+        [0 => 'on page load', 1 => 'after interaction', 2 => 'never']);
+        $tab->add($setting);
+
+        // Setting: Toggle wrapping.
+        $title = get_string('sliderwrapsetting', 'theme_boost_union', null, true);
+        $description = get_string('sliderwrapsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcheckbox("theme_boost_union/sliderwrapsetting", $title, $description, 1);
+        $tab->add($setting);
+
+        // Create a hardcoded amount of slides.
+        for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
+
+            // Create Slide heading.
+            $name = 'theme_boost_union/oneslidetab'.$i;
+            $title = get_string('oneslidetab', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_heading($name, $title, null);
+            $tab->add($setting);
+
+            // Setting: Slide enabled.
+            $name = 'theme_boost_union/slide'.$i.'enabled';
+            $title = get_string('oneslideenabled', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('oneslideenabled_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
+                    $yesnooption);
+            $tab->add($setting);
+
+            // Setting: Select picture.
+            $name = 'theme_boost_union/oneslidepickimage'.$i;
+            $title = get_string('oneslidepickimage', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('oneslidepickimage_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_configstoredfile($name, $title, $description, "sliderbackgroundimage".$i, 0,
+                    ['maxfiles' => 1, 'accepted_types' => 'web_image']);
+            $setting->set_updatedcallback('theme_reset_all_caches');
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/oneslidepickimage'.$i, 'theme_boost_union/slide'.$i.'enabled', 'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Set title for picture.
+            $name = 'theme_boost_union/oneslideimagetitle'.$i;
+            $title = get_string('oneslideimagetitle', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('oneslideimagetitle_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_configtext($name, $title, $description, "");
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/oneslideimagetitle'.$i, 'theme_boost_union/slide'.$i.'enabled', 'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Set link for slide.
+            $name = 'theme_boost_union/oneslidelink'.$i;
+            $title = get_string('oneslidelink', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('oneslidelink_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_configtext($name, $title, $description, "");
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/oneslidelink'.$i, 'theme_boost_union/slide'.$i.'enabled', 'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Set title for link.
+            $name = 'theme_boost_union/oneslidelinktitle'.$i;
+            $title = get_string('oneslidelinktitle', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('oneslidelinktitle_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_configtext($name, $title, $description, "");
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/oneslidelinktitle'.$i, 'theme_boost_union/slide'.$i.'enabled', 'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Set Caption text.
+            $name = 'theme_boost_union/oneslidecaption'.$i;
+            $title = get_string('oneslidecaption', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('oneslidecaption_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_configtext($name, $title, $description, "");
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/oneslidecaption'.$i, 'theme_boost_union/slide'.$i.'enabled', 'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Set Content text.
+            $name = 'theme_boost_union/oneslidecontent'.$i;
+            $title = get_string('oneslidecontent', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('oneslidecontent_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_confightmleditor($name, $title, $description, "");
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/oneslidecontent'.$i, 'theme_boost_union/slide'.$i.'enabled', 'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES);
+        }
+
+        // Add tab to settings page.
+        $page->add($tab);
+
         // Add settings page to the admin settings category.
         $ADMIN->add('theme_boost_union', $page);
+
+
 
         // Create Functionality settings page with tabs
         // (and allow users with the theme/boost_union:configure capability to access it).
