@@ -1,0 +1,101 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template plugintype_pluginname/template_name
+
+    Template purpose and description.
+
+    Classes required for JS:
+    * none
+
+    Data attributes required for JS:
+    * none
+
+    Context variables required for this template:
+    * none
+
+    Example context (json):
+    {
+    }
+}}
+
+{{#slidergeneralsettings.show}}
+<div class="boost-union-frontpage-slider">
+  <div id="slider" class="carousel {{slidergeneralsettings.animation}}" data-interval="{{slidergeneralsettings.interval}}"
+    data-keyboard="{{slidergeneralsettings.keyboard}}" data-pause="{{slidergeneralsettings.pause}}"
+    data-ride="{{slidergeneralsettings.ride}}" data-wrap="{{slidergeneralsettings.wrap}}"
+  >
+
+    {{#slidergeneralsettings.showindicatornav}}
+    <ol class="carousel-indicators">
+       {{#slidecontent}}
+      <li data-target="#slider" data-slide-to="{{count}}"></li>
+      {{/slidecontent}}
+    </ol>
+    {{/slidergeneralsettings.showindicatornav}}
+
+    <div class="carousel-inner">
+    
+      {{#slidecontent}}
+        <div class="carousel-item">
+        
+          {{#link}}<a href="{{link}}" title="{{linktitle}}" target="_blank">{{/link}}
+            {{#image}}<img class="d-block w-100" src="{{image}}" alt="{{imagetitle}}">{{/image}}
+          {{#link}}</a>{{/link}}
+
+          <div class="carousel-caption">
+            <h5>{{caption}}</h5>
+            {{{content}}}
+          </div>
+        </div>
+      {{/slidecontent}}
+    </div>
+
+    {{#slidergeneralsettings.showarrownav}}
+    <a class="carousel-control-prev" href="#slider" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">prev</span>
+    </a>
+    <a class="carousel-control-next" href="#slider" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">next</span>
+    </a>
+    {{/slidergeneralsettings.showarrownav}}
+      
+  </div>
+</div>
+{{/slidergeneralsettings.show}}
+
+
+{{#js}}
+require(['jquery', 'theme_boost/bootstrap/carousel'], function($) {
+  if (document.getElementById("slider")) {
+    let carouselitems = document.getElementById("slider").getElementsByClassName('carousel-item');
+    if (carouselitems && carouselitems[0]){
+      carouselitems[0].className += ' active';
+    }
+    
+    let carouselindicators = document.getElementById("slider").getElementsByTagName('li');
+    if (carouselindicators && carouselindicators[0]) {
+      carouselindicators[0].className += ' active';
+    }
+    
+    $('#slider').carousel();
+  }
+});
+
+{{/js}}

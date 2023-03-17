@@ -206,6 +206,10 @@
             {{/regions.contentupper.hasblocks}}
             <div id="page-content" class="pb-3 d-print-block">
                 <div id="region-main-box">
+                    {{#sliderpositionbefore}}
+                        {{> theme_boost_union/slider }}
+                    {{/sliderpositionbefore}}
+
                     {{#advtilespositionbefore}}
                         {{> theme_boost_union/advertisementtiles }}
                     {{/advtilespositionbefore}}
@@ -230,6 +234,7 @@
                                 </div>
                             </div>
                         {{/overflow}}
+
                         {{{courserelatedhints}}}
                         {{{ output.main_content }}}
                         {{{ output.activity_navigation }}}
@@ -239,6 +244,10 @@
                     {{#advtilespositionafter}}
                         {{> theme_boost_union/advertisementtiles }}
                     {{/advtilespositionafter}}
+                    {{#sliderpositionafter}}
+                        {{> theme_boost_union/slider }}
+                    {{/sliderpositionafter}}
+
                 </div>
             </div>
             {{#regions.contentlower.hasblocks}}

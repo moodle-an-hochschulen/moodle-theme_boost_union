@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-12-28 - Feature: Add slider which can be displayed on site home, solves #162.
 * 2023-12-27 - Improvement: Add content style setting to the advertisement tiles, solves #519.
 * 2023-12-27 - Test: Always reactivate debugging during Behat tests, solves #521.
 * 2023-12-26 - Improvement: Do not add the advertisement tiles div to the frontpage if no tile is activated, solves #516.

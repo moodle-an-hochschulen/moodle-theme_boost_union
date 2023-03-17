@@ -834,6 +834,49 @@ $string['flavourspreviewblindtext'] = 'Lorem ipsum dolor sit amet, consectetur a
 $string['flavourstitle'] = 'Title';
 $string['flavourstitle_help'] = 'The flavour\'s title is just used internally to allow you to document a particular flavour in the list of flavours.';
 
+// Settings: Slider.
+$string['slidertab'] = 'Slider';
+// ... Section: Slider general.
+$string['slidergeneralheading'] = 'Slider general';
+$string['slideractivatedsetting'] = 'Activate Slider';
+$string['slideractivatedsetting_desc'] = 'With this setting, you activate the slider to be shown on site home.';
+$string['sliderpositiononfrontpage'] = 'Position the slider';
+$string['sliderpositiononfrontpage_desc'] = 'The slider is shown on site home only. With this setting, you control if the slider is displayed before the site home content or after the site home content. If you want to show only the slider on site home and nothing else, all other site home content can be removed by changing the <a href="{$a->url}">site home settings</a>.';
+$string['sliderfrontpagepositionsetting_before'] = 'Before the site home content';
+$string['sliderfrontpagepositionsetting_after'] = 'After the site home content';
+$string['sliderarrownavsetting'] = 'Enable arrow navigation';
+$string['sliderarrownavsetting_desc'] = 'With this setting, you can add navigation arrows on both sides of the slider.';
+$string['sliderindicatornavsetting'] = 'Enable slider indicator navigation';
+$string['sliderindicatornavsetting_desc'] = 'With this setting, you can add navigation indicators on the bottom of the slider.';
+$string['slideranimationsetting'] = 'Animation type';
+$string['slideranimationsetting_desc'] = 'With this setting, you control the slider animation. \'Slide\' applies a sliding animation, \'fade\' applies a fading animation and \'none\' removes all animations.';
+$string['sliderintervalsetting'] = 'Interval speed';
+$string['sliderintervalsetting_desc'] = 'With this setting, you control how long a slide is displayed in milliseconds. The minimum value is 1000 (one second) and the maximum value is 10000 (10 seconds).';
+$string['sliderridesetting'] = 'Cycle through slides';
+$string['sliderridesetting_desc'] = 'With this setting, you control the cycling behaviour of the slider. \'On page load\' begins cycling through slides after the page has finished loading, \'after interaction\' will start cycling after a user has interacted with the slider. \'Never\' disables the automatic cycling of slides altogether, requiring user input to cycle through slides.';
+$string['sliderkeybaordsetting'] = 'Allow keyboard interaction';
+$string['sliderkeybaordsetting_desc'] = 'With this setting, you enable keyboard inputs (arrow keys) to control the slider. Please note that disabling this lowers accessibility.';
+$string['sliderpausesetting'] = 'Pause slider on mouseover';
+$string['sliderpausesetting_desc'] = 'With this setting, you prevent the slider from cycling through the slides when a user hovers over a slide. Please note that disabling this lowers accessibility.';
+$string['sliderwrapsetting'] = 'Continuously cycle through slides';
+$string['sliderwrapsetting_desc'] = 'With this setting, you make the slider cycling through all slides. If you disable this, the slider will stop cycling at the last slide.';
+// ... Section: Slides.
+$string['oneslidetab'] = 'Slide {$a->no}';
+$string['oneslideenabled'] = 'Enable slide {$a->no}';
+$string['oneslideenabled_desc'] = 'With this setting, you can enable slide {$a->no}.';
+$string['oneslidepickimage'] = 'Slide {$a->no} image';
+$string['oneslidepickimage_desc'] = 'Here, you can upload an image file which will be shown as background image behind the content of slide {$a->no}. Please make sure or check that the content is still readable on the background image. Please note that it is required to set an image for the slide to appear.';
+$string['oneslideimagetitle'] = 'Slide {$a->no} image title';
+$string['oneslideimagetitle_desc'] = 'Here, you can set a title for the image of slide {$a->no}. This is an optional setting, the slide will be shown even if you do not set an image title. Please note that not providing an image title lowers accessibility.';
+$string['oneslidelink'] = 'Slide {$a->no} link URL';
+$string['oneslidelink_desc'] = 'Here, you can set a (Moodle-internal or external) URL which the slide content of slide {$a->no} will link to. The link will be opened in a new browser tab. This is an optional setting, the slide will be shown even if you do not set a link URL.';
+$string['oneslidelinktitle'] = 'Slide {$a->no} link title';
+$string['oneslidelinktitle_desc'] = 'Here, you can set a title for the URL of slide {$a->no}. This is an optional setting, the slide will be shown even if you do not set a link title. Please note that not providing a link title lowers accessibility.';
+$string['oneslidecaption'] = 'Slide {$a->no} caption';
+$string['oneslidecaption_desc'] = 'Here, you enter the caption which should be displayed in slide {$a->no}. The caption is displayed at the bottom center of the slide. This is an optional setting, the slide will be shown even if you do not set a caption.';
+$string['oneslidecontent'] = 'Slide {$a->no} content';
+$string['oneslidecontent_desc'] = 'Here, you enter the content which should be displayed in slide {$a->no}. The content is displayed at the bottom center of the slide. If a caption is set, the content is displayed below the caption. This is an optional setting, the slide will be shown even if you do not set any content.';
+
 // Settings: Smart menus page.
 $string['smartmenus'] = 'Smart menus';
 $string['error:smartmenusmenuitemnotfound'] = 'Smart menu item not found';
