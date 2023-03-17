@@ -410,14 +410,14 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
  * @return string
  */
 function theme_boost_union_before_standard_html_head() {
-    global $CFG;
+    global $CFG, $PAGE;
 
     // Initialize HTML (even though we do not add any HTML at this stage of the implementation).
     $html = '';
 
-    // If another theme than Boost Union is active, return directly.
+    // If a theme other than Boost Union or a child theme of it is active, return directly.
     // This is necessary as the before_standard_html_head() callback is called regardless of the active theme.
-    if ($CFG->theme != 'boost_union') {
+    if ($PAGE->theme->name != 'boost_union' && !in_array('boost_union', $PAGE->theme->parents)) {
         return $html;
     }
 
