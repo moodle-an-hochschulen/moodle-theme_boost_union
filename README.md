@@ -471,6 +471,10 @@ In this tab, you can enable and configure multiple information banners to be sho
 
 In this tab, you can enable and configure multiple advertisement tiles to be shown on site home.
 
+#### Tab "Slider"
+
+In this tab, you can enable and configure multiple slides to be shown on site home.
+
 ### Settings page "Functionality"
 
 #### Tab "Courses"
