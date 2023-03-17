@@ -4,6 +4,8 @@ moodle-theme_boost_union
 Changes
 -------
 
+* 2023-03-17 - Improvement: Do not force child themes to copy theme settings, but allow it.
+
 ### v4.1-r4
 
 * 2023-03-06 - Bugfix: Align the search bar with the dark navbar look, solves #234.
