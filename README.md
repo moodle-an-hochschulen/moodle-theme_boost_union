@@ -470,12 +470,12 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * lern.link GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
 * lern.link GmbH, Beata Waloszczyk: Code
 * Lower Saxony (Federal state of Germany): Funding
-* moodleSCHULE e.V., Ralf Krause: German translation and curation
-* Ruhr University Bochum, Melanie Treitinger: Code
+* moodleSCHULE e.V., Ralf Krause: German translation and curation, Ideating
+* Ruhr University Bochum, Melanie Treitinger: Code, Ideating
 * RWTH Aachen, Amrita Deb Dutta: Code
 * RWTH Aachen, Josha Bartsch: Code
 * University of Graz, André Menrath: Code
 * University of Lübeck, Christian Wolters: Peer Review, Ideating
-* Zurich University of Applied Sciences (ZHAW): Funding
+* Zurich University of Applied Sciences (ZHAW): Funding, Ideating
 
 Additionally, we thank all other contributors who contributed ideas, feedback and code snippets within the Github issues and pull requests as well as all contributors who contributed additional translations in AMOS, the Moodle translation tool.
