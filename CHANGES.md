@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-03-18 - Bugfix: Fix wrong rgba color definition for advertisement tile backgrounds, solves #244.
+
 ### v4.0-r15
 
 * 2023-03-06 - Bugfix: Align the search bar with the dark navbar look, solves #234.
