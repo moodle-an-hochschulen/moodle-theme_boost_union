@@ -25,8 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$footnotesetting = get_config('theme_boost_union', 'footnote');
-
 // Get and use the course related hints HTML code, if any hints are configured.
 $courserelatedhintshtml = theme_boost_union_get_course_related_hints();
 if ($courserelatedhintshtml) {
