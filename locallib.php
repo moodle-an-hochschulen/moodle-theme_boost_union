@@ -1313,3 +1313,20 @@ function theme_boost_union_set_mobilecss_url() {
         set_config('mobilecssurl', '');
     }
 }
+
+/**
+ * Checks if the current theme (Boost Union or a child theme of it) has the requested setting.
+ * If it does, returns that setting's value.
+ * If it doesn't, returns the value of Boost Union's setting.
+ * @param string $setting - Name of the setting
+ * @return mixed
+ */
+function theme_boost_union_get_setting(string $setting) {
+    global $PAGE;
+    if ($PAGE->theme->settings->{$setting}) {
+        $value = $PAGE->theme->settings->{$setting};
+    } else {
+        $value = get_config('theme_boost_union', $setting);
+    }
+    return $value;
+}
