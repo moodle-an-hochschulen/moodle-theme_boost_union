@@ -42,9 +42,9 @@ $templatecontext = [
     'bodyattributes' => $bodyattributes,
     'loginbackgroundimagetext' => $loginbackgroundimagetext,
     'loginbackgroundimagetextcolor' => $loginbackgroundimagetextcolor,
-    'loginwrapperclass' => 'login-wrapper-'.$this->page->theme->settings->loginformposition,
+    'loginwrapperclass' => 'login-wrapper-'.get_config('theme_boost_union','loginformposition'),
     'logincontainerclass' =>
-            ($this->page->theme->settings->loginformtransparency == THEME_BOOST_UNION_SETTING_SELECT_YES) ?
+            (get_config('theme_boost_union','loginformtransparency') == THEME_BOOST_UNION_SETTING_SELECT_YES) ?
                     'login-container-80t' : ''
 ];
 
