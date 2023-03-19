@@ -222,7 +222,7 @@ With this setting, you can override Moodle's H5P content bank width without manu
 
 #### Tab "Mobile app"
 
-##### Mobile appearance 
+##### Mobile appearance
 
 ###### Additional CSS for Mobile app
 
