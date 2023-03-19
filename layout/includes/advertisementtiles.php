@@ -71,7 +71,7 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
     // If the tile is enabled? (regardless if it contains any content).
     if ($config->{'tile'.$i.'enabled'} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
         // Get and set the tile's title.
-        $title = $config->{'tile'.$i.'title'};
+        $title = format_string(trim($config->{'tile'.$i.'title'}));
 
         // Get and set the tile's content.
         $formatoptions = array('noclean' => true);
@@ -79,7 +79,7 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
 
         // Get and set the tile's link.
         $link = $config->{'tile'.$i.'link'};
-        $linktitle = $config->{'tile'.$i.'linktitle'};
+        $linktitle = format_string(trim($config->{'tile'.$i.'linktitle'}));
         if ($config->{'tile'.$i.'linktarget'} == THEME_BOOST_UNION_SETTING_LINKTARGET_NEWTAB) {
             $linktargetnewtab = true;
         } else {

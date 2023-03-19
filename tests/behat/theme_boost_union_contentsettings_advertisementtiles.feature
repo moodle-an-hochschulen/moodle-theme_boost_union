@@ -83,18 +83,26 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
 
   Scenario: Setting: Advertisement tiles - Display the title, the content and the link in the corresponding HTML elements
     Given the following config values are set as admin:
-      | config         | value                             | plugin            |
-      | tile1enabled   | yes                               | theme_boost_union |
-      | tile1title     | Tile 1                            | theme_boost_union |
-      | tile1content   | This is a test content for tile 1 | theme_boost_union |
-      | tile1link      | www.behat.com                     | theme_boost_union |
-      | tile1linktitle | Link to Behat                     | theme_boost_union |
+      | config         | value                                                                                                                                               | plugin            |
+      | tile1enabled   | yes                                                                                                                                                 | theme_boost_union |
+      | tile1title     | <span lang="en" class="multilang">Tile 1</span><span lang="de" class="multilang">Kachel 1</span>                                                    | theme_boost_union |
+      | tile1content   | <span lang="en" class="multilang">This is a test content for tile 1</span><span lang="de" class="multilang">Dies ist Testinhalt für Kachel 1</span> | theme_boost_union |
+      | tile1link      | www.behat.com                                                                                                                                       | theme_boost_union |
+      | tile1linktitle | <span lang="en" class="multilang">Link to Behat</span><span lang="de" class="multilang">Link zu Behat</span>                                        | theme_boost_union |
+    And the "multilang" filter is "on"
+    And the "multilang" filter applies to "content and headings"
     When I log in as "teacher1"
     And I am on site homepage
     Then "#themeboostunionadvtiles #themeboostunionadvtile1" "css_element" should exist
     And I should see "This is a test content for tile 1" in the "#themeboostunionadvtile1 .card .card-body .card-text" "css_element"
+    And I should not see "<span lang=\"en\" class=\"multilang\">This is a test content for tile 1</span>" in the "#themeboostunionadvtile1 .card .card-body .card-text" "css_element"
+    And I should not see "This is a test content for tile 1Dies ist Testinhalt für Kachel 1" in the "#themeboostunionadvtile1 .card .card-body .card-text" "css_element"
     And I should see "Tile 1" in the "#themeboostunionadvtile1 .card h5.card-header" "css_element"
+    And I should not see "<span lang=\"en\" class=\"multilang\">Tile 1</span>" in the "#themeboostunionadvtile1 .card h5.card-header" "css_element"
+    And I should not see "Tile 1Kachel 1" in the "#themeboostunionadvtile1 .card h5.card-header" "css_element"
     And I should see "Link to Behat" in the "#themeboostunionadvtile1 .card .card-footer #themeboostunionadvtile1link" "css_element"
+    And I should not see "<span lang=\"en\" class=\"multilang\">Link to Behat</span>" in the "#themeboostunionadvtile1 .card .card-footer #themeboostunionadvtile1link" "css_element"
+    And I should not see "Link to BehatLink zu Behat" in the "#themeboostunionadvtile1 .card .card-footer #themeboostunionadvtile1link" "css_element"
 
   Scenario: Setting: Advertisement tiles - Display the links in the advertisement tiles
     Given the following config values are set as admin:
