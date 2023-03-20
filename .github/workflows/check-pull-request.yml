@@ -1,0 +1,14 @@
+name: Check the Pull request for snafus
+
+on: [pull_request]
+
+jobs:
+  check_pr:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check PR
+        uses: JJ/github-pr-contains-action@releases/v10
+        with:
+          github-token: ${{github.token}}
+          diffDoesNotContain: "->settings->"
+
