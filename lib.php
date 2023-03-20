@@ -96,7 +96,8 @@ function theme_boost_union_get_main_scss_content($theme) {
     global $CFG;
 
     $scss = '';
-    $filename = !empty($theme->settings->preset) ? $theme->settings->preset : null;
+    $preset = get_config('theme_boost_union', 'preset');
+    $filename = !empty($preset) ? $preset : null;
     $fs = get_file_storage();
 
     $context = context_system::instance();

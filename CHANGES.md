@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-03-20 - Improvement: More consistency by using get_config in theme_boost_union_get_main_scss_content, solves #262.
+
 ### v4.1-r5
 
 * 2023-03-19 - Bugfix: Fully support multilang strings in advertisement tiles, solves #258.
