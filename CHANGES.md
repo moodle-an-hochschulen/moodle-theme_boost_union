@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-03-19 - Bugfix: Fully support multilang strings in advertisement tiles, solves #258.
 * 2023-03-17 - Improvement: Don't force child themes to reimplement settings 'loginformposition' and 'loginformtransparency', solves #247.
 * 2023-03-15 - Bugfix: $THEME->editor_scss referenced a non-existing sheet. Setting it also ignored Boost's sheets. This solves #242.
 * 2023-03-18 - Bugfix: Fix wrong rgba color definition for advertisement tile backgrounds, solves #244.
