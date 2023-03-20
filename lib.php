@@ -141,8 +141,8 @@ function theme_boost_union_get_pre_scss($theme) {
 
     // Prepend variables first.
     foreach ($configurable as $configkey => $targets) {
-        $value = isset($theme->settings->{$configkey}) ? $theme->settings->{$configkey} : null;
-        if (empty($value)) {
+        $value = get_config('theme_boost_union', $configkey);
+        if (!($value)) {
             continue;
         }
         array_map(function($target) use (&$scss, $value) {
@@ -152,38 +152,38 @@ function theme_boost_union_get_pre_scss($theme) {
 
     // Overwrite Boost core SCSS variables which need units and thus couldn't be added to $configurable above.
     // Set variables which are influenced by the coursecontentmaxwidth setting.
-    if (isset($theme->settings->coursecontentmaxwidth)) {
-        $scss .= '$course-content-maxwidth: '.$theme->settings->coursecontentmaxwidth.";\n";
+    if (get_config('theme_boost_union', 'coursecontentmaxwidth')) {
+        $scss .= '$course-content-maxwidth: '.get_config('theme_boost_union', 'coursecontentmaxwidth').";\n";
     }
     // Set variables which are influenced by the mediumcontentmaxwidth setting.
-    if (isset($theme->settings->mediumcontentmaxwidth)) {
-        $scss .= '$medium-content-maxwidth: ' . $theme->settings->mediumcontentmaxwidth . ";\n";
+    if (get_config('theme_boost_union', 'mediumcontentmaxwidth')) {
+        $scss .= '$medium-content-maxwidth: '.get_config('theme_boost_union', 'mediumcontentmaxwidth').";\n";
     }
     // Set variables which are influenced by the h5pcontentmaxwidth setting.
-    if (isset($theme->settings->h5pcontentmaxwidth)) {
-        $scss .= '$h5p-content-maxwidth: '.$theme->settings->h5pcontentmaxwidth.";\n";
+    if (get_config('theme_boost_union', 'h5pcontentmaxwidth')) {
+        $scss .= '$h5p-content-maxwidth: '.get_config('theme_boost_union', 'h5pcontentmaxwidth').";\n";
     }
 
     // Overwrite Boost core SCSS variables which are stored in a SCSS map and thus couldn't be added to $configurable above.
     // Set variables for the activity icon colors.
     $activityiconcolors = array();
-    if (!empty($theme->settings->activityiconcoloradministration)) {
-        $activityiconcolors[] = '"administration": '.$theme->settings->activityiconcoloradministration;
+    if (get_config('theme_boost_union', 'activityiconcoloradministration')) {
+        $activityiconcolors[] = '"administration": '.get_config('theme_boost_union', 'activityiconcoloradministration');
     }
-    if (!empty($theme->settings->activityiconcolorassessment)) {
-        $activityiconcolors[] = '"assessment": '.$theme->settings->activityiconcolorassessment;
+    if (get_config('theme_boost_union', 'activityiconcolorassessment')) {
+        $activityiconcolors[] = '"assessment": '.get_config('theme_boost_union', 'activityiconcolorassessment');
     }
-    if (!empty($theme->settings->activityiconcolorcollaboration)) {
-        $activityiconcolors[] = '"collaboration": '.$theme->settings->activityiconcolorcollaboration;
+    if (get_config('theme_boost_union', 'activityiconcolorcollaboration')) {
+        $activityiconcolors[] = '"collaboration": '.get_config('theme_boost_union', 'activityiconcolorcollaboration');
     }
-    if (!empty($theme->settings->activityiconcolorcommunication)) {
-        $activityiconcolors[] = '"communication": '.$theme->settings->activityiconcolorcommunication;
+    if (get_config('theme_boost_union', 'activityiconcolorcollaboration')) {
+        $activityiconcolors[] = '"communication": '.get_config('theme_boost_union', 'activityiconcolorcollaboration');
     }
-    if (!empty($theme->settings->activityiconcolorcontent)) {
-        $activityiconcolors[] = '"content": '.$theme->settings->activityiconcolorcontent;
+    if (get_config('theme_boost_union', 'activityiconcolorcontent')) {
+        $activityiconcolors[] = '"content": '.get_config('theme_boost_union', 'activityiconcolorcontent');
     }
-    if (!empty($theme->settings->activityiconcolorinterface)) {
-        $activityiconcolors[] = '"interface": '.$theme->settings->activityiconcolorinterface;
+    if (get_config('theme_boost_union', 'activityiconcolorinterface')) {
+        $activityiconcolors[] = '"interface": '.get_config('theme_boost_union', 'activityiconcolorinterface');
     }
     if (count($activityiconcolors) > 0) {
         $activityiconscss = '$activity-icon-colors: ('."\n";
@@ -193,8 +193,8 @@ function theme_boost_union_get_pre_scss($theme) {
     }
 
     // Prepend pre-scss.
-    if (!empty($theme->settings->scsspre)) {
-        $scss .= $theme->settings->scsspre;
+    if (get_config('theme_boost_union', 'scsspre')) {
+        $scss .= get_config('theme_boost_union', 'scsspre');
     }
 
     return $scss;
