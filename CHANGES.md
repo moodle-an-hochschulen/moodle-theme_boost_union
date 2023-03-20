@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.0-r16
 
 * 2023-03-19 - Bugfix: Fully support multilang strings in advertisement tiles, solves #258.
 * 2023-03-17 - Improvement: Don't force child themes to reimplement settings 'loginformposition' and 'loginformtransparency', solves #247.
