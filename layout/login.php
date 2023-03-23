@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Campus Login - Login page layout.
+ * Theme Boost Union Login - Login page layout.
  *
  * This layoutfile is based on theme/boost/layout/login.php
  *
