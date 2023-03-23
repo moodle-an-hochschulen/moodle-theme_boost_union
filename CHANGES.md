@@ -4,6 +4,8 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
 * 2023-03-17 - Improvement: Reduce code duplication when child theming by checking theme ancestry in theme_boost_union_before_standard_html_head, solves #245.
 
 ### v4.0-r16
