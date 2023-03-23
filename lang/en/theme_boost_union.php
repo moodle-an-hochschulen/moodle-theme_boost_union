@@ -39,6 +39,8 @@ $string['configtitlelook'] = 'Look';
 // Settings: General settings tab.
 // ... Section: Theme presets.
 $string['presetheading'] = 'Theme presets';
+$string['presetheading_desc'] = 'Theme presets can be used to dramatically alter the appearance of the theme. Boost Union does not re-implement the theme preset setting. If you want to use theme presets, please set them directly in Boost. Boost Union will inherit and use the configured preset.';
+$string['presetbutton'] = 'Set theme preset in Boost';
 
 // Settings: SCSS tab.
 $string['scsstab'] = 'SCSS';

@@ -51,13 +51,7 @@ In this tab there are the following settings:
 
 ##### Theme presets
 
-###### Theme preset
-
-This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
-
-###### Additional theme preset files
-
-This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+Theme presets can be used to dramatically alter the appearance of the theme. Boost Union does not re-implement the theme preset setting. If you want to use theme presets, please set them directly in Boost. Boost Union will inherit and use the configured preset.
 
 #### Tab "SCSS"
 
