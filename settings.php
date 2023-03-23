@@ -126,37 +126,11 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Create theme presets heading.
         $name = 'theme_boost_union/presetheading';
+        $preseturl = new moodle_url('/admin/settings.php', ['section' => 'themesettingboost'], 'theme_boost_general');
         $title = get_string('presetheading', 'theme_boost_union', null, true);
-        $setting = new admin_setting_heading($name, $title, null);
-        $tab->add($setting);
-
-        // Replicate the preset setting from theme_boost, but use our own file area.
-        $name = 'theme_boost_union/preset';
-        $title = get_string('preset', 'theme_boost', null, true);
-        $description = get_string('preset_desc', 'theme_boost', null, true);
-        $default = 'default.scss';
-
-        $context = context_system::instance();
-        $fs = get_file_storage();
-        $files = $fs->get_area_files($context->id, 'theme_boost_union', 'preset', 0, 'itemid, filepath, filename', false);
-
-        $choices = [];
-        foreach ($files as $file) {
-            $choices[$file->get_filename()] = $file->get_filename();
-        }
-        $choices['default.scss'] = 'default.scss';
-        $choices['plain.scss'] = 'plain.scss';
-
-        $setting = new admin_setting_configthemepreset($name, $title, $description, $default, $choices, 'boost_union');
-        $setting->set_updatedcallback('theme_reset_all_caches');
-        $tab->add($setting);
-
-        // Replicate the preset files setting from theme_boost.
-        $name = 'theme_boost_union/presetfiles';
-        $title = get_string('presetfiles', 'theme_boost', null, true);
-        $description = get_string('presetfiles_desc', 'theme_boost', null, true);
-        $setting = new admin_setting_configstoredfile($name, $title, $description, 'preset', 0,
-                ['maxfiles' => 20, 'accepted_types' => ['.scss']]);
+        $description = get_string('presetheading_desc', 'theme_boost_union', null, true).'<br />'.
+            $OUTPUT->single_button($preseturl, get_string('presetbutton', 'theme_boost_union', null, true)).'<br />';
+        $setting = new admin_setting_heading($name, $title, $description);
         $tab->add($setting);
 
         // Add tab to settings page.

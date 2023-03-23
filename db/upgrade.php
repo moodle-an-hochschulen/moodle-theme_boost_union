@@ -291,5 +291,22 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023090112, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2023090124) {
+
+        // Remove the preset setting from Boost Union.
+        unset_config('preset', 'theme_boost_union');
+
+        // Remove the presetfiles setting from Boost Union.
+        unset_config('presetfiles', 'theme_boost_union');
+
+        // Remove the files from the preset filearea of Boost Union as this setting was removed.
+        $systemcontext = context_system::instance();
+        $fs = get_file_storage();
+        $fs->delete_area_files($systemcontext->id, 'theme_boost_union', 'preset');
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2023090124, 'theme', 'boost_union');
+    }
+
     return true;
 }
