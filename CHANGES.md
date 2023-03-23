@@ -6,6 +6,8 @@ Changes
 
 ### Unreleased
 
+* 2024-02-09 - Improvement: Inherit preset setting and preset files from Boost Core instead of duplicating them into Boost Union, resolves #267.
+               Please note: The preset setting in Boost Union was practically broken up to now. Removing the duplicated setting should not break anything.
 * 2024-01-30 - Child theme support: Don't force child themes to reimplement the settings to mark links and the settings to modify the course overview block, resolves #345.
 * 2024-01-30 - Child theme support: Don't force child theme to reimplement activitypurpose_MODNAME settings, resolves #370.
 * 2024-02-11 - Peer review management: Add a github action checking pull requests for use of non get_config() theme settings references, resolves #257.
