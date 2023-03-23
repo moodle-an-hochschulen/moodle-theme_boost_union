@@ -23,7 +23,7 @@ Feature: Configuring the theme_boost_union plugin as manager
     And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
     And "body#page-admin-setting-theme_boost_union_look" "css_element" should exist
     And I should see "Look" in the "#region-main" "css_element"
-    And I should see "General settings" in the "#region-main" "css_element"
+    And I should see "SCSS" in the "#region-main" "css_element"
     # However, we have to test the 'flavours' page as well as this is an external admin page.
     And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
     And "body#page-admin-theme-boost_union-flavours-overview" "css_element" should exist

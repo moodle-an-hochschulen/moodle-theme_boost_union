@@ -45,20 +45,6 @@ There, you find multiple setting pages:
 
 ### Settings page "Look"
 
-#### Tab "General settings"
-
-In this tab there are the following settings:
-
-##### Theme presets
-
-###### Theme preset
-
-This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
-
-###### Additional theme preset files
-
-This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
-
 #### Tab "SCSS"
 
 In this tab there are the following settings:

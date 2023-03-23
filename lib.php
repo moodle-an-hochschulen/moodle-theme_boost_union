@@ -130,18 +130,9 @@ function theme_boost_union_get_main_scss_content($theme) {
     global $CFG;
 
     $scss = '';
-    $filename = !empty($theme->settings->preset) ? $theme->settings->preset : null;
-    $fs = get_file_storage();
-
-    $context = context_system::instance();
-    $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/pre.scss');
-    if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_boost_union', 'preset', 0, '/', $filename))) {
-        $scss .= $presetfile->get_content();
-    } else {
-        // Safety fallback - maybe new installs etc.
-        $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/preset/default.scss');
-    }
-    $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/post.scss');
+    $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/pre-boost-main.scss');
+    $scss .= theme_boost_get_main_scss_content(theme_config::load('boost'));
+    $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/post-boost-main.scss');
 
     return $scss;
 }
@@ -320,8 +311,9 @@ function theme_boost_union_get_extra_scss($theme) {
     // Instead, the flavour is overriding the background image later in flavours/styles.php.
 
     // For the rest of this function, we add SCSS snippets to the SCSS stack based on enabled admin settings.
-    // This is done here as it is quite easy to do. As an alternative, it could also been done in post.css by using
-    // SCSS variables with @if conditions and SCSS variables. However, we preferred to do it here in a single place.
+    // This is done here as it is quite easy to do. As an alternative,
+    // it could also been done in post-boost-main.scss by using SCSS variables with @if conditions and SCSS variables.
+    // However, we preferred to do it here in a single place.
 
     // Setting: Activity icon purpose.
     $content .= theme_boost_union_get_scss_for_activity_icon_purpose($theme);

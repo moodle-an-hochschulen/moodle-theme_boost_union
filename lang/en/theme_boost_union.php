@@ -36,10 +36,6 @@ $string['dontchange'] = 'Do not change anything';
 // Settings: Look page.
 $string['configtitlelook'] = 'Look';
 
-// Settings: General settings tab.
-// ... Section: Theme presets.
-$string['presetheading'] = 'Theme presets';
-
 // Settings: SCSS tab.
 $string['scsstab'] = 'SCSS';
 // ... Section: Raw SCSS.
