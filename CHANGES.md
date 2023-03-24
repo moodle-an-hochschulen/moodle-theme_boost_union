@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r6
 
 * 2023-03-22 - Feature: Allow admin to provide several additional block regions, solves #30.
                Please note: This is a comparably large addition. If you encounter any issues with this feature, please report it on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues.
