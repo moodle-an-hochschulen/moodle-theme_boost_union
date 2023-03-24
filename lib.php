@@ -86,6 +86,12 @@ define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK', 'dark');
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYLIGHT', 'primarylight');
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYDARK', 'primarydark');
 
+define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT', 'nextmaincontent');
+define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEARWINDOW', 'nearwindowedges');
+define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH', 'fullwidth');
+define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_COURSECONTENTWIDTH', 'coursecontentwidth');
+define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_HEROWIDTH', 'herowidth');
+
 /**
  * Returns the main SCSS content.
  *
@@ -190,6 +196,15 @@ function theme_boost_union_get_pre_scss($theme) {
         $activityiconscss .= implode(",\n", $activityiconcolors);
         $activityiconscss .= ');';
         $scss .= $activityiconscss."\n";
+    }
+
+    // Set custom Boost Union SCSS variables.
+    if (get_config('theme_boost_union', 'blockregionoutsideleftwidth')) {
+        $scss .= '$blockregionoutsideleftwidth: '.get_config('theme_boost_union', 'blockregionoutsideleftwidth').";\n";
+    }
+    if (get_config('theme_boost_union', 'blockregionoutsiderightwidth')) {
+        $scss .= '$blockregionoutsiderightwidth: '.get_config('theme_boost_union', 'blockregionoutsiderightwidth').
+                ";\n";
     }
 
     // Prepend pre-scss.

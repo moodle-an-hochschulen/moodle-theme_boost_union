@@ -332,6 +332,61 @@ $string['activitynavigationsetting_desc'] = 'With this setting the elements to j
 $string['blockstab'] = 'Blocks';
 // ... Section: General blocks.
 $string['blocksgeneralheading'] = 'General blocks';
+// ... Section: Block regions.
+$string['blockregionsheading'] = 'Additional block regions';
+$string['blockregionsheading_desc'] = '<p>Boost Union provides a large number of additional block regions which can be used to add and show blocks over the whole Moodle page:</p>
+<ul><li>The <em>Outside block regions</em> are placed on all four sides of the Moodle page. They can be used to show blocks which accompany the shown Moodle page but do not directly belong to the main content.</li>
+<li>The <em>Header block region</em> is placed between the Outside (top) area and the main content area. It can be used to show a block as course header information.</li>
+<li>The <em>Content block regions</em> are placed directly over and under the main content in the main content area. They can be used to add blocks to the course content flow.</li>
+<li>The <em>Footer block regions</em> are placed at the bottom of the page between the Outside (bottom) area and the footnote. You have three footer regions available to build columns if necessary.</li>
+<li>The <em>Off-canvas block region</em> is somehow special as it hovers over the whole Moodle page as a drawer. The drawer is opened by the 9-dots icon at the very right side of the navigation bar. You have three off-canvas regions available to build columns if necessary.</li></ul>
+<p>Please note:</p>
+<ul><li>By default, all additional block regions are disabled. Please enable the particular block regions on the particular page layouts according to your needs. Try to be as focused as possible – too many block regions could overwhelm end users.</li>
+<li>As soon as an additional block region is enabled, it is visible for all authenticated users and editable by teachers and managers (depending on the fact if the particular user is allowed to edit the particular Moodle page, of course). But there are also theme/boost_union:viewregion* and theme/boost_union:editregion* capabilities which allow you to fine-tune the usage of each block region according to your needs.</li>
+<li>The Outside (left), Outside (right), Content (upper), Content (lower) and Header block regions are not available for all page layouts.</li></ul>';
+$string['blockregionsheading_experimental'] = 'Please note: The <em>Outside (left) and Outside (right) block regions</em> are fully working in the current state of implementation, but have to be <em>considered as experimental</em> as they do not wrap properly on medium width screens yet. Against this background, please use them with care. This issue will be fixed in an upcoming release.';
+$string['region-none'] = 'None';
+$string['region-outside-left'] = 'Outside (left)';
+$string['region-outside-top'] = 'Outside (top)';
+$string['region-outside-bottom'] = 'Outside (bottom)';
+$string['region-outside-right'] = 'Outside (right)';
+$string['region-content-upper'] = 'Content (upper)';
+$string['region-content-lower'] = 'Content (lower)';
+$string['region-footer-left'] = 'Footer (left)';
+$string['region-footer-right'] = 'Footer (right)';
+$string['region-footer-center'] = 'Footer (center)';
+$string['region-header'] = 'Header';
+$string['region-offcanvas-left'] = 'Off-canvas (left)';
+$string['region-offcanvas-right'] = 'Off-canvas (right)';
+$string['region-offcanvas-center'] = 'Off-canvas (center)';
+$string['closeoffcanvas'] = 'Close Off-canvas drawer';
+$string['openoffcanvas'] = 'Open Off-canvas drawer';
+// ... ... Setting: Block regions for 'x' layout.
+$string['blockregionsforlayout'] = 'Additional block regions for \'{$a}\' layout';
+$string['blockregionsforlayout_desc'] = 'With this setting, you can enable additional block regions for the \'{$a}\' layout.';
+// ... Section: Outside regions.
+$string['outsideregionsheading'] = 'Outside regions';
+$string['outsideregionsheading_desc'] = 'Outside regions can not only be enabled with the layout settings above, their appearance can also be customized.';
+// ... ... Setting: Block region width for Outside (left) region.
+$string['blockregionoutsideleftwidth'] = 'Block region width for \'Outside (left)\' region';
+$string['blockregionoutsideleftwidth_desc'] = 'With this setting, you can set the width of the \'Outside (left)\' block region which is shown on the left hand side of the main content area. By default, Boost Union uses a width of 300px. You can enter other pixel-based values like 200px, but you can also enter a percentage-based value like 10% or a viewport-width value like 10vw.';
+// ... ... Setting: Block region width for Outside (right) region.
+$string['blockregionoutsiderightwidth'] = 'Block region width for \'Outside (right)\' region';
+$string['blockregionoutsiderightwidth_desc'] = 'With this setting, you can set the width of the \'Outside (right)\' block region which is shown on the right hand side of the main content area. By default, Boost Union uses a width of 300px. You can enter other pixel-based values like 200px, but you can also enter a percentage-based value like 10% or a viewport-width value like 10vw.';
+// ... ... Setting: Block region width for Outside (top) region.
+$string['blockregionoutsidetopwidth'] = 'Block region width for \'Outside (top)\' region';
+$string['blockregionoutsidetopwidth_desc'] = 'With this setting, you can set the width of the \'Outside (top)\' block region which is shown at the very top of the page. You can choose between full width, course content width and hero width.';
+$string['outsideregionswidthfullwidth'] = 'Full width';
+$string['outsideregionswidthcoursecontentwidth'] = 'Course content width';
+$string['outsideregionswidthherowidth'] = 'Hero width';
+// ... ... Setting: Block region width for Outside (bottom) region.
+$string['blockregionoutsidebottomwidth'] = 'Block region width for \'Outside (bottom)\' region';
+$string['blockregionoutsidebottomwidth_desc'] = 'With this setting, you can set the width of the \'Outside (bottom)\' block region which is shown below the main content. You can choose between full width, course content width and hero width.';
+// ... ... Setting: Outside regions horizontal placement.
+$string['outsideregionsplacement'] = 'Outside regions horizontal placement';
+$string['outsideregionsplacement_desc'] = 'With this setting, you can control if, on larger screens, the \'Outside (left)\' and \'Outside (right)\' block regions should be placed near the main content area or rather near the window edges.';
+$string['outsideregionsplacementnextmaincontent'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions next to the main content area';
+$string['outsideregionsplacementnearwindowedges'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions near the window edges';
 
 // Settings: Misc tab.
 $string['misctab'] = 'Miscellaneous';
@@ -595,6 +650,32 @@ $string['privacy:metadata'] = 'The Boost Union theme does not store any personal
 $string['boost_union:configure'] = 'To be able to configure the theme as non-admin';
 $string['boost_union:viewhintcourseselfenrol'] = 'To be able to see a hint for unrestricted self enrolment in a visible course.';
 $string['boost_union:viewhintinhiddencourse'] = 'To be able to see a hint in a hidden course.';
+$string['boost_union:viewregionheader'] = 'To be able to see the Header block region';
+$string['boost_union:editregionheader'] = 'To be able to edit the Header block region';
+$string['boost_union:viewregionoutsideleft'] = 'To be able to see the Outside (left) block region';
+$string['boost_union:editregionoutsideleft'] = 'To be able to edit the Outside (left) block region';
+$string['boost_union:viewregionoutsideright'] = 'To be able to see the Outside (right) block region';
+$string['boost_union:editregionoutsideright'] = 'To be able to edit the Outside (right) block region';
+$string['boost_union:viewregionoutsidetop'] = 'To be able to see the Outside (top) block region';
+$string['boost_union:editregionoutsidetop'] = 'To be able to edit the Outside (top) block region';
+$string['boost_union:viewregionoutsidebottom'] = 'To be able to see the Outside (bottom) block region';
+$string['boost_union:editregionoutsidebottom'] = 'To be able to edit the Outside (bottom) block region';
+$string['boost_union:viewregioncontentupper'] = 'To be able to see the Content (upper) block region';
+$string['boost_union:editregioncontentupper'] = 'To be able to edit the Content (upper) block region';
+$string['boost_union:viewregioncontentlower'] = 'To be able to see the Content (lower) block region';
+$string['boost_union:editregioncontentlower'] = 'To be able to edit the Content (lower) block region';
+$string['boost_union:viewregionfooterleft'] = 'To be able to see the Footer (left) block region';
+$string['boost_union:editregionfooterleft'] = 'To be able to edit the Footer (left) block region';
+$string['boost_union:viewregionfooterright'] = 'To be able to see the Footer (right) block region';
+$string['boost_union:editregionfooterright'] = 'To be able to edit the Footer (right) block region';
+$string['boost_union:viewregionfootercenter'] = 'To be able to see the Footer (center) block region';
+$string['boost_union:editregionfootercenter'] = 'To be able to edit the Footer (center) block region';
+$string['boost_union:viewregionoffcanvasleft'] = 'To be able to see the Off-canvas (left) block region';
+$string['boost_union:editregionoffcanvasleft'] = 'To be able to edit the Off-canvas (left) block region';
+$string['boost_union:viewregionoffcanvasright'] = 'To be able to see the Off-canvas (right) block region';
+$string['boost_union:editregionoffcanvasright'] = 'To be able to edit the Off-canvas (right) block region';
+$string['boost_union:viewregionoffcanvascenter'] = 'To be able to see the Off-canvas (center) block region';
+$string['boost_union:editregionoffcanvascenter'] = 'To be able to edit the Off-canvas (center) block region';
 
 // Caches.
 $string['cachedef_fontawesome'] = 'FontAwesome files (which are uploaded in the Boost Union settings)';

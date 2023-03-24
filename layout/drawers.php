@@ -30,6 +30,7 @@
  * * Include Jvascript disabled hint
  * * Include advertisement tiles
  * * Include info banners
+ * * Include additional block regions
  *
  * @package   theme_boost_union
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
@@ -133,6 +134,9 @@ $templatecontext = [
 
 // Include the template content for the course related hints.
 require_once(__DIR__ . '/includes/courserelatedhints.php');
+
+// Include the template content for the block regions.
+require_once(__DIR__ . '/includes/blockregions.php');
 
 // Include the content for the back to top button.
 require_once(__DIR__ . '/includes/backtotopbutton.php');
