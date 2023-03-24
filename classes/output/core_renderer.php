@@ -398,4 +398,57 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
         return $this->render_from_template('core/full_header', $header);
     }
+
+    /**
+     * Prints a nice side block with an optional header.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * @param block_contents $bc HTML for the content
+     * @param string $region the region the block is appearing in.
+     * @return string the HTML to be output.
+     */
+    public function block(\block_contents $bc, $region) {
+        global $CFG;
+
+        // Require own locallib.php.
+        require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+
+        $bc = clone($bc); // Avoid messing up the object passed in.
+        if (empty($bc->blockinstanceid) || !strip_tags($bc->title)) {
+            $bc->collapsible = \block_contents::NOT_HIDEABLE;
+        }
+
+        $id = !empty($bc->attributes['id']) ? $bc->attributes['id'] : uniqid('block-');
+        $context = new \stdClass();
+        $context->skipid = $bc->skipid;
+        $context->blockinstanceid = $bc->blockinstanceid ?: uniqid('fakeid-');
+        $context->dockable = $bc->dockable;
+        $context->id = $id;
+        $context->hidden = $bc->collapsible == \block_contents::HIDDEN;
+        $context->skiptitle = strip_tags($bc->title);
+        $context->showskiplink = !empty($context->skiptitle);
+        $context->arialabel = $bc->arialabel;
+        $context->ariarole = !empty($bc->attributes['role']) ? $bc->attributes['role'] : 'complementary';
+        $context->class = $bc->attributes['class'];
+        $context->type = $bc->attributes['data-block'];
+        $context->title = $bc->title;
+        $context->content = $bc->content;
+        $context->annotation = $bc->annotation;
+        $context->footer = $bc->footer;
+        $context->hascontrols = !empty($bc->controls);
+
+        // Hide edit control options for the regions based on the capabilities.
+        $regions = theme_boost_union_get_additional_regions();
+        $regioncapname = array_search($region, $regions);
+        if (!empty($regioncapname) && $context->hascontrols) {
+            $context->hascontrols = has_capability('theme/boost_union:editregion'.$regioncapname, $this->page->context);
+        }
+
+        if ($context->hascontrols) {
+            $context->controls = $this->block_controls($bc->controls, $id);
+        }
+
+        return $this->render_from_template('core/block', $context);
+    }
 }

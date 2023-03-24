@@ -96,6 +96,14 @@
         background-color: #8f959e;
     }
 
+    /* Change the color of the offcanvas button to fit onto the dark background. */
+    #theme_boost_union-offcanvas-btn {
+        color: #c8c8c8;
+    }
+    #theme_boost_union-offcanvas-btn:hover {
+        color: #fff;
+    }
+
     /* Change the color of the login link in the navbar to a light grey and to white when hovered. */
     .login,
     .login a {
@@ -296,6 +304,322 @@ body.hasstickyfooter #back-to-top {
     @include media-breakpoint-up(sm) {
         bottom: 9rem;
     }
+}
+
+
+/*=======================================
+ * Settings: Feel -> Blocks.
+ ======================================*/
+
+/*---------------------------------------
+ * Settings: Additional block regions - The offcanvas region.
+ --------------------------------------*/
+
+/* The Offcanvas drawer (which is only used in non-editing mode). */
+#theme_boost_union-drawers-offcanvas {
+    /* Position and size (which takes effect as soon as the drawer is shown). */
+    background-color: $gray-100;
+    box-shadow: 2px 2px 4px $drawer-shadow-color;
+    height: calc(100vh - 3rem);
+    min-height: 300px;
+    top: -100vh;
+    width: 100vw;
+    z-index: 1050; /* This z-index is equal to $zindex-modal and puts the drawer on top of
+                      the whole page regardless what Moodle does for the .drawer class. */
+
+    /* And show it as soon as the drawer is set to be shown. */
+    &.show {
+        top: 0;
+        @include transition(0.2s);
+    }
+
+    /* The close icon to close the Offcanvas drawer. */
+    .drawerheader {
+        /* Position the icon. */
+        .btn {
+            margin-left: auto;
+            margin-right: 10px;
+        }
+
+        /* Make the close icon more visible. */
+        .icon {
+            background: $black;
+            color: $white;
+            border-radius: 5px;
+            padding: 4px;
+        }
+    }
+
+    /* Do what we can to avoid horizontal scrollbars in the Offcanvas drawer's content. */
+    .drawercontent {
+        overflow-x: hidden;
+        > .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+}
+
+/* The Offcanvas block region (which is only used in editing mode as we do not have a drawer then).
+   Please note: #theme-block-region-offcanvas-editing is the outer element which is shown and hidden by Bootstrap
+   Collapse. #theme-block-region-offcanvas-editing-inner is the inner element which we style here. */
+#theme-block-region-offcanvas-editing-inner {
+    /* Position and size (which takes effect as soon as the region is shown). */
+    background-color: $gray-100;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    box-shadow: 2px 2px 4px $drawer-shadow-color;
+    margin: 0 -15px 30px -15px;
+    padding: 15px 15px 0 15px;
+}
+/* Disable the Bootstrap collapse transition as it is not properly working with all the block regions. */
+#theme-block-region-offcanvas-editing.collapsing {
+    transition: none;
+}
+
+/* Navbar icon for opening the offcanvas drawer. */
+.navbar-nav {
+    .drawer-offcanvas-toggle {
+        display: flex;
+        align-items: center;
+        .btn {
+            color: rgba(0, 0, 0, .6);
+            height: 40px;
+            &:hover {
+                color: rgba(0, 0, 0, .9);
+            }
+            i {
+                font-size: 20px;
+                line-height: 30px;
+            }
+        }
+    }
+}
+
+
+/*---------------------------------------
+ * Settings: Additional block regions - The outside-left and outside-right regions.
+ --------------------------------------*/
+
+/* On larger screens. */
+@include media-breakpoint-up(md) {
+    /* On Moodle pages with limited width (currently: The course main pages, the frontpage and the dashboard).
+       Remember: Only on these pages, we offer the outside-left and outside-right region.
+       We do not need to handle the full-width pages here. */
+    body.limitedwidth {
+        /* If we have a outside-left and / or a outside-right block region. */
+        .main-inner-outside-left-right,
+        .main-inner-outside-left,
+        .main-inner-outside-right {
+            /* Center the main region content to keep the page content in the middle of the page. */
+            text-align: center;
+
+            /* Change the block regions to show them properly as block columns. */
+            #theme-block-region-outside-left,
+            #theme-block-region-outside-right,
+            .main-inner {
+                /* Undo the text-align for the regions in each column to still show the content correctly. */
+                text-align: initial;
+
+                /* Display them as inline-block. */
+                display: inline-block;
+
+                /* And make sure that the columns are at the top of the page at all. */
+                vertical-align: top;
+            }
+        }
+
+        /* On pages where only the outside-left region is enabled:
+           Reduce the size of the main column to make space for the outside-left column. */
+        .main-inner-outside-left .main-inner {
+            width: calc(98% - #{$blockregionoutsideleftwidth});
+        }
+
+        /* On pages where only the outside-right region is enabled:
+           Reduce the size of the main column to make space for the outside-right column. */
+        .main-inner-outside-right .main-inner {
+            width: calc(98% - #{$blockregionoutsiderightwidth});
+        }
+
+        /* On pages where the outside-left and the outside-right region are enabled:
+           Reduce the size of the main column to make space for the outside-left and outside-right columns. */
+        .main-inner-outside-left-right .main-inner {
+            width: calc(98% - #{$blockregionoutsiderightwidth} - #{$blockregionoutsideleftwidth});
+        }
+
+        /* Set the width and margin of the outside-left region. */
+        #theme-block-region-outside-left {
+            margin-right: 1rem;
+            margin-top: 1.5rem;
+            width: $blockregionoutsideleftwidth;
+        }
+
+        /* Set the width of the outside-right region. */
+        #theme-block-region-outside-right {
+            margin-left: 1rem;
+            margin-top: 1.5rem;
+            width: $blockregionoutsiderightwidth;
+        }
+
+        /* If the admin configured outside blocks to be shown next to the main content. */
+        .main-inner-outside-nextmaincontent {
+            #theme-block-region-outside-left,
+            #theme-block-region-outside-right {
+                /* Disable float (just to be sure). */
+                float: none;
+            }
+        }
+
+        /* If the admin configured outside blocks to be shown next to the main content. */
+        .main-inner-outside-nearwindowedges {
+            /* Float the outside-left block region to the left. */
+            #theme-block-region-outside-left {
+                float: left;
+            }
+
+            /* Float the outside-right block region to the right. */
+            #theme-block-region-outside-right {
+                float: right;
+            }
+
+            /* Clear the outside-bottom + footer regions so that they are shown correctly after the floated regions. */
+            #theme-block-region-outside-bottom,
+            #theme-block-region-footer {
+                clear: both;
+            }
+        }
+    }
+}
+
+/* And on smaller screens. */
+@include media-breakpoint-down(sm) {
+    /* Change the outside-left and outside-right blocks to full width (with some horizontal space). */
+    #theme-block-region-outside-left,
+    #theme-block-region-outside-right {
+        padding-left: 15px;
+        padding-right: 15px;
+        width: 100%;
+    }
+    /* And remove their floating. */
+    .main-inner-outside-nearwindowedges {
+        #theme-block-region-outside-left,
+        #theme-block-region-outside-right {
+            float: none;
+        }
+    }
+}
+
+
+/*---------------------------------------
+ * Settings: Additional block regions - The outside-top, header and outside-bottom regions.
+ --------------------------------------*/
+
+/* Block regions: Outside top and outside bottom. */
+#theme-block-region-outside-top,
+#theme-block-region-outside-bottom {
+    /* On larger screens. */
+    @include media-breakpoint-up(md) {
+        /* Position and size. */
+        &.theme-block-region-outside-fullwidth,
+        &.theme-block-region-outside-coursecontentwidth {
+            margin: 1rem auto;
+            width: 100%;
+        }
+        &.theme-block-region-outside-herowidth {
+            margin: 0 -3rem 0 -3rem;
+            /* We do not set any width at all.
+               100% would be too small, 100vw would add horizontal scrollbars (for whatever reason). */
+        }
+    }
+
+    /* And on smaller screens. */
+    @include media-breakpoint-down(sm) {
+        &.theme-block-region-outside-fullwidth,
+        &.theme-block-region-outside-coursecontentwidth {
+            /* Just show the block full width with some horizontal space. */
+            padding-left: 15px;
+            padding-right: 15px;
+            width: 100%;
+        }
+        &.theme-block-region-outside-herowidth {
+            /* Remove the margin. */
+            margin: 0;
+        }
+    }
+}
+
+/* Additional styling for content width regions to limit the block region size on Moodle pages with limited width. */
+body.limitedwidth .theme-block-region-outside-coursecontentwidth {
+    max-width: $course-content-maxwidth;
+}
+
+/* Additional styling for hero-width regions to remove some styling which is counterproductive. */
+.theme-block-region-outside-herowidth {
+    .block {
+        border-width: 0;
+        border-radius: 0;
+    }
+}
+
+/* Block region: Header. */
+#theme-block-region-header {
+    /* On larger screens. */
+    @include media-breakpoint-up(md) {
+        /* Position and size. */
+        margin: 0 auto;
+        max-width: $course-content-maxwidth;
+        width: 100%;
+    }
+
+    /* And on smaller screens. */
+    @include media-breakpoint-down(sm) {
+        /* Just show the block full width with some horizontal space. */
+        padding-left: 15px;
+        padding-right: 15px;
+        width: 100%;
+    }
+
+    /* Add margin-top to avoid that this block region is glued to the navbar if
+       #theme-block-region-outside-top does not exist. */
+    margin-top: 1rem;
+}
+/* Remove margin-top again if this block region is already preceded by the outside-top region. */
+#theme-block-region-outside-top + #theme-block-region-header {
+    margin-top: 0;
+}
+
+
+/*---------------------------------------
+ * Settings: Additional block regions - The footer regions.
+ --------------------------------------*/
+
+/* Block region: Footer. */
+#theme-block-region-footer {
+    /* Position and size. */
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* And on smaller screens. */
+@include media-breakpoint-down(sm) {
+    /* Add some horizontal space on the small screen. */
+    #theme-block-region-footer {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+
+/*---------------------------------------
+ * Settings: Additional block regions - The content regions.
+ --------------------------------------*/
+
+/* Block region: Content-upper and Content-lower. */
+#theme-block-region-content-upper,
+#theme-block-region-content-lower {
+    /* Position and size. */
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 

@@ -60,6 +60,7 @@
 
     Modifications compared to this template:
     * Added the possibility to change navbar color.
+    * Include button for off-canvas region.
 }}
 <nav class="navbar fixed-top {{navbarcolorclasses}} navbar-expand" aria-label="{{#str}}sitemenubar, admin{{/str}}">
 
@@ -104,6 +105,46 @@
             {{/usermenu}}
         </div>
         {{{ output.edit_switch }}}
+
+        {{^userisediting}}
+            {{#regions.offcanvas.hasblocks}}
+                <div class="divider border-left h-75 align-self-center mx-1"></div>
+                <div class="drawer-offcanvas-toggle d-print-none">
+                    <button
+                        class="btn"
+                        id="theme_boost_union-offcanvas-btn"
+                        data-toggler="drawers"
+                        title="{{#str}}openoffcanvas, theme_boost_union{{/str}}"
+                        data-action="toggle"
+                        data-target="theme_boost_union-drawers-offcanvas"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                    >
+                        <span class="sr-only">{{#str}}openoffcanvas, theme_boost_union{{/str}}</span>
+                        <i class="fa fa-th"></i>
+                    </button>
+                </div>
+            {{/regions.offcanvas.hasblocks}}
+        {{/userisediting}}
+        {{#userisediting}}
+            {{#regions.offcanvas.hasblocks}}
+                <div class="divider border-left h-75 align-self-center mx-1"></div>
+                <div class="drawer-offcanvas-toggle d-print-none">
+                    <button
+                        class="btn"
+                        id="theme_boost_union-offcanvas-btn"
+                        data-toggle="collapse"
+                        title="{{#str}}openoffcanvas, theme_boost_union{{/str}}"
+                        data-target="#theme-block-region-offcanvas-editing"
+                        aria-expanded="false"
+                        aria-controls="theme-block-region-offcanvas-editing"
+                    >
+                        <span class="sr-only">{{#str}}openoffcanvas, theme_boost_union{{/str}}</span>
+                        <i class="fa fa-th"></i>
+                    </button>
+                </div>
+            {{/regions.offcanvas.hasblocks}}
+        {{/userisediting}}
     </div>
 </nav>
 

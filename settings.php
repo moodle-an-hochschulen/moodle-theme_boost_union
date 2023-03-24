@@ -1023,6 +1023,155 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_TEXT);
         $tab->add($setting);
 
+        // Create block regions heading.
+        $name = 'theme_boost_union/blockregionsheading';
+        $title = get_string('blockregionsheading', 'theme_boost_union', null, true);
+        $description = get_string('blockregionsheading_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, $description);
+        $tab->add($setting);
+
+        // Add experimental warning.
+        $name = 'theme_boost_union/blockregionsheadingexperimental';
+        $notification = new \core\output\notification(get_string('blockregionsheading_experimental', 'theme_boost_union'),
+                \core\output\notification::NOTIFY_WARNING);
+        $notification->set_show_closebutton(false);
+        $description = $OUTPUT->render($notification);
+        $setting = new admin_setting_heading($name, '', $description);
+        $tab->add($setting);
+
+        // Settings: Additional block regions for 'x' layout.
+        // List of region strings.
+        $regionstr = (array) get_strings([
+            'region-outside-top',
+            'region-outside-left',
+            'region-outside-right',
+            'region-outside-bottom',
+            'region-content-upper',
+            'region-content-lower',
+            'region-header',
+            'region-footer-left',
+            'region-footer-right',
+            'region-footer-center',
+            'region-offcanvas-left',
+            'region-offcanvas-right',
+            'region-offcanvas-center'
+        ], 'theme_boost_union');
+        // List of all available regions.
+        $allavailableregions = array(
+            'outside-top' => $regionstr['region-outside-top'],
+            'outside-left' => $regionstr['region-outside-left'],
+            'outside-right' => $regionstr['region-outside-right'],
+            'outside-bottom' => $regionstr['region-outside-bottom'],
+            'footer-left' => $regionstr['region-footer-left'],
+            'footer-right' => $regionstr['region-footer-right'],
+            'footer-center' => $regionstr['region-footer-center'],
+            'offcanvas-left' => $regionstr['region-offcanvas-left'],
+            'offcanvas-right' => $regionstr['region-offcanvas-right'],
+            'offcanvas-center' => $regionstr['region-offcanvas-center'],
+            'content-upper' => $regionstr['region-content-upper'],
+            'content-lower' => $regionstr['region-content-lower'],
+            'header' => $regionstr['region-header']
+        );
+        // Partial list of regions (used on some layouts).
+        $partialregions = [
+            'outside-top' => $regionstr['region-outside-top'],
+            'outside-bottom' => $regionstr['region-outside-bottom'],
+            'footer-left' => $regionstr['region-footer-left'],
+            'footer-right' => $regionstr['region-footer-right'],
+            'footer-center' => $regionstr['region-footer-center'],
+            'offcanvas-left' => $regionstr['region-offcanvas-left'],
+            'offcanvas-right' => $regionstr['region-offcanvas-right'],
+            'offcanvas-center' => $regionstr['region-offcanvas-center']
+        ];
+        // Build list of page layouts and map the regions to each page layout.
+        $pagelayouts = [
+            'standard' => $partialregions,
+            'admin' => $partialregions,
+            'coursecategory' => $partialregions,
+            'incourse' => $partialregions,
+            'mypublic' => $partialregions,
+            'report' => $partialregions,
+            'course' => $allavailableregions,
+            'frontpage' => $allavailableregions
+        ];
+        // For the mydashboard layout, remove the content-* layouts as there are already block regions.
+        $pagelayouts['mydashboard'] = array_filter($allavailableregions, function($key) {
+            return ($key != 'content-upper' && $key != 'content-lower') ? true : false;
+        }, ARRAY_FILTER_USE_KEY);
+        // Create admin setting for each page layout.
+        foreach ($pagelayouts as $layout => $regions) {
+            $name = 'theme_boost_union/blockregionsfor'.$layout;
+            $title = get_string('blockregionsforlayout', 'theme_boost_union', $layout, true);
+            $description = get_string('blockregionsforlayout_desc', 'theme_boost_union', $layout, true);
+            $setting = new admin_setting_configmulticheckbox($name, $title, $description, array(), $regions);
+            $tab->add($setting);
+        }
+
+        // Create outside regions heading.
+        $name = 'theme_boost_union/outsideregionsheading';
+        $title = get_string('outsideregionsheading', 'theme_boost_union', null, true);
+        $description = get_string('outsideregionsheading_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, $description);
+        $tab->add($setting);
+
+        // Setting: Block region width for Outside (left) region.
+        $name = 'theme_boost_union/blockregionoutsideleftwidth';
+        $title = get_string('blockregionoutsideleftwidth', 'theme_boost_union', null, true);
+        $description = get_string('blockregionoutsideleftwidth_desc', 'theme_boost_union', null, true);
+        $default = '300px';
+        $setting = new admin_setting_configtext($name, $title, $description, $default);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Block region width for Outside (right) region.
+        $name = 'theme_boost_union/blockregionoutsiderightwidth';
+        $title = get_string('blockregionoutsiderightwidth', 'theme_boost_union', null, true);
+        $description = get_string('blockregionoutsiderightwidth_desc', 'theme_boost_union', null, true);
+        $default = '300px';
+        $setting = new admin_setting_configtext($name, $title, $description, $default);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Block region width for Outside (top) region.
+        $outsideregionswidthoptions = array(
+            // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+            // PHP warning otherwise.
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH =>
+                        get_string('outsideregionswidthfullwidth', 'theme_boost_union', null, false),
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_COURSECONTENTWIDTH =>
+                        get_string('outsideregionswidthcoursecontentwidth', 'theme_boost_union', null, false),
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_HEROWIDTH =>
+                        get_string('outsideregionswidthherowidth', 'theme_boost_union', null, false));
+        $name = 'theme_boost_union/blockregionoutsidetopwidth';
+        $title = get_string('blockregionoutsidetopwidth', 'theme_boost_union', null, true);
+        $description = get_string('blockregionoutsidetopwidth_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH, $outsideregionswidthoptions);
+        $tab->add($setting);
+
+        // Setting: Block region width for Outside (bottom) region.
+        $name = 'theme_boost_union/blockregionoutsidebottomwidth';
+        $title = get_string('blockregionoutsidebottomwidth', 'theme_boost_union', null, true);
+        $description = get_string('blockregionoutsidebottomwidth_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH, $outsideregionswidthoptions);
+        $tab->add($setting);
+
+        // Setting: Outside regions horizontal placement.
+        $outsideregionsplacementoptions = array(
+            // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+            // PHP warning otherwise.
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT =>
+                        get_string('outsideregionsplacementnextmaincontent', 'theme_boost_union', null, false),
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEARWINDOW =>
+                        get_string('outsideregionsplacementnearwindowedges', 'theme_boost_union', null, false));
+        $name = 'theme_boost_union/outsideregionsplacement';
+        $title = get_string('outsideregionsplacement', 'theme_boost_union', null, true);
+        $description = get_string('outsideregionsplacement_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT, $outsideregionsplacementoptions);
+        $tab->add($setting);
+
         // Add tab to settings page.
         $page->add($tab);
 
