@@ -828,3 +828,81 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     margin-left: 15px;
     margin-right: 15px;
 }
+
+
+/*=======================================
+ * Supporting third-party plugins
+ ======================================*/
+
+/*---------------------------------------
+ * Dash Pro
+ --------------------------------------*/
+
+/* Style Dash Pro dashboards. */
+.path-local-dash-dashboard #page.drawers {
+    /* Use flex if one of the block regions next to the main content is used. */
+    .main-inner-outside-nextmaincontent {
+        display: flex;
+    }
+
+    /* Remove the margin of a Dash block when used in the outside top region in hero width mode. */
+    #theme-block-region-outside-top.theme-block-region-outside-herowidth .block_dash,
+    #theme-block-region-outside-bottom.theme-block-region-outside-herowidth .block_dash {
+        margin: 0;
+    }
+
+    /* The page header makes alignment nearly impossible,
+       so let's hide it when block regions next to main content are used. */
+    .main-inner-outside-nextmaincontent #page-header {
+        display: none;
+    }
+
+    /* Remove the spacing which was there for the header which we have hidden in the previous rule. */
+    .main-inner-outside-nextmaincontent .main-inner {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* 25-50-25 layout. */
+    .main-inner-outside-left-right > .main-inner {
+        width: 50%;
+        max-width: 50%;
+    }
+    .main-inner-outside-left-right > section {
+        width: 25%;
+        max-width: 25%;
+        margin-top: calc(0.5rem + 1px);
+    }
+
+    /* 33-67 or 67-33 layout. */
+    .main-inner-outside-right > .main-inner,
+    .main-inner-outside-left > .main-inner {
+        width: 67%;
+        max-width: 67%;
+    }
+    .main-inner-outside-left > section,
+    .main-inner-outside-right > section {
+        width: 33%;
+        max-width: 33%;
+        margin-top: calc(0.5rem + 1px);
+    }
+
+    /* On not-so-large screens. */
+    @include media-breakpoint-down(lg) { /* This means less than 300px per outside block region. */
+        /* Stack content vertically. */
+        .main-inner-outside-nextmaincontent {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Main content first, outside block regions later. */
+        .main-inner-outside-nextmaincontent > .main-inner {
+            order: -2;
+        }
+        .main-inner-outside-nextmaincontent > section,
+        .main-inner-outside-nextmaincontent > .main-inner {
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+}
