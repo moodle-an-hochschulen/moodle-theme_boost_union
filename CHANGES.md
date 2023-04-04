@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-04-04 - Bugfix: Take a css property name instead of its value, solves #271.
+
 ### v4.1-r6
 
 * 2023-03-22 - Feature: Allow admin to provide several additional block regions, solves #30.

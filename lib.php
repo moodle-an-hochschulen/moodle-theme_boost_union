@@ -200,10 +200,10 @@ function theme_boost_union_get_pre_scss($theme) {
 
     // Set custom Boost Union SCSS variables.
     if (get_config('theme_boost_union', 'blockregionoutsideleftwidth')) {
-        $scss .= '$blockregionoutsideleftwidth: '.get_config('theme_boost_union', 'blockregionoutsideleftwidth').";\n";
+        $scss .= 'blockregionoutsideleftwidth: '.get_config('theme_boost_union', 'blockregionoutsideleftwidth').";\n";
     }
     if (get_config('theme_boost_union', 'blockregionoutsiderightwidth')) {
-        $scss .= '$blockregionoutsiderightwidth: '.get_config('theme_boost_union', 'blockregionoutsiderightwidth').
+        $scss .= 'blockregionoutsiderightwidth: '.get_config('theme_boost_union', 'blockregionoutsiderightwidth').
                 ";\n";
     }
 
