@@ -37,28 +37,30 @@ const initScrollSpy = () => {
     // Unfortunately the editmode-switch carries no unique ID
     let editToggle = document.querySelector('form.editmode-switch-form');
 
-    editToggle.addEventListener('click', () => {
+    if (editToggle) {
+        editToggle.addEventListener('click', () => {
 
-        window.sessionStorage.setItem('edittoggled', true);
+            window.sessionStorage.setItem('edittoggled', true);
 
-        let viewporttop = document.getElementById('page').scrollTop;
-        let closest = null;
-        let closestoffset = null;
+            let viewporttop = document.getElementById('page').scrollTop;
+            let closest = null;
+            let closestoffset = null;
 
-        document.querySelectorAll('.section.main').forEach((node) => {
-            let thisoffset = node.offsetTop;
+            document.querySelectorAll('.section.main').forEach((node) => {
+                let thisoffset = node.offsetTop;
 
-            if (closest && closest.offsetTop) {
-                closestoffset = closest.offsetTop;
-            }
-            if (closest === null || Math.abs(thisoffset - viewporttop) < Math.abs(closestoffset - viewporttop)) {
-                closest = node;
-            }
+                if (closest && closest.offsetTop) {
+                    closestoffset = closest.offsetTop;
+                }
+                if (closest === null || Math.abs(thisoffset - viewporttop) < Math.abs(closestoffset - viewporttop)) {
+                    closest = node;
+                }
+            });
+
+            window.sessionStorage.setItem('closestid', closest.id);
+            window.sessionStorage.setItem('closestdelta', viewporttop - closest.offsetTop);
         });
-
-        window.sessionStorage.setItem('closestid', closest.id);
-        window.sessionStorage.setItem('closestdelta', viewporttop - closest.offsetTop);
-    });
+    }
 
     let edittoggled = window.sessionStorage.getItem('edittoggled');
 
