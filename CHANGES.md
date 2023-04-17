@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-04-17 - Bugfix: Setting activityiconcolorcommunication was not processed anymore, solves #279.
 * 2023-04-13 - Bugfix: When there is no edit switch, as on the assignment grading page, scrollfix should not kick in, solves #276.
 * 2023-04-12 - Feature: Allow right-side blocks drawer of site home to be extended by default #169.
 
