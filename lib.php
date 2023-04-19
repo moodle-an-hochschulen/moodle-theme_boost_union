@@ -182,8 +182,8 @@ function theme_boost_union_get_pre_scss($theme) {
     if (get_config('theme_boost_union', 'activityiconcolorcollaboration')) {
         $activityiconcolors[] = '"collaboration": '.get_config('theme_boost_union', 'activityiconcolorcollaboration');
     }
-    if (get_config('theme_boost_union', 'activityiconcolorcollaboration')) {
-        $activityiconcolors[] = '"communication": '.get_config('theme_boost_union', 'activityiconcolorcollaboration');
+    if (get_config('theme_boost_union', 'activityiconcolorcommunication')) {
+        $activityiconcolors[] = '"communication": '.get_config('theme_boost_union', 'activityiconcolorcommunication');
     }
     if (get_config('theme_boost_union', 'activityiconcolorcontent')) {
         $activityiconcolors[] = '"content": '.get_config('theme_boost_union', 'activityiconcolorcontent');
