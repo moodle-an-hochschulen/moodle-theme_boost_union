@@ -400,6 +400,16 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     /**
+     * Renders the "breadcrumb" for all pages in boost union.
+     *
+     * @return string the HTML for the navbar.
+     */
+    public function navbar(): string {
+        $newnav = new \theme_boost_union\boostnavbar($this->page);
+        return $this->render_from_template('core/navbar', $newnav);
+    }
+
+    /**
      * Prints a nice side block with an optional header.
      *
      * This renderer function is copied and modified from /lib/outputrenderers.php

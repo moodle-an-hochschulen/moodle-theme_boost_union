@@ -562,6 +562,26 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Add tab to settings page.
         $page->add($tab);
 
+        // Create breadcrumbs tab.
+        $tab = new admin_settingpage('theme_boost_union_look_breadcrumbs',
+            get_string('breadcrumbstab', 'theme_boost_union', null, true));
+
+        // Create breadcrumbs heading.
+        $name = 'theme_boost_union/breadcrumbsheading';
+        $title = get_string('breadcrumbsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Display the category breadcrumb in the course header.
+        $name = 'theme_boost_union/categorybreadcrumbsenabled';
+        $title = get_string('categorybreadcrumbsenabled', 'theme_boost_union', null, true);
+        $description = get_string('categorybreadcrumbsenabled_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
 
         // Create E_Mail branding tab.
         $tab = new admin_settingpage('theme_boost_union_look_emailbranding',
