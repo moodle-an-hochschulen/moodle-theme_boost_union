@@ -60,6 +60,7 @@
     * Added the possibility to show info banners.
     * Include theme_boost_union/advertisementtiles template
     * Added additional block regions (including JS for offcanvas region)
+    * Added smartmenu JS for third level submenu support.
 }}
 {{> theme_boost/head }}
 
@@ -295,9 +296,11 @@
 </html>
 {{#js}}
 M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer', 'theme_boost_union/offcanvas'], function(Loader, Drawer, OffCanvas) {
+require(['theme_boost/loader', 'theme_boost/drawer',
+    'theme_boost_union/offcanvas', 'theme_boost_union/smartmenu'], function(Loader, Drawer, OffCanvas, SmartMenu) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
     OffCanvas.init();
+    SmartMenu.init();
 });
 {{/js}}

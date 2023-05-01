@@ -61,7 +61,15 @@
     Modifications compared to this template:
     * Added the possibility to change navbar color.
     * Include button for off-canvas region.
+    * Include menubar to show menus in top of primary navbar.
 }}
+
+
+{{#menubar}}
+<nav class="menubar fixed-top boost-union-menubar navbar navbar-expand">
+    {{> core/moremenu}}
+</nav>
+{{/menubar}}
 <nav class="navbar fixed-top {{navbarcolorclasses}} navbar-expand" aria-label="{{#str}}sitemenubar, admin{{/str}}">
 
     <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
@@ -78,6 +86,7 @@
             {{{ sitename }}}
         {{/ output.should_display_navbar_logo }}
     </a>
+
     {{#primarymoremenu}}
         <div class="primary-navigation">
             {{> core/moremenu}}

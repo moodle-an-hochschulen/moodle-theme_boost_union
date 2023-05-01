@@ -839,3 +839,537 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     margin-left: 15px;
     margin-right: 15px;
 }
+
+/* ========================
+ Smartmenu: CARD style.
+ ==========================*/
+
+/*Header Menu*/
+.navbar {
+    &.fixed-top {
+        /*Added Height and background color for the top header, z-index is added to show the top header dropdown menu above the header block*/
+        &.boost-union-menubar { /*boost-union-menubar class is added for the top header*/
+            height: 40px;
+            border-bottom: 0;
+            background-color: #f8f9fa;
+            z-index: 1031;
+            .moremenu {
+                .more-nav {
+                    li {
+                        &.nav-item {
+                            &:first-child {
+                                /*The position of the dropdown menu should not extend beyond the visible area of the screen*/
+                                .dropdown-menu {
+                                    left: 0;
+                                    right: auto;
+                                }
+                            }
+                        }
+                        a {
+                             /*The color of the dropdown menu link is added*/
+                            &.dropdown-toggle {
+                                color: #000;
+                            }
+                        }
+                        /*The minimum width of the dropdown menu and poisition of the dropdown menu added*/
+                        .dropdown-menu {
+                            min-width: 250px;
+                            left: auto;
+                            right: 0;
+                        }
+                    }
+                }
+            }
+            + .navbar {
+                /*Margin top has been added to the Header block to ensure that it does not conflict with the top header.*/
+                &.fixed-top {
+                    margin-top: 40px;
+                    /*The position of the card dropdown block has been set to fixed, so it will always appear directly under the card menu link.*/
+                    .moremenu .dropdown.card-dropdown .dropdown-menu {
+                        top: 100px;
+                    }
+                }
+            }
+            /*The position of the navigation drawer has been adjusted slightly below to accommodate the top header.*/
+            ~ .drawer {
+                top: 100px;
+            }
+            /*The position of the main page has been adjusted slightly below to accommodate the top header.*/
+            ~ #page.drawers {
+                margin-top: 100px;
+                /*The position of the drawer button to toggle has been adjusted slightly below to accommodate the top header.*/
+                .drawer-toggles .drawer-right-toggle {
+                    top: 100px;
+                }
+            }
+        }
+    }
+    .moremenu {
+        .more-nav {
+            li.nav-item {
+                /*The style below added when the menu link is under the "More" option in the responsive alignment*/
+                &.dropdownmoremenu {
+                    .dropdown-menu li.nav-item {
+                        &.dropdown {
+                            .dropdown-toggle {
+                                /*Header dropdown toggle menu link color added*/
+                                &:hover,
+                                &:focus,
+                                &:active {
+                                    color: $white;
+                                }
+                            }
+                            /*Header dropdown menu border and position added not to conflict with the screen*/
+                            .dropdown-menu {
+                                border: 1px solid rgba(0, 0, 0, 0.15);
+                                position: absolute;
+                                top: 0;
+                                left: auto;
+                                right: 100%;
+                                .dropdown-item {
+                                    /*The border radius has been added to the first child menu item in the header dropdown menu so that the menu item background will not show without the border radius.*/
+                                    &:first-child {
+                                        border-top-left-radius: 5px;
+                                        border-top-right-radius: 5px;
+                                    }
+                                    /*The border radius has been added to the last child menu item in the header dropdown menu so that the menu item background will not show without the border radius.*/
+                                    &:last-child {
+                                        border-bottom-left-radius: 5px;
+                                        border-bottom-right-radius: 5px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .dropdown {
+            .dropdown-menu {
+                min-width: 250px;
+                overflow: visible;
+                .dropdown-item {
+                    /*The below style is added when the Menu link is selected as "Heading" option in the settings */
+                    &.menu-item-heading {
+                        font-size: 14px;
+                        opacity: .6;
+                        /*Menu link icon font size when "Heading" and "icon" option selected in the settings */
+                        i.icon {
+                            font-size: 14px;
+                        }
+                    }
+                }
+                /*The below styles are header dropdown submenu */
+                .dropdown-submenu {
+                    > a {
+                        &.dropdown-item {
+                            &:before {
+                                content: '';
+                            }
+                            /*The arrow icon is added when the header menu has dropdown submenus*/
+                            &:after {
+                                content: '\f105';
+                                font-family: fontawesome;
+                                float: right;
+                            }
+                        }
+                    }
+                    ul {
+                        display: none;
+                    }
+                    &.show {
+                        position: relative;
+                        /*The dropdown submenu style is added for the header menu*/
+                        ul {
+                            list-style: none;
+                            border: 1px solid $border-color;
+                            border-radius: 0.5rem;
+                            background-color: #fff;
+                            padding: 0;
+                            margin-left: 1px;
+                            display: block;
+                            position: absolute;
+                            top: 0;
+                            left: 100%;
+                            li {
+                                /*The height and padding is added for the header dropdown submenu links */
+                                a.nav-link {
+                                    height: auto;
+                                    padding: 10px 15px;
+                                }
+                                /*The border radius has been added to the first child menu item in the header dropdown submenu so that the menu item background will not show without the border radius.*/
+                                &:first-child {
+                                    a.nav-link {
+                                        border-top-left-radius: 0.5rem;
+                                        border-top-right-radius: 0.5rem;
+                                    }
+                                }
+                                /*The border radius has been added to the last child menu item in the header dropdown submenu so that the menu item background will not show without the border radius.*/
+                                &:last-child {
+                                    a.nav-link {
+                                        border-bottom-left-radius: 0.5rem;
+                                        border-bottom-right-radius: 0.5rem;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            /*Card layout - The below styles are header dropdown Card style menus */
+            &.card-dropdown {
+                /*The header card dropdown menu styles */
+                .dropdown-menu {
+                    width: 100%;
+                    padding: 30px;
+                    border-radius: 0;
+                    background-color: #f0efef;
+                    position: fixed;
+                    top: 58px;
+                    left: 0;
+                    /*The header card dropdown menu items styles*/
+                    .card-block {
+                        margin-right: 15px;
+                        margin-bottom: 15px;
+                        display: inline-block;
+                        vertical-align: top;
+                        flex-direction: column;
+                        /*The header card dropdown items image size*/
+                        .img-block {
+                            width: 280px;
+                            height: 150px;
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+                        }
+                        /*The header card dropdown items content block style*/
+                        .content-block {
+                            width: 280px;
+                            padding: 10px;
+                            background-color: $primary;
+                            display: flex;
+                            align-items: center;
+                            /*The header card dropdown items content block Menu link style*/
+                            h5 {
+                                margin-bottom: 0;
+                                a {
+                                    font-size: 14px;
+                                    color: $white;
+                                    font-weight: bold;
+                                    padding: 0;
+                                    &:hover,
+                                    &:focus,
+                                    &:active {
+                                        background: none;
+                                    }
+                                }
+                            }
+                            /*The header card dropdown items content block Go button arrow style*/
+                            .btn-block {
+                                line-height: 10px;
+                                text-align: right;
+                                a {
+                                    color: #fff;
+                                    padding: 0;
+                                    &:hover,
+                                    &:focus,
+                                    &:active {
+                                        background: none;
+                                    }
+                                }
+                            }
+                        }
+                        /*The below style is added when the Menu link is selected as "Heading" option with "card layout" Menu settings */
+                        &.menu-item-heading {
+                            /*the Card Menu content style with "Heading" option*/
+                            .content-block {
+                                /*the Card Menu content menu link style with "Heading" option*/
+                                h5 {
+                                    a {
+                                        font-size: 16px;
+                                        opacity: .6;
+                                        i {
+                                            font-size: 16px;
+                                        }
+                                    }
+                                }
+                                /*the Card Menu content Go button link style with "Heading" option*/
+                                .btn-block {
+                                    display: none;
+                                    a {
+                                        opacity: .6;
+                                    }
+                                }
+                            }
+                        }
+                        /*The "Text position" of the menu link is selected as "Top overlay" or "Below overlay" styles*/
+                        &.card-text-overlay-top,
+                        &.card-text-overlay-bottom {
+                            position: relative;
+                            .content-block {
+                                width: 100%;
+                                height: 100%;
+                                display: block;
+                                align-items: flex-start;
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                            }
+                        }
+                        /*The "Text position" styles as the menu link to show in the bottom of the card block in the "Below overlay" option*/
+                        &.card-text-overlay-bottom {
+                            .content-block {
+                                align-items: flex-end;
+                            }
+                        }
+                    }
+                }
+                /*Card appearance - Card size*/
+                /*Card size - Tiny*/
+                &.card-size-tiny {
+                    .dropdown-menu {
+                        .card-block {
+                            .img-block {
+                                height: 50px;
+                            }
+                        }
+                    }
+                }
+                /*Card size - Small*/
+                &.card-size-small {
+                    .dropdown-menu {
+                        .card-block {
+                            .img-block {
+                                height: 100px;
+                            }
+                        }
+                    }
+                }
+                /*Card size - Medium*/
+                &.card-size-medium {
+                    .dropdown-menu {
+                        .card-block {
+                            .img-block {
+                                height: 150px;
+                            }
+                        }
+                    }
+                }
+                /*Card size - large*/
+                &.card-size-large {
+                    .dropdown-menu {
+                        .card-block {
+                            .img-block {
+                                height: 200px;
+                            }
+                        }
+                    }
+                }
+
+                /*Card appearance - Card form style*/
+                /*Card form style - Square*/
+                &.card-form-square {
+                    .dropdown-menu {
+                        width: 25%;
+                        text-align: center;
+                        overflow: auto;
+                        left: 36%;
+                    }
+                }
+                /*Card form style - Portrait*/
+                &.card-form-portrait {
+                    .dropdown-menu {
+                        width: 52%;
+                        left: 22%;
+                        overflow-y: auto;
+                    }
+                }
+                /*Card form style - Landscape*/
+                &.card-form-landscape {
+                    .dropdown-menu {
+                        width: 75%;
+                        text-align: center;
+                        left: 12%
+                    }
+                }
+                /*Card form style - Fullwidth*/
+                &.card-form-fullwidth {
+                    .dropdown-menu {
+                        width: 100%;
+                    }
+                }
+                /*Card Overflow behaviour - No Wrap*/
+                &.card-overflow-no-wrap.show {
+                    .dropdown-menu {
+                        overflow-x: auto;
+                        display: flex;
+                        flex-wrap: nowrap;
+                    }
+                }
+                /*Card size - "Large" with the "Text positions"*/
+                &.card-size-large {
+                    .dropdown-menu .card-block {
+                        &.card-text-overlay-top,
+                        &.card-text-overlay-bottom {
+                            .img-block {
+                                height: calc(200px + 39px);
+                            }
+                        }
+                    }
+                }
+                /*Card size - "Medium" with the "Text positions"*/
+                &.card-size-medium {
+                    .dropdown-menu .card-block {
+                        &.card-text-overlay-top,
+                        &.card-text-overlay-bottom {
+                            .img-block {
+                                height: calc(150px + 39px);
+                            }
+                        }
+                    }
+                }
+                /*Card size - "Small" with the "Text positions"*/
+                &.card-size-small {
+                    .dropdown-menu .card-block {
+                        &.card-text-overlay-top,
+                        &.card-text-overlay-bottom {
+                            .img-block {
+                                height: calc(100px + 39px);
+                            }
+                        }
+                    }
+                }
+                /*Card size - "Tiny" with the "Text positions"*/
+                &.card-size-tiny {
+                    .dropdown-menu .card-block {
+                        &.card-text-overlay-top,
+                        &.card-text-overlay-bottom {
+                            .img-block {
+                                height: calc(50px + 39px);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*The nav drawer position to the top in the responsive alignment*/
+@media (max-width: 991px) {
+    .navbar.fixed-top.boost-union-menubar ~ .drawer {
+        top: 0;
+    }
+}
+
+/*The Header dropdown menu dropdown are shown under the header menu links with out the position*/
+@media (max-width: 600px) {
+    .navbar.fixed-top.boost-union-menubar .moremenu .more-nav li {
+        &.nav-item.dropdownmoremenu .dropdown-menu li.nav-item.dropdown .dropdown-menu {
+            position: static;
+        }
+    }
+}
+
+/*End of Header Menu*/
+
+/*Smart Menu Settings*/
+
+/* Menu item settings page style */
+.menuitem-buttons {
+    /*"Add menu headings/static/dynamic items" links in the Menu/Menu edit page setting styles*/
+    .right-menu-items {
+        a {
+            margin-right: 15px;
+        }
+    }
+    /*Menu settings page - margin for the "Restriction" label in the table block when the restrictions are enabled*/
+    + .no-overflow table tbody tr td ul li {
+        label {
+            margin-right: 10px;
+        }
+    }
+}
+
+/*The Menu settings - Title alignment in the table block*/
+.main-inner-wrapper {
+    .main-inner div[role="main"] .no-overflow .generaltable tbody tr td {
+        .menu-title {
+            display: inline-block;
+        }
+        .btn-link {
+            margin-left: 5px;
+        }
+    }
+}
+/*End of Smart Menu settings*/
+
+/*Footer Menu*/
+#page-wrapper #page-footer {
+    .navbar {
+        /*Footer bottom menu - "boost-union-bottom-menu"*/
+        &.boost-union-bottom-menu {
+            padding: 0;
+            .bottom-navigation {
+                .more-nav {
+                    li {
+                        &.dropdown {
+                            /*Footer bottom dropdown style*/
+                            .dropdown-menu {
+                                margin-top: 0;
+                                margin-bottom: 0.125rem;
+                                top: auto;
+                                bottom: 100%;
+                                left: auto;
+                                right: 0;
+                            }
+                            /*Footer bottom dropdown style when the menus are in the "More" option in the responsive alignment*/
+                            &.dropdownmoremenu {
+                                display: flex;
+                                align-items: center;
+                                /*Footer bottom dropdown toggle button style*/
+                                button {
+                                    &.navbar-toggler {
+                                        height: 100%;
+                                        color: $primary;
+                                        border-radius: 5px;
+                                        padding-top: 0;
+                                        &:hover {
+                                            background: #f8f9fa;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        /*The position of the footer dropdown menu should not extend beyond the visible area of the screen*/
+                        &:first-child {
+                            &.dropdown {
+                                .dropdown-menu {
+                                    left: 0;
+                                    right: auto;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+/*End of Footer Menu*/
+
+@media (max-width: 767px) {
+    /*The padding for the footer to visible the footer bottom menu because it is in the position style*/
+    #page-wrapper #page {
+        .footer-bottom-menu {
+            padding-bottom: 75px;
+        }
+    }
+    /*THe nav drawer width is extend to full screen in the mobile view*/
+    body .drawer.show {
+        max-width: none;
+        width: 100%;
+    }
+}

@@ -136,5 +136,88 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2022080922, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2023010510) {
+
+        // Create the table for smart menus.
+        $table = new xmldb_table('theme_boost_union_menus');
+        // Field definitions for the table theme_boost_union_menus.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, XMLDB_SEQUENCE);
+        $table->add_field('title', XMLDB_TYPE_CHAR, '255', null, null);
+        $table->add_field('description', XMLDB_TYPE_TEXT, null, null, null, null, null, 'title');
+        $table->add_field('description_format', XMLDB_TYPE_TEXT, null, null, null, null, null, 'description');
+        $table->add_field('showdesc', XMLDB_TYPE_INTEGER, '2', null, null, null, null, 'description_format');
+        $table->add_field('sortorder', XMLDB_TYPE_INTEGER, '11', XMLDB_UNSIGNED, null, null, null, 'showdesc');
+        $table->add_field('location', XMLDB_TYPE_CHAR, '50', null, XMLDB_NOTNULL, null, null, 'sortorder');
+        $table->add_field('type', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'location');
+        $table->add_field('path', XMLDB_TYPE_CHAR, '255', null, null, null, null, 'type');
+        $table->add_field('cssclass', XMLDB_TYPE_CHAR, '50', null, null, null, null, 'path');
+        $table->add_field('moremenubehavior', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, null, null, '1', 'cssclass');
+        $table->add_field('cardsize', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, null, null, '1', 'moremenubehavior');
+        $table->add_field('cardform', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, null, null, '1', 'cardsize');
+        $table->add_field('overflowbehavior', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, null, null, '1', 'cardform');
+        $table->add_field('roles', XMLDB_TYPE_TEXT, null, null, null, null, null, 'overflowbehavior');
+        $table->add_field('rolecontext', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '1', 'roles');
+        $table->add_field('cohorts', XMLDB_TYPE_TEXT, null, null, null, null, null, 'rolecontext');
+        $table->add_field('operator', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '1', 'cohorts');
+        $table->add_field('languages', XMLDB_TYPE_TEXT, null, null, null, null, null, 'operator');
+        $table->add_field('start_date', XMLDB_TYPE_INTEGER, '11', null, null, null, null, 'languages');
+        $table->add_field('end_date', XMLDB_TYPE_INTEGER, '11', null, null, null, null, 'start_date');
+        $table->add_field('visible', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '1', 'end_date');
+
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+
+        // Create the table if not already created.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Create the table for smart menus items.
+        $table = new xmldb_table('theme_boost_union_menuitems');
+        // Field definitions for the table theme_boost_union_smartmenu_items.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, XMLDB_SEQUENCE);
+        $table->add_field('title', XMLDB_TYPE_CHAR, '255', null, null);
+        $table->add_field('menu', XMLDB_TYPE_INTEGER, '11', XMLDB_UNSIGNED, null, null, null, 'title');
+        $table->add_field('type', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, null, null, '1', 'menu');
+        $table->add_field('sortorder', XMLDB_TYPE_INTEGER, '11', XMLDB_UNSIGNED, null, null, null, 'showdesc');
+        $table->add_field('url', XMLDB_TYPE_TEXT, null, null, null, null, null, 'title');
+        $table->add_field('category', XMLDB_TYPE_TEXT, null, null, null, null, null, 'description');
+        $table->add_field('enrolmentrole', XMLDB_TYPE_TEXT, null, null, null, null, null, 'description');
+        $table->add_field('completionstatus', XMLDB_TYPE_CHAR, '20', null, null, null, null, 'sortorder');
+        $table->add_field('daterange', XMLDB_TYPE_CHAR, '20', null, null, null, null, 'sortorder');
+        $table->add_field('customfields', XMLDB_TYPE_TEXT, null, null, null, null, null, 'daterange');
+        $table->add_field('starred', XMLDB_TYPE_INTEGER, '1', null, null, null, null, 'description_format');
+        $table->add_field('filtered', XMLDB_TYPE_INTEGER, '1', null, null, null, null, 'description_format');
+        $table->add_field('mode', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, null, null, null, 'filtered');
+        $table->add_field('menuicon', XMLDB_TYPE_CHAR, '50', null, null, null, null, 'mode');
+        $table->add_field('display', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, null, null, null, 'menuicon');
+        $table->add_field('tooltip', XMLDB_TYPE_CHAR, '255', null, null);
+        $table->add_field('target', XMLDB_TYPE_INTEGER, '1', null, null, null, null, 'tooltip');
+        $table->add_field('cssclass', XMLDB_TYPE_CHAR, '50', null, null, null, null, 'target');
+        $table->add_field('textposition', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'cssclass');
+        $table->add_field('textcolor', XMLDB_TYPE_CHAR, '10', null, null, null, null, 'textposition');
+        $table->add_field('backgroundcolor', XMLDB_TYPE_CHAR, '10', null, null, null, null, 'textcolor');
+        $table->add_field('desktop', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, null, null, '1', 'backgroundcolor');
+        $table->add_field('tablet', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, null, null, '1', 'desktop');
+        $table->add_field('mobile', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, null, null, '1', 'tablet');
+        $table->add_field('roles', XMLDB_TYPE_TEXT, null, null, null, null, null, 'mobile');
+        $table->add_field('rolecontext', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '1', 'roles');
+        $table->add_field('cohorts', XMLDB_TYPE_TEXT, null, null, null, null, null, 'rolecontext');
+        $table->add_field('operator', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '1', 'cohorts');
+        $table->add_field('languages', XMLDB_TYPE_TEXT, null, null, null, null, null, 'operator');
+        $table->add_field('start_date', XMLDB_TYPE_INTEGER, '11', null, null, null, null, 'languages');
+        $table->add_field('end_date', XMLDB_TYPE_INTEGER, '11', null, null, null, null, 'start_date');
+        $table->add_field('visible', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '1', 'end_date');
+        $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '11', null, null, null, null, 'visible');
+
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+
+        // Create the table if not already created.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+        // Update the boost_union theme savepoint.
+        upgrade_plugin_savepoint(true, 2023010510, 'theme', 'boost_union');
+    }
+
     return true;
 }
