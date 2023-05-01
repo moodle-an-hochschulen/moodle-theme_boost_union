@@ -36,6 +36,7 @@
     * Include theme_boost_union/footnote template
     * Include theme_boost_union/footer template instead of theme_boost/footer
     * Added the possibility to show info banners.
+    * Added the login background image text.
 }}
 {{> theme_boost/head }}
 
@@ -51,8 +52,8 @@
         <div id="page-content" class="row">
             <div id="region-main-box" class="col-12">
                 <section id="region-main" class="col-12 h-100" aria-label="{{#str}}content{{/str}}">
-                <div class="login-wrapper">
-                    <div class="login-container">
+                <div class="login-wrapper {{loginwrapperclass}}">
+                    <div class="login-container {{logincontainerclass}}">
                     {{{ output.main_content }}}
                     </div>
                 </div>
@@ -60,6 +61,15 @@
             </div>
         </div>
     </div>
+    {{# loginbackgroundimagetext }}
+        <div class="container-fluid">
+            <div class="row justify-content-end no-gutters mx-3 my-2" id="loginbackgroundimagetext">
+                <span class="small d-none d-md-inline text-{{loginbackgroundimagetextcolor}}">
+                    {{loginbackgroundimagetext}}
+                </span>
+            </div>
+        </div>
+    {{/ loginbackgroundimagetext }}
     {{> theme_boost_union/footer }}
     {{> theme_boost_union/footnote }}
 </div>

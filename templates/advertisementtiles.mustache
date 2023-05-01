@@ -1,0 +1,93 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/advertisementtiles
+
+    Boost Union advertisement tiles layout template.
+
+    Context variables required for this template:
+    * advtileslayoutclass - The CSS class for the grid
+    * advtiles - The configured info banners list with:
+      * content - The info banner content
+      * backgroundimage = Image to be displayed behind the content;
+      * linktitle = The link title which is displayed (might be empty);
+      * link = The actual URL (might be empty);
+      * no = Order which is displayed in the settings.;
+
+    Example context (json):
+    {
+        "advtileslayoutclass" : "col-6",
+        "advtiles": [
+            {
+                "title": "This is a nice title",
+                "content": "This is a really nice content which is added in this tile.",
+                "backgroundimageurl": "",
+                "linktitle": "",
+                "link": "",
+                "no": 1,
+                "order": 1
+            },
+            {
+                "title": "",
+                "content": "Are you hungry?",
+                "backgroundimageurl": "",
+                "linktitle": "Canteen",
+                "link": "https://canteen.awesome-organisation.org/",
+                "no": 2,
+                "order": 2
+            },
+            {
+                "title": "",
+                "content": "",
+                "backgroundimageurl": "https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/login_bg1.jpg",
+                "linktitle": "",
+                "link": "",
+                "no": 3,
+                "order": 3
+            }
+        ]
+    }
+}}
+<div id="themeboostunionadvtiles" class="container-fluid">
+    <div class="row">
+        {{#advtiles}}
+        <div id="themeboostunionadvtile{{no}}" class="themeboostunionadvtile {{advtileslayoutclass}} d-flex align-items-stretch align-self-stretch py-3">
+            <div class="transparent-bg card {{#backgroundimageurl}}themeboostunionadvtilebg{{/backgroundimageurl}}"
+                style="{{#backgroundimageurl}}background-image: url('{{{backgroundimageurl}}}');{{/backgroundimageurl}}
+                        {{#backgroundimageposition}}background-position: {{{.}}};{{/backgroundimageposition}}
+                        {{#tileheight}}min-height: {{{.}}};{{/tileheight}}">
+                {{#title}}<h5 class="card-header">{{{title}}}</h5>{{/title}}
+                <div class="card-body">
+                    {{#content}}<div class="card-text">{{{content}}}</div>{{/content}}
+                </div>
+                {{#link}}
+                    <div class="card-footer">
+                        <a href={{{link}}} id="themeboostunionadvtile{{no}}link" {{#linktargetnewtab}}target="_blank" rel="noopener noreferrer"{{/linktargetnewtab}} class="btn btn-primary">
+                            {{#linktitle}}
+                                {{{linktitle}}}
+                            {{/linktitle}}
+                            {{^linktitle}}
+                                {{#str}}tilelinktitlefallback, theme_boost_union{{/str}}
+                            {{/linktitle}}
+                        </a>
+                    </div>
+                {{/link}}
+            </div>
+        </div>
+        {{/advtiles}}
+    </div>
+</div>

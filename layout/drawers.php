@@ -20,11 +20,17 @@
  * This layoutfile is based on theme/boost/layout/drawers.php
  *
  * Modifications compared to this layout file:
- * * Include footnote
  * * Render theme_boost_union/drawers instead of theme_boost/drawers template
+ * * Include activity navigation
  * * Include course related hints
  * * Include back to top button
- * * Include activity navigation
+ * * Include scroll spy
+ * * Include footnote
+ * * Include static pages
+ * * Include Jvascript disabled hint
+ * * Include advertisement tiles
+ * * Include info banners
+ * * Include additional block regions
  *
  * @package   theme_boost_union
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
@@ -94,7 +100,9 @@ if ($PAGE->has_secondary_navigation()) {
     }
 }
 
-$primary = new core\navigation\output\primary($PAGE);
+$primary = new theme_boost_union\output\navigation\primary($PAGE);
+/* print_object($PAGE->primarynav);
+exit; */
 $renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
@@ -123,17 +131,16 @@ $templatecontext = [
     'hasregionmainsettingsmenu' => !empty($regionmainsettingsmenu),
     'overflow' => $overflow,
     'headercontent' => $headercontent,
-    'addblockbutton' => $addblockbutton
+    'addblockbutton' => $addblockbutton,
+    'menubar' => $primarymenu['menubar'] ?? [],
+    'bottombar' => $primarymenu['bottombar'] ?? []
 ];
-
-// Get and use the course related hints HTML code, if any hints are configured.
-$courserelatedhintshtml = theme_boost_union_get_course_related_hints();
-if ($courserelatedhintshtml) {
-    $templatecontext['courserelatedhints'] = $courserelatedhintshtml;
-}
 
 // Include the template content for the course related hints.
 require_once(__DIR__ . '/includes/courserelatedhints.php');
+
+// Include the template content for the block regions.
+require_once(__DIR__ . '/includes/blockregions.php');
 
 // Include the content for the back to top button.
 require_once(__DIR__ . '/includes/backtotopbutton.php');
@@ -152,6 +159,14 @@ require_once(__DIR__ . '/includes/javascriptdisabledhint.php');
 
 // Include the template content for the info banners.
 require_once(__DIR__ . '/includes/infobanners.php');
+
+// Include the template content for the navbar styling.
+require_once(__DIR__ . '/includes/navbar.php');
+
+// Include the template content for the advertisement tiles, but only if we are on the frontpage.
+if ($PAGE->pagelayout == 'frontpage') {
+    require_once(__DIR__ . '/includes/advertisementtiles.php');
+}
 
 // Render drawers.mustache from boost_union.
 echo $OUTPUT->render_from_template('theme_boost_union/drawers', $templatecontext);

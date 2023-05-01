@@ -1,0 +1,132 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template core/full_header
+
+    This template renders the header.
+
+    Example context (json):
+    {
+        "contextheader": "context_header_html",
+        "settingsmenu": "settings_html",
+        "hasnavbar": false,
+        "navbar": "navbar_if_available",
+        "courseheader": "course_header_html",
+        "welcomemessage": "welcomemessage",
+        "courseheaderimageurl": "http://localhost/boostunionmoodle/pluginfile.php/14/course/overviewfiles/ex.png"
+    }
+}}
+{{!
+    This template overwrites the core/full_header template in the theme
+
+    Modifications compared to this template:
+    * Include a course header image
+      For the sake of readability and as the course header image feature has multiple layout options,
+      the HTML snippets for the course header have been duplicated in this template to cover each layout separately.
+      The selection algorithmn goes like this:
+      -> Do we have a welcome message?
+         -> Yes: Show the course header just like Moodle core does.
+         -> No: Do we have a course header image URL?
+            -> No: Show the course header just like Moodle core does.
+            -> Yes: Do we have to show the course heading above the course header image?
+               -> Yes: Show the course header like Moodle core does and add the #courseheaderimage element below it.
+               -> No: Wrap the course header of Moodle core in a #courseheaderimage element and add the configured
+                      stacked layout class to it.
+}}
+<header id="page-header" class="header-maxwidth d-print-none">
+    <div class="w-100">
+        <div class="d-flex flex-wrap">
+            {{#hasnavbar}}
+            <div id="page-navbar">
+                {{{navbar}}}
+            </div>
+            {{/hasnavbar}}
+            <div class="ml-auto d-flex">
+                {{{pageheadingbutton}}}
+            </div>
+            <div id="course-header">
+                {{{courseheader}}}
+            </div>
+        </div>
+        {{#welcomemessage}}
+            <div class="d-flex align-items-center">
+                {{> core/welcome }}
+                <div class="header-actions-container ml-auto" data-region="header-actions-container">
+                    {{#headeractions}}
+                        <div class="header-action ml-2">{{{.}}}</div>
+                    {{/headeractions}}
+                </div>
+            </div>
+        {{/welcomemessage}}
+        {{^welcomemessage}}
+            {{^courseheaderimageurl}}
+                <div class="d-flex align-items-center">
+                    {{#contextheader}}
+                        <div class="mr-auto">
+                            {{{contextheader}}}
+                        </div>
+                    {{/contextheader}}
+                    <div class="header-actions-container ml-auto" data-region="header-actions-container">
+                        {{#headeractions}}
+                            <div class="header-action ml-2">{{{.}}}</div>
+                        {{/headeractions}}
+                    </div>
+                </div>
+            {{/courseheaderimageurl}}
+            {{#courseheaderimageurl}}
+                {{#courseheaderimagelayoutheadingabove}}
+                    <div class="d-flex align-items-center">
+                        {{#contextheader}}
+                            <div class="mr-auto">
+                                {{{contextheader}}}
+                            </div>
+                        {{/contextheader}}
+                        <div class="header-actions-container ml-auto" data-region="header-actions-container">
+                            {{#headeractions}}
+                                <div class="header-action ml-2">{{{.}}}</div>
+                            {{/headeractions}}
+                        </div>
+                    </div>
+                    <div id="courseheaderimage" class="p-3 mb-3"
+                         style="background-image: url('{{{courseheaderimageurl}}}');
+                             {{#courseheaderimageheight}}min-height: {{{.}}};{{/courseheaderimageheight}}
+                             {{#courseheaderimageposition}}background-position: {{{.}}};{{/courseheaderimageposition}}">
+                    </div>
+                {{/courseheaderimagelayoutheadingabove}}
+                {{^courseheaderimagelayoutheadingabove}}
+                    <div id="courseheaderimage" class="p-3 mb-3 {{#courseheaderimagelayoutstackedclass}}courseheaderimage-{{{.}}}{{/courseheaderimagelayoutstackedclass}}"
+                            style="background-image: url('{{{courseheaderimageurl}}}');
+                                    {{#courseheaderimageheight}}min-height: {{{.}}};{{/courseheaderimageheight}}
+                                    {{#courseheaderimageposition}}background-position: {{{.}}};{{/courseheaderimageposition}}">
+                        <div class="d-flex align-items-center">
+                            {{#contextheader}}
+                                <div class="mr-auto">
+                                    {{{contextheader}}}
+                                </div>
+                            {{/contextheader}}
+                            <div class="header-actions-container ml-auto" data-region="header-actions-container">
+                                {{#headeractions}}
+                                    <div class="header-action ml-2">{{{.}}}</div>
+                                {{/headeractions}}
+                            </div>
+                        </div>
+                    </div>
+                {{/courseheaderimagelayoutheadingabove}}
+            {{/courseheaderimageurl}}
+        {{/welcomemessage}}
+    </div>
+</header>

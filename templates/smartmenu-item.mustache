@@ -1,0 +1,8 @@
+{{#items}}
+    {{#url}}
+        <a href="{{{url}}}" data-key="{{key}}" data-type="{{type}}" > {{{title}}} </a>
+    {{/url}}
+    {{^url}}
+        <h6 class="smartmenu-heading" > {{{title}}} </h6>
+    {{/url}}
+{{/items}}

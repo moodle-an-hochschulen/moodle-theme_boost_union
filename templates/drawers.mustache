@@ -55,8 +55,11 @@
     Modifications compared to this template:
     * Include theme_boost_union/footnote template
     * Include theme_boost_union/footer template instead of theme_boost/footer
+    * Include theme_boost_union/navbar template instead of theme_boost/navbar
     * Added the possibility to show course related hints.
     * Added the possibility to show info banners.
+    * Include theme_boost_union/advertisementtiles template
+    * Added additional block regions (including JS for offcanvas region)
 }}
 {{> theme_boost/head }}
 
@@ -66,7 +69,7 @@
 
     {{{ output.standard_top_of_body_html }}}
 
-    {{> theme_boost/navbar }}
+    {{> theme_boost_union/navbar }}
     {{#courseindex}}
         {{< theme_boost/drawer }}
             {{$id}}theme_boost-drawers-courseindex{{/id}}
@@ -98,7 +101,55 @@
             {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
+
+    {{^userisediting}}
+        {{#regions.offcanvas.hasblocks}}
+            {{< theme_boost/drawer }}
+                {{$id}}theme_boost_union-drawers-offcanvas{{/id}}
+                {{$drawerclasses}}drawer drawer-top{{/drawerclasses}}
+                {{$drawercontent}}
+                    {{> theme_boost_union/offcanvas}}
+                {{/drawercontent}}
+                {{$forceopen}}0{{/forceopen}}
+                {{$drawerstate}}show-drawer-offcanvas{{/drawerstate}}
+                {{$tooltipplacement}}top{{/tooltipplacement}}
+                {{$drawercloseonresize}}1{{/drawercloseonresize}}
+                {{$closebuttontext}}{{#str}}closeoffcanvas, theme_boost_union{{/str}}{{/closebuttontext}}
+            {{/ theme_boost/drawer}}
+        {{/regions.offcanvas.hasblocks}}
+    {{/userisediting}}
+
     <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+        {{#userisediting}}
+            <div id="theme-block-region-offcanvas-editing" class="collapse">
+                <div id="theme-block-region-offcanvas-editing-inner">
+                    {{> theme_boost_union/offcanvas}}
+                </div>
+            </div>
+        {{/userisediting}}
+
+        {{#regions.outsidetop.hasblocks}}
+            <section id="theme-block-region-outside-top" class="theme-block-region {{{outsidetopwidth}}}" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.outsidetop.addblockbutton }}}
+                {{{ regions.outsidetop.regionhtml }}}
+            </section>
+        {{/regions.outsidetop.hasblocks}}
+
+        {{#regions.header.hasblocks}}
+            <section id="theme-block-region-header" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.header.addblockbutton }}}
+                {{{ regions.header.regionhtml }}}
+            </section>
+        {{/regions.header.hasblocks}}
+
+        <div class="main-inner-wrapper {{{maininnerwrapperclass}}} {{{outsideregionsplacement}}}">
+            {{#regions.outsideleft.hasblocks}}
+                <section id="theme-block-region-outside-left" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.outsideleft.addblockbutton }}}
+                    {{{ regions.outsideleft.regionhtml }}}
+                 </section>
+            {{/regions.outsideleft.hasblocks}}
+
         <div id="topofscroll" class="main-inner">
             <div class="drawer-toggles d-flex">
                 {{#courseindex}}
@@ -143,8 +194,17 @@
                     {{> core/moremenu}}
                 </div>
             {{/secondarymoremenu}}
+            {{#regions.contentupper.hasblocks}}
+                <section id="theme-block-region-content-upper" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.contentupper.addblockbutton }}}
+                    {{{ regions.contentupper.regionhtml }}}
+                </section>
+            {{/regions.contentupper.hasblocks}}
             <div id="page-content" class="pb-3 d-print-block">
                 <div id="region-main-box">
+                    {{#advtilespositionbefore}}
+                        {{> theme_boost_union/advertisementtiles }}
+                    {{/advtilespositionbefore}}
                     {{#hasregionmainsettingsmenu}}
                     <div id="region-main-settings-menu" class="d-print-none">
                         <div> {{{ regionmainsettingsmenu }}} </div>
@@ -172,9 +232,59 @@
                         {{{ output.course_content_footer }}}
 
                     </section>
+                    {{#advtilespositionafter}}
+                        {{> theme_boost_union/advertisementtiles }}
+                    {{/advtilespositionafter}}
                 </div>
             </div>
+            {{#regions.contentlower.hasblocks}}
+                <section id="theme-block-region-content-lower" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.contentlower.addblockbutton }}}
+                    {{{ regions.contentlower.regionhtml }}}
+                </section>
+            {{/regions.contentlower.hasblocks}}
         </div>
+
+        {{#regions.outsideright.hasblocks}}
+            <section id="theme-block-region-outside-right" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.outsideright.addblockbutton }}}
+                {{{ regions.outsideright.regionhtml }}}
+            </section>
+        {{/regions.outsideright.hasblocks}}
+        </div>
+
+        {{#regions.outsidebottom.hasblocks}}
+            <section id="theme-block-region-outside-bottom" class="theme-block-region {{{outsidebottomwidth}}}" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.outsidebottom.addblockbutton }}}
+                {{{ regions.outsidebottom.regionhtml }}}
+            </section>
+        {{/regions.outsidebottom.hasblocks}}
+
+        {{#regions.footer.hasblocks}}
+            <div id="theme-block-region-footer">
+                <div class="row">
+                     {{#regions.footerleft.hasblocks}}
+                        <section id="theme-block-region-footer-left" class="theme-block-region {{regions.footer.class}}" aria-label="{{#str}}blocks{{/str}}">
+                            {{{ regions.footerleft.addblockbutton }}}
+                            {{{ regions.footerleft.regionhtml }}}
+                        </section>
+                    {{/regions.footerleft.hasblocks}}
+                    {{#regions.footercenter.hasblocks}}
+                        <section id="theme-block-region-footer-center" class="theme-block-region {{regions.footer.class}}" aria-label="{{#str}}blocks{{/str}}">
+                            {{{ regions.footercenter.addblockbutton }}}
+                            {{{ regions.footercenter.regionhtml }}}
+                        </section>
+                    {{/regions.footercenter.hasblocks}}
+                    {{#regions.footerright.hasblocks}}
+                        <section id="theme-block-region-footer-right" class="theme-block-region {{regions.footer.class}}" aria-label="{{#str}}blocks{{/str}}">
+                            {{{ regions.footerright.addblockbutton }}}
+                            {{{ regions.footerright.regionhtml }}}
+                        </section>
+                    {{/regions.footerright.hasblocks}}
+                </div>
+            </div>
+        {{/regions.footer.hasblocks}}
+
         {{> theme_boost_union/footer }}
         {{> theme_boost_union/footnote }}
     </div>
@@ -185,8 +295,13 @@
 </html>
 {{#js}}
 M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
+require(['theme_boost/loader', 'theme_boost/drawer',
+    'theme_boost_union/offcanvas', 'theme_boost_union/smartmenu'], function(Loader, Drawer, OffCanvas, SmartMenu) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
+    OffCanvas.init();
+    SmartMenu.init();
 });
+
+
 {{/js}}
