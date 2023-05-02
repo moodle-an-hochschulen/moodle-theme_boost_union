@@ -417,8 +417,8 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         // Send stored file (and cache it for 90 days, similar to other static assets within Moodle).
         send_stored_file($file, DAYSECS * 90, 0, $forcedownload, $options);
 
+    // Serve smart menu card image for items.
     } else if ($filearea === 'smartmenus_itemimage' && $context->contextlevel === CONTEXT_SYSTEM) {
-
         $fs = get_file_storage();
 
         $file = $fs->get_file($context->id, 'theme_boost_union', $filearea, $args[0], '/', $args[1]);
@@ -463,10 +463,3 @@ function theme_boost_union_before_standard_html_head() {
     // Return an empty string to keep the caller happy.
     return $html;
 }
-
-/* function theme_boost_union_page_init($page) {
-    \theme_boost_union\smartmenu::build_smartmenu($page);/*
-    $page->primarynav->add(get_string('myhome'), new \moodle_url('/my/'),
-    primary::TYPE_SETTING, null, 'myhome1', new \pix_icon('i/dashboard', '')); *
-    // exit;
-} */

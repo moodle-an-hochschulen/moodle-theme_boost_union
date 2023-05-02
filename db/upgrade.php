@@ -216,7 +216,7 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
             $dbman->create_table($table);
         }
         // Update the boost_union theme savepoint.
-        upgrade_plugin_savepoint(true, 2023010518, 'theme', 'boost_union');
+        upgrade_plugin_savepoint(true, 2023010519, 'theme', 'boost_union');
     }
 
     return true;

@@ -99,10 +99,9 @@ if ($PAGE->has_secondary_navigation()) {
         $overflow = $overflowdata->export_for_template($OUTPUT);
     }
 }
-
+// Load the navigation from boost_union primary navigation, the extended version of core primary navigation.
+// It includes the smart menus and menu items, for multiple locations.
 $primary = new theme_boost_union\output\navigation\primary($PAGE);
-/* print_object($PAGE->primarynav);
-exit; */
 $renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
