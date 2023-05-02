@@ -31,6 +31,7 @@
  * * Include advertisement tiles
  * * Include info banners
  * * Include additional block regions
+ * * Handle admin setting for right-hand block drawer of site home
  *
  * @package   theme_boost_union
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch

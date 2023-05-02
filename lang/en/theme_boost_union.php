@@ -641,13 +641,13 @@ $string['tiletitlesetting_desc'] = 'Here, you enter the title which should be di
 
 // ... Section: Site home right-hand block drawer behaviour.
 $string['sitehomerighthandblockdrawerbehaviour'] = 'Site home right-hand block drawer';
-// ... ... Setting: Show site home right-hand blocks drawer on visit setting.
+// ... ... Setting: Show right-hand block drawer of site home on visit.
 $string['showsitehomerighthandblockdraweronvisitsetting'] = 'Show right-hand block drawer of site home on visit';
 $string['showsitehomerighthandblockdraweronvisitsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who are not logged in and does not overwrite the toggle state of each individual user.';
-// ... ... Setting: Show site home right-hand block drawer on first login setting.
+// ... ... Setting: Show right-hand block drawer of site home on first login.
 $string['showsitehomerighthandblockdraweronfirstloginsetting'] = 'Show right-hand block drawer of site home on first login';
 $string['showsitehomerighthandblockdraweronfirstloginsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in for the very first time and does not overwrite the toggle state of each individual user.';
-// ... ... Setting: Show site home right-hand block drawer on guest login setting.
+// ... ... Setting: Show right-hand block drawer of site home on guest login.
 $string['showsitehomerighthandblockdraweronguestloginsetting'] = 'Show right-hand block drawer of site home on guest login';
 $string['showsitehomerighthandblockdraweronguestloginsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in as a guest.';
 

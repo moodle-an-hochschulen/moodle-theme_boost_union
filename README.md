@@ -294,6 +294,7 @@ With this setting, you can set the width of the 'Outside (bottom)' block region 
 ###### Outside regions horizontal placement
 
 With this setting, you can control if, on larger screens, the 'Outside (left)' and 'Outside (right)' block regions should be placed near the main content area or rather near the window edges.
+
 ##### Site home right-hand block drawer
 
 ###### Show right-hand block drawer of site home on visit
