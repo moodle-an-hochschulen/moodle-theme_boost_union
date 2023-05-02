@@ -131,8 +131,8 @@ class smartmenu_helper {
         global $DB;
 
         $roles = $this->data->roles;
-
-        if ($roles != '' || empty($roles)) {
+        // Roles not mentioned then stop the role check.
+        if ($roles == '' || empty($roles)) {
             return true;
         }
 
@@ -160,13 +160,16 @@ class smartmenu_helper {
 
         $cohorts = $this->data->cohorts;
 
-        if ($cohorts != '' || empty($cohorts)) {
+        if ($cohorts == '' || empty($cohorts)) {
             return true;
         }
-
+        // Build insql to confirm the user cohort is available in the configured cohort.
         list($insql, $inparam) = $DB->get_in_or_equal($cohorts, SQL_PARAMS_NAMED, 'ch');
 
+        // If operator is all then check the count of user assigned cohorts,
+        // Confirm the count is same as configured menu/items cohorts count.
         $condition = $this->data->operator == smartmenu::ALL ? " GROUP BY cm.userid HAVING COUNT(DISTINCT c.id) = :chcount" : '';
+
         $sql = " JOIN (SELECT count(*) AS member FROM {cohort_members} cm
             JOIN {cohort} c ON cm.cohortid = c.id
             WHERE c.id $insql AND cm.userid=:chuserid $condition) ch";

@@ -57,10 +57,12 @@ $overviewurl = new moodle_url('/theme/boost_union/smartmenus/menus.php');
 
 if ($formdata = $menuform->get_data()) {
     $result = theme_boost_union\smartmenu::manage_instance($formdata);
-    if ($result && $formdata->saveanddisplay) {
+    // After saved the menu data, lets redirect to configure items for this menu.
+    if (isset($formdata->saveanddisplay) && $formdata->saveanddisplay) {
         $itemsurl = new \moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $result]);
         redirect($itemsurl);
     } else {
+        // Redirect to menus list.
         redirect($overviewurl);
     }
 } else if ($menuform->is_cancelled()) {
