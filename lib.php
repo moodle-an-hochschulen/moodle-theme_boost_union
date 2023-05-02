@@ -416,8 +416,8 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         // Send stored file (and cache it for 90 days, similar to other static assets within Moodle).
         send_stored_file($file, DAYSECS * 90, 0, $forcedownload, $options);
 
+    // Serve smart menu card image for items.
     } else if ($filearea === 'smartmenus_itemimage' && $context->contextlevel === CONTEXT_SYSTEM) {
-
         $fs = get_file_storage();
 
         $file = $fs->get_file($context->id, 'theme_boost_union', $filearea, $args[0], '/', $args[1]);
