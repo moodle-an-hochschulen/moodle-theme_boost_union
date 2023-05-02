@@ -1115,9 +1115,6 @@ class smartmenu_item {
 
         $transaction = $DB->start_delegated_transaction();
 
-        // Cache for menu item.
-        $cache = cache::make('theme_boost_union', 'smartmenu_items');
-
         // Cache for menu.
         $menucache = cache::make('theme_boost_union', 'smartmenus');
 
@@ -1143,9 +1140,9 @@ class smartmenu_item {
             }
 
             // Delete the item cached.
-            $cache->delete($itemid);
+            \cache_helper::purge_by_event('theme_boost_union_menuitems_edited');
             // Delete the cached data of its menu.
-            $menucache->delete($formdata->menu);
+            \cache_helper::purge_by_event('theme_boost_union_menus_edited');
 
             // Show the edited success notification.
             \core\notification::success(get_string('smartmenu:updatesuccess', 'theme_boost_union'));

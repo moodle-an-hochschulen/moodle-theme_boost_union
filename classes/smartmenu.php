@@ -738,7 +738,7 @@ class smartmenu {
 
             $DB->update_record('theme_boost_union_menus', $record);
             // Clear the current menu caches. Update may cause changes in the menus list.
-            $cache->delete($menuid);
+            \cache_helper::purge_by_event('theme_boost_union_menus_edited');
 
             // Show the edited success notification.
             \core\notification::success(get_string('smartmenu:updatesuccess', 'theme_boost_union'));
