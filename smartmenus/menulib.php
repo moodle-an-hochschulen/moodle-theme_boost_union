@@ -322,11 +322,11 @@ class smartmenu_helper {
     public static function purge_cache_session_cohort(int $cohortid, int $userid) {
 
         if (self::find_condition_used_menus($cohortid)) {
-            set_user_preference('theme_boost_union_menu_purgesessioncahce', true, $userid);
+            set_user_preference('theme_boost_union_menu_purgesessioncache', true, $userid);
         }
 
         if (self::find_condition_used_menuitems($cohortid)) {
-            set_user_preference('theme_boost_union_menuitem_purgesessioncahce', true, $userid);
+            set_user_preference('theme_boost_union_menuitem_purgesessioncache', true, $userid);
         }
     }
 
@@ -377,11 +377,11 @@ class smartmenu_helper {
     public static function purge_cache_session_roles(int $roleid, int $userid) {
 
         if (self::find_condition_used_menus($roleid, 'roles')) {
-            set_user_preference('theme_boost_union_menu_purgesessioncahce', true, $userid);
+            set_user_preference('theme_boost_union_menu_purgesessioncache', true, $userid);
         }
 
         if (self::find_condition_used_menuitems($roleid, 'roles')) {
-            set_user_preference('theme_boost_union_menuitem_purgesessioncahce', true, $userid);
+            set_user_preference('theme_boost_union_menuitem_purgesessioncache', true, $userid);
         }
     }
 
@@ -455,8 +455,8 @@ class smartmenu_helper {
      */
     public static function purge_all_cache_user_session($userid) {
         // Clear all the menu and item caches for this user.
-        set_user_preference('theme_boost_union_menu_purgesessioncahce', true, $userid);
-        set_user_preference('theme_boost_union_menuitem_purgesessioncahce', true, $userid);
+        set_user_preference('theme_boost_union_menu_purgesessioncache', true, $userid);
+        set_user_preference('theme_boost_union_menuitem_purgesessioncache', true, $userid);
     }
 
     /**
@@ -506,6 +506,24 @@ class smartmenu_helper {
      */
     public static function purge_cache_byevent($key) {
         \cache_helper::purge_by_event($key);
+    }
+
+    /**
+     * Reset the preference of user to clear the session cache for menu items.
+     * @return void
+     */
+    public static function clear_user_cachepreferenceitem() {
+        global $USER;
+        set_user_preference('theme_boost_union_menuitem_purgesessioncache', false, $USER);
+    }
+
+    /**
+     * Reset the preference of user to clear the session cache for menu items.
+     * @return void
+     */
+    public static function clear_user_cachepreferencemenu() {
+        global $USER;
+        set_user_preference('theme_boost_union_menu_purgesessioncache', false, $USER);
     }
 
     /**
@@ -617,8 +635,3 @@ class smartmenu_helper {
         return $langoptions;
     }
 }
-
-
-
-
-

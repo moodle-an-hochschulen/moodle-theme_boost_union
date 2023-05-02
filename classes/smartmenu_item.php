@@ -695,27 +695,17 @@ class smartmenu_item {
 
         $sql = "SELECT ue.courseid FROM (
             SELECT
-                CASE WHEN (mcm.progress/cms.total) * 100 = 100 THEN 'completed'
-                    WHEN mcm.progress > 0 THEN 'inprogress'
-                    WHEN ue.timestart > 0 THEN 'enrolled'
-                    ELSE NULL
+                CASE WHEN cc.timecompleted > 0 THEN 'completed'
+                    WHEN cc.timestarted > 0 THEN 'inprogress'
+                    ELSE 'enrolled'
                     END AS status,
                     e.courseid AS courseid
             FROM {user_enrolments} ue
             LEFT JOIN {enrol} e ON ue.enrolid = e.id
-            LEFT JOIN (
-                SELECT count(*) AS total, course FROM {course_modules}
-                WHERE completion >= 1 GROUP BY course
-            ) cms ON cms.course = e.courseid
-            LEFT JOIN (
-                SELECT count(*) as progress, cm.course, mc.userid FROM {course_modules} cm
-                JOIN {course_modules_completion} mc ON mc.coursemoduleid = cm.id
-                WHERE mc.completionstate > 0 GROUP BY mc.userid, cm.course
-            ) mcm ON mcm.course = e.courseid AND mcm.userid = ue.userid
+            LEFT JOIN {course_completions} cc ON cc.course = e.courseid AND ue.userid = cc.userid
             WHERE ue.userid = :fueuserid AND ue.status <= 0
             AND (ue.timestart = 0 OR ue.timestart <= :timestart)
             AND (ue.timeend = 0 OR ue.timeend > :timeend)
-
         ) ue WHERE ue.status $insql";
 
         $query->where[] = " c.id IN ($sql) ";
@@ -818,17 +808,19 @@ class smartmenu_item {
     public function build() {
         global $DB;
 
-        // Cache for menu.
-        $cache = cache::make('theme_boost_union', 'smartmenu_items');
-
-        // Purge the cahced menus data if the menu date restrictions are reached or passed.
-        smartmenu_helper::purge_cache_date_reached($cache, $this->item, 'theme_boost_union_menuitemlastcheckdate');
-
         // If the flag to purge the menuitems cache is set for this user.
         if (get_user_preferences('theme_boost_union_menuitem_purgesessioncache', false) == true) {
             // Purge the menuitems cache for this user.
             \cache_helper::purge_by_definition('theme_boost_union', 'smartmenu_items');
+            // Clear the user preference for purge the menuitem cache.
+            \smartmenu_helper::clear_user_cachepreferenceitem();
         }
+
+        // Cache for menu.
+        $cache = cache::make('theme_boost_union', 'smartmenu_items');
+
+        // Purge the cached menus data if the menu date restrictions are reached or passed.
+        smartmenu_helper::purge_cache_date_reached($cache, $this->item, 'theme_boost_union_menuitemlastcheckdate');
 
         // Get the node data for item from cache if it is stored.
         if ($result = $cache->get($this->item->id)) {

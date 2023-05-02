@@ -130,10 +130,6 @@ class smartmenu_item_form extends \moodleform {
         // Using custom fields to setup the conditions.
         menuitem::load_custom_field_config($mform);
 
-        // Starred.
-        $mform->addElement('advcheckbox', 'starred', get_string('favourites', 'core'));
-        $mform->hideIf('starred', 'type', 'neq', menuitem::TYPEDYNAMIC);
-
         // Appearance section.
         $mform->addElement('header', 'appearance_header', get_string('appearance', 'core'));
         $mform->addElement('static', 'appearanceheader_desc', get_string('smartmenu:appearanceheader_desc', 'theme_boost_union'));

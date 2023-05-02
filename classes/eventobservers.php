@@ -127,8 +127,8 @@ class eventobservers {
      * @param \core\event\base $event The event that triggered the handler.
      */
     public static function user_updated(\core\event\base $event) {
-        set_user_preference('theme_boost_union_menu_purgesessioncahce', true, $event->relateduserid);
-        set_user_preference('theme_boost_union_menuitem_purgesessioncahce', true, $event->relateduserid);
+        set_user_preference('theme_boost_union_menu_purgesessioncache', true, $event->relateduserid);
+        set_user_preference('theme_boost_union_menuitem_purgesessioncache', true, $event->relateduserid);
     }
 
     /**

@@ -196,30 +196,6 @@ class menuitems extends \table_sql {
             'sesskey' => \sesskey()
         ]);
         $actions = array();
-        // Edit.
-        $actions[] = array(
-            'url' => new moodle_url('/theme/boost_union/smartmenus/edit_items.php', [
-                'id' => $row->id,
-                'sesskey' => sesskey()
-            ]),
-            'icon' => new \pix_icon('t/edit', \get_string('edit')),
-            'attributes' => array('class' => 'action-edit')
-        );
-
-        // Make the menu duplicate.
-        $actions[] = array(
-            'url' => new \moodle_url($baseurl, ['action' => 'copy']),
-            'icon' => new \pix_icon('t/copy', \get_string('copycourse')),
-            'attributes' => array('class' => 'action-copy')
-        );
-
-        // Delete.
-        $actions[] = array(
-            'url' => new \moodle_url($baseurl, array('action' => 'delete')),
-            'icon' => new \pix_icon('t/delete', \get_string('delete')),
-            'attributes' => array('class' => 'action-delete'),
-            'action' => new \confirm_action(get_string('deleteconfirm', 'tool_recyclebin'))
-        );
 
         // Show/Hide.
         if ($row->visible) {
@@ -235,6 +211,30 @@ class menuitems extends \table_sql {
                 'attributes' => array('data-action' => 'show', 'class' => 'action-show')
             );
         }
+        // Edit.
+        $actions[] = array(
+            'url' => new moodle_url('/theme/boost_union/smartmenus/edit_items.php', [
+                'id' => $row->id,
+                'sesskey' => sesskey()
+            ]),
+            'icon' => new \pix_icon('t/edit', \get_string('edit')),
+            'attributes' => array('class' => 'action-edit')
+        );
+
+        // Make the menu item duplicate.
+        $actions[] = array(
+            'url' => new \moodle_url($baseurl, ['action' => 'copy']),
+            'icon' => new \pix_icon('t/copy', \get_string('smartmenu:copyitem', 'theme_boost_union')),
+            'attributes' => array('class' => 'action-copy')
+        );
+
+        // Delete.
+        $actions[] = array(
+            'url' => new \moodle_url($baseurl, array('action' => 'delete')),
+            'icon' => new \pix_icon('t/delete', \get_string('delete')),
+            'attributes' => array('class' => 'action-delete'),
+            'action' => new \confirm_action(get_string('smartmenu:deleteconfirmitem', 'theme_boost_union'))
+        );
 
         // Move up/down.
         $actions[] = array(

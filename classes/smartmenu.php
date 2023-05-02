@@ -527,8 +527,15 @@ class smartmenu {
         // Cache for menu.
         $cache = cache::make('theme_boost_union', 'smartmenus');
 
-        // Purge the cahced menus data if the menu date restrictions are reached or passed.
+        // Purge the cached menus data if the menu date restrictions are reached or passed.
         smartmenu_helper::purge_cache_date_reached($cache, $this->menu, 'theme_boost_union_menulastcheckdate');
+
+        // If the flag to purge the menu cache is set for this user.
+        if (get_user_preferences('theme_boost_union_menu_purgesessioncache', false) == true) {
+            // Purge the menu cache for this user.
+            \cache_helper::purge_by_definition('theme_boost_union', 'smartmenus');
+            \smartmenu_helper::clear_user_cachepreferencemenu();
+        }
 
         // Get the menu and its menu items from cache.
         if ($nodes = $cache->get($this->menu->id)) {

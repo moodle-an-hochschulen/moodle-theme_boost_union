@@ -815,3 +815,7 @@ $string['smartmenu:restriction'] = 'Access rules';
 $string['smartmenu:norestrict'] = 'No restricted';
 $string['savechangesandconfigure'] = 'Save and configure items';
 $string['smartmenussettins'] = 'Smart menu - settings';
+$string['smartmenu:deleteconfirmmenu'] = 'Are you sure you want to delete this menu from the smart menus?';
+$string['smartmenu:deleteconfirmitem'] = 'Are you sure you want to delete this menu item from the smart menus?';
+$string['smartmenu:copyitem'] = 'Copy menu item';
+$string['smartmenu:copymenu'] = 'Copy menu and it items';
