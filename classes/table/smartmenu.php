@@ -168,6 +168,22 @@ class smartmenu extends \table_sql {
             'sesskey' => \sesskey()
         ]);
         $actions = array();
+
+        // Show/Hide.
+        if ($row->visible) {
+            $actions[] = array(
+                'url' => new \moodle_url($baseurl, array('action' => 'hidemenu')),
+                'icon' => new \pix_icon('t/hide', \get_string('hide')),
+                'attributes' => array('data-action' => 'hide', 'class' => 'action-hide')
+            );
+        } else {
+            $actions[] = array(
+                'url' => new \moodle_url($baseurl, array('action' => 'showmenu')),
+                'icon' => new \pix_icon('t/show', \get_string('show')),
+                'attributes' => array('data-action' => 'show', 'class' => 'action-show')
+            );
+        }
+
         // Edit.
         $actions[] = array(
             'url' => new moodle_url('/theme/boost_union/smartmenus/edit.php', [
@@ -181,7 +197,7 @@ class smartmenu extends \table_sql {
         // Make the menu duplicate.
         $actions[] = array(
             'url' => new \moodle_url($baseurl, ['action' => 'copy']),
-            'icon' => new \pix_icon('t/copy', \get_string('copycourse')),
+            'icon' => new \pix_icon('t/copy', \get_string('smartmenu:copymenu', 'theme_boost_union')),
             'attributes' => array('class' => 'action-copy')
         );
 
@@ -198,23 +214,8 @@ class smartmenu extends \table_sql {
             'url' => new \moodle_url($baseurl, array('action' => 'delete')),
             'icon' => new \pix_icon('t/delete', \get_string('delete')),
             'attributes' => array('class' => 'action-delete'),
-            'action' => new \confirm_action(get_string('deleteconfirm', 'tool_recyclebin'))
+            'action' => new \confirm_action(get_string('smartmenu:deleteconfirmmenu', 'theme_boost_union'))
         );
-
-        // Show/Hide.
-        if ($row->visible) {
-            $actions[] = array(
-                'url' => new \moodle_url($baseurl, array('action' => 'hidemenu')),
-                'icon' => new \pix_icon('t/hide', \get_string('hide')),
-                'attributes' => array('data-action' => 'hide', 'class' => 'action-hide')
-            );
-        } else {
-            $actions[] = array(
-                'url' => new \moodle_url($baseurl, array('action' => 'showmenu')),
-                'icon' => new \pix_icon('t/show', \get_string('show')),
-                'attributes' => array('data-action' => 'show', 'class' => 'action-show')
-            );
-        }
 
         // Move up/down.
         $actions[] = array(
