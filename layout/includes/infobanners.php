@@ -17,9 +17,10 @@
 /**
  * Theme Boost Union - info banners layout include.
  *
- * @package   theme_boost_union
- * @copyright 2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    theme_boost_union
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @copyright  on behalf of Zurich University of Applied Sciences (ZHAW)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -86,7 +87,7 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_INFOBANNER_COUNT; $i++) {
 }
 
 // Reorder the info banners based on their order settings.
-usort($infobanners, 'theme_boost_union_infobanner_compare_order');
+usort($infobanners, 'theme_boost_union_compare_order');
 
 // Add info banners data to templatecontext.
 $templatecontext['infobanners'] = $infobanners;

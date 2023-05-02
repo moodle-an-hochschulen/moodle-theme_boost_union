@@ -18,7 +18,7 @@
  * Theme Boost Union - Imprint page.
  *
  * @package    theme_boost_union
- * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -60,13 +60,13 @@ if ($config->enableimprint != THEME_BOOST_UNION_SETTING_SELECT_YES) {
 }
 
 // Set page title.
-$PAGE->set_title(theme_boost_union_get_imprint_pagetitle());
+$PAGE->set_title(theme_boost_union_get_staticpage_pagetitle('imprint'));
 
 // Start page output.
 echo $OUTPUT->header();
 
 // Show page heading.
-echo $OUTPUT->heading(theme_boost_union_get_imprint_pagetitle());
+echo $OUTPUT->heading(theme_boost_union_get_staticpage_pagetitle('imprint'));
 
 // Output imprint content.
 echo format_text($config->imprintcontent);

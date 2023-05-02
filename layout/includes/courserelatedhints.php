@@ -17,14 +17,13 @@
 /**
  * Theme Boost Union - course related hints include.
  *
- * @package   theme_boost_union
- * @copyright 2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    theme_boost_union
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @copyright  on behalf of Zurich University of Applied Sciences (ZHAW)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
-
-$footnotesetting = get_config('theme_boost_union', 'footnote');
 
 // Get and use the course related hints HTML code, if any hints are configured.
 $courserelatedhintshtml = theme_boost_union_get_course_related_hints();

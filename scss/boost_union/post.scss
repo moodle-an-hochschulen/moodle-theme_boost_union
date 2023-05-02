@@ -1,4 +1,266 @@
 /*=======================================
+ * Settings: Look -> Branding
+ ======================================*/
+
+/*---------------------------------------
+ * Setting: Compact logo
+ --------------------------------------*/
+
+/* Add an explicit height to the logo in the navbar.
+   This is necessary to render SVG logos properly as their size is calculated different than pixel-based images. */
+.navbar-brand,
+.navbar-brand .logo {
+    height: 100%;
+    width: auto;
+}
+
+/*---------------------------------------
+ * Setting: Navbar color
+ --------------------------------------*/
+
+/* Moodle core already presents the light navbar with dark font color (.navbar-light.bg-white) perfectly.
+   There is nothing to change here. */
+
+/* Tweak the dark navbar with light font color
+   and the primary color navbar with light font color. */
+.navbar.navbar-dark.bg-dark,
+.navbar.navbar-dark.bg-primary {
+    /* Remove the white border at the bottom of the navbar as it looks odd with a dark navbar. */
+    border-bottom: none;
+
+    /* Change the color of the site name in the navbar to light grey and to white when active. */
+    .navbar-brand {
+        color: #c8c8c8;
+    }
+    .navbar-brand:hover {
+        color: $white;
+    }
+
+    /* Change the color of the navigation items in the navbar to light grey, to white when active
+       and to black when hovered (as Moodle core will then show a white background).
+       This has to use !important as Moodle core already uses !important for some of its hover states. */
+    .nav-link {
+        color: #c8c8c8;
+    }
+    .nav-link.active {
+        color: $white;
+    }
+    .nav-link:hover,
+    .nav-link:focus {
+        color: $black !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    /* Change the background color and colors of open custom menu parent navigation items in the navbar
+       as they are built differently from single navigation items. */
+    .nav-item.dropdown.show .nav-link.dropdown-toggle {
+        background-color: #f8f9fa;
+        color: $black;
+    }
+
+    /* Change the color of the icons in the navbar as well as the toggle icon in the usermenu
+       to a light grey and to white when hovered.
+       This has to use !important as Moodle core already uses !important for the icon colors. */
+    .nav-link .icon,
+    .nav-link a .icon,
+    .usermenu .dropdown-toggle {
+        color: #c8c8c8 !important; /* stylelint-disable-line declaration-no-important */
+    }
+    .nav-link:hover .icon,
+    .nav-link:hover a .icon,
+    .usermenu .dropdown-toggle:hover {
+        color: $white !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    /* Revert color of the close icon in the search panel in the navbar as this icon is still dark on white
+       within the input form. */
+    #searchform-navbar .btn-close .icon {
+        color: #6a737b !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    /* Change the color of the edit switch label in the navbar to light grey and to white when hovered.
+       This has to use !important as Moodle core would change the color to text-primary as soon as editing is on. */
+    .editmode-switch-form,
+    .editmode-switch-form label {
+        color: #c8c8c8 !important; /* stylelint-disable-line declaration-no-important */
+    }
+    .editmode-switch-form label:hover {
+        color: $white !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    /* Adapt the color of the edit switch widget to fit onto the dark background. */
+    .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: $white;
+        border-color: #c8c8c8;
+    }
+    .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+        background-color: #8f959e;
+    }
+
+    /* Change the color of the offcanvas button to fit onto the dark background. */
+    #theme_boost_union-offcanvas-btn {
+        color: #c8c8c8;
+    }
+    #theme_boost_union-offcanvas-btn:hover {
+        color: #fff;
+    }
+
+    /* Change the color of the login link in the navbar to a light grey and to white when hovered. */
+    .login,
+    .login a {
+        color: #c8c8c8;
+    }
+    .login a:hover {
+        color: $white;
+    }
+}
+
+/* Tweak the dark navbar with light font color a little bit more. */
+.navbar.navbar-dark.bg-dark {
+    /* Change the background color of the custom child menu and user menu navigation items in the navbar
+       to dark grey when hovered and focused (especially during keyboard navigation) */
+    .nav-item.dropdown.show,
+    #user-action-menu.show {
+        a.dropdown-item {
+            background-color: inherit;
+        }
+        a.dropdown-item:hover,
+        a.dropdown-item:focus {
+            background-color: #343a40;
+        }
+    }
+
+    /* Change the background color of the search panel in the navbar. */
+    #searchform-navbar {
+        background-color: #343a40;
+    }
+}
+
+/* Tweak the primary color navbar with light font color a little bit more. */
+.navbar.navbar-dark.bg-primary {
+    /* Change the background color of the custom child menu and user menu navigation items in the navbar
+       to dark grey when hovered and focused (especially during keyboard navigation) */
+    .nav-item.dropdown.show,
+    #user-action-menu.show {
+        a.dropdown-item {
+            background-color: inherit;
+        }
+        a.dropdown-item:hover,
+        a.dropdown-item:focus {
+            background-color: $primary;
+        }
+    }
+
+    /* Change the background color of the search panel in the navbar. */
+    #searchform-navbar {
+        background-color: $primary;
+    }
+}
+
+/* Tweak the primary color navbar with dark font color. */
+.navbar.navbar-light.bg-primary {
+    /* Change the color of the active nav items's bottom border to white as this would be presented in the
+       primary color as well otherwise. */
+    .nav-link.active {
+        border-bottom-color: $white;
+    }
+
+    /* Change the background color and colors of open custom menu parent navigation items in the navbar
+   as they are built differently from single navigation items. */
+    .nav-item.dropdown.show .nav-link.dropdown-toggle {
+        background-color: #f8f9fa;
+        color: $black;
+    }
+
+    /* Change the color of the edit switch label in the navbar to dark grey.
+       This has to use !important as Moodle core wants to use the color text-primary as soon as editing is on. */
+    .editmode-switch-form,
+    .editmode-switch-form label {
+        color: rgba($black, .6) !important; /* stylelint-disable-line declaration-no-important */
+    }
+    .editmode-switch-form label:hover {
+        color: rgba($black, .9) !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    /* Adapt the color of the edit switch widget to fit onto the dark background. */
+    .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: $white;
+        border-color: #c8c8c8;
+    }
+    .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+        background-color: #8f959e;
+    }
+
+    /* Change the background color of the search panel in the navbar. */
+    #searchform-navbar {
+        background-color: $primary;
+    }
+}
+
+/*=======================================
+ * Settings: Look -> Login page
+ ======================================*/
+
+/*---------------------------------------
+ * Setting: Login form position
+ --------------------------------------*/
+
+/* Move the login window to the side based on the theme settings.
+   While the classes login-wrapper-left and login-wrapper-right are set here,
+   the class login-wrapper-center is not set here as the login form is already centered by Moodle core. */
+.login-wrapper.login-wrapper-left {
+    justify-content: left;
+}
+.login-wrapper.login-wrapper-right {
+    justify-content: right;
+}
+
+/*---------------------------------------
+ * Setting: Login form transparency
+ --------------------------------------*/
+
+/* Make background of login panel slightly transparent. */
+.login-container.login-container-80t {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+
+/*=======================================
+ * Settings: Look -> Course
+ ======================================*/
+
+/*---------------------------------------
+ * Setting: Course header image.
+ --------------------------------------*/
+#courseheaderimage {
+    background-size: cover;
+    @include border-radius();
+}
+.courseheaderimage-dark {
+    color: white;
+    text-shadow: 0 0 5px black;
+}
+.courseheaderimage-light {
+    color: black;
+    text-shadow: 0 0 5px white;
+}
+
+/*=======================================
+ * Settings: Look -> Resources
+ ======================================*/
+
+/*---------------------------------------
+ * Setting: Additional resources.
+ --------------------------------------*/
+
+/* Enlarge the icons in the settings file lists. */
+.settings-additionalresources-filelist .icon,
+.settings-customfonts-filelist .icon {
+    height: 64px;
+    width: 64px;
+}
+
+
+/*=======================================
  * Settings: Feel -> Navigation.
  ======================================*/
 
@@ -33,36 +295,477 @@
     right: calc(#{$drawer-right-width} + 2rem);
 }
 
+/* As soon as the sticky footer is shown (especially in the database activity),
+   the back to top button has to be moved further up.
+   Again, we have to distinguish between really small screens and larger screens
+   (where the fotter button is shown as well). */
+body.hasstickyfooter #back-to-top {
+    bottom: 5rem;
+    @include media-breakpoint-up(sm) {
+        bottom: 9rem;
+    }
+}
+
+
+/*=======================================
+ * Settings: Feel -> Blocks.
+ ======================================*/
+
+/*---------------------------------------
+ * Settings: Additional block regions - The offcanvas region.
+ --------------------------------------*/
+
+/* The Offcanvas drawer (which is only used in non-editing mode). */
+#theme_boost_union-drawers-offcanvas {
+    /* Position and size (which takes effect as soon as the drawer is shown). */
+    background-color: $gray-100;
+    box-shadow: 2px 2px 4px $drawer-shadow-color;
+    height: calc(100vh - 3rem);
+    min-height: 300px;
+    top: -100vh;
+    width: 100vw;
+    z-index: 1050; /* This z-index is equal to $zindex-modal and puts the drawer on top of
+                      the whole page regardless what Moodle does for the .drawer class. */
+
+    /* And show it as soon as the drawer is set to be shown. */
+    &.show {
+        top: 0;
+        @include transition(0.2s);
+    }
+
+    /* The close icon to close the Offcanvas drawer. */
+    .drawerheader {
+        /* Position the icon. */
+        .btn {
+            margin-left: auto;
+            margin-right: 10px;
+        }
+
+        /* Make the close icon more visible. */
+        .icon {
+            background: $black;
+            color: $white;
+            border-radius: 5px;
+            padding: 4px;
+        }
+    }
+
+    /* Do what we can to avoid horizontal scrollbars in the Offcanvas drawer's content. */
+    .drawercontent {
+        overflow-x: hidden;
+        > .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+}
+
+/* The Offcanvas block region (which is only used in editing mode as we do not have a drawer then).
+   Please note: #theme-block-region-offcanvas-editing is the outer element which is shown and hidden by Bootstrap
+   Collapse. #theme-block-region-offcanvas-editing-inner is the inner element which we style here. */
+#theme-block-region-offcanvas-editing-inner {
+    /* Position and size (which takes effect as soon as the region is shown). */
+    background-color: $gray-100;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    box-shadow: 2px 2px 4px $drawer-shadow-color;
+    margin: 0 -15px 30px -15px;
+    padding: 15px 15px 0 15px;
+}
+/* Disable the Bootstrap collapse transition as it is not properly working with all the block regions. */
+#theme-block-region-offcanvas-editing.collapsing {
+    transition: none;
+}
+
+/* Navbar icon for opening the offcanvas drawer. */
+.navbar-nav {
+    .drawer-offcanvas-toggle {
+        display: flex;
+        align-items: center;
+        .btn {
+            color: rgba(0, 0, 0, .6);
+            height: 40px;
+            &:hover {
+                color: rgba(0, 0, 0, .9);
+            }
+            i {
+                font-size: 20px;
+                line-height: 30px;
+            }
+        }
+    }
+}
+
+
+/*---------------------------------------
+ * Settings: Additional block regions - The outside-left and outside-right regions.
+ --------------------------------------*/
+
+/* On larger screens. */
+@include media-breakpoint-up(md) {
+    /* On Moodle pages with limited width (currently: The course main pages, the frontpage and the dashboard).
+       Remember: Only on these pages, we offer the outside-left and outside-right region.
+       We do not need to handle the full-width pages here. */
+    body.limitedwidth {
+        /* If we have a outside-left and / or a outside-right block region. */
+        .main-inner-outside-left-right,
+        .main-inner-outside-left,
+        .main-inner-outside-right {
+            /* Center the main region content to keep the page content in the middle of the page. */
+            text-align: center;
+
+            /* Change the block regions to show them properly as block columns. */
+            #theme-block-region-outside-left,
+            #theme-block-region-outside-right,
+            .main-inner {
+                /* Undo the text-align for the regions in each column to still show the content correctly. */
+                text-align: initial;
+
+                /* Display them as inline-block. */
+                display: inline-block;
+
+                /* And make sure that the columns are at the top of the page at all. */
+                vertical-align: top;
+            }
+        }
+
+        /* On pages where only the outside-left region is enabled:
+           Reduce the size of the main column to make space for the outside-left column. */
+        .main-inner-outside-left .main-inner {
+            width: calc(98% - #{$blockregionoutsideleftwidth});
+        }
+
+        /* On pages where only the outside-right region is enabled:
+           Reduce the size of the main column to make space for the outside-right column. */
+        .main-inner-outside-right .main-inner {
+            width: calc(98% - #{$blockregionoutsiderightwidth});
+        }
+
+        /* On pages where the outside-left and the outside-right region are enabled:
+           Reduce the size of the main column to make space for the outside-left and outside-right columns. */
+        .main-inner-outside-left-right .main-inner {
+            width: calc(98% - #{$blockregionoutsiderightwidth} - #{$blockregionoutsideleftwidth});
+        }
+
+        /* Set the width and margin of the outside-left region. */
+        #theme-block-region-outside-left {
+            margin-right: 1rem;
+            margin-top: 1.5rem;
+            width: $blockregionoutsideleftwidth;
+        }
+
+        /* Set the width of the outside-right region. */
+        #theme-block-region-outside-right {
+            margin-left: 1rem;
+            margin-top: 1.5rem;
+            width: $blockregionoutsiderightwidth;
+        }
+
+        /* If the admin configured outside blocks to be shown next to the main content. */
+        .main-inner-outside-nextmaincontent {
+            #theme-block-region-outside-left,
+            #theme-block-region-outside-right {
+                /* Disable float (just to be sure). */
+                float: none;
+            }
+        }
+
+        /* If the admin configured outside blocks to be shown next to the main content. */
+        .main-inner-outside-nearwindowedges {
+            /* Float the outside-left block region to the left. */
+            #theme-block-region-outside-left {
+                float: left;
+            }
+
+            /* Float the outside-right block region to the right. */
+            #theme-block-region-outside-right {
+                float: right;
+            }
+
+            /* Clear the outside-bottom + footer regions so that they are shown correctly after the floated regions. */
+            #theme-block-region-outside-bottom,
+            #theme-block-region-footer {
+                clear: both;
+            }
+        }
+    }
+}
+
+/* And on smaller screens. */
+@include media-breakpoint-down(sm) {
+    /* Change the outside-left and outside-right blocks to full width (with some horizontal space). */
+    #theme-block-region-outside-left,
+    #theme-block-region-outside-right {
+        padding-left: 15px;
+        padding-right: 15px;
+        width: 100%;
+    }
+    /* And remove their floating. */
+    .main-inner-outside-nearwindowedges {
+        #theme-block-region-outside-left,
+        #theme-block-region-outside-right {
+            float: none;
+        }
+    }
+}
+
+
+/*---------------------------------------
+ * Settings: Additional block regions - The outside-top, header and outside-bottom regions.
+ --------------------------------------*/
+
+/* Block regions: Outside top and outside bottom. */
+#theme-block-region-outside-top,
+#theme-block-region-outside-bottom {
+    /* On larger screens. */
+    @include media-breakpoint-up(md) {
+        /* Position and size. */
+        &.theme-block-region-outside-fullwidth,
+        &.theme-block-region-outside-coursecontentwidth {
+            margin: 1rem auto;
+            width: 100%;
+        }
+        &.theme-block-region-outside-herowidth {
+            margin: 0 -3rem 0 -3rem;
+            /* We do not set any width at all.
+               100% would be too small, 100vw would add horizontal scrollbars (for whatever reason). */
+        }
+    }
+
+    /* And on smaller screens. */
+    @include media-breakpoint-down(sm) {
+        &.theme-block-region-outside-fullwidth,
+        &.theme-block-region-outside-coursecontentwidth {
+            /* Just show the block full width with some horizontal space. */
+            padding-left: 15px;
+            padding-right: 15px;
+            width: 100%;
+        }
+        &.theme-block-region-outside-herowidth {
+            /* Remove the margin. */
+            margin: 0;
+        }
+    }
+}
+
+/* Additional styling for content width regions to limit the block region size on Moodle pages with limited width. */
+body.limitedwidth .theme-block-region-outside-coursecontentwidth {
+    max-width: $course-content-maxwidth;
+}
+
+/* Additional styling for hero-width regions to remove some styling which is counterproductive. */
+.theme-block-region-outside-herowidth {
+    .block {
+        border-width: 0;
+        border-radius: 0;
+    }
+}
+
+/* Block region: Header. */
+#theme-block-region-header {
+    /* On larger screens. */
+    @include media-breakpoint-up(md) {
+        /* Position and size. */
+        margin: 0 auto;
+        max-width: $course-content-maxwidth;
+        width: 100%;
+    }
+
+    /* And on smaller screens. */
+    @include media-breakpoint-down(sm) {
+        /* Just show the block full width with some horizontal space. */
+        padding-left: 15px;
+        padding-right: 15px;
+        width: 100%;
+    }
+
+    /* Add margin-top to avoid that this block region is glued to the navbar if
+       #theme-block-region-outside-top does not exist. */
+    margin-top: 1rem;
+}
+/* Remove margin-top again if this block region is already preceded by the outside-top region. */
+#theme-block-region-outside-top + #theme-block-region-header {
+    margin-top: 0;
+}
+
+
+/*---------------------------------------
+ * Settings: Additional block regions - The footer regions.
+ --------------------------------------*/
+
+/* Block region: Footer. */
+#theme-block-region-footer {
+    /* Position and size. */
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* And on smaller screens. */
+@include media-breakpoint-down(sm) {
+    /* Add some horizontal space on the small screen. */
+    #theme-block-region-footer {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+
+/*---------------------------------------
+ * Settings: Additional block regions - The content regions.
+ --------------------------------------*/
+
+/* Block region: Content-upper and Content-lower. */
+#theme-block-region-content-upper,
+#theme-block-region-content-lower {
+    /* Position and size. */
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
 
 /*=======================================
  * Settings: Content -> Footnote.
  ======================================*/
 
-/* Add horizontal margin to align the footnote with the main page content. */
+/* Static pages links dividers. */
 #footnote {
-    /* On larger screens. */
-    @include media-breakpoint-up(md) {
-        margin-left: calc(15px + .5rem);
-        margin-right: calc(15px + .5rem);
+    .theme_boost_union_footnote_link {
+        border-right: 2px solid $nav-divider-color;
     }
-    /* And on smaller screens. */
-    @include media-breakpoint-down(sm) {
-        margin-left: 15px;
-        margin-right: 15px;
-    }
-    /* And on really small screens, a left padding is added as well as the footer links appear then instead of the
-       footer icons and everything should align well. */
-    @include media-breakpoint-down(sm) {
-        padding-left: 1rem;
+    .theme_boost_union_footnote_link:last-of-type {
+        border-right: none;
     }
 }
-/* On the login page, the footnote does not need a border-top as the login page has a grey background already.
-   Only on really small screens, the border top is helpful there. */
-@include media-breakpoint-up(sm) {
-    #page-login-index #footnote {
-        /* stylelint-disable-next-line declaration-no-important */
-        border-top: none !important;
+
+/* The footnote styles are different on the login page and on all non-login pages.
+   They are also different on larger and smaller screens.
+   We will deal with the overall cases for all screen sizes first and will then overwrite the things which need
+   to be different on the login page. */
+
+/* On larger screens. */
+@include media-breakpoint-up(md) {
+    /* If there is a background image or a loginbackground image configured. */
+    body.backgroundimage #footnote,
+    body.loginbackgroundimage #footnote {
+        /* Add horizontal padding to align the footnote with the main page content.
+           The numbers are basically adopted from the main content areas of the Moodle page. */
+        padding-left: calc(15px + .5rem);
+        padding-right: calc(15px + .5rem);
+
+        /* Add white background color, border radius and a small bottom margin
+           to make the footnote work with background images. */
+        @include border-radius();
+        background-color: $white;
+        margin-bottom: 1rem;
     }
+
+    /* If there isn't a background image nor a loginbackground image configured. */
+    body:not(.backgroundimage):not(.loginbackgroundimage) #footnote {
+        /* Add horizontal margin to align the footnote with the main page content.
+           The numbers are basically adopted from the main content areas of the Moodle page. */
+        margin-left: calc(15px + .5rem);
+        margin-right: calc(15px + .5rem);
+
+        /* Add top border. */
+        border-top: $border-width solid $border-color;
+    }
+}
+
+/* And on smaller screens. */
+@include media-breakpoint-only(sm) {
+    #footnote {
+        /* On smaller screens, there isn't any background image, so there's no need for a white background. */
+
+        /* Add horizontal margin and padding to align the footnote with the main page content.
+           The numbers are adopted from the main content areas of the Moodle page.
+           Add another right padding as well to avoid that the content gets covered by the footer and back-to-top
+           buttons. */
+        margin-left: .5rem;
+        padding-left: 15px;
+        margin-right: .5rem;
+        padding-right: 51px; /* The underlying calculation is 15px + 36px. */
+
+        /* Add top border. */
+        border-top: $border-width solid $border-color;
+    }
+}
+
+/* And on really small screens. */
+@include media-breakpoint-down(xs) {
+    #footnote {
+        /* On really small screens, there isn't any background image, so there's no need for a white background. */
+
+        /* Add horizontal margin and padding to align the footnote with the main page content.
+           The numbers are adopted from the main content areas of the Moodle page.
+           Add another right padding as well to avoid that the content gets covered by the back-to-top button. */
+        margin-left: 15px;
+        padding-left: 1rem;
+        margin-right: 15px;
+        padding-right: calc(1rem + 36px);
+
+        /* Add top border. */
+        border-top: $border-width solid $border-color;
+    }
+}
+
+/* As said, the login needs some more adjustments. */
+
+/* On larger screens. */
+@include media-breakpoint-up(sm) {
+    /* If there is a loginbackground image configured. */
+    body.pagelayout-login.loginbackgroundimage #footnote {
+        /* Add a box shadow to the footnote to match the look of the login box. */
+        box-shadow: $logincontainer-shadow;
+
+        /* Add horizontal margin as the page does not have a margin itself. */
+        margin-left: 15px;
+        margin-right: 15px;
+
+        /* Add another right padding as well to avoid that the content gets covered by the footer button. */
+        padding-right: calc(.5rem + 51px); /* The underlying calculation is 15px + .5rem + 36px. */
+    }
+}
+
+/* On smaller screens. */
+@include media-breakpoint-only(sm) {
+    /* If there is a loginbackground image configured. */
+    body.pagelayout-login.loginbackgroundimage #footnote {
+        /* Add white background color and a small bottom margin
+           to make the footnote work with background images.
+           This is necessary as this isn't covered by the normal background styles already
+           (which are only applied to pages > 768px.
+           Note that there isn't a border-radius added as the login box doesn't have a border radius as well
+           on this screen size. */
+        background-color: $white;
+        margin-bottom: 1rem;
+    }
+}
+
+/* And on really small screens. */
+@include media-breakpoint-down(xs) {
+    body.pagelayout-login.loginbackgroundimage #footnote {
+        /* Add white background color and a small bottom margin
+           to make the footnote work with background images.
+           This is necessary as this isn't covered by the normal background styles already
+           (which are only applied to pages > 768px. */
+        background-color: $white;
+
+        /* Change horizontal margin and padding to
+           to make the footnote work with background images.
+           We do not need any additional right padding as there isn't a back-to-top button nor a footer button
+           on the login page on this screen size. */
+        margin-left: 0;
+        padding-left: calc(15px + 1rem);
+        margin-right: 0;
+        padding-right: calc(15px + 1rem);
+    }
+}
+
+/* On all screen sizes. */
+/* If there isn't a loginbackground image configured. */
+body.pagelayout-login:not(.loginbackgroundimage) #footnote {
+    /* Remove the top border as there is the gradient in #page. */
+    border-top: none;
 }
 
 
@@ -70,9 +773,54 @@
  * Settings: Content -> Info banner.
  ======================================*/
 
+/* Adjust the margins of the info banners to align with the header and main content on larger screens. */
+@include media-breakpoint-up(md) {
+    .themeboostunioninfobanner {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+}
+
 /* Remove margin after last paragraph for a nicer look. */
 .themeboostunioninfobanner p:last-child {
     margin-bottom: 0;
+}
+
+
+/*=======================================
+ * Settings: Content -> Advertisement tiles.
+ ======================================*/
+
+/* Remove horizontal paddings on the tile container on smaller screens to align it with the main frontpage content. */
+@include media-breakpoint-down(sm) {
+    #themeboostunionadvtiles {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+/* Style the advertisement tile cards. */
+#themeboostunionadvtiles [class*="col-"] .card {
+    background-size: cover;
+    /* d-flex align-items-stretch align-self-stretch classes in mustache template require to set width to inherit
+       (Otherwise width is flexible dependent on content). */
+    width: inherit;
+}
+
+/* Improve the advertisement tile card if a background image is used. */
+.themeboostunionadvtilebg {
+    /* Remove the 1px border which is added around the card by default and which looks strange
+       with a background image. */
+    border: none;
+
+    /* Add a more solid background color so that the title remains readable. */
+    .card-header {
+        background-color: rgba(255, 255, 255, .8);
+    }
+    /* Remove the border-top from the footer. */
+    .card-footer {
+        border-top: none;
+    }
 }
 
 

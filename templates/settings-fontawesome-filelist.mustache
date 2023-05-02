@@ -1,0 +1,65 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/settings-fontawesome-filelist
+
+    Boost Union settingsfilelist layout template.
+
+    Context variables required for this template:
+    * files - Array of files
+
+    Example context (json):
+    {
+        "files": [
+            {
+                "exists": true,
+                "mandatory": true,
+                "filepath": "css/fontawesome.min",
+                "description": "This is the main CSS file which adds all available FontAwesome glyphs to the Moodle page."
+            },
+            {
+                "exists": false,
+                "mandatory": true,
+                "filepath": "webfonts/fa-solid-900",
+                "description": "This is the font file for FontAwesome solid icons (in the WOFF2 format)."
+            },
+            {
+                "exists": false,
+                "mandatory": false,
+                "filepath": "webfonts/fa-brands-400",
+                "description": "This is the font file for FontAwesome brand icons (in the WOFF2 format)."
+            }
+        ]
+    }
+}}
+
+<ul class="list-group my-3 settings-fontawesome-filelist">
+    {{#files}}
+        <li class="list-group-item d-flex justify-content-between">
+            <div class="d-flex flex-row">
+                {{#exists}}<span class="{{#mandatory}}text-success{{/mandatory}}{{^mandatory}}text-success{{/mandatory}}"><i class="fa fa-check-circle-o fa-3x fa-fw"></i></span>{{/exists}}
+                {{^exists}}<span class="{{#mandatory}}text-danger{{/mandatory}}{{^mandatory}}text-muted{{/mandatory}}"><i class="fa fa-times-circle-o fa-3x fa-fw"></i></span>{{/exists}}
+                <div class="ml-3">
+                    <h6 class="mb-0">{{filepath}}</h6>
+                    <small>{{description}}</small><br />
+                    {{#exists}}<small>{{#mandatory}}{{#str}}fontawesomelistmandatoryuploaded,theme_boost_union{{/str}}{{/mandatory}}{{^mandatory}}{{#str}}fontawesomelistoptionaluploaded,theme_boost_union{{/str}}{{/mandatory}}</small>{{/exists}}
+                    {{^exists}}<small>{{#mandatory}}{{#str}}fontawesomelistmandatorymissing,theme_boost_union{{/str}}{{/mandatory}}{{^mandatory}}{{#str}}fontawesomelistoptionalmissing,theme_boost_union{{/str}}{{/mandatory}}</small>{{/exists}}
+                </div>
+            </div>
+        </li>
+    {{/files}}
+</ul>

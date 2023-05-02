@@ -18,7 +18,7 @@
  * Theme Boost Union - Local library
  *
  * @package    theme_boost_union
- * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -26,7 +26,7 @@
  * Build the course related hints HTML code.
  * This function evaluates and composes all course related hints which may appear on a course page below the course header.
  *
- * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @copyright  based on code from theme_boost_campus by Kathrin Osswald.
  *
  * @return string.
@@ -279,36 +279,39 @@ function theme_boost_union_get_course_related_hints() {
 }
 
 /**
- * Build the link to the imprint page.
+ * Build the link to a static page.
  *
+ * @param string $page The static page's identifier.
  * @return string.
  */
-function theme_boost_union_get_imprint_link() {
+function theme_boost_union_get_staticpage_link($page) {
     // Compose the URL object.
-    $url = new moodle_url('/theme/boost_union/pages/imprint.php');
+    $url = new moodle_url('/theme/boost_union/pages/'.$page.'.php');
 
     // Return the string representation of the URL.
     return $url->out();
 }
 
 /**
- * Build the page title of the imprint page.
+ * Build the page title of a static page.
  *
+ * @param string $page The static page's identifier.
  * @return string.
  */
-function theme_boost_union_get_imprint_pagetitle() {
+function theme_boost_union_get_staticpage_pagetitle($page) {
     // Get the configured page title.
-    $imprintpagetitleconfig = get_config('theme_boost_union', 'imprintpagetitle');
+    $pagetitleconfig = format_string(get_config('theme_boost_union', $page.'pagetitle'), true,
+    ['context' => \context_system::instance()]);
 
     // If there is a string configured.
-    if ($imprintpagetitleconfig) {
+    if ($pagetitleconfig) {
         // Return this setting.
-        return $imprintpagetitleconfig;
+        return $pagetitleconfig;
 
         // Otherwise.
     } else {
         // Return the default string.
-        return get_string('imprintpagetitledefault', 'theme_boost_union');
+        return get_string($page.'pagetitledefault', 'theme_boost_union');
     }
 }
 
@@ -320,7 +323,7 @@ function theme_boost_union_get_imprint_pagetitle() {
  * b) if the banner is configured to be shown on the given page
  * c) if the banner is configured to be shown now (in case it is a time-based banner)
  *
- * @copyright  2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @copyright  based on code from theme_boost_campus by Kathrin Osswald.
  *
  * @param int $bannerno The counting number of the info banner.
@@ -400,22 +403,23 @@ function theme_boost_union_infobanner_is_shown_on_page($bannerno) {
 }
 
 /**
- * Helper function to compare two infobanner orders.
+ * Helper function to compare either infobanner or tiles orders.
  *
  * @param int $a The first value
  * @param int $b The second value
  *
  * @return boolean.
  */
-function theme_boost_union_infobanner_compare_order($a, $b) {
+function theme_boost_union_compare_order($a, $b) {
+    // If the same 'order' attribute is given to both items.
     if ($a->order == $b->order) {
-        // Basically, we should return 0 in this case.
-        // But due to the way how usort works internally, info banners with the same order would end up in the result array
-        // in reversed order (compared to the numbering order on the theme settings page).
-        // Thus, we do a little trick and tell the sorting algorithm that the first item is greater than the second one
-        // by returning a positive number.
-        return 1;
+        // We have to compare the 'no' attribute.
+        // This way, we make sure that the item which is presented first in the admin settings is still placed first in the
+        // ordered list even if the same order is configured.
+        return ($a->no < $b->no) ? -1 : 1;
     }
+
+    // Otherwise, compare both items based on their 'order' attribute.
     return ($a->order < $b->order) ? -1 : 1;
 }
 
@@ -455,4 +459,904 @@ function theme_boost_union_infobanner_reset_visibility($no) {
     } else {
         return false;
     }
+}
+
+/**
+ * Get the random number for displaying the background image on the login page randomly.
+ *
+ * @return int|null
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_boost_union_get_random_loginbackgroundimage_number() {
+    // Static variable.
+    static $number = null;
+
+    if ($number == null) {
+        // Get all files for loginbackgroundimages.
+        $files = theme_boost_union_get_loginbackgroundimage_files();
+
+        // Get count of array elements.
+        $filecount = count($files);
+
+        // We only return a number if images are uploaded to the loginbackgroundimage file area.
+        if ($filecount > 0) {
+            // If Behat tests are running.
+            if (defined('BEHAT_SITE_RUNNING')) {
+                // Select the last image (to make Behat tests work).
+                $number = $filecount;
+            } else {
+                // Generate random number.
+                $number = rand(1, $filecount);
+            }
+        }
+    }
+
+    return $number;
+}
+
+/**
+ * Get a random class for body tag for the background image of the login page.
+ *
+ * @return string
+ */
+function theme_boost_union_get_random_loginbackgroundimage_class() {
+    // Get the static random number.
+    $number = theme_boost_union_get_random_loginbackgroundimage_number();
+
+    // Only create the class name with the random number if there is a number (=files uploaded to the file area).
+    if ($number != null) {
+        return 'loginbackgroundimage'.$number;
+    } else {
+        return '';
+    }
+}
+
+/**
+ * Return the files from the loginbackgroundimage file area.
+ * This function always loads the files from the filearea which is not really performant.
+ * However, we accept this at the moment as it is only invoked on the login page.
+ *
+ * @return array|null
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_boost_union_get_loginbackgroundimage_files() {
+    // Static variable to remember the files for subsequent calls of this function.
+    static $files = null;
+
+    if ($files == null) {
+        // Get the system context.
+        $systemcontext = \context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get all files from filearea.
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'loginbackgroundimage',
+                false, 'itemid', false);
+    }
+
+    return $files;
+}
+
+/**
+ *
+ * Get the advertisement tile's background image URL from the filearea 'tilebackgroundimage'.tileno.
+ *
+ * Note:
+ * Calling this function for each tile separately is maybe not performant. Originally it was planed to put
+ * all files in one filearea. However, at the time of development
+ * https://github.com/moodle/moodle/blob/master/lib/outputlib.php#L2062
+ * did not support itemids in setting-files of themes.
+ *
+ * @param int $tileno The tile number.
+ * @return string|null
+ */
+function theme_boost_union_get_urloftilebackgroundimage($tileno) {
+    // If the tile number is apparently not valid, return.
+    // Note: We just check the tile's number, we do not check if the tile is enabled or not.
+    if ($tileno < 0 || $tileno > THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT) {
+        return null;
+    }
+
+    // Get the background image config for this tile.
+    $bgconfig = get_config('theme_boost_union', 'tile'.$tileno.'backgroundimage');
+
+    // If a background image is configured.
+    if (!empty($bgconfig)) {
+        // Get the system context.
+        $systemcontext = context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get all files from filearea.
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'tilebackgroundimage'.$tileno,
+                false, 'itemid', false);
+
+        // Just pick the first file - we are sure that there is just one file.
+        $file = reset($files);
+
+        // Build and return the image URL.
+        return moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+    }
+
+    // As no image was found, return null.
+    return null;
+}
+
+/**
+ * Add background images from setting 'loginbackgroundimage' to SCSS.
+ *
+ * @return string
+ */
+function theme_boost_union_get_loginbackgroundimage_scss() {
+    // Initialize variables.
+    $count = 0;
+    $scss = '';
+
+    // Get all files from filearea.
+    $files = theme_boost_union_get_loginbackgroundimage_files();
+
+    // Add URL of uploaded images to equivalent class.
+    foreach ($files as $file) {
+        $count++;
+        // Get url from file.
+        $url = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+        // Add this url to the body class loginbackgroundimage[n] as a background image.
+        $scss .= 'body.pagelayout-login.loginbackgroundimage'.$count.' {';
+        $scss .= 'background-image: url("'.$url.'");';
+        $scss .= '}';
+    }
+
+    return $scss;
+}
+
+/**
+ * Get the text that should be displayed for the randomly displayed background image on the login page.
+ *
+ * @return array (of two strings, holding the text and the text color)
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_boost_union_get_loginbackgroundimage_text() {
+    // Get the random number.
+    $number = theme_boost_union_get_random_loginbackgroundimage_number();
+
+    // Only search for the text if there's a background image.
+    if ($number != null) {
+
+        // Get the files from the filearea loginbackgroundimage.
+        $files = theme_boost_union_get_loginbackgroundimage_files();
+        // Get the file for the selected random number.
+        $file = array_slice($files, ($number - 1), 1, false);
+        // Get the filename.
+        $filename = array_pop($file)->get_filename();
+
+        // Get the config for loginbackgroundimagetext and make an array out of the lines.
+        $lines = explode("\n", get_config('theme_boost_union', 'loginbackgroundimagetext'));
+
+        // Process the lines.
+        foreach ($lines as $line) {
+            $settings = explode("|", $line);
+            // If the line does not have three items, skip it.
+            if (count($settings) != 3) {
+                continue;
+            }
+            // Compare the filenames for a match.
+            if (strcmp($filename, trim($settings[0])) == 0) {
+                // Trim the second parameter as we need it more than once.
+                $settings[2] = trim($settings[2]);
+
+                // If the color value is not acceptable, replace it with dark.
+                if ($settings[2] != 'dark' && $settings[2] != 'light') {
+                    $settings[2] = 'dark';
+                }
+
+                // Return the text + text color that belongs to the randomly selected image.
+                return array(format_string(trim($settings[1])), $settings[2]);
+            }
+        }
+    }
+
+    return '';
+}
+
+/**
+ * Return the files from the additionalresources file area as templatecontext structure.
+ * It was designed to compose the files for the settings-additionalresources-filelist.mustache template.
+ * This function always loads the files from the filearea which is not really performant.
+ * Thus, you have to take care where and how often you use it (or add some caching).
+ *
+ * @return array|null
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_boost_union_get_additionalresources_templatecontext() {
+    global $OUTPUT;
+
+    // Static variable to remember the files for subsequent calls of this function.
+    static $filesforcontext = null;
+
+    if ($filesforcontext == null) {
+        // Get the system context.
+        $systemcontext = \context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get all files from filearea.
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'additionalresources', false, 'itemid', false);
+
+        // Iterate over the files and fill the templatecontext of the file list.
+        $filesforcontext = array();
+        foreach ($files as $af) {
+            $urlpersistent = new moodle_url('/pluginfile.php/1/theme_boost_union/additionalresources/0/'.$af->get_filename());
+            $urlrevisioned = new moodle_url('/pluginfile.php/1/theme_boost_union/additionalresources/'.theme_get_revision().
+                    '/'.$af->get_filename());
+            $filesforcontext[] = array('filename' => $af->get_filename(),
+                                        'filetype' => $af->get_mimetype(),
+                                        'filesize' => display_size($af->get_filesize()),
+                                        'fileicon' => $OUTPUT->image_icon(file_file_icon($af, 64), get_mimetype_description($af)),
+                                        'fileurlpersistent' => $urlpersistent->out(),
+                                        'fileurlrevisioned' => $urlrevisioned->out());
+        }
+    }
+
+    return $filesforcontext;
+}
+
+/**
+ * Return the files from the customfonts file area as templatecontext structure.
+ * It was designed to compose the files for the settings-customfonts-filelist.mustache template.
+ * This function always loads the files from the filearea which is not really performant.
+ * Thus, you have to take care where and how often you use it (or add some caching).
+ *
+ * @return array|null
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_boost_union_get_customfonts_templatecontext() {
+    global $OUTPUT;
+
+    // Static variable to remember the files for subsequent calls of this function.
+    static $filesforcontext = null;
+
+    if ($filesforcontext == null) {
+        // Get the system context.
+        $systemcontext = \context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get all files from filearea.
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'customfonts', false, 'itemid', false);
+
+        // Get the webfonts extensions list.
+        $webfonts = theme_boost_union_get_webfonts_extensions();
+
+        // Iterate over the files.
+        $filesforcontext = array();
+        foreach ($files as $af) {
+            // Get the filename.
+            $filename = $af->get_filename();
+
+            // Check if the file is really a font file (as we can't really rely on the upload restriction in settings.php)
+            // according to its file suffix (as the filetype might not have a known mimetype).
+            // If it isn't a font file, skip it.
+            $filenamesuffix = pathinfo($filename, PATHINFO_EXTENSION);
+            if (!in_array('.'.$filenamesuffix, $webfonts)) {
+                continue;
+            }
+
+            // Otherwise, fill the templatecontext of the file list.
+            $urlpersistent = new moodle_url('/pluginfile.php/1/theme_boost_union/customfonts/0/'.$filename);
+            $filesforcontext[] = array('filename' => $filename,
+                    'fileurlpersistent' => $urlpersistent->out());
+        }
+    }
+
+    return $filesforcontext;
+}
+
+/**
+ * Helper function which returns an array of accepted webfonts extensions (including the dots).
+ *
+ * @return array
+ */
+function theme_boost_union_get_webfonts_extensions() {
+    return array('.eot', '.otf', '.svg', '.ttf', '.woff', '.woff2');
+}
+
+/**
+ * Helper function which makes sure that all webfont file types are registered in the system.
+ * The webfont file types need to be registered in the system, otherwise the admin settings filepicker wouldn't allow restricting
+ * the uploadable file types to webfonts only.
+ *
+ * Please note: If custom filetypes are defined in config.php, registering additional filetypes is not possible
+ * due to a restriction in the set_custom_types() function in Moodle core. In this case, this function does not
+ * register anything and will return false.
+ *
+ * @return boolean true if the filetypes were registered, false if not.
+ * @throws coding_exception
+ */
+function theme_boost_union_register_webfonts_filetypes() {
+    global $CFG;
+
+    // If customfiletypes are set in config.php, we can't do anything.
+    if (array_key_exists('customfiletypes', $CFG->config_php_settings)) {
+        return false;
+    }
+
+    // Our array of webfont file types to register.
+    // As we want to keep things simple, we do not set a particular icon for these file types.
+    // Likewise, we do not set any type groups or use descriptions from the language pack.
+    $webfonts = array(
+            'eot' => array(
+                    'extension' => 'eot',
+                    'mimetype' => 'application/vnd.ms-fontobject',
+                    'coreicon' => 'unknown'
+            ),
+            'otf' => array(
+                    'extension' => 'otf',
+                    'mimetype' => 'font/otf',
+                    'coreicon' => 'unknown'
+            ),
+            'svg' => array(
+                    'extension' => 'svg',
+                    'mimetype' => 'image/svg+xml',
+                    'coreicon' => 'unknown'
+            ),
+            'ttf' => array(
+                    'extension' => 'ttf',
+                    'mimetype' => 'font/ttf',
+                    'coreicon' => 'unknown'
+            ),
+            'woff' => array(
+                    'extension' => 'woff',
+                    'mimetype' => 'font/woff',
+                    'coreicon' => 'unknown'
+            ),
+            'woff2' => array(
+                    'extension' => 'woff2',
+                    'mimetype' => 'font/woff2',
+                    'coreicon' => 'unknown'
+            ),
+    );
+
+    // First, get the list of currently registered file types.
+    $currenttypes = core_filetypes::get_types();
+
+    // Iterate over the webfonts file types.
+    foreach ($webfonts as $f) {
+        // If the file type is already registered, skip it.
+        if (array_key_exists($f['extension'], $currenttypes)) {
+            continue;
+        }
+
+        // Otherwise, register the file type.
+        core_filetypes::add_type($f['extension'], $f['mimetype'], $f['coreicon']);
+    }
+
+    return true;
+}
+
+/**
+ * Helper function to render a preview of a HTML email to be shown on the theme settings page.
+ *
+ * If E-Mails have been branded, an E-Mail preview will be returned as string.
+ * Otherwise, null will be returned.
+ *
+ * @return string|null
+ */
+function theme_boost_union_get_emailbrandinghtmlpreview() {
+    global $OUTPUT;
+
+    // Get branding snippets.
+    $htmlprefix = get_string('templateemailhtmlprefix', 'theme_boost_union');
+    $htmlsuffix = get_string('templateemailhtmlsuffix', 'theme_boost_union');
+
+    // If no snippet was customized, return null.
+    if (trim($htmlprefix) == '' && trim($htmlsuffix) == '') {
+        return null;
+    }
+
+    // Otherwise, compose mail text.
+    $mailtemplatecontext = array('body' => get_string('emailbrandinghtmldemobody', 'theme_boost_union'));
+    $mail = $OUTPUT->render_from_template('core/email_html', $mailtemplatecontext);
+
+    // And compose mail preview.
+    $previewtemplatecontext = array('mail' => $mail);
+    $preview = $OUTPUT->render_from_template('theme_boost_union/emailpreview', $previewtemplatecontext);
+
+    return $preview;
+}
+
+/**
+ * Helper function to render a preview of a plaintext email to be shown on the theme settings page.
+ *
+ * If E-Mails have been branded, an E-Mail preview will be returned as string.
+ * Otherwise, null will be returned.
+ *
+ * @return string|null
+ */
+function theme_boost_union_get_emailbrandingtextpreview() {
+    global $OUTPUT;
+
+    // Get branding snippets.
+    $textprefix = get_string('templateemailtextprefix', 'theme_boost_union');
+    $textsuffix = get_string('templateemailtextsuffix', 'theme_boost_union');
+
+    // If no snippet was customized, return null.
+    if (trim($textprefix) == '' && trim($textsuffix) == '') {
+        return null;
+    }
+
+    // Otherwise, compose mail text.
+    $mailtemplatecontext = array('body' => get_string('emailbrandingtextdemobody', 'theme_boost_union'));
+    $mail = nl2br($OUTPUT->render_from_template('core/email_text', $mailtemplatecontext));
+    $mail = '<div class="text-monospace">'.$mail.'</div>';
+
+    // And compose mail preview.
+    $previewtemplatecontext = array('mail' => $mail);
+    $preview = $OUTPUT->render_from_template('theme_boost_union/emailpreview', $previewtemplatecontext);
+
+    return $preview;
+}
+
+/**
+ * Callback function which is called from settings.php if the FontAwesome files setting has changed.
+ *
+ * It gets all files from the files setting, picks all the expected files (and ignores all others)
+ * and stores them into an application cache for quicker access.
+ *
+ * @return void
+ */
+function theme_boost_union_fontawesome_checkin() {
+    // Create cache for FontAwesome files.
+    $cache = cache::make('theme_boost_union', 'fontawesome');
+
+    // Purge the existing cache values as we will refill the cache now.
+    $cache->purge();
+
+    // Get FontAwesome version config.
+    $faconfig = get_config('theme_boost_union', 'fontawesomeversion');
+
+    // If a FontAwesome version is enabled.
+    if ($faconfig != THEME_BOOST_UNION_SETTING_FAVERSION_NONE && $faconfig != null) {
+
+        // Get the system context.
+        $systemcontext = \context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get FontAwesome file structure.
+        $filestructure = theme_boost_union_get_fontawesome_filestructure($faconfig);
+
+        // If a valid file structure could be retrieved.
+        if ($filestructure != null) {
+
+            // Iterate over the folder structure.
+            foreach ($filestructure as $folder => $files) {
+
+                // Initialize a folder list.
+                $folderlist = array();
+
+                // Iterate over the files in the folder.
+                foreach ($files as $file => $expected) {
+
+                    // Try to get the file from the filearea.
+                    $fsfile = $fs->get_file($systemcontext->id, 'theme_boost_union', 'fontawesome', 0, '/'.$folder.'/', $file);
+
+                    // If the file exists.
+                    if ($fsfile != false) {
+                        // Add the file to the folder list.
+                        $folderlist[] = $file;
+                    }
+                }
+
+                // Add the folder to the cache.
+                $cache->set($folder, $folderlist);
+            }
+        }
+    }
+
+    // Add a marker value to the cache which indicates that the files have been checked into the cache completely.
+    // This will help to decide later if the cache is really empty (and should be refilled) or if there aren't just any
+    // files uploaded.
+    $cache->set('checkedin', true);
+}
+
+/**
+ * Helper function which returns an array of accepted fontawesome file extensions (including the dots).
+ *
+ * @return array
+ */
+function theme_boost_union_get_fontawesome_extensions() {
+    return array('.css', '.eot', '.svg', '.ttf', '.woff', '.woff2');
+}
+
+/**
+ * Helper function which returns the files which are expected to be provided for a given FontAwesome version.
+ *
+ * @param string $version The FontAwesome version, given as THEME_BOOST_UNION_SETTING_FAVERSION_* constant.
+ *
+ * @return array|null The array of files or null if an invalid FontAwesome version was provided.
+ */
+function theme_boost_union_get_fontawesome_filestructure($version) {
+    // Pick the files for the selected FA version.
+    switch ($version) {
+        case THEME_BOOST_UNION_SETTING_FAVERSION_FA6FREE:
+            $files = array('css' => array('fontawesome.min.css' => THEME_BOOST_UNION_SETTING_FAFILES_MANDATORY,
+                            'solid.min.css' => THEME_BOOST_UNION_SETTING_FAFILES_MANDATORY,
+                            'regular.min.css' => THEME_BOOST_UNION_SETTING_FAFILES_OPTIONAL,
+                            'brands.min.css' => THEME_BOOST_UNION_SETTING_FAFILES_OPTIONAL,
+                            'v4-font-face.min.css' => THEME_BOOST_UNION_SETTING_FAFILES_MANDATORY),
+                    'webfonts' => array('fa-solid-900.woff2' => THEME_BOOST_UNION_SETTING_FAFILES_MANDATORY,
+                            'fa-solid-900.ttf' => THEME_BOOST_UNION_SETTING_FAFILES_MANDATORY,
+                            'fa-regular-400.woff2' => THEME_BOOST_UNION_SETTING_FAFILES_OPTIONAL,
+                            'fa-regular-400.ttf' => THEME_BOOST_UNION_SETTING_FAFILES_OPTIONAL,
+                            'fa-brands-400.woff2' => THEME_BOOST_UNION_SETTING_FAFILES_OPTIONAL,
+                            'fa-brands-400.ttf' => THEME_BOOST_UNION_SETTING_FAFILES_OPTIONAL,
+                            'fa-v4compatibility.woff2' => THEME_BOOST_UNION_SETTING_FAFILES_MANDATORY,
+                            'fa-v4compatibility.ttf' => THEME_BOOST_UNION_SETTING_FAFILES_MANDATORY));
+            break;
+        default:
+            // This only happens if an invalid version was provided.
+            $files = null;
+    }
+
+    // Return the file structure.
+    return $files;
+}
+
+/**
+ * Helper function which return the files from the fontawesome file area as templatecontext structure.
+ * It was designed to compose the files for the settings-fontawesome-filelist.mustache template.
+ * This function uses the fontawesome cache definition, i.e. it does not load the files from the filearea directly.
+ * This means it uses the same data source as the theme_boost_union_add_fontawesome_to_page() function which adds
+ * the fontawesome files to the page.
+ *
+ * @return array|null
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_boost_union_get_fontawesome_templatecontext() {
+    // Create cache for FontAwesome files.
+    $cache = cache::make('theme_boost_union', 'fontawesome');
+
+    // If the cache is completely empty, check the files in on-the-fly.
+    if ($cache->get('checkedin') != true) {
+        theme_boost_union_fontawesome_checkin();
+    }
+
+    // Get FontAwesome version config.
+    $faconfig = get_config('theme_boost_union', 'fontawesomeversion');
+
+    // If a FontAwesome version is enabled.
+    if ($faconfig != THEME_BOOST_UNION_SETTING_FAVERSION_NONE && $faconfig != null) {
+
+        // Initialize context variable.
+        $filesforcontext = array();
+
+        // Get FontAwesome file structure.
+        $filestructure = theme_boost_union_get_fontawesome_filestructure($faconfig);
+
+        // If a valid file structure could be retrieved.
+        if ($filestructure != null) {
+
+            // Iterate over the folder structure.
+            foreach ($filestructure as $folder => $files) {
+
+                // Get the cached data for this folder.
+                $cachedfolder = $cache->get($folder);
+
+                // Iterate over the files in the folder structure.
+                foreach ($files as $file => $expected) {
+
+                    // Deduce the mandatory value.
+                    if ($expected == THEME_BOOST_UNION_SETTING_FAFILES_MANDATORY) {
+                        $mandatory = true;
+                    } else {
+                        $mandatory = false;
+                    }
+
+                    // Compose the file path.
+                    $filepath = $folder . '/' . $file;
+
+                    // Get the description of the file.
+                    $fileidentifier = str_replace('/', '-', $filepath);
+                    $description = get_string('fontawesomelistfileinfo-' . $faconfig . '-' . $fileidentifier, 'theme_boost_union');
+
+                    // If the folder was not uploaded at all or if the folder is empty, we do not need to check if the file exists.
+                    // We can add the file as non-existent right away.
+                    if ($cachedfolder == null || ($cachedfolder == array()) && count($cachedfolder) < 1) {
+                        $exists = false;
+
+                        // Otherwise, we have to check the file it was uploaded.
+                    } else {
+                        $exists = in_array($file, $cachedfolder);
+                    }
+
+                    // Add the file to the template structure.
+                    $filesforcontext[] = array('filepath' => $filepath, 'exists' => $exists, 'mandatory' => $mandatory,
+                            'description' => $description);
+                }
+            }
+        }
+    }
+
+    return $filesforcontext;
+}
+
+/**
+ * Helper function which returns the visual checks for the configured FontAwesome version.
+ *
+ * @return array|null The array of checks or null if an invalid FontAwesome version is configured.
+ */
+function theme_boost_union_get_fontawesome_checks_templatecontext() {
+    global $CFG;
+
+    // Get FontAwesome version config.
+    $version = get_config('theme_boost_union', 'fontawesomeversion');
+
+    // Pick the checks for the selected FA version.
+    switch ($version) {
+        case THEME_BOOST_UNION_SETTING_FAVERSION_FA6FREE:
+            $checks = array(
+                    array('icon' => '<i class="fa fa-check-circle-o fa-3x fa-fw"></i>',
+                            'title' => get_string('fontawesomecheck-fa6free-general-title', 'theme_boost_union'),
+                            'description' => get_string('fontawesomecheck-fa6free-general-description', 'theme_boost_union')),
+                    array('icon' => '<i class="fa fa-map-o fa-3x fa-fw"></i>',
+                            'title' => get_string('fontawesomecheck-fa6free-fallback-title', 'theme_boost_union'),
+                            'description' => get_string('fontawesomecheck-fa6free-fallback-description', 'theme_boost_union')),
+                    array('icon' => '<i class="fa-solid fa-virus-covid fa-3x fa-fw"></i>',
+                            'title' => get_string('fontawesomecheck-fa6free-newstuff-title', 'theme_boost_union'),
+                            'description' => get_string('fontawesomecheck-fa6free-newstuff-description', 'theme_boost_union')),
+            );
+            break;
+        default:
+            // This only happens if an invalid version was provided.
+            $checks = null;
+    }
+
+    // If the filter_fontawesome plugin is installed, add a check for filtering the icons.
+    if (file_exists($CFG->dirroot.'/filter/fontawesome/version.php')) {
+        $checks[] = array('icon' => format_text('[fa-solid fa-users-line fa-3x fa-fw]'),
+                'title' => get_string('fontawesomecheck-fa6free-filter-title', 'theme_boost_union'),
+                'description' => get_string('fontawesomecheck-fa6free-filter-description', 'theme_boost_union'));
+    }
+
+    // Return the checks structure.
+    return $checks;
+}
+
+/**
+ * Helper function to compose the title of an external admin page.
+ * This is adopted from /admin/settings.php and done to make sure that the external admin pages look as similar as possible
+ * to the standard admin pages.
+ *
+ * @param string $pagename The page's name.
+ *
+ * @return string
+ */
+function theme_boost_union_get_externaladminpage_title($pagename) {
+    global $SITE;
+
+    $title = $SITE->shortname.': ';
+    $title .= get_string('administration', 'core').': ';
+    $title .= get_string('appearance', 'core').': ';
+    $title .= get_string('themes', 'core').': ';
+    $title .= get_string('pluginname', 'theme_boost_union').': ';
+    $title .= $pagename;
+
+    return $title;
+}
+
+/**
+ * Helper function to compose the heading of an external admin page.
+ * This is adopted from /admin/settings.php and done to make sure that the external admin pages look as similar as possible
+ * to the standard admin pages.
+ *
+ * @return string
+ */
+function theme_boost_union_get_externaladminpage_heading() {
+    global $SITE;
+
+    return $SITE->fullname;
+}
+
+/**
+ * Helper function which adds the CSS files from the fontawesome file area to the Moodle page.
+ * This function uses the fontawesome cache definition, i.e. it does not load the files from the filearea directly.
+ * It's meant to be called by theme_boost_union_before_standard_html_head() only.
+ * *
+ * @throws coding_exception
+ * @throws dml_exception
+ * @throws moodle_exception
+ */
+function theme_boost_union_add_fontawesome_to_page() {
+    global $PAGE;
+
+    // Create cache for FontAwesome files.
+    $cache = cache::make('theme_boost_union', 'fontawesome');
+
+    // If the cache is completely empty, check the files in on-the-fly.
+    if ($cache->get('checkedin') != true) {
+        theme_boost_union_fontawesome_checkin();
+    }
+
+    // Get FontAwesome version config.
+    $faconfig = get_config('theme_boost_union', 'fontawesomeversion');
+
+    // If a FontAwesome version is enabled.
+    if ($faconfig != THEME_BOOST_UNION_SETTING_FAVERSION_NONE && $faconfig != null) {
+
+        // Get the cached data for the CSS folder (we do not need to add files from any other folders in the cache).
+        $cachedfolder = $cache->get('css');
+
+        // Iterate over the files in the cached folder structure.
+        foreach ($cachedfolder as $cachedfile) {
+
+            // Build the FontAwesome CSS file URL.
+            $facssurl = new moodle_url('/pluginfile.php/1/theme_boost_union/fontawesome/' .
+                    theme_get_revision().'/css/'.$cachedfile);
+
+            // Add the CSS file to the page.
+            $PAGE->requires->css($facssurl);
+        }
+    }
+}
+
+/**
+ * Helper function which adds the CSS file from the flavour to the Moodle page.
+ * It's meant to be called by theme_boost_union_before_standard_html_head() only.
+ * *
+ * @throws coding_exception
+ * @throws dml_exception
+ * @throws moodle_exception
+ */
+function theme_boost_union_add_flavourcss_to_page() {
+    global $CFG, $PAGE;
+
+    // Require flavours library.
+    require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+
+    // If any flavour applies to this page.
+    $flavour = theme_boost_union_get_flavour_which_applies();
+    if ($flavour != null) {
+        // Build the flavour CSS file URL.
+        $flavourcssurl = new moodle_url('/theme/boost_union/flavours/styles.php',
+                array('id' => $flavour->id, 'rev' => theme_get_revision()));
+
+        // Add the CSS file to the page.
+        $PAGE->requires->css($flavourcssurl);
+    }
+}
+
+/**
+ * Helper function which returns the course header image url, picking the current course from the course settings
+ * or the fallback image from the theme.
+ * If no course header image can should be shown for the current course, the function returns null.
+ *
+ * @return null | string
+ */
+function theme_boost_union_get_course_header_image_url() {
+    global $PAGE;
+
+    // If the current course is the frontpage course (which means that we are not within any real course),
+    // directly return null.
+    if (isset($PAGE->course->id) && $PAGE->course->id == SITEID) {
+        return null;
+    }
+
+    // Get the course image.
+    $courseimage = \core_course\external\course_summary_exporter::get_course_image($PAGE->course);
+
+    // If the course has a course image.
+    if ($courseimage) {
+        // Then return it directly.
+        return $courseimage;
+
+        // Otherwise, if a fallback image is configured.
+    } else if (get_config('theme_boost_union', 'courseheaderimagefallback')) {
+        // Get the system context.
+        $systemcontext = \context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get all files from filearea.
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'courseheaderimagefallback',
+            false, 'itemid', false);
+
+        // Just pick the first file - we are sure that there is just one file.
+        $file = reset($files);
+
+        // Build and return the image URL.
+        return moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+            $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+    }
+
+    // As no picture was found, return null.
+    return null;
+}
+
+/**
+ * Helper function which sets the URL to the CSS file as soon as the theme's mobilescss setting has any CSS code.
+ * It's meant to be called as callback when changing the admin setting only.
+ * *
+ * @throws coding_exception
+ * @throws dml_exception
+ * @throws moodle_exception
+ */
+function theme_boost_union_set_mobilecss_url() {
+    // Check if the admin has set any CSS code for the Mobile app.
+    $csscode = get_config('theme_boost_union', 'mobilescss');
+    if (!empty($csscode)) {
+        // Build the Mobile app CSS file URL and especially add the current time as rev parameter.
+        // This parameter isn't the theme revision as the theme cache is not cleared when this setting is stored.
+        // It is just the time when the setting is saved.
+        // This is the best we can do to make the Mobile app load the new styles when needed.
+        $mobilescssurl = new moodle_url('/theme/boost_union/mobile/styles.php', array('rev' => time()));
+
+        // Set the $CFG->mobilecssurl setting.
+        set_config('mobilecssurl', $mobilescssurl->out());
+
+        // Otherwise.
+    } else {
+        // Clear the $CFG->mobilecssurl setting.
+        set_config('mobilecssurl', '');
+    }
+}
+
+/**
+ * Returns an array of the defined additional block regions.
+ *
+ * @param array $pageregions List of page regions.
+ * @return array $regions
+ */
+function theme_boost_union_get_additional_regions($pageregions=[]) {
+    $regions = [
+            'footerleft' => 'footer-left',
+            'footerright' => 'footer-right',
+            'footercenter' => 'footer-center',
+            'offcanvasleft' => 'offcanvas-left',
+            'offcanvasright' => 'offcanvas-right',
+            'offcanvascenter' => 'offcanvas-center',
+            'outsideleft' => 'outside-left',
+            'outsideright' => 'outside-right',
+            'outsidetop' => 'outside-top',
+            'outsidebottom' => 'outside-bottom',
+            'contentupper' => 'content-upper',
+            'contentlower' => 'content-lower',
+            'header' => 'header'
+    ];
+
+    return ($pageregions) ? array_intersect($regions, $pageregions) : $regions;
+}
+
+/**
+ * Get the defined regions for the page layout.
+ *
+ * @param string $layout Pagelayout name.
+ * @return array $regions
+ */
+function theme_boost_union_get_block_regions($layout) {
+
+    // Get the admin setting for the layout.
+    $regionsettings = get_config('theme_boost_union', 'blockregionsfor'.$layout);
+
+    // Explode the admin setting to get the block regions.
+    $settings = !empty($regionsettings) ? explode(',', $regionsettings) : [];
+
+    // Add the configured regions to the side-pre region (which is always provided by Boost core).
+    $regions = array_merge(['side-pre'], $settings);
+
+    // Return.
+    return $regions;
 }

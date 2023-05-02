@@ -21,6 +21,8 @@ On the other hand, many Moodle installations share the same basic functional nee
 
 One highlight is the main design principle of Boost Union: As soon as it is activated on a Moodle site, it does not change anything yet and simply behaves as Boost from Moodle core does. The admin can enable and configure only the theme features he needs and does not need to care about side effects from other, disabled theme features.
 
+As a side note, it is quite easy to create a grandchild theme of Boost Union. That way, you can benefit from all the / only the Boost Union features you need, but you can also add additional local features or settings (that are not interesting as a pull request or feature request for the whole Boost Union community) to your local grandchild theme at the same time.
+
 
 Installation
 ------------
@@ -57,7 +59,7 @@ This setting is already available in the Moodle core theme Boost. For more infor
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
-#### Tab "Advanced settings"
+#### Tab "SCSS"
 
 In this tab there are the following settings:
 
@@ -75,31 +77,42 @@ This setting is already available in the Moodle core theme Boost. For more infor
 
 In this tab there are the following settings:
 
-##### Layout
+##### Page width
 
 ###### Course content max width
 
-With this setting, you can override Moodle's default content width without manual SCSS modifications.
+With this setting, you can override Moodle's course content width without manual SCSS modifications.
+
+###### Medium content max width
+
+With this setting, you can override Moodle's default medium width without manual SCSS modifications.
 
 #### Tab "Branding"
 
 In this tab there are the following settings:
 
+##### Logos
+
+###### Logo
+
+Here, you can upload a full logo to be used as decoration. This image is especially used on the login page. This image can be quite high resolution because it will be scaled down for use.
+
+###### Compact logo
+
+Here, you can upload a compact version of the same logo as above, such as an emblem, shield or icon. This image is especially used in the navigation bar at the top of each Moodle page. The image should be clear even at small sizes.
+
 ##### Favicon
 
 ###### Favicon
 
-Here, you can upload a custom image (.ico or .png format) that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.
+Here, you can upload a custom image that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.
 
 ##### Background images
 
-###### Background image
+###### General background image
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
-
-###### Login background image
-
-This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+Please note: This will not interfere with the setting "theme_boost_union | loginbackgroundimage" which means that the pictures uploaded here will be shown on all pages except the login page.
 
 ##### Brand colors
 
@@ -115,11 +128,112 @@ With these settings, you can overwrite the Bootstrap colors which are used withi
 
 With these settings, you can overwrite the activity icon colors which are used within courses.
 
+#### Tab "Login page"
+
+##### Login page background images
+
+###### Login page background images
+
+This setting is already available in the Moodle core theme Boost.
+However, in Boost Union you can not only add one but up to 25 files as a background image for the login page. One of these images will be picked randomly and shown when the user visits the login page.
+
+###### Display text for login background images
+
+With this optional setting you can add text, e.g. a copyright notice to your uploaded login background images.
+Each line consists of the file identifier (the file name) and the text that should be displayed, separated by a pipe character. Each declaration needs to be written in a new line.
+
+For example:
+``background-image-1.jpg|Copyright: CC0|dark``
+
+As text color, you can use the values "dark" or "light".
+
+You can declare texts for an arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.
+
+##### Login form position
+
+With this setting, you can optimize the login form to fit to a greater variety of background images. By default, the login form is displayed centered on the login page. Alternatively, you can move it to the left or to the right of the login page to let other parts of the background image shine through. Of course, you can also change this setting if no background images are uploaded at all.
+
+##### Login form transparency
+
+With this setting, you can make the login form slightly transparent to let the background image shine through even more.
+
+#### Tab "Course"
+
+##### Course Header
+
+###### Display the course image in the course header
+
+When enabled, the course image (which can be uploaded in a course's course settings) is displayed in the header of a course. The course images are shown there in addition to the 'My courses' page where they are always shown.
+
+###### Fallback course header image
+
+If you upload an image in this setting, it is used as fallback image and is displayed in the course header if no course image is uploaded in a particular course's course settings. If you do not upload an image here, a course header image is only shown in a particular course if a course image is uploaded in this particular course's course settings.
+
+###### Course header image height
+
+With this setting, you control the height of the presented course header image.
+
+###### Course header image layout
+
+With this setting, you control the layout of the course header image and the course title.
+
+###### Course header image position
+
+With this setting, you control the positioning of the course header image within the course header container. The first value is the horizontal position, the second value is the vertical position.
+
+#### Tab "E-Mail branding"
+
+In this tab, you find a feature which you can use to apply branding to all E-Mails which Moodle is sending out.
+
+Please note: This is an advanced functionality which uses some workarounds to provide E-Mail branding options. Please follow the instructions closely.
+
+#### Tab "Resources"
+
+##### Additional resources
+
+With this setting you can upload additional resources to the theme. The advantage of uploading files to this file area is that those files can be delivered without a check if the user is logged in. This is also why you should only add files that are uncritical and everyone should be allowed to access and don't need be protected with a valid login. As soon as you have uploaded at least one file to this filearea and have stored the settings, a list will appear underneath which will give you the URL which you can use to reference a particular file.
+
+##### Custom fonts
+
+With this setting you can upload custom fonts to the theme. The advantage of uploading fonts to this file area is that those fonts can be delivered without a check if the user is logged in and can be used as locally installed fonts everywhere on the site. As soon as you have uploaded at least one font to this filearea and have stored the settings, a list will appear underneath which will give you CSS code snippets which you can use as a boilerplate to reference particular fonts in your custom SCSS.
+
+##### FontAwesome
+
+Moodle core ships with FontAwesome 4 icons which are fine, but FontAwesome has evolved since then. If you want to use more recent FontAwesome icons, you can do this with this setting. As soon as you choose another version than FontAwesome 4, additional settings will appear where you can upload more recent FontAwesome versions.
+
+#### Tab "H5P"
+
+##### Raw CSS for H5P
+
+###### Raw CSS for H5P
+
+Use this field to provide CSS code which will be applied to the presentation of H5P content by mod_h5p and mod_hvp. Please inspect the H5P content types to find the necessary CSS selectors.
+
+##### Content width
+
+###### H5P content bank max width
+
+With this setting, you can override Moodle's H5P content bank width without manual SCSS modifications.
+
+#### Tab "Mobile app"
+
+##### Mobile appearance
+
+###### Additional CSS for Mobile app
+
+With this setting, you can write custom CSS code to customise your mobile app interface. The CSS code will be only added to the Mobile app depiction of this Moodle instance and will not be shown in the webbrowser version.
+
 ### Settings page "Feel"
 
 #### Tab "Navigation"
 
 In this tab there are the following settings:
+
+##### Primary navigation
+
+###### Hide nodes in primary navigation
+
+With this setting, you can hide one or multiple nodes from the primary navigation.
 
 ##### Navigation
 
@@ -144,6 +258,60 @@ In this tab there are the following settings:
 ###### Unneeded blocks
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+
+##### Additional block regions
+
+Boost Union provides a large number of additional block regions which can be used to add and show blocks over the whole Moodle page:
+
+* The Outside block regions are placed on all four sides of the Moodle page. They can be used to show blocks which accompany the shown Moodle page but do not directly belong to the main content.
+* The Header block region is placed between the Outside (top) area and the main content area. It can be used to show a block as course header information.
+* The Content block regions are placed directly over and under the main content in the main content area. They can be used to add blocks to the course content flow.
+* The Footer block regions are placed at the bottom of the page between the Outside (bottom) area and the footnote. You have three footer regions available to build columns if necessary.
+* The Off-canvas block region is somehow special as it hovers over the whole Moodle page as a drawer. The drawer is opened by the 9-dots icon at the very right side of the navigation bar. You have three off-canvas regions available to build columns if necessary.
+
+Please note:
+
+* By default, all additional block regions are disabled. Please enable the particular block regions on the particular page layouts according to your needs. Try to be as focused as possible – too many block regions could overwhelm end users.
+* As soon as an additional block region is enabled, it is visible for all authenticated users and editable by teachers and managers (depending on the fact if the particular user is allowed to edit the particular Moodle page, of course). But there are also theme/boost_union:viewregion* and theme/boost_union:editregion* capabilities which allow you to fine-tune the usage of each block region according to your needs.
+* The Outside (left), Outside (right), Content (upper), Content (lower) and Header block regions are not available for all page layouts.
+
+##### Outside regions
+
+Outside regions can not only be enabled with the layout settings above, their appearance can also be customized.
+
+###### Block region width for 'Outside (left)' region
+
+With this setting, you can set the width of the 'Outside (left)' block region which is shown on the left hand side of the main content area.
+
+###### Block region width for 'Outside (right)' region
+
+With this setting, you can set the width of the 'Outside (right)' block region which is shown on the right hand side of the main content area.
+
+###### Block region width for 'Outside (top)' region
+
+With this setting, you can set the width of the 'Outside (top)' block region which is shown at the very top of the page.
+
+###### Block region width for 'Outside (bottom)' region
+
+With this setting, you can set the width of the 'Outside (bottom)' block region which is shown below the main content.
+
+###### Outside regions horizontal placement
+
+With this setting, you can control if, on larger screens, the 'Outside (left)' and 'Outside (right)' block regions should be placed near the main content area or rather near the window edges.
+
+##### Site home right-hand block drawer
+
+###### Show right-hand block drawer of site home on visit
+
+With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who are not logged in and does not overwrite the toggle state of each individual user.
+
+###### Show right-hand block drawer of site home on first login
+
+With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in for the very first time and does not overwrite the toggle state of each individual user.
+
+###### Show right-hand block drawer of site home on guest login
+
+With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in as a guest.
 
 #### Tab "Miscellaneous"
 
@@ -175,9 +343,25 @@ In this tab there are the following settings:
 
 With these settings, you can add rich text content which will be shown on the imprint page.
 
+##### Contact
+
+With these settings, you can add rich text content which will be shown on a contact page (which is not the same as the built-in Moodle 'Contact site support' page).
+
+##### Help
+
+With these settings, you can add rich text content which will be shown on a help page.
+
+##### Maintenance
+
+With these settings, you can add rich text content which will be shown on a maintenance information page (which is not the same as the built-in Moodle maintenance page).
+
 #### Tab "Information banners"
 
 In this tab, you can enable and configure multiple information banners to be shown on selected pages.
+
+#### Tab "Advertisement tiles"
+
+In this tab, you can enable and configure multiple advertisement tiles to be shown on site home.
 
 ### Settings page "Functionality"
 
@@ -203,6 +387,10 @@ With this setting a hint will appear in the course header when a user is accessi
 
 With this setting a hint will appear in the course header if the course is visible and an enrolment without enrolment key is currently possible.
 
+### Settings page "Flavours"
+
+Boost Union's flavours offer a possibility to override particular Moodle look & feel settings in particular contexts. On this page, you can create and manage flavours.
+
 
 Capabilities
 ------------
@@ -220,6 +408,14 @@ This capability is used to control who is able to see a hint for unrestricted se
 ### theme/boost_union:viewhintinhiddencourse
 
 This capability is used to control who is able to see a hint in a hidden course (if this feature was enabled in the theme settings). By default, it is assigned to teachers, non-editing teachers and managers.
+
+### theme/boost_union:viewregion*
+
+These capabilities are used to control who is allowed to see a particular block region. By default, they are assigned to all authenticated users, teachers, non-editing teachers and managers
+
+### theme/boost_union:editregion*
+
+These capabilities are used to control who is allowed to edit a particular block region. By default, they are assigned to teachers, non-editing teachers and managers.
 
 
 How this theme works
@@ -296,6 +492,12 @@ Maintainers
 The plugin is maintained by\
 Moodle an Hochschulen e.V.
 
+in cooperation with\
+lern.link GmbH
+
+together with\
+bdecent GmbH
+
 
 Copyright
 ---------
@@ -317,12 +519,24 @@ Contributors
 
 This theme is a collaboration result of multiple organisations.
 
-Moodle an Hochschulen e.V. would like to thank these main contributors (in alphabetical order) for their work:
+Moodle an Hochschulen e.V. would like to thank these main contributors (in alphabetical order of the institutions) for their work:
 
+* bdecent GmbH, Stefan Scholz: Code, Ideating, Funding
 * Bern University of Applied Sciences (BFH), Luca Bösch: Code, Peer Review, Ideating
+* FernUniversität in Hagen, Daniel Poggenpohl: Code, Ideating
+* Hochschule Hannover - University of Applied Sciences and Arts: Funding, Ideating
+* Käferfreie Software, Nina Herrmann: Code
 * lern.link GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
+* lern.link GmbH, Beata Waloszczyk: Code
+* Moodle.NRW / Ruhr University Bochum, Tim Trappen: Code, Ideating
+* Moodle.NRW / Ruhr University Bochum, Matthias Buttgereit: Code, Ideating
+* moodleSCHULE e.V., Ralf Krause: German translation and curation, Ideating
+* Ruhr University Bochum, Melanie Treitinger: Code, Ideating
+* RWTH Aachen, Amrita Deb Dutta: Code
 * RWTH Aachen, Josha Bartsch: Code
+* Solent University, Mark Sharp: Code
+* University of Graz, André Menrath: Code
 * University of Lübeck, Christian Wolters: Peer Review, Ideating
-* Zurich University of Applied Sciences (ZHAW): Funding
+* Zurich University of Applied Sciences (ZHAW): Funding, Ideating
 
-Additionally, we thank all other contributors who contributed ideas, feedback and code snippets within the Github issues and pull requests.
+Additionally, we thank all other contributors who contributed ideas, feedback and code snippets within the Github issues and pull requests as well as all contributors who contributed additional translations in AMOS, the Moodle translation tool.

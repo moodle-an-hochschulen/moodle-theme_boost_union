@@ -17,9 +17,9 @@
 /**
  * Theme Boost Union - Static pages layout include.
  *
- * @package   theme_boost_union
- * @copyright 2022 Moodle an Hochschulen e.V. <kontakt@moodle-an-hochschulen.de>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    theme_boost_union
+ * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -29,29 +29,35 @@ require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
 
 $config = get_config('theme_boost_union');
 
-// If the imprint is enabled.
-if ($config->enableimprint == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-    // If the admin wants to show a link in the footnote or in both locations.
-    if ($config->imprintlinkposition == THEME_BOOST_UNION_SETTING_IMPRINTLINKPOSITION_FOOTNOTE ||
-            $config->imprintlinkposition == THEME_BOOST_UNION_SETTING_IMPRINTLINKPOSITION_BOTH) {
-        // If the footnote is empty and not configured to be shown yet.
-        if (isset($templatecontext['showfootnote']) == false || $templatecontext['showfootnote'] == false) {
-            // Add marker to show the footnote to templatecontext.
-            $templatecontext['showfootnote'] = true;
+// The static pages to be supported.
+$staticpages = array('imprint', 'contact', 'help', 'maintenance');
+
+// Iterate over the static pages.
+foreach ($staticpages as $staticpage) {
+    // If the page is enabled.
+    if ($config->{'enable'.$staticpage} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // If the admin wants to show a link in the footnote or in both locations.
+        if ($config->{$staticpage.'linkposition'} == THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTNOTE ||
+                $config->{$staticpage.'linkposition'} == THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_BOTH) {
+            // If the footnote is empty and not configured to be shown yet.
+            if (isset($templatecontext['showfootnote']) == false || $templatecontext['showfootnote'] == false) {
+                // Add marker to show the footnote to templatecontext.
+                $templatecontext['showfootnote'] = true;
+            }
+
+            // Add marker to show the page link in the footnote to templatecontext.
+            $templatecontext[$staticpage.'linkpositionfootnote'] = true;
         }
 
-        // Add marker to show the imprint link in the footnote to templatecontext.
-        $templatecontext['imprintlinkpositionfootnote'] = true;
-    }
+        // If the admin wants to show a link in the footer or in both locations.
+        if ($config->{$staticpage.'linkposition'} == THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTER ||
+                $config->{$staticpage.'linkposition'} == THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_BOTH) {
+            // Add marker to show the page link in the footer to templatecontext.
+            $templatecontext[$staticpage.'linkpositionfooter'] = true;
+        }
 
-    // If the admin wants to show a link in the footer or in both locations.
-    if ($config->imprintlinkposition == THEME_BOOST_UNION_SETTING_IMPRINTLINKPOSITION_FOOTER ||
-            $config->imprintlinkposition == THEME_BOOST_UNION_SETTING_IMPRINTLINKPOSITION_BOTH) {
-        // Add marker to show the imprint link in the footer to templatecontext.
-        $templatecontext['imprintlinkpositionfooter'] = true;
+        // Add the page link and page title to the templatecontext.
+        $templatecontext[$staticpage.'link'] = theme_boost_union_get_staticpage_link($staticpage);
+        $templatecontext[$staticpage.'pagetitle'] = theme_boost_union_get_staticpage_pagetitle($staticpage);
     }
-
-    // Add the imprint link and page title to the templatecontext.
-    $templatecontext['imprintlink'] = theme_boost_union_get_imprint_link();
-    $templatecontext['imprintpagetitle'] = theme_boost_union_get_imprint_pagetitle();
 }

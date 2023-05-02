@@ -97,17 +97,17 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
       | showhintcourseselfenrol | yes   | theme_boost_union |
     When I log in as "teacher1"
     And I am on "Course 1" course homepage
-    Then I should not see "This course is currently visible and self enrolment without enrolment key is"
+    Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
     And I am on the "Course 1" "enrolment methods" page
     When I click on "Enable" "link" in the "Self enrolment (Student)" "table_row"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is"
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should exist
     And I log out
     When I log in as "student1"
     And I am on "Course 1" course homepage
-    Then I should not see "This course is currently visible and self enrolment without enrolment key is"
+    Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
 
   Scenario: Setting: Show hint for self enrolment without enrolment key - Enable the setting and check that the call for action is shown
@@ -122,83 +122,83 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
       | teacher2 | C1     | teacher |
     When I log in as "teacher1"
     And I am on "Course 1" course homepage
-    Then I should not see "This course is currently visible and self enrolment without enrolment key is"
-    And I should not see "If you don't want that any Moodle user can enrol into this course freely, please restrict the self enrolment settings."
+    Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
+    And I should not see "If you don't want any Moodle user to have access to this course freely, please restrict the self enrolment settings."
     And ".course-hint-selfenrol" "css_element" should not exist
     And I am on the "Course 1" "enrolment methods" page
     When I click on "Enable" "link" in the "Self enrolment (Student)" "table_row"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is"
-    And I should see "If you don't want that any Moodle user can enrol into this course freely, please restrict the self enrolment settings."
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is"
+    And I should see "If you don't want any Moodle user to have access to this course freely, please restrict the self enrolment settings."
     And ".course-hint-selfenrol" "css_element" should exist
     And I log out
     When I log in as "teacher2"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is"
-    And I should not see "If you don't want that any Moodle user can enrol into this course freely, please restrict the self enrolment settings."
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is"
+    And I should not see "If you don't want any Moodle user to have access to this course freely, please restrict the self enrolment settings."
     And ".course-hint-selfenrol" "css_element" should exist
     And I log out
     When I log in as "student1"
     And I am on "Course 1" course homepage
-    Then I should not see "This course is currently visible and self enrolment without enrolment key is"
-    And I should not see "If you don't want that any Moodle user can enrol into this course freely, please restrict the self enrolment settings."
+    Then I should not see "This course is currently visible to everyone and self enrolment without enrolment key is"
+    And I should not see "If you don't want any Moodle user to have access to into this course freely, please restrict the self enrolment settings."
     And ".course-hint-selfenrol" "css_element" should not exist
 
-  Scenario: Setting: Show hint for self enrolment without enrolment key - Enable the setting and check that it is hidden when new enrolments are disabled
+  Scenario: Setting: Show hint for self enrolment without an enrolment key - Enable the setting and check that it is hidden when new enrolments are disabled
     Given the following config values are set as admin:
       | config                  | value | plugin             |
       | showhintcourseselfenrol | yes   | theme_boost_union |
     When I log in as "teacher1"
     And I am on "Course 1" course homepage
-    Then I should not see "This course is currently visible and self enrolment without enrolment key is"
+    Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
     And I am on the "Course 1" "enrolment methods" page
     When I click on "Enable" "link" in the "Self enrolment (Student)" "table_row"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is"
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should exist
     When I click on "Self enrolment (Student)" "link" in the ".course-hint-selfenrol" "css_element"
     And I set the following fields to these values:
       | Allow new enrolments | 0 |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    Then I should not see "This course is currently visible and self enrolment without enrolment key is"
+    Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
 
-  Scenario: Setting: Show hint for self enrolment without enrolment key - Enable the setting and check that it is hidden when a password is set
+  Scenario: Setting: Show hint for self enrolment without an enrolment key - Enable the setting and check that it is hidden when a password is set
     Given the following config values are set as admin:
       | config                  | value | plugin             |
       | showhintcourseselfenrol | yes   | theme_boost_union |
     When I log in as "teacher1"
     And I am on "Course 1" course homepage
-    Then I should not see "This course is currently visible and self enrolment without enrolment key is"
+    Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
     And I am on the "Course 1" "enrolment methods" page
     When I click on "Enable" "link" in the "Self enrolment (Student)" "table_row"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is"
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should exist
     When I click on "Self enrolment (Student)" "link" in the ".course-hint-selfenrol" "css_element"
     And I set the following fields to these values:
       | Enrolment key | 1234 |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    Then I should not see "This course is currently visible and self enrolment without enrolment key is"
+    Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
 
-  Scenario: Setting: Show hint for self enrolment without enrolment key - Enable the setting and check the hints depending on the configured start and / or end dates
+  Scenario: Setting: Show hint for self enrolment without an enrolment key - Enable the setting and check the hints depending on the configured start and / or end dates
     Given the following config values are set as admin:
       | config                  | value | plugin             |
       | showhintcourseselfenrol | yes   | theme_boost_union |
     When I log in as "teacher1"
     And I am on "Course 1" course homepage
-    Then I should not see "This course is currently visible and self enrolment without enrolment key is"
+    Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
     And I am on the "Course 1" "enrolment methods" page
     When I click on "Enable" "link" in the "Self enrolment (Student)" "table_row"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is currently possible."
-    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment infinitely."
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is possible."
+    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment indefinitely."
     And ".course-hint-selfenrol" "css_element" should exist
     When I click on "Self enrolment (Student)" "link" in the ".course-hint-selfenrol" "css_element"
     And I set the following fields to these values:
@@ -212,7 +212,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
       | id_enrolenddate_minute    | 00            |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    Then I should not see "This course is currently visible and self enrolment without enrolment key is"
+    Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
     When I am on the "Course 1" "enrolment methods" page
     And I click on "Edit" "link" in the "Self enrolment (Student)" "table_row"
@@ -227,7 +227,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
       | id_enrolenddate_minute    | 00            |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is currently possible."
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is possible."
     And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment until Saturday, 1 January 2050, 12:00 AM."
     And ".course-hint-selfenrol" "css_element" should exist
     When I am on the "Course 1" "enrolment methods" page
@@ -243,7 +243,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
       | id_enrolenddate_enabled   | 0             |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is currently possible."
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is possible."
     And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment currently."
     And ".course-hint-selfenrol" "css_element" should exist
     When I am on the "Course 1" "enrolment methods" page
@@ -259,7 +259,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
       | id_enrolenddate_enabled   | 0             |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is planned to become possible."
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is planned to become possible."
     And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment from Saturday, 1 January 2050, 12:00 AM on."
     And ".course-hint-selfenrol" "css_element" should exist
     When I am on the "Course 1" "enrolment methods" page
@@ -281,7 +281,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
       | id_enrolenddate_minute    | 00            |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is planned to become possible."
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is planned to become possible."
     And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment from Saturday, 1 January 2050, 12:00 AM until Sunday, 2 January 2050, 12:00 AM."
     And ".course-hint-selfenrol" "css_element" should exist
     When I am on the "Course 1" "enrolment methods" page
@@ -303,7 +303,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
       | id_enrolenddate_minute    | 00            |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is currently possible."
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is possible."
     And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment until Saturday, 1 January 2050, 12:00 AM."
     And ".course-hint-selfenrol" "css_element" should exist
     When I am on the "Course 1" "enrolment methods" page
@@ -325,22 +325,22 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
       | id_enrolenddate_minute    | 00            |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    Then I should not see "This course is currently visible and self enrolment without enrolment key is"
+    Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
 
-  Scenario: Setting: Show hint for self enrolment without enrolment key - Enable the setting and add more than one self enrolment instance
+  Scenario: Setting: Show hint for self enrolment without an enrolment key - Enable the setting and add more than one self enrolment instance
     Given the following config values are set as admin:
       | config                  | value | plugin             |
       | showhintcourseselfenrol | yes   | theme_boost_union |
     When I log in as "teacher1"
     And I am on "Course 1" course homepage
-    Then I should not see "This course is currently visible and self enrolment without enrolment key is"
+    Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
     And I am on the "Course 1" "enrolment methods" page
     When I click on "Enable" "link" in the "Self enrolment (Student)" "table_row"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is"
-    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment infinitely."
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is"
+    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment indefinitely."
     And ".course-hint-selfenrol" "css_element" should exist
     When I add "Self enrolment" enrolment method in "Course 1" with:
       | Custom instance name | Custom self enrolment |
@@ -357,8 +357,8 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
       | id_enrolenddate_minute    | 00            |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is currently possible."
-    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment infinitely."
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is possible."
+    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment indefinitely."
     And I should see "The Custom self enrolment enrolment instance allows unrestricted self enrolment until Saturday, 1 January 2050, 12:00 AM."
     And ".course-hint-selfenrol" "css_element" should exist
     When I am on the "Course 1" "enrolment methods" page
@@ -367,7 +367,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
       | Enrolment key | 1234 |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    Then I should see "This course is currently visible and self enrolment without enrolment key is currently possible."
-    And I should not see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment infinitely."
+    Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is possible."
+    And I should not see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment indefinitely."
     And I should see "The Custom self enrolment enrolment instance allows unrestricted self enrolment until Saturday, 1 January 2050, 12:00 AM."
     And ".course-hint-selfenrol" "css_element" should exist

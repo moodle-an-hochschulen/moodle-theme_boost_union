@@ -19,10 +19,16 @@ Feature: Configuring the theme_boost_union plugin as manager
     And I log in as "manager"
     And I follow "Site administration"
     Then ".secondary-navigation li[data-key='appearance']" "css_element" should exist
+    # We just need to test the 'look' page as a representative of all theme admin pages.
     And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
     And "body#page-admin-setting-theme_boost_union_look" "css_element" should exist
     And I should see "Look" in the "#region-main" "css_element"
     And I should see "General settings" in the "#region-main" "css_element"
+    # However, we have to test the 'flavours' page as well as this is an external admin page.
+    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And "body#page-admin-theme-boost_union-flavours-overview" "css_element" should exist
+    And I should see "Flavours" in the "#region-main" "css_element"
+    And I should see "Create flavour" in the "#region-main" "css_element"
 
   Scenario: Capabilities - Do not allow managers to configure Boost Union (countercheck)
     Given the following "permission overrides" exist:
