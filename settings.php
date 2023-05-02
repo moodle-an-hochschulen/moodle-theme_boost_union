@@ -1170,27 +1170,28 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('outsideregionsplacement_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description,
                 THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT, $outsideregionsplacementoptions);
-        // Creat site home right-hand blocks drawer behaviour heading.
+
+        // Create site home right-hand blocks drawer behaviour heading.
         $name = 'theme_boost_union/sitehomerighthandblockdrawerbehaviour';
         $title = get_string('sitehomerighthandblockdrawerbehaviour', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
-        // Setting: Show site home right-hand blocks drawer when logged out users visit.
+        // Setting: Show right-hand block drawer of site home on visit.
         $name = 'theme_boost_union/showsitehomerighthandblockdraweronvisit';
         $title = get_string('showsitehomerighthandblockdraweronvisitsetting', 'theme_boost_union', null, true);
         $description = get_string('showsitehomerighthandblockdraweronvisitsetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
-        // Setting: Show site home right-hand blocks drawer when user logs in for the very first time.
+        // Setting: Show right-hand block drawer of site home on first login.
         $name = 'theme_boost_union/showsitehomerighthandblockdraweronfirstlogin';
         $title = get_string('showsitehomerighthandblockdraweronfirstloginsetting', 'theme_boost_union', null, true);
         $description = get_string('showsitehomerighthandblockdraweronfirstloginsetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
-        // Setting: Show site home right-hand blocks drawer when user logs in as guest.
+        // Setting: Show right-hand block drawer of site home on guest login.
         $name = 'theme_boost_union/showsitehomerighthandblockdraweronguestlogin';
         $title = get_string('showsitehomerighthandblockdraweronguestloginsetting', 'theme_boost_union', null, true);
         $description = get_string('showsitehomerighthandblockdraweronguestloginsetting_desc', 'theme_boost_union', null, true);
