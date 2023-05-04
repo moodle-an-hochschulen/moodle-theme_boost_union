@@ -1156,6 +1156,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('outsideregionsplacement_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description,
                 THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT, $outsideregionsplacementoptions);
+        $tab->add($setting);
 
         // Create site home right-hand blocks drawer behaviour heading.
         $name = 'theme_boost_union/sitehomerighthandblockdrawerbehaviour';
