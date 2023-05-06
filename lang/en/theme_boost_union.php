@@ -166,15 +166,6 @@ $string['courseheaderimagelayoutheadingabove'] = 'Course title above of course i
 $string['courseheaderimageposition'] = 'Course header image position';
 $string['courseheaderimageposition_desc'] = 'With this setting, you control the positioning of the course header image within the course header image container. The first value is the horizontal position, the second value is the vertical position.';
 
-// Settings: Breadcrumbs tab.
-$string['breadcrumbstab'] = 'Breadcrumbs';
-// ... Section: Breadcrumbs header.
-$string['breadcrumbsheading'] = 'Breadcrumbs';
-// ... ... Setting: Course category breadcrumb.
-$string['categorybreadcrumbsenabled'] = 'Display the category breadcrumbs in the course header';
-$string['categorybreadcrumbsenabled_desc'] = 'When enabled, the category breadcrumbs are displayed in the header of a course.';
-
-
 // Settings: E-Mail branding tab.
 $string['emailbrandingtab'] = 'E-Mail branding';
 $string['templateemailhtmlprefix'] = '';
@@ -322,6 +313,11 @@ $string['primarynavigationheading'] = 'Primary navigation';
 // ... ... Settings: Hide nodes in primary navigation.
 $string['hidenodesprimarynavigationsetting'] = 'Hide nodes in primary navigation';
 $string['hidenodesprimarynavigationsetting_desc'] = 'With this setting, you can hide one or multiple nodes from the primary navigation.';
+// ... Section: Breadcrumbs.
+$string['breadcrumbsheading'] = 'Breadcrumbs';
+// ... ... Setting: Course category breadcrumb.
+$string['categorybreadcrumbs'] = 'Display the category breadcrumbs in the course header';
+$string['categorybreadcrumbs_desc'] = 'By default, the category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the category breadcrumbs in the course header above the course name.';
 // ... Section: Navigation.
 $string['navigationheading'] = 'Navigation';
 // ... ... Setting: Back to top button.

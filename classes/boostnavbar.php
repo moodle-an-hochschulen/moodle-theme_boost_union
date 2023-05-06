@@ -22,39 +22,23 @@ use moodle_url;
 use action_link;
 use lang_string;
 
-defined('MOODLE_INTERNAL') || die();
-
-require_once($CFG->libdir . '/navigationlib.php');
-
 /**
  * Creates a navbar for boost union that allows easy control of the navbar items.
  *
+ * This class is copied and modified from /theme/boost/classes/boostnavbar.php
+ *
  * @package    theme_boost_union
  * @copyright  2023 Luca Bösch <luca.boesch@bfh.ch>
+ * @copyright  based on code from theme_boost by Adrian Greeve
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class boostnavbar implements \renderable {
-
-    /** @var array The individual items of the navbar. */
-    protected $items = [];
-    /** @var moodle_page The current moodle page. */
-    protected $page;
-
-    /**
-     * Takes a navbar object and picks the necessary parts for display.
-     *
-     * @param \moodle_page $page The current moodle page.
-     */
-    public function __construct(\moodle_page $page) {
-        $this->page = $page;
-        foreach ($this->page->navbar->get_items() as $item) {
-            $this->items[] = $item;
-        }
-        $this->prepare_nodes_for_boost();
-    }
+class boostnavbar extends \theme_boost\boostnavbar {
 
     /**
      * Prepares the navigation nodes for use with boost.
+     *
+     * This function is amended with the category composing code from
+     * get_course_categories() in lib/navigation.lib
      */
     protected function prepare_nodes_for_boost(): void {
         global $PAGE;
@@ -72,7 +56,7 @@ class boostnavbar implements \renderable {
             }
         }
         if ($this->page->context->contextlevel == CONTEXT_COURSE) {
-            if (get_config('theme_boost_union', 'categorybreadcrumbsenabled') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            if (get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 // Add the categories breadcrumb navigation nodes.
                 foreach (array_reverse($this->get_categories()) as $category) {
                     $context = \context_coursecat::instance($category->id);
@@ -84,7 +68,7 @@ class boostnavbar implements \renderable {
                     $url = new moodle_url('/course/index.php', ['categoryid' => $category->id]);
                     $name = format_string($category->name, true, ['context' => $displaycontext]);
                     $categorynode = \breadcrumb_navigation_node::create($name, $url, \breadcrumb_navigation_node::TYPE_CATEGORY,
-                        null, $category->id);
+                            null, $category->id);
                     if (!$category->visible) {
                         $categorynode->hidden = true;
                     }
@@ -97,7 +81,7 @@ class boostnavbar implements \renderable {
             // Remove 'My courses' and 'Courses' if we are in the course context.
             $this->remove('mycourses');
             $this->remove('courses');
-            if (!(get_config('theme_boost_union', 'categorybreadcrumbsenabled') == THEME_BOOST_UNION_SETTING_SELECT_YES)) {
+            if (get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_NO) {
                 // Remove the course category breadcrumb node.
                 $this->remove($this->page->course->category, \breadcrumb_navigation_node::TYPE_CATEGORY);
             }
@@ -173,15 +157,6 @@ class boostnavbar implements \renderable {
     }
 
     /**
-     * Get all the boostnavbaritem elements.
-     *
-     * @return boostnavbaritem[] Boost navbar items.
-     */
-    public function get_items(): array {
-        return $this->items;
-    }
-
-    /**
      * Get the course categories.
      *
      * @return boostnavbaritem[] Boost navbar items.
@@ -191,41 +166,10 @@ class boostnavbar implements \renderable {
     }
 
     /**
-     * Removes all navigation items out of this boost navbar
-     */
-    protected function clear_items(): void {
-        $this->items = [];
-    }
-
-    /**
-     * Retrieve a single navbar item.
-     *
-     * @param  string|int $key The identifier of the navbar item to return.
-     * @return \breadcrumb_navigation_node|null The navbar item.
-     */
-    protected function get_item($key): ?\breadcrumb_navigation_node {
-        foreach ($this->items as $item) {
-            if ($key === $item->key) {
-                return $item;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Counts all of the navbar items.
-     *
-     * @return int How many navbar items there are.
-     */
-    protected function item_count(): int {
-        return count($this->items);
-    }
-
-    /**
      * Remove a boostnavbaritem from the boost navbar.
      *
-     * @param  string|int $itemkey An identifier for the boostnavbaritem
-     * @param  int|null $itemtype An additional type identifier for the boostnavbaritem (optional)
+     * @param string|int $itemkey An identifier for the boostnavbaritem
+     * @param int|null $itemtype An additional type identifier for the boostnavbaritem (optional)
      */
     protected function remove($itemkey, ?int $itemtype = null): void {
 
@@ -271,17 +215,6 @@ class boostnavbar implements \renderable {
     }
 
     /**
-     * Returns the second last navbar item. This is for use in the mobile view where we are showing just the second
-     * last item in the breadcrumb navbar.
-     *
-     * @return breadcrumb_navigation_node|null The second last navigation node.
-     */
-    public function get_penultimate_item(): ?\breadcrumb_navigation_node {
-        $number = $this->item_count() - 2;
-        return ($number >= 0) ? $this->items[$number] : null;
-    }
-
-    /**
      * Remove items that have no actions associated with them and optionally remove items that are sections.
      *
      * The only exception is the last item in the list which may not have a link but needs to be displayed.
@@ -296,80 +229,5 @@ class boostnavbar implements \renderable {
             }
         }
         $this->items = array_values($this->items);
-    }
-
-    /**
-     * Remove breadcrumb items that already exist in a given navigation view.
-     *
-     * This method removes the breadcrumb items that have a text => action match in a given navigation view
-     * (primary or secondary).
-     *
-     * @param view $navigationview The navigation view object.
-     */
-    protected function remove_items_that_exist_in_navigation(view $navigationview): void {
-        // Loop through the navigation view items and create a 'text' => 'action' array which will be later used
-        // to compare whether any of the breadcrumb items matches these pairs.
-        $navigationviewitems = [];
-        foreach ($navigationview->children as $child) {
-            list($childtext, $childaction) = $this->get_node_text_and_action($child);
-            if ($childaction) {
-                $navigationviewitems[$childtext] = $childaction;
-            }
-        }
-        // Loop through the breadcrumb items and if the item's 'text' and 'action' values matches with any of the
-        // existing navigation view items, remove it from the breadcrumbs.
-        foreach ($this->items as $item) {
-            list($itemtext, $itemaction) = $this->get_node_text_and_action($item);
-            if ($itemaction) {
-                if (array_key_exists($itemtext, $navigationviewitems) &&
-                        $navigationviewitems[$itemtext] === $itemaction) {
-                    $this->remove($item->key);
-                }
-            }
-        }
-    }
-
-    /**
-     * Remove duplicate breadcrumb items.
-     *
-     * This method looks for breadcrumb items that have identical text and action values and removes the first item.
-     */
-    protected function remove_duplicate_items(): void {
-        $taken = [];
-        // Reverse the order of the items before filtering so that the first occurrence is removed instead of the last.
-        $filtereditems = array_values(array_filter(array_reverse($this->items), function($item) use (&$taken) {
-            list($itemtext, $itemaction) = $this->get_node_text_and_action($item);
-            if ($itemaction) {
-                if (array_key_exists($itemtext, $taken) && $taken[$itemtext] === $itemaction) {
-                    return false;
-                }
-                $taken[$itemtext] = $itemaction;
-            }
-            return true;
-        }));
-        // Reverse back the order.
-        $this->items = array_reverse($filtereditems);
-    }
-
-    /**
-     * Helper function that returns an array of the text and the outputted action url (if exists) for a given
-     * navigation node.
-     *
-     * @param navigation_node $node The navigation node object.
-     * @return array
-     */
-    protected function get_node_text_and_action(navigation_node $node): array {
-        $text = $node->text instanceof lang_string ? $node->text->out() : $node->text;
-        $action = null;
-        if ($node->has_action()) {
-            if ($node->action instanceof moodle_url) {
-                $action = $node->action->out();
-            } else if ($node->action instanceof action_link) {
-                $action = $node->action->url->out();
-            } else {
-                $action = $node->action;
-            }
-        }
-        return [$text, $action];
     }
 }

@@ -402,6 +402,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
     /**
      * Renders the "breadcrumb" for all pages in boost union.
      *
+     * This renderer function is copied and modified from /theme/boost/classes/output/core_renderer.php
+     *
      * @return string the HTML for the navbar.
      */
     public function navbar(): string {
