@@ -317,7 +317,9 @@ $string['hidenodesprimarynavigationsetting_desc'] = 'With this setting, you can 
 $string['breadcrumbsheading'] = 'Breadcrumbs';
 // ... ... Setting: Course category breadcrumb.
 $string['categorybreadcrumbs'] = 'Display the category breadcrumbs in the course header';
-$string['categorybreadcrumbs_desc'] = 'By default, the category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the category breadcrumbs in the course header above the course name.';
+$string['categorybreadcrumbs_desc'] = 'By default, the course category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the course category breadcrumbs in the course header above the course name.<br/>
+"No" fixes a behaviour where in Boost beginning on the fourth course category nesting level breadcrumbs would be shown.';
+$string['changenothing'] = 'Change nothing';
 // ... Section: Navigation.
 $string['navigationheading'] = 'Navigation';
 // ... ... Setting: Back to top button.

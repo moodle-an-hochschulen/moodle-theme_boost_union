@@ -49,30 +49,48 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
   Scenario Outline: Setting: Course category breadcrumbs
     Given the following "categories" exist:
       | name           | category | idnumber | category |
-      | Category E     | 0        | CE       |          |
+      | Category E     | 0        | CE       | 0        |
       | Category ED    | 1        | CED      | CE       |
       | Category EDC   | 2        | CEDC     | CED      |
       | Category EDCB  | 3        | CEDCB    | CEDC     |
       | Category EDCBA | 4        | CEDCBA   | CEDCB    |
     And the following "courses" exist:
-      | fullname | shortname | category |
-      | Course 2 | C2        | CED      |
-      | Course 3 | C3        | CEDC     |
-      | Course 4 | C4        | CEDCB    |
-      | Course 5 | C5        | CEDCBA   |
+      | fullname  | shortname | category |
+      | Course C1 | CC1       | CE       |
+      | Course C2 | CC2       | CED      |
+      | Course C3 | CC3       | CEDC     |
+      | Course C4 | CC4       | CEDCB    |
+      | Course C5 | CC5       | CEDCBA   |
     And the following "course enrolments" exist:
       | user     | course | role           |
-      | teacher1 | C2     | editingteacher |
-      | teacher1 | C3     | editingteacher |
-      | teacher1 | C4     | editingteacher |
-      | teacher1 | C5     | editingteacher |
+      | teacher1 | CC2    | editingteacher |
+      | teacher1 | CC3    | editingteacher |
+      | teacher1 | CC4    | editingteacher |
+      | teacher1 | CC5    | editingteacher |
     And the following config values are set as admin:
       | config              | value     | plugin            |
       | categorybreadcrumbs | <setting> | theme_boost_union |
     When I log in as "teacher1"
-    And I am on "Course 2" course homepage
+    And I am on "Course C1" course homepage
     Then "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And I am on "Course C2" course homepage
+    And "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
     And "Category ED" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And I am on "Course C3" course homepage
+    And "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category ED" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category EDC" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And I am on "Course C4" course homepage
+    And "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category ED" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category EDC" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category EDCB" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And I am on "Course C5" course homepage
+    And "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category ED" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category EDC" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category EDCB" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category EDCBA" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
 
     Examples:
       | setting | shouldornot |

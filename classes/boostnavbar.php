@@ -81,9 +81,16 @@ class boostnavbar extends \theme_boost\boostnavbar {
             // Remove 'My courses' and 'Courses' if we are in the course context.
             $this->remove('mycourses');
             $this->remove('courses');
-            if (get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_NO) {
-                // Remove the course category breadcrumb node.
-                $this->remove($this->page->course->category, \breadcrumb_navigation_node::TYPE_CATEGORY);
+            switch (get_config('theme_boost_union', 'categorybreadcrumbs')) {
+                case THEME_BOOST_UNION_SETTING_SELECT_NO:
+                    foreach ($this->items as $key => $item) {
+                        // Remove if it is a course category breadcrumb node.
+                        $this->remove($item->key, \breadcrumb_navigation_node::TYPE_CATEGORY);
+                    }
+                case THEME_BOOST_UNION_SETTING_BREADCRUMBS_CHANGENOTHING:
+                    $this->remove($this->page->course->category, \breadcrumb_navigation_node::TYPE_CATEGORY);
+                case THEME_BOOST_UNION_SETTING_SELECT_YES:
+                    break;
             }
             // Remove the course breadcrumb node.
             $this->remove($this->page->course->id, \breadcrumb_navigation_node::TYPE_COURSE);
@@ -145,13 +152,17 @@ class boostnavbar extends \theme_boost\boostnavbar {
         $this->remove_no_link_items($removesections);
 
         // Don't display the navbar if there is only one item. Apparently this is bad UX design.
-        if ($this->item_count() <= 1) {
-            $this->clear_items();
-            return;
+        // Except, leave it in when in course context and categorybreadcrumbs are desired.
+        if (!((get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES) &&
+            $this->page->context->contextlevel == CONTEXT_COURSE)) {
+            if ($this->item_count() <= 1) {
+                $this->clear_items();
+                return;
+            }
         }
 
         // Make sure that the last item is not a link. Not sure if this is always a good idea.
-        if (false) {
+        if (get_config('theme_boost_union', 'categorybreadcrumbs') != THEME_BOOST_UNION_SETTING_SELECT_YES) {
             $this->remove_last_item_action();
         }
     }

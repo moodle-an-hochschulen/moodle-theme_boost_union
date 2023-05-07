@@ -235,6 +235,12 @@ In this tab there are the following settings:
 
 With this setting, you can hide one or multiple nodes from the primary navigation.
 
+##### Breadcrumbs
+
+###### Display the category breadcrumbs in the course header
+
+With this setting, you can show or hide the course category breadcrumbs above the course name.
+
 ##### Navigation
 
 ###### Back to top button
