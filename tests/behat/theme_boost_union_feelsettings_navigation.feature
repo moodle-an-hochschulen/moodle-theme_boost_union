@@ -48,22 +48,31 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
 
   Scenario Outline: Setting: Course category breadcrumbs
     Given the following "categories" exist:
-      | name                | category | idnumber | category |
-      | Course category     | 0        | CC       |          |
-      | Course sub category | 1        | CSC      | CC       |
+      | name           | category | idnumber | category |
+      | Category E     | 0        | CE       |          |
+      | Category ED    | 1        | CED      | CE       |
+      | Category EDC   | 2        | CEDC     | CED      |
+      | Category EDCB  | 3        | CEDCB    | CEDC     |
+      | Category EDCBA | 4        | CEDCBA   | CEDCB    |
     And the following "courses" exist:
       | fullname | shortname | category |
-      | Course 2 | C2        | CSC      |
+      | Course 2 | C2        | CED      |
+      | Course 3 | C3        | CEDC     |
+      | Course 4 | C4        | CEDCB    |
+      | Course 5 | C5        | CEDCBA   |
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | C2     | editingteacher |
+      | teacher1 | C3     | editingteacher |
+      | teacher1 | C4     | editingteacher |
+      | teacher1 | C5     | editingteacher |
     And the following config values are set as admin:
       | config              | value     | plugin            |
       | categorybreadcrumbs | <setting> | theme_boost_union |
     When I log in as "teacher1"
     And I am on "Course 2" course homepage
-    Then "Course category" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
-    And "Course sub category" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    Then "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category ED" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
 
     Examples:
       | setting | shouldornot |
