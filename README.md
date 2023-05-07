@@ -128,9 +128,11 @@ With these settings, you can overwrite the Bootstrap colors which are used withi
 
 With these settings, you can overwrite the activity icon colors which are used within courses.
 
-##### Icons for Activities and Resources
+##### Activity icons
 
-With this setting, Activity and Resource icons can be overwritten.
+###### Custom icons for activities and resources
+
+With this setting, you can modify the icons for activities and resources which are used by Moodle on the course pages and in the activity chooser. You can upload custom icons for all or only some activity modules installed in this Moodle instance.
 
 #### Tab "Login page"
 

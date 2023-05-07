@@ -1362,96 +1362,173 @@ function theme_boost_union_get_block_regions($layout) {
 }
 
 /**
- * Remove recursively all files in the directory.
- * @param string $src folderpath
- * @param bool $del delete the folder itself?
+ * Remove recursively all files in the given directory.
+ *
+ * @param string $src The folder path
+ * @param bool $del Delete the folder itself?
  */
 function theme_boost_union_rrmdir($src , $del) {
+    // Open directory handle.
     $dir = opendir($src);
+
+    // While there are files in the given directory, get the files.
     while (false !== ($file = readdir($dir))) {
+        // Ignore the directory and parent directory entries.
         if (($file != '.') && ($file != '..')) {
+            // Compose file path.
             $full = $src . '/' . $file;
+
+            // If this is a directory.
             if (is_dir($full)) {
+                // Recursively descend into the directory.
                 theme_boost_union_rrmdir($full, true);
+
+                // Otherwise.
             } else {
+                // Delete the file.
                 unlink($full);
             }
         }
     }
+
+    // Close directory handle.
     closedir($dir);
+
+    // If requested, delete the directory itself.
     if ($del) {
         rmdir($src);
     }
 }
 
 /**
- * First delete all icons that are placed in dataroot->pix_plugin->mod
- * (https://github.com/moodle/moodle/blob/15d4ea81e003439c528004a8d555a07cad0f02d3/lib/outputlib.php#L2151-L2169,
- * Used as third fallback for mod icons- first look in theme - second in parent theme)
- * Then checks the files and ONLY upload files which are in a folder called as the activity and
- * are namen icon/monologo.png/svg.
+ * Callback function which is called from settings.php if the enable custom activity icons setting has changed.
+ *
+ * It checks if the setting has just been disabled. If yes, it removes all custom icons from the
+ * the pix_plugins/mod folder in the Moodledata directory as they are not needed anymore.
+ */
+function theme_boost_union_check_mod_icons_cleanup() {
+    global $CFG;
+
+    // Get the modiconsenable setting.
+    $modiconsenable = get_config('theme_boost_union', 'modiconsenable');
+
+    // If modiconsenable was just enabled, return directly as everything is fine.
+    if ($modiconsenable != THEME_BOOST_UNION_SETTING_SELECT_NO) {
+        return;
+    }
+
+    // Purge the content of the pix_plugins/mod folder in Moodledata.
+    $pixpluginpath = $CFG->dataroot.DIRECTORY_SEPARATOR.'pix_plugins'.DIRECTORY_SEPARATOR.'mod';
+    if (is_dir($pixpluginpath)) {
+        theme_boost_union_rrmdir($pixpluginpath, true);
+    }
+
+    // Purge the theme cache to show the old icons in the GUI.
+    theme_reset_all_caches();
+}
+
+/**
+ * Callback function which is called from settings.php if the custom activity icons files setting has changed.
+ *
+ * First, it deletes all files that are placed within the pix_plugins/mod folder in the Moodledata directory
+ * (see https://github.com/moodle/moodle/blob/15d4ea81e003439c528004a8d555a07cad0f02d3/lib/outputlib.php#L2151-L2169,
+ * this location is used as third fallback for activity icons after looking for an icon in the theme and the parent theme).
+ *
+ * Then, it gets all icons from the files setting, picks all the valid icons which are in a folder of a valid activity
+ * and stores them into the pix_plugins/mod folder in the Moodledata directory again.
  *
  * @throws coding_exception
  * @throws dml_exception
  * @throws moodle_exception
  */
-function theme_boost_union_load_mod_icons() {
-    global $CFG;
-    // Delete all previous files:
-    // If Behat tests are running.
-    $pixpluginpath = $CFG->dataroot . DIRECTORY_SEPARATOR . 'pix_plugins';
+function theme_boost_union_place_mod_icons() {
+    global $CFG, $DB;
+
+    // Get the modiconsenable setting.
+    $modiconsenable = get_config('theme_boost_union', 'modiconsenable');
+
+    // If modiconsenable is not enabled, return directly as we do not want to modify the placed icons.
+    if ($modiconsenable != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        return;
+    }
+
+    // Purge the content of the pix_plugins/mod folder in Moodledata.
+    $pixpluginpath = $CFG->dataroot.DIRECTORY_SEPARATOR.'pix_plugins'.DIRECTORY_SEPARATOR.'mod';
     if (is_dir($pixpluginpath)) {
         theme_boost_union_rrmdir($pixpluginpath, false);
     }
+
     // Get the system context.
     $systemcontext = \context_system::instance();
+
     // Get filearea.
     $fs = get_file_storage();
-    // Get all files from filearea.
-    $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'modicons',
-            false, 'itemid', true);
-    $filesnottransferedending = array();
-    $filesnottransferedname = array();
-    $filesnottransferedfolder = array();
-    foreach ($files as $file) {
-        // Is filename icon/monologo.svg/png ?
-        $trimmedfilename = str_replace(array('icon', 'monologo'), "",  $file->get_filename());
-        if (!($trimmedfilename === '.png' || $trimmedfilename === '.svg')) {
-            array_push($filesnottransferedending, $file->get_filename());
-            continue;
-        }
-        $trimmedfilename = str_replace(array('.png', '.svg'), "",  $file->get_filename());
-        if (!($trimmedfilename === 'icon' || $trimmedfilename === 'monologo')) {
-            array_push($filesnottransferedname, $file->get_filename());
-            continue;
-        }
-        // Do we have a filepath? In case we have exactly one folder this will result in three entries in the array.
-        $checksize = count(explode(DIRECTORY_SEPARATOR, $file->get_filepath()));
-        if (empty($file->get_filepath()) || $checksize != 3) {
-            array_push($filesnottransferedfolder, $file->get_filename());
-            continue;
-        }
-        // Write file to moodledata.
-        $foldername = trim($file->get_filepath(), DIRECTORY_SEPARATOR);
 
-        $path = $pixpluginpath . DIRECTORY_SEPARATOR . 'mod' . DIRECTORY_SEPARATOR . $foldername;
-        if (!is_dir($path)) {
-            umask(0000);
-            // Create the directory for Backups.
-            if (!mkdir($path, $CFG->directorypermissions, true)) {
-                $mkdirerrorarray = error_get_last();
-                throw new \moodle_exception(get_string('errorcreatingpath', 'theme_boost_union', $mkdirerrorarray['message']));
-            }
+    // Get all files from filearea.
+    $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'modicons', false, 'itemid', true);
+
+    // Get installed activity plugins.
+    $modules = $DB->get_records('modules', array(), '', 'name');
+
+    // Iterate over the files.
+    foreach ($files as $file) {
+        // Pick the filename and extension.
+        $trimmedfilename = pathinfo($file->get_filename(), PATHINFO_FILENAME);
+        $trimmedextension = pathinfo($file->get_filename(), PATHINFO_EXTENSION);
+
+        // If the extension is _not_ svg or png.
+        if (!($trimmedextension === 'png' || $trimmedextension === 'svg')) {
+            // Skip the file.
+            continue;
         }
+
+        // If the filename is _not_ icon or monologo.
+        if (!($trimmedfilename === 'icon' || $trimmedfilename === 'monologo')) {
+            // Skip the file.
+            continue;
+        }
+
+        // Get the number of the path size.
+        // We expect the use files within one folder. Such paths have a path size of three.
+        // (One before the leading slash, one for the folder, one for the file).
+        $pathsize = count(explode(DIRECTORY_SEPARATOR, $file->get_filepath()));
+
+        // If the file is not placed within a single folder.
+        if (empty($file->get_filepath()) || $pathsize != 3) {
+            // Skip the file.
+            continue;
+        }
+
+        // Pick the folder name.
+        $trimmedfolder = trim($file->get_filepath(), DIRECTORY_SEPARATOR);
+
+        // If the folder does not have a valid activity name.
+        if (!array_key_exists($trimmedfolder, $modules)) {
+            // Skip the file.
+            continue;
+        }
+
+        // Compose the path for the icon's folder in Moodledata.
+        $path = $pixpluginpath.DIRECTORY_SEPARATOR.$trimmedfolder;
+
+        // Create the folder.
+        check_dir_exists($path, true, true);
+
+        // Write the file to Moodledata.
         if (!empty($file)) {
-            $file->copy_content_to($path . DIRECTORY_SEPARATOR . $file->get_filename());
+            $file->copy_content_to($path.DIRECTORY_SEPARATOR.$file->get_filename());
         }
     }
+
+    // Purge the theme cache to show the new icons in the GUI.
+    theme_reset_all_caches();
 }
 
 /**
- * Return the template data for all uploaded files for
- * settings-modicon-filelist.mustache
+ * Return the custom icons from the modiconsfiles file area as templatecontext structure.
+ * It was designed to compose the files for the settings-modicon-filelist.mustache template.
+ * This function always loads the files from the filearea which is not really performant.
+ * Thus, you have to take care where and how often you use it (or add some caching).
  *
  * @return array
  * @throws coding_exception
@@ -1459,43 +1536,67 @@ function theme_boost_union_load_mod_icons() {
  */
 function theme_boost_union_get_modicon_templatecontext () {
     global $DB;
+
+    // Get the system context.
     $systemcontext = \context_system::instance();
+
     // Get filearea.
     $fs = get_file_storage();
-    // Get all files from filearea.
-    $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'modicons',
-            false, 'itemid', true);
 
+    // Get all files from filearea.
+    $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'modicons', false, 'filepath,filename', true);
+
+    // Get installed activity plugins.
     $modules = $DB->get_records('modules', array(), '', 'name');
 
+    // Initialize template data.
     $templatedata = array();
+
+    // Iterate over the files.
     foreach ($files as $file) {
-        // Is filename [icon|monologo] ?
-        // Dismiss png/svg check is already restricted by moodle.
+        // Initialize template object.
         $templateobject = new stdClass();
-        $trimmedfilename = str_replace(array('.png', '.svg'), "", $file->get_filename());
-        if (!($trimmedfilename === 'icon' || $trimmedfilename === 'monologo')) {
+
+        // Pick the filename and extension.
+        $trimmedfilename = pathinfo($file->get_filename(), PATHINFO_FILENAME);
+        $trimmedextension = pathinfo($file->get_filename(), PATHINFO_EXTENSION);
+
+        // Check if we have a Moodle 4 icon, a Moodle 4 legacy icon or none of both.
+        if (!($trimmedfilename === 'icon' || $trimmedfilename === 'monologo') ||
+                !($trimmedextension === 'svg' || $trimmedextension === 'png')) {
             $templateobject->invalidname = true;
         } else if ($trimmedfilename === 'monologo') {
             $templateobject->moodle4 = true;
         } else if ($trimmedfilename === 'icon') {
             $templateobject->moodle3 = true;
         }
-        // Do we have a filepath? In case we have exactly one folder this will result in three entries in the array.
-        $checksize = count(explode(DIRECTORY_SEPARATOR, $file->get_filepath()));
-        // Skip Folders.
-        if ($checksize < 2 || $file->get_filename() == '.') {
+
+        // Get the number of the path size.
+        // We expect the use files within one folder. Such paths have a path size of three.
+        // (One before the leading slash, one for the folder, one for the file).
+        $pathsize = count(explode(DIRECTORY_SEPARATOR, $file->get_filepath()));
+
+        // Skip the root directory and all folder dot files.
+        if ($pathsize < 2 || $file->get_filename() == '.') {
             continue;
         }
-        $templateobject->path = $file->get_filepath() . $file->get_filename();
-        // We have exactly one folder - Check if the folder has a valid name.
-        if (!empty($file->get_filepath()) || $checksize == 3) {
+
+        // Compose and add the path to the template object.
+        $templateobject->path = $file->get_filepath().$file->get_filename();
+
+        // If we have a file within one single folder.
+        if (!empty($file->get_filepath()) && $pathsize == 3) {
+            // If the folder has a valid activity name.
             $foldername = trim($file->get_filepath(), DIRECTORY_SEPARATOR);
             if (array_key_exists($foldername, $modules)) {
+                // Add the activity name to the template object.
                 $templateobject->mod = get_string('modulename', $foldername);
             }
         }
+
+        // Add the template object to the template data stack.
         array_push($templatedata, $templateobject);
     }
+
     return $templatedata;
 }

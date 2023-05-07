@@ -26,12 +26,12 @@
     {
         "files": [
             {
-                "path": 'somenotexistingmod/monologo.png',
+                "path": 'assign/monologo.png',
                 "mod": 'Assignment',
                 "moodle4": true,
             },
             {
-                "path": 'somenotexistingmod/icon.png',
+                "path": 'assign/icon.png',
                 "mod": 'Assignment',
                 "moodle3": true,
             },
@@ -48,42 +48,28 @@
         <li class="list-group-item d-flex justify-content-between">
             <div class="d-flex flex-row">
                 {{#mod}}
-                    {{^invalidname}}
-                        <span class="text-success"><i class="fa fa-check-circle-o fa-3x fa-fw"></i></span>
-                    {{/invalidname}}
-                    {{#invalidname}}
-                        <span class="text-danger"><i class="fa fa-times-circle-o fa-3x fa-fw"></i></span>
-                    {{/invalidname}}
+                    {{^invalidname}}<span class="text-success"><i class="fa fa-check-circle-o fa-3x fa-fw"></i></span>{{/invalidname}}
+                    {{#invalidname}}<span class="text-danger"><i class="fa fa-times-circle-o fa-3x fa-fw"></i></span>{{/invalidname}}
                 {{/mod}}
-                {{^mod}}
-                    <span class="text-danger"><i class="fa fa-times-circle-o fa-3x fa-fw"></i></span>
-                {{/mod}}
+                {{^mod}}<span class="text-danger"><i class="fa fa-times-circle-o fa-3x fa-fw"></i></span>{{/mod}}
                 <div class="ml-3">
-                    <h6 class="mb-0"><code>{{path}}</code> {{mod}}
-                        {{#moodle4}}
-                            - ({{#str}}gtmoodle4, theme_boost_union{{/str}})
-                        {{/moodle4}}
-                        {{#moodle3}}
-                            - ({{#str}}ltmoodle311, theme_boost_union{{/str}})
-                        {{/moodle3}}
-                    </h6>
-                    {{#mod}}<small>
+                    <h6 class="mb-0">{{path}}</h6>
+                    {{#mod}}
+                        <small>{{#str}}modiconactivity, theme_boost_union{{/str}}: {{mod}}</small><br />
+                        {{#moodle4}}<small>{{#str}}modiconversion, theme_boost_union{{/str}}: {{#str}}modicongtmoodle4, theme_boost_union{{/str}}</small><br />{{/moodle4}}
+                        {{#moodle3}}<small>{{#str}}modiconversion, theme_boost_union{{/str}}: {{#str}}modiconltmoodle311, theme_boost_union{{/str}}</small><br />{{/moodle3}}
                         {{^invalidname}}
-                        {{#moodle4}}
-                            {{#str}}modiconsuccess40, theme_boost_union, {{mod}}{{/str}}
-                        {{/moodle4}}
-                        {{^moodle4}}
-                            {{#str}}modiconsuccess3x, theme_boost_union, {{mod}}{{/str}}
-                        {{/moodle4}}
+                            {{#moodle4}}<small>{{#str}}modiconsuccess4x, theme_boost_union, {{mod}}{{/str}}</small>{{/moodle4}}
+                            {{#moodle3}}<small>{{#str}}modiconsuccess3x, theme_boost_union, {{mod}}{{/str}}</small>{{/moodle3}}
                         {{/invalidname}}
                         {{#invalidname}}
-                                {{#str}}modiconnamefail40, theme_boost_union, {{mod}}{{/str}}
+                            <small>{{#str}}modiconversion, theme_boost_union{{/str}}: {{#str}}modiconactivityunknown, theme_boost_union{{/str}}</small><br />
+                            <small>{{#str}}modiconnamefail, theme_boost_union, {{mod}}{{/str}}</small>
                         {{/invalidname}}
-                    </small>{{/mod}}
+                    {{/mod}}
                     {{^mod}}
-                        <small>
-                            {{#str}}modiconnotexist, theme_boost_union, {{path}}{{/str}}
-                        </small>
+                        <small>{{#str}}modiconactivity, theme_boost_union{{/str}}: {{#str}}modiconactivityunknown, theme_boost_union{{/str}}</small><br />
+                        <small>{{#str}}modiconnotexist, theme_boost_union, {{path}}{{/str}}</small>
                     {{/mod}}
                 </div>
             </div>
