@@ -96,6 +96,7 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | setting | shouldornot |
       | yes     | should      |
       | no      | should not  |
+      # We do not check the 'dontchange' setting as this is Boost core behaviour which Boost Union does not control.
 
   @javascript
   Scenario: Setting: back to top button - Enable "Back to top button"

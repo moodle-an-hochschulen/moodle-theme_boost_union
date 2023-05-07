@@ -239,7 +239,7 @@ With this setting, you can hide one or multiple nodes from the primary navigatio
 
 ###### Display the category breadcrumbs in the course header
 
-With this setting, you can show or hide the course category breadcrumbs above the course name.
+By default, the course category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the course category breadcrumbs in the course header above the course name.
 
 ##### Navigation
 

@@ -29,6 +29,9 @@ $string['pluginname'] = 'Boost Union';
 $string['choosereadme'] = '<p>Theme Boost Union is an enhanced child theme of Boost which is intended, on the one hand, to make Boost simply more configurable and, on the other hand, to provide helpful additional features for the daily Moodle operation of admins, teachers and students.</p><p>Boost Union is maintained by<br />Moodle an Hochschulen e.V.,</p><p>in cooperation with<br />lern.link GmbH</p><p>together with<br />bdecent GmbH</p>';
 $string['configtitle'] = 'Boost Union';
 
+// Settings: General strings.
+$string['dontchange'] = 'Do not change anything';
+
 // Settings: Look page.
 $string['configtitlelook'] = 'Look';
 
@@ -317,9 +320,8 @@ $string['hidenodesprimarynavigationsetting_desc'] = 'With this setting, you can 
 $string['breadcrumbsheading'] = 'Breadcrumbs';
 // ... ... Setting: Course category breadcrumb.
 $string['categorybreadcrumbs'] = 'Display the category breadcrumbs in the course header';
-$string['categorybreadcrumbs_desc'] = 'By default, the course category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the course category breadcrumbs in the course header above the course name.<br/>
-"No" fixes a behaviour where in Boost beginning on the fourth course category nesting level breadcrumbs would be shown.';
-$string['changenothing'] = 'Change nothing';
+$string['categorybreadcrumbs_desc'] = 'By default, the course category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the course category breadcrumbs in the course header above the course name.<br/><br/>
+Please note: The "Do not change anything" option does not change anything about the course category breadcrumbs like they are presented by Moodle core. Whereas the "No" option takes care that course category breadcrumbs are never shown at all. This might be a difference as Boost in Moodle core might indeed show course category breadcrumbs beginning on deeper nested course category levels (which the Boost Union developers assess to be a glitch).';
 // ... Section: Navigation.
 $string['navigationheading'] = 'Navigation';
 // ... ... Setting: Back to top button.
