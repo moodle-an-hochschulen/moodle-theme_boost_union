@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-04-20 - Feature: Course category breadcrumbs in course header, solves #284.
 * 2023-04-02 - Improvement: Add SCSS code to improve the block regions presentation in our companion plugin Dash Pro, solves #291.
 * 2023-04-17 - Bugfix: Setting activityiconcolorcommunication was not processed anymore, solves #279.
 * 2023-04-13 - Bugfix: When there is no edit switch, as on the assignment grading page, scrollfix should not kick in, solves #276.
