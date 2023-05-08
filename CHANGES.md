@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r7
 
 * 2023-04-20 - Feature: Course category breadcrumbs in course header, solves #284.
 * 2023-04-02 - Improvement: Add SCSS code to improve the block regions presentation in our companion plugin Dash Pro, solves #291.
