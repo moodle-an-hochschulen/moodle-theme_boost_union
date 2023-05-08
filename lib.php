@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use core\navigation\views\primary;
+
 // Constants which are use throughout this theme.
 define('THEME_BOOST_UNION_SETTING_SELECT_YES', 'yes');
 define('THEME_BOOST_UNION_SETTING_SELECT_NO', 'no');

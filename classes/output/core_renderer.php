@@ -335,6 +335,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string HTML to display the main header.
      */
     public function full_header() {
+
         $pagetype = $this->page->pagetype;
         $homepage = get_home_page();
         $homepagetype = null;

@@ -1,0 +1,15 @@
+<div class="smartmenus">
+    <ul class="menu-list">
+        {{#items}}
+        <li class="menuitem">
+            {{#url}}
+            <a href="{{{url}}}" class="menuitem-{{type}}" data-key="{{key}}"> {{{title}}} </a>
+            {{/url}}
+            <!-- Heading -->
+            {{^url}}
+            <h5 class="menuitem-heading" data-key="{{key}}"> {{{title}}} </h5>
+            {{/url}}
+        </li>
+        {{/items}}
+    </ul>
+</div>
