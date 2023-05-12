@@ -1,0 +1,78 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/settings-modicons-filelist
+
+    Boost Union settingsfilelist layout template.
+
+    Context variables required for this template:
+    * files - Array of files
+
+    Example context (json):
+    {
+        "files": [
+            {
+                "path": 'assign/monologo.png',
+                "mod": 'Assignment',
+                "moodle4": true,
+            },
+            {
+                "path": 'assign/icon.png',
+                "mod": 'Assignment',
+                "moodle3": true,
+            },
+             {
+                "path": 'somenotexistingmod/mono.png',
+                "invalidname": 'true',
+            }
+        ]
+    }
+}}
+
+<ul class="list-group my-3 settings-modicons-filelist">
+    {{#files}}
+        <li class="list-group-item d-flex justify-content-between">
+            <div class="d-flex flex-row">
+                {{#mod}}
+                    {{^invalidname}}<span class="text-success"><i class="fa fa-check-circle-o fa-3x fa-fw"></i></span>{{/invalidname}}
+                    {{#invalidname}}<span class="text-danger"><i class="fa fa-times-circle-o fa-3x fa-fw"></i></span>{{/invalidname}}
+                {{/mod}}
+                {{^mod}}<span class="text-danger"><i class="fa fa-times-circle-o fa-3x fa-fw"></i></span>{{/mod}}
+                <div class="ml-3">
+                    <h6 class="mb-0">{{path}}</h6>
+                    {{#mod}}
+                        <small>{{#str}}modiconactivity, theme_boost_union{{/str}}: {{mod}}</small><br />
+                        {{#moodle4}}<small>{{#str}}modiconversion, theme_boost_union{{/str}}: {{#str}}modicongtmoodle4, theme_boost_union{{/str}}</small><br />{{/moodle4}}
+                        {{#moodle3}}<small>{{#str}}modiconversion, theme_boost_union{{/str}}: {{#str}}modiconltmoodle311, theme_boost_union{{/str}}</small><br />{{/moodle3}}
+                        {{^invalidname}}
+                            {{#moodle4}}<small>{{#str}}modiconsuccess4x, theme_boost_union, {{mod}}{{/str}}</small>{{/moodle4}}
+                            {{#moodle3}}<small>{{#str}}modiconsuccess3x, theme_boost_union, {{mod}}{{/str}}</small>{{/moodle3}}
+                        {{/invalidname}}
+                        {{#invalidname}}
+                            <small>{{#str}}modiconversion, theme_boost_union{{/str}}: {{#str}}modiconactivityunknown, theme_boost_union{{/str}}</small><br />
+                            <small>{{#str}}modiconnamefail, theme_boost_union, {{mod}}{{/str}}</small>
+                        {{/invalidname}}
+                    {{/mod}}
+                    {{^mod}}
+                        <small>{{#str}}modiconactivity, theme_boost_union{{/str}}: {{#str}}modiconactivityunknown, theme_boost_union{{/str}}</small><br />
+                        <small>{{#str}}modiconnotexist, theme_boost_union, {{path}}{{/str}}</small>
+                    {{/mod}}
+                </div>
+            </div>
+        </li>
+    {{/files}}
+</ul>
