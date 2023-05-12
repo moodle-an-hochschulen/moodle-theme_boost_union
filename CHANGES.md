@@ -4,9 +4,12 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-05-11 - Feature: Allow the admin to upload custom icons for activities and resources, solves #175.
+
 ### v4.0-r18
 
-* 2023-05-07 - Feature: Allow the admin to upload custom icons for activities and resources, solves #175.
 * 2023-04-20 - Feature: Course category breadcrumbs in course header, solves #284.
 * 2023-04-02 - Improvement: Add SCSS code to improve the block regions presentation in our companion plugin Dash Pro, solves #291.
 * 2023-04-17 - Bugfix: Setting activityiconcolorcommunication was not processed anymore, solves #279.
