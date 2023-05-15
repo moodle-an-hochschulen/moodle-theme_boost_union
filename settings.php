@@ -85,6 +85,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 new moodle_url('/theme/boost_union/flavours/overview.php'),
                 'theme/boost_union:configure');
         $ADMIN->add('theme_boost_union', $flavourspage);
+
+        // Create Smart Menus settings page.
+        // (and allow users with the theme/boost_union:configure capability to access it).
+        $tab = new admin_externalpage('theme_boost_union_smartmenus',
+                get_string('smartmenus', 'theme_boost_union', null, true),
+                new moodle_url('/theme/boost_union/smartmenus/menus.php'),
+                'theme/boost_union:configure');
+        $ADMIN->add('theme_boost_union', $tab);
     }
 
     // Create full settings page structure.

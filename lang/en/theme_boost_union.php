@@ -755,3 +755,215 @@ $string['upgradenotice_2022080922_logo'] = 'logo';
 $string['upgradenotice_2022080922_logocompact'] = 'compact logo';
 $string['upgradenotice_2022080922_copied'] = 'The existing <strong>{$a}</strong> from the Moodle core settings has been copied to the Boost Union {$a} setting during this upgrade. Please double-check the result.';
 $string['upgradenotice_2022080922_notcopied'] = 'The <strong>{$a}</strong> setting within Boost Union is empty now. If you want to use a {$a} within Boost Union from now on, just upload it into the Boost Union {$a} setting later.';
+
+
+// Smart menus.
+// ...Smart menu edit form.
+$string['smartmenus'] = 'Smart menus';
+$string['smartmenus_desc'] = '"Smart Menu" allows site administrators to create customizable menus that can be placed in different locations on the site, such as the site main menu, bottom mobile menu, and user menu. The menus can be configured to display different types of content,
+including links to other pages or resources, category links, or user profile links.
+<br>
+Site administrator can create a new menu and specify the menu items, and display settings. The administrator can also choose where the menu will be displayed on the site and whether it should be visible to all users or only to certain user roles.';
+// Smartmenu: Menu form element strings.
+$string['smartmenu:generalsection'] = 'General sections';
+$string['smartmenu:title'] = 'Title';
+$string['smartmenu:showdescription'] = 'Show description';
+$string['smartmenu:description'] = 'Description';
+$string['smartmenu:location'] = 'Locations';
+$string['smartmenu:location:main'] = 'Main navigation';
+$string['smartmenu:location:menu'] = 'Menu bar';
+$string['smartmenu:location:user'] = 'User Menu';
+$string['smartmenu:location:bottom'] = 'Bottom bar';
+$string['smartmenu:types'] = 'Types';
+$string['smartmenu:types:list'] = 'List';
+$string['smartmenu:types:card'] = 'Card';
+$string['smartmenu:top'] = 'Top';
+$string['smartmenu:never'] = 'Never';
+$string['smartmenu:above'] = 'Above';
+$string['smartmenu:below'] = 'Below';
+$string['smartmenu:help'] = 'Help';
+$string['smartmenu:advancedsettings'] = 'Advanced settings';
+$string['smartmenu:cssclass'] = 'CSS classes';
+$string['smartmenu:default'] = 'Default';
+$string['smartmenu:forcedintomoremenu'] = 'Forced into more menu';
+$string['smartmenu:forcedoutsideofmoremenu'] = 'Forced out side of moremenu';
+$string['smartmenu:moremenubehavior'] = 'More menu behavior';
+$string['smartmenu:cardappearance'] = 'Card appearance';
+$string['smartmenu:tiny'] = 'Tiny';
+$string['smartmenu:small'] = 'Small';
+$string['smartmenu:medium'] = 'Medium';
+$string['smartmenu:large'] = 'Large';
+$string['smartmenu:cardsize'] = 'Card size';
+$string['smartmenu:square'] = 'Square';
+$string['smartmenu:portrait'] = 'Portrait';
+$string['smartmenu:landscape'] = 'Landscape';
+$string['smartmenu:fullwidth'] = 'Full width';
+$string['smartmenu:cardform'] = 'Card form';
+$string['smartmenu:no_wrap'] = 'No wrap';
+$string['smartmenu:wrap'] = 'Wrap';
+$string['smartmenu:overflowbehavior'] = 'Overflow behavior';
+$string['smartmenu:accessrules'] = 'Access rules';
+$string['smartmenu:allroles'] = 'All roles';
+$string['smartmenu:byrole'] = 'By role';
+$string['smartmenu:anycohort'] = 'Any cohort';
+$string['smartmenu:bycohort'] = 'By cohort';
+$string['smartmenu:anylanguage'] = 'Any language';
+$string['smartmenu:bylanguage'] = 'By language';
+$string['smartmenu:createmenu'] = 'Create new smart menu';
+$string['smartmenu:insertsuccess'] = 'Smart menu created successfully';
+$string['smartmenu:updatesuccess'] = 'Smart menu updated successfully';
+$string['smartmenu:menudeleted'] = 'Smart menu deleted successfully';
+// Smartmenu: Menu form element strings.
+$string['smartmenu:menutitle'] = 'Title';
+$string['smartmenu:description'] = 'Description';
+$string['smartmenu:static'] = 'Static';
+$string['smartmenu:type'] = 'Type';
+$string['smartmenu:dynamiccourses'] = 'Dynamic courses';
+$string['smartmenu:completionstatus'] = 'Completion status';
+$string['smartmenu:enrolmentrole'] = 'Enrolment role';
+$string['smartmenu:enrolled'] = 'Enrolled';
+$string['smartmenu:past'] = 'Past';
+$string['smartmenu:present'] = 'Present';
+$string['smartmenu:future'] = 'Future';
+$string['smartmenu:daterange'] = 'Date range';
+$string['smartmenu:appearanceheader_desc'] = 'Use these settings to customize the look and feel of the smart menu item';
+$string['smartmenu:showtitleicon'] = 'Show title icon';
+$string['smartmenu:hidetitle'] = 'Hide title';
+$string['smartmenu:hidetitlemobile'] = 'Hide title in mobile';
+$string['smartmenu:tooltip'] = 'Tooltip';
+$string['smartmenu:tooltip_help'] = 'Falls back to title if not set';
+$string['smartmenu:target'] = 'Target';
+$string['smartmenu:target_help'] = 'Target help';
+$string['smartmenu:responsivedesktop'] = 'Desktop';
+$string['smartmenu:responsivetablet'] = 'Tablet';
+$string['smartmenu:responsivemobile'] = 'Mobile';
+$string['smartmenu:responsive'] = 'Responsive';
+$string['smartmenu:appearancecard'] = 'Card appearance';
+$string['smartmenu:appearancecard_desc'] = 'Use these settings to customize the look and feel of the smart menu item when using cards';
+$string['smartmenu:belowimage'] = 'Below image';
+$string['smartmenu:overlaytop'] = 'Top overlay';
+$string['smartmenu:overlaybottom'] = 'Bottom overlay';
+$string['smartmenu:textposition'] = 'Text position';
+$string['smartmenu:textcolor'] = 'Text color';
+$string['smartmenu:image'] = 'Image';
+$string['smartmenu:backgroundcolor'] = 'Background color';
+$string['smartmenu:displayoptions'] = 'Display options';
+$string['smartmenu:menus'] = 'Menus';
+$string['smartmenu:menuitems'] = 'Menu items';
+
+// Smartmenu: Menu items strings.
+$string['smartmenu:backtomenus'] = 'Back to all smart menus';
+$string['smartmenu:settings'] = 'Smart menu settings';
+$string['smartmenu:addnewitem'] = 'Add new item';
+$string['smartmenu:addnewheadingitem'] = 'Add new heading item';
+$string['smartmenu:addnewstaticitem'] = 'Add new static item';
+$string['smartmenu:addnewdynamicitem'] = 'Add new dynamic item';
+// Smartmenu: Menu items form elements text.
+$string['smartmenu:menuheading'] = ' "{$a}" - items';
+$string['smartmenu:rolecontext'] = 'Context';
+$string['smartmenu:accessbyroles'] = 'Restrict access by roles';
+$string['smartmenu:accessbycohorts'] = 'Restrict access by cohorts';
+$string['smartmenu:accessbylanguage'] = 'Restrict access by language';
+$string['smartmenu:accessbydateselector'] = 'Restrict access by date';
+$string['smartmenu:operator'] = 'Operator';
+$string['smartmenu:submenu'] = 'Submenu';
+$string['smartmenu:inline'] = 'Inline';
+$string['smartmenu:mode'] = 'Mode';
+$string['smartmenu:menuduplicated'] = 'Menu and its menu items duplicated successfully';
+$string['smartmenu:menuitemduplicated'] = 'Menu item duplicated successfully';
+$string['smartmenu:restriction'] = 'Access rules';
+$string['smartmenu:norestrict'] = 'No restricted';
+$string['savechangesandconfigure'] = 'Save and configure items';
+$string['smartmenussettins'] = 'Smart menu - settings';
+$string['smartmenu:deleteconfirmmenu'] = 'Are you sure you want to delete this menu from the smart menus?';
+$string['smartmenu:deleteconfirmitem'] = 'Are you sure you want to delete this menu item from the smart menus?';
+$string['smartmenu:copyitem'] = 'Copy menu item';
+$string['smartmenu:copymenu'] = 'Copy menu and it items';
+$string['menusnothingtodisplay'] = "There aren't any smart menus are created. Please create your first smart menu.";
+$string['itemsnothingtodisplay'] = "There aren't any items are created for this menu. Please add first item to this menu.";
+$string['smartmenu:menuicon'] = 'Icon';
+$string['smartmenu:order'] = 'Order';
+$string['smartmenu:from'] = 'From';
+$string['smartmenu:durationuntil'] = 'Until';
+$string['smartmenu:category'] = 'Category';
+$string['smartmenu:url'] = 'Menu URL';
+// ...Smartmenu form elements help text.
+$string['smartmenu:description_help'] = 'Description about the menu';
+$string['smartmenu:menutitle_help'] = 'Enter the title for menu.';
+$string['smartmenu:location_help'] = "Select the location where you want the menu to appear on the page. The menu bar is located above the main navigation, at the top of the page.
+The user menu can be accessed by clicking on the user profile in the navigation bar. The bottom bar is placed at the bottom of the screen and can be used to implement a thumb navigation for easy access to important areas,
+such as the dashboard, the my courses page or the home page. Please note that upon enabling the bottom bar, the hamburger icon will be replaced by your site's logo, because users can reach the main navigation then using the bottom bar.";
+$string['smartmenu:types_help'] = 'Select the type of menu you want to create, choosing between card, and list.';
+$string['smartmenu:moremenubehavior_help'] = 'Choose whether to display the menu when there are too many items to fit in the menu or not. If enabled, excess items will be moved inside the "more" menu.
+You can choose whether to force the menus to display inside the "more" menu or outside of it.';
+$string['smartmenu:cardsize_help'] = 'Set the size of the card for card-style menus. choosing between tiny, small, medium, or large';
+$string['smartmenu:cardform_help'] = 'Select the form of the card for card-style menus, choosing between square, portrait, landscape or fullwidth';
+$string['smartmenu:overflowbehavior_help'] = 'Choose how the menu should behave when it overflows its container, either by showing a scrollbar or wrap the overflowing items.';
+// Help strings for menu item form elements.
+$string['smartmenu:title_help'] = "Enter the title for the menu item. Use hash signs (###) to display the menu item as a separator for heading type items.";
+$string['smartmenu:type_help'] = "Select the type of menu item you want to create: static, heading, or dynamic. <br>
+<ul>
+<li> Static: A static menu item is simply a link to a fixed URL that does not change. </li>
+<li> Heading: A heading menu item is used to group related menu items together under a common heading.
+It does not have a link and is not clickable. </li>
+<li> Dynamic: A dynamic menu item is used to display a list of courses based on certain criteria,
+such as category, enrollment role, completion status, date range, etc.
+The content displayed in a dynamic menu item will update automatically as the criteria changes.</li>
+</ul>";
+$string['smartmenu:url_help'] = "Enter the URL for the menu item. This is the link that will be followed when the menu item is clicked.";
+$string['smartmenu:enrolmentrole_help'] = "Select the role for which the menu item should be visible.
+The menu item will only be displayed to users who have this role.";
+$string['smartmenu:completionstatus_help'] = "For dynamic menu items,
+you can display a list of courses based on the user's completion status in the course.
+If you select \"In progress\" as the completion status,
+the dynamic list of courses will only contain courses that the current user is currently working on";
+$string['smartmenu:daterange_help'] = "Select the date range for which the menu item should be visible.
+The menu item will only be displayed to users during this period.";
+$string['smartmenu:mode_help'] = "Select the mode for which the menu item should be visible.
+<ul><li>
+Inline: the item is displayed as a regular menu item within the menu. This is the default mode for static and heading menu items.
+</li>
+<li> Submenu: the item is displayed as a submenu item, which can be expanded or collapsed by clicking on the parent item.
+This mode is useful for dynamic menu items, where courses are displayed as submenu items for this menu item.
+The title of this menu item is used as the text for the submenu item.</li></ul>";
+$string['smartmenu:menuicon_help'] = "Select an icon to display with the menu item title.";
+$string['smartmenu:displayoptions_help'] = "Choose how you want the menu item to be displayed.
+You can display both the title and icon, hide the title, or hide the title only on mobile devices.";
+$string['smartmenu:tooltip_help'] = "Enter a tooltip to display when the user hovers over the menu item.";
+$string['smartmenu:sortorder_help'] = "Enter a sort order for the menu item. Menu items are displayed in ascending order based on their sort order.";
+$string['smartmenu:target_help'] = "Select the target for the link. The menu item will open in this target when clicked (e.g. in a new window or tab).";
+$string['smartmenu:cssclass_help'] = "Enter a CSS class for the menu item. This can be used to apply custom styling to the menu item.";
+$string['smartmenu:image_help'] = "Select an image to display next to the menu item.
+The item image will be used for card type menus and will be displayed as the card image for the item";
+$string['smartmenu:textposition_help'] = "Select the position of the menu item text in relation to the icon or image.
+Options include top overlay, bottom overlay, and below image.
+<ul>
+<li>Top overlay: Displays the item title over the overlay and at the top of the section. </li>
+<li> Bottom overlay: Displays the item title over the overlay and at the bottom of the section. </li>
+<li> Below image: Displays the item title below the card image.</li> </ul>";
+$string['smartmenu:textcolor_help'] = "Select the color for the menu item text.";
+$string['smartmenu:backgroundcolor_help'] = "Select the background color for the menu item.";
+$string['smartmenu:byrole_help'] = "Select whether to show or hide the menu item based on the user's role.";
+$string['smartmenu:rolecontext_help'] = "Select the context for which the user's role should be checked (e.g. any or system context).";
+$string['smartmenu:bycohort_help'] = "Select whether to show or hide the menu item based on the user's cohort.";
+$string['smartmenu:operator_help'] = "Select the operator for the cohort condition (e.g. \"Any\" or \"All\").";
+$string['smartmenu:bylanguage_help'] = "Select whether to show or hide the menu item based on the user's language.";
+$string['smartmenu:order_help'] = 'Rearrange the position of item';
+$string['smartmenu:from_help'] = 'Select the date to display the menu items to users until the date reached';
+$string['smartmenu:durationuntil_help'] = 'Select the date to hide the menu items to users once the date reached';
+$string['smartmenu:category_help'] = 'Select a category to display its courses as menu items';
+$string['smartmenu:menumode'] = 'Menu mode';
+$string['smartmenu:menumode_help'] = "Select the mode for where the menu should be visible.
+<ul><li>
+Inline: items in the menu will be displayed as a menu directly in the naivgation. This option did not support for card type menus.
+</li>
+<li> Submenu: This is default option, items will be display as submenu of this menu. </li></ul>";
+
+$string['smartmenu:shortname'] = 'Short name';
+$string['smartmenu:fullname'] = 'Full name';
+$string['smartmenu:displayfield'] = 'Select name field';
+$string['smartmenu:textcount'] = 'Number of words';
+$string['smartmenu:displayfield_help'] = 'This setting allows you to choose the field to display as the course name. Select one of the following options:
+<ul><li>Short Name: Displays the short name of the course.</li>
+<li>Full Name: Displays the full name of the course.</li></ul>';
+$string['smartmenu:textcount_help'] = 'Specify the maximum number of words to be displayed for the course title in the menu.';

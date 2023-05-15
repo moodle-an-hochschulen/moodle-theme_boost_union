@@ -28,6 +28,7 @@
  * * Include static pages
  * * Include Jvascript disabled hint
  * * Include info banners
+ * * Load the theme_boost_union/output/navigation/primary instead of core primary navigation.
  *
  * @package   theme_boost_union
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
@@ -68,7 +69,9 @@ if ($PAGE->has_secondary_navigation()) {
     }
 }
 
-$primary = new core\navigation\output\primary($PAGE);
+// Load the navigation from boost_union primary navigation, the extended version of core primary navigation.
+// It includes the smart menus and menu items, for multiple locations.
+$primary = new theme_boost_union\output\navigation\primary($PAGE);
 $renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions()  && !$PAGE->has_secondary_navigation();
@@ -94,6 +97,8 @@ $templatecontext = [
     'headercontent' => $headercontent,
     'overflow' => $overflow,
     'addblockbutton' => $addblockbutton,
+    'menubar' => $primarymenu['menubar'] ?? [],
+    'bottombar' => $primarymenu['bottombar'] ?? []
 ];
 
 // Include the template content for the course related hints.

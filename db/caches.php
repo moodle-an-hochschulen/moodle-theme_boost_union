@@ -67,5 +67,38 @@ $definitions = array(
                 'simplekeys' => true,
                 'simpledata' => true,
                 'staticacceleration' => true,
+        ),
+        // This cache stores the menus and menu items.
+        'smartmenus' => array(
+                'mode' => cache_store::MODE_SESSION,
+                'simplekeys' => true,
+                'simpledata' => false,
+                'invalidationevents' => array(
+                    'theme_boost_union_menus_created',
+                    'theme_boost_union_menus_edited',
+                    'theme_boost_union_menus_resorted',
+                    'theme_boost_union_menus_deleted',
+                    'theme_boost_union_cohort_deleted',
+                    'theme_boost_union_roles_deleted',
+                    'theme_boost_union_user_updated',
+                    'theme_boost_union_course_updated'
+
+                )
+        ),
+        // This cache stores the menus and menu items.
+        'smartmenu_items' => array(
+                'mode' => cache_store::MODE_SESSION,
+                'simplekeys' => true,
+                'simpledata' => false,
+                'invalidationevents' => array(
+                    'theme_boost_union_menuitems_created',
+                    'theme_boost_union_menuitems_edited',
+                    'theme_boost_union_menuitems_resorted',
+                    'theme_boost_union_menuitems_deleted',
+                    'theme_boost_union_cohort_deleted',
+                    'theme_boost_union_roles_deleted',
+                    'theme_boost_union_user_updated',
+                    'theme_boost_union_course_updated'
+                )
         )
 );

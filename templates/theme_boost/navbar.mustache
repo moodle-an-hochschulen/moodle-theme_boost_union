@@ -61,15 +61,28 @@
     Modifications compared to the original template:
     * Added the possibility to change navbar color.
     * Include button for off-canvas region.
+    * Removed the primary menu drawer hamburger menu, added bottom bar more section will help users to open the nav drawer.
+    * Display the logo on mobile viewport. (removed d-none, changed d-md-flex to d-flex)
+    * Added menu bar section.
+    * Included primary mobile drawer from boost_union.
+    * Loaded the primary and menubar moremenu from theme.
 }}
-<nav class="navbar fixed-top {{navbarcolorclasses}} navbar-expand" aria-label="{{#str}}sitemenubar, admin{{/str}}">
 
+{{#menubar}}
+<nav class="menubar fixed-top boost-union-menubar navbar navbar-expand {{#bottombar.drawer}} smartmenu-bottom-navigation {{/bottombar.drawer}}">
+    {{> theme_boost_union/moremenu}}
+</nav>
+{{/menubar}}
+<nav class="navbar fixed-top {{navbarcolorclasses}} navbar-expand {{#bottombar.drawer}} smartmenu-bottom-navigation {{/bottombar.drawer}}" aria-label="{{#str}}sitemenubar, admin{{/str}}">
+
+    {{^bottombar.drawer}}
     <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
         <span class="navbar-toggler-icon"></span>
         <span class="sr-only">{{#str}}sidepanel, core{{/str}}</span>
     </button>
+    {{/bottombar.drawer}}
 
-    <a href="{{{ config.homeurl }}}" class="navbar-brand d-none d-md-flex align-items-center m-0 mr-4 p-0 aabtn">
+    <a href="{{{ config.homeurl }}}" class="navbar-brand align-items-center m-0 mr-4 p-0 aabtn {{#bottombar.drawer}} d-flex {{/bottombar.drawer}} {{^bottombar.drawer}} d-none d-md-flex {{/bottombar.drawer}} ">
 
         {{# output.should_display_navbar_logo }}
             <img src="{{output.get_compact_logo_url}}" class="logo mr-1" alt="{{sitename}}">
@@ -80,7 +93,7 @@
     </a>
     {{#primarymoremenu}}
         <div class="primary-navigation">
-            {{> core/moremenu}}
+            {{> theme_boost_union/moremenu}}
         </div>
     {{/primarymoremenu}}
 
@@ -148,4 +161,4 @@
     </div>
 </nav>
 
-{{> theme_boost/primary-drawer-mobile }}
+{{> theme_boost_union/primary-drawer-mobile }}
