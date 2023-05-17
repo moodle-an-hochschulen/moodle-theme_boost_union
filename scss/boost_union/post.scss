@@ -112,6 +112,20 @@
     .login a:hover {
         color: $white;
     }
+
+    /* Change the color of the notification action buttons to dark grey.
+       This has to use !important as Moodle core already uses !important for the icon colors. */
+    .popover-region-container a .icon {
+        color: #343a40 !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    /* Change the color of the language selector link in the navbar to a light grey and to white when hovered. */
+    .langmenu .dropdown .dropdown-toggle {
+        color: #c8c8c8;
+        &:hover {
+            color: $white;
+        }
+    }
 }
 
 /* Tweak the dark navbar with light font color a little bit more. */
@@ -132,6 +146,17 @@
     /* Change the background color of the search panel in the navbar. */
     #searchform-navbar {
         background-color: #343a40;
+    }
+
+    /* Change the color of the language selector drop down items when hovered, focused and active to dark grey
+       as this would be presented in the primary color otherwise. */
+    .langmenu {
+        .dropdown-item:active,
+        .dropdown-item:hover,
+        .dropdown-item:focus,
+        .dropdown-item:focus-within {
+            background-color: $dark;
+        }
     }
 }
 
@@ -154,14 +179,26 @@
     #searchform-navbar {
         background-color: $primary;
     }
+
+    /* Change the color of the active nav items's bottom border to white as this would be presented in the
+   primary color otherwise. */
+    .nav-link.active {
+        border-bottom-color: $white;
+    }
+
+    /* Change the color of the language selector icon to a light grey as well.
+        This has to use !important as Moodle core already uses !important for the icon colors. */
+    .langmenu .icon {
+        color: #c8c8c8 !important; /* stylelint-disable-line declaration-no-important */
+    }
 }
 
 /* Tweak the primary color navbar with dark font color. */
 .navbar.navbar-light.bg-primary {
-    /* Change the color of the active nav items's bottom border to white as this would be presented in the
+    /* Change the color of the active nav items's bottom border to dark grey as this would be presented in the
        primary color as well otherwise. */
     .nav-link.active {
-        border-bottom-color: $white;
+        border-bottom-color: rgba($black, .6);
     }
 
     /* Change the background color and colors of open custom menu parent navigation items in the navbar
@@ -193,6 +230,21 @@
     /* Change the background color of the search panel in the navbar. */
     #searchform-navbar {
         background-color: $primary;
+    }
+
+    /* Change the color of the login link in the navbar to dark grey and to darker grey when hovered. */
+    .login,
+    .login a {
+        color: rgba($black, .6);
+        &:hover {
+            color: rgba($black, .9);
+        }
+    }
+
+    /* Change the color of the divider to dark grey.
+       This has to use !important as Moodle core already uses !important for the border-left color.*/
+    .divider {
+        border-left: 1px solid rgba($black, .6) !important; /* stylelint-disable-line declaration-no-important */
     }
 }
 
