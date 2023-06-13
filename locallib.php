@@ -1600,3 +1600,41 @@ function theme_boost_union_get_modicon_templatecontext () {
 
     return $templatedata;
 }
+
+/**
+ * Adds an external link icon after external links to mark them visually.
+ *
+ * @param theme_config $theme The theme config object.
+ * @return string
+ */
+function theme_boost_union_get_scss_to_mark_external_links($theme) {
+    global $CFG;
+
+    // Initialize SCSS snippet.
+    $scss = '';
+
+    // If the corresponding setting is set to 'yes'.
+    if ($theme->settings->markexternallinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+
+        // SCSS to add external link icon after the link and respect LTR and RTL while doing this.
+        $scss = 'body.dir-ltr a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::after,
+            body.dir-ltr a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::after {
+            font-family: "FontAwesome";
+            content: "\f08e" !important;
+            padding-left: 0.25rem;
+        }';
+        $scss .= 'body.dir-rtl a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::before,
+            body.dir-rtl a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::before {
+            font-family: "FontAwesome";
+            content: "\f08e" !important;
+            padding-right: 0.25rem;
+        }';
+
+        // Moodle adds a hardcoded external-link icon to the "services and support" link in the questionmark menu.
+        // This becomes obsolete now. We remove it with the sledgehammer.
+        $scss .= '.footer-support-link a[href^="https://moodle.com/help/"] .fa-external-link {
+            display: none;
+        }';
+    }
+    return $scss;
+}
