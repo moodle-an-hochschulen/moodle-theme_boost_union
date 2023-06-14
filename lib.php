@@ -220,6 +220,11 @@ function theme_boost_union_get_pre_scss($theme) {
  * @return string
  */
 function theme_boost_union_get_extra_scss($theme) {
+    global $CFG;
+
+    // Require the necessary libraries.
+    require_once($CFG->dirroot . '/course/lib.php');
+
     // Initialize extra SCSS.
     $content = '';
 
@@ -275,6 +280,41 @@ function theme_boost_union_get_extra_scss($theme) {
     // In contrast to the other flavour assets like the favicon overriding, this isn't done here in place as this function
     // is composing Moodle core CSS which has to remain flavour-independent.
     // Instead, the flavour is overriding the background image later in flavours/styles.php.
+
+    // For the rest of this function, we add SCSS snippets to the SCSS stack based on enabled admin settings.
+    // This is done here as it is quite easy to do. As an alternative, it could also been done in post.css by using
+    // SCSS variables with @if conditions and SCSS variables. However, we preferred to do it here in a single place.
+
+    // Setting: Activity icon purpose.
+
+    // Get installed activity modules.
+    $installedactivities = get_module_types_names();
+    // Iterate over all existing activities.
+    foreach ($installedactivities as $modname => $modinfo) {
+        // Get default purpose of activity module.
+        $defaultpurpose = plugin_supports('mod', $modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
+        // If the plugin does not have any default purpose.
+        if (!$defaultpurpose) {
+            // Fallback to "other" purpose.
+            $defaultpurpose = MOD_PURPOSE_OTHER;
+        }
+        // If the activity purpose setting is set and differs from the activity's default purpose.
+        $configname = 'activitypurpose'.$modname;
+        if (isset($theme->settings->{$configname}) && $theme->settings->{$configname} != $defaultpurpose) {
+            // Add CSS to modify the activity purpose color in the activity chooser and the activity icon.
+            $content .= '.activity.modtype_'.$modname.' .activityiconcontainer.courseicon,';
+            $content .= '.modchoosercontainer .modicon_'.$modname.'.activityiconcontainer { ';
+            $content .= 'background-color: var(--activity'.$theme->settings->{$configname}.') !important;';
+            $content .= '}';
+            // If the default purpose originally was 'other' and now is overridden, make the icon white.
+            if ($defaultpurpose == MOD_PURPOSE_OTHER) {
+                $content .= '.activity.modtype_'.$modname.' .activityiconcontainer.courseicon .activityicon,';
+                $content .= '.modchoosercontainer .modicon_'.$modname.'.activityiconcontainer .activityicon { ';
+                $content .= 'filter: brightness(0) invert(1);';
+                $content .= '}';
+            }
+        }
+    }
 
     return $content;
 }

@@ -124,6 +124,10 @@ With these settings, you can overwrite the Bootstrap colors which are used withi
 
 With these settings, you can overwrite the activity icon colors which are used within courses.
 
+##### Activity icon purposes
+
+With these settings, you can override the activity icon background color which is defined by the activity's purpose (and which is a hardcoded plugin feature in each activity).
+
 ##### Activity icons
 
 ###### Custom icons for activities and resources

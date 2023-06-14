@@ -109,6 +109,16 @@ $string['activityiconcolorcontentsetting_desc'] = 'The activity icon color for "
 // ... ... Setting: Activity icon color for 'Interface'.
 $string['activityiconcolorinterfacesetting'] = 'Activity icon color for "Interface"';
 $string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for "Interface"';
+// ... Section: Activity icon purposes.
+$string['activitypurposeheading'] = 'Activity icon purposes';
+$string['activitypurposeheading_desc'] = 'With these settings, you can override the activity icon background color which is defined by the activity\'s purpose (and which is a hardcoded plugin feature in each activity).';
+$string['activitypurposeadministration'] = 'Administration';
+$string['activitypurposeassessment'] = 'Assessment';
+$string['activitypurposecollaboration'] = 'Collaboration';
+$string['activitypurposecommunication'] = 'Communication';
+$string['activitypurposecontent'] = 'Content';
+$string['activitypurposeinterface'] = 'Interface';
+$string['activitypurposeother'] = 'Other';
 // ... Section: Activity icons.
 $string['modiconsheading'] = 'Activity icons';
 // ... ... Setting: Enable custom icons for activities and resources.
