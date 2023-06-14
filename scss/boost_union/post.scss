@@ -625,7 +625,8 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 }
 
 /* Additional styling for hero-width regions to remove some styling which is counterproductive. */
-.theme-block-region-outside-herowidth, .theme-block-region-footer-herowidth {
+.theme-block-region-outside-herowidth,
+.theme-block-region-footer-herowidth {
     .block {
         border-width: 0;
         border-radius: 0;

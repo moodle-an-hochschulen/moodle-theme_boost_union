@@ -444,7 +444,7 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | outside-bottom | blockregionoutsidebottomwidth | fullwidth          |
       | outside-bottom | blockregionoutsidebottomwidth | coursecontentwidth |
       | outside-bottom | blockregionoutsidebottomwidth | herowidth          |
-	  | footer         | blockregionfooterwidth        | fullwidth          |
+      | footer         | blockregionfooterwidth        | fullwidth          |
       | footer         | blockregionfooterwidth        | coursecontentwidth |
       | footer         | blockregionfooterwidth        | herowidth          |
 
