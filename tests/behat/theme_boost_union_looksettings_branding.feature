@@ -168,6 +168,9 @@ Feature: Configuring the theme_boost_union plugin for the "Branding" tab on the 
   # Unfortunately, this can't be tested with Behat yet
   # Scenario: Setting: Activity icon color for "Interface" - Setting the color
 
+  # Unfortunately, this can't be tested with Behat yet
+  # Scenario: Setting: Activity icon purposes - Setting the purpose
+
   @javascript @_file_upload
   Scenario Outline: Setting: Custom icons files - Upload custom icons files
     Given the following config values are set as admin:
