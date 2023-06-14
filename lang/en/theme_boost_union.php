@@ -426,6 +426,14 @@ $string['outsideregionsplacement_desc'] = 'With this setting, you can control if
 $string['outsideregionsplacementnextmaincontent'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions next to the main content area';
 $string['outsideregionsplacementnearwindowedges'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions near the window edges';
 
+// Settings: Links tab.
+$string['linkstab'] = 'Links';
+// ... Section: Special links markup.
+$string['speciallinksmarkupheading'] = 'Special links markup';
+// ... ... Setting: Mark external links.
+$string['markexternallinkssetting'] = 'Mark external links';
+$string['markexternallinkssetting_desc'] = 'Adds an "external link" icon after external links (which lead the user to a target outside Moodle).';
+
 // Settings: Misc tab.
 $string['misctab'] = 'Miscellaneous';
 // ... Section: JavaScript.

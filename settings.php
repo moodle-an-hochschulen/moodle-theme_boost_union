@@ -1299,6 +1299,27 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
+        // Create links tab.
+        $tab = new admin_settingpage('theme_boost_union_feel_links', get_string('linkstab', 'theme_boost_union', null, true));
+
+        // Create Special Links Markup heading.
+        $name = 'theme_boost_union/speciallinksmarkupheading';
+        $title = get_string('speciallinksmarkupheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Mark external links.
+        $name = 'theme_boost_union/markexternallinks';
+        $title = get_string('markexternallinkssetting', 'theme_boost_union', null, true);
+        $description = get_string('markexternallinkssetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
         // Create misc tab.
         $tab = new admin_settingpage('theme_boost_union_feel_misc', get_string('misctab', 'theme_boost_union', null, true));
 

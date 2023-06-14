@@ -325,6 +325,16 @@ With this setting, the right-hand block drawer of site home will be displayed in
 
 With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in as a guest.
 
+#### Tab "Links"
+
+In this tab there are the following settings:
+
+##### Special links markup
+
+###### Mark external links
+
+Adds an "external link" icon after external links (which lead the user to a target outside Moodle).
+
 #### Tab "Miscellaneous"
 
 In this tab there are the following settings:
