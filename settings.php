@@ -94,6 +94,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Require the necessary libraries.
         require_once($CFG->dirroot . '/theme/boost_union/lib.php');
         require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+        require_once($CFG->dirroot . '/course/lib.php');
 
         // Prepare options array for select settings.
         // Due to MDL-58376, we will use binary select settings instead of checkbox settings throughout this theme.
@@ -388,6 +389,44 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
+
+        // Create activity icons purpose heading.
+        $name = 'theme_boost_union/activitypurposeheading';
+        $title = get_string('activitypurposeheading', 'theme_boost_union', null, true);
+        $description = get_string('activitypurposeheading_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, $description);
+        $tab->add($setting);
+
+        // Prepare activity purposes.
+        $purposesoptions = array(
+                MOD_PURPOSE_ADMINISTRATION => get_string('activitypurposeadministration', 'theme_boost_union'),
+                MOD_PURPOSE_ASSESSMENT => get_string('activitypurposeassessment', 'theme_boost_union'),
+                MOD_PURPOSE_COLLABORATION => get_string('activitypurposecollaboration', 'theme_boost_union'),
+                MOD_PURPOSE_COMMUNICATION => get_string('activitypurposecommunication', 'theme_boost_union'),
+                MOD_PURPOSE_CONTENT => get_string('activitypurposecontent', 'theme_boost_union'),
+                MOD_PURPOSE_INTERFACE => get_string('activitypurposeinterface', 'theme_boost_union'),
+                MOD_PURPOSE_OTHER => get_string('activitypurposeother', 'theme_boost_union')
+        );
+        // Get installed activity modules.
+        $installedactivities = get_module_types_names();
+        // Iterate over all existing activities.
+        foreach ($installedactivities as $modname => $modinfo) {
+            // Get default purpose of activity module.
+            $defaultpurpose = plugin_supports('mod', $modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
+            // If the plugin does not have any default purpose.
+            if (!$defaultpurpose) {
+                // Fallback to "other" purpose.
+                $defaultpurpose = MOD_PURPOSE_OTHER;
+            }
+
+            // Create the setting.
+            $name = 'theme_boost_union/activitypurpose'.$modname;
+            $title = get_string('modulename', $modname, null, true);
+            $description = '';
+            $setting = new admin_setting_configselect($name, $title, $description, $defaultpurpose, $purposesoptions);
+            $setting->set_updatedcallback('theme_reset_all_caches');
+            $tab->add($setting);
+        }
 
         // Create activity icons heading.
         $name = 'theme_boost_union/modicons';

@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-06-13 - Feature: Allow the admin to overwrite the modules purpose, solves #288.
 * 2023-05-17 - Improvement: Improve SCSS for dark navbar and primary color navbar, solves #273.
 * 2023-05-11 - Feature: Allow the admin to upload custom icons for activities and resources, solves #175.
 
