@@ -444,9 +444,23 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | outside-bottom | blockregionoutsidebottomwidth | fullwidth          |
       | outside-bottom | blockregionoutsidebottomwidth | coursecontentwidth |
       | outside-bottom | blockregionoutsidebottomwidth | herowidth          |
-      | footer         | blockregionfooterwidth        | fullwidth          |
-      | footer         | blockregionfooterwidth        | coursecontentwidth |
-      | footer         | blockregionfooterwidth        | herowidth          |
+
+  Scenario Outline: Setting: Block region width for 'Footer' regions
+    Given the following config values are set as admin:
+      | config                | value          | plugin            |
+      | blockregionsforcourse | footer-left    | theme_boost_union |
+      | <config>              | <settingvalue> | theme_boost_union |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I turn editing mode on
+    And I should see "Add a block" in the "#theme-block-region-footer-left" "css_element"
+    Then the "class" attribute of "#theme-block-region-footer" "css_element" should contain "theme-block-region-footer-<settingvalue>"
+
+    Examples:
+      | config                        | settingvalue       |
+      | blockregionfooterwidth        | fullwidth          |
+      | blockregionfooterwidth        | coursecontentwidth |
+      | blockregionfooterwidth        | herowidth          |
 
   Scenario Outline: Setting: Outside regions horizontal placement
     Given the following config values are set as admin:
