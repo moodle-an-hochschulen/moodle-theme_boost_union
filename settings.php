@@ -1267,7 +1267,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH, $outsideregionswidthoptions);
         $tab->add($setting);
 
-	// Setting: Block region width for Footer region.
+        // Setting: Block region width for Footer region.
         $name = 'theme_boost_union/blockregionfooterwidth';
         $title = get_string('blockregionfooterwidth', 'theme_boost_union', null, true);
         $description = get_string('blockregionfooterwidth_desc', 'theme_boost_union', null, true);
