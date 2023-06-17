@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-06-03 - Bugfix: Help fixing PHPUnit runs with Boost Union, solves #305.
 * 2023-06-14 - Bugfix: Fix footer and footnote placement, solves #269.
 * 2023-06-13 - Feature: Add admin option to mark external links, solves #307.
 * 2023-06-13 - Feature: Allow the admin to overwrite the modules purpose, solves #288.
