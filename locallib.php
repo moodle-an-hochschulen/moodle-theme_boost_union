@@ -786,7 +786,7 @@ function theme_boost_union_get_webfonts_extensions() {
 function theme_boost_union_register_webfonts_filetypes() {
     global $CFG;
 
-    // If customfiletypes are set in config.php, we can't do anything.
+    // If customfiletypes are set in config.php or PHP tests are running, we can't do anything.
     if (array_key_exists('customfiletypes', $CFG->config_php_settings) || PHPUNIT_TEST) {
         return false;
     }
