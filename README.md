@@ -307,6 +307,10 @@ With this setting, you can set the width of the 'Outside (top)' block region whi
 
 With this setting, you can set the width of the 'Outside (bottom)' block region which is shown below the main content.
 
+###### Block region width for 'Footer' region
+
+With this setting, you can set the width of the 'Footer' block region.
+
 ###### Outside regions horizontal placement
 
 With this setting, you can control if, on larger screens, the 'Outside (left)' and 'Outside (right)' block regions should be placed near the main content area or rather near the window edges.

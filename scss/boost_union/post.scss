@@ -568,16 +568,20 @@
 
 /* Block regions: Outside top and outside bottom. */
 #theme-block-region-outside-top,
-#theme-block-region-outside-bottom {
+#theme-block-region-outside-bottom,
+#theme-block-region-footer {
     /* On larger screens. */
     @include media-breakpoint-up(md) {
         /* Position and size. */
         &.theme-block-region-outside-fullwidth,
-        &.theme-block-region-outside-coursecontentwidth {
+        &.theme-block-region-outside-coursecontentwidth,
+        &.theme-block-region-footer-fullwidth,
+        &.theme-block-region-footer-coursecontentwidth {
             margin: 1rem auto;
             width: 100%;
         }
-        &.theme-block-region-outside-herowidth {
+        &.theme-block-region-outside-herowidth,
+        &.theme-block-region-footer-herowidth {
             margin: 0 -3rem 0 -3rem;
             /* We do not set any width at all.
                100% would be too small, 100vw would add horizontal scrollbars (for whatever reason). */
@@ -587,13 +591,16 @@
     /* And on smaller screens. */
     @include media-breakpoint-down(sm) {
         &.theme-block-region-outside-fullwidth,
-        &.theme-block-region-outside-coursecontentwidth {
+        &.theme-block-region-outside-coursecontentwidth,
+        &.theme-block-region-footer-fullwidth,
+        &.theme-block-region-footer-coursecontentwidth {
             /* Just show the block full width with some horizontal space. */
             padding-left: 15px;
             padding-right: 15px;
             width: 100%;
         }
-        &.theme-block-region-outside-herowidth {
+        &.theme-block-region-outside-herowidth,
+        &.theme-block-region-footer-herowidth {
             /* Remove the margin. */
             margin: 0;
         }
@@ -601,12 +608,14 @@
 }
 
 /* Additional styling for content width regions to limit the block region size on Moodle pages with limited width. */
-body.limitedwidth .theme-block-region-outside-coursecontentwidth {
+body.limitedwidth .theme-block-region-outside-coursecontentwidth,
+body.limitedwidth .theme-block-region-footer-coursecontentwidth {
     max-width: $course-content-maxwidth;
 }
 
 /* Additional styling for hero-width regions to remove some styling which is counterproductive. */
-.theme-block-region-outside-herowidth {
+.theme-block-region-outside-herowidth,
+.theme-block-region-footer-herowidth {
     .block {
         border-width: 0;
         border-radius: 0;
@@ -910,7 +919,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
     /* Remove the margin of a Dash block when used in the outside top region in hero width mode. */
     #theme-block-region-outside-top.theme-block-region-outside-herowidth .block_dash,
-    #theme-block-region-outside-bottom.theme-block-region-outside-herowidth .block_dash {
+    #theme-block-region-outside-bottom.theme-block-region-outside-herowidth .block_dash,
+    #theme-block-region-footer.theme-block-region-footer-herowidth .block_dash {
         margin: 0;
     }
 
