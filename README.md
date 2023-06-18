@@ -87,7 +87,7 @@ With this setting, you can override Moodle's course content width without manual
 
 With this setting, you can override Moodle's default medium width without manual SCSS modifications.
 
-#### Tab "Branding"
+#### Tab "Site Branding"
 
 In this tab there are the following settings:
 
@@ -123,6 +123,10 @@ This setting is already available in the Moodle core theme Boost. For more infor
 ##### Bootstrap colors
 
 With these settings, you can overwrite the Bootstrap colors which are used within the Moodle GUI.
+
+#### Tab "Activity Branding"
+
+In this tab there are the following settings:
 
 ##### Activity icon colors
 
