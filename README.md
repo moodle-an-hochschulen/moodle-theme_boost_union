@@ -551,6 +551,7 @@ This theme is a collaboration result of multiple organisations.
 
 Moodle an Hochschulen e.V. would like to thank these main contributors (in alphabetical order of the institutions) for their work:
 
+* Baden-Württemberg Cooperative State University (DHBW), Katja Neubehler: Code
 * bdecent GmbH, Stefan Scholz: Code, Ideating, Funding
 * Bern University of Applied Sciences (BFH), Luca Bösch: Code, Peer Review, Ideating
 * FernUniversität in Hagen, Daniel Poggenpohl: Code, Ideating
