@@ -208,8 +208,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create branding tab.
-        $tab = new admin_settingpage('theme_boost_union_look_branding', get_string('brandingtab', 'theme_boost_union', null, true));
+        // Create site branding tab.
+        $tab = new admin_settingpage('theme_boost_union_look_sitebranding',
+                get_string('sitebrandingtab', 'theme_boost_union', null, true));
 
         // Create logos heading.
         $name = 'theme_boost_union/logosheading';
@@ -321,6 +322,37 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
+
+        // Create navbar heading.
+        $name = 'theme_boost_union/navbarheading';
+        $title = get_string('navbarheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Navbar color.
+        $name = 'theme_boost_union/navbarcolor';
+        $title = get_string('navbarcolorsetting', 'theme_boost_union', null, true);
+        $description = get_string('navbarcolorsetting_desc', 'theme_boost_union', null, true);
+        $navbarcoloroptions = array(
+                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT =>
+                        get_string('navbarcolorsetting_light', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK =>
+                        get_string('navbarcolorsetting_dark', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYLIGHT =>
+                        get_string('navbarcolorsetting_primarylight', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYDARK =>
+                        get_string('navbarcolorsetting_primarydark', 'theme_boost_union'));
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT,
+                $navbarcoloroptions);
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
+        // Create activity branding tab.
+        $tab = new admin_settingpage('theme_boost_union_look_activitybranding',
+                get_string('activitybrandingtab', 'theme_boost_union', null, true));
 
         // Create activity icon colors heading.
         $name = 'theme_boost_union/activityiconcolorsheading';
@@ -462,29 +494,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $setting = new admin_setting_description($name, $title, $description);
             $tab->add($setting);
         }
-
-        // Create navbar heading.
-        $name = 'theme_boost_union/navbarheading';
-        $title = get_string('navbarheading', 'theme_boost_union', null, true);
-        $setting = new admin_setting_heading($name, $title, null);
-        $tab->add($setting);
-
-        // Setting: Navbar color.
-        $name = 'theme_boost_union/navbarcolor';
-        $title = get_string('navbarcolorsetting', 'theme_boost_union', null, true);
-        $description = get_string('navbarcolorsetting_desc', 'theme_boost_union', null, true);
-        $navbarcoloroptions = array(
-                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT =>
-                        get_string('navbarcolorsetting_light', 'theme_boost_union'),
-                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK =>
-                        get_string('navbarcolorsetting_dark', 'theme_boost_union'),
-                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYLIGHT =>
-                        get_string('navbarcolorsetting_primarylight', 'theme_boost_union'),
-                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYDARK =>
-                        get_string('navbarcolorsetting_primarydark', 'theme_boost_union'));
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT,
-                $navbarcoloroptions);
-        $tab->add($setting);
 
         // Add tab to settings page.
         $page->add($tab);
