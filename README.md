@@ -107,9 +107,9 @@ Here, you can upload a compact version of the same logo as above, such as an emb
 
 Here, you can upload a custom image that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.
 
-##### Background images
+##### General background images
 
-###### General background image
+###### Background image
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 Please note: This will not interfere with the setting "theme_boost_union | loginbackgroundimage" which means that the pictures uploaded here will be shown on all pages except the login page.
@@ -123,6 +123,10 @@ This setting is already available in the Moodle core theme Boost. For more infor
 ##### Bootstrap colors
 
 With these settings, you can overwrite the Bootstrap colors which are used within the Moodle GUI.
+
+##### Navbar
+
+With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one.
 
 #### Tab "Activity Branding"
 
@@ -163,6 +167,8 @@ As text color, you can use the values "dark" or "light".
 
 You can declare texts for an arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.
 
+#### Login form
+
 ##### Login form position
 
 With this setting, you can optimize the login form to fit to a greater variety of background images. By default, the login form is displayed centered on the login page. Alternatively, you can move it to the left or to the right of the login page to let other parts of the background image shine through. Of course, you can also change this setting if no background images are uploaded at all.
@@ -183,13 +189,13 @@ When enabled, the course image (which can be uploaded in a course's course setti
 
 If you upload an image in this setting, it is used as fallback image and is displayed in the course header if no course image is uploaded in a particular course's course settings. If you do not upload an image here, a course header image is only shown in a particular course if a course image is uploaded in this particular course's course settings.
 
-###### Course header image height
-
-With this setting, you control the height of the presented course header image.
-
 ###### Course header image layout
 
 With this setting, you control the layout of the course header image and the course title.
+
+###### Course header image height
+
+With this setting, you control the height of the presented course header image.
 
 ###### Course header image position
 
@@ -261,11 +267,11 @@ By default, the course category breadcrumbs are not shown on course pages in the
 
 With this setting a back to top button will appear in the bottom right corner of the page as soon as the user scrolls down the page. A button like this existed already on Boost in Moodle Core until Moodle 3.11, but was removed in 4.0. With Boost Union, you can bring it back.
 
-###### Scrollspy
+###### Scroll-spy
 
 With this setting, upon toggling edit mode on and off, the scroll position at where the user was when performing the toggle is preserved.
 
-###### Activity navigation
+###### Activity navigation elements
 
 With this setting the elements to jump to the previous and next activity/resource as well as the pull down menu to jump to a distinct activity/resource become displayed. UI elements like this existed already on Boost in Moodle Core until Moodle 3.11, but were removed in 4.0. With Boost Union, you can bring them back.
 
