@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r8
 
 * 2023-06-18 - Improvement: Split "Branding" tab into "Site branding" and "Activity branding", solves #315.
 * 2023-06-17 - Bugfix: Hide nodes in primary navigation had no effect on site administration menu item, solves #312.
