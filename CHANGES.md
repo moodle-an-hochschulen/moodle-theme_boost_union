@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-06-18 - Improvement: Split "Branding" tab into "Site branding" and "Activity branding", solves #315.
 * 2023-06-17 - Bugfix: Hide nodes in primary navigation had no effect on site administration menu item, solves #312.
 * 2023-06-14 - Feature: Add admin option to configure block size in footer, solves first part of #253.
 * 2023-06-03 - Bugfix: Help fixing PHPUnit runs with Boost Union, solves #305.
