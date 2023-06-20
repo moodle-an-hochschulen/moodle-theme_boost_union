@@ -318,14 +318,15 @@ function theme_boost_union_get_extra_scss($theme) {
             $content .= '.activity.modtype_'.$modname.' .activityiconcontainer.courseicon,';
             $content .= '.modchoosercontainer .modicon_'.$modname.'.activityiconcontainer { ';
             $content .= 'background-color: var(--activity'.$theme->settings->{$configname}.') !important;';
-            $content .= '}';
             // If the default purpose originally was 'other' and now is overridden, make the icon white.
             if ($defaultpurpose == MOD_PURPOSE_OTHER) {
-                $content .= '.activity.modtype_'.$modname.' .activityiconcontainer.courseicon .activityicon,';
-                $content .= '.modchoosercontainer .modicon_'.$modname.'.activityiconcontainer .activityicon { ';
-                $content .= 'filter: brightness(0) invert(1);';
-                $content .= '}';
+                $content .= '.activityicon { filter: brightness(0) invert(1); }';
             }
+            // If the default purpose was not 'other' and now it is, make the icon black.
+            if ($theme->settings->{$configname} == MOD_PURPOSE_OTHER) {
+                $content .= '.activityicon { filter: none; }';
+            }
+            $content .= '}';
         }
     }
 
