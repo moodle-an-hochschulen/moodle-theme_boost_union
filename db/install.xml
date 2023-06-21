@@ -9,7 +9,7 @@
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="description" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="description_format" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="description_format" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="sort" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="applytocohorts" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="applytocohorts_ids" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
