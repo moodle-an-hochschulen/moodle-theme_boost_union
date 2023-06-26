@@ -1619,14 +1619,16 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
         // SCSS to add external link icon after the link and respect LTR and RTL while doing this.
         $scss = 'body.dir-ltr a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::after,
             body.dir-ltr a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::after {
-            font-family: "FontAwesome";
-            content: "\f08e" !important;
+            font-family: "Font Awesome 6 Free", "FontAwesome";
+            font-weight: 900;
+            content: "#{$fa-var-external-link}" !important;
             padding-left: 0.25rem;
         }';
         $scss .= 'body.dir-rtl a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::before,
             body.dir-rtl a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::before {
-            font-family: "FontAwesome";
-            content: "\f08e" !important;
+            font-family: "Font Awesome 6 Free", "FontAwesome";
+            font-weight: 900;
+            content: "#{$fa-var-external-link}" !important;
             padding-right: 0.25rem;
         }';
 

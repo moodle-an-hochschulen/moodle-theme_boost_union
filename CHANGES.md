@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-06-26 - Bugfix: Fixed broken FontAwesome 6 external link icon in Moodle 4.2+, solves #327.
+
 ### v4.1-r8
 
 * 2023-06-18 - Improvement: Split "Branding" tab into "Site branding" and "Activity branding", solves #315.
