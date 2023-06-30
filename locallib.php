@@ -1199,15 +1199,18 @@ function theme_boost_union_add_fontawesome_to_page() {
         // Get the cached data for the CSS folder (we do not need to add files from any other folders in the cache).
         $cachedfolder = $cache->get('css');
 
-        // Iterate over the files in the cached folder structure.
-        foreach ($cachedfolder as $cachedfile) {
+        // If we have found any folder in the cache.
+        if ($cachedfolder !== false) {
+            // Iterate over the files in the cached folder structure.
+            foreach ($cachedfolder as $cachedfile) {
 
-            // Build the FontAwesome CSS file URL.
-            $facssurl = new moodle_url('/pluginfile.php/1/theme_boost_union/fontawesome/' .
-                    theme_get_revision().'/css/'.$cachedfile);
+                // Build the FontAwesome CSS file URL.
+                $facssurl = new moodle_url('/pluginfile.php/1/theme_boost_union/fontawesome/' .
+                        theme_get_revision().'/css/'.$cachedfile);
 
-            // Add the CSS file to the page.
-            $PAGE->requires->css($facssurl);
+                // Add the CSS file to the page.
+                $PAGE->requires->css($facssurl);
+            }
         }
     }
 }
