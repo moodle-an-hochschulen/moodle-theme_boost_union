@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-06-26 - Bugfix: If the settings blockregionoutsiderightwidth or blockregionoutsiderightwidth were not set for any reason, the SCSS was not compiled, solves #325.
+
 ### v4.0-r19
 
 * 2023-06-18 - Improvement: Split "Branding" tab into "Site branding" and "Activity branding", solves #315.

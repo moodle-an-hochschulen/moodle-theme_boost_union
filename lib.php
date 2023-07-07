@@ -196,14 +196,23 @@ function theme_boost_union_get_pre_scss($theme) {
         $scss .= $activityiconscss."\n";
     }
 
-    // Set custom Boost Union SCSS variables.
-    if (get_config('theme_boost_union', 'blockregionoutsideleftwidth')) {
-        $scss .= '$blockregionoutsideleftwidth: '.get_config('theme_boost_union', 'blockregionoutsideleftwidth').";\n";
+    // Set custom Boost Union SCSS variable: The block region outside left width.
+    $blockregionoutsideleftwidth = get_config('theme_boost_union', 'blockregionoutsideleftwidth');
+    // If the setting is not set.
+    if (!$blockregionoutsideleftwidth) {
+        // Set the variable to the default setting to make sure that the SCSS variable does not remain uninitialized.
+        $blockregionoutsideleftwidth = '300px';
     }
-    if (get_config('theme_boost_union', 'blockregionoutsiderightwidth')) {
-        $scss .= '$blockregionoutsiderightwidth: '.get_config('theme_boost_union', 'blockregionoutsiderightwidth').
-                ";\n";
+    $scss .= '$blockregionoutsideleftwidth: '.$blockregionoutsideleftwidth.";\n";
+
+    // Set custom Boost Union SCSS variable: The block region outside left width.
+    $blockregionoutsiderightwidth = get_config('theme_boost_union', 'blockregionoutsiderightwidth');
+    // If the setting is not set.
+    if (!$blockregionoutsiderightwidth) {
+        // Set the variable to the default setting to make sure that the SCSS variable does not remain uninitialized.
+        $blockregionoutsiderightwidth = '300px';
     }
+    $scss .= '$blockregionoutsiderightwidth: '.$blockregionoutsiderightwidth.";\n";
 
     // Prepend pre-scss.
     if (get_config('theme_boost_union', 'scsspre')) {
