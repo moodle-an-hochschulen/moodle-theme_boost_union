@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-07-07 - Bugfix: Changing module purpose to "other" made icon background white instead of grey, solves #333.
 * 2023-07-07 - Bugfix: Changing module purpose to "other" made icon invisible, solves #319.
 * 2023-06-26 - Bugfix: If the settings blockregionoutsiderightwidth or blockregionoutsiderightwidth were not set for any reason, the SCSS was not compiled, solves #325.
 
