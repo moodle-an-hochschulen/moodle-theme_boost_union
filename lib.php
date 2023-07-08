@@ -317,7 +317,14 @@ function theme_boost_union_get_extra_scss($theme) {
             // Add CSS to modify the activity purpose color in the activity chooser and the activity icon.
             $content .= '.activity.modtype_'.$modname.' .activityiconcontainer.courseicon,';
             $content .= '.modchoosercontainer .modicon_'.$modname.'.activityiconcontainer { ';
-            $content .= 'background-color: var(--activity'.$theme->settings->{$configname}.') !important;';
+            // If the purpose is now different than 'other', change the background color to the new color.
+            if ($theme->settings->{$configname} != MOD_PURPOSE_OTHER) {
+                $content .= 'background-color: var(--activity' . $theme->settings->{$configname} . ') !important;';
+
+                // Otherwise, the background color is set to light grey (as there is no '--activityother' variable).
+            } else {
+                $content .= 'background-color: $light !important;';
+            }
             // If the default purpose originally was 'other' and now is overridden, make the icon white.
             if ($defaultpurpose == MOD_PURPOSE_OTHER) {
                 $content .= '.activityicon { filter: brightness(0) invert(1); }';
