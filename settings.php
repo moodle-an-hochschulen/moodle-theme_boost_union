@@ -425,7 +425,10 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create activity icons purpose heading.
         $name = 'theme_boost_union/activitypurposeheading';
         $title = get_string('activitypurposeheading', 'theme_boost_union', null, true);
-        $description = get_string('activitypurposeheading_desc', 'theme_boost_union', null, true);
+        $description = get_string('activitypurposeheading_desc', 'theme_boost_union', null, true).'<br /><br />'.
+                get_string('activitypurposeheadingtechnote', 'theme_boost_union',
+                        get_string('githubissueslink', 'theme_boost_union', null, true),
+                true);
         $setting = new admin_setting_heading($name, $title, $description);
         $tab->add($setting);
 
