@@ -312,7 +312,10 @@ function theme_boost_union_get_extra_scss($theme) {
         if (isset($theme->settings->{$configname}) && $theme->settings->{$configname} != $defaultpurpose) {
             // Add CSS to modify the activity purpose color in the activity chooser and the activity icon.
             $content .= '.activity.modtype_'.$modname.' .activityiconcontainer.courseicon,';
-            $content .= '.modchoosercontainer .modicon_'.$modname.'.activityiconcontainer { ';
+            $content .= '.modchoosercontainer .modicon_'.$modname.'.activityiconcontainer,';
+            $content .= '#page-header .modicon_'.$modname.'.activityiconcontainer,';
+            $content .= '.block_recentlyaccesseditems .theme-boost-union-'.$modname.'.activityiconcontainer,';
+            $content .= '.block_timeline .theme-boost-union-mod_'.$modname.'.activityiconcontainer {';
             // If the purpose is now different than 'other', change the background color to the new color.
             if ($theme->settings->{$configname} != MOD_PURPOSE_OTHER) {
                 $content .= 'background-color: var(--activity' . $theme->settings->{$configname} . ') !important;';
@@ -323,11 +326,11 @@ function theme_boost_union_get_extra_scss($theme) {
             }
             // If the default purpose originally was 'other' and now is overridden, make the icon white.
             if ($defaultpurpose == MOD_PURPOSE_OTHER) {
-                $content .= '.activityicon { filter: brightness(0) invert(1); }';
+                $content .= '.activityicon, .icon { filter: brightness(0) invert(1); }';
             }
             // If the default purpose was not 'other' and now it is, make the icon black.
             if ($theme->settings->{$configname} == MOD_PURPOSE_OTHER) {
-                $content .= '.activityicon { filter: none; }';
+                $content .= '.activityicon, .icon { filter: none; }';
             }
             $content .= '}';
         }

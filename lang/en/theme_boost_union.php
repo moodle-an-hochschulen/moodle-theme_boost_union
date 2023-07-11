@@ -28,6 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 $string['pluginname'] = 'Boost Union';
 $string['choosereadme'] = '<p>Theme Boost Union is an enhanced child theme of Boost which is intended, on the one hand, to make Boost simply more configurable and, on the other hand, to provide helpful additional features for the daily Moodle operation of admins, teachers and students.</p><p>Boost Union is maintained by<br />Moodle an Hochschulen e.V.,</p><p>in cooperation with<br />lern.link GmbH</p><p>together with<br />bdecent GmbH</p>';
 $string['configtitle'] = 'Boost Union';
+$string['githubissueslink'] = '<a href="https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues">Github issues</a>';
 
 // Settings: General strings.
 $string['dontchange'] = 'Do not change anything';
@@ -124,6 +125,7 @@ $string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for
 // ... Section: Activity icon purposes.
 $string['activitypurposeheading'] = 'Activity icon purposes';
 $string['activitypurposeheading_desc'] = 'With these settings, you can override the activity icon background color which is defined by the activity\'s purpose (and which is a hardcoded plugin feature in each activity).';
+$string['activitypurposeheadingtechnote'] = 'Technical note: Due to the way how Moodle core implements the activity purposes and their colors, the activity purposes are only overridden with CSS by Boost Union. Currently, all areas in Moodle core which show colored activity icons should be covered. If you spot any area or third party plugin which continues to show the unchanged activity purpose colors, please report it on {$a}.';
 $string['activitypurposeadministration'] = 'Administration';
 $string['activitypurposeassessment'] = 'Assessment';
 $string['activitypurposecollaboration'] = 'Collaboration';
