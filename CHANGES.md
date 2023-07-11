@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-07-10 - Bugfix: Omit warning when no CSS cached folder present, solves #330.
 * 2023-07-10 - Bugfix: Overwriting module purposes did not affect all places where the activity icon is displayed, solves #318.
 * 2023-07-07 - Bugfix: Changing module purpose to "other" made icon background white instead of grey, solves #333.
 * 2023-07-07 - Bugfix: Changing module purpose to "other" made icon invisible, solves #319.
