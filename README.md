@@ -576,6 +576,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * RWTH Aachen, Amrita Deb Dutta: Code
 * RWTH Aachen, Josha Bartsch: Code
 * Solent University, Mark Sharp: Code
+* Technische Universität Berlin, Lars Bonczek: Code
 * University of Graz, André Menrath: Code
 * University of Lübeck, Christian Wolters: Peer Review, Ideating
 * Zurich University of Applied Sciences (ZHAW): Funding, Ideating
