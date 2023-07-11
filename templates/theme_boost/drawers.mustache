@@ -15,9 +15,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost_union/drawers
+    @template theme_boost/drawers
 
-    Boost Union drawer template.
+    Boost drawer template.
 
     Context variables required for this template:
     * sitename - The name of the site
@@ -50,9 +50,9 @@
     }
 }}
 {{!
-    This template is based on theme_boost/drawers
+    This template is a modified version of theme_boost/drawers
 
-    Modifications compared to this template:
+    Modifications compared to the original template:
     * Include theme_boost_union/footnote template
     * Include theme_boost_union/footer template instead of theme_boost/footer
     * Include theme_boost_union/navbar template instead of theme_boost/navbar
@@ -69,7 +69,7 @@
 
     {{{ output.standard_top_of_body_html }}}
 
-    {{> theme_boost_union/navbar }}
+    {{> theme_boost/navbar }}
     {{#courseindex}}
         {{< theme_boost/drawer }}
             {{$id}}theme_boost-drawers-courseindex{{/id}}
@@ -285,7 +285,7 @@
             </div>
         {{/regions.footer.hasblocks}}
 
-        {{> theme_boost_union/footer }}
+        {{> theme_boost/footer }}
         {{> theme_boost_union/footnote }}
     </div>
     {{{ output.standard_after_main_region_html }}}

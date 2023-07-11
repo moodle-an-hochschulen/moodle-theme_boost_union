@@ -15,9 +15,11 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost_union/columns2
+    @template theme_boost/columns2
 
-    Boost Union 2 column layout template.
+    Admin time setting template.
+
+    Boost 2 column layout template.
 
     Context variables required for this template:
     * sitename - The name of the site
@@ -47,9 +49,9 @@
     }
 }}
 {{!
-    This template is based on theme_boost/columns2
+    This template is a modified version of theme_boost/columns2
 
-    Modifications compared to this template:
+    Modifications compared to the original template:
     * Include theme_boost_union/footnote template
     * Include theme_boost_union/footer template instead of theme_boost/footer
     * Include theme_boost_union/navbar template instead of theme_boost/navbar
@@ -65,7 +67,7 @@
 
     {{{ output.standard_top_of_body_html }}}
 
-    {{> theme_boost_union/navbar }}
+    {{> theme_boost/navbar }}
 
     <div id="page" class="container-fluid d-print-block">
         {{> theme_boost_union/javascriptdisabledhint }}
@@ -111,7 +113,7 @@
         </div>
     </div>
     {{{ output.standard_after_main_region_html }}}
-    {{> theme_boost_union/footer }}
+    {{> theme_boost/footer }}
     {{> theme_boost_union/footnote }}
 </div>
 
