@@ -94,15 +94,21 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // Apparently, there isn't any flavour favicon set. Let's continue with the logic to serve the general favicon.
         $logo = null;
+        $filepath = '64x64/';
         if (!during_initial_install()) {
             $logo = get_config('theme_boost_union', 'favicon');
+
+            $logoextension = pathinfo($logo, PATHINFO_EXTENSION);
+            if (in_array($logoextension, ['ico'])) {
+                $filepath = '1/';
+            }
         }
         if (empty($logo)) {
             return $this->image_url('favicon', 'theme');
         }
 
         // Use $CFG->themerev to prevent browser caching when the file changes.
-        return moodle_url::make_pluginfile_url(context_system::instance()->id, 'theme_boost_union', 'favicon', '64x64/',
+        return moodle_url::make_pluginfile_url(context_system::instance()->id, 'theme_boost_union', 'favicon', $filepath,
                 theme_get_revision(), $logo);
     }
 
