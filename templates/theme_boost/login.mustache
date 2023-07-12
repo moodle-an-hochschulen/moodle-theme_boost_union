@@ -15,9 +15,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost_union/login
+    @template theme_boost/login
 
-    Boost Union Login page template
+    Login page template
 
     Example context (json):
     {
@@ -30,9 +30,9 @@
     }
 }}
 {{!
-    This template is based on theme_boost/login
+    This template is a modified version of theme_boost/login
 
-    Modifications compared to this template:
+    Modifications compared to the original template:
     * Include theme_boost_union/footnote template
     * Include theme_boost_union/footer template instead of theme_boost/footer
     * Added the possibility to show info banners.
@@ -70,7 +70,7 @@
             </div>
         </div>
     {{/ loginbackgroundimagetext }}
-    {{> theme_boost_union/footer }}
+    {{> theme_boost/footer }}
     {{> theme_boost_union/footnote }}
 </div>
 
