@@ -20,7 +20,6 @@
  * This layoutfile is based on theme/boost/layout/login.php
  *
  * Modifications compared to this layout file:
- * * Render theme_boost_union/login instead of theme_boost/login template
  * * Include footnote
  * * Include static pages
  * * Include info banners
@@ -57,5 +56,5 @@ require_once(__DIR__ . '/includes/staticpages.php');
 // Include the template content for the info banners.
 require_once(__DIR__ . '/includes/infobanners.php');
 
-// Render login.mustache from boost_union.
-echo $OUTPUT->render_from_template('theme_boost_union/login', $templatecontext);
+// Render login.mustache from theme_boost (which is overridden in theme_boost_union).
+echo $OUTPUT->render_from_template('theme_boost/login', $templatecontext);
