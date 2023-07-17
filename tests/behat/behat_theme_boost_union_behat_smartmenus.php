@@ -18,7 +18,7 @@
  * Theme Boost Union - Custom Behat rules for smartmenus
  *
  * @package    theme_boost_union
- * @copyright  bdecent GmbH 2023
+ * @copyright  2023 bdecent GmbH <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,7 +30,7 @@ use Behat\Gherkin\Node\{TableNode, PyStringNode};
  * Class behat_theme_boost_union_behat_smartmenus
  *
  * @package    theme_boost_union
- * @copyright  bdecent GmbH 2023e>
+ * @copyright  2023 bdecent GmbH <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_boost_union_behat_smartmenus extends behat_base {

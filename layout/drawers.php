@@ -31,7 +31,7 @@
  * * Include info banners
  * * Include additional block regions
  * * Handle admin setting for right-hand block drawer of site home
- * * Load the theme_boost_union/output/navigation/primary instead of core primary navigation.
+ * * Include smart menus
  *
  * @package   theme_boost_union
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
@@ -156,9 +156,7 @@ $templatecontext = [
     'hasregionmainsettingsmenu' => !empty($regionmainsettingsmenu),
     'overflow' => $overflow,
     'headercontent' => $headercontent,
-    'addblockbutton' => $addblockbutton,
-    'menubar' => $primarymenu['menubar'] ?? [],
-    'bottombar' => $primarymenu['bottombar'] ?? []
+    'addblockbutton' => $addblockbutton
 ];
 
 // Include the template content for the course related hints.
@@ -192,6 +190,9 @@ require_once(__DIR__ . '/includes/navbar.php');
 if ($PAGE->pagelayout == 'frontpage') {
     require_once(__DIR__ . '/includes/advertisementtiles.php');
 }
+
+// Include the template content for the smart menus.
+require_once(__DIR__ . '/includes/smartmenus.php');
 
 // Render drawers.mustache from theme_boost (which is overridden in theme_boost_union).
 echo $OUTPUT->render_from_template('theme_boost/drawers', $templatecontext);

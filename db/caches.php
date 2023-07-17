@@ -68,7 +68,7 @@ $definitions = array(
                 'simpledata' => true,
                 'staticacceleration' => true,
         ),
-        // This cache stores the menus and menu items.
+        // This cache stores the smart menus.
         'smartmenus' => array(
                 'mode' => cache_store::MODE_SESSION,
                 'simplekeys' => true,
@@ -85,7 +85,7 @@ $definitions = array(
 
                 )
         ),
-        // This cache stores the menus and menu items.
+        // This cache stores the smart menus' menu items.
         'smartmenu_items' => array(
                 'mode' => cache_store::MODE_SESSION,
                 'simplekeys' => true,

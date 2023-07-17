@@ -18,7 +18,7 @@
  * Theme Boost Union - Smart menu Helper.
  *
  * @package    theme_boost_union
- * @copyright  bdecent GmbH 2023
+ * @copyright  2023 bdecent GmbH <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -35,7 +35,7 @@ use theme_boost_union\smartmenu_item;
  * It contains the method to purge caches of menu and items for different events.
  *
  * @package    theme_boost_union
- * @copyright  bdecent GmbH 2023
+ * @copyright  2023 bdecent GmbH <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class smartmenu_helper {
@@ -545,12 +545,12 @@ class smartmenu_helper {
 
         $output .= html_writer::start_div('left-menu-items mr-auto p-2');
         // Setup create menu button on page.
-        $caption = get_string('smartmenu:backtomenus', 'theme_boost_union');
+        $caption = get_string('smartmenusbacktomenus', 'theme_boost_union');
         $editurl = new moodle_url('/theme/boost_union/smartmenus/menus.php');
         $output .= $OUTPUT->single_button($editurl, $caption, 'get');
 
         // Setup create menu button on page.
-        $caption = get_string('smartmenu:settings', 'theme_boost_union');
+        $caption = get_string('smartmenussettings', 'theme_boost_union');
         $editurl = new moodle_url('/theme/boost_union/smartmenus/edit.php', ['id' => $menuid, 'sesskey' => sesskey()]);
         $output .= $OUTPUT->single_button($editurl, $caption, 'get');
 
@@ -560,7 +560,7 @@ class smartmenu_helper {
         $output .= html_writer::start_div('right-menu-items');
 
         // Add new item.
-        $itemscaption = get_string('smartmenu:addnewitem', 'theme_boost_union');
+        $itemscaption = get_string('smartmenusaddnewitem', 'theme_boost_union');
         $itemsurl = new moodle_url(
             '/theme/boost_union/smartmenus/edit_items.php',
             ['menu' => $menuid, 'sesskey' => sesskey()]
@@ -583,7 +583,7 @@ class smartmenu_helper {
         global $OUTPUT;
 
         // Setup create menu button on page.
-        $caption = get_string('smartmenu:createmenu', 'theme_boost_union');
+        $caption = get_string('smartmenuscreatemenu', 'theme_boost_union');
         $editurl = new moodle_url('/theme/boost_union/smartmenus/edit.php', ['sesskey' => sesskey()]);
 
         // IN Moodle 4.2, primary button param depreceted.

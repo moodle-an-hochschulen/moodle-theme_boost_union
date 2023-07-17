@@ -15,25 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * File contains definition of class MoodleQuickForm_boostunioncolorpicker
+ * Theme Boost Union Login - Form element for color picker
  *
  * @package    theme_boost_union
- * @copyright  bdecent GmbH 2021
+ * @copyright  2023 bdecent GmbH <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once("HTML/QuickForm/input.php");
+require_once('HTML/QuickForm/input.php');
 
 /**
- * Form element for handling colorpicker
+ * Form element for color picker.
  *
  * @package   theme_boost_union
  * @copyright bdecent GmbH 2021
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class moodlequickform_boostunioncolorpicker extends HTML_QuickForm_input {
+class moodlequickform_themeboostunion_colorpicker extends HTML_QuickForm_input {
 
     /** @var bool if true label will be hidden */
     public $_helpbutton = '';
@@ -45,9 +45,9 @@ class moodlequickform_boostunioncolorpicker extends HTML_QuickForm_input {
     protected $forceltr = false;
 
     /**
-     * Sets label to be hidden
+     * Sets label to be hidden.
      *
-     * @param bool $hiddenlabel sets if label should be hidden
+     * @param bool $hiddenlabel sets if label should be hidden.
      */
     public function sethiddenlabel($hiddenlabel) {
         $this->_hiddenlabel = $hiddenlabel;
@@ -63,9 +63,9 @@ class moodlequickform_boostunioncolorpicker extends HTML_QuickForm_input {
     }
 
     /**
-     * get html for help button
+     * Get html for help button.
      *
-     * @return string html for help button
+     * @return string html for help button.
      */
     public function gethelpbutton() {
         return $this->_helpbutton;
@@ -91,7 +91,11 @@ class moodlequickform_boostunioncolorpicker extends HTML_QuickForm_input {
     public function toHtml() {
     // @codingStandardsIgnoreEnd
         global $PAGE, $OUTPUT;
+
+        // Build loading icon.
         $icon = new pix_icon('i/loading', get_string('loading', 'admin'), 'moodle', ['class' => 'loadingicon']);
+
+        // Compose template context for Moodle core admin setting.
         $template = (object) [
             'id' => $this->getAttribute('id'),
             'name' => $this->getAttribute('name'),
@@ -101,12 +105,20 @@ class moodlequickform_boostunioncolorpicker extends HTML_QuickForm_input {
             'forceltr' => $this->get_force_ltr(),
             'readonly' => '',
         ];
+
+        // Render color picker from Moodle core admin setting.
         $colorpicker = $OUTPUT->render_from_template('core_admin/setting_configcolourpicker', $template);
+
+        // Compose template context for Mform element.
         $context = $template;
         $context->colorpicker = $colorpicker;
         $context->lable = $this->getLabel();
         $context->type = 'colorpicker';
+
+        // Add JS init call to page.
         $PAGE->requires->js_init_call('M.util.init_colour_picker', array($this->getAttribute('id'), ''));
-        return $OUTPUT->render_from_template('theme_boost_union/element_colorpicker', $context);
+
+        // Render and return Mform element.
+        return $OUTPUT->render_from_template('theme_boost_union/form-element-colorpicker', $context);
     }
 }

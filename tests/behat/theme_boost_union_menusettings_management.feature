@@ -10,7 +10,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     When I log in as "admin"
     And I navigate to "Appearance > Themes > Boost Union > Smart menus" in site administration
     Then I should see "Smart menus" in the "#region-main h2" "css_element"
-    And I should see "There aren't any smart menus are created. Please create your first smart menu."
+    And I should see "There aren't any smart menus created yet. Please create your first smart menu to get things going."
     And "table" "css_element" should not exist in the "#region-main" "css_element"
     And "Create new smart menu" "button" should exist in the "#region-main" "css_element"
     And ".menu-item-actions" "css_element" should not exist in the "#region-main" "css_element"
@@ -27,7 +27,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     | Locations | Main |
     And I click on "Save and return" "button"
     Then I should see "Smart menus" in the "#region-main h2" "css_element"
-    And I should not see "There aren't any smart menus are created. Please create your first smart menu."
+    And I should not see "There aren't any smart menus created yet. Please create your first smart menu to get things going."
     And "table" "css_element" should exist in the "#region-main" "css_element"
     And the following should exist in the "smartmenus" table:
     | Title | Locations |
@@ -72,7 +72,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I click on ".action-delete" "css_element" in the "Links" "table_row"
     Then I should see "Are you sure you want to delete this menu from the smart menus?" in the ".moodle-dialogue-confirm" "css_element"
     And I click on "Yes" "button" in the ".moodle-dialogue-confirm" "css_element"
-    And I should see "There aren't any smart menus are created. Please create your first smart menu."
+    And I should see "There aren't any smart menus created yet. Please create your first smart menu to get things going."
 
   @javascript
   Scenario: Smartmenus: Management - Duplicate an existing menus

@@ -18,18 +18,30 @@
  * Theme Boost Union - Primary navigation render.
  *
  * @package    theme_boost_union
- * @copyright  bdecent GmbH 2023
+ * @copyright  2023 bdecent GmbH <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace theme_boost_union\output\navigation;
 
+use renderable;
+use renderer_base;
+use templatable;
 use custom_menu;
 use \theme_boost_union\smartmenu;
-use renderer_base;
 
 /**
- * Extending the \core\navigation\output\primary renderer.
+ * Primary navigation renderable.
+ *
+ * This file combines primary nav, custom menu, lang menu and
+ * usermenu into a standardized format for the frontend.
+ *
+ * This renderer is copied and modified from /lib/classes/navigation/output/primary.php
+ *
+ * @package     theme_boost_union
+ * @copyright   2023 bdecent GmbH <https://bdecent.de>
+ * @copyright   based on code 2021 onwards Peter Dias
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class primary extends \core\navigation\output\primary {
 
@@ -48,20 +60,19 @@ class primary extends \core\navigation\output\primary {
     /**
      * Combine the various menus into a standardized output.
      *
-     * Updated the export_for_template method of \core\navigation\output\primary from lib\classes\navigation\output\primary.php.
-     *
-     * Build the smartmenus and its items as navigation nodes.
-     * Generate the nodes for different locations based on the menus locations.
-     * Combine the smart menus nodes with core primary menus.
+     * Modifications compared to the original function:
+     * * Build the smart menus and its items as navigation nodes.
+     * * Generate the nodes for different locations based on the menus locations.
+     * * Combine the smart menus nodes with core primary menus.
      *
      * @param renderer_base|null $output
      * @return array
      */
     public function export_for_template(?renderer_base $output = null): array {
-        global $DB, $PAGE;
+        global $DB;
 
+        // If the smart menu feature is not installed at all, use the parent function.
         $dbman = $DB->get_manager();
-        // Backward support check.
         if (!$dbman->table_exists('theme_boost_union_menus')) {
             return parent::export_for_template($output);
         }
@@ -73,19 +84,22 @@ class primary extends \core\navigation\output\primary {
         // Generate the menus and its items into nodes.
         $smartmenus = smartmenu::build_smartmenu();
 
-        // Get the menus for mainmenu.
+        // Get the menus for the main menu.
         $mainmenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_MAIN, $smartmenus);
 
-        // Separate the menus for menubar.
+        // Separate the menus for the menubar.
         $menubarmenus = smartmenu::get_menus_forlocation(smartmenu::LOCATION_MENU, $smartmenus);
-        // Separate the menus for usermenus.
+
+        // Separate the menus for the user menus.
         $locationusermenus = smartmenu::get_menus_forlocation(smartmenu::LOCATION_USER, $smartmenus);
-        // Separate the menus for bottom menu.
+
+        // Separate the menus for the bottom menu.
         $locationbottom = smartmenu::get_menus_forlocation(smartmenu::LOCATION_BOTTOM, $smartmenus);
 
-        // Merge the smartmenu nodes which contians the main menu location with primary and custom menu nodes.
-        $menudata = array_merge($this->get_primary_nav(), $this->get_custom_menu($output), $mainmenu);
-        $moremenu = new \core\navigation\output\more_menu((object) $menudata, 'navbar-nav', false);
+        // Merge the smart menu nodes which contain the main menu location with the primary and custom menu nodes.
+        $menudata = (object) array_merge($this->get_primary_nav(), $this->get_custom_menu($output), $mainmenu);
+        $moremenu = new \core\navigation\output\more_menu($menudata, 'navbar-nav', false);
+
         // Menubar.
         // Items of menus only added in the menubar.
         // Removed the menu nodes from menubar, each item will be displayed as menu in menubar.
@@ -104,8 +118,9 @@ class primary extends \core\navigation\output\primary {
             $bottombardata = $bottombar->export_for_template($output);
             $bottombardata['drawer'] = (!empty($locationbottom)) ? true : false;
         }
+
         // Usermenu.
-        // Merge the smartmenu nodes which contians the location for usermenu, with the default core usermenu nodes.
+        // Merge the smartmenu nodes which contains the location for user menu, with the default core user menu nodes.
         $languagemenu = new \core\output\language_menu($this->page);
         $usermenu = $this->get_user_menu($output);
         $this->build_usermenus($usermenu, $locationusermenus);
@@ -121,13 +136,13 @@ class primary extends \core\navigation\output\primary {
     }
 
     /**
-     * Attach the smartmenus to usermenu which has location selected for usermenu.
-     * Seperate the children items and attach those items to submenus element in usermenu.
-     * Add the menus in items element in usermenu.
+     * Attach the smart menus to the user menu which has location selected for user menu.
+     * Separate the children items and attach those items to submenus element in user menu.
+     * Add the menus in items element in user menu.
      *
-     * Usermenu and its submenus are connected using submenuid. Added submenuid for submenu items if that has childrens.
-     * Add all the items before logout menu. Removed the logout menu, then add the items into usermenu items,
-     * once all items are added, sperator included before logout
+     * User menu and its submenus are connected using submenuid. Added submenuid for submenu items if that has children.
+     * Add all the items before logout menu. Removed the logout menu, then add the items into user menu items,
+     * once all items are added, separator included before logout
      * if any smart menus are included then added the logout menu to menu items.
      *
      * @param array $usermenu
@@ -147,17 +162,20 @@ class primary extends \core\navigation\output\primary {
                 $usermenu['items'][] = $menu;
                 continue;
             }
-            // Menu with children, split the childrens and push them into submenus.
+
+            // Menu with children, split the children and push them into submenus.
             if (isset($menu->submenuid)) {
                 $children = $menu->children;
-                // Update the dividers itemtype.
+
+                // Update the dividers item type.
                 array_walk($children, function(&$value) use (&$usermenu, $menu) {
                     if (isset($value['divider'])) {
                         $value['itemtype'] = 'divider';
                         $value['link'] = '';
                     }
+
                     // Children is submenu item, add third level submenu.
-                    // Only three levels is avialble, therfore implemeneted in a static way, incase wants use multiple levels.
+                    // Only three levels is available, therefore implemented in a static way, in case wants to use multiple levels.
                     // Convert this into separate function make dynamic.
                     if (!empty($value['children'])) {
                         $uniqueid = uniqid();
@@ -169,7 +187,8 @@ class primary extends \core\navigation\output\primary {
                             'title' => $value['title'],
                             'items' => $value['children'],
                         ];
-                        // Insert the third level childrens into submenus.
+
+                        // Insert the third level children into submenus.
                         $usermenu['submenus'][] = (object) $submenu;
 
                         unset($value['children']);
@@ -185,6 +204,7 @@ class primary extends \core\navigation\output\primary {
                 $usermenu['submenus'][] = (object) $submenu;
             }
         }
+
         // Include the divider after smart menus items to make difference from logout.
         $divider = [
             'title' => '####',
@@ -193,6 +213,7 @@ class primary extends \core\navigation\output\primary {
             'link' => ''
         ];
         array_push($usermenu['items'], $divider);
+
         // Update the logout menu at end of menus.
         if (!empty($logout)) {
             array_push($usermenu['items'], $logout);

@@ -39,32 +39,11 @@
         }
     }
 }}
-{{!
-    This template is a modified version of core/user_action_menu_submenus
-
-    Modifications compared to the original template:
-    * Include icon support. Changed the text variable to support html.
-    * Include thirdlevel submenu support. Haschildren based menu item added.
-}}
 {{#items}}
-    {{#haschildren}}
-        <a href="#" class="carousel-navigation-link {{#itemdata.classes}} {{.}} {{/itemdata.classes}} dropdown-item pl-5" role="menuitem" data-toggle="tooltip" title="{{tooltip}}" tabindex="1" data-carousel-target-id="carousel-item-{{submenuid}}">
-            {{#pixicon}}
-                {{#pix}}{{pixicon}}{{/pix}}
-            {{/pixicon}}
-            {{^pixicon}}
-                {{#imgsrc}}<img aria-hidden="true" src="{{imgsrc}}" alt="{{{title}}}"/>{{/imgsrc}}
-            {{/pixicon}}
-            {{{text}}}
+    {{#link}}
+        <a href="{{{url}}}" class="dropdown-item pl-5" role="menuitem" tabindex="-1" {{#isactive}}aria-current="true"{{/isactive}}
+            {{#attributes}}{{key}}="{{value}}" {{/attributes}}>
+            {{text}}
         </a>
-    {{/haschildren}}
-
-    {{^haschildren}}
-        {{#link}}
-            <a href="{{{url}}}" class="dropdown-item {{#itemdata.classes}} {{.}} {{/itemdata.classes}} pl-5" data-toggle="tooltip" title="{{tooltip}}" role="menuitem" tabindex="-1" {{#isactive}}aria-current="true"{{/isactive}}
-                {{#attributes}} {{#key}}{{key}}="{{value}}"{{/key}} {{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
-                {{{text}}}
-            </a>
-        {{/link}}
-    {{/haschildren}}
+    {{/link}}
 {{/items}}

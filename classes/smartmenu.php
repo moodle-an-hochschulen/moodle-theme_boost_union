@@ -18,7 +18,7 @@
  * Menu controller for managing menus and menu items. Build menu for different locations.
  *
  * @package    theme_boost_union
- * @copyright  bdecent GmbH 2023
+ * @copyright  2023 bdecent GmbH <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -43,7 +43,7 @@ require_once($CFG->dirroot.'/theme/boost_union/smartmenus/menulib.php');
  * updating existing menus, deleting menus, and sorting the order of menus.
  *
  * @package    theme_boost_union
- * @copyright    bdecent GmbH 2023
+ * @copyright  2023 bdecent GmbH <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class smartmenu {
@@ -407,7 +407,7 @@ class smartmenu {
             }
         }
         // Success message for duplicated menu.
-        \core\notification::success(get_string('smartmenu:menuduplicated', 'theme_boost_union'));
+        \core\notification::success(get_string('smartmenusmenuduplicated', 'theme_boost_union'));
 
         return true;
     }
@@ -746,10 +746,10 @@ class smartmenu {
     public static function get_locations() {
         // List of locations where same menu can be used in multiple places.
         $locations = array(
-            self::LOCATION_MAIN => get_string('smartmenu:location:main', 'theme_boost_union'),
-            self::LOCATION_MENU => get_string('smartmenu:location:menu', 'theme_boost_union'),
-            self::LOCATION_USER => get_string('smartmenu:location:user', 'theme_boost_union'),
-            self::LOCATION_BOTTOM => get_string('smartmenu:location:bottom', 'theme_boost_union')
+            self::LOCATION_MAIN => get_string('smartmenuslocationmain', 'theme_boost_union'),
+            self::LOCATION_MENU => get_string('smartmenuslocationmenu', 'theme_boost_union'),
+            self::LOCATION_USER => get_string('smartmenuslocationuser', 'theme_boost_union'),
+            self::LOCATION_BOTTOM => get_string('smartmenuslocationbottom', 'theme_boost_union')
         );
 
         return $locations;
@@ -773,8 +773,8 @@ class smartmenu {
      */
     public static function get_types() {
         $types = array(
-            self::TYPE_LIST => get_string('smartmenu:types:list', 'theme_boost_union'),
-            self::TYPE_CARD => get_string('smartmenu:types:card', 'theme_boost_union')
+            self::TYPE_LIST => get_string('smartmenustypeslist', 'theme_boost_union'),
+            self::TYPE_CARD => get_string('smartmenustypescard', 'theme_boost_union')
         );
 
         return $types;
@@ -827,7 +827,7 @@ class smartmenu {
             \cache_helper::purge_by_event('theme_boost_union_menuitems_edited');
 
             // Show the edited success notification.
-            \core\notification::success(get_string('smartmenu:updatesuccess', 'theme_boost_union'));
+            \core\notification::success(get_string('smartmenusupdatesuccess', 'theme_boost_union'));
         } else {
             // Setup the menu order.
             $lastmenu = self::get_lastmenu();
@@ -836,7 +836,7 @@ class smartmenu {
 
             \cache_helper::purge_by_event('theme_boost_union_menus_created');
             // Show the menu inserted success notification.
-            \core\notification::success(get_string('smartmenu:insertsuccess', 'theme_boost_union'));
+            \core\notification::success(get_string('smartmenusinsertsuccess', 'theme_boost_union'));
         }
 
         // Allow to update the DB changes to Database.

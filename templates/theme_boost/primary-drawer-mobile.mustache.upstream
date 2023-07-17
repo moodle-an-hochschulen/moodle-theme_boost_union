@@ -16,9 +16,9 @@
 }}
 {{!
 
-    @template theme_boost_union/primary-drawer-mobile
+    @template theme_boost/primary-drawer-mobile
 
-    This template renders the mobile version of the top navbar menu in a drawer. Based on the template from theme_boost_union/primary-drawer-mobile.
+    This template renders the mobile version of the top navbar menu in a drawer.
 
     Example context (json):
     {
@@ -48,7 +48,7 @@
 
 {{< theme_boost/drawer }}
     {{$id}}theme_boost-drawers-primary{{/id}}
-    {{$drawerclasses}}drawer {{#bottombar.drawer}} drawer-bottom {{/bottombar.drawer}} {{^bottombar.drawer}} drawer-left {{/bottombar.drawer}} drawer-primary{{/drawerclasses}}
+    {{$drawerclasses}}drawer drawer-left drawer-primary{{/drawerclasses}}
     {{$drawercloseonresize}}1{{/drawercloseonresize}}
     {{$drawerheading}}
         {{# output.should_display_navbar_logo }}
@@ -59,16 +59,34 @@
         {{/ output.should_display_navbar_logo }}
     {{/drawerheading}}
     {{$drawercontent}}
-        {{#bottombar.drawer}}
-        <div class="menu-title">{{#str}} menu, core {{/str}}</div>
-        {{/bottombar.drawer}}
         <div class="list-group">
             {{#mobileprimarynav}}
                 {{#haschildren}}
-                    {{> theme_boost_union/primary-drawer-mobile-child }}
+                <a id="drop-down-{{sort}}" href="#" class="list-group-item list-group-item-action icons-collapse-expand collapsed d-flex" data-toggle="collapse" data-target="#drop-down-menu-{{sort}}" aria-expanded="false" aria-controls="drop-down-menu-{{sort}}">
+                    {{{text}}}
+                    <span class="ml-auto expanded-icon icon-no-margin mx-2">
+                        {{#pix}} t/expanded, core {{/pix}}
+                        <span class="sr-only">
+                            {{#str}} collapse, core {{/str}}
+                        </span>
+                    </span>
+                    <span class="ml-auto collapsed-icon icon-no-margin mx-2">
+                        {{#pix}} t/collapsed, core {{/pix}}
+                        <span class="sr-only">
+                            {{#str}} expand, core {{/str}}
+                        </span>
+                    </span>
+                </a>
+                <div class="collapse list-group-item p-0 border-0" role="menu" id="drop-down-menu-{{sort}}" aria-labelledby="drop-down-{{sort}}">
+                    {{#children}}
+                        {{^divider}}
+                             <a href="{{{url}}}" class="pl-5 bg-light list-group-item list-group-item-action">{{{text}}}</a>
+                        {{/divider}}
+                    {{/children}}
+                </div>
                 {{/haschildren}}
                 {{^haschildren}}
-                <a href="{{{url}}}" data-toggle="tooltip" title="{{tooltip}}" class="{{#menuclasses}} {{.}} {{/menuclasses}} list-group-item list-group-item-action {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}" {{#isactive}}aria-current="true"{{/isactive}} {{#attributes}} {{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
+                <a href="{{{url}}}" class="list-group-item list-group-item-action {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}" {{#isactive}}aria-current="true"{{/isactive}}>
                     {{{text}}}
                 </a>
                 {{/haschildren}}

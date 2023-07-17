@@ -14,10 +14,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Shows the footer content in a popover. Modified version of theme_boost\footer-popover by Bas Brands
+ * Theme Boost Union - JS code which shows all fontawesome icons in a popover.
  *
  * @module     theme_boost_union/fontawesome-popover
- * @copyright  bdecent GmbH 2023
+ * @copyright  2023 bdecent GmbH <https://bdecent.de>
+ * @copyright  based on code from theme_boost\footer-popover by Bas Brands.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -35,7 +36,7 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
     var SELECTBOX;
 
     /**
-     * Get the footer content for popover.
+     * Get the icon list for popover.
      *
      * @returns {String} HTML string
      * @private
@@ -45,9 +46,9 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
     };
 
     /**
-     * Filter the icons in list with values user entered in search input.
+     * Filter the icons in the list with values which the user entered in the search input.
      * Given input will contain the text in both aria-value and aria-label.
-     * Ex. "core:t\document" is aira value and "fa-document" is aria-label.
+     * Ex. "core:t\document" is aria-value and "fa-document" is aria-label.
      *
      * @param {Element} target
      */
@@ -72,8 +73,8 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
     };
 
     /**
-     * Creates input element and append the element into the target elements parentnode.
-     * USer can able to search icons using this input field
+     * Creates input element and append the element into the target element's parent node.
+     * User is able to search icons using this input field.
      *
      * @param {String} target Element Selector.
      */
@@ -101,9 +102,9 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
     /**
      * Update the target with fontawesome iconpicker.
      *
-     * Create picker input field for search icons insert to dom, Fetch the icons list and setup the popover with icons content.
-     * Display the popover when the icon search input field is focused or clicked. This way user can view the list of icons,
-     * Search icons. when the icons is selected, same icon in the select element will selected.
+     * Create picker input field for search icons insert to DOM, fetch the icons list and setup the popover with icons content.
+     * Display the popover when the icon search input field is focused or clicked. This way user can view the list of icons and
+     * search icons. When the icon is selected, same icon in the select element will be selected.
      *
      * @param {String} target Element Selector.
      */
@@ -120,16 +121,17 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
 
         // Parent of the target element.
         var selectBoxParent = document.querySelector(target).parentNode;
+
         // Input element for search icons, appended in createElements method.
         const pickerInput = selectBoxParent.querySelector("input.fontawesome-autocomplete");
 
-        // Check the search input created and inserted in dom.
+        // Check the search input created and inserted in DOM.
         if (pickerInput === undefined || pickerInput === null) {
             setTimeout(() => iconPicker(target), 1000);
             return;
         }
 
-        // Fetch the icons list, and setup popover with iconslist.
+        // Fetch the icons list and setup popover with icons list.
         getIconList().then(function(html) {
 
             $(pickerInput).popover({
@@ -140,9 +142,9 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
                 trigger: 'click'
             });
 
-            // Event observer when the popover is inserted in dom, create eventlistner for each icons in icons list.
+            // Event observer when the popover is inserted in DOM, create event listner for each icon in icons list.
             // Icon is clicked, set the icon aria-value as value for select box.
-            // Set the icon label to value of autocompletd picker.
+            // Set the icon label to value of autocomplete picker.
             $(pickerInput).on('inserted.bs.popover', function() {
                 var ul = document.querySelector('.fontawesome-iconpicker-popover ul.fontawesome-icon-suggestions');
                 ul.querySelectorAll('li').forEach((li) => {
@@ -182,12 +184,13 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
 
         $(pickerInput).on('shown.bs.popover', () => {
             pickerIsShown = true;
-            // Add class to selected icon, helps to differenciate.
+            // Add class to selected icon, helps to differentiate.
             if (pickerInput.value != '') {
                 var iconSuggestion = document.querySelector('.fontawesome-iconpicker-popover ul.fontawesome-icon-suggestions');
                 if (iconSuggestion.querySelector('li[aria-label="' + pickerInput.value + '"]') !== null) {
                     // Remove selected class.
-                    iconSuggestion.querySelectorAll('li').forEach((li) => li.classList.remove('selected'));
+                    iconSuggestion.querySelectorAll('li').forEach((li) =>
+                            li.classList.remove('selected'));
                     // Assign selected class for new.
                     iconSuggestion.querySelector('li[aria-label="' + pickerInput.value + '"]').classList.add('selected');
                 }

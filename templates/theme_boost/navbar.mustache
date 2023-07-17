@@ -64,13 +64,11 @@
     * Removed the primary menu drawer hamburger menu, added bottom bar more section will help users to open the nav drawer.
     * Display the logo on mobile viewport. (removed d-none, changed d-md-flex to d-flex)
     * Added menu bar section.
-    * Included primary mobile drawer from boost_union.
-    * Loaded the primary and menubar moremenu from theme.
 }}
 
 {{#menubar}}
 <nav class="menubar fixed-top boost-union-menubar navbar navbar-expand {{#bottombar.drawer}} smartmenu-bottom-navigation {{/bottombar.drawer}}">
-    {{> theme_boost_union/moremenu}}
+    {{> core/moremenu}}
 </nav>
 {{/menubar}}
 <nav class="navbar fixed-top {{navbarcolorclasses}} navbar-expand {{#bottombar.drawer}} smartmenu-bottom-navigation {{/bottombar.drawer}}" aria-label="{{#str}}sitemenubar, admin{{/str}}">
@@ -93,7 +91,7 @@
     </a>
     {{#primarymoremenu}}
         <div class="primary-navigation">
-            {{> theme_boost_union/moremenu}}
+            {{> core/moremenu}}
         </div>
     {{/primarymoremenu}}
 
@@ -161,4 +159,4 @@
     </div>
 </nav>
 
-{{> theme_boost_union/primary-drawer-mobile }}
+{{> theme_boost/primary-drawer-mobile }}

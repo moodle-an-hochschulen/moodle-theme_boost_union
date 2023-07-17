@@ -15,9 +15,10 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost_union/fontawesome_list based on core/form_autocomplete_suggestions
+    @template theme_boost_union/fontawesome-iconpicker-popover
 
-    Moodle template for the list of valid options in an autocomplate form element.
+    Boost Union template for the list of valid fontawesome icons.
+    It is based on core/form_autocomplete_suggestions.
 
     Classes required for JS:
     * none
@@ -26,14 +27,23 @@
     * none
 
     Context variables required for this template:
-    * suggestionsId The dom id of the current suggestions list.
-    * options List of options with label and value fields.
+    * suggestionsId - The dom id of the current suggestions list.
+    * options - List of options with label and value fields.
 
     Example context (json):
-    { "suggestionsId": 1, "options": [
-        { "label": "Item label with <strong>tags</strong>", "value": "5" },
-        { "label": "Another item label with <strong>tags</strong>", "value": "4" }
-    ]}
+    {
+        "suggestionsId": 1,
+        "options": [
+            {
+                "label": "Item label with <strong>tags</strong>",
+                "value": "5"
+            },
+            {
+                "label": "Another item label with <strong>tags</strong>",
+                "value": "4"
+            }
+        ]
+    }
 }}
 <div class="fontawesome-iconpicker-popover">
     <ul class="fontawesome-icon-suggestions" id="fontawesome-icon-suggestions" role="listbox" aria-label="{{#str}}suggestions, form{{/str}}" aria-hidden="true" tabindex="-1">

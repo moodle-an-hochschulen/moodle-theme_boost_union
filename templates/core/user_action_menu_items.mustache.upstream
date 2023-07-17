@@ -57,36 +57,27 @@
         ]
     }
 }}
-{{!
-    This template is a modified version of core/user_menu
-
-    Modifications compared to the original template:
-    * Add menu classes to items
-    * Add icons to items
-}}
 {{#items}}
     {{#link}}
-        <a href="{{{url}}}" class="dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" role="menuitem" tabindex="-1" data-toggle="tooltip" title="{{tooltip}}" {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
+        <a href="{{{url}}}" class="dropdown-item" role="menuitem" tabindex="-1">
             {{#pixicon}}
                 {{#pix}}{{pixicon}}{{/pix}}
             {{/pixicon}}
             {{^pixicon}}
                 {{#imgsrc}}<img aria-hidden="true" src="{{imgsrc}}" alt="{{title}}"/>{{/imgsrc}}
             {{/pixicon}}
-            {{#icontitle}}{{{icontitle}}}{{/icontitle}}
-            {{^icontitle}}{{title}}{{/icontitle}}
+            {{title}}
         </a>
     {{/link}}
     {{#submenulink}}
-        <a href="#" class="carousel-navigation-link dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" role="menuitem" tabindex="-1" data-carousel-target-id="carousel-item-{{submenuid}}" data-toggle="tooltip" title="{{tooltip}}"
-        {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}}{{/attributes}}>
+        <a href="#" class="carousel-navigation-link dropdown-item" role="menuitem" tabindex="-1" data-carousel-target-id="carousel-item-{{submenuid}}">
             {{#pixicon}}
                 {{#pix}}{{pixicon}}{{/pix}}
             {{/pixicon}}
             {{^pixicon}}
                 {{#imgsrc}}<img aria-hidden="true" src="{{imgsrc}}" alt="{{title}}"/>{{/imgsrc}}
             {{/pixicon}}
-            {{{title}}}
+            {{title}}
         </a>
     {{/submenulink}}
     {{#divider}}<div class="dropdown-divider"></div>{{/divider}}

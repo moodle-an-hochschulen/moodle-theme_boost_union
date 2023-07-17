@@ -166,9 +166,9 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" items pag
   @javascript
   Scenario: Smartmenuitem: Application - Include the custom css class for menu items
     Given I set "Quick Links" items with the following fields to these values:
-      | Title     | Resources             |
-      | Type      | Static                |
-      | Menu URL  | http://moodle.org     |
+      | Title         | Resources         |
+      | Type          | Static            |
+      | Menu item URL | http://moodle.org |
     # And I navigate to smartmenu "Quick Links" items
     And I click on ".action-edit" "css_element" in the "Resources" "table_row"
     And I expand all fieldsets

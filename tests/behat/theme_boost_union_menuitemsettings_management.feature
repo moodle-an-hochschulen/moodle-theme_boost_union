@@ -18,7 +18,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I navigate to "Appearance > Themes > Boost Union > Smart menus" in site administration
     Then I should see "Smart menus" in the "#region-main h2" "css_element"
     And I click on ".action-list-items" "css_element" in the "Quick Links" "table_row"
-    And I should see "There aren't any items are created for this menu. Please add first item to this menu."
+    And I should see "There aren't any items added to this smart menu yet. Please add an item to this menu."
     And "table" "css_element" should not exist in the "#region-main" "css_element"
     And "Add new item" "link" should exist in the "#region-main" "css_element"
     And ".menu-item-actions" "css_element" should not exist in the "#region-main" "css_element"
@@ -35,7 +35,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     | Title | Info    |
     | Type  | Heading |
     And I click on "Save changes" "button"
-    Then I should not see "There aren't any items are created for this menu. Please add first item to this menu."
+    Then I should not see "There aren't any items added to this smart menu yet. Please add an item to this menu."
     And "table" "css_element" should exist in the "#region-main" "css_element"
     And I should see "Info" in the "smartmenus_item" "table"
     And ".menu-item-actions" "css_element" should exist in the "smartmenus_item" "table"
@@ -69,14 +69,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     | Type | Heading |
     And ".action-delete" "css_element" should exist in the "smartmenus_item" "table"
     And I click on ".action-delete" "css_element" in the "Info" "table_row"
-    Then I should see "Are you sure you want to delete this menu item from the smart menus?" in the ".moodle-dialogue-confirm" "css_element"
+    Then I should see "Are you sure you want to delete this menu item from the smart menu?" in the ".moodle-dialogue-confirm" "css_element"
     And I click on "Cancel" "button" in the ".moodle-dialogue-confirm" "css_element"
     And I should see "Info" in the "smartmenus_item" "table"
     And I click on ".action-delete" "css_element" in the "Info" "table_row"
-    Then I should see "Are you sure you want to delete this menu item from the smart menus?" in the ".moodle-dialogue-confirm" "css_element"
+    Then I should see "Are you sure you want to delete this menu item from the smart menu?" in the ".moodle-dialogue-confirm" "css_element"
     And I click on "Yes" "button" in the ".moodle-dialogue-confirm" "css_element"
     Then "smartmenus_item" "table" should not exist
-    And I should see "There aren't any items are created for this menu. Please add first item to this menu."
+    And I should see "There aren't any items added to this smart menu yet. Please add an item to this menu."
 
   @javascript
   Scenario: Smartmenus: Management - Duplicate an existing menu items
