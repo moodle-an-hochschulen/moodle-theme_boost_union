@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
 
 // Get theme config.
-$config = get_config('theme_boost_union');
+$config = $PAGE->theme->settings;
 
 // Initialize advertisement tiles data for templatecontext.
 $advertisementtiles = array();

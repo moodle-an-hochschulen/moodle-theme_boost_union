@@ -95,7 +95,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // Apparently, there isn't any flavour favicon set. Let's continue with the logic to serve the general favicon.
         $logo = null;
         if (!during_initial_install()) {
-            $logo = get_config('theme_boost_union', 'favicon');
+            $logo = $this->page->theme->settings->favicon;
         }
         if (empty($logo)) {
             return $this->image_url('favicon', 'theme');
@@ -164,7 +164,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         // Apparently, there isn't any flavour logo set. Let's continue to serve the general logo.
-        $logo = get_config('theme_boost_union', 'logo');
+        $logo = $this->page->theme->settings->logo;
         if (empty($logo)) {
             return false;
         }
@@ -250,7 +250,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         // Apparently, there isn't any flavour logo set. Let's continue to service the general compact logo.
-        $logo = get_config('theme_boost_union', 'logocompact');
+        $logo = $this->page->theme->settings->logocompact;
         if (empty($logo)) {
             return false;
         }
@@ -297,7 +297,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // If this isn't the login page and the page has a background image, add a class to the body attributes.
         if ($this->page->pagelayout != 'login') {
-            if (!empty(get_config('theme_boost_union', 'backgroundimage'))) {
+            if (!empty($this->page->theme->settings->backgroundimage)) {
                 $additionalclasses[] = 'backgroundimage';
             }
         }
@@ -366,17 +366,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $header->headeractions = $this->page->get_header_actions();
 
         // Add the course header image for rendering.
-        if ($this->page->pagelayout == 'course' && (get_config('theme_boost_union', 'courseheaderimageenabled')
+        if ($this->page->pagelayout == 'course' && ($this->page->theme->settings->courseheaderimageenabled
                         == THEME_BOOST_UNION_SETTING_SELECT_YES)) {
             // If course header images are activated, we get the course header image url
             // (which might be the fallback image depending on the course settings and theme settings).
             $header->courseheaderimageurl = theme_boost_union_get_course_header_image_url();
             // Additionally, get the course header image height.
-            $header->courseheaderimageheight = get_config('theme_boost_union', 'courseheaderimageheight');
+            $header->courseheaderimageheight = $this->page->theme->settings->courseheaderimageheight;
             // Additionally, get the course header image position.
-            $header->courseheaderimageposition = get_config('theme_boost_union', 'courseheaderimageposition');
+            $header->courseheaderimageposition = $this->page->theme->settings->courseheaderimageposition;
             // Additionally, get the template context attributes for the course header image layout.
-            $courseheaderimagelayout = get_config('theme_boost_union', 'courseheaderimagelayout');
+            $courseheaderimagelayout = $this->page->theme->settings->courseheaderimagelayout;
             switch($courseheaderimagelayout) {
                 case THEME_BOOST_UNION_SETTING_COURSEIMAGELAYOUT_HEADINGABOVE:
                     $header->courseheaderimagelayoutheadingabove = true;

@@ -38,7 +38,7 @@ function theme_boost_union_get_flavour_which_applies() {
     // This function is called from every Moodle page.
     // BUT: If the plugin is not properly installed or updated yet, we must not access any database table
     // as this would trigger a "Read from database" error.
-    if (get_config('theme_boost_union', 'version') < 2022080916) {
+    if ($PAGE->theme->settings->version < 2022080916) {
         return null;
     }
 

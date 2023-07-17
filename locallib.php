@@ -42,7 +42,7 @@ function theme_boost_union_get_course_related_hints() {
 
     // If the setting showhintcoursehidden is set and the visibility of the course is hidden and
     // a hint for the visibility will be shown.
-    if (get_config('theme_boost_union', 'showhintcoursehidden') == THEME_BOOST_UNION_SETTING_SELECT_YES
+    if ($PAGE->theme->settings->showhintcoursehidden == THEME_BOOST_UNION_SETTING_SELECT_YES
             && has_capability('theme/boost_union:viewhintinhiddencourse', \context_course::instance($COURSE->id))
             && $PAGE->has_set_url()
             && $PAGE->url->compare(new moodle_url('/course/view.php'), URL_MATCH_BASE)
@@ -67,7 +67,7 @@ function theme_boost_union_get_course_related_hints() {
     // We also check that the user did not switch the role. This is a special case for roles that can fully access the course
     // without being enrolled. A role switch would show the guest access hint additionally in that case and this is not
     // intended.
-    if (get_config('theme_boost_union', 'showhintcourseguestaccess') == THEME_BOOST_UNION_SETTING_SELECT_YES
+    if ($PAGE->theme->settings->showhintcourseguestaccess == THEME_BOOST_UNION_SETTING_SELECT_YES
             && is_guest(\context_course::instance($COURSE->id), $USER->id)
             && $PAGE->has_set_url()
             && $PAGE->url->compare(new moodle_url('/course/view.php'), URL_MATCH_BASE)
@@ -107,7 +107,7 @@ function theme_boost_union_get_course_related_hints() {
     // If the setting showhintcourseselfenrol is set, a hint for users is shown that the course allows unrestricted self
     // enrolment. This hint is only shown if the course is visible, the self enrolment is visible and if the user has the
     // capability "theme/boost_union:viewhintcourseselfenrol".
-    if (get_config('theme_boost_union', 'showhintcourseselfenrol') == THEME_BOOST_UNION_SETTING_SELECT_YES
+    if ($PAGE->theme->settings->showhintcourseselfenrol == THEME_BOOST_UNION_SETTING_SELECT_YES
             && has_capability('theme/boost_union:viewhintcourseselfenrol', \context_course::instance($COURSE->id))
             && $PAGE->has_set_url()
             && $PAGE->url->compare(new moodle_url('/course/view.php'), URL_MATCH_BASE)
@@ -252,7 +252,7 @@ function theme_boost_union_get_course_related_hints() {
 
     // If the setting showswitchedroleincourse is set and the user has switched his role,
     // a hint for the role switch will be shown.
-    if (get_config('theme_boost_union', 'showswitchedroleincourse') === THEME_BOOST_UNION_SETTING_SELECT_YES
+    if ($PAGE->theme->settings->showswitchedroleincourse === THEME_BOOST_UNION_SETTING_SELECT_YES
             && is_role_switched($COURSE->id) ) {
 
         // Get the role name switched to.
@@ -299,8 +299,9 @@ function theme_boost_union_get_staticpage_link($page) {
  * @return string.
  */
 function theme_boost_union_get_staticpage_pagetitle($page) {
+    global $PAGE;
     // Get the configured page title.
-    $pagetitleconfig = format_string(get_config('theme_boost_union', $page.'pagetitle'), true,
+    $pagetitleconfig = format_string($PAGE->theme->settings->{$page.'pagetitle'}, true,
     ['context' => \context_system::instance()]);
 
     // If there is a string configured.
@@ -334,7 +335,7 @@ function theme_boost_union_infobanner_is_shown_on_page($bannerno) {
     global $PAGE;
 
     // Get theme config.
-    $config = get_config('theme_boost_union');
+    $config = $PAGE->theme->settings;
 
     // If the info banner is enabled.
     $enabledsettingname = 'infobanner'.$bannerno.'enabled';
@@ -554,17 +555,16 @@ function theme_boost_union_get_loginbackgroundimage_files() {
  * @return string|null
  */
 function theme_boost_union_get_urloftilebackgroundimage($tileno) {
+    global $PAGE;
+
     // If the tile number is apparently not valid, return.
     // Note: We just check the tile's number, we do not check if the tile is enabled or not.
     if ($tileno < 0 || $tileno > THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT) {
         return null;
     }
 
-    // Get the background image config for this tile.
-    $bgconfig = get_config('theme_boost_union', 'tile'.$tileno.'backgroundimage');
-
     // If a background image is configured.
-    if (!empty($bgconfig)) {
+    if (!empty($PAGE->theme->settings->{'tile'.$tileno.'backgroundimage'})) {
         // Get the system context.
         $systemcontext = context_system::instance();
 
@@ -623,6 +623,8 @@ function theme_boost_union_get_loginbackgroundimage_scss() {
  * @throws dml_exception
  */
 function theme_boost_union_get_loginbackgroundimage_text() {
+    global $PAGE;
+
     // Get the random number.
     $number = theme_boost_union_get_random_loginbackgroundimage_number();
 
@@ -637,7 +639,7 @@ function theme_boost_union_get_loginbackgroundimage_text() {
         $filename = array_pop($file)->get_filename();
 
         // Get the config for loginbackgroundimagetext and make an array out of the lines.
-        $lines = explode("\n", get_config('theme_boost_union', 'loginbackgroundimagetext'));
+        $lines = explode("\n", $PAGE->theme->settings->loginbackgroundimagetext);
 
         // Process the lines.
         foreach ($lines as $line) {
@@ -916,6 +918,8 @@ function theme_boost_union_get_emailbrandingtextpreview() {
  * @return void
  */
 function theme_boost_union_fontawesome_checkin() {
+    global $PAGE;
+
     // Create cache for FontAwesome files.
     $cache = cache::make('theme_boost_union', 'fontawesome');
 
@@ -923,7 +927,7 @@ function theme_boost_union_fontawesome_checkin() {
     $cache->purge();
 
     // Get FontAwesome version config.
-    $faconfig = get_config('theme_boost_union', 'fontawesomeversion');
+    $faconfig = $PAGE->theme->settings->fontawesomeversion;
 
     // If a FontAwesome version is enabled.
     if ($faconfig != THEME_BOOST_UNION_SETTING_FAVERSION_NONE && $faconfig != null) {
@@ -1026,6 +1030,8 @@ function theme_boost_union_get_fontawesome_filestructure($version) {
  * @throws dml_exception
  */
 function theme_boost_union_get_fontawesome_templatecontext() {
+    global $PAGE;
+
     // Create cache for FontAwesome files.
     $cache = cache::make('theme_boost_union', 'fontawesome');
 
@@ -1035,7 +1041,7 @@ function theme_boost_union_get_fontawesome_templatecontext() {
     }
 
     // Get FontAwesome version config.
-    $faconfig = get_config('theme_boost_union', 'fontawesomeversion');
+    $faconfig = $PAGE->theme->settings->fontawesomeversion;
 
     // If a FontAwesome version is enabled.
     if ($faconfig != THEME_BOOST_UNION_SETTING_FAVERSION_NONE && $faconfig != null) {
@@ -1099,10 +1105,10 @@ function theme_boost_union_get_fontawesome_templatecontext() {
  * @return array|null The array of checks or null if an invalid FontAwesome version is configured.
  */
 function theme_boost_union_get_fontawesome_checks_templatecontext() {
-    global $CFG;
+    global $CFG, $PAGE;
 
     // Get FontAwesome version config.
-    $version = get_config('theme_boost_union', 'fontawesomeversion');
+    $version = $PAGE->theme->settings->fontawesomeversion;
 
     // Pick the checks for the selected FA version.
     switch ($version) {
@@ -1191,7 +1197,7 @@ function theme_boost_union_add_fontawesome_to_page() {
     }
 
     // Get FontAwesome version config.
-    $faconfig = get_config('theme_boost_union', 'fontawesomeversion');
+    $faconfig = $PAGE->theme->settings->fontawesomeversion;
 
     // If a FontAwesome version is enabled.
     if ($faconfig != THEME_BOOST_UNION_SETTING_FAVERSION_NONE && $faconfig != null) {
@@ -1237,7 +1243,7 @@ function theme_boost_union_add_flavourcss_to_page() {
                 array('id' => $flavour->id, 'rev' => theme_get_revision()));
 
         // Add the CSS file to the page.
-        $PAGE->requires->css($flavourcssurl);
+        $PAGE->theme->requires->css($flavourcssurl);
     }
 }
 
@@ -1266,7 +1272,7 @@ function theme_boost_union_get_course_header_image_url() {
         return $courseimage;
 
         // Otherwise, if a fallback image is configured.
-    } else if (get_config('theme_boost_union', 'courseheaderimagefallback')) {
+    } else if ($PAGE->theme->settings->courseheaderimagefallback) {
         // Get the system context.
         $systemcontext = \context_system::instance();
 

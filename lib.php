@@ -124,7 +124,7 @@ function theme_boost_union_get_main_scss_content($theme) {
  * Get SCSS to prepend.
  *
  * @param theme_config $theme The theme config object.
- * @return array
+ * @return string
  */
 function theme_boost_union_get_pre_scss($theme) {
     global $CFG;
@@ -149,8 +149,8 @@ function theme_boost_union_get_pre_scss($theme) {
 
     // Prepend variables first.
     foreach ($configurable as $configkey => $targets) {
-        $value = get_config('theme_boost_union', $configkey);
-        if (!($value)) {
+        $value = isset($theme->settings->{$configkey}) ? $theme->settings->{$configkey} : null;
+        if (empty($value)) {
             continue;
         }
         array_map(function($target) use (&$scss, $value) {
@@ -160,38 +160,38 @@ function theme_boost_union_get_pre_scss($theme) {
 
     // Overwrite Boost core SCSS variables which need units and thus couldn't be added to $configurable above.
     // Set variables which are influenced by the coursecontentmaxwidth setting.
-    if (get_config('theme_boost_union', 'coursecontentmaxwidth')) {
-        $scss .= '$course-content-maxwidth: '.get_config('theme_boost_union', 'coursecontentmaxwidth').";\n";
+    if (!empty($theme->settings->coursecontentmaxwidth)) {
+        $scss .= '$course-content-maxwidth: '.$theme->settings->coursecontentmaxwidth.";\n";
     }
     // Set variables which are influenced by the mediumcontentmaxwidth setting.
-    if (get_config('theme_boost_union', 'mediumcontentmaxwidth')) {
-        $scss .= '$medium-content-maxwidth: '.get_config('theme_boost_union', 'mediumcontentmaxwidth').";\n";
+    if (!empty($theme->settings->mediumcontentmaxwidth)) {
+        $scss .= '$medium-content-maxwidth: '.$theme->settings->mediumcontentmaxwidth.";\n";
     }
     // Set variables which are influenced by the h5pcontentmaxwidth setting.
-    if (get_config('theme_boost_union', 'h5pcontentmaxwidth')) {
-        $scss .= '$h5p-content-maxwidth: '.get_config('theme_boost_union', 'h5pcontentmaxwidth').";\n";
+    if (!empty($theme->settings->h5pcontentmaxwidth)) {
+        $scss .= '$h5p-content-maxwidth: '.$theme->settings->h5pcontentmaxwidth.";\n";
     }
 
     // Overwrite Boost core SCSS variables which are stored in a SCSS map and thus couldn't be added to $configurable above.
     // Set variables for the activity icon colors.
     $activityiconcolors = array();
-    if (get_config('theme_boost_union', 'activityiconcoloradministration')) {
-        $activityiconcolors[] = '"administration": '.get_config('theme_boost_union', 'activityiconcoloradministration');
+    if (!empty($theme->settings->activityiconcoloradministration)) {
+        $activityiconcolors[] = '"administration": '.$theme->settings->activityiconcoloradministration;
     }
-    if (get_config('theme_boost_union', 'activityiconcolorassessment')) {
-        $activityiconcolors[] = '"assessment": '.get_config('theme_boost_union', 'activityiconcolorassessment');
+    if (!empty($theme->settings->activityiconcolorassessment)) {
+        $activityiconcolors[] = '"assessment": '.$theme->settings->activityiconcolorassessment;
     }
-    if (get_config('theme_boost_union', 'activityiconcolorcollaboration')) {
-        $activityiconcolors[] = '"collaboration": '.get_config('theme_boost_union', 'activityiconcolorcollaboration');
+    if (!empty($theme->settings->activityiconcolorcollaboration)) {
+        $activityiconcolors[] = '"collaboration": '.$theme->settings->activityiconcolorcollaboration;
     }
-    if (get_config('theme_boost_union', 'activityiconcolorcommunication')) {
-        $activityiconcolors[] = '"communication": '.get_config('theme_boost_union', 'activityiconcolorcommunication');
+    if (!empty($theme->settings->activityiconcolorcommunication)) {
+        $activityiconcolors[] = '"communication": '.$theme->settings->activityiconcolorcommunication;
     }
-    if (get_config('theme_boost_union', 'activityiconcolorcontent')) {
-        $activityiconcolors[] = '"content": '.get_config('theme_boost_union', 'activityiconcolorcontent');
+    if (!empty($theme->settings->activityiconcolorcontent)) {
+        $activityiconcolors[] = '"content": '.$theme->settings->activityiconcolorcontent;
     }
-    if (get_config('theme_boost_union', 'activityiconcolorinterface')) {
-        $activityiconcolors[] = '"interface": '.get_config('theme_boost_union', 'activityiconcolorinterface');
+    if (!empty($theme->settings->activityiconcolorinterface)) {
+        $activityiconcolors[] = '"interface": '.$theme->settings->activityiconcolorinterface;
     }
     if (count($activityiconcolors) > 0) {
         $activityiconscss = '$activity-icon-colors: ('."\n";
@@ -201,26 +201,17 @@ function theme_boost_union_get_pre_scss($theme) {
     }
 
     // Set custom Boost Union SCSS variable: The block region outside left width.
-    $blockregionoutsideleftwidth = get_config('theme_boost_union', 'blockregionoutsideleftwidth');
-    // If the setting is not set.
-    if (!$blockregionoutsideleftwidth) {
-        // Set the variable to the default setting to make sure that the SCSS variable does not remain uninitialized.
-        $blockregionoutsideleftwidth = '300px';
-    }
+    $blockregionoutsideleftwidth = empty($theme->settings->blockregionoutsideleftwidth) ?
+        '300px' : $theme->settings->blockregionoutsideleftwidth;
     $scss .= '$blockregionoutsideleftwidth: '.$blockregionoutsideleftwidth.";\n";
 
     // Set custom Boost Union SCSS variable: The block region outside left width.
-    $blockregionoutsiderightwidth = get_config('theme_boost_union', 'blockregionoutsiderightwidth');
-    // If the setting is not set.
-    if (!$blockregionoutsiderightwidth) {
-        // Set the variable to the default setting to make sure that the SCSS variable does not remain uninitialized.
-        $blockregionoutsiderightwidth = '300px';
-    }
+    $blockregionoutsiderightwidth = empty($theme->settings->blockregionoutsiderightwidth) ?
+        '300px' : $theme->settings->blockregionoutsiderightwidth;
     $scss .= '$blockregionoutsiderightwidth: '.$blockregionoutsiderightwidth.";\n";
 
-    // Prepend pre-scss.
-    if (get_config('theme_boost_union', 'scsspre')) {
-        $scss .= get_config('theme_boost_union', 'scsspre');
+    if (!empty($theme->settings->scsspre)) {
+        $scss .= $theme->settings->scsspre;
     }
 
     return $scss;
@@ -254,8 +245,7 @@ function theme_boost_union_get_extra_scss($theme) {
 
     // In contrast to Boost core, Boost Union should add the login page background to the body element as well.
     // Thus, check if a login background image is set.
-    $loginbackgroundimagepresent = get_config('theme_boost_union', 'loginbackgroundimage');
-    if (!empty($loginbackgroundimagepresent)) {
+    if (!empty($theme->settings->loginbackgroundimage)) {
         // We first have to revert the background which is set to #page on the login page by Boost core already.
         // Doing this, we also have to make the background of the #page element transparent on the login page.
         $content .= 'body.pagelayout-login #page { ';
@@ -270,14 +260,13 @@ function theme_boost_union_get_extra_scss($theme) {
 
         // Finally, we add all possible background image urls which will be picked based on the (random) loginpageimage class.
         $content .= theme_boost_union_get_loginbackgroundimage_scss();
-    }
+    } else {
+        // Boost core has the behaviour that the normal background image is not shown on the login page,
+        // only the login background image is shown on the login page.
+        // This is fine, but it is done improperly as the normal background image is still there on the login page and just overlaid
+        // with a grey color in the #page element. This can result in flickering during the page load.
+        // We try to avoid this by removing the background image from the body tag if no login background image is set.
 
-    // Boost core has the behaviour that the normal background image is not shown on the login page, only the login background image
-    // is shown on the login page.
-    // This is fine, but it is done improperly as the normal background image is still there on the login page and just overlaid
-    // with a grey color in the #page element. This can result in flickering during the page load.
-    // We try to avoid this by removing the background image from the body tag if no login background image is set.
-    if (empty($loginbackgroundimagepresent)) {
         $content .= 'body.pagelayout-login { ';
         $content .= "background-image: none !important;";
         $content .= '}';

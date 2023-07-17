@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$footnotesetting = get_config('theme_boost_union', 'footnote');
+$footnotesetting = $PAGE->theme->settings->footnote;
 
 // Only proceed if text area does not only contains empty tags.
 if (!html_is_blank($footnotesetting)) {

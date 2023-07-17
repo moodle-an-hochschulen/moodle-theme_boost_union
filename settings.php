@@ -28,6 +28,7 @@ use \theme_boost_union\admin_setting_configstoredfilealwayscallback;
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig || has_capability('theme/boost_union:configure', context_system::instance())) {
+    global $PAGE;
 
     // How this file works:
     // This theme's settings are divided into multiple settings pages.
@@ -495,9 +496,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Information: Custom icons files list.
         // If there is at least one file uploaded and if custom icons are enabled (unfortunately, hide_if does not
         // work for admin_setting_description up to now, that's why we have to use this workaround).
-        $modiconsenableconfig = get_config('theme_boost_union', 'modiconsenable');
-        if ($modiconsenableconfig == THEME_BOOST_UNION_SETTING_SELECT_YES &&
-                !empty(get_config('theme_boost_union', 'modiconsfiles'))) {
+        if ($PAGE->theme->settings->modiconsenable == THEME_BOOST_UNION_SETTING_SELECT_YES &&
+                !empty($PAGE->theme->settings->modiconsenablemodiconsfiles)) {
             // Prepare the widget.
             $name = 'theme_boost_union/modiconlist';
             $title = get_string('modiconlistsetting', 'theme_boost_union', null, true);
@@ -805,7 +805,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Information: Additional resources list.
         // If there is at least one file uploaded.
-        if (!empty(get_config('theme_boost_union', 'additionalresources'))) {
+        if (!empty($PAGE->theme->settings->additionalresources)) {
             // Prepare the widget.
             $name = 'theme_boost_union/additionalresourceslist';
             $title = get_string('additionalresourceslistsetting', 'theme_boost_union', null, true);
@@ -849,7 +849,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Information: Custom fonts list.
         // If there is at least one file uploaded.
-        if (!empty(get_config('theme_boost_union', 'customfonts'))) {
+        if (!empty($PAGE->theme->settings->customfonts)) {
             // Prepare the widget.
             $name = 'theme_boost_union/customfontslist';
             $title = get_string('customfontslistsetting', 'theme_boost_union', null, true);
@@ -909,11 +909,11 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 THEME_BOOST_UNION_SETTING_FAVERSION_NONE);
 
         // Information: FontAwesome list.
-        $faconfig = get_config('theme_boost_union', 'fontawesomeversion');
+        $faconfig = $PAGE->theme->settings->fontawesomeversion;
         // If there is at least one file uploaded and if a FontAwesome version is enabled (unfortunately, hide_if does not
         // work for admin_setting_description up to now, that's why we have to use this workaround).
         if ($faconfig != THEME_BOOST_UNION_SETTING_FAVERSION_NONE && $faconfig != null &&
-                !empty(get_config('theme_boost_union', 'fontawesomefiles'))) {
+                !empty($PAGE->theme->settings->fontawesomefiles)) {
             // Prepare the widget.
             $name = 'theme_boost_union/fontawesomelist';
             $title = get_string('fontawesomelistsetting', 'theme_boost_union', null, true);
@@ -933,7 +933,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // If there is at least one file uploaded and if a FontAwesome version is enabled (unfortunately, hide_if does not
         // work for admin_setting_description up to now, that's why we have to use this workaround).
         if ($faconfig != THEME_BOOST_UNION_SETTING_FAVERSION_NONE && $faconfig != null &&
-                !empty(get_config('theme_boost_union', 'fontawesomefiles'))) {
+                !empty($PAGE->theme->settings->fontawesomefiles)) {
             // Prepare the widget.
             $name = 'theme_boost_union/fontawesomechecks';
             $title = get_string('fontawesomecheckssetting', 'theme_boost_union', null, true);
@@ -1617,7 +1617,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $title = get_string('infobannerdismissiblesetting', 'theme_boost_union', array('no' => $i), true);
             $description = get_string('infobannerdismissiblesetting_desc', 'theme_boost_union', array('no' => $i), true);
             // Add Reset button if the info banner is already configured to be dismissible.
-            if (get_config('theme_boost_union', 'infobanner'.$i.'dismissible') == true) {
+            if ($PAGE->theme->settings->{'infobanner'.$i.'dismissible'} == true) {
                 $reseturl = new moodle_url('/theme/boost_union/settings_infobanner_resetdismissed.php',
                         array('sesskey' => sesskey(), 'no' => $i));
                 $description .= html_writer::empty_tag('br');

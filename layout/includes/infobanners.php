@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 // Require the necessary libraries.
 require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
 
-$config = get_config('theme_boost_union');
+$config = $PAGE->theme->settings;
 
 // Initialize info banners data for templatecontext.
 $infobanners = array();

@@ -47,7 +47,7 @@ require_once($CFG->dirroot . '/course/lib.php');
 require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
 // Add activity navigation if the feature is enabled.
-$activitynavigation = get_config('theme_boost_union', 'activitynavigation');
+$activitynavigation = $PAGE->theme->settings->activitynavigation;
 if ($activitynavigation == THEME_BOOST_UNION_SETTING_SELECT_YES) {
     $PAGE->theme->usescourseindex = false;
 }
@@ -62,9 +62,9 @@ if (isloggedin()) {
     $courseindexopen = (get_user_preferences('drawer-open-index', true) == true);
 
     if (isguestuser()) {
-        $sitehomerighthandblockdrawerserverconfig = get_config('theme_boost_union', 'showsitehomerighthandblockdraweronguestlogin');
+        $sitehomerighthandblockdrawerserverconfig = $PAGE->theme->settings->showsitehomerighthandblockdraweronguestlogin;
     } else {
-        $sitehomerighthandblockdrawerserverconfig = get_config('theme_boost_union', 'showsitehomerighthandblockdraweronfirstlogin');
+        $sitehomerighthandblockdrawerserverconfig = $PAGE->theme->settings->showsitehomerighthandblockdraweronfirstlogin;
     }
 
     $isadminsettingyes = ($sitehomerighthandblockdrawerserverconfig == THEME_BOOST_UNION_SETTING_SELECT_YES);
@@ -73,7 +73,7 @@ if (isloggedin()) {
     $courseindexopen = false;
     $blockdraweropen = false;
 
-    if (get_config('theme_boost_union', 'showsitehomerighthandblockdraweronvisit') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    if ($PAGE->theme->settings->showsitehomerighthandblockdraweronvisit == THEME_BOOST_UNION_SETTING_SELECT_YES) {
         $blockdraweropen = true;
     }
 }
