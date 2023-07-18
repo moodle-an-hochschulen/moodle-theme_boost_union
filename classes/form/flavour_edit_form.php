@@ -51,6 +51,8 @@ class flavour_edit_form extends \moodleform {
      * @throws \coding_exception
      */
     public function definition() {
+        global $CFG, $OUTPUT;
+
         // Get an easier handler for the form.
         $mform = $this->_form;
 
@@ -119,6 +121,96 @@ class flavour_edit_form extends \moodleform {
                         'return_types' => FILE_INTERNAL
                 ]);
         $mform->addHelpButton('flavours_look_backgroundimage', 'flavoursbackgroundimage', 'theme_boost_union');
+
+        // Create brand colors heading.
+        $context = new \stdClass();
+        $context->title = get_string('brandcolorsheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+                'html',
+                '<div id="adminsettings">'. $OUTPUT->render_from_template('core_admin/setting_heading', $context), '</div>'
+        );
+
+        // Register custom colourpicker.
+        \MoodleQuickForm::registerElementType('boost_union_colourpicker',
+            $CFG->dirroot . '/theme/boost_union/classes/form/colourpicker_form_element.php',
+            'theme_boost_union_colourpicker_form_element');
+        // Register validation rule for colourpicker.
+        \MoodleQuickForm::registerRule('theme_boost_union_colourpicker_rule',
+            null,
+            'theme_boost_union_colourpicker_rule',
+            $CFG->dirroot . '/theme/boost_union/classes/form/colourpicker_form_element.php');
+
+        // Add brandcolour as colourpicker element.
+        $mform->addElement(
+                'boost_union_colourpicker',
+                'brandcolor',
+                get_string('brandcolor', 'theme_boost'),
+                [
+                        'id' => 'colourpicker_brandcolour',
+                ]);
+        $mform->setDefault('brandcolor', '');
+        $mform->addHelpButton('brandcolor', 'flavoursbrandcolour', 'theme_boost_union');
+        // Add validation rule.
+        $mform->addRule('brandcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colourpicker_rule');
+
+        // Create Bootstrap colors heading.
+        $context = new \stdClass();
+        $context->title = get_string('bootstrapcolorsheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+            'html',
+            '<div id="adminsettings">'. $OUTPUT->render_from_template('core_admin/setting_heading', $context), '</div>'
+        );
+
+        // Add Bootstrap color for 'success' as colourpicker element.
+        $mform->addElement(
+            'boost_union_colourpicker',
+            'bootstrapcolorsuccess',
+            get_string('bootstrapcolorsuccesssetting', 'theme_boost_union'),
+            [
+                'id' => 'colourpicker-bootstrapcolorsuccess',
+            ]);
+        $mform->setDefault('bootstrapcolorsuccess', '');
+        $mform->addHelpButton('bootstrapcolorsuccess', 'flavoursbootstrapcolorsuccess', 'theme_boost_union');
+        // Add validation rule.
+        $mform->addRule('bootstrapcolorsuccess', get_string('validateerror', 'admin'), 'theme_boost_union_colourpicker_rule');
+
+        // Add Bootstrap color for 'info' as colourpicker element.
+        $mform->addElement(
+            'boost_union_colourpicker',
+            'bootstrapcolorinfo',
+            get_string('bootstrapcolorinfosetting', 'theme_boost_union'),
+            [
+                'id' => 'colourpicker-bootstrapcolorinfo',
+            ]);
+        $mform->setDefault('bootstrapcolorinfo', '');
+        $mform->addHelpButton('bootstrapcolorinfo', 'flavoursbootstrapcolorinfo', 'theme_boost_union');
+        // Add validation rule.
+        $mform->addRule('bootstrapcolorinfo', get_string('validateerror', 'admin'), 'theme_boost_union_colourpicker_rule');
+
+        // Add Bootstrap color for 'warning' as colourpicker element.
+        $mform->addElement(
+            'boost_union_colourpicker',
+            'bootstrapcolorwarning',
+            get_string('bootstrapcolorwarningsetting', 'theme_boost_union'),
+            [
+                'id' => 'colourpicker-bootstrapcolorwarning',
+            ]);
+        $mform->addHelpButton('bootstrapcolorwarning', 'flavoursbootstrapcolorwarning', 'theme_boost_union');
+        // Add validation rule.
+        $mform->addRule('bootstrapcolorwarning', get_string('validateerror', 'admin'), 'theme_boost_union_colourpicker_rule');
+
+        // Add Bootstrap color for 'danger' as colourpicker element.
+        $mform->addElement(
+            'boost_union_colourpicker',
+            'bootstrapcolordanger',
+            get_string('bootstrapcolordangersetting', 'theme_boost_union'),
+            [
+                'id' => 'colourpicker-bbootstrapcolordanger',
+            ]);
+        $mform->setDefault('bootstrapcolordanger', '');
+        $mform->addHelpButton('bootstrapcolordanger', 'flavoursbootstrapcolordanger', 'theme_boost_union');
+        // Add validation rule.
+        $mform->addRule('bootstrapcolordanger', get_string('validateerror', 'admin'), 'theme_boost_union_colourpicker_rule');
 
         // Add custom css as textarea element.
         // Note: In the current state of implementation, this setting only allows the usage of custom CSS, not SCSS.

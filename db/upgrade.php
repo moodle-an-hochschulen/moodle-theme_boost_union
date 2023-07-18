@@ -136,5 +136,38 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2022080922, 'theme', 'boost_union');
     }
 
+    /*if ($oldversion < 0000000) {
+
+        $table = new xmldb_table('theme_boost_union_flavours');
+
+        $field = new xmldb_field('brandcolor', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('bootstrapcolorsuccess', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('bootstrapcolorwarning', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('bootstrapcolorwarning', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('bootstrapcolordanger', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 00000000, 'theme', 'boost_union');
+    }*/
+
     return true;
 }

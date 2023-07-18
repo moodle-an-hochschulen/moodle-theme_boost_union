@@ -124,10 +124,10 @@ function theme_boost_union_get_main_scss_content($theme) {
  * Get SCSS to prepend.
  *
  * @param theme_config $theme The theme config object.
- * @return array
+ * @return string
  */
 function theme_boost_union_get_pre_scss($theme) {
-    global $CFG;
+    global $CFG, $flavourid;
 
     // Require local library.
     require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
@@ -149,7 +149,20 @@ function theme_boost_union_get_pre_scss($theme) {
 
     // Prepend variables first.
     foreach ($configurable as $configkey => $targets) {
-        $value = get_config('theme_boost_union', $configkey);
+        $value = isset($theme->settings->{$configkey}) ? $theme->settings->{$configkey} : null;
+        // Check if flavour is active.
+        if (isset($flavourid)) {
+            // Require flavours library.
+            require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+            // Get flavour config for id.
+            $flavourvalue = theme_boost_union_get_flavour_config_item_for_id($flavourid, $configkey);
+            // Check override value.
+            if (!($flavourvalue)) {
+                continue;
+            }
+            // Override em.
+            $value = $flavourvalue;
+        }
         if (!($value)) {
             continue;
         }
@@ -219,8 +232,8 @@ function theme_boost_union_get_pre_scss($theme) {
     $scss .= '$blockregionoutsiderightwidth: '.$blockregionoutsiderightwidth.";\n";
 
     // Prepend pre-scss.
-    if (get_config('theme_boost_union', 'scsspre')) {
-        $scss .= get_config('theme_boost_union', 'scsspre');
+    if (!empty($theme->settings->scsspre)) {
+        $scss .= $theme->settings->scsspre;
     }
 
     return $scss;
@@ -334,7 +347,7 @@ function theme_boost_union_get_extra_scss($theme) {
             }
             // If the default purpose was not 'other' and now it is, make the icon black.
             if ($theme->settings->{$configname} == MOD_PURPOSE_OTHER) {
-                $content .= '.activityicon, .icon { filter: none; }';
+                $content .= '.activityicon { filter: none; }';
             }
             $content .= '}';
         }
@@ -512,8 +525,38 @@ function theme_boost_union_before_standard_html_head() {
     theme_boost_union_add_fontawesome_to_page();
 
     // Add the flavour CSS to the page.
-    theme_boost_union_add_flavourcss_to_page();
+    theme_boost_union_add_flavourcss_to_page(); // Todo remove em when flavour pre/post scss goes prod.
 
     // Return an empty string to keep the caller happy.
     return $html;
+}
+
+function theme_boost_union_alter_css_urls(&$urls) {
+    global $CFG;
+
+    // Require flavours library.
+    require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+
+    // If any flavour applies to this page.
+    $flavour = theme_boost_union_get_flavour_which_applies();
+    if ($flavour != null) {
+        if (defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING) {
+            // No CSS switch during behat runs, or it will take ages to run a scenario.
+            return;
+        }
+
+        foreach (array_keys($urls) as $i) {
+            if ($urls[$i] instanceof moodle_url) {
+                $pathstyles = preg_quote($CFG->wwwroot . '/theme/styles.php', '|');
+                if (preg_match("|^$pathstyles(/_s)?(.*)$|", $urls[$i]->out(false), $matches)) {
+                    if (!empty($CFG->slasharguments)) {
+                        $parts = explode('/', $matches[2]);
+                        $parts[3] = $flavour->id . '/' . $parts[3];
+                        $urls[$i] = new moodle_url('/theme/boost_union/flavours/css.php');
+                        $urls[$i]->set_slashargument($matches[1] . join('/', $parts));
+                    }
+                }
+            }
+        }
+    }
 }
