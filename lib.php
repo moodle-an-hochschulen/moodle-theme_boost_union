@@ -173,7 +173,7 @@ function theme_boost_union_get_main_scss_content($theme) {
  * @return string
  */
 function theme_boost_union_get_pre_scss($theme) {
-    global $CFG;
+    global $CFG, $flavourid;
 
     // Require local library.
     require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
@@ -201,7 +201,20 @@ function theme_boost_union_get_pre_scss($theme) {
 
     // Prepend variables first.
     foreach ($configurable as $configkey => $targets) {
-        $value = get_config('theme_boost_union', $configkey);
+        $value = isset($theme->settings->{$configkey}) ? $theme->settings->{$configkey} : null;
+        // Check if flavour is active.
+        if (isset($flavourid)) {
+            // Require flavours library.
+            require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+            // Get flavour config for id.
+            $flavourvalue = theme_boost_union_get_flavour_config_item_for_id($flavourid, $configkey);
+            // Check override value.
+            if (!($flavourvalue)) {
+                continue;
+            }
+            // Override em.
+            $value = $flavourvalue;
+        }
         if (!($value)) {
             continue;
         }
@@ -257,11 +270,28 @@ function theme_boost_union_get_pre_scss($theme) {
     // Get and include the external Pre SCSS.
     $scss .= theme_boost_union_get_external_scss('pre');
 
-    // Prepend pre-scss.
-    if (get_config('theme_boost_union', 'scsspre')) {
-        $scss .= get_config('theme_boost_union', 'scsspre');
-    }
+    if (isset($flavourid)) {
+        $rawscsspre = theme_boost_union_get_flavour_config_item_for_id($flavourid, 'look_rawscss');
+        // Append pre-scss.
+        if ($rawscsspre !== false) {
+            $scss .= "\n/** RAW-SCSS from theme_boost_union_get_pre_scss **/\n" . $rawscsspre;
+        }
 
+        // If the flavour has a background image.
+        $backgroundimage = theme_boost_union_get_flavour_config_item_for_id($flavourid, 'look_backgroundimage');
+        if ($backgroundimage != false) {
+            // Compose the URL to the flavour's background image.
+            $backgroundimageurl = moodle_url::make_pluginfile_url(
+                context_system::instance()->id, 'theme_boost_union', 'flavours_look_backgroundimage', $flavourid,
+                '/'.theme_get_revision(), '/'.$backgroundimage);
+
+            // And add it to the SCSS code, adhering the fact that we must not overwrite the login page background image again.
+            $scss .= 'body:not(.pagelayout-login) { ';
+            $scss .= 'background-image: url("'.$backgroundimageurl.'");';
+            $scss .= '}';
+        }
+    }
+    // Since setting "precss" is originally from parent boost it is added in theme_boost_get_pre_scss.
     return $scss;
 }
 
@@ -340,7 +370,7 @@ function theme_boost_union_get_extra_scss($theme) {
     // Note: Boost Union is also capable of overriding the background image in its flavours.
     // In contrast to the other flavour assets like the favicon overriding, this isn't done here in place as this function
     // is composing Moodle core CSS which has to remain flavour-independent.
-    // Instead, the flavour is overriding the background image later in flavours/styles.php.
+    // Instead, the flavour is overriding the background image later in theme_boost_union_get_pre_scss() lib.php.
 
     // For the rest of this function, we add SCSS snippets to the SCSS stack based on enabled admin settings.
     // This is done here as it is quite easy to do. As an alternative, it could also been done in post.scss by using
@@ -643,4 +673,34 @@ function theme_boost_union_render_navbar_output() {
 
     // Return.
     return $content;
+}
+
+function theme_boost_union_alter_css_urls(&$urls) {
+    global $CFG;
+
+    // Require flavours library.
+    require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+
+    // If any flavour applies to this page.
+    $flavour = theme_boost_union_get_flavour_which_applies();
+    if ($flavour != null) {
+        if (defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING) {
+            // No CSS switch during behat runs, or it will take ages to run a scenario.
+            return;
+        }
+
+        foreach (array_keys($urls) as $i) {
+            if ($urls[$i] instanceof moodle_url) {
+                $pathstyles = preg_quote($CFG->wwwroot . '/theme/styles.php', '|');
+                if (preg_match("|^$pathstyles(/_s)?(.*)$|", $urls[$i]->out(false), $matches)) {
+                    if (!empty($CFG->slasharguments)) {
+                        $parts = explode('/', $matches[2]);
+                        $parts[3] = $flavour->id . '/' . $parts[3];
+                        $urls[$i] = new moodle_url('/theme/boost_union/flavours/css.php');
+                        $urls[$i]->set_slashargument($matches[1] . join('/', $parts));
+                    }
+                }
+            }
+        }
+    }
 }
