@@ -338,5 +338,54 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023010572, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2024100705) {
+
+        // Define table theme_boost_union_flavours to be altered.
+        $table = new xmldb_table('theme_boost_union_flavours');
+
+        // Define field brandcolor to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('brandcolor', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field brandcolor.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field bootstrapcolorsuccess to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('bootstrapcolorsuccess', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field bootstrapcolorsuccess.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field bootstrapcolorinfo to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('bootstrapcolorinfo', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field bootstrapcolorinfo.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field bootstrapcolorwarning to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('bootstrapcolorwarning', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field bootstrapcolorwarning.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field bootstrapcolordanger to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('bootstrapcolordanger', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field bootstrapcolordanger.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2024100705, 'theme', 'boost_union');
+    }
+
     return true;
 }
