@@ -231,11 +231,14 @@ function theme_boost_union_get_pre_scss($theme) {
     }
     $scss .= '$blockregionoutsiderightwidth: '.$blockregionoutsiderightwidth.";\n";
 
-    // Prepend pre-scss.
-    if (!empty($theme->settings->scsspre)) {
-        $scss .= $theme->settings->scsspre;
+    if (isset($flavourid)) {
+        $rawscsspre = theme_boost_union_get_flavour_config_item_for_id($flavourid, 'look_rawscss');
+        // Append pre-scss.
+        if ($rawscsspre !== false) {
+            $scss .= "\n/** RAW-SCSS from theme_boost_union_get_pre_scss **/\n" . $rawscsspre;
+        }
     }
-
+    // Since setting "precss" is originally from parent boost it is added in theme_boost_get_pre_scss.
     return $scss;
 }
 

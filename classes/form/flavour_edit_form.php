@@ -213,11 +213,7 @@ class flavour_edit_form extends \moodleform {
         $mform->addRule('bootstrapcolordanger', get_string('validateerror', 'admin'), 'theme_boost_union_colourpicker_rule');
 
         // Add custom css as textarea element.
-        // Note: In the current state of implementation, this setting only allows the usage of custom CSS, not SCSS.
-        // It will be appended to the stack of CSS code which is shipped to the browser.
-        // There is a follow-up issue on Github to add SCSS support.
-        // When this is realized, the widget's title string should be changed to 'theme_boost/rawscss'.
-        $mform->addElement('textarea', 'look_rawscss', get_string('flavourscustomcss', 'theme_boost_union'), array('rows' => 15));
+        $mform->addElement('textarea', 'look_rawscss', get_string('rawscss', 'theme_boost'), array('rows' => 15));
         $mform->setType('title', PARAM_TEXT);
         $mform->addHelpButton('look_rawscss', 'flavourscustomcss', 'theme_boost_union');
 

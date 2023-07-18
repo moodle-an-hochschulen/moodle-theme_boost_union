@@ -317,30 +317,29 @@ function theme_boost_union_flavour_exists_for_cohort($cohortid) {
 /**
  * Helper function do get a config key from flavour item.
  *
- * @param $flavourid
- * @param $configkey
+ * @param string $flavourid
+ * @param string $configkey
  *
- * @return false
+ * @return string/bool
  */
-function theme_boost_union_get_flavour_config_item_for_id($flavourid, $configkey) {
+function theme_boost_union_get_flavour_config_item_for_id(string $flavourid, string $configkey) {
     global $DB;
 
     $cache = cache::make('theme_boost_union', 'flavours');
 
     $flavouridkey = 'flavour_' . $flavourid;
-    // Get the cached flavour for the current user flavour id.
-    $flavour = $cache->get($flavouridkey);
+    // Get the cached flavour config for the current user flavour id.
+    $flavourconfig = $cache->get($flavouridkey);
 
-    // If we got a cached flavour.
-    if ($flavour == false) {
-        $flavour = $DB->get_record('theme_boost_union_flavours', ['id' => $flavourid]);
+    // If we got a cached flavour config.
+    if ($flavourconfig == false) {
+        $flavourconfig = $DB->get_record('theme_boost_union_flavours', ['id' => $flavourid]);
+        $cache->set($flavouridkey, $flavourconfig);
     }
 
-    if ($flavour !== false ) {
-        $cache->set($flavouridkey, $flavour);
-        if (isset($flavour->{$configkey})) { // ...isset returns true only if property exits and value != null;.
-            return $flavour->{$configkey};
-        }
+    if (isset($flavourconfig->{$configkey})) { // ...isset returns true only if property exits and value != null;.
+        return $flavourconfig->{$configkey};
     }
+
     return false;
 }
