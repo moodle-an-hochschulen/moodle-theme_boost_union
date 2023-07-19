@@ -228,17 +228,6 @@ function theme_styles_generate_and_store($theme, $rev, $themesubrev, $candidated
         . theme_styles_get_filename($type, $flavourid, $theme->use_svg_icons());
     css_store_css($theme, $fallbacksheet, $csscontent);
 
-    // Delete older revisions from localcache. ToDo check if we can leave it cause /theme/styles.php should do it.
-    /*$themecachedirs = glob("{$CFG->localcachedir}/theme/*", GLOB_ONLYDIR);
-    foreach ($themecachedirs as $localcachedir) {
-        $cachedrev = [];
-        preg_match("/\/theme\/([0-9]+)$/", $localcachedir, $cachedrev);
-        $cachedrev = isset($cachedrev[1]) ? intval($cachedrev[1]) : 0;
-        if ($cachedrev > 0 && $cachedrev < $rev) {
-            fulldelete($localcachedir);
-        }
-    }*/
-
     // Delete older theme subrevision CSS from localcache.
     $subrevfiles = glob("{$CFG->localcachedir}/theme/{$rev}/{$theme->name}/css/*.css");
     foreach ($subrevfiles as $subrevfile) {
