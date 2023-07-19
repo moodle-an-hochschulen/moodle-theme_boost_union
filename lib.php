@@ -237,6 +237,20 @@ function theme_boost_union_get_pre_scss($theme) {
         if ($rawscsspre !== false) {
             $scss .= "\n/** RAW-SCSS from theme_boost_union_get_pre_scss **/\n" . $rawscsspre;
         }
+
+        // If the flavour has a background image.
+        $backgroundimage = theme_boost_union_get_flavour_config_item_for_id($flavourid, 'look_backgroundimage');
+        if ($backgroundimage != false) {
+            // Compose the URL to the flavour's background image.
+            $backgroundimageurl = moodle_url::make_pluginfile_url(
+                context_system::instance()->id, 'theme_boost_union', 'flavours_look_backgroundimage', $flavourid,
+                '/'.theme_get_revision(), '/'.$backgroundimage);
+
+            // And add it to the SCSS code, adhering the fact that we must not overwrite the login page background image again.
+            $scss .= 'body:not(.pagelayout-login) { ';
+            $scss .= 'background-image: url("'.$backgroundimageurl.'");';
+            $scss .= '}';
+        }
     }
     // Since setting "precss" is originally from parent boost it is added in theme_boost_get_pre_scss.
     return $scss;
@@ -308,7 +322,7 @@ function theme_boost_union_get_extra_scss($theme) {
     // Note: Boost Union is also capable of overriding the background image in its flavours.
     // In contrast to the other flavour assets like the favicon overriding, this isn't done here in place as this function
     // is composing Moodle core CSS which has to remain flavour-independent.
-    // Instead, the flavour is overriding the background image later in flavours/styles.php.
+    // Instead, the flavour is overriding the background image later in theme_boost_union_get_pre_scss() lib.php.
 
     // For the rest of this function, we add SCSS snippets to the SCSS stack based on enabled admin settings.
     // This is done here as it is quite easy to do. As an alternative, it could also been done in post.css by using
@@ -526,9 +540,6 @@ function theme_boost_union_before_standard_html_head() {
 
     // Add the FontAwesome icons to the page.
     theme_boost_union_add_fontawesome_to_page();
-
-    // Add the flavour CSS to the page.
-    theme_boost_union_add_flavourcss_to_page(); // Todo remove em when flavour pre/post scss goes prod.
 
     // Return an empty string to keep the caller happy.
     return $html;
