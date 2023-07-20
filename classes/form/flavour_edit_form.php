@@ -26,6 +26,9 @@
 
 namespace theme_boost_union\form;
 
+use ScssPhp\ScssPhp\Exception\CompilerException;
+use ScssPhp\ScssPhp\Exception\ParserException;
+
 defined('MOODLE_INTERNAL') || die();
 
 // Require forms library.
@@ -133,11 +136,11 @@ class flavour_edit_form extends \moodleform {
         // Register custom colourpicker.
         \MoodleQuickForm::registerElementType('boost_union_colourpicker',
             $CFG->dirroot . '/theme/boost_union/classes/form/colourpicker_form_element.php',
-            'theme_boost_union_colourpicker_form_element');
+            'theme_boost_union\form\theme_boost_union_colourpicker_form_element');
         // Register validation rule for colourpicker.
         \MoodleQuickForm::registerRule('theme_boost_union_colourpicker_rule',
             null,
-            'theme_boost_union_colourpicker_rule',
+            'theme_boost_union\form\theme_boost_union_colourpicker_rule',
             $CFG->dirroot . '/theme/boost_union/classes/form/colourpicker_form_element.php');
 
         // Add brandcolour as colourpicker element.
@@ -271,5 +274,38 @@ class flavour_edit_form extends \moodleform {
 
         // Add the action buttons.
         $this->add_action_buttons();
+    }
+
+    /**
+     * Theme Boost Union - Flavours edit form validation
+     *
+     * @package theme_boost_union
+     * @param array $data array of ("fieldname"=>value) of submitted data
+     * @param array $files array of uploaded files "element_name"=>tmp_file_path
+     * @return array of "element_name"=>"error_description" if there are errors,
+     *         or an empty array if everything is OK (true allowed for backwards compatibility too).
+     */
+    public function validation($data, $files) {
+        global $PAGE;
+
+        $errors = [];
+
+        if (!empty($data['look_rawscss']) && !empty($data)) {
+
+            $scss = new \core_scss();
+            try {
+                if ($scssproperties = $PAGE->theme->get_scss_property()) {
+                    $scss->setImportPaths($scssproperties[0]);
+                }
+                $scss->compile($data['look_rawscss']);
+            } catch (ParserException $e) {
+                $errors['look_rawscss'] = get_string('scssinvalid', 'admin', $e->getMessage());
+            } catch (CompilerException $e) {
+                $errors['look_rawscss'] = get_string('scssinvalid', 'admin', $e->getMessage());
+            }
+            $scss = null;
+            unset($scss);
+        }
+        return $errors;
     }
 }

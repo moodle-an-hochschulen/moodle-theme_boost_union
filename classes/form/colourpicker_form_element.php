@@ -14,6 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace theme_boost_union\form;
+
+use renderer_base;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -27,7 +31,7 @@ require_once($CFG->dirroot . '/lib/form/editor.php');
  * @copyright  2023 Mario Wehr <m.wehr@fh-kaernten.at>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_boost_union_colourpicker_form_element extends HTML_QuickForm_element implements templatable {
+class theme_boost_union_colourpicker_form_element extends \HTML_QuickForm_element implements \templatable {
 
     // String html for help button, if empty then no help.
     public $_helpbutton = '';
@@ -102,7 +106,7 @@ class theme_boost_union_colourpicker_form_element extends HTML_QuickForm_element
     public function tohtml() {
         global $PAGE, $OUTPUT;
 
-        $icon = new pix_icon('i/loading', get_string('loading', 'admin'), 'moodle', ['class' => 'loadingicon']);
+        $icon = new \pix_icon('i/loading', get_string('loading', 'admin'), 'moodle', ['class' => 'loadingicon']);
         $context = (object) [
             'icon' => $icon->export_for_template($OUTPUT),
             'name' => $this->getAttribute('name'),
@@ -135,7 +139,7 @@ class theme_boost_union_colourpicker_form_element extends HTML_QuickForm_element
  * @copyright  2023 Mario Wehr <m.wehr@fh-kaernten.at>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_boost_union_colourpicker_rule extends HTML_QuickForm_Rule {
+class theme_boost_union_colourpicker_rule extends \HTML_QuickForm_Rule {
 
     /**
      * Validates the colour that was entered by the user
@@ -188,13 +192,13 @@ class theme_boost_union_colourpicker_rule extends HTML_QuickForm_Rule {
             return $value;
         } else if (in_array(strtolower($value), $colornames)) {
             return $value;
-        } else if (preg_match('/rgb\(\d{0,3}%?\, ?\d{0,3}%?, ?\d{0,3}%?\)/i', $value)) {
+        } else if (preg_match('/rgb\(\d{0,3}%?, ?\d{0,3}%?, ?\d{0,3}%?\)/i', $value)) {
             return $value;
-        } else if (preg_match('/rgba\(\d{0,3}%?\, ?\d{0,3}%?, ?\d{0,3}%?\, ?\d(\.\d)?\)/i', $value)) {
+        } else if (preg_match('/rgba\(\d{0,3}%?, ?\d{0,3}%?, ?\d{0,3}%?, ?\d(\.\d)?\)/i', $value)) {
             return $value;
-        } else if (preg_match('/hsl\(\d{0,3}\, ?\d{0,3}%, ?\d{0,3}%\)/i', $value)) {
+        } else if (preg_match('/hsl\(\d{0,3}, ?\d{0,3}%, ?\d{0,3}%\)/i', $value)) {
             return $value;
-        } else if (preg_match('/hsla\(\d{0,3}\, ?\d{0,3}%,\d{0,3}%\, ?\d(\.\d)?\)/i', $value)) {
+        } else if (preg_match('/hsla\(\d{0,3}, ?\d{0,3}%,\d{0,3}%, ?\d(\.\d)?\)/i', $value)) {
             return $value;
         } else if (($value == 'transparent') || ($value == 'currentColor') || ($value == 'inherit')) {
             return $value;
