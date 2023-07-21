@@ -433,6 +433,17 @@ $string['outsideregionsplacement'] = 'Outside regions horizontal placement';
 $string['outsideregionsplacement_desc'] = 'With this setting, you can control if, on larger screens, the \'Outside (left)\' and \'Outside (right)\' block regions should be placed near the main content area or rather near the window edges.';
 $string['outsideregionsplacementnextmaincontent'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions next to the main content area';
 $string['outsideregionsplacementnearwindowedges'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions near the window edges';
+// ... Section: Site home right-hand block drawer behaviour.
+$string['sitehomerighthandblockdrawerbehaviour'] = 'Site home right-hand block drawer';
+// ... ... Setting: Show right-hand block drawer of site home on visit.
+$string['showsitehomerighthandblockdraweronvisitsetting'] = 'Show right-hand block drawer of site home on visit';
+$string['showsitehomerighthandblockdraweronvisitsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who are not logged in and does not overwrite the toggle state of each individual user.';
+// ... ... Setting: Show right-hand block drawer of site home on first login.
+$string['showsitehomerighthandblockdraweronfirstloginsetting'] = 'Show right-hand block drawer of site home on first login';
+$string['showsitehomerighthandblockdraweronfirstloginsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in for the very first time and does not overwrite the toggle state of each individual user.';
+// ... ... Setting: Show right-hand block drawer of site home on guest login.
+$string['showsitehomerighthandblockdraweronguestloginsetting'] = 'Show right-hand block drawer of site home on guest login';
+$string['showsitehomerighthandblockdraweronguestloginsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in as a guest.';
 
 // Settings: Links tab.
 $string['linkstab'] = 'Links';
@@ -581,6 +592,41 @@ $string['infobannerdismissiblesetting_desc'] = 'With this setting, you can make 
 $string['infobannerstartsetting'] = 'Info banner {$a->no} start time';
 $string['infobannerstartsetting_desc'] = 'With this setting, you can define from when on info banner {$a->no} should be displayed. The configured time is interpreted as server time, not as user time.';$string['infobannerendsetting'] = 'Info banner {$a->no} end time';
 $string['infobannerendsetting_desc'] = 'With this setting, you can define until when info banner {$a->no} should be displayed. The configured time is interpreted as server time, not as user time.';
+// Settings: Advertisement tiles tab.
+$string['tilestab'] = 'Advertisement tiles';
+// ... Section: Advertisement tiles general.
+$string['tilesgeneralheading'] = 'Advertisement tiles general';
+$string['tilecolumnssetting'] = 'Number of advertisement tile columns per row';
+$string['tilecolumnssetting_desc'] = 'Here, you define the number of columns per row in the presented grid of advertisement tiles. Please note that this number of columns applies to desktop / larger screens. On smaller screens and mobile screens, the advertisement tile columns are automatically wrapped.';
+$string['tilefrontpagepositionsetting'] = 'Position of the advertisement tiles on site home';
+$string['tilefrontpagepositionsetting_desc'] = 'Advertisement tiles are shown on site home only. With this setting, you control if the advertisement tiles are displayed before the site home content or after the site home content. If you want to show only the advertisement tiles on site home and nothing else, all other site home content can be removed by changing the <a href="{$a->url}">site home settings</a>.';
+$string['tilefrontpagepositionsetting_before'] = 'Before the site home content';
+$string['tilefrontpagepositionsetting_after'] = 'After the site home content';
+$string['tileheightsetting'] = 'Advertisement tiles height';
+$string['tileheightsetting_desc'] = 'With this setting, you control the height of the advertisement tiles. The configured height is the minimum height of each tile. If a tile\'s content is higher than this configured height, the whole row of tiles will be automatically made higher as needed.';
+// ... Section: Advertisement tiles.
+$string['tileheading'] = 'Advertisement tile {$a->no}';
+$string['tilebackgroundimagepositionsetting'] = 'Advertisement tile {$a->no} background image position';
+$string['tilebackgroundimagepositionsetting_desc'] = 'With this setting, you control the positioning of the background image within the advertisement tile {$a->no} container. The first value is the horizontal position, the second value is the vertical position.';
+$string['tilebackgroundimagesetting'] = 'Advertisement tile {$a->no} background image';
+$string['tilebackgroundimagesetting_desc'] = 'Here, you can upload an image file which will be shown as background image behind the content of the advertisement tile {$a->no}. Please make sure or check that the content is still readable on the background image. This is an optional setting, the advertisement tile will work even if you do not upload any background image.';
+$string['tilecontentsetting'] = 'Advertisement tile {$a->no} content';
+$string['tilecontentsetting_desc'] = 'Here, you enter the content which should be displayed in the advertisement tile {$a->no}. The content is displayed in the middle of the tile. This is an optional setting, the advertisement tile will be shown even if you do not set any content.';
+$string['tileenabledsetting'] = 'Enable advertisement tile {$a->no}';
+$string['tileenabledsetting_desc'] = 'With this setting, you can enable advertisement tile {$a->no}.';
+$string['tilelinksetting'] = 'Advertisement tile {$a->no} link URL';
+$string['tilelinksetting_desc'] = 'Here, you can set a (Moodle-internal or external) URL which will be offered as link button at the end of the advertisement tile {$a->no}. This is an optional setting, the advertisement tile will work even if you do not set any link URL.';
+$string['tilelinktitlefallback'] = 'Link';
+$string['tilelinktitlesetting'] = 'Advertisement tile {$a->no} link title';
+$string['tilelinktitlesetting_desc'] = 'Here, you can set a link title which is used as label of the link button as soon as you set a link URL in the advertisement tile {$a->no}. Please note that if you set a link URL but do not set a link title, the link button will just be labeled with \'Link\'.';
+$string['tilelinktargetsetting'] = 'Advertisement tile {$a->no} link target';
+$string['tilelinktargetsetting_desc'] = 'Here, you can set the link target which is set for the link button as soon as you set a link URL in the advertisement tile {$a->no}.';
+$string['tilelinktargetsetting_samewindow'] = 'Same window';
+$string['tilelinktargetsetting_newtab'] = 'New tab';
+$string['tileordersetting'] = 'Advertisement tile {$a->no} order position';
+$string['tileordersetting_desc'] = 'With this setting, you define the order position of the advertisement tile {$a->no}. By default, the advertisement tiles are ordered from top to bottom and left to right like you see them on this settings page here. However, you can decide to assign another order position with this setting. If you assign the same order position to two or more advertisement tiles, they will be ordered again according to the order on this settings page.';
+$string['tiletitlesetting'] = 'Advertisement tile {$a->no} title';
+$string['tiletitlesetting_desc'] = 'Here, you enter the title which should be displayed in the advertisement tile {$a->no}. This is an optional setting, the advertisement tile will be shown even if you do not set a title.';
 
 // Settings: Functionality page.
 $string['configtitlefunctionality'] = 'Functionality';
@@ -660,54 +706,6 @@ $string['flavourspreviewflavour'] = 'Preview flavour';
 $string['flavourspreviewblindtext'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam eleifend mi in nulla. Felis imperdiet proin fermentum leo vel orci porta. Sed nisi lacus sed viverra tellus in hac habitasse. Vivamus arcu felis bibendum ut. Nisi porta lorem mollis aliquam ut porttitor. Odio euismod lacinia at quis risus sed vulputate odio. Sed felis eget velit aliquet sagittis id consectetur purus. Nec ullamcorper sit amet risus nullam eget. Pellentesque sit amet porttitor eget dolor. Cursus mattis molestie a iaculis at erat pellentesque.';
 $string['flavourstitle'] = 'Title';
 $string['flavourstitle_help'] = 'The flavour\'s title is just used internally to allow you to document a particular flavour in the list of flavours.';
-
-// Settings: Advertisement tiles.
-$string['tilestab'] = 'Advertisement tiles';
-// ... Section: Advertisement tiles general.
-$string['tilesgeneralheading'] = 'Advertisement tiles general';
-$string['tilecolumnssetting'] = 'Number of advertisement tile columns per row';
-$string['tilecolumnssetting_desc'] = 'Here, you define the number of columns per row in the presented grid of advertisement tiles. Please note that this number of columns applies to desktop / larger screens. On smaller screens and mobile screens, the advertisement tile columns are automatically wrapped.';
-$string['tilefrontpagepositionsetting'] = 'Position of the advertisement tiles on site home';
-$string['tilefrontpagepositionsetting_desc'] = 'Advertisement tiles are shown on site home only. With this setting, you control if the advertisement tiles are displayed before the site home content or after the site home content. If you want to show only the advertisement tiles on site home and nothing else, all other site home content can be removed by changing the <a href="{$a->url}">site home settings</a>.';
-$string['tilefrontpagepositionsetting_before'] = 'Before the site home content';
-$string['tilefrontpagepositionsetting_after'] = 'After the site home content';
-$string['tileheightsetting'] = 'Advertisement tiles height';
-$string['tileheightsetting_desc'] = 'With this setting, you control the height of the advertisement tiles. The configured height is the minimum height of each tile. If a tile\'s content is higher than this configured height, the whole row of tiles will be automatically made higher as needed.';
-// ... Section: Advertisement tiles.
-$string['tileheading'] = 'Advertisement tile {$a->no}';
-$string['tilebackgroundimagepositionsetting'] = 'Advertisement tile {$a->no} background image position';
-$string['tilebackgroundimagepositionsetting_desc'] = 'With this setting, you control the positioning of the background image within the advertisement tile {$a->no} container. The first value is the horizontal position, the second value is the vertical position.';
-$string['tilebackgroundimagesetting'] = 'Advertisement tile {$a->no} background image';
-$string['tilebackgroundimagesetting_desc'] = 'Here, you can upload an image file which will be shown as background image behind the content of the advertisement tile {$a->no}. Please make sure or check that the content is still readable on the background image. This is an optional setting, the advertisement tile will work even if you do not upload any background image.';
-$string['tilecontentsetting'] = 'Advertisement tile {$a->no} content';
-$string['tilecontentsetting_desc'] = 'Here, you enter the content which should be displayed in the advertisement tile {$a->no}. The content is displayed in the middle of the tile. This is an optional setting, the advertisement tile will be shown even if you do not set any content.';
-$string['tileenabledsetting'] = 'Enable advertisement tile {$a->no}';
-$string['tileenabledsetting_desc'] = 'With this setting, you can enable advertisement tile {$a->no}.';
-$string['tilelinksetting'] = 'Advertisement tile {$a->no} link URL';
-$string['tilelinksetting_desc'] = 'Here, you can set a (Moodle-internal or external) URL which will be offered as link button at the end of the advertisement tile {$a->no}. This is an optional setting, the advertisement tile will work even if you do not set any link URL.';
-$string['tilelinktitlefallback'] = 'Link';
-$string['tilelinktitlesetting'] = 'Advertisement tile {$a->no} link title';
-$string['tilelinktitlesetting_desc'] = 'Here, you can set a link title which is used as label of the link button as soon as you set a link URL in the advertisement tile {$a->no}. Please note that if you set a link URL but do not set a link title, the link button will just be labeled with \'Link\'.';
-$string['tilelinktargetsetting'] = 'Advertisement tile {$a->no} link target';
-$string['tilelinktargetsetting_desc'] = 'Here, you can set the link target which is set for the link button as soon as you set a link URL in the advertisement tile {$a->no}.';
-$string['tilelinktargetsetting_samewindow'] = 'Same window';
-$string['tilelinktargetsetting_newtab'] = 'New tab';
-$string['tileordersetting'] = 'Advertisement tile {$a->no} order position';
-$string['tileordersetting_desc'] = 'With this setting, you define the order position of the advertisement tile {$a->no}. By default, the advertisement tiles are ordered from top to bottom and left to right like you see them on this settings page here. However, you can decide to assign another order position with this setting. If you assign the same order position to two or more advertisement tiles, they will be ordered again according to the order on this settings page.';
-$string['tiletitlesetting'] = 'Advertisement tile {$a->no} title';
-$string['tiletitlesetting_desc'] = 'Here, you enter the title which should be displayed in the advertisement tile {$a->no}. This is an optional setting, the advertisement tile will be shown even if you do not set a title.';
-
-// ... Section: Site home right-hand block drawer behaviour.
-$string['sitehomerighthandblockdrawerbehaviour'] = 'Site home right-hand block drawer';
-// ... ... Setting: Show right-hand block drawer of site home on visit.
-$string['showsitehomerighthandblockdraweronvisitsetting'] = 'Show right-hand block drawer of site home on visit';
-$string['showsitehomerighthandblockdraweronvisitsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who are not logged in and does not overwrite the toggle state of each individual user.';
-// ... ... Setting: Show right-hand block drawer of site home on first login.
-$string['showsitehomerighthandblockdraweronfirstloginsetting'] = 'Show right-hand block drawer of site home on first login';
-$string['showsitehomerighthandblockdraweronfirstloginsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in for the very first time and does not overwrite the toggle state of each individual user.';
-// ... ... Setting: Show right-hand block drawer of site home on guest login.
-$string['showsitehomerighthandblockdraweronguestloginsetting'] = 'Show right-hand block drawer of site home on guest login';
-$string['showsitehomerighthandblockdraweronguestloginsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in as a guest.';
 
 // Privacy API.
 $string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
