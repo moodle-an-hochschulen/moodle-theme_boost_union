@@ -337,12 +337,13 @@ $string['h5pcontentmaxwidthsetting_desc'] = 'With this setting, you can override
 $string['mobiletab'] = 'Mobile app';
 // ... Section: Mobile appearance.
 $string['mobileappearanceheading'] = 'Mobile appearance';
-// ... ... Setting: Additional CSS for Mobile app.
-$string['mobilecss'] = 'Additional CSS for Mobile app';
-$string['mobilecss_desc'] = 'With this setting, you can write custom CSS code to customise your mobile app interface. The CSS code will be only added to the Mobile app depiction of this Moodle instance and will not be shown in the webbrowser version. Read more about this feature in the <a href="https://moodledev.io/general/app/customisation/remote-themes#how-do-remote-themes-work">Moodle dev docs</a>.';
-$string['mobilecss_set'] = 'As soon as you add any CSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically set to a URL of the Boost Union theme.';
-$string['mobilecss_overwrite'] = 'As soon as you add any CSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically overwritten with a URL of the Boost Union theme. Currently this setting is set to <a href="{$a->value}">{$a->value}</a>.';
-$string['mobilecss_donotchange'] = 'This step is necessary to ship the CSS code to the Mobile app. Do not change the URL there unless you really want to remove the CSS code from the Mobile app again.';
+// ... ... Setting: Additional SCSS for Mobile app.
+$string['mobilescss'] = 'Additional SCSS for Mobile app';
+$string['mobilescss_desc'] = 'With this setting, you can write custom SCSS code to customise your mobile app interface. The generated CSS code will be only added to the Mobile app depiction of this Moodle instance and will not be shown in the webbrowser version. Read more about this feature in the <a href="https://moodledev.io/general/app/customisation/remote-themes#how-do-remote-themes-work">Moodle dev docs</a>.';
+$string['mobilescss_scsscompile_error']  = 'Error while compiling SCSS.';
+$string['mobilescss_set'] = 'As soon as you add any SCSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically set to a URL of the Boost Union theme.';
+$string['mobilescss_overwrite'] = 'As soon as you add any SCSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically overwritten with a URL of the Boost Union theme. Currently this setting is set to <a href="{$a->value}">{$a->value}</a>.';
+$string['mobilescss_donotchange'] = 'This step is necessary to ship the CSS code to the Mobile app. Do not change the URL there unless you really want to remove the CSS code from the Mobile app again.';
 
 // Settings: Feel page.
 $string['configtitlefeel'] = 'Feel';

@@ -42,24 +42,27 @@ require_once($CFG->dirroot.'/lib/configonlylib.php');
 
 // Initialize SCSS code.
 $scss = '';
-
-// Get the raw SCSS from the admin setting,
-// throw an exception if get_config throws an exception which happens only if something is really wrong.
-try {
-    // Note: In the current state of implementation, this setting only allows the usage of custom CSS, not SCSS.
-    // There is a follow-up issue on Github to add SCSS support.
-    // However, to ease this future improvement, the setting has already been called 'mobilescss'.
-    $configmobilescss = get_config('theme_boost_union', 'mobilescss');
-
-    // Catch the exception.
-} catch (\Exception $e) {
-    // Just die, there is no use to output any error message, it would even be counter-productive if the browser
-    // tries to interpret it as CSS code.
-    die;
+$cssfile = $CFG->localcachedir. '/scsscache-mobile-boost-union/mobile.css';
+if (!file_exists($cssfile)) {
+    // Maybe cache was purged.
+    // Check if we have set a theme union mobile url.
+    if (!empty($CFG->mobilecssurl) && strpos($CFG->mobilecssurl, '/theme/boost_union/mobile/styles.php') !== false) {
+        require_once(__DIR__ . '/../locallib.php');
+        try {
+            // Rebuild mobile.css .
+            theme_boost_union_build_mobilescss();
+        } catch (moodle_exception) {
+            // In case of exception send empty css.
+            css_send_cached_css_content($scss, theme_get_revision());
+            die;
+        }
+    } else {
+        // Should not happen.
+        css_send_cached_css_content($scss, theme_get_revision());
+        die;
+    }
 }
 
-// Always add the CSS code even if it is empty.
-$scss .= $configmobilescss;
-
-// Send out the resulting CSS code. The theme revision will be set as etag to support the browser caching.
+$scss = file_get_contents($cssfile);
 css_send_cached_css_content($scss, theme_get_revision());
+
