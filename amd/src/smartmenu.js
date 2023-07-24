@@ -52,6 +52,33 @@ define(["jquery", "core/moremenu"], function($) {
             }
         });
 
+        // Provide the third level menu support inside the more menu.
+        // StopPropagation used in the toggledropdown method on Moremenu.js, It prevents the opening of the third level menus.
+        // Used the document delegation method to fetch the click on moremenu and submenu.
+        document.addEventListener('click', (e) => {
+            var dropdown = e.target.closest('.dropdownmoremenu');
+            var subMenu = e.target.closest('.dropdown-submenu');
+            if (dropdown && subMenu !== null) {
+                // Hide the previously opend submenus. before open the new one.
+                dropdown.querySelectorAll('.dropdown-submenu.show').forEach((menu) => {
+                    menu.classList.remove('show');
+                });
+                subMenu.classList.toggle('show');
+            }
+
+            // Hide the opened menus before open the other menus.
+            var dropdownMenu = e.target.parentNode.classList.contains('dropdown');
+            if (dropdown && dropdownMenu) {
+                dropdown.querySelectorAll('.dropdown-menu.show').forEach((menu) => {
+                    // Hide the opened menus in more menu.
+                    if (menu != e.target.closest('.dropdown-menu')) {
+                        menu.classList.remove('show');
+                    }
+                });
+            }
+
+        }, true);
+
         // Prevent the closing of dropdown during the click on help icon.
         var helpIcon = document.querySelectorAll('.moremenu .dropdown .menu-helpicon');
         if (helpIcon !== null) {

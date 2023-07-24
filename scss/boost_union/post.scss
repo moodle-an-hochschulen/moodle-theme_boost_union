@@ -1424,6 +1424,9 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                                 height: 100%;
                                 object-fit: cover;
                             }
+                            > a {
+                                padding: 0;
+                            }
                         }
                         /* The card dropdown items content block width, padding, background color
                         and aligned center styles added */
@@ -1437,6 +1440,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                             h5 {
                                 width: 100%;
                                 margin-bottom: 0;
+                                overflow: hidden;
                                 /* The font style, color, paddign added to the link of the heading
                                 in the content block for the card dropdown items */
                                 a {
@@ -1459,6 +1463,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                                 width: auto;
                                 line-height: 10px;
                                 text-align: right;
+                                margin-left: 5px;
                                 a {
                                     /* The color and padding added for the "Go" button in
                                     the content block of the card dropdown items */
