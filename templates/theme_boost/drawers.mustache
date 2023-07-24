@@ -294,20 +294,10 @@
 </body>
 </html>
 {{#js}}
-    M.util.js_pending('theme_boost/loader');
-    require(['theme_boost/loader', 'theme_boost/drawer'
-        {{#regions.offcanvas.hasblocks}}
-            ,'theme_boost_union/offcanvas'
-        {{/regions.offcanvas.hasblocks}}
-    ], function(Loader, Drawer
-        {{#regions.offcanvas.hasblocks}}
-            ,OffCanvas
-        {{/regions.offcanvas.hasblocks}}
-    ) {
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader', 'theme_boost/drawer'{{#regions.offcanvas.hasblocks}},'theme_boost_union/offcanvas'{{/regions.offcanvas.hasblocks}}], function(Loader, Drawer{{#regions.offcanvas.hasblocks}},OffCanvas{{/regions.offcanvas.hasblocks}}) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
-    {{#regions.offcanvas.hasblocks}}
-        OffCanvas.init();
-    {{/regions.offcanvas.hasblocks}}
-    });
+    {{#regions.offcanvas.hasblocks}}OffCanvas.init();{{/regions.offcanvas.hasblocks}}
+});
 {{/js}}
