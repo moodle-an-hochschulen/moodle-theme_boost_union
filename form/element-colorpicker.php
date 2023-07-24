@@ -25,100 +25,57 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once('HTML/QuickForm/input.php');
+require_once($CFG->dirroot.'/lib/form/templatable_form_element.php');
+require_once($CFG->dirroot.'/lib/form/text.php');
 
 /**
- * Form element for color picker.
+ * Form element for color picker
  *
  * @package   theme_boost_union
  * @copyright bdecent GmbH 2021
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class moodlequickform_themeboostunion_colorpicker extends HTML_QuickForm_input {
+class moodlequickform_themeboostunion_colorpicker extends MoodleQuickForm_text implements templatable {
 
-    /** @var bool if true label will be hidden */
-    public $_helpbutton = '';
-
-    /** @var bool if true label will be hidden */
-    public $_hiddenlabel = false;
-
-    /** @var bool Whether to force the display of this element to flow LTR. */
-    protected $forceltr = false;
-
-    /**
-     * Sets label to be hidden.
-     *
-     * @param bool $hiddenlabel sets if label should be hidden.
-     */
-    public function sethiddenlabel($hiddenlabel) {
-        $this->_hiddenlabel = $hiddenlabel;
+    use templatable_form_element {
+        export_for_template as export_for_template_base;
     }
 
     /**
-     * Get force LTR option.
+     * constructor
      *
-     * @return bool
+     * @param string $elementname (optional) name of the text field
+     * @param string $elementlabel (optional) text field label
+     * @param string $attributes (optional) Either a typical HTML attribute string or an associative array
      */
-    public function get_force_ltr() {
-        return $this->forceltr;
+    public function __construct($elementname=null, $elementlabel=null, $attributes=null) {
+        parent::__construct($elementname, $elementlabel, $attributes);
+        $this->setType('colorpicker');
+
+        // Add the class admin_colourpicker.
+        $class = $this->getAttribute('class');
+        if (empty($class)) {
+            $class = '';
+        }
+        $this->updateAttributes(array('class' => $class . ' union-form-colour-picker '));
     }
 
     /**
-     * Get html for help button.
+     * Export for template
      *
-     * @return string html for help button.
+     * @param renderer_base $output
+     * @return array|stdClass
      */
-    public function gethelpbutton() {
-        return $this->_helpbutton;
-    }
-
-    /**
-     * Force the field to flow left-to-right.
-     *
-     * This is useful for fields such as URLs, passwords, settings, etc...
-     *
-     * @param bool $value The value to set the option to.
-     */
-    public function set_force_ltr($value) {
-        $this->forceltr = (bool) $value;
-    }
-
-    // @codingStandardsIgnoreStart
-    /**
-     * Returns HTML for this form element.
-     *
-     * @return string
-     */
-    public function toHtml() {
-    // @codingStandardsIgnoreEnd
-        global $PAGE, $OUTPUT;
-
+    public function export_for_template(renderer_base $output) {
+        global $PAGE;
+        // Compose template context for Mform element.
+        $context = $this->export_for_template_base($output);
         // Build loading icon.
         $icon = new pix_icon('i/loading', get_string('loading', 'admin'), 'moodle', ['class' => 'loadingicon']);
-
-        // Compose template context for Moodle core admin setting.
-        $template = (object) [
-            'id' => $this->getAttribute('id'),
-            'name' => $this->getAttribute('name'),
-            'value' => $this->getAttribute('value'),
-            'icon' => $icon->export_for_template($OUTPUT),
-            'haspreviewconfig' => '',
-            'forceltr' => $this->get_force_ltr(),
-            'readonly' => '',
-        ];
-
-        // Render color picker from Moodle core admin setting.
-        $colorpicker = $OUTPUT->render_from_template('core_admin/setting_configcolourpicker', $template);
-
-        // Compose template context for Mform element.
-        $context = $template;
-        $context->colorpicker = $colorpicker;
-        $context->lable = $this->getLabel();
-        $context->type = 'colorpicker';
-
+        $context['icon'] = $icon->export_for_template($output);
         // Add JS init call to page.
         $PAGE->requires->js_init_call('M.util.init_colour_picker', array($this->getAttribute('id'), ''));
 
-        // Render and return Mform element.
-        return $OUTPUT->render_from_template('theme_boost_union/form-element-colorpicker', $context);
+        return $context;
     }
 }

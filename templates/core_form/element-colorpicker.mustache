@@ -1,0 +1,89 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/core_form/element-colorpicker
+
+    Boost Union template for the form element colorpicker template.
+
+    Example context (json):
+    {
+        "element": {
+            "id": "id_textcolor",
+            "name": "textcolor",
+            "label": null,
+            "multiple": null,
+            "checked": null,
+            "error": null,
+            "size": null,
+            "value": "#0454EB",
+            "type": "colorpicker",
+            "hiddenlabel": false,
+            "frozen": false,
+            "hardfrozen": false,
+            "extraclasses": " union-form-colour-picker ",
+            "attributes": "",
+            "emptylabel": false,
+            "iderror": "id_error_textcolor",
+            "icon": {
+                "attributes": [
+                    {
+                        "name": "alt",
+                        "value": "Loading"
+                    },
+                    {
+                        "name": "title",
+                        "value": "Loading"
+                    },
+                    {
+                        "name": "src",
+                        "value": "http://moodle.com/theme/image.php/boost_union/core/1690187894/i/loading"
+                    }
+                ],
+                "extraclasses": "loadingicon"
+            },
+            "wrapperid": "fitem_id_textcolor"
+        },
+        "label": "Text color",
+        "text": "",
+        "required": false,
+        "advanced": false,
+        "error": null
+    }
+}}
+
+{{< core_form/element-template }}
+    {{$element}}
+        <div class="admin_colourpicker clearfix">
+            {{#element.icon}}
+                {{>core/pix_icon}}
+            {{/element.icon}}
+        </div>
+        <input type="text"
+                class="form-control {{#error}}is-invalid{{/error}}"
+                name="{{element.name}}"
+        {{#element.frozen}}
+                readonly {{#element.hardfrozen}}disabled{{/element.hardfrozen}}
+        {{/element.frozen}}
+                id="{{element.id}}"
+                value="{{element.value}}"
+                {{#element.size}}size="{{element.size}}"{{/element.size}}
+                {{#error}}
+                    autofocus aria-describedby="{{element.iderror}}"
+                {{/error}}
+                {{{element.attributes}}} >
+    {{/element}}
+{{/ core_form/element-template }}

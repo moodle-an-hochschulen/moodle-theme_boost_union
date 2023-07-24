@@ -2029,3 +2029,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
         }
     }
 }
+
+/* Display the color picker box and the text field as column */
+.union-form-colour-picker [data-fieldtype="colorpicker"] {
+    flex-direction: column;
+}

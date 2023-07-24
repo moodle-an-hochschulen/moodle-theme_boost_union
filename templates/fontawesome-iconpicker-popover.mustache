@@ -27,20 +27,20 @@
     * none
 
     Context variables required for this template:
-    * suggestionsId - The dom id of the current suggestions list.
-    * options - List of options with label and value fields.
+    * options - List of icons with label and value fields.
 
     Example context (json):
     {
-        "suggestionsId": 1,
         "options": [
             {
-                "label": "Item label with <strong>tags</strong>",
-                "value": "5"
+                "label": "fa-book",
+                "value": "core:book",
+                "icon": "<i class=\"icon fa fa-book fa-fw\" aria-hidden=\"true\"></i>"
             },
             {
-                "label": "Another item label with <strong>tags</strong>",
-                "value": "4"
+                "label": "fa-info-circle",
+                "value": "core:docs",
+                "icon": "<i class=\"icon fa fa-info-circle fa-fw\" aria-hidden=\"true\"></i>"
             }
         ]
     }
