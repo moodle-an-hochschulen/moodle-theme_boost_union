@@ -564,6 +564,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * Baden-Württemberg Cooperative State University (DHBW), Katja Neubehler: Code
 * bdecent GmbH, Stefan Scholz: Code, Ideating, Funding
 * Bern University of Applied Sciences (BFH), Luca Bösch: Code, Peer Review, Ideating
+* Carinthia University of Applied Sciences, Mario Wehr: Code
 * FernUniversität in Hagen, Daniel Poggenpohl: Code, Ideating
 * Hochschule Hannover - University of Applied Sciences and Arts: Funding, Ideating
 * Käferfreie Software, Nina Herrmann: Code
