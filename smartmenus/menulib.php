@@ -283,6 +283,37 @@ class smartmenu_helper {
     }
 
     /**
+     * Generate the cache helper for smart menu.
+     *
+     * @return cache
+     */
+    public static function get_menu_cache() {
+        static $cache;
+
+        if (empty($cache)) {
+            $cache = cache::make('theme_boost_union', 'smartmenus');
+        }
+
+        return $cache;
+    }
+
+    /**
+     * Generate the cache helper for smart menu item.
+     *
+     * @return cache
+     */
+    public static function get_item_cache() {
+        static $cache;
+
+        if (empty($cache)) {
+            $cache = cache::make('theme_boost_union', 'smartmenu_items');
+        }
+
+        return $cache;
+    }
+
+
+    /**
      * Purge the cache for menu and menu items when the cohort is deleted.
      *
      * It verify any of the menus are used the cohort in the access rules. if records found it will purge the cache of the menus.
@@ -296,20 +327,102 @@ class smartmenu_helper {
         $records = self::find_condition_used_menus($cohortid);
 
         if (!empty($records)) {
-            \cache_helper::purge_by_event('theme_boost_union_menus_cohort_deleted');
             // Remove the deleted cohort from rules if used in menus restriction.
-            self::remove_deleted_condition_menu($cohortid);
+            self::remove_deleted_condition_menu($records, $cohortid);
         }
 
         $records = self::find_condition_used_menuitems($cohortid);
         if (!empty($records)) {
-            \cache_helper::purge_by_event('theme_boost_union_menus_cohort_deleted');
-            foreach ($records as $record) {
-                // Remove the item and its menu data from cache.
-                smartmenu_item::instance($record->id)->delete_cache();
-            }
             // Remove the deleted cohort from menu item rules if used in menuitems restriction.
-            self::remove_deleted_condition_menuitems($cohortid);
+            self::remove_deleted_condition_menuitems($records, $cohortid);
+        }
+    }
+
+    /**
+     * Clear the smartmenu and menu items stored cache for the menus which is used the given role in restriction condition.
+     * Remove the deleted role from menu restrictions.
+     *
+     * @param [type] $roleid
+     * @return void
+     */
+    public static function purge_cache_deleted_roles($roleid) {
+
+        $records = self::find_condition_used_menus($roleid, 'roles');
+
+        if (!empty($records)) {
+            // Remove the deleted role from menu restrictions.
+            self::remove_deleted_condition_menu($records, $roleid, 'roles');
+        }
+
+        $records = self::find_condition_used_menuitems($roleid, 'roles');
+        if (!empty($records)) {
+            // Remove the deleted role from menu item restrictions.
+            self::remove_deleted_condition_menuitems($records, $roleid, 'roles');
+        }
+
+    }
+
+    /**
+     * Remove the deleted conditions from menu data.
+     * If the role or cohort is deleted this method will remove the role from the access rules if setup in the menus.
+     *
+     * Get the menus which is used the deleted role or cohort in access rules,
+     * then remove the id from that method and set the updated data for the method related field.
+     *
+     * @param stclass $menus List of menus need to purge from cache.
+     * @param int $id ID of the deleted role or cohort.
+     * @param string $method Role or cohort which is triggered the purge.
+     * @return void
+     */
+    public static function remove_deleted_condition_menu($menus, $id, $method='cohorts') {
+        global $DB;
+
+        if ($menus) {
+            foreach ($menus as $menu) {
+                if (isset($menu->$method)) {
+                    $value = json_decode($menu->$method);
+                    if (($key = array_search($id, $value)) !== false) {
+                        unset($value[$key]);
+                        $updated = json_encode($value);
+                        $DB->set_field('theme_boost_union_menus', $method, $updated, ['id' => $menu->id]);
+
+                        // Purge the cache of this menu.
+                        self::purge_menu_cache($menu->id);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Remove the deleted conditions from menu items data.
+     * If the role or cohort is deleted this method will remove the role from the access rules if setup in the menu items.
+     *
+     * Get the items which is used the deleted role or cohort in access rules,
+     * then remove the id from that method and set the updated data for the method related field.
+     *
+     * @param stclass $menuitems List of menuitems need to purge from cache
+     * @param int $id ID of the deleted role or cohort.
+     * @param string $method Role or cohort which is triggered the purge.
+     * @return void
+     */
+    public static function remove_deleted_condition_menuitems($menuitems, $id, $method='cohorts') {
+        global $DB;
+
+        if ($menuitems) {
+            foreach ($menuitems as $item) {
+                if (isset($item->$method)) {
+                    $value = json_decode($item->$method);
+                    if (($key = array_search($id, $value)) !== false) {
+                        unset($value[$key]);
+                        $updated = json_encode($value);
+                        $DB->set_field('theme_boost_union_menuitems', $method, $updated, ['id' => $item->id]);
+                        // Purge the cache of this item and its menu.
+                        self::purge_menu_cache($item->menu);
+                        self::purge_item_cache($item->id);
+                    }
+                }
+            }
         }
     }
 
@@ -328,54 +441,28 @@ class smartmenu_helper {
      */
     public static function purge_cache_session_cohort(int $cohortid, int $userid) {
 
-        if (self::find_condition_used_menus($cohortid)) {
-            set_user_preference('theme_boost_union_menu_purgesessioncache', true, $userid);
+        if ($menus = self::find_condition_used_menus($cohortid)) {
+            // Remove the menus cache for the user.
+            $menus = array_column($menus, 'id');
+            array_walk($menus, ['self', 'remove_user_cachemenu'], $userid);
         }
 
-        if (self::find_condition_used_menuitems($cohortid)) {
-            set_user_preference('theme_boost_union_menuitem_purgesessioncache', true, $userid);
+        if ($items = self::find_condition_used_menuitems($cohortid)) {
+            // Get the list of menus related to the items.
+            $menus = array_unique(array_column($items, 'menu'));
+            $items = array_column($items, 'id');
+            // Remove the menus and item cache for the user.
+            array_walk($menus, ['self', 'remove_user_cachemenu'], $userid);
+            array_walk($items, ['self', 'remove_user_cacheitem'], $userid);
+
         }
     }
 
     /**
-     * Clear the smartmenu and menu items stored cache for the menus which is used the given role in restriction condition.
-     * Remove the deleted role from menu restrictions.
+     * Purge the given user cache of menu and items which are configured with the affected role.
      *
-     * @param [type] $roleid
-     * @return void
-     */
-    public static function purge_cache_deleted_roles($roleid) {
-
-        $records = self::find_condition_used_menus($roleid, 'roles');
-
-        if (!empty($records)) {
-            \cache_helper::purge_by_event('theme_boost_union_menus_role_deleted');
-
-            // Remove the deleted role from menu restrictions.
-            self::remove_deleted_condition_menu($roleid, 'roles');
-        }
-
-        $records = self::find_condition_used_menuitems($roleid, 'roles');
-        if (!empty($records)) {
-            // Purge the cache.
-            \cache_helper::purge_by_event('theme_boost_union_menus_role_deleted');
-            foreach ($records as $record) {
-                // Remove the item and its menu data from cache.
-                smartmenu_item::instance($record->id)->delete_cache();
-            }
-            self::remove_deleted_condition_menuitems($roleid, 'roles');
-        }
-
-    }
-
-    /**
-     * Sets the user preferences to trigger the cache purging when the menu is fetched for the user.
-     *
-     * The actual cache purging is performed in build method in smartmenu
-     * that checks the user preferences and purges the cache accordingly.
-     *
-     * Before set the preference, it checks any of the menus or menu items used this role in rules.
-     * If found then it set the purge in preference.
+     * Find the list of menus and items configured with the given role and delete the menu from users cache.
+     * Items are configured with this role, then method removes the items menu cache too.
      *
      * @param int $roleid Removed role id.
      * @param int $userid Releated user who is affected by this event.
@@ -383,86 +470,103 @@ class smartmenu_helper {
      */
     public static function purge_cache_session_roles(int $roleid, int $userid) {
 
-        if (self::find_condition_used_menus($roleid, 'roles')) {
-            set_user_preference('theme_boost_union_menu_purgesessioncache', true, $userid);
+        if ($menus = self::find_condition_used_menus($roleid, 'roles')) {
+            // Remove the menus cache for the user.
+            $menus = array_column($menus, 'id');
+            array_walk($menus, ['self', 'remove_user_cachemenu'], $userid);
         }
 
-        if (self::find_condition_used_menuitems($roleid, 'roles')) {
-            set_user_preference('theme_boost_union_menuitem_purgesessioncache', true, $userid);
+        if ($items = self::find_condition_used_menuitems($roleid, 'roles')) {
+            // Get the list of menus related to the items.
+            $menus = array_unique(array_column($items, 'menu'));
+            $items = array_column($items, 'id');
+            // Remove the menus and item cache for the user.
+            array_walk($menus, ['self', 'remove_user_cachemenu'], $userid);
+            array_walk($items, ['self', 'remove_user_cacheitem'], $userid);
         }
     }
 
     /**
-     * Remove the deleted conditions from menu data.
-     * If the role or cohort is deleted this method will remove the role from the access rules if setup in the menus.
+     * Purge the cache of items and menus which is configured to use the affected course category.
      *
-     * Get the menus which is used the deleted role or cohort in access rules,
-     * then remove the id from that method and set the updated data for the method related field.
-     *
-     * @param int $id ID of the deleted role or cohort.
-     * @param string $method Role or cohort which is triggered the purge.
+     * @param int $courseid
      * @return void
      */
-    public static function remove_deleted_condition_menu($id, $method='cohorts') {
+    public static function purge_cache_updated_course($courseid) {
+        // Fetch affected course data.
+        $course = get_course($courseid);
+        if ($items = self::find_condition_used_menuitems($course->category, 'category')) {
+            // List of items to purge.
+            $items = array_column($items, 'id');
+            // Remove the menus items for the user.
+            array_walk($items, ['self', 'purge_item_cache']);
+        }
+    }
+
+    /**
+     * Purge the cache of items and menus which is configured to use the affected course category.
+     *
+     * @param int $categoryid
+     * @return void
+     */
+    public static function purge_cache_updated_category($categoryid) {
+        // Fetch list of menuitems, configured with the event categoryid.
+        if ($items = self::find_condition_used_menuitems($categoryid, 'category')) {
+            // List of items to purge.
+            $items = array_column($items, 'id');
+            // Remove the menus items for the user.
+            array_walk($items, ['self', 'purge_item_cache']);
+        }
+    }
+
+    /**
+     * Purge the cache of dynamic course items.
+     *
+     * @return void
+     */
+    public static function purge_cache_dynamic_courseitems() {
         global $DB;
-
-        if ($menus = self::find_condition_used_menus($id, $method)) {
-            foreach ($menus as $menu) {
-                if (isset($menu->$method)) {
-                    $value = json_decode($menu->$method);
-                    if (($key = array_search($id, $value)) !== false) {
-                        unset($value[$key]);
-                        $updated = json_encode($value);
-
-                        $DB->set_field('theme_boost_union_menus', $method, $updated, ['id' => $menu->id]);
-                    }
-                }
-            }
+        // Fetch list of menuitems, configured with the event categoryid.
+        if ($items = $DB->get_records('theme_boost_union_menuitems', ['type' => smartmenu_item::TYPEDYNAMIC])) {
+            // List of items to purge.
+            $items = array_column($items, 'id');
+            // Remove the menus items for the user.
+            array_walk($items, ['self', 'purge_item_cache']);
         }
     }
 
     /**
-     * Remove the deleted conditions from menu items data.
-     * If the role or cohort is deleted this method will remove the role from the access rules if setup in the menu items.
+     * Deletes the cached menu data for the particular user.
+     * Fetch the cache instacne, genreate the key combine with menuid and userid, then delete the menu cahce.
      *
-     * Get the items which is used the deleted role or cohort in access rules,
-     * then remove the id from that method and set the updated data for the method related field.
-     *
-     * @param int $id ID of the deleted role or cohort.
-     * @param string $method Role or cohort which is triggered the purge.
+     * @param int $menuid ID of the menu.
+     * @param int $key
+     * @param int $userid ID of the user to purge menu cache.
      * @return void
      */
-    public static function remove_deleted_condition_menuitems($id, $method='cohorts') {
-        global $DB;
-
-        if ($menuitems = self::find_condition_used_menuitems($id, $method)) {
-            foreach ($menuitems as $item) {
-                if (isset($item->$method)) {
-                    $value = json_decode($item->$method);
-                    if (($key = array_search($id, $value)) !== false) {
-                        unset($value[$key]);
-                        $updated = json_encode($value);
-
-                        $DB->set_field('theme_boost_union_menuitems', $method, $updated, ['id' => $item->id]);
-                    }
-
-                }
-            }
-        }
+    public static function remove_user_cachemenu($menuid, $key, $userid) {
+        // Fetch the cache helper for menu.
+        $cache = self::get_menu_cache();
+        // Create key to remove this menu cache for given user and delete.
+        $cachekey = "{$menuid}_u_{$userid}";
+        $cache->delete($cachekey);
     }
 
     /**
-     * Sets the user preferences to trigger the cache purging when the menu is fetched for the user.
-     * The actual cache purging is performed in build method in smartmenu
-     * that checks the user preferences and purges the cache accordingly.
+     * Deletes the cached menu item data for the particular user.
+     * Fetch the cache instacne, genreate the key combine with itemid and userid, then delete the item from cache.
      *
-     * @param int $userid
+     * @param int $itemid ID of the item.
+     * @param int $key
+     * @param int $userid ID of the user to purge menu cache.
      * @return void
      */
-    public static function purge_all_cache_user_session($userid) {
-        // Clear all the menu and item caches for this user.
-        set_user_preference('theme_boost_union_menu_purgesessioncache', true, $userid);
-        set_user_preference('theme_boost_union_menuitem_purgesessioncache', true, $userid);
+    public static function remove_user_cacheitem($itemid, $key, $userid) {
+        // Fetch the cache helper for item.
+        $cache = self::get_item_cache();
+        // Create key to remove this items cache for given user and delete.
+        $cachekey = "{$itemid}_u_{$userid}";
+        $cache->delete($cachekey);
     }
 
     /**
@@ -492,35 +596,51 @@ class smartmenu_helper {
         // Menu start date reached and last cache date is less than today, then clear the cache and set last check date.
         // Verify the lastcheckdate is prevents setup cache again even the cache was stored after the startdate reached.
         if ($data->start_date != '' && $data->start_date < $today && $lastcheckdate < $data->start_date) {
-            $cache->delete($data->id);
+            $cache->delete_menu($data->id);
             $cache->set($key, $today);
         }
 
         // Menu end date is gone and last cache date is less than today, then clear the cache and set last check date.
         // Verify the lastcheckdate is prevents setup cache again even the cache was stored after the enddate reached.
         if ($data->end_date != '' && $data->end_date < $today && $lastcheckdate <= $data->end_date) {
-            $cache->delete($data->id);
+            $cache->delete_menu($data->id);
             $cache->set($key, $today);
         }
     }
 
     /**
-     * Purges the cached data of menu or item for the given event.
+     * Remove the specific menu cache for all the users.
      *
-     * @param string $key The key of the event.
+     * @param int $menuid Menu ID to purge.
      * @return void
      */
-    public static function purge_cache_byevent($key) {
-        \cache_helper::purge_by_event($key);
+    protected static function purge_menu_cache($menuid) {
+        $cache = self::get_menu_cache();
+        $cache->delete_menu($menuid);
     }
 
     /**
-     * Reset the preference of user to clear the session cache for menu items.
+     * Remove the specific item cache for all the users.
+     *
+     * @param int $itemid Item ID to purge.
      * @return void
      */
-    public static function clear_user_cachepreferenceitem() {
-        global $USER;
-        set_user_preference('theme_boost_union_menuitem_purgesessioncache', false, $USER);
+    protected static function purge_item_cache($itemid) {
+        $cache = self::get_item_cache();
+        $cache->delete_menu($itemid);
+    }
+
+    /**
+     * Sets the user preferences to trigger the cache purging when the menu is fetched for the user.
+     * The actual cache purging is performed in build method in smartmenu
+     * that checks the user preferences and purges the cache accordingly.
+     *
+     * @param int $userid
+     * @return void
+     */
+    public static function set_user_purgecache($userid) {
+        // Clear all the menu and item caches for this user.
+        set_user_preference('theme_boost_union_menu_purgesessioncache', true, $userid);
     }
 
     /**

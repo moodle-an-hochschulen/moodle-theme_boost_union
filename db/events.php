@@ -58,15 +58,28 @@ $observers = array(
                 'callback' => '\theme_boost_union\eventobservers::course_updated'
         ),
         array(
-                'eventname' => 'core\event\course_updated',
-                'callback' => '\theme_boost_union\eventobservers::course_updated'
-        ),
-        array(
                 'eventname' => 'core\event\course_completion_updated',
                 'callback' => '\theme_boost_union\eventobservers::completion_updated'
         ),
         array(
                 'eventname' => 'core\event\course_module_completion_updated',
                 'callback' => '\theme_boost_union\eventobservers::completion_updated'
-        )
+        ),
+        array(
+                'eventname' => 'core\event\course_updated',
+                'callback' => '\theme_boost_union\eventobservers::course_updated'
+        ),
+        array(
+                'eventname' => 'core\event\course_deleted',
+                'callback' => '\theme_boost_union\eventobservers::course_updated'
+        ),
+        array(
+                'eventname' => 'core\event\course_category_deleted',
+                'callback' => '\theme_boost_union\eventobservers::category_updated'
+        ),
+        array(
+                'eventname' => 'core\event\course_category_updated',
+                'callback' => '\theme_boost_union\eventobservers::category_updated'
+        ),
+
 );

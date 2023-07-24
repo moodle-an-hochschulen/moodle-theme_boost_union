@@ -117,17 +117,6 @@ class eventobservers {
     }
 
     /**
-     * Event observer for when a user profile is updated.
-     *
-     * @param \core\event\base $event The event that triggered the handler.
-     */
-    public static function user_updated(\core\event\base $event) {
-        // Purge the cached menus for the updated user.
-        set_user_preference('theme_boost_union_menu_purgesessioncache', true, $event->relateduserid);
-        set_user_preference('theme_boost_union_menuitem_purgesessioncache', true, $event->relateduserid);
-    }
-
-    /**
      * Event observer for when a role is assigned to a user.
      *
      * @param \core\event\base $event The event that triggered the handler.
@@ -183,8 +172,44 @@ class eventobservers {
         // Require smart menus library.
         require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
+        // Course is moved to another category, Event data only contains the newer category.
+        // Update the cache for new category, added the updated course in that menu item,
+        // But the previous category of the course still hold this course.
+        // Therefore need to delete all the items which are configured as dynamic courses.
+        if (isset($event->other['updatedfields'])) {
+            if (in_array('category', array_keys($event->other['updatedfields']))) {
+                // Purge all the dynamic course items cache.
+                \smartmenu_helper::purge_cache_dynamic_courseitems();
+                return true;
+            }
+        }
+
+        // Fetch category id of the deleted course from the record snapshot.
+        // Get category using normal get_course throw course not find error.
+        if ($event->action == 'deleted') {
+            $record = $event->get_record_snapshot($event->objecttable, $event->objectid);
+            if (!empty($record)) {
+                \smartmenu_helper::purge_cache_updated_category($record->category);
+            }
+            return true;
+        }
         // Clear the cache of menu when the course updated.
-        \cache_helper::purge_by_event('theme_boost_union_course_updated');
+        \smartmenu_helper::purge_cache_updated_course($event->objectid);
+    }
+
+    /**
+     * Event observer for when a category is updated or deleted.
+     *
+     * @param \core\event\base $event The event that triggered the handler.
+     */
+    public static function category_updated(\core\event\base $event) {
+        global $CFG;
+
+        // Require smart menus library.
+        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+
+        // Clear the cache of menu when the course updated.
+        \smartmenu_helper::purge_cache_updated_category($event->objectid);
     }
 
     /**
@@ -199,6 +224,21 @@ class eventobservers {
         require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
         // Clear the cache of menu when the course/module completion updated for user.
-        \smartmenu_helper::purge_all_cache_user_session($event->relateduserid);
+        \smartmenu_helper::set_user_purgecache($event->relateduserid);
+    }
+
+    /**
+     * Event observer for when a user profile is updated.
+     *
+     * @param \core\event\base $event The event that triggered the handler.
+     */
+    public static function user_updated(\core\event\base $event) {
+        global $CFG;
+
+        // Require smart menus library.
+        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+
+        // Clear the cache of menu when the course/module completion updated for user.
+        \smartmenu_helper::set_user_purgecache($event->relateduserid);
     }
 }
