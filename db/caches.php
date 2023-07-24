@@ -70,35 +70,16 @@ $definitions = array(
         ),
         // This cache stores the smart menus.
         'smartmenus' => array(
-                'mode' => cache_store::MODE_SESSION,
+                'mode' => cache_store::MODE_APPLICATION,
                 'simplekeys' => true,
                 'simpledata' => false,
-                'invalidationevents' => array(
-                    'theme_boost_union_menus_created',
-                    'theme_boost_union_menus_edited',
-                    'theme_boost_union_menus_resorted',
-                    'theme_boost_union_menus_deleted',
-                    'theme_boost_union_cohort_deleted',
-                    'theme_boost_union_roles_deleted',
-                    'theme_boost_union_user_updated',
-                    'theme_boost_union_course_updated'
-
-                )
+                'overrideclass' => '\theme_boost_union\cache\loader',
         ),
         // This cache stores the smart menus' menu items.
         'smartmenu_items' => array(
-                'mode' => cache_store::MODE_SESSION,
+                'mode' => cache_store::MODE_APPLICATION,
                 'simplekeys' => true,
                 'simpledata' => false,
-                'invalidationevents' => array(
-                    'theme_boost_union_menuitems_created',
-                    'theme_boost_union_menuitems_edited',
-                    'theme_boost_union_menuitems_resorted',
-                    'theme_boost_union_menuitems_deleted',
-                    'theme_boost_union_cohort_deleted',
-                    'theme_boost_union_roles_deleted',
-                    'theme_boost_union_user_updated',
-                    'theme_boost_union_course_updated'
-                )
+                'overrideclass' => '\theme_boost_union\cache\loader',
         )
 );

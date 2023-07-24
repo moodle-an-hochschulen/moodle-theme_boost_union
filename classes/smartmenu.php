@@ -263,6 +263,11 @@ class smartmenu {
     public const MODE_SUBMENU = 1;
 
     /**
+     * Cache key for the menus list.
+     */
+    public const CACHE_MENUSLIST = 'menuslist';
+
+    /**
      * Create an instance of the smartmenu class from the given menu ID or menu object/array.
      *
      * @param int|stdclass $menu
@@ -288,7 +293,7 @@ class smartmenu {
      */
     public function __construct($menu) {
         $this->id = $menu->id;
-        $this->menu = $menu;
+        $this->menu = self::update_menu_valuesformat($menu);
         $this->helper = new \smartmenu_helper($this->menu);
         // Cache for menu.
         $this->cache = cache::make('theme_boost_union', 'smartmenus');
@@ -342,8 +347,8 @@ class smartmenu {
             $DB->set_field('theme_boost_union_menus', 'sortorder', $prevmenu->sortorder, ['id' => $this->id]);
             // Set the prevmenu position to down.
             $DB->set_field('theme_boost_union_menus', 'sortorder', $currentposition, ['id' => $prevmenu->id]);
-            // Purge the menu cache.
-            cache_helper::purge_by_event('theme_boost_union_menus_resorted');
+            // Purge the menus list, need to recreate in new order.
+            $this->cache->delete(self::CACHE_MENUSLIST);
 
             return true;
         }
@@ -369,8 +374,8 @@ class smartmenu {
             $DB->set_field('theme_boost_union_menus', 'sortorder', $nextmenu->sortorder, ['id' => $this->id]);
             // Set the nextmenu position to up.
             $DB->set_field('theme_boost_union_menus', 'sortorder', $currentposition, ['id' => $nextmenu->id]);
-            // Purge the menu cache.
-            cache_helper::purge_by_event('theme_boost_union_menus_resorted');
+            // Purge the menus list, need to recreate in new order.
+            $this->cache->delete(self::CACHE_MENUSLIST);
 
             return true;
         }
@@ -409,6 +414,9 @@ class smartmenu {
         // Success message for duplicated menu.
         \core\notification::success(get_string('smartmenusmenuduplicated', 'theme_boost_union'));
 
+        // New menu added, Recreate the menuslist in cache.
+        $this->cache->delete(self::CACHE_MENUSLIST);
+
         return true;
     }
 
@@ -420,7 +428,9 @@ class smartmenu {
      */
     public function update_visible(bool $visible) {
         // Delete the current menu from cache.
-        $this->cache->delete($this->id);
+        $this->cache->delete_menu($this->id);
+        // Purge the menus list from cache, recreates it on next page load.
+        $this->cache->delete(self::CACHE_MENUSLIST);
 
         return $this->update_field('visible', $visible, ['id' => $this->id]);
     }
@@ -438,7 +448,7 @@ class smartmenu {
         $result = $DB->set_field('theme_boost_union_menus', $key, $value, ['id' => $this->id]);
 
         // Delete the current menu from cache.
-        $this->cache->delete($this->id);
+        $this->cache->delete_menu($this->id);
 
         return $result;
     }
@@ -525,93 +535,105 @@ class smartmenu {
      *
      * Finally, the processed menu node and its child items are stored in the cache, and the method returns the node.
      *
+     * @param bool $resetcache True means remove the cache and build. Useful to session based menus and items purge.
      * @return false|object Returns false if the menu is not visible or a menu object otherwise.
      */
-    public function build() {
-        global $OUTPUT;
+    public function build($resetcache=false) {
+        global $OUTPUT, $USER;
+        static $itemcache;
 
-        if (!$this->is_visible()) {
-            return false;
+        if (empty($itemcache)) {
+            $itemcache = cache::make('theme_boost_union', 'smartmenu_items');
         }
-
-        // Cache for menu.
-        $cache = cache::make('theme_boost_union', 'smartmenus');
+        // Make cachekey using combine the menu and current user.
+        $cachekey = "{$this->menu->id}_u_{$USER->id}";
 
         // Purge the cached menus data if the menu date restrictions are reached or passed.
-        smartmenu_helper::purge_cache_date_reached($cache, $this->menu, 'theme_boost_union_menulastcheckdate');
-
-        // If the flag to purge the menu cache is set for this user.
-        if (get_user_preferences('theme_boost_union_menu_purgesessioncache', false) == true) {
-            // Purge the menu cache for this user.
-            \cache_helper::purge_by_definition('theme_boost_union', 'smartmenus');
-            \smartmenu_helper::clear_user_cachepreferencemenu();
-        }
+        smartmenu_helper::purge_cache_date_reached($this->cache, $this->menu, 'menulastcheckdate');
 
         // Get the menu and its menu items from cache.
-        if ($nodescache = $cache->get($this->menu->id)) {
-            return $nodescache;
-        }
+        $menuitems = [];
+        if ($nodes = $this->cache->get($cachekey)) {
+            // List of menu items added to this menu.
+            $menuitems = $nodes->menuitems ?? [];
 
-        $this->menu->classes[] = $this->get_cardform(); // Html class for the card form size, Potrait, Square, landscape.
-        $this->menu->classes[] = $this->get_cardsize(); // HTML class for the card Size, tiny, small, medium, large.
-        $this->menu->classes[] = $this->get_cardwrap(); // HtML class for the card overflow behaviour.
-        $this->menu->classes[] = $this->menu->cssclass;// Custom class selector for menu.
-        $this->menu->classes[] = ($this->menu->moremenubehavior == self::MOREMENU_OUTSIDE) ? "force-menu-out" : '';
+        } else {
+            // Set flag to store the menu data to cache.
+            $storecache = true;
 
-        // Card type menus doesn't supports inline menus.
-        // MOde is submenu or not set anything then create the menuitems as submenu.otherwise add the menu items directoly as menu.
-        if ($this->menu->mode != self::MODE_INLINE || $this->menu->type == self::TYPE_CARD) {
-
-            $nodes = (object) [
-                'menudata' => $this->menu,
-                'title' => $this->menu->title,
-                'url' => null,
-                'text' => $this->menu->title,
-                'key' => $this->menu->id,
-                'submenulink' => 1,
-                'itemtype' => 'submenu-link', // Used in user menus, to identify the menu type, "link" for submmenus.
-                'submenuid' => uniqid(), // Menu has user menu location, then the submenu id is manatory for submenus.
-                'card' => ($this->menu->type == self::TYPE_CARD) ? true : false,
-                'forceintomoremenu' => ($this->menu->moremenubehavior == self::MOREMENU_INTO) ? true : false,
-                'haschildren' => 0,
-                'sort' => uniqid() // Support third level menu.
-            ];
-
-            // Add the description data to nodes. Inline mode menus not supports the menu.
-            if ($this->menu->showdesc != self::DESC_NEVER) {
-                $description = format_text($this->menu->description['text'], FORMAT_HTML);
-                $nodes->helptext = $description;
-                $nodes->abovehelptext = ($this->menu->showdesc == self::DESC_ABOVE) ? true : false;
-                $nodes->belowhelptext = ($this->menu->showdesc == self::DESC_BELOW) ? true : false;
-                // Add selector class in dropdown element for style.
-                $this->menu->classes[] = ($nodes->abovehelptext) ? 'dropdown-description-above' : '';
-                $this->menu->classes[] = ($nodes->belowhelptext) ? 'dropdown-description-below' : '';
-
-                // Show the description as helpicon.
-                if ($this->menu->showdesc == self::DESC_HELP) {
-                    $alt = get_string('description');
-                    $data = [
-                        'text' => $description,
-                        'alt' => $alt,
-                        'icon' => (new \pix_icon('help', $alt, 'core', ['class' => 'iconhelp']))->export_for_template($OUTPUT),
-                        'ltr' => !right_to_left()
-                    ];
-                    $nodes->helpicon = $OUTPUT->render_from_template('core/help_icon', $data);
-                }
-
+            if (!$this->is_visible()) {
+                return false;
             }
-            // Menu is set to inline, items classes are loadded in this variable menuclasses in template.
-            $nodes->menuclasses = $this->menu->classes; // Menus classes.
+
+            $this->menu->classes[] = $this->get_cardform(); // Html class for the card form size, Potrait, Square, landscape.
+            $this->menu->classes[] = $this->get_cardsize(); // HTML class for the card Size, tiny, small, medium, large.
+            $this->menu->classes[] = $this->get_cardwrap(); // HtML class for the card overflow behaviour.
+            $this->menu->classes[] = $this->menu->cssclass;// Custom class selector for menu.
+            $this->menu->classes[] = ($this->menu->moremenubehavior == self::MOREMENU_OUTSIDE) ? "force-menu-out" : '';
+
+            // Card type menus doesn't supports inline menus.
+            // Mode is submenu or not set anything then create the menuitems as submenu.
+            // Otherwise add the menu items directoly as menu.
+            if ($this->menu->mode != self::MODE_INLINE || $this->menu->type == self::TYPE_CARD) {
+
+                $nodes = (object) [
+                    'menudata' => $this->menu,
+                    'title' => $this->menu->title,
+                    'url' => null,
+                    'text' => $this->menu->title,
+                    'key' => $this->menu->id,
+                    'submenulink' => 1,
+                    'itemtype' => 'submenu-link', // Used in user menus, to identify the menu type, "link" for submmenus.
+                    'submenuid' => uniqid(), // Menu has user menu location, then the submenu id is manatory for submenus.
+                    'card' => ($this->menu->type == self::TYPE_CARD) ? true : false,
+                    'forceintomoremenu' => ($this->menu->moremenubehavior == self::MOREMENU_INTO) ? true : false,
+                    'haschildren' => 0,
+                    'sort' => uniqid() // Support third level menu.
+                ];
+
+                // Add the description data to nodes. Inline mode menus not supports the menu.
+                if ($this->menu->showdesc != self::DESC_NEVER) {
+                    $description = format_text($this->menu->description['text'], FORMAT_HTML);
+                    $nodes->helptext = $description;
+                    $nodes->abovehelptext = ($this->menu->showdesc == self::DESC_ABOVE) ? true : false;
+                    $nodes->belowhelptext = ($this->menu->showdesc == self::DESC_BELOW) ? true : false;
+                    // Add selector class in dropdown element for style.
+                    $this->menu->classes[] = ($nodes->abovehelptext) ? 'dropdown-description-above' : '';
+                    $this->menu->classes[] = ($nodes->belowhelptext) ? 'dropdown-description-below' : '';
+
+                    // Show the description as helpicon.
+                    if ($this->menu->showdesc == self::DESC_HELP) {
+                        $alt = get_string('description');
+                        $data = [
+                            'text' => $description,
+                            'alt' => $alt,
+                            'icon' => (new \pix_icon('help', $alt, 'core', ['class' => 'iconhelp']))->export_for_template($OUTPUT),
+                            'ltr' => !right_to_left()
+                        ];
+                        $nodes->helpicon = $OUTPUT->render_from_template('core/help_icon', $data);
+                    }
+
+                }
+                // Menu is set to inline, items classes are loadded in this variable menuclasses in template.
+                $nodes->menuclasses = $this->menu->classes; // Menus classes.
+            }
         }
         // Menus not exists in cache, then build the menu and menu items.
         // Get list of its items.
-        $menuitems = $this->get_menu_items();
+        $menuitems = $menuitems ?: $this->get_menu_items();
+
         if (!empty($menuitems)) {
 
             $builditems = [];
             foreach ($menuitems as $item) {
+                // Need to purge the items for user, remove the cache before build.
+                if ($resetcache) {
+                    // Purge the items cache for this user.
+                    $cachekey = "{$item->id}_u_{$USER->id}";
+                    $itemcache->delete($cachekey);
+                }
                 // Build the item based on restrict rules and its type like static, dynamic.
-                $item = \theme_boost_union\smartmenu_item::instance($item->id)->build();
+                $item = \theme_boost_union\smartmenu_item::instance($item, $this->menu)->build();
                 // Merge the dynamic course items as single item.
                 $builditems = (!empty($item)) ? array_merge($builditems, $item) : $builditems;
             }
@@ -643,9 +665,19 @@ class smartmenu {
                 $nodes = $builditems;
             }
         }
+
         // Set the processed menus node and its children item nodes in Cache.
-        if (isset($nodes)) {
-            $cache->set($this->menu->id, $nodes);
+        if (isset($nodes) && isset($storecache)) {
+            $nodescache = clone $nodes;
+            // Remove the children data from cache before store.
+            unset($nodescache->children);
+            $nodescache->menuitems = $menuitems;
+            $this->cache->set($cachekey, $nodescache);
+        }
+        // Remove the menu items list from nodes. it doesn't need to build the smartmenus.
+        if (isset($nodes->menuitems)) {
+            // Remove the menu items list from nodes, it doesn't need anymore.
+            unset($nodes->menuitems);
         }
 
         return $nodes ?? false;
@@ -697,16 +729,9 @@ class smartmenu {
 
         // Verfiy and Fetch menu record from DB.
         if ($record = $DB->get_record('theme_boost_union_menus', ['id' => $id])) {
-            $record->description = [
-                'text'   => $record->description,
-                'format' => $record->description_format
-            ];
+
             // Decode the multiple option select elements values to array.
-            $record->location = json_decode($record->location);
-            $record->roles = json_decode($record->roles);
-            $record->cohorts = json_decode($record->cohorts);
-            $record->languages = json_decode($record->languages);
-            $record->mode = $record->mode ?? self::MODE_SUBMENU; // Submenu is default menu mode.
+            $record = self::update_menu_valuesformat($record);
 
             return $record;
         } else {
@@ -714,6 +739,33 @@ class smartmenu {
             throw new moodle_exception('menunotfound', 'theme_boost_union');
         }
         return false;
+    }
+
+    /**
+     * Update the menu values from json to array.
+     *
+     * @param stdclass $menu Record data of the menu.
+     * @return stdclass Converted menu data.
+     */
+    public static function update_menu_valuesformat($menu) {
+
+        // Verify the format is already updated.
+        if (!is_scalar($menu->location)) {
+            return $menu;
+        }
+
+        $menu->description = [
+            'text'   => $menu->description,
+            'format' => $menu->description_format
+        ];
+        // Decode the multiple option select elements values to array.
+        $menu->location = json_decode($menu->location);
+        $menu->roles = json_decode($menu->roles);
+        $menu->cohorts = json_decode($menu->cohorts);
+        $menu->languages = json_decode($menu->languages);
+        $menu->mode = $menu->mode ?? self::MODE_SUBMENU; // Submenu is default menu mode.
+
+        return $menu;
     }
 
     /**
@@ -814,6 +866,8 @@ class smartmenu {
         $record->cohorts = json_encode($formdata->cohorts);
         $record->languages = json_encode($formdata->languages);
 
+        $cache = cache::make('theme_boost_union', 'smartmenus');
+
         $transaction = $DB->start_delegated_transaction();
 
         if (isset($formdata->id) && $DB->record_exists('theme_boost_union_menus', ['id' => $formdata->id])) {
@@ -821,11 +875,10 @@ class smartmenu {
 
             $DB->update_record('theme_boost_union_menus', $record);
             // Clear the current menu caches. Update may cause changes in the menus list.
-            \cache_helper::purge_by_event('theme_boost_union_menus_edited');
-
-            // Delete the item cached.
-            \cache_helper::purge_by_event('theme_boost_union_menuitems_edited');
-
+            // Delete the menu cache for all users.
+            $cache->delete_menu($menuid);
+            // Menu updated, recreate the menuslist.
+            $cache->delete(self::CACHE_MENUSLIST);
             // Show the edited success notification.
             \core\notification::success(get_string('smartmenusupdatesuccess', 'theme_boost_union'));
         } else {
@@ -833,8 +886,8 @@ class smartmenu {
             $lastmenu = self::get_lastmenu();
             $record->sortorder = isset($lastmenu->sortorder) ? $lastmenu->sortorder + 1 : 1;
             $menuid = $DB->insert_record('theme_boost_union_menus', $record);
-
-            \cache_helper::purge_by_event('theme_boost_union_menus_created');
+            // New menu added, recreate the menuslist.
+            $cache->delete(self::CACHE_MENUSLIST);
             // Show the menu inserted success notification.
             \core\notification::success(get_string('smartmenusinsertsuccess', 'theme_boost_union'));
         }
@@ -863,11 +916,36 @@ class smartmenu {
      * @return array An array of SmartMenu nodes.
      */
     public static function build_smartmenu() {
+        global $USER;
+
         $nodes = [];
-        // Get top level menus.
-        $topmenus = self::get_menus();
+
+        $cache = cache::make('theme_boost_union', 'smartmenus');
+        // Fetch the list of menus from cache.
+        $topmenus = $cache->get(self::CACHE_MENUSLIST);
+        // Get top level menus, store the menus to cache.
+        if (empty($topmenus)) {
+            $topmenus = self::get_menus();
+            $cache->set(self::CACHE_MENUSLIST, $topmenus);
+        }
+
+        if (empty($topmenus)) {
+            // Still menus are not created.
+            return false;
+        }
+
+        // Test the flag to purge the cache is set for this user.
+        $removecache = (get_user_preferences('theme_boost_union_menu_purgesessioncache', false) == true);
+
         foreach ($topmenus as $menu) {
-            if ($node = self::instance($menu->id)->build()) {
+            // Need to purge the menus for user, remove the cache before build.
+            if ($removecache) {
+                // Purge the menu cache for this user.
+                $cachekey = "{$menu->id}_u_{$USER->id}";
+                $cache->delete($cachekey);
+            }
+
+            if ($node = self::instance($menu)->build($removecache)) {
                 if (isset($node->menudata)) {
                     $nodes[] = $node;
                 } else {
@@ -875,6 +953,10 @@ class smartmenu {
                 }
             }
         }
+
+        // Menus are purged in the build method when needed, then clear the user preference of purge cache.
+        \smartmenu_helper::clear_user_cachepreferencemenu();
+
         return $nodes;
     }
 }
