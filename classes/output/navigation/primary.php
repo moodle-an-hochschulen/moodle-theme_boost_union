@@ -71,10 +71,14 @@ class primary extends \core\navigation\output\primary {
     public function export_for_template(?renderer_base $output = null): array {
         global $DB;
 
-        // If the smart menu feature is not installed at all, use the parent function.
-        $dbman = $DB->get_manager();
-        if (!$dbman->table_exists('theme_boost_union_menus')) {
-            return parent::export_for_template($output);
+        $cache = \cache::make('theme_boost_union', 'smartmenus');
+
+        if (!$cache->get(smartmenu::CACHE_MENUSLIST)) {
+            // If the smart menu feature is not installed at all, use the parent function.
+            $dbman = $DB->get_manager();
+            if (!$dbman->table_exists('theme_boost_union_menus')) {
+                return parent::export_for_template($output);
+            }
         }
 
         if (!$output) {
@@ -83,6 +87,10 @@ class primary extends \core\navigation\output\primary {
 
         // Generate the menus and its items into nodes.
         $smartmenus = smartmenu::build_smartmenu();
+        // Smartmenus not created, then fallback to core navigation.
+        if (empty($smartmenus)) {
+            return parent::export_for_template($output);
+        }
 
         // Get the menus for the main menu.
         $mainmenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_MAIN, $smartmenus);

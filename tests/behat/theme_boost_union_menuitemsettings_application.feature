@@ -6,9 +6,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" items pag
 
   Background:
     Given the following "courses" exist:
-      | fullname| shortname | category |
-      | Test course    | C1 | 0 |
-      | Test course2   | C2 | 0 |
+      | fullname                | shortname | category |
+      | Test course              | C1 | 0 |
+      | Test course2             | C2 | 0 |
+      | Test course word count   | C3 | 0 |
     And the following "users" exist:
       | username | firstname | lastname | email             | lang |
       | student1 | student   | User 1   | student1@test.com | en   |
@@ -202,23 +203,23 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" items pag
       | Title             | Available courses |
       | Type              | Dynamic courses   |
       | Category          | Category 1        |
-      | Select name field | Short name         |
+      | Select name field | Short name        |
     And I should see "Available courses" in the "smartmenus_item" "table"
     And I click on "Quick Links" "link" in the ".primary-navigation" "css_element"
     And I should see "C1" in the ".primary-navigation" "css_element"
-    And I should not see "Test course" in the ".primary-navigation" "css_element"
+    And I should not see "Test course word count" in the ".primary-navigation" "css_element"
     And I navigate to smartmenu "Quick Links" items
     And I click on ".action-edit" "css_element" in the "Available courses" "table_row"
     And I set the field "Select name field" to "Full name"
     And I click on "Save changes" "button"
     And I click on "Quick Links" "link" in the ".primary-navigation" "css_element"
     And I should not see "C1" in the ".primary-navigation" "css_element"
-    And I should see "Test course" in the ".primary-navigation" "css_element"
+    And I should see "Test course word count" in the ".primary-navigation" "css_element"
     # Set the words count.
     And I navigate to smartmenu "Quick Links" items
     And I click on ".action-edit" "css_element" in the "Available courses" "table_row"
-    And I set the field "Number of words" to "10"
+    And I set the field "Number of words" to "2"
     And I click on "Save changes" "button"
     And I should see "Available courses" in the "smartmenus_item" "table"
     And I click on "Quick Links" "link" in the ".primary-navigation" "css_element"
-    And I should see "Test cou.." in the ".primary-navigation" "css_element"
+    And I should see "Test course.." in the ".primary-navigation" "css_element"
