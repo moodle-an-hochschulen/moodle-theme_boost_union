@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-07-24 - Improvement: Only add load OffCanvas module when offcanvas region is enabled, solves #343.
 * 2023-07-11 - Improvement: Place mustache templates which are overridden from theme_boost into subfolder, solves #337.
 * 2023-07-10 - Bugfix: Omit warning when no CSS cached folder present, solves #330.
 * 2023-07-10 - Bugfix: Overwriting module purposes did not affect all places where the activity icon is displayed, solves #318.
