@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.0-r20
 
 * 2023-07-24 - Improvement: Only add load OffCanvas module when offcanvas region is enabled, solves #343.
 * 2023-07-11 - Improvement: Place mustache templates which are overridden from theme_boost into subfolder, solves #337.
