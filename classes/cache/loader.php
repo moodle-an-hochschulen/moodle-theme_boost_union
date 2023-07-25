@@ -34,7 +34,7 @@ require_once($CFG->dirroot.'/cache/classes/loaders.php');
 class loader extends \cache_application {
 
     /**
-     * Delete the cached menus or menuitems for all of its users.
+     * Delete the cached menus or menu items for all of its users.
      *
      * Fetch the cache store, generate the keys with menu or item id and keyword of user cache.
      * Get the list of cached files by their filename, filenames are stored in the format of "menuid/itemid_u_ userid".

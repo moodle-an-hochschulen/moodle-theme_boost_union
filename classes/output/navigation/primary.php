@@ -71,10 +71,13 @@ class primary extends \core\navigation\output\primary {
     public function export_for_template(?renderer_base $output = null): array {
         global $DB;
 
+        // Create smart menu cache.
         $cache = \cache::make('theme_boost_union', 'smartmenus');
 
+        // Check if the smart menus are already there in the cache.
         if (!$cache->get(smartmenu::CACHE_MENUSLIST)) {
             // If the smart menu feature is not installed at all, use the parent function.
+            // This will help to avoid hickups during a theme upgrade.
             $dbman = $DB->get_manager();
             if (!$dbman->table_exists('theme_boost_union_menus')) {
                 return parent::export_for_template($output);

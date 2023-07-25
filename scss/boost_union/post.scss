@@ -63,9 +63,22 @@
        This has to use !important as Moodle core already uses !important for the icon colors. */
     .nav-link .icon,
     .nav-link a .icon,
-    .usermenu .dropdown-toggle,
-    .dropdown-menu .dropdown-item .icon {
+    .usermenu .dropdown-toggle {
         color: #c8c8c8 !important; /* stylelint-disable-line declaration-no-important */
+    }
+    .nav-link:hover .icon,
+    .nav-link:hover a .icon,
+    .usermenu .dropdown-toggle:hover {
+        color: $white !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    /* Change the color of the icons in the dropdown menu to a dark and to white when hovered.
+       This has to use !important as Moodle core already uses !important for the icon colors. */
+    .dropdown-menu .dropdown-item .icon {
+        color: #1d2125 !important; /* stylelint-disable-line declaration-no-important */
+    }
+    .dropdown-menu .dropdown-item:hover .icon {
+        color: $white !important; /* stylelint-disable-line declaration-no-important */
     }
 
     /* Revert color of the close icon in the search panel in the navbar as this icon is still dark on white
@@ -911,86 +924,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 
 /*=======================================
- * Supporting third-party plugins
+ * Settings: Smart menus.
  ======================================*/
-
-/*---------------------------------------
- * Dash Pro
- --------------------------------------*/
-
-/* Style Dash Pro dashboards. */
-.path-local-dash-dashboard #page.drawers {
-    /* Use flex if one of the block regions next to the main content is used. */
-    .main-inner-outside-nextmaincontent {
-        display: flex;
-    }
-
-    /* Remove the margin of a Dash block when used in the outside top region in hero width mode. */
-    #theme-block-region-outside-top.theme-block-region-outside-herowidth .block_dash,
-    #theme-block-region-outside-bottom.theme-block-region-outside-herowidth .block_dash,
-    #theme-block-region-footer.theme-block-region-footer-herowidth .block_dash {
-        margin: 0;
-    }
-
-    /* The page header makes alignment nearly impossible,
-       so let's hide it when block regions next to main content are used. */
-    .main-inner-outside-nextmaincontent #page-header {
-        display: none;
-    }
-
-    /* Remove the spacing which was there for the header which we have hidden in the previous rule. */
-    .main-inner-outside-nextmaincontent .main-inner {
-        margin: 0;
-        padding: 0;
-    }
-
-    /* 25-50-25 layout. */
-    .main-inner-outside-left-right > .main-inner {
-        width: 50%;
-        max-width: 50%;
-    }
-    .main-inner-outside-left-right > section {
-        width: 25%;
-        max-width: 25%;
-        margin-top: calc(0.5rem + 1px);
-    }
-
-    /* 33-67 or 67-33 layout. */
-    .main-inner-outside-right > .main-inner,
-    .main-inner-outside-left > .main-inner {
-        width: 67%;
-        max-width: 67%;
-    }
-    .main-inner-outside-left > section,
-    .main-inner-outside-right > section {
-        width: 33%;
-        max-width: 33%;
-        margin-top: calc(0.5rem + 1px);
-    }
-
-    /* On not-so-large screens. */
-    @include media-breakpoint-down(lg) { /* This means less than 300px per outside block region. */
-        /* Stack content vertically. */
-        .main-inner-outside-nextmaincontent {
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Main content first, outside block regions later. */
-        .main-inner-outside-nextmaincontent > .main-inner {
-            order: -2;
-        }
-        .main-inner-outside-nextmaincontent > section,
-        .main-inner-outside-nextmaincontent > .main-inner {
-            width: 100%;
-            max-width: 100%;
-        }
-    }
-}
-
-/* ========================
- Smartmenu: style.
- ========================== */
 
 /* Scrollbar */
 
@@ -2038,4 +1973,83 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 /* Display the color picker box and the text field as column */
 .union-form-colour-picker [data-fieldtype="colorpicker"] {
     flex-direction: column;
+}
+
+
+/*=======================================
+ * Supporting third-party plugins
+ ======================================*/
+
+/*---------------------------------------
+ * Dash Pro
+ --------------------------------------*/
+
+/* Style Dash Pro dashboards. */
+.path-local-dash-dashboard #page.drawers {
+    /* Use flex if one of the block regions next to the main content is used. */
+    .main-inner-outside-nextmaincontent {
+        display: flex;
+    }
+
+    /* Remove the margin of a Dash block when used in the outside top region in hero width mode. */
+    #theme-block-region-outside-top.theme-block-region-outside-herowidth .block_dash,
+    #theme-block-region-outside-bottom.theme-block-region-outside-herowidth .block_dash,
+    #theme-block-region-footer.theme-block-region-footer-herowidth .block_dash {
+        margin: 0;
+    }
+
+    /* The page header makes alignment nearly impossible,
+       so let's hide it when block regions next to main content are used. */
+    .main-inner-outside-nextmaincontent #page-header {
+        display: none;
+    }
+
+    /* Remove the spacing which was there for the header which we have hidden in the previous rule. */
+    .main-inner-outside-nextmaincontent .main-inner {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* 25-50-25 layout. */
+    .main-inner-outside-left-right > .main-inner {
+        width: 50%;
+        max-width: 50%;
+    }
+    .main-inner-outside-left-right > section {
+        width: 25%;
+        max-width: 25%;
+        margin-top: calc(0.5rem + 1px);
+    }
+
+    /* 33-67 or 67-33 layout. */
+    .main-inner-outside-right > .main-inner,
+    .main-inner-outside-left > .main-inner {
+        width: 67%;
+        max-width: 67%;
+    }
+    .main-inner-outside-left > section,
+    .main-inner-outside-right > section {
+        width: 33%;
+        max-width: 33%;
+        margin-top: calc(0.5rem + 1px);
+    }
+
+    /* On not-so-large screens. */
+    @include media-breakpoint-down(lg) { /* This means less than 300px per outside block region. */
+        /* Stack content vertically. */
+        .main-inner-outside-nextmaincontent {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Main content first, outside block regions later. */
+        .main-inner-outside-nextmaincontent > .main-inner {
+            order: -2;
+        }
+        .main-inner-outside-nextmaincontent > section,
+        .main-inner-outside-nextmaincontent > .main-inner {
+            width: 100%;
+            max-width: 100%;
+        }
+    }
 }
