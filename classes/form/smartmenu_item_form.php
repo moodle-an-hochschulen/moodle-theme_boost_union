@@ -252,11 +252,13 @@ class smartmenu_item_form extends \moodleform {
         // Text color.
         $mform->addElement('theme_boost_union_colorpicker', 'textcolor', get_string('smartmenustextcolor', 'theme_boost_union'));
         $mform->addHelpButton('textcolor', 'smartmenustextcolor', 'theme_boost_union');
+        $mform->setType('textcolor', PARAM_TEXT);
 
         // Background color.
         $mform->addElement('theme_boost_union_colorpicker', 'backgroundcolor',
             get_string('smartmenusbackgroundcolor', 'theme_boost_union'));
         $mform->addHelpButton('backgroundcolor', 'smartmenusbackgroundcolor', 'theme_boost_union');
+        $mform->setType('backgroundcolor', PARAM_TEXT);
 
         // Access rule by roles.
         $mform->addElement('header', 'accessbyroles', get_string('smartmenusaccessbyroles', 'theme_boost_union'));

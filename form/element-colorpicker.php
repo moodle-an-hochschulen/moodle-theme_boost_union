@@ -50,7 +50,7 @@ class moodlequickform_themeboostunion_colorpicker extends MoodleQuickForm_text i
      */
     public function __construct($elementname=null, $elementlabel=null, $attributes=null) {
         parent::__construct($elementname, $elementlabel, $attributes);
-        $this->setType('colorpicker');
+        $this->setType('text');
 
         // Add the class admin_colourpicker.
         $class = $this->getAttribute('class');
@@ -72,10 +72,24 @@ class moodlequickform_themeboostunion_colorpicker extends MoodleQuickForm_text i
         $context = $this->export_for_template_base($output);
         // Build loading icon.
         $icon = new pix_icon('i/loading', get_string('loading', 'admin'), 'moodle', ['class' => 'loadingicon']);
-        $context['icon'] = $icon->export_for_template($output);
-        // Add JS init call to page.
-        $PAGE->requires->js_init_call('M.util.init_colour_picker', array($this->getAttribute('id'), ''));
+        $icondata = $icon->export_for_template($output);
+        $iconoutput = $output->render_from_template('core/pix_icon', $icondata);
+        // Id of the element.
+        $id = $this->getAttribute('id');
+        // JS to append the color picker div before the element and initiate the color picker utility method.
+        $PAGE->requires->js_amd_inline("
+            var element = document.getElementById('$id');
+            var pickerDiv = document.createElement('div');
+            pickerDiv.classList.add('admin_colourpicker', 'clearfix');
+            pickerDiv.innerHTML = '$iconoutput'; // Add loading icon.
+            element.parentNode.prepend(pickerDiv);
+            element.parentNode.style.flexDirection = 'column'; // Helps to align the config text when boost_union is not a default.
+
+            // Init color picker utility.
+            M.util.init_colour_picker(Y, '$id');
+        ");
 
         return $context;
     }
+
 }

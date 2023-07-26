@@ -1971,7 +1971,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 }
 
 /* Display the color picker box and the text field as column */
-.union-form-colour-picker [data-fieldtype="colorpicker"] {
+.union-form-colour-picker .felement {
     flex-direction: column;
 }
 
