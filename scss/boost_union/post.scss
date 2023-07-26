@@ -927,7 +927,9 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
  * Settings: Smart menus.
  ======================================*/
 
-/* Scrollbar */
+/*---------------------------------------
+ * Scrollbar
+ --------------------------------------*/
 
 /* Width and height of the scrollbar */
 ::-webkit-scrollbar {
@@ -950,7 +952,11 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 }
 /* End of Scrollbar */
 
-/* Header Menu */
+
+/*---------------------------------------
+ * Header menu
+ --------------------------------------*/
+
 .navbar {
     &.fixed-top {
         /* Added Height and background color for the top header,
@@ -1636,7 +1642,11 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     }
 }
 
-/* Smart Menu Settings */
+
+/*---------------------------------------
+ * Smart menu settings
+ --------------------------------------*/
+
 /*  Menu item settings page style  */
 .menuitem-buttons {
     /* Menu settings page - margin for the "Restriction" label in the table block when the restrictions are enabled */
@@ -1665,9 +1675,12 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
         margin-bottom: 20px;
     }
 }
-/* End of Smart Menu settings */
 
-/* Footer Menu */
+
+/*---------------------------------------
+ * Footer menu
+ --------------------------------------*/
+
 #page-wrapper #page-footer {
     .navbar {
         /* Footer bottom menu */
@@ -1916,24 +1929,32 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     }
 }
 
-/*  Increases the space at the bottom for the footer popover, as the bottom menu bar might hide it.  */
+/* Increases the space at the bottom for the footer popover, as the bottom menu bar might hide it. */
 .btn-footer-popover {
     bottom: 4rem;
 }
 
-/*Learning tools floating button align*/
+/* Learning tools floating button align. */
 .learningtools-action-info .floating-button {
     bottom: 4rem;
 }
 
-/**
- *   Fontawesome icon picker styles.
- */
+
+/*=======================================
+ * General styling
+ ======================================*/
+
+/*---------------------------------------
+ * Form element: Fontawesome picker
+ --------------------------------------*/
+
 .fontawesome-picker {
-    /* Padding removed in the fontawesome picker popover */
+    /* Padding removed in the fontawesome picker popover. */
     .popover-body {
         padding: 0;
-        /* Width, height, padding added, margin removed and text aligned center in the popover fontawesome icon picker */
+
+        /* Width, height, padding added, margin
+           removed and text aligned centered in the popover fontawesome icon picker. */
         .fontawesome-icon-suggestions {
             width: 250px;
             height: 350px;
@@ -1942,8 +1963,9 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
             overflow: auto;
             padding: 10px 2px 2px 10px;
             margin: 0;
+
             /* Width, height, line height, border, border radius and margin
-            added for the icon item in the popover fontawesome icon picker */
+               added for the icon item in the popover fontawesome icon picker */
             li {
                 width: 40px;
                 height: 40px;
@@ -1953,12 +1975,14 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                 margin: 0 10px 10px 0;
                 display: inline-block;
                 cursor: pointer;
-                /* Background color added on hover and selected for the font icon item */
+
+                /* Background color added on hover and selected for the font icon item. */
                 &:hover,
                 &.selected {
                     background-color: #f4f4f4;
                 }
-                /* Width, height, font size added and margin removed for the Font icon */
+
+                /* Width, height, font size added and margin removed for the Font icon. */
                 .icon {
                     width: 14px;
                     height: 14px;
@@ -1970,8 +1994,13 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     }
 }
 
-/* Display the color picker box and the text field as column */
-.union-form-colour-picker .felement {
+
+/*---------------------------------------
+ * Form element: Color picker
+ --------------------------------------*/
+
+/* Display the color picker box and the text field as column. */
+.theme_boost_union-form-colour-picker .felement {
     flex-direction: column;
 }
 
