@@ -321,7 +321,10 @@ class smartmenu {
             // Delete all its items.
             $DB->delete_records('theme_boost_union_menuitems', ['menu' => $this->id]);
             // Purge the menus cache.
-            cache_helper::purge_by_event('theme_boost_union_menus_deleted');
+            $this->cache->delete_menu($this->id);
+            // Delete the cached menus list.
+            $this->cache->delete(self::CACHE_MENUSLIST);
+
             return true;
         }
         return false;
@@ -553,7 +556,8 @@ class smartmenu {
 
         // Get the menu and its menu items from cache.
         $menuitems = [];
-        if ($nodes = $this->cache->get($cachekey)) {
+        $nodes = $this->cache->get($cachekey);
+        if (!empty($nodes)) {
             // List of menu items added to this menu.
             $menuitems = $nodes->menuitems ?? [];
 
@@ -638,7 +642,7 @@ class smartmenu {
                 $builditems = (!empty($item)) ? array_merge($builditems, $item) : $builditems;
             }
 
-            if (isset($nodes)) {
+            if (isset($nodes) && !empty($nodes)) {
                 // Setup the childrens to parent menu node.
                 $nodes->haschildren = (count($builditems) > 0) ? true : false;
                 $nodes->children = $builditems;
@@ -668,7 +672,7 @@ class smartmenu {
 
         // Set the processed menus node and its children item nodes in Cache.
         if (isset($nodes) && isset($storecache)) {
-            $nodescache = clone $nodes;
+            $nodescache = clone (object) $nodes;
             // Remove the children data from cache before store.
             unset($nodescache->children);
             $nodescache->menuitems = $menuitems;

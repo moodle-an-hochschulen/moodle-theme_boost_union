@@ -439,9 +439,6 @@ class smartmenu_item {
         // Delete the menu cache, recreate the menu with updated items order.
         $this->delete_cache();
 
-        // Purge the menu items cache.
-        \cache_helper::purge_by_event('theme_boost_union_menuitems_sorted');
-
         return true;
 
     }
