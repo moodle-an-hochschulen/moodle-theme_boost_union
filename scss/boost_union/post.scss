@@ -928,32 +928,6 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
  ======================================*/
 
 /*---------------------------------------
- * Scrollbar
- --------------------------------------*/
-
-/* Width and height of the scrollbar */
-::-webkit-scrollbar {
-    width: 12px;
-    height: 10px;
-}
-/* Background color for the scrollbar on hover */
-::-webkit-scrollbar-thumb:hover {
-    background-color: #495057;
-}
-/* Border, border radius and background color for the bar in the scrollbar */
-::-webkit-scrollbar-thumb {
-    background-color: #6a737b;
-    border-radius: 20px;
-    border: 2px solid #f8f9fa;
-}
-/* Background for the scrollbar */
-::-webkit-scrollbar-track {
-    background: #f8f9fa;
-}
-/* End of Scrollbar */
-
-
-/*---------------------------------------
  * Header menu
  --------------------------------------*/
 
@@ -1517,6 +1491,27 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                     display: flex;
                     flex-wrap: nowrap;
                     flex-direction: column;
+                    /* Scrollbar */
+                    /* Width and height of the scrollbar */
+                    ::-webkit-scrollbar {
+                        width: 12px;
+                        height: 10px;
+                    }
+                    /* Background color for the scrollbar on hover */
+                    ::-webkit-scrollbar-thumb:hover {
+                        background-color: #495057;
+                    }
+                    /* Border, border radius and background color for the bar in the scrollbar */
+                    ::-webkit-scrollbar-thumb {
+                        background-color: #6a737b;
+                        border-radius: 20px;
+                        border: 2px solid #f8f9fa;
+                    }
+                    /* Background for the scrollbar */
+                    ::-webkit-scrollbar-track {
+                        background: #f8f9fa;
+                    }
+                    /* End of Scrollbar */
                     .card-block-wrapper {
                         display: flex;
                         overflow-y: auto;
@@ -1579,7 +1574,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 }
 
 /* The nav drawer position to the top in the responsive alignment */
-@media (max-width: 991px) {
+@include media-breakpoint-down(md) {
     .navbar.fixed-top.boost-union-menubar ~ .drawer {
         top: 40px;
         &.drawer-right {
@@ -1589,13 +1584,13 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 }
 
 /* The nav drawer position to the top in the responsive alignment */
-@media (min-width: 768px) {
+@include media-breakpoint-up(md) {
     .navbar.fixed-top.boost-union-menubar ~ #page.drawers .drawer-toggles .drawer-toggler {
         top: 110px;
     }
 }
 
-@media (max-width: 767px) {
+@include media-breakpoint-down(sm) {
     .navbar.fixed-top {
         /* The header z-index is increased to show at top when the footer bottom menu is added */
         &.smartmenu-bottom-navigation {
@@ -1923,7 +1918,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 }
 /* End of Footer Menu */
 
-@media (max-width: 767px) {
+@include media-breakpoint-down(sm) {
     /* The padding for the footer to visible the footer bottom menu because it is in the position style */
     #page-wrapper #page .footer-bottom-menu {
         padding-bottom: 75px;
