@@ -1019,6 +1019,13 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                                 width: 100%;
                             }
                         }
+                        /*Removed the padding in the card dropdown overlay*/
+                        &.dropdown.card-dropdown {
+                            .card-block-wrapper .card-block a {
+                                padding: 0;
+                            }
+                        }
+                        /*Added max-height and overflow auto for scollbar when the card item reach the dropdown height */
                         &.dropdownmoremenu .dropdown-menu .dropdown-menu {
                             max-height: 300px;
                             overflow-y: auto;
@@ -1681,223 +1688,233 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
  * Footer menu
  --------------------------------------*/
 
-#page-wrapper #page-footer {
-    .navbar {
-        /* Footer bottom menu */
-        /* Padding space removed around the bottom menu block, box-shadow and z-index
-        to view the bottom menu at the top added*/
-        &.boost-union-bottom-menu {
-            padding: 0;
-            box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
-            z-index: 1050;
-            .bottom-navigation .more-nav {
-                > li {
-                    /* The footer bottom dropdown menu icon and text are displayed in separate rows. */
-                    &.dropdown > a {
-                        flex-direction: column;
-                        /* The footer bottom dropdown menu icon margin is removed. */
-                        i {
-                            margin: 0 0 3px;
-                        }
-                    }
-                    /* The footer bottom menu item border bottom is removed when it's not active. */
-                    > a {
-                        &:not(.active) {
-                            border-bottom: 0;
-                            flex-wrap: wrap;
-                            /* flex-basis: min-content; */
+ #page-wrapper #page {
+    &.footer-bottom-menu {
+        /*  Increases the space at the bottom for the footer popover, as the bottom menu bar might hide it.  */
+        .btn-footer-popover {
+            bottom: 4rem;
+        }
+    }
+    #page-footer {
+        .navbar {
+            /* Footer bottom menu */
+            /* Padding space removed around the bottom menu block, box-shadow and z-index
+            to view the bottom menu at the top added*/
+            &.boost-union-bottom-menu {
+                padding: 0;
+                box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
+                z-index: 1050;
+                .bottom-navigation .more-nav {
+                    > li {
+                        /* The footer bottom dropdown menu icon and text are displayed in separate rows. */
+                        &.dropdown > a {
                             flex-direction: column;
-                            justify-content: center;
-                            position: relative;
+                            /* The footer bottom dropdown menu icon margin is removed. */
                             i {
-                                margin-right: 0;
+                                margin: 0 0 3px;
                             }
-                            &:after {
-                                margin-left: 5px;
-                                position: absolute;
-                                right: 0;
+                        }
+                        /* The footer bottom menu item border bottom is removed when it's not active. */
+                        > a {
+                            &.dropdown-toggle {
+                                padding-right: 25px;
+                            }
+                            &:not(.active) {
+                                border-bottom: 0;
+                                flex-wrap: wrap;
+                                flex-direction: column;
+                                justify-content: center;
+                                position: relative;
+                                i {
+                                    margin: 0;
+                                }
+                                &:after {
+                                    margin-left: 5px;
+                                    position: absolute;
+                                    right: 0;
+                                }
                             }
                         }
                     }
-                }
-                li {
-                    &:first-child,
-                    &:nth-child(2),
-                    &:nth-child(3) {
-                        &.dropdown .dropdown-menu .dropdown-submenu ul {
-                            left: 100%;
+                    li {
+                        &:first-child,
+                        &:nth-child(2),
+                        &:nth-child(3) {
+                            &.dropdown .dropdown-menu .dropdown-submenu ul {
+                                left: 100%;
+                                right: auto;
+                            }
+                        }
+                        &.dropdown {
+                            /* Footer bottom dropdown menu width, height and removed margin, position to stay the
+                            dropup menu */
+                            .dropdown-menu {
+                                width: auto;
+                                margin-top: 0;
+                                margin-bottom: 0;
+                                top: auto;
+                                bottom: 100%;
+                                left: auto;
+                                right: 0;
+                                /* The footer bottom dropdown submenu min-width, max-height, overflow and position to show
+                                the menus above the footer */
+                                .dropdown-submenu ul {
+                                    min-width: 150px;
+                                    max-height: calc(100vh - 300px);
+                                    overflow: auto;
+                                    left: auto;
+                                    right: 100%;
+                                    bottom: 0;
+                                    top: auto;
+                                }
+                            }
+                            /* Footer bottom dropdown style when the menus are in the "More" option in the responsive alignment */
+                            &.dropdownmoremenu {
+                                display: flex;
+                                align-items: center;
+                                /* The footer bottom dropdown menu icon and text are displayed in separate rows. */
+                                > a.dropdown-toggle {
+                                    flex-direction: column;
+                                    /* Added ellipsis fontawesome icon, and diplay block to  for the dropdown more menu when the
+                                    smart menus are not added in the Footer menu */
+                                    &:before {
+                                        content: '\f142';
+                                        font-family: fontawesome;
+                                    }
+                                    /* The arrow icon after the More menu link text is hidden when the smart menus are not added */
+                                    &:after {
+                                        display: none;
+                                    }
+                                }
+                                /* Footer bottom dropdown toggle button height, font-size, color, align center,
+                                removed border radius, padding and added margin left & right style */
+                                button.navbar-toggler {
+                                    height: 100%;
+                                    font-size: calc(0.90375rem + 0.045vw);
+                                    color: $primary;
+                                    text-align: center;
+                                    border-radius: 0;
+                                    padding-top: 0;
+                                    padding-bottom: 0;
+                                    margin: 0 10px;
+                                    /* Footer bottom dropdown toggle button baclground added on hover  */
+                                    &:hover {
+                                        font-size: calc(0.90375rem + 0.045vw);
+                                        background: #f8f9fa;
+                                    }
+                                    /* More menu toggle button icon margin remove in the mobile view */
+                                    i {
+                                        margin: -5px auto 5px;
+                                        display: block;
+                                    }
+                                }
+                            }
+                        }
+                        /* Footer bottom menu card-dropdown */
+                        /* The card dropdown Position is changed to static, so the dropdown menu will be in fullscreen  */
+                        &.card-dropdown {
+                            position: static;
+                            /* Card appearance - Card form style */
+                            /* Card form style - Square */
+                            &.card-form-square {
+                                /* Minimun and maximum width is added when the Card size "Tiny" with card form "Square" */
+                                &.card-size-tiny .dropdown-menu .card-block {
+                                    min-width: 90px;
+                                    max-width: 90px;
+                                }
+                                /* Minimun and maximum width is added when the Card size "Small" with card form "Square" */
+                                &.card-size-small .dropdown-menu .card-block {
+                                    min-width: 140px;
+                                    max-width: 140px;
+                                }
+                                /* Minimun and maximum width is added when the Card size "Medium" with card form "Square" */
+                                &.card-size-medium .dropdown-menu .card-block {
+                                    min-width: 190px;
+                                    max-width: 190px;
+                                }
+                                /* Minimun and maximum width is added when the Card size "Large" with card form "Square" */
+                                &.card-size-large .dropdown-menu .card-block {
+                                    min-width: 240px;
+                                    max-width: 240px;
+                                }
+                            }
+                            /* Card form style - Portrait */
+                            &.card-form-portrait {
+                                /* Minimun and maximum width is added when the Card size "Tiny" with card form "portrait" */
+                                &.card-size-tiny .dropdown-menu .card-block {
+                                    min-width: 60px;
+                                    max-width: 60px;
+                                }
+                                /* Minimun and maximum width is added when the Card size "Small" with card form "portrait" */
+                                &.card-size-small .dropdown-menu .card-block {
+                                    min-width: 94px;
+                                    max-width: 94px;
+                                }
+                                /* Minimun and maximum width is added when the Card size "Medium" with card form "portrait" */
+                                &.card-size-medium .dropdown-menu .card-block {
+                                    min-width: 127px;
+                                    max-width: 127px;
+                                }
+                                /* Minimun and maximum width is added when the Card size "Large" with card form "portrait" */
+                                &.card-size-large .dropdown-menu .card-block {
+                                    min-width: 160px;
+                                    max-width: 160px;
+                                }
+                            }
+                            /* Card form style - Landscape */
+                            &.card-form-landscape {
+                                /* Minimun and maximum width is added when the Card size "Tiny" with card form "Landscape" */
+                                &.card-size-tiny .dropdown-menu .card-block {
+                                    min-width: 135px;
+                                    max-width: 135px;
+                                }
+                                /* Minimun and maximum width is added when the Card size "Small" with card form "Landscape" */
+                                &.card-size-small .dropdown-menu .card-block {
+                                    min-width: 210px;
+                                    max-width: 210px;
+                                }
+                                /* Minimun and maximum width is added when the Card size "Medium" with card form "Landscape" */
+                                &.card-size-medium .dropdown-menu .card-block {
+                                    min-width: 285px;
+                                    max-width: 285px;
+                                }
+                                /* Minimun and maximum width is added when the Card size "Large" with card form "Landscape" */
+                                &.card-size-large .dropdown-menu .card-block {
+                                    min-width: 360px;
+                                    max-width: 360px;
+                                }
+                            }
+                            /* Card form style - Fullwidth */
+                            /* Full Width is added when the Card size "Tiny, Small, Medium and Large" with card form "Full width" */
+                            &.card-form-fullwidth {
+                                &.card-size-tiny,
+                                &.card-size-small,
+                                &.card-size-medium,
+                                &.card-size-large {
+                                    .dropdown-menu .card-block {
+                                        min-width: 100%;
+                                        width: 100%;
+                                    }
+                                }
+                                /* Card size "large" has margin right none because the size of the card is full width of the screen */
+                                &.card-overflow-wrap.card-size-large {
+                                    .dropdown-menu .card-block {
+                                        margin-right: 0;
+                                    }
+                                }
+                            }
+                            /* The card dropdown menu width is 100%, so the dropdown menu will not overflow the screen */
+                            .dropdown-menu {
+                                width: 100%;
+                                max-height: calc(100vh - 300px);
+                                overflow-y: auto;
+                            }
+                        }
+                        /* The position of the footer dropdown menu should not extend beyond the visible area of the screen */
+                        &:first-child.dropdown .dropdown-menu {
+                            left: 0;
                             right: auto;
                         }
-                    }
-                    &.dropdown {
-                        /* Footer bottom dropdown menu width, height and removed margin, position to stay the
-                        dropup menu */
-                        .dropdown-menu {
-                            width: auto;
-                            margin-top: 0;
-                            margin-bottom: 0;
-                            top: auto;
-                            bottom: 100%;
-                            left: auto;
-                            right: 0;
-                            /* The footer bottom dropdown submenu min-width, max-height, overflow and position to show
-                            the menus above the footer */
-                            .dropdown-submenu ul {
-                                min-width: 150px;
-                                max-height: calc(100vh - 300px);
-                                overflow: auto;
-                                left: auto;
-                                right: 100%;
-                                bottom: 0;
-                                top: auto;
-                            }
-                        }
-                        /* Footer bottom dropdown style when the menus are in the "More" option in the responsive alignment */
-                        &.dropdownmoremenu {
-                            display: flex;
-                            align-items: center;
-                            /* The footer bottom dropdown menu icon and text are displayed in separate rows. */
-                            > a.dropdown-toggle {
-                                flex-direction: column;
-                                /* Added ellipsis fontawesome icon, and diplay block to  for the dropdown more menu when the
-                                smart menus are not added in the Footer menu */
-                                &:before {
-                                    content: '\f142';
-                                    font-family: fontawesome;
-                                }
-                                /* The arrow icon after the More menu link text is hidden when the smart menus are not added */
-                                &:after {
-                                    display: none;
-                                }
-                            }
-                            /* Footer bottom dropdown toggle button height, font-size, color, align center,
-                            removed border radius, padding and added margin left & right style */
-                            button.navbar-toggler {
-                                height: 100%;
-                                font-size: calc(0.90375rem + 0.045vw);
-                                color: $primary;
-                                text-align: center;
-                                border-radius: 0;
-                                padding-top: 0;
-                                padding-bottom: 0;
-                                margin: 0 10px;
-                                /* Footer bottom dropdown toggle button baclground added on hover  */
-                                &:hover {
-                                    font-size: calc(0.90375rem + 0.045vw);
-                                    background: #f8f9fa;
-                                }
-                                /* More menu toggle button icon margin remove in the mobile view */
-                                i {
-                                    margin: -5px auto 5px;
-                                    display: block;
-                                }
-                            }
-                        }
-                    }
-                    /* Footer bottom menu card-dropdown */
-                    /* The card dropdown Position is changed to static, so the dropdown menu will be in fullscreen  */
-                    &.card-dropdown {
-                        position: static;
-                        /* Card appearance - Card form style */
-                        /* Card form style - Square */
-                        &.card-form-square {
-                            /* Minimun and maximum width is added when the Card size "Tiny" with card form "Square" */
-                            &.card-size-tiny .dropdown-menu .card-block {
-                                min-width: 90px;
-                                max-width: 90px;
-                            }
-                            /* Minimun and maximum width is added when the Card size "Small" with card form "Square" */
-                            &.card-size-small .dropdown-menu .card-block {
-                                min-width: 140px;
-                                max-width: 140px;
-                            }
-                            /* Minimun and maximum width is added when the Card size "Medium" with card form "Square" */
-                            &.card-size-medium .dropdown-menu .card-block {
-                                min-width: 190px;
-                                max-width: 190px;
-                            }
-                            /* Minimun and maximum width is added when the Card size "Large" with card form "Square" */
-                            &.card-size-large .dropdown-menu .card-block {
-                                min-width: 240px;
-                                max-width: 240px;
-                            }
-                        }
-                        /* Card form style - Portrait */
-                        &.card-form-portrait {
-                            /* Minimun and maximum width is added when the Card size "Tiny" with card form "portrait" */
-                            &.card-size-tiny .dropdown-menu .card-block {
-                                min-width: 60px;
-                                max-width: 60px;
-                            }
-                            /* Minimun and maximum width is added when the Card size "Small" with card form "portrait" */
-                            &.card-size-small .dropdown-menu .card-block {
-                                min-width: 94px;
-                                max-width: 94px;
-                            }
-                            /* Minimun and maximum width is added when the Card size "Medium" with card form "portrait" */
-                            &.card-size-medium .dropdown-menu .card-block {
-                                min-width: 127px;
-                                max-width: 127px;
-                            }
-                            /* Minimun and maximum width is added when the Card size "Large" with card form "portrait" */
-                            &.card-size-large .dropdown-menu .card-block {
-                                min-width: 160px;
-                                max-width: 160px;
-                            }
-                        }
-                        /* Card form style - Landscape */
-                        &.card-form-landscape {
-                            /* Minimun and maximum width is added when the Card size "Tiny" with card form "Landscape" */
-                            &.card-size-tiny .dropdown-menu .card-block {
-                                min-width: 135px;
-                                max-width: 135px;
-                            }
-                            /* Minimun and maximum width is added when the Card size "Small" with card form "Landscape" */
-                            &.card-size-small .dropdown-menu .card-block {
-                                min-width: 210px;
-                                max-width: 210px;
-                            }
-                            /* Minimun and maximum width is added when the Card size "Medium" with card form "Landscape" */
-                            &.card-size-medium .dropdown-menu .card-block {
-                                min-width: 285px;
-                                max-width: 285px;
-                            }
-                            /* Minimun and maximum width is added when the Card size "Large" with card form "Landscape" */
-                            &.card-size-large .dropdown-menu .card-block {
-                                min-width: 360px;
-                                max-width: 360px;
-                            }
-                        }
-                        /* Card form style - Fullwidth */
-                        /* Full Width is added when the Card size "Tiny, Small, Medium and Large" with card form "Full width" */
-                        &.card-form-fullwidth {
-                            &.card-size-tiny,
-                            &.card-size-small,
-                            &.card-size-medium,
-                            &.card-size-large {
-                                .dropdown-menu .card-block {
-                                    min-width: 100%;
-                                    width: 100%;
-                                }
-                            }
-                            /* Card size "large" has margin right none because the size of the card is full width of the screen */
-                            &.card-overflow-wrap.card-size-large {
-                                .dropdown-menu .card-block {
-                                    margin-right: 0;
-                                }
-                            }
-                        }
-                        /* The card dropdown menu width is 100%, so the dropdown menu will not overflow the screen */
-                        .dropdown-menu {
-                            width: 100%;
-                            max-height: calc(100vh - 300px);
-                            overflow-y: auto;
-                        }
-                    }
-                    /* The position of the footer dropdown menu should not extend beyond the visible area of the screen */
-                    &:first-child.dropdown .dropdown-menu {
-                        left: 0;
-                        right: auto;
                     }
                 }
             }
@@ -1928,17 +1945,6 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
         }
     }
 }
-
-/* Increases the space at the bottom for the footer popover, as the bottom menu bar might hide it. */
-.btn-footer-popover {
-    bottom: 4rem;
-}
-
-/* Learning tools floating button align. */
-.learningtools-action-info .floating-button {
-    bottom: 4rem;
-}
-
 
 /*=======================================
  * General styling
@@ -2008,6 +2014,12 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 /*=======================================
  * Supporting third-party plugins
  ======================================*/
+
+/*Learning tools floating button position alignment*/
+#page-wrapper #page.footer-bottom-menu .learningtools-action-info .floating-button {
+    bottom: 4rem;
+}
+
 
 /*---------------------------------------
  * Dash Pro
