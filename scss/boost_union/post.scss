@@ -1,10 +1,10 @@
 /*=======================================
  * Settings: Look -> Site branding
- ======================================*/
+======================================*/
 
 /*---------------------------------------
  * Setting: Compact logo
- --------------------------------------*/
+--------------------------------------*/
 
 /* Add an explicit height to the logo in the navbar.
    This is necessary to render SVG logos properly as their size is calculated different than pixel-based images. */
@@ -16,7 +16,7 @@
 
 /*---------------------------------------
  * Setting: Navbar color
- --------------------------------------*/
+--------------------------------------*/
 
 /* Moodle core already presents the light navbar with dark font color (.navbar-light.bg-white) perfectly.
    There is nothing to change here. */
@@ -37,8 +37,8 @@
     }
 
     /* Change the color of the navigation items in the navbar to light grey, to white when active
-       and to black when hovered (as Moodle core will then show a white background).
-       This has to use !important as Moodle core already uses !important for some of its hover states. */
+        and to black when hovered (as Moodle core will then show a white background).
+        This has to use !important as Moodle core already uses !important for some of its hover states. */
     .nav-link {
         color: #c8c8c8;
     }
@@ -59,8 +59,8 @@
     }
 
     /* Change the color of the icons in the navbar as well as the toggle icon in the usermenu
-       to a light grey and to white when hovered.
-       This has to use !important as Moodle core already uses !important for the icon colors. */
+        to a light grey and to white when hovered.
+        This has to use !important as Moodle core already uses !important for the icon colors. */
     .nav-link .icon,
     .nav-link a .icon,
     .usermenu .dropdown-toggle {
@@ -252,7 +252,7 @@
     }
 
     /* Change the color of the divider to dark grey.
-       This has to use !important as Moodle core already uses !important for the border-left color.*/
+    This has to use !important as Moodle core already uses !important for the border-left color.*/
     .divider {
         border-left: 1px solid rgba($black, .6) !important; /* stylelint-disable-line declaration-no-important */
     }
@@ -260,15 +260,15 @@
 
 /*=======================================
  * Settings: Look -> Login page
- ======================================*/
+======================================*/
 
 /*---------------------------------------
  * Setting: Login form position
- --------------------------------------*/
+--------------------------------------*/
 
 /* Move the login window to the side based on the theme settings.
-   While the classes login-wrapper-left and login-wrapper-right are set here,
-   the class login-wrapper-center is not set here as the login form is already centered by Moodle core. */
+    While the classes login-wrapper-left and login-wrapper-right are set here,
+    the class login-wrapper-center is not set here as the login form is already centered by Moodle core. */
 .login-wrapper.login-wrapper-left {
     justify-content: left;
 }
@@ -278,7 +278,7 @@
 
 /*---------------------------------------
  * Setting: Login form transparency
- --------------------------------------*/
+--------------------------------------*/
 
 /* Make background of login panel slightly transparent. */
 .login-container.login-container-80t {
@@ -288,11 +288,11 @@
 
 /*=======================================
  * Settings: Look -> Course
- ======================================*/
+======================================*/
 
 /*---------------------------------------
  * Setting: Course header image.
- --------------------------------------*/
+--------------------------------------*/
 #courseheaderimage {
     background-size: cover;
     @include border-radius();
@@ -308,11 +308,11 @@
 
 /*=======================================
  * Settings: Look -> Resources
- ======================================*/
+======================================*/
 
 /*---------------------------------------
  * Setting: Additional resources.
- --------------------------------------*/
+--------------------------------------*/
 
 /* Enlarge the icons in the settings file lists. */
 .settings-additionalresources-filelist .icon,
@@ -324,11 +324,11 @@
 
 /*=======================================
  * Settings: Feel -> Navigation.
- ======================================*/
+======================================*/
 
 /*---------------------------------------
  * Setting: Back to top button.
- --------------------------------------*/
+--------------------------------------*/
 
 #back-to-top {
     /* Hide the back to top icon initially. It will be unhidden by JS only. */
@@ -358,8 +358,8 @@
 }
 
 /* As soon as the sticky footer is shown (especially in the database activity),
-   the back to top button has to be moved further up.
-   Again, we have to distinguish between really small screens and larger screens
+    the back to top button has to be moved further up.
+    Again, we have to distinguish between really small screens and larger screens
    (where the fotter button is shown as well). */
 body.hasstickyfooter #back-to-top {
     bottom: 5rem;
@@ -371,22 +371,22 @@ body.hasstickyfooter #back-to-top {
 
 /*=======================================
  * Settings: Feel -> Blocks.
- ======================================*/
+======================================*/
 
 /*---------------------------------------
  * Settings: Additional block regions - General.
- --------------------------------------*/
+--------------------------------------*/
 
 /* To support additional block regions around the main content area, Boost Union introduced
-   the main-inner-wrapper HTML element. Unfortunately, this breaks the Flexbox flow of Moodle core.
-   To make it work again, we have to set the Flexbox flex attribute in the main-inner-wrapper element as well. */
+    the main-inner-wrapper HTML element. Unfortunately, this breaks the Flexbox flow of Moodle core.
+    To make it work again, we have to set the Flexbox flex attribute in the main-inner-wrapper element as well. */
 .main-inner-wrapper {
     flex: 1 0 auto;
 }
 
 /*---------------------------------------
  * Settings: Additional block regions - The offcanvas region.
- --------------------------------------*/
+--------------------------------------*/
 
 /* The Offcanvas drawer (which is only used in non-editing mode). */
 #theme_boost_union-drawers-offcanvas {
@@ -434,8 +434,8 @@ body.hasstickyfooter #back-to-top {
 }
 
 /* The Offcanvas block region (which is only used in editing mode as we do not have a drawer then).
-   Please note: #theme-block-region-offcanvas-editing is the outer element which is shown and hidden by Bootstrap
-   Collapse. #theme-block-region-offcanvas-editing-inner is the inner element which we style here. */
+    Please note: #theme-block-region-offcanvas-editing is the outer element which is shown and hidden by Bootstrap
+    Collapse. #theme-block-region-offcanvas-editing-inner is the inner element which we style here. */
 #theme-block-region-offcanvas-editing-inner {
     /* Position and size (which takes effect as soon as the region is shown). */
     background-color: $gray-100;
@@ -472,12 +472,12 @@ body.hasstickyfooter #back-to-top {
 
 /*---------------------------------------
  * Settings: Additional block regions - The outside-left and outside-right regions.
- --------------------------------------*/
+--------------------------------------*/
 
 /* On larger screens. */
 @include media-breakpoint-up(md) {
     /* On Moodle pages with limited width (currently: The course main pages, the frontpage and the dashboard).
-       Remember: Only on these pages, we offer the outside-left and outside-right region.
+    Remember: Only on these pages, we offer the outside-left and outside-right region.
        We do not need to handle the full-width pages here. */
     body.limitedwidth {
         /* If we have a outside-left and / or a outside-right block region. */
@@ -585,7 +585,7 @@ body.hasstickyfooter #back-to-top {
 
 /*---------------------------------------
  * Settings: Additional block regions - The outside-top, header and outside-bottom regions.
- --------------------------------------*/
+--------------------------------------*/
 
 /* Block regions: Outside top and outside bottom. */
 #theme-block-region-outside-top,
@@ -673,7 +673,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 
 /*---------------------------------------
  * Settings: Additional block regions - The footer regions.
- --------------------------------------*/
+--------------------------------------*/
 
 /* Block region: Footer. */
 #theme-block-region-footer {
@@ -694,7 +694,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 
 /*---------------------------------------
  * Settings: Additional block regions - The content regions.
- --------------------------------------*/
+--------------------------------------*/
 
 /* Block region: Content-upper and Content-lower. */
 #theme-block-region-content-upper,
@@ -707,7 +707,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 
 /*=======================================
  * Settings: Content -> Footnote.
- ======================================*/
+======================================*/
 
 /* Static pages links dividers. */
 #footnote {
@@ -720,9 +720,9 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 }
 
 /* The footnote styles are different on the login page and on all non-login pages.
-   They are also different on larger and smaller screens.
-   We will deal with the overall cases for all screen sizes first and will then overwrite the things which need
-   to be different on the login page. */
+    They are also different on larger and smaller screens.
+    We will deal with the overall cases for all screen sizes first and will then overwrite the things which need
+    to be different on the login page. */
 
 /* On larger screens. */
 @include media-breakpoint-up(md) {
@@ -759,8 +759,8 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
         /* On smaller screens, there isn't any background image, so there's no need for a white background. */
 
         /* Add horizontal margin and padding to align the footnote with the main page content.
-           The numbers are adopted from the main content areas of the Moodle page.
-           Add another right padding as well to avoid that the content gets covered by the footer and back-to-top
+        The numbers are adopted from the main content areas of the Moodle page.
+        Add another right padding as well to avoid that the content gets covered by the footer and back-to-top
            buttons. */
         margin-left: .5rem;
         padding-left: 15px;
@@ -778,7 +778,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
         /* On really small screens, there isn't any background image, so there's no need for a white background. */
 
         /* Add horizontal margin and padding to align the footnote with the main page content.
-           The numbers are adopted from the main content areas of the Moodle page.
+        The numbers are adopted from the main content areas of the Moodle page.
            Add another right padding as well to avoid that the content gets covered by the back-to-top button. */
         margin-left: 15px;
         padding-left: 1rem;
@@ -813,11 +813,11 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
     /* If there is a loginbackground image configured. */
     body.pagelayout-login.loginbackgroundimage #footnote {
         /* Add white background color and a small bottom margin
-           to make the footnote work with background images.
-           This is necessary as this isn't covered by the normal background styles already
-           (which are only applied to pages > 768px.
-           Note that there isn't a border-radius added as the login box doesn't have a border radius as well
-           on this screen size. */
+        to make the footnote work with background images.
+        This is necessary as this isn't covered by the normal background styles already
+        (which are only applied to pages > 768px.
+        Note that there isn't a border-radius added as the login box doesn't have a border radius as well
+        on this screen size. */
         background-color: $white;
         margin-bottom: 1rem;
     }
@@ -827,14 +827,14 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 @include media-breakpoint-down(xs) {
     body.pagelayout-login.loginbackgroundimage #footnote {
         /* Add white background color and a small bottom margin
-           to make the footnote work with background images.
-           This is necessary as this isn't covered by the normal background styles already
+        to make the footnote work with background images.
+        This is necessary as this isn't covered by the normal background styles already
            (which are only applied to pages > 768px. */
         background-color: $white;
 
         /* Change horizontal margin and padding to
-           to make the footnote work with background images.
-           We do not need any additional right padding as there isn't a back-to-top button nor a footer button
+        make the footnote work with background images.
+        We do not need any additional right padding as there isn't a back-to-top button nor a footer button
            on the login page on this screen size. */
         margin-left: 0;
         padding-left: calc(15px + 1rem);
@@ -871,7 +871,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*=======================================
  * Settings: Content -> Advertisement tiles.
- ======================================*/
+======================================*/
 
 /* Remove horizontal paddings on the tile container on smaller screens to align it with the main frontpage content. */
 @include media-breakpoint-down(sm) {
@@ -908,11 +908,11 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*=======================================
  * Settings: Functionality -> Courses.
- ======================================*/
+======================================*/
 
 /*---------------------------------------
  * Setting: Course related hints.
- --------------------------------------*/
+--------------------------------------*/
 
 .course-hint-hidden,
 .course-hint-guestaccess,
@@ -925,11 +925,11 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*=======================================
  * Settings: Smart menus.
- ======================================*/
+======================================*/
 
 /*---------------------------------------
  * Header menu
- --------------------------------------*/
+--------------------------------------*/
 
 .navbar {
     &.fixed-top {
@@ -1485,7 +1485,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                     height: 200px;
                 }
                 /* Card Overflow behaviour - No Wrap */
-                /* Displayed the card menu as flex, nowrap and horizontal scroll bar to show the dropdown menu in a single row  */
+                /* Displayed the card menu as flex, nowrap and horizontal scroll bar to show the dropdown menu in a single row */
                 &.card-overflow-no-wrap.show .dropdown-menu {
                     overflow-x: auto;
                     display: flex;
@@ -1634,7 +1634,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
             /* top: 61px; */
         }
         /*~ #page.drawers {
-             The position of the drawer button to toggle has been adjusted slightly
+            The position of the drawer button to toggle has been adjusted slightly
             below on the course view page to accommodate the top header.
             .drawer-toggles .drawer-left-toggle,
             .drawer-toggles .drawer-right-toggle {
@@ -1647,7 +1647,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*---------------------------------------
  * Smart menu settings
- --------------------------------------*/
+--------------------------------------*/
 
 /*  Menu item settings page style  */
 .menuitem-buttons {
@@ -1681,15 +1681,9 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*---------------------------------------
  * Footer menu
- --------------------------------------*/
+--------------------------------------*/
 
- #page-wrapper #page {
-    &.footer-bottom-menu {
-        /*  Increases the space at the bottom for the footer popover, as the bottom menu bar might hide it.  */
-        .btn-footer-popover {
-            bottom: 4rem;
-        }
-    }
+#page-wrapper #page {
     #page-footer {
         .navbar {
             /* Footer bottom menu */
@@ -1880,7 +1874,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                                 }
                             }
                             /* Card form style - Fullwidth */
-                            /* Full Width is added when the Card size "Tiny, Small, Medium and Large" with card form "Full width" */
+                            /* Full Width is added when the Card size "Tiny, Small, Medium and Large"
+                            with card form "Full width" */
                             &.card-form-fullwidth {
                                 &.card-size-tiny,
                                 &.card-size-small,
@@ -1891,7 +1886,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                                         width: 100%;
                                     }
                                 }
-                                /* Card size "large" has margin right none because the size of the card is full width of the screen */
+                                /* Card size "large" has margin right none because the size of the card is full
+                                width of the screen */
                                 &.card-overflow-wrap.card-size-large {
                                     .dropdown-menu .card-block {
                                         margin-right: 0;
@@ -1919,6 +1915,17 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 /* End of Footer Menu */
 
 @include media-breakpoint-down(sm) {
+    #page-wrapper #page {
+        &.footer-bottom-menu {
+            /*  Increases the space at the bottom for the footer popover, as the bottom menu bar might hide it.  */
+            .btn-footer-popover {
+                bottom: 4rem;
+            }
+        }
+    }
+}
+
+@include media-breakpoint-down(sm) {
     /* The padding for the footer to visible the footer bottom menu because it is in the position style */
     #page-wrapper #page .footer-bottom-menu {
         padding-bottom: 75px;
@@ -1929,12 +1936,12 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
         width: 100%;
     }
     .drawer-primary .drawercontent .list-group .list-group-item {
-        /* The padding left is added to the nav drawer menu dropdown menu in the mobile view*/
+        /* The padding left is added to the nav drawer menu dropdown menu in the mobile view */
         .list-group-item-action {
             padding-left: 32px;
             align-items: baseline;
         }
-        /* The margin left is added to the dropdown submenu icon for the nav drawer menu in the mobile view*/
+        /* The margin left is added to the dropdown submenu icon for the nav drawer menu in the mobile view */
         .list-group-item .list-group-item-action i {
             margin-left: 25px;
         }
@@ -1943,11 +1950,11 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*=======================================
  * General styling
- ======================================*/
+======================================*/
 
 /*---------------------------------------
  * Form element: Fontawesome picker
- --------------------------------------*/
+--------------------------------------*/
 
 .fontawesome-picker {
     /* Padding removed in the fontawesome picker popover. */
@@ -1995,30 +2002,29 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     }
 }
 
-
 /*---------------------------------------
  * Form element: Color picker
- --------------------------------------*/
+--------------------------------------*/
 
 /* Display the color picker box and the text field as column. */
 .theme_boost_union-form-colour-picker .felement {
     flex-direction: column;
 }
 
-
 /*=======================================
  * Supporting third-party plugins
- ======================================*/
+======================================*/
 
-/*Learning tools floating button position alignment*/
-#page-wrapper #page.footer-bottom-menu .learningtools-action-info .floating-button {
-    bottom: 4rem;
+@include media-breakpoint-down(sm) {
+    /*Learning tools floating button position alignment*/
+    #page-wrapper #page.footer-bottom-menu .learningtools-action-info .floating-button {
+        bottom: 4rem;
+    }
 }
-
 
 /*---------------------------------------
  * Dash Pro
- --------------------------------------*/
+--------------------------------------*/
 
 /* Style Dash Pro dashboards. */
 .path-local-dash-dashboard #page.drawers {
@@ -2071,7 +2077,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     }
 
     /* On not-so-large screens. */
-    @include media-breakpoint-down(lg) { /* This means less than 300px per outside block region. */
+    /* This means less than 992px per outside block region. */
+    @include media-breakpoint-down(lg) {
         /* Stack content vertically. */
         .main-inner-outside-nextmaincontent {
             display: flex;
