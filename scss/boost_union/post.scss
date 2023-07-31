@@ -1,10 +1,10 @@
 /*=======================================
  * Settings: Look -> Site branding
-======================================*/
+ ======================================*/
 
 /*---------------------------------------
  * Setting: Compact logo
---------------------------------------*/
+ --------------------------------------*/
 
 /* Add an explicit height to the logo in the navbar.
    This is necessary to render SVG logos properly as their size is calculated different than pixel-based images. */
@@ -37,8 +37,8 @@
     }
 
     /* Change the color of the navigation items in the navbar to light grey, to white when active
-        and to black when hovered (as Moodle core will then show a white background).
-        This has to use !important as Moodle core already uses !important for some of its hover states. */
+       and to black when hovered (as Moodle core will then show a white background).
+       This has to use !important as Moodle core already uses !important for some of its hover states. */
     .nav-link {
         color: #c8c8c8;
     }
@@ -59,8 +59,8 @@
     }
 
     /* Change the color of the icons in the navbar as well as the toggle icon in the usermenu
-        to a light grey and to white when hovered.
-        This has to use !important as Moodle core already uses !important for the icon colors. */
+       to a light grey and to white when hovered.
+       This has to use !important as Moodle core already uses !important for the icon colors. */
     .nav-link .icon,
     .nav-link a .icon,
     .usermenu .dropdown-toggle {
@@ -252,7 +252,7 @@
     }
 
     /* Change the color of the divider to dark grey.
-    This has to use !important as Moodle core already uses !important for the border-left color.*/
+       This has to use !important as Moodle core already uses !important for the border-left color.*/
     .divider {
         border-left: 1px solid rgba($black, .6) !important; /* stylelint-disable-line declaration-no-important */
     }
@@ -260,15 +260,15 @@
 
 /*=======================================
  * Settings: Look -> Login page
-======================================*/
+ ======================================*/
 
 /*---------------------------------------
  * Setting: Login form position
---------------------------------------*/
+ --------------------------------------*/
 
 /* Move the login window to the side based on the theme settings.
-    While the classes login-wrapper-left and login-wrapper-right are set here,
-    the class login-wrapper-center is not set here as the login form is already centered by Moodle core. */
+   While the classes login-wrapper-left and login-wrapper-right are set here,
+   the class login-wrapper-center is not set here as the login form is already centered by Moodle core. */
 .login-wrapper.login-wrapper-left {
     justify-content: left;
 }
@@ -278,7 +278,7 @@
 
 /*---------------------------------------
  * Setting: Login form transparency
---------------------------------------*/
+ --------------------------------------*/
 
 /* Make background of login panel slightly transparent. */
 .login-container.login-container-80t {
@@ -288,11 +288,11 @@
 
 /*=======================================
  * Settings: Look -> Course
-======================================*/
+ ======================================*/
 
 /*---------------------------------------
  * Setting: Course header image.
---------------------------------------*/
+ --------------------------------------*/
 #courseheaderimage {
     background-size: cover;
     @include border-radius();
@@ -308,11 +308,11 @@
 
 /*=======================================
  * Settings: Look -> Resources
-======================================*/
+ ======================================*/
 
 /*---------------------------------------
  * Setting: Additional resources.
---------------------------------------*/
+ --------------------------------------*/
 
 /* Enlarge the icons in the settings file lists. */
 .settings-additionalresources-filelist .icon,
@@ -324,11 +324,11 @@
 
 /*=======================================
  * Settings: Feel -> Navigation.
-======================================*/
+ ======================================*/
 
 /*---------------------------------------
  * Setting: Back to top button.
---------------------------------------*/
+ --------------------------------------*/
 
 #back-to-top {
     /* Hide the back to top icon initially. It will be unhidden by JS only. */
@@ -358,8 +358,8 @@
 }
 
 /* As soon as the sticky footer is shown (especially in the database activity),
-    the back to top button has to be moved further up.
-    Again, we have to distinguish between really small screens and larger screens
+   the back to top button has to be moved further up.
+   Again, we have to distinguish between really small screens and larger screens
    (where the fotter button is shown as well). */
 body.hasstickyfooter #back-to-top {
     bottom: 5rem;
@@ -371,22 +371,22 @@ body.hasstickyfooter #back-to-top {
 
 /*=======================================
  * Settings: Feel -> Blocks.
-======================================*/
+ ======================================*/
 
 /*---------------------------------------
  * Settings: Additional block regions - General.
---------------------------------------*/
+ --------------------------------------*/
 
 /* To support additional block regions around the main content area, Boost Union introduced
-    the main-inner-wrapper HTML element. Unfortunately, this breaks the Flexbox flow of Moodle core.
-    To make it work again, we have to set the Flexbox flex attribute in the main-inner-wrapper element as well. */
+   the main-inner-wrapper HTML element. Unfortunately, this breaks the Flexbox flow of Moodle core.
+   To make it work again, we have to set the Flexbox flex attribute in the main-inner-wrapper element as well. */
 .main-inner-wrapper {
     flex: 1 0 auto;
 }
 
 /*---------------------------------------
  * Settings: Additional block regions - The offcanvas region.
---------------------------------------*/
+ --------------------------------------*/
 
 /* The Offcanvas drawer (which is only used in non-editing mode). */
 #theme_boost_union-drawers-offcanvas {
@@ -434,8 +434,8 @@ body.hasstickyfooter #back-to-top {
 }
 
 /* The Offcanvas block region (which is only used in editing mode as we do not have a drawer then).
-    Please note: #theme-block-region-offcanvas-editing is the outer element which is shown and hidden by Bootstrap
-    Collapse. #theme-block-region-offcanvas-editing-inner is the inner element which we style here. */
+   Please note: #theme-block-region-offcanvas-editing is the outer element which is shown and hidden by Bootstrap
+   Collapse. #theme-block-region-offcanvas-editing-inner is the inner element which we style here. */
 #theme-block-region-offcanvas-editing-inner {
     /* Position and size (which takes effect as soon as the region is shown). */
     background-color: $gray-100;
@@ -472,12 +472,12 @@ body.hasstickyfooter #back-to-top {
 
 /*---------------------------------------
  * Settings: Additional block regions - The outside-left and outside-right regions.
---------------------------------------*/
+ --------------------------------------*/
 
 /* On larger screens. */
 @include media-breakpoint-up(md) {
     /* On Moodle pages with limited width (currently: The course main pages, the frontpage and the dashboard).
-    Remember: Only on these pages, we offer the outside-left and outside-right region.
+       Remember: Only on these pages, we offer the outside-left and outside-right region.
        We do not need to handle the full-width pages here. */
     body.limitedwidth {
         /* If we have a outside-left and / or a outside-right block region. */
@@ -585,7 +585,7 @@ body.hasstickyfooter #back-to-top {
 
 /*---------------------------------------
  * Settings: Additional block regions - The outside-top, header and outside-bottom regions.
---------------------------------------*/
+ --------------------------------------*/
 
 /* Block regions: Outside top and outside bottom. */
 #theme-block-region-outside-top,
@@ -673,7 +673,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 
 /*---------------------------------------
  * Settings: Additional block regions - The footer regions.
---------------------------------------*/
+ --------------------------------------*/
 
 /* Block region: Footer. */
 #theme-block-region-footer {
@@ -694,7 +694,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 
 /*---------------------------------------
  * Settings: Additional block regions - The content regions.
---------------------------------------*/
+ --------------------------------------*/
 
 /* Block region: Content-upper and Content-lower. */
 #theme-block-region-content-upper,
@@ -707,7 +707,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 
 /*=======================================
  * Settings: Content -> Footnote.
-======================================*/
+ ======================================*/
 
 /* Static pages links dividers. */
 #footnote {
@@ -720,9 +720,9 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 }
 
 /* The footnote styles are different on the login page and on all non-login pages.
-    They are also different on larger and smaller screens.
-    We will deal with the overall cases for all screen sizes first and will then overwrite the things which need
-    to be different on the login page. */
+   They are also different on larger and smaller screens.
+   We will deal with the overall cases for all screen sizes first and will then overwrite the things which need
+   to be different on the login page. */
 
 /* On larger screens. */
 @include media-breakpoint-up(md) {
@@ -759,8 +759,8 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
         /* On smaller screens, there isn't any background image, so there's no need for a white background. */
 
         /* Add horizontal margin and padding to align the footnote with the main page content.
-        The numbers are adopted from the main content areas of the Moodle page.
-        Add another right padding as well to avoid that the content gets covered by the footer and back-to-top
+           The numbers are adopted from the main content areas of the Moodle page.
+           Add another right padding as well to avoid that the content gets covered by the footer and back-to-top
            buttons. */
         margin-left: .5rem;
         padding-left: 15px;
@@ -778,7 +778,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
         /* On really small screens, there isn't any background image, so there's no need for a white background. */
 
         /* Add horizontal margin and padding to align the footnote with the main page content.
-        The numbers are adopted from the main content areas of the Moodle page.
+           The numbers are adopted from the main content areas of the Moodle page.
            Add another right padding as well to avoid that the content gets covered by the back-to-top button. */
         margin-left: 15px;
         padding-left: 1rem;
@@ -813,11 +813,11 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
     /* If there is a loginbackground image configured. */
     body.pagelayout-login.loginbackgroundimage #footnote {
         /* Add white background color and a small bottom margin
-        to make the footnote work with background images.
-        This is necessary as this isn't covered by the normal background styles already
-        (which are only applied to pages > 768px.
-        Note that there isn't a border-radius added as the login box doesn't have a border radius as well
-        on this screen size. */
+           to make the footnote work with background images.
+           This is necessary as this isn't covered by the normal background styles already
+           (which are only applied to pages > 768px.
+           Note that there isn't a border-radius added as the login box doesn't have a border radius as well
+           on this screen size. */
         background-color: $white;
         margin-bottom: 1rem;
     }
@@ -827,14 +827,14 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 @include media-breakpoint-down(xs) {
     body.pagelayout-login.loginbackgroundimage #footnote {
         /* Add white background color and a small bottom margin
-        to make the footnote work with background images.
-        This is necessary as this isn't covered by the normal background styles already
+           to make the footnote work with background images.
+           This is necessary as this isn't covered by the normal background styles already
            (which are only applied to pages > 768px. */
         background-color: $white;
 
         /* Change horizontal margin and padding to
-        make the footnote work with background images.
-        We do not need any additional right padding as there isn't a back-to-top button nor a footer button
+           make the footnote work with background images.
+           We do not need any additional right padding as there isn't a back-to-top button nor a footer button
            on the login page on this screen size. */
         margin-left: 0;
         padding-left: calc(15px + 1rem);
@@ -871,7 +871,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*=======================================
  * Settings: Content -> Advertisement tiles.
-======================================*/
+ ======================================*/
 
 /* Remove horizontal paddings on the tile container on smaller screens to align it with the main frontpage content. */
 @include media-breakpoint-down(sm) {
@@ -908,11 +908,11 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*=======================================
  * Settings: Functionality -> Courses.
-======================================*/
+ ======================================*/
 
 /*---------------------------------------
  * Setting: Course related hints.
---------------------------------------*/
+ --------------------------------------*/
 
 .course-hint-hidden,
 .course-hint-guestaccess,
@@ -925,11 +925,11 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*=======================================
  * Settings: Smart menus.
-======================================*/
+ ======================================*/
 
 /*---------------------------------------
  * Header menu
---------------------------------------*/
+ --------------------------------------*/
 
 .navbar {
     &.fixed-top {
@@ -959,13 +959,15 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
             .moremenu {
                 .more-nav {
                     li {
-                        /* The card dropdown menu link position is changed to static to show the card dropdown menu in full width */
+                        /* The card dropdown menu link position is changed to static to show the card dropdown menu
+                           in full width */
                         &.card-dropdown {
                             position: static;
                         }
                         &.nav-item {
                             &:first-child {
-                                /* The position of the dropdown menu should not extend beyond the visible area of the screen */
+                                /* The position of the dropdown menu should not extend beyond the visible area of
+                                   the screen */
                                 .dropdown-menu {
                                     left: 0;
                                     right: auto;
@@ -993,13 +995,14 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                                 width: 100%;
                             }
                         }
-                        /*Removed the padding in the card dropdown overlay*/
+                        /* Removed the padding in the card dropdown overlay*/
                         &.dropdown.card-dropdown {
                             .card-block-wrapper .card-block a {
                                 padding: 0;
                             }
                         }
-                        /*Added max-height and overflow auto for scollbar when the card item reach the dropdown height */
+                        /* Added max-height and overflow auto for scollbar when the card item reach the dropdown
+                           height */
                         &.dropdownmoremenu .dropdown-menu .dropdown-menu {
                             max-height: 300px;
                             overflow-y: auto;
@@ -1008,7 +1011,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                 }
             }
             + .navbar {
-                /* Margin top has been added to the Header block to ensure that it does not conflict with the top header. */
+                /* Margin top has been added to the Header block to ensure that it does not conflict with the top
+                   header. */
                 &.fixed-top {
                     margin-top: 40px;
                     /* The position of the card dropdown block has been set to static,
@@ -1222,7 +1226,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                         margin: 0;
                     }
                 }
-                /* The font size and opacity reduced when the Menu link is selected as "Heading" option in the settings */
+                /* The font size and opacity reduced when the Menu link is selected as "Heading" option in the
+                   settings */
                 .dropdown-item {
                     /* Dropdown menu link alignment at top */
                     align-items: baseline;
@@ -1233,7 +1238,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                     &.menu-item-heading {
                         font-size: 14px;
                         opacity: .6;
-                        /* Menu link icon font size when the menu link as "Heading" and "icon" option selected in the settings */
+                        /* Menu link icon font size when the menu link as "Heading" and "icon" option selected in the
+                           settings */
                         i.icon {
                             font-size: 14px;
                         }
@@ -1248,7 +1254,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                         &:before {
                             content: '';
                         }
-                        /* The arrow icon and its postion at the right side is added when the header menu which has dropdown */
+                        /* The arrow icon and its postion at the right side is added when the header menu which has
+                           dropdown */
                         &:after {
                             content: '\f105';
                             font-family: fontawesome;
@@ -1426,8 +1433,9 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                         &.card-text-overlay-bottom {
                             /* The position relative to the card dropdown  */
                             position: relative;
-                            /* The border, background, box-shadow, outline are removed for the card overlay link and the width,
-                            height, position is added to redirect to course for the card top overlay & card bottom overlay */
+                            /* The border, background, box-shadow, outline are removed for the card overlay link and
+                               the width, height, position is added to redirect to course for the card top overlay &
+                               card bottom overlay */
                             > a {
                                 width: 100%;
                                 height: 100%;
@@ -1440,7 +1448,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                                 left: 0;
                                 z-index: 1;
                             }
-                            /* The width and position of the menu link at the top of the card block in the card dropdown menu */
+                            /* The width and position of the menu link at the top of the card block in the card
+                               dropdown menu */
                             .content-block {
                                 width: 100%;
                                 height: 100%;
@@ -1485,7 +1494,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                     height: 200px;
                 }
                 /* Card Overflow behaviour - No Wrap */
-                /* Displayed the card menu as flex, nowrap and horizontal scroll bar to show the dropdown menu in a single row */
+                /* Displayed the card menu as flex, nowrap and horizontal scroll bar to show the dropdown menu in a
+                   single row */
                 &.card-overflow-no-wrap.show .dropdown-menu {
                     overflow-x: auto;
                     display: flex;
@@ -1647,7 +1657,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*---------------------------------------
  * Smart menu settings
---------------------------------------*/
+ --------------------------------------*/
 
 /*  Menu item settings page style  */
 .menuitem-buttons {
@@ -1681,7 +1691,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*---------------------------------------
  * Footer menu
---------------------------------------*/
+ --------------------------------------*/
 
 #page-wrapper #page {
     #page-footer {
@@ -1745,8 +1755,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                                 bottom: 100%;
                                 left: auto;
                                 right: 0;
-                                /* The footer bottom dropdown submenu min-width, max-height, overflow and position to show
-                                the menus above the footer */
+                                /* The footer bottom dropdown submenu min-width, max-height, overflow and position
+                                   to show the menus above the footer */
                                 .dropdown-submenu ul {
                                     min-width: 150px;
                                     max-height: calc(100vh - 300px);
@@ -1757,20 +1767,22 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                                     top: auto;
                                 }
                             }
-                            /* Footer bottom dropdown style when the menus are in the "More" option in the responsive alignment */
+                            /* Footer bottom dropdown style when the menus are in the "More" option in the responsive
+                               alignment */
                             &.dropdownmoremenu {
                                 display: flex;
                                 align-items: center;
                                 /* The footer bottom dropdown menu icon and text are displayed in separate rows. */
                                 > a.dropdown-toggle {
                                     flex-direction: column;
-                                    /* Added ellipsis fontawesome icon, and diplay block to  for the dropdown more menu when the
-                                    smart menus are not added in the Footer menu */
+                                    /* Added ellipsis fontawesome icon, and diplay block to  for the dropdown more
+                                       menu when the smart menus are not added in the Footer menu */
                                     &:before {
                                         content: '\f142';
                                         font-family: fontawesome;
                                     }
-                                    /* The arrow icon after the More menu link text is hidden when the smart menus are not added */
+                                    /* The arrow icon after the More menu link text is hidden when the smart menus are
+                                       not added */
                                     &:after {
                                         display: none;
                                     }
@@ -1800,28 +1812,33 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                             }
                         }
                         /* Footer bottom menu card-dropdown */
-                        /* The card dropdown Position is changed to static, so the dropdown menu will be in fullscreen  */
+                        /* The card dropdown Position is changed to static, so the dropdown menu will be in
+                           fullscreen */
                         &.card-dropdown {
                             position: static;
                             /* Card appearance - Card form style */
                             /* Card form style - Square */
                             &.card-form-square {
-                                /* Minimun and maximum width is added when the Card size "Tiny" with card form "Square" */
+                                /* Minimun and maximum width is added when the Card size "Tiny" with card form
+                                   "Square" */
                                 &.card-size-tiny .dropdown-menu .card-block {
                                     min-width: 90px;
                                     max-width: 90px;
                                 }
-                                /* Minimun and maximum width is added when the Card size "Small" with card form "Square" */
+                                /* Minimun and maximum width is added when the Card size "Small" with card form
+                                   "Square" */
                                 &.card-size-small .dropdown-menu .card-block {
                                     min-width: 140px;
                                     max-width: 140px;
                                 }
-                                /* Minimun and maximum width is added when the Card size "Medium" with card form "Square" */
+                                /* Minimun and maximum width is added when the Card size "Medium" with card form
+                                   "Square" */
                                 &.card-size-medium .dropdown-menu .card-block {
                                     min-width: 190px;
                                     max-width: 190px;
                                 }
-                                /* Minimun and maximum width is added when the Card size "Large" with card form "Square" */
+                                /* Minimun and maximum width is added when the Card size "Large" with card form
+                                   "Square" */
                                 &.card-size-large .dropdown-menu .card-block {
                                     min-width: 240px;
                                     max-width: 240px;
@@ -1829,22 +1846,26 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                             }
                             /* Card form style - Portrait */
                             &.card-form-portrait {
-                                /* Minimun and maximum width is added when the Card size "Tiny" with card form "portrait" */
+                                /* Minimun and maximum width is added when the Card size "Tiny" with card form
+                                   "portrait" */
                                 &.card-size-tiny .dropdown-menu .card-block {
                                     min-width: 60px;
                                     max-width: 60px;
                                 }
-                                /* Minimun and maximum width is added when the Card size "Small" with card form "portrait" */
+                                /* Minimun and maximum width is added when the Card size "Small" with card form
+                                   "portrait" */
                                 &.card-size-small .dropdown-menu .card-block {
                                     min-width: 94px;
                                     max-width: 94px;
                                 }
-                                /* Minimun and maximum width is added when the Card size "Medium" with card form "portrait" */
+                                /* Minimun and maximum width is added when the Card size "Medium" with card form
+                                   "portrait" */
                                 &.card-size-medium .dropdown-menu .card-block {
                                     min-width: 127px;
                                     max-width: 127px;
                                 }
-                                /* Minimun and maximum width is added when the Card size "Large" with card form "portrait" */
+                                /* Minimun and maximum width is added when the Card size "Large" with card form
+                                   "portrait" */
                                 &.card-size-large .dropdown-menu .card-block {
                                     min-width: 160px;
                                     max-width: 160px;
@@ -1852,22 +1873,26 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                             }
                             /* Card form style - Landscape */
                             &.card-form-landscape {
-                                /* Minimun and maximum width is added when the Card size "Tiny" with card form "Landscape" */
+                                /* Minimun and maximum width is added when the Card size "Tiny" with card form
+                                   "Landscape" */
                                 &.card-size-tiny .dropdown-menu .card-block {
                                     min-width: 135px;
                                     max-width: 135px;
                                 }
-                                /* Minimun and maximum width is added when the Card size "Small" with card form "Landscape" */
+                                /* Minimun and maximum width is added when the Card size "Small" with card form
+                                   "Landscape" */
                                 &.card-size-small .dropdown-menu .card-block {
                                     min-width: 210px;
                                     max-width: 210px;
                                 }
-                                /* Minimun and maximum width is added when the Card size "Medium" with card form "Landscape" */
+                                /* Minimun and maximum width is added when the Card size "Medium" with card form
+                                   "Landscape" */
                                 &.card-size-medium .dropdown-menu .card-block {
                                     min-width: 285px;
                                     max-width: 285px;
                                 }
-                                /* Minimun and maximum width is added when the Card size "Large" with card form "Landscape" */
+                                /* Minimun and maximum width is added when the Card size "Large" with card form
+                                   "Landscape" */
                                 &.card-size-large .dropdown-menu .card-block {
                                     min-width: 360px;
                                     max-width: 360px;
@@ -1894,14 +1919,16 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                                     }
                                 }
                             }
-                            /* The card dropdown menu width is 100%, so the dropdown menu will not overflow the screen */
+                            /* The card dropdown menu width is 100%, so the dropdown menu will not overflow the
+                               screen */
                             .dropdown-menu {
                                 width: 100%;
                                 max-height: calc(100vh - 300px);
                                 overflow-y: auto;
                             }
                         }
-                        /* The position of the footer dropdown menu should not extend beyond the visible area of the screen */
+                        /* The position of the footer dropdown menu should not extend beyond the visible area of
+                           the screen */
                         &:first-child.dropdown .dropdown-menu {
                             left: 0;
                             right: auto;
@@ -1917,7 +1944,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 @include media-breakpoint-down(sm) {
     #page-wrapper #page {
         &.footer-bottom-menu {
-            /*  Increases the space at the bottom for the footer popover, as the bottom menu bar might hide it.  */
+            /* Increases the space at the bottom for the footer popover, as the bottom menu bar might hide it. */
             .btn-footer-popover {
                 bottom: 4rem;
             }
@@ -1950,11 +1977,11 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*=======================================
  * General styling
-======================================*/
+ ======================================*/
 
 /*---------------------------------------
  * Form element: Fontawesome picker
---------------------------------------*/
+ --------------------------------------*/
 
 .fontawesome-picker {
     /* Padding removed in the fontawesome picker popover. */
@@ -2004,7 +2031,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*---------------------------------------
  * Form element: Color picker
---------------------------------------*/
+ --------------------------------------*/
 
 /* Display the color picker box and the text field as column. */
 .theme_boost_union-form-colour-picker .felement {
@@ -2013,18 +2040,24 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /*=======================================
  * Supporting third-party plugins
-======================================*/
+ ======================================*/
 
+/*---------------------------------------
+ * Learning Tools
+ --------------------------------------*/
+
+/* On smaller screens. */
 @include media-breakpoint-down(sm) {
-    /*Learning tools floating button position alignment*/
-    #page-wrapper #page.footer-bottom-menu .learningtools-action-info .floating-button {
+    /* Move the learning tools floating button up as soon as the bottom menu is shown. */
+    #page.footer-bottom-menu .learningtools-action-info .floating-button {
         bottom: 4rem;
     }
 }
 
+
 /*---------------------------------------
  * Dash Pro
---------------------------------------*/
+ --------------------------------------*/
 
 /* Style Dash Pro dashboards. */
 .path-local-dash-dashboard #page.drawers {
