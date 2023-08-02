@@ -1134,20 +1134,46 @@ class smartmenu_item {
             if (isset($data[$fieldid])) {
                 $data = $data[$fieldid];
                 $data->instance_form_definition($mform);
-                if ("select" == $field->get('type')) {
-                    $elem = $mform->getElement("customfield_".$shortname);
+                $elem = $mform->getElement("customfield_".$shortname);
+                // Remove the rules for custom fields.
+                if (isset($mform->_rules["customfield_".$shortname])) {
+                    unset($mform->_rules["customfield_".$shortname]);
+                }
+                // Remove the custom fields from required sections.
+                if (($key = array_search("customfield_".$shortname, $mform->_required)) !== false) {
+                    unset($mform->_required[$key]);
+                }
+                // By default, ensure that no values are pre-set in the form as defaults.
+                $default = (isset($mform->_types["customfield_".$shortname])
+                    && $mform->_types["customfield_".$shortname]) == 'int' ? 0 : '';
+
+                $mform->setDefault("customfield_".$shortname, $default);
+                // Change the password fields type to text, then admin can view the password field as text field.
+                if ($elem->_type == 'password') {
+                    $elem->_type = 'text';
+                }
+
+                // Make the select fields to select multiple.
+                if ("select" == $field->get('type') || "semester" == $field->get('type')) {
                     $elem->setMultiple(true);
                     $mform->setDefault("customfield_".$shortname, 0);
                 }
+
                 $mform->hideif("customfield_".$shortname, 'type', 'neq', self::TYPEDYNAMIC);
             }
         }
 
-        $PAGE->requires->js_amd_inline('require(["core/form-autocomplete"], function(Auto) {
+        $PAGE->requires->js_amd_inline('require(["core/form-autocomplete", "core/str"], function(Auto, Str) {
             // List of custom fields.
             var dropdowns = document.querySelectorAll("div[data-fieldtype=select] [id^=id_customfield_]");
-            dropdowns.forEach((elem) => {
-                Auto.enhance(elem);
+            // Fetch no-selection string.
+            Str.get_string("noselection", "form").then((noSelection) => {
+                dropdowns.forEach((elem) => {
+                    elem.classList.add("custom-select");
+                    // Change the field type to autcomplete, it fix the suggestion box alignment.
+                    elem.parentNode.setAttribute("data-fieldtype", "autocomplete");
+                    Auto.enhance(elem, "", false, "", false, true, noSelection);
+                });
             });
         })');
     }
