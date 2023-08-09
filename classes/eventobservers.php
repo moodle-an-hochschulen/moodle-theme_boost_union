@@ -172,29 +172,10 @@ class eventobservers {
         // Require smart menus library.
         require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
-        // Course is moved to another category, Event data only contains the newer category.
-        // Update the cache for new category, added the updated course in that menu item,
-        // But the previous category of the course still hold this course.
-        // Therefore need to delete all the items which are configured as dynamic courses.
-        if (isset($event->other['updatedfields'])) {
-            if (in_array('category', array_keys($event->other['updatedfields']))) {
-                // Purge all the dynamic course items cache.
-                \smartmenu_helper::purge_cache_dynamic_courseitems();
-                return true;
-            }
-        }
+        // Purge all the dynamic course items cache.
+        \smartmenu_helper::purge_cache_dynamic_courseitems();
 
-        // Fetch category id of the deleted course from the record snapshot.
-        // Get category using normal get_course throw course not find error.
-        if ($event->action == 'deleted') {
-            $record = $event->get_record_snapshot($event->objecttable, $event->objectid);
-            if (!empty($record)) {
-                \smartmenu_helper::purge_cache_updated_category($record->category);
-            }
-            return true;
-        }
-        // Clear the cache of menu when the course updated.
-        \smartmenu_helper::purge_cache_updated_course($event->objectid);
+        return true;
     }
 
     /**
@@ -209,7 +190,7 @@ class eventobservers {
         require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
         // Clear the cache of menu when the course updated.
-        \smartmenu_helper::purge_cache_updated_category($event->objectid);
+        \smartmenu_helper::purge_cache_dynamic_courseitems();
     }
 
     /**

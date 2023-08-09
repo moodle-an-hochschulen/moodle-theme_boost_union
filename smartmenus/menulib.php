@@ -487,39 +487,6 @@ class smartmenu_helper {
     }
 
     /**
-     * Purge the cache of items and menus which is configured to use the affected course category.
-     *
-     * @param int $courseid
-     * @return void
-     */
-    public static function purge_cache_updated_course($courseid) {
-        // Fetch affected course data.
-        $course = get_course($courseid);
-        if ($items = self::find_condition_used_menuitems($course->category, 'category')) {
-            // List of items to purge.
-            $items = array_column($items, 'id');
-            // Remove the menus items for the user.
-            array_walk($items, ['self', 'purge_item_cache']);
-        }
-    }
-
-    /**
-     * Purge the cache of items and menus which is configured to use the affected course category.
-     *
-     * @param int $categoryid
-     * @return void
-     */
-    public static function purge_cache_updated_category($categoryid) {
-        // Fetch list of menuitems, configured with the event categoryid.
-        if ($items = self::find_condition_used_menuitems($categoryid, 'category')) {
-            // List of items to purge.
-            $items = array_column($items, 'id');
-            // Remove the menus items for the user.
-            array_walk($items, ['self', 'purge_item_cache']);
-        }
-    }
-
-    /**
      * Purge the cache of dynamic course items.
      *
      * @return void
