@@ -49,7 +49,9 @@ $PAGE->set_heading(get_string('smartmenus', 'theme_boost_union'));
 $PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', array('category' => 'themes')));
 $PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
         array('category' => 'theme_boost_union')));
-$PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/edit.php'));
+$PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/menus.php'));
+$PAGE->navbar->add(get_string('edit'), $url);
+
 
 // Edit smart menus form.
 $menuform = new \theme_boost_union\form\smartmenu_form(null, ['id' => $id]);

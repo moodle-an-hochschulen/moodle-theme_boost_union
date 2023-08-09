@@ -95,13 +95,6 @@ if ($action !== null && confirm_sesskey()) {
 // Access checks.
 admin_externalpage_setup('theme_boost_union_smartmenus');
 
-// Prepare the breadcrumbs. // TODO Review.
-$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', array('category' => 'themes')));
-$PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
-                array('category' => 'theme_boost_union'))
-);
-$PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/menus.php'));
-
 // Further prepare the page.
 $PAGE->set_heading(theme_boost_union_get_externaladminpage_heading());
 
