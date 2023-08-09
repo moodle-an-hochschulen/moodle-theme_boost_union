@@ -641,6 +641,9 @@ class smartmenu_item {
         $sql = " SELECT $select FROM {course} c $join";
         $sql .= $where ? " WHERE $where " : '';
 
+        // Sort the courses in ascending order by its display field.
+        $sql .= ($this->item->displayfield == self::FIELD_SHORTNAME) ? " ORDER BY c.shortname ASC " : " ORDER BY c.fullname ASC ";
+
         // Fetch the course records based on the sql.
         $records = $DB->get_records_sql($sql, $params);
 
