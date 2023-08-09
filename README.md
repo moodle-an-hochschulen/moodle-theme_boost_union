@@ -379,6 +379,14 @@ Whatever you add to this textarea will be displayed at the end of a page, in the
 
 In this tab there are the following settings:
 
+##### About us
+
+With these settings, you can add rich text content which will be shown on an about us page.
+
+##### Offers
+
+With these settings, you can add rich text content which will be shown on an offers page.
+
 ##### Imprint
 
 With these settings, you can add rich text content which will be shown on the imprint page.
@@ -394,6 +402,18 @@ With these settings, you can add rich text content which will be shown on a help
 ##### Maintenance
 
 With these settings, you can add rich text content which will be shown on a maintenance information page (which is not the same as the built-in Moodle maintenance page).
+
+##### Generic page 1
+
+With these settings, you can add rich text content which will be shown on a generic page 1.
+
+##### Generic page 2
+
+With these settings, you can add rich text content which will be shown on a generic page 2.
+
+##### Generic page 3
+
+With these settings, you can add rich text content which will be shown on a generic page 3.
 
 #### Tab "Information banners"
 
