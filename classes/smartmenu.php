@@ -699,15 +699,20 @@ class smartmenu {
         if (empty($menus) || $location == '') {
             return [];
         }
+        // Get the menu location from topmenus list.
+        // Locations from itemdata is not accurate, to fix this need to remove the all of items cache for the updated menu.
+        // Instead of delete item caches, get locations from cached menus list.
+        $topmenus = smartmenu_helper::get_menu_cache()->get(self::CACHE_MENUSLIST);
+
+        $menulocation = [];
         foreach ($menus as $menu) {
 
             $menu = (object) $menu;
 
             if (isset($menu->menudata->location)) {
                 $menulocation = $menu->menudata->location;
-            }
-            if (isset($menu->itemdata->location)) {
-                $menulocation = $menu->itemdata->location;
+            } else if (isset($menu->itemdata->menu) && isset($topmenus[$menu->itemdata->menu])) { // Inline menus.
+                $menulocation = json_decode($topmenus[$menu->itemdata->menu]->location);
             }
 
             if (!isset($menulocation) || empty($menulocation)) {
@@ -716,6 +721,7 @@ class smartmenu {
             // The menu contians the specified location. then store the menu for this location.
             if (in_array($location, $menulocation)) {
                 $result[] = $menu;
+                $menulocation = []; // Reset the menu location for verify next menu.
             }
         }
 
