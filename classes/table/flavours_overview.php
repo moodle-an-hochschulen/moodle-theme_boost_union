@@ -24,7 +24,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_boost_union;
+namespace theme_boost_union\table;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -40,7 +40,7 @@ require_once($CFG->libdir.'/tablelib.php');
  * @copyright  based on code by bdecent gmbh <https://bdecent.de> in format_kickstart.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class flavours_overview_table extends \table_sql {
+class flavours_overview extends \table_sql {
 
     /**
      * Setup table.

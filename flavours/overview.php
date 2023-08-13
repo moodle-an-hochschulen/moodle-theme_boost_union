@@ -102,7 +102,7 @@ $PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('flavo
 $PAGE->set_heading(theme_boost_union_get_externaladminpage_heading());
 
 // Build flavours table.
-$table = new \theme_boost_union\flavours_overview_table();
+$table = new \theme_boost_union\table\flavours_overview();
 $table->define_baseurl($PAGE->url);
 
 // Start page output.
