@@ -109,6 +109,12 @@ echo $OUTPUT->heading(get_string('smartmenus', 'theme_boost_union'));
 // Show smart menus description.
 echo get_string('smartmenus_desc', 'theme_boost_union');
 
+// Add experimental warning.
+$experimentalnotification = new \core\output\notification(get_string('smartmenusexperimental', 'theme_boost_union'),
+        \core\output\notification::NOTIFY_WARNING);
+$experimentalnotification->set_show_closebutton(false);
+echo $OUTPUT->render($experimentalnotification);
+
 // Prepare 'Create smart menu' button. // TODO Review.
 $createbutton = $OUTPUT->box_start();
 $createbutton .= smartmenu_helper::theme_boost_union_smartmenu_buttons();

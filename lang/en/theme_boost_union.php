@@ -774,6 +774,7 @@ $string['smartmenusdynamiccourses'] = 'Dynamic courses';
 $string['smartmenusenrolled'] = 'Enrolled';
 $string['smartmenusenrolmentrole'] = 'Enrolment role';
 $string['smartmenusenrolmentrole_help'] = 'Select the role for which the menu item should be visible. The menu item will only be displayed to users who have this role';
+$string['smartmenusexperimental'] = 'Please note: The smart menus functionality is fully usable in the current state of implementation, but has to be <em>considered as experimental</em> due to the large amount of setting combinations which still might trigger unexpected issues. Against this background, please test your smart menus with your individual menu settings thoroughly. If you encounter any issues with smart menus, please report them on <a href="https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues">Github</a> with clear steps to reproduce.';
 $string['smartmenusforcedintomoremenu'] = 'Forced into more menu';
 $string['smartmenusforcedoutsideofmoremenu'] = 'Forced out side of more menu';
 $string['smartmenusfrom'] = 'From';
