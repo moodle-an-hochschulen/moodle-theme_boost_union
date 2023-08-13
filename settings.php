@@ -1075,7 +1075,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Setting: Hide nodes in primary navigation.
         $name = 'theme_boost_union/hidenodesprimarynavigation';
         $title = get_string('hidenodesprimarynavigationsetting', 'theme_boost_union', null, true);
-        $description = get_string('hidenodesprimarynavigationsetting_desc', 'theme_boost_union', null, true);
+        $smartmenuurl = new moodle_url('/theme/boost_union/smartmenus/menus.php');
+        $description = get_string('hidenodesprimarynavigationsetting_desc', 'theme_boost_union',
+                array('url' => $smartmenuurl), true);
         $setting = new admin_setting_configmulticheckbox($name, $title, $description, array(), $hidenodesoptions);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
