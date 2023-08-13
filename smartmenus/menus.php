@@ -140,7 +140,7 @@ if ($countmenus < 1) {
     echo $createbutton;
 
     // And then show the table.
-    $table->out(10, true);
+    $table->out(50, true);
 }
 
 // Finish page output.
