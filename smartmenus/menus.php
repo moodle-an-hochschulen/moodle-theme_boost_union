@@ -99,7 +99,7 @@ admin_externalpage_setup('theme_boost_union_smartmenus');
 $PAGE->set_heading(theme_boost_union_get_externaladminpage_heading());
 
 // Build smart menus table.
-$table = new theme_boost_union\table\smartmenu($context->id);
+$table = new theme_boost_union\table\smartmenus_menus($context->id);
 $table->define_baseurl($PAGE->url);
 
 // Start page output.

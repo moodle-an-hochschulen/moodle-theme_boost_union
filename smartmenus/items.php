@@ -125,7 +125,7 @@ if ($action !== null && confirm_sesskey() && $action != 'preview') {
 }
 
 // Build smart menu items table.
-$table = new theme_boost_union\table\menuitems($menu->id);
+$table = new theme_boost_union\table\smartmenus_items($menu->id);
 $table->define_baseurl($PAGE->url);
 
 // Start page output.

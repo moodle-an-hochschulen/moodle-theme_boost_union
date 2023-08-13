@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Table to list the items for menu. Display the items access rules and it type.
+ * Table to list the menus.
  *
  * @package    theme_boost_union
  * @copyright  2023 bdecent GmbH <https://bdecent.de>
@@ -30,12 +30,12 @@ require_once($CFG->dirroot.'/lib/tablelib.php');
 
 use moodle_url;
 use html_writer;
-use smartmenu_helper;
+use theme_boost_union\smartmenu as menuinstance;
 
 /**
- * List of items available in the menu.
+ * List of Smart menus table.
  */
-class menuitems extends \table_sql {
+class smartmenus_menus extends \table_sql {
 
     /**
      * Setup and Render the menus table.
@@ -45,13 +45,15 @@ class menuitems extends \table_sql {
      * @param string $downloadhelpbutton
      */
     public function out($pagesize, $useinitialsbar, $downloadhelpbutton = '') {
-        $columns = ['title', 'type', 'restrictions', 'sortorder'];
 
+        // Define table headers and columns.
+        $columns = ['title', 'description', 'location', 'type', 'sortorder'];
         $headers = [
             get_string('smartmenustitle', 'theme_boost_union'),
+            get_string('smartmenusdescription', 'theme_boost_union'),
+            get_string('smartmenuslocation', 'theme_boost_union'),
             get_string('smartmenustypes', 'theme_boost_union'),
-            get_string('smartmenusrestriction', 'theme_boost_union'),
-            get_string('action'),
+            get_string('actions'),
         ];
 
         $this->define_columns($columns);
@@ -60,19 +62,21 @@ class menuitems extends \table_sql {
         // Remove sorting for some fields.
         $this->sortable(false, 'sortorder', SORT_ASC);
 
+        // Do not make the table collapsible.
+        $this->collapsible(false);
+
+        $this->set_attribute('id', 'smartmenus');
+
         $this->guess_base_url();
-        // Table name for TESTING.
-        $this->set_attribute('id', 'smartmenus_item');
 
         parent::out($pagesize, $useinitialsbar, $downloadhelpbutton);
     }
 
     /**
-     * Guess the base url for the participants table.
+     * Guess the base url for the menu items table.
      */
     public function guess_base_url(): void {
-        $menu = required_param('menu', PARAM_INT);
-        $this->baseurl = new moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $menu]);
+        $this->baseurl = new moodle_url('/theme/boost_union/smartmenus/menus.php');
     }
 
     /**
@@ -84,95 +88,61 @@ class menuitems extends \table_sql {
      */
     public function query_db($pagesize, $useinitialsbar = true) {
         // Fetch all avialable records from smart menu table.
-        $this->set_sql('*', '{theme_boost_union_menuitems}', 'menu=:menuid', ['menuid' => $this->uniqueid]);
+        $this->set_sql('*', '{theme_boost_union_menus}', '1=1');
+
         parent::query_db($pagesize, $useinitialsbar);
     }
 
     /**
-     * Display the item type, whether is static, dynamic, or heading.
+     * Show the menu title in the list, render the description based on the show description value "Above, below and help".
+     * Default help_icon method only works with string identifiers, rendered the help icon from template directly.
      *
-     * @param stdclass $row Data of the item.
-     * @return string HTML content to show the item type.
+     * @param object $row
+     * @return void
      */
-    public function col_type($row) {
-        $type = \theme_boost_union\smartmenu_item::get_types($row->type);
-        return html_writer::tag('span', $type, ['class' => 'badge badge-primary']);
+    public function col_title($row) {
+        global $OUTPUT;
+        $title = html_writer::tag('h6', $row->title, ['class' => 'menu-title']);
+        return $title;
     }
 
     /**
-     * Display the access rules configured in menu. Fetch the user readable names for roles, cohorts, lanauges and dates.
+     * Display the menus description.
      *
-     * @param  object $row
-     * @return string $html
+     * @param stdclass $row
+     * @return void
      */
-    public function col_restrictions($row) {
-        global $DB;
+    public function col_description($row) {
 
-        $rules = [];
+        $description = format_text($row->description, FORMAT_HTML);
+        $description = html_to_text($description);
 
-        if ($row->roles != '' && !empty(json_decode($row->roles))) {
-            $roles = json_decode($row->roles);
-            $rolelist = $DB->get_records_list('role', 'id', $roles);
-            $rolenames = role_fix_names($rolelist);
-            array_walk($rolenames, function(&$value) {
-                $value = html_writer::tag('span', $value->localname, ['class' => 'badge badge-primary']);
-            });
+        return $description;
+    }
 
-            $rules[] = [
-                'name' => get_string('smartmenusbyrole', 'theme_boost_union'),
-                'value' => implode(' ', $rolenames)
-            ];
-        }
+    /**
+     * Display the locations of menu. Convert the languge shortname to user readable name.
+     *
+     * @param stdClass $row The row object containing the location information.
+     * @return string The HTML code to display the location information as a list of badges.
+     */
+    public function col_location($row) {
+        $locations = json_decode($row->location);
+        return (!empty($locations)) ? implode(' ', array_map(function($value) {
+            $location = \theme_boost_union\smartmenu::get_location($value);
+            return html_writer::tag('span', $location, ['class' => 'badge badge-primary']);
+        }, $locations)) : "";
+    }
 
-        if ($row->cohorts != '' && !empty(json_decode($row->cohorts))) {
-            $cohorts = json_decode($row->cohorts);
-            $cohortlist = $DB->get_records_list('cohort', 'id', $cohorts);
-
-            array_walk($cohortlist, function(&$value) {
-                $value = html_writer::tag('span', $value->name, ['class' => 'badge badge-primary']);
-            });
-            $rules[] = [
-                'name' => get_string('smartmenusbycohort', 'theme_boost_union'),
-                'value' => implode(' ', $cohortlist)
-            ];
-        }
-
-        if ($row->languages != '' && !empty(json_decode($row->languages))) {
-            // Get user readable name for selected lanauges.
-            $languages = json_decode($row->languages);
-            $options = get_string_manager()->get_list_of_translations();
-            $list = [];
-            foreach ($languages as $lang) {
-                if (isset($options[$lang])) {
-                    $list[] = html_writer::tag('span', $options[$lang], ['class' => 'badge badge-primary']);
-                }
-            }
-            $rules[] = [
-                'name' => get_string('smartmenusbylanguage', 'theme_boost_union'),
-                'value' => implode(' ', $list)
-            ];
-        }
-
-        if ($row->start_date) {
-            $rules[] = [
-                'name' => get_string('smartmenusfrom', 'theme_boost_union'),
-                'value' => userdate($row->start_date, get_string('strftimedate', 'core_langconfig') )
-            ];
-
-        }
-        if ($row->end_date) {
-            $rules[] = [
-                'name' => get_string('smartmenusdurationuntil', 'theme_boost_union'),
-                'value' => userdate($row->end_date, get_string('strftimedate', 'core_langconfig') )
-            ];
-
-        }
-
-        $html = '';
-        foreach ($rules as $rule) {
-            $html .= html_writer::tag('li', html_writer::tag('label', $rule['name']) . $rule['value']);
-        }
-        return $html ? html_writer::tag('ul', $html) : get_string('smartmenusnorestrict', 'theme_boost_union');
+    /**
+     * Display the "type" of column for a row in the item table.
+     *
+     * @param object $row The database row representing the Smart Menu item.
+     * @return string The HTML representation of the "type" column for the given row.
+     */
+    public function col_type($row) {
+        $type = \theme_boost_union\smartmenu::get_type($row->type);
+        return html_writer::tag('span', $type, ['class' => 'badge badge-primary']);
     }
 
     /**
@@ -184,7 +154,7 @@ class menuitems extends \table_sql {
     public function col_sortorder($row) {
         global $OUTPUT;
 
-        $baseurl = new \moodle_url('/theme/boost_union/smartmenus/items.php', [
+        $baseurl = new \moodle_url('/theme/boost_union/smartmenus/menus.php', [
             'id' => $row->id,
             'sesskey' => \sesskey()
         ]);
@@ -193,20 +163,21 @@ class menuitems extends \table_sql {
         // Show/Hide.
         if ($row->visible) {
             $actions[] = array(
-                'url' => new \moodle_url($baseurl, array('action' => 'hide')),
+                'url' => new \moodle_url($baseurl, array('action' => 'hidemenu')),
                 'icon' => new \pix_icon('t/hide', \get_string('hide')),
                 'attributes' => array('data-action' => 'hide', 'class' => 'action-hide')
             );
         } else {
             $actions[] = array(
-                'url' => new \moodle_url($baseurl, array('action' => 'show')),
+                'url' => new \moodle_url($baseurl, array('action' => 'showmenu')),
                 'icon' => new \pix_icon('t/show', \get_string('show')),
                 'attributes' => array('data-action' => 'show', 'class' => 'action-show')
             );
         }
+
         // Edit.
         $actions[] = array(
-            'url' => new moodle_url('/theme/boost_union/smartmenus/edit_items.php', [
+            'url' => new moodle_url('/theme/boost_union/smartmenus/edit.php', [
                 'id' => $row->id,
                 'sesskey' => sesskey()
             ]),
@@ -214,11 +185,19 @@ class menuitems extends \table_sql {
             'attributes' => array('class' => 'action-edit')
         );
 
-        // Make the menu item duplicate.
+        // Make the menu duplicate.
         $actions[] = array(
             'url' => new \moodle_url($baseurl, ['action' => 'copy']),
-            'icon' => new \pix_icon('t/copy', \get_string('smartmenuscopyitem', 'theme_boost_union')),
+            'icon' => new \pix_icon('t/copy', \get_string('smartmenuscopymenu', 'theme_boost_union')),
             'attributes' => array('class' => 'action-copy')
+        );
+
+        // List of items.
+        $itemsurl = new \moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $row->id]);
+        $actions[] = array(
+            'url' => $itemsurl,
+            'icon' => new \pix_icon('e/bullet_list', \get_string('list')),
+            'attributes' => array('class' => 'action-list-items')
         );
 
         // Delete.
@@ -226,7 +205,7 @@ class menuitems extends \table_sql {
             'url' => new \moodle_url($baseurl, array('action' => 'delete')),
             'icon' => new \pix_icon('t/delete', \get_string('delete')),
             'attributes' => array('class' => 'action-delete'),
-            'action' => new \confirm_action(get_string('smartmenusdeleteconfirmitem', 'theme_boost_union'))
+            'action' => new \confirm_action(get_string('smartmenusdeleteconfirmmenu', 'theme_boost_union'))
         );
 
         // Move up/down.
@@ -264,8 +243,8 @@ class menuitems extends \table_sql {
 
         // Show notification as html element.
         $notification = new \core\output\notification(
-                get_string('smartmenusitemsnothingtodisplay', 'theme_boost_union'),
-                        \core\output\notification::NOTIFY_INFO);
+                get_string('smartmenusmenusnothingtodisplay', 'theme_boost_union'),
+                    \core\output\notification::NOTIFY_INFO);
         $notification->set_show_closebutton(false);
         echo $OUTPUT->render($notification);
     }
