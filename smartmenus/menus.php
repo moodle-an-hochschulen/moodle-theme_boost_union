@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - List the available menus and manage the menu Create, Update, Delete actions, sort the order of menus.
+ * Theme Boost Union - Menu overview page
  *
  * @package    theme_boost_union
  * @copyright  2023 bdecent GmbH <https://bdecent.de>
@@ -35,12 +35,13 @@ require_once($CFG->libdir.'/adminlib.php');
 $action = optional_param('action', null, PARAM_ALPHAEXT);
 $menuid = optional_param('id', null, PARAM_INT);
 
-// Page values.
+// Get system context.
 $context = context_system::instance();
 
-// Prepare the page.
+// Prepare the page (to make sure that all necessary information is already set even if we just handle the actions as a start).
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/theme/boost_union/smartmenus/menus.php'));
+$PAGE->set_cacheable(false);
 
 // Process actions.
 if ($action !== null && confirm_sesskey()) {
@@ -96,6 +97,7 @@ if ($action !== null && confirm_sesskey()) {
 admin_externalpage_setup('theme_boost_union_smartmenus');
 
 // Further prepare the page.
+$PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('smartmenus', 'theme_boost_union')));
 $PAGE->set_heading(theme_boost_union_get_externaladminpage_heading());
 
 // Build smart menus table.
@@ -115,9 +117,11 @@ $experimentalnotification = new \core\output\notification(get_string('smartmenus
 $experimentalnotification->set_show_closebutton(false);
 echo $OUTPUT->render($experimentalnotification);
 
-// Prepare 'Create smart menu' button. // TODO Review.
+// Prepare 'Create smart menu' button.
 $createbutton = $OUTPUT->box_start();
-$createbutton .= smartmenu_helper::theme_boost_union_smartmenu_buttons();
+$createbutton .= $OUTPUT->single_button(
+        new \moodle_url('/theme/boost_union/smartmenus/edit.php', ['sesskey' => sesskey()]),
+        get_string('smartmenuscreatemenu', 'theme_boost_union'), 'get');
 $createbutton .= $OUTPUT->box_end();
 
 // If there aren't any smart menus yet.

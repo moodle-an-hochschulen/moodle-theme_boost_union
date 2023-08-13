@@ -662,26 +662,6 @@ class smartmenu_helper {
     }
 
     /**
-     * Generate the button which is displayed on top of the menus table. Helps to create menu.
-     *
-     * @return string The HTML contents to display the create menu button.
-     */
-    public static function theme_boost_union_smartmenu_buttons() {
-        global $OUTPUT;
-
-        // Setup create menu button on page.
-        $caption = get_string('smartmenuscreatemenu', 'theme_boost_union');
-        $editurl = new moodle_url('/theme/boost_union/smartmenus/edit.php', ['sesskey' => sesskey()]);
-
-        // IN Moodle 4.2, primary button param depreceted.
-        $primary = defined('single_button::BUTTON_PRIMARY') ? single_button::BUTTON_PRIMARY : true;
-        $button = new single_button($editurl, $caption, 'get', $primary);
-        $button = $OUTPUT->render($button);
-
-        return $button;
-    }
-
-    /**
      * Function returns the rgb format with the combination of passed color hex and opacity.
      * Used in the item background color or card layout.
      *
