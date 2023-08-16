@@ -15,9 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - List the items table for the menu.
- *
- * Manage the item Create, Update, Delete actions, sort the order of menus, Duplicate the item.
+ * Theme Boost Union - Menu items page.
  *
  * @package    theme_boost_union
  * @copyright  2023 bdecent GmbH <https://bdecent.de>
@@ -27,55 +25,55 @@
 // Require config.
 require(__DIR__.'/../../../config.php');
 
-// Require admin library.
-require_once($CFG->libdir.'/adminlib.php');
+// Require plugin libraries.
 require_once($CFG->dirroot. '/theme/boost_union/smartmenus/menulib.php');
 
+// Require admin library.
+require_once($CFG->libdir.'/adminlib.php');
+
 // Get parameters.
+$action = optional_param('action', null, PARAM_ALPHAEXT);
 $menuid = optional_param('menu', null, PARAM_INT);
 $id = optional_param('id', null, PARAM_INT);
-$action = optional_param('action', null, PARAM_ALPHAEXT);
 
 // Verify the existence of the menu and menu item.
 if ($menuid == null && $id !== null) {
     // Verify the menu item exists. Get the menu from item id.
     $item = $DB->get_record('theme_boost_union_menuitems', ['id' => $id]);
     if (!$menu = $DB->get_record('theme_boost_union_menus', ['id' => $item->menu])) {
-        throw new moodle_exception('menunotfound', 'theme_boost_union_smartmenus');
+        throw new moodle_exception('error:smartmenusmenuitemnotfound', 'theme_boost_union');
     }
 } else {
     // Verify the menu exists.
     $menu = $DB->get_record('theme_boost_union_menus', ['id' => $menuid]);
     if (!$menu) {
-        throw new moodle_exception('menunotfound', 'theme_boost_union_smartmenus');
+        throw new moodle_exception('error:smartmenusmenunotfound', 'theme_boost_union');
     }
 }
 
-// Page values.
-$url = new moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $menu->id]);
-$context = \context_system::instance();
+// Compose the page URL.
+$pageurl = new moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $menu->id]);
+
+// Get system context.
+$context = context_system::instance();
 
 // Access checks.
-admin_externalpage_setup('theme_boost_union_smartmenus');
+require_login();
+require_capability('theme/boost_union:configure', $context);
 
-// Prepare the page.
+// Prepare the page (to make sure that all necessary information is already set even if we just handle the actions as a start).
 $PAGE->set_context($context);
-$PAGE->set_url($url);
-$PAGE->set_heading(get_string('smartmenus', 'theme_boost_union')); // TODO Review.
-
-// Prepare the breadcrumbs. // TODO Review.
+$PAGE->set_url($pageurl);
+$PAGE->set_cacheable(false);
 $PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', array('category' => 'themes')));
 $PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
-    array('category' => 'theme_boost_union'))
-);
+        array('category' => 'theme_boost_union')));
 $PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/menus.php'));
-$PAGE->navbar->add(
-    get_string('smartmenusmenuitems', 'theme_boost_union'),
-    new moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $menu->id])
-);
+$PAGE->navbar->add(get_string('smartmenusmenuitems', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/items.php',
+        array('menu' => $menu->id)));
 
 // Process actions.
-if ($action !== null && confirm_sesskey() && $action != 'preview') {
+if ($action !== null && confirm_sesskey()) {
     // Every action is based on a menu, thus the menu ID param has to exist.
     $id = required_param('id', PARAM_INT);
 
@@ -83,6 +81,7 @@ if ($action !== null && confirm_sesskey() && $action != 'preview') {
     $item = new theme_boost_union\smartmenu_item($id);
 
     $transaction = $DB->start_delegated_transaction();
+
     // Perform the requested action.
     switch ($action) {
         // Triggered action is delete, then init the deletion of menu.
@@ -95,16 +94,15 @@ if ($action !== null && confirm_sesskey() && $action != 'preview') {
             break;
         // Move the menu order to down.
         case "movedown":
-            // Move the item to down order. Fetch the next item and use its order and change the next item position to upwards.
+            // Move the item downwards.
             $item->move_downward();
             break;
         case "moveup":
-            // Move the item to upwards.Fetch the previous item and use its order and change the previous item position to upwards.
+            // Move the item upwards.
             $item->move_upward();
             break;
         case "copy":
-            // Duplicate the item. Clone the item instance, removed the id and send to manage_instance.
-            // It will create the item as newone.
+            // Duplicate the item.
             $item->duplicate();
             break;
         case "hide":
@@ -120,9 +118,13 @@ if ($action !== null && confirm_sesskey() && $action != 'preview') {
     // Allow to update the changes to database.
     $transaction->allow_commit();
 
-    // Redirect to items page to remove the params from the URL.
-    redirect($url);
+    // Redirect to the items page to remove the params from the URL.
+    redirect($pageurl);
 }
+
+// Further prepare the page.
+$PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('smartmenus', 'theme_boost_union')));
+$PAGE->set_heading(theme_boost_union_get_externaladminpage_heading());
 
 // Build smart menu items table.
 $table = new theme_boost_union\table\smartmenus_items($menu->id);
@@ -130,16 +132,21 @@ $table->define_baseurl($PAGE->url);
 
 // Start page output.
 echo $OUTPUT->header();
-if (isset($menu->title)) { // TODO Review.
-    echo $OUTPUT->heading(get_string('smartmenusmenuheading', 'theme_boost_union', $menu->title));
+echo $OUTPUT->heading(get_string('smartmenus', 'theme_boost_union'));
+if (isset($menu->title)) {
+    $menuheading = $menu->title;
+    $settingstitle = get_string('smartmenussettings', 'theme_boost_union');
+    $settingsurl = new moodle_url('/theme/boost_union/smartmenus/edit.php', array('id' => $menuid, 'sesskey' => sesskey()));
+    $menuheading .= html_writer::link($settingsurl,
+            $OUTPUT->pix_icon('t/edit', $settingstitle, 'moodle', array('class' => 'ml-2')));
+    echo $OUTPUT->heading($menuheading, 4);
 }
 
-// Show smart menus description.
-echo get_string('smartmenus_desc', 'theme_boost_union');
-
-// Prepare 'Create smart menu item' buttons. // TODO Review.
+// Prepare 'Create smart menu item' buttons.
 $createbutton = $OUTPUT->box_start();
-$createbutton .= smartmenu_helper::theme_boost_union_menuitems_button($menu->id);
+$createbutton .= $OUTPUT->single_button(
+        new \moodle_url('/theme/boost_union/smartmenus/edit_items.php', ['menu' => $menuid, 'sesskey' => sesskey()]),
+        get_string('smartmenusaddnewitem', 'theme_boost_union'), 'get');
 $createbutton .= $OUTPUT->box_end();
 
 // If there aren't any smart menu items yet.

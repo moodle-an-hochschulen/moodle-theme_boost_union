@@ -1659,16 +1659,6 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
  * Smart menu settings
  --------------------------------------*/
 
-/*  Menu item settings page style  */
-.menuitem-buttons {
-    /* Menu settings page - margin for the "Restriction" label in the table block when the restrictions are enabled */
-    + .no-overflow table tbody tr td ul li {
-        label {
-            margin-right: 10px;
-        }
-    }
-}
-
 /* The Menu settings - Title alignment in the table block */
 .main-inner-wrapper .main-inner div[role="main"] {
     .no-overflow .generaltable tbody tr td {

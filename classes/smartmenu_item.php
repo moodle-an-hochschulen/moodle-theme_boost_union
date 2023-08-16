@@ -248,7 +248,7 @@ class smartmenu_item {
 
         // Verify the item data is object or array, otherwise throws an exeception.
         if (!is_array($item) && !is_object($item)) {
-            throw new \moodle_exception('itemnotfound', 'theme_boost_union');
+            throw new \moodle_exception('error:smartmenusmenuitemnotfound', 'theme_boost_union');
         }
 
         // Menu data, the current item belongs to.
@@ -294,8 +294,7 @@ class smartmenu_item {
             return $this->update_item_valuesformat($record);
 
         } else {
-            // TODO: string for menu not found.
-            throw new \moodle_exception('itemnotfound', 'theme_boost_union');
+            throw new \moodle_exception('error:smartmenusmenuitemnotfound', 'theme_boost_union');
         }
 
         return false;

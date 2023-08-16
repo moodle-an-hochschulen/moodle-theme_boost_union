@@ -620,48 +620,6 @@ class smartmenu_helper {
     }
 
     /**
-     * Generate the buttons, displayed on top of the items table. Helps to create new items, backto menus list, edit menu settings.
-     *
-     * @param  int $menuid Menu id.
-     * @return string
-     */
-    public static function theme_boost_union_menuitems_button(int $menuid) {
-        global $OUTPUT;
-
-        $output = html_writer::start_div('menuitem-buttons d-flex align-items-baseline');
-
-        $output .= html_writer::start_div('left-menu-items mr-auto p-2');
-        // Setup create menu button on page.
-        $caption = get_string('smartmenusbacktomenus', 'theme_boost_union');
-        $editurl = new moodle_url('/theme/boost_union/smartmenus/menus.php');
-        $output .= $OUTPUT->single_button($editurl, $caption, 'get');
-
-        // Setup create menu button on page.
-        $caption = get_string('smartmenussettings', 'theme_boost_union');
-        $editurl = new moodle_url('/theme/boost_union/smartmenus/edit.php', ['id' => $menuid, 'sesskey' => sesskey()]);
-        $output .= $OUTPUT->single_button($editurl, $caption, 'get');
-
-        $output .= html_writer::end_div(); // E.O left-menu-items.
-
-        // Right side menus to create items.
-        $output .= html_writer::start_div('right-menu-items');
-
-        // Add new item.
-        $itemscaption = get_string('smartmenusaddnewitem', 'theme_boost_union');
-        $itemsurl = new moodle_url(
-            '/theme/boost_union/smartmenus/edit_items.php',
-            ['menu' => $menuid, 'sesskey' => sesskey()]
-        );
-        $output .= html_writer::link($itemsurl, $itemscaption);
-
-        $output .= html_writer::end_div(); // E.O Right-menu-items.
-
-        $output .= html_writer::end_div(); // E.O Menuitem buttons.
-
-        return $output;
-    }
-
-    /**
      * Function returns the rgb format with the combination of passed color hex and opacity.
      * Used in the item background color or card layout.
      *

@@ -25,78 +25,86 @@
 // Require config.
 require(__DIR__.'/../../../config.php');
 
+// Require plugin libraries.
+require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+
 // Require admin library.
 require_once($CFG->libdir.'/adminlib.php');
 
-require_sesskey();
-
-// Smart menu ID to edit.
+// Get parameters.
 $id = optional_param('id', null, PARAM_INT);
-$action = optional_param('action', null, PARAM_ALPHAEXT);
 
-// Extend the features of admin settings.
-admin_externalpage_setup('theme_boost_union_smartmenus');
-
-// Page values.
-$url = new moodle_url('/theme/boost_union/smartmenus/edit.php', ['id' => $id, 'sesskey' => sesskey()]);
+// Get system context.
 $context = context_system::instance();
 
-// Setup page values.
-$PAGE->set_url($url);
-$PAGE->set_context($context);
-$PAGE->set_heading(get_string('smartmenus', 'theme_boost_union'));
+// Access checks.
+require_login();
+require_sesskey();
+require_capability('theme/boost_union:configure', $context);
 
+// Prepare the page.
+$PAGE->set_context($context);
+$PAGE->set_url(new moodle_url('/theme/boost_union/smartmenus/edit.php', array('id' => $id, 'sesskey' => sesskey())));
+$PAGE->set_cacheable(false);
 $PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', array('category' => 'themes')));
 $PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
         array('category' => 'theme_boost_union')));
 $PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/menus.php'));
-$PAGE->navbar->add(get_string('edit'), $url);
-
-
-// Edit smart menus form.
-$menuform = new \theme_boost_union\form\smartmenu_form(null, ['id' => $id]);
-$overviewurl = new moodle_url('/theme/boost_union/smartmenus/menus.php');
-
-if ($formdata = $menuform->get_data()) {
-    $result = theme_boost_union\smartmenu::manage_instance($formdata);
-    // After saved the menu data, lets redirect to configure items for this menu.
-    if (isset($formdata->saveanddisplay) && $formdata->saveanddisplay) {
-        $itemsurl = new \moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $result]);
-        redirect($itemsurl);
-    } else {
-        // Redirect to menus list.
-        redirect($overviewurl);
-    }
-} else if ($menuform->is_cancelled()) {
-    redirect($overviewurl);
+$PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('smartmenus', 'theme_boost_union')));
+if ($id !== null && $id > 0) {
+    $PAGE->set_heading(get_string('smartmenuseditmenu', 'theme_boost_union'));
+    $PAGE->navbar->add(get_string('smartmenusedit', 'theme_boost_union'));
+} else {
+    $PAGE->set_heading(get_string('smartmenuscreatemenu', 'theme_boost_union'));
+    $PAGE->navbar->add(get_string('smartmenuscreate', 'theme_boost_union'));
 }
 
-// Setup the menu to the form, if the form id param available.
-if ($id !== null && $id > 0) {
+// Init form.
+$form = new \theme_boost_union\form\smartmenu_form(null, array('id' => $id));
 
+// If the form was submitted.
+if ($data = $form->get_data()) {
+    // Handle form results.
+    $menuid = theme_boost_union\smartmenu::manage_instance($data);
+
+    // After the menu data was saved, let's redirect to configure items for this menu.
+    if (isset($data->saveanddisplay) && $data->saveanddisplay) {
+        redirect(new moodle_url('/theme/boost_union/smartmenus/items.php', array('menu' => $menuid)));
+
+        // Otherwise.
+    } else {
+        // Redirect to menu list.
+        redirect(new moodle_url('/theme/boost_union/smartmenus/menus.php'));
+    }
+
+    // Otherwise if the form was cancelled.
+} else if ($form->is_cancelled()) {
+    // Redirect to menu list.
+    redirect(new moodle_url('/theme/boost_union/smartmenus/menus.php'));
+}
+
+// If a menu ID is given.
+if ($id !== null && $id > 0) {
+    // Fetch the data for the menu.
     if ($record = theme_boost_union\smartmenu::get_menu($id)) {
         // Set the menu data to the menu edit form.
-        $menuform->set_data($record);
+        $form->set_data($record);
+
+        // If the menu is not available.
     } else {
-        // Direct the user to list page with error message, when the requested menu is not available.
-        \core\notification::error(get_string('smartmenusrecordmissing', 'theme_boost_union'));
-        redirect($overviewurl);
+        // Add a notification to the page.
+        \core\notification::error(get_string('error:smartmenusmenunotfound', 'theme_boost_union'));
+
+        // Redirect to menu list (where the notification is shown).
+        redirect(new moodle_url('/theme/boost_union/smartmenus/menus.php'));
     }
 }
 
-// Page content display started.
+// Start page output.
 echo $OUTPUT->header();
 
-// Add the create item and create menu buttons.
-if ($id !== null && $id > 0) {
-    echo smartmenu_helper::theme_boost_union_menuitems_button($id);
-}
+// Show form.
+echo $form->display();
 
-// Smart menu heading.
-echo $OUTPUT->heading(get_string('smartmenussettins', 'theme_boost_union'));
-
-// Display the smart menu form for create or edit.
-echo $menuform->display();
-
-// Footer.
+// Finish page output.
 echo $OUTPUT->footer();

@@ -38,6 +38,9 @@ $menuid = optional_param('id', null, PARAM_INT);
 // Get system context.
 $context = context_system::instance();
 
+// Access checks.
+admin_externalpage_setup('theme_boost_union_smartmenus');
+
 // Prepare the page (to make sure that all necessary information is already set even if we just handle the actions as a start).
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/theme/boost_union/smartmenus/menus.php'));
@@ -93,9 +96,6 @@ if ($action !== null && confirm_sesskey()) {
     redirect($PAGE->url);
 }
 
-// Access checks.
-admin_externalpage_setup('theme_boost_union_smartmenus');
-
 // Further prepare the page.
 $PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('smartmenus', 'theme_boost_union')));
 $PAGE->set_heading(theme_boost_union_get_externaladminpage_heading());
@@ -120,7 +120,7 @@ echo $OUTPUT->render($experimentalnotification);
 // Prepare 'Create smart menu' button.
 $createbutton = $OUTPUT->box_start();
 $createbutton .= $OUTPUT->single_button(
-        new \moodle_url('/theme/boost_union/smartmenus/edit.php', ['sesskey' => sesskey()]),
+        new \moodle_url('/theme/boost_union/smartmenus/edit.php', array('sesskey' => sesskey())),
         get_string('smartmenuscreatemenu', 'theme_boost_union'), 'get');
 $createbutton .= $OUTPUT->box_end();
 

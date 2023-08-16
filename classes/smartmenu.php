@@ -745,8 +745,7 @@ class smartmenu {
 
             return $record;
         } else {
-            // TODO: string for menu not found.
-            throw new moodle_exception('menunotfound', 'theme_boost_union');
+            throw new moodle_exception('error:smartmenusmenunotfound', 'theme_boost_union');
         }
         return false;
     }
@@ -860,7 +859,7 @@ class smartmenu {
      * Delete the current menu cache after updated the menu.
      *
      * @param stdclass $formdata
-     * @return bool
+     * @return int The menu ID.
      */
     public static function manage_instance($formdata) {
         global $DB;
