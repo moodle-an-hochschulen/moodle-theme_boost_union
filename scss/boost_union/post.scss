@@ -16,7 +16,7 @@
 
 /*---------------------------------------
  * Setting: Navbar color
---------------------------------------*/
+ --------------------------------------*/
 
 /* Moodle core already presents the light navbar with dark font color (.navbar-light.bg-white) perfectly.
    There is nothing to change here. */
@@ -28,22 +28,18 @@
     /* Remove the white border at the bottom of the navbar as it looks odd with a dark navbar. */
     border-bottom: none;
 
-    /* Change the color of the site name in the navbar to light grey and to white when active. */
+    /* Change the color of the site name in the navbar to white. */
     .navbar-brand {
-        color: #c8c8c8;
-    }
-    .navbar-brand:hover {
         color: $white;
     }
 
-    /* Change the color of the navigation items in the navbar to light grey, to white when active
+    /* Change the color of the navigation items in the navbar to white
        and to black when hovered (as Moodle core will then show a white background).
        This has to use !important as Moodle core already uses !important for some of its hover states. */
     .nav-link {
-        color: #c8c8c8;
+        color: $white;
     }
     .nav-link.active {
-        color: $white;
         border-bottom-color: $white;
     }
     .nav-link:hover,
@@ -59,20 +55,15 @@
     }
 
     /* Change the color of the icons in the navbar as well as the toggle icon in the usermenu
-       to a light grey and to white when hovered.
+       to white.
        This has to use !important as Moodle core already uses !important for the icon colors. */
     .nav-link .icon,
     .nav-link a .icon,
     .usermenu .dropdown-toggle {
-        color: #c8c8c8 !important; /* stylelint-disable-line declaration-no-important */
-    }
-    .nav-link:hover .icon,
-    .nav-link:hover a .icon,
-    .usermenu .dropdown-toggle:hover {
         color: $white !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    /* Change the color of the icons in the dropdown menu to a dark and to white when hovered.
+    /* Change the color of the icons in the dropdown menu to a dark grey and to white when hovered.
        This has to use !important as Moodle core already uses !important for the icon colors. */
     .dropdown-menu .dropdown-item .icon {
         color: #1d2125 !important; /* stylelint-disable-line declaration-no-important */
@@ -87,13 +78,10 @@
         color: #6a737b !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    /* Change the color of the edit switch label in the navbar to light grey and to white when hovered.
+    /* Change the color of the edit switch label in the navbar to white.
        This has to use !important as Moodle core would change the color to text-primary as soon as editing is on. */
     .editmode-switch-form,
     .editmode-switch-form label {
-        color: #c8c8c8 !important; /* stylelint-disable-line declaration-no-important */
-    }
-    .editmode-switch-form label:hover {
         color: $white !important; /* stylelint-disable-line declaration-no-important */
     }
 
@@ -114,12 +102,9 @@
         color: #fff;
     }
 
-    /* Change the color of the login link in the navbar to a light grey and to white when hovered. */
+    /* Change the color of the login link in the navbar to white. */
     .login,
     .login a {
-        color: #c8c8c8;
-    }
-    .login a:hover {
         color: $white;
     }
 
@@ -129,12 +114,9 @@
         color: #343a40 !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    /* Change the color of the language selector link in the navbar to a light grey and to white when hovered. */
+    /* Change the color of the language selector link in the navbar to white. */
     .langmenu .dropdown .dropdown-toggle {
-        color: #c8c8c8;
-        &:hover {
-            color: $white;
-        }
+        color: $white;
     }
 }
 
@@ -933,7 +915,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 .navbar {
     &.fixed-top {
-        /* Added Height and background color for the top header,
+        /* Added height and background color for the top header,
         z-index is added to show the top header dropdown menu above the header block */
         &.boost-union-menubar { /* boost-union-menubar class is added for the top header */
             height: 42px;
@@ -1656,30 +1638,6 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 
 /*---------------------------------------
- * Smart menu settings
- --------------------------------------*/
-
-/* The Menu settings - Title alignment in the table block */
-.main-inner-wrapper .main-inner div[role="main"] {
-    .no-overflow .generaltable tbody tr td {
-        /*  In the Meu settings page, the Smart menu text in the table as display as inline-block
-            so the help icon stays near the Smart menu text  */
-        .menu-title {
-            display: inline-block;
-        }
-        /* Margin left added for the help icon near the Smart menu text in the table */
-        .btn-link {
-            margin-left: 5px;
-        }
-    }
-    /* Added margin bottom for the "Create new Smart menu" button in the Menu settings page */
-    > .singlebutton {
-        margin-bottom: 20px;
-    }
-}
-
-
-/*---------------------------------------
  * Footer menu
  --------------------------------------*/
 
@@ -2019,6 +1977,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     }
 }
 
+
 /*---------------------------------------
  * Form element: Color picker
  --------------------------------------*/
@@ -2027,6 +1986,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 .theme_boost_union-form-colour-picker .felement {
     flex-direction: column;
 }
+
 
 /*=======================================
  * Supporting third-party plugins
@@ -2100,8 +2060,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     }
 
     /* On not-so-large screens. */
-    /* This means less than 992px per outside block region. */
-    @include media-breakpoint-down(lg) {
+    @include media-breakpoint-down(lg) { /* This means less than 992px per outside block region. */
         /* Stack content vertically. */
         .main-inner-outside-nextmaincontent {
             display: flex;
