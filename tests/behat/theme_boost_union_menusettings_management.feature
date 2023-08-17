@@ -21,7 +21,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I navigate to "Appearance > Themes > Boost Union > Smart menus" in site administration
     Then I should see "Smart menus" in the "#region-main h2" "css_element"
     And I click on "Create new smart menu" "button"
-    And I should see "Smart menu - settings" in the "#region-main" "css_element"
     And I set the following fields to these values:
     | Title | Links |
     | Locations | Main |

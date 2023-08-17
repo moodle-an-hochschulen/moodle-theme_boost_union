@@ -88,8 +88,8 @@ class behat_theme_boost_union_behat_smartmenus extends behat_base {
 
         $this->execute('behat_navigation::i_navigate_to_in_site_administration',
             ["Appearance > Themes > Boost Union > Smart menus"]);
-        $this->execute("behat_general::i_click_on_in_the", [".action-edit", "css_element", $menu, 'table_row']);
-        $this->execute("behat_general::i_click_on", ["Add new item", "link"]);
+        $this->execute("behat_general::i_click_on_in_the", [".action-list-items", "css_element", $menu, 'table_row']);
+        $this->execute("behat_general::i_click_on", ["Add new menu item", "button"]);
         $this->execute('behat_forms::i_set_the_following_fields_to_these_values', [$data]);
         $this->execute("behat_general::i_click_on", ["Save changes", "button"]);
     }

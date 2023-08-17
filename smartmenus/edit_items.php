@@ -73,11 +73,11 @@ $PAGE->navbar->add(get_string('smartmenusmenuitems', 'theme_boost_union'), new m
         array('menu' => $menu->id)));
 $PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('smartmenus', 'theme_boost_union')));
 if ($menuid == null && $id !== null) {
-    $PAGE->set_heading(get_string('smartmenuseditmenuitem', 'theme_boost_union')); // TODO
-    $PAGE->navbar->add(get_string('smartmenusedititem', 'theme_boost_union')); // TODO
+    $PAGE->set_heading(get_string('smartmenuseditmenuitem', 'theme_boost_union'));
+    $PAGE->navbar->add(get_string('smartmenusedititem', 'theme_boost_union'));
 } else {
-    $PAGE->set_heading(get_string('smartmenuscreatemenuitem', 'theme_boost_union')); // TODO
-    $PAGE->navbar->add(get_string('smartmenuscreateitem', 'theme_boost_union')); // TODO
+    $PAGE->set_heading(get_string('smartmenuscreatemenuitem', 'theme_boost_union'));
+    $PAGE->navbar->add(get_string('smartmenuscreateitem', 'theme_boost_union'));
 }
 
 // Prepare draft item id for the form.

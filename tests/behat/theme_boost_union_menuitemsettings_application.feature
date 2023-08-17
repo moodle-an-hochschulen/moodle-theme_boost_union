@@ -37,7 +37,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" items pag
   Scenario: Smartmenuitem: Application - Add a item in smartmenu to the main navigation
     Given I log in as "admin"
     And I navigate to smartmenu "Quick Links" items
-    And I click on "Add new item" "link"
+    And I click on "Add new menu item" "button"
     And I set the following fields to these values:
     | Title | Badges                    |
     | Type  | Static                    |

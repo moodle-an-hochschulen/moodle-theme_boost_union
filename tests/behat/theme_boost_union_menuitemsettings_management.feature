@@ -20,7 +20,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I click on ".action-list-items" "css_element" in the "Quick Links" "table_row"
     And I should see "There aren't any items added to this smart menu yet. Please add an item to this menu."
     And "table" "css_element" should not exist in the "#region-main" "css_element"
-    And "Add new item" "link" should exist in the "#region-main" "css_element"
+    And "Add new menu item" "button" should exist in the "#region-main" "css_element"
     And ".menu-item-actions" "css_element" should not exist in the "#region-main" "css_element"
 
   @javascript
@@ -29,8 +29,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I navigate to smartmenus
     Then I should see "Smart menus" in the "#region-main h2" "css_element"
     And I click on ".action-list-items" "css_element" in the "Quick Links" "table_row"
-    And I should see "\"Quick Links\" - items" in the "#region-main" "css_element"
-    And I click on "Add new item" "link"
+    And I should see "Quick Links" in the "#region-main h4" "css_element"
+    And I click on "Add new menu item" "button"
     And I set the following fields to these values:
     | Title | Info    |
     | Type  | Heading |
@@ -47,7 +47,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     Given I log in as "admin"
     And I navigate to smartmenus
     And I click on ".action-list-items" "css_element" in the "Quick Links" "table_row"
-    And I click on "Add new item" "link"
+    And I click on "Add new menu item" "button"
     And I set the following fields to these values:
     | Title | Info    |
     | Type  | Heading |
@@ -122,7 +122,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     | Title| Info    |
     | Type | Heading |
     And I should see "Info" in the "smartmenus_item" "table"
-    And I click on "Add new item" "link"
+    And I click on "Add new menu item" "button"
     And I set the field "Title" to "Courses"
     And I set the field "Type" to "Static"
     And I set the field "URL" to "https://moodle.org/course"
@@ -133,7 +133,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     Then "Info" "table_row" should appear after "Courses" "table_row"
     And I click on ".action-moveup" "css_element" in the "Info" "table_row"
     And "Info" "table_row" should appear before "Courses" "table_row"
-    And I click on "Add new item" "link"
+    And I click on "Add new menu item" "button"
     And I set the field "Title" to "Badges"
     And I set the field "Type" to "Static"
     And I set the field "URL" to "https://moodle.org/badges"

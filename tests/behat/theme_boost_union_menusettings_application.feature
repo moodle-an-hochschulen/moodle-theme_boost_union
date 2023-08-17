@@ -74,15 +74,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menu items" page
     | Title     | Links                    |
     | Locations | Main, Menu, Bottom, User |
     And I click on "Save and configure items" "button"
-    And I should see "\"Links\" - items" in the "#region-main" "css_element"
-    And I click on "Add new item" "link"
+    And I should see "Links" in the "#region-main h4" "css_element"
+    And I click on "Add new menu item" "button"
     And I set the following fields to these values:
     | Title | Smartmenu Resourse |
     | Type  | Static             |
     | URL   | https://moodle.org |
     And I click on "Save changes" "button"
-    And I should see "Back to all smart menus"
-    And I click on "Back to all smart menus" "button"
+    And I click on "Smart menus" "link" in the "#page-navbar .breadcrumb" "css_element"
     And I should see "Main" in the "Links" "table_row"
     And I should see "Menu" in the "Links" "table_row"
     And I should see "User" in the "Links" "table_row"
@@ -114,15 +113,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menu items" page
     | Title     | External resources |
     | Locations | Menu               |
     And I click on "Save and configure items" "button"
-    And I should see "\"External resources\" - items" in the "#region-main" "css_element"
-    And I click on "Add new item" "link"
+    And I should see "External resources" in the "#region-main h4" "css_element"
+    And I click on "Add new menu item" "button"
     And I set the following fields to these values:
     | Title | Smartmenu Resourse |
     | Type  | Static             |
     | URL   | https://moodle.org |
     And I click on "Save changes" "button"
-    And I should see "Back to all smart menus"
-    And I click on "Back to all smart menus" "button"
+    And I click on "Smart menus" "link" in the "#page-navbar .breadcrumb" "css_element"
     And I should see "Menu" in the "External resources" "table_row"
     And ".boost-union-menubar" "css_element" should be visible
     And I click on "External resources" "link" in the ".boost-union-menubar" "css_element"
@@ -180,8 +178,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menu items" page
     | Locations | Main        |
     | Type      | Card        |
     And I click on "Save and configure items" "button"
-    And I should see "\"Quick Links\" - items" in the "#region-main" "css_element"
-    And I click on "Add new item" "link"
+    And I should see "Quick Links" in the "#region-main h4" "css_element"
+    And I click on "Add new menu item" "button"
     And I set the following fields to these values:
     | Title | Smartmenu Resource |
     | Type  | Static             |
@@ -191,7 +189,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menu items" page
     And I click on "Quick Links" "link" in the ".primary-navigation" "css_element"
     And ".card-dropdown .dropdown-menu.show" "css_element" should exist in the ".primary-navigation" "css_element"
     And I should see "Smartmenu Resource" in the ".card-dropdown .dropdown-menu.show .card-block" "css_element"
-    And I click on "Smart menu settings" "button"
+    And I click on "Smart menu settings" "icon" in the "#region-main h4" "css_element"
     And I set the field "Type" to "List"
     And I click on "Save and return" "button"
     Then ".dropdown.nav-item.card-dropdown" "css_element" should not exist in the ".primary-navigation" "css_element"
@@ -209,7 +207,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menu items" page
     | Title | Smartmenu Resource |
     | Type  | Static             |
     | URL   | https://moodle.org |
-    And I click on "Back to all smart menus" "button"
+    And I click on "Smart menus" "link" in the "#page-navbar .breadcrumb" "css_element"
     And ".dropdown.nav-item.card-dropdown" "css_element" should exist in the ".primary-navigation" "css_element"
     And I click on "Quick Links" "link" in the ".primary-navigation" "css_element"
     And I should see ".card-dropdown .dropdown-menu.show img" style "height" value "100"
@@ -238,8 +236,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menu items" page
     | Title     | Smartmenu Resource |
     | Type      | Static             |
     | URL       | https://moodle.org |
-    And I click on "Back to all smart menus" "button"
-
+    And I click on "Smart menus" "link" in the "#page-navbar .breadcrumb" "css_element"
     And ".dropdown.nav-item.card-dropdown" "css_element" should exist in the ".primary-navigation" "css_element"
     And I click on "Quick Links" "link" in the ".primary-navigation" "css_element"
     Then ".card-dropdown.card-form-portrait .dropdown-menu.show" "css_element" should exist in the ".primary-navigation" "css_element"
