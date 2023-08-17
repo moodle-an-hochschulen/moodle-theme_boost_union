@@ -60,6 +60,8 @@
     * Added the possibility to show info banners.
     * Include theme_boost_union/advertisementtiles template
     * Added additional block regions (including JS for offcanvas region)
+    * Added smartmenu js to support third level submenus.
+    * Added footer-bottom-menu class to #page element as soon as the bottom menu is shown
 }}
 {{> theme_boost/head }}
 
@@ -119,7 +121,7 @@
         {{/regions.offcanvas.hasblocks}}
     {{/userisediting}}
 
-    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container {{#bottombar.drawer}} footer-bottom-menu {{/bottombar.drawer}}">
         {{#userisediting}}
             <div id="theme-block-region-offcanvas-editing" class="collapse">
                 <div id="theme-block-region-offcanvas-editing-inner">
@@ -295,9 +297,10 @@
 </html>
 {{#js}}
 M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer'{{#regions.offcanvas.hasblocks}},'theme_boost_union/offcanvas'{{/regions.offcanvas.hasblocks}}], function(Loader, Drawer{{#regions.offcanvas.hasblocks}},OffCanvas{{/regions.offcanvas.hasblocks}}) {
+require(['theme_boost/loader', 'theme_boost/drawer'{{#regions.offcanvas.hasblocks}},'theme_boost_union/offcanvas'{{/regions.offcanvas.hasblocks}}, 'theme_boost_union/smartmenu'], function(Loader, Drawer{{#regions.offcanvas.hasblocks}},OffCanvas{{/regions.offcanvas.hasblocks}}, SmartMenu) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
     {{#regions.offcanvas.hasblocks}}OffCanvas.init();{{/regions.offcanvas.hasblocks}}
+    SmartMenu.init();
 });
 {{/js}}

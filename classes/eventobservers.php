@@ -36,7 +36,7 @@ class eventobservers {
     /**
      * Cohort deleted event observer.
      *
-     * @param \core\event\base $event The event.
+     * @param \core\event\base $event The event that triggered the handler.
      */
     public static function cohort_deleted(\core\event\base $event) {
         global $CFG;
@@ -51,12 +51,19 @@ class eventobservers {
             // of the current user and not for all users.
             \cache_helper::purge_by_event('theme_boost_union_cohort_deleted');
         }
+
+        // Require smart menus library.
+        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+
+        // Deletion this cohort may result in a menu change for its users.
+        // Verify if any of the menus used this cohort in restriction rules and, if yes, purge the menus cache.
+        \smartmenu_helper::purge_cache_deleted_cohort($event->objectid);
     }
 
     /**
      * Cohort member added event observer.
      *
-     * @param \core\event\base $event The event.
+     * @param \core\event\base $event The event that triggered the handler.
      */
     public static function cohort_member_added(\core\event\base $event) {
         global $CFG;
@@ -72,12 +79,19 @@ class eventobservers {
             // This way, we avoid that the flavours cache is purged unnecessarily for all users.
             set_user_preference('theme_boost_union_flavours_purgesessioncache', true, $event->relateduserid);
         }
+
+        // Require smart menus library.
+        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+
+        // Adding users to this cohort may result in a menu change for these users.
+        // Verify if any of the menus used this cohort in restriction rules and, if yes, purge the menus cache for this user.
+        \smartmenu_helper::purge_cache_session_cohort($event->objectid, $event->relateduserid);
     }
 
     /**
      * Cohort member removed event observer.
      *
-     * @param \core\event\base $event The event.
+     * @param \core\event\base $event The event that triggered the handler.
      */
     public static function cohort_member_removed(\core\event\base $event) {
         global $CFG;
@@ -93,5 +107,119 @@ class eventobservers {
             // This way, we avoid that the flavours cache is purged unnecessarily for all users.
             set_user_preference('theme_boost_union_flavours_purgesessioncache', true, $event->relateduserid);
         }
+
+        // Require smart menus library.
+        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+
+        // Removing users from this cohort may result in a menu change for these users.
+        // Verify if any of the menus used this cohort in restriction rules and, if yes, purge the menus cache for this user.
+        \smartmenu_helper::purge_cache_session_cohort($event->objectid, $event->relateduserid);
+    }
+
+    /**
+     * Event observer for when a role is assigned to a user.
+     *
+     * @param \core\event\base $event The event that triggered the handler.
+     */
+    public static function role_assigned(\core\event\base $event) {
+        global $CFG;
+
+        // Require smart menus library.
+        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+
+        // Purge the cached menus for the user with the assigned role.
+        \smartmenu_helper::purge_cache_session_roles($event->objectid, $event->relateduserid);
+    }
+
+    /**
+     * Event observer for when a role is unassigned from a user.
+     *
+     * @param \core\event\base $event The event that triggered the handler.
+     */
+    public static function role_unassigned(\core\event\base $event) {
+        global $CFG;
+
+        // Require smart menus library.
+        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+
+        // Purge the cached menus for the user with the unassigned role.
+        \smartmenu_helper::purge_cache_session_roles($event->objectid, $event->relateduserid);
+    }
+
+    /**
+     * Event observer for when a role is deleted.
+     *
+     * @param \core\event\base $event The event that triggered the handler.
+     */
+    public static function role_deleted(\core\event\base $event) {
+        global $CFG;
+
+        // Require smart menus library.
+        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+
+        // Purge the cached menus for all users with the deleted role.
+        \smartmenu_helper::purge_cache_deleted_roles($event->objectid);
+    }
+
+    /**
+     * Event observer for when a course is updated.
+     *
+     * @param \core\event\base $event The event that triggered the handler.
+     */
+    public static function course_updated(\core\event\base $event) {
+        global $CFG;
+
+        // Require smart menus library.
+        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+
+        // Purge all the dynamic course items cache.
+        \smartmenu_helper::purge_cache_dynamic_courseitems();
+
+        return true;
+    }
+
+    /**
+     * Event observer for when a category is updated or deleted.
+     *
+     * @param \core\event\base $event The event that triggered the handler.
+     */
+    public static function category_updated(\core\event\base $event) {
+        global $CFG;
+
+        // Require smart menus library.
+        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+
+        // Clear the cache of menu when the course updated.
+        \smartmenu_helper::purge_cache_dynamic_courseitems();
+    }
+
+    /**
+     * Event observer for when a course or module completion is updated.
+     *
+     * @param \core\event\base $event The event that triggered the handler.
+     */
+    public static function completion_updated(\core\event\base $event) {
+        global $CFG;
+
+        // Require smart menus library.
+        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+
+        // Clear the cache of menu when the course/module completion updated for user.
+        \smartmenu_helper::set_user_purgecache($event->relateduserid);
+    }
+
+    /**
+     * Event observer for when a user profile is updated.
+     *
+     * @param \core\event\base $event The event that triggered the handler.
+     */
+    public static function user_updated(\core\event\base $event) {
+        global $CFG;
+
+        // Require smart menus library.
+        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+
+        // Clear the cache of menu when the course/module completion updated for user.
+        \smartmenu_helper::set_user_purgecache($event->relateduserid);
     }
 }

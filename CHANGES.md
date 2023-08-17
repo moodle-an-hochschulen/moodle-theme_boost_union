@@ -4,6 +4,11 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-08-13 - Improvement: Make the fonts in the dark navbar variants always fully white (not only when hovered) to improve the contrast.
+* 2023-08-13 - Feature: Smart menus, solves #137
+
 ### v4.1-r9
 
 * 2023-07-24 - Improvement: Only add load OffCanvas module when offcanvas region is enabled, solves #343.

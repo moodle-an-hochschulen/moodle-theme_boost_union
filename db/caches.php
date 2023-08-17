@@ -67,5 +67,19 @@ $definitions = array(
                 'simplekeys' => true,
                 'simpledata' => true,
                 'staticacceleration' => true,
+        ),
+        // This cache stores the smart menus.
+        'smartmenus' => array(
+                'mode' => cache_store::MODE_APPLICATION,
+                'simplekeys' => true,
+                'simpledata' => false,
+                'overrideclass' => '\theme_boost_union\cache\loader',
+        ),
+        // This cache stores the smart menus' menu items.
+        'smartmenu_items' => array(
+                'mode' => cache_store::MODE_APPLICATION,
+                'simplekeys' => true,
+                'simpledata' => false,
+                'overrideclass' => '\theme_boost_union\cache\loader',
         )
 );

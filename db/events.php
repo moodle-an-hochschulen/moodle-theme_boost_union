@@ -37,4 +37,49 @@ $observers = array(
                 'eventname' => '\core\event\cohort_member_removed',
                 'callback' => '\theme_boost_union\eventobservers::cohort_member_removed'
         ),
+        array(
+                'eventname' => 'core\event\role_assigned',
+                'callback' => '\theme_boost_union\eventobservers::role_assigned'
+        ),
+        array(
+                'eventname' => 'core\event\role_deleted',
+                'callback' => '\theme_boost_union\eventobservers::role_deleted'
+        ),
+        array(
+                'eventname' => 'core\event\role_unassigned',
+                'callback' => '\theme_boost_union\eventobservers::role_unassigned'
+        ),
+        array(
+                'eventname' => 'core\event\user_updated',
+                'callback' => '\theme_boost_union\eventobservers::user_updated'
+        ),
+        array(
+                'eventname' => 'core\event\course_created',
+                'callback' => '\theme_boost_union\eventobservers::course_updated'
+        ),
+        array(
+                'eventname' => 'core\event\course_completion_updated',
+                'callback' => '\theme_boost_union\eventobservers::completion_updated'
+        ),
+        array(
+                'eventname' => 'core\event\course_module_completion_updated',
+                'callback' => '\theme_boost_union\eventobservers::completion_updated'
+        ),
+        array(
+                'eventname' => 'core\event\course_updated',
+                'callback' => '\theme_boost_union\eventobservers::course_updated'
+        ),
+        array(
+                'eventname' => 'core\event\course_deleted',
+                'callback' => '\theme_boost_union\eventobservers::course_updated'
+        ),
+        array(
+                'eventname' => 'core\event\course_category_deleted',
+                'callback' => '\theme_boost_union\eventobservers::category_updated'
+        ),
+        array(
+                'eventname' => 'core\event\course_category_updated',
+                'callback' => '\theme_boost_union\eventobservers::category_updated'
+        ),
+
 );

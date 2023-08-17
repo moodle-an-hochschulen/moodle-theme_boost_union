@@ -1,0 +1,114 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/smartmenus-cardmenu-children
+
+    The smart menus card menu children.
+    This is a modified version of core/moremenu_children.
+
+    Example context (json):
+    {
+        "divider": "",
+        "haschildren": "",
+        "moremenuid": "614c104dbacfa",
+        "text": "Moodle community",
+        "children": "",
+        "title": "Moodle community",
+        "url": "https://moodle.org"
+    }
+}}
+{{#haschildren}}
+    <li class="dropdown nav-item {{#card}} card-dropdown {{/card}} {{#menudata.classes}} {{.}} {{/menudata.classes}}" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+        <a class="dropdown-toggle nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}} {{#menu.cssclass}} {{menu.cssclass}}{{/menu.cssclass}}" id="drop-down-{{moremenuid}}" role="menuitem" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" href="#" aria-controls="drop-down-menu-{{moremenuid}}"
+            {{#isactive}}aria-current="true"{{/isactive}}
+            {{^isactive}}tabindex="-1"{{/isactive}}
+        >
+            {{{text}}}
+        </a>
+        <div class="dropdown-menu" role="menu" id="drop-down-menu-{{moremenuid}}" aria-labelledby="drop-down-{{moremenuid}}">
+            {{#helpicon}} <div class="menu-helpicon"> {{{helpicon}}} </div> {{/helpicon}}
+            {{#abovehelptext}} <div class="menu-description"> {{{helptext}}} </div> {{/abovehelptext}}
+
+            <div class="card-block-wrapper">
+                {{#children}}
+                    {{^divider}}
+                        <div class="card-block {{#itemdata.classes}} {{.}} {{/itemdata.classes}} ">
+                            <a href="{{{url}}}{{{action}}}">
+                                <span class="card-item-overlay"></span>
+                            </a>
+                            <div class="img-block">
+                                <a href="{{{url}}}{{{action}}}"><img src="{{{itemimage}}}" alt="" role="presentation"></a>
+                            </div>
+                            <div class="content-block"
+                                style="{{#itemdata.backgroundcolor}}background-color:{{{itemdata.backgroundcolor}}};{{/itemdata.backgroundcolor}}">
+
+                                <h5>
+                                    {{^is_action_link}}
+                                        <a class="dropdown-item menu-item-{{itemtype}} " data-toggle="tooltip" title="{{{tooltip}}}" role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}} tabindex="-1" {{#attributes}}{{name}}="{{value}}"{{/attributes}} style="{{#itemdata.textcolor}} color:{{{itemdata.textcolor}}};{{/itemdata.textcolor}}">{{{text}}}</a>
+                                    {{/is_action_link}}
+                                </h5>
+                                {{^is_action_link}}
+                                <div class="btn-block">
+                                    <a class="dropdown-item " role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}} tabindex="-1" {{#attributes}}{{name}}="{{value}}"{{/attributes}}>
+                                        <i class="fa fa-long-arrow-right"></i>
+                                    </a>
+                                </div>
+                                {{/is_action_link}}
+                            </div>
+                        </div>
+                    {{/divider}}
+                    {{#divider}}
+                        <div class="dropdown-divider"></div>
+                    {{/divider}}
+                {{/children}}
+            </div>
+
+            {{#belowhelptext}} <div class="menu-description">{{{helptext}}}</div> {{/belowhelptext}}
+        </div>
+    </li>
+{{/haschildren}}
+{{^haschildren}}
+    <li data-key="{{key}}" class="nav-item" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+        {{#istablist}}
+            {{^is_action_link}}
+                <a role="tab" class="nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}"
+                    href="{{tab}}" data-toggle="tab" data-text="{{{text}}}"
+                    {{#isactive}}aria-selected="true"{{/isactive}}
+                    {{^isactive}}tabindex="-1"{{/isactive}}
+                    {{#attributes}}{{name}}="{{value}}"{{/attributes}}
+                    data-toggle="tooltip" title="{{{tooltip}}}"
+                >
+                    {{{text}}}
+                </a>
+            {{/is_action_link}}
+        {{/istablist}}
+        {{^istablist}}
+            {{^is_action_link}}
+                <a role="menuitem" class="nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}"
+                    href="{{{url}}}{{{action}}}"
+                    {{#isactive}}aria-current="true"{{/isactive}}
+                    {{^isactive}}tabindex="-1"{{/isactive}}
+                    {{#attributes}}{{name}}="{{value}}"{{/attributes}}
+                    data-toggle="tooltip" title="{{{tooltip}}}"
+                >
+                    {{{text}}}
+                </a>
+            {{/is_action_link}}
+        {{/istablist}}
+    </li>
+{{/haschildren}}
