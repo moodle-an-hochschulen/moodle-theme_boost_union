@@ -1,0 +1,103 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template core/moremenu
+
+    The More menu.
+
+    Example context (json):
+    {
+        "nodecollection": {
+            "children": [
+                {
+                    "text": "Home",
+                    "action": "/index.php?redirect=0",
+                    "active": "true"
+                },
+                {
+                    "text": "Dashboard",
+                    "action": "/my"
+                },
+                {
+                    "text": "Courses",
+                    "action": "/course"
+                },
+                {
+                    "text": "Site Administration",
+                    "action": "/admin/search.php"
+                }
+            ]
+        },
+        "moremenuid": "614c104dbacfa"
+    }
+}}
+{{!
+    This template is a modified version of core/moremenu
+
+    Modifications compared to the original template:
+    * Add card style menu.
+}}
+<nav class="moremenu navigation">
+    <ul id="moremenu-{{moremenuid}}-{{navbarstyle}}" role="{{#istablist}}tablist{{/istablist}}{{^istablist}}menubar{{/istablist}}" class="nav more-nav {{navbarstyle}}">
+        {{#nodecollection}}
+            {{#children}}
+                {{> core/moremenu_children}}
+            {{/children}}
+        {{/nodecollection}}
+        {{#nodearray}}
+        {{!-- Menu with card style --}}
+            {{#card}}
+                {{> theme_boost_union/smartmenus-cardmenu-children}}
+            {{/card}}
+
+            {{^card}}
+                {{> core/moremenu_children}}
+            {{/card}}
+        {{/nodearray}}
+        {{^drawer}}
+            <li role="none" class="nav-item dropdown dropdownmoremenu d-none" data-region="morebutton">
+                <a class="dropdown-toggle nav-link {{#isactive}}active{{/isactive}}" href="#" id="moremenu-dropdown-{{moremenuid}}" role="{{#istablist}}tab{{/istablist}}{{^istablist}}menuitem{{/istablist}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" tabindex="-1">
+                    {{#str}}moremenu, core{{/str}}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-left" data-region="moredropdown" aria-labelledby="moremenu-dropdown-{{moremenuid}}" role="menu">
+                </ul>
+            </li>
+        {{/drawer}}
+        {{!- Bottombar, change the more menu into drawer --}}
+        {{#drawer}}
+            <li role="none" class="nav-item dropdown dropdownmoremenu d-none" data-region="morebutton">
+                <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
+                    {{#pix}} i/menu, core {{/pix}}
+                    {{#str}}moremenu, core{{/str}}
+                    <span class="sr-only">{{#str}}sidepanel, core{{/str}}</span>
+                </button>
+                <div class="hidden">
+                    <a class="dropdown-toggle nav-link {{#isactive}}active{{/isactive}}" href="#" id="moremenu-dropdown-{{moremenuid}}" role="{{#istablist}}tab{{/istablist}}{{^istablist}}menuitem{{/istablist}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" tabindex="-1">
+                        {{#str}}moremenu, core{{/str}}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-left" data-region="moredropdown" aria-labelledby="moremenu-dropdown-{{moremenuid}}" role="menu">
+                    </ul>
+                </div>
+            </li>
+        {{/drawer}}
+    </ul>
+</nav>
+{{#js}}
+    require(['core/moremenu'], function(moremenu) {
+        moremenu(document.querySelector('#moremenu-{{moremenuid}}-{{navbarstyle}}'));
+    });
+{{/js}}
