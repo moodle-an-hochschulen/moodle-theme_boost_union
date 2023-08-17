@@ -1216,32 +1216,6 @@ function theme_boost_union_add_fontawesome_to_page() {
 }
 
 /**
- * Helper function which adds the CSS file from the flavour to the Moodle page.
- * It's meant to be called by theme_boost_union_before_standard_html_head() only.
- * *
- * @throws coding_exception
- * @throws dml_exception
- * @throws moodle_exception
- */
-function theme_boost_union_add_flavourcss_to_page() {
-    global $CFG, $PAGE;
-
-    // Require flavours library.
-    require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
-
-    // If any flavour applies to this page.
-    $flavour = theme_boost_union_get_flavour_which_applies();
-    if ($flavour != null) {
-        // Build the flavour CSS file URL.
-        $flavourcssurl = new moodle_url('/theme/boost_union/flavours/styles.php',
-                array('id' => $flavour->id, 'rev' => theme_get_revision()));
-
-        // Add the CSS file to the page.
-        $PAGE->requires->css($flavourcssurl);
-    }
-}
-
-/**
  * Helper function which returns the course header image url, picking the current course from the course settings
  * or the fallback image from the theme.
  * If no course header image can should be shown for the current course, the function returns null.

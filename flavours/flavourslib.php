@@ -313,3 +313,33 @@ function theme_boost_union_flavour_exists_for_cohort($cohortid) {
     // We didn't find any matching cohort, return false.
     return false;
 }
+
+/**
+ * Helper function do get a config key from flavour item.
+ *
+ * @param string $flavourid
+ * @param string $configkey
+ *
+ * @return string/bool
+ */
+function theme_boost_union_get_flavour_config_item_for_id(string $flavourid, string $configkey) {
+    global $DB;
+
+    $cache = cache::make('theme_boost_union', 'flavours');
+
+    $flavouridkey = 'flavour_' . $flavourid;
+    // Get the cached flavour config for the current user flavour id.
+    $flavourconfig = $cache->get($flavouridkey);
+
+    // If we got a cached flavour config.
+    if ($flavourconfig == false) {
+        $flavourconfig = $DB->get_record('theme_boost_union_flavours', ['id' => $flavourid]);
+        $cache->set($flavouridkey, $flavourconfig);
+    }
+
+    if (isset($flavourconfig->{$configkey})) { // ...isset returns true only if property exits and value != null;.
+        return $flavourconfig->{$configkey};
+    }
+
+    return false;
+}
