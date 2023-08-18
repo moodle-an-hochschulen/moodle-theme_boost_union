@@ -43,6 +43,7 @@ class theme_boost_union_core_h5p_renderer extends \core_h5p\output\renderer {
      * @param string $embedtype How the H5P is displayed.
      */
     public function h5p_alter_styles(&$styles, $libraries, $embedtype) {
+        global $CFG;
         // Build the H5P CSS file URL.
         $h5pcssurl = new moodle_url('/theme/boost_union/h5p/styles.php');
 
@@ -51,6 +52,61 @@ class theme_boost_union_core_h5p_renderer extends \core_h5p\output\renderer {
                 'path' => $h5pcssurl->out(),
                 'version' => '?ver='.theme_get_revision(),
         );
+
+        // Adding local_och5pcore styles.
+        if (file_exists($CFG->dirroot.'/local/och5pcore/version.php')) {
+            if (
+                isset($libraries['H5P.InteractiveVideo']) &&
+                $libraries['H5P.InteractiveVideo']['majorVersion'] == '1'
+            ) {
+                // Adding H5PEditor css file.
+                $h5peditoravurl = new moodle_url('/local/och5pcore/lib/style/H5PEditor.AV.css');
+                $styles[] = (object) array(
+                    'path' => $h5peditoravurl->out(),
+                    'version' => '?ver=0.0.1',
+                );
+
+                // Adding opencast font css file.
+                $ocfontsurl = new moodle_url('/local/och5pcore/lib/style/oc-fonts.css');
+                $styles[] = (object) array(
+                    'path' => $ocfontsurl->out(),
+                    'version' => '?ver=0.0.1',
+                );
+            }
+        }
+    }
+
+    /**
+     * Add scripts when an H5P is displayed.
+     *
+     * @param array $scripts Scripts that will be applied.
+     * @param array $libraries Libraries that will be displayed.
+     * @param string $embedType How the H5P is displayed.
+     */
+    public function h5p_alter_scripts(&$scripts, $libraries, $embedType) {
+        global $CFG;
+        // Adding local_och5pcore scripts.
+        if (file_exists($CFG->dirroot.'/local/och5pcore/version.php')) {
+
+            if (
+                isset($libraries['H5P.InteractiveVideo']) &&
+                $libraries['H5P.InteractiveVideo']['majorVersion'] == '1'
+            ) {
+                // Adding LTI related script into scripts array.
+                $h5prunltiurl = new moodle_url('/local/och5pcore/lib/js/H5PRunLTI.js');
+                $scripts[] = (object) array(
+                    'path' => $h5prunltiurl->out(),
+                    'version' => '?ver=0.0.1',
+                );
+
+                // Adding editor script to scripts array.
+                $h5peditoravurl = new moodle_url('/local/och5pcore/lib/js/H5PEditor.AV.js');
+                $scripts[] = (object) array(
+                    'path' => $h5peditoravurl->out(),
+                    'version' => '?ver=0.0.1',
+                );
+            }
+        }
     }
 }
 
@@ -79,6 +135,7 @@ if (file_exists($CFG->dirroot.'/mod/hvp/renderer.php')) {
              * @param string $embedtype How the H5P is displayed.
              */
             public function hvp_alter_styles(&$styles, $libraries, $embedtype) {
+                global $CFG;
                 // Build the H5P CSS file URL.
                 $h5pcssurl = new moodle_url('/theme/boost_union/h5p/styles.php');
 
@@ -87,6 +144,61 @@ if (file_exists($CFG->dirroot.'/mod/hvp/renderer.php')) {
                         'path' => $h5pcssurl->out(),
                         'version' => '?ver='.theme_get_revision(),
                 );
+
+                // Adding local_och5p styles.
+                if (file_exists($CFG->dirroot.'/local/och5p/version.php')) {
+                    if (
+                        isset($libraries['H5P.InteractiveVideo']) &&
+                        $libraries['H5P.InteractiveVideo']['majorVersion'] == '1'
+                    ) {
+                        // Adding H5PEditor css file.
+                        $h5peditoravurl = new moodle_url('/local/och5p/lib/style/H5PEditor.AV.css');
+                        $styles[] = (object) array(
+                            'path' => $h5peditoravurl->out(),
+                            'version' => '?ver=0.0.1',
+                        );
+
+                        // Adding opencast font css file.
+                        $ocfontsurl = new moodle_url('/local/och5p/lib/style/oc-fonts.css');
+                        $styles[] = (object) array(
+                            'path' => $ocfontsurl->out(),
+                            'version' => '?ver=0.0.1',
+                        );
+                    }
+                }
+            }
+
+            /**
+             * Add scripts when an H5P is displayed.
+             *
+             * @param array $scripts Scripts that will be applied.
+             * @param array $libraries Libraries that will be displayed.
+             * @param string $embedType How the H5P is displayed.
+             */
+            public function hvp_alter_scripts(&$scripts, $libraries, $embedType) {
+                global $CFG;
+
+                // Adding local_och5p scripts.
+                if (file_exists($CFG->dirroot.'/local/och5p/version.php')) {
+                    if (
+                        isset($libraries['H5P.InteractiveVideo']) &&
+                        $libraries['H5P.InteractiveVideo']['majorVersion'] == '1'
+                    ) {
+                        // Adding LTI related script into scripts array.
+                        $h5prunltiurl = new moodle_url('/local/och5p/lib/js/H5PRunLTI.js');
+                        $scripts[] = (object) array(
+                            'path' => $h5prunltiurl->out(),
+                            'version' => '?ver=0.0.1',
+                        );
+
+                        // Adding editor script to scripts array.
+                        $h5peditoravurl = new moodle_url('/local/och5p/lib/js/H5PEditor.AV.js');
+                        $scripts[] = (object) array(
+                            'path' => $h5peditoravurl->out(),
+                            'version' => '?ver=0.0.1',
+                        );
+                    }
+                }
             }
         }
     }
