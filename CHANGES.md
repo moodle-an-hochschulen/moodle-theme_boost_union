@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-08-18 - Improvement: Add CSS and Scripts for local_och5p local_och5pcore to the theme renderer.
 * 2023-08-13 - Improvement: Make the fonts in the dark navbar variants always fully white (not only when hovered) to improve the contrast.
 * 2023-08-13 - Feature: Smart menus, solves #137
 
