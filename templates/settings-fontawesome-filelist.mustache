@@ -55,7 +55,7 @@
                 {{^exists}}<span class="{{#mandatory}}text-danger{{/mandatory}}{{^mandatory}}text-muted{{/mandatory}}"><i class="fa fa-times-circle-o fa-3x fa-fw"></i></span>{{/exists}}
                 <div class="ml-3">
                     <h6 class="mb-0">{{filepath}}</h6>
-                    <small>{{description}}</small><br />
+                    <small>{{description}}</small><br>
                     {{#exists}}<small>{{#mandatory}}{{#str}}fontawesomelistmandatoryuploaded,theme_boost_union{{/str}}{{/mandatory}}{{^mandatory}}{{#str}}fontawesomelistoptionaluploaded,theme_boost_union{{/str}}{{/mandatory}}</small>{{/exists}}
                     {{^exists}}<small>{{#mandatory}}{{#str}}fontawesomelistmandatorymissing,theme_boost_union{{/str}}{{/mandatory}}{{^mandatory}}{{#str}}fontawesomelistoptionalmissing,theme_boost_union{{/str}}{{/mandatory}}</small>{{/exists}}
                 </div>
