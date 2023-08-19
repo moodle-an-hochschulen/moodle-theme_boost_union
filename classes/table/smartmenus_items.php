@@ -65,7 +65,7 @@ class smartmenus_items extends \table_sql {
 
         $this->guess_base_url();
         // Table name for TESTING.
-        $this->set_attribute('id', 'smartmenus_item');
+        $this->set_attribute('id', 'smartmenus_items');
 
         parent::out($pagesize, $useinitialsbar, $downloadhelpbutton);
     }
