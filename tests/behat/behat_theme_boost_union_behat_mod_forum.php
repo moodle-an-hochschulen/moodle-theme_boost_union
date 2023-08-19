@@ -24,8 +24,11 @@
  */
 
 // NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
+// For that reason, we can't even rely on $CFG->admin being available here.
 
 require_once(__DIR__ . '/../../../../mod/forum/tests/behat/behat_mod_forum.php');
+
+use Behat\Gherkin\Node\TableNode as TableNode;
 
 /**
  * Forum-related step definition overrides for the Boost Union theme.

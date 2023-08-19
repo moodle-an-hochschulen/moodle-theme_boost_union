@@ -24,8 +24,14 @@
  */
 
 // NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
+// For that reason, we can't even rely on $CFG->admin being available here.
 
 require_once(__DIR__ . '/../../../../course/tests/behat/behat_course.php');
+
+use Behat\Gherkin\Node\TableNode as TableNode,
+    Behat\Mink\Exception\ExpectationException as ExpectationException,
+    Behat\Mink\Exception\DriverException as DriverException,
+    Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
 
 /**
  * Course-related step definition overrides for the Boost Union theme.
