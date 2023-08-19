@@ -15,17 +15,22 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
     Then ".theme_boost_union_footer_<page>link" "css_element" should not exist
     And ".theme_boost_union_footnote_<page>link" "css_element" should not exist
     And I am on <page> page
-    Then I should see "The <pagedisabled> page is disabled for this site. There is nothing to see here."
+    Then I should see "The <pagedisabled> is disabled for this site. There is nothing to see here."
     And ".theme_boost_union_footnote_<page>link" "css_element" should not exist in the "#footnote" "css_element"
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
     And ".theme_boost_union_footer_<page>link" "css_element" should not exist in the ".footer .popover-body" "css_element"
 
     Examples:
-      | page        | pagedisabled            |
-      | imprint     | imprint                 |
-      | contact     | contact                 |
-      | help        | help                    |
-      | maintenance | maintenance information |
+      | page        | pagedisabled                 |
+      | aboutus     | about us page                |
+      | offers      | offers page                  |
+      | imprint     | imprint page                 |
+      | contact     | contact page                 |
+      | help        | help page                    |
+      | maintenance | maintenance information page |
+      | page1       | generic page 1               |
+      | page2       | generic page 2               |
+      | page3       | generic page 3               |
 
   Scenario Outline: Setting: Enable static page - Enable and fill the static page with content
     Given the following config values are set as admin:
@@ -43,11 +48,16 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
     And I should see "<pagetitle>" in the "div[role='main'] h2" "css_element"
 
     Examples:
-      | page        | pagetitle   |
-      | imprint     | Imprint     |
-      | contact     | Contact     |
-      | help        | Help        |
-      | maintenance | Maintenance |
+      | page        | pagetitle      |
+      | aboutus     | About us       |
+      | offers      | Offers         |
+      | imprint     | Imprint        |
+      | contact     | Contact        |
+      | help        | Help           |
+      | maintenance | Maintenance    |
+      | page1       | Generic page 1 |
+      | page2       | Generic page 2 |
+      | page3       | Generic page 3 |
 
   @javascript
   Scenario Outline: Setting: Static page link position - Do not automatically add the static page link
@@ -67,10 +77,15 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
 
     Examples:
       | page        |
+      | aboutus     |
+      | offers      |
       | imprint     |
       | contact     |
       | help        |
       | maintenance |
+      | page1       |
+      | page2       |
+      | page3       |
 
   @javascript
   Scenario Outline: Setting: Static page link position - Add the static page link to the footnote automatically (even if the footnote is empty otherwise)
@@ -88,11 +103,16 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
     And ".theme_boost_union_footer_<page>link" "css_element" should not exist in the ".footer .popover-body" "css_element"
 
     Examples:
-      | page        | pagetitle   |
-      | imprint     | Imprint     |
-      | contact     | Contact     |
-      | help        | Help        |
-      | maintenance | Maintenance |
+      | page        | pagetitle      |
+      | aboutus     | About us       |
+      | offers      | Offers         |
+      | imprint     | Imprint        |
+      | contact     | Contact        |
+      | help        | Help           |
+      | maintenance | Maintenance    |
+      | page1       | Generic page 1 |
+      | page2       | Generic page 2 |
+      | page3       | Generic page 3 |
 
   @javascript
   Scenario Outline: Setting: Static page link position - Add the static page link to the footnote automatically (if the footnote contains some content already)
@@ -111,11 +131,16 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
     And ".theme_boost_union_footer_<page>link" "css_element" should not exist in the ".footer .popover-body" "css_element"
 
     Examples:
-      | page        | pagetitle   |
-      | imprint     | Imprint     |
-      | contact     | Contact     |
-      | help        | Help        |
-      | maintenance | Maintenance |
+      | page        | pagetitle      |
+      | aboutus     | About us       |
+      | offers      | Offers         |
+      | imprint     | Imprint        |
+      | contact     | Contact        |
+      | help        | Help           |
+      | maintenance | Maintenance    |
+      | page1       | Generic page 1 |
+      | page2       | Generic page 2 |
+      | page3       | Generic page 3 |
 
   @javascript
   Scenario Outline: Setting: Static page link position - Add the static page link to the footer automatically
@@ -133,11 +158,16 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
     And ".theme_boost_union_footnote_<page>link" "css_element" should not exist in the "#footnote" "css_element"
 
     Examples:
-      | page        | pagetitle   |
-      | imprint     | Imprint     |
-      | contact     | Contact     |
-      | help        | Help        |
-      | maintenance | Maintenance |
+      | page        | pagetitle      |
+      | aboutus     | About us       |
+      | offers      | Offers         |
+      | imprint     | Imprint        |
+      | contact     | Contact        |
+      | help        | Help           |
+      | maintenance | Maintenance    |
+      | page1       | Generic page 1 |
+      | page2       | Generic page 2 |
+      | page3       | Generic page 3 |
 
   @javascript
   Scenario Outline: Setting: Static page link position - Add the static page link to the footnote and the footer automatically
@@ -155,11 +185,16 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
     And ".theme_boost_union_footnote_<page>link" "css_element" should exist in the "#footnote" "css_element"
 
     Examples:
-      | page        | pagetitle   |
-      | imprint     | Imprint     |
-      | contact     | Contact     |
-      | help        | Help        |
-      | maintenance | Maintenance |
+      | page        | pagetitle      |
+      | aboutus     | About us       |
+      | offers      | Offers         |
+      | imprint     | Imprint        |
+      | contact     | Contact        |
+      | help        | Help           |
+      | maintenance | Maintenance    |
+      | page1       | Generic page 1 |
+      | page2       | Generic page 2 |
+      | page3       | Generic page 3 |
 
   @javascript
   Scenario Outline: Setting: Static page page title - Set an empty static page page title (and trigger the fallback string)
@@ -185,11 +220,16 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
     Then I should see "<pagetitle>" in the ".footer .popover-body .theme_boost_union_footer_<page>link" "css_element"
 
     Examples:
-      | page        | pagetitle   |
-      | imprint     | Imprint     |
-      | contact     | Contact     |
-      | help        | Help        |
-      | maintenance | Maintenance |
+      | page        | pagetitle      |
+      | aboutus     | About us       |
+      | offers      | Offers         |
+      | imprint     | Imprint        |
+      | contact     | Contact        |
+      | help        | Help           |
+      | maintenance | Maintenance    |
+      | page1       | Generic page 1 |
+      | page2       | Generic page 2 |
+      | page3       | Generic page 3 |
 
   @javascript
   Scenario Outline: Setting: Static page page title - Set a custom static page page title
@@ -224,7 +264,12 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
 
     Examples:
       | page        |
+      | aboutus     |
+      | offers      |
       | imprint     |
       | contact     |
       | help        |
       | maintenance |
+      | page1       |
+      | page2       |
+      | page3       |
