@@ -53,6 +53,24 @@ class behat_theme_boost_union extends behat_base {
     }
 
     /**
+     * Open the aboutus page.
+     *
+     * @Given /^I am on aboutus page$/
+     */
+    public function i_am_on_aboutus_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/aboutus.php']);
+    }
+
+    /**
+     * Open the offers page.
+     *
+     * @Given /^I am on offers page$/
+     */
+    public function i_am_on_offers_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/offers.php']);
+    }
+
+    /**
      * Open the imprint page.
      *
      * @Given /^I am on imprint page$/
@@ -86,5 +104,32 @@ class behat_theme_boost_union extends behat_base {
      */
     public function i_am_on_maintenance_page() {
         $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/maintenance.php']);
+    }
+
+    /**
+     * Open the page1 page.
+     *
+     * @Given /^I am on page1 page$/
+     */
+    public function i_am_on_page1_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/page1.php']);
+    }
+
+    /**
+     * Open the page2 page.
+     *
+     * @Given /^I am on page2 page$/
+     */
+    public function i_am_on_page2_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/page2.php']);
+    }
+
+    /**
+     * Open the page3 page.
+     *
+     * @Given /^I am on page3 page$/
+     */
+    public function i_am_on_page3_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/page3.php']);
     }
 }

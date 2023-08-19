@@ -26,6 +26,12 @@
     {
         "showfootnote": true,
         "footnotesetting": "This is my nice footnote",
+        "aboutuslinkpositionfooter": true,
+        "aboutuslink": "https://localhost/theme/boost_union/pages/aboutus.php",
+        "aboutustitle": "About us",
+        "offerslinkpositionfooter": true,
+        "offerslink": "https://localhost/theme/boost_union/pages/offers.php",
+        "offerstitle": "Offers",
         "imprintlinkpositionfootnote": true,
         "imprintlink": "https://localhost/theme/boost_union/pages/imprint.php",
         "imprinttitle": "Imprint",
@@ -37,7 +43,16 @@
         "helplinktitle": "Help",
         "maintenancelinkpositionfootnote": true,
         "maintenancelink": "https://localhost/theme/boost_union/pages/maintenance.php",
-        "maintenancetitle": "Maintenance"
+        "maintenancetitle": "Maintenance",
+        "page1linkpositionfooter": true,
+        "page1link": "https://localhost/theme/boost_union/pages/page1.php",
+        "page1title": "Generic page 1",
+        "page2linkpositionfooter": true,
+        "page2link": "https://localhost/theme/boost_union/pages/page2.php",
+        "page2title": "Generic page 2",
+        "page3linkpositionfooter": true,
+        "page3link": "https://localhost/theme/boost_union/pages/page3.php",
+        "page3title": "Generic page 3"
     }
 }}
 
@@ -48,6 +63,16 @@
                 {{{ footnotesetting }}}
             </div>
             <div class="row{{# footnotesetting }} mt-1{{/ footnotesetting }}">
+                {{# aboutuslinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_aboutuslink pr-2 mr-2">
+                        <a href="{{ aboutuslink }}">{{ aboutuspagetitle }}</a>
+                    </span>
+                {{/ aboutuslinkpositionfootnote }}
+                {{# offerslinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_offerslink pr-2 mr-2">
+                        <a href="{{ offerslink }}">{{ offerspagetitle }}</a>
+                    </span>
+                {{/ offerslinkpositionfootnote }}
                 {{# imprintlinkpositionfootnote }}
                     <span class="theme_boost_union_footnote_link theme_boost_union_footnote_imprintlink pr-2 mr-2">
                         <a href="{{ imprintlink }}">{{ imprintpagetitle }}</a>
@@ -68,6 +93,21 @@
                         <a href="{{ maintenancelink }}">{{ maintenancepagetitle }}</a>
                     </span>
                 {{/ maintenancelinkpositionfootnote }}
+                {{# page1linkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page1link pr-2 mr-2">
+                        <a href="{{ page1link }}">{{ page1pagetitle }}</a>
+                    </span>
+                {{/ page1linkpositionfootnote }}
+                {{# page2linkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page2link pr-2 mr-2">
+                        <a href="{{ page2link }}">{{ page2pagetitle }}</a>
+                    </span>
+                {{/ page2linkpositionfootnote }}
+                {{# page3linkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page3link pr-2 mr-2">
+                        <a href="{{ page3link }}">{{ page3pagetitle }}</a>
+                    </span>
+                {{/ page3linkpositionfootnote }}
             </div>
         </div>
     </div>

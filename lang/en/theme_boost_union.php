@@ -480,6 +480,44 @@ $string['footnotesetting_desc'] = 'Whatever you add to this textarea will be dis
 
 // Settings: Static pages tab.
 $string['staticpagestab'] = 'Static pages';
+// ... Section: About us.
+$string['aboutusheading'] = 'About us';
+// ... ... Setting: Enable about us page.
+$string['enableaboutussetting'] = 'Enable about us page';
+$string['aboutusdisabled'] = 'The about us page is disabled for this site. There is nothing to see here.';
+// ... ... Setting: About us content.
+$string['aboutuscontentsetting'] = 'About us content';
+$string['aboutuscontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the about us page.';
+// ... ... Setting: About us page title.
+$string['aboutuspagetitledefault'] = 'About us';
+$string['aboutuspagetitlesetting'] = 'About us page title';
+$string['aboutuspagetitlesetting_desc'] = 'In this setting, you can define the title of the about us page. This text will be used as link text to the about us page as well if you configure \'About us link position\' accordingly.';
+// ... ... Setting: About us link position.
+$string['aboutuslinkpositionnone'] = 'Do not automatically show a link to the about us page';
+$string['aboutuslinkpositionfootnote'] = 'Add a link to the about us page to the footnote';
+$string['aboutuslinkpositionfooter'] = 'Add a link to the about us page to the footer (questionmark) icon';
+$string['aboutuslinkpositionboth'] = 'Add a link to the about us page to the footnote and to the footer (questionmark) icon';
+$string['aboutuslinkpositionsetting'] = 'About us link position';
+$string['aboutuslinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the about us page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+// ... Section: Offers.
+$string['offersheading'] = 'Offers';
+// ... ... Setting: Enable offers page.
+$string['enableofferssetting'] = 'Enable offers page';
+$string['offersdisabled'] = 'The offers page is disabled for this site. There is nothing to see here.';
+// ... ... Setting: Offers content.
+$string['offerscontentsetting'] = 'Offers content';
+$string['offerscontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the offers page.';
+// ... ... Setting: Offers page title.
+$string['offerspagetitledefault'] = 'Offers';
+$string['offerspagetitlesetting'] = 'Offers page title';
+$string['offerspagetitlesetting_desc'] = 'In this setting, you can define the title of the offers page. This text will be used as link text to the offers page as well if you configure \'Offers link position\' accordingly.';
+// ... ... Setting: Offers link position.
+$string['offerslinkpositionnone'] = 'Do not automatically show a link to the offers page';
+$string['offerslinkpositionfootnote'] = 'Add a link to the offers page to the footnote';
+$string['offerslinkpositionfooter'] = 'Add a link to the offers page to the footer (questionmark) icon';
+$string['offerslinkpositionboth'] = 'Add a link to the offers page to the footnote and to the footer (questionmark) icon';
+$string['offerslinkpositionsetting'] = 'Offers link position';
+$string['offerslinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the offers page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
 // ... Section: Imprint.
 $string['imprintheading'] = 'Imprint';
 // ... ... Setting: Enable imprint.
@@ -556,6 +594,63 @@ $string['maintenancelinkpositionfooter'] = 'Add a link to the maintenance inform
 $string['maintenancelinkpositionboth'] = 'Add a link to the maintenance information page to the footnote and to the footer (questionmark) icon';
 $string['maintenancelinkpositionsetting'] = 'Maintenance information page link position';
 $string['maintenancelinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the maintenance information page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+// ... Section: Generic page 1.
+$string['page1heading'] = 'Generic page 1';
+// ... ... Setting: Enable generic page 1.
+$string['enablepage1setting'] = 'Enable generic page 1';
+$string['page1disabled'] = 'The generic page 1 is disabled for this site. There is nothing to see here.';
+// ... ... Setting: Generic page 1 content.
+$string['page1contentsetting'] = 'Generic page 1 content';
+$string['page1contentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the generic page 1.';
+// ... ... Setting: Generic page 1 title.
+$string['page1pagetitledefault'] = 'Generic page 1';
+$string['page1pagetitlesetting'] = 'Generic page 1 title';
+$string['page1pagetitlesetting_desc'] = 'In this setting, you can define the title of the generic page 1. This text will be used as link text to the generic page 1 as well if you configure \'Generic page 1 link position\' accordingly.';
+// ... ... Setting: Generic page 1 link position.
+$string['page1linkpositionnone'] = 'Do not automatically show a link to the generic page 1';
+$string['page1linkpositionfootnote'] = 'Add a link to the generic page 1 to the footnote';
+$string['page1linkpositionfooter'] = 'Add a link to the generic page 1 to the footer (questionmark) icon';
+$string['page1linkpositionboth'] = 'Add a link to the generic page 1 to the footnote and to the footer (questionmark) icon';
+$string['page1linkpositionsetting'] = 'Generic page 1 link position';
+$string['page1linkpositionsetting_desc'] = 'In this setting, you can configure if a link to the generic page 1 should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+// ... Section: Generic page 2.
+$string['page2heading'] = 'Generic page 2';
+// ... ... Setting: Enable generic page 2.
+$string['enablepage2setting'] = 'Enable generic page 2';
+$string['page2disabled'] = 'The generic page 2 is disabled for this site. There is nothing to see here.';
+// ... ... Setting: Generic page 2 content.
+$string['page2contentsetting'] = 'Generic page 2 content';
+$string['page2contentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the generic page 2.';
+// ... ... Setting: Generic page 2 title.
+$string['page2pagetitledefault'] = 'Generic page 2';
+$string['page2pagetitlesetting'] = 'Generic page 2 title';
+$string['page2pagetitlesetting_desc'] = 'In this setting, you can define the title of the generic page 2. This text will be used as link text to the generic page 2 as well if you configure \'Generic page 2 link position\' accordingly.';
+// ... ... Setting: Generic page 2 link position.
+$string['page2linkpositionnone'] = 'Do not automatically show a link to the generic page 2';
+$string['page2linkpositionfootnote'] = 'Add a link to the generic page 2 to the footnote';
+$string['page2linkpositionfooter'] = 'Add a link to the generic page 2 to the footer (questionmark) icon';
+$string['page2linkpositionboth'] = 'Add a link to the generic page 2 to the footnote and to the footer (questionmark) icon';
+$string['page2linkpositionsetting'] = 'Generic page 2 link position';
+$string['page2linkpositionsetting_desc'] = 'In this setting, you can configure if a link to the generic page 2 should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+// ... Section: Generic page 3.
+$string['page3heading'] = 'Generic page 3';
+// ... ... Setting: Enable generic page 3.
+$string['enablepage3setting'] = 'Enable generic page 3';
+$string['page3disabled'] = 'The generic page 3 is disabled for this site. There is nothing to see here.';
+// ... ... Setting: Generic page 3 content.
+$string['page3contentsetting'] = 'Generic page 3 content';
+$string['page3contentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the generic page 3.';
+// ... ... Setting: Generic page 3 title.
+$string['page3pagetitledefault'] = 'Generic page 3';
+$string['page3pagetitlesetting'] = 'Generic page 3 title';
+$string['page3pagetitlesetting_desc'] = 'In this setting, you can define the title of the generic page 3. This text will be used as link text to the generic page 3 as well if you configure \'Generic page 3 link position\' accordingly.';
+// ... ... Setting: Generic page 3 link position.
+$string['page3linkpositionnone'] = 'Do not automatically show a link to the generic page 3';
+$string['page3linkpositionfootnote'] = 'Add a link to the generic page 3 to the footnote';
+$string['page3linkpositionfooter'] = 'Add a link to the generic page 3 to the footer (questionmark) icon';
+$string['page3linkpositionboth'] = 'Add a link to the generic page 3 to the footnote and to the footer (questionmark) icon';
+$string['page3linkpositionsetting'] = 'Generic page 3 link position';
+$string['page3linkpositionsetting_desc'] = 'In this setting, you can configure if a link to the generic page 3 should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
 // Settings: Info banners tab.
 $string['infobannertab'] = 'Info banner';
 // ... Section: Info banners.
