@@ -584,7 +584,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * Carinthia University of Applied Sciences, Mario Wehr: Code
 * ELAN e.V., Farbod Zamani: Code
 * FernUniversität in Hagen, Daniel Poggenpohl: Code, Ideating
-* Hochschule Hannover - University of Applied Sciences and Arts: Funding, Ideating
+* Hochschule Hannover - University of Applied Sciences and Arts: Code, Funding, Ideating
 * Käferfreie Software, Nina Herrmann: Code
 * lern.link GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
 * lern.link GmbH, Beata Waloszczyk: Code
