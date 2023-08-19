@@ -468,6 +468,19 @@ How this theme works
 This Boost child theme is implemented with minimal code duplication in mind. It inherits / requires as much code as possible from theme_boost and only implements the extended or modified functionalities.
 
 
+Support for companion plugins
+-----------------------------
+
+This theme ships with some additions for companion plugins:
+
+* block_dash / local_dash:
+  * Style improvements for Dash dashboards in combination with Boost Union block regions
+* local_learningtools:
+  * Style improvements for the learning tools button in combination with the Boost Union bottom navigation
+* local_och5p / local_och5pcore:
+  * Renderer additions to add necessary additional CSS and JS files.
+
+
 Plugin repositories
 -------------------
 
