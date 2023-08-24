@@ -1360,8 +1360,8 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
             $defaultpurpose = MOD_PURPOSE_OTHER;
         }
         // If the activity purpose setting is set and differs from the activity's default purpose.
-        $configname = 'activitypurpose'.$modname;
-        if (isset($theme->settings->{$configname}) && $theme->settings->{$configname} != $defaultpurpose) {
+        $activitypurpose = get_config('theme_boost_union', 'activitypurpose'.$modname);
+        if ($activitypurpose && $activitypurpose != $defaultpurpose) {
             // Add CSS to modify the activity purpose color in the activity chooser and the activity icon.
             $scss .= '.activity.modtype_'.$modname.' .activityiconcontainer.courseicon,';
             $scss .= '.modchoosercontainer .modicon_'.$modname.'.activityiconcontainer,';
@@ -1369,8 +1369,8 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
             $scss .= '.block_recentlyaccesseditems .theme-boost-union-'.$modname.'.activityiconcontainer,';
             $scss .= '.block_timeline .theme-boost-union-mod_'.$modname.'.activityiconcontainer {';
             // If the purpose is now different than 'other', change the background color to the new color.
-            if ($theme->settings->{$configname} != MOD_PURPOSE_OTHER) {
-                $scss .= 'background-color: var(--activity' . $theme->settings->{$configname} . ') !important;';
+            if ($activitypurpose != MOD_PURPOSE_OTHER) {
+                $scss .= 'background-color: var(--activity' . $activitypurpose . ') !important;';
 
                 // Otherwise, the background color is set to light grey (as there is no '--activityother' variable).
             } else {
@@ -1381,7 +1381,7 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
                 $scss .= '.activityicon, .icon { filter: brightness(0) invert(1); }';
             }
             // If the default purpose was not 'other' and now it is, make the icon black.
-            if ($theme->settings->{$configname} == MOD_PURPOSE_OTHER) {
+            if ($activitypurpose == MOD_PURPOSE_OTHER) {
                 $scss .= '.activityicon, .icon { filter: none; }';
             }
             $scss .= '}';
