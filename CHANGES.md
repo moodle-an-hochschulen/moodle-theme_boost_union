@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-08-24 - Improvement: Don't force child theme to reimplement markexternallinks setting, solves #345.
 * 2023-08-19 - Improvement: Fix more mustache linter warnings, solves #360.
 * 2023-08-02 - Improvement: Add 'aboutus', 'offers', 'page1', 'page2' and 'page3' static pages, solves #351.
 * 2023-08-19 - Bugfix: Fix unparsable example JSON in Mustache template, solves #348.

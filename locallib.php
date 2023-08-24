@@ -1617,7 +1617,7 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
     $scss = '';
 
     // If the corresponding setting is set to 'yes'.
-    if ($theme->settings->markexternallinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    if (get_config('theme_boost_union', 'markexternallinks') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
 
         // SCSS to add external link icon after the link and respect LTR and RTL while doing this.
         $scss = 'body.dir-ltr a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::after,
