@@ -25,6 +25,5 @@
 defined('MOODLE_INTERNAL') || die();
 
 // Add smart menu elements to template context.
-// TODO Add switch if enabled.
 $templatecontext['menubar'] = $primarymenu['menubar'] ?? [];
 $templatecontext['bottombar'] = $primarymenu['bottombar'] ?? [];
