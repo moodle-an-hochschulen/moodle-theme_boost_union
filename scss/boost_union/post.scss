@@ -338,6 +338,16 @@
     /* Move the back to top button when right drawer is shown. */
     right: calc(#{$drawer-right-width} + 2rem);
 }
+/* If the smart menu bottom bar is shown, the back to top button has to be moved even more upwards. */
+@include media-breakpoint-down(sm) {
+    #page-wrapper #page.footer-bottom-menu #back-to-top {
+        bottom: calc(60px + 1rem);
+        /* On larger screens. */
+        @include media-breakpoint-up(sm) {
+            bottom: calc(60px + 4rem);
+        }
+    }
+}
 
 /* As soon as the sticky footer is shown (especially in the database activity),
    the back to top button has to be moved further up.
@@ -1649,9 +1659,13 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
             to view the bottom menu at the top added*/
             &.boost-union-bottom-menu {
                 padding: 0;
-                box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
+                box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
                 z-index: 1050;
+
                 .bottom-navigation .more-nav {
+                    /* Spread the menu items over the whole screen. */
+                    justify-content: space-around;
+
                     > li {
                         /* The footer bottom dropdown menu icon and text are displayed in separate rows. */
                         &.dropdown > a {
@@ -1889,12 +1903,13 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 }
 /* End of Footer Menu */
 
+/* On small screens where the bottom bar is shown. */
 @include media-breakpoint-down(sm) {
     #page-wrapper #page {
         &.footer-bottom-menu {
-            /* Increases the space at the bottom for the footer popover, as the bottom menu bar might hide it. */
+            /* Increase the space at the bottom for the footer popover, as the bottom menu bar might hide it. */
             .btn-footer-popover {
-                bottom: 4rem;
+                bottom: calc(60px + 1rem);
             }
         }
     }
@@ -1922,6 +1937,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
         }
     }
 }
+
 
 /*=======================================
  * General styling
@@ -2060,7 +2076,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     }
 
     /* On not-so-large screens. */
-    @include media-breakpoint-down(lg) { /* This means less than 992px per outside block region. */
+    @include media-breakpoint-down(lg) { /* This means less than 300px per outside block region. */
         /* Stack content vertically. */
         .main-inner-outside-nextmaincontent {
             display: flex;
