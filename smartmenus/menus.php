@@ -54,11 +54,11 @@ if ($action !== null && confirm_sesskey()) {
     // Create menu instance. Actions are performed in smartmenu instance.
     $menu = theme_boost_union\smartmenu::instance($menuid);
 
+    // The actions might be done with more than one DB statements which should have a monolithic effect, so we use a transaction.
     $transaction = $DB->start_delegated_transaction();
 
     // Perform the requested action.
     switch ($action) {
-        // Triggered action is delete, then init the deletion of menu.
         case 'delete':
             // Delete the menu.
             if ($menu->delete_menu()) {
@@ -66,25 +66,24 @@ if ($action !== null && confirm_sesskey()) {
                 \core\notification::success(get_string('smartmenusmenudeleted', 'theme_boost_union'));
             }
             break;
-        // Move the menu order to down.
-        case "movedown":
+        case "down":
             // Move the menu downwards.
             $menu->move_downward();
             break;
-        case "moveup":
+        case "up":
             // Move the menu upwards.
             $menu->move_upward();
             break;
         case "copy":
-            // Duplicate the menu and it items.
+            // Duplicate the menu and its items.
             $menu->duplicate();
             break;
-        case "hidemenu":
+        case "hide":
             // Disable the menu visibility.
             $menu->update_visible(false);
             break;
-        case "showmenu":
-            // Enable the menu.
+        case "show":
+            // Enable the menu visibility.
             $menu->update_visible(true);
             break;
     }
@@ -140,7 +139,7 @@ if ($countmenus < 1) {
     echo $createbutton;
 
     // And then show the table.
-    $table->out(50, true);
+    $table->out(0, true);
 }
 
 // Finish page output.

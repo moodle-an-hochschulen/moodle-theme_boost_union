@@ -20,7 +20,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     Then I should see "There aren't any items added to this smart menu yet. Please add an item to this menu."
     And "table" "css_element" should not exist in the "#region-main" "css_element"
     And "Add new menu item" "button" should exist in the "#region-main" "css_element"
-    And ".menu-item-actions" "css_element" should not exist in the "#region-main" "css_element"
+    And ".smartmenu-items-actions" "css_element" should not exist in the "#region-main" "css_element"
 
   @javascript
   Scenario: Smart menus: Menu items: Management - Create a new smart menu item
@@ -41,7 +41,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
       | Title |
       | Info  |
     And I should see "Info" in the "smartmenus_items" "table"
-    And ".menu-item-actions" "css_element" should exist in the "smartmenus_items" "table"
+    And ".smartmenu-items-actions" "css_element" should exist in the "smartmenus_items" "table"
     And I click on "Quick links" "text" in the ".menubar" "css_element"
     And I should see "Info" in the "nav.moremenu" "css_element"
 
@@ -113,9 +113,9 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
       | Info  |
     And ".action-copy" "css_element" should exist in the "Info" "table_row"
     And I click on ".action-copy" "css_element" in the "Info" "table_row"
-    Then "Info" "text" should exist in the "table#smartmenus_items tbody tr:nth-child(1)" "css_element"
-    And "Info" "text" should exist in the "table#smartmenus_items tbody tr:nth-child(2)" "css_element"
-    And I click on ".action-edit" "css_element" in the "table#smartmenus_items tbody tr:nth-child(2)" "css_element"
+    Then "Info" "text" should exist in the "table#smartmenus_items #smartmenu_items_r0" "css_element"
+    And "Info" "text" should exist in the "table#smartmenus_items #smartmenu_items_r1" "css_element"
+    And I click on ".action-edit" "css_element" in the "table#smartmenus_items #smartmenu_items_r1" "css_element"
     And I set the field "Title" to "External Resources"
     And I click on "Save changes" "button"
     And I click on "Quick links" "link" in the "nav.moremenu" "css_element"
@@ -175,7 +175,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
       | Title   |
       | Courses |
     And "Info" "table_row" should appear before "Courses" "table_row"
-    And I click on ".action-moveup" "css_element" in the "Courses" "table_row"
+    And I click on ".sort-smartmenuitems-up-action" "css_element" in the "Courses" "table_row"
     Then "Info" "table_row" should appear after "Courses" "table_row"
-    And I click on ".action-moveup" "css_element" in the "Info" "table_row"
+    And I click on ".sort-smartmenuitems-up-action" "css_element" in the "Info" "table_row"
     And "Info" "table_row" should appear before "Courses" "table_row"

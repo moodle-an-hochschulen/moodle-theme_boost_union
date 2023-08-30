@@ -80,11 +80,11 @@ if ($action !== null && confirm_sesskey()) {
     // Create menu instance. Actions are performed in smartmenu instance.
     $item = new theme_boost_union\smartmenu_item($id);
 
+    // The actions might be done with more than one DB statements which should have a monolithic effect, so we use a transaction.
     $transaction = $DB->start_delegated_transaction();
 
     // Perform the requested action.
     switch ($action) {
-        // Triggered action is delete, then init the deletion of menu.
         case 'delete':
             // Delete the menu.
             if ($item->delete_menuitem()) {
@@ -92,12 +92,11 @@ if ($action !== null && confirm_sesskey()) {
                 \core\notification::success(get_string('smartmenusmenudeleted', 'theme_boost_union'));
             }
             break;
-        // Move the menu order to down.
-        case "movedown":
+        case "down":
             // Move the item downwards.
             $item->move_downward();
             break;
-        case "moveup":
+        case "up":
             // Move the item upwards.
             $item->move_upward();
             break;
@@ -128,7 +127,7 @@ $PAGE->set_heading(theme_boost_union_get_externaladminpage_heading());
 
 // Build smart menu items table.
 $table = new theme_boost_union\table\smartmenus_items($menu->id);
-$table->define_baseurl($PAGE->url);
+$table->define_baseurl($PAGE->url, array('menu' => $menu->id));
 
 // Start page output.
 echo $OUTPUT->header();
@@ -165,7 +164,7 @@ if ($countitems < 1) {
     echo $createbutton;
 
     // And then show the table.
-    $table->out(50, true);
+    $table->out(0, true);
 }
 
 // Finish page output.
