@@ -41,7 +41,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
     And I click on "Save changes" "button"
-    And I click on "Preview" "button" in the "#region-main table" "css_element"
+    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     # Unfortunately, we can't test for the particular flavour ID, we can just check that the class is there.
     Then the "class" attribute of "body" "css_element" should contain "flavour-"
 
@@ -145,7 +145,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
     And I should see "Course categories" in the "Cat 1 flavour" "table_row"
-    And I click on "Edit" "button" in the "#region-main table" "css_element"
+    And I click on ".action-edit" "css_element" in the "Cat 1 flavour" "table_row"
     And I expand all fieldsets
     And I select "No" from the "Apply to course categories" singleselect
     And I click on "Save changes" "button"
@@ -210,7 +210,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
     And I should see "Cohorts" in the "Cohort 1 flavour" "table_row"
-    And I click on "Edit" "button" in the "#region-main table" "css_element"
+    And I click on ".action-edit" "css_element" in the "Cohort 1 flavour" "table_row"
     And I expand all fieldsets
     And I select "No" from the "Apply to cohorts" singleselect
     And I click on "Save changes" "button"

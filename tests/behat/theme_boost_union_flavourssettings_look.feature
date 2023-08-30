@@ -23,7 +23,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I upload "theme/boost_union/tests/fixtures/flavourlogo.png" file to "Compact logo" filemanager
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
-    And I click on "Preview" "button" in the "#region-main table" "css_element"
+    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     # We can't check the uploaded image file visually, but we can verify that the compact logo is shipped from the theme_boost_union flavour filearea.
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/flavours_look_logocompact')][contains(@src, 'flavourlogo.png')]" "xpath_element" should exist
 
@@ -41,7 +41,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I upload "theme/boost_union/tests/fixtures/flavourlogo.png" file to "Compact logo" filemanager
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
-    And I click on "Preview" "button" in the "#region-main table" "css_element"
+    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     # We can't check the uploaded image file visually, but we can verify that the compact logo is shipped from the theme_boost_union flavour filearea.
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/flavours_look_logocompact')][contains(@src, 'flavourlogo.png')]" "xpath_element" should exist
 
@@ -58,7 +58,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I set the field "Title" to "My shiny new flavour"
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
-    And I click on "Preview" "button" in the "#region-main table" "css_element"
+    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     # We can't check the uploaded image file visually, but we can verify that the compact logo is shipped from the theme_boost_union global logo filearea.
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
 
@@ -72,7 +72,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I upload "theme/boost_union/tests/fixtures/flavourfavicon.ico" file to "Favicon" filemanager
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
-    And I click on "Preview" "button" in the "#region-main table" "css_element"
+    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     # We can't check the uploaded image file visually, but we can verify that the favicon is shipped from the theme_boost_union flavour filearea.
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/flavours_look_favicon')][contains(@href, 'flavourfavicon.ico')]" "xpath_element" should exist
 
@@ -90,7 +90,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I upload "theme/boost_union/tests/fixtures/flavourfavicon.ico" file to "Favicon" filemanager
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
-    And I click on "Preview" "button" in the "#region-main table" "css_element"
+    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     # We can't check the uploaded image file visually, but we can verify that the favicon is shipped from the theme_boost_union flavour filearea.
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/flavours_look_favicon')][contains(@href, 'flavourfavicon.ico')]" "xpath_element" should exist
 
@@ -107,7 +107,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I set the field "Title" to "My shiny new flavour"
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
-    And I click on "Preview" "button" in the "#region-main table" "css_element"
+    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     # We can't check the uploaded image file visually, but we can verify that the favicon is shipped from the theme_boost_union global favicon filearea.
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/favicon')][contains(@href, 'favicon.ico')]" "xpath_element" should exist
 
@@ -135,5 +135,5 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     """
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
-    And I click on "Preview" "button" in the "#region-main table" "css_element"
+    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     Then I should not see "Preview flavour" in the "#page-header .page-header-headings" "css_element"

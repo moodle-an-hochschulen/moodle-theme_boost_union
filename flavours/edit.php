@@ -40,6 +40,7 @@ $context = context_system::instance();
 
 // Access checks.
 require_login();
+require_sesskey();
 require_capability('theme/boost_union:configure', $context);
 
 // Prepare the page.

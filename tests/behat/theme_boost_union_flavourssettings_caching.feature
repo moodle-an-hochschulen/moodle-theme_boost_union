@@ -92,7 +92,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I am on "Course 1" course homepage
     And I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
     And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
-    And I click on "Edit" "button" in the "#region-main table" "css_element"
+    And I click on ".action-edit" "css_element" in the "Effective flavour" "table_row"
     And I click on "span.badge" "css_element" in the "#fitem_id_applytocategories_ids .form-autocomplete-selection" "css_element"
     And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
     And I click on "Cat 2" item in the autocomplete list
@@ -147,7 +147,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I am on "Course 1" course homepage
     And I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
     And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
-    And I click on "Delete" "button" in the "Effective flavour" "table_row"
+    And I click on ".action-delete" "css_element" in the "Effective flavour" "table_row"
     And I click on "Delete" "button"
     And I am on "Course 1" course homepage
     Then I should see "Course 1" in the "#page-header .page-header-headings" "css_element"

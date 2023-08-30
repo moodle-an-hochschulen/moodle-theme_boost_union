@@ -69,6 +69,7 @@ class flavours_overview extends \table_sql {
         $this->pageable(false); // Having a pageable table would be nice, but we will keep it simple for now.
         $this->define_columns($columns);
         $this->define_headers($headers);
+        $this->define_header_column('title');
 
         // Initialize values for the updown feature.
         $this->count = 0;
@@ -97,9 +98,9 @@ class flavours_overview extends \table_sql {
         if ($this->count > 0) {
             // Add the up icon.
             $updown .= \html_writer::link($actionurl->out(false,
-                            array('action' => 'up', 'id' => $data->id)),
-                            $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
-                                    array('class' => 'iconsmall')), array('class' => 'sort-flavour-up-action'));
+                    array('action' => 'up', 'id' => $data->id, 'sesskey' => sesskey())),
+                    $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
+                            array('class' => 'iconsmall')), array('class' => 'sort-flavour-up-action'));
 
             // Otherwise, just add a spacer.
         } else {
@@ -111,9 +112,9 @@ class flavours_overview extends \table_sql {
             // Add the down icon.
             $updown .= '&nbsp;';
             $updown .= \html_writer::link($actionurl->out(false,
-                            array('action' => 'down', 'id' => $data->id)),
-                            $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
-                                    array('class' => 'iconsmall')), array('class' => 'sort-flavour-down-action'));
+                    array('action' => 'down', 'id' => $data->id, 'sesskey' => sesskey())),
+                    $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
+                            array('class' => 'iconsmall')), array('class' => 'sort-flavour-down-action'));
 
             // Otherwise, just add a spacer.
         } else {
@@ -166,17 +167,46 @@ class flavours_overview extends \table_sql {
     public function col_actions($data) {
         global $OUTPUT;
 
-        // Compose and return the action buttons.
-        return
-            $OUTPUT->single_button(
-                    new \moodle_url('/theme/boost_union/flavours/preview.php', ['id' => $data->id]),
-                    get_string('flavourspreview', 'theme_boost_union'), 'get').
-            $OUTPUT->single_button(
-                    new \moodle_url('/theme/boost_union/flavours/edit.php', ['action' => 'edit', 'id' => $data->id]),
-                    get_string('flavoursedit', 'theme_boost_union'), 'get').
-            $OUTPUT->single_button(
-                    new \moodle_url('/theme/boost_union/flavours/edit.php', ['action' => 'delete', 'id' => $data->id]),
-                    get_string('flavoursdelete', 'theme_boost_union'), 'get');
+        // Initialize actions.
+        $actions = array();
+
+        // Preview.
+        $actions[] = array(
+                'url' => new \moodle_url('/theme/boost_union/flavours/preview.php', array('id' => $data->id)),
+                'icon' => new \pix_icon('i/search', get_string('flavoursedit', 'theme_boost_union')),
+                'attributes' => array('class' => 'action-preview')
+        );
+
+        // Edit.
+        $actions[] = array(
+                'url' => new \moodle_url('/theme/boost_union/flavours/edit.php',
+                        array('action' => 'edit', 'id' => $data->id, 'sesskey' => sesskey())),
+                'icon' => new \pix_icon('t/edit', get_string('flavoursedit', 'theme_boost_union')),
+                'attributes' => array('class' => 'action-edit')
+        );
+
+        // Delete.
+        $actions[] = array(
+                'url' => new \moodle_url('/theme/boost_union/flavours/edit.php',
+                        array('action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey())),
+                'icon' => new \pix_icon('t/delete', get_string('flavourspreview', 'theme_boost_union')),
+                'attributes' => array('class' => 'action-delete')
+        );
+
+        // Compose action icons for all actions.
+        $actionshtml = array();
+        foreach ($actions as $action) {
+            $action['attributes']['role'] = 'button';
+            $actionshtml[] = $OUTPUT->action_icon(
+                $action['url'],
+                $action['icon'],
+                ($action['confirm'] ?? null),
+                $action['attributes']
+            );
+        }
+
+        // Return all actions.
+        return \html_writer::span(join('', $actionshtml), 'flavours-actions');
     }
 
     /**
