@@ -73,7 +73,7 @@ class flavour_edit_form extends \moodleform {
 
         // Add the description title as editor element.
         $mform->addElement('editor', 'description', get_string('flavoursdescription', 'theme_boost_union'));
-        $mform->setType('description', PARAM_RAW);
+        $mform->setType('description', PARAM_CLEANHTML);
         $mform->addHelpButton('description', 'flavoursdescription', 'theme_boost_union');
 
         // Add look as header element.
