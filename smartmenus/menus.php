@@ -32,7 +32,7 @@ require_once($CFG->dirroot. '/theme/boost_union/smartmenus/menulib.php');
 require_once($CFG->libdir.'/adminlib.php');
 
 // Get parameters.
-$action = optional_param('action', null, PARAM_ALPHAEXT);
+$action = optional_param('action', null, PARAM_TEXT);
 $menuid = optional_param('id', null, PARAM_INT);
 
 // Get system context.
@@ -66,23 +66,23 @@ if ($action !== null && confirm_sesskey()) {
                 \core\notification::success(get_string('smartmenusmenudeleted', 'theme_boost_union'));
             }
             break;
-        case "down":
+        case 'down':
             // Move the menu downwards.
             $menu->move_downward();
             break;
-        case "up":
+        case 'up':
             // Move the menu upwards.
             $menu->move_upward();
             break;
-        case "copy":
+        case 'copy':
             // Duplicate the menu and its items.
             $menu->duplicate();
             break;
-        case "hide":
+        case 'hide':
             // Disable the menu visibility.
             $menu->update_visible(false);
             break;
-        case "show":
+        case 'show':
             // Enable the menu visibility.
             $menu->update_visible(true);
             break;
