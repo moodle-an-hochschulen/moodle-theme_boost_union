@@ -1297,8 +1297,8 @@ class smartmenu_item {
                 WHERE sortorder >= :sortorder AND id != :item AND menu=:menuid";
 
             $DB->execute($sql, ['sortorder' => $record->sortorder, 'item' => $itemid, 'menuid' => $record->menu]);
-            // Show the menu inserted success notification.
-            \core\notification::success(get_string('smartmenusinsertsuccess', 'theme_boost_union'));
+            // Show the menu item inserted success notification.
+            \core\notification::success(get_string('smartmenusinsertmenuitemsuccess', 'theme_boost_union'));
 
             // Delete the cached data of its menu. Menu will recreate with this item.
             $menucache->delete_menu($formdata->menu);

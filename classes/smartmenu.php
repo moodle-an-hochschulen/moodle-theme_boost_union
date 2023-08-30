@@ -898,7 +898,7 @@ class smartmenu {
             // New menu added, recreate the menuslist.
             $cache->delete(self::CACHE_MENUSLIST);
             // Show the menu inserted success notification.
-            \core\notification::success(get_string('smartmenusinsertsuccess', 'theme_boost_union'));
+            \core\notification::success(get_string('smartmenusinsertmenusuccess', 'theme_boost_union'));
         }
 
         // Allow to update the DB changes to Database.

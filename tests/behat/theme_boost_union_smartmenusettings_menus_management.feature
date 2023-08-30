@@ -11,7 +11,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     Then I should see "There aren't any smart menus created yet. Please create your first smart menu to get things going."
     And "table" "css_element" should not exist in the "#region-main" "css_element"
     And "Create new smart menu" "button" should exist in the "#region-main" "css_element"
-    And ".menu-item-actions" "css_element" should not exist in the "#region-main" "css_element"
+    And ".smartmenu-actions" "css_element" should not exist in the "#region-main" "css_element"
 
   @javascript
   Scenario: Smart menus: Menus: Management - Create a new smart menu
@@ -30,7 +30,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
       | Title | Locations |
       | Links | Main      |
     And I should see "Links" in the "smartmenus" "table"
-    And ".menu-item-actions" "css_element" should exist in the "smartmenus" "table"
+    And ".smartmenu-actions" "css_element" should exist in the "smartmenus" "table"
     And I should see "Links" in the "nav.moremenu" "css_element"
 
   @javascript
@@ -83,9 +83,9 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I should see "Links" in the "smartmenus" "table"
     And ".action-copy" "css_element" should exist in the "Links" "table_row"
     And I click on ".action-copy" "css_element" in the "Links" "table_row"
-    And "Links" "text" should exist in the "table#smartmenus tr#1_r0" "css_element"
-    And "Links" "text" should exist in the "table#smartmenus tr#1_r1" "css_element"
-    And I click on ".action-edit" "css_element" in the "table#smartmenus tr#1_r1" "css_element"
+    And "Links" "text" should exist in the "table#smartmenus #smartmenus_r0" "css_element"
+    And "Links" "text" should exist in the "table#smartmenus #smartmenus_r1" "css_element"
+    And I click on ".action-edit" "css_element" in the "table#smartmenus #smartmenus_r1" "css_element"
     And I set the field "Title" to "Useful Links"
     And I click on "Save and return" "button"
     And I should see "Links" in the "nav.moremenu" "css_element"
@@ -126,7 +126,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I click on "Save and return" "button"
     And I should see "Completed courses" in the "smartmenus" "table"
     And "Enrolled courses" "table_row" should appear before "Completed courses" "table_row"
-    And I click on ".action-moveup" "css_element" in the "Completed courses" "table_row"
+    And I click on ".sort-smartmenus-up-action" "css_element" in the "Completed courses" "table_row"
     Then "Enrolled courses" "table_row" should appear after "Completed courses" "table_row"
-    And I click on ".action-moveup" "css_element" in the "Enrolled courses" "table_row"
+    And I click on ".sort-smartmenus-up-action" "css_element" in the "Enrolled courses" "table_row"
     And "Enrolled courses" "table_row" should appear before "Completed courses" "table_row"

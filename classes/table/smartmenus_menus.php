@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Table to list the menus.
+ * Theme Boost Union - Smart menus overview table.
  *
  * @package    theme_boost_union
  * @copyright  2023 bdecent GmbH <https://bdecent.de>
@@ -26,217 +26,236 @@ namespace theme_boost_union\table;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot.'/lib/tablelib.php');
-
-use moodle_url;
-use html_writer;
-use theme_boost_union\smartmenu as menuinstance;
+// Require table library.
+require_once($CFG->libdir.'/tablelib.php');
 
 /**
- * List of Smart menus table.
+ * List of smart menus.
+ *
+ * @package    theme_boost_union
+ * @copyright  2023 bdecent GmbH <https://bdecent.de>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class smartmenus_menus extends \table_sql {
 
     /**
-     * Setup and Render the menus table.
+     * Setup table.
      *
-     * @param int $pagesize Size of page for paginated displayed table.
-     * @param bool $useinitialsbar Whether to use the initials bar which will only be used if there is a fullname column defined.
-     * @param string $downloadhelpbutton
+     * @throws \coding_exception
      */
-    public function out($pagesize, $useinitialsbar, $downloadhelpbutton = '') {
+    public function __construct() {
+        global $DB;
 
-        // Define table headers and columns.
-        $columns = ['title', 'description', 'location', 'type', 'sortorder'];
-        $headers = [
-            get_string('smartmenustitle', 'theme_boost_union'),
-            get_string('smartmenusdescription', 'theme_boost_union'),
-            get_string('smartmenuslocation', 'theme_boost_union'),
-            get_string('smartmenustypes', 'theme_boost_union'),
-            get_string('actions'),
-        ];
+        // Call parent constructor.
+        parent::__construct('smartmenus');
 
+        // Define the headers and columns.
+        $headers[] = get_string('smartmenustitle', 'theme_boost_union');
+        $headers[] = get_string('smartmenusdescription', 'theme_boost_union');
+        $headers[] = get_string('smartmenuslocation', 'theme_boost_union');
+        $headers[] = get_string('smartmenustypes', 'theme_boost_union');
+        $headers[] = get_string('up') . '/' . get_string('down');
+        $headers[] = get_string('actions');
+        $columns[] = 'title';
+        $columns[] = 'description';
+        $columns[] = 'location';
+        $columns[] = 'type';
+        $columns[] = 'updown';
+        $columns[] = 'actions';
+        $this->sortable(false); // Having a sortable table would be nice, but this would interfere with the up/down feature.
+        $this->collapsible(false);
+        $this->pageable(false); // Having a pageable table would be nice, but we will keep it simple for now.
         $this->define_columns($columns);
         $this->define_headers($headers);
+        $this->define_header_column('title');
 
-        // Remove sorting for some fields.
-        $this->sortable(false, 'sortorder', SORT_ASC);
-
-        // Do not make the table collapsible.
-        $this->collapsible(false);
-
+        // Set an ID to this table (just used for Behat testing).
         $this->set_attribute('id', 'smartmenus');
 
-        $this->guess_base_url();
-
-        parent::out($pagesize, $useinitialsbar, $downloadhelpbutton);
+        // Initialize values for the updown feature.
+        $this->count = 0;
+        $this->totalmenus = $DB->count_records('theme_boost_union_menus');
     }
 
     /**
-     * Guess the base url for the menu items table.
-     */
-    public function guess_base_url(): void {
-        $this->baseurl = new moodle_url('/theme/boost_union/smartmenus/menus.php');
-    }
-
-    /**
-     * Set the sql query to fetch smart menus list.
+     * Location column.
      *
-     * @param int $pagesize Size of page for paginated displayed table.
-     * @param boolean $useinitialsbar Whether to use the initials bar which will only be used if there is a fullname column defined.
-     * @return void
+     * @param \stdClass $data
+     * @return mixed
      */
-    public function query_db($pagesize, $useinitialsbar = true) {
-        // Fetch all avialable records from smart menu table.
-        $this->set_sql('*', '{theme_boost_union_menus}', '1=1');
+    public function col_location($data) {
+        // Decode all locations.
+        $locations = json_decode($data->location);
 
-        parent::query_db($pagesize, $useinitialsbar);
-    }
-
-    /**
-     * Show the menu title in the list, render the description based on the show description value "Above, below and help".
-     * Default help_icon method only works with string identifiers, rendered the help icon from template directly.
-     *
-     * @param object $row
-     * @return void
-     */
-    public function col_title($row) {
-        global $OUTPUT;
-        $title = html_writer::tag('h6', $row->title, ['class' => 'menu-title']);
-        return $title;
-    }
-
-    /**
-     * Display the menus description.
-     *
-     * @param stdclass $row
-     * @return void
-     */
-    public function col_description($row) {
-
-        $description = format_text($row->description, FORMAT_HTML);
-        $description = html_to_text($description);
-
-        return $description;
-    }
-
-    /**
-     * Display the locations of menu. Convert the languge shortname to user readable name.
-     *
-     * @param stdClass $row The row object containing the location information.
-     * @return string The HTML code to display the location information as a list of badges.
-     */
-    public function col_location($row) {
-        $locations = json_decode($row->location);
+        // Implode all given locations and show a badge for each of them.
         return (!empty($locations)) ? implode(' ', array_map(function($value) {
             $location = \theme_boost_union\smartmenu::get_location($value);
-            return html_writer::tag('span', $location, ['class' => 'badge badge-primary']);
+            return \html_writer::tag('span', $location, ['class' => 'badge badge-primary']);
         }, $locations)) : "";
     }
 
     /**
-     * Display the "type" of column for a row in the item table.
+     * Type column.
      *
-     * @param object $row The database row representing the Smart Menu item.
-     * @return string The HTML representation of the "type" column for the given row.
+     * @param \stdClass $data
+     * @return mixed
      */
-    public function col_type($row) {
-        $type = \theme_boost_union\smartmenu::get_type($row->type);
-        return html_writer::tag('span', $type, ['class' => 'badge badge-primary']);
+    public function col_type($data) {
+        // Get the type.
+        $type = \theme_boost_union\smartmenu::get_type($data->type);
+
+        // Return the type as badge.
+        return \html_writer::tag('span', $type, ['class' => 'badge badge-primary']);
     }
 
     /**
-     * Actions Column, which contains the options to update the menuitem visibility, Update the menu, delete, duplicate, sort.
-     * Used sortorder column as actions column, if not mention the sortorder column in columns order doesn't works based sortorder.
-     * @param  \stdclass $row
-     * @return string
+     * Updown column.
+     *
+     * @param \stdClass $data
+     * @return mixed
      */
-    public function col_sortorder($row) {
+    public function col_updown($data) {
         global $OUTPUT;
 
-        $baseurl = new \moodle_url('/theme/boost_union/smartmenus/menus.php', [
-            'id' => $row->id,
-            'sesskey' => \sesskey()
-        ]);
+        // Prepare action URL.
+        $actionurl = new \moodle_url('/theme/boost_union/smartmenus/menus.php');
+
+        // Initialize column value.
+        $updown = '';
+
+        // Get spacer icon.
+        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', array('class' => 'iconsmall'));
+
+        // If there is more than one smart menu and we do not handle the first (number 0) smart menu.
+        if ($this->count > 0) {
+            // Add the up icon.
+            $updown .= \html_writer::link($actionurl->out(false,
+                    array('action' => 'up', 'id' => $data->id, 'sesskey' => sesskey())),
+                    $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
+                            array('class' => 'iconsmall')), array('class' => 'sort-smartmenus-up-action'));
+
+            // Otherwise, just add a spacer.
+        } else {
+            $updown .= $spacer;
+        }
+
+        // If there is more than one smart menu and we do not handle the last smart menu.
+        if ($this->count < ($this->totalmenus - 1)) {
+            // Add the down icon.
+            $updown .= '&nbsp;';
+            $updown .= \html_writer::link($actionurl->out(false,
+                    array('action' => 'down', 'id' => $data->id, 'sesskey' => sesskey())),
+                    $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
+                            array('class' => 'iconsmall')), array('class' => 'sort-smartmenus-down-action'));
+
+            // Otherwise, just add a spacer.
+        } else {
+            $updown .= $spacer;
+        }
+
+        // Increase the smart menus counter.
+        $this->count++;
+
+        // Return the column value.
+        return $updown;
+    }
+
+    /**
+     * Actions column.
+     *
+     * @param \stdClass $data
+     * @return mixed
+     */
+    public function col_actions($data) {
+        global $OUTPUT;
+
+        // Prepare action URL.
+        $actionurl = new \moodle_url('/theme/boost_union/smartmenus/menus.php');
+
+        // Initialize actions.
         $actions = array();
 
         // Show/Hide.
-        if ($row->visible) {
+        if ($data->visible) {
             $actions[] = array(
-                'url' => new \moodle_url($baseurl, array('action' => 'hidemenu')),
-                'icon' => new \pix_icon('t/hide', \get_string('hide')),
-                'attributes' => array('data-action' => 'hide', 'class' => 'action-hide')
+                'url' => new \moodle_url($actionurl, array('action' => 'hide', 'id' => $data->id, 'sesskey' => sesskey())),
+                'icon' => new \pix_icon('t/hide', get_string('hide')),
+                'attributes' => array('class' => 'action-hide')
             );
         } else {
             $actions[] = array(
-                'url' => new \moodle_url($baseurl, array('action' => 'showmenu')),
-                'icon' => new \pix_icon('t/show', \get_string('show')),
-                'attributes' => array('data-action' => 'show', 'class' => 'action-show')
+                'url' => new \moodle_url($actionurl, array('action' => 'show', 'id' => $data->id, 'sesskey' => sesskey())),
+                'icon' => new \pix_icon('t/show', get_string('show')),
+                'attributes' => array('class' => 'action-show')
             );
         }
 
         // Edit.
         $actions[] = array(
-            'url' => new moodle_url('/theme/boost_union/smartmenus/edit.php', [
-                'id' => $row->id,
-                'sesskey' => sesskey()
-            ]),
-            'icon' => new \pix_icon('t/edit', \get_string('edit')),
+            'url' => new \moodle_url('/theme/boost_union/smartmenus/edit.php', array('id' => $data->id, 'sesskey' => sesskey())),
+            'icon' => new \pix_icon('t/edit', get_string('edit')),
             'attributes' => array('class' => 'action-edit')
         );
 
-        // Make the menu duplicate.
+        // Duplicate.
         $actions[] = array(
-            'url' => new \moodle_url($baseurl, ['action' => 'copy']),
-            'icon' => new \pix_icon('t/copy', \get_string('smartmenuscopymenu', 'theme_boost_union')),
+            'url' => new \moodle_url($actionurl, array('action' => 'copy', 'id' => $data->id, 'sesskey' => sesskey())),
+            'icon' => new \pix_icon('t/copy', get_string('smartmenuscopymenu', 'theme_boost_union')),
             'attributes' => array('class' => 'action-copy')
         );
 
-        // List of items.
-        $itemsurl = new \moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $row->id]);
+        // List items.
         $actions[] = array(
-            'url' => $itemsurl,
-            'icon' => new \pix_icon('e/bullet_list', \get_string('list')),
+            'url' => new \moodle_url('/theme/boost_union/smartmenus/items.php', array('menu' => $data->id)),
+            'icon' => new \pix_icon('e/bullet_list', get_string('list')),
             'attributes' => array('class' => 'action-list-items')
         );
 
         // Delete.
         $actions[] = array(
-            'url' => new \moodle_url($baseurl, array('action' => 'delete')),
-            'icon' => new \pix_icon('t/delete', \get_string('delete')),
+            'url' => new \moodle_url($actionurl, array('action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey())),
+            'icon' => new \pix_icon('t/delete', get_string('delete')),
             'attributes' => array('class' => 'action-delete'),
-            'action' => new \confirm_action(get_string('smartmenusdeleteconfirmmenu', 'theme_boost_union'))
+            'confirm' => new \confirm_action(get_string('smartmenusdeleteconfirmmenu', 'theme_boost_union'))
         );
 
-        // Move up/down.
-        $actions[] = array(
-            'url' => new \moodle_url($baseurl, array('action' => 'moveup')),
-            'icon' => new \pix_icon('t/up', \get_string('moveup')),
-            'attributes' => array('data-action' => 'moveup', 'class' => 'action-moveup')
-        );
-        $actions[] = array(
-            'url' => new \moodle_url($baseurl, array('action' => 'movedown')),
-            'icon' => new \pix_icon('t/down', \get_string('movedown')),
-            'attributes' => array('data-action' => 'movedown', 'class' => 'action-movedown')
-        );
-
+        // Compose action icons for all actions.
         $actionshtml = array();
         foreach ($actions as $action) {
             $action['attributes']['role'] = 'button';
             $actionshtml[] = $OUTPUT->action_icon(
                 $action['url'],
                 $action['icon'],
-                ($action['action'] ?? null),
+                ($action['confirm'] ?? null),
                 $action['attributes']
             );
         }
-        return html_writer::span(join('', $actionshtml), 'menu-item-actions item-actions mr-0');
+
+        // Return all actions.
+        return \html_writer::span(join('', $actionshtml), 'smartmenu-actions');
     }
 
     /**
-     * Override the default "Nothing to display" message when no menus available.
+     * Get the smart menus for the table.
      *
-     * @return void
+     * @param int $pagesize
+     * @param bool $useinitialsbar
+     * @throws \dml_exception
+     */
+    public function query_db($pagesize, $useinitialsbar = true) {
+        global $DB;
+
+        // Compose SQL base query.
+        $sql = 'SELECT *
+                FROM {theme_boost_union_menus} t
+                ORDER BY sortorder';
+
+        // Get records.
+        $this->rawdata = $DB->get_recordset_sql($sql);
+    }
+
+    /**
+     * Override the message if the table contains no entries.
      */
     public function print_nothing_to_display() {
         global $OUTPUT;

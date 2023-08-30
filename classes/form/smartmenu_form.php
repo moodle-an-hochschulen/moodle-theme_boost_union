@@ -205,8 +205,8 @@ class smartmenu_form extends \moodleform {
         $mform->addHelpButton('start_date', 'smartmenusfrom', 'theme_boost_union');
 
         $mform->addElement('date_time_selector', 'end_date',
-            get_string('smartmenusdurationuntil', 'theme_boost_union'), array('optional' => true));
-        $mform->addHelpButton('end_date', 'smartmenusdurationuntil', 'theme_boost_union');
+            get_string('smartmenusuntil', 'theme_boost_union'), array('optional' => true));
+        $mform->addHelpButton('end_date', 'smartmenusuntil', 'theme_boost_union');
 
         // Add the Submit button.
         // When two elements we need a group.
