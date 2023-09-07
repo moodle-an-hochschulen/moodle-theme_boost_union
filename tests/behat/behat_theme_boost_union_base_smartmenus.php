@@ -93,7 +93,7 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
     public function i_create_smartmenu_with_the_following_fields_to_these_values(TableNode $data) {
         $this->execute('behat_navigation::i_navigate_to_in_site_administration',
             ['Appearance > Themes > Boost Union > Smart menus']);
-        $this->execute('behat_general::i_click_on', ['Create new smart menu', 'button']);
+        $this->execute('behat_general::i_click_on', ['Create menu', 'button']);
         $this->execute('behat_forms::i_set_the_following_fields_to_these_values', [$data]);
         $this->execute('behat_general::i_click_on', ['Save and return', 'button']);
     }
@@ -110,7 +110,7 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
         $this->execute('behat_navigation::i_navigate_to_in_site_administration',
             ['Appearance > Themes > Boost Union > Smart menus']);
         $this->execute('behat_general::i_click_on_in_the', ['.action-list-items', 'css_element', $menu, 'table_row']);
-        $this->execute('behat_general::i_click_on', ['Add new menu item', 'button']);
+        $this->execute('behat_general::i_click_on', ['Add menu item', 'button']);
         $this->execute('behat_forms::i_set_the_following_fields_to_these_values', [$data]);
         $this->execute('behat_general::i_click_on', ['Save changes', 'button']);
     }

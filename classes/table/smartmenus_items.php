@@ -51,9 +51,9 @@ class smartmenus_items extends \table_sql {
         parent::__construct('smartmenu_items');
 
         // Define the headers and columns.
-        $headers[] = get_string('smartmenustitle', 'theme_boost_union');
-        $headers[] = get_string('smartmenustypes', 'theme_boost_union');
-        $headers[] = get_string('smartmenusrestriction', 'theme_boost_union');
+        $headers[] = get_string('smartmenusmenuitemtitle', 'theme_boost_union');
+        $headers[] = get_string('smartmenusmenuitemtype', 'theme_boost_union');
+        $headers[] = get_string('smartmenusmenuitemrestriction', 'theme_boost_union');
         $headers[] = get_string('up') . '/' . get_string('down');
         $headers[] = get_string('actions');
         $columns[] = 'title';
@@ -161,13 +161,13 @@ class smartmenus_items extends \table_sql {
         if ($data->start_date || $data->end_date) {
             // If we have start date restrictions.
             if ($data->start_date) {
-                $datelist[] = get_string('smartmenusfrom', 'theme_boost_union').': '.
+                $datelist[] = get_string('smartmenusbydatefrom', 'theme_boost_union').': '.
                         userdate($data->start_date, get_string('strftimedate', 'core_langconfig'));
             }
 
             // If we have end date restrictions.
             if ($data->end_date) {
-                $datelist[] = get_string('smartmenusuntil', 'theme_boost_union').': '.
+                $datelist[] = get_string('smartmenusbydateuntil', 'theme_boost_union').': '.
                         userdate($data->end_date, get_string('strftimedate', 'core_langconfig'));
             }
 
@@ -288,7 +288,7 @@ class smartmenus_items extends \table_sql {
         // Duplicate.
         $actions[] = array(
             'url' => new \moodle_url($actionurl, array('action' => 'copy', 'id' => $data->id, 'sesskey' => sesskey())),
-            'icon' => new \pix_icon('t/copy', get_string('smartmenuscopyitem', 'theme_boost_union')),
+            'icon' => new \pix_icon('t/copy', get_string('smartmenusmenuitemduplicate', 'theme_boost_union')),
             'attributes' => array('class' => 'action-copy')
         );
 
@@ -297,7 +297,7 @@ class smartmenus_items extends \table_sql {
             'url' => new \moodle_url($actionurl, array('action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey())),
             'icon' => new \pix_icon('t/delete', get_string('delete')),
             'attributes' => array('class' => 'action-delete'),
-            'confirm' => new \confirm_action(get_string('smartmenusdeleteconfirmitem', 'theme_boost_union'))
+            'confirm' => new \confirm_action(get_string('smartmenusmenuitemdeleteconfirm', 'theme_boost_union'))
         );
 
         // Compose action icons for all actions.
@@ -345,7 +345,7 @@ class smartmenus_items extends \table_sql {
 
         // Show notification as html element.
         $notification = new \core\output\notification(
-                get_string('smartmenusitemsnothingtodisplay', 'theme_boost_union'),
+                get_string('smartmenusmenuitemnothingtodisplay', 'theme_boost_union'),
                         \core\output\notification::NOTIFY_INFO);
         $notification->set_show_closebutton(false);
         echo $OUTPUT->render($notification);

@@ -39,11 +39,11 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | student1 | C4     | student        |
     And I log in as "admin"
     And I create smart menu with the following fields to these values:
-      | Title     | List menu                |
-      | Locations | Main, Menu, User, Bottom |
+      | Title            | List menu                |
+      | Menu location(s) | Main, Menu, User, Bottom |
     And I set "List menu" smart menu items with the following fields to these values:
-      | Title | Dynamic courses |
-      | Type  | Dynamic courses |
+      | Title          | Dynamic courses |
+      | Menu item type | Dynamic courses |
 
   @javascript
   Scenario: Smartmenus: Menu items: Dynamic courses - Check the smart menu item settings fields which are shown conditionally for dynamic courses
@@ -53,10 +53,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     And I click on ".action-list-items" "css_element" in the "List menu" "table_row"
     Then I should see "Dynamic courses"
     And I click on ".action-edit" "css_element" in the "Dynamic courses" "table_row"
-    And I should see "Category"
-    And I should see "Enrolment role"
-    And I should see "Completion status"
-    And I should see "Date range"
+    And I should see "Dynamic courses: Course category"
+    And I should see "Dynamic courses: Enrolment role"
+    And I should see "Dynamic courses: Completion status"
+    And I should see "Dynamic courses: Date range"
 
   @javascript
   Scenario: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on all existing courses (without any condition)
@@ -73,7 +73,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     When I log in as "admin"
     And I navigate to smart menu "List menu" items
     And I click on ".action-edit" "css_element" in the "Dynamic courses" "table_row"
-    And I set the field "Category" to "<category>"
+    And I set the field "Dynamic courses: Course category" to "<category>"
     And I press "Save changes"
     And I log out
     And I log in as "<user>"
@@ -94,7 +94,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     When I log in as "admin"
     And I navigate to smart menu "List menu" items
     And I click on ".action-edit" "css_element" in the "Dynamic courses" "table_row"
-    And I set the field "Enrolment role" to "<role>"
+    And I set the field "Dynamic courses: Enrolment role" to "<role>"
     And I press "Save changes"
     And I log out
     And I log in as "<user>"
@@ -117,7 +117,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     When I log in as "admin"
     And I navigate to smart menu "List menu" items
     And I click on ".action-edit" "css_element" in the "Dynamic courses" "table_row"
-    And I set the field "Completion status" to "<completionstatus>"
+    And I set the field "Dynamic courses: Completion status" to "<completionstatus>"
     And I press "Save changes"
     And I am on "Course 01" course homepage with editing mode on
     And I navigate to "Course completion" in current page administration
@@ -163,7 +163,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     When I log in as "admin"
     And I navigate to smart menu "List menu" items
     And I click on ".action-edit" "css_element" in the "Dynamic courses" "table_row"
-    And I set the field "Date range" to "<daterange>"
+    And I set the field "Dynamic courses: Date range" to "<daterange>"
     And I press "Save changes"
     And I log out
     And I log in as "<user>"

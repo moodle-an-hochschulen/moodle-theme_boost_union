@@ -175,56 +175,56 @@ class smartmenu {
      * Square (1/1) dimensions
      * @var int
      */
-    public const SQUARE = 1;
+    public const CARDFORM_SQUARE = 1;
 
     /**
      * Portrait (2/3) dimensions
      * @var int
      */
-    public const PORTRAIT = 2;
+    public const CARDFORM_PORTRAIT = 2;
 
     /**
      * Landscape (3/2) dimensions
      * @var int
      */
-    public const LANDSCAPE = 3;
+    public const CARDFORM_LANDSCAPE = 3;
 
     /**
      * Full width dimensions
      * @var int
      */
-    public const FULLWIDTH = 4;
+    public const CARDFORM_FULLWIDTH = 4;
 
     /**
      * Tiny size option.
      * @var int
      */
-    public const TINY = 1;
+    public const CARDSIZE_TINY = 1;
 
     /**
      * Small - Card size option .
      * @var int
      */
-    public const SMALL = 2;
+    public const CARDSIZE_SMALL = 2;
 
     /**
      * Medium size option for card.
      * @var int
      */
-    public const MEDIUM = 3;
+    public const CARDSIZE_MEDIUM = 3;
 
     /**
      * Large size option for card.
      * @var int
      */
-    public const LARGE = 4;
+    public const CARDSIZE_LARGE = 4;
 
     /**
      * Constants for controlling the display of the "More" menu.
      * Default position (below main menu)
      * @var int
      */
-    public const MOREMENU_DEFAULT = 0;
+    public const MOREMENU_DONOTCHANGE = 0;
 
     /**
      * Position into the main menu.
@@ -242,13 +242,13 @@ class smartmenu {
      * Flag to indicate the overflow behavior of card, should be wrapped.
      * @var int
      */
-    public const WRAP = 1;
+    public const CARDOVERFLOWBEHAVIOUR_WRAP = 1;
 
     /**
      * Flag to indicate the overflow behavior of card, should not be wrapped.
      * @var int
      */
-    public const NOWRAP = 2;
+    public const CARDOVERFLOWBEHAVIOUR_NOWRAP = 2;
 
     /**
      * Display the menuitems as menu.
@@ -415,7 +415,7 @@ class smartmenu {
             }
         }
         // Success message for duplicated menu.
-        \core\notification::success(get_string('smartmenusmenuduplicated', 'theme_boost_union'));
+        \core\notification::success(get_string('smartmenusmenuduplicatesuccess', 'theme_boost_union'));
 
         // New menu added, Recreate the menuslist in cache.
         $this->cache->delete(self::CACHE_MENUSLIST);
@@ -464,7 +464,10 @@ class smartmenu {
     protected function get_cardform() {
 
         $options = [
-            self::SQUARE => 'square', self::PORTRAIT => 'portrait', self::LANDSCAPE => 'landscape', self::FULLWIDTH => 'fullwidth'
+                self::CARDFORM_SQUARE => 'square',
+                self::CARDFORM_PORTRAIT => 'portrait',
+                self::CARDFORM_LANDSCAPE => 'landscape',
+                self::CARDFORM_FULLWIDTH => 'fullwidth'
         ];
 
         return isset($options[$this->menu->cardform]) ? 'card-form-'.$options[$this->menu->cardform] : '';
@@ -478,7 +481,10 @@ class smartmenu {
     protected function get_cardsize() {
 
         $options = [
-            self::TINY => 'tiny', self::SMALL => 'small', self::MEDIUM => 'medium', self::LARGE => 'large'
+                self::CARDSIZE_TINY => 'tiny',
+                self::CARDSIZE_SMALL => 'small',
+                self::CARDSIZE_MEDIUM => 'medium',
+                self::CARDSIZE_LARGE => 'large'
         ];
 
         return isset($options[$this->menu->cardsize]) ? 'card-size-' . $options[$this->menu->cardsize] : '';
@@ -492,10 +498,12 @@ class smartmenu {
     public function get_cardwrap() {
 
         $options = [
-            self::WRAP => 'wrap', self::NOWRAP => 'no-wrap'
+                self::CARDOVERFLOWBEHAVIOUR_WRAP => 'wrap',
+                self::CARDOVERFLOWBEHAVIOUR_NOWRAP => 'no-wrap'
         ];
 
-        return isset($options[$this->menu->overflowbehavior]) ? 'card-overflow-' . $options[$this->menu->overflowbehavior] : '';
+        return isset($options[$this->menu->cardoverflowbehavior]) ? 'card-overflow-' .
+                $options[$this->menu->cardoverflowbehavior] : '';
     }
 
 
@@ -807,10 +815,10 @@ class smartmenu {
     public static function get_locations() {
         // List of locations where same menu can be used in multiple places.
         $locations = array(
-            self::LOCATION_MAIN => get_string('smartmenuslocationmain', 'theme_boost_union'),
-            self::LOCATION_MENU => get_string('smartmenuslocationmenu', 'theme_boost_union'),
-            self::LOCATION_USER => get_string('smartmenuslocationuser', 'theme_boost_union'),
-            self::LOCATION_BOTTOM => get_string('smartmenuslocationbottom', 'theme_boost_union')
+            self::LOCATION_MAIN => get_string('smartmenusmenulocationmain', 'theme_boost_union'),
+            self::LOCATION_MENU => get_string('smartmenusmenulocationmenu', 'theme_boost_union'),
+            self::LOCATION_USER => get_string('smartmenusmenulocationuser', 'theme_boost_union'),
+            self::LOCATION_BOTTOM => get_string('smartmenusmenulocationbottom', 'theme_boost_union')
         );
 
         return $locations;
@@ -834,8 +842,8 @@ class smartmenu {
      */
     public static function get_types() {
         $types = array(
-            self::TYPE_LIST => get_string('smartmenustypeslist', 'theme_boost_union'),
-            self::TYPE_CARD => get_string('smartmenustypescard', 'theme_boost_union')
+            self::TYPE_LIST => get_string('smartmenusmenutypelist', 'theme_boost_union'),
+            self::TYPE_CARD => get_string('smartmenusmenutypecard', 'theme_boost_union')
         );
 
         return $types;
@@ -889,7 +897,7 @@ class smartmenu {
             // Menu updated, recreate the menuslist.
             $cache->delete(self::CACHE_MENUSLIST);
             // Show the edited success notification.
-            \core\notification::success(get_string('smartmenusupdatesuccess', 'theme_boost_union'));
+            \core\notification::success(get_string('smartmenusmenueditsuccess', 'theme_boost_union'));
         } else {
             // Setup the menu order.
             $lastmenu = self::get_lastmenu();
@@ -898,7 +906,7 @@ class smartmenu {
             // New menu added, recreate the menuslist.
             $cache->delete(self::CACHE_MENUSLIST);
             // Show the menu inserted success notification.
-            \core\notification::success(get_string('smartmenusinsertmenusuccess', 'theme_boost_union'));
+            \core\notification::success(get_string('smartmenusmenucreatesuccess', 'theme_boost_union'));
         }
 
         // Allow to update the DB changes to Database.

@@ -73,30 +73,50 @@ $PAGE->navbar->add(get_string('smartmenusmenuitems', 'theme_boost_union'), new m
         array('menu' => $menu->id)));
 $PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('smartmenus', 'theme_boost_union')));
 if ($menuid == null && $id !== null) {
-    $PAGE->set_heading(get_string('smartmenuseditmenuitem', 'theme_boost_union'));
-    $PAGE->navbar->add(get_string('smartmenusedititem', 'theme_boost_union'));
+    $PAGE->set_heading(get_string('smartmenusmenuitemedit', 'theme_boost_union'));
+    $PAGE->navbar->add(get_string('smartmenusmenuitemedit', 'theme_boost_union'));
 } else {
-    $PAGE->set_heading(get_string('smartmenuscreatemenuitem', 'theme_boost_union'));
-    $PAGE->navbar->add(get_string('smartmenuscreateitem', 'theme_boost_union'));
+    $PAGE->set_heading(get_string('smartmenusmenuitemcreate', 'theme_boost_union'));
+    $PAGE->navbar->add(get_string('smartmenusmenuitemcreate', 'theme_boost_union'));
 }
 
 // Prepare draft item id for the form.
 $draftitemid = file_get_submitted_draft_itemid('image');
 file_prepare_draft_area($draftitemid, $context->id, 'theme_boost_union', 'smartmenus_itemimage', $id,
-        theme_boost_union\smartmenu_item::image_fileoptions()
+        theme_boost_union\smartmenu_item::image_filepickeroptions()
 );
 
 // Prepare the next menu item id based on the last item ID (if no menu items exist yet, the last item is 0).
 $lastmenu = theme_boost_union\smartmenu_item::get_lastitem($menu->id);
 $nextorder = isset($lastmenu->sortorder) ? $lastmenu->sortorder + 1 : 1;
 
-// Init form.
+// Prepare form URL.
 $formurl = new moodle_url('/theme/boost_union/smartmenus/edit_items.php', array('menu' => $menu->id, 'sesskey' => sesskey()));
-$form = new \theme_boost_union\form\smartmenu_item_form($formurl->out(false), array(
-        'id' => $id,
-        'menu' => $menu->id,
-        'nextorder' => $nextorder,
-));
+
+// If we are editing an existing menu item.
+if ($id != null) {
+    // Get menu item from DB.
+    $menuitem = $DB->get_record('theme_boost_union_menuitems', ['id' => $id], '*', MUST_EXIST);
+
+    // Init form and pass the id and menu item object to it.
+    $form = new \theme_boost_union\form\smartmenu_item_edit_form($formurl->out(false), array(
+            'id' => $id,
+            'menu' => $menu->id,
+            'menutype' => $menu->type,
+            'nextorder' => $nextorder,
+            'menuitem' => $menuitem,
+    ));
+
+    // Otherwise, if we are creating a new menu item.
+} else {
+    // Init form and pass the id to it.
+    $form = new \theme_boost_union\form\smartmenu_item_edit_form($formurl->out(false), array(
+            'id' => $id,
+            'menu' => $menu->id,
+            'menutype' => $menu->type,
+            'nextorder' => $nextorder,
+    ));
+}
 
 // If the form was submitted.
 if ($data = $form->get_data()) {

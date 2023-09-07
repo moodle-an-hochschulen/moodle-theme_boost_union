@@ -63,7 +63,7 @@ if ($action !== null && confirm_sesskey()) {
             // Delete the menu.
             if ($menu->delete_menu()) {
                 // Notification to user for menu deleted success.
-                \core\notification::success(get_string('smartmenusmenudeleted', 'theme_boost_union'));
+                \core\notification::success(get_string('smartmenusmenudeletesuccess', 'theme_boost_union'));
             }
             break;
         case 'down':
@@ -116,11 +116,11 @@ $experimentalnotification = new \core\output\notification(get_string('smartmenus
 $experimentalnotification->set_show_closebutton(false);
 echo $OUTPUT->render($experimentalnotification);
 
-// Prepare 'Create smart menu' button.
+// Prepare 'Create menu' button.
 $createbutton = $OUTPUT->box_start();
 $createbutton .= $OUTPUT->single_button(
         new \moodle_url('/theme/boost_union/smartmenus/edit.php', array('sesskey' => sesskey())),
-        get_string('smartmenuscreatemenu', 'theme_boost_union'), 'get');
+        get_string('smartmenusmenucreate', 'theme_boost_union'), 'get');
 $createbutton .= $OUTPUT->box_end();
 
 // If there aren't any smart menus yet.

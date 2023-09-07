@@ -52,15 +52,26 @@ $PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url
 $PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/menus.php'));
 $PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('smartmenus', 'theme_boost_union')));
 if ($id !== null && $id > 0) {
-    $PAGE->set_heading(get_string('smartmenuseditmenu', 'theme_boost_union'));
-    $PAGE->navbar->add(get_string('smartmenusedit', 'theme_boost_union'));
+    $PAGE->set_heading(get_string('smartmenusmenuedit', 'theme_boost_union'));
+    $PAGE->navbar->add(get_string('smartmenusmenuedit', 'theme_boost_union'));
 } else {
-    $PAGE->set_heading(get_string('smartmenuscreatemenu', 'theme_boost_union'));
-    $PAGE->navbar->add(get_string('smartmenuscreate', 'theme_boost_union'));
+    $PAGE->set_heading(get_string('smartmenusmenucreate', 'theme_boost_union'));
+    $PAGE->navbar->add(get_string('smartmenusmenucreate', 'theme_boost_union'));
 }
 
-// Init form.
-$form = new \theme_boost_union\form\smartmenu_form(null, array('id' => $id));
+// If we are editing an existing menu.
+if ($id != null) {
+    // Get menu from DB.
+    $menu = $DB->get_record('theme_boost_union_menus', ['id' => $id], '*', MUST_EXIST);
+
+    // Init form and pass the id and menu object to it.
+    $form = new \theme_boost_union\form\smartmenu_edit_form(null, array('id' => $id, 'menu' => $menu));
+
+    // Otherwise, if we are creating a new menu.
+} else {
+    // Init form and pass the id to it.
+    $form = new \theme_boost_union\form\smartmenu_edit_form(null, array('id' => $id));
+}
 
 // If the form was submitted.
 if ($data = $form->get_data()) {

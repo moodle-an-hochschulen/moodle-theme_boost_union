@@ -41,7 +41,7 @@
         <FIELD NAME="moremenubehavior" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="cardsize" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="cardform" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="overflowbehavior" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="cardoverflowbehavior" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="roles" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="rolecontext" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="cohorts" TYPE="text" NOTNULL="false" SEQUENCE="false"/>

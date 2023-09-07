@@ -15,18 +15,18 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | username |
       | user1    |
     And I create smart menu with the following fields to these values:
-      | Title     | Quick links              |
-      | Locations | Main, Menu, User, Bottom |
+      | Title            | Quick links              |
+      | Menu location(s) | Main, Menu, User, Bottom |
 
   @javascript
   Scenario Outline: Smartmenus: Menu items: Presentation - Open the smart menu items in different targets
     When I log in as "admin"
     And I set "Quick links" smart menu items with the following fields to these values:
-      | Title    | Available courses |
-      | Type     | Dynamic courses   |
-      | Category | Category 1        |
-      | Mode     | Inline            |
-      | Target   | <setting>         |
+      | Title                            | Available courses |
+      | Menu item type                   | Dynamic courses   |
+      | Dynamic courses: Course category | Category 1        |
+      | Menu item mode                   | Inline            |
+      | Link target                      | <setting>         |
     And I should see "Available courses" in the "smartmenus_items" "table"
     # Menu items in main navigation
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
@@ -57,9 +57,9 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   Scenario: Smartmenus: Menu items: Presentation - Include the custom css class for a smart menu item
     When I log in as "admin"
     And I set "Quick links" smart menu items with the following fields to these values:
-      | Title         | Resources         |
-      | Type          | Static            |
-      | Menu item URL | http://moodle.org |
+      | Title          | Resources         |
+      | Menu item type | Static            |
+      | Menu item URL  | http://moodle.org |
     And I navigate to smart menu "Quick links" items
     And I click on ".action-edit" "css_element" in the "Resources" "table_row"
     And I expand all fieldsets
@@ -90,18 +90,18 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   Scenario Outline: Smartmenus: Menu items: Presentation - Display the different fields as smart menu item title
     When I log in as "admin"
     And I set "Quick links" smart menu items with the following fields to these values:
-      | Title             | Available courses |
-      | Type              | Dynamic courses   |
-      | Category          | Category 1        |
-      | Select name field | <selectnamefield> |
-      | Number of words   | <numberofwords>   |
+      | Title                                     | Available courses |
+      | Menu item type                            | Dynamic courses   |
+      | Dynamic courses: Course category          | Category 1        |
+      | Dynamic courses: Course name presentation | <selectnamefield> |
+      | Dynamic courses: Number of words          | <numberofwords>   |
     And I should see "Available courses" in the "smartmenus_items" "table"
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
     And I should see "<showntitle>" in the ".primary-navigation" "css_element"
     And I should not see "<notshowntitle>" in the ".primary-navigation" "css_element"
 
     Examples:
-      | selectnamefield | numberofwords | showntitle             | notshowntitle          |
-      | Short name      |               | C1                     | Test course            |
-      | Full name       |               | Test course word count | C1                     |
-      | Full name       | 2             | Test course..          | Test course word count |
+      | selectnamefield   | numberofwords | showntitle             | notshowntitle          |
+      | Course short name |               | C1                     | Test course            |
+      | Course full name  |               | Test course word count | C1                     |
+      | Course full name  | 2             | Test course..          | Test course word count |
