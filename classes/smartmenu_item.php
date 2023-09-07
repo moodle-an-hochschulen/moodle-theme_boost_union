@@ -493,7 +493,7 @@ class smartmenu_item {
         $record->id = 0;
         // Create instance.
         if (self::manage_instance($record)) {
-            \core\notification::success(get_string('smartmenusmenuitemduplicated', 'theme_boost_union'));
+            \core\notification::success(get_string('smartmenusmenuitemduplicatesuccess', 'theme_boost_union'));
         }
     }
 
@@ -1188,9 +1188,9 @@ class smartmenu_item {
      */
     public static function get_types(int $type=null) {
         $types = array(
-            self::TYPEHEADING => get_string('heading', 'editor'),
-            self::TYPESTATIC => get_string('smartmenusstatic', 'theme_boost_union'),
-            self::TYPEDYNAMIC => get_string('smartmenusdynamiccourses', 'theme_boost_union'),
+                self::TYPESTATIC => get_string('smartmenusmenuitemtypestatic', 'theme_boost_union'),
+                self::TYPEHEADING => get_string('smartmenusmenuitemtypeheading', 'theme_boost_union'),
+                self::TYPEDYNAMIC => get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union'),
         );
 
         return ($type !== null && isset($types[$type])) ? $types[$type] : $types;
@@ -1205,9 +1205,9 @@ class smartmenu_item {
      */
     public static function get_display_options(int $option=null) {
         $displayoptions = [
-            self::DISPLAY_SHOWTITLEICON => get_string('smartmenusshowtitleicon', 'theme_boost_union'),
-            self::DISPLAY_HIDETITLE => get_string('smartmenushidetitle', 'theme_boost_union'),
-            self::DISPLAY_HIDETITLEMOBILE => get_string('smartmenushidetitlemobile', 'theme_boost_union')
+                self::DISPLAY_SHOWTITLEICON => get_string('smartmenusmenuitemdisplayoptionsshowtitleicon', 'theme_boost_union'),
+                self::DISPLAY_HIDETITLE => get_string('smartmenushidetitle', 'theme_boost_union'),
+                self::DISPLAY_HIDETITLEMOBILE => get_string('smartmenushidetitlemobile', 'theme_boost_union')
         ];
 
         return ($option !== null && isset($displayoptions[$option])) ? $displayoptions[$option] : $displayoptions;
@@ -1287,7 +1287,7 @@ class smartmenu_item {
             $cache->delete_menu($formdata->id);
 
             // Show the edited success notification.
-            \core\notification::success(get_string('smartmenusupdatesuccess', 'theme_boost_union'));
+            \core\notification::success(get_string('smartmenusmenuitemeditsuccess', 'theme_boost_union'));
         } else {
             $record->sortorder = $record->sortorder ?: 1;
             $itemid = $DB->insert_record('theme_boost_union_menuitems', $record);
@@ -1298,7 +1298,7 @@ class smartmenu_item {
 
             $DB->execute($sql, ['sortorder' => $record->sortorder, 'item' => $itemid, 'menuid' => $record->menu]);
             // Show the menu item inserted success notification.
-            \core\notification::success(get_string('smartmenusinsertmenuitemsuccess', 'theme_boost_union'));
+            \core\notification::success(get_string('smartmenusmenuitemcreatesuccess', 'theme_boost_union'));
 
             // Delete the cached data of its menu. Menu will recreate with this item.
             $menucache->delete_menu($formdata->menu);
@@ -1313,7 +1313,7 @@ class smartmenu_item {
                 'theme_boost_union',
                 'smartmenus_itemimage',
                 $itemid,
-                self::image_fileoptions()
+                self::image_filepickeroptions()
             );
         }
 
@@ -1327,7 +1327,7 @@ class smartmenu_item {
      *
      * @return array An array of file options.
      */
-    public static function image_fileoptions() {
+    public static function image_filepickeroptions() {
 
         return [
             'subdirs' => 0,

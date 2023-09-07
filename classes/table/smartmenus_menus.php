@@ -50,10 +50,10 @@ class smartmenus_menus extends \table_sql {
         parent::__construct('smartmenus');
 
         // Define the headers and columns.
-        $headers[] = get_string('smartmenustitle', 'theme_boost_union');
-        $headers[] = get_string('smartmenusdescription', 'theme_boost_union');
-        $headers[] = get_string('smartmenuslocation', 'theme_boost_union');
-        $headers[] = get_string('smartmenustypes', 'theme_boost_union');
+        $headers[] = get_string('smartmenusmenutitle', 'theme_boost_union');
+        $headers[] = get_string('smartmenusmenudescription', 'theme_boost_union');
+        $headers[] = get_string('smartmenusmenulocation', 'theme_boost_union');
+        $headers[] = get_string('smartmenusmenutype', 'theme_boost_union');
         $headers[] = get_string('up') . '/' . get_string('down');
         $headers[] = get_string('actions');
         $columns[] = 'title';
@@ -200,7 +200,7 @@ class smartmenus_menus extends \table_sql {
         // Duplicate.
         $actions[] = array(
             'url' => new \moodle_url($actionurl, array('action' => 'copy', 'id' => $data->id, 'sesskey' => sesskey())),
-            'icon' => new \pix_icon('t/copy', get_string('smartmenuscopymenu', 'theme_boost_union')),
+            'icon' => new \pix_icon('t/copy', get_string('smartmenusmenuduplicate', 'theme_boost_union')),
             'attributes' => array('class' => 'action-copy')
         );
 
@@ -216,7 +216,7 @@ class smartmenus_menus extends \table_sql {
             'url' => new \moodle_url($actionurl, array('action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey())),
             'icon' => new \pix_icon('t/delete', get_string('delete')),
             'attributes' => array('class' => 'action-delete'),
-            'confirm' => new \confirm_action(get_string('smartmenusdeleteconfirmmenu', 'theme_boost_union'))
+            'confirm' => new \confirm_action(get_string('smartmenusmenudeleteconfirm', 'theme_boost_union'))
         );
 
         // Compose action icons for all actions.
@@ -262,7 +262,7 @@ class smartmenus_menus extends \table_sql {
 
         // Show notification as html element.
         $notification = new \core\output\notification(
-                get_string('smartmenusmenusnothingtodisplay', 'theme_boost_union'),
+                get_string('smartmenusmenunothingtodisplay', 'theme_boost_union'),
                     \core\output\notification::NOTIFY_INFO);
         $notification->set_show_closebutton(false);
         echo $OUTPUT->render($notification);

@@ -7,8 +7,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
   Background:
     Given I log in as "admin"
     And I create smart menu with the following fields to these values:
-      | Title     | Quick links              |
-      | Locations | Main, Menu, User, Bottom |
+      | Title            | Quick links              |
+      | Menu location(s) | Main, Menu, User, Bottom |
 
   @javascript
   Scenario: Smartmenus: Menu items: Management - When a smart menu is just created, no smart menu items exist
@@ -19,7 +19,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I should see "Quick links" in the "#region-main h4" "css_element"
     Then I should see "There aren't any items added to this smart menu yet. Please add an item to this menu."
     And "table" "css_element" should not exist in the "#region-main" "css_element"
-    And "Add new menu item" "button" should exist in the "#region-main" "css_element"
+    And "Add menu item" "button" should exist in the "#region-main" "css_element"
     And ".smartmenu-items-actions" "css_element" should not exist in the "#region-main" "css_element"
 
   @javascript
@@ -29,10 +29,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I should see "Smart menus" in the "#region-main h2" "css_element"
     And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
     And I should see "Quick links" in the "#region-main h4" "css_element"
-    And I click on "Add new menu item" "button"
+    And I click on "Add menu item" "button"
     And I set the following fields to these values:
-      | Title | Info    |
-      | Type  | Heading |
+      | Title          | Info    |
+      | Menu item type | Heading |
     And I click on "Save changes" "button"
     And I should see "Quick links" in the "#region-main h4" "css_element"
     Then I should not see "There aren't any items added to this smart menu yet. Please add an item to this menu."
@@ -51,10 +51,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I navigate to smart menus
     And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
     And I should see "Quick links" in the "#region-main h4" "css_element"
-    And I click on "Add new menu item" "button"
+    And I click on "Add menu item" "button"
     And I set the following fields to these values:
-      | Title | Info    |
-      | Type  | Heading |
+      | Title          | Info    |
+      | Menu item type | Heading |
     And I click on "Save changes" "button"
     And I should see "Quick links" in the "#region-main h4" "css_element"
     And the following should exist in the "smartmenus_items" table:
@@ -62,13 +62,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
       | Info  |
     And I click on ".action-edit" "css_element" in the "Info" "table_row"
     And I set the field "Title" to "Useful Resources"
-    And I set the field "Type" to "Static"
+    And I set the field "Menu item type" to "Static"
     And I set the field "URL" to "https://moodle.org"
     And I click on "Save changes" "button"
     Then I should not see "Info" in the "smartmenus_items" "table"
     And the following should exist in the "smartmenus_items" table:
-      | Title             |
-      | Useful Resources  |
+      | Title            |
+      | Useful Resources |
 
   @javascript
   Scenario: Smartmenus: Menu items: Management - Delete an existing smart menu item
@@ -76,10 +76,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I navigate to smart menus
     And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
     And I should see "Quick links" in the "#region-main h4" "css_element"
-    And I click on "Add new menu item" "button"
+    And I click on "Add menu item" "button"
     And I set the following fields to these values:
-      | Title | Info    |
-      | Type  | Heading |
+      | Title          | Info    |
+      | Menu item type | Heading |
     And I click on "Save changes" "button"
     And I should see "Quick links" in the "#region-main h4" "css_element"
     And the following should exist in the "smartmenus_items" table:
@@ -102,10 +102,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I navigate to smart menus
     And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
     And I should see "Quick links" in the "#region-main h4" "css_element"
-    And I click on "Add new menu item" "button"
+    And I click on "Add menu item" "button"
     And I set the following fields to these values:
-      | Title | Info    |
-      | Type  | Heading |
+      | Title          | Info    |
+      | Menu item type | Heading |
     And I click on "Save changes" "button"
     And I should see "Quick links" in the "#region-main h4" "css_element"
     And the following should exist in the "smartmenus_items" table:
@@ -128,10 +128,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I navigate to smart menus
     And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
     And I should see "Quick links" in the "#region-main h4" "css_element"
-    And I click on "Add new menu item" "button"
+    And I click on "Add menu item" "button"
     And I set the following fields to these values:
-      | Title | Info    |
-      | Type  | Heading |
+      | Title          | Info    |
+      | Menu item type | Heading |
     And I click on "Save changes" "button"
     And I should see "Quick links" in the "#region-main h4" "css_element"
     And the following should exist in the "smartmenus_items" table:
@@ -156,19 +156,19 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I navigate to smart menus
     And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
     And I should see "Quick links" in the "#region-main h4" "css_element"
-    And I click on "Add new menu item" "button"
+    And I click on "Add menu item" "button"
     And I set the following fields to these values:
-      | Title | Info    |
-      | Type  | Heading |
+      | Title          | Info    |
+      | Menu item type | Heading |
     And I click on "Save changes" "button"
     And I should see "Quick links" in the "#region-main h4" "css_element"
     And the following should exist in the "smartmenus_items" table:
       | Title |
       | Info  |
-    And I click on "Add new menu item" "button"
+    And I click on "Add menu item" "button"
     And I set the following fields to these values:
-      | Title | Courses    |
-      | Type  | Heading |
+      | Title          | Courses |
+      | Menu item type | Heading |
     And I click on "Save changes" "button"
     And I should see "Quick links" in the "#region-main h4" "css_element"
     And the following should exist in the "smartmenus_items" table:

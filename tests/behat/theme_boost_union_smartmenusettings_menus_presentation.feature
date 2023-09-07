@@ -13,16 +13,16 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   Scenario: Smartmenu: Menus: Presentation - Display smart menu description in different places
     When I log in as "admin"
     And I navigate to smart menus
-    And I click on "Create new smart menu" "button"
+    And I click on "Create menu" "button"
     And I set the following fields to these values:
       | Title            | Useful Resources                  |
       | Description      | List of useful external resources |
       | Show description | Below                             |
-      | Locations        | Main, Menu                        |
+      | Menu location(s) | Main, Menu                        |
     And I click on "Save and return" "button"
     And I set "Useful Resources" smart menu items with the following fields to these values:
-      | Title | Info    |
-      | Type  | Heading |
+      | Title          | Info    |
+      | Menu item type | Heading |
     And I click on "Useful Resources" "link" in the ".primary-navigation" "css_element"
     Then "List of useful external resources" "text" should appear after "Info" "link"
     And I navigate to smart menus
@@ -44,12 +44,12 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   Scenario: Smartmenu: Menus: Presentation - Include the custom css class to a smart menu
     When I log in as "admin"
     And I navigate to smart menus
-    And I click on "Create new smart menu" "button"
+    And I click on "Create menu" "button"
     And I expand all fieldsets
     And I set the following fields to these values:
-      | Title     | Quick links      |
-      | Locations | Main navigation  |
-      | CSS class | quick-links-menu |
+      | Title            | Quick links      |
+      | Menu location(s) | Main navigation  |
+      | CSS class        | quick-links-menu |
     And I click on "Save and return" "button"
     Then ".nav-item.quick-links-menu" "css_element" should exist in the ".primary-navigation" "css_element"
     And I should see "Quick links" in the ".nav-item.quick-links-menu" "css_element"
@@ -65,25 +65,25 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   Scenario: Smartmenu: Menus: Presentation - Use different styles for a smart menu
     When I log in as "admin"
     And I navigate to smart menus
-    And I click on "Create new smart menu" "button"
+    And I click on "Create menu" "button"
     And I set the following fields to these values:
-      | Title     | Quick links |
-      | Locations | Main        |
-      | Type      | Card        |
+      | Title             | Quick links |
+      | Menu location(s)  | Main        |
+      | Presentation type | Card        |
     And I click on "Save and configure items" "button"
     And I should see "Quick links" in the "#region-main h4" "css_element"
-    And I click on "Add new menu item" "button"
+    And I click on "Add menu item" "button"
     And I set the following fields to these values:
-      | Title | Smartmenu Resource |
-      | Type  | Static             |
-      | URL   | https://moodle.org |
+      | Title          | Smartmenu Resource |
+      | Menu item type | Static             |
+      | URL            | https://moodle.org |
     And I click on "Save changes" "button"
     Then ".dropdown.nav-item.card-dropdown" "css_element" should exist in the ".primary-navigation" "css_element"
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
     And ".card-dropdown .dropdown-menu.show" "css_element" should exist in the ".primary-navigation" "css_element"
     And I should see "Smartmenu Resource" in the ".card-dropdown .dropdown-menu.show .card-block" "css_element"
     And I click on "Smart menu settings" "icon" in the "#region-main h4" "css_element"
-    And I set the field "Type" to "List"
+    And I set the field "Presentation type" to "List"
     And I click on "Save and return" "button"
     Then ".dropdown.nav-item.card-dropdown" "css_element" should not exist in the ".primary-navigation" "css_element"
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
@@ -93,14 +93,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   Scenario Outline: Smartmenu: Menus: Presentation - Display the smart menu and its menu items as cards with different sizes
     When I log in as "admin"
     And I create smart menu with the following fields to these values:
-      | Title     | Quick links |
-      | Locations | Main        |
-      | Type      | Card        |
-      | Card size | <cardsize>  |
+      | Title             | Quick links |
+      | Menu location(s)  | Main        |
+      | Presentation type | Card        |
+      | Card size         | <cardsize>  |
     And I set "Quick links" smart menu items with the following fields to these values:
-      | Title | Smartmenu Resource |
-      | Type  | Static             |
-      | URL   | https://moodle.org |
+      | Title          | Smartmenu Resource |
+      | Menu item type | Static             |
+      | URL            | https://moodle.org |
     And I click on "Smart menus" "link" in the "#page-navbar .breadcrumb" "css_element"
     And ".dropdown.nav-item.card-dropdown" "css_element" should exist in the ".primary-navigation" "css_element"
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
@@ -117,14 +117,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   Scenario Outline: Smartmenu: Menus: Presentation - Display the smart menu and its menu items as card withs different aspect ratios
     When I log in as "admin"
     And I create smart menu with the following fields to these values:
-      | Title     | Quick links |
-      | Locations | Main        |
-      | Type      | Card        |
-      | Card form | <cardform>  |
+      | Title             | Quick links |
+      | Menu location(s)  | Main        |
+      | Presentation type | Card        |
+      | Card form         | <cardform>  |
     And I set "Quick links" smart menu items with the following fields to these values:
-      | Title | Smartmenu Resource |
-      | Type  | Static             |
-      | URL   | https://moodle.org |
+      | Title          | Smartmenu Resource |
+      | Menu item type | Static             |
+      | URL            | https://moodle.org |
     And I click on "Smart menus" "link" in the "#page-navbar .breadcrumb" "css_element"
     And ".dropdown.nav-item.card-dropdown" "css_element" should exist in the ".primary-navigation" "css_element"
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"

@@ -15,18 +15,18 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | username |
       | user1    |
     And I create smart menu with the following fields to these values:
-      | Title     | Quick links              |
-      | Locations | Main, Menu, User, Bottom |
+      | Title            | Quick links              |
+      | Menu location(s) | Main, Menu, User, Bottom |
 
   @javascript
   Scenario: Smartmenus: Menu items: Application - Add a smart menu item in smart menu to the main navigation
     When I log in as "admin"
     And I navigate to smart menu "Quick links" items
-    And I click on "Add new menu item" "button"
+    And I click on "Add menu item" "button"
     And I set the following fields to these values:
-      | Title | Badges                    |
-      | Type  | Static                    |
-      | URL   | https://moodle.org/badges |
+      | Title          | Badges                    |
+      | Menu item type | Static                    |
+      | URL            | https://moodle.org/badges |
     And I click on "Save changes" "button"
     And I click on "Quick links" "link" in the "nav.moremenu" "css_element"
     Then I should see "Badges" in the "nav.moremenu" "css_element"
@@ -39,10 +39,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   Scenario: Smartmenus: Menu items: Application - Display the smart menu items in inline mode
     When I log in as "admin"
     And I set "Quick links" smart menu items with the following fields to these values:
-      | Title    | Available courses |
-      | Type     | Dynamic courses   |
-      | Category | Category 1        |
-      | Mode     | Inline            |
+      | Title                            | Available courses |
+      | Menu item type                   | Dynamic courses   |
+      | Dynamic courses: Course category | Category 1        |
+      | Menu item mode                   | Inline            |
     And I should see "Available courses" in the "smartmenus_items" "table"
     # Inline items in main navigation.
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
@@ -72,10 +72,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   Scenario: Smartmenus: Menu items: Application - Display the smart menu items in submenu modes
     When I log in as "admin"
     And I set "Quick links" smart menu items with the following fields to these values:
-      | Title    | Available courses |
-      | Type     | Dynamic courses   |
-      | Category | Category 1        |
-      | Mode     | Submenu           |
+      | Title                            | Available courses |
+      | Menu item type                   | Dynamic courses   |
+      | Dynamic courses: Course category | Category 1        |
+      | Menu item mode                   | Submenu           |
     And I should see "Available courses" in the "smartmenus_items" "table"
     # Submenu items in main navigation.
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"

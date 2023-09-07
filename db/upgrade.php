@@ -224,5 +224,20 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023010517, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2023010519) {
+
+        // Define table theme_boost_union_menus to be altered.
+        $table = new xmldb_table('theme_boost_union_menus');
+
+        // Define field overflowbehavior to be altered.
+        $field = new xmldb_field('overflowbehavior', XMLDB_TYPE_INTEGER, '9', null, null, null, null, 'cardform');
+
+        // Launch rename field to cardoverflowbehavior.
+        $dbman->rename_field($table, $field, 'cardoverflowbehavior');
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2023010519, 'theme', 'boost_union');
+    }
+
     return true;
 }

@@ -39,12 +39,12 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | student2 | CH2    |
       | teacher  | CH2    |
     And I create smart menu with the following fields to these values:
-      | Title     | Quick links              |
-      | Locations | Main, Menu, User, Bottom |
+      | Title            | Quick links              |
+      | Menu location(s) | Main, Menu, User, Bottom |
     And I set "Quick links" smart menu items with the following fields to these values:
-      | Title | Resources          |
-      | Type  | Static             |
-      | URL   | https://moodle.org |
+      | Title          | Resources          |
+      | Menu item type | Static             |
+      | URL            | https://moodle.org |
 
   @javascript
   Scenario Outline: Smartmenu: Menus: Rules - Show smart menu based on the user roles
