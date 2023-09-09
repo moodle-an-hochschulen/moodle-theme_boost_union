@@ -124,7 +124,7 @@ function theme_boost_union_get_main_scss_content($theme) {
  * Get SCSS to prepend.
  *
  * @param theme_config $theme The theme config object.
- * @return array
+ * @return string
  */
 function theme_boost_union_get_pre_scss($theme) {
     global $CFG;
