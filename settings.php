@@ -299,7 +299,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
-        // Replicate the Variable $body-color setting from theme_boost.
+        // Replicate the brand color setting from theme_boost.
         $name = 'theme_boost_union/brandcolor';
         $title = get_string('brandcolor', 'theme_boost', null, true);
         $description = get_string('brandcolor_desc', 'theme_boost', null, true);
