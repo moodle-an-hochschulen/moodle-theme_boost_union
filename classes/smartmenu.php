@@ -590,7 +590,9 @@ class smartmenu {
 
                 $nodes = (object) [
                     'menudata' => $this->menu,
-                    'title' => $this->menu->title,
+                    // Do not set the title attribute as this would show a standard tooltip based on the
+                    // Moodle core custom menu logic.
+                    'title' => '',
                     'url' => null,
                     'text' => $this->menu->title,
                     'key' => $this->menu->id,

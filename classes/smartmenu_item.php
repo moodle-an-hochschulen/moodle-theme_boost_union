@@ -1004,7 +1004,7 @@ class smartmenu_item {
 
         global $OUTPUT;
 
-        $title = $titleorg = format_string($title);
+        $title = format_string($title);
         // Icon not shown in moodle 4.x, added the icon with text.
         if ($this->item->menuicon) {
             $icon = explode(':', $this->item->menuicon);
@@ -1039,8 +1039,8 @@ class smartmenu_item {
             'url' => $url ?: 'javascript:void(0)',
             'key' => $key != null ? $key : 'item-'.$this->item->id,
             'text' => $title,
-            'icontitle' => $title, // Title with icon.
-            'title' => $titleorg,
+            // Do not set the title attribute as this would show a standard tooltip based on the Moodle core custom menu logic.
+            'title' => '',
             'tooltip' => $tooltip ? format_string($tooltip) : '',
             'haschildren' => $haschildren,
             'itemimage' => $itemimage,

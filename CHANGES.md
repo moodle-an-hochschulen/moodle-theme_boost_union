@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-09-09 - Release: Adopt theme_boost changes from MDL-78656 to moremenu_children.mustache template, align menu item icon and tooltip handling at the same time, solves #385.
 * 2023-08-30 - Improvement: Align actions column on flavours and smart menus settings pages, solves #381.
 * 2023-08-19 - Improvement: Fix more mustache linter warnings, solves #360.
 * 2023-08-02 - Improvement: Add 'aboutus', 'offers', 'page1', 'page2' and 'page3' static pages, solves #351.

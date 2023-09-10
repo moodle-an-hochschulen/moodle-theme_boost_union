@@ -59,7 +59,7 @@
 
                                 <h5>
                                     {{^is_action_link}}
-                                        <a class="dropdown-item menu-item-{{itemtype}} " data-toggle="tooltip" title="{{{tooltip}}}" role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}} tabindex="-1" {{#attributes}}{{name}}="{{value}}"{{/attributes}} style="{{#itemdata.textcolor}} color:{{{itemdata.textcolor}}};{{/itemdata.textcolor}}">{{{text}}}</a>
+                                        <a class="dropdown-item menu-item-{{itemtype}} " {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}} role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}} tabindex="-1" {{#attributes}}{{name}}="{{value}}"{{/attributes}} style="{{#itemdata.textcolor}} color:{{{itemdata.textcolor}}};{{/itemdata.textcolor}}">{{{text}}}</a>
                                     {{/is_action_link}}
                                 </h5>
                                 {{^is_action_link}}
@@ -91,7 +91,7 @@
                     {{#isactive}}aria-selected="true"{{/isactive}}
                     {{^isactive}}tabindex="-1"{{/isactive}}
                     {{#attributes}}{{name}}="{{value}}"{{/attributes}}
-                    data-toggle="tooltip" title="{{{tooltip}}}"
+                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}
                 >
                     {{{text}}}
                 </a>
@@ -104,7 +104,7 @@
                     {{#isactive}}aria-current="true"{{/isactive}}
                     {{^isactive}}tabindex="-1"{{/isactive}}
                     {{#attributes}}{{name}}="{{value}}"{{/attributes}}
-                    data-toggle="tooltip" title="{{{tooltip}}}"
+                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}
                 >
                     {{{text}}}
                 </a>
