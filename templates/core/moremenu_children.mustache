@@ -34,28 +34,32 @@
     This template is a modified version of core/moremenu
 
     Modifications compared to the original template:
-    * Added submenu support
-    * Added smartmenus styles, icons
+    * Added smart menu styles, icons, headings, tooltips etc.
+    * Added smart menu submenu support.
 }}
 {{#haschildren}}
-    <li class="dropdown nav-item {{#menuclasses}} {{.}} {{/menuclasses}} " role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+    <li class="dropdown nav-item {{#menuclasses}}{{.}} {{/menuclasses}} " role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
         <a class="dropdown-toggle nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}" id="drop-down-{{moremenuid}}" role="menuitem" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" href="#" aria-controls="drop-down-menu-{{moremenuid}}"
+            {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+            {{#attributes}}{{name}}="{{value}}" {{/attributes}}
             {{#isactive}}aria-current="true"{{/isactive}}
             {{^isactive}}tabindex="-1"{{/isactive}}
         >
             {{{text}}}
         </a>
         <div class="dropdown-menu" role="menu" id="drop-down-menu-{{moremenuid}}" aria-labelledby="drop-down-{{moremenuid}}">
-            {{#helpicon}} <div class="menu-helpicon"> {{{helpicon}}} </div> {{/helpicon}}
-            {{#abovehelptext}} <div class="menu-description"> {{{helptext}}} </div> {{/abovehelptext}}
+            {{#helpicon}}<div class="menu-helpicon">{{{helpicon}}}</div>{{/helpicon}}
+            {{#abovehelptext}}<div class="menu-description">{{{helptext}}}</div>{{/abovehelptext}}
             {{#children}}
                 {{^divider}}
                     {{#haschildren}}
                     <div class="dropdown-submenu" role="none" >
                     {{/haschildren}}
                     {{#is_action_link}}
-                        <a class="dropdown-item {{#itemdata.classes}} {{.}} {{/itemdata.classes}}" role="menuitem" {{#actionattributes}}{{name}}="{{value}}"{{/actionattributes}} data-toggle="tooltip" title="{{tooltip}}" href="{{{url}}}{{{action}}}"
+                        <a class="dropdown-item {{#itemdata.classes}}{{.}} {{/itemdata.classes}}" role="menuitem" {{#actionattributes}}{{name}}="{{value}}" {{/actionattributes}} href="{{{url}}}{{{action}}}"
+                            {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                            {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                             data-disableactive="true" tabindex="-1"
                         >
                             {{{text}}}
@@ -65,7 +69,12 @@
                         {{/action_link_actions}}
                     {{/is_action_link}}
                     {{^is_action_link}}
-                        <a class="dropdown-item {{#itemdata.classes}} {{.}} {{/itemdata.classes}}" role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}} tabindex="-1" data-toggle="tooltip" title="{{{tooltip}}}" {{#attributes}}{{name}}="{{value}}"{{/attributes}} >{{{text}}}</a>
+                        <a class="dropdown-item {{#itemdata.classes}}{{.}} {{/itemdata.classes}}" role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}} tabindex="-1"
+                            {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                            {{#attributes}}{{name}}="{{value}}" {{/attributes}}
+                        >
+                            {{{text}}}
+                        </a>
                     {{/is_action_link}}
                     {{#haschildren}}
                         <ul>
@@ -80,15 +89,18 @@
                     <div class="dropdown-divider"></div>
                 {{/divider}}
             {{/children}}
-            {{#belowhelptext}} <div class="menu-description">{{{helptext}}}</div> {{/belowhelptext}}
+            {{#belowhelptext}}<div class="menu-description">{{{helptext}}}</div>{{/belowhelptext}}
         </div>
     </li>
 {{/haschildren}}
 {{^haschildren}}
-    <li data-key="{{key}}" class="nav-item {{#menuclasses}} {{.}} {{/menuclasses}}" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+    <li data-key="{{key}}" class="nav-item {{#menuclasses}}{{.}} {{/menuclasses}}" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
         {{#istablist}}
             {{#is_action_link}}
-                <a role="tab" class="nav-link {{#classes}}{{.}} {{/classes}}" href="{{tab}}" data-toggle="tab" data-text="{{{text}}}" data-disableactive="true" tabindex="-1">
+                <a role="tab" class="nav-link {{#classes}}{{.}} {{/classes}}" href="{{tab}}" data-toggle="tab" data-text="{{{text}}}" data-disableactive="true" tabindex="-1"
+                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                    {{#attributes}}{{name}}="{{value}}" {{/attributes}}
+                >
                     {{{text}}}
                 </a>
                 {{#action_link_actions}}
@@ -98,9 +110,10 @@
             {{^is_action_link}}
                 <a role="tab" class="nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}"
                     href="{{tab}}" data-toggle="tab" data-text="{{{text}}}"
+                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                    {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                     {{#isactive}}aria-selected="true"{{/isactive}}
                     {{^isactive}}tabindex="-1"{{/isactive}}
-                    {{#attributes}}{{name}}="{{value}}"{{/attributes}}
                 >
                     {{{text}}}
                 </a>
@@ -108,7 +121,11 @@
         {{/istablist}}
         {{^istablist}}
             {{#is_action_link}}
-                <a role="menuitem" class="nav-link {{#itemdata.classes}} {{.}} {{/itemdata.classes}} {{#classes}}{{.}} {{/classes}}" {{#actionattributes}}{{name}}="{{value}}"{{/actionattributes}} href="{{{url}}}{{{action}}}" data-disableactive="true" tabindex="-1">
+                <a role="menuitem" class="nav-link {{#itemdata.classes}}{{.}} {{/itemdata.classes}} {{#classes}}{{.}} {{/classes}}" {{#actionattributes}}{{name}}="{{value}}" {{/actionattributes}} href="{{{url}}}{{{action}}}"
+                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                    {{#attributes}}{{name}}="{{value}}" {{/attributes}}
+                    data-disableactive="true" tabindex="-1"
+                >
                     {{{text}}}
                 </a>
                 {{#action_link_actions}}
@@ -116,12 +133,12 @@
                 {{/action_link_actions}}
             {{/is_action_link}}
             {{^is_action_link}}
-                <a role="menuitem" class="nav-link {{#itemdata.classes}} {{.}} {{/itemdata.classes}} {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}"
+                <a role="menuitem" class="nav-link {{#itemdata.classes}}{{.}} {{/itemdata.classes}} {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}"
                     href="{{{url}}}{{{action}}}"
+                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                    {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                     {{#isactive}}aria-current="true"{{/isactive}}
                     {{^isactive}}tabindex="-1"{{/isactive}}
-                    {{#attributes}}{{name}}="{{value}}"{{/attributes}}
-                    data-toggle="tooltip" title="{{{tooltip}}}"
                 >
                     {{{text}}}
                 </a>

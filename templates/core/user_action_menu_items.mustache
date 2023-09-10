@@ -61,24 +61,26 @@
     This template is a modified version of core/user_menu
 
     Modifications compared to the original template:
-    * Add menu classes to items
-    * Add icons to items
+    * Add menu classes to items.
+    * Add icon support to items.
+    * Add tooltip to items.
+    * Add additional attributes to items.
+    * Allow formatted text within the item.
 }}
 {{#items}}
     {{#link}}
-        <a href="{{{url}}}" class="dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" role="menuitem" tabindex="-1" data-toggle="tooltip" title="{{tooltip}}" {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
+        <a href="{{{url}}}" class="dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" role="menuitem" tabindex="-1" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}} {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
             {{#pixicon}}
                 {{#pix}}{{pixicon}}{{/pix}}
             {{/pixicon}}
             {{^pixicon}}
                 {{#imgsrc}}<img aria-hidden="true" src="{{imgsrc}}" alt="{{title}}"/>{{/imgsrc}}
             {{/pixicon}}
-            {{#icontitle}}{{{icontitle}}}{{/icontitle}}
-            {{^icontitle}}{{title}}{{/icontitle}}
+            {{#text}}{{{text}}}{{/text}}{{^text}}{{title}}{{/text}}
         </a>
     {{/link}}
     {{#submenulink}}
-        <a href="#" class="carousel-navigation-link dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" role="menuitem" tabindex="-1" data-carousel-target-id="carousel-item-{{submenuid}}" data-toggle="tooltip" title="{{tooltip}}"
+        <a href="#" class="carousel-navigation-link dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" role="menuitem" tabindex="-1" data-carousel-target-id="carousel-item-{{submenuid}}" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}
         {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}}{{/attributes}}>
             {{#pixicon}}
                 {{#pix}}{{pixicon}}{{/pix}}
@@ -86,7 +88,7 @@
             {{^pixicon}}
                 {{#imgsrc}}<img aria-hidden="true" src="{{imgsrc}}" alt="{{title}}"/>{{/imgsrc}}
             {{/pixicon}}
-            {{{title}}}
+            {{#text}}{{{text}}}{{/text}}{{^text}}{{title}}{{/text}}
         </a>
     {{/submenulink}}
     {{#divider}}<div class="dropdown-divider"></div>{{/divider}}
