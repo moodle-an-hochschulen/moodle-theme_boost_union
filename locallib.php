@@ -1290,17 +1290,43 @@ function theme_boost_union_get_course_header_image_url() {
 }
 
 /**
- * Helper function which sets the URL to the CSS file as soon as the theme's mobilescss setting has any CSS code.
+ * Helper function which sets the URL to the CSS file as soon as the theme's mobilescss setting has any SCSS code.
  * It's meant to be called as callback when changing the admin setting only.
  * *
  * @throws coding_exception
  * @throws dml_exception
  * @throws moodle_exception
  */
-function theme_boost_union_set_mobilecss_url() {
+function theme_boost_union_build_mobilescss() {
+    GLOBAL $CFG, $PAGE;
     // Check if the admin has set any CSS code for the Mobile app.
-    $csscode = get_config('theme_boost_union', 'mobilescss');
-    if (!empty($csscode)) {
+    $scsscode = get_config('theme_boost_union', 'mobilescss');
+    if (!empty($scsscode)) {
+        include_once($CFG->libdir.'/csslib.php');
+        // Store the CSS.
+        // We might need more memory/time to do this, so let's play safe.
+        raise_memory_limit(MEMORY_EXTRA);
+        core_php_time_limit::raise(300);
+
+        // Set-up the compiler.
+        $compiler = new core_scss([]);
+        $compiler->append_raw_scss($scsscode);
+
+        try {
+            // Compile!
+            $csscontent = $compiler->to_css();
+            $csscontent = core_minify::css($csscontent);
+            $cachedir = make_localcache_directory('scsscache-mobile-boost-union', false);
+            // ...css_store_css() first param isn't used inside the function.
+            css_store_css($PAGE->theme, $cachedir. '/mobile.css' , $csscontent);
+        } catch (\Exception $e) {
+            throw new \moodle_exception('mobilescss_scsscompile_error', 'theme_boost_union', '', null, $e->getMessage());
+        } finally {
+            // Try to save memory.
+            $compiler = null;
+            unset($compiler);
+        }
+
         // Build the Mobile app CSS file URL and especially add the current time as rev parameter.
         // This parameter isn't the theme revision as the theme cache is not cleared when this setting is stored.
         // It is just the time when the setting is saved.
