@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-09-22 - Bugfix: Smart menu language restriction did not respect switching language with the language switcher, solves #358.
 * 2023-09-26 - Bugfix: The smart menu third level arrow was broken, solves #402.
 * 2023-09-22 - Make codechecker happier
 * 2023-09-24 - Test: Behat scenario 'Show hint for self enrolment without an enrolment key' was broken, solves #398.

@@ -98,8 +98,10 @@ class smartmenu_helper {
         // Restriction by cohorts.
         $this->restriction_bycohorts($query);
 
-        // REstriction by lanuages.
-        $this->restriction_bylanguage($query);
+        // Restriction by languages.
+        if (!$this->restriction_bylanguage()) {
+            return false;
+        }
 
         // Restriction by date. Menu configured date is not started or already ended then hide the menu.
         if (!$this->restriction_bydate()) {
@@ -188,24 +190,21 @@ class smartmenu_helper {
     }
 
     /**
-     * Generate the queries and params to verify the user has the language which is contained in the current data.
+     * Verify the menu has restricted based on the current language.
      *
-     * @param stdclass $query Array which contains elements for DB conditions, selectors and params.
-     * @return void
+     * @return bool True if the menu is available for this lanauage, otherwise false.
      */
-    public function restriction_bylanguage(&$query) {
+    public function restriction_bylanguage() {
         global $DB;
 
         $languages = $this->data->languages;
         if (empty($languages)) {
             return true;
         }
-        list($insql, $inparam) = $DB->get_in_or_equal($languages, SQL_PARAMS_NAMED, 'la');
+        // Current language selected for this session.
+        $lang = current_language();
 
-        if (!empty($inparam)) {
-            $query->where[] = "u.lang $insql";
-            $query->params += $inparam;
-        }
+        return in_array($lang, $languages); // This item is available for the current language.
     }
 
     /**
