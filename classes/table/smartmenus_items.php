@@ -80,6 +80,17 @@ class smartmenus_items extends \table_sql {
     }
 
     /**
+     * Title column.
+     *
+     * @param stdclass $row Data of the item.
+     * @return string Language formatted title of item.
+     */
+    public function col_title($row) {
+        // Return the title after filter.
+        return format_string($row->title);
+    }
+
+    /**
      * Type column.
      *
      * @param \stdClass $data

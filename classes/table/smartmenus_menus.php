@@ -78,6 +78,28 @@ class smartmenus_menus extends \table_sql {
     }
 
     /**
+     * Title column.
+     *
+     * @param stdclass $row Data of the menu.
+     * @return string Language formatted title of menu.
+     */
+    public function col_title($row) {
+        // Return the title after filter.
+        return format_string($row->title);
+    }
+
+    /**
+     * Description column.
+     *
+     * @param stdclass $row Data of the menu.
+     * @return string Language formatted description of menu.
+     */
+    public function col_description($row) {
+        // Return the description after filter.
+        return format_string($row->description);
+    }
+
+    /**
      * Location column.
      *
      * @param \stdClass $data

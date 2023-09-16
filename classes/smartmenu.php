@@ -594,7 +594,7 @@ class smartmenu {
                     // Moodle core custom menu logic.
                     'title' => '',
                     'url' => null,
-                    'text' => $this->menu->title,
+                    'text' => format_string($this->menu->title),
                     'key' => $this->menu->id,
                     'submenulink' => 1,
                     'itemtype' => 'submenu-link', // Used in user menus, to identify the menu type, "link" for submmenus.
