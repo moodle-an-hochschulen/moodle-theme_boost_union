@@ -27,3 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 // Add smart menu elements to template context.
 $templatecontext['menubar'] = $primarymenu['menubar'] ?? [];
 $templatecontext['bottombar'] = $primarymenu['bottombar'] ?? [];
+
+// Add smart menu flag if the smart menu contains any menus to show.
+$includesmartmenu = (isset($primarymenu['includesmartmenu']) && !empty($primarymenu['includesmartmenu']));
+$templatecontext['includesmartmenu'] = $includesmartmenu ? true : false;

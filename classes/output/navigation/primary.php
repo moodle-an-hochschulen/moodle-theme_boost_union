@@ -136,6 +136,11 @@ class primary extends \core\navigation\output\primary {
         $usermenu = $this->get_user_menu($output);
         $this->build_usermenus($usermenu, $locationusermenus);
 
+        // Check if any of the smartmenus are going to be included on the page.
+        // This is used as flag to include the smart menu's JS file in mustache templates later
+        // as well as for controlling the smart menu SCSS.
+        $includesmartmenu = (!empty($mainmenu) || !empty($menubarmenus) || !empty($locationusermenus) || !empty($locationbottom));
+
         return [
             'mobileprimarynav' => $mobileprimarynav,
             'moremenu' => $moremenu->export_for_template($output),
@@ -143,6 +148,7 @@ class primary extends \core\navigation\output\primary {
             'lang' => !isloggedin() || isguestuser() ? $languagemenu->export_for_template($output) : [],
             'user' => $usermenu ?? [],
             'bottombar' => $bottombardata ?? false,
+            'includesmartmenu' => $includesmartmenu ? true : false,
         ];
     }
 
