@@ -1136,9 +1136,19 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
             min-width: 200px;
             overflow-y: visible;
         }
-        /* The icon tag aligned top at the menu link */
-        .usermenu .dropdown-menu .submenu .items a.dropdown-item {
-            align-items: baseline;
+        /* The icon tag aligned top at the usermenu link */
+        .usermenu .dropdown-menu {
+            .submenu .items a.dropdown-item {
+                align-items: baseline;
+            }
+            /* Usermenu dropdown item position relative for it's submenu */
+            .dropdown-item {
+                position: relative;
+                /* Usermenu dropdown submenu arrow alignment */
+                &.carousel-navigation-link:after {
+                    top: 8px;
+                }
+            }
         }
     }
     .moremenu {
