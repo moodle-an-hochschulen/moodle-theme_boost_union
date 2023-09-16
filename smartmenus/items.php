@@ -133,7 +133,7 @@ $table->define_baseurl($PAGE->url, ['menu' => $menu->id]);
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('smartmenus', 'theme_boost_union'));
 if (isset($menu->title)) {
-    $menuheading = $menu->title;
+    $menuheading = format_string($menu->title);
     $settingstitle = get_string('smartmenussettings', 'theme_boost_union');
     $settingsurl = new moodle_url('/theme/boost_union/smartmenus/edit.php', ['id' => $menuid, 'sesskey' => sesskey()]);
     $menuheading .= html_writer::link($settingsurl,
