@@ -923,667 +923,672 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
  * Header menu
  --------------------------------------*/
 
-.navbar {
-    &.fixed-top {
-        /* Added height and background color for the top header,
-        z-index is added to show the top header dropdown menu above the header block */
-        &.boost-union-menubar { /* boost-union-menubar class is added for the top header */
-            height: 42px;
-            border-bottom: 0;
-            background-color: #f8f9fa;
-            z-index: 1031;
-            /* The position of the side drawer has been adjusted slightly below to accommodate the top header. */
-            ~ .drawer.drawer-left {
-                top: 0;
+/* Boost union header menu style when the smart menu is enabled */
+.theme-boost-union-smartmenu {
+    .navbar {
+        &.fixed-top {
+            /* Added height and background color for the top header,
+            z-index is added to show the top header dropdown menu above the header block */
+            &.boost-union-menubar { /* boost-union-menubar class is added for the top header */
+                height: 42px;
+                border-bottom: 0;
+                background-color: #f8f9fa;
+                z-index: 1031;
+                /* The position of the side drawer has been adjusted slightly below to accommodate the top header. */
+                ~ .drawer.drawer-left {
+                    top: 0;
+                }
+                ~ .drawer.drawer-right {
+                    top: 101px;
+                }
+                /* The position of the main page has been adjusted slightly below to accommodate the top header. */
+                ~ #page.drawers {
+                    margin-top: 100px;
+                    /* The position of the drawer button to toggle has been adjusted slightly
+                    below to accommodate the top header.
+                    .drawer-toggles .drawer-toggler {
+                        top: 110px;
+                    }*/
+                }
+                .moremenu {
+                    .more-nav {
+                        li {
+                            /* The card dropdown menu link position is changed to static to show the card dropdown menu
+                               in full width */
+                            &.card-dropdown {
+                                position: static;
+                            }
+                            &.nav-item {
+                                &:first-child {
+                                    /* The position of the dropdown menu should not extend beyond the visible area of
+                                       the screen */
+                                    .dropdown-menu {
+                                        left: 0;
+                                        right: auto;
+                                    }
+                                }
+                            }
+                            a {
+                                &:not(.active) {
+                                    border-bottom: 0;
+                                    padding: 10px;
+                                }
+                                > * {
+                                    cursor: pointer;
+                                }
+                                /* Background color added in the menubar menu link on hover */
+                                &.nav-link:hover {
+                                    background-color: #f4f4f4;
+                                }
+                            }
+                            /* The positions of the dropdown menu added */
+                            .dropdown-menu {
+                                left: auto;
+                                right: 0;
+                                li {
+                                    width: 100%;
+                                }
+                            }
+                            /* Removed the padding in the card dropdown overlay*/
+                            &.dropdown.card-dropdown {
+                                .card-block-wrapper .card-block a {
+                                    padding: 0;
+                                }
+                            }
+                            /* Added max-height and overflow auto for scollbar when the card item reach the dropdown
+                               height */
+                            &.dropdownmoremenu .dropdown-menu .dropdown-menu {
+                                max-height: 300px;
+                                overflow-y: auto;
+                            }
+                        }
+                    }
+                }
+                + .navbar {
+                    /* Margin top has been added to the Header block to ensure that it does not conflict with the top
+                       header. */
+                    &.fixed-top {
+                        margin-top: 40px;
+                        /* The position of the card dropdown block has been set to static,
+                        so it will always appear under the card menu link. */
+                        .moremenu .dropdown.card-dropdown {
+                            position: static;
+                            .dropdown-menu {
+                                overflow-y: auto;
+                            }
+                            &:not(.card-overflow-no-wrap) .dropdown-menu {
+                                max-height: calc(100vh - 300px);
+                            }
+                        }
+                    }
+                }
             }
-            ~ .drawer.drawer-right {
-                top: 101px;
+            /* The width is added to show the navigation drawer in full page and
+                position of the navigation drawer has been adjusted to open the drawer from below. */
+            ~ .drawer-bottom.drawer {
+                width: 100%;
+                top: 0;
+                padding-bottom: 101px;
+                visibility: hidden;
+                /* Visible on show when the drawer toggle "More" link is clicked */
+                &.show {
+                    visibility: visible;
+                }
             }
             /* The position of the main page has been adjusted slightly below to accommodate the top header. */
             ~ #page.drawers {
-                margin-top: 100px;
-                /* The position of the drawer button to toggle has been adjusted slightly
-                below to accommodate the top header.
-                .drawer-toggles .drawer-toggler {
-                    top: 110px;
-                }*/
+                margin-top: 60px;
             }
-            .moremenu {
-                .more-nav {
-                    li {
-                        /* The card dropdown menu link position is changed to static to show the card dropdown menu
-                           in full width */
-                        &.card-dropdown {
-                            position: static;
+            .moremenu .more-nav li.card-dropdown {
+                /* The position of the card dropdown block has been set to static,
+                so it will always appear under the card menu link. */
+                position: static;
+                /* Card appearance - Card form style */
+                /* Card form style - Square */
+                &.card-form-square {
+                    /* Minimun and maximum width is added when the Card size "Tiny" with card form "Square" */
+                    &.card-size-tiny .dropdown-menu .card-block {
+                        min-width: 90px;
+                        max-width: 90px;
+                    }
+                    /* Minimun and maximum width is added when the Card size "Small" with card form "Square" */
+                    &.card-size-small .dropdown-menu .card-block {
+                        min-width: 140px;
+                        max-width: 140px;
+                    }
+                    /* Minimun and maximum width is added when the Card size "Medium" with card form "Square" */
+                    &.card-size-medium .dropdown-menu .card-block {
+                        min-width: 190px;
+                        max-width: 190px;
+                    }
+                    /* Minimun and maximum width is added when the Card size "Large" with card form "Square" */
+                    &.card-size-large .dropdown-menu .card-block {
+                        min-width: 240px;
+                        max-width: 240px;
+                    }
+                }
+                /* Card form style - Portrait */
+                &.card-form-portrait {
+                    /* Minimun and maximum width is added when the Card size "Tiny" with card form "portrait" */
+                    &.card-size-tiny .dropdown-menu .card-block {
+                        min-width: 60px;
+                        max-width: 60px;
+                    }
+                    /* Minimun and maximum width is added when the Card size "Small" with card form "portrait" */
+                    &.card-size-small .dropdown-menu .card-block {
+                        min-width: 94px;
+                        max-width: 94px;
+                    }
+                    /* Minimun and maximum width is added when the Card size "Medium" with card form "portrait" */
+                    &.card-size-medium .dropdown-menu .card-block {
+                        min-width: 127px;
+                        max-width: 127px;
+                    }
+                    /* Minimun and maximum width is added when the Card size "Large" with card form "portrait" */
+                    &.card-size-large .dropdown-menu .card-block {
+                        min-width: 160px;
+                        max-width: 160px;
+                    }
+                }
+                /* Card form style - Landscape */
+                &.card-form-landscape {
+                    /* Minimun and maximum width is added when the Card size "Tiny" with card form "Landscape" */
+                    &.card-size-tiny .dropdown-menu .card-block {
+                        min-width: 135px;
+                        max-width: 135px;
+                    }
+                    /* Minimun and maximum width is added when the Card size "Small" with card form "Landscape" */
+                    &.card-size-small .dropdown-menu .card-block {
+                        min-width: 210px;
+                        max-width: 210px;
+                    }
+                    /* Minimun and maximum width is added when the Card size "Medium" with card form "Landscape" */
+                    &.card-size-medium .dropdown-menu .card-block {
+                        min-width: 285px;
+                        max-width: 285px;
+                    }
+                    /* Minimun and maximum width is added when the Card size "Large" with card form "Landscape" */
+                    &.card-size-large .dropdown-menu .card-block {
+                        min-width: 360px;
+                        max-width: 360px;
+                    }
+                }
+                /* Card form style - Fullwidth */
+                /* Full Width is added when the Card size "Tiny, Small, Medium and Large" with card form "Full width" */
+                &.card-form-fullwidth {
+                    &.card-size-tiny,
+                    &.card-size-small,
+                    &.card-size-medium,
+                    &.card-size-large {
+                        .dropdown-menu .card-block {
+                            min-width: 100%;
+                            width: 100%;
                         }
-                        &.nav-item {
-                            &:first-child {
-                                /* The position of the dropdown menu should not extend beyond the visible area of
-                                   the screen */
-                                .dropdown-menu {
-                                    left: 0;
-                                    right: auto;
-                                }
-                            }
-                        }
-                        a {
-                            &:not(.active) {
-                                border-bottom: 0;
-                                padding: 10px;
-                            }
-                            > * {
-                                cursor: pointer;
-                            }
-                            /* Background color added in the menubar menu link on hover */
-                            &.nav-link:hover {
-                                background-color: #f4f4f4;
-                            }
-                        }
-                        /* The positions of the dropdown menu added */
-                        .dropdown-menu {
-                            left: auto;
-                            right: 0;
-                            li {
-                                width: 100%;
-                            }
-                        }
-                        /* Removed the padding in the card dropdown overlay*/
-                        &.dropdown.card-dropdown {
-                            .card-block-wrapper .card-block a {
-                                padding: 0;
-                            }
-                        }
-                        /* Added max-height and overflow auto for scollbar when the card item reach the dropdown
-                           height */
-                        &.dropdownmoremenu .dropdown-menu .dropdown-menu {
-                            max-height: 300px;
-                            overflow-y: auto;
+                    }
+                    /* Card size "large" has margin right none because the size of the card is full width of the
+                       screen */
+                    &.card-overflow-wrap.card-size-large {
+                        .dropdown-menu .card-block {
+                            margin-right: 0;
                         }
                     }
                 }
             }
-            + .navbar {
-                /* Margin top has been added to the Header block to ensure that it does not conflict with the top
-                   header. */
-                &.fixed-top {
-                    margin-top: 40px;
-                    /* The position of the card dropdown block has been set to static,
-                    so it will always appear under the card menu link. */
-                    .moremenu .dropdown.card-dropdown {
-                        position: static;
-                        .dropdown-menu {
-                            overflow-y: auto;
-                        }
-                        &:not(.card-overflow-no-wrap) .dropdown-menu {
-                            max-height: calc(100vh - 300px);
-                        }
-                    }
-                }
-            }
-        }
-        /* The width is added to show the navigation drawer in full page and
-            position of the navigation drawer has been adjusted to open the drawer from below. */
-        ~ .drawer-bottom.drawer {
-            width: 100%;
-            top: 0;
-            padding-bottom: 101px;
-            visibility: hidden;
-            /* Visible on show when the drawer toggle "More" link is clicked */
-            &.show {
-                visibility: visible;
-            }
-        }
-        /* The position of the main page has been adjusted slightly below to accommodate the top header. */
-        ~ #page.drawers {
-            margin-top: 60px;
-        }
-        .moremenu .more-nav li.card-dropdown {
-            /* The position of the card dropdown block has been set to static,
-            so it will always appear under the card menu link. */
-            position: static;
-            /* Card appearance - Card form style */
-            /* Card form style - Square */
-            &.card-form-square {
-                /* Minimun and maximum width is added when the Card size "Tiny" with card form "Square" */
-                &.card-size-tiny .dropdown-menu .card-block {
-                    min-width: 90px;
-                    max-width: 90px;
-                }
-                /* Minimun and maximum width is added when the Card size "Small" with card form "Square" */
-                &.card-size-small .dropdown-menu .card-block {
-                    min-width: 140px;
-                    max-width: 140px;
-                }
-                /* Minimun and maximum width is added when the Card size "Medium" with card form "Square" */
-                &.card-size-medium .dropdown-menu .card-block {
-                    min-width: 190px;
-                    max-width: 190px;
-                }
-                /* Minimun and maximum width is added when the Card size "Large" with card form "Square" */
-                &.card-size-large .dropdown-menu .card-block {
-                    min-width: 240px;
-                    max-width: 240px;
-                }
-            }
-            /* Card form style - Portrait */
-            &.card-form-portrait {
-                /* Minimun and maximum width is added when the Card size "Tiny" with card form "portrait" */
-                &.card-size-tiny .dropdown-menu .card-block {
-                    min-width: 60px;
-                    max-width: 60px;
-                }
-                /* Minimun and maximum width is added when the Card size "Small" with card form "portrait" */
-                &.card-size-small .dropdown-menu .card-block {
-                    min-width: 94px;
-                    max-width: 94px;
-                }
-                /* Minimun and maximum width is added when the Card size "Medium" with card form "portrait" */
-                &.card-size-medium .dropdown-menu .card-block {
-                    min-width: 127px;
-                    max-width: 127px;
-                }
-                /* Minimun and maximum width is added when the Card size "Large" with card form "portrait" */
-                &.card-size-large .dropdown-menu .card-block {
-                    min-width: 160px;
-                    max-width: 160px;
-                }
-            }
-            /* Card form style - Landscape */
-            &.card-form-landscape {
-                /* Minimun and maximum width is added when the Card size "Tiny" with card form "Landscape" */
-                &.card-size-tiny .dropdown-menu .card-block {
-                    min-width: 135px;
-                    max-width: 135px;
-                }
-                /* Minimun and maximum width is added when the Card size "Small" with card form "Landscape" */
-                &.card-size-small .dropdown-menu .card-block {
-                    min-width: 210px;
-                    max-width: 210px;
-                }
-                /* Minimun and maximum width is added when the Card size "Medium" with card form "Landscape" */
-                &.card-size-medium .dropdown-menu .card-block {
-                    min-width: 285px;
-                    max-width: 285px;
-                }
-                /* Minimun and maximum width is added when the Card size "Large" with card form "Landscape" */
-                &.card-size-large .dropdown-menu .card-block {
-                    min-width: 360px;
-                    max-width: 360px;
-                }
-            }
-            /* Card form style - Fullwidth */
-            /* Full Width is added when the Card size "Tiny, Small, Medium and Large" with card form "Full width" */
-            &.card-form-fullwidth {
-                &.card-size-tiny,
-                &.card-size-small,
-                &.card-size-medium,
-                &.card-size-large {
-                    .dropdown-menu .card-block {
-                        min-width: 100%;
-                        width: 100%;
-                    }
-                }
-                /* Card size "large" has margin right none because the size of the card is full width of the screen */
-                &.card-overflow-wrap.card-size-large {
-                    .dropdown-menu .card-block {
-                        margin-right: 0;
-                    }
-                }
-            }
-        }
-        /* Minimum width is adde for the dropdown, overlay y axis is visible to show the sub dropdown menus*/
-        > div:not(.navbar-nav) .dropdown:not(.card-dropdown) .dropdown-menu {
-            min-width: 200px;
-            overflow-y: visible;
-        }
-        /* The icon tag aligned top at the usermenu link */
-        .usermenu .dropdown-menu {
-            .submenu .items a.dropdown-item {
-                align-items: baseline;
-            }
-            /* Usermenu dropdown item position relative for it's submenu */
-            .dropdown-item {
-                position: relative;
-                /* Usermenu dropdown submenu arrow alignment */
-                &.carousel-navigation-link:after {
-                    top: 8px;
-                }
-            }
-        }
-    }
-    .moremenu {
-        .more-nav li.nav-item {
-            /* Menu link icon aligned center */
-            a {
-                align-items: center;
-                label {
-                    margin-bottom: 0;
-                }
-            }
-            /* The style below added when the menu link is under the "More" option in the responsive alignment */
-            /* The full width style is added for the menu link inside the "More" menu */
-            &.dropdownmoremenu .dropdown-menu li.nav-item.dropdown {
-                width: 100%;
-                .dropdown-toggle {
-                    /* Header dropdown toggle menu link color added */
-                    &:hover,
-                    &:focus,
-                    &:active {
-                        color: $white;
-                    }
-                }
-                /* Header dropdown menu border added and position added not to conflict
-                    with the screen in the responsive alignment */
-                .dropdown-menu {
-                    border: 1px solid rgba(0, 0, 0, 0.15);
-                    padding: 0.5rem 0;
-                    position: absolute;
-                    top: 0;
-                    left: auto;
-                    right: 100%;
-                    /* Removed the background color for the menu link of the submenu link*/
-                    .dropdown-item {
-                        &:not(:hover):not(:focus):not(:active) {
-                            background: none;
-                        }
-                    }
-                }
-                &.card-dropdown {
-                    .dropdown-menu {
-                        min-width: 420px;
-                        max-height: calc(100vh - 120px);
-                        text-align: center;
-                    }
-                    &.card-form-fullwidth {
-                        .dropdown-menu .card-block-wrapper {
-                            padding: 0 15px;
-                        }
-                    }
-                }
-            }
-        }
-        .dropdown {
-            /* Top margin removed and overlay y axis is visible to show the dropdowm menu without the scrollbar */
-            .dropdown-menu {
+            /* Minimum width is adde for the dropdown, overlay y axis is visible to show the sub dropdown menus*/
+            > div:not(.navbar-nav) .dropdown:not(.card-dropdown) .dropdown-menu {
+                min-width: 200px;
                 overflow-y: visible;
-                margin-top: 0;
-                /* Menu description font size, padding, border-radius and background color added */
-                .menu-description {
-                    font-size: 12px;
-                    padding: 0.25rem 1.5rem;
-                    border-radius: 5px;
-                    background-color: #eee;
-                    /* Removed the margin bottom for the content to avoid unwanted space below the description */
-                    p {
+            }
+            /* The icon tag aligned top at the usermenu link */
+            .usermenu .dropdown-menu {
+                .submenu .items a.dropdown-item {
+                    align-items: baseline;
+                }
+                /* Usermenu dropdown item position relative for it's submenu */
+                .dropdown-item {
+                    position: relative;
+                    /* Usermenu dropdown submenu arrow alignment */
+                    &.carousel-navigation-link:after {
+                        top: 8px;
+                    }
+                }
+            }
+        }
+        .moremenu {
+            .more-nav li.nav-item {
+                /* Menu link icon aligned center */
+                a {
+                    align-items: center;
+                    label {
                         margin-bottom: 0;
                     }
                 }
-                /* Padding and Position added for the "help icon" in menu */
-                .menu-helpicon {
-                    text-align: center;
-                    padding-right: 10px;
-                    margin-bottom: 10px;
-                    /* Margin removed in the menu description help icon in the menu */
-                    i {
-                        margin: 0;
-                    }
-                }
-                /* The font size and opacity reduced when the Menu link is selected as "Heading" option in the
-                   settings */
-                .dropdown-item {
-                    /* Dropdown menu link alignment at top */
-                    align-items: baseline;
-                    /* The "Tick" icon removed when the menu link is clicked */
-                    &:before {
-                        display: none;
-                    }
-                    &.menu-item-heading {
-                        font-size: 14px;
-                        opacity: .6;
-                        /* Menu link icon font size when the menu link as "Heading" and "icon" option selected in the
-                           settings */
-                        i.icon {
-                            font-size: 14px;
-                        }
-                    }
-                }
-                /* The below styles are header dropdown submenu  */
-                .dropdown-submenu {
-                    /* Position relative submenu link to control the arrow icon when it has submenus */
-                    > a.dropdown-item {
-                        position: relative;
-                        /* Header dropdown submenu */
-                        &:before {
-                            content: '';
-                        }
-                        /* The arrow icon and its postion at the right side is added when the header menu which has
-                           dropdown */
-                        &:after {
-                            content: '\f105';
-                            font-family: '#{$fa-style-family}';
-                            font-weight: 900;
-                            line-height: 10px;
-                            position: absolute;
-                            top: 40%;
-                            right: 10px;
-                        }
-                    }
-                    /* The submenu dropdown is hidden before the menu is clicked */
-                    ul {
-                        display: none;
-                    }
-                    /* The position relative is added for the dropdown menu */
-                    &.show {
-                        position: relative;
-                        /* The dropdown submenu style is added for the header menu */
-                        /* Height added to control the menu with scrollbard, border, border radius, background color,
-                        padding and its position styles are added and display block is added to show the submenu when
-                        the dropdown menu is clicked */
-                        ul {
-                            max-height: 250px;
-                            list-style: none;
-                            border: 1px solid $border-color;
-                            border-radius: 0.5rem;
-                            background-color: #fff;
-                            padding: .5rem 0;
-                            margin-left: 1px;
-                            overflow-y: auto;
-                            display: block;
-                            position: absolute;
-                            top: 0;
-                            left: 100%;
-                            /* The full width of the dropdown submenu link */
-                            li {
-                                width: 100%;
-                                /* The height and padding is added for the header dropdown submenu links */
-                                a.nav-link {
-                                    width: 100%;
-                                    height: auto;
-                                    padding: 0.1rem 1.5rem;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            /* The top padding is removed in the dropdown menu when menu description is added in the top */
-            &.dropdown-description-above .dropdown-menu {
-                padding-top: 0;
-                /* When menu description is added in the top the menu description bottom border radius is removed */
-                .menu-description {
-                    border-bottom-left-radius: 0;
-                    border-bottom-right-radius: 0;
-                }
-            }
-            /* The bottom padding is removed in the dropdown menu when menu description is added in the below */
-            &.dropdown-description-below .dropdown-menu {
-                padding-bottom: 0;
-                /* When menu description is added in the bottom the menu description top border radius is removed */
-                .menu-description {
-                    border-top-left-radius: 0;
-                    border-top-right-radius: 0;
-                }
-            }
-            /* Card layout - The below styles are header dropdown Card style menus */
-            &.card-dropdown {
-                /* The header card dropdown menu width, padding, removed border radius and top margin, added
-                white background color and it's position styles */
-                .dropdown-menu {
+                /* The style below added when the menu link is under the "More" option in the responsive alignment */
+                /* The full width style is added for the menu link inside the "More" menu */
+                &.dropdownmoremenu .dropdown-menu li.nav-item.dropdown {
                     width: 100%;
-                    border-radius: 0;
-                    background-color: #f0efef;
-                    padding: 30px;
+                    .dropdown-toggle {
+                        /* Header dropdown toggle menu link color added */
+                        &:hover,
+                        &:focus,
+                        &:active {
+                            color: $white;
+                        }
+                    }
+                    /* Header dropdown menu border added and position added not to conflict
+                        with the screen in the responsive alignment */
+                    .dropdown-menu {
+                        border: 1px solid rgba(0, 0, 0, 0.15);
+                        padding: 0.5rem 0;
+                        position: absolute;
+                        top: 0;
+                        left: auto;
+                        right: 100%;
+                        /* Removed the background color for the menu link of the submenu link*/
+                        .dropdown-item {
+                            &:not(:hover):not(:focus):not(:active) {
+                                background: none;
+                            }
+                        }
+                    }
+                    &.card-dropdown {
+                        .dropdown-menu {
+                            min-width: 420px;
+                            max-height: calc(100vh - 120px);
+                            text-align: center;
+                        }
+                        &.card-form-fullwidth {
+                            .dropdown-menu .card-block-wrapper {
+                                padding: 0 15px;
+                            }
+                        }
+                    }
+                }
+            }
+            .dropdown {
+                /* Top margin removed and overlay y axis is visible to show the dropdowm menu without the scrollbar */
+                .dropdown-menu {
+                    overflow-y: visible;
                     margin-top: 0;
-                    position: absolute;
-                    top: 100%;
-                    left: 0;
-                    /* The header card dropdown menu items styles */
-                    /* Margin added to the card block right & bottom and vertical align added to
-                    align the card block center to each other */
-                    .card-block {
-                        margin-right: 15px;
-                        margin-bottom: 15px;
-                        display: inline-block;
-                        vertical-align: top;
-                        flex-direction: column;
-                        /* The image parent div added for the card dropdown items */
-                        .img-block {
-                            width: 100%;
-                            height: 200px;
-                            /* The image size added for the card dropdown items */
-                            img {
-                                width: 100%;
-                                height: 100%;
-                                object-fit: cover;
-                            }
-                            > a {
-                                padding: 0;
-                            }
+                    /* Menu description font size, padding, border-radius and background color added */
+                    .menu-description {
+                        font-size: 12px;
+                        padding: 0.25rem 1.5rem;
+                        border-radius: 5px;
+                        background-color: #eee;
+                        /* Removed the margin bottom for the content to avoid unwanted space below the description */
+                        p {
+                            margin-bottom: 0;
                         }
-                        /* The card dropdown items content block width, padding, background color
-                        and aligned center styles added */
-                        .content-block {
-                            width: 100%;
-                            padding: 10px;
-                            background-color: rgba(0, 0, 0, 0.5);
-                            display: flex;
-                            align-items: center;
-                            /* The margin added to the heading in the content block for the card dropdown items */
-                            h5 {
-                                width: 100%;
-                                margin-bottom: 0;
-                                overflow: hidden;
-                                /* The font style, color, paddign added to the link of the heading
-                                in the content block for the card dropdown items */
-                                a {
-                                    font-size: 14px;
-                                    color: $white;
-                                    font-weight: bold;
-                                    padding: 0;
-                                    /* Background removed for the link of the heading on hover
-                                    in the content block for the card dropdown items */
-                                    &:hover,
-                                    &:focus,
-                                    &:active {
-                                        background: none;
-                                    }
-                                }
-                            }
-                            /* The line height added and "Go" button block aligned right side
-                            in the content block for the card dropdown items */
-                            .btn-block {
-                                width: auto;
-                                line-height: 10px;
-                                text-align: right;
-                                margin-left: 5px;
-                                a {
-                                    /* The color and padding added for the "Go" button in
-                                    the content block of the card dropdown items */
-                                    color: #fff;
-                                    padding: 0;
-                                    &:hover,
-                                    &:focus,
-                                    &:active {
-                                        /* Background removed for the link of the button on
-                                        hover in the content block for the card dropdown items */
-                                        background: none;
-                                    }
-                                }
-                            }
+                    }
+                    /* Padding and Position added for the "help icon" in menu */
+                    .menu-helpicon {
+                        text-align: center;
+                        padding-right: 10px;
+                        margin-bottom: 10px;
+                        /* Margin removed in the menu description help icon in the menu */
+                        i {
+                            margin: 0;
                         }
-                        /* The below style is added when the Menu link as "Heading" in "card layout" Menu settings */
+                    }
+                    /* The font size and opacity reduced when the Menu link is selected as "Heading" option in the
+                       settings */
+                    .dropdown-item {
+                        /* Dropdown menu link alignment at top */
+                        align-items: baseline;
+                        /* The "Tick" icon removed when the menu link is clicked */
+                        &:before {
+                            display: none;
+                        }
                         &.menu-item-heading {
-                            /* The Card menu as "Heading" option content block style */
-                            .content-block {
-                                /* The Card menu content heading menu link font-size and opacity added */
-                                h5 a {
-                                    font-size: 16px;
-                                    opacity: .6;
-                                    /* The Card menu content heading menu link icon font-size added */
-                                    i {
-                                        font-size: 16px;
+                            font-size: 14px;
+                            opacity: .6;
+                            /* Menu link icon font size when the menu link as "Heading" and "icon" option selected in
+                               the settings */
+                            i.icon {
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                    /* The below styles are header dropdown submenu  */
+                    .dropdown-submenu {
+                        /* Position relative submenu link to control the arrow icon when it has submenus */
+                        > a.dropdown-item {
+                            position: relative;
+                            /* Header dropdown submenu */
+                            &:before {
+                                content: '';
+                            }
+                            /* The arrow icon and its postion at the right side is added when the header menu which has
+                               dropdown */
+                            &:after {
+                                content: '\f105';
+                                font-family: '#{$fa-style-family}';
+                                font-weight: 900;
+                                line-height: 10px;
+                                position: absolute;
+                                top: 40%;
+                                right: 10px;
+                            }
+                        }
+                        /* The submenu dropdown is hidden before the menu is clicked */
+                        ul {
+                            display: none;
+                        }
+                        /* The position relative is added for the dropdown menu */
+                        &.show {
+                            position: relative;
+                            /* The dropdown submenu style is added for the header menu */
+                            /* Height added to control the menu with scrollbard, border, border radius,
+                               background color, padding and its position styles are added and display block
+                               is added to show the submenu when the dropdown menu is clicked */
+                            ul {
+                                max-height: 250px;
+                                list-style: none;
+                                border: 1px solid $border-color;
+                                border-radius: 0.5rem;
+                                background-color: #fff;
+                                padding: .5rem 0;
+                                margin-left: 1px;
+                                overflow-y: auto;
+                                display: block;
+                                position: absolute;
+                                top: 0;
+                                left: 100%;
+                                /* The full width of the dropdown submenu link */
+                                li {
+                                    width: 100%;
+                                    /* The height and padding is added for the header dropdown submenu links */
+                                    a.nav-link {
+                                        width: 100%;
+                                        height: auto;
+                                        padding: 0.1rem 1.5rem;
                                     }
-                                }
-                                /* The Card Menu as "Heading" option content block "Go" button link is hidden */
-                                .btn-block {
-                                    display: none;
                                 }
                             }
                         }
-                        /* The "Text position" of the menu link is selected as "Top overlay"
-                        or "Below overlay" in the "Card Appearance" settings */
+                    }
+                }
+                /* The top padding is removed in the dropdown menu when menu description is added in the top */
+                &.dropdown-description-above .dropdown-menu {
+                    padding-top: 0;
+                    /* When menu description is added in the top the menu description bottom border radius is removed */
+                    .menu-description {
+                        border-bottom-left-radius: 0;
+                        border-bottom-right-radius: 0;
+                    }
+                }
+                /* The bottom padding is removed in the dropdown menu when menu description is added in the below */
+                &.dropdown-description-below .dropdown-menu {
+                    padding-bottom: 0;
+                    /* When menu description is added in the bottom the menu description top border radius is removed */
+                    .menu-description {
+                        border-top-left-radius: 0;
+                        border-top-right-radius: 0;
+                    }
+                }
+                /* Card layout - The below styles are header dropdown Card style menus */
+                &.card-dropdown {
+                    /* The header card dropdown menu width, padding, removed border radius and top margin, added
+                    white background color and it's position styles */
+                    .dropdown-menu {
+                        width: 100%;
+                        border-radius: 0;
+                        background-color: #f0efef;
+                        padding: 30px;
+                        margin-top: 0;
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        /* The header card dropdown menu items styles */
+                        /* Margin added to the card block right & bottom and vertical align added to
+                        align the card block center to each other */
+                        .card-block {
+                            margin-right: 15px;
+                            margin-bottom: 15px;
+                            display: inline-block;
+                            vertical-align: top;
+                            flex-direction: column;
+                            /* The image parent div added for the card dropdown items */
+                            .img-block {
+                                width: 100%;
+                                height: 200px;
+                                /* The image size added for the card dropdown items */
+                                img {
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: cover;
+                                }
+                                > a {
+                                    padding: 0;
+                                }
+                            }
+                            /* The card dropdown items content block width, padding, background color
+                            and aligned center styles added */
+                            .content-block {
+                                width: 100%;
+                                padding: 10px;
+                                background-color: rgba(0, 0, 0, 0.5);
+                                display: flex;
+                                align-items: center;
+                                /* The margin added to the heading in the content block for the card dropdown items */
+                                h5 {
+                                    width: 100%;
+                                    margin-bottom: 0;
+                                    overflow: hidden;
+                                    /* The font style, color, paddign added to the link of the heading
+                                    in the content block for the card dropdown items */
+                                    a {
+                                        font-size: 14px;
+                                        color: $white;
+                                        font-weight: bold;
+                                        padding: 0;
+                                        /* Background removed for the link of the heading on hover
+                                        in the content block for the card dropdown items */
+                                        &:hover,
+                                        &:focus,
+                                        &:active {
+                                            background: none;
+                                        }
+                                    }
+                                }
+                                /* The line height added and "Go" button block aligned right side
+                                in the content block for the card dropdown items */
+                                .btn-block {
+                                    width: auto;
+                                    line-height: 10px;
+                                    text-align: right;
+                                    margin-left: 5px;
+                                    a {
+                                        /* The color and padding added for the "Go" button in
+                                        the content block of the card dropdown items */
+                                        color: #fff;
+                                        padding: 0;
+                                        &:hover,
+                                        &:focus,
+                                        &:active {
+                                            /* Background removed for the link of the button on
+                                            hover in the content block for the card dropdown items */
+                                            background: none;
+                                        }
+                                    }
+                                }
+                            }
+                            /* The below style is added when the Menu link as "Heading" in "card layout" Menu
+                               settings */
+                            &.menu-item-heading {
+                                /* The Card menu as "Heading" option content block style */
+                                .content-block {
+                                    /* The Card menu content heading menu link font-size and opacity added */
+                                    h5 a {
+                                        font-size: 16px;
+                                        opacity: .6;
+                                        /* The Card menu content heading menu link icon font-size added */
+                                        i {
+                                            font-size: 16px;
+                                        }
+                                    }
+                                    /* The Card Menu as "Heading" option content block "Go" button link is hidden */
+                                    .btn-block {
+                                        display: none;
+                                    }
+                                }
+                            }
+                            /* The "Text position" of the menu link is selected as "Top overlay"
+                            or "Below overlay" in the "Card Appearance" settings */
+                            &.card-text-overlay-top,
+                            &.card-text-overlay-bottom {
+                                /* The position relative to the card dropdown  */
+                                position: relative;
+                                /* The border, background, box-shadow, outline are removed for the card overlay link and
+                                   the width, height, position is added to redirect to course for the card top overlay &
+                                   card bottom overlay */
+                                > a {
+                                    width: 100%;
+                                    height: 100%;
+                                    border: 0;
+                                    background: none;
+                                    box-shadow: none;
+                                    outline: none;
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    z-index: 1;
+                                }
+                                /* The width and position of the menu link at the top of the card block in the card
+                                   dropdown menu */
+                                .content-block {
+                                    width: 100%;
+                                    height: 100%;
+                                    align-items: flex-start;
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                }
+                            }
+                            /* The "Text position" of the menu link bottom
+                            of the card block in the "Below overlay" option */
+                            &.card-text-overlay-bottom {
+                                .content-block {
+                                    align-items: flex-end;
+                                }
+                            }
+                        }
+                    }
+                    /* Menu description aligned center and margin top & bottom added in the Card drowpdown menu */
+                    &.dropdown-description-above,
+                    &.dropdown-description-below {
+                        .dropdown-menu .menu-description {
+                            text-align: center;
+                            margin: 10px 0;
+                        }
+                    }
+                    /* Card appearance - Card size */
+                    /* Height of the Card size - Tiny */
+                    &.card-size-tiny .dropdown-menu .card-block .img-block {
+                        height: 50px;
+                    }
+                    /* Height of the Card size - Small */
+                    &.card-size-small .dropdown-menu .card-block .img-block {
+                        height: 100px;
+                    }
+                    /* Height of the Card size - Medium */
+                    &.card-size-medium .dropdown-menu .card-block .img-block {
+                        height: 150px;
+                    }
+                    /* Height of the Card size - large */
+                    &.card-size-large .dropdown-menu .card-block .img-block {
+                        height: 200px;
+                    }
+                    /* Card Overflow behaviour - No Wrap */
+                    /* Displayed the card menu as flex, nowrap and horizontal scroll bar to show the dropdown menu in a
+                       single row */
+                    &.card-overflow-no-wrap.show .dropdown-menu {
+                        overflow-x: auto;
+                        display: flex;
+                        flex-wrap: nowrap;
+                        flex-direction: column;
+                        /* Scrollbar */
+                        /* Width and height of the scrollbar */
+                        ::-webkit-scrollbar {
+                            width: 12px;
+                            height: 10px;
+                        }
+                        /* Background color for the scrollbar on hover */
+                        ::-webkit-scrollbar-thumb:hover {
+                            background-color: #495057;
+                        }
+                        /* Border, border radius and background color for the bar in the scrollbar */
+                        ::-webkit-scrollbar-thumb {
+                            background-color: #6a737b;
+                            border-radius: 20px;
+                            border: 2px solid #f8f9fa;
+                        }
+                        /* Background for the scrollbar */
+                        ::-webkit-scrollbar-track {
+                            background: #f8f9fa;
+                        }
+                        /* End of Scrollbar */
+                        .card-block-wrapper {
+                            display: flex;
+                            overflow-y: auto;
+                        }
+                    }
+                    /* Card size - "Large" with the "Text positions" */
+                    /* Increased the height of the card block in the "Text Position" when the card size Large */
+                    &.card-size-large .dropdown-menu .card-block {
                         &.card-text-overlay-top,
                         &.card-text-overlay-bottom {
-                            /* The position relative to the card dropdown  */
-                            position: relative;
-                            /* The border, background, box-shadow, outline are removed for the card overlay link and
-                               the width, height, position is added to redirect to course for the card top overlay &
-                               card bottom overlay */
-                            > a {
-                                width: 100%;
-                                height: 100%;
-                                border: 0;
-                                background: none;
-                                box-shadow: none;
-                                outline: none;
-                                position: absolute;
-                                top: 0;
-                                left: 0;
-                                z-index: 1;
-                            }
-                            /* The width and position of the menu link at the top of the card block in the card
-                               dropdown menu */
+                            > a,
+                            .img-block,
                             .content-block {
-                                width: 100%;
-                                height: 100%;
-                                align-items: flex-start;
-                                position: absolute;
-                                top: 0;
-                                left: 0;
+                                height: calc(200px + 39px);
                             }
                         }
-                        /* The "Text position" of the menu link bottom
-                        of the card block in the "Below overlay" option */
+                    }
+                    /* Card size - "Medium" with the "Text positions" */
+                    /* Increased the height of the card block in the "Text Position" when the card size Medium */
+                    &.card-size-medium .dropdown-menu .card-block {
+                        &.card-text-overlay-top,
                         &.card-text-overlay-bottom {
+                            > a,
+                            .img-block,
                             .content-block {
-                                align-items: flex-end;
+                                height: calc(150px + 39px);
                             }
                         }
                     }
-                }
-                /* Menu description aligned center and margin top & bottom added in the Card drowpdown menu */
-                &.dropdown-description-above,
-                &.dropdown-description-below {
-                    .dropdown-menu .menu-description {
-                        text-align: center;
-                        margin: 10px 0;
-                    }
-                }
-                /* Card appearance - Card size */
-                /* Height of the Card size - Tiny */
-                &.card-size-tiny .dropdown-menu .card-block .img-block {
-                    height: 50px;
-                }
-                /* Height of the Card size - Small */
-                &.card-size-small .dropdown-menu .card-block .img-block {
-                    height: 100px;
-                }
-                /* Height of the Card size - Medium */
-                &.card-size-medium .dropdown-menu .card-block .img-block {
-                    height: 150px;
-                }
-                /* Height of the Card size - large */
-                &.card-size-large .dropdown-menu .card-block .img-block {
-                    height: 200px;
-                }
-                /* Card Overflow behaviour - No Wrap */
-                /* Displayed the card menu as flex, nowrap and horizontal scroll bar to show the dropdown menu in a
-                   single row */
-                &.card-overflow-no-wrap.show .dropdown-menu {
-                    overflow-x: auto;
-                    display: flex;
-                    flex-wrap: nowrap;
-                    flex-direction: column;
-                    /* Scrollbar */
-                    /* Width and height of the scrollbar */
-                    ::-webkit-scrollbar {
-                        width: 12px;
-                        height: 10px;
-                    }
-                    /* Background color for the scrollbar on hover */
-                    ::-webkit-scrollbar-thumb:hover {
-                        background-color: #495057;
-                    }
-                    /* Border, border radius and background color for the bar in the scrollbar */
-                    ::-webkit-scrollbar-thumb {
-                        background-color: #6a737b;
-                        border-radius: 20px;
-                        border: 2px solid #f8f9fa;
-                    }
-                    /* Background for the scrollbar */
-                    ::-webkit-scrollbar-track {
-                        background: #f8f9fa;
-                    }
-                    /* End of Scrollbar */
-                    .card-block-wrapper {
-                        display: flex;
-                        overflow-y: auto;
-                    }
-                }
-                /* Card size - "Large" with the "Text positions" */
-                /* Increased the height of the card block in the "Text Position" when the card size Large */
-                &.card-size-large .dropdown-menu .card-block {
-                    &.card-text-overlay-top,
-                    &.card-text-overlay-bottom {
-                        > a,
-                        .img-block,
-                        .content-block {
-                            height: calc(200px + 39px);
+                    /* Card size - "Small" with the "Text positions" */
+                    /* Increased the height of the card block in the "Text Position" when the card size Small */
+                    &.card-size-small .dropdown-menu .card-block {
+                        &.card-text-overlay-top,
+                        &.card-text-overlay-bottom {
+                            > a,
+                            .img-block,
+                            .content-block {
+                                height: calc(100px + 39px);
+                            }
                         }
                     }
-                }
-                /* Card size - "Medium" with the "Text positions" */
-                /* Increased the height of the card block in the "Text Position" when the card size Medium */
-                &.card-size-medium .dropdown-menu .card-block {
-                    &.card-text-overlay-top,
-                    &.card-text-overlay-bottom {
-                        > a,
-                        .img-block,
-                        .content-block {
-                            height: calc(150px + 39px);
-                        }
-                    }
-                }
-                /* Card size - "Small" with the "Text positions" */
-                /* Increased the height of the card block in the "Text Position" when the card size Small */
-                &.card-size-small .dropdown-menu .card-block {
-                    &.card-text-overlay-top,
-                    &.card-text-overlay-bottom {
-                        > a,
-                        .img-block,
-                        .content-block {
-                            height: calc(100px + 39px);
-                        }
-                    }
-                }
-                /* Card size - "Tiny" with the "Text positions" */
-                /* Increased the height of the card block in the "Text Position" when the card size Tiny */
-                &.card-size-tiny .dropdown-menu .card-block {
-                    &.card-text-overlay-top,
-                    &.card-text-overlay-bottom {
-                        > a,
-                        .img-block,
-                        .content-block {
-                            height: calc(50px + 39px);
+                    /* Card size - "Tiny" with the "Text positions" */
+                    /* Increased the height of the card block in the "Text Position" when the card size Tiny */
+                    &.card-size-tiny .dropdown-menu .card-block {
+                        &.card-text-overlay-top,
+                        &.card-text-overlay-bottom {
+                            > a,
+                            .img-block,
+                            .content-block {
+                                height: calc(50px + 39px);
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
-.drawer-primary .drawercontent .list-group .list-group-item {
-    align-items: center;
+    .drawer-primary .drawercontent .list-group .list-group-item {
+        align-items: center;
+    }
 }
 
 /* The nav drawer position to the top in the responsive alignment */
@@ -1662,7 +1667,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
  * Footer menu
  --------------------------------------*/
 
-#page-wrapper #page {
+/* Boost union footer bottom menu style when the smart menu is enabled */
+.theme-boost-union-smartmenu #page-wrapper #page {
     #page-footer {
         .navbar {
             /* Footer bottom menu */
@@ -1917,7 +1923,8 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 /* On small screens where the bottom bar is shown. */
 @include media-breakpoint-down(sm) {
-    #page-wrapper #page {
+    /* Boost union footer bottom menu style when the smart menu is enabled */
+    .theme-boost-union-smartmenu #page-wrapper #page {
         &.footer-bottom-menu {
             /* Increase the space at the bottom for the footer popover, as the bottom menu bar might hide it. */
             .btn-footer-popover {
@@ -1929,15 +1936,17 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 
 @include media-breakpoint-down(sm) {
     /* The padding for the footer to visible the footer bottom menu because it is in the position style */
-    #page-wrapper #page .footer-bottom-menu {
+    /* Boost union footer bottom menu style when the smart menu is enabled */
+    .theme-boost-union-smartmenu #page-wrapper #page .footer-bottom-menu {
         padding-bottom: 75px;
     }
-    /* The nav drawer width is extend to full screen in the mobile view */
-    body .drawer.show {
+    /* The nav drawer width is extend to full screen in the mobile view when the boost union smart menu is enabled */
+    body.theme-boost-union-smartmenu .drawer.show {
         max-width: none;
         width: 100%;
     }
-    .drawer-primary .drawercontent .list-group .list-group-item {
+    /* Drawer content list group when the boost union smart menu is enabled */
+    .theme-boost-union-smartmenu .drawer-primary .drawercontent .list-group .list-group-item {
         /* The padding left is added to the nav drawer menu dropdown menu in the mobile view */
         .list-group-item-action {
             padding-left: 32px;
