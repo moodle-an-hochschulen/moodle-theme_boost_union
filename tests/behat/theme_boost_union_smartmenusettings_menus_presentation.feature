@@ -136,3 +136,32 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Square (1/1)    | square    |
       | Landscape (3/2) | landscape |
       | Full width      | fullwidth |
+
+  @javascript
+  Scenario: Smartmenu: Menus: Presentation - Add a smart menu with multilang tags
+    When I log in as "admin"
+    And the "multilang" filter is "on"
+    And the "multilang" filter applies to "content and headings"
+    And I navigate to "Language > Language packs" in site administration
+    And I set the field "Available language packs" to "de"
+    And I press "Install selected language pack(s)"
+    And I navigate to smart menus
+    And I click on "Create menu" "button"
+    And I set the following fields to these values:
+      | Title            | <span lang="en" class="multilang">Lorem ipsum</span><span lang="de" class="multilang">Dolor sit amet</span> |
+      | Menu location(s) | Main                                                                                                        |
+    And I click on "Save and return" "button"
+    And I follow "Preferences" in the user menu
+    And I click on "Preferred language" "link"
+    And I set the field "Preferred language" to "English ‎(en)‎"
+    And I press "Save changes"
+    And I am on site homepage
+    Then I should see "Lorem ipsum" in the "nav.moremenu" "css_element"
+    And I should not see "Dolor sit amet" in the "nav.moremenu" "css_element"
+    And I follow "Preferences" in the user menu
+    And I click on "Preferred language" "link"
+    And I set the field "Preferred language" to "Deutsch ‎(de)‎"
+    And I press "Save changes"
+    And I am on site homepage
+    Then I should see "Dolor sit amet" in the "nav.moremenu" "css_element"
+    And I should not see "Lorem ipsum" in the "nav.moremenu" "css_element"
