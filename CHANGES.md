@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-09-22 - Bugfix: Transition in second level in user menu was wrong, solves #397
 * 2023-09-22 - Improvement: Smartmenus.js is only be added to the page if smart menus are really used, solves #357
 * 2023-09-22 - Bugfix: Smart menu language restriction did not respect switching language with the language switcher, solves #358.
 * 2023-09-22 - Make codechecker happier
