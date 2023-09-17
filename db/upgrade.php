@@ -239,5 +239,18 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023010519, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2023010521) {
+
+        // Remove the THEME_BOOST_UNION_SETTING_COURSEBREADCRUMBS_DONTCHANGE option from the categorybreadcrumbs setting
+        // and replace it with THEME_BOOST_UNION_SETTING_SELECT_NO if necessary.
+        $oldconfig = get_config('theme_boost_union', 'categorybreadcrumbs');
+        if ($oldconfig == 'dontchange') {
+            set_config('categorybreadcrumbs', THEME_BOOST_UNION_SETTING_SELECT_NO, 'theme_boost_union');
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2023010521, 'theme', 'boost_union');
+    }
+
     return true;
 }
