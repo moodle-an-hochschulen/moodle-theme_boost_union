@@ -1623,19 +1623,26 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
         $scss = 'body.dir-ltr a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::after,
             body.dir-ltr a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::after {
             font-family: "FontAwesome";
-            content: "\f08e" !important;
+            content: "#{$fa-var-external-link}" !important;
             padding-left: 0.25rem;
         }';
         $scss .= 'body.dir-rtl a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::before,
             body.dir-rtl a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::before {
             font-family: "FontAwesome";
-            content: "\f08e" !important;
+            content: "#{$fa-var-external-link}" !important;
             padding-right: 0.25rem;
         }';
 
-        // Moodle adds a hardcoded external-link icon to the "services and support" link in the questionmark menu.
-        // This becomes obsolete now. We remove it with the sledgehammer.
-        $scss .= '.footer-support-link a[href^="https://moodle.com/help/"] .fa-external-link {
+        // Moodle adds a hardcoded external-link icon to several links:
+        // * The "services and support" link in the questionmark menu (which will point to moodle.com/help.
+        // * The "contact site support" link in the questionmark menu (as soon as the URL in the $CFG->supportpage setting is set).
+        // * The links to the Moodle docs (which are created with the get_docs_url() helper function).
+        // These icons become obsolete now. We remove them with the sledgehammer.
+        $scss .= '.footer-support-link a[href^="https://moodle.com/help/"] .fa-external-link';
+        if (!empty($CFG->supportpage)) {
+            $scss .= ', a[href="'.$CFG->supportpage.'"] .fa-external-link';
+        }
+        $scss .= ', a[href^="'.get_docs_url().'"] .fa-external-link {
             display: none;
         }';
     }
