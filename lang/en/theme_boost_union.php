@@ -276,49 +276,6 @@ $string['customfontslistsetting'] = 'Custom fonts list';
 $string['customfontslistsetting_desc'] = 'This is the list of fonts which you have uploaded to the custom fonts filearea. The given CSS snippets can be used to add these fonts to your custom SCSS. Please note that you will have to take care of the font format value as well as the font-family, font-style and font-weight CSS properties yourself for now as Boost Union is not able yet to parse the font files.';
 $string['customfontsfileurlpersistent'] = 'URL (persistent)';
 $string['customfontsfileurlrevisioned'] = 'URL (revisioned)';
-// ... Section: FontAwesome.
-$string['fontawesomeheading'] = 'FontAwesome';
-// ... ... Setting: FontAwesome version.
-$string['fontawesomeversionsetting'] = 'FontAwesome version';
-$string['fontawesomeversionsetting_desc'] = 'Moodle core ships with FontAwesome 4 icons which are fine, but FontAwesome has evolved since then. If you want to use more recent FontAwesome icons, you can do this with this setting. As soon as you choose another version than FontAwesome 4, additional settings will appear where you can upload more recent FontAwesome versions.';
-$string['fontawesomeversionnone'] = 'Keep FontAwesome 4 (as shipped with Moodle core)';
-$string['fontawesomeversionfa6free'] = 'Update to FontAwesome 6 Free';
-// ... ... Setting: FontAwesome files.
-$string['fontawesomefilessetting'] = 'FontAwesome files';
-$string['fontawesomefilessetting_desc'] = 'With this setting you can upload more recent FontAwesome files to Moodle. You have to upload the FontAwesome files to Moodle yourself due to licensing constraints. Just head over to <a href="https://fontawesome.com">fontawesome.com</a>, download the FontAwesome package and upload the files here.';
-$string['fontawesomefilesstructurenote'] = 'Please note that the files must be uploaded with the correct folder structure and with the correct file names. Please start by creating a <em>css</em> and a <em>webfonts</em> folder in the filepicker, upload the <em>fa-solid-900.woff2</em> file into the <em>webfonts</em> folder and save the settings page. As soon as you have done this, a file list will appear below which helps you to identify and upload the right files into these folders.';
-// ... ... Information: FontAwesome files list.
-$string['fontawesomelistsetting'] = 'FontAwesome files list';
-$string['fontawesomelistsetting_desc'] = 'This is the list of FontAwesome files which you have uploaded to the FontAwesome files filearea above. All FontAwesome files which are valid for the configured FontAwesome version are listed here, other files which you may have uploaded as well but which are not valid or needed FontAwesome files are ignored. The FontAwesome files are automatically added to the Moodle pages and have a direct effect as soon as you save this setting.';
-$string['fontawesomelistnote'] = 'Please note that, if you upload only a fraction of the mandatory files, the FontAwesome icons can appear as broken on the Moodle page. This cannot be fixed until you upload all mandatory files or remove all files again.';
-$string['fontawesomelistfileinfo-fa6free-css-fontawesome.min.css'] = 'This is the main CSS file which adds all available FontAwesome glyphs to the Moodle page.';
-$string['fontawesomelistfileinfo-fa6free-css-brands.min.css'] = 'This is an additional CSS file which adds the font for FontAwesome brand icons to the Moodle page.';
-$string['fontawesomelistfileinfo-fa6free-css-regular.min.css'] = 'This is an additional CSS file which adds the font for FontAwesome regular icons to the Moodle page.';
-$string['fontawesomelistfileinfo-fa6free-css-solid.min.css'] = 'This is an additional CSS file which adds the font for FontAwesome solid icons to the Moodle page.';
-$string['fontawesomelistfileinfo-fa6free-css-v4-font-face.min.css'] = 'This is the CSS file which makes sure that the FontAwesome 4 icons in Moodle are still displayed correctly.';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-brands-400.woff2'] = 'This is the font file for FontAwesome brand icons (in the WOFF2 format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-brands-400.ttf'] = 'This is the font file for FontAwesome brand icons (in the TTF format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-regular-400.woff2'] = 'This is the font file for FontAwesome regular icons (in the WOFF2 format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-regular-400.ttf'] = 'This is the font file for FontAwesome regular icons (in the TTF format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-solid-900.woff2'] = 'This is the font file for FontAwesome solid icons (in the WOFF2 format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-solid-900.ttf'] = 'This is the font file for FontAwesome solid icons (in the TTF format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-v4compatibility.woff2'] = 'This is the font file for the FontAwesome v4 compatibility (in the WOFF2 format).';
-$string['fontawesomelistfileinfo-fa6free-webfonts-fa-v4compatibility.ttf'] = 'This is the font file for the FontAwesome v4 compatibility (in the TTF format).';
-$string['fontawesomelistmandatoryuploaded'] = 'It is a mandatory file for FontAwesome to work and it was uploaded properly.';
-$string['fontawesomelistoptionaluploaded'] = 'It is an optional file to enhance the FontAwesome iconset and it was uploaded properly.';
-$string['fontawesomelistmandatorymissing'] = 'It is a mandatory file for FontAwesome to work, but it was not uploaded properly. Please try to upload it properly.';
-$string['fontawesomelistoptionalmissing'] = 'It is an optional file to enhance the FontAwesome iconset, but it was not uploaded. This fine as long as you don\'t need it.';
-// ... ... Information: FontAwesome checks.
-$string['fontawesomecheckssetting'] = 'FontAwesome checks';
-$string['fontawesomecheckssetting_desc'] = 'Here, you can verify visually if the FontAwesome files have been uploaded and added to the Moodle page properly. If one of the checks fail, please double-check if you have uploaded all mandatory files correctly.';
-$string['fontawesomecheck-fa6free-general-title'] = 'General functionality';
-$string['fontawesomecheck-fa6free-general-description'] = 'If you see a checkmark icon on the left hand side, FontAwesome is generally working in your site.';
-$string['fontawesomecheck-fa6free-fallback-title'] = 'FontAwesome 4 fallback';
-$string['fontawesomecheck-fa6free-fallback-description'] = 'Newer FontAwesome versions use to remap older icon identifiers to newer ones or even get rid of some icons. If you see a solid map icon on the left hand side, your FontAwesome 6 version is properly showing remapped icons from FontAwesome 4.';
-$string['fontawesomecheck-fa6free-newstuff-title'] = 'FontAwesome 6 icons';
-$string['fontawesomecheck-fa6free-newstuff-description'] = 'Newer FontAwesome versions ship with additional icons compared to the FontAwesome 4 iconset. If you see a virus icon on the left hand side, your FontAwesome 6 version is properly showing new icons which are new in FontAwesome 6.';
-$string['fontawesomecheck-fa6free-filter-title'] = 'FontAwesome filter';
-$string['fontawesomecheck-fa6free-filter-description'] = 'As you have the FontAwesome filter plugin installed, you should be sure that the filter handles the new FontAwesome 6 icons correctly as well. If you see a users icon on the left hand side, the filter is working properly with the FontAwesome 6 version icons.';
 
 // Settings: H5P tab.
 $string['h5ptab'] = 'H5P';
@@ -1008,7 +965,6 @@ $string['boost_union:viewregionoffcanvascenter'] = 'To be able to see the Off-ca
 $string['boost_union:editregionoffcanvascenter'] = 'To be able to edit the Off-canvas (center) block region';
 
 // Caches.
-$string['cachedef_fontawesome'] = 'FontAwesome files (which are uploaded in the Boost Union settings)';
 $string['cachedef_flavours'] = 'Flavours which apply to a given page category ID for the current user';
 
 // Upgrade notices.

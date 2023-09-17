@@ -436,7 +436,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         // This code is copied and modified from theme_boost_pluginfile() in theme/boost/lib.php.
     } else if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'backgroundimage' ||
         $filearea === 'loginbackgroundimage' || $filearea === 'additionalresources' ||
-                $filearea === 'customfonts' || $filearea === 'fontawesome' || $filearea === 'courseheaderimagefallback' ||
+                $filearea === 'customfonts' || $filearea === 'courseheaderimagefallback' ||
                 preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea))) {
         $theme = theme_config::load('boost_union');
         // By default, theme files must be cache-able by both browsers and proxies.
@@ -497,7 +497,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
 /**
  * Callback to add head elements.
  *
- * We use this callback to inject the FontAwesome CSS code and the flavour's CSS code to the page.
+ * We use this callback to inject the flavour's CSS code to the page.
  *
  * @return string
  */
@@ -515,9 +515,6 @@ function theme_boost_union_before_standard_html_head() {
 
     // Require local library.
     require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
-
-    // Add the FontAwesome icons to the page.
-    theme_boost_union_add_fontawesome_to_page();
 
     // Add the flavour CSS to the page.
     theme_boost_union_add_flavourcss_to_page();

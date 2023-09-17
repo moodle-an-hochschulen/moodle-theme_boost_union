@@ -252,5 +252,15 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023010521, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2023010522) {
+        // Remove the files from the FontAwesome filearea of Boost Union as this setting was removed.
+        $systemcontext = context_system::instance();
+        $fs = get_file_storage();
+        $fs->delete_area_files($systemcontext->id, 'theme_boost_union', 'fontawesome');
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2023010522, 'theme', 'boost_union');
+    }
+
     return true;
 }

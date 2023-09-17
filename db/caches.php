@@ -60,14 +60,6 @@ $definitions = array(
                     'theme_boost_union_cohort_deleted'
                 )
         ),
-        // This cache stores the FontAwesome files (which are uploaded in the Boost Union settings)
-        // to avoid that the files have to be read from the filearea on every page load.
-        'fontawesome' => array(
-                'mode' => cache_store::MODE_APPLICATION,
-                'simplekeys' => true,
-                'simpledata' => true,
-                'staticacceleration' => true,
-        ),
         // This cache stores the smart menus.
         'smartmenus' => array(
                 'mode' => cache_store::MODE_APPLICATION,

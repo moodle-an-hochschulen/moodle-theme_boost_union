@@ -1250,7 +1250,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                            dropdown */
                         &:after {
                             content: '\f105';
-                            font-family: fontawesome;
+                            font-family: '#{$fa-style-family}';
                             line-height: 10px;
                             position: absolute;
                             top: 40%;
@@ -1741,7 +1741,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                                        menu when the smart menus are not added in the Footer menu */
                                     &:before {
                                         content: '\f142';
-                                        font-family: fontawesome;
+                                        font-family: '#{$fa-style-family}';
                                     }
                                     /* The arrow icon after the More menu link text is hidden when the smart menus are
                                        not added */
