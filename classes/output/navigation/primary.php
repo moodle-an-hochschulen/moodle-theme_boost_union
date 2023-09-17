@@ -45,7 +45,7 @@ use \theme_boost_union\smartmenu;
  */
 class primary extends \core\navigation\output\primary {
 
-    /** @var moodle_page $page the moodle page that the navigation belongs to */
+    /** @var \moodle_page $page the moodle page that the navigation belongs to */
     private $page = null;
 
     /**

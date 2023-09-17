@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-09-17 - Upgrade: Adopt PHPDoc change from MDL-77164.
 * 2023-09-01 - Prepare compatibility for Moodle 4.2.
 * 2023-09-17 - Improvement: Adopt Moodle core bugfix from MDL-78138 which fixed the category breadcrumbs in Boost core, removing the 'Do not change anything' option from the 'Display the category breadcrumbs in the course header' setting, solves #388
 * 2023-09-17 - Bugfix: Adopt Moodle core bugfix from MDL-78644 to allow .ico files as favicons again, solves #387.
