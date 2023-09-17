@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-09-17 - Bugfix: Fix double-labeling and FontAwesome issues with the 'Mark external links' feature, solves #323 and #327.
 * 2023-09-17 - Upgrade: Use better icon for offcanvas button with FontAwesome 6, solves #265.
 * 2023-09-17 - Upgrade: Remove 'FontAwesome version' setting as FontAwesome 6 Free has been integrated into Moodle core. Boost Union will use FontAwesome 6 by default from 4.2 on, solves #389.
 * 2023-09-17 - Upgrade: Adopt PHPDoc change from MDL-77164.
