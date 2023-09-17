@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-09-17 - Updated Moodle Plugin CI to latest upstream recommendations
+
 ### v4.0-r20
 
 * 2023-07-24 - Improvement: Only add load OffCanvas module when offcanvas region is enabled, solves #343.
