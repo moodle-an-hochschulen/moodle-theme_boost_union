@@ -359,8 +359,7 @@ Please note: Here, you can just remove navigation nodes. But if you want to add 
 $string['breadcrumbsheading'] = 'Breadcrumbs';
 // ... ... Setting: Course category breadcrumb.
 $string['categorybreadcrumbs'] = 'Display the category breadcrumbs in the course header';
-$string['categorybreadcrumbs_desc'] = 'By default, the course category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the course category breadcrumbs in the course header above the course name.<br/><br/>
-Please note: The "Do not change anything" option does not change anything about the course category breadcrumbs like they are presented by Moodle core. Whereas the "No" option takes care that course category breadcrumbs are never shown at all. This might be a difference as Boost in Moodle core might indeed show course category breadcrumbs beginning on deeper nested course category levels (which the Boost Union developers assess to be a glitch).';
+$string['categorybreadcrumbs_desc'] = 'By default, the course category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the course category breadcrumbs in the course header above the course name.';
 // ... Section: Navigation.
 $string['navigationheading'] = 'Navigation';
 // ... ... Setting: Back to top button.
