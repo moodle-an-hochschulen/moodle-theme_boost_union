@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-09-17 - Bugfix: Adopt Moodle core bugfix from MDL-78644 to allow .ico files as favicons again, solves #387.
 * 2023-09-17 - Updated Moodle Plugin CI to latest upstream recommendations
 
 ### v4.1-r10
