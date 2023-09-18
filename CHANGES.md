@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r11
 
 * 2023-09-17 - Bugfix: Fix double-labeling and FontAwesome issues with the 'Mark external links' feature, solves #323 and #327.
 * 2023-09-17 - Improvement: Adopt Moodle core bugfix from MDL-78138 which fixed the category breadcrumbs in Boost core, removing the 'Do not change anything' option from the 'Display the category breadcrumbs in the course header' setting, solves #388
