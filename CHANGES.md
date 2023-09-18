@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.2-r1
 
 * 2023-09-17 - Bugfix: Fix double-labeling and FontAwesome issues with the 'Mark external links' feature, solves #323 and #327.
 * 2023-09-17 - Upgrade: Use better icon for offcanvas button with FontAwesome 6, solves #265.
