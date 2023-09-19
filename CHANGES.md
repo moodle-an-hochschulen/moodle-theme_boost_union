@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.2-r2
 
 * 2023-09-19 - Bugfix: Fix fatal mustache rendering errors, solves #390.
                This issue was a regression of #385 which adopted Moodle core changes from MDL-78656 into Boost Union.
