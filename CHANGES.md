@@ -4,6 +4,13 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-09-19 - Bugfix: Fix fatal mustache rendering errors, solves #390.
+               This issue was a regression of #385 which adopted Moodle core changes from MDL-78656 into Boost Union.
+               During this adoption into Boost Union, it was overseen to raise the minimum required Moodle core version for Boost Union at the same time.
+               If you intend to use this release of Boost Union, please update Moodle core to the latest Moodle core 4.2.2+ or wait some more days for 4.2.3. Thank you for your understanding.
+
 ### v4.2-r1
 
 * 2023-09-17 - Bugfix: Fix double-labeling and FontAwesome issues with the 'Mark external links' feature, solves #323 and #327.
