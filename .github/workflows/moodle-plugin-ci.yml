@@ -94,8 +94,9 @@ jobs:
         run: moodle-plugin-ci savepoints
 
       - name: Mustache Lint
+        continue-on-error: true # This step will show errors but will not fail
         if: ${{ always() }}
-        run: moodle-plugin-ci mustache || true
+        run: moodle-plugin-ci mustache
 
       - name: Grunt
         if: ${{ always() }}
