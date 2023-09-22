@@ -30,30 +30,11 @@ require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 $THEME->name = 'boost_union';
 $THEME->sheets = [];
 $THEME->editor_sheets = [];
+// Note: $THEME->editor_scss is not needed. See #242 for the explanation.
 $THEME->usefallback = true;
 $THEME->scss = function($theme) {
     return theme_boost_union_get_main_scss_content($theme);
 };
-
-// The $THEME->layouts setting is not duplicated here as they are properly inherited from theme_boost.
-
-$THEME->parents = ['boost'];
-$THEME->enable_dock = false;
-$THEME->extrascsscallback = 'theme_boost_union_get_extra_scss';
-$THEME->prescsscallback = 'theme_boost_union_get_pre_scss';
-$THEME->precompiledcsscallback = 'theme_boost_union_get_precompiled_css';
-$THEME->yuicssmodules = array();
-$THEME->rendererfactory = 'theme_overridden_renderer_factory';
-$THEME->requiredblocks = '';
-$THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
-$THEME->iconsystem = \core\output\icon_system::FONTAWESOME;
-$THEME->haseditswitch = true;
-$THEME->usescourseindex = true;
-$THEME->removedprimarynavitems = explode(',', get_config('theme_boost_union', 'hidenodesprimarynavigation'));
-// By default, all boost theme do not need their titles displayed.
-$THEME->activityheaderconfig = [
-    'notitle' => true
-];
 
 $THEME->layouts = [
     // Most backwards compatible layout without the blocks.
@@ -186,4 +167,22 @@ $THEME->layouts = [
         'regions' => array('side-pre'),
         'defaultregion' => 'side-pre'
     )
+];
+
+$THEME->parents = ['boost'];
+$THEME->enable_dock = false;
+$THEME->extrascsscallback = 'theme_boost_union_get_extra_scss';
+$THEME->prescsscallback = 'theme_boost_union_get_pre_scss';
+$THEME->precompiledcsscallback = 'theme_boost_union_get_precompiled_css';
+$THEME->yuicssmodules = array();
+$THEME->rendererfactory = 'theme_overridden_renderer_factory';
+$THEME->requiredblocks = '';
+$THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
+$THEME->iconsystem = \core\output\icon_system::FONTAWESOME;
+$THEME->haseditswitch = true;
+$THEME->usescourseindex = true;
+$THEME->removedprimarynavitems = explode(',', get_config('theme_boost_union', 'hidenodesprimarynavigation'));
+// By default, all boost theme do not need their titles displayed.
+$THEME->activityheaderconfig = [
+    'notitle' => true
 ];
