@@ -24,305 +24,305 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$capabilities = array(
+$capabilities = [
 
     // Ability to configure the theme as non-admin.
-    'theme/boost_union:configure' => array(
+    'theme/boost_union:configure' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,
-        'riskbitmask' => RISK_XSS | RISK_CONFIG
-    ),
+        'riskbitmask' => RISK_XSS | RISK_CONFIG,
+    ],
     // Ability to see a hint for unrestricted self enrolment in a visible course.
-    'theme/boost_union:viewhintcourseselfenrol' => array(
+    'theme/boost_union:viewhintcourseselfenrol' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see a hint in a hidden course.
-    'theme/boost_union:viewhintinhiddencourse' => array(
+    'theme/boost_union:viewhintinhiddencourse' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see the header block region.
-    'theme/boost_union:viewregionheader' => array(
+    'theme/boost_union:viewregionheader' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to edit the header block region.
-    'theme/boost_union:editregionheader' => array(
+    'theme/boost_union:editregionheader' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see the outsideleft block region.
-    'theme/boost_union:viewregionoutsideleft' => array(
+    'theme/boost_union:viewregionoutsideleft' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to edit the outsideleft block region.
-    'theme/boost_union:editregionoutsideleft' => array(
+    'theme/boost_union:editregionoutsideleft' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see the outsideright block region.
-    'theme/boost_union:viewregionoutsideright' => array(
+    'theme/boost_union:viewregionoutsideright' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to edit the outsideright block region.
-    'theme/boost_union:editregionoutsideright' => array(
+    'theme/boost_union:editregionoutsideright' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see the outsidetop block region.
-    'theme/boost_union:viewregionoutsidetop' => array(
+    'theme/boost_union:viewregionoutsidetop' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to edit the outsidetop block region.
-    'theme/boost_union:editregionoutsidetop' => array(
+    'theme/boost_union:editregionoutsidetop' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see the outsidebottom block region.
-    'theme/boost_union:viewregionoutsidebottom' => array(
+    'theme/boost_union:viewregionoutsidebottom' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to edit the outsidebottom block region.
-    'theme/boost_union:editregionoutsidebottom' => array(
+    'theme/boost_union:editregionoutsidebottom' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see the contentupper block region.
-    'theme/boost_union:viewregioncontentupper' => array(
+    'theme/boost_union:viewregioncontentupper' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to edit the contentupper block region.
-    'theme/boost_union:editregioncontentupper' => array(
+    'theme/boost_union:editregioncontentupper' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see the contentlower block region.
-    'theme/boost_union:viewregioncontentlower' => array(
+    'theme/boost_union:viewregioncontentlower' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to edit the contentlower block region.
-    'theme/boost_union:editregioncontentlower' => array(
+    'theme/boost_union:editregioncontentlower' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see the footerleft block region.
-    'theme/boost_union:viewregionfooterleft' => array(
+    'theme/boost_union:viewregionfooterleft' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to edit the footerleft block region.
-    'theme/boost_union:editregionfooterleft' => array(
+    'theme/boost_union:editregionfooterleft' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see the footerright block region.
-    'theme/boost_union:viewregionfooterright' => array(
+    'theme/boost_union:viewregionfooterright' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to edit the footerright block region.
-    'theme/boost_union:editregionfooterright' => array(
+    'theme/boost_union:editregionfooterright' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see the footercenter block region.
-    'theme/boost_union:viewregionfootercenter' => array(
+    'theme/boost_union:viewregionfootercenter' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to edit the footercenter block region.
-    'theme/boost_union:editregionfootercenter' => array(
+    'theme/boost_union:editregionfootercenter' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see the offcanvas left block region.
-    'theme/boost_union:viewregionoffcanvasleft' => array(
+    'theme/boost_union:viewregionoffcanvasleft' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to edit the offcanvas left block region.
-    'theme/boost_union:editregionoffcanvasleft' => array(
+    'theme/boost_union:editregionoffcanvasleft' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see the offcanvas right block region.
-    'theme/boost_union:viewregionoffcanvasright' => array(
+    'theme/boost_union:viewregionoffcanvasright' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to edit the offcanvas right block region.
-    'theme/boost_union:editregionoffcanvasright' => array(
+    'theme/boost_union:editregionoffcanvasright' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see the offcanvas center block region.
-    'theme/boost_union:viewregionoffcanvascenter' => array(
+    'theme/boost_union:viewregionoffcanvascenter' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to edit the offcanvas center block region.
-    'theme/boost_union:editregionoffcanvascenter' => array(
+    'theme/boost_union:editregionoffcanvascenter' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-    ),
-);
+            'manager' => CAP_ALLOW,
+        ],
+    ],
+];

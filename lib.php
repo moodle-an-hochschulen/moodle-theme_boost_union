@@ -172,7 +172,7 @@ function theme_boost_union_get_pre_scss($theme) {
 
     // Overwrite Boost core SCSS variables which are stored in a SCSS map and thus couldn't be added to $configurable above.
     // Set variables for the activity icon colors.
-    $activityiconcolors = array();
+    $activityiconcolors = [];
     if (get_config('theme_boost_union', 'activityiconcoloradministration')) {
         $activityiconcolors[] = '"administration": '.get_config('theme_boost_union', 'activityiconcoloradministration');
     }
@@ -367,7 +367,7 @@ function theme_boost_union_get_precompiled_css() {
  * @param array $options
  * @return bool
  */
-function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     global $CFG;
 
     // Serve the (general) logo files or favicon file from the theme settings.
@@ -568,7 +568,7 @@ function theme_boost_union_output_fragment_icons_list($args) {
             $icons[] = [
                 'icon' => $faiconsystem->render_pix_icon($OUTPUT, $icon),
                 'value' => $iconkey,
-                'label' => $icontxt
+                'label' => $icontxt,
             ];
         }
 

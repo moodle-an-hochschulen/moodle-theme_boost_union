@@ -57,7 +57,7 @@ class moodlequickform_themeboostunion_colorpicker extends MoodleQuickForm_text i
         if (empty($class)) {
             $class = '';
         }
-        $this->updateAttributes(array('class' => $class.' theme_boost_union-form-colour-picker '));
+        $this->updateAttributes(['class' => $class.' theme_boost_union-form-colour-picker ']);
     }
 
     /**

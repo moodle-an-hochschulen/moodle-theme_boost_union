@@ -124,15 +124,15 @@ class smartmenus_menus extends \table_sql {
         $updown = '';
 
         // Get spacer icon.
-        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', array('class' => 'iconsmall'));
+        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', ['class' => 'iconsmall']);
 
         // If there is more than one smart menu and we do not handle the first (number 0) smart menu.
         if ($this->count > 0) {
             // Add the up icon.
             $updown .= \html_writer::link($actionurl->out(false,
-                    array('action' => 'up', 'id' => $data->id, 'sesskey' => sesskey())),
+                    ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]),
                     $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
-                            array('class' => 'iconsmall')), array('class' => 'sort-smartmenus-up-action'));
+                            ['class' => 'iconsmall']), ['class' => 'sort-smartmenus-up-action']);
 
             // Otherwise, just add a spacer.
         } else {
@@ -144,9 +144,9 @@ class smartmenus_menus extends \table_sql {
             // Add the down icon.
             $updown .= '&nbsp;';
             $updown .= \html_writer::link($actionurl->out(false,
-                    array('action' => 'down', 'id' => $data->id, 'sesskey' => sesskey())),
+                    ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]),
                     $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
-                            array('class' => 'iconsmall')), array('class' => 'sort-smartmenus-down-action'));
+                            ['class' => 'iconsmall']), ['class' => 'sort-smartmenus-down-action']);
 
             // Otherwise, just add a spacer.
         } else {
@@ -173,54 +173,54 @@ class smartmenus_menus extends \table_sql {
         $actionurl = new \moodle_url('/theme/boost_union/smartmenus/menus.php');
 
         // Initialize actions.
-        $actions = array();
+        $actions = [];
 
         // Show/Hide.
         if ($data->visible) {
-            $actions[] = array(
-                'url' => new \moodle_url($actionurl, array('action' => 'hide', 'id' => $data->id, 'sesskey' => sesskey())),
+            $actions[] = [
+                'url' => new \moodle_url($actionurl, ['action' => 'hide', 'id' => $data->id, 'sesskey' => sesskey()]),
                 'icon' => new \pix_icon('t/hide', get_string('hide')),
-                'attributes' => array('class' => 'action-hide')
-            );
+                'attributes' => ['class' => 'action-hide'],
+            ];
         } else {
-            $actions[] = array(
-                'url' => new \moodle_url($actionurl, array('action' => 'show', 'id' => $data->id, 'sesskey' => sesskey())),
+            $actions[] = [
+                'url' => new \moodle_url($actionurl, ['action' => 'show', 'id' => $data->id, 'sesskey' => sesskey()]),
                 'icon' => new \pix_icon('t/show', get_string('show')),
-                'attributes' => array('class' => 'action-show')
-            );
+                'attributes' => ['class' => 'action-show'],
+            ];
         }
 
         // Edit.
-        $actions[] = array(
-            'url' => new \moodle_url('/theme/boost_union/smartmenus/edit.php', array('id' => $data->id, 'sesskey' => sesskey())),
+        $actions[] = [
+            'url' => new \moodle_url('/theme/boost_union/smartmenus/edit.php', ['id' => $data->id, 'sesskey' => sesskey()]),
             'icon' => new \pix_icon('t/edit', get_string('edit')),
-            'attributes' => array('class' => 'action-edit')
-        );
+            'attributes' => ['class' => 'action-edit'],
+        ];
 
         // Duplicate.
-        $actions[] = array(
-            'url' => new \moodle_url($actionurl, array('action' => 'copy', 'id' => $data->id, 'sesskey' => sesskey())),
+        $actions[] = [
+            'url' => new \moodle_url($actionurl, ['action' => 'copy', 'id' => $data->id, 'sesskey' => sesskey()]),
             'icon' => new \pix_icon('t/copy', get_string('smartmenusmenuduplicate', 'theme_boost_union')),
-            'attributes' => array('class' => 'action-copy')
-        );
+            'attributes' => ['class' => 'action-copy'],
+        ];
 
         // List items.
-        $actions[] = array(
-            'url' => new \moodle_url('/theme/boost_union/smartmenus/items.php', array('menu' => $data->id)),
+        $actions[] = [
+            'url' => new \moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $data->id]),
             'icon' => new \pix_icon('e/bullet_list', get_string('list')),
-            'attributes' => array('class' => 'action-list-items')
-        );
+            'attributes' => ['class' => 'action-list-items'],
+        ];
 
         // Delete.
-        $actions[] = array(
-            'url' => new \moodle_url($actionurl, array('action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey())),
+        $actions[] = [
+            'url' => new \moodle_url($actionurl, ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]),
             'icon' => new \pix_icon('t/delete', get_string('delete')),
-            'attributes' => array('class' => 'action-delete'),
-            'confirm' => new \confirm_action(get_string('smartmenusmenudeleteconfirm', 'theme_boost_union'))
-        );
+            'attributes' => ['class' => 'action-delete'],
+            'confirm' => new \confirm_action(get_string('smartmenusmenudeleteconfirm', 'theme_boost_union')),
+        ];
 
         // Compose action icons for all actions.
-        $actionshtml = array();
+        $actionshtml = [];
         foreach ($actions as $action) {
             $action['attributes']['role'] = 'button';
             $actionshtml[] = $OUTPUT->action_icon(

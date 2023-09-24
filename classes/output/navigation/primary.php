@@ -28,7 +28,7 @@ use renderable;
 use renderer_base;
 use templatable;
 use custom_menu;
-use \theme_boost_union\smartmenu;
+use theme_boost_union\smartmenu;
 
 /**
  * Primary navigation renderable.
@@ -142,7 +142,7 @@ class primary extends \core\navigation\output\primary {
             'menubar' => isset($menubarmoremenu) ? $menubarmoremenu->export_for_template($output) : false,
             'lang' => !isloggedin() || isguestuser() ? $languagemenu->export_for_template($output) : [],
             'user' => $usermenu ?? [],
-            'bottombar' => $bottombardata ?? false
+            'bottombar' => $bottombardata ?? false,
         ];
     }
 
@@ -209,7 +209,7 @@ class primary extends \core\navigation\output\primary {
                 $submenu = [
                     'id' => $menu->submenuid,
                     'title' => $menu->title,
-                    'items' => $children
+                    'items' => $children,
                 ];
                 $usermenu['items'][] = $menu;
                 $usermenu['submenus'][] = (object) $submenu;
@@ -221,7 +221,7 @@ class primary extends \core\navigation\output\primary {
             'title' => '####',
             'itemtype' => 'divider',
             'divider' => 1,
-            'link' => ''
+            'link' => '',
         ];
         array_push($usermenu['items'], $divider);
 

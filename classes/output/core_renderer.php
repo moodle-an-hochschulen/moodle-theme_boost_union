@@ -284,7 +284,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @param string|array $additionalclasses Any additional classes to give the body tag,
      * @return string
      */
-    public function body_attributes($additionalclasses = array()) {
+    public function body_attributes($additionalclasses = []) {
         global $CFG;
 
         // Require local libraries.

@@ -62,13 +62,13 @@ if ($action !== null && confirm_sesskey()) {
     switch ($action) {
         case 'up':
             // Move the flavour upwards.
-            $currentflavour = $DB->get_record('theme_boost_union_flavours', array('id' => $flavourid));
-            $prevflavour = $DB->get_record('theme_boost_union_flavours', array('sort' => $currentflavour->sort - 1));
+            $currentflavour = $DB->get_record('theme_boost_union_flavours', ['id' => $flavourid]);
+            $prevflavour = $DB->get_record('theme_boost_union_flavours', ['sort' => $currentflavour->sort - 1]);
             if ($prevflavour) {
                 $DB->set_field('theme_boost_union_flavours', 'sort', $prevflavour->sort,
-                        array('id' => $currentflavour->id));
+                        ['id' => $currentflavour->id]);
                 $DB->set_field('theme_boost_union_flavours', 'sort', $currentflavour->sort,
-                        array('id' => $prevflavour->id));
+                        ['id' => $prevflavour->id]);
 
                 // Purge the flavours cache as the users might get other flavours which apply after the sorting.
                 // We would have preferred using cache_helper::purge_by_definition, but this just purges the session cache
@@ -78,13 +78,13 @@ if ($action !== null && confirm_sesskey()) {
             break;
         case 'down':
             // Move the flavour downwards.
-            $currentflavour = $DB->get_record('theme_boost_union_flavours', array('id' => $flavourid));
-            $nextflavour = $DB->get_record('theme_boost_union_flavours', array('sort' => $currentflavour->sort + 1));
+            $currentflavour = $DB->get_record('theme_boost_union_flavours', ['id' => $flavourid]);
+            $nextflavour = $DB->get_record('theme_boost_union_flavours', ['sort' => $currentflavour->sort + 1]);
             if ($nextflavour) {
                 $DB->set_field('theme_boost_union_flavours', 'sort', $nextflavour->sort,
-                        array('id' => $currentflavour->id));
+                        ['id' => $currentflavour->id]);
                 $DB->set_field('theme_boost_union_flavours', 'sort', $currentflavour->sort,
-                        array('id' => $nextflavour->id));
+                        ['id' => $nextflavour->id]);
 
                 // Purge the flavours cache as the users might get other flavours which apply after the sorting.
                 // We would have preferred using cache_helper::purge_by_definition, but this just purges the session cache
@@ -119,7 +119,7 @@ echo get_string('flavoursoverview_desc', 'theme_boost_union');
 // Prepare 'Create flavours' button.
 $createbutton = $OUTPUT->box_start();
 $createbutton .= $OUTPUT->single_button(
-        new \moodle_url('/theme/boost_union/flavours/edit.php', array('action' => 'create', 'sesskey' => sesskey())),
+        new \moodle_url('/theme/boost_union/flavours/edit.php', ['action' => 'create', 'sesskey' => sesskey()]),
         get_string('flavourscreateflavour', 'theme_boost_union'), 'get');
 $createbutton .= $OUTPUT->box_end();
 

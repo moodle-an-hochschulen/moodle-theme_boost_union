@@ -92,15 +92,15 @@ class flavours_overview extends \table_sql {
         $updown = '';
 
         // Get spacer icon.
-        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', array('class' => 'iconsmall'));
+        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', ['class' => 'iconsmall']);
 
         // If there is more than one flavour and we do not handle the first (number 0) flavour.
         if ($this->count > 0) {
             // Add the up icon.
             $updown .= \html_writer::link($actionurl->out(false,
-                    array('action' => 'up', 'id' => $data->id, 'sesskey' => sesskey())),
+                    ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]),
                     $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
-                            array('class' => 'iconsmall')), array('class' => 'sort-flavour-up-action'));
+                            ['class' => 'iconsmall']), ['class' => 'sort-flavour-up-action']);
 
             // Otherwise, just add a spacer.
         } else {
@@ -112,9 +112,9 @@ class flavours_overview extends \table_sql {
             // Add the down icon.
             $updown .= '&nbsp;';
             $updown .= \html_writer::link($actionurl->out(false,
-                    array('action' => 'down', 'id' => $data->id, 'sesskey' => sesskey())),
+                    ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]),
                     $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
-                            array('class' => 'iconsmall')), array('class' => 'sort-flavour-down-action'));
+                            ['class' => 'iconsmall']), ['class' => 'sort-flavour-down-action']);
 
             // Otherwise, just add a spacer.
         } else {
@@ -136,20 +136,20 @@ class flavours_overview extends \table_sql {
      */
     public function col_appliesto($data) {
         // Initialize the badges.
-        $badges = array();
+        $badges = [];
 
         // If apply-to-categories is enabled, add a badge.
         if ($data->applytocategories == true) {
             $badges[] = \html_writer::tag('span',
                     get_string('categories'),
-                    array('class' => 'badge badge-primary'));
+                    ['class' => 'badge badge-primary']);
         }
 
         // If apply-to-cohorts is enabled, add a badge.
         if ($data->applytocohorts == true) {
             $badges[] = \html_writer::tag('span',
                     get_string('cohorts', 'cohort'),
-                    array('class' => 'badge badge-primary'));
+                    ['class' => 'badge badge-primary']);
         }
 
         // Implode and return the badges.
@@ -168,33 +168,33 @@ class flavours_overview extends \table_sql {
         global $OUTPUT;
 
         // Initialize actions.
-        $actions = array();
+        $actions = [];
 
         // Preview.
-        $actions[] = array(
-                'url' => new \moodle_url('/theme/boost_union/flavours/preview.php', array('id' => $data->id)),
+        $actions[] = [
+                'url' => new \moodle_url('/theme/boost_union/flavours/preview.php', ['id' => $data->id]),
                 'icon' => new \pix_icon('i/search', get_string('flavoursedit', 'theme_boost_union')),
-                'attributes' => array('class' => 'action-preview')
-        );
+                'attributes' => ['class' => 'action-preview'],
+        ];
 
         // Edit.
-        $actions[] = array(
+        $actions[] = [
                 'url' => new \moodle_url('/theme/boost_union/flavours/edit.php',
-                        array('action' => 'edit', 'id' => $data->id, 'sesskey' => sesskey())),
+                        ['action' => 'edit', 'id' => $data->id, 'sesskey' => sesskey()]),
                 'icon' => new \pix_icon('t/edit', get_string('flavoursedit', 'theme_boost_union')),
-                'attributes' => array('class' => 'action-edit')
-        );
+                'attributes' => ['class' => 'action-edit'],
+        ];
 
         // Delete.
-        $actions[] = array(
+        $actions[] = [
                 'url' => new \moodle_url('/theme/boost_union/flavours/edit.php',
-                        array('action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey())),
+                        ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]),
                 'icon' => new \pix_icon('t/delete', get_string('flavourspreview', 'theme_boost_union')),
-                'attributes' => array('class' => 'action-delete')
-        );
+                'attributes' => ['class' => 'action-delete'],
+        ];
 
         // Compose action icons for all actions.
-        $actionshtml = array();
+        $actionshtml = [];
         foreach ($actions as $action) {
             $action['attributes']['role'] = 'button';
             $actionshtml[] = $OUTPUT->action_icon(

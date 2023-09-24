@@ -95,10 +95,10 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
                     $file = reset($files);
 
                     // Create the filerecord with the modified information.
-                    $filerecord = array(
+                    $filerecord = [
                             'component' => 'theme_boost_union',
                             'filearea' => $setting,
-                    );
+                    ];
 
                     // Copy the logo file to Boost Union.
                     $newfile = $fs->create_file_from_storedfile($filerecord, $file);

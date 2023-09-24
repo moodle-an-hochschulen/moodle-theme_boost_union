@@ -65,12 +65,12 @@ require_capability('theme/boost_union:configure', $context);
 $PAGE->set_context($context);
 $PAGE->set_url($pageurl);
 $PAGE->set_cacheable(false);
-$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', array('category' => 'themes')));
+$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', ['category' => 'themes']));
 $PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
-        array('category' => 'theme_boost_union')));
+        ['category' => 'theme_boost_union']));
 $PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/menus.php'));
 $PAGE->navbar->add(get_string('smartmenusmenuitems', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/items.php',
-        array('menu' => $menu->id)));
+        ['menu' => $menu->id]));
 
 // Process actions.
 if ($action !== null && confirm_sesskey()) {
@@ -127,7 +127,7 @@ $PAGE->set_heading(theme_boost_union_get_externaladminpage_heading());
 
 // Build smart menu items table.
 $table = new theme_boost_union\table\smartmenus_items($menu->id);
-$table->define_baseurl($PAGE->url, array('menu' => $menu->id));
+$table->define_baseurl($PAGE->url, ['menu' => $menu->id]);
 
 // Start page output.
 echo $OUTPUT->header();
@@ -135,9 +135,9 @@ echo $OUTPUT->heading(get_string('smartmenus', 'theme_boost_union'));
 if (isset($menu->title)) {
     $menuheading = $menu->title;
     $settingstitle = get_string('smartmenussettings', 'theme_boost_union');
-    $settingsurl = new moodle_url('/theme/boost_union/smartmenus/edit.php', array('id' => $menuid, 'sesskey' => sesskey()));
+    $settingsurl = new moodle_url('/theme/boost_union/smartmenus/edit.php', ['id' => $menuid, 'sesskey' => sesskey()]);
     $menuheading .= html_writer::link($settingsurl,
-            $OUTPUT->pix_icon('t/edit', $settingstitle, 'moodle', array('class' => 'ml-2')));
+            $OUTPUT->pix_icon('t/edit', $settingstitle, 'moodle', ['class' => 'ml-2']));
     echo $OUTPUT->heading($menuheading, 4);
 }
 

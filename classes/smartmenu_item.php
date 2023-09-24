@@ -31,7 +31,7 @@ use html_writer;
 use smartmenu_helper;
 use stdClass;
 use cache;
-use \core_course\external\course_summary_exporter;
+use core_course\external\course_summary_exporter;
 
 require_once($CFG->dirroot.'/theme/boost_union/smartmenus/menulib.php');
 
@@ -366,7 +366,7 @@ class smartmenu_item {
             $sql = 'SELECT * FROM {theme_boost_union_menuitems} WHERE sortorder < :pos AND menu = :menu ORDER BY sortorder ASC';
             $previtems = $DB->get_records_sql($sql, [
                 'pos' => $currentposition,
-                'menu' => $this->item->menu
+                'menu' => $this->item->menu,
             ]);
 
             if (empty($previtems)) {
@@ -378,12 +378,12 @@ class smartmenu_item {
             // Update the menu position to upwards.
             $DB->set_field('theme_boost_union_menuitems', 'sortorder', $previtem->sortorder, [
                 'id' => $this->id,
-                'menu' => $this->item->menu
+                'menu' => $this->item->menu,
             ]);
             // Set the prevmenu position to down.
             $DB->set_field('theme_boost_union_menuitems', 'sortorder', $currentposition, [
                 'id' => $previtem->id,
-                'menu' => $this->item->menu
+                'menu' => $this->item->menu,
             ]);
 
             // Difference between two items is more than 1 then reorder the items.
@@ -411,7 +411,7 @@ class smartmenu_item {
         $sql = 'SELECT * FROM {theme_boost_union_menuitems} WHERE sortorder > :pos AND menu = :menu ORDER BY sortorder ASC';
         $nextitems = $DB->get_records_sql($sql, [
             'pos' => $currentposition,
-            'menu' => $this->item->menu
+            'menu' => $this->item->menu,
         ]);
 
         if (empty($nextitems)) {
@@ -422,12 +422,12 @@ class smartmenu_item {
         // Update the menu position to down.
         $DB->set_field('theme_boost_union_menuitems', 'sortorder', $nextitem->sortorder, [
             'id' => $this->id,
-            'menu' => $this->item->menu
+            'menu' => $this->item->menu,
         ]);
         // Set the prevmenu position to up.
         $DB->set_field('theme_boost_union_menuitems', 'sortorder', $currentposition, [
             'id' => $nextitem->id,
-            'menu' => $this->item->menu
+            'menu' => $this->item->menu,
         ]);
 
         // Difference between two items is more than 1 then reorder the items.
@@ -590,7 +590,8 @@ class smartmenu_item {
             $this->item->title, // Title.
             $staticurl, // URL.
             null, // Default key.
-            $this->item->tooltip, // Tooltip.
+            $this->item->tooltip,
+        // Tooltip.
         );
     }
 
@@ -1046,7 +1047,7 @@ class smartmenu_item {
             'itemimage' => $itemimage,
             'itemtype' => 'link',
             'link' => 1,
-            'sort' => uniqid() // Support third level menu.
+            'sort' => uniqid(), // Support third level menu.
         ];
 
         if ($haschildren && !empty($children)) {
@@ -1054,10 +1055,10 @@ class smartmenu_item {
         }
 
         if ($this->item->target == self::TARGET_NEW && $url != '') {
-            $data['attributes'] = array([
+            $data['attributes'] = [[
                 'name' => 'target',
-                'value' => '__blank'
-            ]);
+                'value' => '__blank',
+            ], ];
         }
 
         if (preg_match("/^#+$/", format_string($title))) {
@@ -1187,11 +1188,11 @@ class smartmenu_item {
      * @return array|string An array of types if $type is null, or a string with the name of the specific type.
      */
     public static function get_types(int $type=null) {
-        $types = array(
+        $types = [
                 self::TYPESTATIC => get_string('smartmenusmenuitemtypestatic', 'theme_boost_union'),
                 self::TYPEHEADING => get_string('smartmenusmenuitemtypeheading', 'theme_boost_union'),
                 self::TYPEDYNAMIC => get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union'),
-        );
+        ];
 
         return ($type !== null && isset($types[$type])) ? $types[$type] : $types;
     }
@@ -1207,7 +1208,7 @@ class smartmenu_item {
         $displayoptions = [
                 self::DISPLAY_SHOWTITLEICON => get_string('smartmenusmenuitemdisplayoptionsshowtitleicon', 'theme_boost_union'),
                 self::DISPLAY_HIDETITLE => get_string('smartmenushidetitle', 'theme_boost_union'),
-                self::DISPLAY_HIDETITLEMOBILE => get_string('smartmenushidetitlemobile', 'theme_boost_union')
+                self::DISPLAY_HIDETITLEMOBILE => get_string('smartmenushidetitlemobile', 'theme_boost_union'),
         ];
 
         return ($option !== null && isset($displayoptions[$option])) ? $displayoptions[$option] : $displayoptions;
@@ -1277,7 +1278,7 @@ class smartmenu_item {
                     'oldorder' => $oldrecord->sortorder,
                     'neworder' => $record->sortorder,
                     'item' => $formdata->id,
-                    'menuid' => $formdata->menu
+                    'menuid' => $formdata->menu,
                 ]);
             }
 
