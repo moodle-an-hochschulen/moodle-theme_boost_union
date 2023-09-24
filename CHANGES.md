@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-09-24 - Test: Behat scenario 'Show hint for self enrolment without an enrolment key' was broken, solves #398.
 * 2023-09-22 - Improvement: Reuse Moodle core function remove_dir(), solves #369.
 
 ### v4.1-r12
