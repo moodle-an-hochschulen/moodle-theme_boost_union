@@ -49,7 +49,7 @@ function theme_boost_union_get_course_related_hints() {
             && $COURSE->visible == false) {
 
         // Prepare template context.
-        $templatecontext = array('courseid' => $COURSE->id);
+        $templatecontext = ['courseid' => $COURSE->id];
 
         // If the user has the capability to change the course settings, an additional link to the course settings is shown.
         if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
@@ -77,8 +77,8 @@ function theme_boost_union_get_course_related_hints() {
         require_once($CFG->dirroot . '/enrol/self/lib.php');
 
         // Prepare template context.
-        $templatecontext = array('courseid' => $COURSE->id,
-                'role' => role_get_name(get_guest_role()));
+        $templatecontext = ['courseid' => $COURSE->id,
+                'role' => role_get_name(get_guest_role()), ];
 
         // Search for an available self enrolment link in this course.
         $templatecontext['showselfenrollink'] = false;
@@ -190,7 +190,7 @@ function theme_boost_union_get_course_related_hints() {
                 ($selfenrolmentpossiblecurrently == true || $selfenrolmentpossiblefuture == true)) {
 
             // Prepare template context.
-            $templatecontext = array();
+            $templatecontext = [];
 
             // Add the start of the hint t the template context
             // depending on the fact if enrolment is already possible currently or will be in the future.
@@ -204,37 +204,37 @@ function theme_boost_union_get_course_related_hints() {
             foreach ($selfenrolinstances as $selfenrolinstanceid => $selfenrolinstanceobject) {
                 // If the user has the capability to config self enrolments, enrich the instance name with the settings link.
                 if (has_capability('enrol/self:config', \context_course::instance($COURSE->id))) {
-                    $url = new moodle_url('/enrol/editinstance.php', array('courseid' => $COURSE->id,
-                            'id' => $selfenrolinstanceid, 'type' => 'self'));
+                    $url = new moodle_url('/enrol/editinstance.php', ['courseid' => $COURSE->id,
+                            'id' => $selfenrolinstanceid, 'type' => 'self', ]);
                     $selfenrolinstanceobject->name = html_writer::link($url, $selfenrolinstanceobject->name);
                 }
 
                 // Add the enrolment instance information to the template context depending on the instance configuration.
                 if ($selfenrolinstanceobject->unrestrictedness == 'unlimited') {
                     $templatecontext['selfenrolinstances'][] = get_string('showhintcourseselfenrolunlimited', 'theme_boost_union',
-                            array('name' => $selfenrolinstanceobject->name));
+                            ['name' => $selfenrolinstanceobject->name]);
                 } else if ($selfenrolinstanceobject->unrestrictedness == 'until') {
                     $templatecontext['selfenrolinstances'][] = get_string('showhintcourseselfenroluntil', 'theme_boost_union',
-                            array('name' => $selfenrolinstanceobject->name,
-                                    'until' => userdate($selfenrolinstanceobject->enddate)));
+                            ['name' => $selfenrolinstanceobject->name,
+                                    'until' => userdate($selfenrolinstanceobject->enddate), ]);
                 } else if ($selfenrolinstanceobject->unrestrictedness == 'from') {
                     $templatecontext['selfenrolinstances'][] = get_string('showhintcourseselfenrolfrom', 'theme_boost_union',
-                            array('name' => $selfenrolinstanceobject->name,
-                                    'from' => userdate($selfenrolinstanceobject->startdate)));
+                            ['name' => $selfenrolinstanceobject->name,
+                                    'from' => userdate($selfenrolinstanceobject->startdate), ]);
                 } else if ($selfenrolinstanceobject->unrestrictedness == 'since') {
                     $templatecontext['selfenrolinstances'][] = get_string('showhintcourseselfenrolsince', 'theme_boost_union',
-                            array('name' => $selfenrolinstanceobject->name,
-                                    'since' => userdate($selfenrolinstanceobject->startdate)));
+                            ['name' => $selfenrolinstanceobject->name,
+                                    'since' => userdate($selfenrolinstanceobject->startdate), ]);
                 } else if ($selfenrolinstanceobject->unrestrictedness == 'fromuntil') {
                     $templatecontext['selfenrolinstances'][] = get_string('showhintcourseselfenrolfromuntil', 'theme_boost_union',
-                            array('name' => $selfenrolinstanceobject->name,
+                            ['name' => $selfenrolinstanceobject->name,
                                     'until' => userdate($selfenrolinstanceobject->enddate),
-                                    'from' => userdate($selfenrolinstanceobject->startdate)));
+                                    'from' => userdate($selfenrolinstanceobject->startdate), ]);
                 } else if ($selfenrolinstanceobject->unrestrictedness == 'sinceuntil') {
                     $templatecontext['selfenrolinstances'][] = get_string('showhintcourseselfenrolsinceuntil', 'theme_boost_union',
-                            array('name' => $selfenrolinstanceobject->name,
+                            ['name' => $selfenrolinstanceobject->name,
                                     'until' => userdate($selfenrolinstanceobject->enddate),
-                                    'since' => userdate($selfenrolinstanceobject->startdate)));
+                                    'since' => userdate($selfenrolinstanceobject->startdate), ]);
                 }
             }
 
@@ -261,14 +261,14 @@ function theme_boost_union_get_course_related_hints() {
 
         // Get the URL to switch back (normal role).
         $url = new moodle_url('/course/switchrole.php',
-                array('id' => $COURSE->id,
+                ['id' => $COURSE->id,
                         'sesskey' => sesskey(),
                         'switchrole' => 0,
-                        'returnurl' => $PAGE->url->out_as_local_url(false)));
+                        'returnurl' => $PAGE->url->out_as_local_url(false), ]);
 
         // Prepare template context.
-        $templatecontext = array('role' => $role,
-                'url' => $url->out());
+        $templatecontext = ['role' => $role,
+                'url' => $url->out(), ];
 
         // Render template and add it to HTML code.
         $html .= $OUTPUT->render_from_template('theme_boost_union/course-hint-switchedrole', $templatecontext);
@@ -444,7 +444,7 @@ function theme_boost_union_infobanner_reset_visibility($no) {
     // Initialize variable for feedback messages.
     $somethingwentwrong = false;
     // Store coding exception.
-    $codingexception[] = array();
+    $codingexception[] = [];
 
     foreach ($users as $user) {
         try {
@@ -657,7 +657,7 @@ function theme_boost_union_get_loginbackgroundimage_text() {
                 }
 
                 // Return the text + text color that belongs to the randomly selected image.
-                return array(format_string(trim($settings[1])), $settings[2]);
+                return [format_string(trim($settings[1])), $settings[2]];
             }
         }
     }
@@ -692,17 +692,17 @@ function theme_boost_union_get_additionalresources_templatecontext() {
         $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'additionalresources', false, 'itemid', false);
 
         // Iterate over the files and fill the templatecontext of the file list.
-        $filesforcontext = array();
+        $filesforcontext = [];
         foreach ($files as $af) {
             $urlpersistent = new moodle_url('/pluginfile.php/1/theme_boost_union/additionalresources/0/'.$af->get_filename());
             $urlrevisioned = new moodle_url('/pluginfile.php/1/theme_boost_union/additionalresources/'.theme_get_revision().
                     '/'.$af->get_filename());
-            $filesforcontext[] = array('filename' => $af->get_filename(),
+            $filesforcontext[] = ['filename' => $af->get_filename(),
                                         'filetype' => $af->get_mimetype(),
                                         'filesize' => display_size($af->get_filesize()),
                                         'fileicon' => $OUTPUT->image_icon(file_file_icon($af, 64), get_mimetype_description($af)),
                                         'fileurlpersistent' => $urlpersistent->out(),
-                                        'fileurlrevisioned' => $urlrevisioned->out());
+                                        'fileurlrevisioned' => $urlrevisioned->out(), ];
         }
     }
 
@@ -739,7 +739,7 @@ function theme_boost_union_get_customfonts_templatecontext() {
         $webfonts = theme_boost_union_get_webfonts_extensions();
 
         // Iterate over the files.
-        $filesforcontext = array();
+        $filesforcontext = [];
         foreach ($files as $af) {
             // Get the filename.
             $filename = $af->get_filename();
@@ -754,8 +754,8 @@ function theme_boost_union_get_customfonts_templatecontext() {
 
             // Otherwise, fill the templatecontext of the file list.
             $urlpersistent = new moodle_url('/pluginfile.php/1/theme_boost_union/customfonts/0/'.$filename);
-            $filesforcontext[] = array('filename' => $filename,
-                    'fileurlpersistent' => $urlpersistent->out());
+            $filesforcontext[] = ['filename' => $filename,
+                    'fileurlpersistent' => $urlpersistent->out(), ];
         }
     }
 
@@ -768,7 +768,7 @@ function theme_boost_union_get_customfonts_templatecontext() {
  * @return array
  */
 function theme_boost_union_get_webfonts_extensions() {
-    return array('.eot', '.otf', '.svg', '.ttf', '.woff', '.woff2');
+    return ['.eot', '.otf', '.svg', '.ttf', '.woff', '.woff2'];
 }
 
 /**
@@ -794,38 +794,38 @@ function theme_boost_union_register_webfonts_filetypes() {
     // Our array of webfont file types to register.
     // As we want to keep things simple, we do not set a particular icon for these file types.
     // Likewise, we do not set any type groups or use descriptions from the language pack.
-    $webfonts = array(
-            'eot' => array(
+    $webfonts = [
+            'eot' => [
                     'extension' => 'eot',
                     'mimetype' => 'application/vnd.ms-fontobject',
-                    'coreicon' => 'unknown'
-            ),
-            'otf' => array(
+                    'coreicon' => 'unknown',
+            ],
+            'otf' => [
                     'extension' => 'otf',
                     'mimetype' => 'font/otf',
-                    'coreicon' => 'unknown'
-            ),
-            'svg' => array(
+                    'coreicon' => 'unknown',
+            ],
+            'svg' => [
                     'extension' => 'svg',
                     'mimetype' => 'image/svg+xml',
-                    'coreicon' => 'unknown'
-            ),
-            'ttf' => array(
+                    'coreicon' => 'unknown',
+            ],
+            'ttf' => [
                     'extension' => 'ttf',
                     'mimetype' => 'font/ttf',
-                    'coreicon' => 'unknown'
-            ),
-            'woff' => array(
+                    'coreicon' => 'unknown',
+            ],
+            'woff' => [
                     'extension' => 'woff',
                     'mimetype' => 'font/woff',
-                    'coreicon' => 'unknown'
-            ),
-            'woff2' => array(
+                    'coreicon' => 'unknown',
+            ],
+            'woff2' => [
                     'extension' => 'woff2',
                     'mimetype' => 'font/woff2',
-                    'coreicon' => 'unknown'
-            ),
-    );
+                    'coreicon' => 'unknown',
+            ],
+    ];
 
     // First, get the list of currently registered file types.
     $currenttypes = core_filetypes::get_types();
@@ -865,11 +865,11 @@ function theme_boost_union_get_emailbrandinghtmlpreview() {
     }
 
     // Otherwise, compose mail text.
-    $mailtemplatecontext = array('body' => get_string('emailbrandinghtmldemobody', 'theme_boost_union'));
+    $mailtemplatecontext = ['body' => get_string('emailbrandinghtmldemobody', 'theme_boost_union')];
     $mail = $OUTPUT->render_from_template('core/email_html', $mailtemplatecontext);
 
     // And compose mail preview.
-    $previewtemplatecontext = array('mail' => $mail);
+    $previewtemplatecontext = ['mail' => $mail];
     $preview = $OUTPUT->render_from_template('theme_boost_union/emailpreview', $previewtemplatecontext);
 
     return $preview;
@@ -896,12 +896,12 @@ function theme_boost_union_get_emailbrandingtextpreview() {
     }
 
     // Otherwise, compose mail text.
-    $mailtemplatecontext = array('body' => get_string('emailbrandingtextdemobody', 'theme_boost_union'));
+    $mailtemplatecontext = ['body' => get_string('emailbrandingtextdemobody', 'theme_boost_union')];
     $mail = nl2br($OUTPUT->render_from_template('core/email_text', $mailtemplatecontext));
     $mail = '<div class="text-monospace">'.$mail.'</div>';
 
     // And compose mail preview.
-    $previewtemplatecontext = array('mail' => $mail);
+    $previewtemplatecontext = ['mail' => $mail];
     $preview = $OUTPUT->render_from_template('theme_boost_union/emailpreview', $previewtemplatecontext);
 
     return $preview;
@@ -961,7 +961,7 @@ function theme_boost_union_add_flavourcss_to_page() {
     if ($flavour != null) {
         // Build the flavour CSS file URL.
         $flavourcssurl = new moodle_url('/theme/boost_union/flavours/styles.php',
-                array('id' => $flavour->id, 'rev' => theme_get_revision()));
+                ['id' => $flavour->id, 'rev' => theme_get_revision()]);
 
         // Add the CSS file to the page.
         $PAGE->requires->css($flavourcssurl);
@@ -1032,7 +1032,7 @@ function theme_boost_union_set_mobilecss_url() {
         // This parameter isn't the theme revision as the theme cache is not cleared when this setting is stored.
         // It is just the time when the setting is saved.
         // This is the best we can do to make the Mobile app load the new styles when needed.
-        $mobilescssurl = new moodle_url('/theme/boost_union/mobile/styles.php', array('rev' => time()));
+        $mobilescssurl = new moodle_url('/theme/boost_union/mobile/styles.php', ['rev' => time()]);
 
         // Set the $CFG->mobilecssurl setting.
         set_config('mobilecssurl', $mobilescssurl->out());
@@ -1064,7 +1064,7 @@ function theme_boost_union_get_additional_regions($pageregions=[]) {
             'outsidebottom' => 'outside-bottom',
             'contentupper' => 'content-upper',
             'contentlower' => 'content-lower',
-            'header' => 'header'
+            'header' => 'header',
     ];
 
     return ($pageregions) ? array_intersect($regions, $pageregions) : $regions;
@@ -1159,7 +1159,7 @@ function theme_boost_union_place_mod_icons() {
     $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'modicons', false, 'itemid', true);
 
     // Get installed activity plugins.
-    $modules = $DB->get_records('modules', array(), '', 'name');
+    $modules = $DB->get_records('modules', [], '', 'name');
 
     // Iterate over the files.
     foreach ($files as $file) {
@@ -1238,10 +1238,10 @@ function theme_boost_union_get_modicon_templatecontext () {
     $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'modicons', false, 'filepath,filename', true);
 
     // Get installed activity plugins.
-    $modules = $DB->get_records('modules', array(), '', 'name');
+    $modules = $DB->get_records('modules', [], '', 'name');
 
     // Initialize template data.
-    $templatedata = array();
+    $templatedata = [];
 
     // Iterate over the files.
     foreach ($files as $file) {

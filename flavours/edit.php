@@ -47,9 +47,9 @@ require_capability('theme/boost_union:configure', $context);
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/theme/boost_union/flavours/edit.php', ['action' => $action]));
 $PAGE->set_cacheable(false);
-$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', array('category' => 'themes')));
+$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', ['category' => 'themes']));
 $PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
-        array('category' => 'theme_boost_union')));
+        ['category' => 'theme_boost_union']));
 $PAGE->navbar->add(get_string('flavoursflavours', 'theme_boost_union'), new moodle_url('/theme/boost_union/flavours/overview.php'));
 switch ($action) {
     case 'create':
@@ -119,7 +119,7 @@ switch ($action) {
             $backgroundimagefilename = theme_boost_union_flavours_get_filename('look_backgroundimage', $id);
 
             // Update the database record to include the file names.
-            $updaterecord = $DB->get_record('theme_boost_union_flavours', array('id' => $id));
+            $updaterecord = $DB->get_record('theme_boost_union_flavours', ['id' => $id]);
             $updaterecord->look_logo = $looklogofilename;
             $updaterecord->look_logocompact = $looklogocompactfilename;
             $updaterecord->look_favicon = $faviconfilename;
@@ -158,7 +158,7 @@ switch ($action) {
         $flavour = $DB->get_record('theme_boost_union_flavours', ['id' => $id], '*', MUST_EXIST);
 
         // Init form and pass the $flavour object to it.
-        $form = new \theme_boost_union\form\flavour_edit_form($PAGE->url, array('flavour' => $flavour));
+        $form = new \theme_boost_union\form\flavour_edit_form($PAGE->url, ['flavour' => $flavour]);
 
         // If the form was submitted.
         if ($data = $form->get_data()) {
@@ -193,7 +193,7 @@ switch ($action) {
             $backgroundimagefilename = theme_boost_union_flavours_get_filename('look_backgroundimage', $id);
 
             // Update the database record to include the file names.
-            $updaterecord = $DB->get_record('theme_boost_union_flavours', array('id' => $id));
+            $updaterecord = $DB->get_record('theme_boost_union_flavours', ['id' => $id]);
             $updaterecord->look_logo = $looklogofilename;
             $updaterecord->look_logocompact = $looklogocompactfilename;
             $updaterecord->look_favicon = $faviconfilename;
@@ -243,7 +243,7 @@ switch ($action) {
             // Gather the data for the form.
             $flavour->description = [
                     'text' => $flavour->description,
-                    'format' => $flavour->description_format
+                    'format' => $flavour->description_format,
             ];
             if (isset($flavour->applytocohorts_ids)) {
                 $flavour->applytocohorts_ids = json_decode($flavour->applytocohorts_ids, true);
@@ -267,7 +267,7 @@ switch ($action) {
         $flavour = $DB->get_record('theme_boost_union_flavours', ['id' => $id], '*', MUST_EXIST);
 
         // Init form and pass the $flavour object to it.
-        $form = new \theme_boost_union\form\flavour_delete_form($PAGE->url, array('flavour' => $flavour));
+        $form = new \theme_boost_union\form\flavour_delete_form($PAGE->url, ['flavour' => $flavour]);
 
         // If the form was submitted.
         if ($data = $form->get_data()) {

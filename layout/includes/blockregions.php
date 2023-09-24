@@ -75,7 +75,7 @@ class additionalregions {
             $regionsdata[$name] = [
                 'hasblocks' => (strpos($regionhtml, 'data-block=') !== false || !empty($blockbutton)),
                 'regionhtml' => $regionhtml,
-                'addblockbutton' => $blockbutton
+                'addblockbutton' => $blockbutton,
             ];
         }
         return $regionsdata;
@@ -127,7 +127,7 @@ class additionalregions {
 
         return [
             'count' => $regioncount,
-            'class' => 'col-xl-'.(($regioncount > 0 ) ? round(12 / $regioncount) : '12' )
+            'class' => 'col-xl-'.(($regioncount > 0 ) ? round(12 / $regioncount) : '12' ),
         ];
     }
 
@@ -140,7 +140,7 @@ class additionalregions {
         $list = $this->countcolclass([
                 'offcanvasleft',
                 'offcanvasright',
-                'offcanvascenter'], $regionsdata);
+                'offcanvascenter', ], $regionsdata);
 
         $regionsdata['offcanvas'] = [
                 'hasblocks' => ($list['count'] > 0) ? true : false,
@@ -157,7 +157,7 @@ class additionalregions {
         $list = $this->countcolclass([
                 'footerleft',
                 'footerright',
-                'footercenter'], $regionsdata);
+                'footercenter', ], $regionsdata);
 
         $regionsdata['footer'] = [
                 'hasblocks' => ($list['count'] > 0) ? true : false,
