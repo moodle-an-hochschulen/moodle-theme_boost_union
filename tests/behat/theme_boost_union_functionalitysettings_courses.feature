@@ -159,7 +159,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     And ".course-hint-selfenrol" "css_element" should exist
     When I click on "Self enrolment (Student)" "link" in the ".course-hint-selfenrol" "css_element"
     And I set the following fields to these values:
-      | Allow new enrolments | 0 |
+      | Allow new self enrolments | 0 |
     And I press "Save changes"
     And I am on "Course 1" course homepage
     Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
