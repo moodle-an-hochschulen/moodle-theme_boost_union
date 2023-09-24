@@ -24,6 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// @codingStandardsIgnoreFile
+// Let codechecker ignore this file. We prefer being able to diff this file easily than to make codechecker happy.
+
 // Require own locallib.php.
 require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
@@ -38,78 +41,78 @@ $THEME->scss = function($theme) {
 
 $THEME->layouts = [
     // Most backwards compatible layout without the blocks.
-    'base' => array(
+    'base' => [
         'file' => 'drawers.php',
-        'regions' => array(),
-    ),
+        'regions' => [],
+    ],
     // Standard layout with blocks.
-    'standard' => array(
+    'standard' => [
         'file' => 'drawers.php',
         'regions' => theme_boost_union_get_block_regions('standard'),
         'defaultregion' => 'side-pre',
-    ),
+    ],
     // Main course page.
-    'course' => array(
+    'course' => [
         'file' => 'drawers.php',
         'regions' => theme_boost_union_get_block_regions('course'),
         'defaultregion' => 'side-pre',
-        'options' => array('langmenu' => true),
-    ),
-    'coursecategory' => array(
+        'options' => ['langmenu' => true],
+    ],
+    'coursecategory' => [
         'file' => 'drawers.php',
         'regions' => theme_boost_union_get_block_regions('coursecategory'),
         'defaultregion' => 'side-pre',
-    ),
+    ],
     // Part of course, typical for modules - default page layout if $cm specified in require_login().
-    'incourse' => array(
+    'incourse' => [
         'file' => 'drawers.php',
         'regions' => theme_boost_union_get_block_regions('incourse'),
         'defaultregion' => 'side-pre',
-    ),
+    ],
     // The site home page.
-    'frontpage' => array(
+    'frontpage' => [
         'file' => 'drawers.php',
         'regions' => theme_boost_union_get_block_regions('frontpage'),
         'defaultregion' => 'side-pre',
-        'options' => array('nonavbar' => true),
-    ),
+        'options' => ['nonavbar' => true],
+    ],
     // Server administration scripts.
-    'admin' => array(
+    'admin' => [
         'file' => 'drawers.php',
         'regions' => theme_boost_union_get_block_regions('admin'),
         'defaultregion' => 'side-pre',
-    ),
+    ],
     // My courses page.
-    'mycourses' => array(
+    'mycourses' => [
         'file' => 'drawers.php',
-        'regions' => array('side-pre'),
+        'regions' => ['side-pre'],
         'defaultregion' => 'side-pre',
-        'options' => array('nonavbar' => true),
-    ),
+        'options' => ['nonavbar' => true],
+    ],
     // My dashboard page.
-    'mydashboard' => array(
+    'mydashboard' => [
         'file' => 'drawers.php',
         'regions' => theme_boost_union_get_block_regions('mydashboard'),
         'defaultregion' => 'side-pre',
-        'options' => array('nonavbar' => true, 'langmenu' => true),
-    ),
+        'options' => ['nonavbar' => true, 'langmenu' => true],
+    ],
     // My public page.
-    'mypublic' => array(
+    'mypublic' => [
         'file' => 'drawers.php',
         'regions' => theme_boost_union_get_block_regions('mypublic'),
         'defaultregion' => 'side-pre',
-    ),
-    'login' => array(
+    ],
+    'login' => [
         'file' => 'login.php',
-        'regions' => array(),
-        'options' => array('langmenu' => true),
-    ),
+        'regions' => [],
+        'options' => ['langmenu' => true],
+    ],
 
     // Pages that appear in pop-up windows - no navigation, no blocks, no header and bare activity header.
-    'popup' => array(
+    'popup' => [
         'file' => 'columns1.php',
-        'regions' => array(),
-        'options' => array(
+        'regions' => [],
+        'options' => [
             'nofooter' => true,
             'nonavbar' => true,
             'activityheader' => [
@@ -117,56 +120,56 @@ $THEME->layouts = [
                 'nocompletion' => true,
                 'nodescription' => true
             ]
-        )
-    ),
+        ]
+    ],
     // No blocks and minimal footer - used for legacy frame layouts only!
-    'frametop' => array(
+    'frametop' => [
         'file' => 'columns1.php',
-        'regions' => array(),
-        'options' => array(
+        'regions' => [],
+        'options' => [
             'nofooter' => true,
             'nocoursefooter' => true,
             'activityheader' => [
                 'nocompletion' => true
             ]
-        ),
-    ),
+        ],
+    ],
     // Embeded pages, like iframe/object embeded in moodleform - it needs as much space as possible.
-    'embedded' => array(
+    'embedded' => [
         'file' => 'embedded.php',
-        'regions' => array('side-pre'),
+        'regions' => ['side-pre'],
         'defaultregion' => 'side-pre',
-    ),
+    ],
     // Used during upgrade and install, and for the 'This site is undergoing maintenance' message.
     // This must not have any blocks, links, or API calls that would lead to database or cache interaction.
     // Please be extremely careful if you are modifying this layout.
-    'maintenance' => array(
+    'maintenance' => [
         'file' => 'maintenance.php',
-        'regions' => array(),
-    ),
+        'regions' => [],
+    ],
     // Should display the content and basic headers only.
-    'print' => array(
+    'print' => [
         'file' => 'columns1.php',
-        'regions' => array(),
-        'options' => array('nofooter' => true, 'nonavbar' => false, 'noactivityheader' => true),
-    ),
+        'regions' => [],
+        'options' => ['nofooter' => true, 'nonavbar' => false, 'noactivityheader' => true],
+    ],
     // The pagelayout used when a redirection is occuring.
-    'redirect' => array(
+    'redirect' => [
         'file' => 'embedded.php',
-        'regions' => array(),
-    ),
+        'regions' => [],
+    ],
     // The pagelayout used for reports.
-    'report' => array(
+    'report' => [
         'file' => 'drawers.php',
         'regions' => theme_boost_union_get_block_regions('report'),
         'defaultregion' => 'side-pre',
-    ),
+    ],
     // The pagelayout used for safebrowser and securewindow.
-    'secure' => array(
+    'secure' => [
         'file' => 'secure.php',
-        'regions' => array('side-pre'),
+        'regions' => ['side-pre'],
         'defaultregion' => 'side-pre'
-    )
+    ]
 ];
 
 $THEME->parents = ['boost'];
@@ -174,7 +177,7 @@ $THEME->enable_dock = false;
 $THEME->extrascsscallback = 'theme_boost_union_get_extra_scss';
 $THEME->prescsscallback = 'theme_boost_union_get_pre_scss';
 $THEME->precompiledcsscallback = 'theme_boost_union_get_precompiled_css';
-$THEME->yuicssmodules = array();
+$THEME->yuicssmodules = [];
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 $THEME->requiredblocks = '';
 $THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;

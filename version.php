@@ -30,4 +30,4 @@ $plugin->release = 'v4.2-r2';
 $plugin->requires = 2023042402.04;
 $plugin->supported = [402, 402];
 $plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = array('theme_boost' => 2023042400);
+$plugin->dependencies = ['theme_boost' => 2023042400];

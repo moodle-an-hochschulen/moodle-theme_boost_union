@@ -64,13 +64,13 @@ if ($menuid == null && $id !== null) {
 
 // Prepare the page.
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/theme/boost_union/smartmenus/edit_items.php', array('menu' => $menu->id, 'sesskey' => sesskey())));
-$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', array('category' => 'themes')));
+$PAGE->set_url(new moodle_url('/theme/boost_union/smartmenus/edit_items.php', ['menu' => $menu->id, 'sesskey' => sesskey()]));
+$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', ['category' => 'themes']));
 $PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
-        array('category' => 'theme_boost_union')));
+        ['category' => 'theme_boost_union']));
 $PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/menus.php'));
 $PAGE->navbar->add(get_string('smartmenusmenuitems', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/items.php',
-        array('menu' => $menu->id)));
+        ['menu' => $menu->id]));
 $PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('smartmenus', 'theme_boost_union')));
 if ($menuid == null && $id !== null) {
     $PAGE->set_heading(get_string('smartmenusmenuitemedit', 'theme_boost_union'));
@@ -91,7 +91,7 @@ $lastmenu = theme_boost_union\smartmenu_item::get_lastitem($menu->id);
 $nextorder = isset($lastmenu->sortorder) ? $lastmenu->sortorder + 1 : 1;
 
 // Prepare form URL.
-$formurl = new moodle_url('/theme/boost_union/smartmenus/edit_items.php', array('menu' => $menu->id, 'sesskey' => sesskey()));
+$formurl = new moodle_url('/theme/boost_union/smartmenus/edit_items.php', ['menu' => $menu->id, 'sesskey' => sesskey()]);
 
 // If we are editing an existing menu item.
 if ($id != null) {
@@ -99,23 +99,23 @@ if ($id != null) {
     $menuitem = $DB->get_record('theme_boost_union_menuitems', ['id' => $id], '*', MUST_EXIST);
 
     // Init form and pass the id and menu item object to it.
-    $form = new \theme_boost_union\form\smartmenu_item_edit_form($formurl->out(false), array(
+    $form = new \theme_boost_union\form\smartmenu_item_edit_form($formurl->out(false), [
             'id' => $id,
             'menu' => $menu->id,
             'menutype' => $menu->type,
             'nextorder' => $nextorder,
             'menuitem' => $menuitem,
-    ));
+    ]);
 
     // Otherwise, if we are creating a new menu item.
 } else {
     // Init form and pass the id to it.
-    $form = new \theme_boost_union\form\smartmenu_item_edit_form($formurl->out(false), array(
+    $form = new \theme_boost_union\form\smartmenu_item_edit_form($formurl->out(false), [
             'id' => $id,
             'menu' => $menu->id,
             'menutype' => $menu->type,
             'nextorder' => $nextorder,
-    ));
+    ]);
 }
 
 // If the form was submitted.
@@ -124,13 +124,13 @@ if ($data = $form->get_data()) {
     $result = theme_boost_union\smartmenu_item::manage_instance($data);
     if ($result) {
         // Redirect to menu item list.
-        redirect(new moodle_url('/theme/boost_union/smartmenus/items.php', array('menu' => $menu->id)));
+        redirect(new moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $menu->id]));
     }
 
     // Otherwise if the form was cancelled.
 } else if ($form->is_cancelled()) {
     // Redirect to menu item list.
-    redirect(new moodle_url('/theme/boost_union/smartmenus/items.php', array('menu' => $menu->id)));
+    redirect(new moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $menu->id]));
 }
 
 // If a menu item ID is given.
@@ -149,7 +149,7 @@ if ($id !== null && $id > 0) {
         \core\notification::error(get_string('error:smartmenusmenuitemnotfound', 'theme_boost_union'));
 
         // Redirect to menu item list (where the notification is shown).
-        redirect(new moodle_url('/theme/boost_union/smartmenus/items.php', array('menu' => $menu->id)));
+        redirect(new moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $menu->id]));
     }
 }
 

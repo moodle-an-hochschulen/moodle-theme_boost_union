@@ -55,7 +55,7 @@ class flavour_edit_form extends \moodleform {
         $mform = $this->_form;
 
         // Prepare yes-no option for multiple usage.
-        $yesnooption = array(false => get_string('no'), true => get_string('yes'));
+        $yesnooption = [false => get_string('no'), true => get_string('yes')];
 
         // Add the flavour ID as hidden element.
         $mform->addElement('hidden', 'id');
@@ -86,7 +86,7 @@ class flavour_edit_form extends \moodleform {
                         'subdirs' => 0,
                         'maxfiles' => 1,
                         'accepted_types' => 'web_image',
-                        'return_types' => FILE_INTERNAL
+                        'return_types' => FILE_INTERNAL,
                 ]);
         $mform->addHelpButton('flavours_look_logo', 'flavourslogo', 'theme_boost_union');
 
@@ -96,7 +96,7 @@ class flavour_edit_form extends \moodleform {
                         'subdirs' => 0,
                         'maxfiles' => 1,
                         'accepted_types' => 'web_image',
-                        'return_types' => FILE_INTERNAL
+                        'return_types' => FILE_INTERNAL,
                 ]);
         $mform->addHelpButton('flavours_look_logocompact', 'flavourslogocompact', 'theme_boost_union');
 
@@ -106,7 +106,7 @@ class flavour_edit_form extends \moodleform {
                         'subdirs' => 0,
                         'maxfiles' => 1,
                         'accepted_types' => 'image',
-                        'return_types' => FILE_INTERNAL
+                        'return_types' => FILE_INTERNAL,
                 ]);
         $mform->addHelpButton('flavours_look_favicon', 'flavoursfavicon', 'theme_boost_union');
 
@@ -116,7 +116,7 @@ class flavour_edit_form extends \moodleform {
                         'subdirs' => 0,
                         'maxfiles' => 1,
                         'accepted_types' => 'web_image',
-                        'return_types' => FILE_INTERNAL
+                        'return_types' => FILE_INTERNAL,
                 ]);
         $mform->addHelpButton('flavours_look_backgroundimage', 'flavoursbackgroundimage', 'theme_boost_union');
 
@@ -125,7 +125,7 @@ class flavour_edit_form extends \moodleform {
         // It will be appended to the stack of CSS code which is shipped to the browser.
         // There is a follow-up issue on Github to add SCSS support.
         // When this is realized, the widget's title string should be changed to 'theme_boost/rawscss'.
-        $mform->addElement('textarea', 'look_rawscss', get_string('flavourscustomcss', 'theme_boost_union'), array('rows' => 15));
+        $mform->addElement('textarea', 'look_rawscss', get_string('flavourscustomcss', 'theme_boost_union'), ['rows' => 15]);
         $mform->setType('title', PARAM_TEXT);
         $mform->addHelpButton('look_rawscss', 'flavourscustomcss', 'theme_boost_union');
 

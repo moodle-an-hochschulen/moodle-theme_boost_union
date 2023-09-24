@@ -119,7 +119,7 @@ echo $OUTPUT->render($experimentalnotification);
 // Prepare 'Create menu' button.
 $createbutton = $OUTPUT->box_start();
 $createbutton .= $OUTPUT->single_button(
-        new \moodle_url('/theme/boost_union/smartmenus/edit.php', array('sesskey' => sesskey())),
+        new \moodle_url('/theme/boost_union/smartmenus/edit.php', ['sesskey' => sesskey()]),
         get_string('smartmenusmenucreate', 'theme_boost_union'), 'get');
 $createbutton .= $OUTPUT->box_end();
 

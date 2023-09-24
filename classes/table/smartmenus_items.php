@@ -116,10 +116,10 @@ class smartmenus_items extends \table_sql {
             });
 
             // Amend rule list.
-            $rules[] = array(
+            $rules[] = [
                 'name' => get_string('smartmenusbyrole', 'theme_boost_union'),
-                'value' => implode(' ', $rolenames)
-            );
+                'value' => implode(' ', $rolenames),
+            ];
         }
 
         // If we have cohort restrictions.
@@ -132,10 +132,10 @@ class smartmenus_items extends \table_sql {
             });
 
             // Amend rule list.
-            $rules[] = array(
+            $rules[] = [
                 'name' => get_string('smartmenusbycohort', 'theme_boost_union'),
-                'value' => implode(' ', $cohortlist)
-            );
+                'value' => implode(' ', $cohortlist),
+            ];
         }
 
         // If we have language restrictions.
@@ -143,7 +143,7 @@ class smartmenus_items extends \table_sql {
             // Compose the rule list.
             $languages = json_decode($data->languages);
             $options = get_string_manager()->get_list_of_translations();
-            $languagelist = array();
+            $languagelist = [];
             foreach ($languages as $lang) {
                 if (isset($options[$lang])) {
                     $languagelist[] = \html_writer::tag('span', $options[$lang], ['class' => 'badge badge-primary']);
@@ -151,10 +151,10 @@ class smartmenus_items extends \table_sql {
             }
 
             // Amend rule list.
-            $rules[] = array(
+            $rules[] = [
                 'name' => get_string('smartmenusbylanguage', 'theme_boost_union'),
-                'value' => implode(' ', $languagelist)
-            );
+                'value' => implode(' ', $languagelist),
+            ];
         }
 
         // If we have date restrictions.
@@ -176,10 +176,10 @@ class smartmenus_items extends \table_sql {
             });
 
             // Amend rule list.
-            $rules[] = array(
+            $rules[] = [
                     'name' => get_string('smartmenusbydate', 'theme_boost_union'),
-                    'value' => implode(' ', $datelist)
-            );
+                    'value' => implode(' ', $datelist),
+            ];
         }
 
         // Compose the restriction list.
@@ -211,15 +211,15 @@ class smartmenus_items extends \table_sql {
         $updown = '';
 
         // Get spacer icon.
-        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', array('class' => 'iconsmall'));
+        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', ['class' => 'iconsmall']);
 
         // If there is more than one smart menu item and we do not handle the first (number 0) smart menu item.
         if ($this->count > 0) {
             // Add the up icon.
             $updown .= \html_writer::link($actionurl->out(false,
-                    array('action' => 'up', 'id' => $data->id, 'sesskey' => sesskey())),
+                    ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]),
                     $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
-                            array('class' => 'iconsmall')), array('class' => 'sort-smartmenuitems-up-action'));
+                            ['class' => 'iconsmall']), ['class' => 'sort-smartmenuitems-up-action']);
 
             // Otherwise, just add a spacer.
         } else {
@@ -231,9 +231,9 @@ class smartmenus_items extends \table_sql {
             // Add the down icon.
             $updown .= '&nbsp;';
             $updown .= \html_writer::link($actionurl->out(false,
-                    array('action' => 'down', 'id' => $data->id, 'sesskey' => sesskey())),
+                    ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]),
                     $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
-                            array('class' => 'iconsmall')), array('class' => 'sort-smartmenuitems-down-action'));
+                            ['class' => 'iconsmall']), ['class' => 'sort-smartmenuitems-down-action']);
 
             // Otherwise, just add a spacer.
         } else {
@@ -260,48 +260,48 @@ class smartmenus_items extends \table_sql {
         $actionurl = new \moodle_url('/theme/boost_union/smartmenus/items.php');
 
         // Initialize actions.
-        $actions = array();
+        $actions = [];
 
         // Show/Hide.
         if ($data->visible) {
-            $actions[] = array(
-                'url' => new \moodle_url($actionurl, array('action' => 'hide', 'id' => $data->id, 'sesskey' => sesskey())),
+            $actions[] = [
+                'url' => new \moodle_url($actionurl, ['action' => 'hide', 'id' => $data->id, 'sesskey' => sesskey()]),
                 'icon' => new \pix_icon('t/hide', get_string('hide')),
-                'attributes' => array('class' => 'action-hide')
-            );
+                'attributes' => ['class' => 'action-hide'],
+            ];
         } else {
-            $actions[] = array(
-                'url' => new \moodle_url($actionurl, array('action' => 'show', 'id' => $data->id, 'sesskey' => sesskey())),
+            $actions[] = [
+                'url' => new \moodle_url($actionurl, ['action' => 'show', 'id' => $data->id, 'sesskey' => sesskey()]),
                 'icon' => new \pix_icon('t/show', get_string('show')),
-                'attributes' => array('class' => 'action-show')
-            );
+                'attributes' => ['class' => 'action-show'],
+            ];
         }
 
         // Edit.
-        $actions[] = array(
+        $actions[] = [
             'url' => new \moodle_url('/theme/boost_union/smartmenus/edit_items.php',
-                    array('id' => $data->id, 'sesskey' => sesskey())),
+                    ['id' => $data->id, 'sesskey' => sesskey()]),
             'icon' => new \pix_icon('t/edit', get_string('edit')),
-            'attributes' => array('class' => 'action-edit')
-        );
+            'attributes' => ['class' => 'action-edit'],
+        ];
 
         // Duplicate.
-        $actions[] = array(
-            'url' => new \moodle_url($actionurl, array('action' => 'copy', 'id' => $data->id, 'sesskey' => sesskey())),
+        $actions[] = [
+            'url' => new \moodle_url($actionurl, ['action' => 'copy', 'id' => $data->id, 'sesskey' => sesskey()]),
             'icon' => new \pix_icon('t/copy', get_string('smartmenusmenuitemduplicate', 'theme_boost_union')),
-            'attributes' => array('class' => 'action-copy')
-        );
+            'attributes' => ['class' => 'action-copy'],
+        ];
 
         // Delete.
-        $actions[] = array(
-            'url' => new \moodle_url($actionurl, array('action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey())),
+        $actions[] = [
+            'url' => new \moodle_url($actionurl, ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]),
             'icon' => new \pix_icon('t/delete', get_string('delete')),
-            'attributes' => array('class' => 'action-delete'),
-            'confirm' => new \confirm_action(get_string('smartmenusmenuitemdeleteconfirm', 'theme_boost_union'))
-        );
+            'attributes' => ['class' => 'action-delete'],
+            'confirm' => new \confirm_action(get_string('smartmenusmenuitemdeleteconfirm', 'theme_boost_union')),
+        ];
 
         // Compose action icons for all actions.
-        $actionshtml = array();
+        $actionshtml = [];
         foreach ($actions as $action) {
             $action['attributes']['role'] = 'button';
             $actionshtml[] = $OUTPUT->action_icon(
@@ -331,7 +331,7 @@ class smartmenus_items extends \table_sql {
                 FROM {theme_boost_union_menuitems} t
                 WHERE menu=:menuid
                 ORDER BY sortorder';
-        $sqlparams = array('menuid' => $this->menuid);
+        $sqlparams = ['menuid' => $this->menuid];
 
         // Get records.
         $this->rawdata = $DB->get_recordset_sql($sql, $sqlparams);

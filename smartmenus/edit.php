@@ -44,11 +44,11 @@ require_capability('theme/boost_union:configure', $context);
 
 // Prepare the page.
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/theme/boost_union/smartmenus/edit.php', array('id' => $id, 'sesskey' => sesskey())));
+$PAGE->set_url(new moodle_url('/theme/boost_union/smartmenus/edit.php', ['id' => $id, 'sesskey' => sesskey()]));
 $PAGE->set_cacheable(false);
-$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', array('category' => 'themes')));
+$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', ['category' => 'themes']));
 $PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
-        array('category' => 'theme_boost_union')));
+        ['category' => 'theme_boost_union']));
 $PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/menus.php'));
 $PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('smartmenus', 'theme_boost_union')));
 if ($id !== null && $id > 0) {
@@ -65,12 +65,12 @@ if ($id != null) {
     $menu = $DB->get_record('theme_boost_union_menus', ['id' => $id], '*', MUST_EXIST);
 
     // Init form and pass the id and menu object to it.
-    $form = new \theme_boost_union\form\smartmenu_edit_form(null, array('id' => $id, 'menu' => $menu));
+    $form = new \theme_boost_union\form\smartmenu_edit_form(null, ['id' => $id, 'menu' => $menu]);
 
     // Otherwise, if we are creating a new menu.
 } else {
     // Init form and pass the id to it.
-    $form = new \theme_boost_union\form\smartmenu_edit_form(null, array('id' => $id));
+    $form = new \theme_boost_union\form\smartmenu_edit_form(null, ['id' => $id]);
 }
 
 // If the form was submitted.
@@ -80,7 +80,7 @@ if ($data = $form->get_data()) {
 
     // After the menu data was saved, let's redirect to configure items for this menu.
     if (isset($data->saveanddisplay) && $data->saveanddisplay) {
-        redirect(new moodle_url('/theme/boost_union/smartmenus/items.php', array('menu' => $menuid)));
+        redirect(new moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $menuid]));
 
         // Otherwise.
     } else {

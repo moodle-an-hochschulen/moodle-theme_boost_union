@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$definitions = array(
+$definitions = [
         // This cache stores the flavours which apply to a particular user in his user session.
         // It is there to avoid that the flavour which applies has to be calculated on every page load.
         // The cache key is the page category ID (and 0 for all non-category pages).
@@ -48,30 +48,30 @@ $definitions = array(
         // 4. When a user is added to / removed from a category
         // -- (this is realized with an event observer which sets a user preference flag, followed by a check in
         // -- theme_boost_union_get_flavour_which_applies() which purges the cache for the affected user).
-        'flavours' => array(
+        'flavours' => [
                 'mode' => cache_store::MODE_SESSION,
                 'simplekeys' => true,
                 'simpledata' => false,
-                'invalidationevents' => array(
+                'invalidationevents' => [
                     'theme_boost_union_flavours_resorted',
                     'theme_boost_union_flavours_created',
                     'theme_boost_union_flavours_edited',
                     'theme_boost_union_flavours_deleted',
-                    'theme_boost_union_cohort_deleted'
-                )
-        ),
+                    'theme_boost_union_cohort_deleted',
+                ],
+        ],
         // This cache stores the smart menus.
-        'smartmenus' => array(
+        'smartmenus' => [
                 'mode' => cache_store::MODE_APPLICATION,
                 'simplekeys' => true,
                 'simpledata' => false,
                 'overrideclass' => '\theme_boost_union\cache\loader',
-        ),
+        ],
         // This cache stores the smart menus' menu items.
-        'smartmenu_items' => array(
+        'smartmenu_items' => [
                 'mode' => cache_store::MODE_APPLICATION,
                 'simplekeys' => true,
                 'simpledata' => false,
                 'overrideclass' => '\theme_boost_union\cache\loader',
-        )
-);
+        ],
+];

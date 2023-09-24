@@ -467,7 +467,7 @@ class smartmenu {
                 self::CARDFORM_SQUARE => 'square',
                 self::CARDFORM_PORTRAIT => 'portrait',
                 self::CARDFORM_LANDSCAPE => 'landscape',
-                self::CARDFORM_FULLWIDTH => 'fullwidth'
+                self::CARDFORM_FULLWIDTH => 'fullwidth',
         ];
 
         return isset($options[$this->menu->cardform]) ? 'card-form-'.$options[$this->menu->cardform] : '';
@@ -484,7 +484,7 @@ class smartmenu {
                 self::CARDSIZE_TINY => 'tiny',
                 self::CARDSIZE_SMALL => 'small',
                 self::CARDSIZE_MEDIUM => 'medium',
-                self::CARDSIZE_LARGE => 'large'
+                self::CARDSIZE_LARGE => 'large',
         ];
 
         return isset($options[$this->menu->cardsize]) ? 'card-size-' . $options[$this->menu->cardsize] : '';
@@ -499,7 +499,7 @@ class smartmenu {
 
         $options = [
                 self::CARDOVERFLOWBEHAVIOUR_WRAP => 'wrap',
-                self::CARDOVERFLOWBEHAVIOUR_NOWRAP => 'no-wrap'
+                self::CARDOVERFLOWBEHAVIOUR_NOWRAP => 'no-wrap',
         ];
 
         return isset($options[$this->menu->cardoverflowbehavior]) ? 'card-overflow-' .
@@ -521,7 +521,7 @@ class smartmenu {
             ORDER BY mi.sortorder ASC";
 
         $params = [
-            'id' => $this->menu->id
+            'id' => $this->menu->id,
         ];
         $items = $DB->get_records_sql($sql, $params);
 
@@ -602,7 +602,7 @@ class smartmenu {
                     'card' => ($this->menu->type == self::TYPE_CARD) ? true : false,
                     'forceintomoremenu' => ($this->menu->moremenubehavior == self::MOREMENU_INTO) ? true : false,
                     'haschildren' => 0,
-                    'sort' => uniqid() // Support third level menu.
+                    'sort' => uniqid(), // Support third level menu.
                 ];
 
                 // Add the description data to nodes. Inline mode menus not supports the menu.
@@ -622,7 +622,7 @@ class smartmenu {
                             'text' => $description,
                             'alt' => $alt,
                             'icon' => (new \pix_icon('help', $alt, 'core', ['class' => 'iconhelp']))->export_for_template($OUTPUT),
-                            'ltr' => !right_to_left()
+                            'ltr' => !right_to_left(),
                         ];
                         $nodes->helpicon = $OUTPUT->render_from_template('core/help_icon', $data);
                     }
@@ -775,7 +775,7 @@ class smartmenu {
 
         $menu->description = [
             'text'   => $menu->description,
-            'format' => $menu->description_format
+            'format' => $menu->description_format,
         ];
         // Decode the multiple option select elements values to array.
         $menu->location = json_decode($menu->location);
@@ -816,12 +816,12 @@ class smartmenu {
      */
     public static function get_locations() {
         // List of locations where same menu can be used in multiple places.
-        $locations = array(
+        $locations = [
             self::LOCATION_MAIN => get_string('smartmenusmenulocationmain', 'theme_boost_union'),
             self::LOCATION_MENU => get_string('smartmenusmenulocationmenu', 'theme_boost_union'),
             self::LOCATION_USER => get_string('smartmenusmenulocationuser', 'theme_boost_union'),
-            self::LOCATION_BOTTOM => get_string('smartmenusmenulocationbottom', 'theme_boost_union')
-        );
+            self::LOCATION_BOTTOM => get_string('smartmenusmenulocationbottom', 'theme_boost_union'),
+        ];
 
         return $locations;
     }
@@ -843,10 +843,10 @@ class smartmenu {
      * @return array An array with all available types, where key is the type id and value is the localized type name.
      */
     public static function get_types() {
-        $types = array(
+        $types = [
             self::TYPE_LIST => get_string('smartmenusmenutypelist', 'theme_boost_union'),
-            self::TYPE_CARD => get_string('smartmenusmenutypecard', 'theme_boost_union')
-        );
+            self::TYPE_CARD => get_string('smartmenusmenutypecard', 'theme_boost_union'),
+        ];
 
         return $types;
     }

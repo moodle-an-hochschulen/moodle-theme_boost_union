@@ -149,7 +149,7 @@ class smartmenu_helper {
         $query->where[] = " u.id IN (SELECT userid FROM {role_assignments} WHERE roleid $insql AND userid=:rluserid $contextsql)";
         $params = [
             'rluserid' => $this->userid,
-            'systemcontext' => context_system::instance()->id
+            'systemcontext' => context_system::instance()->id,
         ];
         $query->params += array_merge($params, $inparam);
 
@@ -646,7 +646,7 @@ class smartmenu_helper {
      */
     public static function get_lanuage_options() {
         $languages = get_string_manager()->get_list_of_translations();
-        $langoptions = array();
+        $langoptions = [];
         foreach ($languages as $key => $lang) {
             $langoptions[$key] = $lang;
         }

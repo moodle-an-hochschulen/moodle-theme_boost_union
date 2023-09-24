@@ -60,7 +60,7 @@ function theme_boost_union_get_flavour_which_applies() {
             $previewflavourid = required_param('id', PARAM_INT);
 
             // Get and remember the given flavour.
-            $appliedflavour = $DB->get_record('theme_boost_union_flavours', array('id' => $previewflavourid));
+            $appliedflavour = $DB->get_record('theme_boost_union_flavours', ['id' => $previewflavourid]);
 
             // Remember the fact that the flavour has been checked for subsequent runs of this function.
             $flavourchecked = true;
@@ -122,7 +122,7 @@ function theme_boost_union_get_flavour_which_applies() {
                 // Otherwise.
             } else {
                 // Just remember an empty array to avoid breaking the following code.
-                $parentcategoryids = array();
+                $parentcategoryids = [];
             }
         }
 
@@ -134,7 +134,7 @@ function theme_boost_union_get_flavour_which_applies() {
         // Get all flavours from the DB.
         // The more flavours you have, the more this query will become heavier.
         // However, it is just called once per page category ID within a session, so we accept this for now.
-        $flavours = $DB->get_records('theme_boost_union_flavours', array(), 'sort ASC');
+        $flavours = $DB->get_records('theme_boost_union_flavours', [], 'sort ASC');
 
         // Iterate over the flavours.
         foreach ($flavours as $f) {
@@ -297,7 +297,7 @@ function theme_boost_union_flavour_exists_for_cohort($cohortid) {
     global $DB;
 
     // Get the flavours which are configured to apply to (any) cohort.
-    $flavoursforcohorts = $DB->get_records('theme_boost_union_flavours', array('applytocohorts' => 1), '', 'applytocohorts_ids');
+    $flavoursforcohorts = $DB->get_records('theme_boost_union_flavours', ['applytocohorts' => 1], '', 'applytocohorts_ids');
 
     // Iterate over the flavours.
     foreach ($flavoursforcohorts as $f) {

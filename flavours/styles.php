@@ -55,7 +55,7 @@ try {
     // again and again. However, as the result is cached in the browser and the browser should not request
     // a flavour's CSS file again and again this should be ok for now.
     $flavour = $DB->get_record('theme_boost_union_flavours',
-            array('id' => $flavourid), 'look_rawscss, look_backgroundimage', MUST_EXIST);
+            ['id' => $flavourid], 'look_rawscss, look_backgroundimage', MUST_EXIST);
 
     // Catch the exception.
 } catch (\Exception $e) {
