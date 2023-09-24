@@ -1365,45 +1365,6 @@ function theme_boost_union_get_block_regions($layout) {
 }
 
 /**
- * Remove recursively all files in the given directory.
- *
- * @param string $src The folder path
- * @param bool $del Delete the folder itself?
- */
-function theme_boost_union_rrmdir($src , $del) {
-    // Open directory handle.
-    $dir = opendir($src);
-
-    // While there are files in the given directory, get the files.
-    while (false !== ($file = readdir($dir))) {
-        // Ignore the directory and parent directory entries.
-        if (($file != '.') && ($file != '..')) {
-            // Compose file path.
-            $full = $src . '/' . $file;
-
-            // If this is a directory.
-            if (is_dir($full)) {
-                // Recursively descend into the directory.
-                theme_boost_union_rrmdir($full, true);
-
-                // Otherwise.
-            } else {
-                // Delete the file.
-                unlink($full);
-            }
-        }
-    }
-
-    // Close directory handle.
-    closedir($dir);
-
-    // If requested, delete the directory itself.
-    if ($del) {
-        rmdir($src);
-    }
-}
-
-/**
  * Callback function which is called from settings.php if the enable custom activity icons setting has changed.
  *
  * It checks if the setting has just been disabled. If yes, it removes all custom icons from the
@@ -1423,7 +1384,7 @@ function theme_boost_union_check_mod_icons_cleanup() {
     // Purge the content of the pix_plugins/mod folder in Moodledata.
     $pixpluginpath = $CFG->dataroot.DIRECTORY_SEPARATOR.'pix_plugins'.DIRECTORY_SEPARATOR.'mod';
     if (is_dir($pixpluginpath)) {
-        theme_boost_union_rrmdir($pixpluginpath, true);
+        remove_dir($pixpluginpath, false);
     }
 
     // Purge the theme cache to show the old icons in the GUI.
@@ -1458,7 +1419,7 @@ function theme_boost_union_place_mod_icons() {
     // Purge the content of the pix_plugins/mod folder in Moodledata.
     $pixpluginpath = $CFG->dataroot.DIRECTORY_SEPARATOR.'pix_plugins'.DIRECTORY_SEPARATOR.'mod';
     if (is_dir($pixpluginpath)) {
-        theme_boost_union_rrmdir($pixpluginpath, false);
+        remove_dir($pixpluginpath, true);
     }
 
     // Get the system context.

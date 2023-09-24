@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-09-22 - Improvement: Reuse Moodle core function remove_dir(), solves #369.
+
 ### v4.1-r12
 
 * 2023-09-19 - Bugfix: Fix fatal mustache rendering errors, solves #390.
