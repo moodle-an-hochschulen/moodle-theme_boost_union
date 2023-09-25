@@ -17,7 +17,7 @@ Motivation for this theme
 
 The Boost theme in Moodle core is not really configurable, many things are hardcoded and can only be changed with tricks or with core hacks. This theme intends to provider simple settings for admins to let them configure important settings easily without thinking about the inner workings of the theme.
 
-On the other hand, many Moodle installations share the same basic functional needs like the possibility to add an imprint page or a footnote. This theme intends to provide these basic features without needing to fiddle with other plugins.
+On the other hand, many Moodle installations share the same basic functional needs like the possibility to add an Legal Notice page or a footnote. This theme intends to provide these basic features without needing to fiddle with other plugins.
 
 One highlight is the main design principle of Boost Union: As soon as it is activated on a Moodle site, it does not change anything yet and simply behaves as Boost from Moodle core does. The admin can enable and configure only the theme features he needs and does not need to care about side effects from other, disabled theme features.
 
@@ -383,9 +383,9 @@ With these settings, you can add rich text content which will be shown on an abo
 
 With these settings, you can add rich text content which will be shown on an offers page.
 
-##### Imprint
+##### Legal Notice
 
-With these settings, you can add rich text content which will be shown on the imprint page.
+With these settings, you can add rich text content which will be shown on the legal notice page.
 
 ##### Contact
 

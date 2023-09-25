@@ -199,7 +199,7 @@ Changes
 * 2022-07-08 - Feature: Customize activity icon background colors, solves #49
 * 2022-07-07 - Feature: Show a warning banner if JavaScript is disabled, solves #46
 * 2022-07-07 - Feature: Make the course content column width configurable, helps to resolve #18.
-* 2022-07-06 - Feature: Built-in imprint, solves #32
+* 2022-07-06 - Feature: Built-in Legal Notice, solves #32
 * 2022-07-05 - Feature: Configurable favicon, solves #34
 * 2022-07-05 - Feature: Allow non-admins to edit theme settings, solves #28
 * 2022-07-05 - Feature: Back to top button, solves #7

@@ -24,7 +24,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
       | page        | pagedisabled                 |
       | aboutus     | about us page                |
       | offers      | offers page                  |
-      | imprint     | imprint page                 |
+      | legalnotice     | Legal Notice page                 |
       | contact     | contact page                 |
       | help        | help page                    |
       | maintenance | maintenance information page |
@@ -51,7 +51,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
       | page        | pagetitle      |
       | aboutus     | About us       |
       | offers      | Offers         |
-      | imprint     | Imprint        |
+      | legalnotice     | Legal Notice        |
       | contact     | Contact        |
       | help        | Help           |
       | maintenance | Maintenance    |
@@ -79,7 +79,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
       | page        |
       | aboutus     |
       | offers      |
-      | imprint     |
+      | legalnotice     |
       | contact     |
       | help        |
       | maintenance |
@@ -106,7 +106,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
       | page        | pagetitle      |
       | aboutus     | About us       |
       | offers      | Offers         |
-      | imprint     | Imprint        |
+      | legalnotice     | Legal Notice        |
       | contact     | Contact        |
       | help        | Help           |
       | maintenance | Maintenance    |
@@ -134,7 +134,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
       | page        | pagetitle      |
       | aboutus     | About us       |
       | offers      | Offers         |
-      | imprint     | Imprint        |
+      | legalnotice     | Legal Notice        |
       | contact     | Contact        |
       | help        | Help           |
       | maintenance | Maintenance    |
@@ -161,7 +161,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
       | page        | pagetitle      |
       | aboutus     | About us       |
       | offers      | Offers         |
-      | imprint     | Imprint        |
+      | legalnotice     | Legal Notice        |
       | contact     | Contact        |
       | help        | Help           |
       | maintenance | Maintenance    |
@@ -188,7 +188,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
       | page        | pagetitle      |
       | aboutus     | About us       |
       | offers      | Offers         |
-      | imprint     | Imprint        |
+      | legalnotice     | Legal Notice        |
       | contact     | Contact        |
       | help        | Help           |
       | maintenance | Maintenance    |
@@ -223,7 +223,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
       | page        | pagetitle      |
       | aboutus     | About us       |
       | offers      | Offers         |
-      | imprint     | Imprint        |
+      | legalnotice     | Legal Notice        |
       | contact     | Contact        |
       | help        | Help           |
       | maintenance | Maintenance    |
@@ -266,7 +266,7 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
       | page        |
       | aboutus     |
       | offers      |
-      | imprint     |
+      | legalnotice     |
       | contact     |
       | help        |
       | maintenance |

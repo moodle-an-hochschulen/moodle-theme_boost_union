@@ -30,7 +30,7 @@ require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
 $config = get_config('theme_boost_union');
 
 // The static pages to be supported.
-$staticpages = ['aboutus', 'offers', 'imprint', 'contact', 'help', 'maintenance', 'page1', 'page2', 'page3'];
+$staticpages = ['aboutus', 'offers', 'legalnotice', 'contact', 'help', 'maintenance', 'page1', 'page2', 'page3'];
 
 // Iterate over the static pages.
 foreach ($staticpages as $staticpage) {

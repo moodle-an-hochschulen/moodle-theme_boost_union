@@ -474,25 +474,25 @@ $string['offerslinkpositionfooter'] = 'Add a link to the offers page to the foot
 $string['offerslinkpositionboth'] = 'Add a link to the offers page to the footnote and to the footer (questionmark) icon';
 $string['offerslinkpositionsetting'] = 'Offers link position';
 $string['offerslinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the offers page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
-// ... Section: Imprint.
-$string['imprintheading'] = 'Imprint';
-// ... ... Setting: Enable imprint.
-$string['enableimprintsetting'] = 'Enable imprint';
-$string['imprintdisabled'] = 'The imprint page is disabled for this site. There is nothing to see here.';
-// ... ... Setting: Imprint content.
-$string['imprintcontentsetting'] = 'Imprint content';
-$string['imprintcontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the imprint page.';
-// ... ... Setting: Imprint page title.
-$string['imprintpagetitledefault'] = 'Imprint';
-$string['imprintpagetitlesetting'] = 'Imprint page title';
-$string['imprintpagetitlesetting_desc'] = 'In this setting, you can define the title of the imprint page. This text will be used as link text to the imprint page as well if you configure \'Imprint link position\' accordingly.';
-// ... ... Setting: Imprint link position.
-$string['imprintlinkpositionnone'] = 'Do not automatically show a link to the imprint page';
-$string['imprintlinkpositionfootnote'] = 'Add a link to the imprint page to the footnote';
-$string['imprintlinkpositionfooter'] = 'Add a link to the imprint page to the footer (questionmark) icon';
-$string['imprintlinkpositionboth'] = 'Add a link to the imprint page to the footnote and to the footer (questionmark) icon';
-$string['imprintlinkpositionsetting'] = 'Imprint link position';
-$string['imprintlinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the imprint page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+// ... Section: Legal Notice.
+$string['legalnoticeheading'] = 'Legal Notice';
+// ... ... Setting: Enable Legal Notice.
+$string['enablelegalnoticesetting'] = 'Enable Legal Notice';
+$string['legalnoticedisabled'] = 'The Legal Notice page is disabled for this site. There is nothing to see here.';
+// ... ... Setting: Legal Notice content.
+$string['legalnoticecontentsetting'] = 'Legal Notice content';
+$string['legalnoticecontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the Legal Notice page.';
+// ... ... Setting: Legal Notice page title.
+$string['legalnoticepagetitledefault'] = 'Legal Notice';
+$string['legalnoticepagetitlesetting'] = 'Legal Notice page title';
+$string['legalnoticepagetitlesetting_desc'] = 'In this setting, you can define the title of the Legal Notice page. This text will be used as link text to the Legal Notice page as well if you configure \'Legal Notice link position\' accordingly.';
+// ... ... Setting: Legal Notice link position.
+$string['legalnoticelinkpositionnone'] = 'Do not automatically show a link to the Legal Notice page';
+$string['legalnoticelinkpositionfootnote'] = 'Add a link to the Legal Notice page to the footnote';
+$string['legalnoticelinkpositionfooter'] = 'Add a link to the Legal Notice page to the footer (questionmark) icon';
+$string['legalnoticelinkpositionboth'] = 'Add a link to the Legal Notice page to the footnote and to the footer (questionmark) icon';
+$string['legalnoticelinkpositionsetting'] = 'Legal Notice link position';
+$string['legalnoticelinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the Legal Notice page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
 // ... Section: Contact page.
 $string['contactheading'] = 'Contact';
 // ... ... Setting: Enable contact page.

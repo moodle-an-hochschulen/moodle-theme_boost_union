@@ -51,12 +51,12 @@ class behat_theme_boost_union_base_content extends behat_base {
     }
 
     /**
-     * Open the imprint page.
+     * Open the Legal Notice page.
      *
-     * @Given /^I am on imprint page$/
+     * @Given /^I am on Legal Notice page$/
      */
-    public function i_am_on_imprint_page() {
-        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/imprint.php']);
+    public function i_am_on_legalnotice_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/legalnotice.php']);
     }
 
     /**

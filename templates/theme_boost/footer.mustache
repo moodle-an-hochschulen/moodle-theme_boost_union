@@ -29,9 +29,9 @@
             "login_info": "You are logged in as cute kitten",
             "moodle_release": "90210"
         },
-        "imprintlinkpositionfooter": true,
-        "imprintlink": "https://localhost/theme/boost_union/pages/imprint.php",
-        "imprinttitle": "Imprint",
+        "legalnoticelinkpositionfooter": true,
+        "legalnoticelink": "https://localhost/theme/boost_union/pages/legalnotice.php",
+        "legalnoticetitle": "Legal Notice",
         "contactlinkpositionfooter": true,
         "contactlink": "https://localhost/theme/boost_union/pages/contact.php",
         "contacttitle": "Contact",
@@ -62,7 +62,7 @@
     This template is a modified version of theme_boost/footer
 
     Modifications compared to the original template:
-    * Added the possibility to show the imprint page link.
+    * Added the possibility to show the legal notice page link.
     * Added the possibility to show the contact page link.
     * Added the possibility to show the help page link.
     * Added the possibility to show the maintenance page link.
@@ -107,11 +107,11 @@
                     </div>
                 {{/ offerslinkpositionfooter }}
 
-                {{# imprintlinkpositionfooter }}
-                    <div class="footer-support-link theme_boost_union_footer_imprintlink">
-                        <a href="{{ imprintlink }}"><i class="icon fa fa-building-o fa-fw " aria-hidden="true"></i>{{ imprintpagetitle }}</a>
+                {{# legalnoticelinkpositionfooter }}
+                    <div class="footer-support-link theme_boost_union_footer_legalnoticelink">
+                        <a href="{{ legalnoticelink }}"><i class="icon fa fa-building-o fa-fw " aria-hidden="true"></i>{{ legalnoticepagetitle }}</a>
                     </div>
-                {{/ imprintlinkpositionfooter }}
+                {{/ legalnoticelinkpositionfooter }}
 
                 {{# contactlinkpositionfooter }}
                     <div class="footer-support-link theme_boost_union_footer_contactlink">

@@ -1334,7 +1334,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 get_string('staticpagestab', 'theme_boost_union', null, true));
 
         // The static pages to be supported.
-        $staticpages = ['aboutus', 'offers', 'imprint', 'contact', 'help', 'maintenance', 'page1', 'page2', 'page3'];
+        $staticpages = ['aboutus', 'offers', 'legalnotice', 'contact', 'help', 'maintenance', 'page1', 'page2', 'page3'];
 
         // Iterate over the pages.
         foreach ($staticpages as $staticpage) {
