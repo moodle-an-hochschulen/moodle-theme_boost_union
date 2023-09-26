@@ -1251,6 +1251,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                         &:after {
                             content: '\f105';
                             font-family: '#{$fa-style-family}';
+                            font-weight: 900;
                             line-height: 10px;
                             position: absolute;
                             top: 40%;
@@ -1742,6 +1743,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
                                     &:before {
                                         content: '\f142';
                                         font-family: '#{$fa-style-family}';
+                                        font-weight: 900;
                                     }
                                     /* The arrow icon after the More menu link text is hidden when the smart menus are
                                        not added */
