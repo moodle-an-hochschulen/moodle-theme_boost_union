@@ -43,6 +43,16 @@ require_once($CFG->libdir.'/tablelib.php');
 class flavours_overview extends \table_sql {
 
     /**
+     * @var int $count Flavours count.
+     */
+    private $count;
+
+    /**
+     * @var int $totalflavours Total flavours count.
+     */
+    private $totalflavours;
+
+    /**
      * Setup table.
      *
      * @throws \coding_exception

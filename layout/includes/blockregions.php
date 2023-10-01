@@ -40,6 +40,11 @@ require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 class additionalregions {
 
     /**
+     * @var array $regions List of page regions.
+     */
+    private $regions;
+
+    /**
      * Constructor.
      * Get the all regions in theme_boost_union_get_additional_regions function.
      */

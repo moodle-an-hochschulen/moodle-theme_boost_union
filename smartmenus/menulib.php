@@ -443,7 +443,7 @@ class smartmenu_helper {
         if ($menus = self::find_condition_used_menus($cohortid)) {
             // Remove the menus cache for the user.
             $menus = array_column($menus, 'id');
-            array_walk($menus, ['self', 'remove_user_cachemenu'], $userid);
+            array_walk($menus, [self::class, 'remove_user_cachemenu'], $userid);
         }
 
         if ($items = self::find_condition_used_menuitems($cohortid)) {
@@ -451,8 +451,8 @@ class smartmenu_helper {
             $menus = array_unique(array_column($items, 'menu'));
             $items = array_column($items, 'id');
             // Remove the menus and item cache for the user.
-            array_walk($menus, ['self', 'remove_user_cachemenu'], $userid);
-            array_walk($items, ['self', 'remove_user_cacheitem'], $userid);
+            array_walk($menus, [self::class, 'remove_user_cachemenu'], $userid);
+            array_walk($items, [self::class, 'remove_user_cacheitem'], $userid);
 
         }
     }
@@ -472,7 +472,7 @@ class smartmenu_helper {
         if ($menus = self::find_condition_used_menus($roleid, 'roles')) {
             // Remove the menus cache for the user.
             $menus = array_column($menus, 'id');
-            array_walk($menus, ['self', 'remove_user_cachemenu'], $userid);
+            array_walk($menus, [self::class, 'remove_user_cachemenu'], $userid);
         }
 
         if ($items = self::find_condition_used_menuitems($roleid, 'roles')) {
@@ -480,8 +480,8 @@ class smartmenu_helper {
             $menus = array_unique(array_column($items, 'menu'));
             $items = array_column($items, 'id');
             // Remove the menus and item cache for the user.
-            array_walk($menus, ['self', 'remove_user_cachemenu'], $userid);
-            array_walk($items, ['self', 'remove_user_cacheitem'], $userid);
+            array_walk($menus, [self::class, 'remove_user_cachemenu'], $userid);
+            array_walk($items, [self::class, 'remove_user_cacheitem'], $userid);
         }
     }
 
@@ -497,7 +497,7 @@ class smartmenu_helper {
             // List of items to purge.
             $items = array_column($items, 'id');
             // Remove the menus items for the user.
-            array_walk($items, ['self', 'purge_item_cache']);
+            array_walk($items, [self::class, 'purge_item_cache']);
         }
     }
 
