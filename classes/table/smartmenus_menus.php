@@ -39,6 +39,16 @@ require_once($CFG->libdir.'/tablelib.php');
 class smartmenus_menus extends \table_sql {
 
     /**
+     * @var int $count Smart menu menus count.
+     */
+    private $count;
+
+    /**
+     * @var int $totalmenus Total menu count.
+     */
+    private $totalmenus;
+
+    /**
      * Setup table.
      *
      * @throws \coding_exception
