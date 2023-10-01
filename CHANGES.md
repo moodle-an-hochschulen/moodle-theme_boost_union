@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-10-01 - Bugfix: Omit PHP deprecation warnings on PHP 8.2, solves #411.
 * 2023-10-01 - Test: Run Moodle Plugin CI with PHP 8.2 as well.
 * 2023-10-01 - Bugfix: Smart menus did not support multilanguage filters, solves #376.
 * 2023-09-28 - Release: Make sure that Smart Menu SCSS does not affect installations which do not use smart menus, solves #380.

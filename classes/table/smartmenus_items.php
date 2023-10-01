@@ -39,6 +39,21 @@ require_once($CFG->libdir.'/tablelib.php');
 class smartmenus_items extends \table_sql {
 
     /**
+     * @var int $count Smart menu items count.
+     */
+    private $count;
+
+    /**
+     * @var int $totalmenuitems Total menu items count.
+     */
+    private $totalmenuitems;
+
+    /**
+     * @var int $menuid Menu ID.
+     */
+    private $menuid;
+
+    /**
      * Setup table.
      *
      * @param int $menuid The menu ID.
