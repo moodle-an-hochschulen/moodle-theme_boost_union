@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-12-10 - Improvement: implement new settings for Course overview block, solves #204
+
 ### v4.3-r3
 
 * 2023-12-05 - Improvement: Option to suppress footer (circle containing the question mark) button, solves #444.

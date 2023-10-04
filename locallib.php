@@ -1394,3 +1394,39 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
     }
     return $scss;
 }
+
+/**
+ * Adds appropriate scss to hide the course image and/or the course progress in the course overview block, depending
+ * on the theme settings courseoverviewshowcourseimages and courseoverviewshowcourseprogress respectively.
+ *
+ * @param theme_config $theme The theme config object.
+ * @return string
+ */
+function theme_boost_union_get_scss_courseoverview_block($theme) {
+    // Initialize SCSS snippet.
+    $scss = '';
+
+    // Selector for the course overview block.
+    $courseoverviewblockselector = '.block_myoverview.block div[data-region="courses-view"]';
+
+    // Get the course image setting, defaults to true.
+    $showcourseoverviewcourseimages = isset($theme->settings->courseoverviewshowcourseimages) ?
+        $theme->settings->courseoverviewshowcourseimages == 'yes' : true;
+
+    // If the corresponding setting is set to 'no'.
+    if (!$showcourseoverviewcourseimages) {
+        $scss .= $courseoverviewblockselector . ' .course-summaryitem > .row > .col-md-2 { display: none !important; }' . PHP_EOL;
+        $scss .= $courseoverviewblockselector . ' .course-listitem > .row > .col-md-2 { display: none !important; }' . PHP_EOL;
+        $scss .= $courseoverviewblockselector . ' .dashboard-card-img { display: none; }' . PHP_EOL;
+    }
+
+    // Get the course progress setting, defaults to true.
+    $showcourseprogress = isset($theme->settings->courseoverviewshowcourseprogress) ?
+        $theme->settings->courseoverviewshowcourseprogress == 'yes' : true;
+
+    // If the corresponding setting is set to 'no'.
+    if (!$showcourseprogress) {
+        $scss .= $courseoverviewblockselector . ' .progress-text { display: none !important; }' . PHP_EOL;
+    }
+    return $scss;
+}
