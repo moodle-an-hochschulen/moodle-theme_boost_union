@@ -78,6 +78,9 @@ $string['backgroundimagesheading'] = 'General background images';
 // ... ... Setting: Background image
 $string['backgroundimagesetting'] = 'Background image';
 $string['backgroundimagesetting_desc'] = 'Here, you can upload a custom image to display as a background of the site. The background image you upload here will override the background image in your theme preset files.';
+// ... ... Setting: Background image position
+$string['backgroundimagepositionsetting'] = 'Background image position';
+$string['backgroundimagepositionsetting_desc'] = 'With this setting, you control the positioning of the background image within the browser window. The first value is the horizontal position, the second value is the vertical position.';
 // ... Section: Brand colors.
 $string['brandcolorsheading'] = 'Brand colors';
 // ... Section: Bootstrap colors.
@@ -168,6 +171,9 @@ $string['loginbackgroundimagesheading'] = 'Login page background images';
 // ... ... Setting: Login page background image.
 $string['loginbackgroundimage'] = 'Login page background images';
 $string['loginbackgroundimage_desc'] = 'The images to display as a background of the login page. One of these images will be picked randomly and shown when the user visits the login page. Please make sure not to use non-ASCII-characters in the filename if you want to display text for login background images.';
+// ... ... Setting: Login page background image position.
+$string['loginbackgroundimagepositionsetting'] = 'Login page background image position';
+$string['loginbackgroundimagepositionsetting_desc'] = 'With this setting, you control the positioning of the login page background image within the browser window. The first value is the horizontal position, the second value is the vertical position.';
 // ... ... Setting: Login page background image text.
 $string['loginbackgroundimagetextsetting'] = 'Display text for login background images';
 $string['loginbackgroundimagetextsetting_desc'] = 'With this optional setting you can add text, e.g. a copyright notice to your uploaded background images. This text will appear on top of the page footer on the login page. However, for screen real estate reasons, it is only shown on larger screen sizes.<br/>
