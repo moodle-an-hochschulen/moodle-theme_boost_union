@@ -43,6 +43,26 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And the "class" attribute of "body" "css_element" should contain "loginbackgroundimage3"
 
   @javascript @_file_upload
+  Scenario Outline: Setting: Login page background images - Define the background image position.
+    Given the following config values are set as admin:
+      | config                       | value      | plugin            |
+      | loginbackgroundimageposition | <position> | theme_boost_union |
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
+    And I press "Save changes"
+    And I log out
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then DOM element "body.pagelayout-login" should have computed style "background-position" "<cssvalue>"
+
+    # We do not want to burn too much CPU time by testing all available options. We just test the default value and one non-default value.
+    Examples:
+      | position      | cssvalue |
+      | center center | 50% 50%  |
+      | left top      | 0% 0%    |
+
+  @javascript @_file_upload
   Scenario: Setting: Display text for login background images - Add a text to the login background image
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration
