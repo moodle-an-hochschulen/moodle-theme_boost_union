@@ -114,6 +114,10 @@ Here, you can upload a custom image that the browser will show as the favicon of
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 Please note: This will not interfere with the setting "theme_boost_union | loginbackgroundimage" which means that the pictures uploaded here will be shown on all pages except the login page.
 
+###### Background image position
+
+With this setting, you control the positioning of the background image within the browser window. The first value is the horizontal position, the second value is the vertical position.
+
 ##### Brand colors
 
 ###### Brand color
@@ -154,6 +158,10 @@ With this setting, you can modify the icons for activities and resources which a
 
 This setting is already available in the Moodle core theme Boost.
 However, in Boost Union you can not only add one but up to 25 files as a background image for the login page. One of these images will be picked randomly and shown when the user visits the login page.
+
+###### Login page background image position
+
+With this setting, you control the positioning of the login page background image within the browser window. The first value is the horizontal position, the second value is the vertical position.
 
 ###### Display text for login background images
 
