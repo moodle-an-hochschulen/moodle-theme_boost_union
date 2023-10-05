@@ -534,7 +534,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
-        // Create login page background image setting.
+        // Setting: Login page background image.
         $name = 'theme_boost_union/loginbackgroundimage';
         $title = get_string('loginbackgroundimage', 'theme_boost_union', null, true);
         $description = get_string('loginbackgroundimage_desc', 'theme_boost_union', null, true);
@@ -543,7 +543,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create login page background image text setting.
+        // Setting: Login page background image text.
         $name = 'theme_boost_union/loginbackgroundimagetext';
         $title = get_string('loginbackgroundimagetextsetting', 'theme_boost_union', null, true);
         $description = get_string('loginbackgroundimagetextsetting_desc', 'theme_boost_union', null, true);
@@ -556,7 +556,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
-        // Create login form position setting.
+        // Setting: Login form position.
         $name = 'theme_boost_union/loginformposition';
         $title = get_string('loginformpositionsetting', 'theme_boost_union', null, true);
         $description = get_string('loginformpositionsetting_desc', 'theme_boost_union', null, true);
@@ -569,7 +569,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 $loginformoptions);
         $tab->add($setting);
 
-        // Create login form transparency setting.
+        // Setting: Login form transparency.
         $name = 'theme_boost_union/loginformtransparency';
         $title = get_string('loginformtransparencysetting', 'theme_boost_union', null, true);
         $description = get_string('loginformtransparencysetting_desc', 'theme_boost_union', null, true);
