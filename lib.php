@@ -259,8 +259,17 @@ function theme_boost_union_get_extra_scss($theme) {
         $content .= '}';
     }
 
-    // Lastly, we make sure that the background image is fixed and not repeated. Just to be sure.
+    // If a login background image is present, we set its background image position.
+    if (!empty($loginbackgroundimagepresent)) {
+        $content .= 'body.pagelayout-login { ';
+        $content .= "background-position: ".get_config('theme_boost_union', 'loginbackgroundimageposition').";";
+        $content .= '}';
+    }
+    // And we set the normal background image position in any case.
     $content .= 'body { ';
+    $content .= "background-position: ".get_config('theme_boost_union', 'backgroundimageposition').";";
+
+    // Lastly, we make sure that the (normal and login) background image is fixed and not repeated. Just to be sure.
     $content .= "background-repeat: no-repeat;";
     $content .= "background-attachment: fixed;";
     $content .= '}';

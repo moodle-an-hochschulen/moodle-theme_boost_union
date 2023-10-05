@@ -293,6 +293,34 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Setting: Background image position.
+        $name = 'theme_boost_union/backgroundimageposition';
+        $title = get_string('backgroundimagepositionsetting', 'theme_boost_union', null, true);
+        $description = get_string('backgroundimagepositionsetting_desc', 'theme_boost_union', null, true);
+        $backgroundimagepositionoptions = [
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM, ];
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP, $backgroundimagepositionoptions);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Create brand colors heading.
         $name = 'theme_boost_union/brandcolorsheading';
         $title = get_string('brandcolorsheading', 'theme_boost_union', null, true);
@@ -540,6 +568,34 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('loginbackgroundimage_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configstoredfile($name, $title, $description, 'loginbackgroundimage', 0,
                 ['maxfiles' => 25, 'accepted_types' => 'web_image']);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Login page background image position.
+        $name = 'theme_boost_union/loginbackgroundimageposition';
+        $title = get_string('loginbackgroundimagepositionsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginbackgroundimagepositionsetting_desc', 'theme_boost_union', null, true);
+        $loginbackgroundimagepositionoptions = [
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM, ];
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP, $loginbackgroundimagepositionoptions);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
