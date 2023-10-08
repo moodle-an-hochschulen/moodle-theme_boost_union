@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.2-r3
 
 * 2023-10-01 - Bugfix: Omit PHP deprecation warnings on PHP 8.2, solves #411.
 * 2023-10-01 - Test: Run Moodle Plugin CI with PHP 8.2 as well.
