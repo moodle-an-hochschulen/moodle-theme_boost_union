@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r13
 
 * 2023-10-01 - Bugfix: Omit PHP deprecation warnings on PHP 8.2, solves #411.
 * 2023-10-01 - Bugfix: Smart menus did not support multilanguage filters, solves #376.
