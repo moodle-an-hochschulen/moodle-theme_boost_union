@@ -1848,6 +1848,31 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
+        // Create administration tab.
+        $tab = new admin_settingpage('theme_boost_union_functionality_administration',
+            get_string('administrationtab', 'theme_boost_union', null, true));
+
+        // Create course management heading.
+        $name = 'theme_boost_union/coursemanagementheading';
+        $title = get_string('coursemanagementheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Prepare course management page URL.
+        $coursemgnturl = new moodle_url('/course/management.php');
+
+        // Setting: Show view course icon in course management.
+        $name = 'theme_boost_union/showviewcourseiconincoursemgnt';
+        $title = get_string('showviewcourseiconincoursemgntsetting', 'theme_boost_union', null, true);
+        $description = get_string('showviewcourseiconincoursemgntsesetting_desc', 'theme_boost_union',
+                $coursemgnturl->out(), true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
         // Add settings page to the admin settings category.
         $ADMIN->add('theme_boost_union', $page);
 
