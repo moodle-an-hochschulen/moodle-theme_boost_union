@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-10-14 - Add automated release to moodle.org/plugins
+
 ### v4.1-r13
 
 * 2023-10-01 - Bugfix: Omit PHP deprecation warnings on PHP 8.2, solves #411.
