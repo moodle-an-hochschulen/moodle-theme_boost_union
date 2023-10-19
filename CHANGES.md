@@ -7,6 +7,7 @@ Changes
 ### Unreleased
 
 * 2023-10-14 - Add automated release to moodle.org/plugins
+* 2023-10-19 - Bugfix: Added missing standard_end_of_body_html() call in footer, solves #428.
 
 ### v4.2-r3
 
