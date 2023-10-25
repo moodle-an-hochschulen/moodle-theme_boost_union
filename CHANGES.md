@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-10-25 - Upgrade: Adopt changes in layout/drawers.php from Boost core.
 * 2023-10-25 - Upgrade: Adopt changes in primary-drawer-mobile.mustache from Boost core.
 * 2023-10-25 - Upgrade: Adopt changes in drawers.mustache and footer.mustache from Boost core.
 * 2023-10-20 - Prepare compatibility for Moodle 4.3.

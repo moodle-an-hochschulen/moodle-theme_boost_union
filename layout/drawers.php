@@ -56,9 +56,6 @@ if ($activitynavigation == THEME_BOOST_UNION_SETTING_SELECT_YES) {
 // Add block button in editing mode.
 $addblockbutton = $OUTPUT->addblockbutton();
 
-user_preference_allow_ajax_update('drawer-open-index', PARAM_BOOL);
-user_preference_allow_ajax_update('drawer-open-block', PARAM_BOOL);
-
 if (isloggedin()) {
     $courseindexopen = (get_user_preferences('drawer-open-index', true) == true);
 
@@ -79,7 +76,7 @@ if (isloggedin()) {
     }
 }
 
-if (defined('BEHAT_SITE_RUNNING')) {
+if (defined('BEHAT_SITE_RUNNING') && get_user_preferences('behat_keep_drawer_closed') != 1) {
     try {
         if (
             get_config('theme_boost_union', 'showsitehomerighthandblockdraweronvisit') === false &&
