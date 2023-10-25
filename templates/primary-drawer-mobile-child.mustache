@@ -28,7 +28,7 @@
     }
 }}
 
-<a id="drop-down-{{sort}}" href="#" class="{{#itemdata.classes}} {{.}} {{/itemdata.classes}} list-group-item list-group-item-action icons-collapse-expand collapsed d-flex" title="{{tooltip}}" data-toggle="collapse" data-target="#drop-down-menu-{{sort}}" aria-expanded="false" aria-controls="drop-down-menu-{{sort}}">
+<a id="drop-down-{{sort}}" href="#" class="{{#itemdata.classes}} {{.}} {{/itemdata.classes}} list-group-item list-group-item-action icons-collapse-expand {{^isopen}}collapsed {{/isopen}}d-flex" title="{{tooltip}}" data-toggle="collapse" data-target="#drop-down-menu-{{sort}}" aria-expanded="{{#isopen}}true{{/isopen}}{{^isopen}}false{{/isopen}}" aria-controls="drop-down-menu-{{sort}}">
     {{{text}}}
     <span class="ml-auto expanded-icon icon-no-margin mx-2">
         {{#pix}} t/expanded, core {{/pix}}
@@ -43,7 +43,7 @@
         </span>
     </span>
 </a>
-<div class="collapse list-group-item p-0 border-0" role="menu" id="drop-down-menu-{{sort}}" aria-labelledby="drop-down-{{sort}}">
+<div class="collapse {{#isopen}}show {{/isopen}}list-group-item p-0 border-0" role="menu" id="drop-down-menu-{{sort}}" aria-labelledby="drop-down-{{sort}}">
     {{#children}}
         <!-- Third level child support - Custom -->
         {{#haschildren}}
