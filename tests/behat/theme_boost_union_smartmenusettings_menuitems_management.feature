@@ -87,12 +87,12 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
       | Info  |
     And ".action-delete" "css_element" should exist in the "smartmenus_items" "table"
     And I click on ".action-delete" "css_element" in the "Info" "table_row"
-    And I should see "Are you sure you want to delete this menu item from the smart menu?" in the ".moodle-dialogue-confirm" "css_element"
-    And I click on "Cancel" "button" in the ".moodle-dialogue-confirm" "css_element"
+    And I should see "Are you sure you want to delete this menu item from the smart menu?" in the ".modal-dialog" "css_element"
+    And I click on "Cancel" "button" in the ".modal-dialog" "css_element"
     And I should see "Info" in the "smartmenus_items" "table"
     And I click on ".action-delete" "css_element" in the "Info" "table_row"
-    And I should see "Are you sure you want to delete this menu item from the smart menu?" in the ".moodle-dialogue-confirm" "css_element"
-    And I click on "Yes" "button" in the ".moodle-dialogue-confirm" "css_element"
+    And I should see "Are you sure you want to delete this menu item from the smart menu?" in the ".modal-dialog" "css_element"
+    And I click on "Yes" "button" in the ".modal-dialog" "css_element"
     Then "smartmenus_items" "table" should not exist
     And I should see "There aren't any items added to this smart menu yet. Please add an item to this menu."
 
