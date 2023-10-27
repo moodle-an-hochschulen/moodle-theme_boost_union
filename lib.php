@@ -143,6 +143,12 @@ function theme_boost_union_get_pre_scss($theme) {
         'bootstrapcolorinfo' => ['info'],
         'bootstrapcolorwarning' => ['warning'],
         'bootstrapcolordanger' => ['danger'],
+        'activityiconcoloradministration' => ['activity-icon-administration-bg'],
+        'activityiconcolorassessment' => ['activity-icon-assessment-bg'],
+        'activityiconcolorcollaboration' => ['activity-icon-collaboration-bg'],
+        'activityiconcolorcommunication' => ['activity-icon-communication-bg'],
+        'activityiconcolorcontent' => ['activity-icon-content-bg'],
+        'activityiconcolorinterface' => ['activity-icon-interface-bg'],
     ];
 
     // Prepend variables first.
@@ -168,34 +174,6 @@ function theme_boost_union_get_pre_scss($theme) {
     // Set variables which are influenced by the h5pcontentmaxwidth setting.
     if (get_config('theme_boost_union', 'h5pcontentmaxwidth')) {
         $scss .= '$h5p-content-maxwidth: '.get_config('theme_boost_union', 'h5pcontentmaxwidth').";\n";
-    }
-
-    // Overwrite Boost core SCSS variables which are stored in a SCSS map and thus couldn't be added to $configurable above.
-    // Set variables for the activity icon colors.
-    $activityiconcolors = [];
-    if (get_config('theme_boost_union', 'activityiconcoloradministration')) {
-        $activityiconcolors[] = '"administration": '.get_config('theme_boost_union', 'activityiconcoloradministration');
-    }
-    if (get_config('theme_boost_union', 'activityiconcolorassessment')) {
-        $activityiconcolors[] = '"assessment": '.get_config('theme_boost_union', 'activityiconcolorassessment');
-    }
-    if (get_config('theme_boost_union', 'activityiconcolorcollaboration')) {
-        $activityiconcolors[] = '"collaboration": '.get_config('theme_boost_union', 'activityiconcolorcollaboration');
-    }
-    if (get_config('theme_boost_union', 'activityiconcolorcommunication')) {
-        $activityiconcolors[] = '"communication": '.get_config('theme_boost_union', 'activityiconcolorcommunication');
-    }
-    if (get_config('theme_boost_union', 'activityiconcolorcontent')) {
-        $activityiconcolors[] = '"content": '.get_config('theme_boost_union', 'activityiconcolorcontent');
-    }
-    if (get_config('theme_boost_union', 'activityiconcolorinterface')) {
-        $activityiconcolors[] = '"interface": '.get_config('theme_boost_union', 'activityiconcolorinterface');
-    }
-    if (count($activityiconcolors) > 0) {
-        $activityiconscss = '$activity-icon-colors: ('."\n";
-        $activityiconscss .= implode(",\n", $activityiconcolors);
-        $activityiconscss .= ');';
-        $scss .= $activityiconscss."\n";
     }
 
     // Set custom Boost Union SCSS variable: The block region outside left width.
