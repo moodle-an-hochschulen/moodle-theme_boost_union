@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-10-27 - Upgrade: Get rid of deprecation warning in the additional resources setting, solves #425.
 * 2023-10-27 - Upgrade: Use the new $activity-icon-* SCSS variables for the activity icon color settings.
 * 2023-10-27 - Upgrade: Replace deprecated user_preference_allow_ajax_update() function.
 * 2023-10-25 - Upgrade: Adopt changes in layout/drawers.php from Boost core.

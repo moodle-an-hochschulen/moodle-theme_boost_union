@@ -700,7 +700,7 @@ function theme_boost_union_get_additionalresources_templatecontext() {
             $filesforcontext[] = ['filename' => $af->get_filename(),
                                         'filetype' => $af->get_mimetype(),
                                         'filesize' => display_size($af->get_filesize()),
-                                        'fileicon' => $OUTPUT->image_icon(file_file_icon($af, 64), get_mimetype_description($af)),
+                                        'fileicon' => $OUTPUT->image_icon(file_file_icon($af), get_mimetype_description($af)),
                                         'fileurlpersistent' => $urlpersistent->out(),
                                         'fileurlrevisioned' => $urlrevisioned->out(), ];
         }
