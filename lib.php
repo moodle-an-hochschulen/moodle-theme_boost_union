@@ -573,3 +573,25 @@ function theme_boost_union_output_fragment_icons_list($args) {
         return $OUTPUT->render_from_template('theme_boost_union/fontawesome-iconpicker-popover', ['options' => $icons]);
     }
 }
+
+/**
+ * Define preferences which may be set via the core_user_set_user_preferences external function.
+ *
+ * @uses core_user::is_current_user
+ *
+ * @return array[]
+ */
+function theme_boost_union_user_preferences(): array {
+    // Build preferences array.
+    $preferences = [];
+    for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_INFOBANNER_COUNT; $i++) {
+        $preferences['theme_boost_union_infobanner'.$i.'_dismissed'] = [
+            'type' => PARAM_INT,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => 0,
+            'choices' => [0, 1],
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+        ];
+    }
+    return $preferences;
+}

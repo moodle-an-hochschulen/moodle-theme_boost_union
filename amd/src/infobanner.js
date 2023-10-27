@@ -36,7 +36,9 @@ define(['jquery'], function($) {
             var infobannerno = $(this).attr('data-infobanner-no');
 
             // And store the dismissing of the info banner as a user preference to persist this decision.
-            M.util.set_user_preference('theme_boost_union_infobanner' + infobannerno + '_dismissed', true);
+            require(['core_user/repository'], function(UserRepository) {
+                UserRepository.setUserPreference('theme_boost_union_infobanner' + infobannerno + '_dismissed', true);
+            });
         });
     }
 

@@ -70,9 +70,6 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_INFOBANNER_COUNT; $i++) {
         if ($dismissible == true) {
             // Remember if we need the dismissible AMD module.
             $dismissibleamdneeded = true;
-
-            // Allow updating of the user prefefence.
-            user_preference_allow_ajax_update('theme_boost_union_infobanner'.$i.'_dismissed', PARAM_BOOL);
         }
 
         // Compose and remember this info banner's object.
