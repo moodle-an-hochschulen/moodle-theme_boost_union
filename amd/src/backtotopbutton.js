@@ -46,10 +46,8 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, Notificatio
 
             // This function fades the button in when the page is scrolled down or fades it out
             // if the user is at the top of the page again.
-            // Please note that Boost in Moodle 4.0 does not scroll the window object / whole body tag anymore,
-            // it scrolls the #page element instead.
-            $('#page').on('scroll', function() {
-                if ($('#page').scrollTop() > 220) {
+            $(window).on('scroll', function() {
+                if ($(window).scrollTop() > 220) {
                     checkAndShow();
                 } else {
                     checkAndHide();
@@ -59,7 +57,7 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, Notificatio
             // This function scrolls the page to top with a duration of 500ms.
             $('#back-to-top').on('click', function(event) {
                 event.preventDefault();
-                $('#page').animate({scrollTop: 0}, 500);
+                $('html, body').animate({scrollTop: 0}, 500);
                 $('#back-to-top').blur();
             });
 

@@ -69,7 +69,7 @@ class behat_theme_boost_union_base_general extends behat_base {
      */
     public function i_scroll_page_to_x_y_coordinates_of_page($posx, $posy) {
         try {
-            $this->getSession()->executeScript("(function(){document.getElementById('page').scrollTo($posx, $posy);})();");
+            $this->getSession()->executeScript("(function(){window.scrollTo($posx, $posy);})();");
         } catch (Exception $e) {
             throw new \Exception("Scrolling the page to given coordinates failed");
         }
