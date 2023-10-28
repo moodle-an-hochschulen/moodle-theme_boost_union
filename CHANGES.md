@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-10-28 - Upgrade: Fix a broken Behat test with the additional resources setting.
 * 2023-10-28 - Upgrade: Fix the back-to-top button which broke on Moodle 4.3, solves #419.
 * 2023-10-27 - Upgrade: Fix a broken Behat test with modal confirm dialogues.
 * 2023-10-27 - Upgrade: Get rid of deprecation warning in the additional resources setting, solves #425.

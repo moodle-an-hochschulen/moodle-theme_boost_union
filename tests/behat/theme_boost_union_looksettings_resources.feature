@@ -16,7 +16,7 @@ Feature: Configuring the theme_boost_union plugin for the "Resources" tab on the
     Then I should see "Additional resources list"
     And ".settings-additionalresources-filelist" "css_element" should exist
     And ".settings-additionalresources-filelist .list-group-item .icon[title='Image (JPEG)']" "css_element" should exist
-    And ".settings-additionalresources-filelist .list-group-item .icon[src$='/f/jpeg-64']" "css_element" should exist
+    And ".settings-additionalresources-filelist .list-group-item .icon[src$='/f/image']" "css_element" should exist
     And I should see "MIME type: image/jpeg" in the ".settings-additionalresources-filelist" "css_element"
     And I should see "Size: 38.5" in the ".settings-additionalresources-filelist" "css_element"
     And I should see "URL (persistent):" in the ".settings-additionalresources-filelist" "css_element"
