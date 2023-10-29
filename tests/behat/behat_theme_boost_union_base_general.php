@@ -24,6 +24,8 @@
 
 require_once(__DIR__.'/../../../../lib/behat/behat_base.php');
 
+use Behat\Mink\Exception\ExpectationException;
+
 /**
  * Class behat_theme_boost_union_base_general
  *
@@ -35,13 +37,12 @@ class behat_theme_boost_union_base_general extends behat_base {
     /**
      * Checks if the given DOM element has the given computed style.
      *
-     * @Given DOM element :arg1 should have computed style :arg2 :arg3
-     * @throws \Behat\Mink\Exception\ElementNotFoundException Thrown by behat_base::find
-     * @throws \Behat\Mink\Exception\ExpectationException
+     * @copyright 2023 Alexander Bias <bias@alexanderbias.de>
+     * @Then DOM element :arg1 should have computed style :arg2 :arg3
      * @param string $selector
      * @param string $style
      * @param string $value
-     * @return string The style of the image container
+     * @throws ExpectationException
      */
     public function dom_element_should_have_computed_style($selector, $style, $value) {
         $stylejs = "
