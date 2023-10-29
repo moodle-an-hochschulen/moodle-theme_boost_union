@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-10-29 - Test: Add missing Behat tests for Scroll-spy implementation, solves #86.
 * 2023-10-14 - Add automated release to moodle.org/plugins
 
 ### v4.2-r3
