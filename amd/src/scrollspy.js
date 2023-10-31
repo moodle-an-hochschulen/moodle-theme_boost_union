@@ -46,7 +46,7 @@ const initScrollSpy = () => {
 
         window.sessionStorage.setItem('edittoggled', true);
 
-        let viewporttop = document.getElementById('page').scrollTop;
+        let viewporttop = window.scrollY;
         let closest = null;
         let closestoffset = null;
 
@@ -76,7 +76,7 @@ const initScrollSpy = () => {
             let closest = document.getElementById(closestid);
             let y = closest.offsetTop + parseInt(closestdelta);
 
-            document.getElementById('page').scrollTo(0, y);
+            window.scrollTo(0, y);
         }
 
         window.sessionStorage.removeItem('edittoggled');

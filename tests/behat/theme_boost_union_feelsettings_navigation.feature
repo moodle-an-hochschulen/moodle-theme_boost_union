@@ -137,10 +137,12 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And I press "Purge all caches"
     And I am on "Course 1" course homepage
     And I scroll page to DOM element with ID "section-4"
+    And I make the navbar fixed
     And I turn editing mode on
     And I wait "2" seconds
     Then DOM element "section-4" is at the top of the viewport
     And page top is not at the top of the viewport
+    And I make the navbar fixed
     And I turn editing mode off
     And I wait "2" seconds
     Then DOM element "section-4" is at the top of the viewport

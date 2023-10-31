@@ -88,12 +88,43 @@ class behat_theme_boost_union_base_general extends behat_base {
         $scrolljs = "(function(){
                 let element = document.getElementById('$selector');
                 let y = element.offsetTop;
-                document.getElementById('page').scrollTo(0, y);
+                window.scrollTo(0, y);
         })();";
         try {
             $this->getSession()->executeScript($scrolljs);
         } catch (Exception $e) {
             throw new \Exception('Scrolling the page to the \''.$selector.'\' DOM element failed');
+        }
+    }
+
+    /**
+     * Make the navbar fixed.
+     *
+     * This is not really a real Behat step, but it is necessary for the test of the scrollspy feature in the
+     * 'Setting: Scrollspy - Enable "Scrollspy"' scenario.
+     *
+     * The problem is there:
+     * 1. The 'I scroll page to DOM element with ID' step scrolls the page down as it is needed for the scenario.
+     * 2. The 'I turn editing mode on' scrolls the page up again to click the edit button as the navbar is not fixed
+     *    in Behat runs.
+     *
+     * Because of this, the scrollspy would save the wrong viewport-y value and the scenario would fail.
+     * Against this background, we have to make the navbar fixed just before turning editing on.
+     * And that's what this step is here for.
+     *
+     * @copyright 2023 Alexander Bias <bias@alexanderbias.de>
+     * @Then I make the navbar fixed
+     * @return void
+     * @throws Exception
+     */
+    public function i_make_the_navbar_fixed() {
+        $fixedjs = "(function(){
+                document.querySelector('nav.navbar').style.position = 'fixed';
+        })();";
+        try {
+            $this->getSession()->executeScript($fixedjs);
+        } catch (Exception $e) {
+            throw new \Exception('Making the navbar fixed failed');
         }
     }
 
@@ -107,7 +138,7 @@ class behat_theme_boost_union_base_general extends behat_base {
     public function page_top_is_at_top_of_viewport() {
         $posviewportjs = "
             return (
-                document.getElementById('page').scrollTop
+                window.scrollY
             )
         ";
         $positionviewport = $this->evaluate_script($posviewportjs);
@@ -126,7 +157,7 @@ class behat_theme_boost_union_base_general extends behat_base {
     public function page_top_is_not_at_top_of_viewport() {
         $posviewportjs = "
             return (
-                document.getElementById('page').scrollTop
+                window.scrollY
             )
         ";
         $positionviewport = $this->evaluate_script($posviewportjs);
@@ -152,7 +183,7 @@ class behat_theme_boost_union_base_general extends behat_base {
         $positionelement = $this->evaluate_script($poselementjs);
         $posviewportjs = "
             return (
-                document.getElementById('page').scrollTop
+                window.scrollY
             )
         ";
         $positionviewport = $this->evaluate_script($posviewportjs);
