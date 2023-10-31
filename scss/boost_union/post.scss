@@ -354,9 +354,9 @@
    Again, we have to distinguish between really small screens and larger screens
    (where the fotter button is shown as well). */
 body.hasstickyfooter #back-to-top {
-    bottom: 5rem;
+    bottom: 7rem;
     @include media-breakpoint-up(sm) {
-        bottom: 9rem;
+        bottom: 10rem;
     }
 }
 
