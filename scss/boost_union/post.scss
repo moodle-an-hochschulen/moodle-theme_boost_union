@@ -338,25 +338,52 @@
     /* Move the back to top button when right drawer is shown. */
     right: calc(#{$drawer-right-width} + 2rem);
 }
+/* If the communications button is shown, the back to top button has to be moved more upwards.
+   To realize this, our back-to-top JS has added a class to the body tag. */
+body.theme-boost-union-commincourse #back-to-top {
+    /* On small screens, the footer button and the communication button are not there yet.
+       Thus, this only applies on larger screens where the footer button is shown. */
+    @include media-breakpoint-up(sm) {
+        bottom: 8rem;
+    }
+}
 /* If the smart menu bottom bar is shown, the back to top button has to be moved even more upwards. */
 @include media-breakpoint-down(sm) {
-    #page-wrapper #page.footer-bottom-menu #back-to-top {
+    #page.footer-bottom-menu #back-to-top {
+        /* On smaller screens where the footer button is not shown yet. */
         bottom: calc(60px + 1rem);
-        /* On larger screens. */
+        /* On larger screens where the footer button is shown. */
         @include media-breakpoint-up(sm) {
             bottom: calc(60px + 4rem);
+        }
+    }
+
+    /* Again, if the communications button is shown, the back to top button has to be moved even more upwards. */
+    body.theme-boost-union-commincourse #page.footer-bottom-menu #back-to-top {
+        /* On small screens, the footer button and the communication button are not there yet.
+           Thus, this only applies on larger screens where the footer button is shown. */
+        @include media-breakpoint-up(sm) {
+            bottom: calc(60px + 7rem);
         }
     }
 }
 
 /* As soon as the sticky footer is shown (especially in the database activity),
-   the back to top button has to be moved further up.
-   Again, we have to distinguish between really small screens and larger screens
-   (where the fotter button is shown as well). */
+   the back to top button has to be moved further up. */
 body.hasstickyfooter #back-to-top {
+    /* On smaller screens where the footer button is not shown yet. */
     bottom: 7rem;
+    /* On larger screens where the footer button is shown. */
     @include media-breakpoint-up(sm) {
         bottom: 10rem;
+    }
+}
+/* Again, if the communications button is shown, the back to top button has to be moved even more upwards. */
+body.theme-boost-union-commincourse.hasstickyfooter #back-to-top {
+    /* On small screens, the footer button and the communication button are not there yet.
+       Thus, this only applies on larger screens where the footer button is shown. */
+    @include media-breakpoint-up(sm) {
+        bottom: 13rem;
     }
 }
 
@@ -1929,6 +1956,11 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
             /* Increase the space at the bottom for the footer popover, as the bottom menu bar might hide it. */
             .btn-footer-popover {
                 bottom: calc(60px + 1rem);
+            }
+            /* Increase the space at the bottom for the communications button,
+               as the bottom menu bar might hide it as well. */
+            .btn-footer-communication {
+                bottom: calc(60px + 4rem);
             }
         }
     }

@@ -61,6 +61,14 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, Notificatio
                 $('#back-to-top').blur();
             });
 
+            // This will check if there is a communication button shown on the page already.
+            // If yes, it will add a class to the body tag which will be later used to align the back-to-top button
+            // with the communications button.
+            // This is necessary as the communications button would otherwise be overlaid by the back-to-top button.
+            if ($('#page-footer .btn-footer-communication').length) {
+                $('body').addClass('theme-boost-union-commincourse');
+            }
+
             return true;
         }).fail(Notification.exception);
     }
