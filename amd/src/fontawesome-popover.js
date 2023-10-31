@@ -132,6 +132,7 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
         }
 
         // Fetch the icons list and setup popover with icons list.
+        // eslint-disable-next-line promise/valid-params
         getIconList().then(function(html) {
 
             $(pickerInput).popover({
