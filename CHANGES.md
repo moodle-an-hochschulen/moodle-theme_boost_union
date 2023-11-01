@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.3-r1
 
 * 2023-10-31 - Upgrade: Align the new communications button with the back-to-top button and the bottom menu.
 * 2023-10-28 - Upgrade: Fix the scrollspy which broke on Moodle 4.3, solves #420.
