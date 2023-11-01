@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.2-r4
 
 * 2023-10-31 - Bugfix: Align the back-to-top button better with the sticky footer, solves #437.
 * 2023-10-29 - Test: Add missing Behat tests for Scroll-spy implementation, solves #86.
