@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-11-03 - Bugfix: Add missing cachedef strings to the language pack, solves #441.
+
 ### v4.2-r4
 
 * 2023-10-31 - Bugfix: Align the back-to-top button better with the sticky footer, solves #437.
