@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-11-03 - Bugfix: Add missing cachedef strings to the language pack, solves #441.
+
 ### v4.3-r1
 
 * 2023-10-31 - Upgrade: Align the new communications button with the back-to-top button and the bottom menu.
