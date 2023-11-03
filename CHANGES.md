@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-11-03 - Bugfix: Add missing cachedef strings to the language pack, solves #441.
+
 ### v4.1-r14
 
 * 2023-10-29 - Test: Add missing Behat tests for Scroll-spy implementation, solves #86.
