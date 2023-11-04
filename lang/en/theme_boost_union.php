@@ -767,6 +767,14 @@ $string['showhintcourseselfenrolfromuntil'] = 'The <strong>{$a->name}</strong> e
 $string['showhintcourseselfenrolsinceuntil'] = 'The <strong>{$a->name}</strong> enrolment instance allows unrestricted self enrolment until {$a->until}.';
 $string['showhintcourseselfenrolinstancecallforaction'] = 'If you don\'t want any Moodle user to have access to this course freely, please restrict the self enrolment settings.';
 
+// Settings: Administration tab.
+$string['administrationtab'] = 'Administration';
+// ... Section: Course management.
+$string['coursemanagementheading'] = 'Course management';
+// ... ... Setting: Show view course icon in course management.
+$string['showviewcourseiconincoursemgntsetting'] = 'Show view course icon';
+$string['showviewcourseiconincoursemgntsesetting_desc'] = 'By default, on the <a href="{$a}">course management page</a>, Moodle requires you to either open the course details or to pass through the course settings before you can click an additional UI element to view the course. By enabling this setting, you can add a \'View course\' icon directly to the category listing on the course management page.';
+
 // Settings: Flavours page.
 $string['configtitleflavours'] = 'Flavours';
 $string['flavoursappliesto'] = 'Applies to';

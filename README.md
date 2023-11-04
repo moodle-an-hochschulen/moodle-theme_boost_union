@@ -455,6 +455,16 @@ With this setting a hint will appear in the course header when a user is accessi
 
 With this setting a hint will appear in the course header if the course is visible and an enrolment without enrolment key is currently possible.
 
+#### Tab "Administration"
+
+In this tab there are the following settings:
+
+##### Course management
+
+###### Show view course icon
+
+By default, on the course management page, Moodle requires you to either open the course details or to pass through the course settings before you can click an additional UI element to view the course. By enabling this setting, you can add a 'View course' icon directly to the category listing on the course management page.
+
 ### Settings page "Flavours"
 
 Boost Union's flavours offer a possibility to override particular Moodle look & feel settings in particular contexts. On this page, you can create and manage flavours.
