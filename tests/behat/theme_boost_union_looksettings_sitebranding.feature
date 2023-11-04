@@ -138,6 +138,25 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'theme/image.php/boost_union/theme')][contains(@href, 'favicon')]" "xpath_element" should exist
     And "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/favicon')][contains(@href, 'favicon.ico')]" "xpath_element" should not exist
 
+  @javascript @_file_upload
+  Scenario Outline: Setting: Background image - Define the background image position.
+    Given the following config values are set as admin:
+      | config                  | value      | plugin            |
+      | backgroundimageposition | <position> | theme_boost_union |
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Background image" filemanager
+    And I press "Save changes"
+    And I am on site homepage
+    Then DOM element "body" should have computed style "background-position" "<cssvalue>"
+
+    # We do not want to burn too much CPU time by testing all available options. We just test the default value and one non-default value.
+    Examples:
+      | position      | cssvalue |
+      | center center | 50% 50%  |
+      | left top      | 0% 0%    |
+
   # Unfortunately, this can't be tested with Behat yet
   # Scenario: Setting: Bootstrap color for "Success" - Setting the color
 

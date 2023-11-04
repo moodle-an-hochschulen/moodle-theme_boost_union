@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-10-05 - Improvement: Allow the admin to set the background-position of the background and login background images, solves #111.
 * 2023-11-03 - Bugfix: Add missing cachedef strings to the language pack, solves #441.
 
 ### v4.3-r1
