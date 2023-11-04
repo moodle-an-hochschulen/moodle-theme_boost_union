@@ -30,7 +30,7 @@ $footnotesetting = get_config('theme_boost_union', 'footnote');
 // Only proceed if text area does not only contains empty tags.
 if (!html_is_blank($footnotesetting)) {
     // Use format_text function to enable multilanguage filtering.
-    $footnotesetting = format_text($footnotesetting);
+    $footnotesetting = format_text($footnotesetting, FORMAT_HTML, ['noclean' => true]);
 
     // Add marker to show the footnote to templatecontext.
     $templatecontext['showfootnote'] = true;
