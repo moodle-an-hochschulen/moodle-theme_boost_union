@@ -379,6 +379,10 @@ In this tab there are the following settings:
 
 Whatever you add to this textarea will be displayed at the end of a page, in the footer. Refer to the setting description on the settings page for further instructions.
 
+###### Footer
+
+With these settings, you can show where to show or whether to suppress the footer (circle containing the question mark) button.
+
 #### Tab "Static pages"
 
 In this tab there are the following settings:

@@ -92,6 +92,11 @@ define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH', 'fullwidth');
 define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_COURSECONTENTWIDTH', 'coursecontentwidth');
 define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_HEROWIDTH', 'herowidth');
 
+define('THEME_BOOST_UNION_SETTING_ENABLEFOOTER_BOTH', 'enablefooterbuttonall');
+define('THEME_BOOST_UNION_SETTING_ENABLEFOOTER_DESKTOP', 'enablefooterbuttondesktop');
+define('THEME_BOOST_UNION_SETTING_ENABLEFOOTER_MOBILE', 'enablefooterbuttonmobile');
+define('THEME_BOOST_UNION_SETTING_ENABLEFOOTER_HIDDEN', 'enablefooterbuttonhidden');
+
 /**
  * Returns the main SCSS content.
  *
@@ -310,6 +315,34 @@ function theme_boost_union_get_extra_scss($theme) {
 
     // Setting: Mark external links.
     $content .= theme_boost_union_get_scss_to_mark_external_links($theme);
+
+    // If the footerbutton is enabled.
+    $footerquestionmark = get_config('theme_boost_union', 'enablefooterbutton');
+
+    switch ($footerquestionmark) {
+        case THEME_BOOST_UNION_SETTING_ENABLEFOOTER_BOTH:
+            $content .= '@media (max-width: 575px) { #page-footer [data-region="footer-container-popover"] .btn-footer-popover ' .
+            '{ display: block !important; } }' . PHP_EOL;
+            break;
+        case THEME_BOOST_UNION_SETTING_ENABLEFOOTER_DESKTOP:
+            $content .= '@media (min-width: 576px) { #page-footer [data-region="footer-container-popover"] .btn-footer-popover ' .
+            '{ display: block !important; } }' . PHP_EOL;
+            $content .= '#page-footer .footer-content-popover.container { display: none !important; }' . PHP_EOL;
+            break;
+        case THEME_BOOST_UNION_SETTING_ENABLEFOOTER_MOBILE:
+            $content .= '@media (min-width: 576px) { #page-footer [data-region="footer-container-popover"] .btn-footer-popover ' .
+            '{ display: none !important; } }' . PHP_EOL;
+            $content .= '@media (max-width: 575px) { #page-footer [data-region="footer-container-popover"] .btn-footer-popover ' .
+            '{ display: block !important; bottom: 5rem; } }' . PHP_EOL;
+            $content .= '#page-footer .footer-content-popover.container { display: none !important; }' . PHP_EOL;
+            break;
+        default:
+            $content .= '@media (max-width: 575px) { #page-footer [data-region="footer-container-popover"] .btn-footer-popover ' .
+            '{ display: none !important; } }' . PHP_EOL;
+            $content .= '@media (max-width: 575px) { #page-footer .footer-content-popover.container ' .
+                '{ display: none !important; } }' . PHP_EOL;
+            break;
+    }
 
     return $content;
 }

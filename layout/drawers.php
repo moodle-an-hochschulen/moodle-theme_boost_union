@@ -185,6 +185,9 @@ require_once(__DIR__ . '/includes/footnote.php');
 // Include the template content for the static pages.
 require_once(__DIR__ . '/includes/staticpages.php');
 
+// Include the template content for the footer button.
+require_once(__DIR__ . '/includes/footer.php');
+
 // Include the template content for the JavaScript disabled hint.
 require_once(__DIR__ . '/includes/javascriptdisabledhint.php');
 
