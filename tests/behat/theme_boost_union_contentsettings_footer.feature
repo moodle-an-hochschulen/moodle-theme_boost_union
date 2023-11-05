@@ -45,3 +45,75 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And I should see "Footnote" in the "#footnote" "css_element"
     And I should not see "<span lang=\"en\" class=\"multilang\">Footnote</span>" in the "#footnote" "css_element"
     And I should not see "FootnoteFussnote" in the "#footnote" "css_element"
+
+  @javascript
+  Scenario: Setting: Footer - Enable and disable the footer button
+    Given the following config values are set as admin:
+      | config             | value                    | plugin            |
+      | enablefooterbutton | enablefooterbuttonhidden | theme_boost_union |
+    When I log in as "teacher1"
+    And I change viewport size to "large"
+    And I follow "Dashboard"
+    Then ".btn-footer-popover" "css_element" should not exist
+    And I change viewport size to "480x800"
+    Then ".btn-footer-popover" "css_element" should not exist
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I change viewport size to "large"
+    Then ".btn-footer-popover" "css_element" should not exist
+    And I change viewport size to "480x800"
+    Then ".btn-footer-popover" "css_element" should not exist
+    And I log out
+    And I follow "Log in"
+    And I change viewport size to "large"
+    Then ".btn-footer-popover" "css_element" should not exist
+    And I change viewport size to "480x800"
+    Then ".btn-footer-popover" "css_element" should not exist
+    And I log out
+    And the following config values are set as admin:
+      | config             | value                  | plugin            |
+      | enablefooterbutton | enablefooterbuttonboth | theme_boost_union |
+    When I log in as "teacher1"
+    And I change viewport size to "large"
+    And I follow "Dashboard"
+    Then ".btn-footer-popover" "css_element" should exist
+    And I change viewport size to "480x800"
+    Then ".btn-footer-popover" "css_element" should exist
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I change viewport size to "large"
+    Then ".btn-footer-popover" "css_element" should exist
+    And I change viewport size to "480x800"
+    Then ".btn-footer-popover" "css_element" should exist
+    And I log out
+    And I follow "Log in"
+    And I change viewport size to "large"
+    Then ".btn-footer-popover" "css_element" should exist
+    And I change viewport size to "480x800"
+    Then ".btn-footer-popover" "css_element" should exist
+    And I log out
+    And the following config values are set as admin:
+      | config             | value                     | plugin            |
+      | enablefooterbutton | enablefooterbuttondesktop | theme_boost_union |
+    When I log in as "teacher1"
+    And I am on site homepage
+    And I change viewport size to "large"
+    And I follow "Dashboard"
+    Then ".btn-footer-popover" "css_element" should be visible
+    And I change viewport size to "480x800"
+    Then ".btn-footer-popover" "css_element" should not be visible
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I change viewport size to "large"
+    Then ".btn-footer-popover" "css_element" should be visible
+    And I change viewport size to "480x800"
+    Then ".btn-footer-popover" "css_element" should not be visible
+    And I log out
+    And I follow "Log in"
+    And I change viewport size to "large"
+    Then ".btn-footer-popover" "css_element" should be visible
+    And I change viewport size to "480x800"
+    Then ".btn-footer-popover" "css_element" should not be visible
