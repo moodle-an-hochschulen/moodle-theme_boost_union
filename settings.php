@@ -1381,6 +1381,21 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_confightmleditor($name, $title, $description, '');
         $tab->add($setting);
 
+        // Setting: Footer.
+        $enablefooterbuttonoptions = [
+            'enablefooterbuttonboth' => get_string('enablefooterbuttonboth', 'theme_boost_union', null, true),
+            'enablefooterbuttondesktop' => get_string('enablefooterbuttondesktop', 'theme_boost_union', null, true),
+            'enablefooterbuttonmobile' => get_string('enablefooterbuttonmobile', 'theme_boost_union', null, true),
+            'enablefooterbuttonhidden' => get_string('enablefooterbuttonhidden', 'theme_boost_union', null, true),
+        ];
+        $name = 'theme_boost_union/enablefooterbutton';
+        $title = get_string('enablefooterbutton', 'theme_boost_union', null, true);
+        $description = get_string('enablefooterbutton_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, 'enablefooterbuttonboth',
+            $enablefooterbuttonoptions);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Add tab to settings page.
         $page->add($tab);
 
