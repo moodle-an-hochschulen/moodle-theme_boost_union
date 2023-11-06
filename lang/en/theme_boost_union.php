@@ -213,6 +213,29 @@ $string['courseheaderimagelayoutheadingabove'] = 'Course title above of course i
 $string['courseheaderimageposition'] = 'Course header image position';
 $string['courseheaderimageposition_desc'] = 'With this setting, you control the positioning of the course header image within the course header image container. The first value is the horizontal position, the second value is the vertical position.';
 
+// Settings : Course format tab.
+$string['courseformattab'] = 'Course format';
+// ... Section: Course format Topics.
+$string['courseformattopicsheading'] = 'Topics format';
+// ... ... Setting: Always show summary.
+$string['courseformattopicsalwaysshowsectionsummary'] = 'Always show section summary';
+$string['courseformattopicsalwaysshowsectionsummary_desc'] = 'Always displays the section summary in all courses regardless of whether the section is collapsed or not.';
+// ... ... Setting: Always show summary per course instance override.
+$string['courseformattopicsalwaysshowsectionsummaryoverride'] = 'Allow override per course instance';
+$string['courseformattopicsalwaysshowsectionsummaryoverride_desc'] = 'Allow override "show section summary" setting per course instance';
+// ... ... Setting: Always show inital section.
+$string['courseformattopicsalwaysshowinitialsection'] = 'Always show initial section';
+$string['courseformattopicsalwaysshowinitialsection_desc'] = 'Always displays the initial/first course section.';
+// ... ... Setting: Always show inital section per course instance override.
+$string['courseformattopicsalwaysshowinitialsectionoverride'] = 'Allow override per course instance';
+$string['courseformattopicsalwaysshowinitialsectionoverride_desc'] = 'Allow override "always display initial/first course section" setting per course instance';
+
+// ... ... Custom category.
+$string['topicscategoryname'] = 'Boost Union Topics Format Settings';
+// ... ... Custom course fields.
+$string['topicsalwaysshowsectionsummary_fieldname'] = 'Always show section summary';
+$string['topicsalwaysshowinitialsection_fieldname'] = 'Always show initial/first course section';
+
 // Settings: E-Mail branding tab.
 $string['emailbrandingtab'] = 'E-Mail branding';
 $string['templateemailhtmlprefix'] = '';

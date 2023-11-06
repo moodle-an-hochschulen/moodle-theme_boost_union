@@ -1,0 +1,11 @@
+.topics {
+  // Add some intend
+  .course-description-item.summarytext.boost-union {
+    padding-left: 42px;
+  }
+
+  // Hide outer course summary container on .show
+  .course-content-item-content.show + .course-description-item.summarytext.boost-union {
+    display: none !important;
+  }
+}

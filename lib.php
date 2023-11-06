@@ -543,3 +543,32 @@ function theme_boost_union_user_preferences(): array {
     }
     return $preferences;
 }
+
+/**
+ * Update custom field "Always show summary"
+ */
+function update_course_custom_field_always_show_summary(): void {
+    $fieldsmgr = \theme_boost_union\courseformat\customfield_manager::getinstance();
+    $alwaysshowsummary =
+        get_config('theme_boost_union', 'courseformattopicsalwaysshowsectionsummaryoverride')
+        == THEME_BOOST_UNION_SETTING_SELECT_YES;
+    $fieldsmgr->update_field_with_name(
+        \theme_boost_union\courseformat\customfield_manager::CUSTOM_FIELD_ALWAYSSHOWSUMMARY,
+        $alwaysshowsummary
+    );
+}
+
+/**
+ * Update custom field "Always show initial section"
+ */
+function update_course_custom_field_always_show_initial_section(): void {
+    $fieldsmgr = \theme_boost_union\courseformat\customfield_manager::getinstance();
+    $alwaysshowinitialsection =
+        get_config('theme_boost_union', 'courseformattopicsalwaysshowinitialsectionoverride')
+        == THEME_BOOST_UNION_SETTING_SELECT_YES;
+
+    $fieldsmgr->update_field_with_name(
+        \theme_boost_union\courseformat\customfield_manager::CUSTOM_FIELD_ALWAYSSHOWINITIALSECTION,
+        $alwaysshowinitialsection
+    );
+}

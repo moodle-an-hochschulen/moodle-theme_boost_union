@@ -727,6 +727,50 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Add tab to settings page.
         $page->add($tab);
 
+        // New Topics Course Format additions
+
+        // Create course format tab.
+        $tab = new admin_settingpage('theme_boost_union_look_course_format',
+            get_string('courseformattab', 'theme_boost_union', null, true));
+
+        // Create course Topics format heading.
+        $name = 'theme_boost_union/courseformattopicsheading';
+        $title = get_string('courseformattopicsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Create always show section summary setting.
+        $name = 'theme_boost_union/courseformattopicsalwaysshowsectionsummary';
+        $title = get_string('courseformattopicsalwaysshowsectionsummary', 'theme_boost_union', null, true);
+        $description = get_string('courseformattopicsalwaysshowsectionsummary_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Create allow override section summary setting per course instance.
+        $name = 'theme_boost_union/courseformattopicsalwaysshowsectionsummaryoverride';
+        $title = get_string('courseformattopicsalwaysshowsectionsummaryoverride', 'theme_boost_union', null, true);
+        $description = get_string('courseformattopicsalwaysshowsectionsummaryoverride_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('update_course_custom_field_always_show_summary');
+        $tab->add($setting);
+
+        // Create always show initial section.
+        $name = 'theme_boost_union/courseformattopicsalwaysshowinitialsection';
+        $title = get_string('courseformattopicsalwaysshowinitialsection', 'theme_boost_union', null, true);
+        $description = get_string('courseformattopicsalwaysshowinitialsection_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Create allow override "show initial section" setting per course instance.
+        $name = 'theme_boost_union/courseformattopicsalwaysshowinitialsectionoverride';
+        $title = get_string('courseformattopicsalwaysshowinitialsectionoverride', 'theme_boost_union', null, true);
+        $description = get_string('courseformattopicsalwaysshowinitialsectionoverride_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('update_course_custom_field_always_show_initial_section');
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
 
         // Create E_Mail branding tab.
         $tab = new admin_settingpage('theme_boost_union_look_emailbranding',
