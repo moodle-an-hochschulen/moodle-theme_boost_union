@@ -6,7 +6,7 @@ Changes
 
 ### Unreleased
 
-* 2023-12-10 - Improvement: implement new settings for Course overview block, solves #204
+* 2023-10-04 - Improvement: Allow the admin to change the look of the course overview block, solves #204
 
 ### v4.3-r3
 

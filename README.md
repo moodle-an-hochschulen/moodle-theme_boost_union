@@ -185,6 +185,18 @@ With this setting, you can optimize the login form to fit to a greater variety o
 
 With this setting, you can make the login form slightly transparent to let the background image shine through even more.
 
+#### Tab "Dashboard / My courses"
+
+##### Course overview block
+
+###### Show course images
+
+With this setting, you can control whether the course image is visible inside the course overview block or not.
+
+###### Show course completion progress
+
+With this setting, you can control whether the course completion progress is visible inside the course overview block or not.
+
 #### Tab "Course"
 
 ##### Course Header

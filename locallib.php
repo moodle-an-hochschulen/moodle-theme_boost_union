@@ -1396,7 +1396,7 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
 }
 
 /**
- * Adds appropriate scss to hide the course image and/or the course progress in the course overview block, depending
+ * Returns the SCSS code to hide the course image and/or the course progress in the course overview block, depending
  * on the theme settings courseoverviewshowcourseimages and courseoverviewshowcourseprogress respectively.
  *
  * @param theme_config $theme The theme config object.
@@ -1409,24 +1409,35 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
     // Selector for the course overview block.
     $courseoverviewblockselector = '.block_myoverview.block div[data-region="courses-view"]';
 
-    // Get the course image setting, defaults to true.
-    $showcourseoverviewcourseimages = isset($theme->settings->courseoverviewshowcourseimages) ?
-        $theme->settings->courseoverviewshowcourseimages == 'yes' : true;
+    // Get the course image setting, defaults to true if the setting does not exist.
+    if (!isset($theme->settings->courseoverviewshowcourseimages) ||
+            $theme->settings->courseoverviewshowcourseimages == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        $showcourseoverviewcourseimages = true;
+    } else {
+        $showcourseoverviewcourseimages = false;
+    }
 
-    // If the corresponding setting is set to 'no'.
+    // If the corresponding setting is set to false.
     if (!$showcourseoverviewcourseimages) {
-        $scss .= $courseoverviewblockselector . ' .course-summaryitem > .row > .col-md-2 { display: none !important; }' . PHP_EOL;
-        $scss .= $courseoverviewblockselector . ' .course-listitem > .row > .col-md-2 { display: none !important; }' . PHP_EOL;
-        $scss .= $courseoverviewblockselector . ' .dashboard-card-img { display: none; }' . PHP_EOL;
+        $scss .= $courseoverviewblockselector.' .course-summaryitem > .row > .col-md-2 { display: none !important; }'.
+                PHP_EOL;
+        $scss .= $courseoverviewblockselector.' .course-listitem > .row > .col-md-2 { display: none !important; }'.
+                PHP_EOL;
+        $scss .= $courseoverviewblockselector.' .dashboard-card-img { display: none !important; }'.PHP_EOL;
     }
 
-    // Get the course progress setting, defaults to true.
-    $showcourseprogress = isset($theme->settings->courseoverviewshowcourseprogress) ?
-        $theme->settings->courseoverviewshowcourseprogress == 'yes' : true;
+    // Get the course progress setting, defaults to true if the setting does not exist.
+    if (!isset($theme->settings->courseoverviewshowcourseimages) ||
+            $theme->settings->courseoverviewshowcourseprogress == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        $showcourseprogress = true;
+    } else {
+        $showcourseprogress = false;
+    }
 
-    // If the corresponding setting is set to 'no'.
+    // If the corresponding setting is set to false.
     if (!$showcourseprogress) {
-        $scss .= $courseoverviewblockselector . ' .progress-text { display: none !important; }' . PHP_EOL;
+        $scss .= $courseoverviewblockselector.' .progress-text { display: none !important; }'.PHP_EOL;
     }
+
     return $scss;
 }

@@ -635,17 +635,18 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Add tab to settings page.
         $page->add($tab);
 
-        // Create Dashboard tab.
+
+        // Create Dashboard / My courses tab.
         $tab = new admin_settingpage('theme_boost_union_look_dashboard',
-            get_string('dashboardtab', 'theme_boost_union', null, true));
+                get_string('dashboardtab', 'theme_boost_union', null, true));
 
         // Create Course overview block heading.
-        $name = 'theme_boost_union/courseoverview';
+        $name = 'theme_boost_union/courseoverviewheading';
         $title = get_string('courseoverviewheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
-        // Setting: Show course images in the course overview block.
+        // Setting: Show course images.
         $name = 'theme_boost_union/courseoverviewshowcourseimages';
         $title = get_string('courseoverviewshowcourseimagessetting', 'theme_boost_union', null, true);
         $description = get_string('courseoverviewshowcourseimagessetting_desc', 'theme_boost_union', null, true);
@@ -653,7 +654,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Setting: Show course progress in the course overview block.
+        // Setting: Show course progress.
         $name = 'theme_boost_union/courseoverviewshowcourseprogress';
         $title = get_string('courseoverviewshowprogresssetting', 'theme_boost_union', null, true);
         $description = get_string('courseoverviewshowprogresssetting_desc', 'theme_boost_union', null, true);
@@ -663,6 +664,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Add tab to settings page.
         $page->add($tab);
+
 
         // Create course tab.
         $tab = new admin_settingpage('theme_boost_union_look_course',
