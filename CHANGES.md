@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-11-09 - Bugfix: Hide back to top button on small screens as soon as the right hand drawer is opened, solves #379.
 * 2023-11-09 - Bugfix: Styles of styled e-mail previews leaked into the rest of the admin UI, solves #413.
 * 2023-11-04 - Bugfix: Pass footnote content without text_to_html div generation, solves #442.
 * 2023-10-09 - Improvement: Add a direct 'view course' icon on the course management pages, solves #129.
