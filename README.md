@@ -537,7 +537,8 @@ This plugin is carefully developed and thoroughly tested, but bugs and problems 
 Please report bugs and problems on Github:
 https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues
 
-We will do our best to solve your problems, but please note that due to limited resources we can't always provide per-case support.
+Support: https://moodle.org/mod/forum/discuss.php?d=452129
+we kindly invite you to use this thread in case of any questions you might have. We are a team of many (sometimes power) users of Boost Union and will try to answer or collectively according to our measures. If any other users know answers or a quicker, don't hesitate to answer. We will do our best to solve your problems, but please note that due to limited resources we can't always provide per-case support.
 
 
 Feature proposals
