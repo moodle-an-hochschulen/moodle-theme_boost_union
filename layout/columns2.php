@@ -78,6 +78,9 @@ $primarymenu = $primary->export_for_template($renderer);
 if (isset($primarymenu['includesmartmenu']) && $primarymenu['includesmartmenu'] == true) {
     $extraclasses[] = 'theme-boost-union-smartmenu';
 }
+if (isset($primarymenu['bottombar']) && !empty($primarymenu['includesmartmenu'])) {
+    $extraclasses[] = 'theme-boost-union-bottombar';
+}
 
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions()  && !$PAGE->has_secondary_navigation();
 // If the settings menu will be included in the header then don't add it here.

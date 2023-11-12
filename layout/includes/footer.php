@@ -24,15 +24,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// Require the necessary libraries.
-require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+$footersetting = get_config('theme_boost_union', 'enablefooterbutton');
 
-$config = get_config('theme_boost_union');
-
-// If the footerbutton is enabled.
-$footerquestionmark = isset($config->enablefooterbutton) ? $config->enablefooterbutton :
-    THEME_BOOST_UNION_SETTING_ENABLEFOOTER_BOTH;
-
-if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_HIDDEN) {
+// If the footer button is enabled.
+$footerquestionmark = isset($footersetting) ? $footersetting : THEME_BOOST_UNION_SETTING_ENABLEFOOTER_ALL;
+if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
+    // Add marker to show the footer button to templatecontext.
     $templatecontext['footerbutton'] = true;
 }
