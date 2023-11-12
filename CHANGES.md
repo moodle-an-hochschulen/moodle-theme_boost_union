@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r15
 
 * 2023-11-11 - Bugfix: Bulk actions widget overlaid course header image, solves #469.
 * 2023-11-09 - Bugfix: Hide back to top button on small screens as soon as the right hand drawer is opened, solves #379.
