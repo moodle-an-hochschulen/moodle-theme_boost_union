@@ -325,22 +325,103 @@
     /* Place the back to top button at a fixed place. */
     position: fixed;
     right: 2rem;
-    /* As a start = on really small screens, the back to top button is shown in the bottom right corner. */
+    /* As a start, the back to top button is shown in the bottom right corner. */
     bottom: 2rem;
-    /* On larger screens, there is the footer button already in the bottom right corner and
-       the back to top button has to be shown above of the footer button. */
-    @include media-breakpoint-up(sm) {
-        bottom: 5rem;
-    }
     /* Make sure that the back to top button is not covered by anything else. */
     z-index: $zindex-dropdown;
     /* Animate position together with footer button. */
     @include transition(0.2s);
 }
+/* If the sticky footer is shown by Moodle core, the back to top button has to have a higher starting position. */
+body.hasstickyfooter #back-to-top {
+    bottom: 7rem;
+}
 #back-to-top i::before {
     /* Move the caret icon slightly up for a nicer look. */
     vertical-align: 0.3rem;
 }
+
+/* If we are on a small screen and the footer button is shown in the bottom right corner,
+   the back to top button has to be shown above of the footer button. */
+body.theme_boost-union-footerbuttonall.jsenabled,
+body.theme_boost-union-footerbuttonmobile.jsenabled {
+    @include media-breakpoint-down(xs) {
+        #back-to-top {
+            bottom: 5rem;
+        }
+    }
+    /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
+    &.hasstickyfooter {
+        @include media-breakpoint-down(xs) {
+            #back-to-top {
+                bottom: 10rem;
+            }
+        }
+    }
+}
+/* If we are on a larger screen and the footer button is shown in the bottom right corner,
+   the back to top button has to be shown above of the footer button. */
+body.theme_boost-union-footerbuttonall.jsenabled,
+body.theme_boost-union-footerbuttondesktop.jsenabled {
+    @include media-breakpoint-up(sm) {
+        #back-to-top {
+            bottom: 5rem;
+        }
+    }
+    /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
+    &.hasstickyfooter {
+        @include media-breakpoint-up(sm) {
+            #back-to-top {
+                bottom: 10rem;
+            }
+        }
+    }
+}
+/* If the communications button is shown, the back to top button has to be moved more upwards.
+   To realize this, our back-to-top JS has added a class to the body tag. */
+body.theme-boost-union-commincourse {
+    /* If we are on a small screen,
+       we do not need to do anything (yet) as the communication button is not shown on small screens (yet). */
+
+    /* If we are on a larger screen and the footer button is not shown in the bottom right corner. */
+    &.theme_boost-union-footerbuttonnone.jsenabled,
+    &.theme_boost-union-footerbuttonmobile.jsenabled {
+        /* We have to move the back to top button more upwards.*/
+        @include media-breakpoint-up(sm) {
+            #back-to-top {
+                bottom: 5rem;
+            }
+        }
+        /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
+        &.hasstickyfooter {
+            @include media-breakpoint-up(sm) {
+                #back-to-top {
+                    bottom: 10rem;
+                }
+            }
+        }
+    }
+
+    /* If we are on a larger screen and the footer button is shown in the bottom right corner. */
+    &.theme_boost-union-footerbuttonall.jsenabled,
+    &.theme_boost-union-footerbuttondesktop.jsenabled {
+        /* We have to move the back to top button even more upwards.*/
+        @include media-breakpoint-up(sm) {
+            #back-to-top {
+                bottom: 8rem;
+            }
+        }
+        /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
+        &.hasstickyfooter {
+            @include media-breakpoint-up(sm) {
+                #back-to-top {
+                    bottom: 13rem;
+                }
+            }
+        }
+    }
+}
+
 /* If the right-hand drawer is opened. */
 #page.drawers.show-drawer-right #back-to-top {
     /* On larger screens, the drawer opens near the main content.
@@ -354,54 +435,6 @@
     @include media-breakpoint-down(lg) {
         /* Hide the back to top button when right drawer is shown. */
         display: none;
-    }
-}
-/* If the communications button is shown, the back to top button has to be moved more upwards.
-   To realize this, our back-to-top JS has added a class to the body tag. */
-body.theme-boost-union-commincourse #back-to-top {
-    /* On small screens, the footer button and the communication button are not there yet.
-       Thus, this only applies on larger screens where the footer button is shown. */
-    @include media-breakpoint-up(sm) {
-        bottom: 8rem;
-    }
-}
-/* If the smart menu bottom bar is shown, the back to top button has to be moved even more upwards. */
-@include media-breakpoint-down(sm) {
-    #page.footer-bottom-menu #back-to-top {
-        /* On smaller screens where the footer button is not shown yet. */
-        bottom: calc(60px + 1rem);
-        /* On larger screens where the footer button is shown. */
-        @include media-breakpoint-up(sm) {
-            bottom: calc(60px + 4rem);
-        }
-    }
-
-    /* Again, if the communications button is shown, the back to top button has to be moved even more upwards. */
-    body.theme-boost-union-commincourse #page.footer-bottom-menu #back-to-top {
-        /* On small screens, the footer button and the communication button are not there yet.
-           Thus, this only applies on larger screens where the footer button is shown. */
-        @include media-breakpoint-up(sm) {
-            bottom: calc(60px + 7rem);
-        }
-    }
-}
-
-/* As soon as the sticky footer is shown (especially in the database activity),
-   the back to top button has to be moved further up. */
-body.hasstickyfooter #back-to-top {
-    /* On smaller screens where the footer button is not shown yet. */
-    bottom: 7rem;
-    /* On larger screens where the footer button is shown. */
-    @include media-breakpoint-up(sm) {
-        bottom: 10rem;
-    }
-}
-/* Again, if the communications button is shown, the back to top button has to be moved even more upwards. */
-body.theme-boost-union-commincourse.hasstickyfooter #back-to-top {
-    /* On small screens, the footer button and the communication button are not there yet.
-       Thus, this only applies on larger screens where the footer button is shown. */
-    @include media-breakpoint-up(sm) {
-        bottom: 13rem;
     }
 }
 
@@ -743,8 +776,12 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 
 
 /*=======================================
- * Settings: Content -> Footnote.
+ * Settings: Content -> Footer.
  ======================================*/
+
+/*---------------------------------------
+ * Settings: Footnote.
+ --------------------------------------*/
 
 /* Static pages links dividers. */
 #footnote {
@@ -885,6 +922,75 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     /* Remove the top border as there is the gradient in #page. */
     border-top: none;
+}
+
+/*---------------------------------------
+ * Settings: Footer.
+ --------------------------------------*/
+
+/* If the admin decided to show the footer button on all screen sizes. */
+body.theme_boost-union-footerbuttonall.jsenabled {
+    /* Show the footer button on all screen sizes.
+       This uses !important to make really sure that the element is shown regardless of other CSS rules. */
+    .btn-footer-popover {
+        display: block !important;  /* stylelint-disable-line declaration-no-important */
+    }
+    /* Do not do anything to the communications button as it is placed fine on larger screens anyway and
+       not shown on mobile anyway. */
+}
+
+/* If the admin decided to show the footer button on desktop + tablet only. */
+body.theme_boost-union-footerbuttondesktop.jsenabled {
+    /* Do not do anything with the footer button as Boost core is taking care of everything already . */
+    /* And do not do anything to the communications button as Boost core is taking care of this as well. */
+}
+
+/* If the admin decided to show the footer button on mobile only. */
+body.theme_boost-union-footerbuttonmobile.jsenabled {
+    /* On larger screens. */
+    @include media-breakpoint-up(sm) {
+        /* Hide the footer button.
+           This uses !important to make really sure that the element is hidden regardless of other CSS rules. */
+        .btn-footer-popover,
+        #page-footer .footer-content-popover {
+            display: none !important;  /* stylelint-disable-line declaration-no-important */
+        }
+        /* Move the communication button more downwards as there would be a gap otherwise. */
+        .btn-footer-communication {
+            bottom: 2rem;
+        }
+        /* If the sticky footer is shown by Moodle core, move the communication button more upwards. */
+        &.hasstickyfooter {
+            .btn-footer-communication {
+                bottom: 7rem;
+            }
+        }
+    }
+    /* On smaller screens. */
+    @include media-breakpoint-down(xs) {
+        /* Show the footer button.
+           This uses !important to make really sure that the element is shown regardless of other CSS rules. */
+        .btn-footer-popover {
+            display: block !important;  /* stylelint-disable-line declaration-no-important */
+        }
+        /* And do not do anything to the communications button as Boost core is not shown on mobile anyway. */
+    }
+}
+
+/* If the admin decided not to show the footer button at all. */
+body.theme_boost-union-footerbuttonnone.jsenabled {
+    /* Do not do anything with the footer button as we covered this case in footer.mustache already. */
+
+    /* However, move the communication button more downwards as there would be a gap otherwise. */
+    .btn-footer-communication {
+        bottom: 2rem;
+    }
+    /* If the sticky footer is shown by Moodle core, move the communication button more upwards. */
+    &.hasstickyfooter {
+        .btn-footer-communication {
+            bottom: 7rem;
+        }
+    }
 }
 
 
@@ -1966,19 +2072,79 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 }
 /* End of Footer Menu */
 
-/* On small screens where the bottom bar is shown. */
-@include media-breakpoint-down(sm) {
-    /* Boost union footer bottom menu style when the smart menu is enabled */
-    .theme-boost-union-smartmenu #page-wrapper #page {
-        &.footer-bottom-menu {
-            /* Increase the space at the bottom for the footer popover, as the bottom menu bar might hide it. */
+/* On small screens (where the bottom bar could be visible). */
+@include media-breakpoint-down(xs) {
+    /* If the bottom bar is shown. */
+    body.theme-boost-union-bottombar {
+        /* The back to top button has to be moved more upwards. */
+        #back-to-top {
+            bottom: calc(60px + 1rem);
+        }
+
+        /* If the footer button is shown. */
+        &.theme_boost-union-footerbuttonall.jsenabled,
+        &.theme_boost-union-footerbuttonmobile.jsenabled {
+            /* The footer button has to be moved more upwards. */
             .btn-footer-popover {
                 bottom: calc(60px + 1rem);
             }
-            /* Increase the space at the bottom for the communications button,
-               as the bottom menu bar might hide it as well. */
+            /* And the back to top button has to be moved even more upwards. */
+            #back-to-top {
+                bottom: calc(60px + 4rem);
+            }
+        }
+    }
+}
+/* On screens between xs and sm (where the bottom bar _and_ the communication button could be visible). */
+@include media-breakpoint-only(sm) {
+    /* If the bottom bar is shown. */
+    body.theme-boost-union-bottombar {
+        /* The back to top button has to be moved more upwards. */
+        #back-to-top {
+            bottom: calc(60px + 1rem);
+        }
+
+        /* If the footer button is shown. */
+        &.theme_boost-union-footerbuttonall.jsenabled,
+        &.theme_boost-union-footerbuttondesktop.jsenabled {
+            /* The footer button has to be moved more upwards. */
+            .btn-footer-popover {
+                bottom: calc(60px + 1rem);
+            }
+            /* And the back to top button has to be moved even more upwards. */
+            #back-to-top {
+                bottom: calc(60px + 4rem);
+            }
+        }
+    }
+
+    /* If the bottom bar is shown and if the communications button is shown. */
+    body.theme-boost-union-bottombar.theme-boost-union-commincourse {
+        /* The communication button has to be moved more upwards. */
+        .btn-footer-communication {
+            bottom: calc(60px + 1rem);
+        }
+        /* The back to top button has to be moved even more upwards.
+           This has to use !important as the selector above would be more specific otherwise. */
+        #back-to-top {
+            bottom: calc(60px + 4rem) !important; /* stylelint-disable-line declaration-no-important */
+        }
+
+        /* If the footer button is shown. */
+        &.theme_boost-union-footerbuttonall.jsenabled,
+        &.theme_boost-union-footerbuttondesktop.jsenabled {
+            /* The footer button has to be moved more upwards. */
+            .btn-footer-popover {
+                bottom: calc(60px + 1rem);
+            }
+            /* The communication button has to be moved even more upwards. */
             .btn-footer-communication {
                 bottom: calc(60px + 4rem);
+            }
+            /* And the back to top button has to be moved even more upwards.
+               This has to use !important as the selector above would be more specific otherwise. */
+            #back-to-top {
+                bottom: calc(60px + 7rem) !important; /* stylelint-disable-line declaration-no-important */
             }
         }
     }
@@ -1987,7 +2153,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 @include media-breakpoint-down(sm) {
     /* The padding for the footer to visible the footer bottom menu because it is in the position style */
     /* Boost union footer bottom menu style when the smart menu is enabled */
-    .theme-boost-union-smartmenu #page-wrapper #page .footer-bottom-menu {
+    body.theme-boost-union-bottombar #page-wrapper #page {
         padding-bottom: 75px;
     }
     /* The nav drawer width is extend to full screen in the mobile view when the boost union smart menu is enabled */
@@ -1996,7 +2162,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
         width: 100%;
     }
     /* Drawer content list group when the boost union smart menu is enabled */
-    .theme-boost-union-smartmenu .drawer-primary .drawercontent .list-group .list-group-item {
+    body.theme-boost-union-smartmenu .drawer-primary .drawercontent .list-group .list-group-item {
         /* The padding left is added to the nav drawer menu dropdown menu in the mobile view */
         .list-group-item-action {
             padding-left: 32px;
@@ -2086,7 +2252,7 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
 /* On smaller screens. */
 @include media-breakpoint-down(sm) {
     /* Move the learning tools floating button up as soon as the bottom menu is shown. */
-    #page.footer-bottom-menu .learningtools-action-info .floating-button {
+    body.theme-boost-union-bottombar .learningtools-action-info .floating-button {
         bottom: 4rem;
     }
 }

@@ -127,9 +127,12 @@ $primary = new theme_boost_union\output\navigation\primary($PAGE);
 $renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
 
-// Add a special class selector to improve the Smart menus SCSS selectors.
+// Add special class selectors to improve the Smart menus SCSS selectors.
 if (isset($primarymenu['includesmartmenu']) && $primarymenu['includesmartmenu'] == true) {
     $extraclasses[] = 'theme-boost-union-smartmenu';
+}
+if (isset($primarymenu['bottombar']) && !empty($primarymenu['includesmartmenu'])) {
+    $extraclasses[] = 'theme-boost-union-bottombar';
 }
 
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
