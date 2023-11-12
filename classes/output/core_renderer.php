@@ -324,6 +324,27 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $additionalclasses[] = 'flavour'.'-'.$flavour->id;
         }
 
+        // If the admin decided to change the breakpoints of the footer button,
+        // add the setting as additional body class.
+        // With this setting, we show and hide the footer button as well as move the button
+        // (back-to-top) which is stacked on top of the footer button upwards.
+        $footerbutton = get_config('theme_boost_union', 'enablefooterbutton');
+        switch ($footerbutton) {
+            case THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE:
+                $additionalclasses[] = 'theme_boost-union-footerbuttonnone';
+                break;
+            case THEME_BOOST_UNION_SETTING_ENABLEFOOTER_ALL:
+                $additionalclasses[] = 'theme_boost-union-footerbuttonall';
+                break;
+            case THEME_BOOST_UNION_SETTING_ENABLEFOOTER_MOBILE:
+                $additionalclasses[] = 'theme_boost-union-footerbuttonmobile';
+                break;
+            case THEME_BOOST_UNION_SETTING_ENABLEFOOTER_DESKTOP:
+            default:
+                $additionalclasses[] = 'theme_boost-union-footerbuttondesktop';
+                break;
+        }
+
         return ' id="'. $this->body_id().'" class="'.$this->body_css_classes($additionalclasses).'"';
     }
 
