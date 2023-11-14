@@ -12,7 +12,7 @@ Feature: Configuring the theme_boost_union plugin for the "Administration" tab o
       | fullname  | shortname | category |
       | Course C1 | C1        | C        |
 
-  @javascript @testme
+  @javascript
   Scenario Outline: Setting: Show view course icon - Disable and enable the setting
     Given the following config values are set as admin:
       | config                         | value   | plugin            |
