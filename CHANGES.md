@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-11-23 - Bugfix: Correct order for in-course breadcrumb when sections exist in it (First categories then sections), solves #317.
+
 ### v4.3-r2
 
 * 2023-11-11 - Bugfix: Bulk actions widget overlaid course header image, solves #469.

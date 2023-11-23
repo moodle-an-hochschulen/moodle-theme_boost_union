@@ -57,7 +57,8 @@ class boostnavbar extends \theme_boost\boostnavbar {
         }
         if ($this->page->context->contextlevel == CONTEXT_COURSE) {
             if (get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                // Add the categories breadcrumb navigation nodes.
+                // Create the categories breadcrumb navigation nodes.
+                $categorynodes = [];
                 foreach (array_reverse($this->get_categories()) as $category) {
                     $context = \context_coursecat::instance($category->id);
                     if (!\core_course_category::can_view_category($category)) {
@@ -68,12 +69,24 @@ class boostnavbar extends \theme_boost\boostnavbar {
                     $url = new moodle_url('/course/index.php', ['categoryid' => $category->id]);
                     $name = format_string($category->name, true, ['context' => $displaycontext]);
                     $categorynode = \breadcrumb_navigation_node::create($name, $url, \breadcrumb_navigation_node::TYPE_CATEGORY,
-                            null, $category->id);
+                        null, $category->id);
                     if (!$category->visible) {
                         $categorynode->hidden = true;
                     }
-                    $this->items[] = $categorynode;
+                    $categorynodes[] = $categorynode;
                 }
+                $itemswithcategories = [];
+                if (!$this->items) {
+                    $itemswithcategories = $categorynodes;
+                } else {
+                    foreach ($this->items as $item) {
+                        if ($item->type == \breadcrumb_navigation_node::TYPE_COURSE) {
+                            $itemswithcategories = array_merge($itemswithcategories, $categorynodes);
+                        }
+                        $itemswithcategories[] = $item;
+                    }
+                }
+                $this->items = $itemswithcategories;
             }
 
             // Remove any duplicate navbar nodes.
