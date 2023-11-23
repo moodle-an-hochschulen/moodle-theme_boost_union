@@ -979,7 +979,7 @@ $string['boost_union:viewregionoffcanvascenter'] = 'To be able to see the Off-ca
 $string['boost_union:editregionoffcanvascenter'] = 'To be able to edit the Off-canvas (center) block region';
 
 // Caches.
-$string['cachedef_flavours'] = 'Flavours which apply to a given page category ID for the current user';
+$string['cachedef_flavours'] = 'Flavours which apply to a given page\'s category ID for the current user';
 $string['cachedef_smartmenus'] = 'Smart menus';
 $string['cachedef_smartmenu_items'] = 'Smart menu items';
 
