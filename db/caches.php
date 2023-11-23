@@ -27,7 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 $definitions = [
         // This cache stores the flavours which apply to a particular user in his user session.
         // It is there to avoid that the flavour which applies has to be calculated on every page load.
-        // The cache key is the page category ID (and 0 for all non-category pages).
+        // The cache key is the page's course category ID
+        // (and 0 for all pages which are not placed within a course category).
         // The cache value is the full flavour object.
         //
         // This is a session cache by purpose. It isn't an application cache as it contains user-specific data.

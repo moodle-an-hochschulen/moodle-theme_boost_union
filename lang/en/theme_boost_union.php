@@ -1023,7 +1023,7 @@ $string['boost_union:editregionoffcanvascenter'] = 'To be able to edit the Off-c
 
 // Caches.
 $string['cachedef_fontawesome'] = 'FontAwesome files (which are uploaded in the Boost Union settings)';
-$string['cachedef_flavours'] = 'Flavours which apply to a given page category ID for the current user';
+$string['cachedef_flavours'] = 'Flavours which apply to a given page\'s category ID for the current user';
 $string['cachedef_smartmenus'] = 'Smart menus';
 $string['cachedef_smartmenu_items'] = 'Smart menu items';
 
