@@ -4,6 +4,9 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+* 2023-11-23 - Bugfix: Add background color to OAuth2 login button, solves #473.
+
 ### v4.1-r15
 
 * 2023-11-11 - Bugfix: Bulk actions widget overlaid course header image, solves #469.
