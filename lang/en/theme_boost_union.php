@@ -292,7 +292,7 @@ $string['additionalresourcessetting'] = 'Additional resources';
 $string['additionalresourcessetting_desc'] = 'With this setting you can upload additional resources to the theme. The advantage of uploading files to this file area is that those files can be delivered without a check if the user is logged in. This is also why you should only add files that are uncritical and everyone should be allowed to access and don\'t need be protected with a valid login. As soon as you have uploaded at least one file to this filearea and have stored the settings, a list will appear underneath which will give you the URL which you can use to reference a particular file.';
 // ... ... Information: Additional resources list.
 $string['additionalresourceslistsetting'] = 'Additional resources list';
-$string['additionalresourceslistsetting_desc'] = 'This is the list of files which you have uploaded to the additional resources filearea. The given URLs can be used to link to these files from within your custom CSS, from the footnote or whereever you need to use uploaded files but can\'t upload files in place.';
+$string['additionalresourceslistsetting_desc'] = 'This is the list of files which you have uploaded to the additional resources filearea. The given URLs can be used to link to these files from within your custom CSS, from the footnote or wherever you need to use uploaded files but can\'t upload files in place.';
 $string['additionalresourcesfileurlpersistent'] = 'URL (persistent)';
 $string['additionalresourcesfileurlrevisioned'] = 'URL (revisioned)';
 // ... Section: Custom fonts.
@@ -1002,7 +1002,7 @@ $string['boost_union:viewregionoffcanvascenter'] = 'To be able to see the Off-ca
 $string['boost_union:editregionoffcanvascenter'] = 'To be able to edit the Off-canvas (center) block region';
 
 // Caches.
-$string['cachedef_flavours'] = 'Flavours which apply to a given page category ID for the current user';
+$string['cachedef_flavours'] = 'Flavours which apply to a given page\'s category ID for the current user';
 $string['cachedef_smartmenus'] = 'Smart menus';
 $string['cachedef_smartmenu_items'] = 'Smart menu items';
 

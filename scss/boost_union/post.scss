@@ -287,6 +287,13 @@
     color: black;
     text-shadow: 0 0 5px white;
 }
+/* If the header actions are placed _within_ the course header image element, i.e. the title is stacked on the image.*/
+#courseheaderimage .header-action {
+    /* Add a background color of white to the header actions to make sure that they can be read properly. */
+    background-color: white;
+    @include border-radius();
+}
+
 
 /*=======================================
  * Settings: Look -> Resources
@@ -334,9 +341,20 @@
     /* Move the caret icon slightly up for a nicer look. */
     vertical-align: 0.3rem;
 }
+/* If the right-hand drawer is opened. */
 #page.drawers.show-drawer-right #back-to-top {
-    /* Move the back to top button when right drawer is shown. */
-    right: calc(#{$drawer-right-width} + 2rem);
+    /* On larger screens, the drawer opens near the main content.
+       The back to top button can be moved nicely to the left. */
+    @include media-breakpoint-up(lg) {
+        /* Move the back to top button when right drawer is shown. */
+        right: calc(#{$drawer-right-width} + 2rem);
+    }
+    /* On smaller screens, the drawer opens as an overlay over the main content.
+       The back to top button looks misplaced then. */
+    @include media-breakpoint-down(lg) {
+        /* Hide the back to top button when right drawer is shown. */
+        display: none;
+    }
 }
 /* If the communications button is shown, the back to top button has to be moved more upwards.
    To realize this, our back-to-top JS has added a class to the body tag. */
