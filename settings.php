@@ -727,46 +727,106 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Add tab to settings page.
         $page->add($tab);
 
-        // New Topics Course Format additions
+        // New Course Format additions.
 
         // Create course format tab.
         $tab = new admin_settingpage('theme_boost_union_look_course_format',
-            get_string('courseformattab', 'theme_boost_union', null, true));
+            get_string('cf:tab', 'theme_boost_union', null, true));
 
         // Create course Topics format heading.
-        $name = 'theme_boost_union/courseformattopicsheading';
-        $title = get_string('courseformattopicsheading', 'theme_boost_union', null, true);
+        $name = 'theme_boost_union/cf_topicsheading';
+        $title = get_string('cf:topicsheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
-        // Create always show section summary setting.
-        $name = 'theme_boost_union/courseformattopicsalwaysshowsectionsummary';
-        $title = get_string('courseformattopicsalwaysshowsectionsummary', 'theme_boost_union', null, true);
-        $description = get_string('courseformattopicsalwaysshowsectionsummary_desc', 'theme_boost_union', null, true);
+        // Setting: Topics, always show section summary.
+        $name = 'theme_boost_union/cf_topicsalwaysshowsectionsummary';
+        $title = get_string('cf:alwaysshowsectionsummary', 'theme_boost_union', null, true);
+        $description = get_string('cf:alwaysshowsectionsummary_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
-        // Create allow override section summary setting per course instance.
-        $name = 'theme_boost_union/courseformattopicsalwaysshowsectionsummaryoverride';
-        $title = get_string('courseformattopicsalwaysshowsectionsummaryoverride', 'theme_boost_union', null, true);
-        $description = get_string('courseformattopicsalwaysshowsectionsummaryoverride_desc', 'theme_boost_union', null, true);
+        // Setting: Topics, allow override section summary per course instance.
+        $name = 'theme_boost_union/cf_topicsalwaysshowsectionsummaryoverride';
+        $title = get_string('cf:alwaysshowsectionsummaryoverride', 'theme_boost_union', null, true);
+        $description = get_string('cf:alwaysshowsectionsummaryoverride_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $setting->set_updatedcallback('update_course_custom_field_always_show_summary');
+        $setting->set_updatedcallback('update_course_format_custom_field');
         $tab->add($setting);
 
-        // Create always show initial section.
-        $name = 'theme_boost_union/courseformattopicsalwaysshowinitialsection';
-        $title = get_string('courseformattopicsalwaysshowinitialsection', 'theme_boost_union', null, true);
-        $description = get_string('courseformattopicsalwaysshowinitialsection_desc', 'theme_boost_union', null, true);
+        // Setting: Topics, always show initial section.
+        $name = 'theme_boost_union/cf_topicsalwaysshowinitialsection';
+        $title = get_string('cf:alwaysshowinitialsection', 'theme_boost_union', null, true);
+        $description = get_string('cf:alwaysshowinitialsection_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
-        // Create allow override "show initial section" setting per course instance.
-        $name = 'theme_boost_union/courseformattopicsalwaysshowinitialsectionoverride';
-        $title = get_string('courseformattopicsalwaysshowinitialsectionoverride', 'theme_boost_union', null, true);
-        $description = get_string('courseformattopicsalwaysshowinitialsectionoverride_desc', 'theme_boost_union', null, true);
+        // Setting: Topics, hide initial section title.
+        $name = 'theme_boost_union/cf_topicshidetitle';
+        $title = get_string('cf:hidetitle', 'theme_boost_union', null, true);
+        $description = get_string('cf:hidetitle_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $setting->set_updatedcallback('update_course_custom_field_always_show_initial_section');
+        $tab->add($setting);
+        $page->hide_if($name, 'theme_boost_union/cf_topicsalwaysshowinitialsection', 'eq', THEME_BOOST_UNION_SETTING_SELECT_NO);
+
+        // Setting: Topics, allow override "show initial section" per course instance.
+        $name = 'theme_boost_union/cf_topicsalwaysshowinitialsectionoverride';
+        $title = get_string('cf:alwaysshowinitialsectionoverride', 'theme_boost_union', null, true);
+        $description = get_string('cf:alwaysshowinitialsectionoverride_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('update_course_format_custom_field');
+        $tab->add($setting);
+
+        // Create course Weekly format heading.
+        $name = 'theme_boost_union/cf_weeklyheading';
+        $title = get_string('cf:weeklyheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Weekly, always show section summary.
+        $name = 'theme_boost_union/cf_weeklyalwaysshowsectionsummary';
+        $title = get_string('cf:alwaysshowsectionsummary', 'theme_boost_union', null, true);
+        $description = get_string('cf:alwaysshowsectionsummary_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Setting: Weekly, always show section summary.
+        $name = 'theme_boost_union/cf_weeklyalwaysshowsectionsummary';
+        $title = get_string('cf:alwaysshowsectionsummary', 'theme_boost_union', null, true);
+        $description = get_string('cf:alwaysshowsectionsummary_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Setting: Weekly, Allow override section summary per course instance.
+        $name = 'theme_boost_union/cf_weeklyalwaysshowsectionsummaryoverride';
+        $title = get_string('cf:alwaysshowsectionsummaryoverride', 'theme_boost_union', null, true);
+        $description = get_string('cf:alwaysshowsectionsummaryoverride_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('update_course_format_custom_field');
+        $tab->add($setting);
+
+        // Setting: Weekly, always show initial section.
+        $name = 'theme_boost_union/cf_weeklyalwaysshowinitialsection';
+        $title = get_string('cf:alwaysshowinitialsection', 'theme_boost_union', null, true);
+        $description = get_string('cf:alwaysshowinitialsection_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Setting: Weekly, hide initial section title.
+        $name = 'theme_boost_union/cf_weeklyhidetitle';
+        $title = get_string('cf:hidetitle', 'theme_boost_union', null, true);
+        $description = get_string('cf:hidetitle_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if($name, 'theme_boost_union/cf_weeklyalwaysshowinitialsection', 'eq', THEME_BOOST_UNION_SETTING_SELECT_NO);
+
+
+        // Setting: Weekly, allow override "show initial section" per course instance.
+        $name = 'theme_boost_union/cf_weeklyalwaysshowinitialsectionoverride';
+        $title = get_string('cf:alwaysshowinitialsectionoverride', 'theme_boost_union', null, true);
+        $description = get_string('cf:alwaysshowinitialsectionoverride_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('update_course_format_custom_field');
         $tab->add($setting);
 
         // Add tab to settings page.

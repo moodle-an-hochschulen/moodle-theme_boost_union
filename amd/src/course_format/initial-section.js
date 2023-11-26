@@ -1,4 +1,3 @@
-<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,29 +14,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Format Topics renderer
+ * Theme Boost Union - JS for topics/weekly course format addition to fix error in boost collapse toggler because of missing [data-toggle=collapse]
+ * when initial section is in always view state.
  *
- * @package    theme_boost_union
- * @copyright  2023 Mario Wehr, FH Kärnten <m.wehr@fh-kaernten.at>
+ * @module     theme_boost_union/section-summary
+ * @copyright  2023 Mario Wehr <m.wehr@fh-kaernten.at>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-namespace theme_boost_union\output;
 
-use format_topics\output\renderer;
-use theme_boost_union\courseformat\format_renderer_trait;
-
-class format_topics_renderer extends renderer {
-    use format_renderer_trait;
-
-    public function render_content($widget): bool|string {
-        $templatedata = $widget->export_for_template($this);
-        if (!$templatedata->initialsection->iscoursedisplaymultipage) {
-            $this->setup_courseformat_additions('topics', $templatedata);
-        }
-
-        return $this->render_from_template(
-            $widget->get_template_name($this),
-            $templatedata
-        );
+export const init = () => {
+    const initalSection = document.querySelector('ul.topics li.section.course-section, ul.weeks li.section.course-section');
+    if (initalSection) {
+        // Create dummy item with [data-toggle="collapse"].
+        initalSection.appendChild(document.createElement('div')).setAttribute("data-toggle", "collapse");
     }
-}
+};

@@ -1,11 +1,24 @@
-.topics {
-  // Add some intend
-  .course-description-item.summarytext.boost-union {
-    padding-left: 42px;
+.topics, .weeks {
+
+  .calc-height {
+    height: 0;
+    overflow: hidden;
+    display: block;
   }
 
-  // Hide outer course summary container on .show
-  .course-content-item-content.show + .course-description-item.summarytext.boost-union {
-    display: none !important;
+  .move {
+    transition: padding 400ms ease-in-out;
+  }
+
+  .course-description-item.summarytext {
+    &.move-in {
+      @extend .move;
+      padding-left: 45px;
+    }
+
+    &.move-out {
+      @extend .move;
+      padding-left: 0;
+    }
   }
 }

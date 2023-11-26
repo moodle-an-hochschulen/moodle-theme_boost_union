@@ -21,18 +21,19 @@
  * @copyright  2023 Mario Wehr, FH Kärnten <m.wehr@fh-kaernten.at>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace theme_boost_union\output;
 
 use format_topics\output\renderer;
 use theme_boost_union\courseformat\format_renderer_trait;
 
-class format_topics_renderer extends renderer {
+class format_weeks_renderer extends renderer {
     use format_renderer_trait;
 
     public function render_content($widget): bool|string {
         $templatedata = $widget->export_for_template($this);
         if (!$templatedata->initialsection->iscoursedisplaymultipage) {
-            $this->setup_courseformat_additions('topics', $templatedata);
+            $this->setup_courseformat_additions('weekly', $templatedata);
         }
 
         return $this->render_from_template(

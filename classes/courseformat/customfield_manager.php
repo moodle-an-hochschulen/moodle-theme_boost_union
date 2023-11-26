@@ -30,10 +30,15 @@ class customfield_manager {
     private static ?customfield_manager $instance = null;
 
     // ... The content of the category description field is used for identifying the category.
-    private const CATEGORY_KEY = 'bu_custom_field_category';
-    // ... The shortname is used to for retrieving the custom fields.
-    public const CUSTOM_FIELD_ALWAYSSHOWINITIALSECTION = 'bu_alwaysshowinitalsection';
-    public const CUSTOM_FIELD_ALWAYSSHOWSUMMARY = 'bu_alwaysshowsummary';
+    public const TOPICS_CATEGORY_KEY = 'bu_topics_custom_field_category';
+    public const CUSTOM_FIELD_TOPICS_ALWAYSSHOWINITIALSECTION = 'bu_topics_alwaysshowinitalsection';
+    public const CUSTOM_FIELD_TOPICS_ALWAYSSHOWSUMMARY = 'bu_topics_alwaysshowsummary';
+    public const CUSTOM_FIELD_TOPICS_HIDETITLE = 'bu_topics_hidetitle';
+
+    public const WEEKLY_CATEGORY_KEY = 'bu_weekly_field_category';
+    public const CUSTOM_FIELD_WEEKLY_ALWAYSSHOWINITIALSECTION = 'bu_weekly_alwaysshowinitalsection';
+    public const CUSTOM_FIELD_WEEKLY_ALWAYSSHOWSUMMARY = 'bu_weekly_alwaysshowsummary';
+    public const CUSTOM_FIELD_WEEKLY_HIDETITLE = 'bu_weekly_hidetitle';
 
     private function __construct() {
     }
@@ -49,14 +54,22 @@ class customfield_manager {
     /**
      * Create our category.
      *
+     * @param string $categorykey category key
      * @return int category id
      */
-    private function create_category(): int {
+    private function create_category(string $categorykey): int {
         global $DB;
 
         $cat = new stdClass();
-        $cat->name = get_string('topicscategoryname', 'theme_boost_union');
-        $cat->description = self::CATEGORY_KEY; // Description field cannot be changed via UI -> identifier.
+        switch ($categorykey) {
+            case self::TOPICS_CATEGORY_KEY:
+                $cat->name = get_string('cf:topicscategoryname', 'theme_boost_union');
+                break;
+            case self::WEEKLY_CATEGORY_KEY:
+                $cat->name = get_string('cf:weeklycategoryname', 'theme_boost_union');
+                break;
+        }
+        $cat->description = $categorykey; // Description field cannot be changed via UI -> identifier.
         $cat->component = 'core_course';
         $cat->area = 'course';
         $cat->timecreated = time();
@@ -80,6 +93,7 @@ class customfield_manager {
         $field->type = 'checkbox';
         $field->timecreated = time();
         $field->timemodified = time();
+        $field->sortorder = 0;
         $field->configdata = json_encode([
             'required"' => 0,
             'uniquevalues' => 0,
@@ -90,11 +104,18 @@ class customfield_manager {
         $field->categoryid = $catid;
 
         switch ($fieldkey) {
-            case self::CUSTOM_FIELD_ALWAYSSHOWSUMMARY:
-                $field->name = get_string('topicsalwaysshowsectionsummary_fieldname', 'theme_boost_union');
+            case self::CUSTOM_FIELD_TOPICS_ALWAYSSHOWSUMMARY:
+            case self::CUSTOM_FIELD_WEEKLY_ALWAYSSHOWSUMMARY:
+                $field->name = get_string('cf:alwaysshowsectionsummary_fieldname', 'theme_boost_union');
                 break;
-            case self::CUSTOM_FIELD_ALWAYSSHOWINITIALSECTION:
-                $field->name = get_string('topicsalwaysshowinitialsection_fieldname', 'theme_boost_union');
+            case self::CUSTOM_FIELD_TOPICS_ALWAYSSHOWINITIALSECTION:
+            case self::CUSTOM_FIELD_WEEKLY_ALWAYSSHOWINITIALSECTION:
+                $field->name = get_string('cf:alwaysshowinitialsection_fieldname', 'theme_boost_union');
+                break;
+            case self::CUSTOM_FIELD_TOPICS_HIDETITLE:
+            case self::CUSTOM_FIELD_WEEKLY_HIDETITLE:
+                $field->name = get_string('cf:hidetitle_fieldname', 'theme_boost_union');
+                $field->description = get_string('cf:hidetitle_fieldname_desc', 'theme_boost_union');
                 break;
         }
 
@@ -125,16 +146,29 @@ class customfield_manager {
     public function update_field_with_name(string $fieldkey, bool $value): void {
         global $DB;
 
+        switch ($fieldkey) {
+            case self::CUSTOM_FIELD_TOPICS_ALWAYSSHOWINITIALSECTION:
+            case self::CUSTOM_FIELD_TOPICS_ALWAYSSHOWSUMMARY:
+            case self::CUSTOM_FIELD_TOPICS_HIDETITLE:
+                $categorykey = self::TOPICS_CATEGORY_KEY;
+                break;
+            case self::CUSTOM_FIELD_WEEKLY_ALWAYSSHOWINITIALSECTION:
+            case self::CUSTOM_FIELD_WEEKLY_ALWAYSSHOWSUMMARY:
+            case self::CUSTOM_FIELD_WEEKLY_HIDETITLE:
+                $categorykey = self::WEEKLY_CATEGORY_KEY;
+                break;
+        }
+
         // Check if category exists.
         $textcompare = $DB->sql_compare_text('description') . ' = ' . $DB->sql_compare_text(':description');
         $cat = $DB->get_record_sql(
             "select id from {customfield_category} WHERE $textcompare",
-            ['description' => self::CATEGORY_KEY]
+            ['description' => $categorykey]
         );
 
         if (!$cat) {
             // Create category for our custom fields.
-            $catid = $this->create_category();
+            $catid = $this->create_category($categorykey);
         } else {
             $catid = $cat->id;
         }

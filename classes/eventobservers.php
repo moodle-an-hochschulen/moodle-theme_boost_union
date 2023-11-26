@@ -227,22 +227,36 @@ class eventobservers {
     }
 
     /**
-     * Event observer for when a custom course field belonging to the topics format addition gets deleted
+     * Event observer for when a custom course field belonging to the topics format addition gets deleted manually.
      *
      * @param field_deleted $event The event that triggered the handler.
      */
     public static function customfield_deleted(field_deleted $event): void {
         switch ($event->other['shortname']) {
-            case customfield_manager::CUSTOM_FIELD_ALWAYSSHOWSUMMARY:
+            case customfield_manager::CUSTOM_FIELD_TOPICS_ALWAYSSHOWSUMMARY:
                 set_config(
-                    'courseformattopicsalwaysshowsectionsummaryoverride',
+                    'cf_topicsalwaysshowsectionsummaryoverride',
                     'no',
                     'theme_boost_union'
                 );
                 break;
-            case customfield_manager::CUSTOM_FIELD_ALWAYSSHOWINITIALSECTION:
+            case customfield_manager::CUSTOM_FIELD_TOPICS_ALWAYSSHOWINITIALSECTION:
                 set_config(
-                    'courseformattopicsalwaysshowinitialsectionoverride',
+                    'cf_topicsalwaysshowinitialsectionoverride',
+                    'no',
+                    'theme_boost_union'
+                );
+                break;
+            case customfield_manager::CUSTOM_FIELD_WEEKLY_ALWAYSSHOWSUMMARY:
+                set_config(
+                    'cf_weeklyalwaysshowsectionsummaryoverride',
+                    'no',
+                    'theme_boost_union'
+                );
+                break;
+            case customfield_manager::CUSTOM_FIELD_WEEKLY_ALWAYSSHOWINITIALSECTION:
+                set_config(
+                    'cf_weeklyalwaysshowinitialsectionoverride',
                     'no',
                     'theme_boost_union'
                 );
