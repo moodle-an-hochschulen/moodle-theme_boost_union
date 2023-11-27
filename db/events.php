@@ -84,6 +84,5 @@ $observers = [
         [
                 'eventname' => 'core_customfield\event\field_deleted',
                 'callback' => '\theme_boost_union\eventobservers::customfield_deleted',
-        ]
-
+        ],
 ];

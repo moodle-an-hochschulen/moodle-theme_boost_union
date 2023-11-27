@@ -26,23 +26,43 @@ namespace theme_boost_union\courseformat;
 
 use stdClass;
 
+/**
+ * Custom field manager
+ */
 class customfield_manager {
+    /**
+     * Instance holder
+     * @var customfield_manager $instance
+     */
     private static ?customfield_manager $instance = null;
 
-    // ... The content of the category description field is used for identifying the category.
-    public const TOPICS_CATEGORY_KEY = 'bu_topics_custom_field_category';
+    /** The content of the category description field is used for identifying the category. */
+    public const TOPICS_CATEGORY_KEY = 'bu_topics_custom_field_category'; // Topics custom field category key.
+    /** Topics format, custom field for override "always show inital section" mode */
     public const CUSTOM_FIELD_TOPICS_ALWAYSSHOWINITIALSECTION = 'bu_topics_alwaysshowinitalsection';
+    /** Topics format, custom field for override "always show summary" mode */
     public const CUSTOM_FIELD_TOPICS_ALWAYSSHOWSUMMARY = 'bu_topics_alwaysshowsummary';
+    /** Topics format, custom field for override "hide title" mode */
     public const CUSTOM_FIELD_TOPICS_HIDETITLE = 'bu_topics_hidetitle';
 
+    /** The content of the category description field is used for identifying the category. */
     public const WEEKLY_CATEGORY_KEY = 'bu_weekly_field_category';
+    /** Weekly format, custom field for override "always show inital section" mode */
     public const CUSTOM_FIELD_WEEKLY_ALWAYSSHOWINITIALSECTION = 'bu_weekly_alwaysshowinitalsection';
+    /** Weekly format, custom field for override "always show summary" mode */
     public const CUSTOM_FIELD_WEEKLY_ALWAYSSHOWSUMMARY = 'bu_weekly_alwaysshowsummary';
+    /** Weekly format, custom field for override "hide title" mode */
     public const CUSTOM_FIELD_WEEKLY_HIDETITLE = 'bu_weekly_hidetitle';
 
+    /**
+     *  private ctor.
+     */
     private function __construct() {
     }
 
+    /**
+     * Retrieve single instance.
+     */
     public static function getinstance(): customfield_manager {
         if (self::$instance == null) {
             self::$instance = new customfield_manager();

@@ -24,12 +24,21 @@
 namespace theme_boost_union\output;
 
 use format_topics\output\renderer;
+use renderable;
 use theme_boost_union\courseformat\format_renderer_trait;
 
+/**
+ * Boost Union override of renderer for topics format.
+ */
 class format_topics_renderer extends renderer {
     use format_renderer_trait;
 
-    public function render_content($widget): bool|string {
+    /**
+     * Render content.
+     * @param  renderable $widget
+     * @return bool|string
+     */
+    public function render_content(renderable $widget): bool|string {
         $templatedata = $widget->export_for_template($this);
         if (!$templatedata->initialsection->iscoursedisplaymultipage) {
             $this->setup_courseformat_additions('topics', $templatedata);

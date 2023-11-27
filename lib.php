@@ -546,8 +546,11 @@ function theme_boost_union_user_preferences(): array {
 
 /**
  * Update course format custom fields.
+ *
+ * Settings callback for updating the corresponding custom fields.
+ * @param string $fullname
  */
-function update_course_format_custom_field($fullname): void {
+function update_course_format_custom_field(string $fullname): void {
     $fieldsmgr = \theme_boost_union\courseformat\customfield_manager::getinstance();
 
     $items = preg_split('/_/', $fullname);
@@ -582,3 +585,4 @@ function update_course_format_custom_field($fullname): void {
         );
     }
 }
+
