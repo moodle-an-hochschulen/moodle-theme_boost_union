@@ -14,7 +14,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - JS for topics/weekly course format addition to fix error in boost collapse toggler because of missing [data-toggle=collapse]
+ * Theme Boost Union - JS for topics/weekly course format addition to fix error
+ * in boost collapse toggler because of missing [data-toggle=collapse]
  * when initial section is in always view state.
  *
  * @module     theme_boost_union/section-summary
