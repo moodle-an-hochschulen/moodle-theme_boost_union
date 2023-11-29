@@ -200,7 +200,7 @@ $string['dashboardtab'] = 'Dashboard / My courses';
 $string['courseoverviewheading'] = 'Course overview block';
 // ... ... Setting: Show course images.
 $string['courseoverviewshowcourseimagessetting'] = 'Show course images';
-$string['courseoverviewshowcourseimagessetting_desc'] = 'With this setting, you can control whether the course image is visible inside the course overview block or not.';
+$string['courseoverviewshowcourseimagessetting_desc'] = 'With this setting, you can control whether the course image is visible inside the course overview block or not. It is possible to choose a different setting for Card view, Summary view, and List view.';
 // ... ... Setting: Show course completion progress.
 $string['courseoverviewshowprogresssetting'] = 'Show course completion progress';
 $string['courseoverviewshowprogresssetting_desc'] = 'With this setting, you can control whether the course completion progress is visible inside the course overview block or not.';

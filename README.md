@@ -191,7 +191,7 @@ With this setting, you can make the login form slightly transparent to let the b
 
 ###### Show course images
 
-With this setting, you can control whether the course image is visible inside the course overview block or not.
+With this setting, you can control whether the course image is visible inside the course overview block or not. It is possible to choose a different setting for Card view, Summary view, and List view. 
 
 ###### Show course completion progress
 
@@ -631,6 +631,7 @@ This theme is a collaboration result of multiple organisations.
 
 Moodle an Hochschulen e.V. would like to thank these main contributors (in alphabetical order of the institutions) for their work:
 
+* Academic Moodle Cooperation (AMC): Ideating, Code
 * Baden-Württemberg Cooperative State University (DHBW), Katja Neubehler: Code
 * bdecent GmbH, Stefan Scholz: Code, Ideating, Funding
 * Bern University of Applied Sciences (BFH), Luca Bösch: Code, Peer Review, Ideating

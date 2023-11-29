@@ -646,11 +646,17 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
+        // Prepare show course images.
+        $showcourseimagesoptions = [
+            THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_CARD => get_string('card', 'block_myoverview'),
+            THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_LIST => get_string('list', 'block_myoverview'),
+            THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_SUMMARY => get_string('summary', 'block_myoverview')
+        ];
         // Setting: Show course images.
         $name = 'theme_boost_union/courseoverviewshowcourseimages';
         $title = get_string('courseoverviewshowcourseimagessetting', 'theme_boost_union', null, true);
         $description = get_string('courseoverviewshowcourseimagessetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
+        $setting = new admin_setting_configmulticheckbox($name, $title, $description, $showcourseimagesoptions, $showcourseimagesoptions);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
