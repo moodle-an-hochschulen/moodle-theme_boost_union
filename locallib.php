@@ -1411,30 +1411,30 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
 
     // Get the course image setting, defaults to true if the setting does not exist.
     if (!isset($theme->settings->courseoverviewshowcourseimages)) {
-        $showcourseoverviewcourseimagescard = true;
-        $showcourseoverviewcourseimageslist = true;
-        $showcourseoverviewcourseimagessummary = true;
+        $showcourseimagescard = true;
+        $showcourseimageslist = true;
+        $showimagessummary = true;
     } else {
-        $showcourseoverviewcourseimages = explode(',', $theme->settings->courseoverviewshowcourseimages);
-        $showcourseoverviewcourseimagescard = in_array(THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_CARD, $showcourseoverviewcourseimages);
-        $showcourseoverviewcourseimageslist = in_array(THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_LIST, $showcourseoverviewcourseimages);
-        $showcourseoverviewcourseimagessummary = in_array(THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_SUMMARY, $showcourseoverviewcourseimages);
+        $showcourseimages = explode(',', $theme->settings->courseoverviewshowcourseimages);
+        $showcourseimagescard = in_array(THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_CARD, $showcourseimages);
+        $showcourseimageslist = in_array(THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_LIST, $showcourseimages);
+        $showimagessummary = in_array(THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_SUMMARY, $showcourseimages);
     }
 
     // If the corresponding settings are set to false.
-    if (!$showcourseoverviewcourseimagessummary) {
+    if (!$showimagessummary) {
         $scss .= $courseoverviewblockselector . ' .course-summaryitem > .row > .col-md-2 { display: none !important; }' .
             PHP_EOL;
         $scss .= $courseoverviewblockselector . ' .course-summaryitem > .row > .col-md-1 { margin-left: auto !important; }' .
             PHP_EOL;
     }
-    if (!$showcourseoverviewcourseimageslist) {
+    if (!$showcourseimageslist) {
         $scss .= $courseoverviewblockselector . ' .course-listitem:not(.course-summaryitem) > .row > .col-md-2 { display: none !important; }' .
             PHP_EOL;
         $scss .= $courseoverviewblockselector . ' .course-listitem:not(.course-summaryitem) > .row > .col-md-1 { margin-left: auto !important; }' .
             PHP_EOL;
     }
-    if (!$showcourseoverviewcourseimagescard) {
+    if (!$showcourseimagescard) {
         $scss .= $courseoverviewblockselector.' .dashboard-card-img { display: none !important; }'.PHP_EOL;
     }
 
