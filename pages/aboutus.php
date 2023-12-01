@@ -69,7 +69,7 @@ echo $OUTPUT->header();
 echo $OUTPUT->heading(theme_boost_union_get_staticpage_pagetitle('aboutus'));
 
 // Output aboutus content.
-echo format_text($config->aboutuscontent);
+echo format_text($config->aboutuscontent, FORMAT_MOODLE, ['trusted' => true, 'noclean' => true]);
 
 // Finish page.
 echo $OUTPUT->footer();
