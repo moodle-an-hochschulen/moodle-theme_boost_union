@@ -650,7 +650,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $showcourseimagesoptions = [
             THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_CARD => get_string('card', 'block_myoverview'),
             THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_LIST => get_string('list', 'block_myoverview'),
-            THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_SUMMARY => get_string('summary', 'block_myoverview')
+            THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_SUMMARY => get_string('summary', 'block_myoverview'),
         ];
         // Setting: Show course images.
         $name = 'theme_boost_union/courseoverviewshowcourseimages';
