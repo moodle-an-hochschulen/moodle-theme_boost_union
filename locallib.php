@@ -1407,7 +1407,7 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
     $scss = '';
 
     // Selector for the course overview block.
-    $courseoverviewblockselector = '.block_myoverview.block div[data-region="courses-view"]';
+    $blockselector = '.block_myoverview.block div[data-region="courses-view"]';
 
     // Get the course image setting, defaults to true if the setting does not exist.
     if (!isset($theme->settings->courseoverviewshowcourseimages)) {
@@ -1423,19 +1423,16 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
 
     // If the corresponding settings are set to false.
     if (!$showimagessummary) {
-        $scss .= $courseoverviewblockselector . ' .course-summaryitem > .row > .col-md-2 { display: none !important; }' .
-            PHP_EOL;
-        $scss .= $courseoverviewblockselector . ' .course-summaryitem > .row > .col-md-1 { margin-left: auto !important; }' .
-            PHP_EOL;
+        $scss .= $blockselector . ' .course-summaryitem > .row > .col-md-2 { display: none !important; }' . PHP_EOL;
+        $scss .= $blockselector . ' .course-summaryitem > .row > .col-md-1 { margin-left: auto !important; }' . PHP_EOL;
     }
     if (!$showcourseimageslist) {
-        $scss .= $courseoverviewblockselector . ' .course-listitem:not(.course-summaryitem) > .row > .col-md-2 { display: none !important; }' .
-            PHP_EOL;
-        $scss .= $courseoverviewblockselector . ' .course-listitem:not(.course-summaryitem) > .row > .col-md-1 { margin-left: auto !important; }' .
-            PHP_EOL;
+        $listitemselector = $blockselector . ' .course-listitem:not(.course-summaryitem) > .row ';
+        $scss .= $listitemselector . '> .col-md-2 { display: none !important; }' . PHP_EOL;
+        $scss .= $listitemselector . '> .col-md-1 { margin-left: auto !important; }' . PHP_EOL;
     }
     if (!$showcourseimagescard) {
-        $scss .= $courseoverviewblockselector.' .dashboard-card-img { display: none !important; }'.PHP_EOL;
+        $scss .= $blockselector.' .dashboard-card-img { display: none !important; }'.PHP_EOL;
     }
 
     // Get the course progress setting, defaults to true if the setting does not exist.
@@ -1448,7 +1445,7 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
 
     // If the corresponding setting is set to false.
     if (!$showcourseprogress) {
-        $scss .= $courseoverviewblockselector.' .progress-text { display: none !important; }'.PHP_EOL;
+        $scss .= $blockselector.' .progress-text { display: none !important; }'.PHP_EOL;
     }
 
     return $scss;
