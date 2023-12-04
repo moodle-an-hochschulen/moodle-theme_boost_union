@@ -69,7 +69,7 @@ echo $OUTPUT->header();
 echo $OUTPUT->heading(theme_boost_union_get_staticpage_pagetitle('imprint'));
 
 // Output imprint content.
-echo format_text($config->imprintcontent);
+echo format_text($config->imprintcontent, FORMAT_MOODLE, ['trusted' => true, 'noclean' => true]);
 
 // Finish page.
 echo $OUTPUT->footer();

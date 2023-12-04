@@ -5,6 +5,8 @@ Changes
 -------
 
 ### Unreleased
+
+* 2023-12-01 - Bugfix: Static pages unnecessarily cleaned configured content, solves #486.
 * 2023-11-23 - Bugfix: Add background color to OAuth2 login button, solves #473.
 
 ### v4.1-r15

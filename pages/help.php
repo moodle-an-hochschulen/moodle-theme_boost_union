@@ -69,7 +69,7 @@ echo $OUTPUT->header();
 echo $OUTPUT->heading(theme_boost_union_get_staticpage_pagetitle('help'));
 
 // Output help page content.
-echo format_text($config->helpcontent);
+echo format_text($config->helpcontent, FORMAT_MOODLE, ['trusted' => true, 'noclean' => true]);
 
 // Finish page.
 echo $OUTPUT->footer();
