@@ -225,7 +225,7 @@ $string['emailbrandingintronote'] = 'Please note: This is an advanced functional
 $string['emailbrandinginstruction'] = 'How-to';
 $string['emailbrandinginstruction0'] = 'With this Boost Union feature, you can apply branding to all E-Mails which Moodle is sending out.';
 $string['emailbrandinginstructionli1'] = 'Go to the <a href="{$a->url}" target="_blank">language customization settings page</a> to open the <em>{$a->lang}</em> language pack for editing.';
-$string['emailbrandinginstructionli2'] = 'Search for and modify these strings in the <code>theme_boost_union language</code> pack:';
+$string['emailbrandinginstructionli2'] = 'Search for and modify these strings in the <code>theme_boost_union</code> language pack:';
 $string['emailbrandinginstructionli2li1'] = '<code>templateemailhtmlprefix</code>: This snippet will be added <em>at the beginning / before the body</em> of all <em>HTML E-Mails</em> which Moodle is sending out.';
 $string['emailbrandinginstructionli2li2'] = '<code>templateemailhtmlsuffix</code>: This snippet will be added <em>at the end / after the body</em> of all <em>HTML E-Mails</em> which Moodle is sending out.';
 $string['emailbrandinginstructionli2li3'] = '<code>templateemailtextprefix</code>: This snippet will be added <em>at the beginning / before the body</em> of all <em>plaintext E-Mails</em> which Moodle is sending out.';
