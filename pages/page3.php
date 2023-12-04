@@ -69,7 +69,7 @@ echo $OUTPUT->header();
 echo $OUTPUT->heading(theme_boost_union_get_staticpage_pagetitle('page3'));
 
 // Output page3 content.
-echo format_text($config->page3content);
+echo format_text($config->page3content, FORMAT_MOODLE, ['trusted' => true, 'noclean' => true]);
 
 // Finish page.
 echo $OUTPUT->footer();
