@@ -15,19 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Version file
+ * Theme Boost Union - Footer question mark button layout include.
  *
  * @package    theme_boost_union
- * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @copyright  2023 Luca Bösch <luca.boesch@bfh.ch>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'theme_boost_union';
-$plugin->version = 2023102004;
-$plugin->release = 'v4.3-r2';
-$plugin->requires = 2023100900;
-$plugin->supported = [403, 403];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = ['theme_boost' => 2023100900];
+$footersetting = get_config('theme_boost_union', 'enablefooterbutton');
+
+// If the footer button is enabled.
+$footerquestionmark = isset($footersetting) ? $footersetting : THEME_BOOST_UNION_SETTING_ENABLEFOOTER_ALL;
+if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
+    // Add marker to show the footer button to templatecontext.
+    $templatecontext['footerbutton'] = true;
+}

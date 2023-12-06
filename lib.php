@@ -92,6 +92,11 @@ define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH', 'fullwidth');
 define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_COURSECONTENTWIDTH', 'coursecontentwidth');
 define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_HEROWIDTH', 'herowidth');
 
+define('THEME_BOOST_UNION_SETTING_ENABLEFOOTER_ALL', 'enablefooterbuttonall');
+define('THEME_BOOST_UNION_SETTING_ENABLEFOOTER_DESKTOP', 'enablefooterbuttondesktop');
+define('THEME_BOOST_UNION_SETTING_ENABLEFOOTER_MOBILE', 'enablefooterbuttonmobile');
+define('THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE', 'enablefooterbuttonnone');
+
 /**
  * Returns the main SCSS content.
  *

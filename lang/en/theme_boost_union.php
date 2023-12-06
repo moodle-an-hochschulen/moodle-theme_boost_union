@@ -439,6 +439,15 @@ $string['footnoteheading'] = 'Footnote';
 // ... ... Setting: Footnote.
 $string['footnotesetting'] = 'Footnote';
 $string['footnotesetting_desc'] = 'Whatever you add to this textarea will be displayed at the end of a page, in the footer (not the floating footer) on every page which uses the layouts "drawers", "columns2" or "login". Content in this area could be for example the copyright, the terms of use or the name of your organisation. <br/> If you want to remove the footnote again, just empty the text area.';
+// ... Section: Footer.
+$string['footerheading'] = 'Footer';
+// ... ... Setting: Enable footer.
+$string['enablefooterbutton'] = 'Enable footer';
+$string['enablefooterbutton_desc'] = 'With "footer", the circle containing the question mark at the bottom of the page is meant.<br />Upon click, the user is presented with an overlay. Depending on the site configuration Moodle shows several links (like "Help and documentation" or "Data retention summary") are shown in this overlay.<br />With this setting, you can control whether to show or to suppress the footer button at the bottom of the page.';
+$string['enablefooterbuttonboth'] = 'Enable on desktop, tablet and mobile';
+$string['enablefooterbuttondesktop'] = 'Enable on desktop and tablet only, hide on mobile (unchanged as presented by Moodle core)';
+$string['enablefooterbuttonmobile'] = 'Enable on mobile only, hide on desktop and tablet';
+$string['enablefooterbuttonhidden'] = 'Hide on all devices';
 
 // Settings: Static pages tab.
 $string['staticpagestab'] = 'Static pages';

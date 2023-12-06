@@ -1381,6 +1381,30 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_confightmleditor($name, $title, $description, '');
         $tab->add($setting);
 
+        // Create footer heading.
+        $name = 'theme_boost_union/footerheading';
+        $title = get_string('footerheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Enable footer.
+        $enablefooterbuttonoptions = [
+            THEME_BOOST_UNION_SETTING_ENABLEFOOTER_ALL =>
+                    get_string('enablefooterbuttonboth', 'theme_boost_union', null, true),
+            THEME_BOOST_UNION_SETTING_ENABLEFOOTER_DESKTOP =>
+                    get_string('enablefooterbuttondesktop', 'theme_boost_union', null, true),
+            THEME_BOOST_UNION_SETTING_ENABLEFOOTER_MOBILE =>
+                    get_string('enablefooterbuttonmobile', 'theme_boost_union', null, true),
+            THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE =>
+                    get_string('enablefooterbuttonhidden', 'theme_boost_union', null, true),
+        ];
+        $name = 'theme_boost_union/enablefooterbutton';
+        $title = get_string('enablefooterbutton', 'theme_boost_union', null, true);
+        $description = get_string('enablefooterbutton_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_ENABLEFOOTER_DESKTOP, $enablefooterbuttonoptions);
+        $tab->add($setting);
+
         // Add tab to settings page.
         $page->add($tab);
 

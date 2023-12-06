@@ -45,3 +45,33 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And I should see "Footnote" in the "#footnote" "css_element"
     And I should not see "<span lang=\"en\" class=\"multilang\">Footnote</span>" in the "#footnote" "css_element"
     And I should not see "FootnoteFussnote" in the "#footnote" "css_element"
+
+  @javascript
+  Scenario Outline: Setting: Footer - Enable and disable the footer button
+    Given the following config values are set as admin:
+      | config             | value   | plugin            |
+      | enablefooterbutton | <value> | theme_boost_union |
+    When I log in as "teacher1"
+    And I follow "Dashboard"
+    And I change viewport size to "large"
+    Then ".btn-footer-popover" "css_element" <desktopshouldornot> <visibleorexist>
+    And I change viewport size to "480x800"
+    Then ".btn-footer-popover" "css_element" <mobileshouldornot> <visibleorexist>
+    And I am on "Course 1" course homepage
+    And I change viewport size to "large"
+    Then ".btn-footer-popover" "css_element" <desktopshouldornot> <visibleorexist>
+    And I change viewport size to "480x800"
+    Then ".btn-footer-popover" "css_element" <mobileshouldornot> <visibleorexist>
+    And I log out
+    And I follow "Log in"
+    And I change viewport size to "large"
+    Then ".btn-footer-popover" "css_element" <desktopshouldornot> <visibleorexist>
+    And I change viewport size to "480x800"
+    Then ".btn-footer-popover" "css_element" <mobileshouldornot> <visibleorexist>
+
+    Examples:
+      | value                     | desktopshouldornot | mobileshouldornot | visibleorexist |
+      | enablefooterbuttonall     | should             | should            | be visible     |
+      | enablefooterbuttondesktop | should             | should not        | be visible     |
+      | enablefooterbuttonmobile  | should not         | should            | be visible     |
+      | enablefooterbuttonnone    | should not         | should not        | exist          |
