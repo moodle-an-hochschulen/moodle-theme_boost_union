@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r16
 
 * 2023-12-05 - Improvement: Option to suppress footer (circle containing the question mark) button, solves #444.
 * 2023-12-01 - Bugfix: Static pages unnecessarily cleaned configured content, solves #486.
