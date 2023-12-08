@@ -28,7 +28,6 @@ defined('MOODLE_INTERNAL') || die();
 
 use context_system;
 use html_writer;
-use smartmenu_helper;
 use stdClass;
 use cache;
 use core_course\external\course_summary_exporter;
@@ -248,7 +247,7 @@ class smartmenu_item {
 
     /**
      * The helper object for this menu item.
-     * @var \smartmenu_helper
+     * @var smartmenu_helper
      */
     public $helper;
 

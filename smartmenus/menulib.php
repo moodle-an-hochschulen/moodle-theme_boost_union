@@ -22,12 +22,14 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace theme_boost_union;
+
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot. '/theme/boost_union/locallib.php');
+use cache;
+use context_system;
 
-use theme_boost_union\smartmenu;
-use theme_boost_union\smartmenu_item;
+require_once($CFG->dirroot. '/theme/boost_union/locallib.php');
 
 /**
  * Smartmenu helper which contains the methods to verify the access rules for menu and its items.

@@ -57,7 +57,7 @@ class eventobservers {
 
         // Deletion this cohort may result in a menu change for its users.
         // Verify if any of the menus used this cohort in restriction rules and, if yes, purge the menus cache.
-        \smartmenu_helper::purge_cache_deleted_cohort($event->objectid);
+        smartmenu_helper::purge_cache_deleted_cohort($event->objectid);
     }
 
     /**
@@ -85,7 +85,7 @@ class eventobservers {
 
         // Adding users to this cohort may result in a menu change for these users.
         // Verify if any of the menus used this cohort in restriction rules and, if yes, purge the menus cache for this user.
-        \smartmenu_helper::purge_cache_session_cohort($event->objectid, $event->relateduserid);
+        smartmenu_helper::purge_cache_session_cohort($event->objectid, $event->relateduserid);
     }
 
     /**
@@ -113,7 +113,7 @@ class eventobservers {
 
         // Removing users from this cohort may result in a menu change for these users.
         // Verify if any of the menus used this cohort in restriction rules and, if yes, purge the menus cache for this user.
-        \smartmenu_helper::purge_cache_session_cohort($event->objectid, $event->relateduserid);
+        smartmenu_helper::purge_cache_session_cohort($event->objectid, $event->relateduserid);
     }
 
     /**
@@ -128,7 +128,7 @@ class eventobservers {
         require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
         // Purge the cached menus for the user with the assigned role.
-        \smartmenu_helper::purge_cache_session_roles($event->objectid, $event->relateduserid);
+        smartmenu_helper::purge_cache_session_roles($event->objectid, $event->relateduserid);
     }
 
     /**
@@ -143,7 +143,7 @@ class eventobservers {
         require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
         // Purge the cached menus for the user with the unassigned role.
-        \smartmenu_helper::purge_cache_session_roles($event->objectid, $event->relateduserid);
+        smartmenu_helper::purge_cache_session_roles($event->objectid, $event->relateduserid);
     }
 
     /**
@@ -158,7 +158,7 @@ class eventobservers {
         require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
         // Purge the cached menus for all users with the deleted role.
-        \smartmenu_helper::purge_cache_deleted_roles($event->objectid);
+        smartmenu_helper::purge_cache_deleted_roles($event->objectid);
     }
 
     /**
@@ -173,7 +173,7 @@ class eventobservers {
         require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
         // Purge all the dynamic course items cache.
-        \smartmenu_helper::purge_cache_dynamic_courseitems();
+        smartmenu_helper::purge_cache_dynamic_courseitems();
 
         return true;
     }
@@ -190,7 +190,7 @@ class eventobservers {
         require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
         // Clear the cache of menu when the course updated.
-        \smartmenu_helper::purge_cache_dynamic_courseitems();
+        smartmenu_helper::purge_cache_dynamic_courseitems();
     }
 
     /**
@@ -205,7 +205,7 @@ class eventobservers {
         require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
         // Clear the cache of menu when the course/module completion updated for user.
-        \smartmenu_helper::set_user_purgecache($event->relateduserid);
+        smartmenu_helper::set_user_purgecache($event->relateduserid);
     }
 
     /**
@@ -220,6 +220,6 @@ class eventobservers {
         require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
         // Clear the cache of menu when the course/module completion updated for user.
-        \smartmenu_helper::set_user_purgecache($event->relateduserid);
+        smartmenu_helper::set_user_purgecache($event->relateduserid);
     }
 }

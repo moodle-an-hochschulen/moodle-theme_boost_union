@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-02-11 - Child theme support: Improve namespace of class smartmenu_helper, resolves #494.
 * 2024-02-11 - Child theme support: Update note about grandchild themes in README.md
 * 2024-02-09 - Improvement: Inherit preset setting and preset files from Boost Core instead of duplicating them into Boost Union, resolves #267.
                Please note: The preset setting in Boost Union was practically broken up to now. Removing the duplicated setting should not break anything.
