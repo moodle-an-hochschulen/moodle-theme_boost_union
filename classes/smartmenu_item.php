@@ -303,14 +303,14 @@ class smartmenu_item {
         $this->menu = $menu ?: smartmenu::get_menu($this->item->menu);
 
         // Smartmenu helper to verify the access rules.
-        $this->helper = new smartmenu_helper($this->item);
+        $this->helper = new \theme_boost_union\smartmenu_helper($this->item);
 
         // Cache instance for the items.
-        $this->cache = cache::make('theme_boost_union', 'smartmenu_items');
+        $this->cache = \cache::make('theme_boost_union', 'smartmenu_items');
 
         // Menus cache instance.
         // Purge the menu related to the item, when the item is updated, created and sorted.
-        $this->menucache = cache::make('theme_boost_union', 'smartmenus');
+        $this->menucache = \cache::make('theme_boost_union', 'smartmenus');
     }
 
     /**
@@ -1006,7 +1006,7 @@ class smartmenu_item {
     public function build() {
         global $USER;
 
-        smartmenu_helper::purge_cache_date_reached($this->cache, $this->item, 'itemlastcheckdate');
+        \theme_boost_union\smartmenu_helper::purge_cache_date_reached($this->cache, $this->item, 'itemlastcheckdate');
 
         $cachekey = "{$this->item->id}_u_{$USER->id}";
         if ($result = $this->cache->get($cachekey)) {
@@ -1194,7 +1194,7 @@ class smartmenu_item {
         }
 
         // Attach the opacity into bg color and convert the item bgcolor hexa code into rgba.
-        $background = smartmenu_helper::color_get_rgba($this->item->backgroundcolor, self::BACKGROUND_OPACITY);
+        $background = \theme_boost_union\smartmenu_helper::color_get_rgba($this->item->backgroundcolor, self::BACKGROUND_OPACITY);
         $this->item->backgroundcolor = $background;
     }
 
@@ -1348,9 +1348,9 @@ class smartmenu_item {
         $transaction = $DB->start_delegated_transaction();
 
         // Cache for menus.
-        $menucache = cache::make('theme_boost_union', 'smartmenus');
+        $menucache = \cache::make('theme_boost_union', 'smartmenus');
         // Cache for menu items.
-        $cache = cache::make('theme_boost_union', 'smartmenu_items');
+        $cache = \cache::make('theme_boost_union', 'smartmenu_items');
 
         if (isset($formdata->id) && $oldrecord = $DB->get_record('theme_boost_union_menuitems', ['id' => $formdata->id])) {
             $itemid = $formdata->id;
