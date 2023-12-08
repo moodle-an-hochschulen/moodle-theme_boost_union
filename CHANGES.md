@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-12-08 - Bugfix: Rename class smartmenu_helper to theme_boost_union_smartmenu_helper, solves #494.
+
 ### v4.3-r3
 
 * 2023-12-05 - Improvement: Option to suppress footer (circle containing the question mark) button, solves #444.

@@ -38,7 +38,7 @@ use theme_boost_union\smartmenu_item;
  * @copyright  2023 bdecent GmbH <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class smartmenu_helper {
+class theme_boost_union_smartmenu_helper {
 
     /**
      * Data record of the item or menu.

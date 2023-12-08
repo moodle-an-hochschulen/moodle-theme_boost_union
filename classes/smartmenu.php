@@ -32,7 +32,7 @@ use moodle_exception;
 use core\navigation\views\primary;
 use cache;
 use cache_helper;
-use smartmenu_helper;
+use theme_boost_union_smartmenu_helper;
 
 require_once($CFG->dirroot.'/theme/boost_union/smartmenus/menulib.php');
 
@@ -65,7 +65,7 @@ class smartmenu {
     /**
      * The helper object for managing smart menu restrict access rules.
      *
-     * @var \smartmenu_helper
+     * @var \theme_boost_union_smartmenu_helper
      */
     public $helper;
 
@@ -294,7 +294,7 @@ class smartmenu {
     public function __construct($menu) {
         $this->id = $menu->id;
         $this->menu = self::update_menu_valuesformat($menu);
-        $this->helper = new \smartmenu_helper($this->menu);
+        $this->helper = new \theme_boost_union_smartmenu_helper($this->menu);
         // Cache for menu.
         $this->cache = cache::make('theme_boost_union', 'smartmenus');
     }
@@ -560,7 +560,7 @@ class smartmenu {
         $cachekey = "{$this->menu->id}_u_{$USER->id}";
 
         // Purge the cached menus data if the menu date restrictions are reached or passed.
-        smartmenu_helper::purge_cache_date_reached($this->cache, $this->menu, 'menulastcheckdate');
+        theme_boost_union_smartmenu_helper::purge_cache_date_reached($this->cache, $this->menu, 'menulastcheckdate');
 
         // Get the menu and its menu items from cache.
         $menuitems = [];
@@ -712,7 +712,7 @@ class smartmenu {
         // Get the menu location from topmenus list.
         // Locations from itemdata is not accurate, to fix this need to remove the all of items cache for the updated menu.
         // Instead of delete item caches, get locations from cached menus list.
-        $topmenus = smartmenu_helper::get_menu_cache()->get(self::CACHE_MENUSLIST);
+        $topmenus = theme_boost_union_smartmenu_helper::get_menu_cache()->get(self::CACHE_MENUSLIST);
 
         $menulocation = [];
         foreach ($menus as $menu) {
@@ -977,7 +977,7 @@ class smartmenu {
         }
 
         // Menus are purged in the build method when needed, then clear the user preference of purge cache.
-        \smartmenu_helper::clear_user_cachepreferencemenu();
+        \theme_boost_union_smartmenu_helper::clear_user_cachepreferencemenu();
 
         return $nodes;
     }
@@ -995,7 +995,7 @@ class smartmenu {
             // Confirm the cache is not already purged for this language change. To avoid multiple purge.
             if (!isset($SESSION->prevlang) || $SESSION->prevlang != $lang) {
                 // Set the purge cache preference for this session user. Cache will purged in the build_smartmenu method.
-                \smartmenu_helper::set_user_purgecache($USER->id);
+                \theme_boost_union_smartmenu_helper::set_user_purgecache($USER->id);
                 $SESSION->prevlang = $lang; // Save this lang for verification.
             }
         }

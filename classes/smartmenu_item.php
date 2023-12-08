@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 use context_system;
 use html_writer;
-use smartmenu_helper;
+use theme_boost_union_smartmenu_helper;
 use stdClass;
 use cache;
 use core_course\external\course_summary_exporter;
@@ -200,7 +200,8 @@ class smartmenu_item {
 
     /**
      * The helper object for this menu item.
-     * @var \smartmenu_helper
+     *
+     * @var \theme_boost_union_smartmenu_helper
      */
     public $helper;
 
@@ -255,7 +256,7 @@ class smartmenu_item {
         $this->menu = $menu ?: smartmenu::get_menu($this->item->menu);
 
         // Smartmenu helper to verify the access rules.
-        $this->helper = new smartmenu_helper($this->item);
+        $this->helper = new theme_boost_union_smartmenu_helper($this->item);
 
         // Cache instance for the items.
         $this->cache = cache::make('theme_boost_union', 'smartmenu_items');
@@ -917,7 +918,7 @@ class smartmenu_item {
     public function build() {
         global $USER;
 
-        smartmenu_helper::purge_cache_date_reached($this->cache, $this->item, 'itemlastcheckdate');
+        theme_boost_union_smartmenu_helper::purge_cache_date_reached($this->cache, $this->item, 'itemlastcheckdate');
 
         $cachekey = "{$this->item->id}_u_{$USER->id}";
         if ($result = $this->cache->get($cachekey)) {
@@ -1103,7 +1104,7 @@ class smartmenu_item {
         }
 
         // Attach the opacity into bg color and convert the item bgcolor hexa code into rgba.
-        $background = smartmenu_helper::color_get_rgba($this->item->backgroundcolor, self::BACKGROUND_OPACITY);
+        $background = theme_boost_union_smartmenu_helper::color_get_rgba($this->item->backgroundcolor, self::BACKGROUND_OPACITY);
         $this->item->backgroundcolor = $background;
     }
 
