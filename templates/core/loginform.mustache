@@ -40,6 +40,8 @@
     * sitename - Name of site.,
     * logintoken - Random token to protect login request.,
     * maintenance - Maintenance message
+    * showlocallogin - Should the local login form be shown?
+    * showidploginintro - Should the IDP login intro be shown?
 
     Example context (json):
     {
@@ -91,7 +93,9 @@
         "sitename": "Beer & Chips",
         "logintoken": "randomstring",
         "maintenance": "For full access to this site, you need to login in as an admin.",
-        "languagemenu": "Choose language"
+        "languagemenu": "Choose language",
+        "showlocallogin": true,
+        "showidploginintro": true
     }
 }}
 {{!
@@ -99,6 +103,8 @@
 
     Modifications compared to the original template:
     * Add btn-secondary class to identityprovider login buttons.
+    * Added the possibility to hide the local login form.
+    * Added the possibility to hide the IDP login intro.
 }}
 
 <div class="loginform">
@@ -127,6 +133,7 @@
     {{#cansignup}}
         <a href="{{signupurl}}" class="sr-only">{{#str}} tocreatenewaccount {{/str}}</a>
     {{/cansignup}}
+    {{#showlocallogin}}
     <form class="login-form" action="{{loginurl}}" method="post" id="login">
         <input id="anchor" type="hidden" name="anchor" value="">
         <script>document.getElementById('anchor').value = location.hash;</script>
@@ -166,10 +173,13 @@
             <a href="{{forgotpasswordurl}}">{{#str}}forgotaccount{{/str}}</a>
         </div>
     </form>
+    {{/showlocallogin}}
     {{#hasidentityproviders}}
         <div class="login-divider"></div>
         <div class="login-identityproviders">
+            {{#showidploginintro}}
             <h2 class="login-heading">{{#str}} potentialidps, auth {{/str}}</h2>
+            {{/showidploginintro}}
             {{#identityproviders}}
                 <a class="btn login-identityprovider-btn btn-block btn-secondary" href="{{url}}">
                     {{#iconurl}}
