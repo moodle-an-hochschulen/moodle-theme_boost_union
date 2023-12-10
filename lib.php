@@ -97,6 +97,10 @@ define('THEME_BOOST_UNION_SETTING_ENABLEFOOTER_DESKTOP', 'enablefooterbuttondesk
 define('THEME_BOOST_UNION_SETTING_ENABLEFOOTER_MOBILE', 'enablefooterbuttonmobile');
 define('THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE', 'enablefooterbuttonnone');
 
+define('THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_CARD', 'card');
+define('THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_LIST', 'list');
+define('THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_SUMMARY', 'summary');
+
 /**
  * Returns the main SCSS content.
  *
@@ -315,6 +319,9 @@ function theme_boost_union_get_extra_scss($theme) {
 
     // Setting: Mark external links.
     $content .= theme_boost_union_get_scss_to_mark_external_links($theme);
+
+    // Setting: Course overview block.
+    $content .= theme_boost_union_get_scss_courseoverview_block($theme);
 
     return $content;
 }

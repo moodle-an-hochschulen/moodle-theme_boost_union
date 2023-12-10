@@ -636,6 +636,43 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
+        // Create Dashboard / My courses tab.
+        $tab = new admin_settingpage('theme_boost_union_look_dashboard',
+                get_string('dashboardtab', 'theme_boost_union', null, true));
+
+        // Create Course overview block heading.
+        $name = 'theme_boost_union/courseoverviewheading';
+        $title = get_string('courseoverviewheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Prepare show course images options.
+        $showcourseimagesoptions = [
+                THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_CARD => get_string('card', 'block_myoverview'),
+                THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_LIST => get_string('list', 'block_myoverview'),
+                THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_SUMMARY => get_string('summary', 'block_myoverview'),
+        ];
+        // Setting: Show course images.
+        $name = 'theme_boost_union/courseoverviewshowcourseimages';
+        $title = get_string('courseoverviewshowcourseimagessetting', 'theme_boost_union', null, true);
+        $description = get_string('courseoverviewshowcourseimagessetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configmulticheckbox($name, $title, $description, $showcourseimagesoptions,
+                $showcourseimagesoptions);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Show course progress.
+        $name = 'theme_boost_union/courseoverviewshowcourseprogress';
+        $title = get_string('courseoverviewshowprogresssetting', 'theme_boost_union', null, true);
+        $description = get_string('courseoverviewshowprogresssetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
         // Create course tab.
         $tab = new admin_settingpage('theme_boost_union_look_course',
                 get_string('coursetab', 'theme_boost_union', null, true));

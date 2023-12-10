@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2023-12-10 - Improvement: Allow the admin to change the look of the course overview block, solves #204
+
 ### v4.1-r16
 
 * 2023-12-05 - Improvement: Option to suppress footer (circle containing the question mark) button, solves #444.
