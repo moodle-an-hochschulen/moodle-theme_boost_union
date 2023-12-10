@@ -194,6 +194,17 @@ $string['loginformpositionsetting_right'] = 'Right-aligned';
 $string['loginformtransparencysetting'] = 'Login form transparency';
 $string['loginformtransparencysetting_desc'] = 'With this setting, you can make the login form slightly transparent to let the background image shine through even more.';
 
+// Settings: Dashboard / My courses tab.
+$string['dashboardtab'] = 'Dashboard / My courses';
+// ... Section: Course overview block.
+$string['courseoverviewheading'] = 'Course overview block';
+// ... ... Setting: Show course images.
+$string['courseoverviewshowcourseimagessetting'] = 'Show course images';
+$string['courseoverviewshowcourseimagessetting_desc'] = 'With this setting, you can control whether the course image is visible inside the course overview block or not. It is possible to choose a different setting for Card view, Summary view, and List view.';
+// ... ... Setting: Show course completion progress.
+$string['courseoverviewshowprogresssetting'] = 'Show course completion progress';
+$string['courseoverviewshowprogresssetting_desc'] = 'With this setting, you can control whether the course completion progress is visible inside the course overview block or not.';
+
 // Settings: Course tab.
 $string['coursetab'] = 'Course';
 // ... Section: Course header.
