@@ -23,6 +23,7 @@
  */
 
 namespace theme_boost_union\output;
+use context_course;
 use context_system;
 use moodle_url;
 
@@ -483,5 +484,46 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         return $this->render_from_template('core/block', $context);
+    }
+
+    /**
+     * Renders the login form.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * @param \core_auth\output\login $form The renderable.
+     * @return string
+     */
+    public function render_login(\core_auth\output\login $form) {
+        global $CFG, $SITE;
+
+        $context = $form->export_for_template($this);
+
+        $context->errorformatted = $this->error_text($context->error);
+        $url = $this->get_logo_url();
+        if ($url) {
+            $url = $url->out(false);
+        }
+        $context->logourl = $url;
+        $context->sitename = format_string($SITE->fullname, true,
+            ['context' => context_course::instance(SITEID), "escape" => false]);
+
+        // Check if the local login form is enabled.
+        $loginlocalloginsetting = get_config('theme_boost_union', 'loginlocalloginenable');
+        $showlocallogin = isset($loginlocalloginsetting) ? $loginlocalloginsetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
+        if ($showlocallogin == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            // Add marker to show the local login form to template context.
+            $context->showlocallogin = true;
+        }
+
+        // Check if the IDP login intro is enabled.
+        $loginidpshowintrosetting = get_config('theme_boost_union', 'loginidpshowintro');
+        $showidploginintro = isset($loginidpshowintrosetting) ? $loginidpshowintrosetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
+        if ($showidploginintro == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            // Add marker to show the IDP login intro to template context.
+            $context->showidploginintro = true;
+        }
+
+        return $this->render_from_template('core/loginform', $context);
     }
 }
