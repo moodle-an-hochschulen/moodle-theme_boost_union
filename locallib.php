@@ -1423,13 +1423,14 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
 
     // If the corresponding settings are set to false.
     if (!$showimagessummary) {
-        $scss .= $blockselector . ' .course-summaryitem > .row > .col-md-2 { display: none !important; }' . PHP_EOL;
-        $scss .= $blockselector . ' .course-summaryitem > .row > .col-md-1 { margin-left: auto !important; }' . PHP_EOL;
+        $listitemselector = $blockselector.' .course-summaryitem > .row ';
+        $scss .= $listitemselector.'> .col-md-2 { display: none !important; }'.PHP_EOL;
+        $scss .= $listitemselector.'> .col-md-9 { @extend .col-md-11; }'.PHP_EOL;
     }
     if (!$showcourseimageslist) {
-        $listitemselector = $blockselector . ' .course-listitem:not(.course-summaryitem) > .row ';
-        $scss .= $listitemselector . '> .col-md-2 { display: none !important; }' . PHP_EOL;
-        $scss .= $listitemselector . '> .col-md-1 { margin-left: auto !important; }' . PHP_EOL;
+        $listitemselector = $blockselector.' .course-listitem:not(.course-summaryitem) > .row ';
+        $scss .= $listitemselector.'> .col-md-2 { display: none !important; }'.PHP_EOL;
+        $scss .= $listitemselector.'> .col-md-9 { @extend .col-md-11; }'.PHP_EOL;
     }
     if (!$showcourseimagescard) {
         $scss .= $blockselector.' .dashboard-card-img { display: none !important; }'.PHP_EOL;
