@@ -632,6 +632,26 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
+        // Create login providers heading.
+        $name = 'theme_boost_union/loginprovidersheading';
+        $title = get_string('loginprovidersheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Local login.
+        $name = 'theme_boost_union/loginlocalloginenable';
+        $title = get_string('loginlocalloginenablesetting', 'theme_boost_union', null, true);
+        $description = get_string('loginlocalloginenablesetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
+        $tab->add($setting);
+
+        // Setting: IDP login intro.
+        $name = 'theme_boost_union/loginidpshowintro';
+        $title = get_string('loginidpshowintrosetting', 'theme_boost_union', null, true);
+        $description = get_string('loginidpshowintrosetting_desc', 'theme_boost_union', get_string('potentialidps', 'auth'), true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
+        $tab->add($setting);
+
         // Add tab to settings page.
         $page->add($tab);
 

@@ -137,3 +137,42 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | setting | shouldcontain      |
       | yes     | should contain     |
       | no      | should not contain |
+
+  Scenario Outline: Setting: Local login
+    Given the following config values are set as admin:
+      | config                | value     | plugin            |
+      | loginlocalloginenable | <setting> | theme_boost_union |
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then "form#login" "css_element" <shouldornot> exist
+
+    Examples:
+      | setting | shouldornot |
+      | yes     | should      |
+      | no      | should not  |
+
+  Scenario Outline: Setting: IDP login intro
+    Given the following config values are set as admin:
+      | config            | value     | plugin            |
+      | loginidpshowintro | <setting> | theme_boost_union |
+    And the following config values are set as admin:
+        | config | value         |
+        | auth   | manual,oauth2 |
+    When I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name                       | Testing service                           |
+      | Client ID                  | thisistheclientid                         |
+      | Client secret              | supersecret                               |
+    And I press "Save changes"
+    And I log out
+    And I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then ".login-identityproviders .login-heading" "css_element" <shouldornot> exist
+
+    Examples:
+      | setting | shouldornot |
+      | yes     | should      |
+      | no      | should not  |
