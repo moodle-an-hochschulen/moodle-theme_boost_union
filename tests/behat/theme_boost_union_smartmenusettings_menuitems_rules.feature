@@ -168,6 +168,42 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | English, Deutsch | should                    | should not                | should                   |
 
   @javascript
+  Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on the custom date range
+    When I navigate to smart menus
+    And I should see "Quick links" in the "smartmenus" "table"
+    And I should see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
+    And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
+    And I click on ".action-edit" "css_element" in the "Resources" "table_row"
+    And I expand all fieldsets
+    And I set the following fields to these values:
+      | id_start_date_enabled    | <startenabled> |
+      | id_end_date_enabled      | <endenabled>   |
+      | id_start_date_day        | <start_day>    |
+      | id_start_date_month      | <start_month>  |
+      | id_start_date_year       | <start_year>   |
+      | id_end_date_day          | <end_day>      |
+      | id_end_date_month        | <end_month>    |
+      | id_end_date_year         | <end_year>     |
+    And I click on "Save changes" "button"
+    And I <menushouldorshouldnot> see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
+    Then I log out
+    And I log in as "student1"
+    And I <menushouldorshouldnot> see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
+    And I log out
+    When I log in as "teacher"
+    And I <menushouldorshouldnot> see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
+
+    Examples:
+      | startenabled |endenabled | start_day | start_month | start_year | end_day | end_month | end_year | menushouldorshouldnot |
+      | 1            | 1         | 1         | January     | 2023       | 1       | January   | 2050     | should                |
+      | 1            | 1         | 1         | January     | 2049       | 1       | January   | 2050     | should not            |
+      | 1            | 1         | 1         | January     | 2023       | 1       | December  | 2023     | should not            |
+      | 1            | 0         | 1         | January     | 2023       | 1       | 1         | 2023     | should                |
+      | 1            | 0         | 1         | January     | 2049       | 1       | 1         | 2023     | should not            |
+      | 0            | 1         | 1         | January     | 2023       | 1       | December  | 2050     | should                |
+      | 0            | 1         | 1         | January     | 2023       | 1       | December  | 2023     | should not            |
+
+  @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on multiple conditions
     When I log in as "teacher"
     And I follow "Preferences" in the user menu
