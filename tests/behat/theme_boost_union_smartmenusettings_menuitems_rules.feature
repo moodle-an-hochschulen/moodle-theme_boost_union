@@ -20,14 +20,17 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | fullname | shortname | category |
       | Test     | C1        | 0        |
     And the following "users" exist:
-      | username |
-      | student1 |
-      | student2 |
-      | teacher  |
+      | username      |
+      | student1      |
+      | student2      |
+      | teacher       |
+      | coursemanager |
+      | systemmanager |
     And the following "course enrolments" exist:
-      | user     | course | role           |
-      | teacher  | C1     | editingteacher |
-      | student1 | C1     | student        |
+      | user          | course | role           |
+      | teacher       | C1     | editingteacher |
+      | student1      | C1     | student        |
+      | coursemanager | C1     | manager        |
     And the following "cohorts" exist:
       | name     | idnumber |
       | Cohort 1 | CH1      |
@@ -48,27 +51,38 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
 
   @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on the user roles
-    When I navigate to smart menus
+    Given the following "system role assigns" exist:
+      | user          | course               | role    |
+      | systemmanager | Acceptance test site | manager |
+    And I navigate to smart menus
     And I should see "Quick links" in the "smartmenus" "table"
     And I should see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
     And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
     And I click on ".action-edit" "css_element" in the "Resources" "table_row"
     And I expand all fieldsets
     And I set the field "By role" to "<byrole>"
+    And I set the field "Context" to "<context>"
     And I click on "Save changes" "button"
     And I should not see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
+    And I log out
+    And I log in as "coursemanager"
+    Then I <managershouldorshouldnot> see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
     And I log out
     And I log in as "student1"
     Then I <student1shouldorshouldnot> see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
     And I log out
     And I log in as "teacher"
     Then I <teachershouldorshouldnot> see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
+    And I log out
+    And I log in as "systemmanager"
+    Then I should see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
 
     Examples:
-      | byrole                    | student1shouldorshouldnot | teachershouldorshouldnot |
-      | Manager                   | should not                | should not               |
-      | Manager, Student          | should                    | should not               |
-      | Manager, Student, Teacher | should                    | should                   |
+      | byrole                    | context | student1shouldorshouldnot | teachershouldorshouldnot | managershouldorshouldnot |
+      | Manager                   | Any     | should not                | should not               | should                   |
+      | Manager, Student          | Any     | should                    | should not               | should                   |
+      | Manager, Student, Teacher | Any     | should                    | should                   | should                   |
+      | Manager, Student, Teacher | System  | should not                | should not               | should not               |
 
   @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on the user assignment in single cohorts
