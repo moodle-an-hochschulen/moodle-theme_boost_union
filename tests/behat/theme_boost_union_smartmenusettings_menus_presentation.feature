@@ -47,19 +47,34 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I click on "Create menu" "button"
     And I expand all fieldsets
     And I set the following fields to these values:
-      | Title            | Quick links      |
-      | Menu location(s) | Main navigation  |
-      | CSS class        | quick-links-menu |
+      | Title            | Quick links              |
+      | Menu location(s) | Main, Menu, User, Bottom |
+      | CSS class        | quick-links-menu         |
     And I click on "Save and return" "button"
-    Then ".nav-item.quick-links-menu" "css_element" should exist in the ".primary-navigation" "css_element"
-    And I should see "Quick links" in the ".nav-item.quick-links-menu" "css_element"
+    And I set "Quick links" smart menu items with the following fields to these values:
+      | Title          | Resources         |
+      | Menu item type | Static            |
+      | Menu item URL  | http://moodle.org |
+    And the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links-menu"
+    And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Quick links')]" "xpath_element" should contain "quick-links-menu"
+    And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links-menu"
+    And I change the viewport size to "740x900"
+    And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links-menu"
+    And I change the viewport size to "large"
+    And I navigate to smart menus
     And I click on ".action-edit" "css_element" in the "Quick links" "table_row"
     And I expand all fieldsets
     And I set the field "CSS class" to "quick-links"
     And I click on "Save and return" "button"
-    Then ".nav-item.quick-links-menu" "css_element" should not exist in the ".primary-navigation" "css_element"
-    And ".nav-item.quick-links" "css_element" should exist in the ".primary-navigation" "css_element"
-    And I should see "Quick links" in the ".nav-item.quick-links" "css_element"
+    And the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should not contain "quick-links-menu"
+    And the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links"
+    And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Quick links')]" "xpath_element" should not contain "quick-links-menu"
+    And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Quick links')]" "xpath_element" should contain "quick-links"
+    And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should not contain "quick-links-menu"
+    And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links"
+    And I change the viewport size to "740x900"
+    And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should not contain "quick-links-menu"
+    And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links"
 
   @javascript
   Scenario: Smartmenu: Menus: Presentation - Use different styles for a smart menu
