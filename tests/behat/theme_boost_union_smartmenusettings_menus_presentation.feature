@@ -114,6 +114,33 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Large (200px)  | 200    |
 
   @javascript
+  Scenario: Smartmenu: Menus: Presentation - Displays the card menu container in various overflow behaviors
+    Given I log in as "admin"
+    And I create smart menu with the following fields to these values:
+    | Title                   | Quick Links     |
+    | Menu location(s)        | Main navigation |
+    | Presentation type       | Card            |
+    | Card overflow behavior  | No wrap         |
+    And I set "Quick Links" smart menu items with the following fields to these values:
+    | Title          | Smartmenu Resource |
+    | Menu item type | Static             |
+    | Menu item URL  | https://moodle.org |
+    And I click on "Smart menus" "link" in the "#page-navbar .breadcrumb" "css_element"
+    And ".dropdown.nav-item.card-dropdown" "css_element" should exist in the ".primary-navigation" "css_element"
+    And I click on "Quick Links" "link" in the ".primary-navigation" "css_element"
+    Then ".card-dropdown.card-overflow-no-wrap .dropdown-menu.show" "css_element" should exist in the ".primary-navigation" "css_element"
+    And ".card-dropdown.card-overflow-wrap .dropdown-menu.show" "css_element" should not exist in the ".primary-navigation" "css_element"
+    Then DOM element ".primary-navigation .card-dropdown .dropdown-menu.show" should have computed style "flex-wrap" "nowrap"
+
+    And I click on ".action-edit" "css_element" in the "Quick Links" "table_row"
+    And I expand all fieldsets
+    And I set the field "Card overflow behavior" to "Wrap"
+    And I click on "Save and return" "button"
+    And I click on "Quick Links" "link" in the ".primary-navigation" "css_element"
+    And ".card-dropdown.card-overflow-wrap .dropdown-menu.show" "css_element" should exist in the ".primary-navigation" "css_element"
+    And ".card-dropdown.card-overflow-no-wrap .dropdown-menu.show" "css_element" should not exist in the ".primary-navigation" "css_element"
+
+  @javascript
   Scenario Outline: Smartmenu: Menus: Presentation - Display the smart menu and its menu items as card withs different aspect ratios
     When I log in as "admin"
     And I create smart menu with the following fields to these values:
@@ -165,3 +192,60 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I am on site homepage
     Then I should see "Dolor sit amet" in the "nav.moremenu" "css_element"
     And I should not see "Lorem ipsum" in the "nav.moremenu" "css_element"
+
+  @javascript
+  Scenario: Smartmenu: Menus: Presentation - Display the menus inside and outside more menu
+    Given I log in as "admin"
+    And I create smart menu with the following fields to these values:
+      | Title              | Quick links          |
+      | Menu location(s)   | Main, Menu           |
+      | Menu mode          | Submenu              |
+      | More menu behavior | Force into more menu |
+    And I set "Quick links" smart menu items with the following fields to these values:
+      | Title           | Smartmenu Resource |
+      | Menu item type  | Heading            |
+    And I click on "Smart menus" "link" in the "#page-navbar .breadcrumb" "css_element"
+    And I should not see smart menu "Quick links" in location "Main, Menu"
+    And I click on "More" "link" in the ".primary-navigation" "css_element"
+    Then I should see smart menu "Quick links" in location "Main"
+    And I click on "More" "link" in the ".boost-union-menubar" "css_element"
+    Then I should see smart menu "Quick links" in location "Menu"
+    And I create smart menu with the following fields to these values:
+      | Title            | Test quick demo links 01 |
+      | Menu location(s) | Main, Menu               |
+    And I create smart menu with the following fields to these values:
+      | Title            | Test quick demo links 02 |
+      | Menu location(s) | Main, Menu               |
+    And I create smart menu with the following fields to these values:
+      | Title            | Test quick demo links 03 |
+      | Menu location(s) | Main, Menu               |
+    And I create smart menu with the following fields to these values:
+      | Title            | Test quick demo links 04 |
+      | Menu location(s) | Main, Menu               |
+    And I create smart menu with the following fields to these values:
+      | Title            | Test quick demo links 05 |
+      | Menu location(s) | Main, Menu               |
+    And I create smart menu with the following fields to these values:
+      | Title            | Test quick demo links long title 01  |
+      | Menu location(s) | Menu                                 |
+    And I create smart menu with the following fields to these values:
+      | Title            | Test quick demo links long title 02  |
+      | Menu location(s) | Menu                                 |
+    And I create smart menu with the following fields to these values:
+      | Title            | Test quick demo links 06 |
+      | Menu location(s) | Main, Menu               |
+    Then I change the viewport size to "1600x495"
+    And I should not see smart menu "Test quick demo links 06" in location "Main, Menu"
+    And I click on "More" "link" in the ".primary-navigation" "css_element"
+    Then I should see smart menu "Test quick demo links 06" in location "Main"
+    And I click on "More" "link" in the ".boost-union-menubar" "css_element"
+    Then I should see smart menu "Test quick demo links 06" in location "Menu"
+    And I click on ".action-edit" "css_element" in the "Test quick demo links 06" "table_row"
+    Then I click on "Expand all" "link"
+    And I set the field "More menu behavior" to "Keep outside of more menu"
+    And I click on "Save and return" "button"
+    And I should see smart menu "Test quick demo links 06" in location "Main, Menu"
+    And I click on "More" "link" in the ".primary-navigation" "css_element"
+    Then I should not see "Test quick demo links 06" in the ".primary-navigation .dropdownmoremenu" "css_element"
+    And I click on "More" "link" in the ".boost-union-menubar" "css_element"
+    Then I should not see "Test quick demo links 06" in the ".boost-union-menubar .dropdownmoremenu" "css_element"
