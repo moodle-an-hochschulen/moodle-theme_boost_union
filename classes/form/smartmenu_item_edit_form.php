@@ -248,6 +248,33 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->setType('cssclass', PARAM_TEXT);
         $mform->addHelpButton('cssclass', 'smartmenusmenuitemcssclass', 'theme_boost_union');
 
+        // Add course list ordering (for the dynamic courses menu item type) as select element.
+        $listsortoptions = [
+                smartmenu_item::LISTSORT_FULLNAME_ASC =>
+                        get_string('smartmenusmenuitemlistsortfullnameasc', 'theme_boost_union'),
+                smartmenu_item::LISTSORT_FULLNAME_DESC =>
+                        get_string('smartmenusmenuitemlistsortfullnamedesc', 'theme_boost_union'),
+                smartmenu_item::LISTSORT_SHORTNAME_ASC =>
+                        get_string('smartmenusmenuitemlistsortshortnameasc', 'theme_boost_union'),
+                smartmenu_item::LISTSORT_SHORTNAME_DESC =>
+                        get_string('smartmenusmenuitemlistsortshortnamedesc', 'theme_boost_union'),
+                smartmenu_item::LISTSORT_COURSEID_ASC =>
+                        get_string('smartmenusmenuitemlistsortcourseidasc', 'theme_boost_union'),
+                smartmenu_item::LISTSORT_COURSEID_DESC =>
+                        get_string('smartmenusmenuitemlistsortcourseiddesc', 'theme_boost_union'),
+                smartmenu_item::LISTSORT_COURSEIDNUMBER_ASC =>
+                        get_string('smartmenusmenuitemlistsortcourseidnumberasc', 'theme_boost_union'),
+                smartmenu_item::LISTSORT_COURSEIDNUMBER_DESC =>
+                        get_string('smartmenusmenuitemlistsortcourseidnumberdesc', 'theme_boost_union'),
+        ];
+        $mform->addElement('select', 'listsort',
+                get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
+                get_string('smartmenusmenuitemlistsort', 'theme_boost_union'), $listsortoptions);
+        $mform->setDefault('listsort', smartmenu_item::LISTSORT_FULLNAME_ASC);
+        $mform->setType('listsort', PARAM_INT);
+        $mform->hideIf('listsort', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
+        $mform->addHelpButton('listsort', 'smartmenusmenuitemlistsort', 'theme_boost_union');
+
         // Add course name presentation (for the dynamic courses menu item type) as select element.
         $displayfieldoptions = [
                 smartmenu_item::FIELD_FULLNAME => get_string('smartmenusmenuitemdisplayfieldcoursefullname', 'theme_boost_union'),

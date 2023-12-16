@@ -41,6 +41,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     And I create smart menu with the following fields to these values:
       | Title            | List menu                |
       | Menu location(s) | Main, Menu, User, Bottom |
+      | CSS class        | dynamiccoursetest        |
     And I set "List menu" smart menu items with the following fields to these values:
       | Title          | Dynamic courses |
       | Menu item type | Dynamic courses |
@@ -225,3 +226,40 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | value  | user     | course1    | course2    | course3    | course4    |
       | value1 | student1 | should     | should     | should not | should not |
       | value2 | student1 | should not | should not | should     | should not |
+
+  @javascript
+  Scenario Outline: Smartmenus: Menu items: Dynamic courses - Sort the course list based on the given setting
+    Given the following "courses" exist:
+      | fullname   | shortname | category | idnumber |
+      | AAA Course | BBB       | CAT1     | CCC      |
+      | BBB Course | AAA       | CAT1     | BBB      |
+      | CCC Course | CCC       | CAT1     | AAA      |
+    When I log in as "admin"
+    And I navigate to smart menu "List menu" items
+    And I click on ".action-edit" "css_element" in the "Dynamic courses" "table_row"
+    And I set the field "Dynamic courses: Course list sorting" to "<sorting>"
+    And I press "Save changes"
+    And I log out
+    When I log in as "student1"
+    And I click on ".dynamiccoursetest" "css_element"
+    Then "<thisbeforethat1>" "text" should appear before "<thisbeforethat2>" "text" in the ".dynamiccoursetest .dropdown-menu" "css_element"
+    And "<thisbeforethat2>" "text" should appear before "<thisbeforethat3>" "text" in the ".dynamiccoursetest .dropdown-menu" "css_element"
+
+    Examples:
+      | sorting | thisbeforethat1 | thisbeforethat2 | thisbeforethat3 |
+      # Option: Course fullname ascending
+      | 0       | AAA Course      | BBB Course      | CCC Course      |
+      # Option: Course fullname descending
+      | 1       | CCC Course      | BBB Course      | AAA Course      |
+      # Option: Course shortname ascending
+      | 2       | BBB Course      | AAA Course      | CCC Course      |
+      # Option: Course shortname descending
+      | 3       | CCC Course      | AAA Course      | BBB Course      |
+      # Option: Course ID ascending
+      | 4       | AAA Course      | BBB Course      | CCC Course      |
+      # Option: Course ID descending
+      | 5       | CCC Course      | BBB Course      | AAA Course      |
+      # Option: Course ID number ascending
+      | 6       | CCC Course      | BBB Course      | AAA Course      |
+      # Option: Course ID number descending
+      | 7       | AAA Course      | BBB Course      | CCC Course      |
