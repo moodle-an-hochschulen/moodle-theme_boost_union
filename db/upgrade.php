@@ -262,5 +262,21 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023090100, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2023090111) {
+        // Define table theme_boost_union_menus to be altered.
+        $table = new xmldb_table('theme_boost_union_menuitems');
+
+        // Define field listsort to be added to theme_boost_union_menuitems.
+        $field = new xmldb_field('listsort', XMLDB_TYPE_INTEGER, '9', null, null, null, null, 'customfields');
+
+        // Conditionally launch add field listsort.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2023090111, 'theme', 'boost_union');
+    }
+
     return true;
 }
