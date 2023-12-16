@@ -181,6 +181,54 @@ class smartmenu_item {
     const FIELD_FULLNAME = 0;
 
     /**
+     * Sort the course list alphabetically by fullname ascending for dynamic menu item.
+     * @var int
+     */
+    const LISTSORT_FULLNAME_ASC = 0;
+
+    /**
+     * Sort the course list alphabetically by fullname descending for dynamic menu item.
+     * @var int
+     */
+    const LISTSORT_FULLNAME_DESC = 1;
+
+    /**
+     * Sort the course list alphabetically by shortname ascending for dynamic menu item.
+     * @var int
+     */
+    const LISTSORT_SHORTNAME_ASC = 2;
+
+    /**
+     * Sort the course list alphabetically by shortname descending for dynamic menu item.
+     * @var int
+     */
+    const LISTSORT_SHORTNAME_DESC = 3;
+
+    /**
+     * Sort the course list numerically by course-id ascending for dynamic menu item.
+     * @var int
+     */
+    const LISTSORT_COURSEID_ASC = 4;
+
+    /**
+     * Sort the course list numerically by course-id descending for dynamic menu item.
+     * @var int
+     */
+    const LISTSORT_COURSEID_DESC = 5;
+
+    /**
+     * Sort the course list alphabetically by course idnumber ascending for dynamic menu item.
+     * @var int
+     */
+    const LISTSORT_COURSEIDNUMBER_ASC = 6;
+
+    /**
+     * Sort the course list alphabetically by course idnumber descending for dynamic menu item.
+     * @var int
+     */
+    const LISTSORT_COURSEIDNUMBER_DESC = 7;
+
+    /**
      * The ID of the menu item.
      * @var int
      */
@@ -641,8 +689,11 @@ class smartmenu_item {
         $sql = " SELECT $select FROM {course} c $join";
         $sql .= $where ? " WHERE $where " : '';
 
-        // Sort the courses in ascending order by its display field.
-        $sql .= ($this->item->displayfield == self::FIELD_SHORTNAME) ? " ORDER BY c.shortname ASC " : " ORDER BY c.fullname ASC ";
+        // Sort the courses in ascending order by its ID.
+        // The real list sorting is done later as we have to handle multilanguage strings
+        // which is not possible in SQL.
+        // Sorting by ID here is just to make cases where two courses have exactly identical names deterministic.
+        $sql .= " ORDER BY c.id ASC ";
 
         // Fetch the course records based on the sql.
         $records = $DB->get_records_sql($sql, $params);
@@ -662,9 +713,47 @@ class smartmenu_item {
             $coursename = ($this->item->displayfield == self::FIELD_SHORTNAME) ? $record->shortname : $record->fullname;
             // Short the course text name. used custom end (2) dots instead of three dots to display more words from coursenames.
             $coursename = ($this->item->textcount) ? $this->shorten_words($coursename, $this->item->textcount) : $coursename;
+            // Store the string which should be used for sorting within the item.
+            switch ($this->item->listsort) {
+                case self::LISTSORT_FULLNAME_ASC:
+                case self::LISTSORT_FULLNAME_DESC:
+                default:
+                    $sortstring = $record->fullname;
+                    break;
+                case self::LISTSORT_SHORTNAME_ASC:
+                case self::LISTSORT_SHORTNAME_DESC:
+                    $sortstring = $record->shortname;
+                    break;
+                case self::LISTSORT_COURSEID_ASC:
+                case self::LISTSORT_COURSEID_DESC:
+                    $sortstring = $record->id;
+                    break;
+                case self::LISTSORT_COURSEIDNUMBER_ASC:
+                case self::LISTSORT_COURSEIDNUMBER_DESC:
+                    $sortstring = $record->idnumber;
+                    break;
+            }
 
-            $items[] = $this->generate_node_data($coursename, $url, $rkey, null, 'link', false, [], $itemimage);
+            $items[] = $this->generate_node_data($coursename, $url, $rkey, null, 'link', false, [], $itemimage, $sortstring);
         }
+
+        // Sort the courses based on the configured setting.
+        $listsort = $this->item->listsort;
+        usort($items, function($course1, $course2) use ($listsort) {
+            switch ($listsort) {
+                case self::LISTSORT_FULLNAME_ASC:
+                case self::LISTSORT_SHORTNAME_ASC:
+                case self::LISTSORT_COURSEID_ASC:
+                case self::LISTSORT_COURSEIDNUMBER_ASC:
+                default:
+                    return strnatcasecmp($course1['sortstring'], $course2['sortstring']);
+                case self::LISTSORT_FULLNAME_DESC:
+                case self::LISTSORT_SHORTNAME_DESC:
+                case self::LISTSORT_COURSEID_DESC:
+                case self::LISTSORT_COURSEIDNUMBER_DESC:
+                    return strnatcasecmp($course2['sortstring'], $course1['sortstring']);
+            }
+        });
 
         // Submenu only contains the title as separate node.
         if ($this->item->mode == self::MODE_SUBMENU) {
@@ -997,11 +1086,12 @@ class smartmenu_item {
      * @param int $haschildren Whether the item has children or not, defaults to 0.
      * @param array $children An array of child nodes, defaults to an empty array.
      * @param string $itemimage Card image url for item.
+     * @param string $sortstring The string to be used for sorting the items.
      *
      * @return array An associative array of node data for the item.
      */
     public function generate_node_data($title, $url, $key=null, $tooltip=null,
-        $itemtype='link', $haschildren=0, $children=[], $itemimage='') {
+        $itemtype='link', $haschildren=0, $children=[], $itemimage='', $sortstring='') {
 
         global $OUTPUT;
 
@@ -1048,6 +1138,7 @@ class smartmenu_item {
             'itemtype' => 'link',
             'link' => 1,
             'sort' => uniqid(), // Support third level menu.
+            'sortstring' => format_string($sortstring),
         ];
 
         if ($haschildren && !empty($children)) {
