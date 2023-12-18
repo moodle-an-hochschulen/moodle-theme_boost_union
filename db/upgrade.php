@@ -268,5 +268,18 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023010533, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2023010534) {
+
+        // Changing precision of field description_format on table theme_boost_union_flavours to (2).
+        $table = new xmldb_table('theme_boost_union_flavours');
+        $field = new xmldb_field('description_format', XMLDB_TYPE_INTEGER, '2', null, null, null, null, 'description');
+
+        // Launch change of precision for field description_format.
+        $dbman->change_field_precision($table, $field);
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2023010534, 'theme', 'boost_union');
+    }
+
     return true;
 }
