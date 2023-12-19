@@ -119,14 +119,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I click on "Smart menus" "link" in the "#page-navbar .breadcrumb" "css_element"
     And ".dropdown.nav-item.card-dropdown" "css_element" should exist in the ".primary-navigation" "css_element"
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
-    Then I should see ".card-dropdown .dropdown-menu.show img" style "height" value "<height>"
+    Then DOM element ".card-dropdown .dropdown-menu.show img" should have computed style "height" "<height>"
 
     Examples:
-      | cardsize       | height |
-      | Tiny (50px)    | 50     |
-      | Small (100px)  | 100    |
-      | Medium (150px) | 150    |
-      | Large (200px)  | 200    |
+      | cardsize       | height   |
+      | Tiny (50px)    | 50px     |
+      | Small (100px)  | 100px    |
+      | Medium (150px) | 150px    |
+      | Large (200px)  | 200px    |
 
   @javascript
   Scenario: Smartmenu: Menus: Presentation - Displays the card menu container in various overflow behaviors
