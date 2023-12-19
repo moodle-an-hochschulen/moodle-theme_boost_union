@@ -35,31 +35,6 @@ use Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_boost_union_base_smartmenus extends behat_base {
-    /**
-     * Verify the card size height.
-     *
-     * @Given /^I should see "(?P<element>(?:[^"]|\\")*)" style "(?P<rule>(?:[^"]|\\")*)" value "(?P<value>(?:[^"]|\\")*)"$/
-     * @param string $selector
-     * @param string $rule
-     * @param string $value
-     */
-    public function i_should_see_style_value($selector, $rule, $value) {
-
-        // The DOM and the JS should be all ready and loaded. Running without spinning
-        // as this is a widely used step and we can not spend time here trying to see
-        // a DOM node that is not always there (at the moment clean is not even the
-        // default theme...).
-        $navbuttonjs = "return (
-            Y.one('$selector') &&
-            Y.one('$selector').getComputedStyle('$rule') !== $value
-        )";
-
-        // Adding an extra click we need to show the 'Log in' link.
-        if (!$this->evaluate_script($navbuttonjs)) {
-            return false;
-        }
-        return true;
-    }
 
     /**
      * Open the smart menu listing page.
