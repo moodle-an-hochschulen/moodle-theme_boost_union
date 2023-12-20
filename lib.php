@@ -419,7 +419,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
     } else if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'backgroundimage' ||
         $filearea === 'loginbackgroundimage' || $filearea === 'additionalresources' ||
                 $filearea === 'customfonts' || $filearea === 'courseheaderimagefallback' ||
-                $filearea === 'touchicons' ||
+                $filearea === 'touchiconsios' ||
                 preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea))) {
         $theme = theme_config::load('boost_union');
         // By default, theme files must be cache-able by both browsers and proxies.
@@ -487,7 +487,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
 function theme_boost_union_before_standard_html_head() {
     global $CFG, $PAGE;
 
-    // Initialize HTML (even though we do not add any HTML at this stage of the implementation).
+    // Initialize HTML.
     $html = '';
 
     // If a theme other than Boost Union or a child theme of it is active, return directly.
@@ -502,9 +502,10 @@ function theme_boost_union_before_standard_html_head() {
     // Add the flavour CSS to the page.
     theme_boost_union_add_flavourcss_to_page();
 
-    $html .= theme_boost_union_upload_touchicons_to_page();
+    // Add the touch icons to the page.
+    $html .= theme_boost_union_get_touchicons_html_for_page();
 
-    // Return an empty string to keep the caller happy.
+    // Return the HTML code.
     return $html;
 }
 

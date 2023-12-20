@@ -1029,13 +1029,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create mobile app tab.
+        // Create mobile tab.
         $tab = new admin_settingpage('theme_boost_union_look_mobile',
                 get_string('mobiletab', 'theme_boost_union', null, true));
 
-        // Create Mobile appearance heading.
-        $name = 'theme_boost_union/mobileappearanceheading';
-        $title = get_string('mobileappearanceheading', 'theme_boost_union', null, true);
+        // Create Mobile app heading.
+        $name = 'theme_boost_union/mobileappheading';
+        $title = get_string('mobileappheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
@@ -1071,30 +1071,54 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_boost_union_set_mobilecss_url');
         $tab->add($setting);
 
-        // Setting: image upload for touchimages.
-        $name = 'theme_boost_union/touchiconfiles';
-        $title = get_string('touchiconfiles', 'theme_boost_union', null, true);
-        $description = get_string('touchiconfiles_desc', 'theme_boost_union', null, true) .
-            '<br />' . get_string('touchiconfiles_desc_types_ios', 'theme_boost_union', null, true);
-        // Use our enhanced implementation of admin_setting_configstoredfile to circumvent MDL-59082.
-        // This can be changed back to admin_setting_configstoredfile as soon as MDL-59082 is fixed.
-        $setting = new admin_setting_configstoredfilealwayscallback($name, $title, $description, 'touchicons', 0,
-            array('maxfiles' => -1, 'subdirs' => 0, 'accepted_types' => ['.jpg', '.png']));
+        // Create Mobile appearance heading.
+        $name = 'theme_boost_union/mobileappearanceheading';
+        $title = get_string('mobileappearanceheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
-        // Information: Touchicons list.
-        $faconfig = get_config('theme_boost_union', 'fontawesomeversion');
-        // If there is at least one file uploaded we show a list of files which are accepted...
-        // ...and flag them is they are uploaded.
-        if (!empty(get_config('theme_boost_union', 'touchiconfiles'))) {
-            // Prepare the widget.
-            $name = 'theme_boost_union/touchiconfileslist';
-            $title = get_string('touchiconfileslistsetting', 'theme_boost_union', null, true);
-            $description = get_string('touchiconfileslistsetting_desc', 'theme_boost_union', null, true);
+        // Setting: Touch icon files for iOS.
+        $name = 'theme_boost_union/touchiconfilesios';
+        $title = get_string('touchiconfilesios', 'theme_boost_union', null, true);
+        $touchiconsios = theme_boost_union_get_touchicons_for_ios();
+        $description = get_string('touchiconfilesios_desc', 'theme_boost_union', null, true).'<br />';
+        $description .= get_string('touchiconfilesios_recommended', 'theme_boost_union', null, true).' ';
+        $description .= $touchiconsios['filenameprefix'].
+            '['.
+            implode(' | ', $touchiconsios['sizes']['recommended']).
+            ']-.['.
+            implode(' | ', $touchiconsios['filenamesuffixes']).
+            ']';
+        $description .= '<br />';
+        $description .= get_string('touchiconfilesios_optional', 'theme_boost_union', null, true).' ';
+        $description .= $touchiconsios['filenameprefix'].
+            '['.
+            implode(' | ', $touchiconsios['sizes']['optional']).
+            ']-.['.
+            implode(' | ', $touchiconsios['filenamesuffixes']).
+            ']';
+        $description .= '<br />';
+        $description .= get_string('touchiconfilesios_example', 'theme_boost_union', null, true);
+        $description .= '<br />';
+        $description .= get_string('touchiconfilesios_note', 'theme_boost_union', null, true);
+        // Use our enhanced implementation of admin_setting_configstoredfile to circumvent MDL-59082.
+        // This can be changed back to admin_setting_configstoredfile as soon as MDL-59082 is fixed.
+        $setting = new admin_setting_configstoredfilealwayscallback($name, $title, $description, 'touchiconsios', 0,
+                ['maxfiles' => -1, 'subdirs' => 0, 'accepted_types' => ['.jpg', '.png']]);
+        $setting->set_updatedcallback('theme_boost_union_touchicons_for_ios_checkin');
+        $tab->add($setting);
 
-            // Append the icon list.
-            $templatecontext = array('files' => theme_boost_union_check_mobile_touchimages());
-            $description .= $OUTPUT->render_from_template('theme_boost_union/settings-touchicon-filelist', $templatecontext);
+        // Information: Touch icon files for iOS list.
+        // If there is at least one file uploaded.
+        if (!empty(get_config('theme_boost_union', 'touchiconfilesios'))) {
+            // Prepare the widget.
+            $name = 'theme_boost_union/touchiconfilesioslist';
+            $title = get_string('touchiconfilesioslist', 'theme_boost_union', null, true);
+            $description = get_string('touchiconfilesioslist_desc', 'theme_boost_union', null, true);
+
+            // Append the icon list to the description.
+            $templatecontext = ['files' => theme_boost_union_get_touchicons_for_ios_templatecontext()];
+            $description .= $OUTPUT->render_from_template('theme_boost_union/settings-touchiconsios-filelist', $templatecontext);
 
             // Finish the widget.
             $setting = new admin_setting_description($name, $title, $description);
