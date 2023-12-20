@@ -69,6 +69,14 @@ $definitions = [
                 'simpledata' => true,
                 'staticacceleration' => true,
         ],
+        // This cache stores the touch icon files for iOS (which are uploaded in the Boost Union settings)
+        // to avoid that the files have to be read from the filearea on every page load.
+        'touchiconsios' => [
+            'mode' => cache_store::MODE_APPLICATION,
+            'simplekeys' => true,
+            'simpledata' => true,
+            'staticacceleration' => true,
+        ],
         // This cache stores the smart menus.
         'smartmenus' => [
                 'mode' => cache_store::MODE_APPLICATION,
