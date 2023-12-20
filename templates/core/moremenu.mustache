@@ -55,17 +55,44 @@
     <ul id="moremenu-{{moremenuid}}-{{navbarstyle}}" role="{{#istablist}}tablist{{/istablist}}{{^istablist}}menubar{{/istablist}}" class="nav more-nav {{navbarstyle}}">
         {{#nodecollection}}
             {{#children}}
-                {{> core/moremenu_children}}
+                {{#haschildren}}
+                    <li class="dropdown nav-item {{#menuclasses}}{{.}} {{/menuclasses}} " role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+                        {{> core/moremenu_children}}
+                    </li>
+                {{/haschildren}}
+                {{^haschildren}}
+                    <li data-key="{{key}}" class="nav-item {{#menuclasses}}{{.}} {{/menuclasses}}" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+                        {{> core/moremenu_children}}
+                    </li>
+                {{/haschildren}}
             {{/children}}
         {{/nodecollection}}
         {{#nodearray}}
         {{!-- Menu with card style --}}
             {{#card}}
-                {{> theme_boost_union/smartmenus-cardmenu-children}}
+                {{#haschildren}}
+                    <li class="dropdown nav-item {{#card}} card-dropdown {{/card}} {{#menudata.classes}} {{.}} {{/menudata.classes}}" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+                        {{> theme_boost_union/smartmenus-cardmenu-children}}
+                    </li>
+                {{/haschildren}}
+                {{^haschildren}}
+                    <li data-key="{{key}}" class="nav-item" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+                        {{> theme_boost_union/smartmenus-cardmenu-children}}
+                    </li>
+                {{/haschildren}}
             {{/card}}
 
             {{^card}}
-                {{> core/moremenu_children}}
+                {{#haschildren}}
+                    <li class="dropdown nav-item {{#menuclasses}}{{.}} {{/menuclasses}} " role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+                        {{> core/moremenu_children}}
+                    </li>
+                {{/haschildren}}
+                {{^haschildren}}
+                    <li data-key="{{key}}" class="nav-item {{#menuclasses}}{{.}} {{/menuclasses}}" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+                        {{> core/moremenu_children}}
+                    </li>
+                {{/haschildren}}
             {{/card}}
         {{/nodearray}}
         {{^drawer}}

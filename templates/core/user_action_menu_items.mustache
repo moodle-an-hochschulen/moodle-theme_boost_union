@@ -41,7 +41,8 @@
                     "title": "Github user",
                     "url": "https://raw.githubusercontent.com/",
                     "pixicon": "t/dashboard",
-                    "imgsrc": "https://raw.githubusercontent.com/moodle/moodle/master/pix/t/check.png"
+                    "imgsrc": "https://raw.githubusercontent.com/moodle/moodle/master/pix/t/check.png",
+                    "hidemenuitem": true
                 },
                 "divider": 1
             },
@@ -69,7 +70,7 @@
 }}
 {{#items}}
     {{#link}}
-        <a href="{{{url}}}" class="dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" role="menuitem" tabindex="-1" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}} {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
+        <a href="{{{url}}}" class="dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" {{^hidemenuitem}} role="menuitem" {{/hidemenuitem}} tabindex="-1" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}} {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
             {{#pixicon}}
                 {{#pix}}{{pixicon}}{{/pix}}
             {{/pixicon}}
@@ -80,7 +81,7 @@
         </a>
     {{/link}}
     {{#submenulink}}
-        <a href="#" class="carousel-navigation-link dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" role="menuitem" tabindex="-1" data-carousel-target-id="carousel-item-{{submenuid}}" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}
+        <a href="#" class="carousel-navigation-link dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" {{^hidemenuitem}} role="menuitem" {{/hidemenuitem}} tabindex="-1" data-carousel-target-id="carousel-item-{{submenuid}}" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}
         {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}}{{/attributes}}>
             {{#pixicon}}
                 {{#pix}}{{pixicon}}{{/pix}}
