@@ -26,11 +26,13 @@
           * url - The href for the link.
           * pixicon - (Optional) The Moodle icon to use
           * imgsrc - (Optional) If provided, uses this as source for an image tag. Note: pixicon is preferred.
+          * hidemenuitemrole - (Not available) Only for example context to fix the CI warnings.
         * submenulink - If a submenu link is provided render it.
           * submenuid - The id of the targeted submenu.
           * title - The text to be shown for the link.
           * pixicon - (Optional) The Moodle icon to use.
           * imgsrc - (Optional) If provided, uses this as source for an image tag. Note: pixicon is preferred.
+          * hidemenuitemrole - (Not available) Only for example context to fix the CI warnings on role attribute.
         * divider - Whether a divider is to be displayed or not
 
     Example context (json):
@@ -41,7 +43,8 @@
                     "title": "Github user",
                     "url": "https://raw.githubusercontent.com/",
                     "pixicon": "t/dashboard",
-                    "imgsrc": "https://raw.githubusercontent.com/moodle/moodle/master/pix/t/check.png"
+                    "imgsrc": "https://raw.githubusercontent.com/moodle/moodle/master/pix/t/check.png",
+                    "hidemenuitemrole": true
                 },
                 "divider": 1
             },
@@ -50,7 +53,8 @@
                     "title": "Title",
                     "submenuid": "86cebd87",
                     "pixicon": "t/dashboard",
-                    "imgsrc": "https://raw.githubusercontent.com/moodle/moodle/master/pix/t/check.png"
+                    "imgsrc": "https://raw.githubusercontent.com/moodle/moodle/master/pix/t/check.png",
+                    "hidemenuitemrole": true
                 },
                 "divider": 1
             }
@@ -69,7 +73,7 @@
 }}
 {{#items}}
     {{#link}}
-        <a href="{{{url}}}" class="dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" role="menuitem" tabindex="-1" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}} {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
+        <a href="{{{url}}}" class="dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" {{^hidemenuitemrole}} role="menuitem" {{/hidemenuitemrole}} tabindex="-1" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}} {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
             {{#pixicon}}
                 {{#pix}}{{pixicon}}{{/pix}}
             {{/pixicon}}
@@ -80,7 +84,7 @@
         </a>
     {{/link}}
     {{#submenulink}}
-        <a href="#" class="carousel-navigation-link dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" role="menuitem" tabindex="-1" data-carousel-target-id="carousel-item-{{submenuid}}" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}
+        <a href="#" class="carousel-navigation-link dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" {{^hidemenuitemrole}} role="menuitem" {{/hidemenuitemrole}} tabindex="-1" data-carousel-target-id="carousel-item-{{submenuid}}" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}
         {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}}{{/attributes}}>
             {{#pixicon}}
                 {{#pix}}{{pixicon}}{{/pix}}
