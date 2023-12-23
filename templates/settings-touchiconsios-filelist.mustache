@@ -1,0 +1,64 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/settings-touchiconsios-filelist
+
+    Boost Union settingsfilelist layout template.
+
+    Context variables required for this template:
+    * files - Array of files
+
+    Example context (json):
+    {
+        "files": [
+            {
+                "exists": true,
+                "recommended": true,
+                "filename": "apple-icon-152x152.jpg",
+                "size": "152x152"
+            },
+            {
+                "exists": false,
+                "recommended": true,
+                "filename": "apple-icon-180x180",
+                "size": "180x180"
+            },
+            {
+                "exists": false,
+                "recommended": false,
+                "filename": "apple-icon-60x60.jpg",
+                "size": "60x60"
+            }
+        ]
+    }
+}}
+
+<ul class="list-group my-3 settings-touchiconsios-filelist">
+    {{#files}}
+        <li class="list-group-item d-flex justify-content-between">
+            <div class="d-flex flex-row apple-icon-{{size}}">
+                {{#exists}}<span class="{{#recommended}}text-success{{/recommended}}{{^recommended}}text-success{{/recommended}}"><i class="fa fa-check-circle-o fa-3x fa-fw"></i></span>{{/exists}}
+                {{^exists}}<span class="{{#recommended}}text-danger{{/recommended}}{{^recommended}}text-muted{{/recommended}}"><i class="fa fa-times-circle-o fa-3x fa-fw"></i></span>{{/exists}}
+                <div class="ml-3">
+                    <h6 class="mb-0">{{filename}}</h6>
+                    {{#exists}}<small>{{#recommended}}{{#str}}touchiconlistiosrecommendeduploaded,theme_boost_union{{/str}}{{/recommended}}{{^recommended}}{{#str}}touchiconlistiosoptionaluploaded,theme_boost_union{{/str}}{{/recommended}}</small>{{/exists}}
+                    {{^exists}}<small>{{#recommended}}{{#str}}touchiconlistiosrecommendedmissing,theme_boost_union{{/str}}{{/recommended}}{{^recommended}}{{#str}}touchiconlistiosoptionalmissing,theme_boost_union{{/str}}{{/recommended}}</small>{{/exists}}
+                </div>
+            </div>
+        </li>
+    {{/files}}
+</ul>

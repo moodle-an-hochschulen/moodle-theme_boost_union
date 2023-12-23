@@ -1451,3 +1451,173 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
 
     return $scss;
 }
+
+/**
+ * Helper function which returns the list of possible touch icons for iOS.
+ *
+ * @return array A multidimensional array
+ */
+function theme_boost_union_get_touchicons_for_ios() {
+    $filenameprefix = 'apple-icon-';
+    $filenamesuffixes = ['jpg', 'png'];
+
+    $recommendedsizes = ['120x120', '152x152', '167x167', '180x180'];
+    $optionalsizes = ['57x57', '60x60', '72x72', '76x76', '114x114', '144x144'];
+
+    return [
+        'filenameprefix' => $filenameprefix,
+        'filenamesuffixes' => $filenamesuffixes,
+        'sizes' => [
+            'recommended' => $recommendedsizes,
+            'optional' => $optionalsizes,
+        ],
+        'filenames' => [
+            'recommended' => preg_filter('/^/', $filenameprefix, $recommendedsizes),
+            'optional' => preg_filter('/^/', $filenameprefix, $optionalsizes),
+        ],
+    ];
+}
+
+/**
+ * Callback function which is called from settings.php if the touch icon files for iOS setting has changed.
+ *
+ * It gets all files from the files setting, picks all the expected files (and ignores all others)
+ * and stores them into an application cache for quicker access.
+ *
+ * @return void
+ */
+function theme_boost_union_touchicons_for_ios_checkin() {
+    // Create cache for touch icon files.
+    $cache = cache::make('theme_boost_union', 'touchiconsios');
+
+    // Purge the existing cache values as we will refill the cache now.
+    $cache->purge();
+
+    // Get list of possible touch icons for iOS.
+    $touchiconsios = theme_boost_union_get_touchicons_for_ios();
+
+    // Initialize the file list with all possible files.
+    $filelist = [];
+    foreach ($touchiconsios['filenames']['recommended'] as $ti) {
+        $candidatefile = new stdClass();
+        $candidatefile->exists = false;
+        $candidatefile->recommended = true;
+        $candidatefile->filename = $ti;
+        $candidatefile->size = str_replace($touchiconsios['filenameprefix'], '', $ti);
+        $filelist[$ti] = $candidatefile;
+    }
+    foreach ($touchiconsios['filenames']['optional'] as $ti) {
+        $candidatefile = new stdClass();
+        $candidatefile->exists = false;
+        $candidatefile->recommended = false;
+        $candidatefile->filename = $ti;
+        $candidatefile->size = str_replace($touchiconsios['filenameprefix'], '', $ti);
+        $filelist[$ti] = $candidatefile;
+    }
+
+    // Get the system context.
+    $systemcontext = \context_system::instance();
+
+    // Get filearea.
+    $fs = get_file_storage();
+
+    // Get touch icon files.
+    $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'touchiconsios', false, 'itemid', false);
+
+    // Iterate over the uploaded files and fill the file list.
+    foreach ($files as $file) {
+        // Get the filename including extension.
+        $filename = $file->get_filename();
+
+        // Get the filename without extension.
+        $filenamewithoutext = pathinfo($filename,  PATHINFO_FILENAME);
+
+        // If the filename is a recommended filename or if it is an optional filename.
+        if (in_array($filenamewithoutext, $touchiconsios['filenames']['recommended']) ||
+            in_array($filenamewithoutext, $touchiconsios['filenames']['optional'])) {
+            // Get the file extension.
+            $filenameextension = pathinfo($filename, PATHINFO_EXTENSION);
+
+            // If the file extension is a valid extension.
+            if (in_array($filenameextension, $touchiconsios['filenamesuffixes'])) {
+                // Set the exists flag in the return array.
+                $filelist[$filenamewithoutext]->exists = true;
+
+                // And set the full filename including suffix.
+                $filelist[$filenamewithoutext]->filename = $filename;
+            }
+        }
+    }
+
+    // Add the file list to the cache.
+    $cache->set('filelist', $filelist);
+
+    // Add a marker value to the cache which indicates that the files have been checked into the cache completely.
+    // This will help to decide later if the cache is really empty (and should be refilled) or if there aren't just any
+    // files uploaded.
+    $cache->set('checkedin', true);
+}
+
+/**
+ * Helper function which returns the templatecontext with the file list for the uploaded touch icons for iOS.
+ *
+ * @return array The array of files.
+ */
+function theme_boost_union_get_touchicons_for_ios_templatecontext() {
+    // Create cache for touch icon files.
+    $cache = cache::make('theme_boost_union', 'touchiconsios');
+
+    // If the cache is completely empty, check the files in on-the-fly.
+    if ($cache->get('checkedin') != true) {
+        theme_boost_union_touchicons_for_ios_checkin();
+    }
+
+    // Get the cached file list.
+    $filelist = $cache->get('filelist');
+
+    // The filelist in the cache is already structured in a way that it can be directly used as templatecontext :).
+    // Thus, return the templatecontext (and remove the array indices for proper rendering in Mustache).
+    return array_values($filelist);
+}
+
+/**
+ * Returns the HTML code to add the touch icons to the page.
+ *
+ * @return string
+ */
+function theme_boost_union_get_touchicons_html_for_page() {
+    // Create cache for touch icon files for iOS.
+    $cache = cache::make('theme_boost_union', 'touchiconsios');
+
+    // If the cache is completely empty, check the files in on-the-fly.
+    if ($cache->get('checkedin') != true) {
+        theme_boost_union_touchicons_for_ios_checkin();
+    }
+
+    // Get the cached file list.
+    $filelist = $cache->get('filelist');
+
+    // Initialize string.
+    $touchiconstring = '';
+
+    // If there are files uploaded.
+    if (is_array($filelist) && count($filelist) > 0) {
+        // Iterate over the files and fill the string with the file list.
+        foreach ($filelist as $file) {
+            // If the file exists (i.e. it has been uploaded).
+            if ($file->exists == true) {
+                // Build the file URL.
+                $fileurl = new moodle_url('/pluginfile.php/1/theme_boost_union/touchiconsios/'.
+                    theme_get_revision().'/'.$file->filename);
+
+                // Compose and append the HTML tag.
+                $touchiconstring .= '<link rel="apple-touch-icon" sizes="';
+                $touchiconstring .= $file->size;
+                $touchiconstring .= '" href="'.$fileurl->out().'">';
+            }
+        }
+    }
+
+    // Return the string.
+    return $touchiconstring;
+}

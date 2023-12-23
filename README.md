@@ -261,13 +261,19 @@ Use this field to provide CSS code which will be applied to the presentation of 
 
 With this setting, you can override Moodle's H5P content bank width without manual SCSS modifications.
 
-#### Tab "Mobile app"
+#### Tab "Mobile"
 
-##### Mobile appearance
+##### Mobile app
 
 ###### Additional CSS for Mobile app
 
 With this setting, you can write custom CSS code to customise your mobile app interface. The CSS code will be only added to the Mobile app depiction of this Moodle instance and will not be shown in the webbrowser version.
+
+##### Mobile appearance
+
+###### Touch Icon Files for iOS
+
+Within this setting, you can upload files which are used as homescreen icon as soon as the Moodle site is added to the iOS homescreen as bookmark.
 
 ### Settings page "Feel"
 

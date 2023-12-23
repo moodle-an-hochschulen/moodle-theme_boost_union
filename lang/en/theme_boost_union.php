@@ -315,16 +315,31 @@ $string['contentwidthheading'] = 'Content width';
 $string['h5pcontentmaxwidthsetting'] = 'H5P content bank max width';
 $string['h5pcontentmaxwidthsetting_desc'] = 'With this setting, you can override Moodle\'s H5P content bank width without manual SCSS modifications. This width is used for the H5P editor within the content bank. It is <em>not</em> used for the width of the H5P activity. By default, Moodle uses a H5P content bank max width of 960px. You can enter other pixel-based values like 1200px, but you can also enter a percentage-based value like 100% or a viewport-width value like 90vw.';
 
-// Settings: Mobile app tab.
-$string['mobiletab'] = 'Mobile app';
-// ... Section: Mobile appearance.
-$string['mobileappearanceheading'] = 'Mobile appearance';
+// Settings: Mobile tab.
+$string['mobiletab'] = 'Mobile';
+// ... Section: Mobile app.
+$string['mobileappheading'] = 'Mobile app';
 // ... ... Setting: Additional CSS for Mobile app.
 $string['mobilecss'] = 'Additional CSS for Mobile app';
 $string['mobilecss_desc'] = 'With this setting, you can write custom CSS code to customise your mobile app interface. The CSS code will be only added to the Mobile app depiction of this Moodle instance and will not be shown in the webbrowser version. Read more about this feature in the <a href="https://moodledev.io/general/app/customisation/remote-themes#how-do-remote-themes-work">Moodle dev docs</a>.';
 $string['mobilecss_set'] = 'As soon as you add any CSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically set to a URL of the Boost Union theme.';
 $string['mobilecss_overwrite'] = 'As soon as you add any CSS code to this setting and save the setting, the <a href="{$a->url}">Moodle core setting <em>mobilecssurl</em></a> will be automatically overwritten with a URL of the Boost Union theme. Currently this setting is set to <a href="{$a->value}">{$a->value}</a>.';
 $string['mobilecss_donotchange'] = 'This step is necessary to ship the CSS code to the Mobile app. Do not change the URL there unless you really want to remove the CSS code from the Mobile app again.';
+// ... Section: Mobile appearance.
+$string['mobileappearanceheading'] = 'Mobile appearance';
+// ... ... Setting: Touch icon files for iOS.
+$string['touchiconfilesios'] = 'Touch icon files for iOS';
+$string['touchiconfilesios_desc'] = 'Within this setting, you can upload files which are used as homescreen icon as soon as the Moodle site is added to the iOS homescreen as bookmark.';
+$string['touchiconfilesios_recommended'] = 'Recommended files for iOS:';
+$string['touchiconfilesios_optional'] = 'Optional files for iOS:';
+$string['touchiconfilesios_example'] = 'Example filename: apple-icon-152x152.png';
+$string['touchiconfilesios_note'] = 'Recommended files have a good size to be shown properly on current iOS devices and should be provided. Optional files are (or have been previously) supported by iOS devices as well but should be really considered as optional unless you have a particular legacy device to support.';
+$string['touchiconfilesioslist'] = 'Touch icon files for iOS list';
+$string['touchiconfilesioslist_desc'] = 'This is the list of files which you have uploaded to the touch icon files for iOS filearea.';
+$string['touchiconlistiosrecommendeduploaded'] = 'This is a recommended file to be used as touch icon on iOS devices and it was uploaded.';
+$string['touchiconlistiosrecommendedmissing'] = 'This is a recommended file to be used as touch icon on iOS devices, but it was not uploaded properly.';
+$string['touchiconlistiosoptionaluploaded'] = 'This is an optional file to be used as touch icon on iOS devices and it was uploaded.';
+$string['touchiconlistiosoptionalmissing'] = 'This is an optional file to be used as touch icon on iOS devices and it was not uploaded.';
 
 // Settings: Feel page.
 $string['configtitlefeel'] = 'Feel';
@@ -1020,6 +1035,7 @@ $string['boost_union:editregionoffcanvascenter'] = 'To be able to edit the Off-c
 $string['cachedef_flavours'] = 'Flavours which apply to a given page\'s category ID for the current user';
 $string['cachedef_smartmenus'] = 'Smart menus';
 $string['cachedef_smartmenu_items'] = 'Smart menu items';
+$string['cachedef_touchiconsios'] = 'Touch icon files for iOS';
 
 // Upgrade notices.
 $string['upgradenotice_2022080922'] = 'From this release on, Boost Union has its own logo and compact logo settings and does not use these files from the Moodle core settings anymore.';
