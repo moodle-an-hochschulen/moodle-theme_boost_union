@@ -33,6 +33,9 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, Notificatio
      * Initializing.
      */
     function initBackToTop() {
+        // Define the scroll distance after which the button will be shown.
+        const scrolldistance = 220;
+
         // Get the string backtotop from language file.
         let stringsPromise = str.get_string('backtotop', 'theme_boost_union');
 
@@ -44,10 +47,19 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, Notificatio
                     'aria-label="' + string + '">' +
                     '<i aria-hidden="true" class="fa fa-chevron-up fa-fw "></i></button>');
 
+            // Check directly if the button should be shown.
+            // This is helpful for all cases when this code here runs _after_ the page has been scrolled,
+            // especially by the scrollspy feature or by a simple browser page reload.
+            if ($(window).scrollTop() > scrolldistance) {
+                checkAndShow();
+            } else {
+                checkAndHide();
+            }
+
             // This function fades the button in when the page is scrolled down or fades it out
             // if the user is at the top of the page again.
             $(window).on('scroll', function() {
-                if ($(window).scrollTop() > 220) {
+                if ($(window).scrollTop() > scrolldistance) {
                     checkAndShow();
                 } else {
                     checkAndHide();
