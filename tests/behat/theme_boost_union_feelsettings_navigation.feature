@@ -102,9 +102,8 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     Given the following config values are set as admin:
       | config          | value | plugin            |
       | backtotopbutton | yes   | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I navigate to "Development > Purge caches" in site administration
-    And I press "Purge all caches"
     And I am on "Course 1" course homepage
     Then "#back-to-top" "css_element" should exist
     And "#page-footer" "css_element" should appear before "#back-to-top" "css_element"
@@ -121,9 +120,8 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     Given the following config values are set as admin:
       | config          | value | plugin            |
       | backtotopbutton | no    | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I navigate to "Development > Purge caches" in site administration
-    And I press "Purge all caches"
     And I am on "Course 1" course homepage
     Then "#back-to-top" "css_element" should not exist
 
@@ -132,9 +130,8 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     Given the following config values are set as admin:
       | config          | value | plugin             |
       | scrollspy       | yes   | theme_boost_union  |
+    And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I navigate to "Development > Purge caches" in site administration
-    And I press "Purge all caches"
     And I am on "Course 1" course homepage
     And I scroll page to DOM element with ID "section-4"
     And I make the navbar fixed
@@ -153,9 +150,8 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     Given the following config values are set as admin:
       | config          | value | plugin             |
       | scrollspy       | no    | theme_boost_union  |
+    And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I navigate to "Development > Purge caches" in site administration
-    And I press "Purge all caches"
     And I am on "Course 1" course homepage
     And I scroll page to x "0" y "250"
     And I turn editing mode on

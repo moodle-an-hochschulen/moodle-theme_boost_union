@@ -20,9 +20,8 @@ Feature: Configuring the theme_boost_union plugin for the "Links" tab on the "Fe
     Given the following config values are set as admin:
       | config            | value   | plugin            |
       | markexternallinks | <value> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I navigate to "Development > Purge caches" in site administration
-    And I press "Purge all caches"
     And I am on "Course 1" course homepage
     Then element "a[href*='https://www.externallink.com']" pseudo-class "after" should contain "content": <content>
     And element "a[href='/my/']" pseudo-class "after" should contain "content": none
@@ -37,9 +36,8 @@ Feature: Configuring the theme_boost_union plugin for the "Links" tab on the "Fe
     Given the following config values are set as admin:
       | config          | value   | plugin            |
       | markmailtolinks | <value> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I navigate to "Development > Purge caches" in site administration
-    And I press "Purge all caches"
     And I am on "Course 1" course homepage
     Then element "a[href^='mailto']" pseudo-class "before" should contain "content": <content>
     And element "a[href='/my/']" pseudo-class "after" should contain "content": none
@@ -54,9 +52,8 @@ Feature: Configuring the theme_boost_union plugin for the "Links" tab on the "Fe
     Given the following config values are set as admin:
       | config          | value   | plugin            |
       | markbrokenlinks | <value> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I navigate to "Development > Purge caches" in site administration
-    And I press "Purge all caches"
     And I am on "Course 1" course homepage
     Then element "a[href*='/brokenfile.php']" pseudo-class "before" should contain "content": <content>
     And element "a[href='/my/']" pseudo-class "after" should contain "content": none

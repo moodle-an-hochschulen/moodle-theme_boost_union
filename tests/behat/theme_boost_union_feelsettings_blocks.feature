@@ -410,9 +410,8 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | config                | value          | plugin            |
       | blockregionsforcourse | <region>       | theme_boost_union |
       | <config>              | <settingvalue> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I navigate to "Development > Purge caches" in site administration
-    And I press "Purge all caches"
     And I am on "Course 1" course homepage
     And I turn editing mode on
     And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"

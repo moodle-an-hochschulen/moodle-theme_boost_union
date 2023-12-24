@@ -25,11 +25,8 @@ Feature: Configuring the theme_boost_union plugin for the "Dashboard/My courses"
     Given the following config values are set as admin:
       | config                           | value          | plugin            |
       | courseoverviewshowcourseprogress | <settingvalue> | theme_boost_union |
-    When I log in as "admin"
-    And I navigate to "Development > Purge caches" in site administration
-    And I press "Purge all caches"
-    And I log out
-    And I log in as "student1"
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "student1"
     And I follow "My courses"
     Then I <shouldornot> see "0% complete" in the ".block_myoverview.block div[data-region=courses-view]" "css_element"
     Examples:
@@ -42,11 +39,8 @@ Feature: Configuring the theme_boost_union plugin for the "Dashboard/My courses"
     Given the following config values are set as admin:
       | config                         | value          | plugin            |
       | courseoverviewshowcourseimages | <settingvalue> | theme_boost_union |
-    When I log in as "admin"
-    And I navigate to "Development > Purge caches" in site administration
-    And I press "Purge all caches"
-    And I log out
-    And I log in as "student1"
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "student1"
     And I follow "My courses"
     Then I should see "Course overview" in the "#region-main" "css_element"
     And I click on "#displaydropdown" "css_element" in the "section.block_myoverview" "css_element"
