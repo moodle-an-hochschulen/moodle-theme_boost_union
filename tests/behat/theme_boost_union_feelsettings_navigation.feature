@@ -158,6 +158,24 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And I turn editing mode off
     Then page top is at the top of the viewport
 
+  @javascript @testme
+  Scenario: Settings: back to top button in combination with the scrollspy - Make sure that the back to top button is always shown
+    Given the following config values are set as admin:
+      | config          | value | plugin            |
+      | backtotopbutton | yes   | theme_boost_union |
+      | scrollspy       | yes   | theme_boost_union  |
+    When I log in as "admin"
+    And I navigate to "Development > Purge caches" in site administration
+    And I press "Purge all caches"
+    And I am on "Course 1" course homepage
+    And "#back-to-top" "css_element" should exist
+    And "#back-to-top" "css_element" should not be visible
+    And I scroll page to DOM element with ID "section-4"
+    And I turn editing mode on
+    And I wait "2" seconds
+    And page top is not at the top of the viewport
+    Then "#back-to-top" "css_element" should be visible
+
   @javascript
   Scenario: Setting: Activity navigation - Enable "Activity navigation"
     Given the following config values are set as admin:

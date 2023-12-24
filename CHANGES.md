@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-12-24 - Bugfix: Back to top button was missing directly after the scroll-spy scrolled the page, solves #386.
 * 2023-12-24 - Tests: Use a dedicated and simple step to purge the theme cache, solves #513.
 * 2023-12-23 - Feature: Add admin option to mark broken links and mailto links, solves #163 #164.
 * 2023-12-21 - Feature: Add setting to upload touch-images for iOS devices, solves #151.
