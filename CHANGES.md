@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-12-24 - Tests: Use a dedicated and simple step to purge the theme cache, solves #513.
 * 2023-12-23 - Feature: Add admin option to mark broken links and mailto links, solves #163 #164.
 * 2023-12-21 - Feature: Add setting to upload touch-images for iOS devices, solves #151.
 * 2023-12-18 - Improvement: Shrink description_format column size in theme_boost_union_flavours table, solves #321.

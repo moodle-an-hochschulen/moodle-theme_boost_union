@@ -216,4 +216,13 @@ class behat_theme_boost_union_base_general extends behat_base {
             throw new ExpectationException($s.":".$ps.".content contains: ".$result, $this->getSession());
         }
     }
+
+    /**
+     * Purges theme cache and reloads the theme
+     *
+     * @Given /^the theme cache is purged and the theme is reloaded$/
+     */
+    public function purge_theme_cache_and_reload_theme() {
+        theme_reset_all_caches();
+    }
 }
