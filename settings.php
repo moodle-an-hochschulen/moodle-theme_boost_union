@@ -2050,169 +2050,262 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create Slider tab.
+        // Create slider tab.
         $tab = new admin_settingpage('theme_boost_union_slider',
                 get_string('slidertab', 'theme_boost_union', null, true));
 
-        // Create Slider general heading.
+        // Create slider general heading.
         $name = 'theme_boost_union/slidergeneralheading';
         $title = get_string('slidergeneralheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
-        // Setting: Toggle whether Slider is shown.
-        $title = get_string('slideractivatedsetting', 'theme_boost_union', null, true);
-        $description = get_string('slideractivatedsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configcheckbox("theme_boost_union/slideractivatedsetting", $title, $description, 0);
-        $tab->add($setting);
-
-        // Setting: Pick where Slider is shown.
-        $choices = [
-                THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFORE =>
-                        get_string('sliderfrontpagepositionsetting_before', 'theme_boost_union'),
-                THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_AFTER =>
-                        get_string('sliderfrontpagepositionsetting_after', 'theme_boost_union'),
+        // Setting: Position of the slider on the frontpage.
+        $sliderfrontpagepositionoptions = [
+                THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFOREBEFORE =>
+                        get_string('sliderfrontpagepositionsetting_beforebefore', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFOREAFTER =>
+                        get_string('sliderfrontpagepositionsetting_beforeafter', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_AFTERBEFORE =>
+                        get_string('sliderfrontpagepositionsetting_afterbefore', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_AFTERAFTER =>
+                        get_string('sliderfrontpagepositionsetting_afterafter', 'theme_boost_union'),
         ];
-        $name = 'theme_boost_union/sliderpositiononfrontpage';
-        $title = get_string('sliderpositiononfrontpage', 'theme_boost_union', null, true);
+        $name = 'theme_boost_union/sliderfrontpageposition';
+        $title = get_string('sliderfrontpagepositionsetting', 'theme_boost_union', null, true);
         $url = new moodle_url('/admin/settings.php', ['section' => 'frontpagesettings']);
-        $description = get_string('sliderpositiononfrontpage_desc', 'theme_boost_union', ['url' => $url], true);
+        $description = get_string('sliderfrontpagepositionsetting_desc', 'theme_boost_union', ['url' => $url], true);
         $setting = new admin_setting_configselect($name, $title, $description,
-                THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFORE, $choices);
+                THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFOREBEFORE, $sliderfrontpagepositionoptions);
         $tab->add($setting);
 
-        // Setting: Toggle whether Slider Arrow Controls are shown.
+        // Setting: Enable arrow navigation.
+        $name = 'theme_boost_union/sliderarrownav';
         $title = get_string('sliderarrownavsetting', 'theme_boost_union', null, true);
         $description = get_string('sliderarrownavsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configcheckbox("theme_boost_union/sliderarrownavsetting", $title, $description, 0);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
+                $yesnooption);
         $tab->add($setting);
 
-        // Setting: Toggle whether Slider Indicator Controls are shown.
+        // Setting: Enable slider indicator navigation.
+        $name = 'theme_boost_union/sliderindicatornav';
         $title = get_string('sliderindicatornavsetting', 'theme_boost_union', null, true);
         $description = get_string('sliderindicatornavsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configcheckbox("theme_boost_union/sliderindicatornavsetting", $title, $description, 0);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
+                $yesnooption);
         $tab->add($setting);
 
-        // Setting: Select a slide-animation.
+        // Setting: Slider animation type.
+        $slideranimationoptions = [
+                THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_NONE =>
+                        get_string('slideranimationsetting_none', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_FADE =>
+                        get_string('slideranimationsetting_fade', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_SLIDE =>
+                        get_string('slideranimationsetting_slide', 'theme_boost_union'),
+        ];
+        $name = 'theme_boost_union/slideranimation';
         $title = get_string('slideranimationsetting', 'theme_boost_union', null, true);
         $description = get_string('slideranimationsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect("theme_boost_union/slideranimationsetting", $title, $description, 0,
-                [0 => 'slide', 1 => 'fade', 2 => 'none']);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_SLIDE, $slideranimationoptions);
         $tab->add($setting);
 
-        // Setting: Set interval speed.
+        // Setting: Slider interval speed.
+        $name = 'theme_boost_union/sliderinterval';
         $title = get_string('sliderintervalsetting', 'theme_boost_union', null, true);
         $description = get_string('sliderintervalsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configtext("theme_boost_union/sliderintervalsetting",
-                $title, $description, 5000, PARAM_INT, 6);
+        $setting = new admin_setting_configtext($name, $title, $description, 5000, PARAM_INT, 6);
         $tab->add($setting);
 
-        // Setting: Toggle keyboard interaction.
-        $title = get_string('sliderkeybaordsetting', 'theme_boost_union', null, true);
-        $description = get_string('sliderkeybaordsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configcheckbox("theme_boost_union/sliderkeyboardsetting", $title, $description, 1);
+        // Setting: Allow slider keyboard interaction.
+        $name = 'theme_boost_union/sliderkeyboard';
+        $title = get_string('sliderkeyboardsetting', 'theme_boost_union', null, true);
+        $description = get_string('sliderkeyboardsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES,
+                $yesnooption);
         $tab->add($setting);
 
-        // Setting: Set pause behaviour.
+        // Setting: Pause slider on mouseover.
+        $name = 'theme_boost_union/sliderpause';
         $title = get_string('sliderpausesetting', 'theme_boost_union', null, true);
         $description = get_string('sliderpausesetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configcheckbox("theme_boost_union/sliderpausesetting", $title, $description, 1);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES,
+                $yesnooption);
         $tab->add($setting);
 
-        // Setting: Set ride behaviour.
+        // Setting: Cycle through slides.
+        $sliderrideoptions = [
+                THEME_BOOST_UNION_SETTING_SLIDER_RIDE_ONPAGELOAD =>
+                        get_string('sliderridesetting_onpageload', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SLIDER_RIDE_AFTERINTERACTION =>
+                        get_string('sliderridesetting_afterinteraction', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SLIDER_RIDE_NEVER =>
+                        get_string('sliderridesetting_never', 'theme_boost_union'),
+        ];
+        $name = 'theme_boost_union/sliderride';
         $title = get_string('sliderridesetting', 'theme_boost_union', null, true);
         $description = get_string('sliderridesetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect("theme_boost_union/sliderridesetting", $title, $description, 0,
-        [0 => 'on page load', 1 => 'after interaction', 2 => 'never']);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_SLIDER_RIDE_ONPAGELOAD, $sliderrideoptions);
         $tab->add($setting);
 
-        // Setting: Toggle wrapping.
+        // Setting: Continuously cycle through slides.
+        $name = 'theme_boost_union/sliderwrap';
         $title = get_string('sliderwrapsetting', 'theme_boost_union', null, true);
         $description = get_string('sliderwrapsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configcheckbox("theme_boost_union/sliderwrapsetting", $title, $description, 1);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES,
+                $yesnooption);
         $tab->add($setting);
 
-        // Create a hardcoded amount of slides.
+        // Prepare options for the order settings.
+        $slidesorders = [];
+        for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
+            $slidesorders[$i] = $i;
+        }
+
+        // Create a hardcoded amount of slides without code duplication.
         for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
 
-            // Create Slide heading.
-            $name = 'theme_boost_union/oneslidetab'.$i;
-            $title = get_string('oneslidetab', 'theme_boost_union', ['no' => $i], true);
+            // Create slide heading.
+            $name = 'theme_boost_union/slide'.$i.'heading';
+            $title = get_string('slideheading', 'theme_boost_union', ['no' => $i], true);
             $setting = new admin_setting_heading($name, $title, null);
             $tab->add($setting);
 
             // Setting: Slide enabled.
             $name = 'theme_boost_union/slide'.$i.'enabled';
-            $title = get_string('oneslideenabled', 'theme_boost_union', ['no' => $i], true);
-            $description = get_string('oneslideenabled_desc', 'theme_boost_union', ['no' => $i], true);
+            $title = get_string('slideenabledsetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('slideenabledsetting_desc', 'theme_boost_union', ['no' => $i], true);
             $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
                     $yesnooption);
             $tab->add($setting);
 
-            // Setting: Select picture.
-            $name = 'theme_boost_union/oneslidepickimage'.$i;
-            $title = get_string('oneslidepickimage', 'theme_boost_union', ['no' => $i], true);
-            $description = get_string('oneslidepickimage_desc', 'theme_boost_union', ['no' => $i], true);
-            $setting = new admin_setting_configstoredfile($name, $title, $description, "sliderbackgroundimage".$i, 0,
-                    ['maxfiles' => 1, 'accepted_types' => 'web_image']);
+            // Setting: Slide background image.
+            $name = 'theme_boost_union/slide'.$i.'backgroundimage';
+            $title = get_string('slidebackgroundimagesetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('slidebackgroundimagesetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_configstoredfile($name, $title, $description, 'slidebackgroundimage'.$i, 0,
+                ['maxfiles' => 1, 'accepted_types' => 'web_image']);
             $setting->set_updatedcallback('theme_reset_all_caches');
             $tab->add($setting);
-            $page->hide_if('theme_boost_union/oneslidepickimage'.$i, 'theme_boost_union/slide'.$i.'enabled', 'neq',
-            THEME_BOOST_UNION_SETTING_SELECT_YES);
+            $page->hide_if('theme_boost_union/slide'.$i.'backgroundimage', 'theme_boost_union/slide'.$i.'enabled',
+                'neq', THEME_BOOST_UNION_SETTING_SELECT_YES);
 
-            // Setting: Set title for picture.
-            $name = 'theme_boost_union/oneslideimagetitle'.$i;
-            $title = get_string('oneslideimagetitle', 'theme_boost_union', ['no' => $i], true);
-            $description = get_string('oneslideimagetitle_desc', 'theme_boost_union', ['no' => $i], true);
-            $setting = new admin_setting_configtext($name, $title, $description, "");
+            // Setting: Slide background image alt attribute.
+            $name = 'theme_boost_union/slide'.$i.'backgroundimagealt';
+            $title = get_string('slidebackgroundimagealtsetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('slidebackgroundimagealtsetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_configtext($name, $title, $description, '');
             $tab->add($setting);
-            $page->hide_if('theme_boost_union/oneslideimagetitle'.$i, 'theme_boost_union/slide'.$i.'enabled', 'neq',
-            THEME_BOOST_UNION_SETTING_SELECT_YES);
+            $page->hide_if('theme_boost_union/slide'.$i.'backgroundimagealt', 'theme_boost_union/slide'.$i.'enabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
 
-            // Setting: Set link for slide.
-            $name = 'theme_boost_union/oneslidelink'.$i;
-            $title = get_string('oneslidelink', 'theme_boost_union', ['no' => $i], true);
-            $description = get_string('oneslidelink_desc', 'theme_boost_union', ['no' => $i], true);
-            $setting = new admin_setting_configtext($name, $title, $description, "");
+            // Setting: Slide caption.
+            $name = 'theme_boost_union/slide'.$i.'caption';
+            $title = get_string('slidecaptionsetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('slidecaptionsetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_configtext($name, $title, $description, '');
             $tab->add($setting);
-            $page->hide_if('theme_boost_union/oneslidelink'.$i, 'theme_boost_union/slide'.$i.'enabled', 'neq',
-            THEME_BOOST_UNION_SETTING_SELECT_YES);
+            $page->hide_if('theme_boost_union/slide'.$i.'caption', 'theme_boost_union/slide'.$i.'enabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
 
-            // Setting: Set title for link.
-            $name = 'theme_boost_union/oneslidelinktitle'.$i;
-            $title = get_string('oneslidelinktitle', 'theme_boost_union', ['no' => $i], true);
-            $description = get_string('oneslidelinktitle_desc', 'theme_boost_union', ['no' => $i], true);
-            $setting = new admin_setting_configtext($name, $title, $description, "");
+            // Setting: Slide content.
+            $name = 'theme_boost_union/slide'.$i.'content';
+            $title = get_string('slidecontentsetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('slidecontentsetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_confightmleditor($name, $title, $description, '');
             $tab->add($setting);
-            $page->hide_if('theme_boost_union/oneslidelinktitle'.$i, 'theme_boost_union/slide'.$i.'enabled', 'neq',
-            THEME_BOOST_UNION_SETTING_SELECT_YES);
+            $page->hide_if('theme_boost_union/slide'.$i.'content', 'theme_boost_union/slide'.$i.'enabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
 
-            // Setting: Set Caption text.
-            $name = 'theme_boost_union/oneslidecaption'.$i;
-            $title = get_string('oneslidecaption', 'theme_boost_union', ['no' => $i], true);
-            $description = get_string('oneslidecaption_desc', 'theme_boost_union', ['no' => $i], true);
-            $setting = new admin_setting_configtext($name, $title, $description, "");
+            // Setting: Slide content style.
+            $name = 'theme_boost_union/slide'.$i.'contentstyle';
+            $title = get_string('slidecontentstylesetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('slidecontentstylesetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $slidecontentstyleoptions = [
+                    THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHT =>
+                            get_string('slidecontentstylesetting_light', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHTSHADOW =>
+                            get_string('slidecontentstylesetting_lightshadow', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_CONTENTSTYLE_DARK =>
+                            get_string('slidecontentstylesetting_dark', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_CONTENTSTYLE_DARKSHADOW =>
+                            get_string('slidecontentstylesetting_darkshadow', 'theme_boost_union'),
+            ];
+            $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHT, $slidecontentstyleoptions);
             $tab->add($setting);
-            $page->hide_if('theme_boost_union/oneslidecaption'.$i, 'theme_boost_union/slide'.$i.'enabled', 'neq',
-            THEME_BOOST_UNION_SETTING_SELECT_YES);
+            $page->hide_if('theme_boost_union/slide'.$i.'contentstyle', 'theme_boost_union/slide'.$i.'enabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
 
-            // Setting: Set Content text.
-            $name = 'theme_boost_union/oneslidecontent'.$i;
-            $title = get_string('oneslidecontent', 'theme_boost_union', ['no' => $i], true);
-            $description = get_string('oneslidecontent_desc', 'theme_boost_union', ['no' => $i], true);
-            $setting = new admin_setting_confightmleditor($name, $title, $description, "");
+            // Setting: Slide link URL.
+            $name = 'theme_boost_union/slide'.$i.'link';
+            $title = get_string('slidelinksetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('slidelinksetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
             $tab->add($setting);
-            $page->hide_if('theme_boost_union/oneslidecontent'.$i, 'theme_boost_union/slide'.$i.'enabled', 'neq',
-            THEME_BOOST_UNION_SETTING_SELECT_YES);
+            $page->hide_if('theme_boost_union/slide'.$i.'link', 'theme_boost_union/slide'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Slide link title.
+            $name = 'theme_boost_union/slide'.$i.'linktitle';
+            $title = get_string('slidelinktitlesetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('slidelinktitlesetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_configtext($name, $title, $description, '');
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/slide'.$i.'linktitle', 'theme_boost_union/slide'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Slide link source.
+            $name = 'theme_boost_union/slide'.$i.'linksource';
+            $title = get_string('slidelinksourcesetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('slidelinksourcesetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $slidelinksourceoptions = [
+                    THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_BOTH =>
+                            get_string('slidelinksourcesetting_both', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_IMAGE =>
+                            get_string('slidelinksourcesetting_image', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_TEXT =>
+                            get_string('slidelinksourcesetting_text', 'theme_boost_union'),
+            ];
+            $setting = new admin_setting_configselect($name, $title, $description,
+                    THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_BOTH, $slidelinksourceoptions);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/slide'.$i.'linksource', 'theme_boost_union/slide'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Slide link target.
+            $name = 'theme_boost_union/slide'.$i.'linktarget';
+            $title = get_string('slidelinktargetsetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('slidelinktargetsetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $slidelinktargetnoptions = [
+                    THEME_BOOST_UNION_SETTING_LINKTARGET_SAMEWINDOW =>
+                            get_string('slidelinktargetsetting_samewindow', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_LINKTARGET_NEWTAB =>
+                            get_string('slidelinktargetsetting_newtab', 'theme_boost_union'), ];
+            $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_LINKTARGET_SAMEWINDOW,
+                    $slidelinktargetnoptions);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/slide'.$i.'linktarget', 'theme_boost_union/slide'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Setting: Slide order position.
+            $name = 'theme_boost_union/slide'.$i.'order';
+            $title = get_string('slideordersetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('slideordersetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_configselect($name, $title, $description, $i, $slidesorders);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/slide'.$i.'order', 'theme_boost_union/slide'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
         }
 
         // Add tab to settings page.
         $page->add($tab);
 
+
         // Add settings page to the admin settings category.
         $ADMIN->add('theme_boost_union', $page);
-
-
 
         // Create Functionality settings page with tabs
         // (and allow users with the theme/boost_union:configure capability to access it).
