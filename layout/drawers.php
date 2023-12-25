@@ -28,6 +28,7 @@
  * * Include static pages
  * * Include Jvascript disabled hint
  * * Include advertisement tiles
+ * * Include slider
  * * Include info banners
  * * Include additional block regions
  * * Handle admin setting for right-hand block drawer of site home

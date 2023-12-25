@@ -59,6 +59,7 @@
     * Added the possibility to show course related hints.
     * Added the possibility to show info banners.
     * Include theme_boost_union/advertisementtiles template
+    * Include theme_boost_union/slider template
     * Added additional block regions (including JS for offcanvas region)
     * Added smartmenu js to support third level submenus.
 }}
@@ -206,13 +207,15 @@
             {{/regions.contentupper.hasblocks}}
             <div id="page-content" class="pb-3 d-print-block">
                 <div id="region-main-box">
-                    {{#sliderpositionbefore}}
+                    {{#sliderpositionbeforebefore}}
                         {{> theme_boost_union/slider }}
-                    {{/sliderpositionbefore}}
-
+                    {{/sliderpositionbeforebefore}}
                     {{#advtilespositionbefore}}
                         {{> theme_boost_union/advertisementtiles }}
                     {{/advtilespositionbefore}}
+                    {{#sliderpositionbeforeafter}}
+                        {{> theme_boost_union/slider }}
+                    {{/sliderpositionbeforeafter}}
                     {{#hasregionmainsettingsmenu}}
                     <div id="region-main-settings-menu" class="d-print-none">
                         <div> {{{ regionmainsettingsmenu }}} </div>
@@ -234,20 +237,21 @@
                                 </div>
                             </div>
                         {{/overflow}}
-
                         {{{courserelatedhints}}}
                         {{{ output.main_content }}}
                         {{{ output.activity_navigation }}}
                         {{{ output.course_content_footer }}}
 
                     </section>
+                    {{#sliderpositionafterbefore}}
+                        {{> theme_boost_union/slider }}
+                    {{/sliderpositionafterbefore}}
                     {{#advtilespositionafter}}
                         {{> theme_boost_union/advertisementtiles }}
                     {{/advtilespositionafter}}
-                    {{#sliderpositionafter}}
+                    {{#sliderpositionafterafter}}
                         {{> theme_boost_union/slider }}
-                    {{/sliderpositionafter}}
-
+                    {{/sliderpositionafterafter}}
                 </div>
             </div>
             {{#regions.contentlower.hasblocks}}

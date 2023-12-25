@@ -51,8 +51,19 @@ define('THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_FRONTPAGEPOSITION_BEFORE', 
 define('THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_FRONTPAGEPOSITION_AFTER', 2);
 
 define('THEME_BOOST_UNION_SETTING_SLIDES_COUNT', 6);
-define('THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFORE', 1);
-define('THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_AFTER', 2);
+define('THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_NONE', 0);
+define('THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_SLIDE', 1);
+define('THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_FADE', 2);
+define('THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFOREBEFORE', 1);
+define('THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFOREAFTER', 2);
+define('THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_AFTERBEFORE', 3);
+define('THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_AFTERAFTER', 4);
+define('THEME_BOOST_UNION_SETTING_SLIDER_RIDE_ONPAGELOAD', 0);
+define('THEME_BOOST_UNION_SETTING_SLIDER_RIDE_AFTERINTERACTION', 1);
+define('THEME_BOOST_UNION_SETTING_SLIDER_RIDE_NEVER', 2);
+define('THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_BOTH', 0);
+define('THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_IMAGE', 1);
+define('THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_TEXT', 2);
 
 define('THEME_BOOST_UNION_SETTING_HEIGHT_100PX', '100px');
 define('THEME_BOOST_UNION_SETTING_HEIGHT_150PX', '150px');
@@ -312,11 +323,6 @@ function theme_boost_union_get_extra_scss($theme) {
     // Setting: Course overview block.
     $content .= theme_boost_union_get_scss_courseoverview_block($theme);
 
-    // Load slider css if slider setting is enabled.
-    if (get_config("theme_boost_union", "slideractivatedsetting")) {
-        $content .= theme_boost_union_get_slider_scss();
-    }
-
     return $content;
 }
 
@@ -415,7 +421,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
                 $filearea === 'customfonts' || $filearea === 'courseheaderimagefallback' ||
                 $filearea === 'touchiconsios' ||
                 preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea) ||
-                preg_match("/sliderbackgroundimage[2-9]|1[0-2]?/", $filearea))) {
+                preg_match("/slidebackgroundimage[2-9]|1[0-2]?/", $filearea))) {
         $theme = theme_config::load('boost_union');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {

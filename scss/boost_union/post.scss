@@ -1016,14 +1016,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
  * Settings: Content -> Advertisement tiles.
  ======================================*/
 
-/* Remove horizontal paddings on the tile container on smaller screens to align it with the main frontpage content. */
-@include media-breakpoint-down(sm) {
-    #themeboostunionadvtiles {
-        padding-left: 0;
-        padding-right: 0;
-    }
-}
-
 /* Style the advertisement tile cards. */
 #themeboostunionadvtiles [class*="col-"] .card {
     background-size: cover;
@@ -1063,6 +1055,75 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     /* Remove the border-top from the footer. */
     .card-footer {
         border-top: none;
+    }
+}
+
+
+/*=======================================
+ * Settings: Content -> Slider.
+ ======================================*/
+
+/* Style the slider. */
+#themeboostunionslider {
+    /* Remove the link color and styling for links in the slider as, otherwise, the linked caption and content
+       would be colored and styled which does not make much sense here. */
+    a {
+        color: inherit;
+    }
+    a:hover {
+        text-decoration: inherit;
+    }
+
+    /* Remove the focus border which would appear around slider controls which have been clicked.
+       These do not look nice within the slider. */
+    a:focus {
+        box-shadow: none;
+    }
+
+    /* Remove the font color from the caption to allow styling based on the slider settings. */
+    .carousel-caption {
+        color: inherit;
+    }
+
+    /* Add an unobtrusive shadow to the carousel controls to make them visible on all kinds of backgrounds. */
+    .carousel-control-prev,
+    .carousel-control-next {
+        filter: drop-shadow(0 0 2px rgb(0, 0, 0));
+    }
+    .carousel-indicators {
+        filter: drop-shadow(0 0 1px rgb(0, 0, 0));
+    }
+}
+
+/* Classes for the content style of slides. */
+#themeboostunionslider {
+    .slide-dark {
+        color: black;
+    }
+    .slide-light {
+        color: white;
+    }
+    .slide-darkshadow {
+        color: black;
+        text-shadow: 0 0 5px white;
+    }
+    .slide-lightshadow {
+        color: white;
+        text-shadow: 0 0 5px black;
+    }
+}
+
+
+/*=======================================
+ * Settings: Content -> Advertisement tiles & Slider (Common settings for both features).
+ ======================================*/
+
+/* Remove horizontal paddings on the tile / slider container on smaller screens to align it with the main frontpage content. */
+@include media-breakpoint-down(sm) {
+    #themeboostunionadvtiles,
+    #themeboostunionslider-wrapper {
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 
