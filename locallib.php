@@ -403,7 +403,7 @@ function theme_boost_union_infobanner_is_shown_on_page($bannerno) {
 }
 
 /**
- * Helper function to compare either infobanner or tiles orders.
+ * Helper function to compare either infobanner or tiles or slides orders.
  *
  * @param int $a The first value
  * @param int $b The second value
@@ -588,20 +588,28 @@ function theme_boost_union_get_urloftilebackgroundimage($tileno) {
 }
 
 /**
+ * Get the slider's background image URL from the filearea 'slidebackgroundimage'.tileno.
  *
- * Get the slider image URL from the filearea 'oneslideimage'.tileno.
+ * Note:
+ * Calling this function for each slide separately is maybe not performant. Originally it was planed to put
+ * all files in one filearea. However, at the time of development
+ * https://github.com/moodle/moodle/blob/master/lib/outputlib.php#L2062
+ * did not support itemids in setting-files of themes.
  *
  * @param int $slideno The slide number.
  * @return string|null
  */
-function theme_boost_union_get_urlofsliderimage($slideno) {
-    // Only continue if slide number is valid.
+function theme_boost_union_get_urlofslidebackgroundimage($slideno) {
+    // If the slide number is apparently not valid, return.
+    // Note: We just check the slide's number, we do not check if the slide is enabled or not.
     if ($slideno < 0 || $slideno > THEME_BOOST_UNION_SETTING_SLIDES_COUNT) {
         return null;
     }
-    // Get the image config for this slide.
-    $bgconfig = get_config('theme_boost_union', 'oneslidepickimage'.$slideno);
 
+    // Get the background image config for this slide.
+    $bgconfig = get_config('theme_boost_union', 'slide'.$slideno.'backgroundimage');
+
+    // If a background image is configured.
     if (!empty($bgconfig)) {
         // Get the system context.
         $systemcontext = context_system::instance();
@@ -610,7 +618,7 @@ function theme_boost_union_get_urlofsliderimage($slideno) {
         $fs = get_file_storage();
 
         // Get all files from filearea.
-        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'sliderbackgroundimage'.$slideno,
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'slidebackgroundimage'.$slideno,
                 false, 'itemid', false);
 
         // Just pick the first file - we are sure that there is just one file.
@@ -621,7 +629,7 @@ function theme_boost_union_get_urlofsliderimage($slideno) {
                 $file->get_itemid(), $file->get_filepath(), $file->get_filename());
     }
 
-    // No file was found.
+    // As no image was found, return null.
     return null;
 }
 
@@ -1688,8 +1696,7 @@ function theme_boost_union_get_touchicons_for_ios_templatecontext() {
  *
  * @return string
  */
-function theme_boost_union_get_touchicons_html_for_page()
-{
+function theme_boost_union_get_touchicons_html_for_page() {
     // Create cache for touch icon files for iOS.
     $cache = cache::make('theme_boost_union', 'touchiconsios');
 
@@ -1712,12 +1719,12 @@ function theme_boost_union_get_touchicons_html_for_page()
             if ($file->exists == true) {
                 // Build the file URL.
                 $fileurl = new moodle_url('/pluginfile.php/1/theme_boost_union/touchiconsios/' .
-                    theme_get_revision() . '/' . $file->filename);
+                    theme_get_revision().'/'.$file->filename);
 
                 // Compose and append the HTML tag.
                 $touchiconstring .= '<link rel="apple-touch-icon" sizes="';
                 $touchiconstring .= $file->size;
-                $touchiconstring .= '" href="' . $fileurl->out() . '">';
+                $touchiconstring .= '" href="'.$fileurl->out().'">';
             }
         }
     }
@@ -1727,14 +1734,15 @@ function theme_boost_union_get_touchicons_html_for_page()
 }
 
 /**
- * Get the css settings for the slider feature.
+ * Helper function to map Boost Union settings ('yes'/'no') to corresponding string values ('true'/'false')
+ * This is needed for Bootstrap which expects string boolean values.
+ *
+ * @param string $var Either 'yes' or 'no'
  */
-function theme_boost_union_get_slider_scss() {
-    $layout = ".carousel-caption { text-shadow: 0px 0px 2px black; }";
-    $layout .= ".carousel-control-prev, .carousel-control-next { filter: drop-shadow( 0px 0px 2px rgb(0, 0, 0)); }";
-    $layout .= ".carousel-indicators { filter: drop-shadow( 0px 0px 1px rgb(0, 0, 0)); }";
-    $layout .= ".carousel-inner { border-radius: 0.5rem; }";
-    $layout .= ".boost-union-frontpage-slider { padding: 15px; }";
-
-    return $layout;
+function theme_boost_union_yesno_to_boolstring($var) {
+    if ($var == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        return 'true';
+    } else {
+        return 'false';
+    }
 }

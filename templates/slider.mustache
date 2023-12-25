@@ -15,87 +15,152 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template plugintype_pluginname/template_name
+    @template theme_boost_union/slider
 
-    Template purpose and description.
-
-    Classes required for JS:
-    * none
-
-    Data attributes required for JS:
-    * none
+    Boost Union slider layout template.
 
     Context variables required for this template:
-    * none
+    * showslider - The flag to show the slider or not
+    * slidergeneralsettings - The slider configuration object
+      * animation - The slider animation type
+      * interval - The slider interval speed
+      * keyboard - Allow slider keyboard interaction
+      * pause - Pause slider on mouseover
+      * ride - Cycle through slides
+      * showindicatornav - The flag if the slider indicator should be shown
+      * showarrownav - The flag if the slider arrows should be shown
+      * wrap - Continuously cycle through slides
+    * slides - The configured slides list with:
+      * backgroundimageurl - Image to be displayed behind the content
+      * backgroundimagealt - The alt attribute for the background image
+      * captionorcontent - The flag if caption or content is provided
+      * caption - The slide's caption (might be empty)
+      * content - The slide's content (might be empty)
+      * contentstyleclass - The CSS class for the slide
+      * isfirstslide - The flag if this is the first slide
+      * linkimage - The flag if the slide's background image should be linked
+      * linktext - The flag if the slide's text (caption + content) should be linked
+      * linktitle - The link title which is displayed (might be empty)
+      * link - The actual URL (might be empty)
+      * linktargetnewtab - The flag if the link should open in a new tab
+      * no - The number of the slide (according to the settings)
+      * slideto - The index of the slide (according to the order)
 
     Example context (json):
     {
+        "showslider": true,
+        "slidergeneralsettings": {
+            "animation": "slide carousel-fade",
+            "interval": 5000,
+            "keyboard": "true",
+            "pause": "false",
+            "ride": "carousel",
+            "showindicatornav": true,
+            "showarrownav": true,
+            "wrap": "true"
+        },
+        "slides": [
+            {
+                "backgroundimageurl": "https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/login_bg1.jpg",
+                "backgroundimagealt": "The background image 1",
+                "captionorcontent": true,
+                "caption": "The caption 1",
+                "content": "The content 1",
+                "contentstyleclass": "slide-lightshadow",
+                "isfirstslide": true,
+                "linkimage": true,
+                "linktext": true,
+                "linktitle": "The link",
+                "link": "https://the-link.org/",
+                "linktargetnewtab": true,
+                "no": 1,
+                "slideto": 0
+            },
+            {
+                "backgroundimageurl": "https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/login_bg2.jpg",
+                "backgroundimagealt": "The background image 2",
+                "captionorcontent": true,
+                "caption": "The caption 2",
+                "content": "The content 2",
+                "contentstyleclass": "slide-lightshadow",
+                "isfirstslide": false,
+                "linkimage": true,
+                "linktext": true,
+                "linktitle": "The link",
+                "link": "https://the-link.org/",
+                "linktargetnewtab": false,
+                "no": 2,
+                "slideto": 1
+            },
+            {
+                "backgroundimageurl": "https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/login_bg3.jpg",
+                "backgroundimagealt": "The background image 3",
+                "captionorcontent": true,
+                "caption": "The caption 3",
+                "content": "The content 3",
+                "contentstyleclass": "slide-lightshadow",
+                "isfirstslide": false,
+                "linkimage": true,
+                "linktext": true,
+                "linktitle": "The link",
+                "link": "https://the-link.org/",
+                "linktargetnewtab": false,
+                "no": 3,
+                "slideto": 2
+            }
+        ]
     }
 }}
-
-{{#slidergeneralsettings.show}}
-<div class="boost-union-frontpage-slider">
-  <div id="slider" class="carousel {{slidergeneralsettings.animation}}" data-interval="{{slidergeneralsettings.interval}}"
+{{#showslider}}
+<div id="themeboostunionslider-wrapper" class="container-fluid pb-3">
+  <div id="themeboostunionslider" class="carousel {{slidergeneralsettings.animation}}" data-interval="{{slidergeneralsettings.interval}}"
     data-keyboard="{{slidergeneralsettings.keyboard}}" data-pause="{{slidergeneralsettings.pause}}"
-    data-ride="{{slidergeneralsettings.ride}}" data-wrap="{{slidergeneralsettings.wrap}}"
-  >
+    data-ride="{{slidergeneralsettings.ride}}" data-wrap="{{slidergeneralsettings.wrap}}">
 
     {{#slidergeneralsettings.showindicatornav}}
     <ol class="carousel-indicators">
-       {{#slidecontent}}
-      <li data-target="#slider" data-slide-to="{{count}}"></li>
-      {{/slidecontent}}
+      {{#slides}}
+      <li data-target="#themeboostunionslider" data-slide-to="{{slideto}}" {{#isfirstslide}}class="active"{{/isfirstslide}}></li>
+      {{/slides}}
     </ol>
     {{/slidergeneralsettings.showindicatornav}}
 
-    <div class="carousel-inner">
-    
-      {{#slidecontent}}
-        <div class="carousel-item">
-        
-          {{#link}}<a href="{{link}}" title="{{linktitle}}" target="_blank">{{/link}}
-            {{#image}}<img class="d-block w-100" src="{{image}}" alt="{{imagetitle}}">{{/image}}
-          {{#link}}</a>{{/link}}
-
-          <div class="carousel-caption">
-            <h5>{{caption}}</h5>
-            {{{content}}}
-          </div>
+    <div class="carousel-inner rounded">
+      {{#slides}}
+        <div id="themeboostunionslide{{no}}" class="carousel-item {{#isfirstslide}}active{{/isfirstslide}}">
+          {{#linkimage}}{{#link}}<a href="{{link}}" {{#linktitle}}title="{{linktitle}}"{{/linktitle}} {{#linktargetnewtab}}target="_blank" rel="noopener noreferrer"{{/linktargetnewtab}}>{{/link}}{{/linkimage}}
+            {{#backgroundimageurl}}<img class="d-block w-100" src="{{backgroundimageurl}}" alt="{{backgroundimagealt}}">{{/backgroundimageurl}}
+          {{#linkimage}}{{#link}}</a>{{/link}}{{/linkimage}}
+          {{#captionorcontent}}
+              <div class="carousel-caption {{contentstyleclass}}">
+                {{#linktext}}{{#link}}<a href="{{link}}" {{#linktitle}}title="{{linktitle}}"{{/linktitle}} {{#linktargetnewtab}}target="_blank" rel="noopener noreferrer"{{/linktargetnewtab}}>{{/link}}{{/linktext}}
+                  {{#caption}}<h5>{{caption}}</h5>{{/caption}}
+                  {{{content}}}
+                {{#linktext}}{{#link}}</a>{{/link}}{{/linktext}}
+              </div>
+          {{/captionorcontent}}
         </div>
-      {{/slidecontent}}
+      {{/slides}}
     </div>
 
     {{#slidergeneralsettings.showarrownav}}
-    <a class="carousel-control-prev" href="#slider" role="button" data-slide="prev">
+    <a class="carousel-control-prev" href="#themeboostunionslider" role="button" data-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="sr-only">prev</span>
     </a>
-    <a class="carousel-control-next" href="#slider" role="button" data-slide="next">
+    <a class="carousel-control-next" href="#themeboostunionslider" role="button" data-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only">next</span>
     </a>
     {{/slidergeneralsettings.showarrownav}}
-      
   </div>
 </div>
-{{/slidergeneralsettings.show}}
-
 
 {{#js}}
 require(['jquery', 'theme_boost/bootstrap/carousel'], function($) {
-  if (document.getElementById("slider")) {
-    let carouselitems = document.getElementById("slider").getElementsByClassName('carousel-item');
-    if (carouselitems && carouselitems[0]){
-      carouselitems[0].className += ' active';
-    }
-    
-    let carouselindicators = document.getElementById("slider").getElementsByTagName('li');
-    if (carouselindicators && carouselindicators[0]) {
-      carouselindicators[0].className += ' active';
-    }
-    
-    $('#slider').carousel();
+  if (document.getElementById('themeboostunionslider')) {
+    $('#themeboostunionslider').carousel();
   }
 });
-
 {{/js}}
+{{/showslider}}

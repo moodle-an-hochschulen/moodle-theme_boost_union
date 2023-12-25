@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - scrollspy include.
+ * Theme Boost Union - slider layout include.
  *
  * @package   theme_boost_union
  * @copyright 2023 Annika Lambert <annika.lambert@itc.ruhr-uni-bochum.de>
@@ -25,96 +25,231 @@
 defined('MOODLE_INTERNAL') || die();
 
 // Require the necessary libraries.
-require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
 
 // Get theme config.
 $config = get_config('theme_boost_union');
 
-$generalsettings = new stdClass();
-$generalsettings->show = $config->{'slideractivatedsetting'};
+// Initialize templatecontext flag to show the slider or not.
+$templatecontext['showslider'] = false;
 
-// Getting and setting the Slider position on the frontpage.
-switch ($config->{'sliderpositiononfrontpage'}) {
-    case THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFORE:
-        $templatecontext['sliderpositionbefore'] = true;
-        $templatecontext['sliderpositionafter'] = false;
-        break;
-    case THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_AFTER:
-        $templatecontext['sliderpositionbefore'] = false;
-        $templatecontext['sliderpositionafter'] = true;
+// Initialize slides data for templatecontext.
+$slides = [];
+
+// Iterate over all slides.
+for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
+    // If the slide is enabled? (regardless if it contains any content).
+    if ($config->{'slide' . $i . 'enabled'} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Get and set the slide's background image.
+        $bgimage = theme_boost_union_get_urlofslidebackgroundimage($i);
+
+        // If the slide does not have a background image set, skip it.
+        if ($bgimage == null) {
+            continue;
+        }
+
+        // Flip the show-slider flag to true.
+        $templatecontext['showslider'] = true;
+
+        // Get and set the background image alt attribute.
+        $backgroundimagealt = format_string(trim($config->{'slide'.$i.'backgroundimagealt'}));
+
+        // Get and set the slide's content.
+        $formatoptions = ['noclean' => true];
+        $content = format_text($config->{'slide'.$i.'content'}, FORMAT_HTML, $formatoptions);
+
+        // Get and set the slide's link.
+        $link = $config->{'slide'.$i.'link'};
+        $linktitle = format_string(trim($config->{'slide'.$i.'linktitle'}));
+        if ($config->{'slide'.$i.'linktarget'} == THEME_BOOST_UNION_SETTING_LINKTARGET_NEWTAB) {
+            $linktargetnewtab = true;
+        } else {
+            $linktargetnewtab = false;
+        }
+
+        // Get and set the slide's caption.
+        $caption = format_string(trim($config->{'slide'.$i.'caption'}));
+
+        // Get and set the slide's order.
+        // The order is not needed for the mustache template, but the usort() method will need it later.
+        $order = $config->{'slide'.$i.'order'};
+
+        // Get and set the slide's content style class.
+        switch ($config->{'slide'.$i.'contentstyle'}) {
+            case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHT:
+                $contentstyleclass = 'slide-light';
+                break;
+            case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHTSHADOW:
+                $contentstyleclass = 'slide-lightshadow';
+                break;
+            case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_DARK:
+                $contentstyleclass = 'slide-dark';
+                break;
+            case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_DARKSHADOW:
+                $contentstyleclass = 'slide-darkshadow';
+                break;
+        }
+
+        // Get and set the slide's link source.
+        switch ($config->{'slide'.$i.'linksource'}) {
+            case THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_BOTH:
+                $linkimage = true;
+                $linktext = true;
+                break;
+            case THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_IMAGE:
+                $linkimage = true;
+                $linktext = false;
+                break;
+            case THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_TEXT:
+                $linkimage = false;
+                $linktext = true;
+                break;
+        }
+
+        // Deduce if a caption or content is set.
+        if (!empty($caption) || !empty($content)) {
+            $captionorcontent = true;
+        } else {
+            $captionorcontent = false;
+        }
+
+        // Compose and remember this slide as templatecontext object.
+        $slide = new stdClass();
+        $slide->content = $content;
+        $slide->linktitle = $linktitle;
+        $slide->link = $link;
+        $slide->linktargetnewtab = $linktargetnewtab;
+        $slide->backgroundimageurl = $bgimage;
+        $slide->backgroundimagealt = $backgroundimagealt;
+        $slide->caption = $caption;
+        $slide->no = $i;
+        $slide->order = $order;
+        $slide->contentstyleclass = $contentstyleclass;
+        $slide->captionorcontent = $captionorcontent;
+        $slide->linkimage = $linkimage;
+        $slide->linktext = $linktext;
+        $slide->isfirstslide = false; // Here, all slides are marked with false. This will be changed after ordering shortly.
+        $slides[$i] = $slide;
+    }
 }
 
-if ($generalsettings->show) {
-
-    $generalsettings->showarrownav = $config->{'sliderarrownavsetting'};
-    $generalsettings->showindicatornav = $config->{'sliderindicatornavsetting'};
-
-    switch ($config->{'slideranimationsetting'}) {
-        case 0:
-            $generalsettings->animation = "slide";
+// Only if we have any slide to show.
+if ($templatecontext['showslider'] == true) {
+    // Getting and setting the slider position on the frontpage.
+    switch ($config->{'sliderfrontpageposition'}) {
+        case THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFOREBEFORE:
+            $templatecontext['sliderpositionbeforebefore'] = true;
+            $templatecontext['sliderpositionbeforeafter'] = false;
+            $templatecontext['sliderpositionafterbefore'] = false;
+            $templatecontext['sliderpositionafterafter'] = false;
             break;
-        case 1:
-            $generalsettings->animation = "slide carousel-fade";
+        case THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_BEFOREAFTER:
+            $templatecontext['sliderpositionbeforebefore'] = false;
+            $templatecontext['sliderpositionbeforeafter'] = true;
+            $templatecontext['sliderpositionafterbefore'] = false;
+            $templatecontext['sliderpositionafterafter'] = false;
             break;
-        case 2:
-            $generalsettings->animation = "";
+        case THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_AFTERBEFORE:
+            $templatecontext['sliderpositionbeforebefore'] = false;
+            $templatecontext['sliderpositionbeforeafter'] = false;
+            $templatecontext['sliderpositionafterbefore'] = true;
+            $templatecontext['sliderpositionafterafter'] = false;
+            break;
+        case THEME_BOOST_UNION_SETTING_SLIDER_FRONTPAGEPOSITION_AFTERAFTER:
+            $templatecontext['sliderpositionbeforebefore'] = false;
+            $templatecontext['sliderpositionbeforeafter'] = false;
+            $templatecontext['sliderpositionafterbefore'] = false;
+            $templatecontext['sliderpositionafterafter'] = true;
+            break;
     }
-    if ($config->{'sliderintervalsetting'} < 1000) {
-        $generalsettings->interval = 1000;
-    } else if ($config->{'sliderintervalsetting'} > 10000) {
-        $generalsettings->interval = 10000;
+
+    // Initialize general slider settings object.
+    $generalslidersettings = new stdClass();
+
+    // Getting and setting the slider's navigation settings.
+    switch ($config->{'sliderarrownav'}) {
+        case THEME_BOOST_UNION_SETTING_SELECT_YES:
+            $generalslidersettings->showarrownav = true;
+            break;
+        case THEME_BOOST_UNION_SETTING_SELECT_NO:
+            $generalslidersettings->showarrownav = false;
+            break;
+    }
+    switch ($config->{'sliderindicatornav'}) {
+        case THEME_BOOST_UNION_SETTING_SELECT_YES:
+            $generalslidersettings->showindicatornav = true;
+            break;
+        case THEME_BOOST_UNION_SETTING_SELECT_NO:
+            $generalslidersettings->showindicatornav = false;
+            break;
+    }
+
+    // Getting and setting the slider's animation setting.
+    switch ($config->{'slideranimation'}) {
+        case THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_SLIDE:
+            $generalslidersettings->animation = 'slide';
+            break;
+        case THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_FADE:
+            $generalslidersettings->animation = 'slide carousel-fade';
+            break;
+        case THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_NONE:
+            $generalslidersettings->animation = '';
+            break;
+    }
+
+    // Getting and setting the slider's animation interval setting.
+    if ($config->{'sliderinterval'} < 1000) {
+        $generalslidersettings->interval = 1000;
+    } else if ($config->{'sliderinterval'} > 10000) {
+        $generalslidersettings->interval = 10000;
     } else {
-        $generalsettings->interval = $config->{'sliderintervalsetting'};
+        $generalslidersettings->interval = $config->{'sliderinterval'};
     }
 
-    // Bootstrap mixed-value logic.
-    switch ($config->{'sliderridesetting'}) {
-        case 0:
-            $templatecontext['ride'] = "carousel";
+    // Getting and setting the slider's cycle setting.
+    switch ($config->{'sliderride'}) {
+        case THEME_BOOST_UNION_SETTING_SLIDER_RIDE_ONPAGELOAD:
+            $generalslidersettings->ride = 'carousel';
             break;
-        case 1:
-            $templatecontext['ride'] = "true";
+        case THEME_BOOST_UNION_SETTING_SLIDER_RIDE_AFTERINTERACTION:
+            $generalslidersettings->ride = 'true';
             break;
-        case 2:
-            $templatecontext['ride'] = "false";
+        case THEME_BOOST_UNION_SETTING_SLIDER_RIDE_NEVER:
+            $generalslidersettings->ride = 'false';
+            break;
     }
 
-    $generalsettings->ride = $templatecontext['ride'];
-
-    /**
-     * Maps boolean values (true/false) to corresponding string values ("true"/"false")
-     *
-     * PHP translates booleans to 1/0 instead of true/false. Bootstrap needs string boolean values.
-     */
-    function boolean_to_string ($var) {
-        if ($var == 1) {
-            return "true";
-        } else {
-            return "false";
-        }
+    // Getting and setting the slider's pause setting.
+    switch ($config->{'sliderpause'}) {
+        case THEME_BOOST_UNION_SETTING_SELECT_YES:
+            $generalslidersettings->pause = 'hover';
+            break;
+        case THEME_BOOST_UNION_SETTING_SELECT_NO:
+            $generalslidersettings->pause = 'false';
+            break;
     }
-    $generalsettings->keyboard = boolean_to_string($config->{'sliderkeyboardsetting'});
-    $generalsettings->pause = boolean_to_string($config->{'sliderpausesetting'});
-    $generalsettings->wrap = boolean_to_string($config->{'sliderwrapsetting'});
 
+    // Getting and setting the slider's keyboard setting.
+    $generalslidersettings->keyboard = theme_boost_union_yesno_to_boolstring($config->{'sliderkeyboard'});
 
-    $templatecontext['slidergeneralsettings'] = $generalsettings;
+    // Getting and setting the slider's wrap setting.
+    $generalslidersettings->wrap = theme_boost_union_yesno_to_boolstring($config->{'sliderwrap'});
 
+    // Add general slider settings to templatecontext.
+    $templatecontext['slidergeneralsettings'] = $generalslidersettings;
 
-    $slides = [];
-    for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
-        $sliderimage = theme_boost_union_get_urlofsliderimage($i);
-        if ($sliderimage && $config->{'slide' . $i . 'enabled'} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-            $slidercontent = new stdClass();
-            $slidercontent->count = count($slides);
-            $slidercontent->image = $sliderimage;
-            $slidercontent->imagetitle = $config->{'oneslideimagetitle' . $i};
-            $slidercontent->link = $config->{'oneslidelink' . $i};
-            $slidercontent->linktitle = $config->{'oneslidelinktitle' . $i};
-            $slidercontent->caption = $config->{'oneslidecaption' . $i};
-            $slidercontent->content = $config->{'oneslidecontent' . $i};
-            array_push($slides, $slidercontent);
-        }
+    // Reorder the slides based on their order settings.
+    usort($slides, 'theme_boost_union_compare_order');
+
+    // Add a slideto attribute to each slide.
+    // This is needed for the slide controls, based on the latest ordering and starting from 0.
+    foreach ($slides as $key => $notneeded) {
+        $slides[$key]->slideto = $key;
     }
-    $templatecontext['slidecontent'] = $slides;
+
+    // Mark the first slide as first slide.
+    $slides[0]->isfirstslide = true;
+
+    // Add slides data to templatecontext.
+    $templatecontext['slides'] = $slides;
 }
