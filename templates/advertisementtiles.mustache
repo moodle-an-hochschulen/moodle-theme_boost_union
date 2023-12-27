@@ -20,6 +20,7 @@
     Boost Union advertisement tiles layout template.
 
     Context variables required for this template:
+    * showadvtiles - The flag to show the advertisement tiles or not
     * advtileslayoutclass - The CSS class for the grid
     * advtiles - The configured info banners list with:
       * content - The info banner content
@@ -30,6 +31,7 @@
 
     Example context (json):
     {
+        "showadvtiles" : true,
         "advtileslayoutclass" : "col-6",
         "advtiles": [
             {
@@ -62,6 +64,7 @@
         ]
     }
 }}
+{{#showadvtiles}}
 <div id="themeboostunionadvtiles" class="container-fluid">
     <div class="row">
         {{#advtiles}}
@@ -91,3 +94,4 @@
         {{/advtiles}}
     </div>
 </div>
+{{/showadvtiles}}
