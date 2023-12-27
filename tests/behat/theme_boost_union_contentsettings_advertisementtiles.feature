@@ -285,3 +285,21 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
     Then "#admin-tile1title" "css_element" should not be visible
     Then "#admin-tile3title" "css_element" should not be visible
     Then "#admin-tile4title" "css_element" should be visible
+
+  @javascript
+  Scenario Outline: Setting: Advertisement tiles - Display the configured content style
+    Given the following config values are set as admin:
+      | config            | value                             | plugin            |
+      | tile1contentstyle | <style>                           | theme_boost_union |
+      | tile1enabled      | yes                               | theme_boost_union |
+      | tile1content      | This is a test content for tile 1 | theme_boost_union |
+    When I log in as "teacher1"
+    And I am on site homepage
+    Then "//div[@id='themeboostunionadvtile1']//div[contains(@class, 'card-text') and contains(@class, '<cssclass>')]" "xpath_element" <shouldornot> exist
+
+    # We do not want to burn too much CPU time by testing all available options. We just test the default value and two non-default values.
+    Examples:
+      | style      | cssclass        | shouldornot |
+      | nochange   | tile-light      | should not  |
+      | light      | tile-light      | should      |
+      | darkshadow | tile-darkshadow | should      |

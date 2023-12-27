@@ -63,12 +63,31 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
         // Get and set the tile's background image.
         $bgimage = theme_boost_union_get_urloftilebackgroundimage($i);
 
-        // Get and set the tile's background image posision.
+        // Get and set the tile's background image position.
         $bgimageposition = $config->{'tile'.$i.'backgroundimageposition'};
 
         // Get and set the tile's order.
         // The order is not needed for the mustache template, but the usort() method will need it later.
         $order = $config->{'tile'.$i.'order'};
+
+        // Get and set the tile's content style class.
+        switch ($config->{'tile'.$i.'contentstyle'}) {
+            case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_NOCHANGE:
+                $contentstyleclass = '';
+                break;
+            case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHT:
+                $contentstyleclass = 'tile-light';
+                break;
+            case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHTSHADOW:
+                $contentstyleclass = 'tile-lightshadow';
+                break;
+            case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_DARK:
+                $contentstyleclass = 'tile-dark';
+                break;
+            case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_DARKSHADOW:
+                $contentstyleclass = 'tile-darkshadow';
+                break;
+        }
 
         // Compose and remember this tile as templatecontext object.
         $advtile = new stdClass();
@@ -81,6 +100,7 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
         $advtile->backgroundimageposition = $bgimageposition;
         $advtile->no = $i;
         $advtile->order = $order;
+        $advtile->contentstyleclass = $contentstyleclass;
         $advertisementtiles[$i] = $advtile;
     }
 }
