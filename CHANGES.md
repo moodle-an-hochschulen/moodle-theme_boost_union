@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-12-27 - Improvement: Add content style setting to the advertisement tiles, solves #519.
 * 2023-12-27 - Test: Always reactivate debugging during Behat tests, solves #521.
 * 2023-12-26 - Improvement: Do not add the advertisement tiles div to the frontpage if no tile is activated, solves #516.
 * 2023-12-24 - Bugfix: Back to top button was missing directly after the scroll-spy scrolled the page, solves #386.

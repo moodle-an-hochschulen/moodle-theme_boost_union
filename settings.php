@@ -1898,6 +1898,28 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $page->hide_if('theme_boost_union/tile'.$i.'backgroundimageposition', 'theme_boost_union/tile'.$i.'enabled', 'neq',
                     THEME_BOOST_UNION_SETTING_SELECT_YES);
 
+            // Setting: Advertisement tile content style.
+            $name = 'theme_boost_union/tile'.$i.'contentstyle';
+            $title = get_string('tilecontentstylesetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('tilecontentstylesetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $tilecontentstyleoptions = [
+                    THEME_BOOST_UNION_SETTING_CONTENTSTYLE_NOCHANGE =>
+                            get_string('tilecontentstylesetting_nochange', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHT =>
+                            get_string('tilecontentstylesetting_light', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHTSHADOW =>
+                            get_string('tilecontentstylesetting_lightshadow', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_CONTENTSTYLE_DARK =>
+                            get_string('tilecontentstylesetting_dark', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_CONTENTSTYLE_DARKSHADOW =>
+                            get_string('tilecontentstylesetting_darkshadow', 'theme_boost_union'),
+            ];
+            $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_CONTENTSTYLE_NOCHANGE, $tilecontentstyleoptions);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/tile'.$i.'contentstyle', 'theme_boost_union/tile'.$i.'enabled', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
             // Setting: Advertisement tile link URL.
             $name = 'theme_boost_union/tile'.$i.'link';
             $title = get_string('tilelinksetting', 'theme_boost_union', ['no' => $i], true);
