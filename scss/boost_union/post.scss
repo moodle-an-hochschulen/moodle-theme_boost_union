@@ -958,6 +958,24 @@ body.theme_boost-union-footerbuttonmobile.jsenabled {
     width: inherit;
 }
 
+/* Classes for the content style of advertisement tiles. */
+#themeboostunionadvtiles {
+    .tile-dark {
+        color: black;
+    }
+    .tile-light {
+        color: white;
+    }
+    .tile-darkshadow {
+        color: black;
+        text-shadow: 0 0 5px white;
+    }
+    .tile-lightshadow {
+        color: white;
+        text-shadow: 0 0 5px black;
+    }
+}
+
 /* Improve the advertisement tile card if a background image is used. */
 .themeboostunionadvtilebg {
     /* Remove the 1px border which is added around the card by default and which looks strange
