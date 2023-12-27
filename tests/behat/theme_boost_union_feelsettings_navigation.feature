@@ -160,7 +160,7 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And I turn editing mode off
     Then page top is at the top of the viewport
 
-  @javascript @testme
+  @javascript
   Scenario: Settings: back to top button in combination with the scrollspy - Make sure that the back to top button is always shown
     Given the following config values are set as admin:
       | config          | value | plugin            |
