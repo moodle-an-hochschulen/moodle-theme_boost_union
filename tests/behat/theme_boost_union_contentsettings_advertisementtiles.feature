@@ -196,6 +196,10 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Advertisement tile 1 background image" filemanager
     And I press "Save changes"
     And I am on site homepage
+    # We reactivate debugging again.
+    And the following config values are set as admin:
+      | debug          | 32767 |
+      | debugdisplay   | 1     |
     And I log out
     And I am on site homepage
     And I follow "Log in"
