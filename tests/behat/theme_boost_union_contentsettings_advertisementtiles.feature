@@ -34,13 +34,14 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     Then "#themeboostunionadvtile1" "css_element" should not exist
 
-  Scenario Outline: Setting: Advertisement tiles - Display an advertisement tile only if it is enabled
+  Scenario Outline: Setting: Advertisement tiles - Display the advertisement tile wrapper and the individual advertisement tile only if it is enabled
     Given the following config values are set as admin:
-      | config       | value                             | plugin            |
-      | tile1enabled | <enabled>                         | theme_boost_union |
+      | config       | value     | plugin            |
+      | tile1enabled | <enabled> | theme_boost_union |
     When I log in as "teacher1"
     And I am on site homepage
-    Then "#themeboostunionadvtile1" "css_element" <shouldexist>
+    Then "#themeboostunionadvtiles" "css_element" <shouldexist>
+    And "#themeboostunionadvtile1" "css_element" <shouldexist>
 
     Examples:
       | enabled | shouldexist      |
