@@ -119,7 +119,7 @@ export const init = () => {
         const section = sectionList[idx];
         const sectionCollapse = section.querySelector('.course-content-item-content');
         if (sectionCollapse) {
-            const sectionSummary = sectionCollapse.querySelector('.course-description-item.summarytext');
+            const sectionSummary = sectionCollapse.querySelector('.summarytext');
             // Only create SummaryItemController if summary content is present.
             if (sectionSummary) {
                 summaryCtrlList[idx] = new SummaryItemController(

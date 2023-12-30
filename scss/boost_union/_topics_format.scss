@@ -11,7 +11,7 @@
         transition: padding 400ms ease-in-out;
     }
 
-    .course-description-item.summarytext {
+    .summarytext {
         &.move-in {
             @extend .move;
             padding-left: 45px;
