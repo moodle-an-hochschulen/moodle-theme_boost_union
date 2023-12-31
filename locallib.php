@@ -403,7 +403,7 @@ function theme_boost_union_infobanner_is_shown_on_page($bannerno) {
 }
 
 /**
- * Helper function to compare either infobanner or tiles orders.
+ * Helper function to compare either infobanner or tiles or slides orders.
  *
  * @param int $a The first value
  * @param int $b The second value
@@ -573,6 +573,52 @@ function theme_boost_union_get_urloftilebackgroundimage($tileno) {
 
         // Get all files from filearea.
         $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'tilebackgroundimage'.$tileno,
+                false, 'itemid', false);
+
+        // Just pick the first file - we are sure that there is just one file.
+        $file = reset($files);
+
+        // Build and return the image URL.
+        return moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+    }
+
+    // As no image was found, return null.
+    return null;
+}
+
+/**
+ * Get the slider's background image URL from the filearea 'slidebackgroundimage'.tileno.
+ *
+ * Note:
+ * Calling this function for each slide separately is maybe not performant. Originally it was planed to put
+ * all files in one filearea. However, at the time of development
+ * https://github.com/moodle/moodle/blob/master/lib/outputlib.php#L2062
+ * did not support itemids in setting-files of themes.
+ *
+ * @param int $slideno The slide number.
+ * @return string|null
+ */
+function theme_boost_union_get_urlofslidebackgroundimage($slideno) {
+    // If the slide number is apparently not valid, return.
+    // Note: We just check the slide's number, we do not check if the slide is enabled or not.
+    if ($slideno < 0 || $slideno > THEME_BOOST_UNION_SETTING_SLIDES_COUNT) {
+        return null;
+    }
+
+    // Get the background image config for this slide.
+    $bgconfig = get_config('theme_boost_union', 'slide'.$slideno.'backgroundimage');
+
+    // If a background image is configured.
+    if (!empty($bgconfig)) {
+        // Get the system context.
+        $systemcontext = context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get all files from filearea.
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'slidebackgroundimage'.$slideno,
                 false, 'itemid', false);
 
         // Just pick the first file - we are sure that there is just one file.
@@ -1672,7 +1718,7 @@ function theme_boost_union_get_touchicons_html_for_page() {
             // If the file exists (i.e. it has been uploaded).
             if ($file->exists == true) {
                 // Build the file URL.
-                $fileurl = new moodle_url('/pluginfile.php/1/theme_boost_union/touchiconsios/'.
+                $fileurl = new moodle_url('/pluginfile.php/1/theme_boost_union/touchiconsios/' .
                     theme_get_revision().'/'.$file->filename);
 
                 // Compose and append the HTML tag.
@@ -1685,4 +1731,18 @@ function theme_boost_union_get_touchicons_html_for_page() {
 
     // Return the string.
     return $touchiconstring;
+}
+
+/**
+ * Helper function to map Boost Union settings ('yes'/'no') to corresponding string values ('true'/'false')
+ * This is needed for Bootstrap which expects string boolean values.
+ *
+ * @param string $var Either 'yes' or 'no'
+ */
+function theme_boost_union_yesno_to_boolstring($var) {
+    if ($var == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        return 'true';
+    } else {
+        return 'false';
+    }
 }

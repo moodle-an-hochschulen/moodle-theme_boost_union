@@ -28,6 +28,7 @@
  * * Include static pages
  * * Include Jvascript disabled hint
  * * Include advertisement tiles
+ * * Include slider
  * * Include info banners
  * * Include additional block regions
  * * Handle admin setting for right-hand block drawer of site home
@@ -200,6 +201,11 @@ require_once(__DIR__ . '/includes/navbar.php');
 // Include the template content for the advertisement tiles, but only if we are on the frontpage.
 if ($PAGE->pagelayout == 'frontpage') {
     require_once(__DIR__ . '/includes/advertisementtiles.php');
+}
+
+// Include the template content for the slider, but only if we are on the frontpage.
+if ($PAGE->pagelayout == 'frontpage') {
+    require_once(__DIR__ . '/includes/slider.php');
 }
 
 // Include the template content for the smart menus.

@@ -467,6 +467,10 @@ In this tab, you can enable and configure multiple information banners to be sho
 
 In this tab, you can enable and configure multiple advertisement tiles to be shown on site home.
 
+#### Tab "Slider"
+
+In this tab, you can enable and configure multiple slides to be shown on site home.
+
 ### Settings page "Functionality"
 
 #### Tab "Courses"
@@ -666,8 +670,9 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * Käferfreie Software, Nina Herrmann: Code
 * lern.link GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
 * lern.link GmbH, Beata Waloszczyk: Code
-* Moodle.NRW / Ruhr University Bochum, Tim Trappen: Code, Ideating
+* Moodle.NRW / Ruhr University Bochum, Annika Lambert: Code
 * Moodle.NRW / Ruhr University Bochum, Matthias Buttgereit: Code, Ideating
+* Moodle.NRW / Ruhr University Bochum, Tim Trappen: Code, Ideating
 * moodleSCHULE e.V., Ralf Krause: German translation and curation, Ideating
 * Ruhr University Bochum, Melanie Treitinger: Code, Ideating
 * RWTH Aachen, Amrita Deb Dutta: Code

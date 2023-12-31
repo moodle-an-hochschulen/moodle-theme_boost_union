@@ -1,0 +1,166 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/slider
+
+    Boost Union slider layout template.
+
+    Context variables required for this template:
+    * showslider - The flag to show the slider or not
+    * slidergeneralsettings - The slider configuration object
+      * animation - The slider animation type
+      * interval - The slider interval speed
+      * keyboard - Allow slider keyboard interaction
+      * pause - Pause slider on mouseover
+      * ride - Cycle through slides
+      * showindicatornav - The flag if the slider indicator should be shown
+      * showarrownav - The flag if the slider arrows should be shown
+      * wrap - Continuously cycle through slides
+    * slides - The configured slides list with:
+      * backgroundimageurl - Image to be displayed behind the content
+      * backgroundimagealt - The alt attribute for the background image
+      * captionorcontent - The flag if caption or content is provided
+      * caption - The slide's caption (might be empty)
+      * content - The slide's content (might be empty)
+      * contentstyleclass - The CSS class for the slide
+      * isfirstslide - The flag if this is the first slide
+      * linkimage - The flag if the slide's background image should be linked
+      * linktext - The flag if the slide's text (caption + content) should be linked
+      * linktitle - The link title which is displayed (might be empty)
+      * link - The actual URL (might be empty)
+      * linktargetnewtab - The flag if the link should open in a new tab
+      * no - The number of the slide (according to the settings)
+      * slideto - The index of the slide (according to the order)
+
+    Example context (json):
+    {
+        "showslider": true,
+        "slidergeneralsettings": {
+            "animation": "slide carousel-fade",
+            "interval": 5000,
+            "keyboard": "true",
+            "pause": "false",
+            "ride": "carousel",
+            "showindicatornav": true,
+            "showarrownav": true,
+            "wrap": "true"
+        },
+        "slides": [
+            {
+                "backgroundimageurl": "https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/login_bg1.jpg",
+                "backgroundimagealt": "The background image 1",
+                "captionorcontent": true,
+                "caption": "The caption 1",
+                "content": "The content 1",
+                "contentstyleclass": "slide-lightshadow",
+                "isfirstslide": true,
+                "linkimage": true,
+                "linktext": true,
+                "linktitle": "The link",
+                "link": "https://the-link.org/",
+                "linktargetnewtab": true,
+                "no": 1,
+                "slideto": 0
+            },
+            {
+                "backgroundimageurl": "https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/login_bg2.jpg",
+                "backgroundimagealt": "The background image 2",
+                "captionorcontent": true,
+                "caption": "The caption 2",
+                "content": "The content 2",
+                "contentstyleclass": "slide-lightshadow",
+                "isfirstslide": false,
+                "linkimage": true,
+                "linktext": true,
+                "linktitle": "The link",
+                "link": "https://the-link.org/",
+                "linktargetnewtab": false,
+                "no": 2,
+                "slideto": 1
+            },
+            {
+                "backgroundimageurl": "https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/login_bg3.jpg",
+                "backgroundimagealt": "The background image 3",
+                "captionorcontent": true,
+                "caption": "The caption 3",
+                "content": "The content 3",
+                "contentstyleclass": "slide-lightshadow",
+                "isfirstslide": false,
+                "linkimage": true,
+                "linktext": true,
+                "linktitle": "The link",
+                "link": "https://the-link.org/",
+                "linktargetnewtab": false,
+                "no": 3,
+                "slideto": 2
+            }
+        ]
+    }
+}}
+{{#showslider}}
+<div id="themeboostunionslider-wrapper" class="container-fluid pb-3">
+  <div id="themeboostunionslider" class="carousel {{slidergeneralsettings.animation}}" data-interval="{{slidergeneralsettings.interval}}"
+    data-keyboard="{{slidergeneralsettings.keyboard}}" data-pause="{{slidergeneralsettings.pause}}"
+    data-ride="{{slidergeneralsettings.ride}}" data-wrap="{{slidergeneralsettings.wrap}}">
+
+    {{#slidergeneralsettings.showindicatornav}}
+    <ol class="carousel-indicators">
+      {{#slides}}
+      <li data-target="#themeboostunionslider" data-slide-to="{{slideto}}" {{#isfirstslide}}class="active"{{/isfirstslide}}></li>
+      {{/slides}}
+    </ol>
+    {{/slidergeneralsettings.showindicatornav}}
+
+    <div class="carousel-inner rounded">
+      {{#slides}}
+        <div id="themeboostunionslide{{no}}" class="carousel-item {{#isfirstslide}}active{{/isfirstslide}}">
+          {{#linkimage}}{{#link}}<a href="{{link}}" {{#linktitle}}title="{{linktitle}}"{{/linktitle}} {{#linktargetnewtab}}target="_blank" rel="noopener noreferrer"{{/linktargetnewtab}}>{{/link}}{{/linkimage}}
+            {{#backgroundimageurl}}<img class="d-block w-100" src="{{backgroundimageurl}}" alt="{{backgroundimagealt}}">{{/backgroundimageurl}}
+          {{#linkimage}}{{#link}}</a>{{/link}}{{/linkimage}}
+          {{#captionorcontent}}
+              <div class="carousel-caption {{contentstyleclass}}">
+                {{#linktext}}{{#link}}<a href="{{link}}" {{#linktitle}}title="{{linktitle}}"{{/linktitle}} {{#linktargetnewtab}}target="_blank" rel="noopener noreferrer"{{/linktargetnewtab}}>{{/link}}{{/linktext}}
+                  {{#caption}}<h5>{{caption}}</h5>{{/caption}}
+                  {{{content}}}
+                {{#linktext}}{{#link}}</a>{{/link}}{{/linktext}}
+              </div>
+          {{/captionorcontent}}
+        </div>
+      {{/slides}}
+    </div>
+
+    {{#slidergeneralsettings.showarrownav}}
+    <a class="carousel-control-prev" href="#themeboostunionslider" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">prev</span>
+    </a>
+    <a class="carousel-control-next" href="#themeboostunionslider" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">next</span>
+    </a>
+    {{/slidergeneralsettings.showarrownav}}
+  </div>
+</div>
+
+{{#js}}
+require(['jquery', 'theme_boost/bootstrap/carousel'], function($) {
+  if (document.getElementById('themeboostunionslider')) {
+    $('#themeboostunionslider').carousel();
+  }
+});
+{{/js}}
+{{/showslider}}
