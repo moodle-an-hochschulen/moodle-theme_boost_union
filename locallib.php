@@ -1405,60 +1405,80 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
     // If the corresponding setting is set to 'yes'.
     if ($theme->settings->markexternallinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
 
+        // Get the scope setting.
+        $scope = get_config('theme_boost_union', 'markexternallinksscope');
+
+        // Prepare the CSS selectors depending on the configured scope.
+        switch ($scope) {
+            case THEME_BOOST_UNION_SETTING_MARKLINKS_COURSEMAIN:
+                $topltrselector = 'body.dir-ltr.path-course-view #region-main';
+                $toprtlselector = 'body.dir-rtl.path-course-view #region-main';
+                break;
+            case THEME_BOOST_UNION_SETTING_MARKLINKS_WHOLEPAGE:
+            default:
+                $topltrselector = 'body.dir-ltr';
+                $toprtlselector = 'body.dir-rtl';
+                break;
+        }
+
         // SCSS to add external link icon after the link and respect LTR and RTL while doing this.
-        $scss = 'body.dir-ltr a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::after,
-            body.dir-ltr a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::after {
+        $scss = $topltrselector.' a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::after,'.
+                $topltrselector.' a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::after {
             font-family: "#{$fa-style-family}";
             content: "#{$fa-var-external-link}" !important;
             font-weight: 900;
             padding-left: 0.25rem;
         }';
-        $scss .= 'body.dir-rtl a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::before,
-            body.dir-rtl a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::before {
+        $scss .= $toprtlselector.' a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::before,'.
+                $toprtlselector.' a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::before {
             font-family: "#{$fa-style-family}";
             content: "#{$fa-var-external-link}" !important;
             font-weight: 900;
             padding-right: 0.25rem;
         }';
 
-        // While adding the external link icon to text links is perfectly fine and intended, the SCSS code also
-        // matches on image links. And this should be avoided for optical reasons.
-        // Unfortunately, we can't select _all_ images which are surrounded by links with pure CSS.
-        // But we can at least revert the external link icon in images and other assets which we know that should not
-        // get it:
-        // * Everything inside the frontpage slider.
-        $scss .= '#themeboostunionslider a::before, #themeboostunionslider a::after {
-            display: none;
-        }';
+        // Revert some things depending on the configured scope.
+        if ($scope == THEME_BOOST_UNION_SETTING_MARKLINKS_WHOLEPAGE) {
+            // While adding the external link icon to text links is perfectly fine and intended, the SCSS code also
+            // matches on image links. And this should be avoided for optical reasons.
+            // Unfortunately, we can't select _all_ images which are surrounded by links with pure CSS.
+            // But we can at least revert the external link icon in images and other assets which we know that should not
+            // get it:
+            // * Everything inside the frontpage slider.
+            $scss .= '#themeboostunionslider a::before, #themeboostunionslider a::after {
+                display: none;
+            }';
 
-        // Moodle adds a hardcoded external-link icon to several links:
-        // * The "services and support" link in the questionmark menu (which should point to moodle.com/help, but may also point to
-        // the URL in the $CFG->servicespage setting).
-        // * The "contact site support" link in the questionmark menu (as soon as the URL in the $CFG->supportpage setting is set).
-        // * The links to the Moodle docs (which are created with the get_docs_url() helper function).
-        // * The "Chat to course participants" link in the questionmark menu (as soon as the communication setting is set within
-        // a course).
-        // * The "Give feedback about this software" link in the questionmark menu (if the $CFG->enableuserfeedback setting
-        // is enabled).
-        // * Anything else which is shown in the call-to-action notification banners on the Dashboard
-        // (Currently just the "Give feedback about this software" link as well).
-        // These icons become obsolete now. We remove them with the sledgehammer.
-        $scss .= '.footer-support-link a[href^="https://moodle.com/help/"] .fa-external-link,
-                .footer-support-link a[target="_blank"] .fa-external-link';
-        if (!empty($CFG->servicespage)) {
-            $scss .= ', .footer-support-link a[href="'.$CFG->servicespage.'"] .fa-external-link';
+            // Moodle adds a hardcoded external-link icon to several links:
+            // * The "services and support" link in the questionmark menu (which should point to moodle.com/help, but may also point
+            // to the URL in the $CFG->servicespage setting).
+            // * The "contact site support" link in the questionmark menu (as soon as the URL in the $CFG->supportpage setting is
+            // set).
+            // * The links to the Moodle docs (which are created with the get_docs_url() helper function).
+            // * The "Chat to course participants" link in the questionmark menu (as soon as the communication setting is set within
+            // a course).
+            // * The "Give feedback about this software" link in the questionmark menu (if the $CFG->enableuserfeedback setting
+            // is enabled).
+            // * Anything else which is shown in the call-to-action notification banners on the Dashboard
+            // (Currently just the "Give feedback about this software" link as well).
+            // These icons become obsolete now. We remove them with the sledgehammer.
+            $scss .= '.footer-support-link a[href^="https://moodle.com/help/"] .fa-external-link,
+                    .footer-support-link a[target="_blank"] .fa-external-link';
+            if (!empty($CFG->servicespage)) {
+                $scss .= ', .footer-support-link a[href="'.$CFG->servicespage.'"] .fa-external-link';
+            }
+            if (!empty($CFG->supportpage)) {
+                $scss .= ', a[href="'.$CFG->supportpage.'"] .fa-external-link';
+            }
+            if (!empty($CFG->enableuserfeedback)) {
+                $scss .= ', a[href^="https://feedback.moodle.org"] .fa-external-link,
+                a[href^="https://feedback.moodle.org"] .ml-1';
+            }
+            $scss .= ', a[href^="'.get_docs_url().'"] .fa-external-link,
+                    div.cta a .fa-external-link {
+                display: none;
+            }';
         }
-        if (!empty($CFG->supportpage)) {
-            $scss .= ', a[href="'.$CFG->supportpage.'"] .fa-external-link';
-        }
-        if (!empty($CFG->enableuserfeedback)) {
-            $scss .= ', a[href^="https://feedback.moodle.org"] .fa-external-link,
-            a[href^="https://feedback.moodle.org"] .ml-1';
-        }
-        $scss .= ', a[href^="'.get_docs_url().'"] .fa-external-link,
-                div.cta a .fa-external-link {
-            display: none;
-        }';
     }
     return $scss;
 }
@@ -1510,14 +1530,30 @@ function theme_boost_union_get_scss_to_mark_mailto_links($theme) {
 
     // If the corresponding setting is set to 'yes'.
     if ($theme->settings->markmailtolinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Get the scope setting.
+        $scope = get_config('theme_boost_union', 'markmailtolinksscope');
+
+        // Prepare the CSS selectors depending on the configured scope.
+        switch ($scope) {
+            case THEME_BOOST_UNION_SETTING_MARKLINKS_COURSEMAIN:
+                $topltrselector = 'body.dir-ltr.path-course-view #region-main';
+                $toprtlselector = 'body.dir-rtl.path-course-view #region-main';
+                break;
+            case THEME_BOOST_UNION_SETTING_MARKLINKS_WHOLEPAGE:
+            default:
+                $topltrselector = 'body.dir-ltr';
+                $toprtlselector = 'body.dir-rtl';
+                break;
+        }
+
         // SCSS to add envelope icon in front of the link and respect LTR and RTL while doing this.
-        $scss .= 'body.dir-ltr a[href^="mailto"]::before {
+        $scss .= $topltrselector.' a[href^="mailto"]::before {
             font-family: "#{$fa-style-family}";
             content: "\f003" !important;
             font-weight: 400;
             padding-right: 0.25rem;
         }';
-        $scss .= 'body.dir-rtl a[href^="mailto"]::after {
+        $scss .= $toprtlselector.' a[href^="mailto"]::after {
             font-family: "#{$fa-style-family}";
             content: "\f003" !important;
             font-weight: 400;
