@@ -1421,20 +1421,42 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
             padding-right: 0.25rem;
         }';
 
+        // While adding the external link icon to text links is perfectly fine and intended, the SCSS code also
+        // matches on image links. And this should be avoided for optical reasons.
+        // Unfortunately, we can't select _all_ images which are surrounded by links with pure CSS.
+        // But we can at least revert the external link icon in images and other assets which we know that should not
+        // get it:
+        // * Everything inside the frontpage slider.
+        $scss .= '#themeboostunionslider a::before, #themeboostunionslider a::after {
+            display: none;
+        }';
+
         // Moodle adds a hardcoded external-link icon to several links:
         // * The "services and support" link in the questionmark menu (which should point to moodle.com/help, but may also point to
         // the URL in the $CFG->servicespage setting).
         // * The "contact site support" link in the questionmark menu (as soon as the URL in the $CFG->supportpage setting is set).
         // * The links to the Moodle docs (which are created with the get_docs_url() helper function).
+        // * The "Chat to course participants" link in the questionmark menu (as soon as the communication setting is set within
+        // a course).
+        // * The "Give feedback about this software" link in the questionmark menu (if the $CFG->enableuserfeedback setting
+        // is enabled).
+        // * Anything else which is shown in the call-to-action notification banners on the Dashboard
+        // (Currently just the "Give feedback about this software" link as well).
         // These icons become obsolete now. We remove them with the sledgehammer.
-        $scss .= '.footer-support-link a[href^="https://moodle.com/help/"] .fa-external-link';
+        $scss .= '.footer-support-link a[href^="https://moodle.com/help/"] .fa-external-link,
+                .footer-support-link a[target="_blank"] .fa-external-link';
         if (!empty($CFG->servicespage)) {
             $scss .= ', .footer-support-link a[href="'.$CFG->servicespage.'"] .fa-external-link';
         }
         if (!empty($CFG->supportpage)) {
             $scss .= ', a[href="'.$CFG->supportpage.'"] .fa-external-link';
         }
-        $scss .= ', a[href^="'.get_docs_url().'"] .fa-external-link {
+        if (!empty($CFG->enableuserfeedback)) {
+            $scss .= ', a[href^="https://feedback.moodle.org"] .fa-external-link,
+            a[href^="https://feedback.moodle.org"] .ml-1';
+        }
+        $scss .= ', a[href^="'.get_docs_url().'"] .fa-external-link,
+                div.cta a .fa-external-link {
             display: none;
         }';
     }
