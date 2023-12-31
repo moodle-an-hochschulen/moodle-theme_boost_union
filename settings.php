@@ -1526,12 +1526,50 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Setting: Mark external links scope.
+        $markexternallinksscopeoptions = [
+                // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+                // PHP warning otherwise.
+                THEME_BOOST_UNION_SETTING_MARKLINKS_WHOLEPAGE =>
+                        get_string('marklinksscopesetting_wholepage', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_MARKLINKS_COURSEMAIN =>
+                        get_string('marklinksscopesetting_coursemain', 'theme_boost_union'),
+        ];
+        $name = 'theme_boost_union/markexternallinksscope';
+        $title = get_string('markexternallinksscopesetting', 'theme_boost_union', null, true);
+        $description = get_string('markexternallinksscopesetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_MARKLINKS_WHOLEPAGE, $markexternallinksscopeoptions);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/markexternallinksscope', 'theme_boost_union/markexternallinks', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
         // Setting: Mark mailto links.
         $name = 'theme_boost_union/markmailtolinks';
         $title = get_string('markmailtolinkssetting', 'theme_boost_union', null, true);
         $description = get_string('markmailtolinkssetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
+
+        // Setting: Mark mailto links scope.
+        $markmailtolinksscopeoptions = [
+                // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+                // PHP warning otherwise.
+                THEME_BOOST_UNION_SETTING_MARKLINKS_WHOLEPAGE =>
+                        get_string('marklinksscopesetting_wholepage', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_MARKLINKS_COURSEMAIN =>
+                        get_string('marklinksscopesetting_coursemain', 'theme_boost_union'),
+        ];
+        $name = 'theme_boost_union/markmailtolinksscope';
+        $title = get_string('markmailtolinksscopesetting', 'theme_boost_union', null, true);
+        $description = get_string('markmailtolinksscopesetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_MARKLINKS_WHOLEPAGE, $markmailtolinksscopeoptions);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/markmailtolinksscope', 'theme_boost_union/markmailtolinks', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
 
         // Setting: Mark broken links.
         $name = 'theme_boost_union/markbrokenlinks';
