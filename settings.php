@@ -1869,7 +1869,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $page->hide_if('theme_boost_union/tile'.$i.'backgroundimage', 'theme_boost_union/tile'.$i.'enabled', 'neq',
                 THEME_BOOST_UNION_SETTING_SELECT_YES);
 
-            // Setting: Course header image position.
+            // Setting: Advertisement tile background image position.
             $name = 'theme_boost_union/tile'.$i.'backgroundimageposition';
             $title = get_string('tilebackgroundimagepositionsetting', 'theme_boost_union', ['no' => $i], true);
             $description = get_string('tilebackgroundimagepositionsetting_desc', 'theme_boost_union', ['no' => $i], true);
