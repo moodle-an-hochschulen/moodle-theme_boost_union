@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2023-12-31 - Improvement: Fix several edge-cases where the "Mark external links" should not add its icons, solves #525 & #526 & #528.
 * 2023-12-28 - Feature: Add slider which can be displayed on site home, solves #162.
 * 2023-12-27 - Improvement: Add content style setting to the advertisement tiles, solves #519.
 * 2023-12-27 - Test: Always reactivate debugging during Behat tests, solves #521.

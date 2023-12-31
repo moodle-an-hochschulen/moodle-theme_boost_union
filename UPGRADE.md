@@ -15,6 +15,7 @@ Upstream changes
 
 * This theme is built on top of theme_boost from Moodle core. It inherits the codebase from theme_boost and overwrites and extends several behaviours and functions. Doing this, code duplication couldn't be avoided. If there are any upstream changes in theme_boost, you should check if they should be adopted to this theme as well.
 * In addition to that, you should check any upstream changes which happen in /lib/templates and /lib/outputrenderers.php as some of these templates and renderers are overwritten in this theme as well.
+* In addition to that, you should check if any additions to theme_boost_union_get_scss_to_mark_external_links() should be made. This might be particularly necessary if any new links have been added to the footer questionmark icon in Moodle core (have a look at footer.mustache) or if any links have been added which have a hardcoded external-link icon (check for new occurrences of "i/externallink" in the Moodle codebase).
 
 
 Automated tests
