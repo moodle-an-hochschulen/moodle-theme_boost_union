@@ -670,8 +670,9 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * Käferfreie Software, Nina Herrmann: Code
 * lern.link GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
 * lern.link GmbH, Beata Waloszczyk: Code
-* Moodle.NRW / Ruhr University Bochum, Tim Trappen: Code, Ideating
+* Moodle.NRW / Ruhr University Bochum, Annika Lambert: Code
 * Moodle.NRW / Ruhr University Bochum, Matthias Buttgereit: Code, Ideating
+* Moodle.NRW / Ruhr University Bochum, Tim Trappen: Code, Ideating
 * moodleSCHULE e.V., Ralf Krause: German translation and curation, Ideating
 * Ruhr University Bochum, Melanie Treitinger: Code, Ideating
 * RWTH Aachen, Amrita Deb Dutta: Code
