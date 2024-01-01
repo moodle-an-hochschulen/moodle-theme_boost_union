@@ -539,6 +539,33 @@ $string['enablefooterbuttonboth'] = 'Enable on desktop, tablet and mobile';
 $string['enablefooterbuttondesktop'] = 'Enable on desktop and tablet only, hide on mobile (unchanged as presented by Moodle core)';
 $string['enablefooterbuttonmobile'] = 'Enable on mobile only, hide on desktop and tablet';
 $string['enablefooterbuttonhidden'] = 'Hide on all devices';
+// ... ... Setting: Suppress 'Help and documentation' link.
+$string['footersuppresshelpsetting'] = 'Suppress \'Help and documentation\' link';
+$string['footersuppresshelpsetting_desc'] = 'With this setting, you can entirely suppress the \'Help and documentation\' link in the footer. This link would otherwise appear if a <a href="{$a->url}">Moodle Docs document root</a> is set.';
+// ... ... Setting: Suppress 'Services and support' link.
+$string['footersuppressservicessetting'] = 'Suppress \'Services and support\' link';
+$string['footersuppressservicessetting_desc'] = 'With this setting, you can entirely suppress the \'Services and support\' link in the footer. This link would otherwise show the <a href="{$a->url}">Services and support link</a> to administrators.';
+// ... ... Setting: Suppress 'Contact site support' link.
+$string['footersuppresscontactsetting'] = 'Suppress \'Contact site support\' link';
+$string['footersuppresscontactsetting_desc'] = 'With this setting, you can entirely suppress the \'Contact site support\' link in the footer. This link would otherwise appear if the <a href="{$a->url}">Contact site support link</a> is set.';
+// ... ... Setting: Suppress Login info.
+$string['footersuppresslogininfosetting'] = 'Suppress Login info';
+$string['footersuppresslogininfosetting_desc'] = 'With this setting, you can entirely suppress the login info in the footer. This info would otherwise show links to a user\'s profile and to the logout page.';
+// ... ... Setting: Suppress 'Reset user tour on this page' link.
+$string['footersuppressusertoursetting'] = 'Suppress \'Reset user tour on this page\' link';
+$string['footersuppressusertoursetting_desc'] = 'With this setting, you can entirely suppress the \'Reset user tour on this page\' link in the footer. This link would otherwise provide the possibility to reset a user tour on a particular page.';
+// ... ... Setting: Suppress 'Give feedback about this software' link.
+$string['footersuppressfeedbacksetting'] = 'Suppress \'Give feedback about this software\' link';
+$string['footersuppressfeedbacksetting_desc'] = 'With this setting, you can entirely suppress the \'Give feedback about this software\' link in the footer. This link would otherwise appear if the <a href="{$a->url}">feedback about this software</a> setting is enabled.';
+// ... ... Setting: Suppress theme switcher links.
+$string['footersuppressthemeswitchsetting'] = 'Suppress theme switcher links';
+$string['footersuppressthemeswitchsetting_desc'] = 'With this setting, you can entirely suppress the theme switcher links in the footer. This link might otherwise appear if there are <a href="{$a->url}">themes set for different device types</a> and you are on a non-desktop device.';
+// ... ... Setting: Suppress 'Powered by Moodle' link.
+$string['footersuppresspoweredsetting'] = 'Suppress \'Powered by Moodle\' link';
+$string['footersuppresspoweredsetting_desc'] = 'With this setting, you can entirely suppress the \'Powered by Moodle\' link in the footer. This link would otherwise show an information that this site is running Moodle and provide a link to Moodle HQ.';
+// ... ... Setting: Suppress footer output by plugins.
+$string['footersuppressstandardfooter'] = 'Suppress footer output by plugin \'{$a}\'';
+$string['footersuppressstandardfooter_desc'] = 'With this setting, you can entirely suppress the footer output by plugin \'{$a}\'. Plugins (even if they are shipped with Moodle core, but are still technically plugins) can add additional content to the footer by implementing a particular function. This plugin has implemented this function and might add content to the footer in certain circumstances.';
 
 // Settings: Static pages tab.
 $string['staticpagestab'] = 'Static pages';

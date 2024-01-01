@@ -1651,6 +1651,107 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 THEME_BOOST_UNION_SETTING_ENABLEFOOTER_DESKTOP, $enablefooterbuttonoptions);
         $tab->add($setting);
 
+        // Setting: Suppress 'Help and documentation' link.
+        $name = 'theme_boost_union/footersuppresshelp';
+        $title = get_string('footersuppresshelpsetting', 'theme_boost_union', null, true);
+        $url = new moodle_url('/admin/settings.php', ['section' => 'documentation']);
+        $description = get_string('footersuppresshelpsetting_desc', 'theme_boost_union', ['url' => $url], true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/footersuppresshelp', 'theme_boost_union/enablefooterbutton', 'eq',
+                THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
+
+        // Setting: Suppress 'Services and support' link.
+        $name = 'theme_boost_union/footersuppressservices';
+        $title = get_string('footersuppressservicessetting', 'theme_boost_union', null, true);
+        $url = new moodle_url('/admin/settings.php', ['section' => 'supportcontact']);
+        $description = get_string('footersuppressservicessetting_desc', 'theme_boost_union', ['url' => $url], true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/footersuppressservices', 'theme_boost_union/enablefooterbutton', 'eq',
+                THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
+
+        // Setting: Suppress 'Contact site support' link.
+        $name = 'theme_boost_union/footersuppresscontact';
+        $title = get_string('footersuppresscontactsetting', 'theme_boost_union', null, true);
+        $url = new moodle_url('/admin/settings.php', ['section' => 'supportcontact']);
+        $description = get_string('footersuppresscontactsetting_desc', 'theme_boost_union', ['url' => $url], true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/footersuppresscontact', 'theme_boost_union/enablefooterbutton', 'eq',
+                THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
+
+        // Setting: Suppress Login info.
+        $name = 'theme_boost_union/footersuppresslogininfo';
+        $title = get_string('footersuppresslogininfosetting', 'theme_boost_union', null, true);
+        $description = get_string('footersuppresslogininfosetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/footersuppresslogininfo', 'theme_boost_union/enablefooterbutton', 'eq',
+                THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
+
+        // Setting: Suppress 'Reset user tour on this page' link.
+        $name = 'theme_boost_union/footersuppressusertour';
+        $title = get_string('footersuppressusertoursetting', 'theme_boost_union', null, true);
+        $description = get_string('footersuppressusertoursetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/footersuppressusertour', 'theme_boost_union/enablefooterbutton', 'eq',
+                THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
+
+        // Setting: Suppress 'Give feedback about this software' link.
+        $name = 'theme_boost_union/footersuppressfeedback';
+        $title = get_string('footersuppressfeedbacksetting', 'theme_boost_union', null, true);
+        $url = new moodle_url('/admin/settings.php', ['section' => 'userfeedback']);
+        $description = get_string('footersuppressfeedbacksetting_desc', 'theme_boost_union', ['url' => $url], true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/footersuppressfeedback', 'theme_boost_union/enablefooterbutton', 'eq',
+                THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
+
+        // Setting: Suppress theme switcher links.
+        $name = 'theme_boost_union/footersuppressthemeswitch';
+        $title = get_string('footersuppressthemeswitchsetting', 'theme_boost_union', null, true);
+        $url = new moodle_url('/theme/index.php');
+        $description = get_string('footersuppressthemeswitchsetting_desc', 'theme_boost_union', ['url' => $url], true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/footersuppressthemeswitch', 'theme_boost_union/enablefooterbutton', 'eq',
+                THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
+
+        // Setting: Suppress 'Powered by Moodle' link.
+        $name = 'theme_boost_union/footersuppresspowered';
+        $title = get_string('footersuppresspoweredsetting', 'theme_boost_union', null, true);
+        $description = get_string('footersuppresspoweredsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/footersuppresspowered', 'theme_boost_union/enablefooterbutton', 'eq',
+                THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
+
+        // Settings: Suppress footer output by plugins.
+        // Get the array of plugins with the standard_footer_html() function which can be suppressed by Boost Union.
+        $pluginswithfunction = get_plugins_with_function('standard_footer_html', 'lib.php');
+        // Iterate over all plugins.
+        foreach ($pluginswithfunction as $plugintype => $plugins) {
+            foreach ($plugins as $pluginname => $function) {
+                // Create the setting.
+                $name = 'theme_boost_union/footersuppressstandardfooter_'.$plugintype.'_'.$pluginname;
+                $title = get_string('footersuppressstandardfooter',
+                        'theme_boost_union',
+                        get_string('pluginname', $plugintype.'_'.$pluginname, null, true),
+                        true);
+                $description = get_string('footersuppressstandardfooter_desc',
+                        'theme_boost_union',
+                        get_string('pluginname', $plugintype.'_'.$pluginname, null, true),
+                        true);
+                $setting = new admin_setting_configselect($name, $title, $description,
+                        THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+                $tab->add($setting);
+                $page->hide_if('theme_boost_union/footersuppressstandardfooter_'.$plugintype.'_'.$pluginname,
+                       'theme_boost_union/enablefooterbutton', 'eq', THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
+            }
+        }
+
         // Add tab to settings page.
         $page->add($tab);
 
