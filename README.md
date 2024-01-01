@@ -554,6 +554,15 @@ How this theme works
 This Boost child theme is implemented with minimal code duplication in mind. It inherits / requires as much code as possible from theme_boost and only implements the extended or modified functionalities.
 
 
+Goodies for designers
+---------------------
+
+In addition to our mission to provide admin settings for each and every feature of this theme, designers may want to use features of this theme within (S)CSS code directly. As designer, you should know these possibilities:
+
+* Mark external and mailto links (manually):
+  As an alternative to the markexternallinks and markmailtolinks settings which automatically mark these kind of links, you can also add the .externallink and .mailtolink class to a ```<a>``` HTML tag to manually mark any link as an external / as a mailto link.
+
+
 Support for companion plugins
 -----------------------------
 
