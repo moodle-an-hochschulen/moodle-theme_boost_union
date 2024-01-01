@@ -1697,15 +1697,11 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
         // SCSS to add external link icon after the link and respect LTR and RTL while doing this.
         $scss = $topltrselector.' a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::after,'.
                 $topltrselector.' a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::after {
-            font-family: "FontAwesome";
-            content: "#{$fa-var-external-link}" !important;
-            padding-left: 0.25rem;
+            @include externallink(ltr);
         }';
         $scss .= $toprtlselector.' a:not([href^="' . $CFG->wwwroot . '"])[href^="http://"]::before,'.
                 $toprtlselector.' a:not([href^="' . $CFG->wwwroot . '"])[href^="https://"]::before {
-            font-family: "FontAwesome";
-            content: "#{$fa-var-external-link}" !important;
-            padding-right: 0.25rem;
+            @include externallink(rtl);
         }';
 
         // Revert some things depending on the configured scope.
@@ -1811,14 +1807,10 @@ function theme_boost_union_get_scss_to_mark_mailto_links($theme) {
 
         // SCSS to add envelope icon in front of the link and respect LTR and RTL while doing this.
         $scss .= $topltrselector.' a[href^="mailto"]::before {
-            font-family: "FontAwesome";
-            content: "\f003" !important;
-            padding-right: 0.25rem;
+            @include mailtolink(ltr);
         }';
         $scss .= $toprtlselector.' a[href^="mailto"]::after {
-            font-family: "FontAwesome";
-            content: "\f003" !important;
-            padding-left: 0.25rem;
+            @include mailtolink(rtl);
         }';
     }
 
