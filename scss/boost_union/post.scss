@@ -2216,6 +2216,61 @@ body.theme_boost-union-footerbuttonmobile.jsenabled {
 
 
 /*=======================================
+ * Goodies for designers
+ ======================================*/
+
+/*---------------------------------------
+ * Mark external and mailto links (manually)
+ --------------------------------------*/
+
+/* Prepare mixin for external links to allow these styles to be use here as goody and in the
+   theme_boost_union_get_scss_to_mark_external_links() function as well. */
+@mixin externallink($dir) {
+    font-family: "#{$fa-style-family}";
+    content: "#{$fa-var-external-link}" !important; /* stylelint-disable-line declaration-no-important */
+    font-weight: 900;
+    @if $dir == 'rtl' {
+        padding-right: 0.25rem;
+    }
+    @else {
+        padding-left: 0.25rem;
+    }
+}
+
+/* Prepare mixin for mailto links to allow these styles to be use here as goody and in the
+   theme_boost_union_get_scss_to_mark_mailto_links() function as well. */
+@mixin mailtolink($dir) {
+    font-family: "#{$fa-style-family}";
+    content: "\f003" !important; /* stylelint-disable-line declaration-no-important */
+    font-weight: 400;
+    @if $dir == 'rtl' {
+        padding-left: 0.25rem;
+    }
+    @else {
+        padding-right: 0.25rem;
+    }
+}
+
+/* Provide the styles within a class which can be added to links. */
+body.dir-ltr {
+    a.externallink::after {
+        @include externallink(ltr);
+    }
+    a.mailtolink::before {
+        @include mailtolink(ltr);
+    }
+}
+body.dir-rtl {
+    a.externallink::before {
+        @include externallink(rtl);
+    }
+    a.mailtolink::after {
+        @include mailtolink(rtl);
+    }
+}
+
+
+/*=======================================
  * Supporting third-party plugins
  ======================================*/
 
