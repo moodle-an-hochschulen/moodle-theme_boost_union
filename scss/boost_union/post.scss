@@ -919,6 +919,19 @@ body.theme_boost-union-footerbuttonmobile.jsenabled {
     }
 }
 
+/* Make the reset-user-tours link a real footer section - as soon as the placeholder div is filled by JS.
+   This is necessary due to restructurings of the footer popover content. */
+.tool_usertours-resettourcontainer .usertour {
+    @extend .footer-section;
+    @extend .p-3;
+    @extend .border-bottom;
+}
+
+/* Remove the bottom line from the last footer section. */
+#page-footer .popover-body .footer-section:last-child {
+    border-bottom: none !important; /* stylelint-disable-line declaration-no-important */
+}
+
 
 /*=======================================
  * Settings: Content -> Info banner.

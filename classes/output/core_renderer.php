@@ -25,6 +25,8 @@
 namespace theme_boost_union\output;
 use context_course;
 use context_system;
+use core_userfeedback;
+use html_writer;
 use moodle_url;
 
 /**
@@ -525,5 +527,130 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         return $this->render_from_template('core/loginform', $context);
+    }
+
+    /**
+     * Content that should be output in the footer area
+     * of the page. Designed to be called in theme layout.php files.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * @return string HTML fragment.
+     */
+    public function standard_footer_html() {
+        global $CFG;
+
+        // Initialize static variable to store the output for subsequent runs of this function
+        // (we call it at least twice from footer.mustache).
+        static $output;
+
+        // If the output has already been generated.
+        if ($output != null) {
+            // Return it directly.
+            return $output;
+        }
+
+        $output = '';
+        if (during_initial_install()) {
+            // Debugging info can not work before install is finished,
+            // in any case we do not want any links during installation!
+            return $output;
+        }
+
+        // Give plugins an opportunity to add any footer elements.
+        // The callback must always return a string containing valid html footer content.
+        $pluginswithfunction = get_plugins_with_function('standard_footer_html', 'lib.php');
+        foreach ($pluginswithfunction as $plugintype => $plugins) {
+            foreach ($plugins as $pluginname => $function) {
+                // If the given plugin's output is supressed by Boost Union's settings.
+                $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_'.$plugintype.'_'.$pluginname);
+                if (isset($suppresssetting) && $suppresssetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                    // Skip the plugin.
+                    continue;
+
+                    // Otherwise.
+                } else {
+                    // Add the output.
+                    $output .= $function();
+                }
+            }
+        }
+
+        // If the 'Give feedback about this software' link is not suppressed by Boost Union's settings.
+        $suppressfeedbacksetting = get_config('theme_boost_union', 'footersuppressfeedback');
+        if (!isset($suppressfeedbacksetting) || $suppressfeedbacksetting == THEME_BOOST_UNION_SETTING_SELECT_NO) {
+            if (core_userfeedback::can_give_feedback()) {
+                $output .= html_writer::div(
+                    $this->render_from_template('core/userfeedback_footer_link',
+                            ['url' => core_userfeedback::make_link()->out(false)])
+                );
+            }
+        }
+
+        // If the theme switcher links are not suppressed by Boost Union's settings.
+        $suppressthemeswitchsetting = get_config('theme_boost_union', 'footersuppressthemeswitch');
+        if (!isset($suppressthemeswitchsetting) || $suppressthemeswitchsetting == THEME_BOOST_UNION_SETTING_SELECT_NO) {
+            if ($this->page->devicetypeinuse == 'legacy') {
+                // The legacy theme is in use print the notification.
+                $output .= html_writer::tag('div', get_string('legacythemeinuse'), ['class' => 'legacythemeinuse']);
+            }
+
+            // Get links to switch device types (only shown for users not on a default device).
+            $output .= $this->theme_switch_links();
+        }
+
+        return $output;
+    }
+
+    /**
+     * The standard tags (typically script tags that are not needed earlier) that
+     * should be output after everything else. Designed to be called in theme layout.php files.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * It is based on the standard_end_of_body_html() function but was split into two parts
+     * (for the additionalhtmlfooter and the unique endtoken) to be requested individually in footer.mustache
+     * in Boost Union.
+     *
+     * @return string HTML fragment.
+     */
+    public function standard_end_of_body_html_endtoken() {
+        // This function is normally called from a layout.php file in core_renderer::header()
+        // but some of the content won't be known until later, so we return a placeholder
+        // for now. This will be replaced with the real content in core_renderer::footer().
+        $output = $this->unique_end_html_token;
+        return $output;
+    }
+
+    /**
+     * The standard tags (typically script tags that are not needed earlier) that
+     * should be output after everything else. Designed to be called in theme layout.php files.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * It is based on the standard_end_of_body_html() function but was split into two parts
+     * (for the additionalhtmlfooter and the unique endtoken) to be requested individually in footer.mustache
+     * in Boost Union.
+     *
+     * @return string HTML fragment.
+     */
+    public function standard_end_of_body_html_additionalhtmlfooter() {
+        global $CFG;
+
+        // Initialize static variable to store the output for subsequent runs of this function
+        // (we call it at least twice from footer.mustache).
+        static $output;
+
+        // If the output has already been generated.
+        if ($output != null) {
+            // Return it directly.
+            return $output;
+        }
+
+        $output = '';
+        if ($this->page->pagelayout !== 'embedded' && !empty($CFG->additionalhtmlfooter)) {
+            $output .= "\n".$CFG->additionalhtmlfooter;
+        }
+        return $output;
     }
 }
