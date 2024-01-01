@@ -565,8 +565,23 @@ In addition to our mission to provide admin settings for each and every feature 
   During a custom SCSS design project, you might come into the situation that you have to link to an uploaded image or other asset which is served by Moodle's pluginfile.php script. Unfortunately, these URLs contain a theme revision parameter. To be able to use these URLs properly in custom SCSS and to avoid breaking Moodle's caching features, Boost Union provides the $themerev SCSS variable to be used in your custom SCSS.
 
 
-Support for companion plugins
------------------------------
+Exceptions to our main design principle
+---------------------------------------
+
+As you have read in the introduction, the main design principle of Boost Union is not to change anything in the GUI until a particular feature is enabled in the theme settings. However, due to the way how Moodle core and Boost in Moodle core is built, this main design principle sometimes could not be fully satisfied:
+
+* Footer popover:
+  As soon as you click the footer button (questionmark icon) in the bottom right corner of the screen, a popover with several links appears. However, the content of this link list is far from being well-structured and looks more like a garage sale. When implementing the settings to individually suppress each of these popover links, we had to make some code re-arrangements which result in the fact that the popover links are slightly more well-structured even if you do not enable any setting in Boost Union.
+
+
+Companion plugin local_navbarplus
+---------------------------------
+
+With the footersuppressusertour setting, you can disable the possibility to reset a user tour in the footer popover. If you have enabled this setting, you might want to have a look at our plugin local_navbarplus as a companion plugin which allows you, among other things, to add a "Reset user tour" link to the navigation bar instead. local_navbarplus is published on https://moodle.org/plugins/local_navbarplus and on https://github.com/moodle-an-hochschulen/moodle-local_navbarplus.
+
+
+Support for other companion plugins
+-----------------------------------
 
 This theme ships with some additions for companion plugins:
 

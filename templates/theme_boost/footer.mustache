@@ -40,6 +40,14 @@
         "contactlink": "https://localhost/theme/boost_union/pages/contact.php",
         "contactpagetitle": "Contact",
         "footerbutton": true,
+        "footershowchat": true,
+        "footershowcontact": true,
+        "footershowhelp": true,
+        "footershowlogininfo": true,
+        "footershowpopoverlinks": true,
+        "footershowpowered": true,
+        "footershowservices": true,
+        "footershowusertour": true,
         "helplinkpositionfooter": true,
         "helplink": "https://localhost/theme/boost_union/pages/help.php",
         "helppagetitle": "Help",
@@ -78,6 +86,16 @@
     * Added the possibility to show the generic page 3 link.
     * Added the bottom menu bar to show menus in footer for mobile devices.
     * Added the possibility to suppress the footer button (question mark in the circle).
+    * Added the possibility to suppress each link in the footer popover individually.
+      Three things are particularly important to know:
+      * During this restructuring, standard_end_of_body_html was split into two functions
+        standard_end_of_body_html_additionalhtmlfooter and standard_end_of_body_html_endtoken to allow a better
+        structure of the resulting link list.
+      * The function standard_footer_html() returns several links. The checks if each link is displayed or not
+        happens within this function and not here in Mustache.
+      * The "Reset user tour on this page" link is added to the page by Moodle core with a quite aggressive JavaScript
+        code. If this JS code does not find the placeholder div, it will add the link at another location on the page.
+        That's why we keep the placeholder here and hide it with CSS if the link should be suppressed.
 }}
 
 <footer id="page-footer" class="footer-popover bg-white">
@@ -95,26 +113,36 @@
     </div>
     {{#footerbutton }}
         <div class="footer-content-popover container" data-region="footer-content-popover">
-            {{#output.has_communication_links}}
-                <div class="footer-section p-3 border-bottom footer-link-communication">
-                    <div class="footer-support-link">{{{ output.communication_link }}}</div>
-                </div>
-            {{/output.has_communication_links}}
-            {{# output.has_popover_links }}
-                <div class="footer-section p-3 border-bottom">
-                    {{# output.page_doc_link }}
-                        <div class="footer-support-link">{{{ output.page_doc_link }}}</div>
-                    {{/ output.page_doc_link }}
+            {{#footershowchat}}
+                {{#output.has_communication_links}}
+                    <div class="footer-section p-3 border-bottom footer-link-communication">
+                        <div class="footer-support-link">{{{ output.communication_link }}}</div>
+                    </div>
+                {{/output.has_communication_links}}
+            {{/footershowchat}}
+            {{#footershowpopoverlinks}}
+                {{# output.has_popover_links }}
+                    <div class="footer-section p-3 border-bottom">
+                        {{#footershowhelp}}
+                            {{# output.page_doc_link }}
+                                <div class="footer-support-link">{{{ output.page_doc_link }}}</div>
+                            {{/ output.page_doc_link }}
+                        {{/footershowhelp}}
 
-                    {{# output.services_support_link }}
-                        <div class="footer-support-link">{{{ output.services_support_link }}}</div>
-                    {{/ output.services_support_link }}
+                        {{#footershowservices}}
+                            {{# output.services_support_link }}
+                                <div class="footer-support-link">{{{ output.services_support_link }}}</div>
+                            {{/ output.services_support_link }}
+                        {{/footershowservices}}
 
-                    {{# output.supportemail }}
-                        <div class="footer-support-link">{{{ output.supportemail }}}</div>
-                    {{/ output.supportemail }}
-                </div>
-            {{/ output.has_popover_links }}
+                        {{#footershowcontact}}
+                            {{# output.supportemail }}
+                                <div class="footer-support-link">{{{ output.supportemail }}}</div>
+                            {{/ output.supportemail }}
+                        {{/footershowcontact}}
+                    </div>
+                {{/ output.has_popover_links }}
+            {{/footershowpopoverlinks}}
             {{#anystaticpagelinkedfromfooter}}
                 <div class="footer-section p-3 border-bottom">
                     {{# aboutuslinkpositionfooter }}
@@ -172,28 +200,40 @@
                     {{/ page3linkpositionfooter }}
                 </div>
             {{/anystaticpagelinkedfromfooter}}
-            <div class="footer-section p-3 border-bottom">
-                <div class="logininfo">
-                    {{{ output.login_info }}}
-                </div>
-                <div class="tool_usertours-resettourcontainer">
-                </div>
-
-                {{{ output.standard_footer_html }}}
-                {{{ output.standard_end_of_body_html }}}
-            </div>
-            <div class="footer-section p-3">
-                <div>{{#str}}poweredbymoodle, core{{/str}}</div>
-                {{#output.moodle_release}}
-                    <div>
-                        {{#str}}version, core{{/str}} {{{ output.moodle_release }}}
+            {{#footershowlogininfo}}
+                <div class="footer-section p-3 border-bottom">
+                    <div class="logininfo">
+                        {{{ output.login_info }}}
                     </div>
-                {{/output.moodle_release}}
-            </div>
+                </div>
+            {{/footershowlogininfo}}
+            <div class="tool_usertours-resettourcontainer"></div>
+            {{^footershowusertour}}<style>.tool_usertours-resettourcontainer{display:none;}</style>{{/footershowusertour}}
+            {{# output.standard_footer_html }}
+                <div class="footer-section p-3 border-bottom">
+                    {{{ output.standard_footer_html }}}
+                </div>
+            {{/ output.standard_footer_html }}
+            {{#footershowpowered}}
+                <div class="footer-section p-3 border-bottom">
+                    <div>{{#str}}poweredbymoodle, core{{/str}}</div>
+                    {{#output.moodle_release}}
+                        <div>
+                            {{#str}}version, core{{/str}} {{{ output.moodle_release }}}
+                        </div>
+                    {{/output.moodle_release}}
+                </div>
+            {{/footershowpowered}}
+            {{# output.standard_end_of_body_html_additionalhtmlfooter }}
+                <div class="footer-section p-3 border-bottom">
+                    {{{ output.standard_end_of_body_html_additionalhtmlfooter }}}
+                </div>
+            {{/ output.standard_end_of_body_html_additionalhtmlfooter }}
+            {{{ output.standard_end_of_body_html_endtoken }}}
         </div>
     {{/footerbutton }}
     {{^footerbutton }}
-        {{{ output.standard_end_of_body_html }}}
+        {{{ output.standard_end_of_body_html_endtoken }}}
     {{/footerbutton }}
 
     <div class="footer-content-debugging footer-dark bg-dark text-light">
