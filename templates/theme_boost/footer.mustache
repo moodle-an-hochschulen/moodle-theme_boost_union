@@ -83,95 +83,103 @@
             </button>
         {{/footerbutton }}
     </div>
-    <div class="footer-content-popover container" data-region="footer-content-popover">
-        {{# output.has_popover_links }}
-            <div class="footer-section p-3 border-bottom">
-                {{# output.page_doc_link }}
-                    <div class="footer-support-link">{{{ output.page_doc_link }}}</div>
-                {{/ output.page_doc_link }}
+    {{#footerbutton }}
+        <div class="footer-content-popover container" data-region="footer-content-popover">
+            {{# output.has_popover_links }}
+                <div class="footer-section p-3 border-bottom">
+                    {{# output.page_doc_link }}
+                        <div class="footer-support-link">{{{ output.page_doc_link }}}</div>
+                    {{/ output.page_doc_link }}
 
-                {{# output.services_support_link }}
-                    <div class="footer-support-link">{{{ output.services_support_link }}}</div>
-                {{/ output.services_support_link }}
+                    {{# output.services_support_link }}
+                        <div class="footer-support-link">{{{ output.services_support_link }}}</div>
+                    {{/ output.services_support_link }}
 
-                {{# output.supportemail }}
-                    <div class="footer-support-link">{{{ output.supportemail }}}</div>
-                {{/ output.supportemail }}
-
-                {{# aboutuslinkpositionfooter }}
-                    <div class="footer-support-link theme_boost_union_footer_aboutuslink">
-                        <a href="{{ aboutuslink }}"><i class="icon fa fa-info-circle fa-fw " aria-hidden="true"></i>{{ aboutuspagetitle }}</a>
-                    </div>
-                {{/ aboutuslinkpositionfooter }}
-
-                {{# offerslinkpositionfooter }}
-                    <div class="footer-support-link theme_boost_union_footer_offerslink">
-                        <a href="{{ offerslink }}"><i class="icon fa fa-briefcase fa-fw " aria-hidden="true"></i>{{ offerspagetitle }}</a>
-                    </div>
-                {{/ offerslinkpositionfooter }}
-
-                {{# imprintlinkpositionfooter }}
-                    <div class="footer-support-link theme_boost_union_footer_imprintlink">
-                        <a href="{{ imprintlink }}"><i class="icon fa fa-building-o fa-fw " aria-hidden="true"></i>{{ imprintpagetitle }}</a>
-                    </div>
-                {{/ imprintlinkpositionfooter }}
-
-                {{# contactlinkpositionfooter }}
-                    <div class="footer-support-link theme_boost_union_footer_contactlink">
-                        <a href="{{ contactlink }}"><i class="icon fa fa-address-card fa-fw " aria-hidden="true"></i>{{ contactpagetitle }}</a>
-                    </div>
-                {{/ contactlinkpositionfooter }}
-
-                {{# helplinkpositionfooter }}
-                    <div class="footer-support-link theme_boost_union_footer_helplink">
-                        <a href="{{ helplink }}"><i class="icon fa fa-question-circle-o fa-fw " aria-hidden="true"></i>{{ helppagetitle }}</a>
-                    </div>
-                {{/ helplinkpositionfooter }}
-
-                {{# maintenancelinkpositionfooter }}
-                    <div class="footer-support-link theme_boost_union_footer_maintenancelink">
-                        <a href="{{ maintenancelink }}"><i class="icon fa fa-wrench fa-fw " aria-hidden="true"></i>{{ maintenancepagetitle }}</a>
-                    </div>
-                {{/ maintenancelinkpositionfooter }}
-
-                {{# page1linkpositionfooter }}
-                    <div class="footer-support-link theme_boost_union_footer_page1link">
-                        <a href="{{ page1link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page1pagetitle }}</a>
-                    </div>
-                {{/ page1linkpositionfooter }}
-
-                {{# page2linkpositionfooter }}
-                    <div class="footer-support-link theme_boost_union_footer_page2link">
-                        <a href="{{ page2link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page2pagetitle }}</a>
-                    </div>
-                {{/ page2linkpositionfooter }}
-
-                {{# page3linkpositionfooter }}
-                    <div class="footer-support-link theme_boost_union_footer_page3link">
-                        <a href="{{ page3link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page3pagetitle }}</a>
-                    </div>
-                {{/ page3linkpositionfooter }}
-            </div>
-        {{/ output.has_popover_links }}
-        <div class="footer-section p-3 border-bottom">
-            <div class="logininfo">
-                {{{ output.login_info }}}
-            </div>
-            <div class="tool_usertours-resettourcontainer">
-            </div>
-
-            {{{ output.standard_footer_html }}}
-            {{{ output.standard_end_of_body_html }}}
-        </div>
-        <div class="footer-section p-3">
-            <div>{{#str}}poweredbymoodle, core{{/str}}</div>
-            {{#output.moodle_release}}
-                <div>
-                    {{#str}}version, core{{/str}} {{{ output.moodle_release }}}
+                    {{# output.supportemail }}
+                        <div class="footer-support-link">{{{ output.supportemail }}}</div>
+                    {{/ output.supportemail }}
                 </div>
-            {{/output.moodle_release}}
+            {{/ output.has_popover_links }}
+            {{#anystaticpagelinkedfromfooter}}
+                <div class="footer-section p-3 border-bottom">
+                    {{# aboutuslinkpositionfooter }}
+                        <div class="footer-support-link theme_boost_union_footer_aboutuslink">
+                            <a href="{{ aboutuslink }}"><i class="icon fa fa-info-circle fa-fw " aria-hidden="true"></i>{{ aboutuspagetitle }}</a>
+                        </div>
+                    {{/ aboutuslinkpositionfooter }}
+
+                    {{# offerslinkpositionfooter }}
+                        <div class="footer-support-link theme_boost_union_footer_offerslink">
+                            <a href="{{ offerslink }}"><i class="icon fa fa-briefcase fa-fw " aria-hidden="true"></i>{{ offerspagetitle }}</a>
+                        </div>
+                    {{/ offerslinkpositionfooter }}
+
+                    {{# imprintlinkpositionfooter }}
+                        <div class="footer-support-link theme_boost_union_footer_imprintlink">
+                            <a href="{{ imprintlink }}"><i class="icon fa fa-building-o fa-fw " aria-hidden="true"></i>{{ imprintpagetitle }}</a>
+                        </div>
+                    {{/ imprintlinkpositionfooter }}
+
+                    {{# contactlinkpositionfooter }}
+                        <div class="footer-support-link theme_boost_union_footer_contactlink">
+                            <a href="{{ contactlink }}"><i class="icon fa fa-address-card fa-fw " aria-hidden="true"></i>{{ contactpagetitle }}</a>
+                        </div>
+                    {{/ contactlinkpositionfooter }}
+
+                    {{# helplinkpositionfooter }}
+                        <div class="footer-support-link theme_boost_union_footer_helplink">
+                            <a href="{{ helplink }}"><i class="icon fa fa-question-circle-o fa-fw " aria-hidden="true"></i>{{ helppagetitle }}</a>
+                        </div>
+                    {{/ helplinkpositionfooter }}
+
+                    {{# maintenancelinkpositionfooter }}
+                        <div class="footer-support-link theme_boost_union_footer_maintenancelink">
+                            <a href="{{ maintenancelink }}"><i class="icon fa fa-wrench fa-fw " aria-hidden="true"></i>{{ maintenancepagetitle }}</a>
+                        </div>
+                    {{/ maintenancelinkpositionfooter }}
+
+                    {{# page1linkpositionfooter }}
+                        <div class="footer-support-link theme_boost_union_footer_page1link">
+                            <a href="{{ page1link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page1pagetitle }}</a>
+                        </div>
+                    {{/ page1linkpositionfooter }}
+
+                    {{# page2linkpositionfooter }}
+                        <div class="footer-support-link theme_boost_union_footer_page2link">
+                            <a href="{{ page2link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page2pagetitle }}</a>
+                        </div>
+                    {{/ page2linkpositionfooter }}
+
+                    {{# page3linkpositionfooter }}
+                        <div class="footer-support-link theme_boost_union_footer_page3link">
+                            <a href="{{ page3link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page3pagetitle }}</a>
+                        </div>
+                    {{/ page3linkpositionfooter }}
+                </div>
+            {{/anystaticpagelinkedfromfooter}}
+            <div class="footer-section p-3 border-bottom">
+                <div class="logininfo">
+                    {{{ output.login_info }}}
+                </div>
+                <div class="tool_usertours-resettourcontainer">
+                </div>
+
+                {{{ output.standard_footer_html }}}
+                {{{ output.standard_end_of_body_html }}}
+            </div>
+            <div class="footer-section p-3">
+                <div>{{#str}}poweredbymoodle, core{{/str}}</div>
+                {{#output.moodle_release}}
+                    <div>
+                        {{#str}}version, core{{/str}} {{{ output.moodle_release }}}
+                    </div>
+                {{/output.moodle_release}}
+            </div>
         </div>
-    </div>
+    {{/footerbutton }}
+    {{^footerbutton }}
+        {{{ output.standard_end_of_body_html }}}
+    {{/footerbutton }}
 
     <div class="footer-content-debugging footer-dark bg-dark text-light">
         <div class="container-fluid footer-dark-inner">
