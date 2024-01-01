@@ -32,6 +32,10 @@ $config = get_config('theme_boost_union');
 // The static pages to be supported.
 $staticpages = ['aboutus', 'offers', 'imprint', 'contact', 'help', 'maintenance', 'page1', 'page2', 'page3'];
 
+// Initialize flags if any static page should be linked from the footer and footnote.
+$templatecontext['anystaticpagelinkedfromfooter'] = false;
+$templatecontext['anystaticpagelinkedfromfootnote'] = false;
+
 // Iterate over the static pages.
 foreach ($staticpages as $staticpage) {
     // If the page is enabled.
@@ -47,6 +51,9 @@ foreach ($staticpages as $staticpage) {
 
             // Add marker to show the page link in the footnote to templatecontext.
             $templatecontext[$staticpage.'linkpositionfootnote'] = true;
+
+            // Flip flag that at least one static page should be linked from the footnote.
+            $templatecontext['anystaticpagelinkedfromfootnote'] = true;
         }
 
         // If the admin wants to show a link in the footer or in both locations.
@@ -54,6 +61,9 @@ foreach ($staticpages as $staticpage) {
                 $config->{$staticpage.'linkposition'} == THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_BOTH) {
             // Add marker to show the page link in the footer to templatecontext.
             $templatecontext[$staticpage.'linkpositionfooter'] = true;
+
+            // Flip flag that at least one static page should be linked from the footer.
+            $templatecontext['anystaticpagelinkedfromfooter'] = true;
         }
 
         // Add the page link and page title to the templatecontext.
