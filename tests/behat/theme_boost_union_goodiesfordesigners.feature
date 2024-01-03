@@ -14,7 +14,7 @@ Feature: Using the goodies for designers in the theme_boost_union plugin
     And I follow "Dashboard"
     Then element "#footnote a[href*='https://www.externallink.com']" pseudo-class "after" should contain "content": ""
 
-  @javascript @testme
+  @javascript
   Scenario: Feature: Mark mailto links
     And the following config values are set as admin:
       | config          | value                                                          | plugin            |
