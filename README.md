@@ -385,9 +385,17 @@ In this tab there are the following settings:
 
 Adds an "external link" icon after external links (which lead the user to a target outside Moodle).
 
+###### Mark external links scope
+
+With this setting, you control the scope where Boost Union should mark external links. By default, Boost Union marks external links on the whole Moodle page and does its best to cover some edge-cases where adding the external link icon does not make much sense. However, you can also limit the scope to better avoid edge-cases.
+
 ###### Mark mailto links
 
 Adds an "envelope" icon in front of mailto links.
+
+###### Mark mailto links scope
+
+With this setting, you control the scope where Boost Union should mark mailto links. By default, Boost Union marks mailto links on the whole Moodle page. However, you can also limit the scope to avoid edge-cases.
 
 ###### Mark broken links
 
@@ -544,6 +552,15 @@ How this theme works
 --------------------
 
 This Boost child theme is implemented with minimal code duplication in mind. It inherits / requires as much code as possible from theme_boost and only implements the extended or modified functionalities.
+
+
+Goodies for designers
+---------------------
+
+In addition to our mission to provide admin settings for each and every feature of this theme, designers may want to use features of this theme within (S)CSS code directly. As designer, you should know these possibilities:
+
+* Mark external and mailto links (manually):
+  As an alternative to the markexternallinks and markmailtolinks settings which automatically mark these kind of links, you can also add the .externallink and .mailtolink class to a ```<a>``` HTML tag to manually mark any link as an external / as a mailto link.
 
 
 Support for companion plugins
