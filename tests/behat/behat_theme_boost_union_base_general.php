@@ -195,9 +195,9 @@ class behat_theme_boost_union_base_general extends behat_base {
     }
 
     /**
-     * Checks if a property of a pseudo-class of an element contains a certain value.
+     * Checks if a property of a pseudo-class of an element matches a certain value.
      *
-     * @Then /^element "(?P<s>.*?)" pseudo-class "(?P<ps>.*?)" should contain "(?P<pr>.*?)": "(?P<v>.*?)"$/
+     * @Then /^element "(?P<s>.*?)" pseudo-class "(?P<ps>.*?)" should match "(?P<pr>.*?)": "(?P<v>.*?)"$/
      * @param string $s selector
      * @param string $ps pseudo
      * @param string $pr property
@@ -205,7 +205,7 @@ class behat_theme_boost_union_base_general extends behat_base {
      * @throws ExpectationException
      * @throws DriverException
      */
-    public function i_check_for_pseudoclass_content($s, $ps, $pr, $v) {
+    public function pseudoclass_content_matches($s, $ps, $pr, $v) {
         if (!$this->running_javascript()) {
             throw new DriverException("Pseudo-classes can only be evaluated with Javascript enabled.");
         }
@@ -218,21 +218,48 @@ class behat_theme_boost_union_base_general extends behat_base {
         $eq = Normalizer::normalize('"'.$v.'"', Normalizer::FORM_C);
 
         if (!($result == $eq)) {
-            throw new ExpectationException("Didn't find ".$v." in ".$s.":".$ps.".", $this->getSession());
+            throw new ExpectationException("Didn't find a match for '".$v."' with ".$s.":".$ps.".", $this->getSession());
         }
     }
 
     /**
-     * Checks if a property of a pseudo-class of an element contains 'none'.
+     * Checks if a property of a pseudo-class of an element contains a certain value.
      *
-     * @Then /^element "(?P<s>(?:[^"]|\\")*)" pseudo-class "(?P<ps>(?:[^"]|\\")*)" should contain "(?P<pr>(?:[^"]|\\")*)": none$/
+     * @Then /^element "(?P<s>.*?)" pseudo-class "(?P<ps>.*?)" should contain "(?P<pr>.*?)": "(?P<v>.*?)"$/
+     * @param string $s selector
+     * @param string $ps pseudo
+     * @param string $pr property
+     * @param string $v value
+     * @throws ExpectationException
+     * @throws DriverException
+     */
+    public function pseudoclass_content_contains($s, $ps, $pr, $v) {
+        if (!$this->running_javascript()) {
+            throw new DriverException("Pseudo-classes can only be evaluated with Javascript enabled.");
+        }
+
+        $getvalueofpseudoelementjs = "return (
+            window.getComputedStyle(document.querySelector(\"". $s ."\"), ':".$ps."').getPropertyValue(\"".$pr."\")
+        )";
+
+        $result = Normalizer::normalize($this->evaluate_script($getvalueofpseudoelementjs), Normalizer::FORM_C);
+        $needle = Normalizer::normalize($v, Normalizer::FORM_C);
+        if (strpos($result, $needle) === false) {
+            throw new ExpectationException("Didn't find '".$v."' in ".$s.":".$ps.".", $this->getSession());
+        }
+    }
+
+    /**
+     * Checks if a property of a pseudo-class of an element matches 'none'.
+     *
+     * @Then /^element "(?P<s>(?:[^"]|\\")*)" pseudo-class "(?P<ps>(?:[^"]|\\")*)" should match "(?P<pr>(?:[^"]|\\")*)": none$/
      * @param string $s selector
      * @param string $ps pseudo
      * @param string $pr property
      * @throws ExpectationException
      * @throws DriverException
      */
-    public function pseudoclass_should_not_exist($s, $ps, $pr) {
+    public function pseudoclass_content_none($s, $ps, $pr) {
         if (!$this->running_javascript()) {
             throw new DriverException("Pseudo-classes can only be evaluated with Javascript enabled.");
         }
@@ -244,7 +271,7 @@ class behat_theme_boost_union_base_general extends behat_base {
         $result = $this->evaluate_script($pseudoelementcontent);
 
         if ($result != "none") {
-            throw new ExpectationException($s.":".$ps.".content contains: ".$result, $this->getSession());
+            throw new ExpectationException($s.":".$ps.".content is: ".$result, $this->getSession());
         }
     }
 
