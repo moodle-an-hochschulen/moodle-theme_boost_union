@@ -27,11 +27,11 @@ Feature: Configuring the theme_boost_union plugin for the "Links" tab on the "Fe
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
     And I follow "Dashboard"
-    Then element "#footnote a[href*='https://www.externallink.com']" pseudo-class "after" should contain "content": <contentfootnote>
-    And element "#footnote a[href='/my/']" pseudo-class "after" should contain "content": none
+    Then element "#footnote a[href*='https://www.externallink.com']" pseudo-class "after" should match "content": <contentfootnote>
+    And element "#footnote a[href='/my/']" pseudo-class "after" should match "content": none
     And I am on "Course 1" course homepage
-    Then element "#region-main a[href*='https://www.externallink.com']" pseudo-class "after" should contain "content": <contentcourse>
-    And element "#region-main a[href='/my/']" pseudo-class "after" should contain "content": none
+    Then element "#region-main a[href*='https://www.externallink.com']" pseudo-class "after" should match "content": <contentcourse>
+    And element "#region-main a[href='/my/']" pseudo-class "after" should match "content": none
 
     Examples:
       | value | scope      | contentfootnote | contentcourse |
@@ -48,11 +48,11 @@ Feature: Configuring the theme_boost_union plugin for the "Links" tab on the "Fe
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
     And I follow "Dashboard"
-    Then element "#footnote a[href^='mailto']" pseudo-class "before" should contain "content": <contentfootnote>
-    And element "#footnote a[href='/my/']" pseudo-class "after" should contain "content": none
+    Then element "#footnote a[href^='mailto']" pseudo-class "before" should match "content": <contentfootnote>
+    And element "#footnote a[href='/my/']" pseudo-class "after" should match "content": none
     And I am on "Course 1" course homepage
-    Then element "#region-main a[href^='mailto']" pseudo-class "before" should contain "content": <contentcourse>
-    And element "#region-main a[href='/my/']" pseudo-class "after" should contain "content": none
+    Then element "#region-main a[href^='mailto']" pseudo-class "before" should match "content": <contentcourse>
+    And element "#region-main a[href='/my/']" pseudo-class "after" should match "content": none
 
     Examples:
       | value | scope      | contentfootnote | contentcourse |
@@ -68,8 +68,8 @@ Feature: Configuring the theme_boost_union plugin for the "Links" tab on the "Fe
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
     And I am on "Course 1" course homepage
-    Then element "a[href*='/brokenfile.php']" pseudo-class "before" should contain "content": <content>
-    And element "a[href='/my/']" pseudo-class "after" should contain "content": none
+    Then element "a[href*='/brokenfile.php']" pseudo-class "before" should match "content": <content>
+    And element "a[href='/my/']" pseudo-class "after" should match "content": none
 
     Examples:
       | value | content |

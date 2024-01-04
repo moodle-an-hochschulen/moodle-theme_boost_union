@@ -244,6 +244,9 @@ function theme_boost_union_get_pre_scss($theme) {
     }
     $scss .= '$blockregionoutsiderightwidth: '.$blockregionoutsiderightwidth.";\n";
 
+    // Add custom Boost Union SCSS variable as goody for designers: $themerev.
+    $scss .= '$themerev: '.$CFG->themerev.";\n";
+
     // Prepend pre-scss.
     if (get_config('theme_boost_union', 'scsspre')) {
         $scss .= get_config('theme_boost_union', 'scsspre');
