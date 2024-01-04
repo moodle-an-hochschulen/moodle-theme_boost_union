@@ -31,4 +31,101 @@ $footerquestionmark = isset($footersetting) ? $footersetting : THEME_BOOST_UNION
 if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
     // Add marker to show the footer button to templatecontext.
     $templatecontext['footerbutton'] = true;
+
+    // If the "Suppress 'Chat to course participants' link" setting is not enabled.
+    $footersuppresschatsetting = get_config('theme_boost_union', 'footersuppresschat');
+    if (!isset($footersuppresschatsetting) || $footersuppresschatsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Add marker to show this link.
+        $templatecontext['footershowchat'] = true;
+
+        // Otherwise.
+    } else {
+        // Add marker to hide this link.
+        $templatecontext['footershowchat'] = false;
+    }
+
+    // If the "Suppress 'Help and documentation' link" setting is not enabled.
+    $footersuppresshelpsetting = get_config('theme_boost_union', 'footersuppresshelp');
+    if (!isset($footersuppresshelpsetting) || $footersuppresshelpsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Add marker to show this link.
+        $templatecontext['footershowhelp'] = true;
+
+        // Otherwise.
+    } else {
+        // Add marker to hide this link.
+        $templatecontext['footershowhelp'] = false;
+    }
+
+    // If the "Suppress 'Services and support' link" setting is not enabled.
+    $footersuppressservicessetting = get_config('theme_boost_union', 'footersuppressservices');
+    if (!isset($footersuppressservicessetting) || $footersuppressservicessetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Add marker to show this link.
+        $templatecontext['footershowservices'] = true;
+
+        // Otherwise.
+    } else {
+        // Add marker to hide this link.
+        $templatecontext['footershowservices'] = false;
+    }
+
+    // If the "Suppress 'Contact site support' link" setting is not enabled.
+    $footersuppresscontactsetting = get_config('theme_boost_union', 'footersuppresscontact');
+    if (!isset($footersuppresscontactsetting) || $footersuppresscontactsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Add marker to show this link.
+        $templatecontext['footershowcontact'] = true;
+
+        // Otherwise.
+    } else {
+        // Add marker to hide this link.
+        $templatecontext['footershowcontact'] = false;
+    }
+
+    // If any of the 'Help and documentation', 'Services and support' or 'Contact site support' links are enabled.
+    if (isset($templatecontext['footershowhelp']) && $templatecontext['footershowhelp'] == true ||
+            isset($templatecontext['footershowservices']) && $templatecontext['footershowservices'] == true ||
+            isset($templatecontext['footershowcontact']) && $templatecontext['footershowcontact'] == true) {
+        // Add marker to show popover links.
+        $templatecontext['footershowpopoverlinks'] = true;
+
+        // Otherwise.
+    } else {
+        // Add marker to hide popover links.
+        $templatecontext['footershowpopoverlinks'] = false;
+    }
+
+    // If the "Suppress Login info" setting is not enabled.
+    $footersuppresslogininfosetting = get_config('theme_boost_union', 'footersuppresslogininfo');
+    if (!isset($footersuppresslogininfosetting) || $footersuppresslogininfosetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Add marker to show this link.
+        $templatecontext['footershowlogininfo'] = true;
+
+        // Otherwise.
+    } else {
+        // Add marker to hide this link.
+        $templatecontext['footershowlogininfo'] = false;
+    }
+
+    // If the "Suppress 'Reset user tour on this page' link" setting is not enabled.
+    $footersuppressusertoursetting = get_config('theme_boost_union', 'footersuppressusertour');
+    if (!isset($footersuppressusertoursetting) || $footersuppressusertoursetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Add marker to show this link.
+        $templatecontext['footershowusertour'] = true;
+
+        // Otherwise.
+    } else {
+        // Add marker to hide this link.
+        $templatecontext['footershowusertour'] = false;
+    }
+
+    // If the "Suppress 'Powered by Moodle' link" setting is not enabled.
+    $footersuppresspoweredsetting = get_config('theme_boost_union', 'footersuppresspowered');
+    if (!isset($footersuppresspoweredsetting) || $footersuppresspoweredsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Add marker to show this link.
+        $templatecontext['footershowpowered'] = true;
+
+        // Otherwise.
+    } else {
+        // Add marker to hide this link.
+        $templatecontext['footershowpowered'] = false;
+    }
 }
