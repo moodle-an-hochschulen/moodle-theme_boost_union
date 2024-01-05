@@ -55,6 +55,14 @@ $string['coursecontentmaxwidthsetting_desc'] = 'With this setting, you can overr
 // ... ... Setting: Medium content max width.
 $string['mediumcontentmaxwidthsetting'] = 'Medium content max width';
 $string['mediumcontentmaxwidthsetting_desc'] = 'With this setting, you can override Moodle\'s medium content width without manual SCSS modifications. This page width is used in certain activities like the database activity. By default, Moodle uses a medium content max width of 1120px. You can enter other pixel-based values like 1200px, but you can also enter a percentage-based value like 100% or a viewport-width value like 90vw.';
+// ... Section: Drawer width.
+$string['drawerwidthheading'] = 'Drawer width';
+// ... ... Setting: Course content max width.
+$string['courseindexdrawerwidthsetting'] = 'Course index drawer width';
+$string['courseindexdrawerwidthsetting_desc'] = 'With this setting, you can override Moodle\'s course index drawer width without manual SCSS modifications. By default, Moodle uses a course index drawer width of 285px. You can enter other pixel-based values like 320px, but values with other units like percentage-based values or a viewport-width value won\'t work.';
+// ... ... Setting: Medium content max width.
+$string['blockdrawerwidthsetting'] = 'Block drawer width';
+$string['blockdrawerwidthsetting_desc'] = 'With this setting, you can override Moodle\'s block drawer width without manual SCSS modifications. By default, Moodle uses a medium content max width of 315px. You can enter other pixel-based values like 400px, but values with other units like percentage-based values or a viewport-width value won\'t work.';
 
 // Settings: Site branding tab.
 $string['sitebrandingtab'] = 'Site branding';
