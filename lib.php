@@ -202,6 +202,15 @@ function theme_boost_union_get_pre_scss($theme) {
     if (get_config('theme_boost_union', 'h5pcontentmaxwidth')) {
         $scss .= '$h5p-content-maxwidth: '.get_config('theme_boost_union', 'h5pcontentmaxwidth').";\n";
     }
+    // Set variables which are influenced by the courseindexdrawerwidth setting.
+    if (get_config('theme_boost_union', 'courseindexdrawerwidth')) {
+        $scss .= '$drawer-width: '.get_config('theme_boost_union', 'courseindexdrawerwidth').";\n";
+        $scss .= '$drawer-left-width: '.get_config('theme_boost_union', 'courseindexdrawerwidth').";\n";
+    }
+    // Set variables which are influenced by the blockdrawerwidth setting.
+    if (get_config('theme_boost_union', 'blockdrawerwidth')) {
+        $scss .= '$drawer-right-width: '.get_config('theme_boost_union', 'blockdrawerwidth').";\n";
+    }
 
     // Overwrite Boost core SCSS variables which are stored in a SCSS map and thus couldn't be added to $configurable above.
     // Set variables for the activity icon colors.

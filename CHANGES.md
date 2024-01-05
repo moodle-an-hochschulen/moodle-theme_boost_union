@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-01-06 - Feature: Allow the admin to set the course index and block drawer width, solves #74.
 * 2024-01-05 - Test: Enhance the test coverage of the Look -> Site branding settings.
 * 2024-01-05 - Test: Enhance the test coverage of the Look -> Activity branding settings.
 * 2024-01-04 - Feature: Add admin setting to suppress all links in the footer popup individually, solves #6.
