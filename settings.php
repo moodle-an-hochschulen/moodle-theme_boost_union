@@ -221,6 +221,30 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Create drawer width heading.
+        $name = 'theme_boost_union/drawerwidthheading';
+        $title = get_string('drawerwidthheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Course index drawer width.
+        $name = 'theme_boost_union/courseindexdrawerwidth';
+        $title = get_string('courseindexdrawerwidthsetting', 'theme_boost_union', null, true);
+        $description = get_string('courseindexdrawerwidthsetting_desc', 'theme_boost_union', null, true);
+        $default = '285px';
+        $setting = new admin_setting_configtext($name, $title, $description, $default, $widthregex, 6);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Block drawer width.
+        $name = 'theme_boost_union/blockdrawerwidth';
+        $title = get_string('blockdrawerwidthsetting', 'theme_boost_union', null, true);
+        $description = get_string('blockdrawerwidthsetting_desc', 'theme_boost_union', null, true);
+        $default = '315px';
+        $setting = new admin_setting_configtext($name, $title, $description, $default, $widthregex, 6);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Add tab to settings page.
         $page->add($tab);
 
