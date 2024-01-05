@@ -24,7 +24,7 @@ Feature: Using the goodies for designers in the theme_boost_union plugin
     And I follow "Dashboard"
     Then element "#footnote a[href^='mailto']" pseudo-class "before" should match "content": ""
 
-  @javascript @testme
+  @javascript
   Scenario: Feature: Themerev as SCSS variable
     When I log in as "admin"
     And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
