@@ -5,38 +5,52 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
   I need to be able to configure the theme Boost Union plugin
 
   Background:
-    Given the following "users" exist:
-      | username |
-      | student1 |
-      | teacher1 |
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname | shortname |
       | Course 1 | C1        |
-    And the following "course enrolments" exist:
-      | user     | course | role           |
-      | teacher1 | C1     | editingteacher |
-      | student1 | C1     | student        |
 
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Activity icon color for "Administration" - Setting the color
+  @javascript
+  Scenario Outline: Setting: Activity icon colors - Setting the color
+    Given the following config values are set as admin:
+      | config                         | value      | plugin            |
+      | activityiconcolor<purposename> | <colorhex> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I turn editing mode on
+    And I click on "Add an activity or resource" "button" in the "Topic 1" "section"
+    Then DOM element ".chooser-container .activityiconcontainer.modicon_<modname>" should have computed style "background-color" "<colorrgb>"
 
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Activity icon color for "Assessment" - Setting the color
+    # Unfortunately, we can only test 4 out of 6 purpose types as Moodle does does not ship with any activity with the
+    # administration and interface types. But this should be an acceptable test coverage anyway.
+    Examples:
+      | purposename   | modname | colorhex | colorrgb         |
+      | assessment    | assign  | #FF0000  | rgb(255, 0, 0)   |
+      | collaboration | data    | #00FF00  | rgb(0, 255, 0)   |
+      | communication | choice  | #0000FF  | rgb(0, 0, 255)   |
+      | content       | book    | #FFFF00  | rgb(255, 255, 0) |
 
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Activity icon color for "Collaboration" - Setting the color
+  @javascript
+  Scenario Outline: Setting: Activity icon purposes - Setting the purpose
+    Given I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Activity branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I select "<purpose>" from the "<modname>" singleselect
+    And I press "Save changes"
+    And I am on "Course 1" course homepage
+    And I turn editing mode on
+    When I click on "Add an activity or resource" "button" in the "Topic 1" "section"
+    # We just test if the color in the activity chooser was changed.
+    # Testing all other locations where the activity icons are shown as well and where Boost Union had to modify
+    # the color individually as well would be an overhead which does not really make sense here.
+    Then DOM element ".chooser-container .activityiconcontainer.modicon_<mod>" should have computed style "background-color" "<colorrgb>"
 
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Activity icon color for "Communication" - Setting the color
-
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Activity icon color for "Content" - Setting the color
-
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Activity icon color for "Interface" - Setting the color
-
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Activity icon purposes - Setting the purpose
+    # We do not want to burn too much CPU time by testing all plugins. We just test two plugins which is fine as all plugins are handled with the same PHP code.
+    # These examples will work until Moodle core changes the default colors of the module purpose types.
+    Examples:
+      | modname    | purpose       | mod    | colorrgb          |
+      | Assignment | Collaboration | assign | rgb(247, 99, 77)  |
+      | Book       | Communication | book   | rgb(17, 166, 118) |
 
   @javascript @_file_upload
   Scenario Outline: Setting: Custom icons files - Upload custom icons files
