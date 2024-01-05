@@ -157,17 +157,40 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
       | center center | 50% 50%  |
       | left top      | 0% 0%    |
 
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Bootstrap color for "Success" - Setting the color
+  @javascript
+  Scenario: Setting: Brand color - Set the brand color
+    Given the following config values are set as admin:
+      | config     | value   | plugin            |
+      | brandcolor | #FF0000 | theme_boost_union |
+    And the following "activities" exist:
+      | activity | name      | intro                                                     | course |
+      | label    | Label one | <span class="mytesttext text-primary">My test text</span> | C1     |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I should see "My test text"
+    Then DOM element ".mytesttext" should have computed style "color" "rgb(255, 0, 0)"
 
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Bootstrap color for "Info" - Setting the color
+  @javascript
+  Scenario Outline: Setting: Bootstrap colors - Set the Bootstrap colors
+    Given the following config values are set as admin:
+      | config               | value      | plugin            |
+      | bootstrapcolor<type> | <colorhex> | theme_boost_union |
+    And the following "activities" exist:
+      | activity | name      | intro                                                    | course |
+      | label    | Label one | <span class="mytesttext text-<type>">My test text</span> | C1     |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I should see "My test text"
+    Then DOM element ".mytesttext" should have computed style "color" "<colorrgb>"
 
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Bootstrap color for "Warning" - Setting the color
-
-  # Unfortunately, this can't be tested with Behat yet
-  # Scenario: Setting: Bootstrap color for "Danger" - Setting the color
+    Examples:
+      | type    | colorhex | colorrgb         |
+      | success | #FF0000  | rgb(255, 0, 0)   |
+      | info    | #00FF00  | rgb(0, 255, 0)   |
+      | warning | #0000FF  | rgb(0, 0, 255)   |
+      | danger  | #FFFF00  | rgb(255, 255, 0) |
 
   Scenario Outline: Setting: Navbar color - Set the navbar color
     Given the following config values are set as admin:
