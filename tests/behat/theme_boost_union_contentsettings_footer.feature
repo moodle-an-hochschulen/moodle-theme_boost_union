@@ -210,7 +210,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | no    | should      |
       | yes   | should not  |
 
-  @javascript @testme7
+  @javascript
   Scenario Outline: Setting: Footer - Suppress 'Give feedback about this software' link
     Given the following config values are set as admin:
       | enableuserfeedback | 1 |
@@ -230,7 +230,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
   # Unfortunately, this can't be tested with Behat on Moodle 4.3 anymore
   # Scenario Outline: Setting: Footer - Suppress theme switcher links
 
-  @javascript @testme8
+  @javascript
   Scenario Outline: Setting: Footer - Suppress 'Powered by Moodle' link
     Given the following config values are set as admin:
       | config                | value   | plugin            |
@@ -245,7 +245,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | no    | should      |
       | yes   | should not  |
 
-  @javascript @testme9
+  @javascript
   Scenario Outline: Setting: Footer - Suppress footer output by plugin 'Data privacy'
     Given the following config values are set as admin:
       | config                   | value | plugin           |
