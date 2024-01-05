@@ -203,6 +203,15 @@ function theme_boost_union_get_pre_scss($theme) {
     if (get_config('theme_boost_union', 'h5pcontentmaxwidth')) {
         $scss .= '$h5p-content-maxwidth: '.get_config('theme_boost_union', 'h5pcontentmaxwidth').";\n";
     }
+    // Set variables which are influenced by the courseindexdrawerwidth setting.
+    if (get_config('theme_boost_union', 'courseindexdrawerwidth')) {
+        $scss .= '$drawer-width: '.get_config('theme_boost_union', 'courseindexdrawerwidth').";\n";
+        $scss .= '$drawer-left-width: '.get_config('theme_boost_union', 'courseindexdrawerwidth').";\n";
+    }
+    // Set variables which are influenced by the blockdrawerwidth setting.
+    if (get_config('theme_boost_union', 'blockdrawerwidth')) {
+        $scss .= '$drawer-right-width: '.get_config('theme_boost_union', 'blockdrawerwidth').";\n";
+    }
 
     // Set custom Boost Union SCSS variable: The block region outside left width.
     $blockregionoutsideleftwidth = get_config('theme_boost_union', 'blockregionoutsideleftwidth');

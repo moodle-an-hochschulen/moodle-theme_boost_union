@@ -87,6 +87,16 @@ With this setting, you can override Moodle's course content width without manual
 
 With this setting, you can override Moodle's default medium width without manual SCSS modifications.
 
+##### Drawer width
+
+###### Course index drawer width
+
+With this setting, you can override Moodle's course index drawer width without manual SCSS modifications.
+
+###### Block drawer width
+
+With this setting, you can override Moodle's block drawer width without manual SCSS modifications.
+
 #### Tab "Site Branding"
 
 In this tab there are the following settings:
