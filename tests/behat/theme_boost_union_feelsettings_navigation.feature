@@ -46,6 +46,26 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | home,myhome           | Home           | Dashboard           |
       | courses,siteadminnode | My courses     | Site administration |
 
+  @javascript
+  Scenario Outline: Setting: Add preferred language link to language menu.
+    Given the following "language packs" exist:
+      | language |
+      | de       |
+    And the following config values are set as admin:
+      | langmenu | 1 |
+    And the following config values are set as admin:
+      | config           | value     | plugin            |
+      | addpreferredlang | <setting> | theme_boost_union |
+    When I log in as "admin"
+    And I click on "User menu" "button" in the ".usermenu" "css_element"
+    And I click on "Language" "link" in the ".usermenu" "css_element"
+    Then I <shouldornot> see "Set preferred language" in the ".usermenu .carousel-item.submenu" "css_element"
+
+    Examples:
+      | setting | shouldornot |
+      | yes     | should      |
+      | no      | should not  |
+
   Scenario Outline: Setting: Course category breadcrumbs
     Given the following "categories" exist:
       | name           | category | idnumber | category |
