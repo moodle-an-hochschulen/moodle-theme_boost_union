@@ -316,6 +316,19 @@
  ======================================*/
 
 /*---------------------------------------
+ * Setting: Add preferred language link to language menu.
+ --------------------------------------*/
+
+/* Add a bottom-top to the 'Set preferred language' link.
+   This could be rebuilt as soon as https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues/537
+   is solved. */
+#user-action-menu .carousel-item.submenu a[href$="user/language.php"] {
+    border-top: 1px solid $dropdown-divider-bg;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+}
+
+/*---------------------------------------
  * Setting: Back to top button.
  --------------------------------------*/
 

@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-01-06 - Feature: Add admin setting to add a direct link for selecting default language to the user's language menu, solves #128.
 * 2024-01-06 - Test: Enhance the test coverage of the Look -> Page settings.
 * 2024-01-06 - Feature: Allow the admin to set the course index and block drawer width, solves #74.
 * 2024-01-05 - Test: Enhance the test coverage of the Look -> Site branding settings.
