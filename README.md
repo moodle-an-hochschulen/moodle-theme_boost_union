@@ -301,6 +301,12 @@ In this tab there are the following settings:
 
 With this setting, you can hide one or multiple nodes from the primary navigation.
 
+##### User menu
+
+###### Add preferred language link to language menu
+
+With this setting, you can add a 'Set preferred language' setting to the language menu within the user menu. Understandably, this setting is only processed if the language menu is enabled at all.
+
 ##### Breadcrumbs
 
 ###### Display the category breadcrumbs in the course header

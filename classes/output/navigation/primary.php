@@ -153,6 +153,61 @@ class primary extends \core\navigation\output\primary {
     }
 
     /**
+     * Get/Generate the user menu.
+     *
+     * Modifications compared to the original function:
+     * * Add a 'Set preferred language' link to the lang menu if the addpreferredlang setting is enabled in Boost Union.
+     *
+     * @param renderer_base $output
+     * @return array
+     */
+    public function get_user_menu(renderer_base $output): array {
+
+        // If not any Boost Union user menu modification is enabled.
+        // (This if-clause is already built in a way that we could add more Boost Union user menu modifications
+        // in the future).
+        $addpreferredlangsetting = get_config('theme_boost_union', 'addpreferredlang');
+        if (!isset($addpreferredlangsetting) || $addpreferredlangsetting == THEME_BOOST_UNION_SETTING_SELECT_NO) {
+            // Directly return the output of the parent function.
+            return parent::get_user_menu($output);
+
+            // Otherwise, process the Boost Union user menu modifications.
+        } else {
+            // Get the output of the parent function.
+            $parentoutput = parent::get_user_menu($output);
+
+            // If addpreferredlangsetting is enabled and if there are submenus in the output.
+            if ($addpreferredlangsetting == THEME_BOOST_UNION_SETTING_SELECT_YES &&
+                    array_key_exists('submenus', $parentoutput)) {
+                // Get the needle.
+                $needle = get_string('languageselector');
+
+                // Iterate over the submenus.
+                foreach ($parentoutput['submenus'] as $sm) {
+                    // Search the 'Language' submenu.
+                    if ($sm->title == $needle) {
+                        // Create and inject the 'Set preferred language' link.
+                        $spfnode = [
+                            'title' => get_string('setpreferredlanglink', 'theme_boost_union'),
+                            'text' => get_string('setpreferredlanglink', 'theme_boost_union'),
+                            'link' => true,
+                            'isactive' => false,
+                            'url' => new \moodle_url('/user/language.php'),
+                        ];
+                        $sm->items[] = $spfnode;
+
+                        // No need to look further.
+                        break;
+                    }
+                }
+            }
+
+            // Return the output.
+            return $parentoutput;
+        }
+    }
+
+    /**
      * Attach the smart menus to the user menu which has location selected for user menu.
      * Separate the children items and attach those items to submenus element in user menu.
      * Add the menus in items element in user menu.

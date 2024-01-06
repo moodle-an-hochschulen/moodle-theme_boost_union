@@ -1274,6 +1274,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Create user menu heading.
+        $name = 'theme_boost_union/usermenuheading';
+        $title = get_string('usermenuheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Add preferred language link to language menu.
+        $name = 'theme_boost_union/addpreferredlang';
+        $title = get_string('addpreferredlangsetting', 'theme_boost_union', null, true);
+        $langmenuurl = new moodle_url('/admin/search.php', ['query' => 'langmenu']);
+        $langtoolurl = new moodle_url('/admin/tool/langimport/index.php');
+        $langlisturl = new moodle_url('/admin/search.php', ['query' => 'langlist']);
+        $description = get_string('addpreferredlangsetting_desc',
+                'theme_boost_union',
+                ['url1' => $langmenuurl, 'url2' => $langtoolurl, 'url3' => $langlisturl],
+                true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
         // Create breadcrumbs heading.
         $name = 'theme_boost_union/breadcrumbsheading';
         $title = get_string('breadcrumbsheading', 'theme_boost_union', null, true);
