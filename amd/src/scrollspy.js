@@ -34,54 +34,53 @@
  * (See original implementation: https://raw.githubusercontent.com/dbnschools/moodle-theme_fordson/master/javascript/scrollspy.js)
  */
 const initScrollSpy = () => {
-    // Unfortunately the editmode-switch carries no unique ID
-    let editToggle = document.querySelector('form.editmode-switch-form');
-
-    if (!editToggle) {
-        // Do not continue when there is no edit toggle.
-        return;
-    }
-
-    editToggle.addEventListener('click', () => {
-
-        window.sessionStorage.setItem('edittoggled', true);
-
-        let viewporttop = document.getElementById('page').scrollTop;
-        let closest = null;
-        let closestoffset = null;
-
-        document.querySelectorAll('.section.main').forEach((node) => {
-            let thisoffset = node.offsetTop;
-
-            if (closest && closest.offsetTop) {
-                closestoffset = closest.offsetTop;
-            }
-            if (closest === null || Math.abs(thisoffset - viewporttop) < Math.abs(closestoffset - viewporttop)) {
-                closest = node;
-            }
-        });
-
-        window.sessionStorage.setItem('closestid', closest.id);
-        window.sessionStorage.setItem('closestdelta', viewporttop - closest.offsetTop);
-    });
-
-    let edittoggled = window.sessionStorage.getItem('edittoggled');
-
-    if (edittoggled) {
-
-        let closestid = window.sessionStorage.getItem('closestid');
-        let closestdelta = window.sessionStorage.getItem('closestdelta');
-
-        if (closestid && closestdelta) {
-            let closest = document.getElementById(closestid);
-            let y = closest.offsetTop + parseInt(closestdelta);
-
-            document.getElementById('page').scrollTo(0, y);
+    // Check if .section.main exist.
+    if (document.querySelector('.section.main')) {
+        // Unfortunately the editmode-switch carries no unique ID
+        let editToggle = document.querySelector('form.editmode-switch-form');
+        if (!editToggle) {
+            // Do not continue when there is no edit toggle.
+            return;
         }
+        editToggle.addEventListener('click', () => {
 
-        window.sessionStorage.removeItem('edittoggled');
-        window.sessionStorage.removeItem('closestid');
-        window.sessionStorage.removeItem('closestdelta');
+            window.sessionStorage.setItem('edittoggled', true);
+
+            let viewporttop = document.getElementById('page').scrollTop;
+            let closest = null;
+            let closestoffset = null;
+
+            document.querySelectorAll('.section.main').forEach((node) => {
+                let thisoffset = node.offsetTop;
+
+                if (closest && closest.offsetTop) {
+                    closestoffset = closest.offsetTop;
+                }
+                if (closest === null || Math.abs(thisoffset - viewporttop) < Math.abs(closestoffset - viewporttop)) {
+                    closest = node;
+                }
+            });
+
+            window.sessionStorage.setItem('closestid', closest.id);
+            window.sessionStorage.setItem('closestdelta', viewporttop - closest.offsetTop);
+        });
+        let edittoggled = window.sessionStorage.getItem('edittoggled');
+        if (edittoggled) {
+
+            let closestid = window.sessionStorage.getItem('closestid');
+            let closestdelta = window.sessionStorage.getItem('closestdelta');
+
+            if (closestid && closestdelta) {
+                let closest = document.getElementById(closestid);
+                let y = closest.offsetTop + parseInt(closestdelta);
+
+                document.getElementById('page').scrollTo(0, y);
+            }
+
+            window.sessionStorage.removeItem('edittoggled');
+            window.sessionStorage.removeItem('closestid');
+            window.sessionStorage.removeItem('closestdelta');
+        }
     }
 };
 
@@ -101,5 +100,5 @@ const docReady = (callback) => {
 };
 
 export const init = () => {
-    docReady(initScrollSpy());
+    docReady(initScrollSpy);
 };
