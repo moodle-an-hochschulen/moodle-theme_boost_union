@@ -13,7 +13,7 @@ Changes
 * 2024-01-05 - Test: Enhance the test coverage of the Look -> Activity branding settings.
 * 2024-01-04 - Feature: Add admin setting to suppress all links in the footer popup individually, solves #6.
 * 2024-01-04 - Improvement: Improve the logic in the overridden footer.mustache, solves #530.
-* 2023-01-04 - Feature: Provide $CFG->themerev as SCSS variable, solves #58.
+* 2024-01-04 - Feature: Provide $CFG->themerev as SCSS variable, solves #58.
 * 2023-12-31 - Improvement: Allow designers to mark external and mailto links manually, solves #525 & #526 & #528.
 * 2023-12-31 - Improvement: Add an admin setting to limit the scope of the "Mark external links" and "Mark mailto links" features, solves #525 & #526 & #528.
 * 2023-12-31 - Improvement: Fix several edge-cases where the "Mark external links" should not add its icons, solves #525 & #526 & #528.
