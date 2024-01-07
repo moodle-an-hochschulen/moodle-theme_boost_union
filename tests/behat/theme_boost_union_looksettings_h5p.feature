@@ -17,17 +17,47 @@ Feature: Configuring the theme_boost_union plugin for the "H5P" tab on the "Look
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
 
-  # Unfortunately, this can't be tested with Behat yet
-  # And as this feature file for this tab can't be empty, we just add a dummy step.
+  @javascript
   Scenario: Setting: Raw CSS for H5P - Add custom SCSS to a mod_h5p content type
     When I log in as "admin"
+    And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
+    And I click on "H5P" "link" in the "#adminsettings .nav-tabs" "css_element"
+    # We add a small CSS snippet to the page which makes the H5P content red.
+    # This is just to make it easy to detect the effect of this custom CSS code.
+    And I set the field "Raw CSS for H5P" to multiline:
+    """
+    .h5p-accordion {
+        color: #FF0000 !important;
+    }
+    """
+    And I press "Save changes"
+    And I am on "Course 1" course homepage with editing mode on
+    Given the following "activity" exists:
+      | activity        | h5pactivity                   |
+      | course          | C1                            |
+      | name            | H5P package                   |
+      | packagefilepath | h5p/tests/fixtures/ipsums.h5p |
+    When I am on the "H5P package" "h5pactivity activity" page
+    And I wait until the page is ready
+    And I switch to "h5p-player" class iframe
+    And I switch to "h5p-iframe" class iframe
+    Then DOM element "#h5p-panel-content-0-0" should have computed style "color" "rgb(255, 0, 0)"
 
-  # Unfortunately, this can't be tested with Behat yet
-  # And as this feature file for this tab can't be empty, we just add a dummy step.
-  Scenario: Setting: Raw CSS for H5P - Add custom SCSS to a mod_hvp content type
-    When I log in as "admin"
+  # Unfortunately, this can't be tested with Behat yet, cause the mod_hvp plugin only works when
+  # php warnings don't trigger the shutdown handler. See https://github.com/h5p/moodle-mod_hvp/issues/487.
+  # Scenario: Setting: Raw CSS for H5P - Add custom SCSS to a mod_hvp content type
 
-  # Unfortunately, this can't be tested with Behat yet
-  # And as this feature file for this tab can't be empty, we just add a dummy step.
+  @javascript
   Scenario: Setting: H5P content bank max width - Overwrite the H5P content bank max width setting
+    Given the following config values are set as admin:
+      | config             | value | plugin            |
+      | h5pcontentmaxwidth | 600px | theme_boost_union |
+    And the following "contentbank content" exist:
+      | contextlevel | reference | contenttype     | user     | contentname | filepath                       |
+      | Course       | C1        | contenttype_h5p | teacher1 | ipsums.h5p  | /h5p/tests/fixtures/ipsums.h5p |
+    And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I navigate to "Content bank" in current page administration
+    And I click on "ipsums.h5p" "link" in the ".content-bank" "css_element"
+    Then DOM element ".core_contentbank_viewcontent" should have computed style "max-width" "600px"
