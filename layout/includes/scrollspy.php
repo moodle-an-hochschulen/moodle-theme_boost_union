@@ -26,7 +26,8 @@ defined('MOODLE_INTERNAL') || die();
 
 $scrollspy = get_config('theme_boost_union', 'scrollspy');
 
-// Add scroll-spy AMD module if the feature is enabled.
-if ($scrollspy == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+// Add scroll-spy AMD module if we are on a course page (but not the frontpage) and the feature is enabled.
+if ($PAGE->pagelayout == 'course' && $PAGE->course->id != SITEID &&
+        $scrollspy == THEME_BOOST_UNION_SETTING_SELECT_YES) {
     $PAGE->requires->js_call_amd('theme_boost_union/scrollspy', 'init');
 }
