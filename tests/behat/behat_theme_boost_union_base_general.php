@@ -48,7 +48,7 @@ class behat_theme_boost_union_base_general extends behat_base {
     public function dom_element_should_have_computed_style($selector, $style, $value) {
         $stylejs = "
             return (
-                $('$selector').css('$style')
+                window.getComputedStyle(document.querySelector('$selector')).getPropertyValue('$style')
             )
         ";
         $computedstyle = $this->evaluate_script($stylejs);
