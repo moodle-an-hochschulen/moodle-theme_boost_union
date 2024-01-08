@@ -8,9 +8,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Given the following "users" exist:
       | username |
       | user1    |
-    And the following "language packs" exist:
-      | language |
-      | de       |
 
   @javascript
   Scenario: Smartmenu: Menus: Presentation - Display smart menu description in different places
@@ -184,7 +181,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
 
   @javascript
   Scenario: Smartmenu: Menus: Presentation - Add a smart menu with multilang tags
-    Given the "multilang" filter is "on"
+    Given the following "language packs" exist:
+      | language |
+      | de       |
+    And the "multilang" filter is "on"
     And the "multilang" filter applies to "content and headings"
     When I log in as "admin"
     And I navigate to smart menus

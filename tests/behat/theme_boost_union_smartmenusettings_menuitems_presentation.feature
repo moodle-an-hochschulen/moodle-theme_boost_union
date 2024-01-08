@@ -17,9 +17,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I create smart menu with the following fields to these values:
       | Title            | Quick links              |
       | Menu location(s) | Main, Menu, User, Bottom |
-    And the following "language packs" exist:
-      | language |
-      | de       |
 
   @javascript
   Scenario Outline: Smartmenus: Menu items: Presentation - Open the smart menu items in different targets
@@ -318,7 +315,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
 
   @javascript
   Scenario: Smartmenu: Menu items: Presentation - Add a smart menu item with multilang tags
-    Given the "multilang" filter is "on"
+    Given the following "language packs" exist:
+      | language |
+      | de       |
+    And the "multilang" filter is "on"
     And the "multilang" filter applies to "content and headings"
     When I log in as "admin"
     And I navigate to smart menu "Quick links" items
