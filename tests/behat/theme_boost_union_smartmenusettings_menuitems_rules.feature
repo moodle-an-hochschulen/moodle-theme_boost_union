@@ -6,15 +6,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
 
   Background:
     Given I log in as "admin"
-    And I navigate to "Language > Language packs" in site administration
-    And I set the field "Available language packs" to "fr"
-    And I press "Install selected language pack(s)"
-    And I should see "Language pack 'fr' was successfully installed"
-    And the "Installed language packs" select box should contain "fr"
-    And I set the field "Available language packs" to "de"
-    And I press "Install selected language pack(s)"
-    And I should see "Language pack 'de' was successfully installed"
-    And the "Installed language packs" select box should contain "de"
     And I am on homepage
     And the following "courses" exist:
       | fullname | shortname | category |
@@ -48,6 +39,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Title          | Resources          |
       | Menu item type | Static             |
       | URL            | https://moodle.org |
+    And the following "language packs" exist:
+      | language |
+      | de       |
+      | fr       |
 
   @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on the user roles
