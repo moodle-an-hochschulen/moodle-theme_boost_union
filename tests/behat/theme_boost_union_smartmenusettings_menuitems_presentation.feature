@@ -315,12 +315,12 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
 
   @javascript
   Scenario: Smartmenu: Menu items: Presentation - Add a smart menu item with multilang tags
-    When I log in as "admin"
+    Given the following "language packs" exist:
+      | language |
+      | de       |
     And the "multilang" filter is "on"
     And the "multilang" filter applies to "content and headings"
-    And I navigate to "Language > Language packs" in site administration
-    And I set the field "Available language packs" to "de"
-    And I press "Install selected language pack(s)"
+    When I log in as "admin"
     And I navigate to smart menu "Quick links" items
     And I click on "Add menu item" "button"
     And I set the following fields to these values:
