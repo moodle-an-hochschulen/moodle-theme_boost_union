@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-01-10 - Bugfix: Avoid debug messages during initial installation of Boost Union due to uninitialized settings.
 * 2024-01-07 - Test: Install language packs programmatically in Behat tests, solves #540.
 * 2024-01-07 - Test: Add behat tests for the customisation of the appearance of H5P activities, solves #228.
 * 2024-01-07 - Bugfix: The scrollspy Javascript shortly showed an error when using the edit toggle button not on course page, solves #286.
