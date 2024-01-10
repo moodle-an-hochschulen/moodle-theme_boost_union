@@ -1403,7 +1403,8 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
     $scss = '';
 
     // If the corresponding setting is set to 'yes'.
-    if ($theme->settings->markexternallinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    if (isset($theme->settings->markexternallinks) &&
+            $theme->settings->markexternallinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
 
         // Get the scope setting.
         $scope = get_config('theme_boost_union', 'markexternallinksscope');
@@ -1486,7 +1487,8 @@ function theme_boost_union_get_scss_to_mark_broken_links($theme) {
     $scss = '';
 
     // If the corresponding setting is set to 'yes'.
-    if ($theme->settings->markbrokenlinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    if (isset($theme->settings->markbrokenlinks) &&
+            $theme->settings->markbrokenlinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
         // Set font color to the 'danger' color.
         $scss .= 'a[href*="/brokenfile.php"] {
             color: $danger;
@@ -1521,7 +1523,8 @@ function theme_boost_union_get_scss_to_mark_mailto_links($theme) {
     $scss = '';
 
     // If the corresponding setting is set to 'yes'.
-    if ($theme->settings->markmailtolinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    if (isset($theme->settings->markmailtolinks) &&
+            $theme->settings->markmailtolinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
         // Get the scope setting.
         $scope = get_config('theme_boost_union', 'markmailtolinksscope');
 
