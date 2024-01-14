@@ -39,7 +39,8 @@ $slides = [];
 // Iterate over all slides.
 for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
     // If the slide is enabled? (regardless if it contains any content).
-    if ($config->{'slide' . $i . 'enabled'} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    if (isset($config->{'slide' . $i . 'enabled'}) &&
+            $config->{'slide' . $i . 'enabled'} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
         // Get and set the slide's background image.
         $bgimage = theme_boost_union_get_urlofslidebackgroundimage($i);
 

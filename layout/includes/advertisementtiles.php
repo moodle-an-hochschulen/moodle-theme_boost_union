@@ -40,7 +40,8 @@ $advertisementtiles = [];
 // Iterate over all advertisement tiles.
 for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
     // If the tile is enabled? (regardless if it contains any content).
-    if ($config->{'tile'.$i.'enabled'} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    if (isset($config->{'tile'.$i.'enabled'}) &&
+            $config->{'tile'.$i.'enabled'} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
         // Flip the show-advertisement-tiles flag to true.
         $templatecontext['showadvtiles'] = true;
 
