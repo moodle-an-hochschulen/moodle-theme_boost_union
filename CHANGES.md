@@ -32,6 +32,7 @@ Changes
 * 2023-12-21 - Feature: Add setting to upload touch-images for iOS devices, solves #151.
 * 2023-12-18 - Improvement: Shrink description_format column size in theme_boost_union_flavours table, solves #321.
 * 2023-12-11 - Improvement: Configurable sort order in menu items of smart menu, solves #403.
+* 2023-12-20 - Test: Enhance the test overage of the smart menus, solves #363 #364 #367 #374 #375.
 * 2023-12-10 - Feature: Allow the admin to hide the manual login form and the IDP login intro, solves #490.
 * 2023-12-10 - Improvement: Allow the admin to change the look of the course overview block, solves #204
 
