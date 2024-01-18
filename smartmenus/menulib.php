@@ -26,10 +26,10 @@ namespace theme_boost_union;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot. '/theme/boost_union/locallib.php');
+use cache;
+use context_system;
 
-use theme_boost_union\smartmenu;
-use theme_boost_union\smartmenu_item;
+require_once($CFG->dirroot. '/theme/boost_union/locallib.php');
 
 /**
  * Smartmenu helper which contains the methods to verify the access rules for menu and its items.
@@ -153,7 +153,7 @@ class smartmenu_helper {
         $query->where[] = " u.id IN (SELECT userid FROM {role_assignments} WHERE roleid $insql AND userid=:rluserid $contextsql)";
         $params = [
             'rluserid' => $this->userid,
-            'systemcontext' => \context_system::instance()->id,
+            'systemcontext' => context_system::instance()->id,
         ];
         $query->params += array_merge($params, $inparam);
 
@@ -292,7 +292,7 @@ class smartmenu_helper {
         static $cache;
 
         if (empty($cache)) {
-            $cache = \cache::make('theme_boost_union', 'smartmenus');
+            $cache = cache::make('theme_boost_union', 'smartmenus');
         }
 
         return $cache;
@@ -307,7 +307,7 @@ class smartmenu_helper {
         static $cache;
 
         if (empty($cache)) {
-            $cache = \cache::make('theme_boost_union', 'smartmenu_items');
+            $cache = cache::make('theme_boost_union', 'smartmenu_items');
         }
 
         return $cache;

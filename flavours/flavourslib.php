@@ -76,7 +76,7 @@ function theme_boost_union_get_flavour_which_applies() {
         }
 
         // Create cache for flavours.
-        $cache = \cache::make('theme_boost_union', 'flavours');
+        $cache = cache::make('theme_boost_union', 'flavours');
 
         // If the page has a category ID.
         if ($PAGE->category != null && $PAGE->category->id != null) {

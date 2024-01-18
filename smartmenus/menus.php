@@ -26,7 +26,7 @@
 require(__DIR__.'/../../../config.php');
 
 // Require plugin libraries.
-require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+require_once($CFG->dirroot. '/theme/boost_union/smartmenus/menulib.php');
 
 // Require admin library.
 require_once($CFG->libdir.'/adminlib.php');
