@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.2-r7
 
 * 2024-01-14 - Bugfix: Add missing theme_reset_all_caches updatecallback to markmailtolinks and markbrokenlinks settings.
 * 2024-01-10 - Bugfix: Avoid debug messages during initial installation of Boost Union due to uninitialized settings.
