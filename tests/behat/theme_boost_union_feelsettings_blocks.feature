@@ -87,15 +87,14 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | outside-top      | footer-left,footer-right                                                                                                                            | should not |
 
   @javascript
-  Scenario Outline: Setting: Enable additional block regions (on a category overview page where not all regions are offered)
+  Scenario Outline: Setting: Enable additional block regions (on the admin overview page where not all regions are offered)
     When I log in as "admin"
-    And I am on course index
-    And I follow "Category A"
+    And I follow "Site administration"
     And I turn editing mode on
     Then "#theme-block-region-<region>" "css_element" should not exist
     And the following config values are set as admin:
-      | config                        | value          | plugin            |
-      | blockregionsforcoursecategory | <settingvalue> | theme_boost_union |
+      | config               | value          | plugin            |
+      | blockregionsforadmin | <settingvalue> | theme_boost_union |
     And I reload the page
     Then "#theme-block-region-<region>" "css_element" <should> exist
 
@@ -183,20 +182,18 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | header         | header         |
 
   @javascript
-  Scenario Outline: Setting: Use additional block regions (on a category overview page where not all regions are offered)
+  Scenario Outline: Setting: Use additional block regions (on the admin overview page where not all regions are offered)
     Given the following config values are set as admin:
-      | config                        | value          | plugin            |
-      | blockregionsforcoursecategory | <settingvalue> | theme_boost_union |
+      | config               | value          | plugin            |
+      | blockregionsforadmin | <settingvalue> | theme_boost_union |
     When I log in as "admin"
-    And I am on course index
-    And I follow "Category A"
+    And I follow "Site administration"
     And I turn editing mode on
     And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
     And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
     And I should see "Online users" in the ".modal-body" "css_element"
     And I click on "Online users" "link" in the ".modal-body" "css_element"
-    And I am on course index
-    And I follow "Category A"
+    And I follow "Site administration"
     And I turn editing mode off
     Then I should see "Online users" in the "#theme-block-region-<region>" "css_element"
 
