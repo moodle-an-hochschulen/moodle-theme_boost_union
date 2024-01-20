@@ -39,7 +39,8 @@ $templatecontext['anystaticpagelinkedfromfootnote'] = false;
 // Iterate over the static pages.
 foreach ($staticpages as $staticpage) {
     // If the page is enabled.
-    if ($config->{'enable'.$staticpage} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    if (isset($config->{'enable'.$staticpage}) &&
+            $config->{'enable'.$staticpage} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
         // If the admin wants to show a link in the footnote or in both locations.
         if ($config->{$staticpage.'linkposition'} == THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTNOTE ||
                 $config->{$staticpage.'linkposition'} == THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_BOTH) {
