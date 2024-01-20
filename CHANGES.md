@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-01-19 - Bugfix: Get rid of 'Undefined stdClass property' notices for static page settings, resolves #431.
+
 ### v4.2-r7
 
 * 2024-01-14 - Bugfix: Add missing theme_reset_all_caches updatecallback to markmailtolinks and markbrokenlinks settings.
