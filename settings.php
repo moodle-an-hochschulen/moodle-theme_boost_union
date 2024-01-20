@@ -665,7 +665,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Setting: Local login.
         $name = 'theme_boost_union/loginlocalloginenable';
         $title = get_string('loginlocalloginenablesetting', 'theme_boost_union', null, true);
-        $description = get_string('loginlocalloginenablesetting_desc', 'theme_boost_union', null, true);
+        $localloginurl = new moodle_url('/theme/boost_union/locallogin.php');
+        $description = get_string('loginlocalloginenablesetting_desc', 'theme_boost_union', null, true).'<br /><br />'.
+                get_string('loginlocalloginenablesetting_note', 'theme_boost_union', ['url' => $localloginurl], true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
 
