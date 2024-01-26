@@ -1428,8 +1428,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $pagelayouts = [
             'standard' => $partialregions,
             'admin' => $partialregions,
-            'coursecategory' => $partialregions,
-            'incourse' => $partialregions,
+            'coursecategory' => $allavailableregions,
+            'incourse' => $allavailableregions,
             'mypublic' => $partialregions,
             'report' => $partialregions,
             'course' => $allavailableregions,
