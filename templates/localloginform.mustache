@@ -1,0 +1,54 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/localloginform
+
+    Boost Union template for outputting the local login form on the local login page.
+    This is a limited and modified version of core/loginform.
+
+    Context variables required for this template:
+    * loginurl - Login url,
+    * logintoken - Random token to protect login request.,
+
+    Example context (json):
+    {
+        "loginurl": "http://localhost/stable_master/login/index.php",
+        "logintoken": "randomstring",
+    }
+}}
+
+<div class="loginform">
+    <h1 class="login-heading mb-4">{{#str}}loginlocalloginformhead, theme_boost_union{{/str}}</h1>
+    <form class="login-form" action="{{loginurl}}" method="post" id="login">
+        <input type="hidden" name="logintoken" value="{{logintoken}}">
+        <div class="login-form-username form-group">
+            <label for="username" class="sr-only">{{#str}}username{{/str}}</label>
+            <input type="text" name="username" id="username" {{!
+                !}}class="form-control form-control-lg"{{!
+                !}}placeholder="{{#cleanstr}}username{{/cleanstr}}">
+        </div>
+        <div class="login-form-password form-group">
+            <label for="password" class="sr-only">{{#str}} password {{/str}}</label>
+            <input type="password" name="password" id="password" value="" {{!
+                !}}class="form-control form-control-lg" {{!
+                !}}placeholder="{{#cleanstr}}password{{/cleanstr}}">
+        </div>
+        <div class="login-form-submit form-group">
+            <button class="btn btn-primary btn-lg" type="submit" id="loginbtn">{{#str}}login{{/str}}</button>
+        </div>
+    </form>
+</div>

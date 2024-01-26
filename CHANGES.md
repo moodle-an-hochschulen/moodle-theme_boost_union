@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-01-20 - Improvement: Add a side entrance login page for local logins if the local login form is disabled on the standard login page, resolves #539.
 * 2024-01-20 - Improvement: Make all block regions available for the incourse and coursecategory page layouts, resolves #543.
 * 2024-01-19 - Bugfix: Get rid of 'Undefined stdClass property' notices for static page settings, resolves #431.
 
