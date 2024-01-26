@@ -151,6 +151,35 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | yes     | should      |
       | no      | should not  |
 
+  Scenario Outline: Setting: Local login - View the side entrance login page
+    Given the following config values are set as admin:
+      | config                | value     | plugin            |
+      | loginlocalloginenable | <setting> | theme_boost_union |
+    When I am on local login page
+    Then I <shouldornot1> see "Local login"
+    And ".login-heading" "css_element" <shouldornot1> exist
+    And "#username" "css_element" <shouldornot1> exist
+    And "#password" "css_element" <shouldornot1> exist
+    And "#loginbtn" "css_element" <shouldornot1> exist
+    And I <shouldornot2> see "The local login is enabled on the standard login form"
+
+    Examples:
+      | setting | shouldornot1 | shouldornot2 |
+      | yes     | should not   | should       |
+      | no      | should       | should not   |
+
+  Scenario: Setting: Local login - Use the side entrance login page
+    Given the following config values are set as admin:
+      | config                | value | plugin            |
+      | loginlocalloginenable | no    | theme_boost_union |
+    When I am on local login page
+    And I set the following fields to these values:
+    # With behat, the password is always the same as the username.
+      | Username | admin |
+      | Password | admin |
+    And I press "Log in"
+    Then I should see "Welcome, Admin" in the "page-header" "region"
+
   Scenario Outline: Setting: IDP login intro
     Given the following config values are set as admin:
       | config            | value     | plugin            |
