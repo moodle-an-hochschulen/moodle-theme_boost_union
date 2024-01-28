@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r18
 
 * 2024-01-20 - Improvement: Add a side entrance login page for local logins if the local login form is disabled on the standard login page, resolves #539.
 * 2024-01-20 - Improvement: Make all block regions available for the incourse and coursecategory page layouts, resolves #543.
