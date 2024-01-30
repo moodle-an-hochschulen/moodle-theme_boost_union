@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-01-30 - Child theme support: Don't force child themes to reimplement the settings to mark links and the settings to modify the course overview block, resolves #345.
 * 2024-01-30 - Child theme support: Don't force child theme to reimplement activitypurpose_MODNAME settings, resolves #370.
 
 ### v4.3-r5
