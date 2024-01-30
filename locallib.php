@@ -1676,8 +1676,8 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
     $scss = '';
 
     // If the corresponding setting is set to 'yes'.
-    if (isset($theme->settings->markexternallinks) &&
-            $theme->settings->markexternallinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    $markexternallinksconfig = get_config('theme_boost_union', 'markexternallinks');
+    if (isset($markexternallinksconfig) && $markexternallinksconfig == THEME_BOOST_UNION_SETTING_SELECT_YES) {
 
         // Get the scope setting.
         $scope = get_config('theme_boost_union', 'markexternallinksscope');
@@ -1756,8 +1756,8 @@ function theme_boost_union_get_scss_to_mark_broken_links($theme) {
     $scss = '';
 
     // If the corresponding setting is set to 'yes'.
-    if (isset($theme->settings->markbrokenlinks) &&
-            $theme->settings->markbrokenlinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    $markbrokenlinksconfig = get_config('theme_boost_union', 'markbrokenlinks');
+    if (isset($markbrokenlinksconfig) && $markbrokenlinksconfig == THEME_BOOST_UNION_SETTING_SELECT_YES) {
         // Set font color to the 'danger' color.
         $scss .= 'a[href*="/brokenfile.php"] {
             color: $danger;
@@ -1790,8 +1790,8 @@ function theme_boost_union_get_scss_to_mark_mailto_links($theme) {
     $scss = '';
 
     // If the corresponding setting is set to 'yes'.
-    if (isset($theme->settings->markmailtolinks) &&
-            $theme->settings->markmailtolinks == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    $markmailtolinksconfig = get_config('theme_boost_union', 'markmailtolinks');
+    if (isset($markmailtolinksconfig) && $markmailtolinksconfig == THEME_BOOST_UNION_SETTING_SELECT_YES) {
         // Get the scope setting.
         $scope = get_config('theme_boost_union', 'markmailtolinksscope');
 
@@ -1835,12 +1835,13 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
     $blockselector = '.block_myoverview.block div[data-region="courses-view"]';
 
     // Get the course image setting, defaults to true if the setting does not exist.
-    if (!isset($theme->settings->courseoverviewshowcourseimages)) {
+    $courseoverviewshowcourseimagesconfig = get_config('theme_boost_union', 'courseoverviewshowcourseimages');
+    if (!isset($courseoverviewshowcourseimagesconfig)) {
         $showcourseimagescard = true;
         $showcourseimageslist = true;
         $showimagessummary = true;
     } else {
-        $showcourseimages = explode(',', $theme->settings->courseoverviewshowcourseimages);
+        $showcourseimages = explode(',', $courseoverviewshowcourseimagesconfig);
         $showcourseimagescard = in_array(THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_CARD, $showcourseimages);
         $showcourseimageslist = in_array(THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_LIST, $showcourseimages);
         $showimagessummary = in_array(THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_SUMMARY, $showcourseimages);
@@ -1862,8 +1863,9 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
     }
 
     // Get the course progress setting, defaults to true if the setting does not exist.
-    if (!isset($theme->settings->courseoverviewshowcourseprogress) ||
-            $theme->settings->courseoverviewshowcourseprogress == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    $courseoverviewshowcourseprogressconfig = get_config('theme_boost_union', 'courseoverviewshowcourseprogress');
+    if (!isset($courseoverviewshowcourseprogressconfig) ||
+            $courseoverviewshowcourseprogressconfig == THEME_BOOST_UNION_SETTING_SELECT_YES) {
         $showcourseprogress = true;
     } else {
         $showcourseprogress = false;
