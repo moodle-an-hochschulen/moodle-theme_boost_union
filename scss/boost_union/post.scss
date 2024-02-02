@@ -294,6 +294,90 @@
     @include border-radius();
 }
 
+/*---------------------------------------
+ * Setting: Course module icons in course index.
+ --------------------------------------*/
+
+body.hascourseindexcmicons {
+    span.courseindex-cmicon-container {
+        display: block;
+    }
+}
+
+body.editing.hascourseindexcmicons {
+    span.courseindex-cmicon-container {
+        span.courseindex-cmicon-icon {
+            display: block;
+        }
+        span.completioninfo {
+            display: none;
+        }
+    }
+}
+
+body.nocourseindexcmicons {
+    span.courseindex-cmicon-container {
+        display: none;
+    }
+}
+
+body.hascourseindexcompletionicon {
+    span.courseindex-cmicon-icon {
+        display: block;
+        span.completioninfo {
+            display: none;
+        }
+    }
+    li.courseindex-item > span.completioninfo:first-child {
+        display: none;
+    }
+}
+
+body.hascourseindexcompletioneol {
+    li.courseindex-item > span.completioninfo:first-child {
+        display: none;
+    }
+}
+
+.courseindex-cmicon-container {
+    border-radius: 4px;
+    margin-right: 7px;
+    line-height: normal;
+}
+.courseindex-cmicon {
+    margin: 0.2rem;
+    margin-top: 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    .icon {
+        margin-right: unset;
+    }
+}
+
+.courseindex-cmicon-completion-incomplete {
+    background-color: $gray-600;
+    .courseindex-cmicon-icon {
+        filter: brightness(0) invert(1);
+    }
+}
+
+.courseindex-cmicon-completion-complete {
+    background-color: $success;
+
+    .courseindex-cmicon-icon {
+        filter: brightness(0) invert(1);
+    }
+}
+
+.courseindex-cmicon-completion-fail {
+    background-color: $danger;
+
+    .courseindex-cmicon-icon {
+        filter: brightness(0) invert(1);
+    }
+}
+
 
 /*=======================================
  * Settings: Look -> Resources

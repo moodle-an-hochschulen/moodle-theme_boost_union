@@ -238,3 +238,31 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | stackeddark  | #courseheaderimage.courseheaderimage-dark          | div.d-flex.align-items-center + #courseheaderimage | #courseheaderimage.courseheaderimage-light |
       | stackedlight | #courseheaderimage.courseheaderimage-light         | div.d-flex.align-items-center + #courseheaderimage | #courseheaderimage.courseheaderimage-dark  |
       | headingabove | div.d-flex.align-items-center + #courseheaderimage | #courseheaderimage.courseheaderimage-dark          | #courseheaderimage.courseheaderimage-light |
+
+  @javascript @theme_boost_union_looksettings_course_courseindex
+  Scenario: Setting: Course index icon - Do not display the course module icon should if setting is turned off.
+    Given the following config values are set as admin:
+      | config                    | value | plugin            |
+      | courseindexmodiconenabled | no   | theme_boost_union |
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage with editing mode on
+    And I add a "Forum" to section "1" and I fill the form with:
+      | Forum name | Testforum |
+      | Forum type | Standard forum for general use |
+      | Description | Test forum description |
+    And I am on "Course 1" course homepage with editing mode off
+    Then "//body[contains(@class, 'nocourseindexcmicons')]//span[contains(@class,'courseindex-cmicon-container')]" "xpath_element" should exist
+
+  @javascript @theme_boost_union_looksettings_course_courseindex
+  Scenario: Setting: Course index icon - Display the course module icon in front the the module name in the course index.
+    Given the following config values are set as admin:
+      | config                    | value | plugin            |
+      | courseindexmodiconenabled | yes   | theme_boost_union |
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage with editing mode on
+    And I add a "Forum" to section "1" and I fill the form with:
+      | Forum name | Testforum |
+      | Forum type | Standard forum for general use |
+      | Description | Test forum description |
+    And I am on "Course 1" course homepage with editing mode off
+    Then "//body[contains(@class, 'hascourseindexcmicons')]//span[contains(@class,'courseindex-cmicon-container')]" "xpath_element" should exist
