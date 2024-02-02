@@ -33,6 +33,7 @@
  * * Include additional block regions
  * * Handle admin setting for right-hand block drawer of site home
  * * Include smart menus
+ * * Include course index modification
  *
  * @package   theme_boost_union
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
@@ -135,6 +136,9 @@ if (isset($primarymenu['includesmartmenu']) && $primarymenu['includesmartmenu'] 
 if (isset($primarymenu['bottombar']) && !empty($primarymenu['includesmartmenu'])) {
     $extraclasses[] = 'theme-boost-union-bottombar';
 }
+
+// Include the template content for course index modification.
+require_once(__DIR__ . '/includes/courseindex.php');
 
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
 // If the settings menu will be included in the header then don't add it here.

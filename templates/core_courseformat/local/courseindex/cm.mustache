@@ -1,0 +1,128 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template core_courseformat/local/courseindex/cm
+
+    Displays a course index course-module entry.
+
+    Example context (json):
+    {
+        "id": "12",
+        "name": "Announcements",
+        "url": "#",
+        "visible": 1,
+        "isactive": 1,
+        "uniqid": "0",
+        "accessvisible": 1,
+        "hascmrestrictions": 0,
+        "indent": 1
+        "showcmicon": 1
+    }
+}}
+{{!
+    Modifications of upstream
+    * add course module icon in front of module instance name.
+    * move competioninfo to the right
+    * JS in this template controls if course module icons are shown or not
+}}
+<li class="courseindex-item
+        {{#isactive}}active{{/isactive}}
+    {{#hascmrestrictions}}restrictions{{/hascmrestrictions}}
+    {{^accessvisible}}dimmed{{/accessvisible}}
+        d-flex
+        {{#indent}} indented {{/indent}}"
+    id="course-index-cm-{{id}}"
+    data-for="cm"
+    data-id="{{id}}"
+    role="treeitem"
+>
+    <span class="completioninfo" data-for="cm_completion" data-value="NaN"></span>
+    <span class="courseindex-cmicon-container">
+        <span class="courseindex-cmicon">
+            <span class="courseindex-cmicon-icon" id="observercomp-{{id}}">
+                {{#pix}} monologo, {{module}} {{/pix}}
+                <span class="completioninfo" data-for="_" data-value="NaN"></span>
+            </span>
+        </span>
+    </span>
+    {{#uservisible}}
+        <a
+                class="courseindex-link text-truncate"
+            {{#url}} href="{{{url}}}" {{/url}}{{^url}} href="#{{{anchor}}}" data-anchor="true" {{/url}}
+                data-for="cm_name"
+                tabindex="-1"
+        >
+            {{{name}}}
+        </a>
+    {{/uservisible}}
+    {{^uservisible}}
+        <a class="courseindex-link text-truncate" href="#{{{anchor}}}" data-for="cm_name" tabindex="-1" data-anchor="true">
+            {{{name}}}
+        </a>
+    {{/uservisible}}
+    <span class="courseindex-locked ml-1" data-for="cm_name">
+        {{#pix}} t/locked, core {{/pix}}
+    </span>
+    <span class="ml-auto">
+        <span class="completioninfo" data-for="_" data-value="NaN"></span>
+        <span class="dragicon" style="display: none !important;">{{#pix}}i/dragdrop{{/pix}}</span>
+    </span>
+</li>
+{{#js}}
+
+  if (document.body.classList.contains("hascourseindexcmicons")) {
+        document.querySelectorAll(".courseindex-item[data-id='{{id}}'] span.completioninfo")[0].dataset.for = "_";
+        if (document.body.classList.contains("hascourseindexcompletionicon")) {
+            {{! Completion indication encoded in cm icon. }}
+            const el = document.querySelectorAll(".courseindex-item[data-id='{{id}}'] span.completioninfo")[1];
+            el.dataset.for="cm_completion";
+
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    let node = mutation.target.childNodes[3];
+                    if (node.id.startsWith("bucompletionid")){
+                        let completionel = document.getElementById(node.id);
+                        switch (node.dataset.value){
+                            case "NaN":
+                                break;
+                            case "0":
+                                completionel.closest(".courseindex-cmicon-container").classList.add("courseindex-cmicon-completion-incomplete");
+                                break;
+                            case "1":
+                                completionel.closest(".courseindex-cmicon-container").classList.add("courseindex-cmicon-completion-complete");
+                                break;
+                            case "3":
+                                completionel.closest(".courseindex-cmicon-container").classList.add("courseindex-cmicon-completion-fail");
+                                break;
+                        }
+                    }
+                });
+            });
+            observer.observe(document.getElementById("observercomp-{{id}}"), {attributes: true, childList: true});
+
+        } else if (document.body.classList.contains("hascourseindexcompletioneol")) {
+            {{! Completion indication shown at the end of the line. }}
+            document.querySelectorAll(".courseindex-item[data-id='{{id}}'] span.completioninfo")[2].dataset.for = "cm_completion";
+        }
+    }
+
+    {{! Unmodified core JS of this template:}}
+    require(['core_courseformat/local/courseindex/cm'], function(component) {
+    component.init('course-index-cm-{{id}}');
+    })
+
+{{/js}}
