@@ -238,6 +238,12 @@ $string['courseoverviewshowcourseimagessetting_desc'] = 'With this setting, you 
 // ... ... Setting: Show course completion progress.
 $string['courseoverviewshowprogresssetting'] = 'Show course completion progress';
 $string['courseoverviewshowprogresssetting_desc'] = 'With this setting, you can control whether the course completion progress is visible inside the course overview block or not.';
+// ... ... Setting: Enable cards on course index.
+$string['enablecards'] = 'Enable cards on course index';
+$string['enablecardsdesc'] = 'Display courses as cards on site and course index.';
+// ... ... Setting: Disable teachers from cards.
+$string['enableteacherspic'] = 'Enable teachers pictures';
+$string['enableteacherspicdesc'] = 'This setting controls were to hide or display the teachers\' pictures in the course cards.';
 
 // Settings: Course tab.
 $string['coursetab'] = 'Course';

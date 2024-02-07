@@ -725,6 +725,24 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Enable cards on course index.
+        $name = 'theme_boost_union/enablecards';
+        $title = get_string('enablecards', 'theme_boost_union');
+        $description = get_string('enablecardsdesc', 'theme_boost_union');
+        $default = 0;
+        $choices = [0 => get_string('no'), 1 => get_string('yes')];
+        $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+        $tab->add($setting);
+
+        // Disable teachers from cards.
+        $name = 'theme_boost_union/enableteacherspic';
+        $title = get_string('enableteacherspic', 'theme_boost_union');
+        $description = get_string('enableteacherspicdesc', 'theme_boost_union');
+        $default = 0;
+        $choices = [0 => get_string('no'), 1 => get_string('yes')];
+        $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+        $tab->add($setting);
+
         // Add tab to settings page.
         $page->add($tab);
 
