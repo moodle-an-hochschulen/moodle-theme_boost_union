@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-02-09 - Improvement: Raise required Moodle core version to a full minor release again.
+
 ### v4.2-r8
 
 * 2024-01-20 - Improvement: Add a side entrance login page for local logins if the local login form is disabled on the standard login page, resolves #539.
