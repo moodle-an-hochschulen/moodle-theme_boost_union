@@ -45,6 +45,14 @@ There, you find multiple setting pages:
 
 ### Settings page "Look"
 
+#### Tab "General settings"
+
+In this tab there are the following settings:
+
+##### Theme presets
+
+Theme presets can be used to dramatically alter the appearance of the theme. Boost Union does not re-implement the theme preset setting. If you want to use theme presets, please set them directly in Boost. Boost Union will inherit and use the configured preset.
+
 #### Tab "SCSS"
 
 In this tab there are the following settings:

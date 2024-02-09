@@ -120,6 +120,23 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 get_string('configtitlelook', 'theme_boost_union', null, true),
                 'theme/boost_union:configure');
 
+
+        // Create general settings tab.
+        $tab = new admin_settingpage('theme_boost_union_look_general', get_string('generalsettings', 'theme_boost', null, true));
+
+        // Create theme presets heading.
+        $name = 'theme_boost_union/presetheading';
+        $preseturl = new moodle_url('/admin/settings.php', ['section' => 'themesettingboost'], 'theme_boost_general');
+        $title = get_string('presetheading', 'theme_boost_union', null, true);
+        $description = get_string('presetheading_desc', 'theme_boost_union', null, true).'<br />'.
+            $OUTPUT->single_button($preseturl, get_string('presetbutton', 'theme_boost_union', null, true)).'<br />';
+        $setting = new admin_setting_heading($name, $title, $description);
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
         // Create SCSS tab.
         $tab = new admin_settingpage('theme_boost_union_look_scss', get_string('scsstab', 'theme_boost_union', null, true));
 
