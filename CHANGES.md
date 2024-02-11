@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-02-11 - Upstream change: Update 'Documentation for this page' string after upstream change in MDL-80725, resolves #559.
 * 2024-02-11 - Peer review management: Add a github action checking pull requests for use of non get_config() theme settings references, resolves #257.
 * 2024-02-09 - Improvement: Raise required Moodle core version to a full minor release again.
 

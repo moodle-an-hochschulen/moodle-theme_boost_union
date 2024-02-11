@@ -77,7 +77,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | enablefooterbuttonnone    | should not         | should not        | exist          |
 
   @javascript
-  Scenario Outline: Setting: Footer - Suppress 'Help and documentation' link
+  Scenario Outline: Setting: Footer - Suppress 'Documentation for this page' link
     Given the following config values are set as admin:
       | docroot | https://docs.moodle.org |
     And the following config values are set as admin:
@@ -86,7 +86,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then I <shouldornot> see "Help and documentation" in the ".popover-body" "css_element"
+    Then I <shouldornot> see "Documentation for this page" in the ".popover-body" "css_element"
 
     Examples:
       | value | shouldornot |

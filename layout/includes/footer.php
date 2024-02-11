@@ -32,7 +32,7 @@ if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
     // Add marker to show the footer button to templatecontext.
     $templatecontext['footerbutton'] = true;
 
-    // If the "Suppress 'Help and documentation' link" setting is not enabled.
+    // If the "Suppress 'Documentation for this page' link" setting is not enabled.
     $footersuppresshelpsetting = get_config('theme_boost_union', 'footersuppresshelp');
     if (!isset($footersuppresshelpsetting) || $footersuppresshelpsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
         // Add marker to show this link.
@@ -68,7 +68,7 @@ if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
         $templatecontext['footershowcontact'] = false;
     }
 
-    // If any of the 'Help and documentation', 'Services and support' or 'Contact site support' links are enabled.
+    // If any of the 'Documentation for this page', 'Services and support' or 'Contact site support' links are enabled.
     if (isset($templatecontext['footershowhelp']) && $templatecontext['footershowhelp'] == true ||
             isset($templatecontext['footershowservices']) && $templatecontext['footershowservices'] == true ||
             isset($templatecontext['footershowcontact']) && $templatecontext['footershowcontact'] == true) {

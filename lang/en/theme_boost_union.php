@@ -508,14 +508,14 @@ $string['footnotesetting_desc'] = 'Whatever you add to this textarea will be dis
 $string['footerheading'] = 'Footer';
 // ... ... Setting: Enable footer.
 $string['enablefooterbutton'] = 'Enable footer';
-$string['enablefooterbutton_desc'] = 'With "footer", the circle containing the question mark at the bottom of the page is meant.<br />Upon click, the user is presented with an overlay. Depending on the site configuration Moodle shows several links (like "Help and documentation" or "Data retention summary") are shown in this overlay.<br />With this setting, you can control whether to show or to suppress the footer button at the bottom of the page.';
+$string['enablefooterbutton_desc'] = 'With "footer", the circle containing the question mark at the bottom of the page is meant.<br />Upon click, the user is presented with an overlay. Depending on the site configuration Moodle shows several links (like "Documentation for this page" or "Data retention summary") are shown in this overlay.<br />With this setting, you can control whether to show or to suppress the footer button at the bottom of the page.';
 $string['enablefooterbuttonboth'] = 'Enable on desktop, tablet and mobile';
 $string['enablefooterbuttondesktop'] = 'Enable on desktop and tablet only, hide on mobile (unchanged as presented by Moodle core)';
 $string['enablefooterbuttonmobile'] = 'Enable on mobile only, hide on desktop and tablet';
 $string['enablefooterbuttonhidden'] = 'Hide on all devices';
-// ... ... Setting: Suppress 'Help and documentation' link.
-$string['footersuppresshelpsetting'] = 'Suppress \'Help and documentation\' link';
-$string['footersuppresshelpsetting_desc'] = 'With this setting, you can entirely suppress the \'Help and documentation\' link in the footer. This link would otherwise appear if a <a href="{$a->url}">Moodle Docs document root</a> is set.';
+// ... ... Setting: Suppress 'Documentation for this page' link.
+$string['footersuppresshelpsetting'] = 'Suppress \'Documentation for this page\' link';
+$string['footersuppresshelpsetting_desc'] = 'With this setting, you can entirely suppress the \'Documentation for this page\' link in the footer. This link would otherwise appear if a <a href="{$a->url}">Moodle Docs document root</a> is set.';
 // ... ... Setting: Suppress 'Services and support' link.
 $string['footersuppressservicessetting'] = 'Suppress \'Services and support\' link';
 $string['footersuppressservicessetting_desc'] = 'With this setting, you can entirely suppress the \'Services and support\' link in the footer. This link would otherwise show the <a href="{$a->url}">Services and support link</a> to administrators.';

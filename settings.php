@@ -1615,7 +1615,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 THEME_BOOST_UNION_SETTING_ENABLEFOOTER_DESKTOP, $enablefooterbuttonoptions);
         $tab->add($setting);
 
-        // Setting: Suppress 'Help and documentation' link.
+        // Setting: Suppress 'Documentation for this page' link.
         $name = 'theme_boost_union/footersuppresshelp';
         $title = get_string('footersuppresshelpsetting', 'theme_boost_union', null, true);
         $url = new moodle_url('/admin/settings.php', ['section' => 'documentation']);
