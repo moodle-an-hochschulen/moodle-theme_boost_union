@@ -81,6 +81,12 @@ jobs:
         if: ${{ always() }}
         run: moodle-plugin-ci phpcs --max-warnings 0
 
+      - name: Boost Union Code Checker
+        uses: JJ/github-pr-contains-action@releases/v10
+        with:
+          github-token: ${{github.token}}
+          diffDoesNotContain: "theme->settings->"
+
       - name: Moodle PHPDoc Checker
         if: ${{ always() }}
         run: moodle-plugin-ci phpdoc --max-warnings 0
