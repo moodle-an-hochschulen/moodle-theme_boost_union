@@ -21,7 +21,7 @@ On the other hand, many Moodle installations share the same basic functional nee
 
 One highlight is the main design principle of Boost Union: As soon as it is activated on a Moodle site, it does not change anything yet and simply behaves as Boost from Moodle core does. The admin can enable and configure only the theme features he needs and does not need to care about side effects from other, disabled theme features.
 
-As a side note, it is quite easy to create a grandchild theme of Boost Union. That way, you can benefit from all the / only the Boost Union features you need, but you can also add additional local features or settings (that are not interesting as a pull request or feature request for the whole Boost Union community) to your local grandchild theme at the same time.
+As a side note, it is quite easy to create a grandchild theme of Boost Union. See the 'Grandchild theme support' section below for details.
 
 
 Installation
@@ -613,6 +613,19 @@ This theme ships with some additions for companion plugins:
   * Style improvements for the learning tools button in combination with the Boost Union bottom navigation
 * local_och5p / local_och5pcore:
   * Renderer additions to add necessary additional CSS and JS files.
+
+
+Grandchild theme support
+------------------------
+
+It is quite easy to create a grandchild theme of Boost Union. That way, you can benefit from all the / only the Boost Union features you need, but you can also add additional local features or settings to your local grandchild theme at the same time.
+
+If you plan to build a grandchild theme of Boost Union, we have prepared a 'Boost Union Child' boilerplate for you which can help you to do the first steps.
+
+Boost Union Child can be found on Github:
+https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_child
+
+While Boost Union Child will surely help you to realize all your local Boost Union dreams, please do yourself and the whole community a favour and verify that your planned features are indeed not interesting as a pull request or feature request for the whole Boost Union community and could be contributed to Boost Union directly instead.
 
 
 Plugin repositories
