@@ -237,6 +237,16 @@ With this setting, you control the height of the presented course header image.
 
 With this setting, you control the positioning of the course header image within the course header container. The first value is the horizontal position, the second value is the vertical position.
 
+##### Course index
+
+###### Display activity icon in course index
+
+When enabled, the corresponding activity type icon is displayed in front of the index row with the title of the activity. In doing so, the course activity type is either replacing the course completion indicator which is moved from the front to the end of the course index row line, or colored in by the completion state color.
+
+###### Position of activity completion indication.
+
+Choose the position where the completion indication is displayed.
+
 #### Tab "E-Mail branding"
 
 In this tab, you find a feature which you can use to apply branding to all E-Mails which Moodle is sending out.

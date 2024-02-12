@@ -29,20 +29,22 @@
         "uniqid": "0",
         "accessvisible": 1,
         "hascmrestrictions": 0,
-        "indent": 1
-        "showcmicon": 1
+        "indent": 1,
+        "module": "forum"
     }
 }}
 {{!
-    Modifications of upstream
-    * add course module icon in front of module instance name.
-    * move competioninfo to the right
-    * JS in this template controls if course module icons are shown or not
+    This template is a modified version of core_courseformat/local/courseindex/cm
+
+    Modifications compared to the original template:
+    * Based on the theme's settings, add activity type icon in front of module instance name.
+    * Based on the theme's settings, move completioninfo to the right.
+    * Added additional JS which controls which completion indicators are shown or not.
 }}
 <li class="courseindex-item
         {{#isactive}}active{{/isactive}}
-    {{#hascmrestrictions}}restrictions{{/hascmrestrictions}}
-    {{^accessvisible}}dimmed{{/accessvisible}}
+        {{#hascmrestrictions}}restrictions{{/hascmrestrictions}}
+        {{^accessvisible}}dimmed{{/accessvisible}}
         d-flex
         {{#indent}} indented {{/indent}}"
     id="course-index-cm-{{id}}"
@@ -50,79 +52,82 @@
     data-id="{{id}}"
     role="treeitem"
 >
-    <span class="completioninfo" data-for="cm_completion" data-value="NaN"></span>
+    <span class="completioninfo courseindex-cmicon-cpl-sol" data-for="cm_completion" data-value="NaN"></span>
     <span class="courseindex-cmicon-container">
         <span class="courseindex-cmicon">
-            <span class="courseindex-cmicon-icon" id="observercomp-{{id}}">
+            <span class="courseindex-cmicon-icon" id="courseindex-cmicon-observ-{{id}}">
                 {{#pix}} monologo, {{module}} {{/pix}}
-                <span class="completioninfo" data-for="_" data-value="NaN"></span>
+                <span class="completioninfo courseindex-cmicon-cpl-icon" data-for="_" data-value="NaN"></span>
             </span>
         </span>
     </span>
     {{#uservisible}}
-        <a
-                class="courseindex-link text-truncate"
-            {{#url}} href="{{{url}}}" {{/url}}{{^url}} href="#{{{anchor}}}" data-anchor="true" {{/url}}
-                data-for="cm_name"
-                tabindex="-1"
-        >
-            {{{name}}}
-        </a>
+    <a
+        class="courseindex-link text-truncate"
+        {{#url}} href="{{{url}}}" {{/url}}{{^url}} href="#{{{anchor}}}" data-anchor="true" {{/url}}
+        data-for="cm_name"
+        tabindex="-1"
+    >
+        {{{name}}}
+    </a>
     {{/uservisible}}
     {{^uservisible}}
-        <a class="courseindex-link text-truncate" href="#{{{anchor}}}" data-for="cm_name" tabindex="-1" data-anchor="true">
-            {{{name}}}
-        </a>
+    <a class="courseindex-link text-truncate" href="#{{{anchor}}}" data-for="cm_name" tabindex="-1" data-anchor="true">
+        {{{name}}}
+    </a>
     {{/uservisible}}
     <span class="courseindex-locked ml-1" data-for="cm_name">
         {{#pix}} t/locked, core {{/pix}}
     </span>
     <span class="ml-auto">
-        <span class="completioninfo" data-for="_" data-value="NaN"></span>
-        <span class="dragicon" style="display: none !important;">{{#pix}}i/dragdrop{{/pix}}</span>
+        <span class="completioninfo courseindex-cmicon-cpl-eol" data-for="_" data-value="NaN"></span>
+        <span class="dragicon">{{#pix}}i/dragdrop{{/pix}}</span>
     </span>
 </li>
 {{#js}}
+// Boost Union JS to add the completion colors to the activity type icons:
+if (document.body.classList.contains('hascourseindexcmicons')) {
+    // Completion indication not shown at start of line anymore.
+    document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[0].dataset.for = '_';
 
-  if (document.body.classList.contains("hascourseindexcmicons")) {
-        document.querySelectorAll(".courseindex-item[data-id='{{id}}'] span.completioninfo")[0].dataset.for = "_";
-        if (document.body.classList.contains("hascourseindexcompletionicon")) {
-            {{! Completion indication encoded in cm icon. }}
-            const el = document.querySelectorAll(".courseindex-item[data-id='{{id}}'] span.completioninfo")[1];
-            el.dataset.for="cm_completion";
+    // Instead, completion indication encoded in cm icon.
+    if (document.body.classList.contains('hascourseindexcplicon')) {
+        // The completion indication within the icon is now the active one.
+        document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[1].dataset.for = 'cm_completion';
 
-            const observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    let node = mutation.target.childNodes[3];
-                    if (node.id.startsWith("bucompletionid")){
-                        let completionel = document.getElementById(node.id);
-                        switch (node.dataset.value){
-                            case "NaN":
-                                break;
-                            case "0":
-                                completionel.closest(".courseindex-cmicon-container").classList.add("courseindex-cmicon-completion-incomplete");
-                                break;
-                            case "1":
-                                completionel.closest(".courseindex-cmicon-container").classList.add("courseindex-cmicon-completion-complete");
-                                break;
-                            case "3":
-                                completionel.closest(".courseindex-cmicon-container").classList.add("courseindex-cmicon-completion-fail");
-                                break;
-                        }
+        // Changes to this completion indication will be observed.
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                let node = mutation.target.childNodes[3];
+                if (node.id.startsWith('courseindex-cmicon-cplid-')){
+                    let completionel = document.getElementById(node.id);
+                    // Set the completion color for the icon based on the completion status.
+                    switch (node.dataset.value){
+                        case 'NaN':
+                            break;
+                        case '0':
+                            completionel.closest('.courseindex-cmicon-container').classList.add('courseindex-cmicon-cpl-incomplete');
+                            break;
+                        case '1':
+                            completionel.closest('.courseindex-cmicon-container').classList.add('courseindex-cmicon-cpl-complete');
+                            break;
+                        case '3':
+                            completionel.closest('.courseindex-cmicon-container').classList.add('courseindex-cmicon-cpl-fail');
+                            break;
                     }
-                });
+                }
             });
-            observer.observe(document.getElementById("observercomp-{{id}}"), {attributes: true, childList: true});
+        });
+        observer.observe(document.getElementById('courseindex-cmicon-observ-{{id}}'), {attributes: true, childList: true});
 
-        } else if (document.body.classList.contains("hascourseindexcompletioneol")) {
-            {{! Completion indication shown at the end of the line. }}
-            document.querySelectorAll(".courseindex-item[data-id='{{id}}'] span.completioninfo")[2].dataset.for = "cm_completion";
-        }
+    // Or completion indication shown at the end of the line.
+    } else if (document.body.classList.contains('hascourseindexcpleol')) {
+        document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[2].dataset.for = 'cm_completion';
     }
+}
 
-    {{! Unmodified core JS of this template:}}
-    require(['core_courseformat/local/courseindex/cm'], function(component) {
+// Unmodified Moodle core JS of this template:
+require(['core_courseformat/local/courseindex/cm'], function(component) {
     component.init('course-index-cm-{{id}}');
-    })
-
+});
 {{/js}}

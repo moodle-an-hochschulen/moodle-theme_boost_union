@@ -248,11 +248,11 @@ $string['courseheaderimageposition_desc'] = 'With this setting, you control the 
 $string['courseindexheading'] = 'Course Index';
 // ... ... Setting: Course index.
 $string['courseindexmodiconenabled'] = 'Display activity type icons in course index';
-$string['courseindexmodiconenabled_desc'] = 'When enabled, the corresponding activity type icon is displayed in front of the index row with the title of the activity. In doing so, the course activity type is either replacing the course completion indicator which is moved from the front to the end of the index row line, or coulored in by the completion state colour.';
-$string['courseindexcompletioninfoposition'] = 'Position of activity completion indication.';
-$string['courseindexcompletioninfoposition_desc'] = 'Choose the position where the completion indication is displayed. <em>End of line</em> displays the standard complition indicator at the end of the course index item. <em>Icon</em> encodes the completion information as background of the course module icon.';
+$string['courseindexmodiconenabled_desc'] = 'When enabled, the corresponding activity type icon is displayed in front of the index row with the title of the activity. In doing so, the course activity type is either replacing the course completion indicator which is moved from the front to the end of the course index row line, or colored in by the completion state color.';
+$string['courseindexcompletioninfoposition'] = 'Position of activity completion indication';
+$string['courseindexcompletioninfoposition_desc'] = 'Choose the position where the completion indication is displayed. <em>End of line</em> displays the standard completion indicator at the end of the course index row line. <em>Icon color</em> encodes the completion information as background of the course module icon.';
 $string['courseindexcompletioninfopositionendofline'] = 'End of line';
-$string['courseindexcompletioninfopositionicon'] = 'Colour in the icon';
+$string['courseindexcompletioninfopositioniconcolor'] = 'Icon color';
 
 // Settings: E-Mail branding tab.
 $string['emailbrandingtab'] = 'E-Mail branding';

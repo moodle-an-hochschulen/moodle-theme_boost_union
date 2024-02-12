@@ -24,18 +24,27 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// If activity type icons should be displayed in the course index.
 $showcmicon = get_config('theme_boost_union', 'courseindexmodiconenabled');
-$completionposition = get_config('theme_boost_union', 'courseindexcompletioninfoposition');
-
 if ($showcmicon == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    // Add a class to the body tag.
     $extraclasses[] = 'hascourseindexcmicons';
 
-    if ($completionposition == THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_ICON) {
-        $extraclasses[] = 'hascourseindexcompletionicon';
-    } else {
-        $extraclasses[] = 'hascourseindexcompletioneol';
+    // Switch between the possible activity completion presentation modes.
+    $completionposition = get_config('theme_boost_union', 'courseindexcompletioninfoposition');
+    switch ($completionposition) {
+        // Completion encoded in icon color.
+        case THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_ICONCOLOR:
+            $extraclasses[] = 'hascourseindexcplicon';
+            break;
+        // Completion at end of line.
+        case THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_ENDOFLINE:
+            $extraclasses[] = 'hascourseindexcpleol';
+            break;
     }
 
+    // Otherwise.
 } else {
+    // Add a class to the body tag.
     $extraclasses[] = 'nocourseindexcmicons';
 }

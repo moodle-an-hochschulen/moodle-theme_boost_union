@@ -137,7 +137,7 @@ if (isset($primarymenu['bottombar']) && !empty($primarymenu['includesmartmenu'])
     $extraclasses[] = 'theme-boost-union-bottombar';
 }
 
-// Include the template content for course index modification.
+// Include the extra classes for the course index modification.
 require_once(__DIR__ . '/includes/courseindex.php');
 
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
