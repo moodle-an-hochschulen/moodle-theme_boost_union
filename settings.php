@@ -129,7 +129,11 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $preseturl = new moodle_url('/admin/settings.php', ['section' => 'themesettingboost'], 'theme_boost_general');
         $title = get_string('presetheading', 'theme_boost_union', null, true);
         $description = get_string('presetheading_desc', 'theme_boost_union', null, true).'<br />'.
-            $OUTPUT->single_button($preseturl, get_string('presetbutton', 'theme_boost_union', null, true)).'<br />';
+            // We would love to use $OUTPUT->single_button($preseturl, ...) here, but this results in the fact
+            // that the settings page redirects to the Boost Core settings after saving for an unknown reason.
+            html_writer::link($preseturl,
+                    get_string('presetbutton', 'theme_boost_union', null, true),
+                    ['class' => 'btn btn-secondary my-3']);
         $setting = new admin_setting_heading($name, $title, $description);
         $tab->add($setting);
 
