@@ -518,6 +518,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $context->showlocallogin = true;
         }
 
+        // Check if the local login intro is enabled.
+        $loginlocalshowintrosetting = get_config('theme_boost_union', 'loginlocalshowintro');
+        $showlocalloginintro = ($loginlocalshowintrosetting != false) ?
+            $loginlocalshowintrosetting : THEME_BOOST_UNION_SETTING_SELECT_NO;
+        if ($showlocalloginintro == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            // Add marker to show the local login intro to template context.
+            $context->showlocalloginintro = true;
+        }
+
         // Check if the IDP login intro is enabled.
         $loginidpshowintrosetting = get_config('theme_boost_union', 'loginidpshowintro');
         $showidploginintro = ($loginidpshowintrosetting != false) ?

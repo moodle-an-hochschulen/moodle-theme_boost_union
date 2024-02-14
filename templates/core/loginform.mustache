@@ -41,6 +41,7 @@
     * logintoken - Random token to protect login request.,
     * maintenance - Maintenance message
     * showlocallogin - Should the local login form be shown?
+    * showlocalloginintro - Should the local login intro be shown?
     * showidploginintro - Should the IDP login intro be shown?
 
     Example context (json):
@@ -95,6 +96,7 @@
         "maintenance": "For full access to this site, you need to login in as an admin.",
         "languagemenu": "Choose language",
         "showlocallogin": true,
+        "showlocalloginintro": true,
         "showidploginintro": true
     }
 }}
@@ -105,6 +107,8 @@
     * Add btn-secondary class to identityprovider login buttons.
     * Added the possibility to hide the local login form.
     * Added the possibility to hide the IDP login intro.
+    * Added the possibility to show a local login intro.
+    * Added the possibility to change the login method order by adding wrapper divs around each login method.
 }}
 
 <div class="loginform">
@@ -133,7 +137,13 @@
     {{#cansignup}}
         <a href="{{signupurl}}" class="sr-only">{{#str}} tocreatenewaccount {{/str}}</a>
     {{/cansignup}}
+    <div id="theme_boost_union-loginorder">
     {{#showlocallogin}}
+    <div id="theme_boost_union-loginorder-local" class="theme_boost_union-loginmethod">
+    <div class="login-divider"></div>
+    {{#showlocalloginintro}}
+    <h2 class="login-heading">{{#str}} loginlocalintro, theme_boost_union {{/str}}</h2>
+    {{/showlocalloginintro}}
     <form class="login-form" action="{{loginurl}}" method="post" id="login">
         <input id="anchor" type="hidden" name="anchor" value="">
         <script>document.getElementById('anchor').value = location.hash;</script>
@@ -173,8 +183,10 @@
             <a href="{{forgotpasswordurl}}">{{#str}}forgotaccount{{/str}}</a>
         </div>
     </form>
+    </div>
     {{/showlocallogin}}
     {{#hasidentityproviders}}
+    <div id="theme_boost_union-loginorder-idp" class="theme_boost_union-loginmethod">
         <div class="login-divider"></div>
         <div class="login-identityproviders">
             {{#showidploginintro}}
@@ -189,7 +201,9 @@
                 </a>
             {{/identityproviders}}
         </div>
+    </div>
     {{/hasidentityproviders}}
+    <div id="theme_boost_union-loginorder-firsttimesignup" class="theme_boost_union-loginmethod">
     {{#hasinstructions}}
         <div class="login-divider"></div>
         <div class="login-instructions {{#cansignup}}mb-3{{/cansignup}}">
@@ -202,7 +216,9 @@
             <a class="btn btn-secondary" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a>
         </div>
     {{/cansignup}}
+    </div>
     {{#canloginasguest}}
+    <div id="theme_boost_union-loginorder-guest" class="theme_boost_union-loginmethod">
         <div class="login-divider"></div>
         <h2 class="login-heading">{{#str}}someallowguest{{/str}}</h2>
         <form action="{{loginurl}}" method="post" id="guestlogin">
@@ -211,7 +227,9 @@
             <input type="hidden" name="password" value="guest" />
             <button class="btn btn-secondary" type="submit" id="loginguestbtn">{{#str}}loginguest{{/str}}</button>
         </form>
+    </div>
     {{/canloginasguest}}
+    </div>
     <div class="login-divider"></div>
     <div class="d-flex">
         {{#languagemenu}}
