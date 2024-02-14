@@ -1615,6 +1615,76 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
 }
 
 /**
+ * Helper function which returns an array of login methods on the login page.
+ *
+ * @return array
+ */
+function theme_boost_union_get_loginpage_methods() {
+    return [1 => 'local',
+            2 => 'idp',
+            3 => 'firsttimesignup',
+            4 => 'guest',
+    ];
+}
+
+/**
+ * Returns the SCSS code to re-order the elements of the login form, depending on the theme settings loginorder*.
+ *
+ * @param theme_config $theme The theme config object.
+ * @return string
+ */
+function theme_boost_union_get_scss_login_order($theme) {
+    // Initialize SCSS snippet.
+    $scss = '';
+
+    // Get the login methods.
+    $loginmethods = theme_boost_union_get_loginpage_methods();
+
+    // If the default orders are unchanged.
+    $unchanged = true;
+    foreach ($loginmethods as $key => $lm) {
+        $setting = get_config('theme_boost_union', 'loginorder'.$lm);
+        if ($setting != $key) {
+            $unchanged = false;
+        }
+    }
+    if ($unchanged == true) {
+        // Hide the first login-divider (as we have added login-dividers to all orderable login methods,
+        // but do not want a divider between the page heading and the first login method).
+        $scss .= '#theme_boost_union-loginorder .theme_boost_union-loginmethod:first-of-type .login-divider { display: none; }';
+
+        // Return the SCSS code as we are done.
+        return $scss;
+    }
+
+    // Make the loginform a flexbox.
+    $scss .= '#theme_boost_union-loginorder { display: flex; flex-direction: column; }';
+
+    // Initialize a variable to detect the very first method.
+    $veryfirstmethodname = '';
+    $veryfirstmethodorder = 99; // This assumes that we will never have more than 99 login methods which should be fair.
+
+    // Iterate over all login methods.
+    foreach ($loginmethods as $lm) {
+        // Set the flexbox order for this login method.
+        $setting = get_config('theme_boost_union', 'loginorder'.$lm);
+        $scss .= '#theme_boost_union-loginorder-'.$lm.' { order: '.$setting.'; }';
+
+        // If no other login method has a lower order than this one.
+        if ($setting < $veryfirstmethodorder) {
+            // Remember this login method as very first method.
+            $veryfirstmethodorder = $setting;
+            $veryfirstmethodname = $lm;
+        }
+    }
+
+    // Hide the first login-divider - similar to the 'unchanged settings' case, but in this case based on the flexbox orders.
+    $scss .= '#theme_boost_union-loginorder-'.$veryfirstmethodname.' .login-divider { display: none; }';
+
+    return $scss;
+}
+
+/**
  * Helper function which returns the list of possible touch icons for iOS.
  *
  * @return array A multidimensional array
