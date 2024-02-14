@@ -37,6 +37,10 @@ if ($showcmicon == THEME_BOOST_UNION_SETTING_SELECT_YES) {
         case THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_ICONCOLOR:
             $extraclasses[] = 'hascourseindexcplicon';
             break;
+        // Completion at start of line.
+        case THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_STARTOFLINE:
+            $extraclasses[] = 'hascourseindexcplsol';
+            break;
         // Completion at end of line.
         case THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_ENDOFLINE:
             $extraclasses[] = 'hascourseindexcpleol';

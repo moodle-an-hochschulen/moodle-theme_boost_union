@@ -352,6 +352,16 @@ body.hascourseindexcmicons {
         }
     }
 
+    /* If the admin configured the completion info to be shown at the start of the line. */
+    &.hascourseindexcplsol {
+        #courseindex {
+            /* Hide the completion widget at the end of the line. */
+            .courseindex-cmicon-cpl-eol {
+                display: none;
+            }
+        }
+    }
+
     /* If editing is enabled. */
     &.editing {
         #courseindex {
@@ -416,11 +426,15 @@ body.hascourseindexcmicons {
                 filter: brightness(0) invert(1);
             }
         }
+    }
+}
 
-        /* Add some more right padding to the collapse icon to align the texts in the course index again. */
-        .courseindex-section-title .icons-collapse-expand {
-            padding-right: 8px;
-        }
+/* For some situations, add some more right padding to the collapse icon to align the texts in the course index again. */
+body.hascourseindexcplicon,
+body.hascourseindexcpleol,
+body.hascourseindexcplsol.editing {
+    .courseindex-section-title .icons-collapse-expand {
+        padding-right: 8px;
     }
 }
 

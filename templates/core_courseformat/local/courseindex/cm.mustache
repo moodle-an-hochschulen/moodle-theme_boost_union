@@ -85,13 +85,13 @@
     </span>
 </li>
 {{#js}}
-// Boost Union JS to add the completion colors to the activity type icons:
+// Boost Union JS to change the completion indication if enabled.
 if (document.body.classList.contains('hascourseindexcmicons')) {
-    // Completion indication not shown at start of line anymore.
-    document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[0].dataset.for = '_';
-
-    // Instead, completion indication encoded in cm icon.
+    // Completion indication should be encoded in cm icon.
     if (document.body.classList.contains('hascourseindexcplicon')) {
+        // Completion indication not shown at start of line anymore.
+        document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[0].dataset.for = '_';
+
         // The completion indication within the icon is now the active one.
         document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[1].dataset.for = 'cm_completion';
 
@@ -120,8 +120,12 @@ if (document.body.classList.contains('hascourseindexcmicons')) {
         });
         observer.observe(document.getElementById('courseindex-cmicon-observ-{{id}}'), {attributes: true, childList: true});
 
-    // Or completion indication shown at the end of the line.
+    // Or completion indication should be shown at the end of the line.
     } else if (document.body.classList.contains('hascourseindexcpleol')) {
+        // Completion indication not shown at start of line anymore.
+        document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[0].dataset.for = '_';
+
+        // The completion indication at the end of the line is now the active one.
         document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[2].dataset.for = 'cm_completion';
     }
 }

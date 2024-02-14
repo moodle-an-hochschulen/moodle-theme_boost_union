@@ -805,6 +805,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $courseindexcompletioninfopositionoptions = [
                 THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_ENDOFLINE =>
                         get_string('courseindexcompletioninfopositionendofline', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_STARTOFLINE =>
+                        get_string('courseindexcompletioninfopositionstartofline', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_ICONCOLOR =>
                         get_string('courseindexcompletioninfopositioniconcolor', 'theme_boost_union'), ];
         $setting = new admin_setting_configselect($name, $title, $description,
