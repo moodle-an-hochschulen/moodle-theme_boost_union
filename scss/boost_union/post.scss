@@ -294,6 +294,150 @@
     @include border-radius();
 }
 
+/*---------------------------------------
+ * Setting: Course module icons in course index.
+ --------------------------------------*/
+
+/* If the admin configured the course index not to show course activity type icons. */
+body.nocourseindexcmicons {
+    /* Hide the course activity type icons and the completion info at the right of the line
+       (which are both always added to the DOM regardless of the setting). */
+    #courseindex {
+        span.courseindex-cmicon-container,
+        span.courseindex-cmicon-cpl-eol {
+            display: none;
+        }
+    }
+}
+
+/* If the admin configured the course index to show course activity type icons. */
+body.hascourseindexcmicons {
+    #courseindex {
+        /* Show the course activity type icons
+           (which are always added to the DOM regardless of the setting). */
+        span.courseindex-cmicon-container {
+            display: block;
+        }
+    }
+
+    /* If the admin configured the completion info to be shown as icon color. */
+    &.hascourseindexcplicon {
+        #courseindex {
+            /* Hide the completion widget at the beginning of the line. */
+            .courseindex-cmicon-cpl-sol {
+                display: none;
+            }
+
+            /* And hide the completion info within the activity type icon container.
+               (This element just serves as data source for the observer JS and would be shown by Moodle core JS). */
+            .courseindex-cmicon-icon .completioninfo {
+                display: none;
+            }
+        }
+    }
+
+    /* If the admin configured the completion info to be shown at the end of the line. */
+    &.hascourseindexcpleol {
+        #courseindex {
+            /* Hide the completion widget at the beginning of the line. */
+            .courseindex-cmicon-cpl-sol {
+                display: none;
+            }
+
+            /* And hide the drag icon at the end of the line completely as Moodle core just disables its visibility,
+               but we need the space now for the completion icon. */
+            .courseindex-item .dragicon {
+                display: none;
+            }
+        }
+    }
+
+    /* If the admin configured the completion info to be shown at the start of the line. */
+    &.hascourseindexcplsol {
+        #courseindex {
+            /* Hide the completion widget at the end of the line. */
+            .courseindex-cmicon-cpl-eol {
+                display: none;
+            }
+        }
+    }
+
+    /* If editing is enabled. */
+    &.editing {
+        #courseindex {
+            /* Hide all completion info elements. */
+            span.completioninfo {
+                display: none;
+            }
+
+            /* Re-show the dragicon in editing mode. The visibility will still be controlled by Moodle core. */
+            .courseindex-item .dragicon {
+                display: block;
+            }
+        }
+    }
+
+    /* Style the course index activity type icons / completion widget */
+    #courseindex {
+        /* Position of the course index activity type icon container. */
+        .courseindex-cmicon-container {
+            border-radius: 4px;
+            margin-right: 6px;
+            line-height: normal;
+        }
+
+        /* General style of the course index activity type icon. */
+        .courseindex-cmicon {
+            margin: 0.2rem;
+            margin-top: 0;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            .icon {
+                margin-right: unset;
+            }
+        }
+
+        /* Overwrite activity type icon style for dimmed activities. */
+        .courseindex-item.dimmed .courseindex-cmicon-icon {
+            filter: invert(0.5);
+        }
+
+        /* Overwrite activity type icon style for incomplete activities. */
+        .courseindex-cmicon-cpl-incomplete {
+            background-color: $gray-600;
+            .courseindex-cmicon-icon {
+                filter: brightness(0) invert(1);
+            }
+        }
+
+        /* Overwrite activity type icon style for complete activities. */
+        .courseindex-cmicon-cpl-complete {
+            background-color: $success;
+            .courseindex-cmicon-icon {
+                filter: brightness(0) invert(1);
+            }
+        }
+
+        /* Overwrite activity type icon style for failed activities. */
+        .courseindex-cmicon-cpl-fail {
+            background-color: $danger;
+            .courseindex-cmicon-icon {
+                filter: brightness(0) invert(1);
+            }
+        }
+    }
+}
+
+/* For some situations, add some more right padding to the collapse icon to align the texts in the course index again. */
+body.hascourseindexcplicon,
+body.hascourseindexcpleol,
+body.hascourseindexcplsol.editing {
+    .courseindex-section-title .icons-collapse-expand {
+        padding-right: 8px;
+    }
+}
+
 
 /*=======================================
  * Settings: Look -> Resources

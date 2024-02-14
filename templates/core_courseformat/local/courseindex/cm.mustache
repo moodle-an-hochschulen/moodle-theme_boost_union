@@ -1,0 +1,137 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template core_courseformat/local/courseindex/cm
+
+    Displays a course index course-module entry.
+
+    Example context (json):
+    {
+        "id": "12",
+        "name": "Announcements",
+        "url": "#",
+        "visible": 1,
+        "isactive": 1,
+        "uniqid": "0",
+        "accessvisible": 1,
+        "hascmrestrictions": 0,
+        "indent": 1,
+        "module": "forum"
+    }
+}}
+{{!
+    This template is a modified version of core_courseformat/local/courseindex/cm
+
+    Modifications compared to the original template:
+    * Based on the theme's settings, add activity type icon in front of module instance name.
+    * Based on the theme's settings, move completioninfo to the right.
+    * Added additional JS which controls which completion indicators are shown or not.
+}}
+<li class="courseindex-item
+        {{#isactive}}active{{/isactive}}
+        {{#hascmrestrictions}}restrictions{{/hascmrestrictions}}
+        {{^accessvisible}}dimmed{{/accessvisible}}
+        d-flex
+        {{#indent}} indented {{/indent}}"
+    id="course-index-cm-{{id}}"
+    data-for="cm"
+    data-id="{{id}}"
+    role="treeitem"
+>
+    <span class="completioninfo courseindex-cmicon-cpl-sol" data-for="cm_completion" data-value="NaN"></span>
+    <span class="courseindex-cmicon-container">
+        <span class="courseindex-cmicon">
+            <span class="courseindex-cmicon-icon" id="courseindex-cmicon-observ-{{id}}">
+                {{#pix}} monologo, {{module}} {{/pix}}
+                <span class="completioninfo courseindex-cmicon-cpl-icon" data-for="_" data-value="NaN"></span>
+            </span>
+        </span>
+    </span>
+    {{#uservisible}}
+    <a
+        class="courseindex-link text-truncate"
+        {{#url}} href="{{{url}}}" {{/url}}{{^url}} href="#{{{anchor}}}" data-anchor="true" {{/url}}
+        data-for="cm_name"
+        tabindex="-1"
+    >
+        {{{name}}}
+    </a>
+    {{/uservisible}}
+    {{^uservisible}}
+    <a class="courseindex-link text-truncate" href="#{{{anchor}}}" data-for="cm_name" tabindex="-1" data-anchor="true">
+        {{{name}}}
+    </a>
+    {{/uservisible}}
+    <span class="courseindex-locked ml-1" data-for="cm_name">
+        {{#pix}} t/locked, core {{/pix}}
+    </span>
+    <span class="ml-auto">
+        <span class="completioninfo courseindex-cmicon-cpl-eol" data-for="_" data-value="NaN"></span>
+        <span class="dragicon">{{#pix}}i/dragdrop{{/pix}}</span>
+    </span>
+</li>
+{{#js}}
+// Boost Union JS to change the completion indication if enabled.
+if (document.body.classList.contains('hascourseindexcmicons')) {
+    // Completion indication should be encoded in cm icon.
+    if (document.body.classList.contains('hascourseindexcplicon')) {
+        // Completion indication not shown at start of line anymore.
+        document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[0].dataset.for = '_';
+
+        // The completion indication within the icon is now the active one.
+        document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[1].dataset.for = 'cm_completion';
+
+        // Changes to this completion indication will be observed.
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                let node = mutation.target.childNodes[3];
+                if (node.id.startsWith('courseindex-cmicon-cplid-')){
+                    let completionel = document.getElementById(node.id);
+                    // Set the completion color for the icon based on the completion status.
+                    switch (node.dataset.value){
+                        case 'NaN':
+                            break;
+                        case '0':
+                            completionel.closest('.courseindex-cmicon-container').classList.add('courseindex-cmicon-cpl-incomplete');
+                            break;
+                        case '1':
+                            completionel.closest('.courseindex-cmicon-container').classList.add('courseindex-cmicon-cpl-complete');
+                            break;
+                        case '3':
+                            completionel.closest('.courseindex-cmicon-container').classList.add('courseindex-cmicon-cpl-fail');
+                            break;
+                    }
+                }
+            });
+        });
+        observer.observe(document.getElementById('courseindex-cmicon-observ-{{id}}'), {attributes: true, childList: true});
+
+    // Or completion indication should be shown at the end of the line.
+    } else if (document.body.classList.contains('hascourseindexcpleol')) {
+        // Completion indication not shown at start of line anymore.
+        document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[0].dataset.for = '_';
+
+        // The completion indication at the end of the line is now the active one.
+        document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[2].dataset.for = 'cm_completion';
+    }
+}
+
+// Unmodified Moodle core JS of this template:
+require(['core_courseformat/local/courseindex/cm'], function(component) {
+    component.init('course-index-cm-{{id}}');
+});
+{{/js}}

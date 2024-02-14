@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-02-12 - Feature: Allow the admin to display activity icons in course content navigation, resolves #16.
 * 2024-02-11 - Child theme support: Improve namespace of class smartmenu_helper, resolves #494.
 * 2024-02-11 - Child theme support: Update note about grandchild themes in README.md
 * 2024-02-09 - Improvement: Inherit preset setting and preset files from Boost Core instead of duplicating them into Boost Union, resolves #267.
