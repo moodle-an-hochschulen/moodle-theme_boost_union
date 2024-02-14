@@ -785,6 +785,36 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if('theme_boost_union/courseheaderimageposition', 'theme_boost_union/courseheaderimageenabled', 'neq',
                 THEME_BOOST_UNION_SETTING_SELECT_YES);
 
+        // Create course index heading.
+        $name = 'theme_boost_union/courseindexheading';
+        $title = get_string('courseindexheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Display activity type icons in course index.
+        $name = 'theme_boost_union/courseindexmodiconenabled';
+        $title = get_string('courseindexmodiconenabled', 'theme_boost_union', null, true);
+        $description = get_string('courseindexmodiconenabled_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Setting:  Position of activity completion indication.
+        $name = 'theme_boost_union/courseindexcompletioninfoposition';
+        $title = get_string('courseindexcompletioninfoposition', 'theme_boost_union', null, true);
+        $description = get_string('courseindexcompletioninfoposition_desc', 'theme_boost_union', null, true);
+        $courseindexcompletioninfopositionoptions = [
+                THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_ENDOFLINE =>
+                        get_string('courseindexcompletioninfopositionendofline', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_STARTOFLINE =>
+                        get_string('courseindexcompletioninfopositionstartofline', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_ICONCOLOR =>
+                        get_string('courseindexcompletioninfopositioniconcolor', 'theme_boost_union'), ];
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_ENDOFLINE, $courseindexcompletioninfopositionoptions);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/courseindexcompletioninfoposition', 'theme_boost_union/courseindexmodiconenabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
         // Add tab to settings page.
         $page->add($tab);
 
