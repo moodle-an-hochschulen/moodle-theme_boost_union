@@ -241,7 +241,7 @@ With this setting, you control the positioning of the course header image within
 
 ###### Display activity icon in course index
 
-When enabled, the corresponding activity type icon is displayed in front of the index row with the title of the activity. As soon as the icon is displayed at the start of the line, you will get a second setting to decide whehere to show the activity completion indication instead.
+When enabled, the corresponding activity type icon is displayed in front of the index row with the title of the activity. As soon as the icon is displayed at the start of the line, you will get a second setting to decide where to show the activity completion indication instead.
 
 ###### Position of activity completion indication.
 
