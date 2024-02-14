@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-02-22 - Feature: Allow administrators to change the order of login items on the login page without using CSS or touching the mustache template, resolves #504.
+
 ### v4.1-r20
 
 * 2024-02-21 - Bugfix: Single activity format contained unnecessary second level of navigation items, resolves #415.
