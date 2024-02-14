@@ -239,30 +239,85 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | stackedlight | #courseheaderimage.courseheaderimage-light         | div.d-flex.align-items-center + #courseheaderimage | #courseheaderimage.courseheaderimage-dark  |
       | headingabove | div.d-flex.align-items-center + #courseheaderimage | #courseheaderimage.courseheaderimage-dark          | #courseheaderimage.courseheaderimage-light |
 
-  @javascript @theme_boost_union_looksettings_course_courseindex
-  Scenario: Setting: Course index icon - Do not display the course module icon should if setting is turned off.
+  @javascript @testme
+  Scenario Outline: Setting: Course index - Display activity type icons in course index.
     Given the following config values are set as admin:
-      | config                    | value | plugin            |
-      | courseindexmodiconenabled | no   | theme_boost_union |
+      | config                            | value      | plugin            |
+      | courseindexmodiconenabled         | <enabled>  | theme_boost_union |
+      | courseindexcompletioninfoposition | <position> | theme_boost_union |
+    And the following "courses" exist:
+      | fullname    | shortname | enablecompletion |
+      | Courseindex | CI        | 1                |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | teacher1 | CI     | editingteacher |
+      | student1 | CI     | student        |
+    And the following "activities" exist:
+      | activity | name                               | intro                       | course | idnumber | section | completion |
+      | assign   | Test assignment without completion | Test assignment description | CI     | assign1  | 0       | 0          |
+      | assign   | Test assignment incomplete         | Test assignment description | CI     | assign2  | 0       | 1          |
+      | assign   | Test assignment complete           | Test assignment description | CI     | assign3  | 0       | 1          |
+    When I log in as "student1"
+    And I am on "Courseindex" course homepage with editing mode off
+    And the manual completion button of "Test assignment incomplete" is displayed as "Mark as done"
+    And the manual completion button of "Test assignment complete" is displayed as "Mark as done"
+    And I toggle the manual completion state of "Test assignment complete"
+    And the manual completion button of "Test assignment complete" is displayed as "Done"
+    # Check the body tags
+    Then the "class" attribute of "body" "css_element" <hascourseindexcmicons> contain "hascourseindexcmicons"
+    And the "class" attribute of "body" "css_element" <hascourseindexcplicon> contain "hascourseindexcplicon"
+    And the "class" attribute of "body" "css_element" <hascourseindexcplsol> contain "hascourseindexcplsol"
+    And the "class" attribute of "body" "css_element" <hascourseindexcpleol> contain "hascourseindexcpleol"
+    # Check the visibility of the activity icon
+    And "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) .courseindex-cmicon-container" "css_element" <iconvisible> be visible
+    # Check the completion data of the completion indicator as icon color
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) .courseindex-cmicon-container .completioninfo" "css_element" should contain "NaN"
+    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) .courseindex-cmicon-container .completioninfo" "css_element" <iconshouldornot> contain "cm_completion"
+    And the "class" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) .courseindex-cmicon-container" "css_element" should not contain "courseindex-cmicon-cpl-complete"
+    And the "class" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) .courseindex-cmicon-container" "css_element" should not contain "courseindex-cmicon-cpl-incomplete"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) .courseindex-cmicon-container .completioninfo" "css_element" <iconshouldornot> contain "0"
+    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) .courseindex-cmicon-container .completioninfo" "css_element" <iconshouldornot> contain "cm_completion"
+    And the "class" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) .courseindex-cmicon-container" "css_element" <iconshouldornot> contain "courseindex-cmicon-cpl-incomplete"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) .courseindex-cmicon-container .completioninfo" "css_element" <iconshouldornot> contain "1"
+    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) .courseindex-cmicon-container .completioninfo" "css_element" <iconshouldornot> contain "cm_completion"
+    And the "class" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) .courseindex-cmicon-container" "css_element" <iconshouldornot> contain "courseindex-cmicon-cpl-complete"
+    # Check the completion data of the standard completion indicator at the start of the line
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) > .completioninfo" "css_element" should contain "NaN"
+    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) > .completioninfo" "css_element" <solshouldornot> contain "cm_completion"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) > .completioninfo" "css_element" <solshouldornot> contain "0"
+    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) > .completioninfo" "css_element" <solshouldornot> contain "cm_completion"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .completioninfo" "css_element" <solshouldornot> contain "1"
+    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .completioninfo" "css_element" <solshouldornot> contain "cm_completion"
+    # Check the completion data of the completion indicator at the end of the line
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) > .ml-auto > .completioninfo" "css_element" should contain "NaN"
+    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) > .ml-auto > .completioninfo" "css_element" <eolshouldornot> contain "cm_completion"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) > .ml-auto > .completioninfo" "css_element" <eolshouldornot> contain "0"
+    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) > .ml-auto > .completioninfo" "css_element" <eolshouldornot> contain "cm_completion"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .ml-auto > .completioninfo" "css_element" <eolshouldornot> contain "1"
+    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .ml-auto > .completioninfo" "css_element" <eolshouldornot> contain "cm_completion"
+    And I log out
     And I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
-    And I add a "Forum" to section "1" and I fill the form with:
-      | Forum name | Testforum |
-      | Forum type | Standard forum for general use |
-      | Description | Test forum description |
-    And I am on "Course 1" course homepage with editing mode off
-    Then "//body[contains(@class, 'nocourseindexcmicons')]//span[contains(@class,'courseindex-cmicon-container')]" "xpath_element" should exist
+    And I am on "Courseindex" course homepage with editing mode on
+    Then the "class" attribute of "body" "css_element" <hascourseindexcmicons> contain "hascourseindexcmicons"
+    And the "class" attribute of "body" "css_element" <hascourseindexcplicon> contain "hascourseindexcplicon"
+    And the "class" attribute of "body" "css_element" <hascourseindexcplsol> contain "hascourseindexcplsol"
+    And the "class" attribute of "body" "css_element" <hascourseindexcpleol> contain "hascourseindexcpleol"
+    # Check the visibility of the activity icon
+    And "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) .courseindex-cmicon-container" "css_element" <iconvisible> be visible
+    # Verify that all completion indicators, regardless of the position, are disabled
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) .courseindex-cmicon-container .completioninfo" "css_element" should contain "NaN"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) .courseindex-cmicon-container .completioninfo" "css_element" should contain "NaN"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) .courseindex-cmicon-container .completioninfo" "css_element" should contain "NaN"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) > .completioninfo" "css_element" should contain "NaN"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) > .completioninfo" "css_element" should contain "NaN"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .completioninfo" "css_element" should contain "NaN"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) > .ml-auto > .completioninfo" "css_element" should contain "NaN"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) > .ml-auto > .completioninfo" "css_element" should contain "NaN"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .ml-auto > .completioninfo" "css_element" should contain "NaN"
 
-  @javascript @theme_boost_union_looksettings_course_courseindex
-  Scenario: Setting: Course index icon - Display the course module icon in front the the module name in the course index.
-    Given the following config values are set as admin:
-      | config                    | value | plugin            |
-      | courseindexmodiconenabled | yes   | theme_boost_union |
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
-    And I add a "Forum" to section "1" and I fill the form with:
-      | Forum name | Testforum |
-      | Forum type | Standard forum for general use |
-      | Description | Test forum description |
-    And I am on "Course 1" course homepage with editing mode off
-    Then "//body[contains(@class, 'hascourseindexcmicons')]//span[contains(@class,'courseindex-cmicon-container')]" "xpath_element" should exist
+    Examples:
+      | enabled | position    | hascourseindexcmicons | hascourseindexcplicon | hascourseindexcplsol | hascourseindexcpleol | iconvisible | iconshouldornot | solshouldornot | eolshouldornot |
+      | no      | endofline   | should not            | should not            | should not           | should not           | should not  | should not      | should         | should not     |
+      | yes     | endofline   | should                | should not            | should not           | should               | should      | should not      | should not     | should         |
+      | yes     | startofline | should                | should not            | should               | should not           | should      | should not      | should         | should not     |
+      | yes     | iconcolor   | should                | should                | should not           | should not           | should      | should          | should not     | should not     |
