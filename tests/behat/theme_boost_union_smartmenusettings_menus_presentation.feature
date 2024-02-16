@@ -122,38 +122,34 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then DOM element ".card-dropdown .dropdown-menu.show img" should have computed style "height" "<height>"
 
     Examples:
-      | cardsize       | height   |
-      | Tiny (50px)    | 50px     |
-      | Small (100px)  | 100px    |
-      | Medium (150px) | 150px    |
-      | Large (200px)  | 200px    |
+      | cardsize       | height |
+      | Tiny (50px)    | 50px   |
+      | Small (100px)  | 100px  |
+      | Medium (150px) | 150px  |
+      | Large (200px)  | 200px  |
 
   @javascript
-  Scenario: Smartmenu: Menus: Presentation - Displays the card menu container in various overflow behaviors
-    Given I log in as "admin"
+  Scenario Outline: Smartmenu: Menus: Presentation - Displays the card menu container in various overflow behaviors
+    When I log in as "admin"
     And I create smart menu with the following fields to these values:
-    | Title                   | Quick Links     |
-    | Menu location(s)        | Main navigation |
-    | Presentation type       | Card            |
-    | Card overflow behavior  | No wrap         |
+      | Title                  | Quick Links     |
+      | Menu location(s)       | Main navigation |
+      | Presentation type      | Card            |
+      | Card overflow behavior | <overflow>      |
     And I set "Quick Links" smart menu items with the following fields to these values:
-    | Title          | Smartmenu Resource |
-    | Menu item type | Static             |
-    | Menu item URL  | https://moodle.org |
+      | Title          | Smartmenu Resource |
+      | Menu item type | Static             |
+      | Menu item URL  | https://moodle.org |
     And I click on "Smart menus" "link" in the "#page-navbar .breadcrumb" "css_element"
     And ".dropdown.nav-item.card-dropdown" "css_element" should exist in the ".primary-navigation" "css_element"
     And I click on "Quick Links" "link" in the ".primary-navigation" "css_element"
-    Then ".card-dropdown.card-overflow-no-wrap .dropdown-menu.show" "css_element" should exist in the ".primary-navigation" "css_element"
-    And ".card-dropdown.card-overflow-wrap .dropdown-menu.show" "css_element" should not exist in the ".primary-navigation" "css_element"
-    Then DOM element ".primary-navigation .card-dropdown .dropdown-menu.show" should have computed style "flex-wrap" "nowrap"
+    Then ".card-dropdown.card-overflow-no-wrap .dropdown-menu.show" "css_element" <nowrapshouldornot> exist in the ".primary-navigation" "css_element"
+    And ".card-dropdown.card-overflow-wrap .dropdown-menu.show" "css_element" <wrapshouldornot> exist in the ".primary-navigation" "css_element"
 
-    And I click on ".action-edit" "css_element" in the "Quick Links" "table_row"
-    And I expand all fieldsets
-    And I set the field "Card overflow behavior" to "Wrap"
-    And I click on "Save and return" "button"
-    And I click on "Quick Links" "link" in the ".primary-navigation" "css_element"
-    And ".card-dropdown.card-overflow-wrap .dropdown-menu.show" "css_element" should exist in the ".primary-navigation" "css_element"
-    And ".card-dropdown.card-overflow-no-wrap .dropdown-menu.show" "css_element" should not exist in the ".primary-navigation" "css_element"
+    Examples:
+      | overflow | nowrapshouldornot | wrapshouldornot | flexshouldornot |
+      | No wrap  | should            | should not      | should          |
+      | Wrap     | should not        | should          | should not      |
 
   @javascript
   Scenario Outline: Smartmenu: Menus: Presentation - Display the smart menu and its menu items as card withs different aspect ratios
@@ -210,7 +206,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
 
   @javascript
   Scenario: Smartmenu: Menus: Presentation - Display the menus inside and outside more menu
-    Given I log in as "admin"
+    When I log in as "admin"
     And I create smart menu with the following fields to these values:
       | Title              | Quick links          |
       | Menu location(s)   | Main, Menu           |

@@ -35,7 +35,6 @@ use Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_boost_union_base_smartmenus extends behat_base {
-
     /**
      * Open the smart menu listing page.
      *
