@@ -11,17 +11,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | fullname | shortname | category |
       | Test     | C1        | 0        |
     And the following "users" exist:
-      | username      |
-      | student1      |
-      | student2      |
-      | teacher       |
-      | coursemanager |
-      | systemmanager |
+      | username |
+      | student1 |
+      | student2 |
+      | teacher  |
     And the following "course enrolments" exist:
-      | user          | course | role           |
-      | teacher       | C1     | editingteacher |
-      | student1      | C1     | student        |
-      | coursemanager | C1     | manager        |
+      | user     | course | role           |
+      | teacher  | C1     | editingteacher |
+      | student1 | C1     | student        |
     And the following "cohorts" exist:
       | name     | idnumber |
       | Cohort 1 | CH1      |
@@ -46,10 +43,17 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
 
   @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on the user roles
-    Given the following "system role assigns" exist:
+    Given the following "users" exist:
+      | username      |
+      | coursemanager |
+      | systemmanager |
+    And the following "course enrolments" exist:
+      | user          | course | role    |
+      | coursemanager | C1     | manager |
+    And the following "system role assigns" exist:
       | user          | course               | role    |
       | systemmanager | Acceptance test site | manager |
-    And I navigate to smart menus
+    When I navigate to smart menus
     And I should see "Quick links" in the "smartmenus" "table"
     And I should see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
     And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
