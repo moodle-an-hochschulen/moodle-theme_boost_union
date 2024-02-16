@@ -239,7 +239,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | stackedlight | #courseheaderimage.courseheaderimage-light         | div.d-flex.align-items-center + #courseheaderimage | #courseheaderimage.courseheaderimage-dark  |
       | headingabove | div.d-flex.align-items-center + #courseheaderimage | #courseheaderimage.courseheaderimage-dark          | #courseheaderimage.courseheaderimage-light |
 
-  @javascript @testme
+  @javascript
   Scenario Outline: Setting: Course index - Display activity type icons in course index.
     Given the following config values are set as admin:
       | config                            | value      | plugin            |
