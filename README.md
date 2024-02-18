@@ -764,7 +764,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * Solent University, Mark Sharp: Code
 * Technische Universität Berlin, Lars Bonczek: Code
 * University of Graz, André Menrath: Code
-* University of Lübeck, Christian Wolters: Peer Review, Ideating
+* University of Lübeck, Christian Wolters: Code, Peer Review, Ideating
 * Zurich University of Applied Sciences (ZHAW): Funding, Ideating
 
 Additionally, we thank all other contributors who contributed ideas, feedback and code snippets within the Github issues and pull requests as well as all contributors who contributed additional translations in AMOS, the Moodle translation tool.
