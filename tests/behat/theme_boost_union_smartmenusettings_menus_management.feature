@@ -31,7 +31,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
       | Links | Main             |
     And I should see "Links" in the "smartmenus" "table"
     And ".smartmenu-actions" "css_element" should exist in the "smartmenus" "table"
-    And I should see "Links" in the "nav.moremenu" "css_element"
+    And I should see smart menu "Links" in location "Main"
 
   @javascript
   Scenario: Smart menus: Menus: Management - Edit an existing smart menu
@@ -88,8 +88,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I click on ".action-edit" "css_element" in the "table#smartmenus #smartmenus_r1" "css_element"
     And I set the field "Title" to "Useful Links"
     And I click on "Save and return" "button"
-    And I should see "Links" in the "nav.moremenu" "css_element"
-    Then I should see "Useful Links" in the "nav.moremenu" "css_element"
+    Then I should see smart menu "Links" in location "Main"
+    And I should see smart menu "Useful Links" in location "Main"
 
   @javascript
   Scenario: Smartmenus: Menus: Management - Modify the visibility of an existing smart menu
@@ -97,20 +97,20 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I navigate to smart menus
     And I click on "Create menu" "button"
     And I set the following fields to these values:
-      | Title            | Links |
-      | Menu location(s) | Main  |
+      | Title            | Links                    |
+      | Menu location(s) | Main, Menu, User, Bottom |
     And I click on "Save and return" "button"
     And I should see "Links" in the "smartmenus" "table"
     And ".action-hide" "css_element" should exist in the "Links" "table_row"
     And ".action-show" "css_element" should not exist in the "Links" "table_row"
-    And I should see "Links" in the "nav.moremenu" "css_element"
+    Then I should see smart menu "Links" in location "Main, Menu, User, Bottom"
     And ".action-hide" "css_element" should exist in the "Links" "table_row"
     And I click on ".action-hide" "css_element" in the "Links" "table_row"
-    Then I should not see "Links" in the "nav.moremenu" "css_element"
+    Then I should not see smart menu "Links" in location "Main, Menu, User, Bottom"
     And ".action-show" "css_element" should exist in the "Links" "table_row"
     And ".action-hide" "css_element" should not exist in the "Links" "table_row"
     And I click on ".action-show" "css_element" in the "Links" "table_row"
-    Then I should see "Links" in the "nav.moremenu" "css_element"
+    Then I should see smart menu "Links" in location "Main, Menu, User, Bottom"
 
   Scenario: Smartmenus: Menus: Management - Move an existing smart menu up and down
     When I log in as "admin"
