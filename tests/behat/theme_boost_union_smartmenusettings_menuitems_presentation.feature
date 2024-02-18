@@ -29,23 +29,17 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Link target                      | <setting>         |
     And I should see "Available courses" in the "smartmenus_items" "table"
     # Menu items in main navigation
-    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
-    And I should see "Test course1" in the ".primary-navigation" "css_element"
+    Then I should see smart menu "Quick links" item "Test course1" in location "Main"
     And the "target" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
     # Menu items in user menu.
-    And I click on "#user-menu-toggle" "css_element"
-    And I click on "Quick links" "link" in the "#usermenu-carousel" "css_element"
-    And I should see "Test course1" in the "#usermenu-carousel" "css_element"
+    And I should see smart menu "Quick links" item "Test course1" in location "User"
     And the "target" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
     # Menu items in bottom menu.
-    Then I change the viewport size to "740x900"
-    And I click on "Quick links" "link" in the ".bottom-navigation" "css_element"
-    And I should see "Test course1" in the ".bottom-navigation" "css_element"
+    Then I should see smart menu "Quick links" item "Test course1" in location "Bottom"
     And the "target" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
     Then I change the viewport size to "large"
     # Menu items in menubar.
-    And I click on "Quick links" "link" in the "nav.menubar" "css_element"
-    And I should see "Test course1" in the "nav.menubar" "css_element"
+    And I should see smart menu "Quick links" item "Test course1" in location "Menu"
     And the "target" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
 
     Examples:
@@ -96,9 +90,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Dynamic courses: Course name presentation | <selectnamefield> |
       | Dynamic courses: Number of words          | <numberofwords>   |
     And I should see "Available courses" in the "smartmenus_items" "table"
-    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
-    And I should see "<showntitle>" in the ".primary-navigation" "css_element"
-    And I should not see "<notshowntitle>" in the ".primary-navigation" "css_element"
+    And I should see smart menu "Quick links" item "<showntitle>" in location "Main, Menu, User, Bottom"
+    And I should not see smart menu "Quick links" item "<notshowntitle>" in location "Main, Menu, User, Bottom"
 
     Examples:
       | selectnamefield   | numberofwords | showntitle             | notshowntitle          |
@@ -322,21 +315,19 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I set the following fields to these values:
       | Title          | <span lang="en" class="multilang">Lorem ipsum</span><span lang="de" class="multilang">Dolor sit amet</span> |
       | Menu item type | Static                                                                                                      |
-      | URL            | https://moodle.org/foo                                                                                   |
+      | URL            | https://moodle.org/foo                                                                                      |
     And I click on "Save changes" "button"
     And I follow "Preferences" in the user menu
     And I click on "Preferred language" "link"
     And I set the field "Preferred language" to "English ‎(en)‎"
     And I press "Save changes"
     And I am on site homepage
-    And I click on "Quick links" "link" in the "nav.moremenu" "css_element"
-    Then I should see "Lorem ipsum" in the "nav.moremenu" "css_element"
-    And I should not see "Dolor sit amet" in the "nav.moremenu" "css_element"
+    Then I should see smart menu "Quick links" item "Lorem ipsum" in location "Main, Menu, User, Bottom"
+    And I should not see smart menu "Quick links" item "Dolor sit amet" in location "Main, Menu, User, Bottom"
     And I follow "Preferences" in the user menu
     And I click on "Preferred language" "link"
     And I set the field "Preferred language" to "Deutsch ‎(de)‎"
     And I press "Save changes"
     And I am on site homepage
-    And I click on "Quick links" "link" in the "nav.moremenu" "css_element"
-    Then I should see "Dolor sit amet" in the "nav.moremenu" "css_element"
-    And I should not see "Lorem ipsum" in the "nav.moremenu" "css_element"
+    Then I should see smart menu "Quick links" item "Dolor sit amet" in location "Main, Menu, User, Bottom"
+    And I should not see smart menu "Quick links" item "Lorem ipsum" in location "Main, Menu, User, Bottom"
