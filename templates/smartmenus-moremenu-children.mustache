@@ -15,7 +15,10 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template core/moremenu_children
+    @template  theme_boost_union/smartmenus-moremenu-children
+
+    The smart menus more menu children.
+    This is a modified version of core/moremenu_children.
 
     The More menu children
 
@@ -31,7 +34,7 @@
     }
 }}
 {{!
-    This template is a modified version of core/moremenu
+    This template is a modified version of core/moremenu_children
 
     Modifications compared to the original template:
     * Added smart menu styles, icons, headings, tooltips etc.
@@ -79,7 +82,7 @@
                     {{#haschildren}}
                         <ul>
                             {{#children}}
-                                {{> core/moremenu_children}}
+                                {{> theme_boost_union/smartmenus-moremenu-children}}
                             {{/children}}
                         </ul>
                     </div>
