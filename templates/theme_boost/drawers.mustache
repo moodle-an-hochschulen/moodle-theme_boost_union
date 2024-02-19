@@ -315,7 +315,7 @@ M.util.js_pending('theme_boost/loader');
 require(['theme_boost/loader', 'theme_boost/drawer'{{#regions.offcanvas.hasblocks}},'theme_boost_union/offcanvas'{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, 'theme_boost_union/smartmenu'{{/includesmartmenu}}], function(Loader, Drawer{{#regions.offcanvas.hasblocks}},OffCanvas{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, SmartMenu{{/includesmartmenu}}) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
-    {{#regions.offcanvas.hasblocks}}OffCanvas.init();{{/regions.offcanvas.hasblocks}}
-    {{#includesmartmenu}}SmartMenu.init();{{/includesmartmenu}}
+{{#regions.offcanvas.hasblocks}}OffCanvas.init();{{/regions.offcanvas.hasblocks}}
+{{#includesmartmenu}}SmartMenu.init();{{/includesmartmenu}}
 });
 {{/js}}

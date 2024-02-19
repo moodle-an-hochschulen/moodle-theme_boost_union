@@ -25,7 +25,7 @@
     Example context (json):
     {
         "mail": "Lorem ipsum",
-        "type": "html",
+        "type": "Html",
         "monospace": false
     }
 }}
@@ -38,20 +38,20 @@
 <div class="shadow p-3 my-5 bg-white rounded {{#monospace}}text-monospace{{/monospace}}" id="theme_boost_union-email{{type}}preview-host"></div>
 {{#js}}
     // Get the host element.
-    const theme_boost_union_email{{type}}preview_host = document.querySelector('#theme_boost_union-email{{type}}preview-host');
+    const themeBoostUnionEmail{{type}}PreviewHost = document.querySelector('#theme_boost_union-email{{type}}preview-host');
 
     // Only if the host element exists on this page.
-    if (typeof(theme_boost_union_email{{type}}preview_host) != 'undefined' && theme_boost_union_email{{type}}preview_host != null) {
+    if (typeof (themeBoostUnionEmail{{type}}PreviewHost) != 'undefined' && themeBoostUnionEmail{{type}}PreviewHost !== null) {
         // If the browser supports Shadow DOM.
         if (document.body.attachShadow) {
             // Add the email content within a Shadow DOM.
-            const theme_boost_union_email{{type}}preview_shadow = theme_boost_union_email{{type}}preview_host.attachShadow({ mode: "open" });
-            const theme_boost_union_email{{type}}preview_template = document.getElementById('theme_boost_union-email{{type}}preview-shadow');
-            theme_boost_union_email{{type}}preview_shadow.appendChild(theme_boost_union_email{{type}}preview_template.content);
+            const themeBoostUnionEmail{{type}}PreviewShadow = themeBoostUnionEmail{{type}}PreviewHost.attachShadow({mode: "open"});
+            const themeBoostUnionEmail{{type}}PreviewTemplate = document.getElementById('theme_boost_union-email{{type}}preview-shadow');
+            themeBoostUnionEmail{{type}}PreviewShadow.appendChild(themeBoostUnionEmail{{type}}PreviewTemplate.content);
         } else {
             // Add the email content without Shadow DOM (which will result in style bleeding anyway).
-            const theme_boost_union_email{{type}}preview_template = document.getElementById('theme_boost_union-email{{type}}preview-shadow');
-            theme_boost_union_email{{type}}preview_host.appendChild(theme_boost_union_email{{type}}preview_template.content);
+            const themeBoostUnionEmail{{type}}PreviewTemplate = document.getElementById('theme_boost_union-email{{type}}preview-shadow');
+            themeBoostUnionEmail{{type}}PreviewHost.appendChild(themeBoostUnionEmail{{type}}PreviewTemplate.content);
         }
     }
 {{/js}}

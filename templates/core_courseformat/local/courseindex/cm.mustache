@@ -99,20 +99,20 @@ if (document.body.classList.contains('hascourseindexcmicons')) {
         const observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 let node = mutation.target.childNodes[3];
-                if (node.id.startsWith('courseindex-cmicon-cplid-')){
-                    let completionel = document.getElementById(node.id);
+                if (node.id.startsWith('courseindex-cmicon-cplid-')) {
+                    let cplel = document.getElementById(node.id);
                     // Set the completion color for the icon based on the completion status.
-                    switch (node.dataset.value){
+                    switch (node.dataset.value) {
                         case 'NaN':
                             break;
                         case '0':
-                            completionel.closest('.courseindex-cmicon-container').classList.add('courseindex-cmicon-cpl-incomplete');
+                            cplel.closest('.courseindex-cmicon-container').classList.add('courseindex-cmicon-cpl-incomplete');
                             break;
                         case '1':
-                            completionel.closest('.courseindex-cmicon-container').classList.add('courseindex-cmicon-cpl-complete');
+                            cplel.closest('.courseindex-cmicon-container').classList.add('courseindex-cmicon-cpl-complete');
                             break;
                         case '3':
-                            completionel.closest('.courseindex-cmicon-container').classList.add('courseindex-cmicon-cpl-fail');
+                            cplel.closest('.courseindex-cmicon-container').classList.add('courseindex-cmicon-cpl-fail');
                             break;
                     }
                 }
