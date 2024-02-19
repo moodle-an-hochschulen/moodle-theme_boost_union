@@ -179,25 +179,25 @@ As text color, you can use the values "dark" or "light".
 
 You can declare texts for an arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.
 
-#### Login form
+##### Login form
 
-##### Login form position
+###### Login form position
 
 With this setting, you can optimize the login form to fit to a greater variety of background images. By default, the login form is displayed centered on the login page. Alternatively, you can move it to the left or to the right of the login page to let other parts of the background image shine through. Of course, you can also change this setting if no background images are uploaded at all.
 
-##### Login form transparency
+###### Login form transparency
 
 With this setting, you can make the login form slightly transparent to let the background image shine through even more.
 
-#### Login providers
+##### Login providers
 
-##### Local login
+###### Local login
 
 With this setting, you control if the local login form is shown on the login page or not. By default, the local login form is shown and users an login into the site as normal. If you disable this setting, the local login form is hidden. This allows you to just provide login buttons for external identity providers like OAuth2 or OIDC.
 
 Please note: As soon as you hide the local login form, you risk that admins cannot log in anymore with a local account if there is a problem with the external identity provider. To allow local logins anyway in such cases, a side entrance local login page is provided on /theme/boost_union/locallogin.php. On this side entrance local login page, all of Moodle's login security measures apply as well.
 
-##### IDP login intro
+###### IDP login intro
 
 With this setting, you control if the 'Log in using your account on' intro is shown above the IDP login buttons or not. By default, the intro is shown and users will be quickly informed what the IDP buttons are about. If you disable this setting, the IDP intro is hidden. This allows you to provide a clean user login interface if you just use external identity providers like OAuth2 or OIDC.
 
