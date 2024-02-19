@@ -24,9 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$navbarcolorsetting = get_config('theme_boost_union', 'navbarcolor');
-
 // Compose the navbar color classes based on the navbarcolor setting.
+$navbarcolorsetting = get_config('theme_boost_union', 'navbarcolor');
 switch($navbarcolorsetting) {
     case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK:
         $templatecontext['navbarcolorclasses'] = 'navbar-dark bg-dark';
@@ -41,4 +40,11 @@ switch($navbarcolorsetting) {
     default:
         $templatecontext['navbarcolorclasses'] = 'navbar-light bg-white';
         break;
+}
+
+// If an alternative logo link URL is set.
+$alternativelogolinkurlsetting = get_config('theme_boost_union', 'alternativelogolinkurl');
+if (!empty($alternativelogolinkurlsetting)) {
+    // Add the logo link URL to templatecontext.
+    $templatecontext['alternativelogolinkurl'] = $alternativelogolinkurlsetting;
 }
