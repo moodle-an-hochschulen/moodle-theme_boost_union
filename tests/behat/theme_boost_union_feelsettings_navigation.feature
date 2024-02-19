@@ -46,6 +46,23 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | home,myhome           | Home           | Dashboard           |
       | courses,siteadminnode | My courses     | Site administration |
 
+  Scenario Outline: Setting: Alternative logo link URL.
+    Given the following config values are set as admin:
+      | config                 | value     | plugin            |
+      | alternativelogolinkurl | <setting> | theme_boost_union |
+    And the following config values are set as admin:
+      # We set the start page to the Dashboard to be able to distinguish the used link URL by the '/my/' path later.
+      | config          | value |
+      | defaulthomepage | 1     |
+    When I log in as "admin"
+    And I am on homepage
+    Then the "href" attribute of ".navbar-brand" "css_element" should contain "<href>"
+
+    Examples:
+      | setting         | href            |
+      |                 | /my/            |
+      | https://foo.bar | https://foo.bar |
+
   @javascript
   Scenario Outline: Setting: Add preferred language link to language menu.
     Given the following "language packs" exist:

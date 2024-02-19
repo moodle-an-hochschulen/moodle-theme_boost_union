@@ -1316,6 +1316,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Setting: Alternative logo link URL.
+        $name = 'theme_boost_union/alternativelogolinkurl';
+        $title = get_string('alternativelogolinkurlsetting', 'theme_boost_union', null, true);
+        $description = get_string('alternativelogolinkurlsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+        $tab->add($setting);
+
         // Create user menu heading.
         $name = 'theme_boost_union/usermenuheading';
         $title = get_string('usermenuheading', 'theme_boost_union', null, true);
