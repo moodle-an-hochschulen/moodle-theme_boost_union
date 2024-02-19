@@ -125,6 +125,6 @@ M.util.js_pending('theme_boost/loader');
 require(['theme_boost/loader', 'theme_boost/drawer'{{#includesmartmenu}}, 'theme_boost_union/smartmenu'{{/includesmartmenu}}], function(Loader, Drawer{{#includesmartmenu}}, SmartMenu{{/includesmartmenu}}) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
-    {{#includesmartmenu}}SmartMenu.init();{{/includesmartmenu}}
+{{#includesmartmenu}}SmartMenu.init();{{/includesmartmenu}}
 });
 {{/js}}
