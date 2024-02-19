@@ -64,6 +64,7 @@
     * Removed the primary menu drawer hamburger menu, added bottom bar more section will help users to open the nav drawer.
     * Display the logo on mobile viewport. (removed d-none, changed d-md-flex to d-flex)
     * Added menu bar section.
+    * Added the possibility to use an alternative logo link URL.
 }}
 
 {{#menubar}}
@@ -80,7 +81,7 @@
     </button>
     {{/bottombar.drawer}}
 
-    <a href="{{{ config.homeurl }}}" class="navbar-brand align-items-center m-0 mr-4 p-0 aabtn {{#bottombar.drawer}} d-flex {{/bottombar.drawer}} {{^bottombar.drawer}} d-none d-md-flex {{/bottombar.drawer}} ">
+    <a href="{{#alternativelogolinkurl}}{{{alternativelogolinkurl}}}{{/alternativelogolinkurl}}{{^alternativelogolinkurl}}{{{ config.homeurl }}}{{/alternativelogolinkurl}}" class="navbar-brand align-items-center m-0 mr-4 p-0 aabtn {{#bottombar.drawer}} d-flex {{/bottombar.drawer}} {{^bottombar.drawer}} d-none d-md-flex {{/bottombar.drawer}} ">
 
         {{# output.should_display_navbar_logo }}
             <img src="{{output.get_compact_logo_url}}" class="logo mr-1" alt="{{sitename}}">
