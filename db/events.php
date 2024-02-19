@@ -81,5 +81,8 @@ $observers = [
                 'eventname' => 'core\event\course_category_updated',
                 'callback' => '\theme_boost_union\eventobservers::category_updated',
         ],
-
+        [
+                'eventname' => 'core_customfield\event\field_deleted',
+                'callback' => '\theme_boost_union\eventobservers::customfield_deleted',
+        ],
 ];

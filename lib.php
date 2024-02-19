@@ -599,3 +599,46 @@ function theme_boost_union_user_preferences(): array {
     }
     return $preferences;
 }
+
+/**
+ * Update course format custom fields.
+ *
+ * Settings callback for updating the corresponding custom fields.
+ * @param string $fullname
+ */
+function update_course_format_custom_field(string $fullname): void {
+    $fieldsmgr = \theme_boost_union\courseformat\customfield_manager::getinstance();
+
+    $items = preg_split('/_/', $fullname);
+    $setting = end($items);
+
+    $value = get_config('theme_boost_union', 'cf_' . $setting) == THEME_BOOST_UNION_SETTING_SELECT_YES;
+
+    $fieldkeys = [];
+    switch ($setting) {
+        case 'topicsalwaysshowsectionsummaryoverride':
+            $fieldkeys[] = \theme_boost_union\courseformat\customfield_manager::CUSTOM_FIELD_TOPICS_ALWAYSSHOWSUMMARY;
+            break;
+        case 'topicsalwaysshowinitialsectionoverride':
+            $fieldkeys[] = \theme_boost_union\courseformat\customfield_manager::CUSTOM_FIELD_TOPICS_ALWAYSSHOWINITIALSECTION;
+            // Also updated/create "Hide Title" field.
+            $fieldkeys[] = \theme_boost_union\courseformat\customfield_manager::CUSTOM_FIELD_TOPICS_HIDETITLE;
+            break;
+        case 'weeklyalwaysshowsectionsummaryoverride':
+            $fieldkeys[] = \theme_boost_union\courseformat\customfield_manager::CUSTOM_FIELD_WEEKLY_ALWAYSSHOWSUMMARY;
+            break;
+        case 'weeklyalwaysshowinitialsectionoverride':
+            $fieldkeys[] = \theme_boost_union\courseformat\customfield_manager::CUSTOM_FIELD_WEEKLY_ALWAYSSHOWINITIALSECTION;
+            // Also updated/create "Hide Title" field.
+            $fieldkeys[] = \theme_boost_union\courseformat\customfield_manager::CUSTOM_FIELD_WEEKLY_HIDETITLE;
+            break;
+    }
+
+    foreach ($fieldkeys as $fieldkey) {
+        $fieldsmgr->update_field_with_name(
+            $fieldkey,
+            $value
+        );
+    }
+}
+

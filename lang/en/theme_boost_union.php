@@ -255,6 +255,36 @@ $string['courseindexcompletioninfopositionendofline'] = 'End of line';
 $string['courseindexcompletioninfopositioniconcolor'] = 'Icon color';
 $string['courseindexcompletioninfopositionstartofline'] = 'Start of line';
 
+// Settings : Course format tab.
+$string['cf:tab'] = 'Course format';
+// ... Section: Course format Topics.
+$string['cf:topicsheading'] = 'Topics format';
+$string['cf:weeklyheading'] = 'Weekly format';
+// ... ... Setting: Always show summary.
+$string['cf:alwaysshowsectionsummary'] = 'Always show section summary';
+$string['cf:alwaysshowsectionsummary_desc'] = 'Always displays the section summary in all courses regardless of whether the section is collapsed or not.';
+// ... ... Setting: Always show summary per course instance override.
+$string['cf:alwaysshowsectionsummaryoverride'] = 'Allow override per course instance';
+$string['cf:alwaysshowsectionsummaryoverride_desc'] = 'Allow override "show section summary" setting per course instance';
+// ... ... Setting: Always show inital section.
+$string['cf:alwaysshowinitialsection'] = 'Always show initial section';
+$string['cf:alwaysshowinitialsection_desc'] = 'Always displays the initial/first course section.';
+// ... ... Setting: Hide title from initial section
+$string['cf:hidetitle'] = 'Hide title from initial section';
+$string['cf:hidetitle_desc'] = 'Hide title from initial section when initial section is always shown';
+// ... ... Setting: Always show inital section per course instance override.
+$string['cf:alwaysshowinitialsectionoverride'] = 'Allow override per course instance';
+$string['cf:alwaysshowinitialsectionoverride_desc'] = 'Allow override "always display initial/first course section" setting per course instance';
+
+// ... ... Custom category.
+$string['cf:topicscategoryname'] = 'Boost Union Topics Format Settings';
+$string['cf:weeklycategoryname'] = 'Boost Union Weekly Format Settings';
+// ... ... Custom course fields.
+$string['cf:alwaysshowsectionsummary_fieldname'] = 'Always show section summary';
+$string['cf:alwaysshowinitialsection_fieldname'] = 'Always show initial/first course section';
+$string['cf:hidetitle_fieldname'] = 'Hide title from initial section';
+$string['cf:hidetitle_fieldname_desc'] = 'The "Hide title" feature only works in conjunction with the active setting "Always show initial/first course section"';
+
 // Settings: E-Mail branding tab.
 $string['emailbrandingtab'] = 'E-Mail branding';
 $string['templateemailhtmlprefix'] = '';

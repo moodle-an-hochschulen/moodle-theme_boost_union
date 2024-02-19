@@ -1,0 +1,25 @@
+.topics,
+.weeks {
+
+    .calc-height {
+        height: 0;
+        overflow: hidden;
+        display: block;
+    }
+
+    .move {
+        transition: padding 400ms ease-in-out;
+    }
+
+    .summarytext {
+        &.move-in {
+            @extend .move;
+            padding-left: 45px;
+        }
+
+        &.move-out {
+            @extend .move;
+            padding-left: 0;
+        }
+    }
+}
