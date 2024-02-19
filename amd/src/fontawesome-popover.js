@@ -47,8 +47,8 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
 
     /**
      * Filter the icons in the list with values which the user entered in the search input.
-     * Given input will contain the text in both aria-value and aria-label.
-     * Ex. "core:t\document" is aria-value and "fa-document" is aria-label.
+     * Given input will contain the text in both data-value and data-label.
+     * Ex. "core:t\document" is data-value and "fa-document" is data-label.
      *
      * @param {Element} target
      */
@@ -62,8 +62,8 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
         var li = ul.querySelectorAll('li');
 
         for (var i = 0; i < li.length; i++) {
-            var value = li[i].getAttribute('aria-value');
-            var label = li[i].getAttribute('aria-label');
+            var value = li[i].getAttribute('data-value');
+            var label = li[i].getAttribute('data-label');
             if (!value.toLowerCase().includes(filter) && !label.toLowerCase().includes(filter)) {
                 li[i].style.display = "none";
             } else {
@@ -140,19 +140,20 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
                 html: true,
                 placement: 'bottom',
                 customClass: 'fontawesome-picker',
-                trigger: 'click'
+                trigger: 'click',
+                sanitize: false
             });
 
             // Event observer when the popover is inserted in DOM, create event listner for each icon in icons list.
-            // Icon is clicked, set the icon aria-value as value for select box.
+            // Icon is clicked, set the icon data-value as value for select box.
             // Set the icon label to value of autocomplete picker.
             $(pickerInput).on('inserted.bs.popover', function() {
                 var ul = document.querySelector('.fontawesome-iconpicker-popover ul.fontawesome-icon-suggestions');
                 ul.querySelectorAll('li').forEach((li) => {
                     li.addEventListener('click', (e) => {
                         var target = e.target.closest('li');
-                        var value = target.getAttribute('aria-value');
-                        var label = target.getAttribute('aria-label');
+                        var value = target.getAttribute('data-value');
+                        var label = target.getAttribute('data-label');
                         pickerInput.value = label;
                         SELECTBOX.value = value || 0;
                         $(pickerInput).popover('hide');
@@ -188,12 +189,12 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
             // Add class to selected icon, helps to differentiate.
             if (pickerInput.value != '') {
                 var iconSuggestion = document.querySelector('.fontawesome-iconpicker-popover ul.fontawesome-icon-suggestions');
-                if (iconSuggestion.querySelector('li[aria-label="' + pickerInput.value + '"]') !== null) {
+                if (iconSuggestion.querySelector('li[data-label="' + pickerInput.value + '"]') !== null) {
                     // Remove selected class.
                     iconSuggestion.querySelectorAll('li').forEach((li) =>
                             li.classList.remove('selected'));
                     // Assign selected class for new.
-                    iconSuggestion.querySelector('li[aria-label="' + pickerInput.value + '"]').classList.add('selected');
+                    iconSuggestion.querySelector('li[data-label="' + pickerInput.value + '"]').classList.add('selected');
                 }
             }
         });
