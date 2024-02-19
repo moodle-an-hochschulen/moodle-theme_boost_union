@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r19
 
 * 2024-02-18 - Make codechecker happier
 * 2024-02-17 - Test: Use custom step to check the menus and menu items existence, resolves #365.
