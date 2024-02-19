@@ -35,20 +35,20 @@
     * Adding unique ID to completion span to handle data value changes within the 'Display activity type icons in course index' feature.
 }}
 {{#iscomplete}}
-    <span id="courseindex-cmicon-cplid-{{uniqid}}" class="completioninfo completion_complete" data-for="cm_completion" data-value="{{state}}">
+    <span id="courseindex-cmicon-cplid-{{uniqid}}-complete" class="completioninfo completion_complete" data-for="cm_completion" data-value="{{state}}">
         {{#pix}} t/completion_complete, moodle, {{#str}} done, completion {{/str}} {{/pix}}
     </span>
 {{/iscomplete}}
 {{#isincomplete}}
-    <span id="courseindex-cmicon-cplid-{{uniqid}}" class="completioninfo completion_incomplete" data-for="cm_completion" data-value="{{state}}">
+    <span id="courseindex-cmicon-cplid-{{uniqid}}-incomplete" class="completioninfo completion_incomplete" data-for="cm_completion" data-value="{{state}}">
         {{#pix}} t/completion_incomplete, moodle, {{#str}} todo, completion {{/str}} {{/pix}}
     </span>
 {{/isincomplete}}
 {{#isfail}}
-    <span id="courseindex-cmicon-cplid-{{uniqid}}" class="completioninfo completion_fail" data-for="cm_completion" data-value="{{state}}">
+    <span id="courseindex-cmicon-cplid-{{uniqid}}-fail" class="completioninfo completion_fail" data-for="cm_completion" data-value="{{state}}">
         {{#pix}} t/completion_fail, moodle, {{#str}} failed, completion {{/str}} {{/pix}}
     </span>
 {{/isfail}}
 {{^hasstate}}
-    <span id="courseindex-cmicon-cplid-{{uniqid}}" class="completioninfo completion_none" data-for="cm_completion" data-value="{{state}}"></span>
+    <span id="courseindex-cmicon-cplid-{{uniqid}}-none" class="completioninfo completion_none" data-for="cm_completion" data-value="{{state}}"></span>
 {{/hasstate}}
