@@ -915,7 +915,7 @@ function theme_boost_union_get_emailbrandinghtmlpreview() {
     $mail = $OUTPUT->render_from_template('core/email_html', $mailtemplatecontext);
 
     // And compose mail preview.
-    $previewtemplatecontext = ['mail' => $mail, 'type' => 'html', 'monospace' => false];
+    $previewtemplatecontext = ['mail' => $mail, 'type' => 'Html', 'monospace' => false];
     $preview = $OUTPUT->render_from_template('theme_boost_union/emailpreview', $previewtemplatecontext);
 
     return $preview;
@@ -946,7 +946,7 @@ function theme_boost_union_get_emailbrandingtextpreview() {
     $mail = nl2br($OUTPUT->render_from_template('core/email_text', $mailtemplatecontext));
 
     // And compose mail preview.
-    $previewtemplatecontext = ['mail' => $mail, 'type' => 'text', 'monospace' => true];
+    $previewtemplatecontext = ['mail' => $mail, 'type' => 'Text', 'monospace' => true];
     $preview = $OUTPUT->render_from_template('theme_boost_union/emailpreview', $previewtemplatecontext);
 
     return $preview;

@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-02-18 - Make codechecker happier
 * 2024-02-17 - Test: Use custom step to check the menus and menu items existence, resolves #365.
 * 2024-02-12 - Feature: Allow the admin to display activity icons in course content navigation, resolves #16.
 * 2024-02-11 - Child theme support: Improve namespace of class smartmenu_helper, resolves #494.
