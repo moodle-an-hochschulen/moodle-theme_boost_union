@@ -311,6 +311,10 @@ In this tab there are the following settings:
 
 With this setting, you can hide one or multiple nodes from the primary navigation.
 
+###### Alternative logo link URL
+
+With this setting, you can set an alternative link URL which will be used as link on the logo in the navigation bar. You can use this setting to, for example, link to your organization's website instead of the Moodle frontpage to maintain a homogeneous navigation bar throughout all of your organization's systems.
+
 ##### User menu
 
 ###### Add preferred language link to language menu
