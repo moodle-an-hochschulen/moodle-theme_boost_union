@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-02-21 - Bugfix: Single activity format contained unnecessary second level of navigation items, resolves #415.
+
 ### v4.3-r6
 
 * 2024-02-18 - Make codechecker happier

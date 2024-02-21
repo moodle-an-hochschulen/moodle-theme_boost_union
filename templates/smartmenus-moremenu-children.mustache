@@ -15,9 +15,10 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template core/moremenu_children
+    @template theme_boost_union/smartmenus-moremenu-children
 
-    The More menu children
+    The smart menus more menu children.
+    This is a modified version of core/moremenu_children.
 
     Example context (json):
     {
@@ -31,21 +32,28 @@
     }
 }}
 {{#haschildren}}
-    <li class="dropdown nav-item" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+    <li class="dropdown nav-item {{#menuclasses}}{{.}} {{/menuclasses}} " role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
         <a class="dropdown-toggle nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}" id="drop-down-{{moremenuid}}" role="menuitem" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" href="#" aria-controls="drop-down-menu-{{moremenuid}}"
-            {{#title}}title="{{.}}"{{/title}}
+            {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+            {{#attributes}}{{name}}="{{value}}" {{/attributes}}
             {{#isactive}}aria-current="true"{{/isactive}}
             {{^isactive}}tabindex="-1"{{/isactive}}
         >
             {{{text}}}
         </a>
         <div class="dropdown-menu" role="menu" id="drop-down-menu-{{moremenuid}}" aria-labelledby="drop-down-{{moremenuid}}">
+            {{#helpicon}}<div class="menu-helpicon">{{{helpicon}}}</div>{{/helpicon}}
+            {{#abovehelptext}}<div class="menu-description">{{{helptext}}}</div>{{/abovehelptext}}
             {{#children}}
                 {{^divider}}
+                    {{#haschildren}}
+                    <div class="dropdown-submenu" role="none" >
+                    {{/haschildren}}
                     {{#is_action_link}}
-                        <a class="dropdown-item" role="menuitem" {{#actionattributes}}{{name}}="{{value}}" {{/actionattributes}} href="{{{url}}}{{{action}}}"
-                            {{#title}}title="{{.}}"{{/title}}
+                        <a class="dropdown-item {{#itemdata.classes}}{{.}} {{/itemdata.classes}}" role="menuitem" {{#actionattributes}}{{name}}="{{value}}" {{/actionattributes}} href="{{{url}}}{{{action}}}"
+                            {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                            {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                             data-disableactive="true" tabindex="-1"
                         >
                             {{{text}}}
@@ -55,26 +63,37 @@
                         {{/action_link_actions}}
                     {{/is_action_link}}
                     {{^is_action_link}}
-                        <a class="dropdown-item" role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}} tabindex="-1"
-                            {{#title}}title="{{.}}"{{/title}}
+                        <a class="dropdown-item {{#itemdata.classes}}{{.}} {{/itemdata.classes}}" role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}} tabindex="-1"
+                            {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                            {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                         >
                             {{{text}}}
                         </a>
                     {{/is_action_link}}
+                    {{#haschildren}}
+                        <ul>
+                            {{#children}}
+                                {{> theme_boost_union/smartmenus-moremenu-children}}
+                            {{/children}}
+                        </ul>
+                    </div>
+                    {{/haschildren}}
                 {{/divider}}
                 {{#divider}}
                     <div class="dropdown-divider"></div>
                 {{/divider}}
             {{/children}}
+            {{#belowhelptext}}<div class="menu-description">{{{helptext}}}</div>{{/belowhelptext}}
         </div>
     </li>
 {{/haschildren}}
 {{^haschildren}}
-    <li data-key="{{key}}" class="nav-item" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+    <li data-key="{{key}}" class="nav-item {{#menuclasses}}{{.}} {{/menuclasses}}" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
         {{#istablist}}
             {{#is_action_link}}
                 <a role="tab" class="nav-link {{#classes}}{{.}} {{/classes}}" href="{{tab}}" data-toggle="tab" data-text="{{{text}}}" data-disableactive="true" tabindex="-1"
-                    {{#title}}title="{{.}}"{{/title}}
+                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                    {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                 >
                     {{{text}}}
                 </a>
@@ -85,7 +104,8 @@
             {{^is_action_link}}
                 <a role="tab" class="nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}"
                     href="{{tab}}" data-toggle="tab" data-text="{{{text}}}"
-                    {{#title}}title="{{.}}"{{/title}}
+                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                    {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                     {{#isactive}}aria-selected="true"{{/isactive}}
                     {{^isactive}}tabindex="-1"{{/isactive}}
                 >
@@ -95,8 +115,9 @@
         {{/istablist}}
         {{^istablist}}
             {{#is_action_link}}
-                <a role="menuitem" class="nav-link {{#classes}}{{.}} {{/classes}}" {{#actionattributes}}{{name}}="{{value}}" {{/actionattributes}} href="{{{url}}}{{{action}}}"
-                    {{#title}}title="{{.}}"{{/title}}
+                <a role="menuitem" class="nav-link {{#itemdata.classes}}{{.}} {{/itemdata.classes}} {{#classes}}{{.}} {{/classes}}" {{#actionattributes}}{{name}}="{{value}}" {{/actionattributes}} href="{{{url}}}{{{action}}}"
+                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                    {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                     data-disableactive="true" tabindex="-1"
                 >
                     {{{text}}}
@@ -106,9 +127,10 @@
                 {{/action_link_actions}}
             {{/is_action_link}}
             {{^is_action_link}}
-                <a role="menuitem" class="nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}"
+                <a role="menuitem" class="nav-link {{#itemdata.classes}}{{.}} {{/itemdata.classes}} {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}"
                     href="{{{url}}}{{{action}}}"
-                    {{#title}}title="{{.}}"{{/title}}
+                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                    {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                     {{#isactive}}aria-current="true"{{/isactive}}
                     {{^isactive}}tabindex="-1"{{/isactive}}
                 >
