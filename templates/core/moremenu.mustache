@@ -49,7 +49,7 @@
     This template is a modified version of core/moremenu
 
     Modifications compared to the original template:
-    * Add card style menu.
+    * Use separate templates for children menu types (list style and card style menu).
 }}
 <nav class="moremenu navigation">
     <ul id="moremenu-{{moremenuid}}-{{navbarstyle}}" role="{{#istablist}}tablist{{/istablist}}{{^istablist}}menubar{{/istablist}}" class="nav more-nav {{navbarstyle}}">
@@ -59,11 +59,11 @@
             {{/children}}
         {{/nodecollection}}
         {{#nodearray}}
-        {{!-- Menu with card style --}}
+            {{!-- Menu with card style --}}
             {{#card}}
                 {{> theme_boost_union/smartmenus-cardmenu-children}}
             {{/card}}
-
+            {{!-- Menu with list style --}}
             {{^card}}
                 {{> theme_boost_union/smartmenus-moremenu-children}}
             {{/card}}

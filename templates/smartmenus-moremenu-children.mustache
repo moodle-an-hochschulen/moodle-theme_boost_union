@@ -15,12 +15,10 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template  theme_boost_union/smartmenus-moremenu-children
+    @template theme_boost_union/smartmenus-moremenu-children
 
     The smart menus more menu children.
     This is a modified version of core/moremenu_children.
-
-    The More menu children
 
     Example context (json):
     {
@@ -32,13 +30,6 @@
         "title": "Moodle community",
         "url": "https://moodle.org"
     }
-}}
-{{!
-    This template is a modified version of core/moremenu_children
-
-    Modifications compared to the original template:
-    * Added smart menu styles, icons, headings, tooltips etc.
-    * Added smart menu submenu support.
 }}
 {{#haschildren}}
     <li class="dropdown nav-item {{#menuclasses}}{{.}} {{/menuclasses}} " role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
