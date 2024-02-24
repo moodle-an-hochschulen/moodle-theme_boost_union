@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.3-r8
 
 * 2024-02-22 - Feature: Allow the admin to change the link behind the logo in the navbar, resolves #565.
 * 2024-02-22 - Feature: Allow administrators to change the order of login items on the login page without using CSS or touching the mustache template, resolves #504.
