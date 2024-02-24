@@ -398,6 +398,9 @@ $string['usermenuheading'] = 'User menu';
 $string['addpreferredlangsetting'] = 'Add preferred language link to language menu';
 $string['addpreferredlangsetting_desc'] = 'With this setting, you can add a \'Set preferred language\' setting to the language menu within the user menu. Understandably, this setting is only processed if the setting <a href="{$a->url1}">Display language menu</a> is enabled, and if at least <a href="{$a->url2}">a second language pack is installed</a> and <a href="{$a->url3}">offered for selection</a>.';
 $string['setpreferredlanglink'] = 'Set preferred language';
+// ... ... Settings: show a popover menu with starred courses next to the messages and notifications menus.
+$string['shownavbarstarredcoursessetting'] = 'Show starred courses in primary navigation bar';
+$string['shownavbarstarredcoursessetting_desc'] = 'Show a popover menu with links to starred courses next to the messages and notifications menus.';
 // ... Section: Breadcrumbs.
 $string['breadcrumbsheading'] = 'Breadcrumbs';
 // ... ... Setting: Course category breadcrumb.
