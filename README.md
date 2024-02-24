@@ -321,6 +321,10 @@ With this setting, you can set an alternative link URL which will be used as lin
 
 With this setting, you can add a 'Set preferred language' setting to the language menu within the user menu. Understandably, this setting is only processed if the language menu is enabled at all.
 
+###### Show starred courses in primary navigation bar
+
+With this setting, you can show a popover menu with links to starred courses next to the messages and notifications menus.
+
 ##### Breadcrumbs
 
 ###### Display the category breadcrumbs in the course header
@@ -774,5 +778,6 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * University of Graz, André Menrath: Code
 * University of Lübeck, Christian Wolters: Code, Peer Review, Ideating
 * Zurich University of Applied Sciences (ZHAW): Funding, Ideating
+* Academic Moodle Cooperation (AMC): Code, Ideating
 
 Additionally, we thank all other contributors who contributed ideas, feedback and code snippets within the Github issues and pull requests as well as all contributors who contributed additional translations in AMOS, the Moodle translation tool.
