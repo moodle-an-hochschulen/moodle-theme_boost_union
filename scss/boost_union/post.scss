@@ -473,6 +473,43 @@ body.hascourseindexcplsol.editing {
 }
 
 /*---------------------------------------
+ * Setting: show a popover menu with starred courses next to the messages and notifications menus.
+ --------------------------------------*/
+.navbar #nav-favourites-popover-container {
+    .popover-region-container {
+        height: auto;
+        /* Limit the width to some reasonable size to avoid that the popover menu is too wide. */
+        max-width: 78vw;
+        border-radius: 0.5rem;
+        right: -5vw;
+        width: auto;
+        @include media-breakpoint-down(lg) {
+            max-width: 73vw;
+        }
+        @include media-breakpoint-down(md) {
+            max-width: 68vw;
+        }
+        @include media-breakpoint-down(xs) {
+            right: -35vw;
+            top: 60px;
+        }
+        /* Hide overflowing course names. */
+        .dropdown-item {
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    .popover-region-header-container {
+        display: none;
+    }
+    .popover-region-content-container {
+        height: auto;
+        min-width: 10rem;
+    }
+}
+
+
+/*---------------------------------------
  * Setting: Back to top button.
  --------------------------------------*/
 
