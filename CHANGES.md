@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-03-01 - Improvement: implement new setting to show starred courses in a popover menu in navbar, solves #289.
+
 ### v4.2-r11
 
 * 2024-02-22 - Feature: Allow the admin to change the link behind the logo in the navbar, resolves #565.

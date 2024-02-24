@@ -1,0 +1,27 @@
+{{< core/popover_region }}
+    {{$classes}}popover-region-favourites{{/classes}}
+    {{$attributes}}id="nav-favourites-popover-container" {{/attributes}}
+
+    {{$togglelabel}}{{#str}} favourites {{/str}}{{/togglelabel}}
+    {{$togglecontent}}
+        <i class="fa fa-star icon" title="{{#str}}favourites{{/str}}"></i>
+    {{/togglecontent}}
+
+    {{$containerlabel}}{{#str}} favourites {{/str}}{{/containerlabel}}
+
+
+    {{$content}}
+        <div class="">
+            {{#favourites}}
+                <a class="dropdown-item {{^visible}}dimmed{{/visible}}" href="{{{url}}}" title="{{{fullname}}}">{{{fullname}}}</a>
+            {{/favourites}}
+        </div>
+    {{/content}}
+{{/ core/popover_region }}
+
+{{#js}}
+    require(['jquery', 'core/popover_region_controller'], function($, Controller) {
+        var container = $('#nav-favourites-popover-container');
+        var controller = new Controller(container);
+    });
+{{/js}}
