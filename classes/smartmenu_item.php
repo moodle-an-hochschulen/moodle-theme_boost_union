@@ -1224,10 +1224,20 @@ class smartmenu_item {
             $fieldid = $field->get('id');
             $field = \core_customfield\field_controller::create($fieldid);
             $data = \core_customfield\api::get_instance_fields_data([$fieldid => $field], 0);
+            $istextarea = $field->get('type') == 'textarea';
+            // If textarea adjust the shortname to include _editor.
+            if ($istextarea) {
+                $shortname .= "_editor";
+            }
             if (isset($data[$fieldid])) {
                 $data = $data[$fieldid];
                 $data->instance_form_definition($mform);
                 $elem = $mform->getElement("customfield_".$shortname);
+                // If field is a textarea we'll remove the element and re-add it in a group as textareas can't be conditionally hidden.
+                if ($istextarea) {
+                    $mform->removeElement("customfield_" . $shortname);
+                    $mform->addGroup([$elem], "group_customfield_" . $shortname, $elem->getLabel());
+                }
                 // Remove the rules for custom fields.
                 if (isset($mform->_rules["customfield_".$shortname])) {
                     unset($mform->_rules["customfield_".$shortname]);
@@ -1252,7 +1262,12 @@ class smartmenu_item {
                     $mform->setDefault("customfield_".$shortname, 0);
                 }
 
-                $mform->hideif("customfield_".$shortname, 'type', 'neq', self::TYPEDYNAMIC);
+                // Conditionally hide text area group if needed
+                if ($istextarea) {
+                    $mform->hideif("group_customfield_" . $shortname, 'type', 'neq', self::TYPEDYNAMIC);
+                } else {
+                    $mform->hideif("customfield_" . $shortname, 'type', 'neq', self::TYPEDYNAMIC);
+                }
             }
         }
 
