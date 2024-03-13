@@ -1869,48 +1869,95 @@ function theme_boost_union_yesno_to_boolstring($var) {
 }
 
 /**
- * Function that fetches all favorite courses, and renders them as a popover menu.
+ * Returns the HTML code for the starred courses popover.
+ * It fetches all favorite courses and renders them as a popover menu.
  *
- * @return string HTML to display the main header.
+ * This function is copied and modified from block_starredcourses_external::get_starred_courses()
+ *
+ * @return string HTML to display in the navbar.
  */
-function theme_boost_union_get_favourites_popover_menu() {
-    global $USER, $DB, $OUTPUT;
-    // Menu is relevant only for logged in users.
-    if (isloggedin()) {
-        $settings = get_config('theme_boost_union');
-        if (!isset($settings->shownavbarstarredcourses) || $settings->shownavbarstarredcourses == 'no') {
-            return '';
-        }
-        // Get all favourite courses.
-        $ufservice = \core_favourites\service_factory::get_service_for_user_context(\context_user::instance($USER->id));
-        $favourites = $ufservice->find_favourites_by_type('core_course', 'courses');
-        if (!$favourites) {
-            return '';
-        }
-        $favouritecourseids = array_map(
-            function($favourite) {
-                return $favourite->itemid;
-            }, $favourites);
-        $coursefields = 'id, shortname, fullname, visible';
-        $courses = $DB->get_records_list('course', 'id', $favouritecourseids, 'visible DESC,sortorder ASC', $coursefields);
+function theme_boost_union_get_navbar_starredcoursespopover() {
+    global $USER, $OUTPUT;
 
-        // Sort courses by visibility and name.
-        usort($courses, function($a, $b) {
-            if ($a->visible != $b->visible) {
-                return $a->visible == 0 ? 1 : -1;
-            }
-            return strcasecmp(trim($a->fullname), trim($b->fullname));
-        });
-        $menu = [];
-        foreach ($courses as $course) {
-            $menu[] = [
+    // The popover is relevant only for logged-in users. If the user is not logged in, return directly.
+    if (!isloggedin()) {
+        return '';
+    }
+
+    // If the popover is disabled, return directly.
+    $setting = get_config('theme_boost_union', 'shownavbarstarredcourses');
+    if (!isset($setting) || $setting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        return '';
+    }
+
+    // Get the user context.
+    $usercontext = context_user::instance($USER->id);
+
+    // Get the user favourites service, scoped to a single user (their favourites only).
+    $userservice = \core_favourites\service_factory::get_service_for_user_context($usercontext);
+
+    // Get the favourites, by type, for the user.
+    $favourites = $userservice->find_favourites_by_type('core_course', 'courses');
+
+    // If there aren't any favourite courses, return directly.
+    if (!$favourites) {
+        return '';
+    }
+
+    // Pick the course IDs from the course objects.
+    $favouritecourseids = array_map(
+        function($favourite) {
+            return $favourite->itemid;
+        }, $favourites);
+
+    // Get all courses that the current user is enrolled in, restricted down to favourites.
+    $filteredcourses = [];
+    if ($favouritecourseids) {
+        $courses = course_get_enrolled_courses_for_logged_in_user(0, 0, null, null,
+            COURSE_DB_QUERY_LIMIT, $favouritecourseids);
+        list($filteredcourses, $processedcount) = course_filter_courses_by_favourites(
+            $courses,
+            $favouritecourseids,
+            0
+        );
+    }
+    // Grab the course ids.
+    $filteredcourseids = array_column($filteredcourses, 'id');
+
+    // Filter out any favourites that are not in the list of enroled courses.
+    $filteredfavourites = array_filter($favourites, function($favourite) use ($filteredcourseids) {
+        return in_array($favourite->itemid, $filteredcourseids);
+    });
+
+    // Compose the template context.
+    $coursesfortemplate = [];
+    foreach ($filteredfavourites as $favourite) {
+        $course = get_course($favourite->itemid);
+        $context = \context_course::instance($favourite->itemid);
+        $canviewhiddencourses = has_capability('moodle/course:viewhiddencourses', $context);
+
+        if ($course->visible || $canviewhiddencourses) {
+            $coursesfortemplate[] = [
                 'url' => new \moodle_url('/course/view.php', ['id' => $course->id]),
                 'fullname' => $course->fullname,
                 'visible' => $course->visible == 1,
             ];
         }
-        $html = $OUTPUT->render_from_template('theme_boost_union/favourites-popover', ['favourites' => $menu]);
-        return $html;
     }
-    return '';
+
+    // Sort the favourites by name (if there is anything to be sorted).
+    if (count($coursesfortemplate) > 1) {
+        usort($coursesfortemplate, function($a, $b) {
+            if ($a['fullname'] == $b['fullname']) {
+                return 0;
+            }
+
+            return strcasecmp(trim($a['fullname']), trim($b['fullname']));
+        });
+    }
+
+    // Compose the popover menu.
+    $html = $OUTPUT->render_from_template('theme_boost_union/popover-favourites', ['favourites' => $coursesfortemplate]);
+
+    return $html;
 }

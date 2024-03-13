@@ -609,6 +609,17 @@ function theme_boost_union_user_preferences(): array {
  * @return string
  */
 function theme_boost_union_render_navbar_output() {
-    require_once(__DIR__ . '/locallib.php');
-    return theme_boost_union_get_favourites_popover_menu();
+    global $CFG;
+
+    // Require local library.
+    require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+
+    // Initialize the navbar content.
+    $content = '';
+
+    // Setting: Show starred courses popover in the navbar.
+    $content .= theme_boost_union_get_navbar_starredcoursespopover();
+
+    // Return.
+    return $content;
 }
