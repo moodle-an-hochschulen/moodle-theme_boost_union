@@ -1342,11 +1342,17 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
-        // Setting: show a popover menu with starred courses next to the messages and notifications menus.
+        // Create navbar heading.
+        $name = 'theme_boost_union/navbarheading';
+        $title = get_string('navbarheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Show starred courses popover in the navbar.
         $name = 'theme_boost_union/shownavbarstarredcourses';
         $title = get_string('shownavbarstarredcoursessetting', 'theme_boost_union', null, true);
         $description = get_string('shownavbarstarredcoursessetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
