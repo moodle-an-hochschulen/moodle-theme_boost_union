@@ -64,6 +64,7 @@
         <FIELD NAME="sortorder" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="url" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="category" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="category_subcats" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="enrolmentrole" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="completionstatus" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="daterange" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
