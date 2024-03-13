@@ -473,41 +473,48 @@ body.hascourseindexcplsol.editing {
 }
 
 /*---------------------------------------
- * Setting: show a popover menu with starred courses next to the messages and notifications menus.
+ * Setting: Show starred courses popover in the navbar.
  --------------------------------------*/
-.navbar #nav-favourites-popover-container {
+.navbar #nav-popover-favourites-container {
     .popover-region-container {
+        /* Make sure that the popover is only as high an necessary*/
         height: auto;
+
         /* Limit the width to some reasonable size to avoid that the popover menu is too wide. */
-        max-width: 78vw;
-        border-radius: 0.5rem;
-        right: -5vw;
+        min-width: 250px;
+        max-width: 450px;
         width: auto;
-        @include media-breakpoint-down(lg) {
-            max-width: 73vw;
-        }
-        @include media-breakpoint-down(md) {
-            max-width: 68vw;
-        }
-        @include media-breakpoint-down(xs) {
-            right: -35vw;
-            top: 60px;
-        }
-        /* Hide overflowing course names. */
+    }
+
+    .popover-region-header-container {
+        /* Grant the popover header some more space.*/
+        height: 35px;
+        padding-left: 10px;
+        padding-top: 5px;
+    }
+
+    .popover-region-content-container {
+        /* Make sure that the popover is only as high an necessary.
+           (Full browser height minus navbar height minus popover header height minus some space at the bottom. */
+        height: auto;
+        max-height: calc(100vh - #{$navbar-height} - 35px - 1em);
+
+        /* Improve the course list items. */
         .dropdown-item {
+            /* Fix the left padding of the dropdown item. */
+            padding-left: 10px;
+
+            /* Hide overflowing course names. */
             overflow-x: hidden;
             text-overflow: ellipsis;
+
+            /* Keep dimmed courses white when hovered. */
+            &.dimmed:hover {
+                color: #FFFFFF;
+            }
         }
     }
-    .popover-region-header-container {
-        display: none;
-    }
-    .popover-region-content-container {
-        height: auto;
-        min-width: 10rem;
-    }
 }
-
 
 /*---------------------------------------
  * Setting: Back to top button.
