@@ -117,6 +117,13 @@ class smartmenu_item_edit_form extends \moodleform {
         $catwidget->setMultiple(true);
         $mform->addHelpButton('category', 'smartmenusdynamiccoursescoursecategory', 'theme_boost_union');
 
+        // Add include-subcategories as checkbox.
+        $mform->addElement('advcheckbox', 'category_subcats',
+                get_string('smartmenusdynamiccoursescoursecategorysubcats', 'theme_boost_union'));
+        $mform->setType('category_subcats', PARAM_BOOL);
+        $mform->addHelpButton('category_subcats', 'smartmenusdynamiccoursescoursecategorysubcats', 'theme_boost_union');
+        $mform->hideIf('category_subcats', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
+
         // Add roles (for the dynamic courses menu item type) as autocomplete element.
         $courseroles = get_roles_for_contextlevels(CONTEXT_COURSE);
         list($insql, $inparams) = $DB->get_in_or_equal(array_values($courseroles));
