@@ -91,6 +91,41 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | Category 02 | student1 | should not | should not | should not | should     | should     | should not |
 
   @javascript
+  Scenario Outline: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on a category condition (with or without subcategories)
+    Given the following "categories" exist:
+      | name          | category | idnumber |
+      | Category 01a  | CAT1     | CAT1a    |
+      | Category 01b  | CAT1     | CAT1b    |
+      | Category 01aa | CAT1a    | CAT1aa   |
+    And the following "courses" exist:
+      | fullname    | shortname | category |
+      | Course 01a  | C1a       | CAT1a    |
+      | Course 01b  | C1b       | CAT1b    |
+      | Course 01aa | C1aa      | CAT1aa   |
+    And the following "course enrolments" exist:
+      | user     | course | role    |
+      | student1 | C1a    | student |
+      | student1 | C1b    | student |
+      | student1 | C1aa   | student |
+    When I log in as "admin"
+    And I navigate to smart menu "List menu" items
+    And I click on ".action-edit" "css_element" in the "Dynamic courses" "table_row"
+    And I set the field "Dynamic courses: Course category" to "Category 01"
+    And I set the field "Include subcategories" to "<subcat>"
+    And I press "Save changes"
+    And I log out
+    And I log in as "student1"
+    Then I should see smart menu "List menu" item "Course 01" in location "Main, Menu, User, Bottom"
+    And I <shouldornot> see smart menu "List menu" item "Course 01a" in location "Main, Menu, User, Bottom"
+    And I <shouldornot> see smart menu "List menu" item "Course 01b" in location "Main, Menu, User, Bottom"
+    And I <shouldornot> see smart menu "List menu" item "Course 01aa" in location "Main, Menu, User, Bottom"
+
+    Examples:
+      | subcat | shouldornot |
+      | 0      | should not  |
+      | 1      | should      |
+
+  @javascript
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on a enrolment role condition
     When I log in as "admin"
     And I navigate to smart menu "List menu" items

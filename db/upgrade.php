@@ -308,5 +308,21 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023102021, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2023102027) {
+        // Define table theme_boost_union_menuitems to be altered.
+        $table = new xmldb_table('theme_boost_union_menuitems');
+
+        // Define field listsort to be added to theme_boost_union_menuitems.
+        $field = new xmldb_field('category_subcats', XMLDB_TYPE_INTEGER, '1', null, null, null, null, 'category');
+
+        // Conditionally launch add field listsort.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2023102027, 'theme', 'boost_union');
+    }
+
     return true;
 }

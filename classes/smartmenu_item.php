@@ -802,8 +802,33 @@ class smartmenu_item {
         }
 
         list($insql, $inparams) = $DB->get_in_or_equal($this->item->category, SQL_PARAMS_NAMED, 'cg');
-        $query->where[] = "c.category $insql";
-        $query->params += $inparams;
+
+        // If subcategories should be included, we have to investigate the whole category sub-path.
+        // Unfortunately, as there is no combination of IN and LIKE in SQL, we have to chain up a list of
+        // LIKE-statements.
+        if (property_exists($this->item, 'category_subcats') && $this->item->category_subcats == true) {
+            // Join the course category table.
+            $query->join[] = "JOIN {course_categories} cc ON c.category = cc.id";
+
+            // Build a LIKE clause for each selected category.
+            $likesqlparts = [];
+            foreach ($this->item->category as $subcat) {
+                $likesqlparts[] = $DB->sql_like('cc.path', ':pathcat'.$subcat);
+                $likeparams['pathcat'.$subcat] = '%/'.$subcat.'/%';
+            }
+            $likesql = implode(' OR ', $likesqlparts);
+
+            // Add the categories filter to the query.
+            $query->where[] = "c.category $insql OR $likesql";
+            $query->params += $inparams;
+            $query->params += $likeparams;
+
+            // Otherwise, the query is simpler.
+        } else {
+            // Add the categories filter to the query.
+            $query->where[] = "c.category $insql";
+            $query->params += $inparams;
+        }
     }
 
     /**
