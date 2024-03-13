@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-03-13 - Bugfix: Custom course fields of type "Textarea" were not conditionally hidden in the smart menu configuration, resolves #576.
 * 2024-03-01 - Improvement: implement new setting to show starred courses in a popover menu in navbar, solves #289.
 
 ### v4.3-r8
