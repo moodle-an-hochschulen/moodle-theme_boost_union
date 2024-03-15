@@ -83,7 +83,7 @@
     </li>
 {{/haschildren}}
 {{^haschildren}}
-    <li data-key="{{key}}" class="nav-item" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+    <li data-key="{{key}}" class="nav-item {{#menuclasses}}{{.}} {{/menuclasses}}" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
         {{#istablist}}
             {{^is_action_link}}
                 <a role="tab" class="nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}"
