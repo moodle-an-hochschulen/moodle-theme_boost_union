@@ -43,16 +43,14 @@ use Behat\Mink\Exception\ExpectationException as ExpectationException;
 class behat_theme_boost_union_behat_navigation extends behat_theme_boost_behat_navigation {
 
     /**
-     * Changes the course format options.
+     * Set the course format options to one page per section.
      *
      * @Given /^"(?P<coursefullname_string>(?:[^"]|\\")*)" has been set to one page per section$/
-     * @throws coding_exception
      * @param string $coursefullname The full name of the course.
      * @return void
      */
     public function has_been_set_to_one_page_per_section(string $coursefullname) {
         $courseid = $this->get_course_id($coursefullname);
-        /** @var \format_topics $format */
         $format = course_get_format($courseid);
         $sectionsperpage = new stdClass();
         $sectionsperpage->coursedisplay = COURSE_DISPLAY_MULTIPAGE;
@@ -60,21 +58,20 @@ class behat_theme_boost_union_behat_navigation extends behat_theme_boost_behat_n
     }
 
     /**
-     * Opens the second section of the course.
+     * Opens the nth section of the course.
      *
-     * @When /^I am in the second section of "(?P<coursefullname_string>(?:[^"]|\\")*)" course$/
-     * @throws coding_exception
+     * @When /^I am on section "(?P<section_int>(?:[^"]|\\")*)" page of "(?P<coursefullname_string>(?:[^"]|\\")*)" course$/
+     * @param int $section The ID of the section.
      * @param string $coursefullname The full name of the course.
      * @return void
      */
-    public function i_am_in_the_second_section_of_course(string $coursefullname) {
+    public function i_am_on_the_nth_section_page_of_course(int $section, string $coursefullname) {
         $courseid = $this->get_course_id($coursefullname);
         $urlparams = [
             'id' => $courseid,
-            'section' => 1,
+            'section' => $section,
         ];
         $url = new moodle_url('/course/view.php', $urlparams);
         $this->execute('behat_general::i_visit', [$url]);
     }
-
 }
