@@ -510,7 +510,7 @@ body.hascourseindexcplsol.editing {
 
             /* Keep dimmed courses white when hovered. */
             &.dimmed:hover {
-                color: #FFFFFF;
+                color: $white;
             }
         }
     }
