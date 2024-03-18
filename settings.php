@@ -45,9 +45,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
     // Avoid that the theme settings page is auto-created.
     $settings = null;
 
-    // Load admin tab remember js
-    $PAGE->requires->js_call_amd('theme_boost_union/admintabs', 'init');
-
     // Create custom admin settings category.
     $ADMIN->add('themes', new admin_category('theme_boost_union',
             get_string('pluginname', 'theme_boost_union', null, true)));
@@ -2651,4 +2648,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 'theme/boost_union:configure');
         $ADMIN->add('theme_boost_union', $flavourspage);
     }
+
+    // Add JS to remember the active admin tab to the page.
+    $PAGE->requires->js_call_amd('theme_boost_union/admintabs', 'init');
 }
