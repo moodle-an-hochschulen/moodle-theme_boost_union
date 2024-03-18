@@ -44,7 +44,7 @@ const initScrollSpy = () => {
         }
         editToggle.addEventListener('click', () => {
 
-            window.sessionStorage.setItem('edittoggled', true);
+            window.sessionStorage.setItem('theme_boost_union_scrollspy_edittoggled', true);
 
             let viewporttop = window.scrollY;
             let closest = null;
@@ -61,14 +61,14 @@ const initScrollSpy = () => {
                 }
             });
 
-            window.sessionStorage.setItem('closestid', closest.id);
-            window.sessionStorage.setItem('closestdelta', viewporttop - closest.offsetTop);
+            window.sessionStorage.setItem('theme_boost_union_scrollspy_closestid', closest.id);
+            window.sessionStorage.setItem('theme_boost_union_scrollspy_closestdelta', viewporttop - closest.offsetTop);
         });
-        let edittoggled = window.sessionStorage.getItem('edittoggled');
+        let edittoggled = window.sessionStorage.getItem('theme_boost_union_scrollspy_edittoggled');
         if (edittoggled) {
 
-            let closestid = window.sessionStorage.getItem('closestid');
-            let closestdelta = window.sessionStorage.getItem('closestdelta');
+            let closestid = window.sessionStorage.getItem('theme_boost_union_scrollspy_closestid');
+            let closestdelta = window.sessionStorage.getItem('theme_boost_union_scrollspy_closestdelta');
 
             if (closestid && closestdelta) {
                 let closest = document.getElementById(closestid);
@@ -77,9 +77,9 @@ const initScrollSpy = () => {
                 window.scrollTo(0, y);
             }
 
-            window.sessionStorage.removeItem('edittoggled');
-            window.sessionStorage.removeItem('closestid');
-            window.sessionStorage.removeItem('closestdelta');
+            window.sessionStorage.removeItem('theme_boost_union_scrollspy_edittoggled');
+            window.sessionStorage.removeItem('theme_boost_union_scrollspy_closestid');
+            window.sessionStorage.removeItem('theme_boost_union_scrollspy_closestdelta');
         }
     }
 };
