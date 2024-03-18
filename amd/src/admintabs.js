@@ -28,33 +28,40 @@ define(['jquery'], function($) {
      * Initialising.
      */
     function initAdminTabs() {
-        // Wait for bootstrap
-        whenBootstrapAvailable(() => {
-            const sessionKey = "boost_union_active_admin_tab";
-            // Register for all boost union tabs
+        // Wait for Bootstrap to be finally loaded.
+        // As soon it's loaded, the anonymous function's code is executed.
+        whenBootstrapIsAvailable(() => {
+            // The sessionStorage key.
+            const sessionKey = 'theme_boost_union_active_admin_tab';
+
+            // Register an event listener on all boost union tabs.
             $('a[href^="#theme_boost_union_"]').parent().on("shown.bs.tab", function() {
-                // Store active tab in session
-                sessionStorage.setItem(sessionKey, $(this).children("a").eq(0).attr("href"));
+                // Store the active tab in the session.
+                window.sessionStorage.setItem(sessionKey, $(this).children('a').eq(0).attr('href'));
             });
-            // Get active tab from session
-            const activeTab = sessionStorage.getItem(sessionKey);
+
+            // Get the active tab from the session.
+            const activeTab = window.sessionStorage.getItem(sessionKey);
+
+            // If an active tab was stored in the session.
             if (activeTab) {
-                // Show active tab from session
-                $('a[href="' + activeTab + '"]').tab("show");
+                // Switch to the active tab from the session.
+                $('a[href="' + activeTab + '"]').tab('show');
             }
         });
     }
 
     /**
-     * Wait for Bootstrap is finally loaded
+     * Wait for Bootstrap to be finally loaded.
+     *
      * @param {function} callback
      */
-    function whenBootstrapAvailable(callback) {
+    function whenBootstrapIsAvailable(callback) {
         window.setTimeout(() => {
-            if (typeof $().tab == "function") {
+            if (typeof $().tab == 'function') {
                 callback();
             } else {
-                whenBootstrapAvailable(callback);
+                whenBootstrapIsAvailable(callback);
             }
         }, 100);
     }
