@@ -49,7 +49,8 @@
                 "title": "Submenu title",
                 "items": []
             }
-        ]
+        ],
+        "showfullnameinusermenu": true
     }
 }}
 {{!
@@ -58,6 +59,7 @@
     Modifications compared to the original template:
     * Include submenus custom return id, helps to get back to the submenus parent from third level child.
     * Add icon support to items.
+    * Add user full name at the top of the user menu.
 }}
 <div class="usermenu">
     {{#unauthenticateduser}}
@@ -83,6 +85,13 @@
                 <div id="usermenu-carousel" class="carousel slide" data-touch="false" data-interval="false" data-keyboard="false">
                     <div class="carousel-inner">
                         <div id="carousel-item-main" class="carousel-item active" role="menu" tabindex="-1" aria-label="{{#str}}user{{/str}}">
+                            {{#showfullnameinusermenu}}
+                                <div class="loggedinas">
+                                    <small>{{#str}}showfullnameinusermenussetting_loggedinas, theme_boost_union{{/str}}</small><br />
+                                    <strong>{{userfullname}}</strong>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                            {{/showfullnameinusermenu}}
                             {{> core/user_action_menu_items }}
                         </div>
                         {{#submenus}}

@@ -1329,6 +1329,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
+        // Setting: Show full name in the user menu.
+        $name = 'theme_boost_union/showfullnameinusermenu';
+        $title = get_string('showfullnameinusermenussetting', 'theme_boost_union', null, true);
+        $description = get_string('showfullnameinusermenussetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
         // Setting: Add preferred language link to language menu.
         $name = 'theme_boost_union/addpreferredlang';
         $title = get_string('addpreferredlangsetting', 'theme_boost_union', null, true);
