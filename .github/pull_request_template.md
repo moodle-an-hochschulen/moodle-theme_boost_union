@@ -15,4 +15,4 @@ Please make sure to follow these steps to ease the review process for the peer r
 
 Thank you again for your contribution, we will start reviewing your PR as soon as we are able to.
 
-Feel free to check our [wiki](https://https://github.com/moodle-an-hochschulen/moodle-plugin-maintaining/wiki/Check-list-for-peer-reviewing-patches-and-pull-requests) for further infomation about our review process.
+Feel free to check our [wiki](https://github.com/moodle-an-hochschulen/moodle-plugin-maintaining/wiki/Check-list-for-peer-reviewing-patches-and-pull-requests) for further infomation about our review process.
