@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-03-18 - Improvement: Add prefixes to the sessionStorage keys in the scrollspy implementation, resolves #598.
 * 2024-03-18 - Improvement: Switch to the active Boost Union admin sub-tab after saving a setting and the following page reload, resolves #468.
 * 2024-03-16 - Feature: Show the logged-in user's full name in the user menu, resolves #439.
 * 2024-03-16 - Bugfix: Leave the last item's link in the breadcrumb only if it's really needed, resolves #595
