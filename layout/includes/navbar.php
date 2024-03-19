@@ -48,3 +48,10 @@ if (!empty($alternativelogolinkurlsetting)) {
     // Add the logo link URL to templatecontext.
     $templatecontext['alternativelogolinkurl'] = $alternativelogolinkurlsetting;
 }
+
+// If showing the user name in the user menu is activated.
+$showfullnameinusermenusetting = get_config('theme_boost_union', 'showfullnameinusermenu');
+if ($showfullnameinusermenusetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    // Set a flag in the templatecontext.
+    $templatecontext['showfullnameinusermenu'] = true;
+}
