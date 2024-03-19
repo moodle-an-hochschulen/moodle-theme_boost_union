@@ -317,6 +317,10 @@ With this setting, you can set an alternative link URL which will be used as lin
 
 ##### User menu
 
+###### Show full name in the user menu
+
+With this setting, you can show the logged-in user's full name at the top of the user menu. This can be especially helpful for exam situations where teachers have to confirm that the user is logged in with his own account, but it might also be helpful for the user himself. In contrast to the Classic theme which shows the user's full name in the navbar near the avatar, this approach here does not claim any additional rare space in the navbar.
+
 ###### Add preferred language link to language menu
 
 With this setting, you can add a 'Set preferred language' setting to the language menu within the user menu. Understandably, this setting is only processed if the language menu is enabled at all.

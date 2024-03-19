@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-03-16 - Feature: Show the logged-in user's full name in the user menu, resolves #439.
 * 2024-03-16 - Bugfix: Leave the last item's link in the breadcrumb only if it's really needed, resolves #595
 
 ### v4.3-r9
