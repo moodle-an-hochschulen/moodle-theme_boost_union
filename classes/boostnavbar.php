@@ -164,8 +164,9 @@ class boostnavbar extends \theme_boost\boostnavbar {
         }
 
         // Make sure that the last item is not a link. Not sure if this is always a good idea.
-        // Except, leave it when categorybreadcrumbs are desired.
-        if (get_config('theme_boost_union', 'categorybreadcrumbs') != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Except, leave it when categorybreadcrumbs are desired and if we are on a course page.
+        if (!(get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES &&
+                $this->page->context->contextlevel == CONTEXT_COURSE)) {
             $this->remove_last_item_action();
         }
     }
