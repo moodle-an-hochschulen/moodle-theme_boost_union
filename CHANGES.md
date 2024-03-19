@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-03-16 - Bugfix: Leave the last item's link in the breadcrumb only if it's really needed, resolves #595
+
 ### v4.3-r9
 
 * 2024-03-13 - Improvement: In smart menus, dynamic courses can now pick up the courses from all subcategories, resolves #395.
