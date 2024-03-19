@@ -28,6 +28,7 @@ use theme_boost_union\admin_setting_configstoredfilealwayscallback;
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig || has_capability('theme/boost_union:configure', context_system::instance())) {
+    global $PAGE;
 
     // How this file works:
     // This theme's settings are divided into multiple settings pages.
@@ -2572,4 +2573,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 'theme/boost_union:configure');
         $ADMIN->add('theme_boost_union', $flavourspage);
     }
+
+    // Add JS to remember the active admin tab to the page.
+    $PAGE->requires->js_call_amd('theme_boost_union/admintabs', 'init');
 }
