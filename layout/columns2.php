@@ -134,7 +134,7 @@ require_once(__DIR__ . '/includes/javascriptdisabledhint.php');
 // Include the template content for the info banners.
 require_once(__DIR__ . '/includes/infobanners.php');
 
-// Include the template content for the navbar styling.
+// Include the template content for the navbar.
 require_once(__DIR__ . '/includes/navbar.php');
 
 // Include the template content for the smart menus.
