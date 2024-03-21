@@ -1448,11 +1448,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 /* The position of the main page has been adjusted slightly below to accommodate the top header. */
                 ~ #page.drawers {
                     margin-top: 100px;
-                    /* The position of the drawer button to toggle has been adjusted slightly
-                    below to accommodate the top header.
-                    .drawer-toggles .drawer-toggler {
-                        top: 110px;
-                    }*/
                 }
                 .moremenu {
                     .more-nav {
@@ -1463,7 +1458,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                                 position: static;
                             }
                             &.nav-item {
-                                &:first-child {
+                                &:first-child,
+                                &:nth-child(2) {
                                     /* The position of the dropdown menu should not extend beyond the visible area of
                                        the screen */
                                     .dropdown-menu {
@@ -1475,10 +1471,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                             a {
                                 &:not(.active) {
                                     border-bottom: 0;
-                                    padding: 10px;
-                                }
-                                > * {
-                                    cursor: pointer;
                                 }
                                 /* Background color added in the menubar menu link on hover */
                                 &.nav-link:hover {
@@ -1487,6 +1479,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                             }
                             /* The positions of the dropdown menu added */
                             .dropdown-menu {
+                                float: none;
                                 left: auto;
                                 right: 0;
                                 li {
@@ -1498,12 +1491,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                                 .card-block-wrapper .card-block a {
                                     padding: 0;
                                 }
-                            }
-                            /* Added max-height and overflow auto for scollbar when the card item reach the dropdown
-                               height */
-                            &.dropdownmoremenu .dropdown-menu .dropdown-menu {
-                                max-height: 300px;
-                                overflow-y: auto;
                             }
                         }
                     }
@@ -1638,11 +1625,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     }
                 }
             }
-            /* Minimum width is adde for the dropdown, overlay y axis is visible to show the sub dropdown menus*/
-            > div:not(.navbar-nav) .dropdown:not(.card-dropdown) .dropdown-menu {
-                min-width: 200px;
-                overflow-y: visible;
-            }
             /* The icon tag aligned top at the usermenu link */
             .usermenu .dropdown-menu {
                 .submenu .items a.dropdown-item {
@@ -1655,6 +1637,13 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     &.carousel-navigation-link:after {
                         top: 8px;
                     }
+                }
+            }
+            /* Dropdown more menu back button arrow margin */
+            .boost-union-moremenu.dropdown-menu button.carousel-navigation-link > * {
+                pointer-events: none;
+                img {
+                    margin: 0;
                 }
             }
         }
@@ -1671,7 +1660,16 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 /* The full width style is added for the menu link inside the "More" menu */
                 &.dropdownmoremenu .dropdown-menu li.nav-item.dropdown {
                     width: 100%;
+                    &.card-dropdown .dropdown-toggle:after {
+                        content: '\f105';
+                    }
                     .dropdown-toggle {
+                        &:after {
+                            font-size: 10px;
+                            margin-top: 7px;
+                            position: absolute;
+                            right: 0.75rem;
+                        }
                         /* Header dropdown toggle menu link color added */
                         &:hover,
                         &:focus,
@@ -1682,24 +1680,23 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     /* Header dropdown menu border added and position added not to conflict
                         with the screen in the responsive alignment */
                     .dropdown-menu {
-                        border: 1px solid rgba(0, 0, 0, 0.15);
-                        padding: 0.5rem 0;
-                        position: absolute;
-                        top: 0;
-                        left: auto;
-                        right: 100%;
-                        /* Removed the background color for the menu link of the submenu link*/
-                        .dropdown-item {
-                            &:not(:hover):not(:focus):not(:active) {
-                                background: none;
-                            }
-                        }
+                        max-height: none;
+                        border-radius: 0;
+                        overflow: visible;
                     }
                     &.card-dropdown {
+                        /* Minimum width, maximum width and height, aligned center, and position
+                        fixed of card dropdown menu below the nav header */
                         .dropdown-menu {
-                            min-width: 420px;
+                            min-width: 220px;
+                            max-width: 90%;
                             max-height: calc(100vh - 120px);
                             text-align: center;
+                            padding: 5px;
+                            position: fixed;
+                            right: 0;
+                            top: 100px;
+                            left: 0;
                         }
                         &.card-form-fullwidth {
                             .dropdown-menu .card-block-wrapper {
@@ -1710,10 +1707,16 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 }
             }
             .dropdown {
-                /* Top margin removed and overlay y axis is visible to show the dropdowm menu without the scrollbar */
+                /* Minimum width , max-height added to display the dropdown menu items, Top margin removed
+                and overlay y axis is auto to show the dropdowm menu with the scrollbar */
                 .dropdown-menu {
-                    overflow-y: visible;
+                    min-width: 220px;
+                    max-width: 260px;
                     margin-top: 0;
+                    /* The more menu item with inline to display in full width */
+                    .nav-item {
+                        min-width: 100%;
+                    }
                     /* Menu description font size, padding, border-radius and background color added */
                     .menu-description {
                         font-size: 12px;
@@ -1725,7 +1728,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                             margin-bottom: 0;
                         }
                     }
-                    /* Padding and Position added for the "help icon" in menu */
+                    /* text aligned center, Padding and margin added for the "help icon" in menu */
                     .menu-helpicon {
                         text-align: center;
                         padding-right: 10px;
@@ -1740,6 +1743,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     .dropdown-item {
                         /* Dropdown menu link alignment at top */
                         align-items: baseline;
+                        white-space: normal;
                         /* The "Tick" icon removed when the menu link is clicked */
                         &:before {
                             display: none;
@@ -1834,8 +1838,9 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 /* Card layout - The below styles are header dropdown Card style menus */
                 &.card-dropdown {
                     /* The header card dropdown menu width, padding, removed border radius and top margin, added
-                    white background color and it's position styles */
+                    white background color and it's position styles, max-width as none to show the card dropdown to full width */
                     .dropdown-menu {
+                        max-width: none;
                         width: 100%;
                         border-radius: 0;
                         background-color: #f0efef;
@@ -2089,9 +2094,103 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 }
             }
         }
+        .boost-union-moremenu.dropdown-menu {
+            /* Minimum width for the dropdown submenu */
+            .carousel .carousel-inner .carousel-item.submenu {
+                min-width: 235px;
+            }
+            /* Added the arrow icon styles for the dropdown menus */
+            .dropdown-item.carousel-navigation-link:after {
+                content: '\f0da';
+                font-family: '#{$fa-style-family}';
+                font-weight: 900;
+                font-size: 1rem;
+                position: absolute;
+                right: 0.7rem;
+            }
+            /* Added the arrow icon styles for the dropdown sub menu header */
+            .submenu .header {
+                font-size: .975rem;
+                padding: 0.25rem 0.75rem;
+                display: flex;
+                align-items: center;
+            }
+        }
+        /* Removed the margin for the carousel back button arrow */
+        &.fixed-bottom .boost-union-moremenu.dropdown-menu button.carousel-navigation-link > * {
+            pointer-events: none;
+            img {
+                margin: 0;
+            }
+        }
     }
+    /* Align the drawer content list group item in center*/
     .drawer-primary .drawercontent .list-group .list-group-item {
         align-items: center;
+    }
+    /* Drop down more menu carousel item */
+    .theme-boost-union-smartmenu-carousel {
+        /* Drop down more menu carousel item header */
+        .moremenu-carousel-item-header {
+            display: none;
+        }
+        button.carousel-navigation-link > * {
+            pointer-events: none;
+            /* Drop down more menu carousel item header image */
+            img {
+                margin: 0;
+            }
+        }
+    }
+    /* Dropdown carousel more menu*/
+    .dropdownmoremenu {
+        /* Dropdown carousel more menu position */
+        .boost-union-moremenu-carousel {
+            position: absolute;
+            /* Dropdown carousel dropdown more menu position to static to
+            work on the carousel menu */
+            .dropdown-menu {
+                position: static;
+            }
+        }
+        .theme-boost-union-smartmenu-carousel {
+            /* Display dropdown carousel more menu header item*/
+            .moremenu-carousel-item-header {
+                display: block;
+                /* Dropdown carousel more menu header title and arrow style*/
+                .header {
+                    font-size: .975rem;
+                    padding: 0.25rem 0.75rem;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+            .items {
+                /* Added the arrow icon styles for the carousel dropdown menus */
+                .dropdown-item.carousel-navigation-link:after {
+                    content: '\f0da';
+                    font-family: '#{$fa-style-family}';
+                    font-weight: 900;
+                    font-size: 1rem;
+                    position: absolute;
+                    right: 0.7rem;
+                }
+            }
+            /* Added the arrow icon styles for the dropdown sub menu header */
+            .submenu {
+                padding-top: 10px;
+                .header {
+                    font-size: .975rem;
+                    padding: 0 0.75rem;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+    }
+    /* Hide the ul dropdown menu list */
+    .theme-boost-union-moremenu-carousel .dropdown-menu.hide-on-show {
+        display: none;
     }
 }
 
@@ -2215,7 +2314,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                                 &:after {
                                     margin-left: 5px;
                                     position: absolute;
-                                    right: 0;
+                                    right: 5px;
                                 }
                             }
                         }
