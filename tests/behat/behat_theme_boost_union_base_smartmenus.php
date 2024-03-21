@@ -134,7 +134,8 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
         if (in_array('User', $locations)) {
             $this->execute('behat_general::i_click_on', ['#user-menu-toggle', 'css_element']);
             $this->execute('behat_general::i_click_on_in_the', [$menu, 'link', '#usermenu-carousel', 'css_element']);
-            $this->execute('behat_general::assert_element_contains_text', [$item, '.carousel-item.active', 'css_element']);
+            $this->execute('behat_general::assert_element_contains_text',
+                [$item, '#usermenu-carousel .carousel-item.active', 'css_element']);
             $this->execute('behat_general::i_click_on', ['#user-menu-toggle', 'css_element']);
         }
         if (in_array('Bottom', $locations)) {
@@ -221,7 +222,8 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
         if (in_array('User', $locations)) {
             $this->execute('behat_general::i_click_on', ['#user-menu-toggle', 'css_element']);
             $this->execute('behat_general::i_click_on_in_the', [$menu, 'link', '#usermenu-carousel', 'css_element']);
-            $this->execute('behat_general::assert_element_not_contains_text', [$item, '.carousel-item.active', 'css_element']);
+            $this->execute('behat_general::assert_element_not_contains_text',
+                [$item, '#usermenu-carousel .carousel-item.active', 'css_element']);
             $this->execute('behat_general::i_click_on', ['#user-menu-toggle', 'css_element']);
         }
         if (in_array('Bottom', $locations)) {
