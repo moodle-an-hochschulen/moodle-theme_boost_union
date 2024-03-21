@@ -1693,6 +1693,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                             max-height: calc(100vh - 120px);
                             text-align: center;
                             padding: 5px;
+                            overflow: auto;
                             position: fixed;
                             right: 0;
                             top: 100px;
@@ -1712,6 +1713,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 .dropdown-menu {
                     min-width: 220px;
                     max-width: 260px;
+                    max-height: calc(100vh - 200px);
+                    overflow: auto;
                     margin-top: 0;
                     /* The more menu item with inline to display in full width */
                     .nav-item {
