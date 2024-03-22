@@ -1739,6 +1739,10 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                         /* Margin removed in the menu description help icon in the menu */
                         i {
                             margin: 0;
+                            /* color white is added in the menu description help icon in the menu */
+                            &:before {
+                                color: var(--info);
+                            }
                         }
                     }
                     /* The font size and opacity reduced when the Menu link is selected as "Heading" option in the
@@ -1889,18 +1893,29 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                                     margin-bottom: 0;
                                     overflow: hidden;
                                     /* The font style, color, paddign added to the link of the heading
-                                    in the content block for the card dropdown items */
+                                    in the content block for the card dropdown items. Background none is added when the
+                                    background is not given in the settings for the menu items */
                                     a {
                                         font-size: 14px;
                                         color: $white;
                                         font-weight: bold;
                                         padding: 0;
+                                        background: none;
                                         /* Background removed for the link of the heading on hover
                                         in the content block for the card dropdown items */
                                         &:hover,
                                         &:focus,
                                         &:active {
                                             background: none;
+                                        }
+                                        /* The icon color is intended to correspond with the text color specified in the menu
+                                        item settings. However, the icon color in the card dropdown menu may be overridden by
+                                        the color defined in the theme style for the navigation, particularly when using the
+                                        "dark" and "bg primary" options in the header. To ensure the desired icon color is
+                                        maintained, the icon color is set to "inherit" with the use of "!important".
+                                        This ensures that the color specified in the text setting will be applied to the icon. */
+                                        i {
+                                            color: inherit !important;
                                         }
                                     }
                                 }
@@ -1913,9 +1928,11 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                                     margin-left: 5px;
                                     a {
                                         /* The color and padding added for the "Go" button in
-                                        the content block of the card dropdown items */
+                                        the content block of the card dropdown items. Background none is added when the
+                                        background is not given in the settings for the menu items */
                                         color: #fff;
                                         padding: 0;
+                                        background: none;
                                         &:hover,
                                         &:focus,
                                         &:active {
