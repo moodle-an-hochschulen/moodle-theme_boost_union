@@ -1928,9 +1928,10 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                                             the color defined in the theme style for the navigation, particularly when using the
                                             "dark" and "bg primary" options in the header. To ensure the desired icon color is
                                             maintained, the icon color is set to "inherit" with the use of "!important".
-                                            This ensures that the color specified in the text setting will be applied to the icon. */
+                                            This ensures that the color specified in the text setting will be applied to the icon.
+                                            */
                                             i {
-                                                color: inherit !important;
+                                                color: inherit !important; /* stylelint-disable-line declaration-no-important */
                                             }
                                         }
                                     }
@@ -2159,7 +2160,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     /* Align the drawer content list group item in center*/
     .drawer-primary .drawercontent .list-group .list-group-item {
         align-items: center;
-        /* The icon width, height and font size is changed to normal size when the large size icon (class="iconsize-big") is used in the "i" tag in the bottom menu */
+        /* The icon width, height and font size is changed to normal size when
+        the large size icon (class="iconsize-big") is used in the "i" tag in the bottom menu */
         i.icon {
             width: auto;
             height: auto;
@@ -2343,7 +2345,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                         > a {
                             &.dropdown-toggle {
                                 padding-right: 25px;
-                                /* The footer bottom icon changes to an upward-facing angle when the bottom dropdown menu is visible outside the More menu. */
+                                /* The footer bottom icon changes to an upward-facing angle
+                                when the bottom dropdown menu is visible outside the More menu. */
                                 &:not(.active):after {
                                     content: '\f106';
                                 }
