@@ -1438,6 +1438,10 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 border-bottom: 0;
                 background-color: #f8f9fa;
                 z-index: 1031;
+                /* The position of the message drawer has been adjusted slightly top to accommodate the top header. */
+                ~ [data-region=right-hand-drawer].drawer {
+                    top: 100px;
+                }
                 /* The position of the side drawer has been adjusted slightly below to accommodate the top header. */
                 ~ .drawer.drawer-left {
                     top: 101px;
@@ -1731,10 +1735,9 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                             margin-bottom: 0;
                         }
                     }
-                    /* Text aligned center, Padding and margin bottom added for the "help icon" in menu help icon */
+                    /* Text aligned center and margin bottom added for the "help icon" in menu help icon */
                     .menu-helpicon {
                         text-align: center;
-                        padding-right: 10px;
                         margin-bottom: 10px;
                         /* Margin removed in the menu description help icon in the menu */
                         i {
@@ -1748,7 +1751,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     /* The font size and opacity reduced when the Menu link is selected as "Heading" option in the
                        settings */
                     .dropdown-item {
-                        /* Dropdown menu link alignment at top */
+                        /* Dropdown menu link alignment at top, white-space is used to arrange the large text in the
+                        next line*/
                         align-items: baseline;
                         white-space: normal;
                         /* The icon width, height and font size is changed to normal size when the
@@ -1864,149 +1868,150 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                         top: 100%;
                         left: 0;
                         /* The header card dropdown menu items styles */
-                        /* Margin added to the card block right & bottom and vertical align added to
-                        align the card block center to each other */
-                        .card-block {
-                            margin-right: 15px;
-                            margin-bottom: 15px;
-                            display: inline-block;
-                            vertical-align: top;
-                            flex-direction: column;
-                            /* The image parent div added for the card dropdown items */
-                            .img-block {
-                                width: 100%;
-                                height: 200px;
-                                /* The image size added for the card dropdown items */
-                                img {
+                        /* Aligned the card dropdown to center */
+                        .card-block-wrapper {
+                            text-align: center;
+                            /* Margin added to the card block right & bottom and vertical align added to
+                            align the card block center to each other */
+                            .card-block {
+                                margin-right: 15px;
+                                margin-bottom: 15px;
+                                display: inline-block;
+                                vertical-align: top;
+                                flex-direction: column;
+                                /* The image parent div added for the card dropdown items */
+                                .img-block {
                                     width: 100%;
-                                    height: 100%;
-                                    object-fit: cover;
-                                }
-                                > a {
-                                    padding: 0;
-                                }
-                            }
-                            /* The card dropdown items content block width, padding, background color
-                            and aligned center styles added */
-                            .content-block {
-                                width: 100%;
-                                padding: 10px;
-                                background-color: rgba(0, 0, 0, 0.5);
-                                display: flex;
-                                align-items: center;
-                                /* The margin added to the heading in the content block for the card dropdown items */
-                                h5 {
-                                    width: 100%;
-                                    margin-bottom: 0;
-                                    overflow: hidden;
-                                    /* The font style, color, paddign added to the link of the heading
-                                    in the content block for the card dropdown items. Background none is added when the
-                                    background is not given in the settings for the menu items */
-                                    a {
-                                        font-size: 14px;
-                                        color: $white;
-                                        font-weight: bold;
+                                    height: 200px;
+                                    /* The image size added for the card dropdown items */
+                                    img {
+                                        width: 100%;
+                                        height: 100%;
+                                        object-fit: cover;
+                                    }
+                                    > a {
                                         padding: 0;
-                                        background: none;
-                                        /* Background removed for the link of the heading on hover
-                                        in the content block for the card dropdown items */
-                                        &:hover,
-                                        &:focus,
-                                        &:active {
-                                            background: none;
-                                        }
-                                        /* The icon color is intended to correspond with the text color specified in the menu
-                                        item settings. However, the icon color in the card dropdown menu may be overridden by
-                                        the color defined in the theme style for the navigation, particularly when using the
-                                        "dark" and "bg primary" options in the header. To ensure the desired icon color is
-                                        maintained, the icon color is set to "inherit" with the use of "!important".
-                                        This ensures that the color specified in the text setting will be applied to the icon. */
-                                        i {
-                                            color: inherit !important;
-                                        }
                                     }
                                 }
-                                /* The line height added and "Go" button block aligned right side
-                                in the content block for the card dropdown items */
-                                .btn-block {
-                                    width: auto;
-                                    line-height: 10px;
-                                    text-align: right;
-                                    margin-left: 5px;
-                                    a {
-                                        /* The color and padding added for the "Go" button in
-                                        the content block of the card dropdown items. Background none is added when the
+                                /* The card dropdown items content block width, text aligned left padding, background color
+                                and aligned center styles added */
+                                .content-block {
+                                    width: 100%;
+                                    text-align: left;
+                                    padding: 10px;
+                                    background-color: rgba(0, 0, 0, 0.5);
+                                    display: flex;
+                                    align-items: center;
+                                    /* The margin added to the heading in the content block for the card dropdown items */
+                                    h5 {
+                                        width: 100%;
+                                        margin-bottom: 0;
+                                        overflow: hidden;
+                                        /* The font style, color, paddign added to the link of the heading
+                                        in the content block for the card dropdown items. Background none is added when the
                                         background is not given in the settings for the menu items */
-                                        color: #fff;
-                                        padding: 0;
-                                        background: none;
-                                        &:hover,
-                                        &:focus,
-                                        &:active {
-                                            /* Background removed for the link of the button on
-                                            hover in the content block for the card dropdown items */
+                                        a {
+                                            font-size: 14px;
+                                            color: $white;
+                                            font-weight: bold;
+                                            padding: 0;
                                             background: none;
+                                            /* Background removed for the link of the heading on hover
+                                            in the content block for the card dropdown items */
+                                            &:hover,
+                                            &:focus,
+                                            &:active {
+                                                background: none;
+                                            }
+                                            /* The icon color is intended to correspond with the text color specified in the menu
+                                            item settings. However, the icon color in the card dropdown menu may be overridden by
+                                            the color defined in the theme style for the navigation, particularly when using the
+                                            "dark" and "bg primary" options in the header. To ensure the desired icon color is
+                                            maintained, the icon color is set to "inherit" with the use of "!important".
+                                            This ensures that the color specified in the text setting will be applied to the icon. */
+                                            i {
+                                                color: inherit !important;
+                                            }
                                         }
                                     }
-                                }
-                            }
-                            /* The below style is added when the Menu link as "Heading" in "card layout" Menu
-                               settings */
-                            &.menu-item-heading {
-                                /* The Card menu as "Heading" option content block style */
-                                .content-block {
-                                    /* The Card menu content heading menu link font-size and opacity added */
-                                    h5 a {
-                                        font-size: 16px;
-                                        opacity: .6;
-                                        /* The Card menu content heading menu link icon font-size added */
-                                        i {
-                                            font-size: 16px;
-                                        }
-                                    }
-                                    /* The Card Menu as "Heading" option content block "Go" button link is hidden */
+                                    /* The line height added and "Go" button block aligned right side
+                                    in the content block for the card dropdown items */
                                     .btn-block {
-                                        display: none;
+                                        width: auto;
+                                        line-height: 10px;
+                                        text-align: right;
+                                        margin-left: 5px;
+                                        a {
+                                            /* The color and padding added for the "Go" button in
+                                            the content block of the card dropdown items. Background none is added when the
+                                            background is not given in the settings for the menu items */
+                                            color: #fff;
+                                            padding: 0;
+                                            background: none;
+                                            &:hover,
+                                            &:focus,
+                                            &:active {
+                                                /* Background removed for the link of the button on
+                                                hover in the content block for the card dropdown items */
+                                                background: none;
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                            /* The "Text position" of the menu link is selected as "Top overlay"
-                            or "Below overlay" in the "Card Appearance" settings */
-                            &.card-text-overlay-top,
-                            &.card-text-overlay-bottom {
-                                /* The position relative to the card dropdown  */
-                                position: relative;
-                                /* The border, background, box-shadow, outline are removed for the card overlay link and
-                                   the width, height, position is added to redirect to course for the card top overlay &
-                                   card bottom overlay */
-                                > a {
-                                    width: 100%;
-                                    height: 100%;
-                                    border: 0;
-                                    background: none;
-                                    box-shadow: none;
-                                    outline: none;
-                                    position: absolute;
-                                    top: 0;
-                                    left: 0;
-                                    z-index: 1;
+                                /* The below style is added when the Menu link as "Heading" in "card layout" Menu
+                                settings */
+                                &.menu-item-heading {
+                                    /* The Card menu as "Heading" option content block style */
+                                    .content-block {
+                                        /* The Card menu content heading menu link font-size and opacity added */
+                                        h5 a {
+                                            font-size: 16px;
+                                            opacity: .6;
+                                        }
+                                        /* The Card Menu as "Heading" option content block "Go" button link is hidden */
+                                        .btn-block {
+                                            display: none;
+                                        }
+                                    }
                                 }
-                                /* The width and position of the menu link at the top of the card block in the card
-                                   dropdown menu */
-                                .content-block {
-                                    width: 100%;
-                                    height: 100%;
-                                    align-items: flex-start;
-                                    position: absolute;
-                                    top: 0;
-                                    left: 0;
+                                /* The "Text position" of the menu link is selected as "Top overlay"
+                                or "Below overlay" in the "Card Appearance" settings */
+                                &.card-text-overlay-top,
+                                &.card-text-overlay-bottom {
+                                    /* The position relative to the card dropdown  */
+                                    position: relative;
+                                    /* The border, background, box-shadow, outline are removed for the card overlay link and
+                                    the width, height, position is added to redirect to course for the card top overlay &
+                                    card bottom overlay */
+                                    > a {
+                                        width: 100%;
+                                        height: 100%;
+                                        border: 0;
+                                        background: none;
+                                        box-shadow: none;
+                                        outline: none;
+                                        position: absolute;
+                                        top: 0;
+                                        left: 0;
+                                        z-index: 1;
+                                    }
+                                    /* The width and position of the menu link at the top of the card block in the card
+                                    dropdown menu */
+                                    .content-block {
+                                        width: 100%;
+                                        height: 100%;
+                                        align-items: flex-start;
+                                        position: absolute;
+                                        top: 0;
+                                        left: 0;
+                                    }
                                 }
-                            }
-                            /* The "Text position" of the menu link bottom
-                            of the card block in the "Below overlay" option */
-                            &.card-text-overlay-bottom {
-                                .content-block {
-                                    align-items: flex-end;
+                                /* The "Text position" of the menu link bottom
+                                of the card block in the "Below overlay" option */
+                                &.card-text-overlay-bottom {
+                                    .content-block {
+                                        align-items: flex-end;
+                                    }
                                 }
                             }
                         }
@@ -2230,7 +2235,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 /* The nav drawer position to the top in the responsive alignment */
 @include media-breakpoint-down(md) {
     .navbar.fixed-top.boost-union-menubar ~ .drawer {
-        top: 40px;
+        top: 100px; /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
         &.drawer-right {
             top: 0;
         }
@@ -2297,6 +2302,10 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 top: calc(60px + 0.7rem);
             }
         }*/
+    }
+    /* The card menu of the drodown item margin right is removed when the card dropdown menu is inside the "More" menu */
+    .theme-boost-union-smartmenu .navbar .moremenu .dropdown.card-dropdown .dropdown-menu .card-block-wrapper .card-block {
+        margin-right: 0;
     }
 }
 
