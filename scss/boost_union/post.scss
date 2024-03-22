@@ -1731,7 +1731,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                             margin-bottom: 0;
                         }
                     }
-                    /* text aligned center, Padding and margin added for the "help icon" in menu */
+                    /* Text aligned center, Padding and margin bottom added for the "help icon" in menu help icon */
                     .menu-helpicon {
                         text-align: center;
                         padding-right: 10px;
@@ -1751,6 +1751,13 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                         /* Dropdown menu link alignment at top */
                         align-items: baseline;
                         white-space: normal;
+                        /* The icon width, height and font size is changed to normal size when the
+                        large size icon (class="iconsize-big") is used in the "i" tag */
+                        i.icon {
+                            width: auto;
+                            height: auto;
+                            font-size: 16px;
+                        }
                         /* The "Tick" icon removed when the menu link is clicked */
                         &:before {
                             display: none;
@@ -2147,6 +2154,12 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     /* Align the drawer content list group item in center*/
     .drawer-primary .drawercontent .list-group .list-group-item {
         align-items: center;
+        /* The icon width, height and font size is changed to normal size when the large size icon (class="iconsize-big") is used in the "i" tag in the bottom menu */
+        i.icon {
+            width: auto;
+            height: auto;
+            font-size: 16px;
+        }
     }
     /* Drop down more menu carousel item */
     .theme-boost-union-smartmenu-carousel {
@@ -2321,6 +2334,10 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                         > a {
                             &.dropdown-toggle {
                                 padding-right: 25px;
+                                /* The footer bottom icon changes to an upward-facing angle when the bottom dropdown menu is visible outside the More menu. */
+                                &:not(.active):after {
+                                    content: '\f106';
+                                }
                             }
                             &:not(.active) {
                                 border-bottom: 0;
