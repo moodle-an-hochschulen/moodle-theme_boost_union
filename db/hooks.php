@@ -15,19 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Version file
+ * Theme Boost Union - Hook callbacks.
  *
  * @package    theme_boost_union
- * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @copyright  2024 Alexander Bias <bias@alexanderbias.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'theme_boost_union';
-$plugin->version = 2023102032;
-$plugin->release = 'v4.3-r10';
-$plugin->requires = 2023100900;
-$plugin->supported = [403, 403];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = ['theme_boost' => 2023100900];
+$callbacks = [
+    [
+        'hook' => \core\hook\output\before_standard_head_html_generation::class,
+        'callback' => 'theme_boost_union\local\hook\output\before_standard_head_html_generation::callback',
+        'priority' => 0,
+    ],
+];
