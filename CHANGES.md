@@ -13,6 +13,7 @@ Changes
 
 ### v4.3-r9
 
+* 2024-03-15 - Bugfix: Correct order for in-course breadcrumb when sections exist in it (First categories then sections), solves #317.
 * 2024-03-13 - Improvement: In smart menus, dynamic courses can now pick up the courses from all subcategories, resolves #395.
 * 2024-03-13 - Bugfix: Custom course fields of type "Textarea" were not conditionally hidden in the smart menu configuration, resolves #576.
 * 2024-03-01 - Feature: Show starred courses popover in the navbar, resolves #289.
