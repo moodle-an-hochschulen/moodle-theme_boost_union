@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-03-22 - Upgrade: Migrate the before_standard_html_head() function to the new hook callback on Moodle 4.4, resolves #604.
+
 ### v4.3-r10
 
 * 2024-03-18 - Improvement: Add prefixes to the sessionStorage keys in the scrollspy implementation, resolves #598.
