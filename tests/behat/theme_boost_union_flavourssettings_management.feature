@@ -6,7 +6,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, managi
 
   Scenario: Flavours: Management - When the theme is installed, no flavours exist
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     Then I should see "Flavours" in the "#region-main h2" "css_element"
     And I should see "There aren't any flavours created yet. Please create your first flavour to get things going."
     And "table" "css_element" should not exist in the "#region-main" "css_element"
@@ -17,7 +17,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, managi
 
   Scenario: Flavours: Management - Add a flavour (and set its metadata)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
@@ -35,7 +35,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, managi
 
   Scenario: Flavours: Management - Preview existing flavours
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
@@ -50,7 +50,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, managi
 
   Scenario: Flavours: Management - Edit (the metadata of) an existing flavour
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
@@ -68,7 +68,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, managi
 
   Scenario: Flavours: Management - Delete existing flavours (until none is left anymore)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
@@ -98,7 +98,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, managi
 
   Scenario: Flavours: Management - Cancel the creation of a new flavour
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I click on "Cancel" "button"
@@ -112,7 +112,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, managi
 
   Scenario: Flavours: Management - Cancel the editing of an existing flavour
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
@@ -130,7 +130,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, managi
 
   Scenario: Flavours: Management - Cancel the deletion of an existing flavour
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
@@ -151,7 +151,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, managi
 
   Scenario: Flavours: Management - Move existing flavours up and down
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
