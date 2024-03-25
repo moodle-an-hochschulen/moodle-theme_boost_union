@@ -521,35 +521,14 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
 }
 
 /**
- * Callback to add head elements.
- *
- * We use this callback to inject the flavour's CSS code to the page.
+ * Callback to add head elements (for releases up to Moodle 4.3).
  *
  * @return string
  */
 function theme_boost_union_before_standard_html_head() {
-    global $CFG, $PAGE;
 
-    // Initialize HTML.
-    $html = '';
-
-    // If a theme other than Boost Union or a child theme of it is active, return directly.
-    // This is necessary as the before_standard_html_head() callback is called regardless of the active theme.
-    if ($PAGE->theme->name != 'boost_union' && !in_array('boost_union', $PAGE->theme->parents)) {
-        return $html;
-    }
-
-    // Require local library.
-    require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
-
-    // Add the flavour CSS to the page.
-    theme_boost_union_add_flavourcss_to_page();
-
-    // Add the touch icons to the page.
-    $html .= theme_boost_union_get_touchicons_html_for_page();
-
-    // Return the HTML code.
-    return $html;
+    // Call and return callback implementation.
+    return theme_boost_union_callbackimpl_before_standard_html();
 }
 
 /**
