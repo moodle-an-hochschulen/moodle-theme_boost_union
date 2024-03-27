@@ -1,14 +1,23 @@
 @theme @theme_boost_union @theme_boost_union_general @theme_boost_union_general_admin
 Feature: Configuring the theme_boost_union plugin as admin
   In order to use the features
-  As manager
+  As admin
   I need to be able to configure the theme Boost Union plugin
+
+#  @javascript
+#  Scenario: Redirect the user from the theme selector page to the Boost Union settings category page
+#    When I log in as "admin"
+#    And I follow "Site administration"
+#    And I navigate to "Appearance > Themes" in site administration
+#    And I click on "#theme-settings-boost_union" "css_element" in the "#theme-card-boost_union" "css_element"
+#    And I should see "Category: Boost Union"
+#    And I should see "Boost Union" in the ".breadcrumb" "css_element"
 
   @javascript
   Scenario: Switch to the active Boost Union admin sub-tab after saving a setting and the following page reload
     When I log in as "admin"
     And I follow "Site administration"
-    And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
+    And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Course content max width" to "600px"
     And I click on "Save changes" "button"
