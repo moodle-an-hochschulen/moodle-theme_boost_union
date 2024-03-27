@@ -12,7 +12,7 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
   @javascript
   Scenario: Setting: Raw initial SCSS - Add custom SCSS to the theme
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
+    And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We add a small CSS snippet to the page which hides the heading in the page header.
     # This is just to make it easy to detect the effect of this custom SCSS code.
@@ -27,7 +27,7 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
   @javascript
   Scenario: Setting: Raw SCSS - Add custom SCSS to the theme
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Look" in site administration
+    And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We add a small CSS snippet to the page which hides the heading in the page header.
     # This is just to make it easy to detect the effect of this custom SCSS code.
