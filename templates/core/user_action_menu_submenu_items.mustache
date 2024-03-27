@@ -47,6 +47,7 @@
     * Add additional attributes to items.
     * Allow formatted text within the item.
     * Include thirdlevel submenu support. Haschildren based menu item added.
+    * Add support for dividers in the submenu.
 }}
 {{#items}}
     {{#haschildren}}
@@ -69,5 +70,6 @@
                 {{{text}}}
             </a>
         {{/link}}
+        {{#divider}}<div class="dropdown-divider"></div>{{/divider}}
     {{/haschildren}}
 {{/items}}
