@@ -37,16 +37,18 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
     // stupid "Too much data passed as arguments to js_call_amd..." debugging message if we would
     // pack all settings onto just one settings page.
     // To achieve this goal, we create a custom admin settings category and fill it with several settings pages.
-    // However, there is still the $settings variable which is expected by Moodle coreto be filled with the theme
-    // settings and which is automatically added to the admin settings tree in one settings page.
-    // To avoid that there appears an empty "Boost Union" settings page near our own custom settings category,
-    // we set $settings to null.
 
-    // Avoid that the theme settings page is auto-created.
-    $settings = null;
+    // However, there is still the $settings variable which is expected by Moodle core to be filled with the theme
+    // settings and which is automatically linked from the theme selector page.
+    // To avoid that there appears a broken "Boost Union" settings page, we redirect the user to the settings
+    // category if he opens this page.
+    $mainsettingspageurl = new moodle_url('/admin/settings.php', ['section' => 'themesettingboost_union']);
+    if ($ADMIN->fulltree && $PAGE->has_set_url() && $PAGE->url->compare($mainsettingspageurl)) {
+        redirect(new moodle_url('/admin/category.php', ['category' => 'theme_boost_union']));
+    }
 
     // Create custom admin settings category.
-    $ADMIN->add('themes', new admin_category('theme_boost_union',
+    $ADMIN->add('appearance', new admin_category('theme_boost_union',
             get_string('pluginname', 'theme_boost_union', null, true)));
 
     // Create empty settings page structure to make the site administration work on non-admin pages.

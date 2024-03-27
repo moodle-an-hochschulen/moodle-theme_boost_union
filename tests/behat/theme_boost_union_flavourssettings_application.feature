@@ -36,7 +36,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
 
   Scenario: Flavours: Application - Flavour ID is added as body class attribute
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I set the field "Title" to "My shiny new flavour"
@@ -48,7 +48,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   @javascript
   Scenario: Flavours: Application - Apply a flavour to a particular category without subcategories (and show this fact in the overview table and make sure that other categories are not affected)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -87,7 +87,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   @javascript
   Scenario: Flavours: Application - Apply a flavour to a particular category with subcategories (and show this fact in the overview table and make sure that other categories are not affected)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -126,7 +126,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   @javascript
   Scenario: Flavours: Application - Do not apply a flavour to categories anymore
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -162,7 +162,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   @javascript
   Scenario: Flavours: Application - Apply a flavour to a particular cohort (and show this fact in the overview table and make sure that other cohorts are not affected)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -192,7 +192,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   @javascript
   Scenario: Flavours: Application - Do not apply a flavour to cohorts anymore
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -224,7 +224,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   @javascript
   Scenario: Flavours: Application - Stop after the first matching flavour
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets

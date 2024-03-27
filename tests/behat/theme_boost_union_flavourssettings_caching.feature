@@ -16,7 +16,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
   @javascript
   Scenario: Flavours: Caching - After creating an additional flavour (and thereby changing the flavour which applies to a particular user), the flavour which applies now should take direct effect (i.e. the flavours cache is properly purged)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -26,7 +26,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I should not see "Course categories" in the "Non-effective flavour" "table_row"
     And I am on "Course 1" course homepage
     And I should see "Course 1" in the "#page-header .page-header-headings" "css_element"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -51,7 +51,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
   @javascript
   Scenario: Flavours: Caching - After editing a flavour (and thereby changing the flavour which applies to a particular user), the flavour which applies now should take direct effect (i.e. the flavours cache is properly purged)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -70,7 +70,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
     And I should see "Course categories" in the "Effective flavour" "table_row"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -91,7 +91,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I should see "Course categories" in the "Non-effective flavour" "table_row"
     And I am on "Course 1" course homepage
     And I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on ".action-edit" "css_element" in the "Effective flavour" "table_row"
     And I click on "span.badge" "css_element" in the "#fitem_id_applytocategories_ids .form-autocomplete-selection" "css_element"
     And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
@@ -106,7 +106,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
   @javascript
   Scenario: Flavours: Caching - After deleting a flavour (and thereby changing the flavour which applies to a particular user), the flavour which applies now should take direct effect (i.e. the flavours cache is properly purged)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -125,7 +125,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
     And I should see "Course categories" in the "Effective flavour" "table_row"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -146,7 +146,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I should see "Course categories" in the "Non-effective flavour" "table_row"
     And I am on "Course 1" course homepage
     And I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on ".action-delete" "css_element" in the "Effective flavour" "table_row"
     And I click on "Delete" "button"
     And I am on "Course 1" course homepage
@@ -155,7 +155,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
   @javascript
   Scenario Outline: Flavours: Caching - After sorting a flavour (and thereby changing the flavour which applies to a particular user), the flavour which applies now should take direct effect (i.e. the flavours cache is properly purged)
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -173,7 +173,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Include subcategories" to "0"
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -193,7 +193,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I should see "Flavours" in the "#region-main h2" "css_element"
     And I am on "Course 1" course homepage
     And I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on ".sort-flavour-<action>-action" "css_element" in the "<flavourtosort> flavour" "table_row"
     And I am on "Course 1" course homepage
     Then I should see "Course 1" in the "#page-header .page-header-headings" "css_element"
@@ -214,7 +214,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
       | admin | CH1    |
       | admin | CH2    |
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -232,7 +232,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
     And I should see "Cohorts" in the "Effective flavour" "table_row"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -269,7 +269,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
       | user  | cohort |
       | admin | CH2    |
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -287,7 +287,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
     And I should see "Cohorts" in the "Effective flavour" "table_row"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -327,7 +327,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
       | admin | CH1    |
       | admin | CH2    |
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
@@ -345,7 +345,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
     And I should see "Cohorts" in the "Effective flavour" "table_row"
-    And I navigate to "Appearance > Themes > Boost Union > Flavours" in site administration
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
