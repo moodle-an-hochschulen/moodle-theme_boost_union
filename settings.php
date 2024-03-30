@@ -40,11 +40,11 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
     // However, there is still the $settings variable which is expected by Moodle core to be filled with the theme
     // settings and which is automatically linked from the theme selector page.
-    // To avoid that there appears a broken "Boost Union" settings page, we redirect the user to the settings
-    // category if he opens this page.
+    // To avoid that there appears a broken "Boost Union" settings page, we redirect the user to a settings
+    // overview page if he opens this page.
     $mainsettingspageurl = new moodle_url('/admin/settings.php', ['section' => 'themesettingboost_union']);
     if ($ADMIN->fulltree && $PAGE->has_set_url() && $PAGE->url->compare($mainsettingspageurl)) {
-        redirect(new moodle_url('/admin/category.php', ['category' => 'theme_boost_union']));
+        redirect(new moodle_url('/theme/boost_union/settings_overview.php'));
     }
 
     // Create custom admin settings category.
@@ -53,6 +53,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
     // Create empty settings page structure to make the site administration work on non-admin pages.
     if (!$ADMIN->fulltree) {
+        // Create Overview page
+        // (and allow users with the theme/boost_union:configure capability to access it).
+        $overviewpage = new admin_externalpage('theme_boost_union_overview',
+                get_string('settingsoverview', 'theme_boost_union', null, true),
+                new moodle_url('/theme/boost_union/settings_overview.php'),
+                'theme/boost_union:configure');
+        $ADMIN->add('theme_boost_union', $overviewpage);
+
         // Create Look settings page
         // (and allow users with the theme/boost_union:configure capability to access it).
         $tab = new admin_settingpage('theme_boost_union_look',
@@ -115,7 +123,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Prepare regular expression for checking if the value is a percent number (from 0% to 100%) or a pixel number
         // (with 3 or 4 digits) or a viewport width number (from 0 to 100).
         $widthregex = '/^((\d{1,2}|100)%)|((\d{1,2}|100)vw)|(\d{3,4}px)$/';
-
 
         // Create Look settings page with tabs
         // (and allow users with the theme/boost_union:configure capability to access it).
