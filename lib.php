@@ -526,6 +526,10 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
  * @return string
  */
 function theme_boost_union_before_standard_html_head() {
+    global $CFG;
+
+    // Require local library.
+    require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
 
     // Call and return callback implementation.
     return theme_boost_union_callbackimpl_before_standard_html();
