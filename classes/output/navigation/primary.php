@@ -186,6 +186,15 @@ class primary extends \core\navigation\output\primary {
                 foreach ($parentoutput['submenus'] as $sm) {
                     // Search the 'Language' submenu.
                     if ($sm->title == $needle) {
+                        // Create and inject a divider node.
+                        $dividernode = [
+                            'title' => '####',
+                            'itemtype' => 'divider',
+                            'divider' => 1,
+                            'link' => '',
+                        ];
+                        $sm->items[] = $dividernode;
+
                         // Create and inject the 'Set preferred language' link.
                         $spfnode = [
                             'title' => get_string('setpreferredlanglink', 'theme_boost_union'),

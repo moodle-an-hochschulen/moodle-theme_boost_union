@@ -331,3 +331,21 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I am on site homepage
     Then I should see smart menu "Quick links" item "Dolor sit amet" in location "Main, Menu, User, Bottom"
     And I should not see smart menu "Quick links" item "Lorem ipsum" in location "Main, Menu, User, Bottom"
+
+  @javascript
+  Scenario: Smartmenus: Menu items: Presentation - Use a divider as static menu item
+    When I log in as "admin"
+    And I navigate to smart menu "Quick links" items
+    And I click on "Add menu item" "button"
+    And I set the following fields to these values:
+      | Menu item type | Heading |
+      | Title          | ###     |
+    And I click on "Save changes" "button"
+    # Divider in main navigation.
+    And ".dropdown-divider" "css_element" should exist in the ".primary-navigation" "css_element"
+    # Divider in user menu.
+    And ".dropdown-divider" "css_element" should exist in the "#usermenu-carousel" "css_element"
+    # Divider in bottom menu.
+    And ".dropdown-divider" "css_element" should exist in the ".bottom-navigation" "css_element"
+    # Divider in menubar.
+    And ".dropdown-divider" "css_element" should exist in the "nav.menubar" "css_element"
