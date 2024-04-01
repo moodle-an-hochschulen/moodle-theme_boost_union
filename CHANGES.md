@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-04-01 - Bugfix: Site support form success message is now shown above advert tiles / the slider on frontpage, partly resolves #488.
 * 2024-04-01 - Bugfix: In smart menus, the search for cohorts in restrict visibility by cohorts didn't work for more than 25 cohorts, resolves #462.
 * 2024-04-01 - Improvement: Enhance the activitynavigation setting description to cover section navigation as well, resolves #536.
 * 2024-03-30 - Bugfix: Smart menu divider did not work for user menu submenus, resolves #537.
