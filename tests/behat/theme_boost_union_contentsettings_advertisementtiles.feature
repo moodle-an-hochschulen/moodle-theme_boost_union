@@ -57,7 +57,7 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
       | tile1content          | This is a test content for tile 1 | theme_boost_union |
     When I log in as "teacher1"
     And I am on site homepage
-    Then "#themeboostunionadvtiles" "css_element" should appear <beforeafter> "#region-main" "css_element"
+    Then "#themeboostunionadvtiles" "css_element" should appear <beforeafter> "div[role='main']" "css_element"
 
     Examples:
       | position | beforeafter |

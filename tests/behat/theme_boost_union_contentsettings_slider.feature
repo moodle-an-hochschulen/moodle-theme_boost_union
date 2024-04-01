@@ -76,7 +76,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | tile1content            | This is a test content for tile 1 | theme_boost_union |
     When I log in as "teacher1"
     And I am on site homepage
-    Then "#themeboostunionslider" "css_element" should appear <beforeafter1> "#region-main" "css_element"
+    Then "#themeboostunionslider" "css_element" should appear <beforeafter1> "div[role='main']" "css_element"
     And "#themeboostunionslider" "css_element" should appear <beforeafter2> "#themeboostunionadvtiles" "css_element"
 
     Examples:
