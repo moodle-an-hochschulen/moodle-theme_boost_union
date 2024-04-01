@@ -207,15 +207,6 @@
             {{/regions.contentupper.hasblocks}}
             <div id="page-content" class="pb-3 d-print-block">
                 <div id="region-main-box">
-                    {{#sliderpositionbeforebefore}}
-                        {{> theme_boost_union/slider }}
-                    {{/sliderpositionbeforebefore}}
-                    {{#advtilespositionbefore}}
-                        {{> theme_boost_union/advertisementtiles }}
-                    {{/advtilespositionbefore}}
-                    {{#sliderpositionbeforeafter}}
-                        {{> theme_boost_union/slider }}
-                    {{/sliderpositionbeforeafter}}
                     {{#hasregionmainsettingsmenu}}
                     <div id="region-main-settings-menu" class="d-print-none">
                         <div> {{{ regionmainsettingsmenu }}} </div>
@@ -238,20 +229,29 @@
                             </div>
                         {{/overflow}}
                         {{{courserelatedhints}}}
+                        {{#sliderpositionbeforebefore}}
+                            {{> theme_boost_union/slider }}
+                        {{/sliderpositionbeforebefore}}
+                        {{#advtilespositionbefore}}
+                            {{> theme_boost_union/advertisementtiles }}
+                        {{/advtilespositionbefore}}
+                        {{#sliderpositionbeforeafter}}
+                            {{> theme_boost_union/slider }}
+                        {{/sliderpositionbeforeafter}}
                         {{{ output.main_content }}}
                         {{{ output.activity_navigation }}}
                         {{{ output.course_content_footer }}}
+                        {{#sliderpositionafterbefore}}
+                            {{> theme_boost_union/slider }}
+                        {{/sliderpositionafterbefore}}
+                        {{#advtilespositionafter}}
+                            {{> theme_boost_union/advertisementtiles }}
+                        {{/advtilespositionafter}}
+                        {{#sliderpositionafterafter}}
+                            {{> theme_boost_union/slider }}
+                        {{/sliderpositionafterafter}}
 
                     </section>
-                    {{#sliderpositionafterbefore}}
-                        {{> theme_boost_union/slider }}
-                    {{/sliderpositionafterbefore}}
-                    {{#advtilespositionafter}}
-                        {{> theme_boost_union/advertisementtiles }}
-                    {{/advtilespositionafter}}
-                    {{#sliderpositionafterafter}}
-                        {{> theme_boost_union/slider }}
-                    {{/sliderpositionafterafter}}
                 </div>
             </div>
             {{#regions.contentlower.hasblocks}}
