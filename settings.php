@@ -1408,7 +1408,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Setting: Activity navigation.
+        // Setting: Activity & section navigation.
         $name = 'theme_boost_union/activitynavigation';
         $title = get_string('activitynavigationsetting', 'theme_boost_union', null, true);
         $description = get_string('activitynavigationsetting_desc', 'theme_boost_union', null, true);
