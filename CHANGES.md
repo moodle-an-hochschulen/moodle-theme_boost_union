@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-04-01 - Bugfix: In smart menus, the search for cohorts in restrict visibility by cohorts didn't work for more than 25 cohorts, resolves #462.
 * 2024-04-01 - Improvement: Enhance the activitynavigation setting description to cover section navigation as well, resolves #536.
 * 2024-03-30 - Bugfix: Smart menu divider did not work for user menu submenus, resolves #537.
 * 2024-03-25 - Upgrade: Boost Union settings were moved to an admin settings category of its own to support the new theme chooser on Moodle 4.4, resolves #482.
