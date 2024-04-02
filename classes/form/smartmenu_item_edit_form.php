@@ -385,7 +385,7 @@ class smartmenu_item_edit_form extends \moodleform {
         }
 
         // Add by cohorts as autocomplete element.
-        $cohortslist = \cohort_get_all_cohorts();
+        $cohortslist = \cohort_get_all_cohorts(0, 0);
         $cohortoptions = $cohortslist['cohorts'];
         if ($cohortoptions) {
             array_walk($cohortoptions, function(&$value) {
