@@ -39,7 +39,7 @@ Usage & Settings
 After installing the theme, it does not do anything to Moodle yet.
 
 To configure the theme and its behaviour, please visit:
-Site administration -> Appearance -> Themes -> Boost Union.
+Site administration -> Appearance -> Boost Union.
 
 There, you find multiple setting pages:
 
