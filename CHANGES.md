@@ -11,7 +11,8 @@ Changes
 * 2024-04-01 - Improvement: Enhance the activitynavigation setting description to cover section navigation as well, resolves #536.
 * 2024-03-30 - Bugfix: Smart menu divider did not work for user menu submenus, resolves #537.
 * 2024-03-25 - Upgrade: Boost Union settings were moved to an admin settings category of its own to support the new theme chooser on Moodle 4.4, resolves #482.
-               Please note: This change is backported to Moodle 4.3 to 4.1.
+               Please note: This change is backported to Moodle 4.3 to 4.1 as well.
+               Child theme support: If you are running a Boost Union Child theme, please make sure to adapt your child theme to our latest boilerplate.
 * 2024-03-22 - Upgrade: Migrate the before_standard_html_head() function to the new hook callback on Moodle 4.4, resolves #604.
 
 ### v4.3-r10

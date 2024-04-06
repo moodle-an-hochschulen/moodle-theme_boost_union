@@ -46,7 +46,6 @@ require_capability('theme/boost_union:configure', $context);
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/theme/boost_union/smartmenus/edit.php', ['id' => $id, 'sesskey' => sesskey()]));
 $PAGE->set_cacheable(false);
-$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', ['category' => 'themes']));
 $PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
         ['category' => 'theme_boost_union']));
 $PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/menus.php'));

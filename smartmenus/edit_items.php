@@ -65,7 +65,6 @@ if ($menuid == null && $id !== null) {
 // Prepare the page.
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/theme/boost_union/smartmenus/edit_items.php', ['menu' => $menu->id, 'sesskey' => sesskey()]));
-$PAGE->navbar->add(get_string('themes', 'core'), new moodle_url('/admin/category.php', ['category' => 'themes']));
 $PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
         ['category' => 'theme_boost_union']));
 $PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/menus.php'));
