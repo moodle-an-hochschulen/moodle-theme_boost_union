@@ -33,6 +33,18 @@ $string['githubissueslink'] = '<a href="https://github.com/moodle-an-hochschulen
 // Settings: General strings.
 $string['dontchange'] = 'Do not change anything';
 
+// Settings: Overview page.
+$string['settingsoverview'] = 'Settings overview';
+$string['settingsoverview_title'] = 'Boost Union settings overview';
+$string['settingsoverview_look_desc'] = 'Settings for branding your Moodle site are located here: Colors, icons, images, sizing and, of course, custom SCSS.';
+$string['settingsoverview_feel_desc'] = 'Settings for the overall behaviour of your Moodle site are located here: Navigation items, navigation helpers, blocks and links.';
+$string['settingsoverview_content_desc'] = 'Settings for the global content of your Moodle site are located here: Footer, static pages, info banners, advertisement tiles and sliders.';
+$string['settingsoverview_functionality_desc'] = 'Settings for additional useful global or course-related functionality on your Moodle site are located here.';
+$string['settingsoverview_flavours_desc'] = 'With flavours, you can diversify the look of your Moodle site between cohorts and / or course categories.';
+$string['settingsoverview_smartmenus_desc'] = 'With smart menus, you can extend the navigation items of your Moodle site in the main menu and the user menus well as introduce a bottom menu or a top menu.';
+$string['settingsoverview_all'] = 'All settings on one page';
+$string['settingsoverview_all_desc'] = 'Here, you can open the standard Moodle category settings page for Boost Union that shows all settings on one page. But beware, it is really packed.';
+
 // Settings: Look page.
 $string['configtitlelook'] = 'Look';
 
