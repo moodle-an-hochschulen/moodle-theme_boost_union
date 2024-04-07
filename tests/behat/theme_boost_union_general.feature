@@ -4,7 +4,7 @@ Feature: Configuring the theme_boost_union plugin as admin
   As admin
   I need to be able to configure the theme Boost Union plugin
 
-  @javascript @testme
+  @javascript
   Scenario: Redirect the user from the Boost Union link on the 'Appearance' page to the Boost Union settings overview page
 # Replace the preceeding line with the next line when upgrading to 4.4:
 # Scenario: Redirect the user from the theme selector page to the Boost Union settings overview page
