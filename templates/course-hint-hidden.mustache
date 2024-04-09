@@ -21,11 +21,13 @@
 
     Context variables required for this template:
     * courseid - The course ID
+    * hintcoursehiddentext - The info text shown on hidden courses,
     * showcoursesettingslink - The fact if a link to the course settings should be shown or not
 
     Example context (json):
     {
         "courseid": "123",
+        "hintcoursehiddentext: "This course is currently <strong>hidden</strong>. Only enrolled teachers can access this course when hidden.",
         "showcoursesettingslink": true
     }
 }}
@@ -33,7 +35,7 @@
     <div class="media">
         <div class="mr-3 icon-size-5"><i class="fa fa-exclamation-circle fa-3x"></i></div>
         <div class="media-body align-self-center">
-            {{#str}} showhintcoursehiddengeneral, theme_boost_union {{/str}}
+            {{{hintcoursehiddentext}}}
             {{#showcoursesettingslink}}
                 <br>{{#str}} showhintcoursehiddensettingslink, theme_boost_union, { "url": "{{config.wwwroot}}/course/edit.php?id={{courseid}}" } {{/str}}
             {{/showcoursesettingslink}}
