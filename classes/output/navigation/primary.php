@@ -96,7 +96,6 @@ class primary extends \core\navigation\output\primary {
         }
 
         // Get the menus for the main menu.
-        $mainmenu = [];
         $mainmenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_MAIN, $smartmenus);
 
         // Convert the children menu items into submenus.
