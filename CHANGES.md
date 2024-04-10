@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r25
 
 * 2024-04-10 - Regression: Using Fontawesome 6 icons was broken on Moodle 4.1, resolves #624.
 
