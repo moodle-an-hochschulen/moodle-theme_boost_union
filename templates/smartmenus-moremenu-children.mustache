@@ -21,9 +21,9 @@
     This is a modified version of core/moremenu_children.
 
     Modifications compared to the original template:
-        * Added the carousel-target data to the li item.
-        * Main items are wrapped with carousel-item.
-        * Second-level submenus are rendered as separate carousel items.
+    * Added the carousel-target data to the li item.
+    * Main items are wrapped with carousel-item.
+    * Second-level submenus are rendered as separate carousel items.
 
     Example context (json):
     {
@@ -48,12 +48,9 @@
             {{{text}}}
         </a>
         <div class="dropdown-menu boost-union-moremenu" role="menu" id="drop-down-menu-{{moremenuid}}" aria-labelledby="drop-down-{{moremenuid}}">
-
             <div data-toggle="smartmenu-carousel" class="carousel slide" data-touch="false" data-interval="false" data-keyboard="false">
                 <div class="carousel-inner">
-
                 {{#children}}
-
                     {{! Smart menus }}
                     {{#submenuid}}
                     <div id="carousel-item-main" class="carousel-item active" role="menu" tabindex="-1">
@@ -63,7 +60,6 @@
                         {{#belowhelptext}}{{#helptext}}<div class="menu-description">{{{helptext}}}</div>{{/helptext}}{{/belowhelptext}}
                     </div>
                     {{/submenuid}}
-
                     {{! Moodle core menus }}
                     {{^items}}
                         {{^divider}}
@@ -90,15 +86,12 @@
                                     {{{text}}}
                                 </a>
                             {{/is_action_link}}
-
                         {{/divider}}
                         {{#divider}}
                             <div class="dropdown-divider"></div>
                         {{/divider}}
                     {{/items}}
-
                 {{/children}}
-
                 {{#submenus}}
                     <div id="carousel-item-{{id}}" role="menu" class="carousel-item submenu" tabindex="-1" aria-label="{{title}}">
                         <div class="d-flex flex-column h-100">
@@ -116,9 +109,7 @@
                         </div>
                     </div>
                 {{/submenus}}
-
                 </div>
-
             </div>
         </div>
     </li>

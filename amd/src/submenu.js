@@ -14,10 +14,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Initializes and handles events of the sub menus in smart menu.
+ * Theme Boost Union - JS code to initialize and handle events of the sub menus in smart menu.
  *
  * @module     theme_boost_union/submenu
- * @copyright  2023 bdecent GmbH <https://bdecent.de>
+ * @copyright  2024 bdecent GmbH <https://bdecent.de>
  * @copyright  based on code from core/usermenu by Mihail Geshoski
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -241,9 +241,7 @@ const moreMenuCardItem = () => {
                 innerMenu.style.right = 0;
             }
         }
-
     };
-
 };
 
 /**
@@ -260,7 +258,6 @@ const init = () => {
 
     // Calculate and setup the card menus width and positions inside the more menu.
     moreMenuCardItem();
-
 };
 
 export default {
