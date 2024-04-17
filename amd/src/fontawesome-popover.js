@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, Fragment) {
+define(['jquery', 'theme_boost/popover', 'core/fragment', 'core/notification'], function($, popover, Fragment, Notification) {
 
     const SELECTORS = {
         PICKERCONTAINER: '.fontawesome-iconpicker-popover',
@@ -132,7 +132,6 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
         }
 
         // Fetch the icons list and setup popover with icons list.
-        // eslint-disable-next-line promise/valid-params
         getIconList().then(function(html) {
 
             $(pickerInput).popover({
@@ -161,7 +160,7 @@ define(['jquery', 'theme_boost/popover', 'core/fragment'], function($, popover, 
                 });
             });
             return;
-        }).catch();
+        }).catch(Notification.exception);
 
         document.addEventListener('click', e => {
             if (pickerIsShown && !e.target.closest(SELECTORS.PICKERCONTAINER)) {
