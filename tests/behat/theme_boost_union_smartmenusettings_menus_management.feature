@@ -62,6 +62,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I click on "Create menu" "button"
     And I set the following fields to these values:
       | Title | Links |
+      | Menu location(s) | Main |
     And I click on "Save and return" "button"
     And I should see "Links" in the "smartmenus" "table"
     And ".action-delete" "css_element" should exist in the "smartmenus" "table"
@@ -109,17 +110,20 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I click on ".action-show" "css_element" in the "Links" "table_row"
     Then I should see smart menu "Links" in location "Main, Menu, User, Bottom"
 
+  @javascript
   Scenario: Smartmenus: Menus: Management - Move an existing smart menu up and down
     When I log in as "admin"
     And I navigate to smart menus
     And I click on "Create menu" "button"
     And I set the following fields to these values:
       | Title | Enrolled courses |
+      | Menu location(s) | Main  |
     And I click on "Save and return" "button"
     And I should see "Enrolled courses" in the "smartmenus" "table"
     And I click on "Create menu" "button"
     And I set the following fields to these values:
       | Title | Completed courses |
+      | Menu location(s) | Main   |
     And I click on "Save and return" "button"
     And I should see "Completed courses" in the "smartmenus" "table"
     And "Enrolled courses" "table_row" should appear before "Completed courses" "table_row"
@@ -127,3 +131,20 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     Then "Enrolled courses" "table_row" should appear after "Completed courses" "table_row"
     And I click on ".sort-smartmenus-up-action" "css_element" in the "Enrolled courses" "table_row"
     And "Enrolled courses" "table_row" should appear before "Completed courses" "table_row"
+
+  @javascript
+  Scenario: Smartmenus: Menus: Management - Make location field required
+    When I log in as "admin"
+    And I navigate to smart menus
+    And I click on "Create menu" "button"
+    And I set the following fields to these values:
+      | Title            | Links     |
+    And I click on "Save and return" "button"
+    And I should see "Required" in the "#fitem_id_location" "css_element"
+    Then I set the field "Menu location(s)" to "Main"
+    And I click on "Save and return" "button"
+    And I should see "Links" in the "smartmenus" "table"
+    And I set "Links" smart menu items with the following fields to these values:
+      | Title          | Info    |
+      | Menu item type | Heading |
+    Then I should see smart menu "Links" in location "Main"
