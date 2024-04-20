@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-04-20 - Cleanup: Add proper JS promise error handling, resolves #435.
+
 ### v4.2-r14
 
 * 2024-04-01 - Bugfix: Site support form success message is now shown above advert tiles / the slider on frontpage, partly resolves #488.
