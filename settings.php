@@ -2519,14 +2519,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
-        // Setting: Show hint at forums within hidden courses that notifications are not send.
+        // Setting: Show hint for forum notifications in hidden courses.
         $name = 'theme_boost_union/showhintforumnotifications';
         $title = get_string('showhintforumnotificationssetting', 'theme_boost_union', null, true);
         $description = get_string('showhintforumnotificationssetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
         $page->hide_if('theme_boost_union/showhintforumnotifications', 'theme_boost_union/showhintcoursehidden', 'neq',
-            THEME_BOOST_UNION_SETTING_SELECT_YES);
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
 
         // Setting: Show hint guest for access.
         $name = 'theme_boost_union/showhintcourseguestaccess';

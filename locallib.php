@@ -59,7 +59,9 @@ function theme_boost_union_get_course_related_hints() {
         // If the setting showhintcoursehiddennotifications is set too and we view a forum (e.g. announcement) within a hidden
         // course a hint will be shown that no notifications via forums will be sent out to students.
         if (get_config('theme_boost_union', 'showhintforumnotifications') == THEME_BOOST_UNION_SETTING_SELECT_YES
-                && $PAGE->url->compare(new moodle_url('/mod/forum/view.php'), URL_MATCH_BASE)) {
+                && ($PAGE->url->compare(new moodle_url('/mod/forum/view.php'), URL_MATCH_BASE) ||
+                        $PAGE->url->compare(new moodle_url('/mod/forum/discuss.php'), URL_MATCH_BASE) ||
+                        $PAGE->url->compare(new moodle_url('/mod/forum/post.php'), URL_MATCH_BASE))) {
             // Use the specialized hint text for hidden courses on forum pages.
             $hintcoursehiddentext = get_string('showhintforumnotifications', 'theme_boost_union');
         }
