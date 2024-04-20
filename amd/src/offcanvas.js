@@ -21,7 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'theme_boost/drawers', 'core/modal'], function($, Drawers, Modal) {
+define(['jquery', 'theme_boost/drawers', 'core/modal', 'core/notification'], function($, Drawers, Modal, Notification) {
 
     let modalBackdrop = null;
 
@@ -32,9 +32,9 @@ define(['jquery', 'theme_boost/drawers', 'core/modal'], function($, Drawers, Mod
      * @returns {object}
      */
     const getDrawerBackdrop = function() {
+
         if (!modalBackdrop) {
-             // eslint-disable-next-line promise/valid-params
-             modalBackdrop = Modal.prototype.getBackdrop().then(backdrop => {
+            modalBackdrop = Modal.prototype.getBackdrop().then(backdrop => {
                 backdrop.getAttachmentPoint().get(0).addEventListener('click', e => {
                     e.preventDefault();
                     var currentDrawer = Drawers.getDrawerInstanceForNode(
@@ -45,7 +45,7 @@ define(['jquery', 'theme_boost/drawers', 'core/modal'], function($, Drawers, Mod
                 });
                 return backdrop;
             })
-            .catch();
+            .catch(Notification.exception);
         }
         return modalBackdrop;
     };
@@ -62,12 +62,11 @@ define(['jquery', 'theme_boost/drawers', 'core/modal'], function($, Drawers, Mod
             }
 
             // Get the drawer's backdrop and show it.
-            // eslint-disable-next-line promise/valid-params
             getDrawerBackdrop().then(backdrop => {
                 backdrop.show();
                 return backdrop;
             })
-            .catch();
+            .catch(Notification.exception);
 
             return true;
         });
@@ -79,12 +78,11 @@ define(['jquery', 'theme_boost/drawers', 'core/modal'], function($, Drawers, Mod
                 return null;
             }
 
-            // eslint-disable-next-line promise/valid-params
             getDrawerBackdrop().then(backdrop => {
                 backdrop.hide();
                 return backdrop;
             })
-            .catch();
+            .catch(Notification.exception);
 
             return true;
         });
