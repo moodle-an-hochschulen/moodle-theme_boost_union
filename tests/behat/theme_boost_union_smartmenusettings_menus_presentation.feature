@@ -188,7 +188,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I set the following fields to these values:
       | Title            | <span lang="en" class="multilang">Lorem ipsum</span><span lang="de" class="multilang">Dolor sit amet</span> |
       | Menu location(s) | Main, Menu, User, Bottom                                                                                    |
-    And I click on "Save and return" "button"
+    And I configure smart menu static item "Multilang" "https://moodle.org"
     And I follow "Preferences" in the user menu
     And I click on "Preferred language" "link"
     And I set the field "Preferred language" to "English ‎(en)‎"
@@ -221,28 +221,28 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then I should see smart menu "Quick links" in location "Main"
     And I click on "More" "link" in the ".boost-union-menubar" "css_element"
     Then I should see smart menu "Quick links" in location "Menu"
-    And I create smart menu with the following fields to these values:
+    And I create smart menu and item with the following fields to these values:
       | Title            | Test quick demo links 01 |
       | Menu location(s) | Main, Menu               |
-    And I create smart menu with the following fields to these values:
+    And I create smart menu and item with the following fields to these values:
       | Title            | Test quick demo links 02 |
       | Menu location(s) | Main, Menu               |
-    And I create smart menu with the following fields to these values:
+    And I create smart menu and item with the following fields to these values:
       | Title            | Test quick demo links 03 |
       | Menu location(s) | Main, Menu               |
-    And I create smart menu with the following fields to these values:
+    And I create smart menu and item with the following fields to these values:
       | Title            | Test quick demo links 04 |
       | Menu location(s) | Main, Menu               |
-    And I create smart menu with the following fields to these values:
+    And I create smart menu and item with the following fields to these values:
       | Title            | Test quick demo links 05 |
       | Menu location(s) | Main, Menu               |
-    And I create smart menu with the following fields to these values:
+    And I create smart menu and item with the following fields to these values:
       | Title            | Test quick demo links long title 01  |
       | Menu location(s) | Menu                                 |
-    And I create smart menu with the following fields to these values:
+    And I create smart menu and item with the following fields to these values:
       | Title            | Test quick demo links long title 02  |
       | Menu location(s) | Menu                                 |
-    And I create smart menu with the following fields to these values:
+    And I create smart menu and item with the following fields to these values:
       | Title            | Test quick demo links 06 |
       | Menu location(s) | Main, Menu               |
     Then I change the viewport size to "1600x495"
