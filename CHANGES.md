@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-04-20 - Cleanup: Add proper JS promise error handling, resolves #435.
+
 ### v4.1-r25
 
 * 2024-04-10 - Regression: Using Fontawesome 6 icons was broken on Moodle 4.1, resolves #624.
