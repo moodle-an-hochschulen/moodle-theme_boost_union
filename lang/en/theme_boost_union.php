@@ -973,10 +973,10 @@ $string['showhintcoursehiddensetting'] = 'Show hint in hidden courses';
 $string['showhintcoursehiddensetting_desc'] = 'With this setting a hint will appear in the course header as long as the visibility of the course is hidden. This helps to identify the visibility state of a course at a glance without the need for looking at the course settings.';
 $string['showhintcoursehiddengeneral'] = 'This course is currently <strong>hidden</strong>. Only enrolled teachers can access this course when hidden.';
 $string['showhintcoursehiddensettingslink'] = 'You can change the visibility in the <a href="{$a->url}">course settings</a>.';
-// ... ... Setting: Show hint that notifications don't work within forums for hidden courses.
-$string['showhintforumnotificationssetting'] = 'Show hint regarding notifications in hidden courses';
-$string['showhintforumnotificationssetting_desc'] = 'When a course is hidden notifications within a forum are not send to students. To clarify this a hint will appear on forums within a hidden course to help the teachers understand this circumstance.';
-$string['showhintforumnotifications'] = 'This course is currently <strong>hidden</strong>. Please note that this means that <strong>students will not be notified</strong> online or by email of any messages you post in this forum.';
+// ... ... Setting: Show hint for forum notifications in hidden courses.
+$string['showhintforumnotificationssetting'] = 'Show hint for forum notifications in hidden courses';
+$string['showhintforumnotificationssetting_desc'] = 'With this setting a hint will not only appear in the course header but also in forums as long as the visibility of the course is hidden. This is to clarify that notifications within a forum are not send to students and to help the teachers understand this circumstance.';
+$string['showhintforumnotifications'] = 'This course is currently <strong>hidden</strong>. This means that <strong>students will not be notified</strong> online or by email of any messages you post in this forum.';
 // ... ... Setting: Show hint for guest access.
 $string['showhintcoursguestaccesssetting'] = 'Show hint for guest access';
 $string['showhintcourseguestaccesssetting_desc'] = 'With this setting a hint will appear in the course header when a user is accessing it with the guest access feature. If the course provides an active self enrolment, a link to that page is also presented to the user.';

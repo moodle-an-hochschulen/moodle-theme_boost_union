@@ -549,6 +549,10 @@ In this tab there are the following settings:
 
 With this setting a hint will appear in the course header if the user has switched the role in the course.
 
+###### Show hint for forum notifications in hidden courses
+
+With this setting a hint will not only appear in the course header but also in forums as long as the visibility of the course is hidden.
+
 ###### Show hint in hidden courses
 
 With this setting a hint will appear in the course header as long as the visibility of the course is hidden.
