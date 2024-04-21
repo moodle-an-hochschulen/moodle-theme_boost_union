@@ -40,26 +40,45 @@ function theme_boost_union_get_course_related_hints() {
     // Initialize HTML code.
     $html = '';
 
-    // If the setting showhintcoursehidden is set and the visibility of the course is hidden and
+    // If the setting showhintcoursehidden is set and the visibility of the course is hidden
     // a hint for the visibility will be shown.
     if (get_config('theme_boost_union', 'showhintcoursehidden') == THEME_BOOST_UNION_SETTING_SELECT_YES
             && has_capability('theme/boost_union:viewhintinhiddencourse', \context_course::instance($COURSE->id))
             && $PAGE->has_set_url()
-            && $PAGE->url->compare(new moodle_url('/course/view.php'), URL_MATCH_BASE)
             && $COURSE->visible == false) {
 
-        // Prepare template context.
-        $templatecontext = ['courseid' => $COURSE->id];
+        // Initialize hint text.
+        $hintcoursehiddentext = '';
 
-        // If the user has the capability to change the course settings, an additional link to the course settings is shown.
-        if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
-            $templatecontext['showcoursesettingslink'] = true;
-        } else {
-            $templatecontext['showcoursesettingslink'] = false;
+        // The general hint will only be shown when the course is viewed.
+        if ($PAGE->url->compare(new moodle_url('/course/view.php'), URL_MATCH_BASE)) {
+            // Use the default hint text for hidden courses.
+            $hintcoursehiddentext = get_string('showhintcoursehiddengeneral', 'theme_boost_union');
         }
 
-        // Render template and add it to HTML code.
-        $html .= $OUTPUT->render_from_template('theme_boost_union/course-hint-hidden', $templatecontext);
+        // If the setting showhintcoursehiddennotifications is set too and we view a forum (e.g. announcement) within a hidden
+        // course a hint will be shown that no notifications via forums will be sent out to students.
+        if (get_config('theme_boost_union', 'showhintforumnotifications') == THEME_BOOST_UNION_SETTING_SELECT_YES
+                && ($PAGE->url->compare(new moodle_url('/mod/forum/view.php'), URL_MATCH_BASE) ||
+                        $PAGE->url->compare(new moodle_url('/mod/forum/discuss.php'), URL_MATCH_BASE) ||
+                        $PAGE->url->compare(new moodle_url('/mod/forum/post.php'), URL_MATCH_BASE))) {
+            // Use the specialized hint text for hidden courses on forum pages.
+            $hintcoursehiddentext = get_string('showhintforumnotifications', 'theme_boost_union');
+        }
+
+        // If we show any kind of hint for the hidden course, construct the hints HTML item via mustache.
+        if ($hintcoursehiddentext) {
+            // Prepare the templates context.
+            $templatecontext = [
+                'courseid' => $COURSE->id,
+                'hintcoursehiddentext' => $hintcoursehiddentext,
+                // If the user has the capability to change the course settings, an additional link to the course settings is shown.
+                'showcoursesettingslink' => has_capability('moodle/course:update', context_course::instance($COURSE->id)),
+            ];
+
+            // Render template and add it to HTML code.
+            $html .= $OUTPUT->render_from_template('theme_boost_union/course-hint-hidden', $templatecontext);
+        }
     }
 
     // If the setting showhintcourseguestaccess is set and the user is accessing the course with guest access,
