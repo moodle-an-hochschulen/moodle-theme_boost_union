@@ -206,6 +206,36 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | yes     | should      |
       | no      | should not  |
 
+  Scenario: Setting: Course category breadcrumbs (verify that course sections are properly displayed _after_ the categories)
+    Given the following "categories" exist:
+      | name           | category | idnumber | category |
+      | Category E     | 0        | CE       | 0        |
+      | Category ED    | 1        | CED      | CE       |
+    And the following "courses" exist:
+      | fullname  | shortname | category |
+      | Course C1 | CC1       | CE       |
+      | Course C2 | CC2       | CED      |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | teacher1 | CC2    | editingteacher |
+    And the following config values are set as admin:
+      | config              | value     | plugin            |
+      | categorybreadcrumbs | yes       | theme_boost_union |
+    And "Course C1" has been set to one page per section
+    And "Course C2" has been set to one page per section
+    When I log in as "teacher1"
+    And I am on section "1" page of "Course C1" course
+    Then "Category E" "link" should exist in the ".breadcrumb" "css_element"
+    And "Enrolment options" "text" should exist in the ".breadcrumb" "css_element"
+    And "Enrolment options" "text" should appear after "Category E" "link" in the ".breadcrumb" "css_element"
+    And "Topic 1" "link" should not exist in the ".breadcrumb" "css_element"
+    And I am on section "1" page of "Course C2" course
+    And "Category E" "link" should exist in the ".breadcrumb" "css_element"
+    And "Category ED" "link" should exist in the ".breadcrumb" "css_element"
+    And "Topic 1" "link" should exist in the ".breadcrumb" "css_element"
+    And "Category ED" "link" should appear after "Category E" "link" in the ".breadcrumb" "css_element"
+    And "Topic 1" "link" should appear after "Category ED" "link" in the ".breadcrumb" "css_element"
+
   @javascript
   Scenario: Setting: back to top button - Enable "Back to top button"
     Given the following config values are set as admin:
