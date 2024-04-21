@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-04-20 - Bugfix: Correct order for in-course breadcrumb when sections exist in it (First categories then sections), solves #317.
 * 2024-04-20 - Cleanup: Add proper JS promise error handling, resolves #435.
 
 ### v4.1-r25
