@@ -60,59 +60,57 @@
 
 {{# showfootnote }}
     <div id="footnote" class="py-3">
-        <div class="container-fluid">
-            <div class="row">
-                {{{ footnotesetting }}}
-            </div>
-            {{#anystaticpagelinkedfromfootnote}}
-                <div class="row{{# footnotesetting }} mt-1{{/ footnotesetting }}">
-                    {{# aboutuslinkpositionfootnote }}
-                        <span class="theme_boost_union_footnote_link theme_boost_union_footnote_aboutuslink pr-2 mr-2">
-                            <a href="{{ aboutuslink }}">{{ aboutuspagetitle }}</a>
-                        </span>
-                    {{/ aboutuslinkpositionfootnote }}
-                    {{# offerslinkpositionfootnote }}
-                        <span class="theme_boost_union_footnote_link theme_boost_union_footnote_offerslink pr-2 mr-2">
-                            <a href="{{ offerslink }}">{{ offerspagetitle }}</a>
-                        </span>
-                    {{/ offerslinkpositionfootnote }}
-                    {{# imprintlinkpositionfootnote }}
-                        <span class="theme_boost_union_footnote_link theme_boost_union_footnote_imprintlink pr-2 mr-2">
-                            <a href="{{ imprintlink }}">{{ imprintpagetitle }}</a>
-                        </span>
-                    {{/ imprintlinkpositionfootnote }}
-                    {{# contactlinkpositionfootnote }}
-                        <span class="theme_boost_union_footnote_link theme_boost_union_footnote_contactlink pr-2 mr-2">
-                            <a href="{{ contactlink }}">{{ contactpagetitle }}</a>
-                        </span>
-                    {{/ contactlinkpositionfootnote }}
-                    {{# helplinkpositionfootnote }}
-                        <span class="theme_boost_union_footnote_link theme_boost_union_footnote_helplink pr-2 mr-2">
-                            <a href="{{ helplink }}">{{ helppagetitle }}</a>
-                        </span>
-                    {{/ helplinkpositionfootnote }}
-                    {{# maintenancelinkpositionfootnote }}
-                        <span class="theme_boost_union_footnote_link theme_boost_union_footnote_maintenancelink pr-2 mr-2">
-                            <a href="{{ maintenancelink }}">{{ maintenancepagetitle }}</a>
-                        </span>
-                    {{/ maintenancelinkpositionfootnote }}
-                    {{# page1linkpositionfootnote }}
-                        <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page1link pr-2 mr-2">
-                            <a href="{{ page1link }}">{{ page1pagetitle }}</a>
-                        </span>
-                    {{/ page1linkpositionfootnote }}
-                    {{# page2linkpositionfootnote }}
-                        <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page2link pr-2 mr-2">
-                            <a href="{{ page2link }}">{{ page2pagetitle }}</a>
-                        </span>
-                    {{/ page2linkpositionfootnote }}
-                    {{# page3linkpositionfootnote }}
-                        <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page3link pr-2 mr-2">
-                            <a href="{{ page3link }}">{{ page3pagetitle }}</a>
-                        </span>
-                    {{/ page3linkpositionfootnote }}
-                </div>
-            {{/anystaticpagelinkedfromfootnote}}
+        <div class="container-fluid px-0">
+            {{{ footnotesetting }}}
         </div>
+        {{#anystaticpagelinkedfromfootnote}}
+            <div class="container-fluid px-0{{# footnotesetting }} mt-1{{/ footnotesetting }}">
+                {{# aboutuslinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_aboutuslink pr-2 mr-2">
+                        <a href="{{ aboutuslink }}">{{ aboutuspagetitle }}</a>
+                    </span>
+                {{/ aboutuslinkpositionfootnote }}
+                {{# offerslinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_offerslink pr-2 mr-2">
+                        <a href="{{ offerslink }}">{{ offerspagetitle }}</a>
+                    </span>
+                {{/ offerslinkpositionfootnote }}
+                {{# imprintlinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_imprintlink pr-2 mr-2">
+                        <a href="{{ imprintlink }}">{{ imprintpagetitle }}</a>
+                    </span>
+                {{/ imprintlinkpositionfootnote }}
+                {{# contactlinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_contactlink pr-2 mr-2">
+                        <a href="{{ contactlink }}">{{ contactpagetitle }}</a>
+                    </span>
+                {{/ contactlinkpositionfootnote }}
+                {{# helplinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_helplink pr-2 mr-2">
+                        <a href="{{ helplink }}">{{ helppagetitle }}</a>
+                    </span>
+                {{/ helplinkpositionfootnote }}
+                {{# maintenancelinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_maintenancelink pr-2 mr-2">
+                        <a href="{{ maintenancelink }}">{{ maintenancepagetitle }}</a>
+                    </span>
+                {{/ maintenancelinkpositionfootnote }}
+                {{# page1linkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page1link pr-2 mr-2">
+                        <a href="{{ page1link }}">{{ page1pagetitle }}</a>
+                    </span>
+                {{/ page1linkpositionfootnote }}
+                {{# page2linkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page2link pr-2 mr-2">
+                        <a href="{{ page2link }}">{{ page2pagetitle }}</a>
+                    </span>
+                {{/ page2linkpositionfootnote }}
+                {{# page3linkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page3link pr-2 mr-2">
+                        <a href="{{ page3link }}">{{ page3pagetitle }}</a>
+                    </span>
+                {{/ page3linkpositionfootnote }}
+            </div>
+        {{/anystaticpagelinkedfromfootnote}}
     </div>
 {{/ showfootnote }}
