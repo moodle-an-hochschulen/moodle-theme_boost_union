@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.3-r12
 
 * 2024-04-20 - Bugfix: Footnote ignored paragraph breaks, resolves #623.
 * 2024-04-20 - Improvement: Add hint that notifications don't work within forums for hidden courses, resolves #98.
