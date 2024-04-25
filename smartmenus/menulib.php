@@ -137,12 +137,27 @@ class smartmenu_helper {
      * @return void
      */
     public function restriction_byroles(&$query) {
-        global $DB;
+        global $DB, $CFG;
 
         $roles = $this->data->roles;
         // Roles not mentioned then stop the role check.
         if ($roles == '' || empty($roles)) {
             return true;
+        }
+
+        // Verify the default user role is set to view the menus.
+        $defaultuserroleid = isset($CFG->defaultuserroleid) ? $CFG->defaultuserroleid : 0;
+        if ($defaultuserroleid && in_array($defaultuserroleid, $roles) && !empty($this->userid) && !isguestuser($this->userid)) {
+            return true;
+        }
+
+        // Verify the guest user have any menus or items to view.
+        if (isguestuser()) {
+            $guestroles = get_archetype_roles('guest');
+            $guestroleid = array_column($guestroles, 'id');
+            if (array_intersect($guestroleid, $roles)) {
+                return true;
+            }
         }
 
         list($insql, $inparam) = $DB->get_in_or_equal($roles, SQL_PARAMS_NAMED, 'rl');
@@ -156,7 +171,6 @@ class smartmenu_helper {
             'systemcontext' => context_system::instance()->id,
         ];
         $query->params += array_merge($params, $inparam);
-
     }
 
     /**
