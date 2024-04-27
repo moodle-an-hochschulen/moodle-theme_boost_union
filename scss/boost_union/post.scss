@@ -1149,8 +1149,19 @@ body.theme-boost-union-commincourse {
         .main-inner-outside-left-right,
         .main-inner-outside-left,
         .main-inner-outside-right {
-            /* Center the main region content to keep the page content in the middle of the page. */
-            text-align: center;
+            /* If the admin configured outside blocks to be shown next to the window edges. */
+            &.main-inner-outside-nearwindowedges {
+                /* Center the main region content to position the page content in the middle of the page,
+                and place the left and right block regions near the window edges. */
+                width: 100%;
+            }
+            /* If the admin configured outside blocks to be shown next to the main content. */
+            &.main-inner-outside-nextmaincontent {
+                /* Center the main region content to keep the left and right block regions near the main region,
+                positioning the page content in the middle of the page. */
+                display: flex;
+                align-self: center;
+            }
 
             /* Change the block regions to show them properly as block columns. */
             #theme-block-region-outside-left,
@@ -1158,12 +1169,6 @@ body.theme-boost-union-commincourse {
             .main-inner {
                 /* Undo the text-align for the regions in each column to still show the content correctly. */
                 text-align: initial;
-
-                /* Display them as inline-block. */
-                display: inline-block;
-
-                /* And make sure that the columns are at the top of the page at all. */
-                vertical-align: top;
             }
         }
 
@@ -1185,45 +1190,132 @@ body.theme-boost-union-commincourse {
             width: calc(98% - #{$blockregionoutsiderightwidth} - #{$blockregionoutsideleftwidth});
         }
 
-        /* Set the width and margin of the outside-left region. */
-        #theme-block-region-outside-left {
-            margin-right: 1rem;
-            margin-top: 1.5rem;
-            width: $blockregionoutsideleftwidth;
+        /* Set the width of the outside-* regions to auto.
+           Using a 100% width in the main inner area would push the side regions outside the page. */
+        #page .main-inner-outside-left-right .main-inner,
+        #page .main-inner-outside-left .main-inner,
+        #page .main-inner-outside-right .main-inner {
+            width: auto;
         }
+    }
+}
 
-        /* Set the width of the outside-right region. */
+/* And on larger screens and below. */
+@include media-breakpoint-down(md) {
+    /* Center the main region content while maintaining full width for the left and right block regions,
+    thereby positioning the page content in the middle of the page. */
+    body.limitedwidth {
+        .left-region-nextmaincontent {
+            &.main-inner-outside-left-right.main-inner-outside-nextmaincontent,
+            &.main-inner-outside-left.main-inner-outside-nextmaincontent,
+            &.main-inner-outside-right.main-inner-outside-nextmaincontent,
+            &.main-inner-outside-left-right.main-inner-outside-nearwindowedges,
+            &.main-inner-outside-left.main-inner-outside-nearwindowedges,
+            &.main-inner-outside-right.main-inner-outside-nearwindowedges {
+                display: grid;
+                #theme-block-region-outside-left {
+                    order: 1;
+                }
+                #theme-block-region-outside-right {
+                    order: 2;
+                }
+            }
+        }
+    }
+}
+
+/* On even larger screens. */
+@include media-breakpoint-up(lg) {
+    /* Set the width and margin of the outside-left region. */
+    #theme-block-region-outside-left {
+        margin-right: 1rem;
+        margin-top: 1.5rem;
+        width: $blockregionoutsideleftwidth;
+    }
+
+    /* Set the width of the outside-right region. */
+    #theme-block-region-outside-right {
+        margin-left: 1rem;
+        margin-top: 1.5rem;
+        width: $blockregionoutsiderightwidth;
+    }
+
+    /* Set the width of the main region content to 50%, allowing the left and right block regions to have a wider width */
+    body.limitedwidth #page.drawers .main-inner-wrapper {
+        &.main-inner-outside-left-right,
+        &.main-inner-outside-left,
+        &.main-inner-outside-right {
+            /* If the admin configured outside blocks to be shown next to the window edges. */
+            &.main-inner-outside-nearwindowedges {
+                /* Center the main region content to position the page content in the middle of the page,
+                and place the left and right block regions near the window edges. */
+                display: flex;
+            }
+        }
+        .main-inner {
+            flex: auto;
+        }
+        /* The region block is aligned closer to the center, near the main content block. */
+        &.main-inner-outside-nextmaincontent {
+            align-self: normal;
+            justify-content: center;
+            /* "The left and right margins have been removed from the main inner region to make it full-width,
+                ensuring that the main region remains unaffected when the left and right blocks are disabled." */
+            &:not(.main-inner-outside-none) .main-inner {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+/* On even larger screens only. */
+@include media-breakpoint-only(lg) {
+    /* Reduced the left region block to maximum width, so the center main content & right block region
+    align nearer to the left block region */
+    .main-inner-outside-left-right {
+        #theme-block-region-outside-left,
         #theme-block-region-outside-right {
-            margin-left: 1rem;
-            margin-top: 1.5rem;
-            width: $blockregionoutsiderightwidth;
+            max-width: 200px;
         }
+    }
 
-        /* If the admin configured outside blocks to be shown next to the main content. */
-        .main-inner-outside-nextmaincontent {
-            #theme-block-region-outside-left,
-            #theme-block-region-outside-right {
-                /* Disable float (just to be sure). */
-                float: none;
-            }
+    /* Use possible width for the main content */
+    body.limitedwidth #page .main-inner-outside-left-right .main-inner,
+    body.limitedwidth #page .main-inner-outside-left .main-inner,
+    body.limitedwidth #page .main-inner-outside-right .main-inner {
+        width: 100%;
+    }
+}
+
+/* On larger screens only. */
+@include media-breakpoint-only(md) {
+    /* Center the main region content while maintaining full width for the left and right block regions,
+    thereby positioning the page content in the middle of the page. */
+    body.limitedwidth {
+        .main-inner-outside-left-right.main-inner-outside-nextmaincontent,
+        .main-inner-outside-left.main-inner-outside-nextmaincontent,
+        .main-inner-outside-right.main-inner-outside-nextmaincontent {
+            display: block;
+            align-self: auto;
         }
-
-        /* If the admin configured outside blocks to be shown next to the main content. */
-        .main-inner-outside-nearwindowedges {
-            /* Float the outside-left block region to the left. */
-            #theme-block-region-outside-left {
-                float: left;
-            }
-
-            /* Float the outside-right block region to the right. */
-            #theme-block-region-outside-right {
-                float: right;
-            }
-
-            /* Clear the outside-bottom + footer regions so that they are shown correctly after the floated regions. */
-            #theme-block-region-outside-bottom,
-            #theme-block-region-footer {
-                clear: both;
+    }
+    /* Change the outside-left and outside-right blocks to full width (with some horizontal space) */
+    #theme-block-region-outside-left,
+    #theme-block-region-outside-right {
+        width: 100%;
+    }
+    /* Removed the left and right padding from the main content region. */
+    body.limitedwidth #page.drawers .main-inner-wrapper {
+        .main-inner {
+            padding: 0;
+            margin-bottom: 0;
+            .header-maxwidth,
+            div[role="main"] {
+                padding-left: 0;
+                padding-right: 0;
+                padding-bottom: 0;
+                margin-bottom: 0;
             }
         }
     }
@@ -1231,22 +1323,62 @@ body.theme-boost-union-commincourse {
 
 /* And on smaller screens. */
 @include media-breakpoint-down(md) {
-    /* Change the outside-left and outside-right blocks to full width (with some horizontal space). */
-    #theme-block-region-outside-left,
-    #theme-block-region-outside-right {
-        padding-left: 15px;
-        padding-right: 15px;
-        width: 100%;
+    /* Set the width of the main region content, the left and right block regions to have a full width */
+    body.limitedwidth {
+        .main-inner-outside-left-right.main-inner-outside-nearwindowedges,
+        .main-inner-outside-left.main-inner-outside-nearwindowedges,
+        .main-inner-outside-right.main-inner-outside-nearwindowedges {
+            flex-direction: column;
+            align-items: center;
+        }
+        #page .main-inner-outside-left-right .main-inner,
+        #page .main-inner-outside-left .main-inner,
+        #page .main-inner-outside-right .main-inner {
+            max-width: 100%; /* This width makes the content fully expand in responsive view. */
+            width: 100%;
+        }
     }
-    /* And remove their floating. */
-    .main-inner-outside-nearwindowedges {
-        #theme-block-region-outside-left,
+    body.limitedwidth #page.drawers .main-inner-wrapper {
+        /* Removed the bottom margin of the right region block. */
         #theme-block-region-outside-right {
-            float: none;
+            margin-bottom: 3rem;
         }
     }
 }
 
+/* And on really small screens only. */
+@include media-breakpoint-only(sm) {
+    body.limitedwidth #page.drawers .main-inner-wrapper {
+        #block-region-outside-left,
+        #theme-block-region-outside-right {
+            margin-left: .5rem;
+            margin-right: .5rem;
+        }
+    }
+}
+
+/* And on really small screens. */
+@include media-breakpoint-down(sm) {
+    /* Padding has been added to the center region block, which contains the left and right regions,
+    as well as the main content region, to create space between the main content and the window screen. */
+    body.limitedwidth #page.drawers .main-inner-wrapper {
+        padding: 15px;
+    }
+    /* Removed the left and right padding from the main content region. */
+    body.limitedwidth #page.drawers .main-inner-wrapper {
+        .main-inner {
+            padding: 0;
+            margin-bottom: 0;
+            .header-maxwidth,
+            div[role="main"] {
+                padding-left: 0;
+                padding-right: 0;
+                padding-bottom: 0;
+                margin-bottom: 0;
+            }
+        }
+    }
+}
 
 /*---------------------------------------
  * Settings: Additional block regions - The outside-top, header and outside-bottom regions.
