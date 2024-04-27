@@ -349,3 +349,21 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     When I follow "Forum 2"
     Then "#prev-activity-link" "css_element" should not exist
     And "#next-activity-link" "css_element" should not exist
+
+  @javascript
+  Scenario: Setting: Policy overview navigation - Enable navigation for this page
+    Given the following config values are set as admin:
+      | config                   | value  | plugin            |
+      | policyoverviewnavigation | yes    | theme_boost_union |
+    And I visit '/admin/tool/policy/viewall.php'
+    Then ".navbar" "css_element" should exist
+    And "#page-footer" "css_element" should exist
+
+  @javascript
+  Scenario: Setting: Policy overview navigation - Disable navigation for this page (countercheck)
+    Given the following config values are set as admin:
+      | config                   | value  | plugin            |
+      | policyoverviewnavigation | no    | theme_boost_union |
+    And I visit '/admin/tool/policy/viewall.php'
+    Then ".navbar" "css_element" should not exist
+    And "#page-footer" "css_element" should not exist
