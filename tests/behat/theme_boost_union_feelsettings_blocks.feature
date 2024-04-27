@@ -355,6 +355,7 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | <config>              | <settingvalue> | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
     When I am on the "Course 1" "Course" page logged in as "admin"
+    And I change window size to "large"
     And I turn editing mode on
     And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
     Then DOM element "#theme-block-region-<region>" should have computed style "width" "<settingvalue>"
