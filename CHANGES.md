@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-10-21 - Improvement: Make the outside-left and outside-right block regions fully responsive, finally moving them out of their experimental state, resolves #266.
 * 2025-10-21 - Tests: Some Behat tests for smart menus failed on 5.0, resolves #1074
 * 2025-10-15 - Make codechecker happy again
 * 2025-10-15 - Tests: Switch Github actions workflows to reusable workflows by Moodle an Hochschulen e.V.

@@ -647,7 +647,6 @@ $string['blockregionsheading_guestrole_fix'] = 'Fix the guest role to use the ne
 $string['blockregionsheading_guestrole_fixed'] = 'The guest role uses the new defaults now and the notification on the settings page will be removed now.';
 $string['blockregionsheading_guestrole_keep'] = 'Keep the guest role as it is';
 $string['blockregionsheading_guestrole_kept'] = 'The guest role will be kept as it is and the notification on the settings page will be removed now.';
-$string['blockregionsheading_experimental'] = 'Please note: The <em>Outside (left) and Outside (right) block regions</em> are fully working in the current state of implementation, but have to be <em>considered as experimental</em> as they do not wrap properly on medium width screens yet. Against this background, please use them with care. This issue will be fixed in an upcoming release.';
 $string['error:infobannerdismissnonotvalidnotset'] = 'This Boost Union instance was either not upgraded from a release earlier than Boost Union v5.0 or the new guest role defaults were already handled. There is nothing to do here.';
 $string['region-none'] = 'None';
 $string['region-outside-left'] = 'Outside (left)';
