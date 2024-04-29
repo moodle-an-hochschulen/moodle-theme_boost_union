@@ -1375,7 +1375,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 z-index: 1031;
                 /* The position of the side drawer has been adjusted slightly below to accommodate the top header. */
                 ~ .drawer.drawer-left {
-                    top: 0;
+                    top: 101px;
                 }
                 ~ .drawer.drawer-right {
                     top: 101px;
@@ -2084,11 +2084,13 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         }
         /* When the menu in the left adn right drawer toggle button is clicked, its navigation drawer
             position appears below the header when the header menubar is disabled. */
+        ~ #theme_boost-drawers-primary,
+        ~ #theme_boost-drawers-courseindex,
         ~ .drawer.drawer-left,
         ~ .drawer.drawer-right {
             max-width: 315px;
             padding-bottom: 0;
-            /* top: 61px; */
+            top: 0;
         }
         /*~ #page.drawers {
             The position of the drawer button to toggle has been adjusted slightly
