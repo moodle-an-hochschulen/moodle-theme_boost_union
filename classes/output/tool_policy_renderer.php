@@ -33,13 +33,13 @@ class tool_policy_renderer extends \tool_policy\output\renderer {
      * @return string HTML of the page header.
      */
     public function header() {
-
         // Check that only the /admin/tool/policy/viewall.php page is affected.
         $pageurl = new \moodle_url('/admin/tool/policy/viewall.php');
         if ($pageurl->compare($this->page->url, URL_MATCH_BASE) == true) {
 
+            // If the admin wants to show navigation on the policy page.
             $config = get_config('theme_boost_union', 'policyoverviewnavigation');
-            if ($config == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            if (isset($config) && $config == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 // Set the page layout to standard.
                 $this->page->set_pagelayout('standard');
             }
@@ -47,6 +47,5 @@ class tool_policy_renderer extends \tool_policy\output\renderer {
 
         // Call and return the header function.
         return parent::header();
-
     }
 }

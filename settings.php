@@ -1340,21 +1340,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create tool_policy heading.
-        $name = 'theme_boost_union/policyheading';
-        $title = get_string('policyheading', 'theme_boost_union', null, true);
-        $setting = new admin_setting_heading($name, $title, null);
-        $tab->add($setting);
-
-        // Setting: Navigation on policy overview page.
-        $name = 'theme_boost_union/policyoverviewnavigation';
-        $title = get_string('policyoverviewnavigationsetting', 'theme_boost_union', null, true);
-        $description = get_string('policyoverviewnavigationsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $tab->add($setting);
-
         // Add tab to settings page.
         $page->add($tab);
+
 
         // Create blocks tab.
         $tab = new admin_settingpage('theme_boost_union_feel_blocks', get_string('blockstab', 'theme_boost_union', null, true));
@@ -1554,6 +1542,27 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/showsitehomerighthandblockdraweronguestlogin';
         $title = get_string('showsitehomerighthandblockdraweronguestloginsetting', 'theme_boost_union', null, true);
         $description = get_string('showsitehomerighthandblockdraweronguestloginsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
+        // Create page layouts tab.
+        $tab = new admin_settingpage('theme_boost_union_feel_pagelayouts',
+                get_string('pagelayoutstab', 'theme_boost_union', null, true));
+
+        // Create tool_policy heading.
+        $name = 'theme_boost_union/policyheading';
+        $title = get_string('policyheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Navigation on policy overview page.
+        $name = 'theme_boost_union/policyoverviewnavigation';
+        $title = get_string('policyoverviewnavigationsetting', 'theme_boost_union', null, true);
+        $description = get_string('policyoverviewnavigationsetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 

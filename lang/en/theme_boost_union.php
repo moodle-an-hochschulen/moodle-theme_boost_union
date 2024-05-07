@@ -438,11 +438,6 @@ $string['scrollspysetting_desc'] = 'With this setting, upon toggling edit mode o
 // ... ... Setting: Activity & section navigation
 $string['activitynavigationsetting'] = 'Activity & section navigation elements';
 $string['activitynavigationsetting_desc'] = 'With this setting, the elements to jump to the previous and next activity/resource as well as the pull down menu to jump to a distinct activity/resource become displayed. Furthermore, within courses using the \'one section per page\' mode, similar elements for the previous and next section are displayed as well. UI elements like this existed already on Boost in Moodle Core until Moodle 3.11, but were removed in 4.0. With Boost Union, you can bring them back.';
-// ... Section: tool_policy heading.
-$string['policyheading'] = 'Policies';
-// ... ... Setting: Navigation on policy overview page.
-$string['policyoverviewnavigationsetting'] = 'Show navigation on policy overview page';
-$string['policyoverviewnavigationsetting_desc'] = 'By default, the policy overview page (provided by tool_policy) does not show a navigation menu or footer. With this setting, you can show the primary navigation and footer on that page.';
 
 // Settings: Blocks tab.
 $string['blockstab'] = 'Blocks';
@@ -517,6 +512,14 @@ $string['showsitehomerighthandblockdraweronfirstloginsetting_desc'] = 'With this
 // ... ... Setting: Show right-hand block drawer of site home on guest login.
 $string['showsitehomerighthandblockdraweronguestloginsetting'] = 'Show right-hand block drawer of site home on guest login';
 $string['showsitehomerighthandblockdraweronguestloginsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in as a guest.';
+
+// Settings: Page layouts tab.
+$string['pagelayoutstab'] = 'Page layouts';
+// ... Section: tool_policy heading.
+$string['policyheading'] = 'Policies';
+// ... ... Setting: Navigation on policy overview page.
+$string['policyoverviewnavigationsetting'] = 'Show navigation on policy overview page';
+$string['policyoverviewnavigationsetting_desc'] = 'By default, the policy overview page (provided by tool_policy) does not show a navigation menu or footer. With this setting, you can show the primary navigation and footer on that page.';
 
 // Settings: Links tab.
 $string['linkstab'] = 'Links';
