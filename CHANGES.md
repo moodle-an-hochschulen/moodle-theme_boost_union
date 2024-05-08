@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-04-27 - Improvement: Add navigation to policy overview page, resolves #633
+
 ### v4.1-r26
 
 * 2024-04-20 - Bugfix: Footnote ignored paragraph breaks, resolves #623.
