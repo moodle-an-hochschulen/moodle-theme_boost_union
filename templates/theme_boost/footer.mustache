@@ -68,7 +68,8 @@
         "page2pagetitle": "Generic page 2",
         "page3linkpositionfooter": true,
         "page3link": "https://localhost/theme/boost_union/pages/page3.php",
-        "page3pagetitle": "Generic page 3"
+        "page3pagetitle": "Generic page 3",
+        "suppressfooterlinkicons": true
     }
 }}
 {{!
@@ -147,55 +148,100 @@
                 <div class="footer-section p-3 border-bottom">
                     {{# aboutuslinkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_aboutuslink">
-                            <a href="{{ aboutuslink }}"><i class="icon fa fa-info-circle fa-fw " aria-hidden="true"></i>{{ aboutuspagetitle }}</a>
+                            {{# suppressfooterlinkicons }}
+                                <a href="{{ aboutuslink }}">{{ aboutuspagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
+                            {{^ suppressfooterlinkicons }}
+                                <a href="{{ aboutuslink }}"><i class="icon fa fa-info-circle fa-fw " aria-hidden="true"></i>{{ aboutuspagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
                         </div>
                     {{/ aboutuslinkpositionfooter }}
 
                     {{# offerslinkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_offerslink">
+                        {{# suppressfooterlinkicons }}
+                            <a href="{{ offerslink }}">{{ offerspagetitle }}</a>
+                        {{/ suppressfooterlinkicons }}
+                        {{^ suppressfooterlinkicons }}
                             <a href="{{ offerslink }}"><i class="icon fa fa-briefcase fa-fw " aria-hidden="true"></i>{{ offerspagetitle }}</a>
+                        {{/ suppressfooterlinkicons }}
                         </div>
                     {{/ offerslinkpositionfooter }}
 
                     {{# imprintlinkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_imprintlink">
-                            <a href="{{ imprintlink }}"><i class="icon fa fa-building-o fa-fw " aria-hidden="true"></i>{{ imprintpagetitle }}</a>
+                            {{# suppressfooterlinkicons }}
+                                <a href="{{ imprintlink }}">{{ imprintpagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
+                            {{^ suppressfooterlinkicons }}
+                                <a href="{{ imprintlink }}"><i class="icon fa fa-building-o fa-fw " aria-hidden="true"></i>{{ imprintpagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
                         </div>
                     {{/ imprintlinkpositionfooter }}
 
                     {{# contactlinkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_contactlink">
-                            <a href="{{ contactlink }}"><i class="icon fa fa-address-card fa-fw " aria-hidden="true"></i>{{ contactpagetitle }}</a>
+                            {{# suppressfooterlinkicons }}
+                                <a href="{{ contactlink }}">{{ contactpagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
+                            {{^ suppressfooterlinkicons }}
+                                <a href="{{ contactlink }}"><i class="icon fa fa-address-card fa-fw " aria-hidden="true"></i>{{ contactpagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
                         </div>
                     {{/ contactlinkpositionfooter }}
 
                     {{# helplinkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_helplink">
-                            <a href="{{ helplink }}"><i class="icon fa fa-question-circle-o fa-fw " aria-hidden="true"></i>{{ helppagetitle }}</a>
+                            {{# suppressfooterlinkicons }}
+                                <a href="{{ helplink }}">{{ helppagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
+                            {{^ suppressfooterlinkicons }}
+                                <a href="{{ helplink }}"><i class="icon fa fa-question-circle-o fa-fw " aria-hidden="true"></i>{{ helppagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
                         </div>
                     {{/ helplinkpositionfooter }}
 
                     {{# maintenancelinkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_maintenancelink">
-                            <a href="{{ maintenancelink }}"><i class="icon fa fa-wrench fa-fw " aria-hidden="true"></i>{{ maintenancepagetitle }}</a>
+                            {{# suppressfooterlinkicons }}
+                                <a href="{{ maintenancelink }}">{{ maintenancepagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
+                            {{^ suppressfooterlinkicons }}
+                                <a href="{{ maintenancelink }}"><i class="icon fa fa-wrench fa-fw " aria-hidden="true"></i>{{ maintenancepagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
                         </div>
                     {{/ maintenancelinkpositionfooter }}
 
                     {{# page1linkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_page1link">
-                            <a href="{{ page1link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page1pagetitle }}</a>
+                            {{# suppressfooterlinkicons }}
+                                <a href="{{ page1link }}">{{ page1pagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
+                            {{^ suppressfooterlinkicons }}
+                                <a href="{{ page1link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page1pagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
                         </div>
                     {{/ page1linkpositionfooter }}
 
                     {{# page2linkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_page2link">
-                            <a href="{{ page2link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page2pagetitle }}</a>
+                            {{# suppressfooterlinkicons }}
+                                <a href="{{ page2link }}">{{ page2pagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
+                            {{^ suppressfooterlinkicons }}
+                                <a href="{{ page2link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page2pagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
                         </div>
                     {{/ page2linkpositionfooter }}
 
                     {{# page3linkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_page3link">
-                            <a href="{{ page3link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page3pagetitle }}</a>
+                            {{# suppressfooterlinkicons }}
+                                <a href="{{ page3link }}">{{ page3pagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
+                            {{^ suppressfooterlinkicons }}
+                                <a href="{{ page3link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page3pagetitle }}</a>
+                            {{/ suppressfooterlinkicons }}
                         </div>
                     {{/ page3linkpositionfooter }}
                 </div>
