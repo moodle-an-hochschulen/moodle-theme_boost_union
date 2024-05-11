@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-05-11 - Improvement: Enhance smart menu restrictions for authenticated user role, guest roles and visitor role, resolves #571
 * 2024-05-11 - Improvement: Smart menu "locations" must be filled with a value, resolves #404
 * 2024-05-10 - Bugfix: Do not show empty smart menus to users, resolves #405
 * 2024-05-09 - Bugfix: Smart menu menubar overlaid course index, resolves #607
