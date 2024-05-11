@@ -53,6 +53,12 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And the following "system role assigns" exist:
       | user          | course               | role    |
       | systemmanager | Acceptance test site | manager |
+    And the following "roles" exist:
+      | name    | shortname | description     |
+      | Visitor | visitor   | My visitor role |
+    And I navigate to "Users > Permissions > User policies" in site administration
+    And I set the field "Role for visitors" to "Visitor (visitor)"
+    And I press "Save changes"
     When I navigate to smart menus
     And I should see "Quick links" in the "smartmenus" "table"
     And I should see smart menu "Quick links" in location "Main, Menu, User, Bottom"
@@ -61,7 +67,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I set the field "By role" to "<byrole>"
     And I set the field "Context" to "<context>"
     And I click on "Save and return" "button"
-    And I should not see smart menu "Quick links" in location "Main, Menu, User, Bottom"
+    And I <adminshouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, User, Bottom"
     And I log out
     And I log in as "coursemanager"
     Then I <managershouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, User, Bottom"
@@ -73,14 +79,22 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then I <teachershouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, User, Bottom"
     And I log out
     And I log in as "systemmanager"
-    Then I should see smart menu "Quick links" in location "Main, Menu, User, Bottom"
+    Then I <systemshouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, User, Bottom"
+    And I log out
+    And I log in as "guest"
+    Then I <guestshouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, Bottom"
+    And I log out
+    And I <visitorshouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, Bottom"
 
     Examples:
-      | byrole                    | context | student1shouldorshouldnot | teachershouldorshouldnot | managershouldorshouldnot |
-      | Manager                   | Any     | should not                | should not               | should                   |
-      | Manager, Student          | Any     | should                    | should not               | should                   |
-      | Manager, Student, Teacher | Any     | should                    | should                   | should                   |
-      | Manager, Student, Teacher | System  | should not                | should not               | should not               |
+      | byrole                    | context | student1shouldorshouldnot | teachershouldorshouldnot | managershouldorshouldnot | guestshouldorshouldnot | adminshouldorshouldnot | systemshouldorshouldnot | visitorshouldorshouldnot |
+      | Manager                   | Any     | should not                | should not               | should                   | should not             | should not             | should                  | should not               |
+      | Manager, Student          | Any     | should                    | should not               | should                   | should not             | should not             | should                  | should not               |
+      | Manager, Student, Teacher | Any     | should                    | should                   | should                   | should not             | should not             | should                  | should not               |
+      | Manager, Student, Teacher | System  | should not                | should not               | should not               | should not             | should not             | should                  | should not               |
+      | Authenticated user        | Any     | should                    | should                   | should                   | should not             | should                 | should                  | should not               |
+      | Guest                     | Any     | should not                | should not               | should not               | should                 | should not             | should not              | should not               |
+      | Visitor                   | Any     | should not                | should not               | should not               | should not             | should not             | should not              | should                   |
 
   @javascript
   Scenario Outline: Smartmenu: Menus: Rules - Show smart menu based on the user assignment in single cohorts

@@ -189,7 +189,9 @@ class smartmenu_edit_form extends \moodleform {
         $rolelist = role_get_names(\context_system::instance());
         $roleoptions = [];
         foreach ($rolelist as $role) {
-            $roleoptions[$role->id] = $role->localname;
+            if ($role->archetype !== 'frontpage') { // Frontpage roles are not supported in the menus restriction.
+                $roleoptions[$role->id] = $role->localname;
+            }
         }
         $byroleswidget = $mform->addElement('autocomplete', 'roles', get_string('smartmenusbyrole', 'theme_boost_union'),
                 $roleoptions);
