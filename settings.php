@@ -1290,6 +1290,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Setting: Allow tab index for the primary menus.
+        $name = 'theme_boost_union/allowmenustabindex';
+        $title = get_string('allowmenustabindexsetting', 'theme_boost_union', null, true);
+        $description = get_string('allowmenustabindexsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
         // Create breadcrumbs heading.
         $name = 'theme_boost_union/breadcrumbsheading';
         $title = get_string('breadcrumbsheading', 'theme_boost_union', null, true);

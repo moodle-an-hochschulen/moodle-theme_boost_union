@@ -31,3 +31,7 @@ $templatecontext['bottombar'] = $primarymenu['bottombar'] ?? [];
 // Add smart menu flag if the smart menu contains any menus to show.
 $includesmartmenu = (isset($primarymenu['includesmartmenu']) && !empty($primarymenu['includesmartmenu']));
 $templatecontext['includesmartmenu'] = $includesmartmenu ? true : false;
+
+// Allow tab index for the primary menus.
+$tabindex = get_config('theme_boost_union', 'allowmenustabindex');
+$templatecontext['allowmenustabindex'] = (bool) ($tabindex == THEME_BOOST_UNION_SETTING_SELECT_YES);

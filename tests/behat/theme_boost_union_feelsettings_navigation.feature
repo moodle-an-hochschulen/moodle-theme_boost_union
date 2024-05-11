@@ -349,3 +349,38 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     When I follow "Forum 2"
     Then "#prev-activity-link" "css_element" should not exist
     And "#next-activity-link" "css_element" should not exist
+
+  @javascript
+  Scenario Outline: Setting: Allow tab index for the primary menus
+    Given the following config values are set as admin:
+      | config             | value     | plugin            |
+      | allowmenustabindex | <setting> | theme_boost_union |
+    When I log in as "admin"
+    # To prevent false test results caused by the browser automatically setting the first menu tabindex to 0 for the menubar,
+    # A placeholder menu has been added to capture the browser's default tabindex behavior
+    And I create smart menu with the following fields to these values:
+      | Title            | Links |
+      | Menu location(s) | Menu  |
+    And I set "Links" smart menu items with the following fields to these values:
+      | Title          | Info    |
+      | Menu item type | Heading |
+    # Create menu and item.
+    And I create smart menu with the following fields to these values:
+      | Title              | Quick links |
+      | Menu location(s)   | Main, Menu  |
+      | Menu mode          | <menumode>  |
+    And I set "Quick links" smart menu items with the following fields to these values:
+      | Title          | Courses          |
+      | Menu item type | Dynamic courses  |
+      | Menu item mode | <menuitemmode>   |
+    Then I log out
+    When I log in as "student1"
+    And "//a[contains(@class, 'nav-link') and contains(@tabindex, '-1') and contains(normalize-space(.), '<menutitle>')]" "xpath_element" <shouldornot> exist in the "nav.navbar .primary-navigation" "css_element"
+    And "//a[contains(@class, 'nav-link') and contains(@tabindex, '-1') and contains(normalize-space(.), '<menutitle>')]" "xpath_element" <shouldornot> exist in the "nav.menubar" "css_element"
+
+    Examples:
+      | setting | shouldornot | menumode | menuitemmode | menutitle   |
+      | yes     | should not  | Submenu  | Inline       | Quick links |
+      | yes     | should not  | Inline   | Inline       | Course 1    |
+      | no      | should      | Submenu  | Inline       | Quick links |
+      | no      | should      | Inline   | Inline       | Course 1    |

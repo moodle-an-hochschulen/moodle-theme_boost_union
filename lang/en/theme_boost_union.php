@@ -421,6 +421,9 @@ $string['shownavbarstarredcoursessetting'] = 'Show starred courses popover in th
 $string['shownavbarstarredcoursessetting_desc'] = 'With this setting, you can show a popover menu with links to starred courses next to the messages and notifications menus.';
 $string['shownavbarstarredcourses_config'] = 'Set starred courses on the \'My courses\' page';
 $string['shownavbarstarredcourses_label'] = 'Starred courses';
+// ... ... Setting: Allow tab index for primary menus.
+$string['allowmenustabindexsetting'] = 'Allow tab index for primary menus';
+$string['allowmenustabindexsetting_desc'] = 'This configuration allows enabling or disabling the use of tab index for primary menus. When enabled, tab index will be assigned to primary menu items, allowing keyboard navigation through the menus. If disabled, tab index will not be assigned to primary menu items, preventing keyboard navigation.';
 // ... Section: Breadcrumbs.
 $string['breadcrumbsheading'] = 'Breadcrumbs';
 // ... ... Setting: Course category breadcrumb.
