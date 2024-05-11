@@ -133,17 +133,17 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And "Enrolled courses" "table_row" should appear before "Completed courses" "table_row"
 
   @javascript
-  Scenario: Smartmenus: Menus: Management - Make location field required
+  Scenario: Smartmenus: Menus: Management - Make sure that location field is filled
     When I log in as "admin"
     And I navigate to smart menus
     And I click on "Create menu" "button"
     And I set the following fields to these values:
       | Title            | Links     |
     And I click on "Save and return" "button"
-    And I should see "Required" in the "#fitem_id_location" "css_element"
-    Then I set the field "Menu location(s)" to "Main"
+    Then I should see "Required" in the "#fitem_id_location" "css_element"
+    And I set the field "Menu location(s)" to "Main"
     And I click on "Save and return" "button"
-    And I should see "Links" in the "smartmenus" "table"
+    Then I should see "Links" in the "smartmenus" "table"
     And I set "Links" smart menu items with the following fields to these values:
       | Title          | Info    |
       | Menu item type | Heading |
