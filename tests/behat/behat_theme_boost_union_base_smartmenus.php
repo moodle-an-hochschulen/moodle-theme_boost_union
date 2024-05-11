@@ -73,6 +73,56 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
     }
 
     /**
+     * Populate a smart menu using the provided form field/value data and add a default item to the menu
+     * (to make sure that it is not hidden as empty menu).
+     *
+     * @Given /^I create smart menu with a default item with the following fields to these values:$/
+     * @throws ElementNotFoundException Thrown by behat_base::find
+     * @param TableNode $data
+     */
+    public function i_create_smartmenu_with_default_item_with_the_following_fields_to_these_values(TableNode $data) {
+        $this->execute('behat_navigation::i_navigate_to_in_site_administration',
+            ['Appearance > Boost Union > Smart menus']);
+        $this->execute('behat_general::i_click_on', ['Create menu', 'button']);
+        $this->execute('behat_forms::i_set_the_following_fields_to_these_values', [$data]);
+        $this->execute('behat_general::i_click_on', ['Save and configure items', 'button']);
+
+        // Default item for the menu.
+        $items = new TableNode([
+            ['Title', 'Info'],
+            ['Menu item type', 'Heading'],
+        ]);
+
+        $this->execute('behat_general::i_click_on', ['Add menu item', 'button']);
+        $this->execute('behat_forms::i_set_the_following_fields_to_these_values', [$items]);
+        $this->execute('behat_general::i_click_on', ['Save changes', 'button']);
+        $this->execute('behat_general::i_click_on_in_the', ['Smart menus', 'link', '.breadcrumb', "css_element"]);
+    }
+
+    /**
+     * Adds a static menu item to the currently opened menu.
+     *
+     * @Given /^I add a smart menu static item item "(?P<itemname>(?:[^"]|\\")*)" "(?P<url>(?:[^"]|\\")*)"$/
+     * @throws ElementNotFoundException Thrown by behat_base::find
+     * @param string $item Item title.
+     * @param string $url URL of the static item.
+     */
+    public function i_add_menu_static_item($item, $url) {
+
+        $items = new TableNode([
+            ['Title', $item],
+            ['Menu item type', 'Static'],
+            ['URL', $url],
+        ]);
+
+        $this->execute('behat_general::i_click_on', ['Save and configure items', 'button']);
+        $this->execute('behat_general::i_click_on', ['Add menu item', 'button']);
+        $this->execute('behat_forms::i_set_the_following_fields_to_these_values', [$items]);
+        $this->execute('behat_general::i_click_on', ['Save changes', 'button']);
+        $this->execute('behat_general::i_click_on_in_the', ['Smart menus', 'link', '.breadcrumb', "css_element"]);
+    }
+
+    /**
      * Fills a smart menu item form with field/value data.
      *
      * @Given /^I set "(?P<menuname>(?:[^"]|\\")*)" smart menu items with the following fields to these values:$/

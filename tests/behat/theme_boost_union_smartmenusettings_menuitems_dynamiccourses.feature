@@ -128,6 +128,11 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
   @javascript
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on a enrolment role condition
     When I log in as "admin"
+    # Empty menus are hidden from view. To prevent that the whole menu is missing and the test fails,
+    # a sample item is created.
+    And I set "List menu" smart menu items with the following fields to these values:
+      | Title          | Info    |
+      | Menu item type | Heading |
     And I navigate to smart menu "List menu" items
     And I click on ".action-edit" "css_element" in the "Dynamic courses" "table_row"
     And I set the field "Dynamic courses: Enrolment role" to "<role>"
@@ -298,3 +303,29 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | 6       | CCC Course      | BBB Course      | AAA Course      |
       # Option: Course ID number descending
       | 7       | AAA Course      | BBB Course      | CCC Course      |
+
+  @javascript
+  Scenario Outline: Smartmenus: Menu items: Dynamic courses - Hide empty menus
+    When I log in as "admin"
+    And I navigate to smart menus
+    And I click on ".action-edit" "css_element" in the "List menu" "table_row"
+    And I set the field "Menu mode" to "<menumode>"
+    And I click on "Save and configure items" "button"
+    And I click on ".action-edit" "css_element" in the "Dynamic courses" "table_row"
+    And I set the field "Dynamic courses: Enrolment role" to "<role>"
+    And I set the field "Menu item mode" to "<menumode>"
+    And I press "Save changes"
+    And I log out
+    And I log in as "<user>"
+    Then I <shouldornot> see smart menu "<menutitle>" in location "Main, Menu, User, Bottom"
+
+    Examples:
+      | role                         | user     | shouldornot | menutitle | menumode |
+      | Non-editing teacher, Teacher | student1 | should not  | List menu | Submenu  |
+      | Non-editing teacher, Teacher | teacher  | should      | List menu | Submenu  |
+      | Student                      | student1 | should      | List menu | Submenu  |
+      | Student                      | teacher  | should not  | List menu | Submenu  |
+      | Non-editing teacher, Teacher | student1 | should not  | Course 01 | Inline   |
+      | Non-editing teacher, Teacher | teacher  | should      | Course 01 | Inline   |
+      | Student                      | student1 | should      | Course 01 | Inline   |
+      | Student                      | teacher  | should not  | Course 01 | Inline   |

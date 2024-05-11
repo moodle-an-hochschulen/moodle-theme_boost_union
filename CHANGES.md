@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-05-10 - Bugfix: Do not show empty smart menus to users, resolves #405
 * 2024-05-09 - Bugfix: Smart menu menubar overlaid course index, resolves #607
 * 2024-04-27 - Improvement: Add navigation to policy overview page, resolves #633
 
