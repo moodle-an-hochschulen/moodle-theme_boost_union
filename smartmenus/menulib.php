@@ -140,24 +140,31 @@ class smartmenu_helper {
         global $DB, $CFG;
 
         $roles = $this->data->roles;
-        // Roles not mentioned then stop the role check.
+        // If no role restrictions are set.
         if ($roles == '' || empty($roles)) {
+            // Return directly.
             return true;
         }
 
-        // Verify the default user role is set to view the menus.
+        // If the user is logged in and the default user role is allowed to view the menu.
         $defaultuserroleid = isset($CFG->defaultuserroleid) ? $CFG->defaultuserroleid : 0;
         if ($defaultuserroleid && in_array($defaultuserroleid, $roles) && !empty($this->userid) && !isguestuser($this->userid)) {
+            // Return directly.
             return true;
         }
 
-        // Verify the guest user have any menus or items to view.
-        if (isguestuser()) {
-            $guestroles = get_archetype_roles('guest');
-            $guestroleid = array_column($guestroles, 'id');
-            if (array_intersect($guestroleid, $roles)) {
-                return true;
-            }
+        // If the user is a guest and the guest role is allowed to view the menu.
+        $guestroleid = isset($CFG->guestroleid) ? $CFG->guestroleid : 0;
+        if ($guestroleid && in_array($guestroleid, $roles) && isguestuser()) {
+            // Return directly.
+            return true;
+        }
+
+        // If the user is a visitor and the visitor role is allowed to view the menu.
+        $visitorroleid = isset($CFG->notloggedinroleid) ? $CFG->notloggedinroleid : 0;
+        if ($visitorroleid && in_array($visitorroleid, $roles) && !isloggedin() && !isguestuser()) {
+            // Return directly.
+            return true;
         }
 
         list($insql, $inparam) = $DB->get_in_or_equal($roles, SQL_PARAMS_NAMED, 'rl');
