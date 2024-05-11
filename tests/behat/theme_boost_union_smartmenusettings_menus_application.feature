@@ -17,7 +17,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I set the following fields to these values:
       | Title            | Links |
       | Menu location(s) | Main  |
-    And I configure smart menu static item "Info" "https://moodle.org"
+    And I add a smart menu static item item "Info" "https://moodle.org"
     Then I should see smart menu "Links" in location "Main"
     And I log out
     And I log in as "user1"
@@ -49,7 +49,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   @javascript
   Scenario: Smartmenu: Menus: Application - Show a smart menu in different locations
     When I log in as "admin"
-    And I create smart menu and item with the following fields to these values:
+    And I create smart menu with a default item with the following fields to these values:
       | Title            | Links |
       | Menu location(s) | Main  |
     Then I should see "Main" in the "Links" "table_row"
@@ -73,7 +73,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I set the following fields to these values:
       | Title            | Certificates |
       | Menu location(s) | User         |
-    And I configure smart menu static item "Course completions" "https://moodle.org"
+    And I add a smart menu static item item "Course completions" "https://moodle.org"
     Then I should see "User" in the "Certificates" "table_row"
     And I should not see "Main" in the "Certificates" "table_row"
     And I should see smart menu "Certificates" in location "User"
@@ -81,6 +81,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I set the following fields to these values:
       | Title            | SmartMenu Policy |
       | Menu location(s) | Bottom           |
-    And I configure smart menu static item "Privacy" "https://moodle.org/privacy"
+    And I add a smart menu static item item "Privacy" "https://moodle.org/privacy"
     Then I should see "Bottom" in the "SmartMenu Policy" "table_row"
     And I should see smart menu "SmartMenu Policy" in location "Bottom"

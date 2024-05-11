@@ -690,10 +690,11 @@ class smartmenu {
 
         // If the current menu doesn't contain any nodes, hide the menu from users.
         // Verify after storing the cache to prevent rebuilding the menu items.
-        // This helps to verify the cached menus too.
+        // This helps to verify the cached menus, too.
         if (!isset($builditems) || empty($builditems)) {
             return false;
         }
+
         // Remove the menu items list from nodes. it doesn't need to build the smartmenus.
         if (isset($nodes->menuitems)) {
             // Remove the menu items list from nodes, it doesn't need anymore.

@@ -77,7 +77,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
   @javascript
   Scenario: Smartmenus: Menus: Management - Duplicate an existing smart menu
     When I log in as "admin"
-    And I create smart menu and item with the following fields to these values:
+    And I create smart menu with a default item with the following fields to these values:
       | Title            | Links |
       | Menu location(s) | Main  |
     And I should see "Links" in the "smartmenus" "table"
@@ -94,7 +94,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
   @javascript
   Scenario: Smartmenus: Menus: Management - Modify the visibility of an existing smart menu
     When I log in as "admin"
-    And I create smart menu and item with the following fields to these values:
+    And I create smart menu with a default item with the following fields to these values:
       | Title            | Links                    |
       | Menu location(s) | Main, Menu, User, Bottom |
     And I should see "Links" in the "smartmenus" "table"

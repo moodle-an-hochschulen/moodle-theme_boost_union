@@ -73,13 +73,14 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
     }
 
     /**
-     * Populate a smart menu and its item using the provided form field/value data.
+     * Populate a smart menu using the provided form field/value data and add a default item to the menu
+     * (to make sure that it is not hidden as empty menu).
      *
-     * @Given /^I create smart menu and item with the following fields to these values:$/
+     * @Given /^I create smart menu with a default item with the following fields to these values:$/
      * @throws ElementNotFoundException Thrown by behat_base::find
      * @param TableNode $data
      */
-    public function i_create_smartmenu_and_item_with_the_following_fields_to_these_values(TableNode $data) {
+    public function i_create_smartmenu_with_default_item_with_the_following_fields_to_these_values(TableNode $data) {
         $this->execute('behat_navigation::i_navigate_to_in_site_administration',
             ['Appearance > Boost Union > Smart menus']);
         $this->execute('behat_general::i_click_on', ['Create menu', 'button']);
@@ -99,14 +100,14 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
     }
 
     /**
-     * Creates a static menu for the currently opened menu.
+     * Adds a static menu item to the currently opened menu.
      *
-     * @Given /^I configure smart menu static item "(?P<itemname>(?:[^"]|\\")*)" "(?P<url>(?:[^"]|\\")*)"$/
+     * @Given /^I add a smart menu static item item "(?P<itemname>(?:[^"]|\\")*)" "(?P<url>(?:[^"]|\\")*)"$/
      * @throws ElementNotFoundException Thrown by behat_base::find
      * @param string $item Item title.
      * @param string $url URL of the static item.
      */
-    public function i_configure_menu_static_item($item, $url) {
+    public function i_add_menu_static_item($item, $url) {
 
         $items = new TableNode([
             ['Title', $item],

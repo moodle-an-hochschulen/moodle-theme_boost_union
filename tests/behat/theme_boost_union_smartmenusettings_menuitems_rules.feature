@@ -36,6 +36,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Title          | Resources          |
       | Menu item type | Static             |
       | URL            | https://moodle.org |
+    # Empty menus are hidden from view. To prevent that the whole menu is missing and the test fails,
+    # a sample item is created.
     And I set "Quick links" smart menu items with the following fields to these values:
       | Title          | Info    |
       | Menu item type | Heading |
