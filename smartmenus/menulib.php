@@ -137,11 +137,33 @@ class smartmenu_helper {
      * @return void
      */
     public function restriction_byroles(&$query) {
-        global $DB;
+        global $DB, $CFG;
 
         $roles = $this->data->roles;
-        // Roles not mentioned then stop the role check.
+        // If no role restrictions are set.
         if ($roles == '' || empty($roles)) {
+            // Return directly.
+            return true;
+        }
+
+        // If the user is logged in and the default user role is allowed to view the menu.
+        $defaultuserroleid = isset($CFG->defaultuserroleid) ? $CFG->defaultuserroleid : 0;
+        if ($defaultuserroleid && in_array($defaultuserroleid, $roles) && !empty($this->userid) && !isguestuser($this->userid)) {
+            // Return directly.
+            return true;
+        }
+
+        // If the user is a guest and the guest role is allowed to view the menu.
+        $guestroleid = isset($CFG->guestroleid) ? $CFG->guestroleid : 0;
+        if ($guestroleid && in_array($guestroleid, $roles) && isguestuser()) {
+            // Return directly.
+            return true;
+        }
+
+        // If the user is a visitor and the visitor role is allowed to view the menu.
+        $visitorroleid = isset($CFG->notloggedinroleid) ? $CFG->notloggedinroleid : 0;
+        if ($visitorroleid && in_array($visitorroleid, $roles) && !isloggedin() && !isguestuser()) {
+            // Return directly.
             return true;
         }
 
@@ -156,7 +178,6 @@ class smartmenu_helper {
             'systemcontext' => context_system::instance()->id,
         ];
         $query->params += array_merge($params, $inparam);
-
     }
 
     /**
