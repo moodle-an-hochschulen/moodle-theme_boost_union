@@ -31,6 +31,9 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
       | Links | Main             |
     And I should see "Links" in the "smartmenus" "table"
     And ".smartmenu-actions" "css_element" should exist in the "smartmenus" "table"
+    And I set "Links" smart menu items with the following fields to these values:
+      | Title          | Info    |
+      | Menu item type | Heading |
     And I should see smart menu "Links" in location "Main"
 
   @javascript
@@ -74,12 +77,9 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
   @javascript
   Scenario: Smartmenus: Menus: Management - Duplicate an existing smart menu
     When I log in as "admin"
-    And I navigate to smart menus
-    And I click on "Create menu" "button"
-    And I set the following fields to these values:
+    And I create smart menu with a default item with the following fields to these values:
       | Title            | Links |
       | Menu location(s) | Main  |
-    And I click on "Save and return" "button"
     And I should see "Links" in the "smartmenus" "table"
     And ".action-copy" "css_element" should exist in the "Links" "table_row"
     And I click on ".action-copy" "css_element" in the "Links" "table_row"
@@ -94,12 +94,9 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
   @javascript
   Scenario: Smartmenus: Menus: Management - Modify the visibility of an existing smart menu
     When I log in as "admin"
-    And I navigate to smart menus
-    And I click on "Create menu" "button"
-    And I set the following fields to these values:
+    And I create smart menu with a default item with the following fields to these values:
       | Title            | Links                    |
       | Menu location(s) | Main, Menu, User, Bottom |
-    And I click on "Save and return" "button"
     And I should see "Links" in the "smartmenus" "table"
     And ".action-hide" "css_element" should exist in the "Links" "table_row"
     And ".action-show" "css_element" should not exist in the "Links" "table_row"
