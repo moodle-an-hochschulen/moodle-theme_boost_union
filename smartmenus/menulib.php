@@ -97,6 +97,11 @@ class smartmenu_helper {
         // Restriction by roles.
         $this->restriction_byroles($query);
 
+        // Restricted to admins.
+        if (!$this->restriction_byadminrole()) {
+            return false;
+        }
+
         // Restriction by cohorts.
         $this->restriction_bycohorts($query);
 
@@ -178,6 +183,19 @@ class smartmenu_helper {
             'systemcontext' => context_system::instance()->id,
         ];
         $query->params += array_merge($params, $inparam);
+    }
+
+    /**
+     * Verify if the menu is restricted to admins.
+     *
+     * @return bool True if the user is a site admin
+     */
+    public function restriction_byadminrole() {
+        // Check if the item is restricted to admins.
+        if ($this->data->byadmin) {
+            return is_siteadmin($this->userid); // Returns true if the user is a site admin.
+        }
+        return true;
     }
 
     /**

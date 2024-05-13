@@ -96,6 +96,25 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Guest                     | Any     | should not                | should not               | should not               | should                 | should not             | should not              | should not               |
       | Visitor                   | Any     | should not                | should not               | should not               | should not             | should not             | should not              | should                   |
 
+@javascript 
+  Scenario Outline: Smartmenu: Menus: Rules - Show smart menu based on being site admin
+    When I navigate to smart menus
+    And I should see "Quick links" in the "smartmenus" "table"
+    And I should see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
+    And I click on ".action-edit" "css_element" in the "Quick links" "table_row"
+    And I expand all fieldsets
+    And I set the field "Only for site admin" to "<byadmin>"
+    And I click on "Save and return" "button"
+    And I <adminshouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, User, Bottom"
+    And I log out
+    And I log in as "student1"
+    Then I <student1shouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, User, Bottom"
+
+    Examples:
+      | byadmin                     | adminshouldorshouldnot              | student1shouldorshouldnot |
+      | 1                           | should                              | should not                |
+      | 0                           | should                              | should                    |
+
   @javascript
   Scenario Outline: Smartmenu: Menus: Rules - Show smart menu based on the user assignment in single cohorts
     When I navigate to smart menus
