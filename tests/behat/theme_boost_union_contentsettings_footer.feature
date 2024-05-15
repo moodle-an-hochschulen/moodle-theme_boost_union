@@ -302,7 +302,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | yes   | should not  |
 
   @javascript
-  Scenario Outline: Setting: Footer - Suppress icons before the links in footer
+  Scenario Outline: Setting: Footer - Suppress icons in front of the footer links
     Given the following config values are set as admin:
       | config                   | value              | plugin            |
       | footersuppressicons      | <value>            | theme_boost_union |
@@ -333,7 +333,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | enablepage3              | yes                | theme_boost_union |
       | page3content             | <p>Lorem ipsum</p> | theme_boost_union |
       | page3linkposition        | footer             | theme_boost_union |
-    And I log in as "admin"
+    When I log in as "admin"
     And I am on "Course 1" course homepage
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
     Then ".footer-support-link a i.icon.fa-book" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
