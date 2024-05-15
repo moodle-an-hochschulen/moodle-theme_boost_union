@@ -205,58 +205,222 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I should not see smart menu "Lorem ipsum" in location "Main, Menu, User, Bottom"
 
   @javascript
-  Scenario: Smartmenu: Menus: Presentation - Display the menus inside and outside more menu
+  Scenario Outline: Smartmenu: Menus: Presentation - Display the menus inside and outside more menu (Looking at the visible menus in the main menu)
     When I log in as "admin"
-    And I create smart menu with the following fields to these values:
-      | Title              | Quick links          |
-      | Menu location(s)   | Main, Menu           |
-      | Menu mode          | Submenu              |
-      | More menu behavior | Force into more menu |
-    And I set "Quick links" smart menu items with the following fields to these values:
-      | Title           | Smartmenu Resource |
-      | Menu item type  | Heading            |
-    And I click on "Smart menus" "link" in the "#page-navbar .breadcrumb" "css_element"
-    And I should not see smart menu "Quick links" in location "Main, Menu"
+    Given I create smart menu with a default item with the following fields to these values:
+      | Title              | Quick links 01 |
+      | Menu location(s)   | Main           |
+      | Menu mode          | Submenu        |
+      | More menu behavior | <menu1beh>     |
+    And I create smart menu with a default item with the following fields to these values:
+      | Title              | Quick links 02 |
+      | Menu location(s)   | Main           |
+      | Menu mode          | Submenu        |
+      | More menu behavior | <menu2beh>     |
+    And I create smart menu with a default item with the following fields to these values:
+      | Title              | Quick links 03 |
+      | Menu location(s)   | Main           |
+      | Menu mode          | Submenu        |
+      | More menu behavior | <menu3beh>     |
+    # Set the frontpage title to better control the available space in the navbar
+    And I am on site homepage
+    And I click on "Settings" "link" in the ".secondary-navigation" "css_element"
+    And I set the field "id_s__shortname" to "Boost Union Test"
+    And I press "Save changes"
+    # Hide the standard navigation items to better reproduce the "More" behaviour in the navbar
+    And the following config values are set as admin:
+      | config                     | value                             | plugin            |
+      | hidenodesprimarynavigation | home,myhome,courses,siteadminnode | theme_boost_union |
+    And I follow "Dashboard"
+    # Make the screen really large to test the "More" behaviour without any screen real estate constraints
+    And I change the viewport size to "large"
+    Then I <menu1shouldornotlarge> see smart menu "Quick links 01" in location "Main"
+    And I <menu2shouldornotlarge> see smart menu "Quick links 02" in location "Main"
+    And I <menu3shouldornotlarge> see smart menu "Quick links 03" in location "Main"
+    And ".primary-navigation .dropdownmoremenu" "css_element" <moreshouldornotlarge> be visible
+    # Make the screen smaller and test the "More" behaviour in the navbar
+    And I change the viewport size to "tablet"
+    Then I <menu1shouldornottablet> see smart menu "Quick links 01" in location "Main"
+    And I <menu2shouldornottablet> see smart menu "Quick links 02" in location "Main"
+    And I <menu3shouldornottablet> see smart menu "Quick links 03" in location "Main"
+    And ".primary-navigation .dropdownmoremenu" "css_element" <moreshouldornottablet> be visible
+
+    Examples:
+      # Behaviour option IDs: 0 = Do not change anything, 1 = Force into more menu, 2 = Keep outside of more menu
+      | menu1beh | menu1shouldornotlarge | menu1shouldornottablet | menu2beh | menu2shouldornotlarge | menu2shouldornottablet | menu3beh | menu3shouldornotlarge | menu3shouldornottablet | moreshouldornotlarge | moreshouldornottablet |
+      # Example 1: On larger screens, all menus are shown. On smaller screens, the 01 and 02 menus are shown as they have enough space and the 03 menu is moved to the more menu due to lack of space.
+      # Against this background, this example should look like this:
+      # | 0        | should                | should                 | 0        | should                | should                 | 0        | should                | should not             | should not           | should                |
+      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
+      | 0        | should                | should                 | 0        | should                | should not             | 0        | should                | should not             | should not           | should                |
+      # Example 2: On larger screens, the 01 menu is moved to the more menu due to its configuration and the 02 and 03 menus are shown. On smaller screens, the same is the case.
+      | 1        | should not            | should not             | 0        | should                | should                 | 0        | should                | should                 | should               | should                |
+      # Example 3: On larger screens, all menus are shown. On smaller screens, the 01 menu is shown as it has enough space, the 03 menu is shown as it should be kept out of the more menu due to its configuration and the 02 menu is moved to the more menu due to lack of space.
+      # Against this background, this example should look like this:
+      # | 0        | should                | should                 | 0        | should                | should not             | 2        | should                | should                 | should not           | should                |
+      | 0        | should                | should not             | 0        | should                | should not             | 2        | should                | should                 | should not           | should                |
+      # Example 4: On larger screens, the 01 and 03 menus are shown and the 02 menu is moved to the more menu due to its configuration. On smaller screens, the 02 menu is moved to the more menu due to its configuration, the 03 menu is shown as it should be kept out of the more menu due to its configuration and the 01 menu is moved to the more menu due to lack of space.
+      | 0        | should                | should                 | 1        | should not            | should not             | 2        | should                | should                 | should               | should                |
+
+  @javascript
+  Scenario Outline: Smartmenu: Menus: Presentation - Display the menus inside and outside more menu (Looking at the more menu content in the main menu)
+    # This scenario is split from the previous scenario outline as we can only go into a more menu if it exists.
+    # It basically tests the same examples than the previous scenario and just verifies that the smart menus are there as soon as you click the "More" link
+    When I log in as "admin"
+    Given I create smart menu with a default item with the following fields to these values:
+      | Title              | Quick links 01 |
+      | Menu location(s)   | Main           |
+      | Menu mode          | Submenu        |
+      | More menu behavior | <menu1beh>     |
+    And I create smart menu with a default item with the following fields to these values:
+      | Title              | Quick links 02 |
+      | Menu location(s)   | Main           |
+      | Menu mode          | Submenu        |
+      | More menu behavior | <menu2beh>     |
+    And I create smart menu with a default item with the following fields to these values:
+      | Title              | Quick links 03 |
+      | Menu location(s)   | Main           |
+      | Menu mode          | Submenu        |
+      | More menu behavior | <menu3beh>     |
+    # Set the frontpage title to better control the available space in the navbar
+    And I am on site homepage
+    And I click on "Settings" "link" in the ".secondary-navigation" "css_element"
+    And I set the field "id_s__shortname" to "Boost Union Test"
+    And I press "Save changes"
+    # Hide the standard navigation items to better reproduce the "More" behaviour in the navbar
+    And the following config values are set as admin:
+      | config                     | value                             | plugin            |
+      | hidenodesprimarynavigation | home,myhome,courses,siteadminnode | theme_boost_union |
+    And I follow "Dashboard"
+    # Make the screen smaller and test the "More" behaviour in the navbar
+    # This pixel screen size is essentially the same than the 'tablet' size, but for some strange reason Behat on moodle-docker made the screen too small in this scenario
+    And I change the viewport size to "768x1024"
     And I click on "More" "link" in the ".primary-navigation" "css_element"
-    Then I should see smart menu "Quick links" in location "Main"
+    Then I should see smart menu "Quick links 01" in location "Main"
+    And I should see smart menu "Quick links 02" in location "Main"
+    And I should see smart menu "Quick links 03" in location "Main"
+    # Finally verify the order of the menu items (as they are may have been re-ordered due to their settings)
+    And "Quick links 01" "text" should appear <menu1and2> "Quick links 02" "text"
+    And "Quick links 02" "text" should appear <menu2and3> "Quick links 03" "text"
+    And "Quick links 01" "text" should appear <menu1and3> "Quick links 03" "text"
+
+    Examples:
+      # Behaviour option IDs: 0 = Do not change anything, 1 = Force into more menu, 2 = Keep outside of more menu
+      | menu1beh | menu2beh | menu3beh | menu1and2 | menu2and3 | menu1and3 |
+      | 1        | 0        | 0        | after     | before    | after     |
+      # This example should look like this:
+      # | 0        | 0        | 2        | before    | after     | before    |
+      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
+      | 0        | 0        | 2        | before    | after     | after    |
+      # This example should look like this:
+      # | 0        | 1        | 2        | before    | after     | before    |
+      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
+      | 0        | 1        | 2        | before    | after     | before    |
+
+  @javascript
+  Scenario Outline: Smartmenu: Menus: Presentation - Display the menus inside and outside more menu (Looking at the visible menus in the menu bar)
+    When I log in as "admin"
+    Given I create smart menu with a default item with the following fields to these values:
+      | Title              | Quick links reeeeeally overlong title 01 |
+      | Menu location(s)   | Menu                                 |
+      | Menu mode          | Submenu                              |
+      | More menu behavior | <menu1beh>                           |
+    And I create smart menu with a default item with the following fields to these values:
+      | Title              | Quick links reeeeeally overlong title 02 |
+      | Menu location(s)   | Menu                                 |
+      | Menu mode          | Submenu                              |
+      | More menu behavior | <menu2beh>                           |
+    And I create smart menu with a default item with the following fields to these values:
+      | Title              | Quick links reeeeeally overlong title 03 |
+      | Menu location(s)   | Menu                                 |
+      | Menu mode          | Submenu                              |
+      | More menu behavior | <menu3beh>                           |
+    # Set the frontpage title to better control the available space in the navbar
+    And I am on site homepage
+    And I click on "Settings" "link" in the ".secondary-navigation" "css_element"
+    And I set the field "id_s__shortname" to "Boost Union Test"
+    And I press "Save changes"
+    # Hide the standard navigation items to better reproduce the "More" behaviour in the navbar
+    And the following config values are set as admin:
+      | config                     | value                             | plugin            |
+      | hidenodesprimarynavigation | home,myhome,courses,siteadminnode | theme_boost_union |
+    And I follow "Dashboard"
+    # Make the screen really large to test the "More" behaviour without any screen real estate constraints
+    And I change the viewport size to "large"
+    Then I <menu1shouldornotlarge> see smart menu "Quick links reeeeeally overlong title 01" in location "Menu"
+    And I <menu2shouldornotlarge> see smart menu "Quick links reeeeeally overlong title 02" in location "Menu"
+    And I <menu3shouldornotlarge> see smart menu "Quick links reeeeeally overlong title 03" in location "Menu"
+    And ".boost-union-menubar .dropdownmoremenu" "css_element" <moreshouldornotlarge> be visible
+    # Make the screen smaller and test the "More" behaviour in the menu bar
+    And I change the viewport size to "tablet"
+    Then I <menu1shouldornottablet> see smart menu "Quick links reeeeeally overlong title 01" in location "Menu"
+    And I <menu2shouldornottablet> see smart menu "Quick links reeeeeally overlong title 02" in location "Menu"
+    And I <menu3shouldornottablet> see smart menu "Quick links reeeeeally overlong title 03" in location "Menu"
+    And ".boost-union-menubar .dropdownmoremenu" "css_element" <moreshouldornottablet> be visible
+
+    Examples:
+      # Behaviour option IDs: 0 = Do not change anything, 1 = Force into more menu, 2 = Keep outside of more menu
+      | menu1beh | menu1shouldornotlarge | menu1shouldornottablet | menu2beh | menu2shouldornotlarge | menu2shouldornottablet | menu3beh | menu3shouldornotlarge | menu3shouldornottablet | moreshouldornotlarge | moreshouldornottablet |
+      # Example 1: On larger screens, all menus are shown. On smaller screens, the 01 and 02 menus are shown as they have enough space and the 03 menu is moved to the more menu due to lack of space.
+      # Against this background, this example should look like this:
+      # | 0        | should                | should                 | 0        | should                | should                 | 0        | should                | should not             | should not           | should                |
+      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
+      | 0        | should                | should                 | 0        | should                | should not             | 0        | should                | should not             | should not           | should                |
+      # Example 2: On larger screens, the 01 menu is moved to the more menu due to its configuration and the 02 and 03 menus are shown. On smaller screens, the same is the case.
+      | 1        | should not            | should not             | 0        | should                | should                 | 0        | should                | should                 | should               | should                |
+      # Example 3: On larger screens, all menus are shown. On smaller screens, the 01 menu is shown as it has enough space, the 03 menu is shown as it should be kept out of the more menu due to its configuration and the 02 menu is moved to the more menu due to lack of space.
+      # Against this background, this example should look like this:
+      # | 0        | should                | should                 | 0        | should                | should not             | 2        | should                | should                 | should not           | should                |
+      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
+      | 0        | should                | should not             | 0        | should                | should not             | 2        | should                | should                 | should not           | should                |
+      # Example 4: On larger screens, the 01 and 03 menus are shown and the 02 menu is moved to the more menu due to its configuration. On smaller screens, the 02 menu is moved to the more menu due to its configuration, the 03 menu is shown as it should be kept out of the more menu due to its configuration and the 01 menu is moved to the more menu due to lack of space.
+      | 0        | should                | should                 | 1        | should not            | should not             | 2        | should                | should                 | should               | should                |
+
+  @javascript
+  Scenario Outline: Smartmenu: Menus: Presentation - Display the menus inside and outside more menu (Looking at the more menu content in the menu bar)
+    # This scenario is split from the previous scenario outline as we can only go into a more menu if it exists.
+    # It basically tests the same examples than the previous scenario and just verifies that the smart menus are there as soon as you click the "More" link
+    When I log in as "admin"
+    Given I create smart menu with a default item with the following fields to these values:
+      | Title              | Quick links reeeeeally overlong title 01 |
+      | Menu location(s)   | Menu                                 |
+      | Menu mode          | Submenu                              |
+      | More menu behavior | <menu1beh>                           |
+    And I create smart menu with a default item with the following fields to these values:
+      | Title              | Quick links reeeeeally overlong title 02 |
+      | Menu location(s)   | Menu                                 |
+      | Menu mode          | Submenu                              |
+      | More menu behavior | <menu2beh>                           |
+    And I create smart menu with a default item with the following fields to these values:
+      | Title              | Quick links reeeeeally overlong title 03 |
+      | Menu location(s)   | Menu                                 |
+      | Menu mode          | Submenu                              |
+      | More menu behavior | <menu3beh>                           |
+    # Set the frontpage title to better control the available space in the navbar
+    And I am on site homepage
+    And I click on "Settings" "link" in the ".secondary-navigation" "css_element"
+    And I set the field "id_s__shortname" to "Boost Union Test"
+    And I press "Save changes"
+    # Hide the standard navigation items to better reproduce the "More" behaviour in the navbar
+    And the following config values are set as admin:
+      | config                     | value                             | plugin            |
+      | hidenodesprimarynavigation | home,myhome,courses,siteadminnode | theme_boost_union |
+    And I follow "Dashboard"
+    # Make the screen smaller and test the "More" behaviour in the navbar
+    # This pixel screen size is essentially the same than the 'tablet' size, but for some strange reason Behat on moodle-docker made the screen too small in this scenario
+    And I change the viewport size to "768x1024"
     And I click on "More" "link" in the ".boost-union-menubar" "css_element"
-    Then I should see smart menu "Quick links" in location "Menu"
-    And I create smart menu with a default item with the following fields to these values:
-      | Title            | Test quick demo links 01 |
-      | Menu location(s) | Main, Menu               |
-    And I create smart menu with a default item with the following fields to these values:
-      | Title            | Test quick demo links 02 |
-      | Menu location(s) | Main, Menu               |
-    And I create smart menu with a default item with the following fields to these values:
-      | Title            | Test quick demo links 03 |
-      | Menu location(s) | Main, Menu               |
-    And I create smart menu with a default item with the following fields to these values:
-      | Title            | Test quick demo links 04 |
-      | Menu location(s) | Main, Menu               |
-    And I create smart menu with a default item with the following fields to these values:
-      | Title            | Test quick demo links 05 |
-      | Menu location(s) | Main, Menu               |
-    And I create smart menu with a default item with the following fields to these values:
-      | Title            | Test quick demo links long title 01  |
-      | Menu location(s) | Menu                                 |
-    And I create smart menu with a default item with the following fields to these values:
-      | Title            | Test quick demo links long title 02  |
-      | Menu location(s) | Menu                                 |
-    And I create smart menu with a default item with the following fields to these values:
-      | Title            | Test quick demo links 06 |
-      | Menu location(s) | Main, Menu               |
-    Then I change the viewport size to "1600x495"
-    And I should not see smart menu "Test quick demo links 06" in location "Main, Menu"
-    And I click on "More" "link" in the ".primary-navigation" "css_element"
-    Then I should see smart menu "Test quick demo links 06" in location "Main"
-    And I click on "More" "link" in the ".boost-union-menubar" "css_element"
-    Then I should see smart menu "Test quick demo links 06" in location "Menu"
-    And I click on ".action-edit" "css_element" in the "Test quick demo links 06" "table_row"
-    Then I click on "Expand all" "link"
-    And I set the field "More menu behavior" to "Keep outside of more menu"
-    And I click on "Save and return" "button"
-    And I should see smart menu "Test quick demo links 06" in location "Main, Menu"
-    And I click on "More" "link" in the ".primary-navigation" "css_element"
-    Then I should not see "Test quick demo links 06" in the ".primary-navigation .dropdownmoremenu" "css_element"
-    And I click on "More" "link" in the ".boost-union-menubar" "css_element"
-    Then I should not see "Test quick demo links 06" in the ".boost-union-menubar .dropdownmoremenu" "css_element"
+    Then I should see smart menu "Quick links reeeeeally overlong title 01" in location "Menu"
+    And I should see smart menu "Quick links reeeeeally overlong title 02" in location "Menu"
+    And I should see smart menu "Quick links reeeeeally overlong title 03" in location "Menu"
+    # Finally verify the order of the menu items (as they are may have been re-ordered due to their settings)
+    And "Quick links reeeeeally overlong title 01" "text" should appear <menu1and2> "Quick links reeeeeally overlong title 02" "text"
+    And "Quick links reeeeeally overlong title 02" "text" should appear <menu2and3> "Quick links reeeeeally overlong title 03" "text"
+    And "Quick links reeeeeally overlong title 01" "text" should appear <menu1and3> "Quick links reeeeeally overlong title 03" "text"
+
+    Examples:
+      # Behaviour option IDs: 0 = Do not change anything, 1 = Force into more menu, 2 = Keep outside of more menu
+      | menu1beh | menu2beh | menu3beh | menu1and2 | menu2and3 | menu1and3 |
+      | 1        | 0        | 0        | after     | before    | after     |
+      | 0        | 0        | 2        | before    | after     | after     |
+      | 0        | 1        | 2        | before    | after     | before    |
