@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.2-r16
 
 * 2024-05-11 - Improvement: Enhance smart menu restrictions for authenticated user role, guest roles and visitor role, resolves #571
 * 2024-05-11 - Improvement: Smart menu "locations" must be filled with a value, resolves #404
