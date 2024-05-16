@@ -663,4 +663,130 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
         return $output;
     }
+
+    /**
+     * Returns a string containing a link to the user documentation.
+     * Also contains an icon by default. Shown to teachers and admin only.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * @param string $path The page link after doc root and language, no leading slash.
+     * @param string $text The text to be displayed for the link
+     * @param boolean $forcepopup Whether to force a popup regardless of the value of $CFG->doctonewwindow
+     * @param array $attributes htm attributes
+     * @return string
+     */
+    public function doc_link($path, $text = '', $forcepopup = false, array $attributes = []) {
+        global $CFG;
+
+        // Set the icon only if the setting is not set to suppress the footer icons.
+        $footericonsetting = get_config('theme_boost_union', 'footersuppressicons');
+        if (!isset($footericonsetting) || $footericonsetting == THEME_BOOST_UNION_SETTING_SELECT_NO) {
+            $icon = $this->pix_icon('book', '', 'moodle', ['class' => 'iconhelp icon-pre']);
+
+            // Otherwise.
+        } else {
+            $icon = null;
+        }
+
+        $attributes['href'] = new moodle_url(get_docs_url($path));
+        $newwindowicon = '';
+        if (!empty($CFG->doctonewwindow) || $forcepopup) {
+            $attributes['target'] = '_blank';
+            $newwindowicon = $this->pix_icon('i/externallink', get_string('opensinnewwindow'), 'moodle',
+                ['class' => 'fa fa-externallink fa-fw']);
+        }
+
+        return html_writer::tag('a', $icon . $text . $newwindowicon, $attributes);
+    }
+
+    /**
+     * Returns the services and support link for the help pop-up.
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * @return string
+     */
+    public function services_support_link(): string {
+        global $CFG;
+
+        if (during_initial_install() ||
+            (isset($CFG->showservicesandsupportcontent) && $CFG->showservicesandsupportcontent == false) ||
+            !is_siteadmin()) {
+            return '';
+        }
+
+        // Set the icon only if the setting is not set to suppress the footer icons.
+        $footericonsetting = get_config('theme_boost_union', 'footersuppressicons');
+        if (!isset($footericonsetting) || $footericonsetting == THEME_BOOST_UNION_SETTING_SELECT_NO) {
+            $liferingicon = $this->pix_icon('t/life-ring', '', 'moodle', ['class' => 'fa fa-life-ring']);
+
+            // Otherwise.
+        } else {
+            $liferingicon = null;
+        }
+
+        $newwindowicon = $this->pix_icon('i/externallink', get_string('opensinnewwindow'), 'moodle', ['class' => 'ml-1']);
+        $link = !empty($CFG->servicespage)
+            ? $CFG->servicespage
+            : 'https://moodle.com/help/?utm_source=CTA-banner&utm_medium=platform&utm_campaign=name~Moodle4+cat~lms+mp~no';
+        $content = $liferingicon . get_string('moodleservicesandsupport') . $newwindowicon;
+
+        return html_writer::tag('a', $content, ['target' => '_blank', 'href' => $link]);
+    }
+
+    /**
+     * Returns the HTML for the site support email link
+     *
+     * This renderer function is copied and modified from /lib/outputrenderers.php
+     *
+     * @param array $customattribs Array of custom attributes for the support email anchor tag.
+     * @param bool $embed Set to true if you want to embed the link in other inline content.
+     * @return string The html code for the support email link.
+     */
+    public function supportemail(array $customattribs = [], bool $embed = false): string {
+        global $CFG;
+
+        // Do not provide a link to contact site support if it is unavailable to this user. This would be where the site has
+        // disabled support, or limited it to authenticated users and the current user is a guest or not logged in.
+        if (!isset($CFG->supportavailability) ||
+                $CFG->supportavailability == CONTACT_SUPPORT_DISABLED ||
+                ($CFG->supportavailability == CONTACT_SUPPORT_AUTHENTICATED && (!isloggedin() || isguestuser()))) {
+            return '';
+        }
+
+        $label = get_string('contactsitesupport', 'admin');
+
+        // Set the icon only if the setting is not set to suppress the footer icons.
+        $footericonsetting = get_config('theme_boost_union', 'footersuppressicons');
+        if (!isset($footericonsetting) || $footericonsetting == THEME_BOOST_UNION_SETTING_SELECT_NO) {
+            $icon = $this->pix_icon('book', '', 'moodle', ['class' => 'iconhelp icon-pre']);
+
+            // Otherwise.
+        } else {
+            $icon = null;
+        }
+
+        // Set the icon only if the setting is no set to suppress the footer icons.
+        if (isset($footericonsetting) && $footericonsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            $icon = $this->pix_icon('t/email', '');
+        }
+
+        if (!$embed) {
+            $content = $icon . $label;
+        } else {
+            $content = $label;
+        }
+
+        if (!empty($CFG->supportpage)) {
+            $attributes = ['href' => $CFG->supportpage, 'target' => 'blank'];
+            $content .= $this->pix_icon('i/externallink', '', 'moodle', ['class' => 'ml-1']);
+        } else {
+            $attributes = ['href' => $CFG->wwwroot . '/user/contactsitesupport.php'];
+        }
+
+        $attributes += $customattribs;
+
+        return html_writer::tag('a', $content, $attributes);
+    }
 }

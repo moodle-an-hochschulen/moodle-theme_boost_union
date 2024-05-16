@@ -68,7 +68,8 @@
         "page2pagetitle": "Generic page 2",
         "page3linkpositionfooter": true,
         "page3link": "https://localhost/theme/boost_union/pages/page3.php",
-        "page3pagetitle": "Generic page 3"
+        "page3pagetitle": "Generic page 3",
+        "suppressfooterlinkicons": false
     }
 }}
 {{!
@@ -96,6 +97,7 @@
       * The "Reset user tour on this page" link is added to the page by Moodle core with a quite aggressive JavaScript
         code. If this JS code does not find the placeholder div, it will add the link at another location on the page.
         That's why we keep the placeholder here and hide it with CSS if the link should be suppressed.
+    * Added the possibility to suppress the icons in front of the footer links.
 }}
 
 <footer id="page-footer" class="footer-popover bg-white">
@@ -147,55 +149,55 @@
                 <div class="footer-section p-3 border-bottom">
                     {{# aboutuslinkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_aboutuslink">
-                            <a href="{{ aboutuslink }}"><i class="icon fa fa-info-circle fa-fw " aria-hidden="true"></i>{{ aboutuspagetitle }}</a>
+                            <a href="{{ aboutuslink }}">{{^ suppressfooterlinkicons }}<i class="icon fa fa-info-circle fa-fw " aria-hidden="true"></i>{{/ suppressfooterlinkicons }}{{ aboutuspagetitle }}</a>
                         </div>
                     {{/ aboutuslinkpositionfooter }}
 
                     {{# offerslinkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_offerslink">
-                            <a href="{{ offerslink }}"><i class="icon fa fa-briefcase fa-fw " aria-hidden="true"></i>{{ offerspagetitle }}</a>
+                            <a href="{{ offerslink }}">{{^ suppressfooterlinkicons }}<i class="icon fa fa-briefcase fa-fw " aria-hidden="true"></i>{{/ suppressfooterlinkicons }}{{ offerspagetitle }}</a>
                         </div>
                     {{/ offerslinkpositionfooter }}
 
                     {{# imprintlinkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_imprintlink">
-                            <a href="{{ imprintlink }}"><i class="icon fa fa-building-o fa-fw " aria-hidden="true"></i>{{ imprintpagetitle }}</a>
+                            <a href="{{ imprintlink }}">{{^ suppressfooterlinkicons }}<i class="icon fa fa-building-o fa-fw " aria-hidden="true"></i>{{/ suppressfooterlinkicons }}{{ imprintpagetitle }}</a>
                         </div>
                     {{/ imprintlinkpositionfooter }}
 
                     {{# contactlinkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_contactlink">
-                            <a href="{{ contactlink }}"><i class="icon fa fa-address-card fa-fw " aria-hidden="true"></i>{{ contactpagetitle }}</a>
+                            <a href="{{ contactlink }}">{{^ suppressfooterlinkicons }}<i class="icon fa fa-address-card fa-fw " aria-hidden="true"></i>{{/ suppressfooterlinkicons }}{{ contactpagetitle }}</a>
                         </div>
                     {{/ contactlinkpositionfooter }}
 
                     {{# helplinkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_helplink">
-                            <a href="{{ helplink }}"><i class="icon fa fa-question-circle-o fa-fw " aria-hidden="true"></i>{{ helppagetitle }}</a>
+                            <a href="{{ helplink }}">{{^ suppressfooterlinkicons }}<i class="icon fa fa-question-circle-o fa-fw " aria-hidden="true"></i>{{/ suppressfooterlinkicons }}{{ helppagetitle }}</a>
                         </div>
                     {{/ helplinkpositionfooter }}
 
                     {{# maintenancelinkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_maintenancelink">
-                            <a href="{{ maintenancelink }}"><i class="icon fa fa-wrench fa-fw " aria-hidden="true"></i>{{ maintenancepagetitle }}</a>
+                            <a href="{{ maintenancelink }}">{{^ suppressfooterlinkicons }}<i class="icon fa fa-wrench fa-fw " aria-hidden="true"></i>{{/ suppressfooterlinkicons }}{{ maintenancepagetitle }}</a>
                         </div>
                     {{/ maintenancelinkpositionfooter }}
 
                     {{# page1linkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_page1link">
-                            <a href="{{ page1link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page1pagetitle }}</a>
+                            <a href="{{ page1link }}">{{^ suppressfooterlinkicons }}<i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{/ suppressfooterlinkicons }}{{ page1pagetitle }}</a>
                         </div>
                     {{/ page1linkpositionfooter }}
 
                     {{# page2linkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_page2link">
-                            <a href="{{ page2link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page2pagetitle }}</a>
+                            <a href="{{ page2link }}">{{^ suppressfooterlinkicons }}<i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{/ suppressfooterlinkicons }}{{ page2pagetitle }}</a>
                         </div>
                     {{/ page2linkpositionfooter }}
 
                     {{# page3linkpositionfooter }}
                         <div class="footer-support-link theme_boost_union_footer_page3link">
-                            <a href="{{ page3link }}"><i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{ page3pagetitle }}</a>
+                            <a href="{{ page3link }}">{{^ suppressfooterlinkicons }}<i class="icon fa fa-arrow-circle-o-right fa-fw " aria-hidden="true"></i>{{/ suppressfooterlinkicons }}{{ page3pagetitle }}</a>
                         </div>
                     {{/ page3linkpositionfooter }}
                 </div>

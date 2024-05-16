@@ -128,4 +128,18 @@ if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
         // Add marker to hide this link.
         $templatecontext['footershowpowered'] = false;
     }
+
+    // If the "Suppress icons in front of the footer links" setting is not enabled.
+    $footersuppressfooterlinkiconssetting = get_config('theme_boost_union', 'footersuppressicons');
+    if (!isset($footersuppressfooterlinkiconssetting) ||
+        $footersuppressfooterlinkiconssetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Add marker to show the icons.
+        $templatecontext['suppressfooterlinkicons'] = false;
+
+        // Otherwise.
+    } else {
+        // Add marker to hide the icons.
+        $templatecontext['suppressfooterlinkicons'] = true;
+    }
+
 }
