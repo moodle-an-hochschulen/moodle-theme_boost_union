@@ -481,6 +481,10 @@ Whatever you add to this textarea will be displayed at the end of a page, in the
 
 With this setting, you can control whether to show or to suppress the footer button at the bottom of the page.
 
+###### Suppress icons in front of the footer links
+
+With this setting, you can entirely suppress the icons in front of the footer links.
+
 ###### Suppress ... link
 
 With these settings, you can entirely suppress particular links in the footer.

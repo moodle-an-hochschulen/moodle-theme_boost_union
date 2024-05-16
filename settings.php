@@ -1797,6 +1797,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 THEME_BOOST_UNION_SETTING_ENABLEFOOTER_DESKTOP, $enablefooterbuttonoptions);
         $tab->add($setting);
 
+        // Setting: Suppress icons in front of the footer links.
+        $name = 'theme_boost_union/footersuppressicons';
+        $title = get_string('footersuppressiconssetting', 'theme_boost_union', null, true);
+        $description = get_string('footersuppressiconssetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
         // Setting: Suppress 'Help and documentation' link.
         $name = 'theme_boost_union/footersuppresshelp';
         $title = get_string('footersuppresshelpsetting', 'theme_boost_union', null, true);
