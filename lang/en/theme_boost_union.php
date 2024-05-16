@@ -571,6 +571,9 @@ $string['enablefooterbuttonboth'] = 'Enable on desktop, tablet and mobile';
 $string['enablefooterbuttondesktop'] = 'Enable on desktop and tablet only, hide on mobile (unchanged as presented by Moodle core)';
 $string['enablefooterbuttonmobile'] = 'Enable on mobile only, hide on desktop and tablet';
 $string['enablefooterbuttonhidden'] = 'Hide on all devices';
+// ... ... Setting: Suppress icons in front of the footer links.
+$string['footersuppressiconssetting'] = 'Suppress icons in front of the footer links';
+$string['footersuppressiconssetting_desc'] = 'With this setting, you can entirely suppress the icons in front of the footer links. \'Documentation for this page\' has a book icon, \'Services and support\' a life ring etc.';
 // ... ... Setting: Suppress 'Documentation for this page' link.
 $string['footersuppresshelpsetting'] = 'Suppress \'Documentation for this page\' link';
 $string['footersuppresshelpsetting_desc'] = 'With this setting, you can entirely suppress the \'Documentation for this page\' link in the footer. This link would otherwise appear if a <a href="{$a->url}">Moodle Docs document root</a> is set.';
