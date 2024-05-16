@@ -300,3 +300,53 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | value | shouldornot |
       | no    | should      |
       | yes   | should not  |
+
+  @javascript
+  Scenario Outline: Setting: Footer - Suppress icons in front of the footer links
+    Given the following config values are set as admin:
+      | config                   | value              | plugin            |
+      | footersuppressicons      | <value>            | theme_boost_union |
+      | enableaboutus            | yes                | theme_boost_union |
+      | aboutuscontent           | <p>Lorem ipsum</p> | theme_boost_union |
+      | aboutuslinkposition      | footer             | theme_boost_union |
+      | enableoffers             | yes                | theme_boost_union |
+      | offerscontent            | <p>Lorem ipsum</p> | theme_boost_union |
+      | offerslinkposition       | footer             | theme_boost_union |
+      | enableimprint            | yes                | theme_boost_union |
+      | imprintcontent           | <p>Lorem ipsum</p> | theme_boost_union |
+      | imprintlinkposition      | footer             | theme_boost_union |
+      | enablecontact            | yes                | theme_boost_union |
+      | contactcontent           | <p>Lorem ipsum</p> | theme_boost_union |
+      | contactlinkposition      | footer             | theme_boost_union |
+      | enablehelp               | yes                | theme_boost_union |
+      | helpcontent              | <p>Lorem ipsum</p> | theme_boost_union |
+      | helplinkposition         | footer             | theme_boost_union |
+      | enablemaintainance       | yes                | theme_boost_union |
+      | maintainancecontent      | <p>Lorem ipsum</p> | theme_boost_union |
+      | maintainancelinkposition | footer             | theme_boost_union |
+      | enablepage1              | yes                | theme_boost_union |
+      | page1content             | <p>Lorem ipsum</p> | theme_boost_union |
+      | page1linkposition        | footer             | theme_boost_union |
+      | enablepage2              | yes                | theme_boost_union |
+      | page2content             | <p>Lorem ipsum</p> | theme_boost_union |
+      | page2linkposition        | footer             | theme_boost_union |
+      | enablepage3              | yes                | theme_boost_union |
+      | page3content             | <p>Lorem ipsum</p> | theme_boost_union |
+      | page3linkposition        | footer             | theme_boost_union |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
+    Then ".footer-support-link a i.icon.fa-book" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
+    And ".footer-support-link a i.icon.fa-life-ring" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
+    And ".footer-support-link a i.icon.fa-envelope-o" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
+    And ".footer-support-link a i.icon.fa-info-circle" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
+    And ".footer-support-link a i.icon.fa-briefcase" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
+    And ".footer-support-link a i.icon.fa-building-o" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
+    And ".footer-support-link a i.icon.fa-address-card" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
+    And ".footer-support-link a i.icon.fa-question-circle-o" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
+    And ".footer-support-link a i.icon.fa-arrow-circle-o-right" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
+
+    Examples:
+      | value | shouldornot |
+      | no    | should      |
+      | yes   | should not  |
