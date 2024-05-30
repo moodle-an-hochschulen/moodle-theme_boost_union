@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-07-19 - Bugfix: Remove 'iconhelp' class, resolves #664.
+
 ### v4.4-r1
 
 * 2024-07-15 - Development: Rename master branch to main, please update your clones.
