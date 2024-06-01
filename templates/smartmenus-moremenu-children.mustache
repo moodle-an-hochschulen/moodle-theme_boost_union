@@ -24,6 +24,7 @@
     * Added the carousel-target data to the li item.
     * Main items are wrapped with carousel-item.
     * Second-level submenus are rendered as separate carousel items.
+    * Make submenu headers fully clickable.
 
     Example context (json):
     {
@@ -93,14 +94,17 @@
                     {{/items}}
                 {{/children}}
                 {{#submenus}}
+                    <!-- Make submenu headers fully clickable. -->
                     <div id="carousel-item-{{id}}" role="menu" class="carousel-item submenu" tabindex="-1" aria-label="{{title}}">
                         <div class="d-flex flex-column h-100">
                             <div class="header">
-                                <button type="button" class="btn btn-icon carousel-navigation-link text-decoration-none text-body" data-carousel-target-id="carousel-item-{{#returnid}}{{returnid}}{{/returnid}}{{^returnid}}main{{/returnid}}" aria-label="{{#str}}usermenugoback{{/str}}">
-                                    <span class="dir-rtl-hide">{{#pix}}i/arrow-left{{/pix}}</span>
-                                    <span class="dir-ltr-hide">{{#pix}}i/arrow-right{{/pix}}</span>
-                                </button>
-                                <span class="pl-2" id="carousel-item-title-{{id}}">{{#title}}{{{title}}}{{/title}}{{^title}}{{{text}}}{{/title}}</span>
+                                <a href="#" class=" carousel-navigation-link" data-carousel-target-id="carousel-item-{{#returnid}}{{returnid}}{{/returnid}}{{^returnid}}main{{/returnid}}" aria-label="{{#str}}usermenugoback{{/str}}">
+                                    <button type="button" class="btn btn-icon text-decoration-none text-body">
+                                        <span class="dir-rtl-hide">{{#pix}}i/arrow-left{{/pix}}</span>
+                                        <span class="dir-ltr-hide">{{#pix}}i/arrow-right{{/pix}}</span>
+                                    </button>
+                                    <span class="pl-2" id="carousel-item-title-{{id}}">{{#title}}{{{title}}}{{/title}}{{^title}}{{{text}}}{{/title}}</span>
+                                </a>
                             </div>
                             <div class="dropdown-divider"></div>
                             <div class="items h-100 overflow-auto" role="menu" aria-labelledby="carousel-item-title-{{id}}">

@@ -1631,8 +1631,21 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             }
             /* The icon tag aligned top at the usermenu link */
             .usermenu .dropdown-menu {
-                .submenu .items a.dropdown-item {
-                    align-items: baseline;
+                .submenu {
+                    /* Remove the padding on the User submenu header */
+                    .header {
+                        padding: 0;
+                        /* Centered align the User submenu header, added padding and removed the underline for the link */
+                        .carousel-navigation-link {
+                            text-decoration: none;
+                            padding: .1rem .75rem;
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                    .items a.dropdown-item {
+                        align-items: baseline;
+                    }
                 }
                 /* Usermenu dropdown item position relative for it's submenu */
                 .dropdown-item {
@@ -1644,7 +1657,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 }
             }
             /* Dropdown more menu back button arrow margin */
-            .boost-union-moremenu.dropdown-menu button.carousel-navigation-link > * {
+            .boost-union-moremenu.dropdown-menu .carousel-navigation-link > * {
                 pointer-events: none;
                 img {
                     margin: 0;
@@ -1655,6 +1668,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             .more-nav li.nav-item {
                 /* Menu link icon aligned center */
                 a {
+                    display: flex;
                     align-items: center;
                     label {
                         margin-bottom: 0;
@@ -2144,13 +2158,12 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             /* Added the arrow icon styles for the dropdown sub menu header */
             .submenu .header {
                 font-size: .975rem;
-                padding: 0.25rem 0.75rem;
                 display: flex;
                 align-items: center;
             }
         }
         /* Removed the margin for the carousel back button arrow */
-        &.fixed-bottom .boost-union-moremenu.dropdown-menu button.carousel-navigation-link > * {
+        &.fixed-bottom .boost-union-moremenu.dropdown-menu .carousel-navigation-link > * {
             pointer-events: none;
             img {
                 margin: 0;
@@ -2174,11 +2187,20 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         .moremenu-carousel-item-header {
             display: none;
         }
-        button.carousel-navigation-link > * {
+        .carousel-navigation-link > * {
             pointer-events: none;
             /* Drop down more menu carousel item header image */
             img {
                 margin: 0;
+            }
+        }
+        /* Make the carousel navigation link to full width and cursor as pointor */
+        .carousel-navigation-link {
+            width: 100%;
+            cursor: pointer;
+            /* Removed the underline on hovering the link */
+            &:hover {
+                text-decoration: none;
             }
         }
     }
