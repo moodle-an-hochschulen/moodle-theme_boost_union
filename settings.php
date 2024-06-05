@@ -24,6 +24,7 @@
 
 use theme_boost_union\admin_setting_configdatetime;
 use theme_boost_union\admin_setting_configstoredfilealwayscallback;
+use theme_boost_union\admin_setting_configtext_url;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -177,6 +178,120 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_scsscode($name, $title, $description, $default, PARAM_RAW);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
+
+        // Create external SCSS heading.
+        $name = 'theme_boost_union/extscssheading';
+        $title = get_string('extscssheading', 'theme_boost_union', null, true);
+        $taskurl = new moodle_url('/admin/tool/task/scheduledtasks.php',
+                ['action' => 'edit', 'task' => 'theme_boost_union\task\purge_cache']);
+        $description = get_string('extscssheading_desc', 'theme_boost_union', null, true).'<br /><br />'.
+                get_string('extscssheading_instr', 'theme_boost_union', null, true).
+                '<ul><li>'.get_string('extscssheading_sources', 'theme_boost_union', null, true).'</li>'.
+                '<li>'.get_string('extscssheading_prepost', 'theme_boost_union', null, true).'</li>'.
+                '<li>'.get_string('extscssheading_structure', 'theme_boost_union', null, true).'</li>'.
+                '<li>'.get_string('extscssheading_drop', 'theme_boost_union', null, true).'</li>'.
+                '<li>'.get_string('extscssheading_task', 'theme_boost_union', $taskurl->out(), true).'</li></ul>';
+        $setting = new admin_setting_heading($name, $title, $description);
+        $tab->add($setting);
+
+        // Setting: External SCSS source.
+        $extscsssourceoptions = [
+                THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_NONE =>
+                        get_string('extscsssourcenone', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_DOWNLOAD =>
+                        get_string('extscsssourcedownload', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB =>
+                        get_string('extscsssourcegithub', 'theme_boost_union'),
+        ];
+        $name = 'theme_boost_union/extscsssource';
+        $title = get_string('extscsssource', 'theme_boost_union', null, true);
+        $description = get_string('extscsssource_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_NONE, $extscsssourceoptions);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: External Pre SCSS download URL.
+        $name = 'theme_boost_union/extscssurlpre';
+        $title = get_string('extscssurlpre', 'theme_boost_union', null, true);
+        $description = get_string('extscssurlpre_desc', 'theme_boost_union', null, true);
+        $default = '';
+        $setting = new admin_setting_configtext_url($name, $title, $description, $default, PARAM_URL);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/extscssurlpre', 'theme_boost_union/extscsssource', 'neq',
+                THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_DOWNLOAD);
+
+        // Setting: External Post SCSS download URL.
+        $name = 'theme_boost_union/extscssurlpost';
+        $title = get_string('extscssurlpost', 'theme_boost_union', null, true);
+        $description = get_string('extscssurlpost_desc', 'theme_boost_union', null, true);
+        $default = '';
+        $setting = new admin_setting_configtext_url($name, $title, $description, $default, PARAM_URL);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/extscssurlpost', 'theme_boost_union/extscsssource', 'neq',
+                THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_DOWNLOAD);
+
+        // Setting: External SCSS Github API token.
+        $name = 'theme_boost_union/extscssgithubtoken';
+        $title = get_string('extscssgithubtoken', 'theme_boost_union', null, true);
+        $description = get_string('extscssgithubtoken_desc', 'theme_boost_union', null, true).'<br />'.
+                get_string('extscssgithubtoken_docs', 'theme_boost_union', null, true);
+        $default = '';
+        $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_ALPHANUMEXT);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/extscssgithubtoken', 'theme_boost_union/extscsssource', 'neq',
+                THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB);
+
+        // Setting: External SCSS Github API user.
+        $name = 'theme_boost_union/extscssgithubuser';
+        $title = get_string('extscssgithubuser', 'theme_boost_union', null, true);
+        $description = get_string('extscssgithubuser_desc', 'theme_boost_union', null, true).'<br />'.
+                get_string('extscssgithubuser_example', 'theme_boost_union', null, true);
+        $default = '';
+        $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_ALPHANUMEXT);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/extscssgithubuser', 'theme_boost_union/extscsssource', 'neq',
+                THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB);
+
+        // Setting: External SCSS Github API repository.
+        $name = 'theme_boost_union/extscssgithubrepo';
+        $title = get_string('extscssgithubrepo', 'theme_boost_union', null, true);
+        $description = get_string('extscssgithubrepo_desc', 'theme_boost_union', null, true).'<br />'.
+                get_string('extscssgithubrepo_example', 'theme_boost_union', null, true);
+        $default = '';
+        $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_ALPHANUMEXT);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/extscssgithubrepo', 'theme_boost_union/extscsssource', 'neq',
+                THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB);
+
+        // Setting: External Pre SCSS Github file path.
+        $name = 'theme_boost_union/extscssgithubprefilepath';
+        $title = get_string('extscssgithubprefilepath', 'theme_boost_union', null, true);
+        $description = get_string('extscssgithubprefilepath_desc', 'theme_boost_union', null, true).'<br />'.
+                get_string('extscssgithubfilepath_example', 'theme_boost_union', null, true);
+        $default = '';
+        $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_PATH);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/extscssgithubprefilepath', 'theme_boost_union/extscsssource', 'neq',
+                THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB);
+
+        // Setting: External Post SCSS Github file path.
+        $name = 'theme_boost_union/extscssgithubpostfilepath';
+        $title = get_string('extscssgithubpostfilepath', 'theme_boost_union', null, true);
+        $description = get_string('extscssgithubpostfilepath_desc', 'theme_boost_union', null, true).'<br />'.
+                get_string('extscssgithubfilepath_example', 'theme_boost_union', null, true);
+        $default = '';
+        $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_PATH);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/extscssgithubpostfilepath', 'theme_boost_union/extscsssource', 'neq',
+                THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB);
 
         // Add tab to settings page.
         $page->add($tab);

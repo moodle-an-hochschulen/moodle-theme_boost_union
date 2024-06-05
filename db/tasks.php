@@ -15,19 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Version file
+ * Theme Boost Union - Scheduled tasks.
  *
  * @package    theme_boost_union
- * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @copyright  2024 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'theme_boost_union';
-$plugin->version = 2023010566;
-$plugin->release = 'v4.1-r27';
-$plugin->requires = 2022112806;
-$plugin->supported = [401, 401];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = ['theme_boost' => 2022112800];
+$tasks = [
+    [
+        'classname' => '\theme_boost_union\task\purge_cache',
+        'blocking' => 1,
+        'minute' => '0',
+        'hour' => '0',
+        'day' => '*',
+        'dayofweek' => '*',
+        'month' => '*',
+        'disabled' => 1,
+    ],
+];

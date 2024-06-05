@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased 
+
+* 2024-04-28 - Feature: Allow admins to configure URLs from where Boost Union will fetch additional raw SCSS code, resolves #41.
+
 ### v4.1-r27
 
 * 2024-05-13 - Improvement: Suppress icons in footer, resolves #649
