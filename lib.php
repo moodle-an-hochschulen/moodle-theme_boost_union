@@ -124,6 +124,10 @@ define('THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_SUMMARY', 'sum
 define('THEME_BOOST_UNION_SETTING_MARKLINKS_WHOLEPAGE', 'wholepage');
 define('THEME_BOOST_UNION_SETTING_MARKLINKS_COURSEMAIN', 'coursemain');
 
+define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_NONE', 0);
+define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_DOWNLOAD', 1);
+define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB', 2);
+
 /**
  * Returns the main SCSS content.
  *
@@ -135,6 +139,9 @@ function theme_boost_union_get_main_scss_content($theme) {
 
     $scss = '';
 
+    // Require Boost Core library.
+    require_once($CFG->dirroot.'/theme/boost/lib.php');
+
     // Include pre.scss from Boost Union.
     $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/pre.scss');
 
@@ -144,6 +151,13 @@ function theme_boost_union_get_main_scss_content($theme) {
 
     // Include post.scss from Boost Union.
     $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/post.scss');
+
+    // Get and include the external Post SCSS.
+    // This should actually be in theme_boost_union_get_extra_scss().
+    // But as the *_get_extra_scss() functions work in practice, this is not possible as the external Raw SCSS code
+    // would end of _after_ the code from theme_boost_get_extra_scss() and not _before_.
+    // Thus, we sadly have to get and include the external Post SCSS here already.
+    $scss .= theme_boost_union_get_external_scss('post');
 
     return $scss;
 }
@@ -235,6 +249,9 @@ function theme_boost_union_get_pre_scss($theme) {
 
     // Add custom Boost Union SCSS variable as goody for designers: $themerev.
     $scss .= '$themerev: '.$CFG->themerev.";\n";
+
+    // Get and include the external Pre SCSS.
+    $scss .= theme_boost_union_get_external_scss('pre');
 
     // Prepend pre-scss.
     if (get_config('theme_boost_union', 'scsspre')) {
