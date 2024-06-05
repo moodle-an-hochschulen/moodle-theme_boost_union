@@ -2032,3 +2032,154 @@ function theme_boost_union_callbackimpl_before_standard_html(&$hook = null) {
         return $html;
     }
 }
+
+/**
+ * Gets and returns the external SCSS based on the theme configuration.
+ *
+ * @param string $type The type of SCSS which is requested (pre or post).
+ * @return string
+ */
+function theme_boost_union_get_external_scss($type) {
+    global $CFG;
+
+    // Require file library.
+    require_once($CFG->libdir . '/filelib.php');
+
+    // If an invalid type was requested, return directly.
+    if ($type != 'pre' && $type != 'post') {
+        return '';
+    }
+
+    // Get the SCSS source.
+    $scsssource = get_config('theme_boost_union', 'extscsssource');
+
+    // If fetching external SCSS is disabled, return directly.
+    if ($scsssource == THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_NONE) {
+        return '';
+    }
+
+    // If the admin wanted to use download URLs.
+    if ($scsssource == THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_DOWNLOAD) {
+        // Get the URL config.
+        switch ($type) {
+            case 'post':
+                $url = get_config('theme_boost_union', 'extscssurlpost');
+                break;
+            case 'pre':
+                $url = get_config('theme_boost_union', 'extscssurlpre');
+                break;
+        }
+
+        // If the URL is empty, return directly.
+        if (empty($url)) {
+            return '';
+        }
+
+        // If the URL is invalid, return directly.
+        // This should not happen as the URL has already validated when the setting was stored,
+        // but better be safe than sorry.
+        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+            return '';
+        }
+
+        // Otherwise, if the admin wanted to use a private Github repository.
+    } else if ($scsssource == THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB) {
+        // Get the file path.
+        switch ($type) {
+            case 'post':
+                $ghfilepath = get_config('theme_boost_union', 'extscssgithubpostfilepath');
+                break;
+            case 'pre':
+                $ghfilepath = get_config('theme_boost_union', 'extscssgithubprefilepath');
+                break;
+        }
+
+        // Compose the request URL for the Github API.
+        $ghuser = get_config('theme_boost_union', 'extscssgithubuser');
+        $ghrepo = get_config('theme_boost_union', 'extscssgithubrepo');
+        $ghurl = 'https://api.github.com/repos/'.$ghuser.'/'.$ghrepo.'/contents/'.$ghfilepath;
+
+        // Get the download URL from the Github API.
+        $curl2 = new curl();
+        $curl2header = [
+            'Accept: application/vnd.github+json',
+            'Authorization: Bearer '.get_config('theme_boost_union', 'extscssgithubtoken'),
+            'X-GitHub-Api-Version: 2022-11-28',
+        ];
+        $curl2->setHeader($curl2header);
+        $curl2ret = $curl2->get($ghurl);
+
+        // If cURL had an error, return directly (as we cannot do anything about it).
+        $curl2errno = $curl2->get_errno();
+        if (!empty($curl2errno)) {
+            return '';
+        }
+
+        // If cURL did get anything different than HTTP 200, return directly
+        // (as we have to assume that something is broken).
+        $curl2info = $curl2->get_info();
+        if ($curl2info['http_code'] != 200) {
+            return '';
+        }
+
+        // Decode the JSON from the Github API JSON data.
+        $curl2data = json_decode($curl2ret);
+
+        // If the JSON data does not contain a download URL, return directly.
+        if (is_object($curl2data) !== true || property_exists($curl2data, 'download_url') !== true) {
+            return '';
+        }
+
+        // Extract the download URL from the JSON data.
+        $url = $curl2data->download_url;
+
+        // If the URL is empty, return directly.
+        if (empty($url)) {
+            return '';
+        }
+
+        // If the URL is invalid, return directly.
+        // This should not happen as the URL came directly from Github,
+        // but better be safe than sorry.
+        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+            return '';
+        }
+    }
+
+    // Initialize cURL.
+    $curl = new curl();
+
+    // If the URL is blocked, return directly.
+    // Again, this should not happen as the URL has already checked when the setting was stored,
+    // but the setting may have changed in the meantime.
+    if ($curl->get_security()->url_is_blocked($url)) {
+        return '';
+    }
+    // Get the external SCSS.
+    $extscss = $curl->get($url);
+
+    // If cURL had an error, return directly (as we cannot do anything about it).
+    $curlerrno = $curl->get_errno();
+    if (!empty($curlerrno)) {
+        return '';
+    }
+
+    // If cURL did get anything different than HTTP 200, return directly
+    // (as we have to assume that something is broken).
+    $curlinfo = $curl->get_info();
+    if ($curlinfo['http_code'] != 200) {
+        return '';
+    }
+
+    // If the fetched SCSS code cannot be compiled, return directly
+    // (as we must not include broken SCSS code).
+    $compiler = new core_scss();
+    try {
+        $compiler->compile($extscss);
+    } catch (Exception $e) {
+        return '';
+    }
+
+    // Now return the (hopefully valid and working) SCSS code.
+    return $extscss;
+}

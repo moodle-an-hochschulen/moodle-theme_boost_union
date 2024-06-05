@@ -67,6 +67,10 @@ This setting is already available in the Moodle core theme Boost. For more infor
 
 This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
 
+##### External SCSS
+
+In addition to the raw SCSS settings above, Boost Union can load SCSS from an external source. It is included before the SCSS code which is defined above which means that you can manage a centralized external SCSS codebase and can still amend it with local SCSS additions.
+
 #### Tab "Page"
 
 In this tab there are the following settings:
@@ -614,6 +618,17 @@ These capabilities are used to control who is allowed to see a particular block 
 These capabilities are used to control who is allowed to edit a particular block region. By default, they are assigned to teachers, non-editing teachers and managers.
 
 
+Scheduled Tasks
+---------------
+
+This plugin also introduces these additional scheduled tasks:
+
+### \theme_boost_union\task\purge_cache
+
+This scheduled task can be used to purge the theme cache periodically, for example every night. It is especially there to fetch external SCSS code which might have been updated since the last purging of the theme cache.\
+By default, the task is disabled.
+
+
 How this theme works
 --------------------
 
@@ -783,6 +798,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * Hochschule Hannover - University of Applied Sciences and Arts: Code, Funding, Ideating
 * Käferfreie Software, Nina Herrmann: Code
 * lern.link GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
+* lern.link GmbH, Lukas MuLu Müller: Code
 * lern.link GmbH, Beata Waloszczyk: Code
 * Moodle.NRW / Ruhr University Bochum, Annika Lambert: Code
 * Moodle.NRW / Ruhr University Bochum, Matthias Buttgereit: Code, Ideating

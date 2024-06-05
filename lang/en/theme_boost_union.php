@@ -59,6 +59,48 @@ $string['scsstab'] = 'SCSS';
 // ... Section: Raw SCSS.
 $string['scssheading'] = 'Raw SCSS';
 
+// ... Section: External SCSS.
+$string['extscssheading'] = 'External SCSS';
+$string['extscssheading_desc'] = 'In addition to the raw SCSS settings above, Boost Union can load SCSS from an external source. It is included before the SCSS code which is defined above which means that you can manage a centralized external SCSS codebase and can still amend it with local SCSS additions.';
+$string['extscssheading_instr'] = 'Instructions:';
+$string['extscssheading_drop'] = 'If Boost Union cannot fetch the external SCSS file for any reason or if the fetched external SCSS code is invalid, it will simply ignore the external SCSS file to avoid hickups with SCSS compiling and broken frontends.';
+$string['extscssheading_structure'] = 'The external SCSS must be provided as plaintext file, without any headers or footers, containing just the SCSS code.';
+$string['extscssheading_prepost'] = 'Just like the raw SCSS settings above, the external SCSS is split into two pieces: Pre and Post SCSS. Pre SCSS can be used for initializing SCSS variables, Post SCSS is used for your actual SCSS code.';
+$string['extscssheading_sources'] = 'You can configure Boost Union to fetch the external SCSS file either from a public download URL (which will be accessed and fetched with an unauthenticated cURL request) or from a private Github repository (which will be accessed and fetched with a Github API token).';
+$string['extscssheading_task'] = 'There is a <a href="{$a}">scheduled task theme_boost_union\task\purge_cache</a> which is disabled by default but which you can enable if you want Boost Union to periodically fetch and compile the external SCSS code.';
+$string['invalidurl'] = 'The given URL is invalid';
+// ... ... Setting: External SCSS source.
+$string['extscsssource'] = 'External SCSS source';
+$string['extscsssource_desc'] = 'Pick the type of source from where you want to fetch the external SCSS.';
+$string['extscsssourcenone'] = 'None';
+$string['extscsssourcedownload'] = 'Public download URL';
+$string['extscsssourcegithub'] = 'Private Github repository';
+// ... ... Setting: External Pre SCSS download URL.
+$string['extscssurlpre'] = 'External Pre SCSS download URL';
+$string['extscssurlpre_desc'] = 'The public download URL from where the External Pre SCSS should be fetched.';
+// ... ... Setting: External Post SCSS download URL.
+$string['extscssurlpost'] = 'External Post SCSS download URL';
+$string['extscssurlpost_desc'] = 'The public download URL from where the external Post SCSS should be fetched.';
+// ... ... Setting: External SCSS Github API token.
+$string['extscssgithubtoken'] = 'External SCSS Github API token';
+$string['extscssgithubtoken_desc'] = 'The Github API token which will be used to fetch the SCSS code from the given private Github repository.';
+$string['extscssgithubtoken_docs'] = 'Go to <a href="https://github.com/settings/tokens">your Github token settings</a> to generate an API token and to see the official documentation.';
+// ... ... Setting: External SCSS Github API user.
+$string['extscssgithubuser'] = 'External SCSS Github API user';
+$string['extscssgithubuser_desc'] = 'The Github API user or organization which owns the private Github repository.';
+$string['extscssgithubuser_example'] = 'Example: If you can see the file in your Github account on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union-extscsstest/blob/master/extscss.scss, the user will be <em>moodle-an-hochschulen</em>.';
+// ... ... Setting: External SCSS Github API repository.
+$string['extscssgithubrepo'] = 'External SCSS Github API repository';
+$string['extscssgithubrepo_desc'] = 'The private Github repository where the SCSS files are located.';
+$string['extscssgithubrepo_example'] = 'Example: If you can see the file in your Github account on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union-extscsstest/blob/master/extscss.scss, the repository will be <em>moodle-theme_boost_union-extscsstest</em>.';
+// ... ... Setting: External Pre SCSS Github file path.
+$string['extscssgithubprefilepath'] = 'External Pre SCSS Github file path';
+$string['extscssgithubprefilepath_desc'] = 'The path within the private Github repository where the Pre SCSS file is located.';
+$string['extscssgithubfilepath_example'] = 'Example: If you can see the file in your Github account on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union-extscsstest/blob/master/extscss.scss, the file path will be <em>/extscss.scss</em>.';
+// ... ... Setting: External Post SCSS Github file path.
+$string['extscssgithubpostfilepath'] = 'External Post SCSS Github file path';
+$string['extscssgithubpostfilepath_desc'] = 'The path within the private Github repository where the Post SCSS file is located.';
+
 // Settings: Page tab.
 $string['pagetab'] = 'Page';
 // ... Section: Page width.
@@ -1237,6 +1279,9 @@ $string['cachedef_flavours'] = 'Flavours which apply to a given page\'s category
 $string['cachedef_smartmenus'] = 'Smart menus';
 $string['cachedef_smartmenu_items'] = 'Smart menu items';
 $string['cachedef_touchiconsios'] = 'Touch icon files for iOS';
+
+// Scheduled tasks.
+$string['task_purgecache'] = 'Purge theme cache';
 
 // Upgrade notices.
 $string['upgradenotice_2022080922'] = 'From this release on, Boost Union has its own logo and compact logo settings and does not use these files from the Moodle core settings anymore.';
