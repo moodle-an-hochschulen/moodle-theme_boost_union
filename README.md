@@ -109,6 +109,10 @@ Here, you can upload a full logo to be used as decoration. This image is especia
 
 Here, you can upload a compact version of the same logo as above, such as an emblem, shield or icon. This image is especially used in the navigation bar at the top of each Moodle page. The image should be clear even at small sizes.
 
+###### Logo Maxwidth
+
+If the logo for the navbar on the top left is too wide or has a special aspect ratio, you can limit the logo's maximum width. Use css definition to limit the max-width.
+
 ##### Favicon
 
 ###### Favicon

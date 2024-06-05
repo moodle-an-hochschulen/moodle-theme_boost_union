@@ -1633,6 +1633,26 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
     return $scss;
 }
 
+
+/**
+ * Returns the SCSS code to be used in the navbar. The first usage is a logo icon that is possibly too broad and needs
+ * reduced to fit the navbar. See theme_boost_union_maxlogowidth for further details
+ *
+ * @param theme_config $theme The theme config object.
+ * @return string
+ */
+function theme_boost_union_get_scss_navbar($theme) {
+    // Initialize SCSS snippet.
+    $scss = '';
+
+    // Set variables which are read in settings by the logo maxwidth values.
+    if (get_config('theme_boost_union', 'maxlogowidth')) {
+        $scss .= ".navbar-brand img.logo{max-width:".get_config('theme_boost_union', 'maxlogowidth').";height:auto;}\n";
+    }
+
+    return $scss;
+}
+
 /**
  * Helper function which returns an array of login methods on the login page.
  *
