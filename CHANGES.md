@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased 
 
+* 2024-05-05 - Cleanup: Fix 'Implicitly marking a parameter as nullable is deprecated since PHP 8.4' codechecker warning, resolves #667.
 * 2024-04-28 - Feature: Allow admins to configure URLs from where Boost Union will fetch additional raw SCSS code, resolves #41.
 * 2024-05-13 - Improvement: Suppress icons in footer, resolves #649
 * 2024-05-13 - Bugfix: Make the "More menu behavior" setting in smart menus more stable, resolves #461.
