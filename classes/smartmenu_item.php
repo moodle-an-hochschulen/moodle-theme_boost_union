@@ -270,7 +270,7 @@ class smartmenu_item {
      * @param stdclass|null $menu Data of the menu the item belongs to.
      * @return smartmenu_item A new instance of this class.
      */
-    public static function instance($item, $menu=null) {
+    public static function instance($item, $menu = null) {
         return new self($item, $menu);
     }
 
@@ -281,7 +281,7 @@ class smartmenu_item {
      * @param int|stdclass $item Record or id of the menu.
      * @param stdclass|null $menu Menu data belongs to this item, it fetch the menus data if empty.
      */
-    public function __construct($item, $menu=null) {
+    public function __construct($item, $menu = null) {
 
         if (is_scalar($item)) {
             $item = $this->get_item($item);
@@ -331,7 +331,7 @@ class smartmenu_item {
      * @return \stdclass Menu record if found or false.
      * @throws \moodle_exception When menu is not found.
      */
-    public function get_item($itemid=null) {
+    public function get_item($itemid = null) {
         global $DB;
 
         // Verfiy and Fetch menu record from DB.
@@ -1114,8 +1114,8 @@ class smartmenu_item {
      *
      * @return array An associative array of node data for the item.
      */
-    public function generate_node_data($title, $url, $key=null, $tooltip=null,
-        $itemtype='link', $haschildren=0, $children=[], $itemimage='', $sortstring='') {
+    public function generate_node_data($title, $url, $key = null, $tooltip = null,
+        $itemtype = 'link', $haschildren = 0, $children = [], $itemimage = '', $sortstring = '') {
 
         global $OUTPUT;
 
@@ -1318,7 +1318,7 @@ class smartmenu_item {
      * @param int|null $type Optional. The specific type to retrieve. Defaults to null.
      * @return array|string An array of types if $type is null, or a string with the name of the specific type.
      */
-    public static function get_types(int $type=null) {
+    public static function get_types(?int $type = null) {
         $types = [
                 self::TYPESTATIC => get_string('smartmenusmenuitemtypestatic', 'theme_boost_union'),
                 self::TYPEHEADING => get_string('smartmenusmenuitemtypeheading', 'theme_boost_union'),
@@ -1335,7 +1335,7 @@ class smartmenu_item {
      * @return array|string The array of display options if $option is null, or the display option string if $option is set.
      * @throws coding_exception if $option is set but invalid.
      */
-    public static function get_display_options(int $option=null) {
+    public static function get_display_options(?int $option = null) {
         $displayoptions = [
                 self::DISPLAY_SHOWTITLEICON => get_string('smartmenusmenuitemdisplayoptionsshowtitleicon', 'theme_boost_union'),
                 self::DISPLAY_HIDETITLE => get_string('smartmenushidetitle', 'theme_boost_union'),
