@@ -193,21 +193,13 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And I should not see "This is a test content"
     And I log out
     When I log in as "admin"
-    # We deactivate debugging for a while as the Behat step would otherwise fail due to the
-    # stupid 'Too much data passed as arguments to js_call_amd' debugging message which can't be avoided
-    # on this settings page. This debugging message can't be avoided as we simple use too much hide_if() there.
-    And the following config values are set as admin:
-      | debug          | 0 |
-      | debugdisplay   | 0 |
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Info banner" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I click on "Reset visibility of info banner 1" "link"
     And I click on "Confirm" "link"
     Then I should see "The visibility of info banner 1 has been reset"
-    # We reactivate debugging again.
-    And the following config values are set as admin:
-      | debug          | 32767 |
-      | debugdisplay   | 1     |
+    And Behat debugging is enabled
     And I log out
     When I log in as "teacher1"
     And I follow "Dashboard"

@@ -87,10 +87,12 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | config                   | value | plugin            |
       | courseheaderimageenabled | yes   | theme_boost_union |
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Course" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg2.jpg" file to "Fallback course header image" filemanager
     And I press "Save changes"
+    And Behat debugging is enabled
     And I am on site homepage
     And I log out
     And I am on site homepage
@@ -111,10 +113,12 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | config                   | value | plugin            |
       | courseheaderimageenabled | yes   | theme_boost_union |
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Course" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg2.jpg" file to "Fallback course header image" filemanager
     And I press "Save changes"
+    And Behat debugging is enabled
     And I am on site homepage
     And I log out
     And I am on site homepage

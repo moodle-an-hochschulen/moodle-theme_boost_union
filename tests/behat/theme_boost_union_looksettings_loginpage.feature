@@ -14,10 +14,12 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
   @javascript @_file_upload
   Scenario: Setting: Login page background images - Upload one custom login background image
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I press "Save changes"
+    And Behat debugging is enabled
     And I log out
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     Then the "class" attribute of "body" "css_element" should contain "path-login"
@@ -27,12 +29,14 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
   @javascript @_file_upload
   Scenario: Setting: Login page background images - Upload multiple custom login background image (and have one picked randomly)
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I upload "theme/boost_union/tests/fixtures/login_bg2.jpg" file to "Login page background images" filemanager
     And I upload "theme/boost_union/tests/fixtures/login_bg3.jpg" file to "Login page background images" filemanager
     And I press "Save changes"
+    And Behat debugging is enabled
     And I log out
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     Then the "class" attribute of "body" "css_element" should contain "path-login"
@@ -48,10 +52,12 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | config                       | value      | plugin            |
       | loginbackgroundimageposition | <position> | theme_boost_union |
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I press "Save changes"
+    And Behat debugging is enabled
     And I log out
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     Then DOM element "body.pagelayout-login" should have computed style "background-position" "<cssvalue>"
@@ -65,11 +71,13 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
   @javascript @_file_upload
   Scenario: Setting: Display text for login background images - Add a text to the login background image
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I set the field "Display text for login background images" to "login_bg1.jpg|Copyright by SplitShire on pexels.com|dark"
     And I press "Save changes"
+    And Behat debugging is enabled
     And I log out
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     Then I should see "Copyright by SplitShire on pexels.com" in the "#loginbackgroundimagetext" "css_element"
@@ -77,11 +85,13 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
   @javascript @_file_upload
   Scenario Outline: Setting: Display text for login background images - Match the text to the filename
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I set the field "Display text for login background images" to "<filename>.jpg|Copyright by SplitShire on pexels.com|dark"
     And I press "Save changes"
+    And Behat debugging is enabled
     And I log out
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     Then "#loginbackgroundimagetext" "css_element" <shouldexistornot>
@@ -94,11 +104,13 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
   @javascript @_file_upload
   Scenario Outline: Setting: Display text for login background images - Set the color for the text of the login background image
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
     And I set the field "Display text for login background images" to "login_bg1.jpg|Copyright by SplitShire on pexels.com|<color>"
     And I press "Save changes"
+    And Behat debugging is enabled
     And I log out
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     Then the "class" attribute of "#loginbackgroundimagetext span" "css_element" should contain "text-<csscolor>"
