@@ -20,6 +20,7 @@ Feature: Configuring the theme_boost_union plugin for the "H5P" tab on the "Look
   @javascript
   Scenario: Setting: Raw CSS for H5P - Add custom SCSS to a mod_h5p content type
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "H5P" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We add a small CSS snippet to the page which makes the H5P content red.
@@ -31,6 +32,7 @@ Feature: Configuring the theme_boost_union plugin for the "H5P" tab on the "Look
     }
     """
     And I press "Save changes"
+    And Behat debugging is enabled
     And I am on "Course 1" course homepage with editing mode on
     Given the following "activity" exists:
       | activity        | h5pactivity                   |

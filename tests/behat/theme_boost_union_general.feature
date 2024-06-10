@@ -22,10 +22,12 @@ Feature: Configuring the theme_boost_union plugin as admin
   Scenario: Switch to the active Boost Union admin sub-tab after saving a setting and the following page reload
     When I log in as "admin"
     And I follow "Site administration"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Course content max width" to "600px"
     And I click on "Save changes" "button"
+    And Behat debugging is enabled
     Then I should see "Course content max width" in the ".tab-content" "css_element"
     And "#theme_boost_union_look_page.tab-pane.active" "css_element" should exist
     And "#theme_boost_union_look_page.tab-pane:not(.active)" "css_element" should not exist

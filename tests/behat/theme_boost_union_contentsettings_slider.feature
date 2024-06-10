@@ -15,21 +15,13 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | slide1caption | Slide 1                            | theme_boost_union |
       | slide1content | This is a test content for slide 1 | theme_boost_union |
     When I log in as "admin"
-    # We deactivate debugging for a while as the Behat step would otherwise fail due to the
-    # stupid 'Too much data passed as arguments to js_call_amd' debugging message which can't be avoided
-    # on this settings page. This debugging message can't be avoided as we simple use too much hide_if() there.
-    And the following config values are set as admin:
-      | debug        | 0 |
-      | debugdisplay | 0 |
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Slide 1 background image" filemanager
     And I press "Save changes"
     And I am on site homepage
-    # We reactivate debugging again.
-    And the following config values are set as admin:
-      | debug        | 32767 |
-      | debugdisplay | 1     |
+    And Behat debugging is enabled
     And I log out
 
   Scenario: Setting: Slider - Display the slider on the frontpage only and nowhere else
@@ -267,12 +259,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | slide4linksource | 2                                  | theme_boost_union |
       | slide4linktarget | new                                | theme_boost_union |
     And I log in as "admin"
-    # We deactivate debugging for a while as the Behat step would otherwise fail due to the
-    # stupid 'Too much data passed as arguments to js_call_amd' debugging message which can't be avoided
-    # on this settings page. This debugging message can't be avoided as we simple use too much hide_if() there.
-    And the following config values are set as admin:
-      | debug        | 0 |
-      | debugdisplay | 0 |
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Slide 2 background image" filemanager
@@ -287,10 +274,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Slide 4 background image" filemanager
     And I press "Save changes"
     And I am on site homepage
-    # We reactivate debugging again.
-    And the following config values are set as admin:
-      | debug        | 32767 |
-      | debugdisplay | 1     |
+    And Behat debugging is enabled
     And I log out
     When I log in as "teacher1"
     And I am on site homepage
@@ -336,12 +320,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | slide6content | This is a test content for tile 6 | theme_boost_union |
       | slide6order   | <orders6>                         | theme_boost_union |
     And I log in as "admin"
-    # We deactivate debugging for a while as the Behat step would otherwise fail due to the
-    # stupid 'Too much data passed as arguments to js_call_amd' debugging message which can't be avoided
-    # on this settings page. This debugging message can't be avoided as we simple use too much hide_if() there.
-    And the following config values are set as admin:
-      | debug        | 0 |
-      | debugdisplay | 0 |
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Slide 2 background image" filemanager
@@ -356,10 +335,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Slide 6 background image" filemanager
     And I press "Save changes"
     And I am on site homepage
-    # We reactivate debugging again.
-    And the following config values are set as admin:
-      | debug        | 32767 |
-      | debugdisplay | 1     |
+    And Behat debugging is enabled
     And I log out
     When I log in as "teacher1"
     And I am on site homepage
@@ -381,12 +357,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | config        | value | plugin            |
       | slide1enabled | yes   | theme_boost_union |
     When I log in as "admin"
-    # We deactivate debugging for a while as the Behat step would otherwise fail due to the
-    # stupid 'Too much data passed as arguments to js_call_amd' debugging message which can't be avoided
-    # on this settings page. This debugging message can't be avoided as we simple use too much hide_if() there.
-    And the following config values are set as admin:
-      | debug        | 0 |
-      | debugdisplay | 0 |
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then "#admin-slide1backgroundimage" "css_element" should be visible
