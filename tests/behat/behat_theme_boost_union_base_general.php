@@ -283,4 +283,28 @@ class behat_theme_boost_union_base_general extends behat_base {
     public function purge_theme_cache_and_reload_theme() {
         theme_reset_all_caches();
     }
+
+    /**
+     * Disables debugging in Behat.
+     *
+     * We sometimes need to deactivate debugging for a while as Behat steps would otherwise fail due to the
+     * stupid 'Too much data passed as arguments to js_call_amd' debugging message which can't be avoided
+     * on Boost Union settings pages as we simply use too much hide_if() there.
+     *
+     * @Given /^Behat debugging is disabled$/
+     */
+    public function disable_behat_debugging() {
+        set_config('debug', 0);
+        set_config('debugdisplay', 0);
+    }
+
+    /**
+     * Re-enables debugging in Behat.
+     *
+     * @Given /^Behat debugging is enabled$/
+     */
+    public function enable_behat_debugging() {
+        set_config('debug', 32767);
+        set_config('debugdisplay', 1);
+    }
 }

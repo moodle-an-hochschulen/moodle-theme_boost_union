@@ -30,10 +30,12 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   @javascript @_file_upload
   Scenario: Flavours: Compact logo - Upload a compact logo (with a global compact logo being overridden)
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
     And I click on "Save changes" "button"
+    And Behat debugging is enabled
     And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
@@ -48,10 +50,12 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   @javascript @_file_upload
   Scenario: Flavours: Compact logo - Do not upload a compact logo (with a global compact logo being served properly)
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
     And I click on "Save changes" "button"
+    And Behat debugging is enabled
     And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
@@ -79,10 +83,12 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   @javascript @_file_upload
   Scenario: Flavours: Favicon - Upload a favicon (with a global favicon being overridden)
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/favicon.ico" file to "Favicon" filemanager
     And I press "Save changes"
+    And Behat debugging is enabled
     And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
@@ -97,10 +103,12 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   @javascript @_file_upload
   Scenario: Flavours: Favicon - Do not upload a favicon (with a global favicon being served properly)
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/favicon.ico" file to "Favicon" filemanager
     And I click on "Save changes" "button"
+    And Behat debugging is enabled
     And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"

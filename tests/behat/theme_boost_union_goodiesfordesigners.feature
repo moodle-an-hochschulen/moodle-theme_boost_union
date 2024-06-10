@@ -27,6 +27,7 @@ Feature: Using the goodies for designers in the theme_boost_union plugin
   @javascript
   Scenario: Feature: Themerev as SCSS variable
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We add a small CSS snippet to the page which adds the themrev to the Dashboard header.
@@ -36,6 +37,7 @@ Feature: Using the goodies for designers in the theme_boost_union plugin
     #page-my-index h1:after { content: 'Themerev: #{$themerev}'; }
     """
     And I press "Save changes"
+    And Behat debugging is enabled
     And I follow "Dashboard"
     Then I should see "Dashboard" in the "#page-my-index h1" "css_element"
     And element "#page-my-index h1" pseudo-class "after" should contain "content": "Themerev"
