@@ -9,7 +9,7 @@ Theme Boost Union is an enhanced child theme of Boost which is intended, on the 
 Requirements
 ------------
 
-This theme requires Moodle 4.3+
+This theme requires Moodle 4.4+
 
 
 Motivation for this theme
