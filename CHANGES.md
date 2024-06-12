@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased 
+
+* 2024-06-12 - Cleanup: Fix CSS warnings in external SCSS tests, resolves #674.
+
 ### v4.3-r14 
 
 * 2024-06-10 - Cleanup: Introduce a dedicated Behat step to deactivate and activate debugging, resolves #670.
