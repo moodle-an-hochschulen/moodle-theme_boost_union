@@ -24,6 +24,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// @codingStandardsIgnoreStart
+// Let codechecker ignore this file as it is a language file with a lot of strings
+// which according to coding style should be ordered alphabetically in its integrity
+// but we prefer it sorted by area.
+
 // General.
 $string['pluginname'] = 'Boost Union';
 $string['choosereadme'] = '<p>Theme Boost Union is an enhanced child theme of Boost which is intended, on the one hand, to make Boost simply more configurable and, on the other hand, to provide helpful additional features for the daily Moodle operation of admins, teachers and students.</p><p>Boost Union is maintained by<br />Moodle an Hochschulen e.V.,</p><p>in cooperation with<br />lern.link GmbH</p><p>together with<br />bdecent GmbH</p>';
@@ -1289,3 +1294,5 @@ $string['upgradenotice_2022080922_logo'] = 'logo';
 $string['upgradenotice_2022080922_logocompact'] = 'compact logo';
 $string['upgradenotice_2022080922_copied'] = 'The existing <strong>{$a}</strong> from the Moodle core settings has been copied to the Boost Union {$a} setting during this upgrade. Please double-check the result.';
 $string['upgradenotice_2022080922_notcopied'] = 'The <strong>{$a}</strong> setting within Boost Union is empty now. If you want to use a {$a} within Boost Union from now on, just upload it into the Boost Union {$a} setting later.';
+
+// @codingStandardsIgnoreEnd

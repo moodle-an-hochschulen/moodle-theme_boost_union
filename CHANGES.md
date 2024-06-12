@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-06-01 - Prepare compatibility for Moodle 4.4.
+
 ### v4.3-r14 
 
 * 2024-06-10 - Cleanup: Introduce a dedicated Behat step to deactivate and activate debugging, resolves #670.

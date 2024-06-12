@@ -32,7 +32,7 @@ define('NO_UPGRADE_CHECK', true);
 // Require config.
 // @codingStandardsIgnoreStart
 // Let codechecker ignore the next line because otherwise it would complain about a missing login check
-// after requiring config.php which is really not needed.require('../config.php');
+// after requiring config.php which is really not needed.
 require(__DIR__.'/../../../config.php');
 // @codingStandardsIgnoreEnd
 
