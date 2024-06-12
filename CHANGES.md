@@ -4,7 +4,11 @@ moodle-theme_boost_union
 Changes
 -------
 
-### v4.2-r17 
+### Unreleased 
+
+* 2024-06-12 - Cleanup: Fix CSS warnings in external SCSS tests, resolves #674.
+
+### v4.2-r17
 
 * 2024-06-10 - Cleanup: Introduce a dedicated Behat step to deactivate and activate debugging, resolves #670.
 * 2024-05-05 - Cleanup: Fix 'Implicitly marking a parameter as nullable is deprecated since PHP 8.4' codechecker warning, resolves #667.
