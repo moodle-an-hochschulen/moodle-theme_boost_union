@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// @codingStandardsIgnoreFile
 // Let codechecker ignore this file. We prefer being able to diff this file easily than to make codechecker happy.
+// phpcs:disable NormalizedArrays.Arrays.CommaAfterLast.MissingMultiLine
 
 // Require own locallib.php.
 require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
