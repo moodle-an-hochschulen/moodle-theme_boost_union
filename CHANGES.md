@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased 
 
+* 2024-06-13 - Cleanup: Change @codingStandardsIgnore tags to phpcs:disable, resolves #676.
 * 2024-06-12 - Cleanup: Fix CSS warnings in external SCSS tests, resolves #674.
 
 ### v4.2-r17
