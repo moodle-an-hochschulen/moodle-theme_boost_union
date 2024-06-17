@@ -14,10 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Theme Boost Union - Hook: Allows plugins to add any elements to the page <head> html tag.
+ *
+ * @package    theme_boost_union
+ * @copyright  2024 Alexander Bias <bias@alexanderbias.de>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 namespace theme_boost_union\local\hook\output;
 
 /**
- * Theme Boost Union - Hook: Allows plugins to add any elements to the page <head> html tag.
+ * Hook to allow plugins to add any elements to the page <head> html tag.
  *
  * @package    theme_boost_union
  * @copyright  2024 Alexander Bias <bias@alexanderbias.de>
