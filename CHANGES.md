@@ -5,7 +5,9 @@ Changes
 -------
 
 ### Unreleased
- 
+
+* 2024-06-19 - Upgrade: Adopt changes in loginform.mustache from Boost core.
+* 2024-06-19 - Upgrade: Adopt changes in navbar.mustache from Boost core.
 * 2024-06-01 - Prepare compatibility for Moodle 4.4.
 
 ### v4.3-r15 
