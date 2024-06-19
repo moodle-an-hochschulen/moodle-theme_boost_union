@@ -73,90 +73,91 @@
 </nav>
 {{/menubar}}
 <nav class="navbar fixed-top {{navbarcolorclasses}} navbar-expand {{#bottombar.drawer}} smartmenu-bottom-navigation {{/bottombar.drawer}}" aria-label="{{#str}}sitemenubar, admin{{/str}}">
+    <div class="container-fluid">
+        {{^bottombar.drawer}}
+        <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
+            <span class="navbar-toggler-icon"></span>
+            <span class="sr-only">{{#str}}sidepanel, core{{/str}}</span>
+        </button>
+        {{/bottombar.drawer}}
 
-    {{^bottombar.drawer}}
-    <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
-        <span class="navbar-toggler-icon"></span>
-        <span class="sr-only">{{#str}}sidepanel, core{{/str}}</span>
-    </button>
-    {{/bottombar.drawer}}
+        <a href="{{#alternativelogolinkurl}}{{{alternativelogolinkurl}}}{{/alternativelogolinkurl}}{{^alternativelogolinkurl}}{{{ config.homeurl }}}{{/alternativelogolinkurl}}" class="navbar-brand align-items-center m-0 mr-4 p-0 aabtn {{#bottombar.drawer}} d-flex {{/bottombar.drawer}} {{^bottombar.drawer}} d-none d-md-flex {{/bottombar.drawer}} ">
 
-    <a href="{{#alternativelogolinkurl}}{{{alternativelogolinkurl}}}{{/alternativelogolinkurl}}{{^alternativelogolinkurl}}{{{ config.homeurl }}}{{/alternativelogolinkurl}}" class="navbar-brand align-items-center m-0 mr-4 p-0 aabtn {{#bottombar.drawer}} d-flex {{/bottombar.drawer}} {{^bottombar.drawer}} d-none d-md-flex {{/bottombar.drawer}} ">
+            {{# output.should_display_navbar_logo }}
+                <img src="{{output.get_compact_logo_url}}" class="logo mr-1" alt="{{sitename}}">
+            {{/ output.should_display_navbar_logo }}
+            {{^ output.should_display_navbar_logo }}
+                {{{ sitename }}}
+            {{/ output.should_display_navbar_logo }}
+        </a>
+        {{#primarymoremenu}}
+            <div class="primary-navigation">
+                {{> core/moremenu}}
+            </div>
+        {{/primarymoremenu}}
 
-        {{# output.should_display_navbar_logo }}
-            <img src="{{output.get_compact_logo_url}}" class="logo mr-1" alt="{{sitename}}">
-        {{/ output.should_display_navbar_logo }}
-        {{^ output.should_display_navbar_logo }}
-            {{{ sitename }}}
-        {{/ output.should_display_navbar_logo }}
-    </a>
-    {{#primarymoremenu}}
-        <div class="primary-navigation">
-            {{> core/moremenu}}
-        </div>
-    {{/primarymoremenu}}
+        <ul class="navbar-nav d-none d-md-flex my-1 px-1">
+            <!-- page_heading_menu -->
+            {{{ output.page_heading_menu }}}
+        </ul>
 
-    <ul class="navbar-nav d-none d-md-flex my-1 px-1">
-        <!-- page_heading_menu -->
-        {{{ output.page_heading_menu }}}
-    </ul>
-
-    <div id="usernavigation" class="navbar-nav ml-auto">
-        {{# output.search_box }}
-            {{{ output.search_box }}}
-            <div class="divider border-left h-75 align-self-center mx-1"></div>
-        {{/output.search_box}}
-        {{#langmenu}}
-            {{> theme_boost/language_menu }}
-            <div class="divider border-left h-75 align-self-center mx-1"></div>
-        {{/langmenu}}
-        {{{ output.navbar_plugin_output }}}
-        <div class="d-flex align-items-stretch usermenu-container" data-region="usermenu">
-            {{#usermenu}}
-                {{> core/user_menu }}
-            {{/usermenu}}
-        </div>
-        {{{ output.edit_switch }}}
-
-        {{^userisediting}}
-            {{#regions.offcanvas.hasblocks}}
+        <div id="usernavigation" class="navbar-nav ml-auto">
+            {{# output.search_box }}
+                {{{ output.search_box }}}
                 <div class="divider border-left h-75 align-self-center mx-1"></div>
-                <div class="drawer-offcanvas-toggle d-print-none">
-                    <button
-                        class="btn"
-                        id="theme_boost_union-offcanvas-btn"
-                        data-toggler="drawers"
-                        title="{{#str}}openoffcanvas, theme_boost_union{{/str}}"
-                        data-action="toggle"
-                        data-target="theme_boost_union-drawers-offcanvas"
-                        data-toggle="tooltip"
-                        data-placement="bottom"
-                    >
-                        <span class="sr-only">{{#str}}openoffcanvas, theme_boost_union{{/str}}</span>
-                        <i class="fa fa-grip"></i>
-                    </button>
-                </div>
-            {{/regions.offcanvas.hasblocks}}
-        {{/userisediting}}
-        {{#userisediting}}
-            {{#regions.offcanvas.hasblocks}}
+            {{/output.search_box}}
+            {{#langmenu}}
+                {{> theme_boost/language_menu }}
                 <div class="divider border-left h-75 align-self-center mx-1"></div>
-                <div class="drawer-offcanvas-toggle d-print-none">
-                    <button
-                        class="btn"
-                        id="theme_boost_union-offcanvas-btn"
-                        data-toggle="collapse"
-                        title="{{#str}}openoffcanvas, theme_boost_union{{/str}}"
-                        data-target="#theme-block-region-offcanvas-editing"
-                        aria-expanded="false"
-                        aria-controls="theme-block-region-offcanvas-editing"
-                    >
-                        <span class="sr-only">{{#str}}openoffcanvas, theme_boost_union{{/str}}</span>
-                        <i class="fa fa-grip"></i>
-                    </button>
-                </div>
-            {{/regions.offcanvas.hasblocks}}
-        {{/userisediting}}
+            {{/langmenu}}
+            {{{ output.navbar_plugin_output }}}
+            <div class="d-flex align-items-stretch usermenu-container" data-region="usermenu">
+                {{#usermenu}}
+                    {{> core/user_menu }}
+                {{/usermenu}}
+            </div>
+            {{{ output.edit_switch }}}
+
+            {{^userisediting}}
+                {{#regions.offcanvas.hasblocks}}
+                    <div class="divider border-left h-75 align-self-center mx-1"></div>
+                    <div class="drawer-offcanvas-toggle d-print-none">
+                        <button
+                            class="btn"
+                            id="theme_boost_union-offcanvas-btn"
+                            data-toggler="drawers"
+                            title="{{#str}}openoffcanvas, theme_boost_union{{/str}}"
+                            data-action="toggle"
+                            data-target="theme_boost_union-drawers-offcanvas"
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                        >
+                            <span class="sr-only">{{#str}}openoffcanvas, theme_boost_union{{/str}}</span>
+                            <i class="fa fa-grip"></i>
+                        </button>
+                    </div>
+                {{/regions.offcanvas.hasblocks}}
+            {{/userisediting}}
+            {{#userisediting}}
+                {{#regions.offcanvas.hasblocks}}
+                    <div class="divider border-left h-75 align-self-center mx-1"></div>
+                    <div class="drawer-offcanvas-toggle d-print-none">
+                        <button
+                            class="btn"
+                            id="theme_boost_union-offcanvas-btn"
+                            data-toggle="collapse"
+                            title="{{#str}}openoffcanvas, theme_boost_union{{/str}}"
+                            data-target="#theme-block-region-offcanvas-editing"
+                            aria-expanded="false"
+                            aria-controls="theme-block-region-offcanvas-editing"
+                        >
+                            <span class="sr-only">{{#str}}openoffcanvas, theme_boost_union{{/str}}</span>
+                            <i class="fa fa-grip"></i>
+                        </button>
+                    </div>
+                {{/regions.offcanvas.hasblocks}}
+            {{/userisediting}}
+        </div>
     </div>
 </nav>
 
