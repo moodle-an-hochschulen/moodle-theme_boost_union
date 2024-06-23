@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased 
 
+* 2024-06-23 - Upstream change: Adopt change in view-chards.mustache from MDL-70829.
 * 2024-06-18 - Release: Let codechecker ignore some sniffs in the language pack.
 * 2024-06-13 - Cleanup: Change @codingStandardsIgnore tags to phpcs:disable, resolves #676.
 * 2024-06-12 - Cleanup: Fix CSS warnings in external SCSS tests, resolves #674.
