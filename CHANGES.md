@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-06-19 - Upgrade: Adopt changes in event-list-item.mustache from block_timeline in core.
 * 2024-06-19 - Upgrade: Adopt changes in view-cards.mustache from block_recentlyaccesseditems in core.
 * 2024-06-19 - Upgrade: Adopt changes in loginform.mustache from Boost core.
 * 2024-06-19 - Upgrade: Adopt changes in navbar.mustache from Boost core.
