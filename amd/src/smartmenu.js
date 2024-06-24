@@ -21,7 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(["jquery", "core/moremenu", "theme_boost_union/submenu"], function ($, MoreMenu, SubMenu) {
+define(["jquery", "core/moremenu", "theme_boost_union/submenu"], function($, MoreMenu, SubMenu) {
 
     const Selectors = {
         dropDownMenu: "dropdownmoremenu",
