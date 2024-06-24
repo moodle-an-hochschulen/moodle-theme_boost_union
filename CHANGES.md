@@ -4,14 +4,18 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased 
+### Unreleased
 
 * 2024-06-23 - Upstream change: Adopt change in view-chards.mustache from MDL-70829.
 * 2024-06-18 - Release: Let codechecker ignore some sniffs in the language pack.
 * 2024-06-13 - Cleanup: Change @codingStandardsIgnore tags to phpcs:disable, resolves #676.
 * 2024-06-12 - Cleanup: Fix CSS warnings in external SCSS tests, resolves #674.
+* 2024-04-08 - Bugfix: Smart menu 3rd level submenus were being cut-off in responsive / mobile view, resolves #356.
+               Please note: This is a comparably large change which effectively replaces the flyout menus in the main navigation area and the menu bar area with the 'sliding door' submenu behaviour which has been used in the user menu only up to now.
+* 2024-04-08 - Bugfix: Smart menu 3rd level submenus had a font color which differed from the 2nd level and might have been even invisible, resolves #459.
+* 2024-04-08 - Bugfix: Long smart menus were not scrollable vertically, resolves #406.
 
-### v4.3-r14 
+### v4.3-r14
 
 * 2024-06-10 - Cleanup: Introduce a dedicated Behat step to deactivate and activate debugging, resolves #670.
 * 2024-05-05 - Cleanup: Fix 'Implicitly marking a parameter as nullable is deprecated since PHP 8.4' codechecker warning, resolves #667.
