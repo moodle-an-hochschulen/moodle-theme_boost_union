@@ -1,3 +1,114 @@
+.pagelayout-frontpage .dashboard-card-deck .dashboard-card,
+.pagelayout-coursecategory .dashboard-card-deck .dashboard-card {
+    width: 20%;
+}
+.pagelayout-frontpage .dashboard-card,
+.pagelayout-coursecategory .dashboard-card {
+    position: relative;
+    margin: 1rem;
+}
+.pagelayout-frontpage .dashboard-card.dimmed .card-img::after,
+.pagelayout-coursecategory .dashboard-card.dimmed .card-img::after {
+    content: "";
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+.pagelayout-frontpage .dashboard-card .dashboard-card-footer,
+.pagelayout-coursecategory .dashboard-card .dashboard-card-footer {
+    border-radius: 0.5rem;
+}
+.pagelayout-frontpage .dashboard-card .card-body,
+.pagelayout-coursecategory .dashboard-card .card-body {
+    padding: 0.8rem;
+}
+.pagelayout-frontpage .dashboard-card .customfields .customfield,
+.pagelayout-coursecategory .dashboard-card .customfields .customfield {
+    font-size: 80%;
+    margin-bottom: 0.25rem;
+}
+.pagelayout-frontpage .dashboard-card .customfields .customfield:last-of-type,
+.pagelayout-coursecategory .dashboard-card .customfields .customfield:last-of-type {
+    margin-bottom: 0;
+}
+.pagelayout-frontpage .dashboard-card .customfields,
+.pagelayout-coursecategory .dashboard-card .customfields {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+.pagelayout-frontpage .dashboard-card .customfields .customfield .customfieldname,
+.pagelayout-frontpage .dashboard-card .customfields .customfield .customfieldseparator,
+.pagelayout-coursecategory .dashboard-card .customfields .customfield .customfieldname,
+.pagelayout-coursecategory .dashboard-card .customfields .customfield .customfieldseparator {
+    font-weight: 500;
+}
+.pagelayout-frontpage .dashboard-card .enrolmenticons,
+.pagelayout-coursecategory .dashboard-card .enrolmenticons {
+    position: absolute;
+    bottom: 8px;
+    right: 0;
+}
+.pagelayout-frontpage .dashboard-card .enrolmenticons .enrolmenticon,
+.pagelayout-coursecategory .dashboard-card .enrolmenticons .enrolmenticon {
+    padding: 4px 8px;
+    background-color: #fff;
+    color: #0f47ad;
+    border-radius: 0.5rem;
+    margin: 0 4px;
+}
+.pagelayout-frontpage .dashboard-card .enrolmenticons .enrolmenticon .icon,
+.pagelayout-coursecategory .dashboard-card .enrolmenticons .enrolmenticon .icon {
+    margin-right: 0;
+}
+.pagelayout-frontpage .dashboard-card .course-contacts .contact .info,
+.pagelayout-coursecategory .dashboard-card .course-contacts .contact .info {
+    margin-left: 1em;
+}
+.pagelayout-frontpage .dashboard-card .info .name,
+.pagelayout-coursecategory .dashboard-card .info .name {
+    margin-bottom: 0;
+}
+.pagelayout-frontpage .dashboard-card .course-contacts .contact,
+.pagelayout-coursecategory .dashboard-card .course-contacts .contact {
+    display: flex;
+}
+.pagelayout-frontpage .dashboard-card .course-contacts .contact:not(:first-of-type),
+.pagelayout-coursecategory .dashboard-card .course-contacts .contact:not(:first-of-type) {
+    margin-top: 0.4rem;
+}
+.pagelayout-frontpage .dashboard-card .course-contacts .contact img,
+.pagelayout-coursecategory .dashboard-card .course-contacts .contact img {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #dee2e6;
+    margin-left: 1em;
+}
+.pagelayout-frontpage .dashboard-card .course-contacts .contact p.role,
+.pagelayout-coursecategory .dashboard-card .course-contacts .contact p.role {
+    color: #1d2125;
+    font-size: 80%;
+}
+.pagelayout-frontpage .dashboard-card .dashboard-card-footer,
+.pagelayout-coursecategory .dashboard-card .dashboard-card-footer {
+    padding: 0 0.8rem 0.8rem 0.8rem;
+}
+.pagelayout-frontpage .course_category_tree .category .categoryname.aabtn,
+.pagelayout-coursecategory .course_category_tree .category .categoryname.aabtn {
+    font-size: 1.5em;
+}
+
+.pagelayout-frontpage .dashboard-card .course-summary,
+.pagelayout-coursecategory .dashboard-card .course-summary {
+    max-height: 10em;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 /*=======================================
  * Settings: Look -> Site branding
  ======================================*/
@@ -2585,7 +2696,6 @@ body.dir-rtl {
     }
 }
 
-
 /*=======================================
  * Supporting third-party plugins
  ======================================*/
@@ -2676,3 +2786,4 @@ body.dir-rtl {
         }
     }
 }
+

@@ -849,6 +849,42 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Enable cards on course index.
+        $name = 'theme_boost_union/enablecards';
+        $title = get_string('enablecards', 'theme_boost_union');
+        $description = get_string('enablecardsdesc', 'theme_boost_union');
+        $default = 0;
+        $choices = [0 => get_string('no'), 1 => get_string('yes')];
+        $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+        $tab->add($setting);
+
+        // Enable summary on course cards.
+        $name = 'theme_boost_union/enablecardssummary';
+        $title = get_string('enablecardssummary', 'theme_boost_union');
+        $description = get_string('enablecardssummarydesc', 'theme_boost_union');
+        $default = 0;
+        $choices = [0 => get_string('no'), 1 => get_string('yes')];
+        $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+        $tab->add($setting);
+
+        // Enable custom fields on course cards.
+        $name = 'theme_boost_union/enablecardscfields';
+        $title = get_string('enablecardscfields', 'theme_boost_union');
+        $description = get_string('enablecardscfieldsdesc', 'theme_boost_union');
+        $default = 0;
+        $choices = [0 => get_string('no'), 1 => get_string('yes')];
+        $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+        $tab->add($setting);
+
+        // Enable teachers on course cards.
+        $name = 'theme_boost_union/enableteacherspic';
+        $title = get_string('enableteacherspic', 'theme_boost_union');
+        $description = get_string('enableteacherspicdesc', 'theme_boost_union');
+        $default = 0;
+        $choices = [0 => get_string('no'), 1 => get_string('yes')];
+        $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+        $tab->add($setting);
+
         // Add tab to settings page.
         $page->add($tab);
 
