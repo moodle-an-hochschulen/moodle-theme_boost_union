@@ -28,6 +28,9 @@ use context_system;
 use core_userfeedback;
 use html_writer;
 use moodle_url;
+use core\di;
+use core\hook\manager as hook_manager;
+use core\hook\output\before_standard_footer_html_generation;
 
 /**
  * Extending the core_renderer interface.
@@ -560,19 +563,32 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return $output;
         }
 
-        $output = '';
         if (during_initial_install()) {
             // Debugging info can not work before install is finished,
             // in any case we do not want any links during installation!
-            return $output;
+            return '';
         }
 
-        // Give plugins an opportunity to add any footer elements.
-        // The callback must always return a string containing valid html footer content.
-        $pluginswithfunction = get_plugins_with_function('standard_footer_html', 'lib.php');
+        // Ensure that the callback exists prior to cache purge.
+        // This is a critical page path.
+        // TODO MDL-81134 Remove after LTS+1.
+        require_once($CFG->libdir.'/classes/hook/output/before_standard_footer_html_generation.php');
+
+        // Process the hooks as defined by Moodle core.
+        // If Boost Union is configured to suppress a particular footer element, the hook has been disabled by
+        // theme_boost_union_manipulate_books().
+        $hook = new before_standard_footer_html_generation($this);
+        di::get(hook_manager::class)->dispatch($hook);
+
+        // Give plugins an opportunity to add any footer elements (for legacy plugins).
+        // Originally, this is realized with $hook->process_legacy_callbacks();
+        // However, we duplicate the code here and use the logic from Boost Union which has been used there up to v4.3.
+        // Get the array of plugins with the standard_footer_html() function which can be suppressed by Boost Union.
+        $pluginswithfunction = get_plugins_with_function(function: 'standard_footer_html', migratedtohook: true);
+        // Iterate over all plugins.
         foreach ($pluginswithfunction as $plugintype => $plugins) {
             foreach ($plugins as $pluginname => $function) {
-                // If the given plugin's output is supressed by Boost Union's settings.
+                // If the given plugin's output is suppressed by Boost Union's settings.
                 $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_'.$plugintype.'_'.$pluginname);
                 if (isset($suppresssetting) && $suppresssetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                     // Skip the plugin.
@@ -581,21 +597,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     // Otherwise.
                 } else {
                     // Add the output.
-                    $output .= $function();
+                    $hook->add_html($function());
                 }
             }
         }
 
-        // If the 'Give feedback about this software' link is not suppressed by Boost Union's settings.
-        $suppressfeedbacksetting = get_config('theme_boost_union', 'footersuppressfeedback');
-        if (!isset($suppressfeedbacksetting) || $suppressfeedbacksetting == THEME_BOOST_UNION_SETTING_SELECT_NO) {
-            if (core_userfeedback::can_give_feedback()) {
-                $output .= html_writer::div(
-                    $this->render_from_template('core/userfeedback_footer_link',
-                            ['url' => core_userfeedback::make_link()->out(false)])
-                );
-            }
-        }
+        // Gather the output.
+        $output = $hook->get_output();
 
         // If the theme switcher links are not suppressed by Boost Union's settings.
         $suppressthemeswitchsetting = get_config('theme_boost_union', 'footersuppressthemeswitch');

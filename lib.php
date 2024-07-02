@@ -623,3 +623,22 @@ function theme_boost_union_render_navbar_output() {
     // Return.
     return $content;
 }
+
+/**
+ * Triggered as soon as practical on every moodle bootstrap after config has been loaded.
+ *
+ * We use this callback function to manipulate / set settings which would normally be manipulated / set through
+ * /config.php, but we do not want to urge the admin to add stuff to /config.php when installing Boost Union.
+ */
+function theme_boost_union_after_config() {
+    global $CFG;
+
+    // Require own local library.
+    require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+
+    // If this is not called by a CLI script or an AJAX script.
+    if (!CLI_SCRIPT && !AJAX_SCRIPT) {
+        // Manipulate Moodle core hooks.
+        theme_boost_union_manipulate_hooks();
+    }
+}

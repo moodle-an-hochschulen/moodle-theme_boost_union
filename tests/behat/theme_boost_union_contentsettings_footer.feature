@@ -83,6 +83,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config             | value   | plugin            |
       | footersuppresschat | <value> | theme_boost_union |
+    And all caches are purged
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I navigate to "Communication" in current page administration
@@ -107,6 +108,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config             | value   | plugin            |
       | footersuppresshelp | <value> | theme_boost_union |
+    And all caches are purged
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
@@ -124,6 +126,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config                 | value   | plugin            |
       | footersuppressservices | <value> | theme_boost_union |
+    And all caches are purged
     And I log in as "admin"
     When I am on site homepage
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
@@ -142,6 +145,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config                | value   | plugin            |
       | footersuppresscontact | <value> | theme_boost_union |
+    And all caches are purged
     And I log in as "admin"
     When I am on site homepage
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
@@ -157,6 +161,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     Given the following config values are set as admin:
       | config                  | value   | plugin            |
       | footersuppresslogininfo | <value> | theme_boost_union |
+    And all caches are purged
     And I log in as "admin"
     When I am on site homepage
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
@@ -173,6 +178,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     Given the following config values are set as admin:
       | config                 | value   | plugin            |
       | footersuppressusertour | <value> | theme_boost_union |
+    And all caches are purged
     And I log in as "admin"
     And I add a new user tour with:
       | Name                | First tour |
@@ -210,23 +216,6 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | no    | should      |
       | yes   | should not  |
 
-  @javascript
-  Scenario Outline: Setting: Footer - Suppress 'Give feedback about this software' link
-    Given the following config values are set as admin:
-      | enableuserfeedback | 1 |
-    And the following config values are set as admin:
-      | config                 | value   | plugin            |
-      | footersuppressfeedback | <value> | theme_boost_union |
-    And I log in as "admin"
-    When I am on site homepage
-    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then I <shouldornot> see "Give feedback about this software" in the ".popover-body" "css_element"
-
-    Examples:
-      | value | shouldornot |
-      | no    | should      |
-      | yes   | should not  |
-
   # Unfortunately, this can't be tested with Behat on Moodle 4.3 anymore
   # Scenario Outline: Setting: Footer - Suppress theme switcher links
 
@@ -235,6 +224,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     Given the following config values are set as admin:
       | config                | value   | plugin            |
       | footersuppresspowered | <value> | theme_boost_union |
+    And all caches are purged
     And I log in as "admin"
     When I am on site homepage
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
@@ -246,13 +236,14 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | yes   | should not  |
 
   @javascript
-  Scenario Outline: Setting: Footer - Suppress footer output by plugin 'Data privacy'
+  Scenario Outline: Setting: Footer - Suppress footer output by plugin 'tool_dataprivacy'
     Given the following config values are set as admin:
       | config                   | value | plugin           |
       | showdataretentionsummary | 1     | tool_dataprivacy |
     And the following config values are set as admin:
       | config                                        | value   | plugin            |
       | footersuppressstandardfooter_tool_dataprivacy | <value> | theme_boost_union |
+    And all caches are purged
     And I log in as "admin"
     When I am on site homepage
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
@@ -264,13 +255,32 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | yes   | should not  |
 
   @javascript
-  Scenario Outline: Setting: Footer - Suppress footer output by plugin 'Moodle app tools'
+  Scenario Outline: Setting: Footer - Suppress footer output by core component 'core_userfeedback'
+    Given the following config values are set as admin:
+      | enableuserfeedback | 1 |
+    And the following config values are set as admin:
+      | config                                         | value   | plugin            |
+      | footersuppressstandardfooter_core_userfeedback | <value> | theme_boost_union |
+    And all caches are purged
+    And I log in as "admin"
+    When I am on site homepage
+    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
+    Then I <shouldornot> see "Give feedback about this software" in the ".popover-body" "css_element"
+
+    Examples:
+      | value | shouldornot |
+      | no    | should      |
+      | yes   | should not  |
+
+  @javascript
+  Scenario Outline: Setting: Footer - Suppress footer output by plugin 'tool_mobile'
     Given the following config values are set as admin:
       | config                 | value |
       | enablemobilewebservice | 1     |
     And the following config values are set as admin:
       | config                                   | value   | plugin            |
       | footersuppressstandardfooter_tool_mobile | <value> | theme_boost_union |
+    And all caches are purged
     And I log in as "admin"
     When I am on site homepage
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
@@ -282,7 +292,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | yes   | should not  |
 
   @javascript
-  Scenario Outline: Setting: Footer - Suppress footer output by plugin 'Policies'
+  Scenario Outline: Setting: Footer - Suppress footer output by plugin 'tool_policy'
     Given the following config values are set as admin:
       | sitepolicyhandler | tool_policy |
     And the following policies exist:
@@ -291,6 +301,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config                                   | value   | plugin            |
       | footersuppressstandardfooter_tool_policy | <value> | theme_boost_union |
+    And all caches are purged
     And I log in as "admin"
     When I am on site homepage
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"

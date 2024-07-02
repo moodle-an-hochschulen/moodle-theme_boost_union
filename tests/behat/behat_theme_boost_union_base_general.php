@@ -285,6 +285,15 @@ class behat_theme_boost_union_base_general extends behat_base {
     }
 
     /**
+     * Purges all caches
+     *
+     * @Given /^all caches are purged$/
+     */
+    public function purge_all_caches() {
+        purge_caches();
+    }
+
+    /**
      * Disables debugging in Behat.
      *
      * We sometimes need to deactivate debugging for a while as Behat steps would otherwise fail due to the

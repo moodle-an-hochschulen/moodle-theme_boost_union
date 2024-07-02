@@ -22,6 +22,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use core\di;
+use core\hook\manager as hook_manager;
+
 /**
  * Build the course related hints HTML code.
  * This function evaluates and composes all course related hints which may appear on a course page below the course header.
@@ -2185,4 +2188,182 @@ function theme_boost_union_get_external_scss($type) {
 
     // Now return the (hopefully valid and working) SCSS code.
     return $extscss;
+}
+
+/**
+ * Helper function which wxtracts and returns the pluginname for the given callback name.
+ * This function simply differentiates between real plugins and core components.
+ * The result is especially used in the footersuppressstandardfooter_* feature.
+ *
+ * @param stdClass $callback The callback.
+ * @return string
+ */
+function theme_boost_union_get_pluginname_from_callbackname($callback) {
+    // If the component is 'core', things are somehow different.
+    if ($callback['component'] == 'core') {
+        $hookexplode = explode('::', $callback['callback']);
+        $pluginname = array_shift($hookexplode);
+    } else {
+        $pluginname = $callback['component'];
+    }
+
+    return $pluginname;
+}
+
+/**
+ * Helper function which is called from the after_config() callback which manipulates Moodle core's hooks.
+ */
+function theme_boost_union_manipulate_hooks() {
+    global $CFG;
+
+    // Get the hookcallbacks cache.
+    $cache = \cache::make('core', 'hookcallbacks');
+
+    // Use a temporary marker in the hookcallbacks cache as mutex (to avoid that this code is run in parallel and
+    // race conditions appear).
+    // This is a quite lightweight approach compared to a lock and especially helpful as the hookcallbacks cache
+    // is a local cache store which means that this code should be run on each node.
+    $alreadystarted = $cache->get('theme_boost_union_manipulation_started');
+
+    // If the manipulation has already been started, return directly.
+    if ($alreadystarted == true) {
+        return;
+    }
+
+    // Set the mutex marker.
+    $cache->set('theme_boost_union_manipulation_started', true);
+
+    // Require the own library.
+    require_once($CFG->dirroot.'/theme/boost_union/lib.php');
+
+    // Get the array of plugins with the before_standard_footer_html_generation hook which can be suppressed by Boost Union.
+    //
+    // Ideally, this would be done with:
+    // $pluginswithhook =
+    // di::get(hook_manager::class)->get_callbacks_for_hook('core\\hook\\output\\before_standard_footer_html_generation');
+    // like it's done in settings.php, but it's not that easy.
+    // If we use get_callbacks_for_hook() to get the list of plugins, the hook manager will be instantiated,
+    // will create the list of callbacks and will be kept as static object for the rest of the script lifetime.
+    // We won't have a possibility to modify the list of callbacks with $CFG->hooks_callback_overrides after that point.
+    //
+    // Thus, we adopt the code from init_standard_callbacks(), load_callbacks() and add_component_callbacks()
+    // to here to search for existing hooks ourselves.
+    // In addition to that, it is important to know that this hook list is cached. We thus inject a marker into
+    // the hookcallbacks MUC cache to store the fact that we have manipulated the hooks and do not need to do that
+    // again until the cache is cleared. On the other hand, if we already have manipulated the hooks, we have to
+    // "convince" Moodle to use it (see later).
+
+    // If the manipulation is still pending.
+    $alreadymanipulated = $cache->get('theme_boost_union_manipulation_done');
+    if ($alreadymanipulated != true) {
+        // Get list of all files with callbacks, one per component.
+        $components = ['core' => "{$CFG->dirroot}/lib/db/hooks.php"];
+        $plugintypes = \core_component::get_plugin_types();
+        foreach ($plugintypes as $plugintype => $plugintypedir) {
+            $plugins = \core_component::get_plugin_list($plugintype);
+            foreach ($plugins as $pluginname => $plugindir) {
+                if (!$plugindir) {
+                    continue;
+                }
+                $components["{$plugintype}_{$pluginname}"] = "{$plugindir}/db/hooks.php";
+            }
+        }
+
+        // Iterate over the hooks files and collect all hooks.
+        // Doing this, we do not do the same cleanup and check operations as the hook manager does.
+        // If there would be a problem with a particular hook file, the hook manager itself would stumble upon it anyway.
+        $callbacks = [];
+        $parsecallbacks = function ($hookfile) {
+            $callbacks = [];
+            include($hookfile);
+            return $callbacks;
+        };
+        foreach ($components as $component => $hookfile) {
+            if (!file_exists($hookfile)) {
+                continue;
+            }
+            $newcallbacks = $parsecallbacks($hookfile);
+            if (!is_array($newcallbacks) || !$newcallbacks) {
+                continue;
+            }
+            foreach ($newcallbacks as &$ncb) {
+                $ncb['component'] = $component;
+            }
+            $callbacks = array_merge($callbacks, $newcallbacks);
+        }
+
+        // Pick the callbacks which implement the core\hook\output\before_standard_footer_html_generation hook.
+        $bsfhgcallbacks = [];
+        foreach ($callbacks as $callback) {
+            if ($callback['hook'] == 'core\\hook\\output\\before_standard_footer_html_generation') {
+                // If the callback is a string.
+                if (is_string($callback['callback'])) {
+                    // Use it directly.
+                    $bsfhgcallbacks[] = ['callback' => $callback['callback'], 'component' => $callback['component']];
+
+                    // Otherwise, if the callback is an array with two elements.
+                } else if (is_array($callback['callback']) && count($callback['callback']) == 2) {
+                    // Normalize and use it.
+                    $bsfhgcallbacks[] = ['callback' => implode('::', $callback['callback']), 'component' => $callback['component']];
+                }
+
+                // In all other cases, ignore the callback as it does not match our expectations.
+            }
+        }
+
+        // Iterate over all found callbacks.
+        foreach ($bsfhgcallbacks as $callback) {
+            // Extract the pluginname.
+            $pluginname = theme_boost_union_get_pluginname_from_callbackname($callback);
+            // If the given plugin's output is suppressed by Boost Union's settings.
+            $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_'.$pluginname);
+            if (isset($suppresssetting) && $suppresssetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                // Set the plugin's hook as disabled.
+                // phpcs:disable moodle.Files.LineLength.TooLong
+                $CFG->hooks_callback_overrides['core\\hook\\output\\before_standard_footer_html_generation'][$callback['callback']] =
+                        ['disabled' => true];
+                // phpcs:enable
+            }
+        }
+
+        // Purge the cache so that it is re-generated on the next init of the hook manager.
+        $cache->purge();
+
+        // Trigger a re-build of the hook_manager.
+        di::get(hook_manager::class)->get_instance();
+
+        // Remember that we have manipulated the cache.
+        $cache->set('theme_boost_union_manipulation_done', true);
+
+        // Otherwise, if the manipulation has already been done.
+    } else {
+        // We have to trick Moodle core to assume that the cache is still fine and it should use it.
+        // Otherwise, the usecache check in init_standard_callbacks() within the hook manager will fail and
+        // the callback overrides will be read from disk again (and in this case our modifications will be missed).
+        // The trick is just to calculate the hash which is calculated by calculate_overrides_hash() in the hook manager
+        // ourselves (we have to copy and adapt the code, unfortunately, as this is a private function) and to set it
+        // within the cache.
+        if (!property_exists($CFG, 'hooks_callback_overrides')) {
+            $cache->set('overrideshash', null);
+        } else if (!is_iterable($CFG->hooks_callback_overrides)) {
+            $cache->set('overrideshash', null);
+        } else {
+            $cache->set('overrideshash', sha1(json_encode($CFG->hooks_callback_overrides)));
+        }
+    }
+
+    // Remove the mutex marker.
+    $cache->delete('theme_boost_union_manipulation_started');
+}
+
+/**
+ * Helper function which is called from settings.php as callback.
+ * It simply removes the marker for the Boost Union hook manipulations so that they are
+ * processed again on the next page load.
+ */
+function theme_boost_union_remove_hookmanipulation_marker() {
+    // Get the cache.
+    $cache = \cache::make('core', 'hookcallbacks');
+    // Remove the markers.
+    $cache->delete('theme_boost_union_manipulation_done');
 }

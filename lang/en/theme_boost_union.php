@@ -641,18 +641,18 @@ $string['footersuppresslogininfosetting_desc'] = 'With this setting, you can ent
 // ... ... Setting: Suppress 'Reset user tour on this page' link.
 $string['footersuppressusertoursetting'] = 'Suppress \'Reset user tour on this page\' link';
 $string['footersuppressusertoursetting_desc'] = 'With this setting, you can entirely suppress the \'Reset user tour on this page\' link in the footer. This link would otherwise provide the possibility to reset a user tour on a particular page.';
-// ... ... Setting: Suppress 'Give feedback about this software' link.
-$string['footersuppressfeedbacksetting'] = 'Suppress \'Give feedback about this software\' link';
-$string['footersuppressfeedbacksetting_desc'] = 'With this setting, you can entirely suppress the \'Give feedback about this software\' link in the footer. This link would otherwise appear if the <a href="{$a->url}">feedback about this software</a> setting is enabled.';
 // ... ... Setting: Suppress theme switcher links.
 $string['footersuppressthemeswitchsetting'] = 'Suppress theme switcher links';
 $string['footersuppressthemeswitchsetting_desc'] = 'With this setting, you can entirely suppress the theme switcher links in the footer. The underlying system for device-specific themes was removed in Moodle 4.3, but the output routines are still there, so better be save than sorry.';
 // ... ... Setting: Suppress 'Powered by Moodle' link.
 $string['footersuppresspoweredsetting'] = 'Suppress \'Powered by Moodle\' link';
 $string['footersuppresspoweredsetting_desc'] = 'With this setting, you can entirely suppress the \'Powered by Moodle\' link in the footer. This link would otherwise show an information that this site is running Moodle and provide a link to Moodle HQ.';
+// ... ... Setting: Suppress footer output by core components.
+$string['footersuppressstandardfootercore'] = 'Suppress footer output by core component \'{$a}\'';
+$string['footersuppressstandardfootercore_desc'] = 'With this setting, you can entirely suppress the footer output by the core component \'{$a}\'. Core components can add additional content to the footer by implementing a particular hook or function. This core component has implemented this hook / function and might add content to the footer in certain circumstances.';
 // ... ... Setting: Suppress footer output by plugins.
 $string['footersuppressstandardfooter'] = 'Suppress footer output by plugin \'{$a}\'';
-$string['footersuppressstandardfooter_desc'] = 'With this setting, you can entirely suppress the footer output by plugin \'{$a}\'. Plugins (even if they are shipped with Moodle core, but are still technically plugins) can add additional content to the footer by implementing a particular function. This plugin has implemented this function and might add content to the footer in certain circumstances.';
+$string['footersuppressstandardfooter_desc'] = 'With this setting, you can entirely suppress the footer output by plugin \'{$a}\'. Plugins (even if they are shipped with Moodle core, but are still technically plugins) can add additional content to the footer by implementing a particular hook or function. This plugin has implemented this hook / function and might add content to the footer in certain circumstances.';
 
 // Settings: Static pages tab.
 $string['staticpagestab'] = 'Static pages';

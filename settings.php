@@ -25,6 +25,8 @@
 use theme_boost_union\admin_setting_configdatetime;
 use theme_boost_union\admin_setting_configstoredfilealwayscallback;
 use theme_boost_union\admin_setting_configtext_url;
+use core\di;
+use core\hook\manager as hook_manager;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -1902,16 +1904,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if('theme_boost_union/footersuppressusertour', 'theme_boost_union/enablefooterbutton', 'eq',
                 THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
 
-        // Setting: Suppress 'Give feedback about this software' link.
-        $name = 'theme_boost_union/footersuppressfeedback';
-        $title = get_string('footersuppressfeedbacksetting', 'theme_boost_union', null, true);
-        $url = new moodle_url('/admin/settings.php', ['section' => 'userfeedback']);
-        $description = get_string('footersuppressfeedbacksetting_desc', 'theme_boost_union', ['url' => $url], true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $tab->add($setting);
-        $page->hide_if('theme_boost_union/footersuppressfeedback', 'theme_boost_union/enablefooterbutton', 'eq',
-                THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
-
         // Setting: Suppress theme switcher links.
         $name = 'theme_boost_union/footersuppressthemeswitch';
         $title = get_string('footersuppressthemeswitchsetting', 'theme_boost_union', null, true);
@@ -1930,7 +1922,34 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if('theme_boost_union/footersuppresspowered', 'theme_boost_union/enablefooterbutton', 'eq',
                 THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
 
-        // Settings: Suppress footer output by plugins.
+        // Settings: Suppress footer output by plugins (for updated plugins with the hook).
+        // Get the array of plugins with the before_standard_footer_html_generation hook which can be suppressed by Boost Union.
+        $pluginswithcallback =
+                di::get(hook_manager::class)->get_callbacks_for_hook('core\\hook\\output\\before_standard_footer_html_generation');
+        // Iterate over all plugins.
+        foreach ($pluginswithcallback as $callback) {
+            // Extract the pluginname.
+            $pluginname = theme_boost_union_get_pluginname_from_callbackname($callback);
+            // Compose the label.
+            if ($callback['component'] == 'core') {
+                $hooklabeltitle = get_string('footersuppressstandardfootercore', 'theme_boost_union', $pluginname, true);
+                $hooklabeldesc = get_string('footersuppressstandardfootercore_desc', 'theme_boost_union', $pluginname, true);
+            } else {
+                $hooklabeltitle = get_string('footersuppressstandardfooter', 'theme_boost_union', $pluginname, true);
+                $hooklabeldesc = get_string('footersuppressstandardfooter_desc', 'theme_boost_union', $pluginname, true);
+            }
+            // Get the plugin name from the language pack.
+            // Create the setting.
+            $name = 'theme_boost_union/footersuppressstandardfooter_'.$pluginname;
+            $setting = new admin_setting_configselect($name, $hooklabeltitle, $hooklabeldesc,
+                    THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+            $setting->set_updatedcallback('theme_boost_union_remove_hookmanipulation_marker');
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/footersuppressstandardfooter_'.$pluginname,
+                    'theme_boost_union/enablefooterbutton', 'eq', THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
+        }
+
+        // Settings: Suppress footer output by plugins (for legacy plugins).
         // Get the array of plugins with the standard_footer_html() function which can be suppressed by Boost Union.
         $pluginswithfunction = get_plugins_with_function('standard_footer_html', 'lib.php');
         // Iterate over all plugins.
