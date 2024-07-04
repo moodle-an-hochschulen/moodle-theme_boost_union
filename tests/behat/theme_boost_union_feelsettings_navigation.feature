@@ -109,8 +109,8 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And the theme cache is purged and the theme is reloaded
     When I log in as "student1"
     And I follow "My courses"
-    And I click on ".coursemenubtn" "css_element" in the "//div[@class='card dashboard-card' and contains(.,'Course 1')]" "xpath_element"
-    And I click on "Star this course" "link" in the "//div[@class='card dashboard-card' and contains(.,'Course 1')]" "xpath_element"
+    And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
+    And I click on "Star this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
     And I reload the page
     Then "nav.navbar #usernavigation .popover-region-favourites" "css_element" <shouldornot> be visible
 
@@ -137,10 +137,10 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And the theme cache is purged and the theme is reloaded
     When I log in as "student1"
     And I follow "My courses"
-    And I click on ".coursemenubtn" "css_element" in the "//div[@class='card dashboard-card' and contains(.,'Course 2')]" "xpath_element"
-    And I click on "Star this course" "link" in the "//div[@class='card dashboard-card' and contains(.,'Course 2')]" "xpath_element"
-    And I click on ".coursemenubtn" "css_element" in the "//div[@class='card dashboard-card' and contains(.,'Course 3')]" "xpath_element"
-    And I click on "Star this course" "link" in the "//div[@class='card dashboard-card' and contains(.,'Course 3')]" "xpath_element"
+    And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 2')]" "xpath_element"
+    And I click on "Star this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 2')]" "xpath_element"
+    And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 3')]" "xpath_element"
+    And I click on "Star this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 3')]" "xpath_element"
     And I log out
     And I log in as "admin"
     And I am on "Course 3" course homepage

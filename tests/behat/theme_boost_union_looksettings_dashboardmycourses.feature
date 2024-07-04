@@ -45,7 +45,7 @@ Feature: Configuring the theme_boost_union plugin for the "Dashboard/My courses"
     Then I should see "Course overview" in the "#region-main" "css_element"
     And I click on "#displaydropdown" "css_element" in the "section.block_myoverview" "css_element"
     And I click on "[data-value=card]" "css_element" in the ".dropdown-menu.show" "css_element"
-    And ".block_myoverview.block div[data-region=courses-view] .dashboard-card-img" "css_element" <shouldornotcard> be visible
+    And ".block_myoverview.block div[data-region=courses-view] .card-img-top" "css_element" <shouldornotcard> be visible
     And I click on "#displaydropdown" "css_element" in the "section.block_myoverview" "css_element"
     And I click on "[data-value=list]" "css_element" in the ".dropdown-menu.show" "css_element"
     And ".block_myoverview.block div[data-region=courses-view] .course-listitem:not(.course-summaryitem) > .row > .col-md-2" "css_element" <shouldornotlist> be visible

@@ -1616,7 +1616,7 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
         $scss .= $listitemselector.'> .col-md-9 { @extend .col-md-11; }'.PHP_EOL;
     }
     if (!$showcourseimagescard) {
-        $scss .= $blockselector.' .dashboard-card-img { display: none !important; }'.PHP_EOL;
+        $scss .= $blockselector.' .card-img-top { display: none !important; }'.PHP_EOL;
     }
 
     // Get the course progress setting, defaults to true if the setting does not exist.

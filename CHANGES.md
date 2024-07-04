@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-07-04 - Upgrade: Fix Behat tests which broke due to changes on the MyCourses page in Moodle core.
 * 2024-06-25 - Upgrade: Adopt and handle core changes for the footersuppressstandardfooter_* settings, moving from callback functions to hooks.
 * 2024-06-19 - Upgrade: Adopt changes in event-list-item.mustache from block_timeline in core.
 * 2024-06-19 - Upgrade: Adopt changes in view-cards.mustache from block_recentlyaccesseditems in core.
