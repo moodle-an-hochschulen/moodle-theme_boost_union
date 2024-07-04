@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-07-04 - Upgrade: Adopt changes in boostnavbar.php from Boost core.
 * 2024-07-04 - Upgrade: Fix Behat tests which broke due to changes in the section naming in Moodle core.
 * 2024-07-04 - Upgrade: Adapt a Behat test as planned regarding the new theme selector in Moodle core. 
 * 2024-07-04 - Upgrade: Fix Behat tests which broke due to changes on the MyCourses page in Moodle core.
