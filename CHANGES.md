@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-07-04 - Upgrade: Fix Behat tests which broke due to changes in the section naming in Moodle core.
 * 2024-07-04 - Upgrade: Adapt a Behat test as planned regarding the new theme selector in Moodle core. 
 * 2024-07-04 - Upgrade: Fix Behat tests which broke due to changes on the MyCourses page in Moodle core.
 * 2024-06-25 - Upgrade: Adopt and handle core changes for the footersuppressstandardfooter_* settings, moving from callback functions to hooks.

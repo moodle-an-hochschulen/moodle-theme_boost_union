@@ -18,7 +18,7 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
     When I log in as "admin"
     And I am on "Course 1" course homepage
     And I turn editing mode on
-    And I click on "Add an activity or resource" "button" in the "Topic 1" "section"
+    And I click on "Add an activity or resource" "button" in the "New section" "section"
     Then DOM element ".chooser-container .activityiconcontainer.modicon_<modname>" should have computed style "background-color" "<colorrgb>"
 
     # Unfortunately, we can only test 4 out of 6 purpose types as Moodle does does not ship with any activity with the
@@ -41,7 +41,7 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
     And Behat debugging is enabled
     And I am on "Course 1" course homepage
     And I turn editing mode on
-    When I click on "Add an activity or resource" "button" in the "Topic 1" "section"
+    When I click on "Add an activity or resource" "button" in the "New section" "section"
     # We just test if the color in the activity chooser was changed.
     # Testing all other locations where the activity icons are shown as well and where Boost Union had to modify
     # the color individually as well would be an overhead which does not really make sense here.
