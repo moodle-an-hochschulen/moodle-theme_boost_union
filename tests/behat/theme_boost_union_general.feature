@@ -5,15 +5,11 @@ Feature: Configuring the theme_boost_union plugin as admin
   I need to be able to configure the theme Boost Union plugin
 
   @javascript
-  Scenario: Redirect the user from the Boost Union link on the 'Appearance' page to the Boost Union settings overview page
-# Replace the preceeding line with the next line when upgrading to 4.4:
-# Scenario: Redirect the user from the theme selector page to the Boost Union settings overview page
+  Scenario: Redirect the user from the theme selector page to the Boost Union settings overview page
     When I log in as "admin"
     And I follow "Site administration"
-    And I navigate to "Appearance > Boost Union" in site administration
-# Replace the preceeding line with the next two lines when upgrading to 4.4:
-#   And I navigate to "Appearance > Themes" in site administration
-#   And I click on "#theme-settings-boost_union" "css_element" in the "#theme-card-boost_union" "css_element"
+    And I navigate to "Appearance > Themes" in site administration
+    And I click on "#theme-settings-boost_union" "css_element" in the "#theme-card-boost_union" "css_element"
     And I should see "Look" in the ".card-body" "css_element"
     And I should see "Settings for branding your Moodle site"
     And I should see "Settings overview" in the ".breadcrumb" "css_element"

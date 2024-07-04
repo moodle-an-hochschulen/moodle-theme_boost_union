@@ -12,13 +12,15 @@ Feature: Configuring the theme_boost_union plugin for the "General settings" tab
   @javascript @_file_upload
   Scenario: Setting: Inherit theme preset from Boost Core to Boost Union
     When I log in as "admin"
-    And I navigate to "Appearance > Themes > Boost" in site administration
+    And I navigate to "Appearance > Themes" in site administration
+    And I click on "#theme-settings-boost" "css_element" in the "#theme-card-boost" "css_element"
     And I click on "General settings" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We upload a preset which hides the heading in the page header.
     # This is just to make it easy to detect the effect of the preset.
     And I upload "theme/boost_union/tests/fixtures/preset.scss" file to "Additional theme preset files" filemanager
     And I click on "Save changes" "button"
-    And I navigate to "Appearance > Themes > Boost" in site administration
+    And I navigate to "Appearance > Themes" in site administration
+    And I click on "#theme-settings-boost" "css_element" in the "#theme-card-boost" "css_element"
     And I click on "General settings" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Theme preset" to "preset.scss"
     And I click on "Save changes" "button"
