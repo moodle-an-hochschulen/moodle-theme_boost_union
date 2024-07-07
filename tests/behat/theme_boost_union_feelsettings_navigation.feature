@@ -221,20 +221,18 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And the following config values are set as admin:
       | config              | value     | plugin            |
       | categorybreadcrumbs | yes       | theme_boost_union |
-    And "Course C1" has been set to one page per section
-    And "Course C2" has been set to one page per section
     When I log in as "teacher1"
-    And I am on section "1" page of "Course C1" course
+    And I am on the "Course C1 > New section" "course > section" page
     Then "Category E" "link" should exist in the ".breadcrumb" "css_element"
     And "Enrolment options" "text" should exist in the ".breadcrumb" "css_element"
     And "Enrolment options" "text" should appear after "Category E" "link" in the ".breadcrumb" "css_element"
-    And "Topic 1" "link" should not exist in the ".breadcrumb" "css_element"
-    And I am on section "1" page of "Course C2" course
+    And "New section" "link" should not exist in the ".breadcrumb" "css_element"
+    And I am on the "Course C2 > New section" "course > section" page
     And "Category E" "link" should exist in the ".breadcrumb" "css_element"
     And "Category ED" "link" should exist in the ".breadcrumb" "css_element"
-    And "Topic 1" "link" should exist in the ".breadcrumb" "css_element"
+    And "New section" "link" should exist in the ".breadcrumb" "css_element"
     And "Category ED" "link" should appear after "Category E" "link" in the ".breadcrumb" "css_element"
-    And "Topic 1" "link" should appear after "Category ED" "link" in the ".breadcrumb" "css_element"
+    And "New section" "link" should appear after "Category ED" "link" in the ".breadcrumb" "css_element"
 
   @javascript
   Scenario: Setting: back to top button - Enable "Back to top button"
