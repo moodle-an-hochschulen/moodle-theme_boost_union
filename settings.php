@@ -292,6 +292,16 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if('theme_boost_union/extscssgithubpostfilepath', 'theme_boost_union/extscsssource', 'neq',
                 THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB);
 
+        // Setting: External SCSS validation.
+        $name = 'theme_boost_union/extscssvalidation';
+        $title = get_string('extscssvalidationsetting', 'theme_boost_union', null, true);
+        $description = get_string('extscssvalidationsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/extscssvalidation', 'theme_boost_union/extscsssource', 'eq',
+                THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_NONE);
+
         // Add tab to settings page.
         $page->add($tab);
 
