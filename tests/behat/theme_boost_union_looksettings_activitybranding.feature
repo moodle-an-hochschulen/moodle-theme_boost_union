@@ -14,21 +14,25 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
     Given the following config values are set as admin:
       | config                         | value      | plugin            |
       | activityiconcolor<purposename> | <colorhex> | theme_boost_union |
+      | activityiconcolorfidelity      | 500        | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
     And I am on "Course 1" course homepage
     And I turn editing mode on
     And I click on "Add an activity or resource" "button" in the "New section" "section"
-    Then DOM element ".chooser-container .activityiconcontainer.modicon_<modname>" should have computed style "background-color" "<colorrgb>"
+    # First, we test that the default filter is _not_ set anymore.
+    Then DOM element ".chooser-container .activityiconcontainer.modicon_<modname> img" should not have computed style "filter" "<originalfilter>"
+    # And then, as the hex color to CSS filter conversion results are not reproducible, we test if the applied filter is close enough to the hex color.
+    And DOM element ".chooser-container .activityiconcontainer.modicon_<modname> img" should have a CSS filter close enough to hex color "<colorhex>"
 
     # Unfortunately, we can only test 4 out of 6 purpose types as Moodle does does not ship with any activity with the
     # administration and interface types. But this should be an acceptable test coverage anyway.
     Examples:
-      | purposename   | modname | colorhex | colorrgb         |
-      | assessment    | assign  | #FF0000  | rgb(255, 0, 0)   |
-      | collaboration | data    | #00FF00  | rgb(0, 255, 0)   |
-      | communication | choice  | #0000FF  | rgb(0, 0, 255)   |
-      | content       | book    | #FFFF00  | rgb(255, 255, 0) |
+      | purposename   | modname | colorhex | originalfilter                                                                                      |
+      | assessment    | assign  | #FF0000  | invert(0.36) sepia(0.98) saturate(69.69) hue-rotate(315deg) brightness(0.9) contrast(1.19)  |
+      | collaboration | data    | #00FF00  | invert(0.25) sepia(0.54) saturate(62.26) hue-rotate(245deg) brightness(1) contrast(1.02)    |
+      | communication | choice  | #0000FF  | invert(0.48) sepia(0.74) saturate(48.87) hue-rotate(11deg) brightness(1.02) contrast(1.01)  |
+      | content       | book    | #FFFF00  | invert(0.49) sepia(0.52) saturate(46.75) hue-rotate(156deg) brightness(0.89) contrast(1.02) |
 
   @javascript
   Scenario Outline: Setting: Activity icon purposes - Setting the purpose

@@ -187,12 +187,6 @@ function theme_boost_union_get_pre_scss($theme) {
         'bootstrapcolorinfo' => ['info'],
         'bootstrapcolorwarning' => ['warning'],
         'bootstrapcolordanger' => ['danger'],
-        'activityiconcoloradministration' => ['activity-icon-administration-bg'],
-        'activityiconcolorassessment' => ['activity-icon-assessment-bg'],
-        'activityiconcolorcollaboration' => ['activity-icon-collaboration-bg'],
-        'activityiconcolorcommunication' => ['activity-icon-communication-bg'],
-        'activityiconcolorcontent' => ['activity-icon-content-bg'],
-        'activityiconcolorinterface' => ['activity-icon-interface-bg'],
     ];
 
     // Prepend variables first.
@@ -227,6 +221,31 @@ function theme_boost_union_get_pre_scss($theme) {
     // Set variables which are influenced by the blockdrawerwidth setting.
     if (get_config('theme_boost_union', 'blockdrawerwidth')) {
         $scss .= '$drawer-right-width: '.get_config('theme_boost_union', 'blockdrawerwidth').";\n";
+    }
+
+    // Set variables which are influenced by the activityiconcolor* settings.
+    $purposes = [MOD_PURPOSE_ADMINISTRATION,
+            MOD_PURPOSE_ASSESSMENT,
+            MOD_PURPOSE_COLLABORATION,
+            MOD_PURPOSE_COMMUNICATION,
+            MOD_PURPOSE_CONTENT,
+            MOD_PURPOSE_INTERFACE];
+    // Iterate over all purposes.
+    foreach ($purposes as $purpose) {
+        // Get color setting.
+        $activityiconcolor = get_config('theme_boost_union', 'activityiconcolor'.$purpose);
+
+        // If a color is set.
+        if (!empty($activityiconcolor)) {
+            // Set the activity-icon-*-bg variable which was replaced by the CSS filters in Moodle 4.4 but which is still part
+            // of the codebase.
+            $scss .= '$activity-icon-'.$purpose.'-bg: '.$activityiconcolor.";\n";
+
+            // Set the activity-icon-*-filter variable which holds the CSS filters for the activity icon colors now.
+            $solver = new \theme_boost_union\lib\hextocssfilter\solver($activityiconcolor);
+            $cssfilterresult = $solver->solve();
+            $scss .= '$activity-icon-'.$purpose.'-filter: '.$cssfilterresult['filter'].";\n";
+        }
     }
 
     // Set custom Boost Union SCSS variable: The block region outside left width.
