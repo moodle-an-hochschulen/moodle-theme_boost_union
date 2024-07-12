@@ -67,7 +67,7 @@ $string['scssheading'] = 'Raw SCSS';
 $string['extscssheading'] = 'External SCSS';
 $string['extscssheading_desc'] = 'In addition to the raw SCSS settings above, Boost Union can load SCSS from an external source. It is included before the SCSS code which is defined above which means that you can manage a centralized external SCSS codebase and can still amend it with local SCSS additions.';
 $string['extscssheading_instr'] = 'Instructions:';
-$string['extscssheading_drop'] = 'If Boost Union cannot fetch the external SCSS file for any reason or if the fetched external SCSS code is invalid, it will simply ignore the external SCSS file to avoid hickups with SCSS compiling and broken frontends.';
+$string['extscssheading_drop'] = 'If Boost Union cannot fetch the external SCSS file for any reason, it will simply ignore the external SCSS file to avoid hickups with SCSS compiling and broken frontends.';
 $string['extscssheading_structure'] = 'The external SCSS must be provided as plaintext file, without any headers or footers, containing just the SCSS code.';
 $string['extscssheading_prepost'] = 'Just like the raw SCSS settings above, the external SCSS is split into two pieces: Pre and Post SCSS. Pre SCSS can be used for initializing SCSS variables, Post SCSS is used for your actual SCSS code.';
 $string['extscssheading_sources'] = 'You can configure Boost Union to fetch the external SCSS file either from a public download URL (which will be accessed and fetched with an unauthenticated cURL request) or from a private Github repository (which will be accessed and fetched with a Github API token).';
@@ -104,6 +104,9 @@ $string['extscssgithubfilepath_example'] = 'Example: If you can see the file in 
 // ... ... Setting: External Post SCSS Github file path.
 $string['extscssgithubpostfilepath'] = 'External Post SCSS Github file path';
 $string['extscssgithubpostfilepath_desc'] = 'The path within the private Github repository where the Post SCSS file is located.';
+// ... ... Setting: External SCSS validation.
+$string['extscssvalidationsetting'] = 'External SCSS validation';
+$string['extscssvalidationsetting_desc'] = 'If this setting is enabled, the external SCSS is validated if it can be compiled before it is added to the SCSS stack. External SCSS code which can\'t be compiled is silently ignored and not used. However, this validation is only run on the external SCSS code only, it is not run on the combined SCSS stack which would be the result of the integration of the external SCSS. This means that, as soon as you use SCSS variables from Moodle core or Bootstrap in your external SCSS, you have to disable the validation and verify yourself that the SCSS code is valid to avoid broken frontends.';
 
 // Settings: Page tab.
 $string['pagetab'] = 'Page';
