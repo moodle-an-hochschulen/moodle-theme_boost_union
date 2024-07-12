@@ -155,7 +155,7 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
       | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/broken/tests/fixtures/extscss.scss         |
       | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/extscss-invalid.scss |
 
-  @javascript @testme
+  @javascript
   Scenario Outline: Setting: External SCSS - Add an external SCSS code with Bootstrap variables to the theme and validate it
     Given the following config values are set as admin:
       | config            | value      | plugin            |
