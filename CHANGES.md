@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased 
 
+* 2024-07-11 - Bugfix: Allow external SCSS to use SCSS variables by disabling the SCSS validation, resolves #683.
 * 2024-06-23 - Upstream change: Adopt change in view-chards.mustache from MDL-70829.
 * 2024-06-18 - Release: Let codechecker ignore some sniffs in the language pack.
 * 2024-06-13 - Cleanup: Change @codingStandardsIgnore tags to phpcs:disable, resolves #676.

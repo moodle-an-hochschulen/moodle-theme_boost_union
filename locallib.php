@@ -2171,13 +2171,16 @@ function theme_boost_union_get_external_scss($type) {
         return '';
     }
 
-    // If the fetched SCSS code cannot be compiled, return directly
-    // (as we must not include broken SCSS code).
-    $compiler = new core_scss();
-    try {
-        $compiler->compile($extscss);
-    } catch (Exception $e) {
-        return '';
+    // If external SCSS validation is enabled.
+    if (get_config('theme_boost_union', 'extscssvalidation') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // If the fetched SCSS code cannot be compiled, return directly
+        // (as we must not include broken SCSS code).
+        $compiler = new core_scss();
+        try {
+            $compiler->compile($extscss);
+        } catch (Exception $e) {
+            return '';
+        }
     }
 
     // Now return the (hopefully valid and working) SCSS code.
