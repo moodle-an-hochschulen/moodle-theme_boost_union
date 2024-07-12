@@ -333,6 +333,12 @@ body.hascourseindexcmicons {
             .courseindex-cmicon-icon .completioninfo {
                 display: none;
             }
+
+            /* And move the section title in the course index slightly to the right to align it vertically with the
+               activity title (which is now slightly more right as well) again. */
+            .courseindex-chevron {
+                padding-right: 14px;
+            }
         }
     }
 
@@ -348,6 +354,12 @@ body.hascourseindexcmicons {
                but we need the space now for the completion icon. */
             .courseindex-item .dragicon {
                 display: none;
+            }
+
+            /* And move the section title in the course index slightly to the right to align it vertically with the
+               activity title (which is now slightly more right as well) again. */
+            .courseindex-chevron {
+                padding-right: 14px;
             }
         }
     }
@@ -388,14 +400,19 @@ body.hascourseindexcmicons {
 
         /* General style of the course index activity type icon. */
         .courseindex-cmicon {
-            margin: 0.2rem;
-            margin-top: 0;
+            margin: 0.1rem;
             display: inline-flex;
             justify-content: center;
             align-items: center;
             .icon {
                 margin-right: unset;
             }
+        }
+
+        /* Gain back the vertical space which was given to the icon by reducing the vertical padding of each courseindex
+           element by 0.1rem. */
+        .courseindex-item {
+            padding: .45rem .5rem;
         }
 
         /* Overwrite activity type icon style for dimmed activities. */
