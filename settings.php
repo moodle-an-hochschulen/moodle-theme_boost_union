@@ -554,6 +554,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 MOD_PURPOSE_COLLABORATION,
                 MOD_PURPOSE_COMMUNICATION,
                 MOD_PURPOSE_CONTENT,
+                MOD_PURPOSE_INTERACTIVECONTENT,
                 MOD_PURPOSE_INTERFACE];
         // Iterate over all purposes.
         foreach ($purposes as $purpose) {
@@ -597,6 +598,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 MOD_PURPOSE_COLLABORATION => get_string('activitypurposecollaboration', 'theme_boost_union'),
                 MOD_PURPOSE_COMMUNICATION => get_string('activitypurposecommunication', 'theme_boost_union'),
                 MOD_PURPOSE_CONTENT => get_string('activitypurposecontent', 'theme_boost_union'),
+                MOD_PURPOSE_INTERACTIVECONTENT => get_string('activitypurposeinteractivecontent', 'theme_boost_union'),
                 MOD_PURPOSE_INTERFACE => get_string('activitypurposeinterface', 'theme_boost_union'),
                 MOD_PURPOSE_OTHER => get_string('activitypurposeother', 'theme_boost_union'),
         ];

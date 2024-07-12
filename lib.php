@@ -229,6 +229,7 @@ function theme_boost_union_get_pre_scss($theme) {
             MOD_PURPOSE_COLLABORATION,
             MOD_PURPOSE_COMMUNICATION,
             MOD_PURPOSE_CONTENT,
+            MOD_PURPOSE_INTERACTIVECONTENT,
             MOD_PURPOSE_INTERFACE];
     // Iterate over all purposes.
     foreach ($purposes as $purpose) {

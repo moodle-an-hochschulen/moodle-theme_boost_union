@@ -197,6 +197,9 @@ $string['activityiconcolorcommunicationsetting_desc'] = 'The activity icon color
 // ... ... Setting: Activity icon color for 'Content'.
 $string['activityiconcolorcontentsetting'] = 'Activity icon color for "Content"';
 $string['activityiconcolorcontentsetting_desc'] = 'The activity icon color for "Content"';
+// ... ... Setting: Activity icon color for 'Interactive content'.
+$string['activityiconcolorinteractivecontentsetting'] = 'Activity icon color for "Interactive content"';
+$string['activityiconcolorinteractivecontentsetting_desc'] = 'The activity icon color for "Interactive content"';
 // ... ... Setting: Activity icon color for 'Interface'.
 $string['activityiconcolorinterfacesetting'] = 'Activity icon color for "Interface"';
 $string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for "Interface"';
@@ -216,6 +219,7 @@ $string['activitypurposeassessment'] = 'Assessment';
 $string['activitypurposecollaboration'] = 'Collaboration';
 $string['activitypurposecommunication'] = 'Communication';
 $string['activitypurposecontent'] = 'Content';
+$string['activitypurposeinteractivecontent'] = 'Interactive content';
 $string['activitypurposeinterface'] = 'Interface';
 $string['activitypurposeother'] = 'Other';
 // ... Section: Activity icons.
