@@ -311,6 +311,29 @@ $string['courseoverviewshowcourseimagessetting_desc'] = 'With this setting, you 
 $string['courseoverviewshowprogresssetting'] = 'Show course completion progress';
 $string['courseoverviewshowprogresssetting_desc'] = 'With this setting, you can control whether the course completion progress is visible inside the course overview block or not.';
 
+// Settings: Blocks tab.
+// The string for this tab is the same as on the 'Feel' page.
+// ... Section: Timeline block.
+$string['timelineheading'] = 'Timeline block';
+// Setting: Tint activity icons in the timeline block.
+$string['timelinetintenabled'] = 'Tint timeline activity icons';
+$string['timelinetintenabled_desc'] = 'With this setting, you can tint the activity icons in the timeline block based on the activity purposes. By default, Moodle core displays them just as black icons.';
+// ... Section: Upcoming events block.
+$string['upcomingeventsheading'] = 'Upcoming events block';
+// Setting: Tint activity icons in the upcoming events block.
+$string['upcomingeventstintenabled'] = 'Tint upcoming events activity icons';
+$string['upcomingeventstintenabled_desc'] = 'With this setting, you can tint the activity icons in the upcoming events block based on the activity purposes. By default, Moodle core displays them just as black icons.';
+// ... Section: Recently accessed items block.
+$string['recentlyaccesseditemsheading'] = 'Recently accessed items block';
+// Setting: Tint activity icons in the recently accessed items block.
+$string['recentlyaccesseditemstintenabled'] = 'Tint recently accessed items activity icons';
+$string['recentlyaccesseditemstintenabled_desc'] = 'With this setting, you can tint the activity icons in the recently accessed items block based on the activity purposes. By default, Moodle core displays them just as black icons.';
+// ... Section: Activities block.
+$string['activitiesheading'] = 'Activities block';
+// Setting: Tint activity icons in the activities block.
+$string['activitiestintenabled'] = 'Tint activities activity icons';
+$string['activitiestintenabled_desc'] = 'With this setting, you can tint the activity icons in the activities block based on the activity purposes. By default, Moodle core displays them just as black icons.';
+
 // Settings: Course tab.
 $string['coursetab'] = 'Course';
 // ... Section: Course header.

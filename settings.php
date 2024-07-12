@@ -851,6 +851,70 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
+        // Create Blocks tab.
+        $tab = new admin_settingpage('theme_boost_union_look_blocks',
+            get_string('blockstab', 'theme_boost_union', null, true));
+
+        // Create Timeline block heading.
+        $name = 'theme_boost_union/timelineheading';
+        $title = get_string('timelineheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Tint activity icons in the timeline block.
+        $name = 'theme_boost_union/timelinetintenabled';
+        $title = get_string('timelinetintenabled', 'theme_boost_union', null, true);
+        $description = get_string('timelinetintenabled_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Create Upcoming events block heading.
+        $name = 'theme_boost_union/upcomingeventsheading';
+        $title = get_string('upcomingeventsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Tint activity icons in the upcoming events block.
+        $name = 'theme_boost_union/upcomingeventstintenabled';
+        $title = get_string('upcomingeventstintenabled', 'theme_boost_union', null, true);
+        $description = get_string('upcomingeventstintenabled_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Create Recently accessed items block heading.
+        $name = 'theme_boost_union/recentlyaccesseditemsheading';
+        $title = get_string('recentlyaccesseditemsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Tint activity icons in the recently accessed items block.
+        $name = 'theme_boost_union/recentlyaccesseditemstintenabled';
+        $title = get_string('recentlyaccesseditemstintenabled', 'theme_boost_union', null, true);
+        $description = get_string('recentlyaccesseditemstintenabled_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Create Activities block heading.
+        $name = 'theme_boost_union/activitiesheading';
+        $title = get_string('activitiesheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Tint activity icons in the activities block.
+        $name = 'theme_boost_union/activitiestintenabled';
+        $title = get_string('activitiestintenabled', 'theme_boost_union', null, true);
+        $description = get_string('activitiestintenabled_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
         // Create course tab.
         $tab = new admin_settingpage('theme_boost_union_look_course',
                 get_string('coursetab', 'theme_boost_union', null, true));

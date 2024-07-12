@@ -44,20 +44,24 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
     And I select "<purpose>" from the "<modname>" singleselect
     And I press "Save changes"
     And Behat debugging is enabled
-    And I am on "Course 1" course homepage
+    When I am on "Course 1" course homepage
     And I turn editing mode on
-    When I click on "Add an activity or resource" "button" in the "New section" "section"
-    # We just test if the color in the activity chooser was changed.
-    # Testing all other locations where the activity icons are shown as well and where Boost Union had to modify
-    # the color individually as well would be an overhead which does not really make sense here.
-    Then DOM element ".chooser-container .activityiconcontainer.modicon_<mod>" should have computed style "background-color" "<colorrgb>"
+    And I add a <mod> activity to course "Course 1" section "0" and I fill the form with:
+      | <titlesetting> | Test name |
+    Then DOM element ".activity.modtype_<mod> .activityiconcontainer.courseicon img" should have computed style "filter" "<filter>"
+    And I click on "Add an activity or resource" "button" in the "New section" "section"
+    Then DOM element ".chooser-container .activityiconcontainer.modicon_<mod> img" should have computed style "filter" "<filter>"
+    And I am on the "Test name" "<mod> activity" page
+    Then DOM element "#page-header .modicon_<mod>.activityiconcontainer img" should have computed style "filter" "<filter>"
 
     # We do not want to burn too much CPU time by testing all plugins. We just test two plugins which is fine as all plugins are handled with the same PHP code.
+    # In addition to that, we test the 'other purpose' which is special.
     # These examples will work until Moodle core changes the default colors of the module purpose types.
     Examples:
-      | modname    | purpose       | mod    | colorrgb          |
-      | Assignment | Collaboration | assign | rgb(247, 99, 77)  |
-      | Book       | Communication | book   | rgb(17, 166, 118) |
+      | modname    | titlesetting    | purpose       | mod    | filter                                                                                     |
+      | Assignment | Assignment name | Collaboration | assign | invert(0.25) sepia(0.54) saturate(62.26) hue-rotate(245deg) brightness(1) contrast(1.02)   |
+      | Book       | Name            | Communication | book   | invert(0.48) sepia(0.74) saturate(48.87) hue-rotate(11deg) brightness(1.02) contrast(1.01) |
+      | Assignment | Assignment name | Other         | assign | none                                                                                       |
 
   @javascript @_file_upload
   Scenario Outline: Setting: Custom icons files - Upload custom icons files

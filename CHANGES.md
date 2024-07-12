@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-07-12 - Upgrade: Adopt changes for coloring the activity icons when modifying the activity purpose.
 * 2024-07-12 - Upgrade: Adopt new activity purpose "Interactive content" when coloring activity icons, resolves #611.
 * 2024-07-07 - Upgrade: Adopt changes for coloring the activity icons, moving from background-colors to CSS filters, resolves #631.
 * 2024-07-04 - Upgrade: Fix Behat tests which broke due to the introduction of section pages in Moodle core.

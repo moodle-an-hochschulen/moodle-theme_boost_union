@@ -1376,37 +1376,68 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
     foreach ($installedactivities as $modname => $modinfo) {
         // Get default purpose of activity module.
         $defaultpurpose = plugin_supports('mod', $modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
+
         // If the plugin does not have any default purpose.
         if (!$defaultpurpose) {
             // Fallback to "other" purpose.
             $defaultpurpose = MOD_PURPOSE_OTHER;
         }
+
+        // Compose selectors for blocks.
+        $blocksscss = [];
+        // If the admin wanted us to tint the timeline block as well.
+        if (get_config('theme_boost_union', 'timelinetintenabled') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            $blocksscss[] = '.block_timeline .theme-boost-union-mod_'.$modname.'.activityiconcontainer img';
+        }
+        // If the admin wanted us to tint the upcoming events block as well.
+        if (get_config('theme_boost_union', 'upcomingeventstintenabled') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            $blocksscss[] = '.block_calendar_upcoming .theme-boost-union-mod_'.$modname.'.activityiconcontainer img';
+        }
+        // If the admin wanted us to tint the recently accessed items block as well.
+        if (get_config('theme_boost_union', 'recentlyaccesseditemstintenabled') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            $blocksscss[] = '.block_recentlyaccesseditems .theme-boost-union-'.$modname.'.activityiconcontainer img';
+        }
+        // If the admin wanted us to tint the activities block as well.
+        if (get_config('theme_boost_union', 'activitiestintenabled') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            $blocksscss[] = '.block_activity_modules .content .icon[title="'.$modinfo.'"]';
+        }
+        $blocksscss = implode(', ', $blocksscss);
+
         // If the activity purpose setting is set and differs from the activity's default purpose.
         $activitypurpose = get_config('theme_boost_union', 'activitypurpose'.$modname);
         if ($activitypurpose && $activitypurpose != $defaultpurpose) {
             // Add CSS to modify the activity purpose color in the activity chooser and the activity icon.
-            $scss .= '.activity.modtype_'.$modname.' .activityiconcontainer.courseicon,';
-            $scss .= '.modchoosercontainer .modicon_'.$modname.'.activityiconcontainer,';
-            $scss .= '#page-header .modicon_'.$modname.'.activityiconcontainer,';
-            $scss .= '.block_recentlyaccesseditems .theme-boost-union-'.$modname.'.activityiconcontainer,';
-            $scss .= '.block_timeline .theme-boost-union-mod_'.$modname.'.activityiconcontainer {';
-            // If the purpose is now different than 'other', change the background color to the new color.
+            $scss .= '.activity.modtype_'.$modname.' .activityiconcontainer.courseicon img,';
+            $scss .= '.modchoosercontainer .modicon_'.$modname.'.activityiconcontainer img,';
+            $scss .= '#page-header .modicon_'.$modname.'.activityiconcontainer img';
+            // Add CSS for the configured blocks.
+            if (strlen($blocksscss) > 0) {
+                $scss .= ', '.$blocksscss;
+            }
+            $scss .= ' {';
+            // If the purpose is now different than 'other', change the filter to the new color.
             if ($activitypurpose != MOD_PURPOSE_OTHER) {
-                $scss .= 'background-color: var(--activity' . $activitypurpose . ') !important;';
+                $scss .= 'filter: var(--activity' . $activitypurpose . ') !important;';
 
-                // Otherwise, the background color is set to light grey (as there is no '--activityother' variable).
+                // Otherwise, the filter is removed (as there is no '--activityother' variable).
             } else {
-                $scss .= 'background-color: $light !important;';
-            }
-            // If the default purpose originally was 'other' and now is overridden, make the icon white.
-            if ($defaultpurpose == MOD_PURPOSE_OTHER) {
-                $scss .= '.activityicon, .icon { filter: brightness(0) invert(1); }';
-            }
-            // If the default purpose was not 'other' and now it is, make the icon black.
-            if ($activitypurpose == MOD_PURPOSE_OTHER) {
-                $scss .= '.activityicon, .icon { filter: none; }';
+                $scss .= 'filter: none !important;';
             }
             $scss .= '}';
+
+            // Otherwise, if the purpose is unchanged.
+        } else {
+            // Add CSS for the configured blocks.
+            if (strlen($blocksscss) > 0) {
+                $scss .= $blocksscss.'{ ';
+
+                // If the purpose is now different than 'other', set the filter to tint the icon.
+                if ($activitypurpose != MOD_PURPOSE_OTHER) {
+                    $scss .= 'filter: var(--activity' . $defaultpurpose . ') !important;';
+                }
+
+                $scss .= '}';
+            }
         }
     }
     return $scss;

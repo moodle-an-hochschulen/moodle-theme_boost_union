@@ -225,6 +225,32 @@ With this setting, you can control whether the course image is visible inside th
 
 With this setting, you can control whether the course completion progress is visible inside the course overview block or not.
 
+#### Tab "Blocks"
+
+##### Timeline block
+
+###### Tint timeline activity icons
+
+With this setting, you can tint the activity icons in the timeline block based on the activity purposes. By default, Moodle core displays them just as black icons.
+
+##### Upcoming events block
+
+###### Tint upcoming events activity icons
+
+With this setting, you can tint the activity icons in the upcoming events block based on the activity purposes. By default, Moodle core displays them just as black icons.
+
+##### Recently accessed items block
+
+###### Tint recently accessed items activity icons
+
+With this setting, you can tint the activity icons in the recently accessed items block based on the activity purposes. By default, Moodle core displays them just as black icons.
+
+##### Activities block
+
+###### Tint activities activity icons
+
+With this setting, you can tint the activity icons in the activities block based on the activity purposes. By default, Moodle core displays them just as black icons.
+
 #### Tab "Course"
 
 ##### Course Header
