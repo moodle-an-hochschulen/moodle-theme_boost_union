@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-07-13 - Upgrade: Make the \theme_boost_union\task\purge_cache task non-blocking as this has been deprecated in Moodle core.
 * 2024-07-13 - Bugfix: Adopt fix for MDL-82397 before its integration into Moodle core, relates to #691.
 * 2024-07-12 - Upgrade: Adapt the course index icon feature visually to the new icon sizes.
 * 2024-07-12 - Upgrade: Adopt changes for coloring the activity icons when modifying the activity purpose.
