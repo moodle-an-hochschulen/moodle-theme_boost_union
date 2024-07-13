@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased 
+### v4.3-r15 
 
 * 2024-07-11 - Bugfix: Allow external SCSS to use SCSS variables by disabling the SCSS validation, resolves #683.
 * 2024-06-23 - Upstream change: Adopt change in view-chards.mustache from MDL-70829.
