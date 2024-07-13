@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-07-13 - Bugfix: Adopt fix for MDL-82397 before its integration into Moodle core, relates to #691.
 * 2024-07-12 - Upgrade: Adapt the course index icon feature visually to the new icon sizes.
 * 2024-07-12 - Upgrade: Adopt changes for coloring the activity icons when modifying the activity purpose.
 * 2024-07-12 - Upgrade: Adopt new activity purpose "Interactive content" when coloring activity icons, resolves #611.
