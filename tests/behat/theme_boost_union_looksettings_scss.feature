@@ -63,8 +63,8 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
 
     Examples:
       | urlfield                        | url                                                                                                                 |
-      | External Pre SCSS download URL  | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/extscss.scss |
-      | External Post SCSS download URL | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/extscss.scss |
+      | External Pre SCSS download URL  | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/main/tests/fixtures/extscss.scss |
+      | External Post SCSS download URL | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/main/tests/fixtures/extscss.scss |
 
   @javascript
   Scenario Outline: Setting: External SCSS - Add external SCSS from Github API to the theme
@@ -153,7 +153,7 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
     Examples:
       | url                                                                                                                         |
       | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/broken/tests/fixtures/extscss.scss         |
-      | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/extscss-invalid.scss |
+      | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/main/tests/fixtures/extscss-invalid.scss |
 
   @javascript
   Scenario Outline: Setting: External SCSS - Add an external SCSS code with Bootstrap variables to the theme and validate it
@@ -176,5 +176,5 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
 
     Examples:
       | validate | shouldornot | url                                                                                                                                |
-      | yes      | should      | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/extscss-with-variables.scss |
-      | no       | should not  | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/extscss-with-variables.scss |
+      | yes      | should      | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/main/tests/fixtures/extscss-with-variables.scss |
+      | no       | should not  | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/main/tests/fixtures/extscss-with-variables.scss |

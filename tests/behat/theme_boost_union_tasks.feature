@@ -14,7 +14,7 @@ Feature: Running tasks in the theme_boost_union plugin
     Given the following config values are set as admin:
       | config         | value                                                                                                               | plugin            |
       | extscsssource  | 1                                                                                                                   | theme_boost_union |
-      | extscssurlpost | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/master/tests/fixtures/extscss.scss | theme_boost_union |
+      | extscssurlpost | https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/main/tests/fixtures/extscss.scss | theme_boost_union |
     When I log in as "admin"
     And I am on "Course 1" course homepage
     And I should see "Course 1" in the "#page-header .page-header-headings" "css_element"

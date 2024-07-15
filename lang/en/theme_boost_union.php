@@ -92,15 +92,15 @@ $string['extscssgithubtoken_docs'] = 'Go to <a href="https://github.com/settings
 // ... ... Setting: External SCSS Github API user.
 $string['extscssgithubuser'] = 'External SCSS Github API user';
 $string['extscssgithubuser_desc'] = 'The Github API user or organization which owns the private Github repository.';
-$string['extscssgithubuser_example'] = 'Example: If you can see the file in your Github account on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union-extscsstest/blob/master/extscss.scss, the user will be <em>moodle-an-hochschulen</em>.';
+$string['extscssgithubuser_example'] = 'Example: If you can see the file in your Github account on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union-extscsstest/blob/main/extscss.scss, the user will be <em>moodle-an-hochschulen</em>.';
 // ... ... Setting: External SCSS Github API repository.
 $string['extscssgithubrepo'] = 'External SCSS Github API repository';
 $string['extscssgithubrepo_desc'] = 'The private Github repository where the SCSS files are located.';
-$string['extscssgithubrepo_example'] = 'Example: If you can see the file in your Github account on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union-extscsstest/blob/master/extscss.scss, the repository will be <em>moodle-theme_boost_union-extscsstest</em>.';
+$string['extscssgithubrepo_example'] = 'Example: If you can see the file in your Github account on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union-extscsstest/blob/main/extscss.scss, the repository will be <em>moodle-theme_boost_union-extscsstest</em>.';
 // ... ... Setting: External Pre SCSS Github file path.
 $string['extscssgithubprefilepath'] = 'External Pre SCSS Github file path';
 $string['extscssgithubprefilepath_desc'] = 'The path within the private Github repository where the Pre SCSS file is located.';
-$string['extscssgithubfilepath_example'] = 'Example: If you can see the file in your Github account on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union-extscsstest/blob/master/extscss.scss, the file path will be <em>/extscss.scss</em>.';
+$string['extscssgithubfilepath_example'] = 'Example: If you can see the file in your Github account on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union-extscsstest/blob/main/extscss.scss, the file path will be <em>/extscss.scss</em>.';
 // ... ... Setting: External Post SCSS Github file path.
 $string['extscssgithubpostfilepath'] = 'External Post SCSS Github file path';
 $string['extscssgithubpostfilepath_desc'] = 'The path within the private Github repository where the Post SCSS file is located.';
