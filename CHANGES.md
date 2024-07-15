@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.4-r1
 
 * 2024-07-15 - Development: Rename master branch to main, please update your clones.
 * 2024-07-13 - Upgrade: Make the \theme_boost_union\task\purge_cache task non-blocking as this has been deprecated in Moodle core.
