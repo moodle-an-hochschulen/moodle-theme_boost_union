@@ -690,7 +690,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // Set the icon only if the setting is not set to suppress the footer icons.
         $footericonsetting = get_config('theme_boost_union', 'footersuppressicons');
         if (!isset($footericonsetting) || $footericonsetting == THEME_BOOST_UNION_SETTING_SELECT_NO) {
-            $icon = $this->pix_icon('book', '', 'moodle', ['class' => 'iconhelp icon-pre']);
+            $icon = $this->pix_icon('book', '', 'moodle');
 
             // Otherwise.
         } else {
@@ -768,7 +768,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // Set the icon only if the setting is not set to suppress the footer icons.
         $footericonsetting = get_config('theme_boost_union', 'footersuppressicons');
         if (!isset($footericonsetting) || $footericonsetting == THEME_BOOST_UNION_SETTING_SELECT_NO) {
-            $icon = $this->pix_icon('book', '', 'moodle', ['class' => 'iconhelp icon-pre']);
+            $icon = $this->pix_icon('book', '', 'moodle');
 
             // Otherwise.
         } else {
