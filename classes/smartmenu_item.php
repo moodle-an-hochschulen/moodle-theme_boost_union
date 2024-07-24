@@ -65,6 +65,12 @@ class smartmenu_item {
     const TYPEDYNAMIC = 2;
 
     /**
+     * Represents the type of a dynamic element.
+     * @var int
+     */
+    const TYPEDOCS = 3;
+
+    /**
      * Represents the completion status of an item where the status is 'enrolled'.
      * @var int
      */
@@ -772,6 +778,23 @@ class smartmenu_item {
     }
 
     /**
+     * Generate a node data for doc link item. Use get_docs_url to get the link and generate the data.
+     *
+     * @return array
+     */
+    protected function generate_docs_item() {
+        global $PAGE;
+        $path = page_get_doc_link_path($PAGE);
+        $docurl = get_docs_url($path);
+        return $this->generate_node_data(
+            $this->item->title,
+            $docurl,
+            null,
+            $this->item->tooltip,
+        );
+    }
+
+    /**
      * Given some text and an ideal length, this function truncates the text based on words count.
      *
      * @param string $text text to be shortened
@@ -1052,7 +1075,12 @@ class smartmenu_item {
         // Add classes for item title placement on card.
         $class[] = $this->get_textposition_class();
         // Menu item class.
-        $types = [self::TYPESTATIC => 'static', self::TYPEDYNAMIC => 'dynamic', self::TYPEHEADING => 'heading'];
+        $types = [
+            self::TYPESTATIC => 'static',
+            self::TYPEDYNAMIC => 'dynamic',
+            self::TYPEHEADING => 'heading',
+            self::TYPEDOCS => 'docs',
+        ];
         $class[] = 'menu-item-'.($types[$this->item->type] ?? '');
         // Add classes to item data.
         $this->item->classes = $class;
@@ -1068,11 +1096,20 @@ class smartmenu_item {
                 $static = $this->generate_static_item();
                 $result = [$static]; // Return the result as recursive array for merge with dynamic items.
                 $type = 'static';
+                $cacheable = true;
                 break;
 
             case self::TYPEDYNAMIC:
                 $result = $this->generate_dynamic_item();
                 $type = 'dynamic';
+                $cacheable = true;
+                break;
+
+            case self::TYPEDOCS:
+                $docs = $this->generate_docs_item();
+                $result = [$docs]; // Return the result as recursive array useful to merge with dynamic items.
+                $type = 'docs';
+                $cacheable = false;
                 break;
 
             case self::TYPEHEADING:
@@ -1080,11 +1117,14 @@ class smartmenu_item {
                 $heading = $this->generate_heading();
                 $result = [$heading]; // Return the result as recursive array useful to merge with dynamic items.
                 $type = 'heading';
+                $cacheable = true;
 
         endswitch;
 
-        // Save the items cache.
-        $this->cache->set($cachekey, $result);
+        // If cachable save the items cache.
+        if ($cacheable) {
+            $this->cache->set($cachekey, $result);
+        }
 
         return $result;
     }
@@ -1321,6 +1361,7 @@ class smartmenu_item {
     public static function get_types(?int $type = null) {
         $types = [
                 self::TYPESTATIC => get_string('smartmenusmenuitemtypestatic', 'theme_boost_union'),
+                self::TYPEDOCS => get_string('smartmenusmenuitemtypedocs', 'theme_boost_union'),
                 self::TYPEHEADING => get_string('smartmenusmenuitemtypeheading', 'theme_boost_union'),
                 self::TYPEDYNAMIC => get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union'),
         ];
