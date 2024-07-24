@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-07-24 - Test: Fix broken Behat scenario 'Suppress 'Chat to course participants' link', resolves #696
+
 ### v4.3-r15 
 
 * 2024-07-11 - Bugfix: Allow external SCSS to use SCSS variables by disabling the SCSS validation, resolves #683.

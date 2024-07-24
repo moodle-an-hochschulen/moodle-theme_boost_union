@@ -88,8 +88,8 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And I navigate to "Communication" in current page administration
     And I select "Custom link" from the "Provider" singleselect
     And I set the following fields to these values:
-      | communicationroomname | Test URL                                                                                   |
-      | customlinkurl         | #wwwroot#/communication/provider/customlink/tests/behat/fixtures/custom_link_test_page.php |
+      | Room name       | Test URL                                                                                   |
+      | Custom link URL | #wwwroot#/communication/provider/customlink/tests/behat/fixtures/custom_link_test_page.php |
     And I press "Save changes"
     When I am on "Course 1" course homepage
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
