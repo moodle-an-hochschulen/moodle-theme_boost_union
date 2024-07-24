@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-07-24 - Test: Fix broken Behat scenario 'Suppress 'Chat to course participants' link', resolves #696
 * 2024-07-23 - Bugfix: Fix unparsable example JSON in Mustache template
 
 ### v4.4-r1
