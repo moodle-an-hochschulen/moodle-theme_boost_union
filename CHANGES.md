@@ -12,6 +12,7 @@ Changes
 ### v4.4-r1
 
 * 2024-07-15 - Development: Rename master branch to main, please update your clones.
+* 2024-05-14 - Improvement: Limit the max-width of the navbar logo if it is too broad or has a special aspect ratio #544
 * 2024-07-13 - Upgrade: Make the \theme_boost_union\task\purge_cache task non-blocking as this has been deprecated in Moodle core.
 * 2024-07-13 - Bugfix: Adopt fix for MDL-82397 before its integration into Moodle core, relates to #691.
 * 2024-07-12 - Upgrade: Adapt the course index icon feature visually to the new icon sizes.

@@ -20,12 +20,10 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
   @javascript @_file_upload
   Scenario: Setting: Logo - Upload a custom logo to the theme
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Logo" filemanager
     And I press "Save changes"
-    And Behat debugging is enabled
     And I log out
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     # We can't check the uploaded image file visually, but we can verify that the compact logo is shipped from the theme_boost_union global logo filearea.
@@ -50,12 +48,10 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a PNG logo to the theme and check that it is resized
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Logo" filemanager
     And I press "Save changes"
-    And Behat debugging is enabled
     And I log out
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     Then "//div[@id='loginlogo']//img[@id='logoimage'][contains(@src, 'pluginfile.php/1/theme_boost_union/logo/0x200/')]" "xpath_element" should exist
@@ -63,12 +59,10 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a SVG logo to the theme and check that it is not resized
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/moodlelogo.svg" file to "Logo" filemanager
     And I press "Save changes"
-    And Behat debugging is enabled
     And I log out
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     Then "//div[@id='loginlogo']//img[@id='logoimage'][contains(@src, 'pluginfile.php/1/theme_boost_union/logo/1/')]" "xpath_element" should exist
@@ -76,12 +70,10 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a custom compact logo to the theme
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on site homepage
     # We can't check the uploaded image file visually, but we can verify that the compact logo is shipped from the theme_boost_union global logo filearea.
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
@@ -100,39 +92,72 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     And I am on site homepage
     Then ".navbar .logo" "css_element" should not exist
 
+  @javascript
+  Scenario Outline: Setting: Logo max-width - limit logo width readout from theme_config entry
+    Given the following config values are set as admin:
+      | config                 | value      | plugin            |
+      | maxlogowidth           | <css-rule> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "student1"
+    And I am on site homepage
+    Then DOM element ".navbar-brand .logo" should have computed style "<css-name>" "<css-rule>"
+    And DOM element ".navbar-brand .logo" should have computed style "height" "auto"
+
+    Examples:
+      | css-name   | css-rule  |
+      | max-width  | 100px     |
+      | max-width  | 10vw      |
+      | max-width  | 13%       |
+
+  @javascript
+  Scenario: Setting: Logo max-width - limit logo width readout from theme_config entry (countercheck)
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I set the field "Maximal width of logo" to ""
+    And I press "Save changes"
+    And I am on site homepage
+    And the theme cache is purged and the theme is reloaded
+    Then DOM element ".navbar-brand .logo" should have computed style "height" "100%"
+
+  @javascript
+  Scenario: Setting: Logo max-width - limit logo through admin settings - check regex to limit entry (countercheck)
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I set the field "Maximal width of logo" to "2px"
+    And I press "Save changes"
+    Then I should not see "Changes saved"
+    And I should see "Some settings were not changed due to an error."
+    And I should see "This value is not valid"
+
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a PNG compact logo to the theme and check that it is resized
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on site homepage
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact/300x300/')]" "xpath_element" should exist
 
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a SVG compact logo to the theme and check that it is not resized
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/moodlelogo.svg" file to "Compact logo" filemanager
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on site homepage
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact/1/')]" "xpath_element" should exist
 
   @javascript @_file_upload
   Scenario: Setting: Favicon - Upload a custom favicon to the theme
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/favicon.ico" file to "Favicon" filemanager
     And I press "Save changes"
-    And Behat debugging is enabled
     # We can't check the uploaded favicon visually, but we can verify that the site's favicon is not shipped by pluginfile.php (for uploaded files) and not by theme/image.php (for image files from disk) anymore.
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/favicon')][contains(@href, 'favicon.ico')]" "xpath_element" should exist
     And "//head//link[contains(@rel, 'shortcut')][contains(@href, 'theme/image.php/boost_union')][contains(@href, 'favicon')]" "xpath_element" should not exist
@@ -158,12 +183,10 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
       | config                  | value      | plugin            |
       | backgroundimageposition | <position> | theme_boost_union |
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Background image" filemanager
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on site homepage
     Then DOM element "body" should have computed style "background-position" "<cssvalue>"
 
