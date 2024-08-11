@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-08-11 - Updated Moodle Plugin CI to latest upstream recommendations
+
 ### v4.2-r18 
 
 * 2024-07-11 - Bugfix: Allow external SCSS to use SCSS variables by disabling the SCSS validation, resolves #683.
