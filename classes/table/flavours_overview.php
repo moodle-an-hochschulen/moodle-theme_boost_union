@@ -152,14 +152,14 @@ class flavours_overview extends \table_sql {
         if ($data->applytocategories == true) {
             $badges[] = \html_writer::tag('span',
                     get_string('categories'),
-                    ['class' => 'badge badge-primary']);
+                    ['class' => 'badge bg-primary text-light']);
         }
 
         // If apply-to-cohorts is enabled, add a badge.
         if ($data->applytocohorts == true) {
             $badges[] = \html_writer::tag('span',
                     get_string('cohorts', 'cohort'),
-                    ['class' => 'badge badge-primary']);
+                    ['class' => 'badge bg-primary text-light']);
         }
 
         // Implode and return the badges.

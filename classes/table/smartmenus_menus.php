@@ -122,7 +122,7 @@ class smartmenus_menus extends \table_sql {
         // Implode all given locations and show a badge for each of them.
         return (!empty($locations)) ? implode(' ', array_map(function($value) {
             $location = \theme_boost_union\smartmenu::get_location($value);
-            return \html_writer::tag('span', $location, ['class' => 'badge badge-primary']);
+            return \html_writer::tag('span', $location, ['class' => 'badge bg-primary text-light']);
         }, $locations)) : "";
     }
 
@@ -137,7 +137,7 @@ class smartmenus_menus extends \table_sql {
         $type = \theme_boost_union\smartmenu::get_type($data->type);
 
         // Return the type as badge.
-        return \html_writer::tag('span', $type, ['class' => 'badge badge-primary']);
+        return \html_writer::tag('span', $type, ['class' => 'badge bg-primary text-light']);
     }
 
     /**

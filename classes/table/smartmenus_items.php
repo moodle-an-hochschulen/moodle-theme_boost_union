@@ -116,7 +116,7 @@ class smartmenus_items extends \table_sql {
         $type = \theme_boost_union\smartmenu_item::get_types($data->type);
 
         // Return the type as badge.
-        return \html_writer::tag('span', $type, ['class' => 'badge badge-primary']);
+        return \html_writer::tag('span', $type, ['class' => 'badge bg-primary text-light']);
     }
 
     /**
@@ -138,7 +138,7 @@ class smartmenus_items extends \table_sql {
             $rolelist = $DB->get_records_list('role', 'id', $roles);
             $rolenames = role_fix_names($rolelist);
             array_walk($rolenames, function(&$value) {
-                $value = \html_writer::tag('span', $value->localname, ['class' => 'badge badge-primary']);
+                $value = \html_writer::tag('span', $value->localname, ['class' => 'badge bg-primary text-light']);
             });
 
             // Amend rule list.
@@ -154,7 +154,7 @@ class smartmenus_items extends \table_sql {
             $cohorts = json_decode($data->cohorts);
             $cohortlist = $DB->get_records_list('cohort', 'id', $cohorts);
             array_walk($cohortlist, function(&$value) {
-                $value = \html_writer::tag('span', $value->name, ['class' => 'badge badge-primary']);
+                $value = \html_writer::tag('span', $value->name, ['class' => 'badge bg-primary text-light']);
             });
 
             // Amend rule list.
@@ -172,7 +172,7 @@ class smartmenus_items extends \table_sql {
             $languagelist = [];
             foreach ($languages as $lang) {
                 if (isset($options[$lang])) {
-                    $languagelist[] = \html_writer::tag('span', $options[$lang], ['class' => 'badge badge-primary']);
+                    $languagelist[] = \html_writer::tag('span', $options[$lang], ['class' => 'badge bg-primary text-light']);
                 }
             }
 
@@ -198,7 +198,7 @@ class smartmenus_items extends \table_sql {
             }
 
             array_walk($datelist, function(&$value) {
-                $value = \html_writer::tag('span', $value, ['class' => 'badge badge-primary']);
+                $value = \html_writer::tag('span', $value, ['class' => 'badge bg-primary text-light']);
             });
 
             // Amend rule list.
