@@ -107,8 +107,12 @@ class primary extends \core\navigation\output\primary {
         // Separate the menus for the bottom menu.
         $locationbottom = smartmenu::get_menus_forlocation(smartmenu::LOCATION_BOTTOM, $smartmenus);
 
-        // Merge the smart menu nodes which contain the main menu location with the primary and custom menu nodes.
-        $menudata = array_merge($this->get_primary_nav(), $this->get_custom_menu($output), $mainmenu);
+        // Merge the smart menu nodes which contain the main menu location with the custom menu nodes.
+        $custommenus = array_merge($this->get_custom_menu($output), $mainmenu);
+
+        // Merge the smart menu and custom menu nodes which contain the main menu location with the primary nodes.
+        // The function merge_primary_and_custom is needed cause it also sets the active node.
+        $menudata = $this->merge_primary_and_custom($this->get_primary_nav(), $custommenus , false);
         $moremenu = new \core\navigation\output\more_menu((object) $menudata, 'navbar-nav', false);
 
         // Menubar.
