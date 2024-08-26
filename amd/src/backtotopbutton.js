@@ -20,102 +20,91 @@
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @copyright  on behalf of Zurich University of Applied Sciences (ZHAW)
  * @copyright  based on code from theme_boost_campus by Kathrin Osswald.
+ * @copyright  2024 University of Graz based on code/ideas of Mark Sharp <mark.sharp@solent.ac.uk>
+ *             written 2022 for Solent University {@link https://www.solent.ac.uk}
+ * @author     André Menrath <andre.menrath@uni-graz.at>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/str', 'core/notification'], function($, str, Notification) {
-    "use strict";
+import {getString} from 'core/str';
 
-    // Remember if the back to top button is shown currently.
-    let buttonShown = false;
+/**
+ * Create the back-to-top button element.
+ *
+ * @param {string} backToTopString Aria text for the back-to-top button.
+ */
+const createBackToTopButton = (backToTopString) => {
+    let button = document.createElement('button');
+    button.id = 'back-to-top';
+    button.className = 'btn btn-icon bg-secondary icon-no-margin d-print-none';
+    button.setAttribute('aria-label', backToTopString);
+    button.innerHTML = '<i aria-hidden="true" class="fa fa-chevron-up fa-fw"></i>';
+    return button;
+};
 
-    /**
-     * Initializing.
-     */
-    function initBackToTop() {
-        // Define the scroll distance after which the button will be shown.
-        const scrolldistance = 220;
+/**
+ * Scroll event handler.
+ * @param {element} button The back-to-top button.
+ * @param {integer} scrollDistance Scroll distance from the top when to show the back-to-top button.
+ */
+const handleScroll = (button, scrollDistance) => {
+    button.style.display = document.documentElement.scrollTop > scrollDistance ? 'block' : 'none';
+};
 
-        // Get the string backtotop from language file.
-        let stringsPromise = str.get_string('backtotop', 'theme_boost_union');
+/**
+ * Scroll to top behavior.
+ *
+ * @param {event} event
+ */
+const scrollToTop = (event) => {
+    event.preventDefault();
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+    });
+};
 
-        // If the string has arrived, add backtotop button to DOM and add scroll and click handlers.
-        $.when(stringsPromise).then(function(string) {
-            // Add a fontawesome icon after the footer as the back to top button.
-            $('#page-footer').after('<button id="back-to-top" ' +
-                    'class="btn btn-icon bg-secondary icon-no-margin d-print-none"' +
-                    'aria-label="' + string + '">' +
-                    '<i aria-hidden="true" class="fa fa-chevron-up fa-fw "></i></button>');
+/**
+ * Throttle function to limit calls.
+ *
+ * @param   {function} func  The function to throttle.
+ * @param   {number}   limit The time interval in milliseconds to throttle the function.
+ *
+ * @returns {function}       The throttled function.
+ */
+const throttle = (func, limit) => {
+    let inThrottle = false;
 
-            // Check directly if the button should be shown.
-            // This is helpful for all cases when this code here runs _after_ the page has been scrolled,
-            // especially by the scrollspy feature or by a simple browser page reload.
-            if ($(window).scrollTop() > scrolldistance) {
-                checkAndShow();
-            } else {
-                checkAndHide();
-            }
-
-            // This function fades the button in when the page is scrolled down or fades it out
-            // if the user is at the top of the page again.
-            $(window).on('scroll', function() {
-                if ($(window).scrollTop() > scrolldistance) {
-                    checkAndShow();
-                } else {
-                    checkAndHide();
-                }
-            });
-
-            // This function scrolls the page to top with a duration of 500ms.
-            $('#back-to-top').on('click', function(event) {
-                event.preventDefault();
-                $('html, body').animate({scrollTop: 0}, 500);
-                $('#back-to-top').blur();
-            });
-
-            // This will check if there is a communication button shown on the page already.
-            // If yes, it will add a class to the body tag which will be later used to align the back-to-top button
-            // with the communications button.
-            // This is necessary as the communications button would otherwise be overlaid by the back-to-top button.
-            if ($('#page-footer .btn-footer-communication').length) {
-                $('body').addClass('theme-boost-union-commincourse');
-            }
-
-            return true;
-        }).fail(Notification.exception);
-    }
-
-    /**
-     * Helper function to handle the button visibility when the page is scrolling up.
-     */
-    function checkAndHide() {
-        // Check if the button is still shown.
-        if (buttonShown === true) {
-            // Fade it out and remember the status in the end.
-            // To be precise, the faceOut() function will be called multiple times as buttonShown is not set until the button is
-            // really faded out. However, as soon as it is faded out, it won't be called until the button is shown again.
-            $('#back-to-top').fadeOut(100, function() {
-                buttonShown = false;
-            });
-        }
-    }
-
-    /**
-     * Helper function to handle the button visibility when the page is scrolling down.
-     */
-    function checkAndShow() {
-        // Check if the button is not yet shown.
-        if (buttonShown === false) {
-            // Fade it in and remember the status in the end.
-            $('#back-to-top').fadeIn(300, function() {
-                buttonShown = true;
-            });
-        }
-    }
-
-    return {
-        init: function() {
-            initBackToTop();
+    return (...args) => {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => {
+                inThrottle = false;
+            }, limit);
         }
     };
-});
+};
+
+/**
+ * Initial setup for the back to top button.
+ */
+export const init = async() => {
+    // Configuration value when to start showing the back-to-top button.
+    const scrollDistance = 220;
+
+    // Aria text used for the back-to-top button.
+    const backToTopString = await getString('backtotop', 'theme_boost_union');
+
+    // Create and add the back-to-top button to the DOM.
+    const footer = document.querySelector('#page-footer');
+    const button = createBackToTopButton(backToTopString);
+    footer.after(button);
+
+    // Add event listeners that toggle the visibility and the behavior of the back-to-top button.
+    const throttledScrollHandler = throttle(() => handleScroll(button, scrollDistance), 200);
+
+    document.addEventListener('scroll', throttledScrollHandler);
+    button.addEventListener('click', scrollToTop);
+};
