@@ -58,6 +58,20 @@ class primary extends \core\navigation\output\primary {
     }
 
     /**
+     * Override the parent function, so that it also works with associative arrays.
+     *
+     * @param object|array $node
+     * @param bool $expandedmenu
+     * @return bool
+     */
+    protected function flag_active_nodes(object|array $node, bool $expandedmenu = false): bool {
+        if (is_array($node)) {
+            $node = (object) $node;
+        }
+        return parent::flag_active_nodes($node, $expandedmenu);
+    }
+
+    /**
      * Combine the various menus into a standardized output.
      *
      * Modifications compared to the original function:
