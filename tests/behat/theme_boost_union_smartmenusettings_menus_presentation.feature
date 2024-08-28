@@ -425,7 +425,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | 0        | 0        | 2        | before    | after     | after     |
       | 0        | 1        | 2        | before    | after     | before    |
 
- @javascript
+  @javascript
   Scenario: Smartmenu: Menus: Presentation - Which menu item is active is displayed.
     When I log in as "admin"
     And I navigate to smart menus
