@@ -45,6 +45,7 @@ $string['settingsoverview_feel_desc'] = 'Settings for the overall behaviour of y
 $string['settingsoverview_content_desc'] = 'Settings for the global content of your Moodle site are located here: Footer, static pages, info banners, advertisement tiles and sliders.';
 $string['settingsoverview_functionality_desc'] = 'Settings for additional useful global or course-related functionality on your Moodle site are located here.';
 $string['settingsoverview_flavours_desc'] = 'With flavours, you can diversify the look of your Moodle site between cohorts and / or course categories.';
+$string['settingsoverview_snippets_desc'] = 'With CSS snippets, you can enable additional eye candy or visual fixes on your Moodle site.';
 $string['settingsoverview_smartmenus_desc'] = 'With smart menus, you can extend the navigation items of your Moodle site in the main menu and the user menus well as introduce a bottom menu or a top menu.';
 $string['settingsoverview_all'] = 'All settings on one page';
 $string['settingsoverview_all_desc'] = 'Here, you can open the standard Moodle category settings page for Boost Union that shows all settings on one page. But beware, it is really packed.';
@@ -1101,6 +1102,29 @@ $string['flavourspreviewflavour'] = 'Preview flavour';
 $string['flavourspreviewblindtext'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam eleifend mi in nulla. Felis imperdiet proin fermentum leo vel orci porta. Sed nisi lacus sed viverra tellus in hac habitasse. Vivamus arcu felis bibendum ut. Nisi porta lorem mollis aliquam ut porttitor. Odio euismod lacinia at quis risus sed vulputate odio. Sed felis eget velit aliquet sagittis id consectetur purus. Nec ullamcorper sit amet risus nullam eget. Pellentesque sit amet porttitor eget dolor. Cursus mattis molestie a iaculis at erat pellentesque.';
 $string['flavourstitle'] = 'Title';
 $string['flavourstitle_help'] = 'The flavour\'s title is just used internally to allow you to document a particular flavour in the list of flavours.';
+
+// Settings: CSS snippets page.
+$string['configtitlesnippets'] = 'CSS snippets';
+$string['snippetsdescription'] = 'Description';
+$string['snippetsdisable'] = 'Disable';
+$string['snippetsenable'] = 'Enable';
+$string['snippetsexperimental'] = 'Please note: The CSS snippets functionality is fully usable in the current state of implementation, but has to be <em>considered as extendible</em> as currently only snippets which are built into or added to the Boost Union plugin codebase can be used.';
+$string['snippetsgoal'] = 'Goal';
+$string['snippetsgoalaccessibility'] = 'Accessibility';
+$string['snippetsgoalbugfix'] = 'Bugfix';
+$string['snippetsgoaldevsonly'] = 'For developers only';
+$string['snippetsgoaleaseofuse'] = 'Ease of use';
+$string['snippetsgoaleyecandy'] = 'Eye candy';
+$string['snippetsnothingtodisplay'] = 'There aren\'t any CSS snippets which can be used.';
+$string['snippetsoverview_desc'] = '<p>Boost Union\'s CSS snippets offer a possibility to add small (or slightly larger) amounts of CSS to the Moodle site. This can be particularly handy for fixing small visual glitches in Moodle core or for adding eye candy to your Moodle site.</p>Please note that the CSS snippets are added to the SCSS stack one after another. Thus, the order of the snippets on this page is key.</p><p>Please note as well that after each change which you make on this page, the theme cache is purged. This is necessary to make sure that the compiled SCSS code which is shipped to the browser is up-to-date.</p>';
+$string['snippetsscope'] = 'Scope';
+$string['snippetsscopecourse'] = 'Course';
+$string['snippetsscopedashboard'] = 'Dashboard';
+$string['snippetsscopeglobal'] = 'Global';
+$string['snippetssnippets'] = 'CSS snippets';
+$string['snippetssource'] = 'Source';
+$string['snippetssourcetheme_boost_union'] = 'Boost Union built-in';
+$string['snippetstitle'] = 'Title';
 
 // Settings: Smart menus page.
 $string['smartmenus'] = 'Smart menus';

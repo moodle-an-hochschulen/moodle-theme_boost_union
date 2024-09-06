@@ -1,0 +1,53 @@
+/**
+ * Snippet Title: Visual depth
+ * Domain:        theme_boost_union
+ * Scope:         global
+ * Goal:          eyecandy
+ * Description:   A less flat design than is intended in the Boost theme. Realised by box-shadows on a number of page elements and a colour gradient on the page background.
+ *
+ * @package    theme_boost_union
+ * @copyright  2024 University of Applied Science Hamburg
+ * @author     Nils Promer <nils.promer@haw-hamburg.de>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+
+ body {
+   background: radial-gradient(circle, rgba(0, 26, 36, 0.4) 0%, rgba(208, 226, 242, 1) 51%, rgba(240, 241, 242, 1) 100%);
+ }
+
+ .navbar.fixed-top {
+   box-shadow: rgba(62, 64, 72, 0.4) 0 4px 6px;
+ }
+
+ .main-inner {
+   box-shadow: rgba(149, 157, 165, 0.6) 0 4px 6px;
+ }
+
+section.block {
+  box-shadow: rgba(149, 157, 165, 0.15) 0 4px 6px;
+ }
+
+.add_block_button a {
+   box-shadow: rgba(149, 157, 165, 0.15) 0 4px 6px;
+ }
+
+.pagelayout-frontpage .coursebox {
+   box-shadow: rgba(149, 157, 165, 0.15) 0 4px 6px;
+ }
+
+.pagelayout-mycourses .course-card {
+    box-shadow: rgba(149, 157, 165, 0.15) 0 4px 6px;
+ }
+
+#page-course-view-topics .section-item {
+  box-shadow: rgba(149, 157, 165, 0.15) 0 4px 6px;
+}
+
+.drawer-toggles .drawer-toggler .btn {
+   box-shadow: rgba(62, 64, 72, 0.4) 0 4px 6px;
+ }
+
+.btn-footer-popover {
+   box-shadow: rgba(62, 64, 72, 0.4) 0 4px 6px;
+ }

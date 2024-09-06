@@ -1,0 +1,16 @@
+/**
+ * Snippet Title: Darken hover background color for secondary menu
+ * Domain:        theme_boost_union
+ * Scope:         global
+ * Goal:          accessibility
+ * Description:   Darken the background color of secondary menu items while hovering to show more contrast agains other unselected menu items.
+ *
+ * @package    theme_boost_union
+ * @copyright  2024 The American University in Cairo
+ * @author     Heba Amer <heba.amer@aucegypt.edu>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+.secondary-navigation .moremenu .nav-link:hover, secondary-navigation .moremenu .nav-link:focus {
+  background-color: $gray-400 !important;
+}

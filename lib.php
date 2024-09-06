@@ -128,6 +128,8 @@ define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_NONE', 0);
 define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_DOWNLOAD', 1);
 define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB', 2);
 
+use theme_boost_union\snippets;
+
 /**
  * Returns the main SCSS content.
  *
@@ -158,6 +160,9 @@ function theme_boost_union_get_main_scss_content($theme) {
     // would end of _after_ the code from theme_boost_get_extra_scss() and not _before_.
     // Thus, we sadly have to get and include the external Post SCSS here already.
     $scss .= theme_boost_union_get_external_scss('post');
+
+    // Get and include the SCSS of the enabled CSS snippets.
+    $scss .= snippets::get_enabled_snippet_scss();
 
     return $scss;
 }

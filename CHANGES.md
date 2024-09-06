@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-09-04 - Feature: Add first version of CSS snippets feature, credits go to all members of the MoodleMootDACH dev camp team 22.
 * 2024-08-24 - Upgrade: Update Bootstrap classes for Moodle 4.4.
 * 2024-08-11 - Updated Moodle Plugin CI to latest upstream recommendations
 * 2024-07-24 - Test: Fix broken Behat scenario 'Suppress 'Chat to course participants' link', resolves #696

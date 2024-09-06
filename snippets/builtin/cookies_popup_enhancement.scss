@@ -1,0 +1,93 @@
+/**
+ * Snippet Title: Cookies Popup Enhancement
+ * Domain:        theme_boost_union
+ * Scope:         global
+ * Goal:          easeofuse
+ * Description:   Enhance the popup cookies dialog when first visiting a moodle website
+ *
+ * @package    theme_boost_union
+ * @copyright  2024 The American University in Cairo
+ * @author     Heba Amer <heba.amer@aucegypt.edu>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+.eupopup-container.eupopup-container-bottom {
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 4px 4px 12px 2000px rgba(0,0,0,.56);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 320px;
+    height: 330px;
+    margin: -270px 0 0 -160px;
+    padding: 50px 20px
+}
+
+@media (min-width: 576px) {
+    .eupopup-container.eupopup-container-bottom {
+        width:450px;
+        height: 330px;
+        margin: -270px 0 0 -220px
+    }
+}
+
+@media (min-width: 768px) {
+    .eupopup-container.eupopup-container-bottom {
+        width:650px;
+        height: 300px;
+        margin: -135px 0 0 -320px
+    }
+}
+
+.eupopup-container.eupopup-container-bottom .eupopup-body {
+    color: #343a40;
+    font-size: 1.2rem;
+    line-height: 1.5rem
+}
+
+.eupopup-container.eupopup-container-bottom .eupopup-body a {
+    color: #8eaf3e;
+    text-decoration: none;
+    font-weight: 700;
+    line-height: 2.5rem
+}
+
+.eupopup-container.eupopup-container-bottom .eupopup-body a:hover {
+    text-decoration: underline
+}
+
+.eupopup-container.eupopup-container-bottom .eupopup-buttons {
+    margin-top: 2rem
+}
+
+.eupopup-container.eupopup-container-bottom .eupopup-buttons .eupopup-button_1 {
+    background-color: #ff7f00;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: .75rem 1.5rem 1rem 1.5rem;
+    border-radius: .5rem;
+    display: inline-block;
+    text-align: center;
+    transition: filter 0.15s ease-in-out
+}
+
+.eupopup-container.eupopup-container-bottom .eupopup-buttons .eupopup-button_1:hover {
+    text-decoration: none;
+    filter: brightness(85%)
+}
+
+.eupopup-container.eupopup-container-bottom .eupopup-closebutton {
+    font-weight: 500;
+    color: #343a40;
+    opacity: .8;
+    font-size: 35px;
+    padding: 10px 20px
+}
+
+.eupopup-container.eupopup-container-bottom .eupopup-closebutton:hover {
+    color: #343a40
+}

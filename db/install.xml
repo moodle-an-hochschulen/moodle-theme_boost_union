@@ -98,5 +98,17 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
+    <TABLE NAME="theme_boost_union_snippets" COMMENT="CSS Snippets">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="sortorder" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="source" TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT="theme_boost_union" SEQUENCE="false"/>
+        <FIELD NAME="path" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
   </TABLES>
 </XMLDB>

@@ -1,0 +1,17 @@
+/**
+ * Snippet Title: Collection of fixes for visual flaws
+ * Domain:        theme_boost_union
+ * Scope:         global
+ * Goal:          bugfix
+ * Description:   Collection of fixes for visual flaws in Boost theme<br><ul><li>Fix for visually cropped right border of secondary menu item</li></ul>
+ *
+ * @package    theme_boost_union
+ * @copyright  Luther Blissett
+ * @author     Luther Blissett
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+// Fixing
+.moremenu .nav-link.active:focus, .moremenu .nav-link.active:hover {
+    z-index: 2;
+}

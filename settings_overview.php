@@ -83,6 +83,12 @@ $templatecontext['cards'][] = [
     'url' => new \moodle_url('/theme/boost_union/flavours/overview.php'),
 ];
 $templatecontext['cards'][] = [
+    'label' => get_string('configtitlesnippets', 'theme_boost_union'),
+    'desc' => get_string('settingsoverview_snippets_desc', 'theme_boost_union'),
+    'btn' => 'primary',
+    'url' => new \moodle_url('/theme/boost_union/snippets/overview.php'),
+];
+$templatecontext['cards'][] = [
     'label' => get_string('smartmenus', 'theme_boost_union'),
     'desc' => get_string('settingsoverview_smartmenus_desc', 'theme_boost_union'),
     'btn' => 'primary',
