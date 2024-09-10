@@ -160,7 +160,7 @@ class snippets {
     }
 
     /**
-     * Checks which snippets are active and returns their css.
+     * Checks which snippets are active and returns their scss.
      *
      * @return string
      */
