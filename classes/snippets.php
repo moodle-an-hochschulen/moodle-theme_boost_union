@@ -24,21 +24,16 @@
 
 namespace theme_boost_union;
 
+use stdClass;
+
 /**
- * Class snippets
+ * Library class containing solely static functions for dealing with SCSS snippets.
  *
  * @package    theme_boost_union
  * @copyright  2024 André Menrath, University of Graz <andre.menrath@uni-graz.at>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class snippets {
-    /**
-     * Constant for how many a Kilobyte are in bytes.
-     *
-     * @var int
-     */
-    const KB_IN_BYTES = 1024;
-
     /**
      * List of all available Snippet Meta File headers.
      *
@@ -65,7 +60,7 @@ class snippets {
      *
      * @return string|null
      */
-    public static function get_snippet_file($path, $source) {
+    public static function get_snippet_file($path, $source): string|null {
         global $CFG;
         // Get the snippet file based on the different sources.
         if ('theme_boost_union' === $source) {
@@ -81,21 +76,26 @@ class snippets {
     /**
      * Loads the Snippets SCSS content.
      *
+     * Returns an empty string as a fallback if the snippet is not found.
+     *
      * @param mixed $path
      * @param mixed $source
      *
-     * @return boolean|string
+     * @return string
      */
-    public static function get_snippet_scss($path, $source) {
+    public static function get_snippet_scss($path, $source): string {
         // Get the snippets file, based on the source.
         $file = self::get_snippet_file($path, $source);
 
+        // Return an empty string if the file is not found/readable.
         if (is_null($file)) {
             return '';
         }
 
         $scss = file_get_contents( $file, false, null, 0);
-        return $scss;
+
+        // Return the SCSS or an empty string if reading the file has failed.
+        return $scss ?: '';
     }
 
     /**
@@ -104,9 +104,9 @@ class snippets {
      * @param string $path
      * @param string $source
      *
-     * @return mixed
+     * @return stdClass|null
      */
-    public static function get_snippet_meta($path, $source) {
+    public static function get_snippet_meta($path, $source): stdClass|null {
         // Get the snippets file, based on the source.
         $file = self::get_snippet_file($path, $source);
 
@@ -124,7 +124,7 @@ class snippets {
         }
 
         // Create an object containing the information.
-        $snippet = new \stdClass();
+        $snippet = new stdClass();
         $snippet->title = $headers['Snippet Title'];
         $snippet->description = $headers['Description'];
         $snippet->scope = $headers['Scope'];
@@ -141,9 +141,9 @@ class snippets {
      *
      * @param \moodle_recordset $snippetrecordset
      *
-     * @return array
+     * @return array An array of snippet objects.
      */
-    public static function compose_snippets_data($snippetrecordset) {
+    public static function compose_snippets_data($snippetrecordset): array {
         $snippets = [];
 
         foreach ($snippetrecordset as $snippetrecord) {
@@ -164,7 +164,7 @@ class snippets {
      *
      * @return string
      */
-    public static function get_enabled_snippet_scss() {
+    public static function get_enabled_snippet_scss(): string {
         global $DB;
 
         // Compose SQL base query.
@@ -190,6 +190,8 @@ class snippets {
     /**
      * Strips close comment and close php tags from file headers.
      *
+     * @copyright WordPress https://developer.wordpress.org/reference/functions/_cleanup_header_comment/
+     *
      * @param string $str Header comment to clean up.
      *
      * @return string
@@ -208,14 +210,15 @@ class snippets {
      * If the file data is not within that first 8 KB, then the author should correct
      * the snippet.
      *
+     * @copyright forked from https://developer.wordpress.org/reference/functions/get_file_data/
+     *
      * @param string $file            Absolute path to the file.
      *
-     * @copyright forked from https://developer.wordpress.org/reference/functions/get_file_data/
      * @return string[] Array of file header values keyed by header name.
      */
-    public static function get_snippet_meta_from_file($file) {
+    public static function get_snippet_meta_from_file($file): array {
         // Pull only the first 8 KB of the file in.
-        $filedata = file_get_contents( $file, false, null, 0, 8 * self::KB_IN_BYTES );
+        $filedata = file_get_contents( $file, false, null, 0, 8192);
 
         if ( false === $filedata ) {
             $filedata = '';
@@ -226,6 +229,7 @@ class snippets {
 
         $headers = [];
 
+        // Scan for each snippet header meta information in the files top scss comment.
         foreach (self::SNIPPET_HEADERS as $regex) {
             if (preg_match('/^(?:[ \t]*)?[ \t\/*#@]*' . preg_quote($regex, '/') . ':(.*)$/mi', $filedata, $match)
                 && $match[1]) {
@@ -243,15 +247,13 @@ class snippets {
      *
      * @return string[]
      */
-    private static function get_builtin_snippet_paths() {
+    private static function get_builtin_snippet_paths(): array {
         global $CFG;
         // Get an array of all .scss files in the directory.
         $files = glob($CFG->dirroot . self::BUILTIN_SNIPPETS_BASE_PATH . '*.scss');
 
-        // Get the basenames.
-        $basenames = array_map(fn($file) => basename($file), $files);
-
-        return $basenames;
+        // Return an array of the basenames of the files.
+        return is_array($files) ? array_map(fn($file) => basename($file), $files) : [];
     }
 
     /**
@@ -259,7 +261,7 @@ class snippets {
      *
      * @return void
      */
-    public static function add_builtin_snippets() {
+    public static function add_builtin_snippets(): void {
         global $DB;
 
         // Get builtin snippets that are present on disk.
@@ -281,6 +283,8 @@ class snippets {
             return $snippet->path;
         }, $snippets);
 
+        $transaction = $DB->start_delegated_transaction();
+
         foreach ($paths as $path) {
             if (!in_array($path, $presentpaths)) {
                 $DB->insert_record(
@@ -295,5 +299,7 @@ class snippets {
                 $sortorder += 1;
             }
         }
+
+        $transaction->allow_commit();
     }
 }
