@@ -20,7 +20,7 @@ use advanced_testcase;
 use theme_boost_union\snippets;
 
 /**
- * Tests for Boost Union SCSS Snippets.
+ * Theme Boost Union - Tests for SCSS Snippets.
  *
  * @package    theme_boost_union
  * @category   test

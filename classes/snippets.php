@@ -48,6 +48,7 @@ class snippets {
 
     /**
      * Base path CSS snippets that are shipped with boost_union.
+     *
      * @var string
      */
     const BUILTIN_SNIPPETS_BASE_PATH = '/theme/boost_union/snippets/builtin/';
@@ -55,31 +56,32 @@ class snippets {
     /**
      * Gets the snippet file based on the meta information.
      *
-     * @param mixed $path
-     * @param mixed $source
+     * @param string $path The snippet's path.
+     * @param string $source The snippet's source.
      *
      * @return string|null
      */
     public static function get_snippet_file($path, $source): string|null {
         global $CFG;
+
         // Get the snippet file based on the different sources.
         if ('theme_boost_union' === $source) {
             // Builtin CSS SNippets.
             $file = $CFG->dirroot . self::BUILTIN_SNIPPETS_BASE_PATH . $path;
         } else {
-            // Other snippet sources.
+            // Other snippet sources (which are currently not supported).
             return null;
         }
         return is_readable($file) ? $file : null;
     }
 
     /**
-     * Loads the Snippets SCSS content.
+     * Get the SCSS of a snippet based on its path and source.
      *
      * Returns an empty string as a fallback if the snippet is not found.
      *
-     * @param mixed $path
-     * @param mixed $source
+     * @param string $path The snippet's path.
+     * @param string $source The snippet's source.
      *
      * @return string
      */
@@ -87,24 +89,25 @@ class snippets {
         // Get the snippets file, based on the source.
         $file = self::get_snippet_file($path, $source);
 
-        // Return an empty string if the file is not found/readable.
+        // If the file does not exist or is not readable, we simply return an empty string.
         if (is_null($file)) {
             return '';
         }
 
-        $scss = file_get_contents( $file, false, null, 0);
+        // Get and return the whole file content (which will contain the SCSS comments as well).
+        $scss = file_get_contents($file);
 
         // Return the SCSS or an empty string if reading the file has failed.
         return $scss ?: '';
     }
 
     /**
-     * Get a snippet defined in the code based on path.
+     * Get the meta data of a snippet defined in the snippet code based on its path and source.
      *
-     * @param string $path
-     * @param string $source
+     * @param string $path The snippet's path.
+     * @param string $source The snippet's source.
      *
-     * @return stdClass|null
+     * @return stdClass|null The snippet metadata object, or null if the snippet was not found.
      */
     public static function get_snippet_meta($path, $source): stdClass|null {
         // Get the snippets file, based on the source.
@@ -115,21 +118,22 @@ class snippets {
             return null;
         }
 
-        // Extract the meta from the SCSS files top level multiline comment in WordPress style.
+        // Extract the meta from the SCSS file's top level multiline comment in WordPress style.
         $headers = self::get_snippet_meta_from_file($file);
 
         // The title is the only required meta-key that actually must be set.
+        // If it is not present, we can not proceed.
         if (!array_key_exists('Snippet Title', $headers)) {
             return null;
         }
 
-        // Create an object containing the information.
+        // Create an object containing the metadata.
         $snippet = new stdClass();
         $snippet->title = $headers['Snippet Title'];
         $snippet->description = $headers['Description'];
         $snippet->scope = $headers['Scope'];
         $snippet->goal = $headers['Goal'];
-        $snippet->source = 'theme_boost_union';
+        $snippet->source = $source;
 
         return $snippet;
     }
@@ -139,17 +143,19 @@ class snippets {
      *
      * This is currently used for create the view for the settings table.
      *
-     * @param \moodle_recordset $snippetrecordset
+     * @param \moodle_recordset $snippetrecordset The recordset of snippets which are present in the database.
      *
      * @return array An array of snippet objects.
      */
     public static function compose_snippets_data($snippetrecordset): array {
+        // Initialize snippets array for returning later.
         $snippets = [];
 
+        // Iterate over the snippets which are present in the database.
         foreach ($snippetrecordset as $snippetrecord) {
-            // Get the meta information from the SCSS files top multiline comment.
+            // Get the meta information from the SCSS files' top multiline comment.
             $snippet = self::get_snippet_meta($snippetrecord->path, $snippetrecord->source);
-            // If snippets meta is not found, it will no be added to the returned snippet array.
+            // Only if snippet metadata is found, it will be added to the returned snippets array.
             if ($snippet) {
                 // Merge the two objects.
                 $snippets[] = (object) array_merge((array) $snippetrecord, (array) $snippet);
@@ -176,14 +182,19 @@ class snippets {
         // Get records.
         $data = $DB->get_recordset_sql($sql);
 
+        // Initialize SCSS code.
         $scss = '';
 
+        // Iterate over all records.
         foreach ($data as $snippet) {
+            // And add the SCSS code to the stack.
             $scss .= self::get_snippet_scss($snippet->path, $snippet->source);
         }
 
+        // Close the recordset.
         $data->close();
 
+        // Return the SCSS code.
         return $scss;
     }
 
@@ -243,7 +254,7 @@ class snippets {
     }
 
     /**
-     * Retrieve all builtin CSS snippets via the actual scss files.
+     * Retrieve all builtin CSS snippetsfrom the actual scss files on disk.
      *
      * @return string[]
      */
@@ -252,12 +263,22 @@ class snippets {
         // Get an array of all .scss files in the directory.
         $files = glob($CFG->dirroot . self::BUILTIN_SNIPPETS_BASE_PATH . '*.scss');
 
-        // Return an array of the basenames of the files.
-        return is_array($files) ? array_map(fn($file) => basename($file), $files) : [];
+        // If there are files.
+        if (is_array($files)) {
+            // Return an array of the basenames of the files.
+            $basenames = array_map(function($file) {
+                return basename($file);
+            }, $files);
+            return $basenames;
+
+            // Otherwise.
+        } else {
+            return [];
+        }
     }
 
     /**
-     * Make sure builtin snippets are in the database.
+     * Make sure that the builtin snippets are in the database.
      *
      * @return void
      */
@@ -269,14 +290,14 @@ class snippets {
 
         // Get builtin snippets which are known in the database.
         $snippets = $DB->get_records(
-            'theme_boost_union_snippets',
-            ['source' => 'theme_boost_union'],
-            'sortorder DESC',
-            'id,path,sortorder'
+                'theme_boost_union_snippets',
+                ['source' => 'theme_boost_union'],
+                'sortorder DESC',
+                'id,path,sortorder'
         );
 
         // Get the highest sortorder present.
-        $sortorder = empty($snippets) ? 0 : intval(reset($snippets)->sortorder) + 1;
+        $sortorder = empty($snippets) ? 0 : intval(reset($snippets)->sortorder);
 
         // Prepare an array with all the present builtin snippet paths.
         $presentpaths = array_map(function($snippet) {
@@ -285,20 +306,27 @@ class snippets {
 
         $transaction = $DB->start_delegated_transaction();
 
+        // Iterate over the builtin snippets that are present on disk.
         foreach ($paths as $path) {
+            // If the snippet is not in the database yet.
             if (!in_array($path, $presentpaths)) {
+                // Add it to the database (raising the sort order).
                 $DB->insert_record(
                     'theme_boost_union_snippets',
                     [
                         'path' => $path,
                         'source' => 'theme_boost_union',
-                        'sortorder' => $sortorder,
+                        'sortorder' => $sortorder + 1,
                     ]
                 );
-                // We add each record with incrementing sortorder.
-                $sortorder += 1;
             }
         }
+
+        // Note: snippets which exist in the database and do not exist on disk won't be removed from the database in
+        // in this process.
+        // They will stay there until the theme is removed. This is to make sure that snippet settings do not get lost
+        // even if they appear from disk temporarily.
+        // But such snippets will be ignored later when the snippet table is processed and when the SCSS is composed.
 
         $transaction->allow_commit();
     }
