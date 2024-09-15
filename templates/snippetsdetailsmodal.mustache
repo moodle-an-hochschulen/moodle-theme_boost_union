@@ -41,6 +41,12 @@
     <h6>{{#str}}snippetsdetails, theme_boost_union{{/str}}</h6>
     <table class="table table-striped">
         <tbody>
+            {{#creator}}
+                <tr>
+                    <th scope="row">{{#str}}snippetscreator, theme_boost_union{{/str}}</th>
+                    <td>{{{creator}}}</td>
+                </tr>
+            {{/creator}}
             {{#source}}
                 <tr>
                     <th scope="row">{{#str}}snippetssource, theme_boost_union{{/str}}</th>
