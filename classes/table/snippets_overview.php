@@ -59,21 +59,19 @@ class snippets_overview extends \table_sql {
      * @throws \coding_exception
      */
     public function __construct() {
-        global $DB;
+        global $DB, $PAGE;
 
         // Call parent constructor.
         parent::__construct('snippets');
 
         // Define the headers and columns.
         $headers[] = get_string('snippetstitle', 'theme_boost_union');
-        $headers[] = get_string('snippetsdescription', 'theme_boost_union');
         $headers[] = get_string('snippetssource', 'theme_boost_union');
         $headers[] = get_string('snippetsscope', 'theme_boost_union');
         $headers[] = get_string('snippetsgoal', 'theme_boost_union');
         $headers[] = get_string('up') .'/'. get_string('down');
         $headers[] = get_string('actions');
         $columns[] = 'title';
-        $columns[] = 'description';
         $columns[] = 'source';
         $columns[] = 'scope';
         $columns[] = 'goal';
@@ -85,6 +83,12 @@ class snippets_overview extends \table_sql {
         $this->define_columns($columns);
         $this->define_headers($headers);
         $this->define_header_column('title');
+
+        // Add CSS class which will help the preview modal JS later.
+        $this->set_attribute('id', 'theme_boost_union_snippets');
+
+        // Add JS for the snippets details modal.
+        $PAGE->requires->js_call_amd('theme_boost_union/snippetsdetailsmodal', 'init');
 
         // Initialize values for the updown feature.
         $this->count = 0;
@@ -224,6 +228,21 @@ class snippets_overview extends \table_sql {
                 'attributes' => ['class' => 'action-disable'],
             ];
         }
+
+        // Details.
+        $actions[] = [
+            'url' => '#',
+            'icon' => new \pix_icon('info', get_string('snippetsshowdetails', 'theme_boost_union'), 'theme_boost_union'),
+            'attributes' => ['class' => 'action-details',
+                    'data-action' => 'details',
+                    'data-title' => $data->title,
+                    'data-source' => $this->pick_and_build_badge('snippetssource'.$data->source),
+                    'data-goal' => $this->pick_and_build_badge('snippetsgoal'.$data->goal),
+                    'data-scope' => $this->pick_and_build_badge('snippetsscope'.$data->scope),
+                    'data-description' => $data->description,
+                    'data-image' => $data->image,
+                    ],
+        ];
 
         // Compose action icons for all actions.
         $actionshtml = [];

@@ -1106,6 +1106,8 @@ $string['flavourstitle_help'] = 'The flavour\'s title is just used internally to
 // Settings: CSS snippets page.
 $string['configtitlesnippets'] = 'CSS snippets';
 $string['snippetsdescription'] = 'Description';
+$string['snippetsdetails'] = 'Details';
+$string['snippetsdetailspreview'] = 'Preview';
 $string['snippetsdisable'] = 'Disable';
 $string['snippetsenable'] = 'Enable';
 $string['snippetsexperimental'] = 'Please note: The CSS snippets functionality is fully usable in the current state of implementation, but has to be <em>considered as extendible</em> as currently only snippets which are built into or added to the Boost Union plugin codebase can be used.';
@@ -1121,6 +1123,7 @@ $string['snippetsscope'] = 'Scope';
 $string['snippetsscopecourse'] = 'Course';
 $string['snippetsscopedashboard'] = 'Dashboard';
 $string['snippetsscopeglobal'] = 'Global';
+$string['snippetsshowdetails'] = 'Show details';
 $string['snippetssnippets'] = 'CSS snippets';
 $string['snippetssource'] = 'Source';
 $string['snippetssourcetheme_boost_union'] = 'Boost Union built-in';

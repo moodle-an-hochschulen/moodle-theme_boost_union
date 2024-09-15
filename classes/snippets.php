@@ -65,14 +65,53 @@ class snippets {
         global $CFG;
 
         // Get the snippet file based on the different sources.
-        if ('theme_boost_union' === $source) {
-            // Builtin CSS SNippets.
+        // Builtin CSS Snippets.
+        if ($source === 'theme_boost_union') {
+            // Compose the file path.
             $file = $CFG->dirroot . self::BUILTIN_SNIPPETS_BASE_PATH . $path;
-        } else {
+
             // Other snippet sources (which are currently not supported).
+        } else {
             return null;
         }
+
         return is_readable($file) ? $file : null;
+    }
+
+    /**
+     * Gets the snippet's preview file URL.
+     *
+     * @param string $path The snippet's path.
+     * @param string $source The snippet's source.
+     *
+     * @return string|null
+     */
+    public static function get_snippet_preview_url($path, $source): string|null {
+        global $CFG;
+
+        // Get the snippet file based on the different sources.
+        // Builtin CSS Snippets.
+        if ($source === 'theme_boost_union') {
+            // Replace the .scss suffix with a .png suffix in the path.
+            $search = '.scss';
+            $pos = strrpos($path, $search);
+            if ($pos !== false) {
+                $path = substr_replace($path, '.png', $pos, strlen($search));
+            } else {
+                // In this case the .scss suffix was not found, so anything is broken.
+                return null;
+            }
+
+            // Compose the file path and URL.
+            $file = $CFG->dirroot . self::BUILTIN_SNIPPETS_BASE_PATH . $path;
+            $url = new \moodle_url(self::BUILTIN_SNIPPETS_BASE_PATH . $path);
+
+            // Other snippet sources (which are currently not supported).
+        } else {
+            return null;
+        }
+
+        return is_readable($file) ? $url : null;
     }
 
     /**
@@ -127,6 +166,9 @@ class snippets {
             return null;
         }
 
+        // Get the preview image as well.
+        $image = self::get_snippet_preview_url($path, $source);
+
         // Create an object containing the metadata.
         $snippet = new stdClass();
         $snippet->title = $headers['Snippet Title'];
@@ -134,6 +176,7 @@ class snippets {
         $snippet->scope = $headers['Scope'];
         $snippet->goal = $headers['Goal'];
         $snippet->source = $source;
+        $snippet->image = $image;
 
         return $snippet;
     }

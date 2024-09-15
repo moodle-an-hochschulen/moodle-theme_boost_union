@@ -667,3 +667,16 @@ function theme_boost_union_after_config() {
         theme_boost_union_manipulate_hooks();
     }
 }
+
+/**
+ * Get icon mapping for FontAwesome.
+ * This function is only processed when the Moodle cache is cleared and not on every page load.
+ */
+function theme_boost_union_get_fontawesome_icon_map() {
+    // Create the icon map with the icons.
+    $iconmapping = [
+        'theme_boost_union:info' => 'fa-info-circle',
+    ];
+
+    return $iconmapping;
+}
