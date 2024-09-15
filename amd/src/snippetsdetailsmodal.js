@@ -72,6 +72,7 @@ const buildModal = async(element) => {
         goal: element.getAttribute('data-goal'),
         scope: element.getAttribute('data-scope'),
         creator: element.getAttribute('data-creator'),
+        usagenote: element.getAttribute('data-usagenote'),
     };
 
     await ModalCancel.create({

@@ -241,6 +241,7 @@ class snippets_overview extends \table_sql {
                     'data-scope' => $this->pick_and_build_badge('snippetsscope'.$data->scope),
                     'data-description' => $data->description,
                     'data-creator' => $data->creator,
+                    'data-usagenote' => $data->usagenote,
                     'data-image' => $data->image,
                     ],
         ];

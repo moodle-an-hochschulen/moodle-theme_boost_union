@@ -38,6 +38,12 @@
             <img src="{{image}}" alt="{{#str}}snippetsdetailspreview, theme_boost_union{{/str}}" class="w-100 p-2 border rounded">
         </div>
     {{/image}}
+    {{#usagenote}}
+        <div class="mb-4">
+            <h6>{{#str}}snippetsusagenote, theme_boost_union{{/str}}</h6>
+            <p>{{{usagenote}}}</p>
+        </div>
+    {{/usagenote}}
     <h6>{{#str}}snippetsdetails, theme_boost_union{{/str}}</h6>
     <table class="table table-striped">
         <tbody>

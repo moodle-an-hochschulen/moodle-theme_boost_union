@@ -44,7 +44,8 @@ class snippets {
         'Goal',
         'Description',
         'Scope',
-        'Creator'
+        'Creator',
+        'Usage note',
     ];
 
     /**
@@ -219,6 +220,7 @@ class snippets {
         $snippet->scope = $headers['Scope'];
         $snippet->goal = $headers['Goal'];
         $snippet->creator = $headers['Creator'];
+        $snippet->usagenote = $headers['Usage note'];
         $snippet->source = $source;
         $snippet->image = $image;
 

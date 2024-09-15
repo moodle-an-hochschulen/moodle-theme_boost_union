@@ -1129,6 +1129,7 @@ $string['snippetssnippets'] = 'CSS snippets';
 $string['snippetssource'] = 'Source';
 $string['snippetssourcetheme_boost_union'] = 'Boost Union built-in';
 $string['snippetstitle'] = 'Title';
+$string['snippetsusagenote'] = 'Usage note';
 
 // Settings: Smart menus page.
 $string['smartmenus'] = 'Smart menus';
