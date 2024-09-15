@@ -102,11 +102,11 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Create CSS snippets settings page as external page
         // (and allow users with the theme/boost_union:configure capability to access it).
-        $flavourspage = new admin_externalpage('theme_boost_union_snippets',
+        $snippetspage = new admin_externalpage('theme_boost_union_snippets',
                 get_string('configtitlesnippets', 'theme_boost_union', null, true),
                 new moodle_url('/theme/boost_union/snippets/overview.php'),
                 'theme/boost_union:configure');
-        $ADMIN->add('theme_boost_union', $flavourspage);
+        $ADMIN->add('theme_boost_union', $snippetspage);
 
         // Create Smart Menus settings page as external page.
         // (and allow users with the theme/boost_union:configure capability to access it).
