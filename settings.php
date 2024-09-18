@@ -1411,9 +1411,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Add tab to settings page.
         $page->add($tab);
 
-
         // Add settings page to the admin settings category.
         $ADMIN->add('theme_boost_union', $page);
+
 
         // Create Feel settings page with tabs
         // (and allow users with the theme/boost_union:configure capability to access it).
@@ -1871,9 +1871,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Add tab to settings page.
         $page->add($tab);
 
-
         // Add settings page to the admin settings category.
         $ADMIN->add('theme_boost_union', $page);
+
 
         // Create Content settings page with tabs
         // (and allow users with the theme/boost_union:configure capability to access it).
@@ -2719,9 +2719,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Add tab to settings page.
         $page->add($tab);
 
-
         // Add settings page to the admin settings category.
         $ADMIN->add('theme_boost_union', $page);
+
 
         // Create Functionality settings page with tabs
         // (and allow users with the theme/boost_union:configure capability to access it).
@@ -2804,7 +2804,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Add tab to settings page.
         $page->add($tab);
-
 
         // Add settings page to the admin settings category.
         $ADMIN->add('theme_boost_union', $page);
