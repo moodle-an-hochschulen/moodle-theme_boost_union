@@ -107,7 +107,7 @@ class snippets {
     public static function get_builtin_snippet_preview_url($path, $source) {
         global $CFG;
 
-        // Replace the .scss suffix with a .png suffix in the path.
+        // Search for the .scss suffix in the path.
         $search = '.scss';
         $pos = strrpos($path, $search);
         if ($pos !== false) {
@@ -127,10 +127,12 @@ class snippets {
                 $file = $files[0];
                 // Compose the files URL.
                 $url = new \moodle_url(substr($file, strlen($CFG->dirroot)));
+                // And check if the file is readable.
                 return is_readable($file) ? $url : null;
             }
         }
-        // If anything wen't wrong return null, just as if no snippet preview is present.
+
+        // If anything went wrong, return null just as if no snippet preview is present.
         return null;
     }
 
