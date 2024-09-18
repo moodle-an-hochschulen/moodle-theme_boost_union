@@ -42,7 +42,7 @@ $snippetid = optional_param('id', null, PARAM_INT);
 $context = context_system::instance();
 
 // Access checks.
-admin_externalpage_setup('theme_boost_union_snippets');
+admin_externalpage_setup('theme_boost_union_snippets_overview');
 
 // Prepare the page (to make sure that all necessary information is already set even if we just handle the actions as a start).
 $PAGE->set_context($context);
@@ -127,6 +127,16 @@ $table->define_baseurl($PAGE->url);
 // Start page output.
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('configtitlesnippets', 'theme_boost_union'));
+
+// Create and render the tab tree.
+$tabtree = new \theme_boost_union\admin_externalpage_tabs();
+$tabtree->add_tab('snippetsoverview',
+        new \moodle_url('/theme/boost_union/snippets/overview.php'),
+        get_string('snippetsoverview', 'theme_boost_union'));
+$tabtree->add_tab('snippetssettings',
+        new \moodle_url('/admin/settings.php', ['section' => 'theme_boost_union_snippets'], 'theme_boost_union_snippets_settings'),
+        get_string('snippetssettings', 'theme_boost_union'));
+echo $tabtree->render_tabtree('snippetsoverview');
 
 // Show snippets description.
 echo get_string('snippetsoverview_desc', 'theme_boost_union');
