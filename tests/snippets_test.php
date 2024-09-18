@@ -146,4 +146,20 @@ final class snippets_test extends advanced_testcase {
         $this->assertNotEquals('', $scss);
         $this->assertStringContainsString('Snippet Title: Visual depth', $scss);
     }
+
+    /**
+     * Test looking for visual preview image file of snippet.
+
+     * @covers ::get_snippet_preview_url
+     *
+     * @return void
+     */
+    public function test_lookup_visual_preview_file(): void {
+        global $CFG;
+
+        $file = snippets::get_snippet_preview_url('international_day_against_homophobia.scss', 'theme_boost_union');
+
+        // Check that indeed the present webp preview for this snippet is returned.
+        $this->assertEquals($CFG->wwwroot . '/theme/boost_union/snippets/builtin/international_day_against_homophobia.webp', $file);
+    }
 }

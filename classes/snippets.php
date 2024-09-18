@@ -54,6 +54,21 @@ class snippets {
     const BUILTIN_SNIPPETS_BASE_PATH = '/theme/boost_union/snippets/builtin/';
 
     /**
+     * Allowed file extensions for the visual preview of the SCSS snippet in the more detail modal.
+     *
+     * The order in this array also reflects their priority if multiple matches should exist.
+     *
+     * @var array
+     */
+    const ALLOWED_PREVIEW_FILE_EXTENSIONS = [
+        'webp',
+        'png',
+        'jpg',
+        'jpeg',
+        'gif',
+    ];
+
+    /**
      * Gets the snippet file based on the meta information.
      *
      * @param string $path The snippet's path.
@@ -79,39 +94,66 @@ class snippets {
     }
 
     /**
+     * Get the preview images URL for a builtin snippet.
+     *
+     * The preview file has currently the same path but a different file extension.
+     *
+     * @param string $path The snippet's path.
+     * @param string $source The snippet's source.
+     * @return string|null The URL of the preview image.
+     */
+    public static function get_builtin_snippet_preview_url($path, $source) {
+        global $CFG;
+
+        // Replace the .scss suffix with a .png suffix in the path.
+        $search = '.scss';
+        $pos = strrpos($path, $search);
+        if ($pos !== false) {
+            // Compose the file pattern that searched for files with the same basename and the supported extensions.
+            $pattern = $CFG->dirroot .
+                self::BUILTIN_SNIPPETS_BASE_PATH .
+                substr_replace(
+                    $path,
+                    '.{' . implode(',', self::ALLOWED_PREVIEW_FILE_EXTENSIONS) . '}',
+                    $pos,
+                    strlen($search)
+                );
+            // Search for the preview file.
+            $files = glob($pattern, GLOB_BRACE);
+            // Select the first match of the found preview file(s).
+            if (!empty($files)) {
+                $file = $files[0];
+                // Compose the files URL.
+                $url = new \moodle_url(substr($file, strlen($CFG->dirroot)));
+                return is_readable($file) ? $url : null;
+            }
+        }
+        // If anything wen't wrong return null, just as if no snippet preview is present.
+        return null;
+    }
+
+    /**
      * Gets the snippet's preview file URL.
      *
      * @param string $path The snippet's path.
      * @param string $source The snippet's source.
      *
-     * @return string|null
+     * @return string|null The URL of the snippets preview image.
      */
     public static function get_snippet_preview_url($path, $source): string|null {
         global $CFG;
 
+        $url = null;
+
         // Get the snippet file based on the different sources.
         // Builtin CSS Snippets.
         if ($source === 'theme_boost_union') {
-            // Replace the .scss suffix with a .png suffix in the path.
-            $search = '.scss';
-            $pos = strrpos($path, $search);
-            if ($pos !== false) {
-                $path = substr_replace($path, '.png', $pos, strlen($search));
-            } else {
-                // In this case the .scss suffix was not found, so anything is broken.
-                return null;
-            }
-
-            // Compose the file path and URL.
-            $file = $CFG->dirroot . self::BUILTIN_SNIPPETS_BASE_PATH . $path;
-            $url = new \moodle_url(self::BUILTIN_SNIPPETS_BASE_PATH . $path);
-
+            $url = self::get_builtin_snippet_preview_url($path, $source);
             // Other snippet sources (which are currently not supported).
         } else {
-            return null;
+            return $url;
         }
-
-        return is_readable($file) ? $url : null;
+        return $url;
     }
 
     /**
