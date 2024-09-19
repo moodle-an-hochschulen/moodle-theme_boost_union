@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_boost_union;
-
 /**
  * Theme Boost Union - Admin settings page with tabs as well as external pages within a tab
  *
@@ -25,7 +23,7 @@ namespace theme_boost_union;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace theme_boost_union;
 
 /**
  * Class admin_settingspage_tabs_with_external.
@@ -44,6 +42,7 @@ class admin_settingspage_tabs_with_external extends \theme_boost_admin_settingsp
      * This function is amended with a switch for the external tabs.
      *
      * @param $tab object A tab.
+     * @return bool
      */
     public function add($tab) {
         // If the tab is an external page, add it as external tab.
@@ -77,7 +76,7 @@ class admin_settingspage_tabs_with_external extends \theme_boost_admin_settingsp
         global $OUTPUT;
 
         $activetab = optional_param('activetab', '', PARAM_TEXT);
-        $context = array('tabs' => array());
+        $context = ['tabs' => []];
         $havesetactive = false;
 
         foreach ($this->get_tabs() as $tab) {
@@ -91,12 +90,12 @@ class admin_settingspage_tabs_with_external extends \theme_boost_admin_settingsp
                 $active = true;
             }
 
-            $newtab = array(
+            $newtab = [
                 'name' => $tab->name,
                 'displayname' => $tab->visiblename,
                 'html' => $tab->output_html(),
                 'active' => $active,
-            );
+            ];
             // If the tab is an external page.
             if ($tab instanceof \admin_externalpage) {
                 // Add a flag for the mustache template.

@@ -14,12 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_boost_union;
-
-use moodle_url;
-use tabobject;
-use tabtree;
-
 /**
  * Theme Boost Union - Tabs to be shown within an external admin settings page
  *
@@ -28,7 +22,11 @@ use tabtree;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace theme_boost_union;
+
+use moodle_url;
+use tabobject;
+use tabtree;
 
 /**
  * Class admin_externalpage_tabs.
@@ -50,7 +48,7 @@ class admin_externalpage_tabs {
      *
      * @return void
      */
-    public function _construct() {
+    public function __construct() {
         // Initialize the tab tree.
         $this->tabs = [];
     }

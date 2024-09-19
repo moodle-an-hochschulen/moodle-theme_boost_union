@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_boost_union;
-
 /**
  * Theme Boost Union - External admin settings page which can be placed within a tab
  *
@@ -24,7 +22,7 @@ namespace theme_boost_union;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace theme_boost_union;
 
 /**
  * Class admin_externalpage_in_tab.
