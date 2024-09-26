@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-08-26 - Improvement: Implement accessibility statement and feedback mechanism, resolves #567.
 * 2024-08-24 - Upgrade: Update Bootstrap classes for Moodle 4.4.
 * 2024-08-11 - Updated Moodle Plugin CI to latest upstream recommendations
 * 2024-07-24 - Test: Fix broken Behat scenario 'Suppress 'Chat to course participants' link', resolves #696
