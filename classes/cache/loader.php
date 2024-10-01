@@ -24,14 +24,12 @@
 
 namespace theme_boost_union\cache;
 
-defined('MOODLE_INTERNAL') || die();
-
-require_once($CFG->dirroot.'/cache/classes/loaders.php');
+use core_cache\application_cache;
 
 /**
  * Custom cache loader to handle the smart menus and items deletion.
  */
-class loader extends \cache_application {
+class loader extends application_cache {
 
     /**
      * Delete the cached menus or menu items for all of its users.
