@@ -442,9 +442,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I am on site homepage
     Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should contain "active"
     And the "class" attribute of ".primary-navigation [data-orgposition='4'] a" "css_element" should not contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation [data-orgposition='4']" "css_element"
     And I click on "Privacy" "link" in the ".primary-navigation" "css_element"
     Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should not contain "active"
     And the "class" attribute of ".primary-navigation [data-orgposition='4'] a" "css_element" should contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-orgposition='4']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation [data-key='home']" "css_element"
     And I navigate to smart menus
     And I click on "Create menu" "button"
     And I set the following fields to these values:
@@ -462,7 +466,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Menu item URL  | https://moodle.org |
     And I follow "Dashboard"
     Then the "class" attribute of ".primary-navigation [data-key='myhome'] a" "css_element" should contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-key='myhome']" "css_element"
     And I click on "Useful Resources" "link" in the ".primary-navigation" "css_element"
     And I click on "Contact" "link" in the ".primary-navigation" "css_element"
     Then the "class" attribute of ".primary-navigation [data-key='myhome'] a" "css_element" should not contain "active"
     And the "class" attribute of ".primary-navigation [data-orgposition='5'] a" "css_element" should contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-orgposition='5']" "css_element"
+
