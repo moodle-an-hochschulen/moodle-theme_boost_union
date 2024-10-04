@@ -472,4 +472,3 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then the "class" attribute of ".primary-navigation [data-key='myhome'] a" "css_element" should not contain "active"
     And the "class" attribute of ".primary-navigation [data-orgposition='5'] a" "css_element" should contain "active"
     And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-orgposition='5']" "css_element"
-
