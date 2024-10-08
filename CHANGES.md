@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-08 - Upstream change: Adopt change from MDL-82298 into smartmenus-[card|more]menu-children.mustache
 * 2024-08-24 - Upgrade: Update Bootstrap classes for Moodle 4.4.
 * 2024-08-11 - Updated Moodle Plugin CI to latest upstream recommendations
 * 2024-07-24 - Test: Fix broken Behat scenario 'Suppress 'Chat to course participants' link', resolves #696
