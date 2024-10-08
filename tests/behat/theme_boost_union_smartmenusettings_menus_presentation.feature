@@ -424,3 +424,51 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | 1        | 0        | 0        | after     | before    | after     |
       | 0        | 0        | 2        | before    | after     | after     |
       | 0        | 1        | 2        | before    | after     | before    |
+
+  @javascript
+  Scenario: Smartmenu: Menus: Presentation - Which menu item is active is displayed.
+    When I log in as "admin"
+    And I navigate to smart menus
+    And I click on "Create menu" "button"
+    And I set the following fields to these values:
+      | Title            | Useful Inline Resources |
+      | Menu location(s) | Main                    |
+      | Menu mode        | Inline                  |
+    And I click on "Save and return" "button"
+    And I set "Useful Inline Resources" smart menu items with the following fields to these values:
+      | Title          | Privacy                             |
+      | Menu item type | Static                              |
+      | Menu item URL  | /admin/tool/dataprivacy/summary.php |
+    And I am on site homepage
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should contain "active"
+    And the "class" attribute of ".primary-navigation [data-orgposition='4'] a" "css_element" should not contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation [data-orgposition='4']" "css_element"
+    And I click on "Privacy" "link" in the ".primary-navigation" "css_element"
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should not contain "active"
+    And the "class" attribute of ".primary-navigation [data-orgposition='4'] a" "css_element" should contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-orgposition='4']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation [data-key='home']" "css_element"
+    And I navigate to smart menus
+    And I click on "Create menu" "button"
+    And I set the following fields to these values:
+      | Title            | Useful Resources |
+      | Menu location(s) | Main             |
+      | Menu mode        | Submenu          |
+    And I click on "Save and return" "button"
+    And I set "Useful Resources" smart menu items with the following fields to these values:
+      | Title          | Contact                     |
+      | Menu item type | Static                      |
+      | Menu item URL  |/user/contactsitesupport.php |
+    And I set "Useful Resources" smart menu items with the following fields to these values:
+      | Title          | Moodle             |
+      | Menu item type | Static             |
+      | Menu item URL  | https://moodle.org |
+    And I follow "Dashboard"
+    Then the "class" attribute of ".primary-navigation [data-key='myhome'] a" "css_element" should contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-key='myhome']" "css_element"
+    And I click on "Useful Resources" "link" in the ".primary-navigation" "css_element"
+    And I click on "Contact" "link" in the ".primary-navigation" "css_element"
+    Then the "class" attribute of ".primary-navigation [data-key='myhome'] a" "css_element" should not contain "active"
+    And the "class" attribute of ".primary-navigation [data-orgposition='5'] a" "css_element" should contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-orgposition='5']" "css_element"
