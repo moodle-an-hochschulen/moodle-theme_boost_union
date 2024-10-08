@@ -54,7 +54,8 @@
                         <a class="dropdown-item {{#itemdata.classes}}{{.}} {{/itemdata.classes}}" role="menuitem" {{#actionattributes}}{{name}}="{{value}}" {{/actionattributes}} href="{{{url}}}{{{action}}}"
                             {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
                             {{#attributes}}{{name}}="{{value}}" {{/attributes}}
-                            data-disableactive="true" tabindex="-1"
+                            data-disableactive="true"
+                            tabindex="-1"
                         >
                             {{{text}}}
                         </a>
@@ -63,9 +64,11 @@
                         {{/action_link_actions}}
                     {{/is_action_link}}
                     {{^is_action_link}}
-                        <a class="dropdown-item {{#itemdata.classes}}{{.}} {{/itemdata.classes}}" role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}} tabindex="-1"
+                        <a class="dropdown-item {{#itemdata.classes}}{{.}} {{/itemdata.classes}}" role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}}
                             {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
                             {{#attributes}}{{name}}="{{value}}" {{/attributes}}
+                            data-disableactive="true"
+                            tabindex="-1"
                         >
                             {{{text}}}
                         </a>
@@ -91,9 +94,11 @@
     <li data-key="{{key}}" class="nav-item {{#menuclasses}}{{.}} {{/menuclasses}}" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
         {{#istablist}}
             {{#is_action_link}}
-                <a role="tab" class="nav-link {{#classes}}{{.}} {{/classes}}" href="{{tab}}" data-toggle="tab" data-text="{{{text}}}" data-disableactive="true" tabindex="-1"
+                <a role="tab" class="nav-link {{#classes}}{{.}} {{/classes}}" href="{{tab}}" data-toggle="tab" data-text="{{{text}}}"
                     {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
                     {{#attributes}}{{name}}="{{value}}" {{/attributes}}
+                    data-disableactive="true"
+                    tabindex="-1"
                 >
                     {{{text}}}
                 </a>
@@ -107,6 +112,7 @@
                     {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
                     {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                     {{#isactive}}aria-selected="true"{{/isactive}}
+                    data-disableactive="true"
                     {{^isactive}}tabindex="-1"{{/isactive}}
                 >
                     {{{text}}}
@@ -118,7 +124,8 @@
                 <a role="menuitem" class="nav-link {{#itemdata.classes}}{{.}} {{/itemdata.classes}} {{#classes}}{{.}} {{/classes}}" {{#actionattributes}}{{name}}="{{value}}" {{/actionattributes}} href="{{{url}}}{{{action}}}"
                     {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
                     {{#attributes}}{{name}}="{{value}}" {{/attributes}}
-                    data-disableactive="true" tabindex="-1"
+                    data-disableactive="true"
+                    tabindex="-1"
                 >
                     {{{text}}}
                 </a>
@@ -132,6 +139,7 @@
                     {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
                     {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                     {{#isactive}}aria-current="true"{{/isactive}}
+                    data-disableactive="true"
                     {{^isactive}}tabindex="-1"{{/isactive}}
                 >
                     {{{text}}}
