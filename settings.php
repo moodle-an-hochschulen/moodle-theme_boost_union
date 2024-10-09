@@ -25,6 +25,8 @@
 use theme_boost_union\admin_setting_configdatetime;
 use theme_boost_union\admin_setting_configstoredfilealwayscallback;
 use theme_boost_union\admin_setting_configtext_url;
+use theme_boost_union\admin_settingspage_tabs_with_external;
+use theme_boost_union\admin_externalpage_in_tab;
 use core\di;
 use core\hook\manager as hook_manager;
 
@@ -99,6 +101,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 new moodle_url('/theme/boost_union/flavours/overview.php'),
                 'theme/boost_union:configure');
         $ADMIN->add('theme_boost_union', $flavourspage);
+
+        // Create CSS snippets settings page as external page
+        // (and allow users with the theme/boost_union:configure capability to access it).
+        $snippetspage = new admin_externalpage('theme_boost_union_snippets_overview',
+                get_string('configtitlesnippets', 'theme_boost_union', null, true),
+                new moodle_url('/theme/boost_union/snippets/overview.php'),
+                'theme/boost_union:configure');
+        $ADMIN->add('theme_boost_union', $snippetspage);
 
         // Create Smart Menus settings page as external page.
         // (and allow users with the theme/boost_union:configure capability to access it).
@@ -2795,6 +2805,34 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 $coursemgnturl->out(), true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+        // Add settings page to the admin settings category.
+        $ADMIN->add('theme_boost_union', $page);
+
+
+        // Create CSS snippets settings page with tabs (and external pages).
+        // (and allow users with the theme/boost_union:configure capability to access it).
+        $page = new admin_settingspage_tabs_with_external('theme_boost_union_snippets',
+                get_string('configtitlesnippets', 'theme_boost_union', null, true),
+                'theme/boost_union:configure');
+
+        // Create CSS snippets overview tab
+        // (and allow users with the theme/boost_union:configure capability to access it).
+        $tab = new admin_externalpage_in_tab('theme_boost_union_snippets_overview',
+                get_string('snippetsoverview', 'theme_boost_union', null, true),
+                new moodle_url('/theme/boost_union/snippets/overview.php'),
+                'theme/boost_union:configure');
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
+        // Create general settings tab.
+        $tab = new admin_settingpage('theme_boost_union_snippets_settings',
+                get_string('snippetssettings', 'theme_boost_union', null, true));
 
         // Add tab to settings page.
         $page->add($tab);

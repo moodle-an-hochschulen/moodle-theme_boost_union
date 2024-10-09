@@ -613,6 +613,10 @@ By default, on the course management page, Moodle requires you to either open th
 
 Boost Union's flavours offer a possibility to override particular Moodle look & feel settings in particular contexts. On this page, you can create and manage flavours.
 
+### Settings page "CSS Snippets"
+
+Boost Union's CSS snippets offer a possibility to add small (or slightly larger) amounts of CSS to the Moodle site. This can be particularly handy for fixing small visual glitches in Moodle core or for adding eye candy to your Moodle site.
+
 ### Settings page "Smart menus"
 
 Smart menus allow site administrators to create customizable menus that can be placed in different locations on the site, such as the site main menu, bottom mobile menu, and user menu. The menus can be configured to display different types of content, including links to other pages or resources, category links, or user profile links. On this page, you can create and manage smart menus.
