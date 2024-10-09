@@ -168,8 +168,8 @@ class boostnavbar extends \theme_boost\boostnavbar {
 
         // Don't display the navbar if there is only one item. Apparently this is bad UX design.
         // Except, leave it in when in course context and categorybreadcrumbs are desired.
-        if (get_config('theme_boost_union', 'categorybreadcrumbs') != THEME_BOOST_UNION_SETTING_SELECT_YES &&
-                $this->page->context->contextlevel == CONTEXT_COURSE) {
+        if (!(get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES &&
+                $this->page->context->contextlevel == CONTEXT_COURSE)) {
             if ($this->item_count() <= 1) {
                 $this->clear_items();
                 return;
