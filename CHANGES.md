@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in user_action_menu_submenu_items.mustache
 * 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in primary-drawer-mobile.mustache
 * 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in drawers.mustache
 * 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in upcoming_mini.mustache
