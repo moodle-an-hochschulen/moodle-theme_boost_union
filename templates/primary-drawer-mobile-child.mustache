@@ -30,13 +30,13 @@
 
 <a id="drop-down-{{sort}}" href="#" class="{{#itemdata.classes}} {{.}} {{/itemdata.classes}} list-group-item list-group-item-action icons-collapse-expand {{^isopen}}collapsed {{/isopen}}d-flex" title="{{tooltip}}" data-toggle="collapse" data-target="#drop-down-menu-{{sort}}" aria-expanded="{{#isopen}}true{{/isopen}}{{^isopen}}false{{/isopen}}" aria-controls="drop-down-menu-{{sort}}">
     {{{text}}}
-    <span class="ml-auto expanded-icon icon-no-margin mx-2">
+    <span class="ms-auto expanded-icon icon-no-margin mx-2">
         {{#pix}} t/expanded, core {{/pix}}
         <span class="sr-only">
             {{#str}} collapse, core {{/str}}
         </span>
     </span>
-    <span class="ml-auto collapsed-icon icon-no-margin mx-2">
+    <span class="ms-auto collapsed-icon icon-no-margin mx-2">
         {{#pix}} t/collapsed, core {{/pix}}
         <span class="sr-only">
             {{#str}} expand, core {{/str}}
@@ -52,7 +52,7 @@
 
         {{^haschildren}}
             {{^divider}}
-                <a href="{{{url}}}" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}} class="pl-5 bg-light list-group-item list-group-item-action {{#itemdata.classes}} {{.}} {{/itemdata.classes}}" {{#attributes}} {{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
+                <a href="{{{url}}}" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}} class="ps-5 bg-light list-group-item list-group-item-action {{#itemdata.classes}} {{.}} {{/itemdata.classes}}" {{#attributes}} {{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
                     {{#icon.pix}}
                         {{#pix}}{{{icon.pix}}}, {{{icon.component}}}, {{{icon.alt}}}{{/pix}}
                     {{/icon.pix}}
