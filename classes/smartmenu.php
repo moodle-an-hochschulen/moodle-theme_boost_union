@@ -620,7 +620,7 @@ class smartmenu {
                         $data = [
                             'text' => $description,
                             'alt' => $alt,
-                            'icon' => (new \pix_icon('help', $alt, 'core', ['class' => 'iconhelp']))->export_for_template($OUTPUT),
+                            'icon' => (new \pix_icon('help', $alt, 'core'))->export_for_template($OUTPUT),
                             'ltr' => !right_to_left(),
                         ];
                         $nodes->helpicon = $OUTPUT->render_from_template('core/help_icon', $data);
