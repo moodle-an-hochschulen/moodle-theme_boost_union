@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-10 - Upgrade: Adopt change from MDL-75671 in course_listitem_actions().
 * 2024-10-10 - Upgrade: Fix removed /cache/classes/loaders.php which prevented the theme from being used on Moodle 4.5, resolves #708.
 * 2024-10-07 - Prepare compatibility for Moodle 4.5.
 
