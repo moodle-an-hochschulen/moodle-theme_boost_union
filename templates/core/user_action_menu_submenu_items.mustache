@@ -51,7 +51,7 @@
 }}
 {{#items}}
     {{#haschildren}}
-        <a href="#" class="carousel-navigation-link {{#itemdata.classes}} {{.}} {{/itemdata.classes}} dropdown-item pl-5" role="menuitem" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}} tabindex="1" data-carousel-target-id="carousel-item-{{submenuid}}">
+        <a href="#" class="carousel-navigation-link {{#itemdata.classes}} {{.}} {{/itemdata.classes}} dropdown-item ps-5" role="menuitem" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}} tabindex="1" data-carousel-target-id="carousel-item-{{submenuid}}">
             {{#pixicon}}
                 {{#pix}}{{pixicon}}{{/pix}}
             {{/pixicon}}
@@ -64,7 +64,7 @@
 
     {{^haschildren}}
         {{#link}}
-            <a href="{{{url}}}" class="dropdown-item {{#itemdata.classes}} {{.}} {{/itemdata.classes}} pl-5" role="menuitem" tabindex="-1" {{#isactive}}aria-current="true"{{/isactive}}
+            <a href="{{{url}}}" class="dropdown-item {{#itemdata.classes}} {{.}} {{/itemdata.classes}} ps-5" role="menuitem" tabindex="-1" {{#isactive}}aria-current="true"{{/isactive}}
                 {{#attributes}}{{#key}}{{key}}="{{value}}" {{/key}} {{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}
                 {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}>
                 {{{text}}}
