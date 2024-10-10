@@ -30,4 +30,9 @@ $callbacks = [
         'callback' => 'theme_boost_union\local\hook\output\before_standard_head_html_generation::callback',
         'priority' => 0,
     ],
+    [
+        'hook' => \core\hook\after_config::class,
+        'callback' => 'theme_boost_union\local\hook\after_config::callback',
+        'priority' => 0,
+    ],
 ];
