@@ -73,7 +73,7 @@ class renderer extends \core_course_management_renderer {
             $action['attributes']['role'] = 'button';
             $actionshtml[] = $this->output->action_icon($action['url'], $action['icon'], null, $action['attributes']);
         }
-        return html_writer::span(join('', $actionshtml), 'course-item-actions item-actions mr-0');
+        return html_writer::span(join('', $actionshtml), 'course-item-actions item-actions me-0');
     }
 
     /**
