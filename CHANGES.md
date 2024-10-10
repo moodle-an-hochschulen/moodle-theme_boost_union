@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.2-r19
 
 * 2024-08-11 - Updated Moodle Plugin CI to latest upstream recommendations
 
