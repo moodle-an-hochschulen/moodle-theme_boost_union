@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-07 - Prepare compatibility for Moodle 4.5.
 * 2024-10-14 - Test: Change tests/fixtures/*.jpg to tests/fixtures/*.png to prevent resizing issues with JPG images
 
 ### v4.4-r2
