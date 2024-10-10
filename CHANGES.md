@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in drawers.mustache
 * 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in upcoming_mini.mustache
 * 2024-10-10 - Upgrade: Adopt changes from MDL-74251 and MDL-75671 in loginform.mustache
 * 2024-10-10 - Upgrade: Adopt change from MDL-75671 in full_header.mustache
