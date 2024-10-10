@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-10-07 - Prepare compatibility for Moodle 4.5.
+
 ### v4.4-r3
 
 * 2024-10-21 - Improvement: Add link to policyoverviewnavigation setting, resolves #732.
