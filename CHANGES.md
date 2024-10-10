@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-10 - Upgrade: Adopt changes from MDL-74251 and MDL-75671 in loginform.mustache
 * 2024-10-10 - Upgrade: Adopt change from MDL-75671 in full_header.mustache
 * 2024-10-10 - Upgrade: Use the before_session_start() callback instead of the after_config() callback on Moodle 4.5, resolves #721.
 * 2024-10-10 - Upgrade: Adopt change from MDL-75671 in course_listitem_actions().
