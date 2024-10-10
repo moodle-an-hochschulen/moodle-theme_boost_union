@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.3-r16
 
 * 2024-10-09 - Bugfix: Course category breadcrumbs were broken on the course enrolment page due to MDL-80974 and were removed, resolves #727.
 * 2024-10-08 - Upstream change: Adopt change from MDL-82298 into smartmenus-[card|more]menu-children.mustache
