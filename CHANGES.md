@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-10 - Upgrade: Adopt changes from MDL-74251 to remove old icon classes
 * 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in user_menu.mustache
 * 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in user_action_menu_submenu_items.mustache
 * 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in primary-drawer-mobile.mustache
