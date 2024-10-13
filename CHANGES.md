@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-13 - Upgrade: Adopt changes from MDL-75671 in cm.mustache
 * 2024-10-13 - Upgrade: Adopt changes from MDL-75671 in event-list-item.mustache
 * 2024-10-13 - Upgrade: Adopt changes from MDL-75671 in view-cards.mustache
 * 2024-10-10 - Upgrade: Adopt changes from MDL-81818 to remove old bootstrap classes
