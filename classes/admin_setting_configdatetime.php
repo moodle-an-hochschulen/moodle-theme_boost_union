@@ -93,13 +93,13 @@ class admin_setting_configdatetime extends \admin_setting {
 
         $return = '<div class="form-datetime defaultsnext">';
 
-        $return .= '<select id="'.$this->get_id().'y" name="'.$this->get_full_name().'[y]" class="custom-select mr-2">';
+        $return .= '<select id="'.$this->get_id().'y" name="'.$this->get_full_name().'[y]" class="custom-select me-2">';
         for ($i = 2020; $i <= date("Y") + 10; $i++) {
             $return .= '<option value="'.$i.'"'.($i == $data['y'] ? ' selected="selected"' : '').'>'.$i.'</option>';
         }
         $return .= '</select>';
 
-        $return .= '<select id="'.$this->get_id().'M" name="'.$this->get_full_name().'[M]" class="custom-select mr-2">';
+        $return .= '<select id="'.$this->get_id().'M" name="'.$this->get_full_name().'[M]" class="custom-select me-2">';
         for ($i = 1; $i <= 12; $i++) {
             $sel = ($i == $data['M'] ? ' selected="selected"' : '');
             $dateobj = \DateTime::createFromFormat('!m', $i);
@@ -107,23 +107,23 @@ class admin_setting_configdatetime extends \admin_setting {
         }
         $return .= '</select>';
 
-        $return .= '<select id="'.$this->get_id().'d" name="'.$this->get_full_name().'[d]" class="custom-select mr-2">';
+        $return .= '<select id="'.$this->get_id().'d" name="'.$this->get_full_name().'[d]" class="custom-select me-2">';
         for ($i = 1; $i <= 31; $i++) {
             $sel = ($i == $data['d'] ? ' selected="selected"' : '');
             $return .= '<option value="'.$i.'"'.$sel.'>'.sprintf('%02d', $i).'</option>';
         }
         $return .= '</select>';
 
-        $return .= '<select id="'.$this->get_id().'h" name="'.$this->get_full_name().'[h]" class="custom-select mr-1">';
+        $return .= '<select id="'.$this->get_id().'h" name="'.$this->get_full_name().'[h]" class="custom-select me-1">';
         for ($i = 0; $i < 24; $i++) {
             $sel = ($i == $data['h'] ? ' selected="selected"' : '');
             $return .= '<option value="'.$i.'"'.$sel.'>'.sprintf('%02d', $i).'</option>';
         }
         $return .= '</select>';
 
-        $return .= '<span class="mr-1">:</span>';
+        $return .= '<span class="me-1">:</span>';
 
-        $return .= '<select id="'.$this->get_id().'m" name="'.$this->get_full_name().'[m]" class="custom-select mr-2">';
+        $return .= '<select id="'.$this->get_id().'m" name="'.$this->get_full_name().'[m]" class="custom-select me-2">';
         for ($i = 0; $i < 60; $i += 5) {
             $sel = ($i == $data['m'] ? ' selected="selected"' : '');
             $return .= '<option value="'.$i.'"'.$sel.'>'.sprintf('%02d', $i).'</option>';

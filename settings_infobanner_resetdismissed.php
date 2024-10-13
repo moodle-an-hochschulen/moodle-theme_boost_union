@@ -101,7 +101,7 @@ if ($confirm == true) {
             ['sesskey' => sesskey(), 'no' => $no, 'confirm' => 1]);
     echo html_writer::link($confirmurl,
             get_string('confirm', 'core', null, true),
-            ['class' => 'btn btn-primary mr-3', 'role' => 'button']);
+            ['class' => 'btn btn-primary me-3', 'role' => 'button']);
 
     // Show cancel button.
     $cancelurl = new moodle_url('/admin/settings.php',
