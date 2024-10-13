@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-13 - Upgrade: Adopt changes from MDL-75671 in navbar.mustache
 * 2024-10-13 - Upgrade: Adopt changes from MDL-81725 in cm.mustache
 * 2024-10-13 - Upgrade: Adopt changes from MDL-75671 in cm.mustache
 * 2024-10-13 - Upgrade: Adopt changes from MDL-75671 in event-list-item.mustache
