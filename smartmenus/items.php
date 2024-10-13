@@ -136,7 +136,7 @@ if (isset($menu->title)) {
     $settingstitle = get_string('smartmenussettings', 'theme_boost_union');
     $settingsurl = new moodle_url('/theme/boost_union/smartmenus/edit.php', ['id' => $menuid, 'sesskey' => sesskey()]);
     $menuheading .= html_writer::link($settingsurl,
-            $OUTPUT->pix_icon('t/edit', $settingstitle, 'moodle', ['class' => 'ml-2']));
+            $OUTPUT->pix_icon('t/edit', $settingstitle, 'moodle', ['class' => 'ms-2']));
     echo $OUTPUT->heading($menuheading, 4);
 }
 

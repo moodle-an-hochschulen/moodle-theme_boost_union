@@ -53,7 +53,7 @@
             <div class="d-flex flex-row apple-icon-{{size}}">
                 {{#exists}}<span class="{{#recommended}}text-success{{/recommended}}{{^recommended}}text-success{{/recommended}}"><i class="fa fa-check-circle-o fa-3x fa-fw"></i></span>{{/exists}}
                 {{^exists}}<span class="{{#recommended}}text-danger{{/recommended}}{{^recommended}}text-muted{{/recommended}}"><i class="fa fa-times-circle-o fa-3x fa-fw"></i></span>{{/exists}}
-                <div class="ml-3">
+                <div class="ms-3">
                     <h6 class="mb-0">{{filename}}</h6>
                     {{#exists}}<small>{{#recommended}}{{#str}}touchiconlistiosrecommendeduploaded,theme_boost_union{{/str}}{{/recommended}}{{^recommended}}{{#str}}touchiconlistiosoptionaluploaded,theme_boost_union{{/str}}{{/recommended}}</small>{{/exists}}
                     {{^exists}}<small>{{#recommended}}{{#str}}touchiconlistiosrecommendedmissing,theme_boost_union{{/str}}{{/recommended}}{{^recommended}}{{#str}}touchiconlistiosoptionalmissing,theme_boost_union{{/str}}{{/recommended}}</small>{{/exists}}

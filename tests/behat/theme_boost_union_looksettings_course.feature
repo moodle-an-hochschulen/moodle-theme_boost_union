@@ -293,12 +293,12 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .completioninfo" "css_element" <solshouldornot> contain "1"
     And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .completioninfo" "css_element" <solshouldornot> contain "cm_completion"
     # Check the completion data of the completion indicator at the end of the line
-    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) > .ml-auto > .completioninfo" "css_element" should contain "NaN"
-    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) > .ml-auto > .completioninfo" "css_element" <eolshouldornot> contain "cm_completion"
-    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) > .ml-auto > .completioninfo" "css_element" <eolshouldornot> contain "0"
-    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) > .ml-auto > .completioninfo" "css_element" <eolshouldornot> contain "cm_completion"
-    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .ml-auto > .completioninfo" "css_element" <eolshouldornot> contain "1"
-    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .ml-auto > .completioninfo" "css_element" <eolshouldornot> contain "cm_completion"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) > .ms-auto > .completioninfo" "css_element" should contain "NaN"
+    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) > .ms-auto > .completioninfo" "css_element" <eolshouldornot> contain "cm_completion"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) > .ms-auto > .completioninfo" "css_element" <eolshouldornot> contain "0"
+    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) > .ms-auto > .completioninfo" "css_element" <eolshouldornot> contain "cm_completion"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .ms-auto > .completioninfo" "css_element" <eolshouldornot> contain "1"
+    And the "data-for" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .ms-auto > .completioninfo" "css_element" <eolshouldornot> contain "cm_completion"
     And I log out
     And I log in as "teacher1"
     And I am on "Courseindex" course homepage with editing mode on
@@ -315,9 +315,9 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) > .completioninfo" "css_element" should contain "NaN"
     And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) > .completioninfo" "css_element" should contain "NaN"
     And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .completioninfo" "css_element" should contain "NaN"
-    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) > .ml-auto > .completioninfo" "css_element" should contain "NaN"
-    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) > .ml-auto > .completioninfo" "css_element" should contain "NaN"
-    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .ml-auto > .completioninfo" "css_element" should contain "NaN"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(1) > .ms-auto > .completioninfo" "css_element" should contain "NaN"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(2) > .ms-auto > .completioninfo" "css_element" should contain "NaN"
+    And the "data-value" attribute of "#courseindex .courseindex-item-content .courseindex-item:nth-of-type(3) > .ms-auto > .completioninfo" "css_element" should contain "NaN"
 
     Examples:
       | enabled | position    | hascourseindexcmicons | hascourseindexcplicon | hascourseindexcplsol | hascourseindexcpleol | iconvisible | iconshouldornot | solshouldornot | eolshouldornot |

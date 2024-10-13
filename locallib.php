@@ -1520,7 +1520,7 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
             }
             if (!empty($CFG->enableuserfeedback)) {
                 $scss .= ', a[href^="https://feedback.moodle.org"] .fa-external-link,
-                a[href^="https://feedback.moodle.org"] .ml-1';
+                a[href^="https://feedback.moodle.org"] .ms-1';
             }
             $scss .= ', a[href^="'.get_docs_url().'"] .fa-external-link,
                     div.cta a .fa-external-link {
