@@ -37,12 +37,14 @@
         {{#hascmrestrictions}}restrictions{{/hascmrestrictions}}
         {{^accessvisible}}dimmed{{/accessvisible}}
         d-flex
-        {{#indent}} indented {{/indent}}"
+        {{#indent}} indented {{/indent}}
+        {{#hasdelegatedsection}}py-0{{/hasdelegatedsection}}"
     id="course-index-cm-{{id}}"
     data-for="cm"
     data-id="{{id}}"
     role="treeitem"
 >
+    {{^hasdelegatedsection}}
     <span class="completioninfo" data-for="cm_completion" data-value="NaN"></span>
     {{#uservisible}}
     <a
@@ -62,7 +64,12 @@
     <span class="courseindex-locked ms-1" data-for="cm_name">
         {{#pix}} t/locked, core {{/pix}}
     </span>
-    <span class="dragicon ml-auto">{{#pix}}i/dragdrop{{/pix}}</span>
+    {{/hasdelegatedsection}}
+    {{#hasdelegatedsection}}
+        {{#sectioninfo}}
+            {{> core_courseformat/local/courseindex/section}}
+        {{/sectioninfo}}
+    {{/hasdelegatedsection}}
 </li>
 {{#js}}
 require(['core_courseformat/local/courseindex/cm'], function(component) {

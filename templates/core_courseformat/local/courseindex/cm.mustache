@@ -46,12 +46,14 @@
         {{#hascmrestrictions}}restrictions{{/hascmrestrictions}}
         {{^accessvisible}}dimmed{{/accessvisible}}
         d-flex
-        {{#indent}} indented {{/indent}}"
+        {{#indent}} indented {{/indent}}
+        {{#hasdelegatedsection}}py-0{{/hasdelegatedsection}}"
     id="course-index-cm-{{id}}"
     data-for="cm"
     data-id="{{id}}"
     role="treeitem"
 >
+    {{^hasdelegatedsection}}
     <span class="completioninfo courseindex-cmicon-cpl-sol" data-for="cm_completion" data-value="NaN"></span>
     <span class="courseindex-cmicon-container">
         <span class="courseindex-cmicon">
@@ -81,8 +83,13 @@
     </span>
     <span class="ms-auto">
         <span class="completioninfo courseindex-cmicon-cpl-eol" data-for="_" data-value="NaN"></span>
-        <span class="dragicon">{{#pix}}i/dragdrop{{/pix}}</span>
     </span>
+    {{/hasdelegatedsection}}
+    {{#hasdelegatedsection}}
+        {{#sectioninfo}}
+            {{> core_courseformat/local/courseindex/section}}
+        {{/sectioninfo}}
+    {{/hasdelegatedsection}}
 </li>
 {{#js}}
 // Boost Union JS to change the completion indication if enabled.
