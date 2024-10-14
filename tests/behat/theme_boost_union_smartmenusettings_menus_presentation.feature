@@ -34,7 +34,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I click on ".action-edit" "css_element" in the "Useful Resources" "table_row"
     And I set the field "Show description" to "Help"
     And I click on "Save and return" "button"
-    And "i.fa-question-circle" "css_element" should appear before "Info" "link"
+    And "i.fa-circle-question" "css_element" should appear before "Info" "link"
     And I click on ".action-edit" "css_element" in the "Useful Resources" "table_row"
     And I set the field "Show description" to "Never"
     And I click on "Save and return" "button"
