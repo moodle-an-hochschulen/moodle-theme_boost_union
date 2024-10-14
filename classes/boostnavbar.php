@@ -20,7 +20,6 @@ use core\navigation\views\view;
 use navigation_node;
 use moodle_url;
 use action_link;
-use lang_string;
 
 /**
  * Creates a navbar for boost union that allows easy control of the navbar items.
