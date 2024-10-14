@@ -30,9 +30,9 @@ require_once($CFG->dirroot.'/course/classes/management_renderer.php');
 
 use core_course_category;
 use core_course_list_element;
-use html_writer;
 use moodle_url;
 use pix_icon;
+use core\output\html_writer;
 
 /**
  * Extending the core_course_management_renderer.
