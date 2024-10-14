@@ -458,7 +458,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         if (!empty($pagetype) && !empty($homepagetype) && $pagetype == $homepagetype) {
-            $header->welcomemessage = \core_user::welcome_message();
+            $header->welcomemessage = \core\user::welcome_message();
         }
         return $this->render_from_template('core/full_header', $header);
     }

@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-14 - Upgrade: Adopt changes from MDL-81031 and use new \core\user class.
 * 2024-10-14 - Upgrade: Adopt changes from MDL-66903 and use new \core\component class.
 * 2024-10-14 - Upgrade: Adopt changes from MDL-82158 and use new cache classes.
 * 2024-10-13 - Upgrade: Adopt changes from MDL-75671 into custom Boost Union code.
