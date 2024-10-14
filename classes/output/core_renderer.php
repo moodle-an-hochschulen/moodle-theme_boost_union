@@ -85,7 +85,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     $hasflavourfavicon = true;
 
                     // Compose the URL to the flavour's favicon.
-                    $flavourfaviconurl = moodle_url::make_pluginfile_url(
+                    $flavourfaviconurl = \core\url::make_pluginfile_url(
                         context_system::instance()->id,
                         'theme_boost_union',
                         'flavours_look_favicon',
@@ -167,7 +167,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     $hasflavourlogo = true;
 
                     // Compose the URL to the flavour's logo.
-                    $flavourlogourl = core\url::make_pluginfile_url(
+                    $flavourlogourl = \core\url::make_pluginfile_url(
                         context_system::instance()->id,
                         'theme_boost_union',
                         'flavours_look_logo',
@@ -264,7 +264,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     $hasflavourlogo = true;
 
                     // Compose the URL to the flavour's compact logo.
-                    $flavourlogourl = core\url::make_pluginfile_url(
+                    $flavourlogourl = \core\url::make_pluginfile_url(
                         context_system::instance()->id,
                         'theme_boost_union',
                         'flavours_look_logocompact',

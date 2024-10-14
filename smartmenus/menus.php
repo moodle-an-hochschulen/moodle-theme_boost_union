@@ -43,7 +43,7 @@ admin_externalpage_setup('theme_boost_union_smartmenus');
 
 // Prepare the page (to make sure that all necessary information is already set even if we just handle the actions as a start).
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/theme/boost_union/smartmenus/menus.php'));
+$PAGE->set_url(new core\url('/theme/boost_union/smartmenus/menus.php'));
 $PAGE->set_cacheable(false);
 
 // Process actions.
@@ -119,7 +119,7 @@ echo $OUTPUT->render($experimentalnotification);
 // Prepare 'Create menu' button.
 $createbutton = $OUTPUT->box_start();
 $createbutton .= $OUTPUT->single_button(
-        new \moodle_url('/theme/boost_union/smartmenus/edit.php', ['sesskey' => sesskey()]),
+        new \core\url('/theme/boost_union/smartmenus/edit.php', ['sesskey' => sesskey()]),
         get_string('smartmenusmenucreate', 'theme_boost_union'), 'get');
 $createbutton .= $OUTPUT->box_end();
 

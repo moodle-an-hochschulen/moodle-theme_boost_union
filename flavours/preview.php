@@ -42,11 +42,11 @@ require_capability('theme/boost_union:configure', $context);
 
 // Prepare the page.
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/theme/boost_union/flavours/preview.php', ['id' => $flavourid]));
+$PAGE->set_url(new core\url('/theme/boost_union/flavours/preview.php', ['id' => $flavourid]));
 $PAGE->set_cacheable(false);
-$PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
+$PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new core\url('/admin/category.php',
         ['category' => 'theme_boost_union']));
-$PAGE->navbar->add(get_string('flavoursflavours', 'theme_boost_union'), new moodle_url('/theme/boost_union/flavours/overview.php'));
+$PAGE->navbar->add(get_string('flavoursflavours', 'theme_boost_union'), new core\url('/theme/boost_union/flavours/overview.php'));
 $PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('flavourspreviewflavour', 'theme_boost_union')));
 $PAGE->set_heading(get_string('flavourspreviewflavour', 'theme_boost_union'));
 $PAGE->navbar->add(get_string('flavourspreviewflavour', 'theme_boost_union'));
@@ -60,7 +60,7 @@ echo get_string('flavourspreviewblindtext', 'theme_boost_union');
 // Show back to overview button.
 echo $OUTPUT->box_start('text-center');
 echo $OUTPUT->single_button(
-        new \moodle_url('/theme/boost_union/flavours/overview.php'),
+        new \core\url('/theme/boost_union/flavours/overview.php'),
         get_string('flavoursbacktooverview', 'theme_boost_union'), 'get');
 echo $OUTPUT->box_end();
 

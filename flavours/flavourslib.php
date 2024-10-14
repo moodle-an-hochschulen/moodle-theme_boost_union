@@ -54,7 +54,7 @@ function theme_boost_union_get_flavour_which_applies() {
         // Otherwise.
     } else {
         // If we are on the preview page.
-        $previewurl = new moodle_url('/theme/boost_union/flavours/preview.php');
+        $previewurl = new core\url('/theme/boost_union/flavours/preview.php');
         if ($previewurl->compare($PAGE->url, URL_MATCH_BASE) == true) {
             // Get the flavour from the URL.
             $previewflavourid = required_param('id', PARAM_INT);
