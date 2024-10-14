@@ -72,7 +72,7 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Activity branding" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I click on ".fa-folder-o" "css_element" in the "#admin-modiconsfiles .fp-btn-mkdir" "css_element"
+    And I click on ".fa-folder-plus" "css_element" in the "#admin-modiconsfiles .fp-btn-mkdir" "css_element"
     And I set the field "New folder name" to "assign"
     And I click on ".fp-dlg-butcreate" "css_element" in the ".moodle-dialogue .fp-mkdir-dlg" "css_element"
     And I click on ".aabtn" "css_element" in the "#admin-modiconsfiles .fp-folder" "css_element"
