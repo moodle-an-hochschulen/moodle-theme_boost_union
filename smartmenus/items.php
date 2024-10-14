@@ -52,7 +52,7 @@ if ($menuid == null && $id !== null) {
 }
 
 // Compose the page URL.
-$pageurl = new moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $menu->id]);
+$pageurl = new core\url('/theme/boost_union/smartmenus/items.php', ['menu' => $menu->id]);
 
 // Get system context.
 $context = context_system::instance();
@@ -65,10 +65,10 @@ require_capability('theme/boost_union:configure', $context);
 $PAGE->set_context($context);
 $PAGE->set_url($pageurl);
 $PAGE->set_cacheable(false);
-$PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
+$PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new core\url('/admin/category.php',
         ['category' => 'theme_boost_union']));
-$PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/menus.php'));
-$PAGE->navbar->add(get_string('smartmenusmenuitems', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/items.php',
+$PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new core\url('/theme/boost_union/smartmenus/menus.php'));
+$PAGE->navbar->add(get_string('smartmenusmenuitems', 'theme_boost_union'), new core\url('/theme/boost_union/smartmenus/items.php',
         ['menu' => $menu->id]));
 
 // Process actions.
@@ -134,7 +134,7 @@ echo $OUTPUT->heading(get_string('smartmenus', 'theme_boost_union'));
 if (isset($menu->title)) {
     $menuheading = format_string($menu->title);
     $settingstitle = get_string('smartmenussettings', 'theme_boost_union');
-    $settingsurl = new moodle_url('/theme/boost_union/smartmenus/edit.php', ['id' => $menuid, 'sesskey' => sesskey()]);
+    $settingsurl = new core\url('/theme/boost_union/smartmenus/edit.php', ['id' => $menuid, 'sesskey' => sesskey()]);
     $menuheading .= html_writer::link($settingsurl,
             $OUTPUT->pix_icon('t/edit', $settingstitle, 'moodle', ['class' => 'ms-2']));
     echo $OUTPUT->heading($menuheading, 4);
@@ -143,7 +143,7 @@ if (isset($menu->title)) {
 // Prepare 'Create menu item' buttons.
 $createbutton = $OUTPUT->box_start();
 $createbutton .= $OUTPUT->single_button(
-        new \moodle_url('/theme/boost_union/smartmenus/edit_items.php', ['menu' => $menuid, 'sesskey' => sesskey()]),
+        new \core\url('/theme/boost_union/smartmenus/edit_items.php', ['menu' => $menuid, 'sesskey' => sesskey()]),
         get_string('smartmenusmenuaddnewitem', 'theme_boost_union'), 'get');
 $createbutton .= $OUTPUT->box_end();
 

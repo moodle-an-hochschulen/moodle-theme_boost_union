@@ -231,7 +231,7 @@ class smartmenus_items extends \table_sql {
         global $OUTPUT;
 
         // Prepare action URL.
-        $actionurl = new \moodle_url('/theme/boost_union/smartmenus/items.php');
+        $actionurl = new \core\url('/theme/boost_union/smartmenus/items.php');
 
         // Initialize column value.
         $updown = '';
@@ -283,7 +283,7 @@ class smartmenus_items extends \table_sql {
         global $OUTPUT;
 
         // Prepare action URL.
-        $actionurl = new \moodle_url('/theme/boost_union/smartmenus/items.php');
+        $actionurl = new \core\url('/theme/boost_union/smartmenus/items.php');
 
         // Initialize actions.
         $actions = [];
@@ -291,13 +291,13 @@ class smartmenus_items extends \table_sql {
         // Show/Hide.
         if ($data->visible) {
             $actions[] = [
-                'url' => new \moodle_url($actionurl, ['action' => 'hide', 'id' => $data->id, 'sesskey' => sesskey()]),
+                'url' => new \core\url($actionurl, ['action' => 'hide', 'id' => $data->id, 'sesskey' => sesskey()]),
                 'icon' => new \pix_icon('t/hide', get_string('hide')),
                 'attributes' => ['class' => 'action-hide'],
             ];
         } else {
             $actions[] = [
-                'url' => new \moodle_url($actionurl, ['action' => 'show', 'id' => $data->id, 'sesskey' => sesskey()]),
+                'url' => new \core\url($actionurl, ['action' => 'show', 'id' => $data->id, 'sesskey' => sesskey()]),
                 'icon' => new \pix_icon('t/show', get_string('show')),
                 'attributes' => ['class' => 'action-show'],
             ];
@@ -305,7 +305,7 @@ class smartmenus_items extends \table_sql {
 
         // Edit.
         $actions[] = [
-            'url' => new \moodle_url('/theme/boost_union/smartmenus/edit_items.php',
+            'url' => new \core\url('/theme/boost_union/smartmenus/edit_items.php',
                     ['id' => $data->id, 'sesskey' => sesskey()]),
             'icon' => new \pix_icon('t/edit', get_string('edit')),
             'attributes' => ['class' => 'action-edit'],
@@ -313,14 +313,14 @@ class smartmenus_items extends \table_sql {
 
         // Duplicate.
         $actions[] = [
-            'url' => new \moodle_url($actionurl, ['action' => 'copy', 'id' => $data->id, 'sesskey' => sesskey()]),
+            'url' => new \core\url($actionurl, ['action' => 'copy', 'id' => $data->id, 'sesskey' => sesskey()]),
             'icon' => new \pix_icon('t/copy', get_string('smartmenusmenuitemduplicate', 'theme_boost_union')),
             'attributes' => ['class' => 'action-copy'],
         ];
 
         // Delete.
         $actions[] = [
-            'url' => new \moodle_url($actionurl, ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]),
+            'url' => new \core\url($actionurl, ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]),
             'icon' => new \pix_icon('t/delete', get_string('delete')),
             'attributes' => ['class' => 'action-delete'],
             'confirm' => new \confirm_action(get_string('smartmenusmenuitemdeleteconfirm', 'theme_boost_union')),

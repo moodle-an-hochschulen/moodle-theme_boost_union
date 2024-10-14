@@ -49,7 +49,7 @@ $config = get_config('theme_boost_union');
 // If the local login is not disabled, we just show a short friendly warning page and are done.
 if ($config->loginlocalloginenable != THEME_BOOST_UNION_SETTING_SELECT_NO) {
     echo $OUTPUT->header();
-    $loginurl = new moodle_url('/login/index.php');
+    $loginurl = new core\url('/login/index.php');
     $notification = new \core\output\notification(
             get_string('loginlocalloginlocalnotdisabled', 'theme_boost_union', ['url' => $loginurl]),
             \core\output\notification::NOTIFY_INFO);
@@ -73,7 +73,7 @@ echo $OUTPUT->header();
 
 // Prepare the local login form.
 $templatecontext = [];
-$templatecontext['loginurl'] = new moodle_url('/login/index.php');
+$templatecontext['loginurl'] = new core\url('/login/index.php');
 $templatecontext['logintoken'] = \core\session\manager::get_login_token();
 
 // Output the local login form.

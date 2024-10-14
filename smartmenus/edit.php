@@ -44,11 +44,11 @@ require_capability('theme/boost_union:configure', $context);
 
 // Prepare the page.
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/theme/boost_union/smartmenus/edit.php', ['id' => $id, 'sesskey' => sesskey()]));
+$PAGE->set_url(new core\url('/theme/boost_union/smartmenus/edit.php', ['id' => $id, 'sesskey' => sesskey()]));
 $PAGE->set_cacheable(false);
-$PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
+$PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new core\url('/admin/category.php',
         ['category' => 'theme_boost_union']));
-$PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new moodle_url('/theme/boost_union/smartmenus/menus.php'));
+$PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new core\url('/theme/boost_union/smartmenus/menus.php'));
 $PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('smartmenus', 'theme_boost_union')));
 if ($id !== null && $id > 0) {
     $PAGE->set_heading(get_string('smartmenusmenuedit', 'theme_boost_union'));
@@ -79,18 +79,18 @@ if ($data = $form->get_data()) {
 
     // After the menu data was saved, let's redirect to configure items for this menu.
     if (isset($data->saveanddisplay) && $data->saveanddisplay) {
-        redirect(new moodle_url('/theme/boost_union/smartmenus/items.php', ['menu' => $menuid]));
+        redirect(new core\url('/theme/boost_union/smartmenus/items.php', ['menu' => $menuid]));
 
         // Otherwise.
     } else {
         // Redirect to menu list.
-        redirect(new moodle_url('/theme/boost_union/smartmenus/menus.php'));
+        redirect(new core\url('/theme/boost_union/smartmenus/menus.php'));
     }
 
     // Otherwise if the form was cancelled.
 } else if ($form->is_cancelled()) {
     // Redirect to menu list.
-    redirect(new moodle_url('/theme/boost_union/smartmenus/menus.php'));
+    redirect(new core\url('/theme/boost_union/smartmenus/menus.php'));
 }
 
 // If a menu ID is given.
@@ -106,7 +106,7 @@ if ($id !== null && $id > 0) {
         \core\notification::error(get_string('error:smartmenusmenunotfound', 'theme_boost_union'));
 
         // Redirect to menu list (where the notification is shown).
-        redirect(new moodle_url('/theme/boost_union/smartmenus/menus.php'));
+        redirect(new core\url('/theme/boost_union/smartmenus/menus.php'));
     }
 }
 

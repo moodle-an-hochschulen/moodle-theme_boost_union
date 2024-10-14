@@ -59,7 +59,7 @@ if ($confirm == true) {
     $resetresult = theme_boost_union_infobanner_reset_visibility($no);
 
     // Redirect with a nice message.
-    $redirecturl = new moodle_url('/admin/settings.php',
+    $redirecturl = new core\url('/admin/settings.php',
             ['section' => 'theme_boost_union_content'],
             'theme_boost_union_infobanners_infobanner');
     if ($resetresult == true) {
@@ -97,14 +97,14 @@ if ($confirm == true) {
     echo html_writer::start_tag('div', ['class' => 'mt-2']);
 
     // Show confirm button.
-    $confirmurl = new moodle_url('/theme/boost_union/settings_infobanner_resetdismissed.php',
+    $confirmurl = new core\url('/theme/boost_union/settings_infobanner_resetdismissed.php',
             ['sesskey' => sesskey(), 'no' => $no, 'confirm' => 1]);
     echo html_writer::link($confirmurl,
             get_string('confirm', 'core', null, true),
             ['class' => 'btn btn-primary me-3', 'role' => 'button']);
 
     // Show cancel button.
-    $cancelurl = new moodle_url('/admin/settings.php',
+    $cancelurl = new core\url('/admin/settings.php',
             ['section' => 'theme_boost_union_content'],
             'theme_boost_union_infobanners_infobanner');
     echo html_writer::link($cancelurl,

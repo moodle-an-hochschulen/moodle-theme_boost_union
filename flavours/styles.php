@@ -74,7 +74,7 @@ if (!empty($flavour->look_rawscss)) {
 // If the flavour has a background image.
 if ($flavour->look_backgroundimage != null) {
     // Compose the URL to the flavour's background image.
-    $backgroundimageurl = moodle_url::make_pluginfile_url(
+    $backgroundimageurl = core\url::make_pluginfile_url(
             context_system::instance()->id, 'theme_boost_union', 'flavours_look_backgroundimage', $flavourid,
             '/'.theme_get_revision(), '/'.$flavour->look_backgroundimage);
 

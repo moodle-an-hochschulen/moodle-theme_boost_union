@@ -576,7 +576,7 @@ class smartmenu_item {
             // Get the first file.
             $file = reset($files);
 
-            $url = \moodle_url::make_pluginfile_url(
+            $url = \core\url::make_pluginfile_url(
                 $file->get_contextid(),
                 $file->get_component(),
                 $file->get_filearea(),
@@ -625,13 +625,13 @@ class smartmenu_item {
     }
 
     /**
-     * Generate the item as static menu item, Send the custom URL to moodle_url to make this work with relative URL.
+     * Generate the item as static menu item, Send the custom URL to core\url to make this work with relative URL.
      *
      * @return string
      */
     protected function generate_static_item() {
 
-        $staticurl = new \moodle_url($this->item->url);
+        $staticurl = new \core\url($this->item->url);
 
         return $this->generate_node_data(
             $this->item->title, // Title.
@@ -704,7 +704,7 @@ class smartmenu_item {
         $items = [];
         // Build the items data into nodes.
         foreach ($records as $record) {
-            $url = new \moodle_url('/course/view.php', ['id' => $record->id]);
+            $url = new \core\url('/course/view.php', ['id' => $record->id]);
             $rkey = 'item-'.$this->item->id.'-dynamic-'.$record->id;
             // Get the course image from overview files.
             $itemimage = $this->get_course_image($record);

@@ -96,7 +96,7 @@ class flavours_overview extends \table_sql {
         global $OUTPUT;
 
         // Prepare action URL.
-        $actionurl = new \moodle_url('/theme/boost_union/flavours/overview.php');
+        $actionurl = new \core\url('/theme/boost_union/flavours/overview.php');
 
         // Initialize column value.
         $updown = '';
@@ -182,14 +182,14 @@ class flavours_overview extends \table_sql {
 
         // Preview.
         $actions[] = [
-                'url' => new \moodle_url('/theme/boost_union/flavours/preview.php', ['id' => $data->id]),
+                'url' => new \core\url('/theme/boost_union/flavours/preview.php', ['id' => $data->id]),
                 'icon' => new \pix_icon('i/search', get_string('flavoursedit', 'theme_boost_union')),
                 'attributes' => ['class' => 'action-preview'],
         ];
 
         // Edit.
         $actions[] = [
-                'url' => new \moodle_url('/theme/boost_union/flavours/edit.php',
+                'url' => new \core\url('/theme/boost_union/flavours/edit.php',
                         ['action' => 'edit', 'id' => $data->id, 'sesskey' => sesskey()]),
                 'icon' => new \pix_icon('t/edit', get_string('flavoursedit', 'theme_boost_union')),
                 'attributes' => ['class' => 'action-edit'],
@@ -197,7 +197,7 @@ class flavours_overview extends \table_sql {
 
         // Delete.
         $actions[] = [
-                'url' => new \moodle_url('/theme/boost_union/flavours/edit.php',
+                'url' => new \core\url('/theme/boost_union/flavours/edit.php',
                         ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]),
                 'icon' => new \pix_icon('t/delete', get_string('flavourspreview', 'theme_boost_union')),
                 'attributes' => ['class' => 'action-delete'],

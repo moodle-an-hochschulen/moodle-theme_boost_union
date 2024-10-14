@@ -34,7 +34,7 @@ class tool_policy_renderer extends \tool_policy\output\renderer {
      */
     public function header() {
         // Check that only the /admin/tool/policy/viewall.php page is affected.
-        $pageurl = new \moodle_url('/admin/tool/policy/viewall.php');
+        $pageurl = new \core\url('/admin/tool/policy/viewall.php');
         if ($pageurl->compare($this->page->url, URL_MATCH_BASE) == true) {
 
             // If the admin wants to show navigation on the policy page.
