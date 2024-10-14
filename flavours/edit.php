@@ -45,11 +45,11 @@ require_capability('theme/boost_union:configure', $context);
 
 // Prepare the page.
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/theme/boost_union/flavours/edit.php', ['action' => $action]));
+$PAGE->set_url(new core\url('/theme/boost_union/flavours/edit.php', ['action' => $action]));
 $PAGE->set_cacheable(false);
-$PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new moodle_url('/admin/category.php',
+$PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new core\url('/admin/category.php',
         ['category' => 'theme_boost_union']));
-$PAGE->navbar->add(get_string('flavoursflavours', 'theme_boost_union'), new moodle_url('/theme/boost_union/flavours/overview.php'));
+$PAGE->navbar->add(get_string('flavoursflavours', 'theme_boost_union'), new core\url('/theme/boost_union/flavours/overview.php'));
 switch ($action) {
     case 'create':
         $PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('flavourscreateflavour', 'theme_boost_union')));
@@ -138,12 +138,12 @@ switch ($action) {
             \core\notification::success(get_string('flavoursnotificationcreated', 'theme_boost_union'));
 
             // Redirect to overview page.
-            redirect(new moodle_url('/theme/boost_union/flavours/overview.php'));
+            redirect(new core\url('/theme/boost_union/flavours/overview.php'));
 
             // Otherwise if the form was cancelled.
         } else if ($form->is_cancelled()) {
             // Redirect to overview page.
-            redirect(new moodle_url('/theme/boost_union/flavours/overview.php'));
+            redirect(new core\url('/theme/boost_union/flavours/overview.php'));
         }
 
         break;
@@ -212,12 +212,12 @@ switch ($action) {
             \core\notification::success(get_string('flavoursnotificationedited', 'theme_boost_union'));
 
             // Redirect to overview page.
-            redirect(new moodle_url('/theme/boost_union/flavours/overview.php'));
+            redirect(new core\url('/theme/boost_union/flavours/overview.php'));
 
             // Otherwise if the form was cancelled.
         } else if ($form->is_cancelled()) {
             // Redirect to overview page.
-            redirect(new moodle_url('/theme/boost_union/flavours/overview.php'));
+            redirect(new core\url('/theme/boost_union/flavours/overview.php'));
 
             // Otherwise if the form was not yet submitted.
         } else {
@@ -295,12 +295,12 @@ switch ($action) {
             \core\notification::success(get_string('flavoursnotificationdeleted', 'theme_boost_union'));
 
             // Redirect to overview page.
-            redirect(new moodle_url('/theme/boost_union/flavours/overview.php'));
+            redirect(new core\url('/theme/boost_union/flavours/overview.php'));
 
             // Otherwise if the form was cancelled.
         } else if ($form->is_cancelled()) {
             // Redirect to overview page.
-            redirect(new moodle_url('/theme/boost_union/flavours/overview.php'));
+            redirect(new core\url('/theme/boost_union/flavours/overview.php'));
 
             // Otherwise if the form was not yet submitted.
         } else {
