@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-14 - Upgrade: Adopt changes from MDL-82158 and use new cache classes.
 * 2024-10-13 - Upgrade: Adopt changes from MDL-75671 into custom Boost Union code.
 * 2024-10-13 - Upgrade: Remove legacy implementation of before_standard_html_head, resolves #606.
 * 2024-10-13 - Upgrade: Adopt changes from MDL-82183 where lib/outputrenderers.php was split up.

@@ -72,7 +72,7 @@ function theme_boost_union_get_flavour_which_applies() {
         // If the flag to purge the flavours cache is set for this user.
         if (get_user_preferences('theme_boost_union_flavours_purgesessioncache', false) == true) {
             // Purge the flavours cache for this user.
-            cache_helper::purge_by_definition('theme_boost_union', 'flavours');
+            \core_cache\helper::purge_by_definition('theme_boost_union', 'flavours');
         }
 
         // Create cache for flavours.

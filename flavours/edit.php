@@ -130,9 +130,9 @@ switch ($action) {
             theme_reset_all_caches();
 
             // Purge the flavours cache as well as the users might get other flavours which apply after the creation.
-            // We would have preferred using cache_helper::purge_by_definition, but this just purges the session cache
+            // We would have preferred using \core_cache\helper::purge_by_definition, but this just purges the session cache
             // of the current user and not for all users.
-            cache_helper::purge_by_event('theme_boost_union_flavours_created');
+            \core_cache\helper::purge_by_event('theme_boost_union_flavours_created');
 
             // Show success notification.
             \core\notification::success(get_string('flavoursnotificationcreated', 'theme_boost_union'));
@@ -204,9 +204,9 @@ switch ($action) {
             theme_reset_all_caches();
 
             // Purge the flavours cache as well as the users might get other flavours which apply after the editing.
-            // We would have preferred using cache_helper::purge_by_definition, but this just purges the session cache
+            // We would have preferred using \core_cache\helper::purge_by_definition, but this just purges the session cache
             // of the current user and not for all users.
-            cache_helper::purge_by_event('theme_boost_union_flavours_edited');
+            \core_cache\helper::purge_by_event('theme_boost_union_flavours_edited');
 
             // Show success notification.
             \core\notification::success(get_string('flavoursnotificationedited', 'theme_boost_union'));
@@ -287,9 +287,9 @@ switch ($action) {
             theme_reset_all_caches();
 
             // Purge the flavours cache as well as the users might get other flavours which apply after the deletion.
-            // We would have preferred using cache_helper::purge_by_definition, but this just purges the session cache
+            // We would have preferred using \core_cache\helper::purge_by_definition, but this just purges the session cache
             // of the current user and not for all users.
-            cache_helper::purge_by_event('theme_boost_union_flavours_deleted');
+            \core_cache\helper::purge_by_event('theme_boost_union_flavours_deleted');
 
             // Show success notification.
             \core\notification::success(get_string('flavoursnotificationdeleted', 'theme_boost_union'));
