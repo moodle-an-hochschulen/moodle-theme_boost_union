@@ -2317,9 +2317,9 @@ function theme_boost_union_manipulate_hooks() {
 
         // Get list of all files with callbacks, one per component.
         $components = ['core' => "{$CFG->dirroot}/lib/db/hooks.php"];
-        $plugintypes = \core_component::get_plugin_types();
+        $plugintypes = \core\component::get_plugin_types();
         foreach ($plugintypes as $plugintype => $plugintypedir) {
-            $plugins = \core_component::get_plugin_list($plugintype);
+            $plugins = \core\component::get_plugin_list($plugintype);
             foreach ($plugins as $pluginname => $plugindir) {
                 if (!$plugindir) {
                     continue;
