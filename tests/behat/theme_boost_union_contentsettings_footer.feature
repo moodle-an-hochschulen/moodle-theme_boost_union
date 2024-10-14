@@ -349,7 +349,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
     Then ".footer-support-link a i.icon.fa-book" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
     And ".footer-support-link a i.icon.fa-life-ring" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
-    And ".footer-support-link a i.icon.fa-envelope-o" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
+    And ".footer-support-link a i.icon.fa-envelope" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
     And ".footer-support-link a i.icon.fa-info-circle" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
     And ".footer-support-link a i.icon.fa-briefcase" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
     And ".footer-support-link a i.icon.fa-building-o" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
