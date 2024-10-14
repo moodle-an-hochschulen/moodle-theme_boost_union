@@ -27,9 +27,9 @@ namespace theme_boost_union;
 defined('MOODLE_INTERNAL') || die();
 
 use context_system;
-use html_writer;
 use stdClass;
 use cache;
+use core\output\html_writer;
 use core_course\external\course_summary_exporter;
 
 require_once($CFG->dirroot.'/theme/boost_union/smartmenus/menulib.php');

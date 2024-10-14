@@ -228,7 +228,7 @@ function theme_boost_union_get_course_related_hints() {
                 if (has_capability('enrol/self:config', \context_course::instance($COURSE->id))) {
                     $url = new core\url('/enrol/editinstance.php', ['courseid' => $COURSE->id,
                             'id' => $selfenrolinstanceid, 'type' => 'self', ]);
-                    $selfenrolinstanceobject->name = html_writer::link($url, $selfenrolinstanceobject->name);
+                    $selfenrolinstanceobject->name = core\output\html_writer::link($url, $selfenrolinstanceobject->name);
                 }
 
                 // Add the enrolment instance information to the template context depending on the instance configuration.
@@ -1362,7 +1362,7 @@ function theme_boost_union_get_modicon_templatecontext () {
 /**
  * Returns the SCSS code to modify the activity icon purpose.
  *
- * @param theme_config $theme The theme config object.
+ * @param \core\output\theme_config $theme The theme config object.
  * @return string
  */
 function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
@@ -1446,7 +1446,7 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
 /**
  * Returns the SCSS code to add an external link icon after external links to mark them visually.
  *
- * @param theme_config $theme The theme config object.
+ * @param \core\output\theme_config $theme The theme config object.
  * @return string
  */
 function theme_boost_union_get_scss_to_mark_external_links($theme) {
@@ -1534,7 +1534,7 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
 /**
  * Returns the SCSS to add a broken-chain symbol in front of broken links and make the font red to mark them visually.
  *
- * @param theme_config $theme The theme config object.
+ * @param \core\output\theme_config $theme The theme config object.
  * @return string
  */
 function theme_boost_union_get_scss_to_mark_broken_links($theme) {
@@ -1570,7 +1570,7 @@ function theme_boost_union_get_scss_to_mark_broken_links($theme) {
 /**
  * Returns the SCSS to add an envelope symbol in front of mailto links to mark them visually.
  *
- * @param theme_config $theme The theme config object.
+ * @param \core\output\theme_config $theme The theme config object.
  * @return string
  */
 function theme_boost_union_get_scss_to_mark_mailto_links($theme) {
@@ -1612,7 +1612,7 @@ function theme_boost_union_get_scss_to_mark_mailto_links($theme) {
  * Returns the SCSS code to hide the course image and/or the course progress in the course overview block, depending
  * on the theme settings courseoverviewshowcourseimages and courseoverviewshowcourseprogress respectively.
  *
- * @param theme_config $theme The theme config object.
+ * @param \core\output\theme_config $theme The theme config object.
  * @return string
  */
 function theme_boost_union_get_scss_courseoverview_block($theme) {
@@ -1683,7 +1683,7 @@ function theme_boost_union_get_loginpage_methods() {
 /**
  * Returns the SCSS code to re-order the elements of the login form, depending on the theme settings loginorder*.
  *
- * @param theme_config $theme The theme config object.
+ * @param \core\output\theme_config $theme The theme config object.
  * @return string
  */
 function theme_boost_union_get_scss_login_order($theme) {

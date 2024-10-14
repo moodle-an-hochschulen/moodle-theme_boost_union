@@ -26,12 +26,12 @@ namespace theme_boost_union\output;
 
 use context_course;
 use context_system;
-use html_writer;
 use moodle_url;
 use stdClass;
 use core\di;
 use core\hook\manager as hook_manager;
 use core\hook\output\before_standard_footer_html_generation;
+use core\output\html_writer;
 use core_block\output\block_contents;
 
 /**

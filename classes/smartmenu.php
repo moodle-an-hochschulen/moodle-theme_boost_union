@@ -26,7 +26,6 @@ namespace theme_boost_union;
 
 defined('MOODLE_INTERNAL') || die();
 
-use custom_menu;
 use context_system;
 use moodle_exception;
 use core\navigation\views\primary;
@@ -619,7 +618,7 @@ class smartmenu {
                         $data = [
                             'text' => $description,
                             'alt' => $alt,
-                            'icon' => (new \pix_icon('help', $alt, 'core'))->export_for_template($OUTPUT),
+                            'icon' => (new \core\output\pix_icon('help', $alt, 'core'))->export_for_template($OUTPUT),
                             'ltr' => !right_to_left(),
                         ];
                         $nodes->helpicon = $OUTPUT->render_from_template('core/help_icon', $data);

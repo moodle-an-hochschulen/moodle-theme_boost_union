@@ -26,7 +26,6 @@ namespace theme_boost_union\output\navigation;
 
 use renderable;
 use renderer_base;
-use templatable;
 use custom_menu;
 use theme_boost_union\smartmenu;
 

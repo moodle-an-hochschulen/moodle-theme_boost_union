@@ -94,12 +94,12 @@ if ($confirm == true) {
     echo get_string('infobannerdismissconfirm', 'theme_boost_union', ['no' => $no]);
 
     // Start buttons.
-    echo html_writer::start_tag('div', ['class' => 'mt-2']);
+    echo core\output\html_writer::start_tag('div', ['class' => 'mt-2']);
 
     // Show confirm button.
     $confirmurl = new core\url('/theme/boost_union/settings_infobanner_resetdismissed.php',
             ['sesskey' => sesskey(), 'no' => $no, 'confirm' => 1]);
-    echo html_writer::link($confirmurl,
+    echo \core\output\html_writer::link($confirmurl,
             get_string('confirm', 'core', null, true),
             ['class' => 'btn btn-primary me-3', 'role' => 'button']);
 
@@ -107,12 +107,12 @@ if ($confirm == true) {
     $cancelurl = new core\url('/admin/settings.php',
             ['section' => 'theme_boost_union_content'],
             'theme_boost_union_infobanners_infobanner');
-    echo html_writer::link($cancelurl,
+    echo \core\output\html_writer::link($cancelurl,
             get_string('cancel', 'core', null, true),
             ['class' => 'btn btn-secondary', 'role' => 'button']);
 
     // End buttons.
-    echo html_writer::end_tag('div');
+    echo \core\output\html_writer::end_tag('div');
 
     // Finish page.
     echo $OUTPUT->footer();

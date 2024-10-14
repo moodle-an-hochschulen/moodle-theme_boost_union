@@ -19,7 +19,6 @@ namespace theme_boost_union;
 use core\navigation\views\view;
 use navigation_node;
 use moodle_url;
-use action_link;
 
 /**
  * Creates a navbar for boost union that allows easy control of the navbar items.

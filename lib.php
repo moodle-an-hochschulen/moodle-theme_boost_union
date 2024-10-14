@@ -131,7 +131,7 @@ define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB', 2);
 /**
  * Returns the main SCSS content.
  *
- * @param theme_config $theme The theme config object.
+ * @param \core\output\theme_config $theme The theme config object.
  * @return string
  */
 function theme_boost_union_get_main_scss_content($theme) {
@@ -147,7 +147,7 @@ function theme_boost_union_get_main_scss_content($theme) {
 
     // Get and include the main SCSS from Boost Core.
     // This particularly covers the theme preset which is set in Boost Core and not Boost Union.
-    $scss .= theme_boost_get_main_scss_content(theme_config::load('boost'));
+    $scss .= theme_boost_get_main_scss_content(\core\output\theme_config::load('boost'));
 
     // Include post.scss from Boost Union.
     $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/post.scss');
@@ -165,7 +165,7 @@ function theme_boost_union_get_main_scss_content($theme) {
 /**
  * Get SCSS to prepend.
  *
- * @param theme_config $theme The theme config object.
+ * @param \core\output\theme_config $theme The theme config object.
  * @return string
  */
 function theme_boost_union_get_pre_scss($theme) {
@@ -284,7 +284,7 @@ function theme_boost_union_get_pre_scss($theme) {
 /**
  * Inject additional SCSS.
  *
- * @param theme_config $theme The theme config object.
+ * @param \core\output\theme_config $theme The theme config object.
  * @return string
  */
 function theme_boost_union_get_extra_scss($theme) {
@@ -479,7 +479,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
                 $filearea === 'touchiconsios' ||
                 preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea) ||
                 preg_match("/slidebackgroundimage[2-9]|1[0-2]?/", $filearea))) {
-        $theme = theme_config::load('boost_union');
+        $theme = \core\output\theme_config::load('boost_union');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {
             $options['cacheability'] = 'public';
@@ -565,7 +565,7 @@ function theme_boost_union_output_fragment_icons_list($args) {
         $icons = [];
 
         // Load the theme config.
-        $theme = \theme_config::load($PAGE->theme->name);
+        $theme = \core\output\theme_config::load($PAGE->theme->name);
 
         // Get the FA system.
         $faiconsystem = \core\output\icon_system_fontawesome::instance($theme->get_icon_system());
@@ -588,7 +588,7 @@ function theme_boost_union_output_fragment_icons_list($args) {
             $component = isset($icon[0]) ? $icon[0] : '';
 
             // Render the pix icon.
-            $icon = new \pix_icon($iconstr,  "", $component);
+            $icon = new \core\output\pix_icon($iconstr,  "", $component);
             $icons[] = [
                 'icon' => $faiconsystem->render_pix_icon($OUTPUT, $icon),
                 'value' => $iconkey,

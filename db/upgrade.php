@@ -70,7 +70,7 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     if ($oldversion < 2022080922) {
 
         // Start composing the notification to inform the admin.
-        $message = html_writer::tag('p', get_string('upgradenotice_2022080922', 'theme_boost_union'));
+        $message = \core\output\html_writer::tag('p', get_string('upgradenotice_2022080922', 'theme_boost_union'));
 
         // Handle the logo and compact logo (which have got now new settings in Boost Union).
         foreach (['logo', 'logocompact'] as $setting) {
@@ -114,13 +114,13 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
             // If the logo has been copied.
             if ($logocopied == true) {
                 // Add the corresponding note to the notification.
-                $message .= html_writer::tag('p', get_string('upgradenotice_2022080922_copied', 'theme_boost_union',
+                $message .= \core\output\html_writer::tag('p', get_string('upgradenotice_2022080922_copied', 'theme_boost_union',
                         get_string('upgradenotice_2022080922_'.$setting, 'theme_boost_union')));
 
                 // Otherwise, if no logo was copied.
             } else {
                 // Add the corresponding note to the notification.
-                $message .= html_writer::tag('p', get_string('upgradenotice_2022080922_notcopied', 'theme_boost_union',
+                $message .= \core\output\html_writer::tag('p', get_string('upgradenotice_2022080922_notcopied', 'theme_boost_union',
                         get_string('upgradenotice_2022080922_'.$setting, 'theme_boost_union')));
             }
         }
