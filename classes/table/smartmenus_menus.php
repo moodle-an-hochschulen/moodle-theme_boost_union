@@ -24,6 +24,8 @@
 
 namespace theme_boost_union\table;
 
+use core\output\html_writer;
+
 defined('MOODLE_INTERNAL') || die();
 
 // Require table library.
@@ -36,7 +38,7 @@ require_once($CFG->libdir.'/tablelib.php');
  * @copyright  2023 bdecent GmbH <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class smartmenus_menus extends \table_sql {
+class smartmenus_menus extends \core_table\sql_table {
 
     /**
      * @var int $count Smart menu menus count.
@@ -122,7 +124,7 @@ class smartmenus_menus extends \table_sql {
         // Implode all given locations and show a badge for each of them.
         return (!empty($locations)) ? implode(' ', array_map(function($value) {
             $location = \theme_boost_union\smartmenu::get_location($value);
-            return \html_writer::tag('span', $location, ['class' => 'badge bg-primary text-light']);
+            return html_writer::tag('span', $location, ['class' => 'badge bg-primary text-light']);
         }, $locations)) : "";
     }
 
@@ -137,7 +139,7 @@ class smartmenus_menus extends \table_sql {
         $type = \theme_boost_union\smartmenu::get_type($data->type);
 
         // Return the type as badge.
-        return \html_writer::tag('span', $type, ['class' => 'badge bg-primary text-light']);
+        return html_writer::tag('span', $type, ['class' => 'badge bg-primary text-light']);
     }
 
     /**
@@ -161,7 +163,7 @@ class smartmenus_menus extends \table_sql {
         // If there is more than one smart menu and we do not handle the first (number 0) smart menu.
         if ($this->count > 0) {
             // Add the up icon.
-            $updown .= \html_writer::link($actionurl->out(false,
+            $updown .= html_writer::link($actionurl->out(false,
                     ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]),
                     $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
                             ['class' => 'iconsmall']), ['class' => 'sort-smartmenus-up-action']);
@@ -175,7 +177,7 @@ class smartmenus_menus extends \table_sql {
         if ($this->count < ($this->totalmenus - 1)) {
             // Add the down icon.
             $updown .= '&nbsp;';
-            $updown .= \html_writer::link($actionurl->out(false,
+            $updown .= html_writer::link($actionurl->out(false,
                     ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]),
                     $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
                             ['class' => 'iconsmall']), ['class' => 'sort-smartmenus-down-action']);
@@ -211,13 +213,13 @@ class smartmenus_menus extends \table_sql {
         if ($data->visible) {
             $actions[] = [
                 'url' => new \core\url($actionurl, ['action' => 'hide', 'id' => $data->id, 'sesskey' => sesskey()]),
-                'icon' => new \pix_icon('t/hide', get_string('hide')),
+                'icon' => new \core\output\pix_icon('t/hide', get_string('hide')),
                 'attributes' => ['class' => 'action-hide'],
             ];
         } else {
             $actions[] = [
                 'url' => new \core\url($actionurl, ['action' => 'show', 'id' => $data->id, 'sesskey' => sesskey()]),
-                'icon' => new \pix_icon('t/show', get_string('show')),
+                'icon' => new \core\output\pix_icon('t/show', get_string('show')),
                 'attributes' => ['class' => 'action-show'],
             ];
         }
@@ -225,30 +227,30 @@ class smartmenus_menus extends \table_sql {
         // Edit.
         $actions[] = [
             'url' => new \core\url('/theme/boost_union/smartmenus/edit.php', ['id' => $data->id, 'sesskey' => sesskey()]),
-            'icon' => new \pix_icon('t/edit', get_string('edit')),
+            'icon' => new \core\output\pix_icon('t/edit', get_string('edit')),
             'attributes' => ['class' => 'action-edit'],
         ];
 
         // Duplicate.
         $actions[] = [
             'url' => new \core\url($actionurl, ['action' => 'copy', 'id' => $data->id, 'sesskey' => sesskey()]),
-            'icon' => new \pix_icon('t/copy', get_string('smartmenusmenuduplicate', 'theme_boost_union')),
+            'icon' => new \core\output\pix_icon('t/copy', get_string('smartmenusmenuduplicate', 'theme_boost_union')),
             'attributes' => ['class' => 'action-copy'],
         ];
 
         // List items.
         $actions[] = [
             'url' => new \core\url('/theme/boost_union/smartmenus/items.php', ['menu' => $data->id]),
-            'icon' => new \pix_icon('e/bullet_list', get_string('list')),
+            'icon' => new \core\output\pix_icon('e/bullet_list', get_string('list')),
             'attributes' => ['class' => 'action-list-items'],
         ];
 
         // Delete.
         $actions[] = [
             'url' => new \core\url($actionurl, ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]),
-            'icon' => new \pix_icon('t/delete', get_string('delete')),
+            'icon' => new \core\output\pix_icon('t/delete', get_string('delete')),
             'attributes' => ['class' => 'action-delete'],
-            'confirm' => new \confirm_action(get_string('smartmenusmenudeleteconfirm', 'theme_boost_union')),
+            'confirm' => new \core\output\actions\confirm_action(get_string('smartmenusmenudeleteconfirm', 'theme_boost_union')),
         ];
 
         // Compose action icons for all actions.
@@ -264,7 +266,7 @@ class smartmenus_menus extends \table_sql {
         }
 
         // Return all actions.
-        return \html_writer::span(join('', $actionshtml), 'smartmenu-actions');
+        return html_writer::span(join('', $actionshtml), 'smartmenu-actions');
     }
 
     /**

@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-14 - Upgrade: Adopt changes from MDL-82183 and use several new class names, at least in our own / non-adopted code.
 * 2024-10-14 - Upgrade: Adopt changes from MDL-81960 and use new \core\url class, at least in our own / non-adopted code.
 * 2024-10-14 - Upgrade: Adopt changes from MDL-81920 and use new \core\lang_string class.
 * 2024-10-14 - Upgrade: Adopt changes from MDL-81031 and use new \core\user class.

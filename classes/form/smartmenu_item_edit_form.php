@@ -181,7 +181,7 @@ class smartmenu_item_edit_form extends \moodleform {
 
         // Add icon as input element.
         // Build icon list.
-        $theme = \theme_config::load($PAGE->theme->name);
+        $theme = \core\output\theme_config::load($PAGE->theme->name);
         $faiconsystem = \core\output\icon_system_fontawesome::instance($theme->get_icon_system());
         $iconlist = $faiconsystem->get_core_icon_map();
         array_unshift($iconlist, '');

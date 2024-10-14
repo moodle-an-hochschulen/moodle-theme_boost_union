@@ -26,6 +26,8 @@
 
 namespace theme_boost_union\table;
 
+use core\output\html_writer;
+
 defined('MOODLE_INTERNAL') || die();
 
 // Require table library.
@@ -40,7 +42,7 @@ require_once($CFG->libdir.'/tablelib.php');
  * @copyright  based on code by bdecent gmbh <https://bdecent.de> in format_kickstart.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class flavours_overview extends \table_sql {
+class flavours_overview extends \core_table\sql_table {
 
     /**
      * @var int $count Flavours count.
@@ -107,7 +109,7 @@ class flavours_overview extends \table_sql {
         // If there is more than one flavour and we do not handle the first (number 0) flavour.
         if ($this->count > 0) {
             // Add the up icon.
-            $updown .= \html_writer::link($actionurl->out(false,
+            $updown .= html_writer::link($actionurl->out(false,
                     ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]),
                     $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
                             ['class' => 'iconsmall']), ['class' => 'sort-flavour-up-action']);
@@ -121,7 +123,7 @@ class flavours_overview extends \table_sql {
         if ($this->count < ($this->totalflavours - 1)) {
             // Add the down icon.
             $updown .= '&nbsp;';
-            $updown .= \html_writer::link($actionurl->out(false,
+            $updown .= html_writer::link($actionurl->out(false,
                     ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]),
                     $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
                             ['class' => 'iconsmall']), ['class' => 'sort-flavour-down-action']);
@@ -150,14 +152,14 @@ class flavours_overview extends \table_sql {
 
         // If apply-to-categories is enabled, add a badge.
         if ($data->applytocategories == true) {
-            $badges[] = \html_writer::tag('span',
+            $badges[] = html_writer::tag('span',
                     get_string('categories'),
                     ['class' => 'badge bg-primary text-light']);
         }
 
         // If apply-to-cohorts is enabled, add a badge.
         if ($data->applytocohorts == true) {
-            $badges[] = \html_writer::tag('span',
+            $badges[] = html_writer::tag('span',
                     get_string('cohorts', 'cohort'),
                     ['class' => 'badge bg-primary text-light']);
         }
@@ -183,7 +185,7 @@ class flavours_overview extends \table_sql {
         // Preview.
         $actions[] = [
                 'url' => new \core\url('/theme/boost_union/flavours/preview.php', ['id' => $data->id]),
-                'icon' => new \pix_icon('i/search', get_string('flavoursedit', 'theme_boost_union')),
+                'icon' => new \core\output\pix_icon('i/search', get_string('flavoursedit', 'theme_boost_union')),
                 'attributes' => ['class' => 'action-preview'],
         ];
 
@@ -191,7 +193,7 @@ class flavours_overview extends \table_sql {
         $actions[] = [
                 'url' => new \core\url('/theme/boost_union/flavours/edit.php',
                         ['action' => 'edit', 'id' => $data->id, 'sesskey' => sesskey()]),
-                'icon' => new \pix_icon('t/edit', get_string('flavoursedit', 'theme_boost_union')),
+                'icon' => new \core\output\pix_icon('t/edit', get_string('flavoursedit', 'theme_boost_union')),
                 'attributes' => ['class' => 'action-edit'],
         ];
 
@@ -199,7 +201,7 @@ class flavours_overview extends \table_sql {
         $actions[] = [
                 'url' => new \core\url('/theme/boost_union/flavours/edit.php',
                         ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]),
-                'icon' => new \pix_icon('t/delete', get_string('flavourspreview', 'theme_boost_union')),
+                'icon' => new \core\output\pix_icon('t/delete', get_string('flavourspreview', 'theme_boost_union')),
                 'attributes' => ['class' => 'action-delete'],
         ];
 
@@ -216,7 +218,7 @@ class flavours_overview extends \table_sql {
         }
 
         // Return all actions.
-        return \html_writer::span(join('', $actionshtml), 'flavours-actions');
+        return html_writer::span(join('', $actionshtml), 'flavours-actions');
     }
 
     /**

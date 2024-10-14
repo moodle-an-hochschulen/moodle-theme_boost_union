@@ -143,7 +143,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('presetheading_desc', 'theme_boost_union', null, true).'<br />'.
             // We would love to use $OUTPUT->single_button($preseturl, ...) here, but this results in the fact
             // that the settings page redirects to the Boost Core settings after saving for an unknown reason.
-            html_writer::link($preseturl,
+            \core\output\html_writer::link($preseturl,
                     get_string('presetbutton', 'theme_boost_union', null, true),
                     ['class' => 'btn btn-secondary my-3']);
         $setting = new admin_setting_heading($name, $title, $description);
@@ -2245,8 +2245,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             if (get_config('theme_boost_union', 'infobanner'.$i.'dismissible') == true) {
                 $reseturl = new core\url('/theme/boost_union/settings_infobanner_resetdismissed.php',
                         ['sesskey' => sesskey(), 'no' => $i]);
-                $description .= html_writer::empty_tag('br');
-                $description .= html_writer::link($reseturl,
+                $description .= \core\output\html_writer::empty_tag('br');
+                $description .= \core\output\html_writer::link($reseturl,
                         get_string('infobannerdismissresetbutton', 'theme_boost_union', ['no' => $i], true),
                         ['class' => 'btn btn-secondary mt-3', 'role' => 'button']);
             }
