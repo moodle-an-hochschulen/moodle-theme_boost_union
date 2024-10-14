@@ -47,9 +47,9 @@ class eventobservers {
         // If a flavour exists which is configured to apply to the given cohort.
         if (theme_boost_union_flavour_exists_for_cohort($event->objectid)) {
             // Purge the flavours cache as the users might get other flavours which apply after the cohort deletion.
-            // We would have preferred using cache_helper::purge_by_definition, but this just purges the session cache
+            // We would have preferred using \core_cache\helper::purge_by_definition, but this just purges the session cache
             // of the current user and not for all users.
-            \cache_helper::purge_by_event('theme_boost_union_cohort_deleted');
+            \core_cache\helper::purge_by_event('theme_boost_union_cohort_deleted');
         }
 
         // Require smart menus library.

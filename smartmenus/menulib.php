@@ -569,7 +569,7 @@ class smartmenu_helper {
      * and the last check date is earlier than or equal to the end date,
      * then the cached menu data is cleared from the cache and the last check date is updated to the current date.
      *
-     * @param \cache_store $cache The cache object.
+     * @param \core_cache\store $cache The cache object.
      * @param object $data The menu data object.
      * @param string $key The cache key.
      *

@@ -31,7 +31,6 @@ use context_system;
 use moodle_exception;
 use core\navigation\views\primary;
 use cache;
-use cache_helper;
 
 require_once($CFG->dirroot.'/theme/boost_union/smartmenus/menulib.php');
 
