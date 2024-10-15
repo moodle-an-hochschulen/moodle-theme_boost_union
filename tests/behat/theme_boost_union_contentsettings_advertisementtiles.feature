@@ -188,7 +188,7 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Advertisement tiles" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Advertisement tile 1 background image" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Advertisement tile 1 background image" filemanager
     And I press "Save changes"
     And I am on site homepage
     And Behat debugging is enabled
@@ -197,7 +197,7 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
     And I follow "Log in"
     And I log in as "teacher1"
     And I am on site homepage
-    Then "//div[@id='themeboostunionadvtile1']/*[1][contains(@style, 'pluginfile.php/1/theme_boost_union/tilebackgroundimage1/0/login_bg1.jpg')]" "xpath_element" should exist
+    Then "//div[@id='themeboostunionadvtile1']/*[1][contains(@style, 'pluginfile.php/1/theme_boost_union/tilebackgroundimage1/0/login_bg1.png')]" "xpath_element" should exist
     And "//div[@id='themeboostunionadvtile2']/*[1][contains(@style, 'pluginfile.php')]" "xpath_element" should not exist
 
   Scenario Outline: Setting: Advertisement tiles - Define the tile (min-)height.
@@ -227,7 +227,7 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Advertisement tiles" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Advertisement tile 1 background image" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Advertisement tile 1 background image" filemanager
     And I press "Save changes"
     And I am on site homepage
     And Behat debugging is enabled
