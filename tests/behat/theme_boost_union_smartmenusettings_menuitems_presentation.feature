@@ -297,10 +297,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then DOM element ".boost-union-menubar .dropdown-menu.show .content-block" should have computed style "background-color" "rgb(3, 31, 195)"
     And I click on ".action-edit" "css_element" in the "Resources" "table_row"
     And I expand all fieldsets
-    And I upload "theme/boost_union/tests/fixtures/backimg.jpg" file to "Card image" filemanager
+    And I upload "theme/boost_union/tests/fixtures/backimg.png" file to "Card image" filemanager
     And I click on "Save changes" "button"
     Then I should see smart menu "Quick links" item "Resources" in location "Main, Menu"
-    And the image at "//div[contains(@class, 'primary-navigation')]//img[contains(@src, 'pluginfile.php') and contains(@src, '/theme_boost_union/smartmenus_itemimage/')]" "xpath_element" should be identical to "theme/boost_union/tests/fixtures/backimg.jpg"
+    And the image at "//div[contains(@class, 'primary-navigation')]//img[contains(@src, 'pluginfile.php') and contains(@src, '/theme_boost_union/smartmenus_itemimage/')]" "xpath_element" should be identical to "theme/boost_union/tests/fixtures/backimg.png"
 
   @javascript
   Scenario: Smartmenu: Menu items: Presentation - Add a smart menu item with multilang tags

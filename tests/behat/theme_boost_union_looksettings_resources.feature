@@ -10,18 +10,18 @@ Feature: Configuring the theme_boost_union plugin for the "Resources" tab on the
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Resources" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Additional resources" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Additional resources" filemanager
     And I press "Save changes"
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Resources" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then I should see "Additional resources list"
     And ".settings-additionalresources-filelist" "css_element" should exist
-    And ".settings-additionalresources-filelist .list-group-item .icon[title='Image (JPEG)']" "css_element" should exist
+    And ".settings-additionalresources-filelist .list-group-item .icon[title='Image (PNG)']" "css_element" should exist
     And ".settings-additionalresources-filelist .list-group-item .icon[src$='/f/image']" "css_element" should exist
-    And I should see "MIME type: image/jpeg" in the ".settings-additionalresources-filelist" "css_element"
-    And I should see "Size: 38.5" in the ".settings-additionalresources-filelist" "css_element"
+    And I should see "MIME type: image/png" in the ".settings-additionalresources-filelist" "css_element"
+    And I should see "Size: 205.4" in the ".settings-additionalresources-filelist" "css_element"
     And I should see "URL (persistent):" in the ".settings-additionalresources-filelist" "css_element"
-    And I should see "/pluginfile.php/1/theme_boost_union/additionalresources/0/login_bg1.jpg" in the ".settings-additionalresources-filelist" "css_element"
+    And I should see "/pluginfile.php/1/theme_boost_union/additionalresources/0/login_bg1.png" in the ".settings-additionalresources-filelist" "css_element"
     And I should see "URL (revisioned):" in the ".settings-additionalresources-filelist" "css_element"
     # Checking the revisioned URL is not possible currently with Behat without writing a custom step. We accept this for now.
     And Behat debugging is enabled

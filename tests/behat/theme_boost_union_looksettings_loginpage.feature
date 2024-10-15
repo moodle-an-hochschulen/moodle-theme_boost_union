@@ -17,7 +17,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Login page background images" filemanager
     And I press "Save changes"
     And Behat debugging is enabled
     And I log out
@@ -32,9 +32,9 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
-    And I upload "theme/boost_union/tests/fixtures/login_bg2.jpg" file to "Login page background images" filemanager
-    And I upload "theme/boost_union/tests/fixtures/login_bg3.jpg" file to "Login page background images" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Login page background images" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg2.png" file to "Login page background images" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg3.png" file to "Login page background images" filemanager
     And I press "Save changes"
     And Behat debugging is enabled
     And I log out
@@ -55,7 +55,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Login page background images" filemanager
     And I press "Save changes"
     And Behat debugging is enabled
     And I log out
@@ -74,8 +74,8 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
-    And I set the field "Display text for login background images" to "login_bg1.jpg|Copyright by SplitShire on pexels.com|dark"
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Login page background images" filemanager
+    And I set the field "Display text for login background images" to "login_bg1.png|Copyright by SplitShire on pexels.com|dark"
     And I press "Save changes"
     And Behat debugging is enabled
     And I log out
@@ -88,8 +88,8 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
-    And I set the field "Display text for login background images" to "<filename>.jpg|Copyright by SplitShire on pexels.com|dark"
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Login page background images" filemanager
+    And I set the field "Display text for login background images" to "<filename>.png|Copyright by SplitShire on pexels.com|dark"
     And I press "Save changes"
     And Behat debugging is enabled
     And I log out
@@ -107,8 +107,8 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Login page background images" filemanager
-    And I set the field "Display text for login background images" to "login_bg1.jpg|Copyright by SplitShire on pexels.com|<color>"
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Login page background images" filemanager
+    And I set the field "Display text for login background images" to "login_bg1.png|Copyright by SplitShire on pexels.com|<color>"
     And I press "Save changes"
     And Behat debugging is enabled
     And I log out
