@@ -18,7 +18,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Slide 1 background image" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 1 background image" filemanager
     And I press "Save changes"
     And I am on site homepage
     And Behat debugging is enabled
@@ -194,7 +194,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
     When I log in as "teacher1"
     And I am on site homepage
     Then "#themeboostunionslide1 > img" "css_element" should exist
-    And the "src" attribute of "#themeboostunionslide1 > img" "css_element" should contain "pluginfile.php/1/theme_boost_union/slidebackgroundimage1/0/login_bg1.jpg"
+    And the "src" attribute of "#themeboostunionslide1 > img" "css_element" should contain "pluginfile.php/1/theme_boost_union/slidebackgroundimage1/0/login_bg1.png"
     And the "alt" attribute of "#themeboostunionslide1 > img" "css_element" should contain "This is the image description"
 
   Scenario: Setting: Slider - Display an individual slide only if an image is uploaded
@@ -262,16 +262,16 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Slide 2 background image" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 2 background image" filemanager
     # For a strange reason, Behat fails if we upload all images at once. So we simply save the form after each upload.
     And I press "Save changes"
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Slide 3 background image" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 3 background image" filemanager
     And I press "Save changes"
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Slide 4 background image" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 4 background image" filemanager
     And I press "Save changes"
     And I am on site homepage
     And Behat debugging is enabled
@@ -323,16 +323,16 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Slide 2 background image" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 2 background image" filemanager
     # For a strange reason, Behat fails if we upload all images at once. So we simply save the form after each upload.
     And I press "Save changes"
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Slide 4 background image" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 4 background image" filemanager
     And I press "Save changes"
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.jpg" file to "Slide 6 background image" filemanager
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 6 background image" filemanager
     And I press "Save changes"
     And I am on site homepage
     And Behat debugging is enabled
