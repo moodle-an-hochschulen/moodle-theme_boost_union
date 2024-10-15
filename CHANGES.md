@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-10-14 - Test: Change tests/fixtures/*.jpg to tests/fixtures/*.png to prevent resizing issues with JPG images
+
 ### v4.1-r30
 
 * 2024-08-11 - Updated Moodle Plugin CI to latest upstream recommendations
