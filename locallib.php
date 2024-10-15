@@ -1507,23 +1507,25 @@ function theme_boost_union_get_scss_to_mark_external_links($theme) {
             // a course).
             // * The "Give feedback about this software" link in the questionmark menu (if the $CFG->enableuserfeedback setting
             // is enabled).
+            // * The "EXIF remover" link on /admin/settings.php?section=exifremover.
             // * Anything else which is shown in the call-to-action notification banners on the Dashboard
             // (Currently just the "Give feedback about this software" link as well).
             // These icons become obsolete now. We remove them with the sledgehammer.
-            $scss .= '.footer-support-link a[href^="https://moodle.com/help/"] .fa-external-link,
-                    .footer-support-link a[target="_blank"] .fa-external-link';
+            $scss .= '.footer-support-link a[href^="https://moodle.com/help/"] .fa-arrow-up-right-from-square,
+                    .footer-support-link a[target="_blank"] .fa-arrow-up-right-from-square';
             if (!empty($CFG->servicespage)) {
-                $scss .= ', .footer-support-link a[href="'.$CFG->servicespage.'"] .fa-external-link';
+                $scss .= ', .footer-support-link a[href="'.$CFG->servicespage.'"] .fa-arrow-up-right-from-square';
             }
             if (!empty($CFG->supportpage)) {
-                $scss .= ', a[href="'.$CFG->supportpage.'"] .fa-external-link';
+                $scss .= ', a[href="'.$CFG->supportpage.'"] .fa-arrow-up-right-from-square';
             }
             if (!empty($CFG->enableuserfeedback)) {
-                $scss .= ', a[href^="https://feedback.moodle.org"] .fa-external-link,
+                $scss .= ', a[href^="https://feedback.moodle.org"] .fa-arrow-up-right-from-square,
                 a[href^="https://feedback.moodle.org"] .ms-1';
             }
-            $scss .= ', a[href^="'.get_docs_url().'"] .fa-external-link,
-                    div.cta a .fa-external-link {
+            $scss .= ', a[href^="'.get_docs_url().'"] .fa-arrow-up-right-from-square,
+                    a[href^="https://exiftool.sourceforge.net"] .fa-arrow-up-right-from-square,
+                    div.cta a .fa-arrow-up-right-from-square {
                 display: none;
             }';
         }
