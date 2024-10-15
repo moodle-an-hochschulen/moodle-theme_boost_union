@@ -759,7 +759,16 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create login providers heading.
         $name = 'theme_boost_union/loginprovidersheading';
         $title = get_string('loginprovidersheading', 'theme_boost_union', null, true);
-        $setting = new admin_setting_heading($name, $title, null);
+        $notificationurl = new core\url('/admin/settings.php', ['section' => 'manageauths']);
+        $notificationsettingname = get_string('showloginform', 'core_auth');
+        $notification = new \core\output\notification(
+            get_string('loginprovidersheading_desc', 'theme_boost_union',
+            ['settingname' => $notificationsettingname, 'url' => $notificationurl->out()]),
+            \core\output\notification::NOTIFY_INFO
+        );
+        $notification->set_show_closebutton(false);
+        $description = $OUTPUT->render($notification);
+        $setting = new admin_setting_heading($name, $title, $description);
         $tab->add($setting);
 
         // Setting: Local login.
