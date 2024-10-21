@@ -602,7 +602,7 @@ $string['pagelayoutstab'] = 'Page layouts';
 $string['policyheading'] = 'Policies';
 // ... ... Setting: Navigation on policy overview page.
 $string['policyoverviewnavigationsetting'] = 'Show navigation on policy overview page';
-$string['policyoverviewnavigationsetting_desc'] = 'By default, the policy overview page (provided by tool_policy) does not show a navigation menu or footer. With this setting, you can show the primary navigation and footer on that page.';
+$string['policyoverviewnavigationsetting_desc'] = 'By default, the <a href="{$a->url}">policy overview page (provided by tool_policy)</a> does not show a navigation menu or footer. With this setting, you can show the primary navigation and footer on that page.';
 
 // Settings: Links tab.
 $string['linkstab'] = 'Links';
