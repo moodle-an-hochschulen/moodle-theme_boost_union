@@ -1686,7 +1686,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Setting: Navigation on policy overview page.
         $name = 'theme_boost_union/policyoverviewnavigation';
         $title = get_string('policyoverviewnavigationsetting', 'theme_boost_union', null, true);
-        $description = get_string('policyoverviewnavigationsetting_desc', 'theme_boost_union', null, true);
+        $policyoverviewurl = new moodle_url('/admin/tool/policy/viewall.php');
+        $description = get_string('policyoverviewnavigationsetting_desc', 'theme_boost_union', ['url' => $policyoverviewurl], true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
