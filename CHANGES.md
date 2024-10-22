@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.3-r17
 
 * 2024-10-21 - Improvement: Add link to policyoverviewnavigation setting, resolves #732.
 * 2024-10-14 - Test: Change tests/fixtures/*.jpg to tests/fixtures/*.png to prevent resizing issues with JPG images
