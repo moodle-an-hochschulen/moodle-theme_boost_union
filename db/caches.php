@@ -83,4 +83,12 @@ $definitions = [
                 'simpledata' => false,
                 'overrideclass' => '\theme_boost_union\cache\loader',
         ],
+        // This cache stores the hook overrides.
+        'hookoverrides' => [
+                'mode' => cache_store::MODE_APPLICATION,
+                'simplekeys' => true,
+                'simpledata' => false,
+                'canuselocalstore' => true,
+                'staticacceleration' => false,
+        ],
 ];
