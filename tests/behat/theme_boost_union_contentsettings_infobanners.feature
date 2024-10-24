@@ -194,6 +194,11 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And I log out
     When I log in as "admin"
     And Behat debugging is disabled
+    # Navigating to the content settings may fail with an initialization error of the core_sms\manager for unknown reasons.
+    # Purging the caches before navigating to the content area fixed the Behat failure for the same unknown reasons.
+    # We accept this fix as the error seems not to happen in production.
+    # See https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues/734 for details
+    And all caches are purged
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Info banner" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I click on "Reset visibility of info banner 1" "link"
