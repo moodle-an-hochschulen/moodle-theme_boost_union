@@ -405,7 +405,7 @@ class smartmenu_helper {
                     $value = json_decode($menu->$method);
                     if (($key = array_search($id, $value)) !== false) {
                         unset($value[$key]);
-                        $updated = json_encode($value);
+                        $updated = json_encode(array_values($value));
                         $DB->set_field('theme_boost_union_menus', $method, $updated, ['id' => $menu->id]);
 
                         // Purge the cache of this menu.
@@ -437,7 +437,7 @@ class smartmenu_helper {
                     $value = json_decode($item->$method);
                     if (($key = array_search($id, $value)) !== false) {
                         unset($value[$key]);
-                        $updated = json_encode($value);
+                        $updated = json_encode(array_values($value));
                         $DB->set_field('theme_boost_union_menuitems', $method, $updated, ['id' => $item->id]);
                         // Purge the cache of this item and its menu.
                         self::purge_menu_cache($item->menu);
