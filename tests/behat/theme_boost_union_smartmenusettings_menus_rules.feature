@@ -269,3 +269,52 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | byrole                    | bycohort           | bylanguage       | student1shouldorshouldnot | student2shouldorshouldnot | teachershouldorshouldnot |
       | Manager, Student          | Cohort 1           | English          | should                    | should not                | should not               |
       | Manager, Student, Teacher | Cohort 1, Cohort 2 | English, Deutsch | should                    | should not                | should                   |
+
+  @javascript
+  Scenario: Smartmenu: Menus: Rules - Deleting a cohort used for a rule removes it from the rule
+    Given I navigate to smart menus
+    And I should see "Quick links" in the "smartmenus" "table"
+    And I click on ".action-edit" "css_element" in the "Quick links" "table_row"
+    And I expand all fieldsets
+    And I set the field "By cohort" to "Cohort 1, Cohort 2"
+    And I set the field "Operator" to "Any"
+    And I click on "Save and return" "button"
+    And I click on ".action-edit" "css_element" in the "Quick links" "table_row"
+    And I expand all fieldsets
+    And "Cohort 1" "autocomplete_selection" should exist
+    And "Cohort 2" "autocomplete_selection" should exist
+    When I navigate to "Users > Cohorts" in site administration
+    And I open the action menu in "Cohort 1" "table_row"
+    And I choose "Delete" in the open action menu
+    And I press "Continue"
+    And I navigate to smart menus
+    And I click on ".action-edit" "css_element" in the "Quick links" "table_row"
+    And I expand all fieldsets
+    And "Cohort 1" "autocomplete_selection" should not exist
+    And "Cohort 2" "autocomplete_selection" should exist
+
+  @javascript
+  Scenario: Smartmenu: Menus: Rules - Deleting a role used for a rule removes it from the rule
+    Given the following "roles" exist:
+      | shortname | name        |
+      | test1     | Test role 1 |
+      | test2     | Test role 2 |
+    And I navigate to smart menus
+    And I should see "Quick links" in the "smartmenus" "table"
+    And I click on ".action-edit" "css_element" in the "Quick links" "table_row"
+    And I expand all fieldsets
+    And I set the field "By role" to "Test role 1, Test role 2"
+    And I set the field "Operator" to "Any"
+    And I click on "Save and return" "button"
+    And I click on ".action-edit" "css_element" in the "Quick links" "table_row"
+    And I expand all fieldsets
+    And "Test role 1" "autocomplete_selection" should exist
+    And "Test role 2" "autocomplete_selection" should exist
+    When I navigate to "Users > Define roles" in site administration
+    And I click on "Delete" "link" in the "Test role 1" "table_row"
+    And I press "Yes"
+    And I navigate to smart menus
+    And I click on ".action-edit" "css_element" in the "Quick links" "table_row"
+    And I expand all fieldsets
+    And "Test role 1" "autocomplete_selection" should not exist
+    And "Test role 2" "autocomplete_selection" should exist
