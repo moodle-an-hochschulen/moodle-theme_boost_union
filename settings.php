@@ -1994,7 +1994,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name = 'theme_boost_union/footersuppressstandardfooter_'.$pluginname;
             $setting = new admin_setting_configselect($name, $hooklabeltitle, $hooklabeldesc,
                     THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-            $setting->set_updatedcallback('theme_boost_union_remove_hookmanipulation_marker');
+            $setting->set_updatedcallback('theme_boost_union_remove_hookmanipulation');
             $tab->add($setting);
             $page->hide_if('theme_boost_union/footersuppressstandardfooter_'.$pluginname,
                     'theme_boost_union/enablefooterbutton', 'eq', THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE);
