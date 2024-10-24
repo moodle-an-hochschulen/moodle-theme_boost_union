@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.4-r4
 
 * 2024-10-23 - Backport: Use the before_session_start() callback instead of the after_config() callback on Moodle 4.4, resolves #721.
 
