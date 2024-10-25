@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-10-24 - Release: Change support thread URL in README to a tiny URL.
+
 ### v4.1-r31
 
 * 2024-10-21 - Improvement: Add link to policyoverviewnavigation setting, resolves #732.
