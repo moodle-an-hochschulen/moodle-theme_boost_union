@@ -706,7 +706,7 @@ Please report bugs and problems on Github:
 https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues
 
 Support thread:
-https://moodle.org/mod/forum/discuss.php?d=461642
+https://s.gwdg.de/bxqZti
 
 We kindly invite you to use this support thread in case of any questions you might have. We are a team of many (sometimes power) users of Boost Union and will try to answer or collectively according to our measures. If any other users know answers or are quicker, don't hesitate to answer. We will do our best to solve your problems, but please note that due to limited resources we can't always provide per-case support.
 
