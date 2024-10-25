@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-10-24 - Tests: Try to fix Behat error 'Warning: Undefined array key 1' on Moodle 4.5, resolves #734.
+
 ### v4.5-r1
 
 * 2024-10-15 - Upgrade: Update FontAwesome icon mappings for handling external links.
