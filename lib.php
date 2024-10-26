@@ -521,7 +521,7 @@ function theme_boost_union_get_extra_scss($theme) {
     // Setting: Activity icon purpose.
     $content .= theme_boost_union_get_scss_for_activity_icon_purpose($theme);
 
-    // Setting: Navbar and icon styles.
+    // Setting: Navbar styles.
     $content .= theme_boost_union_get_scss_navbar($theme);
 
     // Setting: Mark external links.

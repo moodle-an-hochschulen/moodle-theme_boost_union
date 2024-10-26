@@ -135,7 +135,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Prepare regular expression for checking if the value is a percent number (from 0% to 100%) or a pixel number
         // (with 2 or 3 digits) or a viewport width number (from 0 to 100). Additionally the field can be left blank.
-        $smallsizeoremptyregex = '/^((\d{1,2}|100)%)|((\d{1,2}|100)vw)|(\d{2,3}px)|(^(?!.*\S))$/';
+        $smallwidthoremptyregex = '/^((\d{1,2}|100)%)|((\d{1,2}|100)vw)|(\d{2,3}px)|(^(?!.*\S))$/';
 
         // Create Look settings page with tabs
         // (and allow users with the theme/boost_union:configure capability to access it).
@@ -407,15 +407,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Setting: add extra SCSS if logo icon is too broad / wrong aspect ratio.
-        $name = 'theme_boost_union/maxlogowidth';
-        $title = get_string('maxlogowidth', 'theme_boost_union', null, true);
-        $description = get_string('maxlogowidth_desc', 'theme_boost_union', null, true);
-        $default = '';
-        $setting = new admin_setting_configtext($name, $title, $description, $default, $smallsizeoremptyregex, 6);
-        $setting->set_updatedcallback('theme_reset_all_caches');
-        $tab->add($setting);
-
         // Create favicon heading.
         $name = 'theme_boost_union/faviconheading';
         $title = get_string('faviconheading', 'theme_boost_union', null, true);
@@ -535,6 +526,15 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/navbarheading';
         $title = get_string('navbarheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Maximal width of logo in navbar.
+        $name = 'theme_boost_union/maxlogowidth';
+        $title = get_string('maxlogowidth', 'theme_boost_union', null, true);
+        $description = get_string('maxlogowidth_desc', 'theme_boost_union', null, true);
+        $default = '';
+        $setting = new admin_setting_configtext($name, $title, $description, $default, $smallwidthoremptyregex, 6);
+        $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
         // Setting: Navbar color.

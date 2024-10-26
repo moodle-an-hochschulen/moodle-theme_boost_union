@@ -6,7 +6,7 @@ Changes
 
 ### Unreleased
 
-* 2025-03-08 - Improvement: Limit the max-width of the navbar logo if it is too broad or has a special aspect ratio, resolves #544.
+* 2025-03-08 - Improvement: Add setting to limit the maximum width of the navbar logo if it is too broad or has a special aspect ratio, resolves #544.
 
 ### v4.5-r9
 
