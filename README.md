@@ -138,6 +138,12 @@ With these settings, you can overwrite the Bootstrap colors which are used withi
 
 ##### Navbar
 
+###### Maximal width of logo in navbar
+
+If the logo for the navbar on the top left is too wide or has a special aspect ratio, you can limit the logo's maximum width. Use css definition to limit the max-width.
+
+###### Navbar color
+
 With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one.
 
 #### Tab "Activity Branding"
