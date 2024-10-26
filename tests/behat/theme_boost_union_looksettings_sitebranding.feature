@@ -117,40 +117,6 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
       | max-width  | 10vw      |
       | max-width  | 13%       |
 
-  @javascript
-  Scenario: Setting: Logo max-width - limit logo width readout from theme_config entry (countercheck)
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I set the field "Maximal width of logo" to ""
-    And I press "Save changes"
-    And I am on site homepage
-    And the theme cache is purged and the theme is reloaded
-    Then DOM element ".navbar-brand .logo" should have computed style "height" "100%"
-
-  @javascript
-  Scenario: Setting: Logo max-width - limit logo through admin settings - check regex to limit entry (countercheck)
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I set the field "Maximal width of logo" to "2px"
-    And I press "Save changes"
-    Then I should not see "Changes saved"
-    And I should see "Some settings were not changed due to an error."
-    And I should see "This value is not valid"
-
-  @javascript @_file_upload
-  Scenario: Setting: Compact logo - Upload a PNG compact logo to the theme and check that it is resized
-    When I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
-    And I press "Save changes"
-    And Behat debugging is enabled
-    And I am on site homepage
-    Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact/300x300/')]" "xpath_element" should exist
-
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a SVG compact logo to the theme and check that it is not resized
     When I log in as "admin"
@@ -246,6 +212,28 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
       | info    | #00FF00  | rgb(0, 255, 0)   |
       | warning | #0000FF  | rgb(0, 0, 255)   |
       | danger  | #FFFF00  | rgb(255, 255, 0) |
+
+  @javascript @_file_upload
+  Scenario Outline: Setting: Maximal width of logo in navbar - Set the maximum width
+    Given the following config values are set as admin:
+      | config       | value     | plugin            |
+      | maxlogowidth | <setting> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
+    And I press "Save changes"
+    And Behat debugging is enabled
+    And I am on site homepage
+    Then DOM element ".navbar-brand" <shouldornot> have computed style "max-width" "<value>"
+    And DOM element ".navbar-brand .logo" <shouldornot> have computed style "max-width" "<value>"
+
+    Examples:
+      | setting | shouldornot | value |
+      | 50px    | should      | 50px  |
+      |         | should not  | 50px  |
 
   Scenario Outline: Setting: Navbar color - Set the navbar color
     Given the following config values are set as admin:

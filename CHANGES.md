@@ -6,7 +6,7 @@ Changes
 
 ### Unreleased
 
-* 2024-10-25 - Improvement: Limit the max-width of the navbar logo if it is too broad or has a special aspect ratio, resolves #544.
+* 2024-10-25 - Improvement: Add setting to limit the maximum width of the navbar logo if it is too broad or has a special aspect ratio, resolves #544.
 * 2024-10-24 - Release: Change support thread URL in README to a tiny URL.
 * 2024-10-24 - Tests: Try to fix Behat error 'Warning: Undefined array key 1' on Moodle 4.5, resolves #734.
 
