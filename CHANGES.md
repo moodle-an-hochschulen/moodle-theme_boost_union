@@ -12,6 +12,7 @@ Changes
 
 ### v4.5-r3
 
+* 2024-11-20 - Improvement: Implement accessibility statement and feedback mechanism, resolves #567.
 * 2024-11-19 - Bugfix: The starred courses popover showed a JavaScript error in the browser JS console, resolves #759.
 * 2024-11-19 - Bugfix: The starred courses popover in the navbar must only be shown if Boost Union or Boost Union child is active, resolves #759.
 * 2024-11-18 - Improvement: Add the possibility to restrict smart menus and smart menu items to site admins and non-site admins only, resolves #421.

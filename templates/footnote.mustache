@@ -46,6 +46,12 @@
         "maintenancelinkpositionfootnote": true,
         "maintenancelink": "https://localhost/theme/boost_union/pages/maintenance.php",
         "maintenancepagetitle": "Maintenance",
+        "accessibilitylinkpositionfootnote": true,
+        "accessibilitylink": "https://localhost/theme/boost_union/pages/accessibility.php",
+        "accessibilitypagetitle": "Declaration of accessibility",
+        "accessibilitysupportlinkpositionfootnote": true,
+        "accessibilitysupportlink": "https://localhost/theme/boost_union/pages/accessibilitysupport.php",
+        "accessibilitysupportpagetitle": "Accessibility support",
         "page1linkpositionfootnote": true,
         "page1link": "https://localhost/theme/boost_union/pages/page1.php",
         "page1pagetitle": "Generic page 1",
@@ -95,6 +101,16 @@
                         <a href="{{ maintenancelink }}">{{ maintenancepagetitle }}</a>
                     </span>
                 {{/ maintenancelinkpositionfootnote }}
+                {{# accessibilitylinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_accessibilitylink pr-2 mr-2">
+                        <a href="{{ accessibilitylink }}">{{ accessibilitypagetitle }}</a>
+                    </span>
+                {{/ accessibilitylinkpositionfootnote }}
+                {{# accessibilitysupportlinkpositionfootnote }}
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_accessibilitysupportlink pr-2 mr-2">
+                        <a href="{{ accessibilitysupportlink }}">{{ accessibilitysupportpagetitle }}</a>
+                    </span>
+                {{/ accessibilitysupportlinkpositionfootnote }}
                 {{# page1linkpositionfootnote }}
                     <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page1link pe-2 me-2">
                         <a href="{{ page1link }}">{{ page1pagetitle }}</a>
