@@ -87,6 +87,24 @@ class behat_theme_boost_union_base_content extends behat_base {
     }
 
     /**
+     * Open the accessibility page.
+     *
+     * @Given /^I am on accessibility page$/
+     */
+    public function i_am_on_accessibility_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/accessibility.php']);
+    }
+
+    /**
+     * Open the accessibilitysupport page.
+     *
+     * @Given /^I am on accessibilitysupport page$/
+     */
+    public function i_am_on_accessibilitysupport_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/accessibilitysupport.php']);
+    }
+
+    /**
      * Open the page1 page.
      *
      * @Given /^I am on page1 page$/

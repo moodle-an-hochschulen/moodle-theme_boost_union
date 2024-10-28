@@ -6,6 +6,8 @@ Changes
 
 ### v4.4-r7
 
+* 2024-11-20 - Improvement: Implement accessibility statement and feedback mechanism, resolves #567.
+* 2024-11-19 - Upgrade: Support more seamless upgrade to 4.5 by only requiring /cache/classes/loaders.php if it is present, resolves #708.
 * 2024-12-06 - Tests: Add several Behat optimisations to bring down the test suite run time, resolves #765.
 * 2024-12-06 - Upstream change: Adopt changes from MDL-83759 ('System notification navbar popover is misplaced in Moodle 4.4 and 4.5')
 * 2024-12-06 - Upstream change: Adopt changes from MDL-75610 ('Quiz activity name no longer being displayed in quiz landing page when using Safe Exam Browser'), resolves #766.
@@ -13,7 +15,6 @@ Changes
 
 ### v4.4-r6
 
-* 2024-11-19 - Upgrade: Support more seamless upgrade to 4.5 by only requiring /cache/classes/loaders.php if it is present, resolves #708.
 * 2024-11-19 - Bugfix: The starred courses popover showed a JavaScript error in the browser JS console, resolves #759.
 * 2024-11-19 - Bugfix: The starred courses popover in the navbar must only be shown if Boost Union or Boost Union child is active, resolves #759.
 * 2024-11-18 - Improvement: Add the possibility to restrict smart menus and smart menu items to site admins and non-site admins only, resolves #421.

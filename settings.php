@@ -2098,6 +2098,172 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Add tab to settings page.
         $page->add($tab);
 
+        // Create Accessibility tab.
+        $tab = new admin_settingpage('theme_boost_union_content_accessibility',
+                get_string('accessibilitytab', 'theme_boost_union', null, true));
+
+        // Create Declaration of accessibility page heading.
+        $name = 'theme_boost_union/accessibilityheading';
+        $title = get_string('accessibilityheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Enable Declaration of accessibility page.
+        $name = 'theme_boost_union/enableaccessibility';
+        $title = get_string('enableaccessibilitysetting', 'theme_boost_union', null, true);
+        $description = '';
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
+                $yesnooption);
+        $tab->add($setting);
+
+        // Setting: Declaration of accessibility page content.
+        $name = 'theme_boost_union/accessibilitycontent';
+        $title = get_string('accessibilitycontentsetting', 'theme_boost_union', null, true);
+        $description = get_string('accessibilitycontentsetting_desc', 'theme_boost_union', null, true);
+        $default = get_string('accessibilitycontentdefault', 'theme_boost_union', null, true);
+        $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/accessibilitycontent', 'theme_boost_union/enableaccessibility', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+        // Setting: Declaration of accessibility page title.
+        $name = 'theme_boost_union/accessibilitypagetitle';
+        $title = get_string('accessibilitypagetitlesetting', 'theme_boost_union', null, true);
+        $description = get_string('accessibilitypagetitlesetting_desc', 'theme_boost_union', null, true);
+        $default = get_string('accessibilitypagetitledefault', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtext($name, $title, $description, $default);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/accessibilitypagetitle', 'theme_boost_union/enableaccessibility', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+        // Setting: Declaration of accessibility page link position.
+        $name = 'theme_boost_union/accessibilitylinkposition';
+        $title = get_string('accessibilitylinkpositionsetting', 'theme_boost_union', null, true);
+        $pageurl = theme_boost_union_get_staticpage_link('accessibility');
+        $description = get_string('accessibilitylinkpositionsetting_desc', 'theme_boost_union', ['url' => $pageurl],
+                true);
+        $linkpositionoption =
+                // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+                // PHP warning otherwise.
+                [THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_NONE =>
+                        get_string('accessibilitylinkpositionnone', 'theme_boost_union', null, false),
+                        THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTNOTE =>
+                                get_string('accessibilitylinkpositionfootnote', 'theme_boost_union', null, false),
+                        THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTER =>
+                                get_string('accessibilitylinkpositionfooter', 'theme_boost_union', null, false),
+                        THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_BOTH =>
+                                get_string('accessibilitylinkpositionboth', 'theme_boost_union', null, false), ];
+        $default = 'none';
+        $setting = new admin_setting_configselect($name, $title, $description, $default, $linkpositionoption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/accessibilitylinkposition', 'theme_boost_union/enableaccessibility', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+        // Create Accessibility support page heading.
+        $name = 'theme_boost_union/accessibilitysupportheading';
+        $title = get_string('accessibilitysupportheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Enable Accessibility support page.
+        $name = 'theme_boost_union/enableaccessibilitysupport';
+        $title = get_string('enableaccessibilitysupportsetting', 'theme_boost_union', null, true);
+        $description = '';
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
+                $yesnooption);
+        $tab->add($setting);
+
+        // Setting: Enable Accessibility support page without login.
+        $name = 'theme_boost_union/enableaccessibilitysupportwithoutlogin';
+        $title = get_string('enableaccessibilitysupportwithoutlogin', 'theme_boost_union', null, true);
+        $description = get_string('enableaccessibilitysupportwithoutlogin_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
+                $yesnooption);
+        $tab->add($setting);
+
+        // Setting: Accessibility support page content.
+        $name = 'theme_boost_union/accessibilitysupportcontent';
+        $title = get_string('accessibilitysupportcontentsetting', 'theme_boost_union', null, true);
+        $description = get_string('accessibilitysupportcontentsetting_desc', 'theme_boost_union', null, true);
+        $default = get_string('accessibilitysupportcontentdefault', 'theme_boost_union', null, true);
+        $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/accessibilitysupportcontent', 'theme_boost_union/enableaccessibilitysupport', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+        // Setting: Accessibility support page title.
+        $name = 'theme_boost_union/accessibilitysupportpagetitle';
+        $title = get_string('accessibilitysupportpagetitlesetting', 'theme_boost_union', null, true);
+        $description = get_string('accessibilitysupportpagetitlesetting_desc', 'theme_boost_union', null, true);
+        $default = get_string('accessibilitysupportpagetitledefault', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtext($name, $title, $description, $default);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/accessibilitysupportpagetitle', 'theme_boost_union/enableaccessibilitysupport', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+        // Setting: Accessibility support page link position.
+        $name = 'theme_boost_union/accessibilitysupportlinkposition';
+        $title = get_string('accessibilitysupportlinkpositionsetting', 'theme_boost_union', null, true);
+        $pageurl = theme_boost_union_get_staticpage_link('accessibilitysupport');
+        $description = get_string('accessibilitysupportlinkpositionsetting_desc', 'theme_boost_union', ['url' => $pageurl],
+                true);
+        $linkpositionoption =
+                // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+                // PHP warning otherwise.
+                [THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_NONE =>
+                        get_string('accessibilitysupportlinkpositionnone', 'theme_boost_union', null, false),
+                        THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTNOTE =>
+                                get_string('accessibilitysupportlinkpositionfootnote', 'theme_boost_union', null, false),
+                        THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTER =>
+                                get_string('accessibilitysupportlinkpositionfooter', 'theme_boost_union', null, false),
+                        THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_BOTH =>
+                                get_string('accessibilitysupportlinkpositionboth', 'theme_boost_union', null, false), ];
+        $default = 'none';
+        $setting = new admin_setting_configselect($name, $title, $description, $default, $linkpositionoption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/accessibilitysupportlinkposition', 'theme_boost_union/enableaccessibilitysupport', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+        // Setting: Enable Accessibility button.
+        $name = 'theme_boost_union/enableaccessibilitybutton';
+        $title = get_string('enableaccessibilitybuttonsetting', 'theme_boost_union', null, true);
+        $description = get_string('enableaccessibilitybuttonsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
+                $yesnooption);
+        $tab->add($setting);
+
+        // Setting: Accessibility support name.
+        $name = 'theme_boost_union/accessibilitysupportname';
+        $title = get_string('accessibilitysupportname', 'theme_boost_union', null, true);
+        $description = get_string('accessibilitysupportname_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_NOTAGS);
+        $tab->add($setting);
+
+        // Setting: Accessibility support email.
+        $name = 'theme_boost_union/accessibilitysupportemail';
+        $title = get_string('accessibilitysupportemail', 'theme_boost_union', null, true);
+        $description = get_string('accessibilitysupportemail_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_EMAIL);
+        $tab->add($setting);
+
+        // Setting: Enable anonymous send checkbox.
+        $name = 'theme_boost_union/enablesendanonymouscheckbox';
+        $title = get_string('enablesendanonymouscheckboxsetting', 'theme_boost_union', null, true);
+        $description = get_string('enablesendanonymouscheckboxsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
+                $yesnooption);
+        $tab->add($setting);
+
+        // Setting: Enable checkbox for sending technical information.
+        $name = 'theme_boost_union/enablesendtechinfocheckbox';
+        $title = get_string('enablesendtechinfocheckboxsetting', 'theme_boost_union', null, true);
+        $description = get_string('enablesendtechinfocheckboxsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES,
+                $yesnooption);
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
 
         // Create info banner tab.
         $tab = new admin_settingpage('theme_boost_union_infobanners_infobanner',
