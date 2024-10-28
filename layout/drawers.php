@@ -26,6 +26,7 @@
  * * Include scroll spy
  * * Include footnote
  * * Include static pages
+ * * Include accessibility pages
  * * Include Jvascript disabled hint
  * * Include advertisement tiles
  * * Include slider
@@ -189,6 +190,9 @@ require_once(__DIR__ . '/includes/footnote.php');
 
 // Include the template content for the static pages.
 require_once(__DIR__ . '/includes/staticpages.php');
+
+// Include the template content for the accessibility pages.
+require_once(__DIR__ . '/includes/accessibilitypages.php');
 
 // Include the template content for the footer button.
 require_once(__DIR__ . '/includes/footer.php');
