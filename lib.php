@@ -558,6 +558,23 @@ function theme_boost_union_before_standard_html_head() {
 }
 
 /**
+ * Callback to add body elements on top (for releases up to Moodle 4.3).
+ *
+ * @return string
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_boost_union_before_standard_top_of_body_html() {
+    global $CFG;
+
+    // Require local library.
+    require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+
+    // Call and return callback implementation.
+    return theme_boost_union_callbackimpl_before_standard_top_of_body_html();
+}
+
+/**
  * Fetches the list of icons and creates an icon suggestion list to be sent to a fragment.
  *
  * @param array $args An array of arguments.

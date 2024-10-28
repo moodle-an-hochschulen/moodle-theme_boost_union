@@ -129,5 +129,19 @@ if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
         // Add marker to hide the icons.
         $templatecontext['suppressfooterlinkicons'] = true;
     }
+}
 
+// If the accessibility button is enabled.
+$enableaccessibilitysupportsetting = get_config('theme_boost_union', 'enableaccessibilitysupport');
+$accessibilitybuttonsetting = get_config('theme_boost_union', 'enableaccessibilitybutton');
+if ($enableaccessibilitysupportsetting == THEME_BOOST_UNION_SETTING_SELECT_YES &&
+        $accessibilitybuttonsetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    // Add marker to show this link.
+    $templatecontext['accessibilitybutton'] = true;
+    $templatecontext['accessibilityformurl'] = new moodle_url('/theme/boost_union/pages/accessibilitysupport.php');
+
+    // Otherwise.
+} else {
+    // Add marker to hide this link.
+    $templatecontext['accessibilitybutton'] = false;
 }
