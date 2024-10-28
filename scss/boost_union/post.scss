@@ -515,9 +515,7 @@ body.hascourseindexcplsol.editing {
  * Setting: Back to top button.
  --------------------------------------*/
 
-#back-to-top {
-    /* Hide the back to top icon initially. It will be unhidden by JS only. */
-    display: none;
+#top-buttons {
     /* Place the back to top button at a fixed place. */
     position: fixed;
     right: 2rem;
@@ -527,9 +525,56 @@ body.hascourseindexcplsol.editing {
     z-index: $zindex-dropdown;
     /* Animate position together with footer button. */
     @include transition(0.2s);
+
+    /* Add margin between buttons. */
+    .btn {
+        display: block;
+        margin-top: 0.75rem;
+    }
+
+    /* Center icon in button. */
+    .btn-accessibility-form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        border: 6px solid #ced4da;
+        transition: 0.2s;
+
+        .icon {
+            width: 1.75rem;
+            height: 1.75rem;
+            max-width: none;
+            max-height: none;
+            font-size: 1.75rem;
+            color: #ced4da;
+            transition: 0.2s;
+        }
+
+        &,
+        &:hover,
+        &:focus {
+            background: #000 !important; /* stylelint-disable-line declaration-no-important */
+        }
+
+        &:hover,
+        &:focus {
+            border-color: #b1bbc4;
+
+            .icon {
+                color: #b1bbc4;
+            }
+        }
+    }
+
+    #back-to-top {
+        /* Hide the back to top icon initially. It will be unhidden by JS only. */
+        display: none;
+    }
 }
+
 /* If the sticky footer is shown by Moodle core, the back to top button has to have a higher starting position. */
-body.hasstickyfooter #back-to-top {
+body.hasstickyfooter #top-buttons {
     bottom: 7rem;
 }
 #back-to-top i::before {
@@ -542,14 +587,14 @@ body.hasstickyfooter #back-to-top {
 body.theme_boost-union-footerbuttonall.jsenabled,
 body.theme_boost-union-footerbuttonmobile.jsenabled {
     @include media-breakpoint-down(xs) {
-        #back-to-top {
+        #top-buttons {
             bottom: 5rem;
         }
     }
     /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
     &.hasstickyfooter {
         @include media-breakpoint-down(xs) {
-            #back-to-top {
+            #top-buttons {
                 bottom: 10rem;
             }
         }
@@ -560,14 +605,14 @@ body.theme_boost-union-footerbuttonmobile.jsenabled {
 body.theme_boost-union-footerbuttonall.jsenabled,
 body.theme_boost-union-footerbuttondesktop.jsenabled {
     @include media-breakpoint-up(sm) {
-        #back-to-top {
+        #top-buttons {
             bottom: 5rem;
         }
     }
     /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
     &.hasstickyfooter {
         @include media-breakpoint-up(sm) {
-            #back-to-top {
+            #top-buttons {
                 bottom: 10rem;
             }
         }
@@ -584,14 +629,14 @@ body.theme-boost-union-commincourse {
     &.theme_boost-union-footerbuttonmobile.jsenabled {
         /* We have to move the back to top button more upwards.*/
         @include media-breakpoint-up(sm) {
-            #back-to-top {
+            #top-buttons {
                 bottom: 5rem;
             }
         }
         /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
         &.hasstickyfooter {
             @include media-breakpoint-up(sm) {
-                #back-to-top {
+                #top-buttons {
                     bottom: 10rem;
                 }
             }
@@ -603,14 +648,14 @@ body.theme-boost-union-commincourse {
     &.theme_boost-union-footerbuttondesktop.jsenabled {
         /* We have to move the back to top button even more upwards.*/
         @include media-breakpoint-up(sm) {
-            #back-to-top {
+            #top-buttons {
                 bottom: 8rem;
             }
         }
         /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
         &.hasstickyfooter {
             @include media-breakpoint-up(sm) {
-                #back-to-top {
+                #top-buttons {
                     bottom: 13rem;
                 }
             }
@@ -619,13 +664,16 @@ body.theme-boost-union-commincourse {
 }
 
 /* If the right-hand drawer is opened. */
-#page.drawers.show-drawer-right #back-to-top {
+#page.drawers.show-drawer-right #top-buttons {
     /* On larger screens, the drawer opens near the main content.
        The back to top button can be moved nicely to the left. */
     @include media-breakpoint-up(lg) {
         /* Move the back to top button when right drawer is shown. */
         right: calc(#{$drawer-right-width} + 2rem);
     }
+}
+
+#page.drawers.show-drawer-right #back-to-top {
     /* On smaller screens, the drawer opens as an overlay over the main content.
        The back to top button looks misplaced then. */
     @include media-breakpoint-down(lg) {
@@ -2370,7 +2418,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     /* If the bottom bar is shown. */
     body.theme-boost-union-bottombar {
         /* The back to top button has to be moved more upwards. */
-        #back-to-top {
+        #top-buttons {
             bottom: calc(60px + 1rem);
         }
 
@@ -2382,7 +2430,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 bottom: calc(60px + 1rem);
             }
             /* And the back to top button has to be moved even more upwards. */
-            #back-to-top {
+            #top-buttons {
                 bottom: calc(60px + 4rem);
             }
         }
@@ -2393,7 +2441,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     /* If the bottom bar is shown. */
     body.theme-boost-union-bottombar {
         /* The back to top button has to be moved more upwards. */
-        #back-to-top {
+        #top-buttons {
             bottom: calc(60px + 1rem);
         }
 
@@ -2405,7 +2453,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 bottom: calc(60px + 1rem);
             }
             /* And the back to top button has to be moved even more upwards. */
-            #back-to-top {
+            #top-buttons {
                 bottom: calc(60px + 4rem);
             }
         }
@@ -2419,7 +2467,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         }
         /* The back to top button has to be moved even more upwards.
            This has to use !important as the selector above would be more specific otherwise. */
-        #back-to-top {
+        #top-buttons {
             bottom: calc(60px + 4rem) !important; /* stylelint-disable-line declaration-no-important */
         }
 
@@ -2436,7 +2484,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             }
             /* And the back to top button has to be moved even more upwards.
                This has to use !important as the selector above would be more specific otherwise. */
-            #back-to-top {
+            #top-buttons {
                 bottom: calc(60px + 7rem) !important; /* stylelint-disable-line declaration-no-important */
             }
         }

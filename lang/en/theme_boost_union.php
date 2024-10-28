@@ -827,6 +827,74 @@ $string['page3linkpositionfooter'] = 'Add a link to the generic page 3 to the fo
 $string['page3linkpositionboth'] = 'Add a link to the generic page 3 to the footnote and to the footer (questionmark) icon';
 $string['page3linkpositionsetting'] = 'Generic page 3 link position';
 $string['page3linkpositionsetting_desc'] = 'In this setting, you can configure if a link to the generic page 3 should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+// Settings: Accessibility tab.
+$string['accessibilitytab'] = 'Accessibility';
+// ... Section: Declaration of accessibility page.
+$string['accessibilityheading'] = 'Declaration of accessibility';
+// ... ... Setting: Enable accessibility page.
+$string['enableaccessibilitysetting'] = 'Enable declaration of accessibility information page';
+$string['accessibilitydisabled'] = 'The declaration of accessibility information page is disabled for this site. There is nothing to see here.';
+// ... ... Setting: Declaration of accessibility page content.
+$string['accessibilitycontentsetting'] = 'Declaration of accessibility information page content';
+$string['accessibilitycontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on a declaration of accessibility information page.';
+$string['accessibilitycontentdefault'] = '<p>Informations about the accessibility of this site will be added here.</p>';
+// ... ... Setting: accessibility page title.
+$string['accessibilitypagetitledefault'] = 'Declaration of accessibility';
+$string['accessibilitypagetitlesetting'] = 'Declaration of accessibility information page title';
+$string['accessibilitypagetitlesetting_desc'] = 'In this setting, you can define the title of the declaration of accessibility information page. This text will be used as link text to the declaration of accessibility information page as well if you configure \'Declaration of accessibility information page link position\' accordingly.';
+// ... ... Setting: Declaration of accessibility page link position.
+$string['accessibilitylinkpositionnone'] = 'Do not automatically show a link to the declaration of accessibility information page';
+$string['accessibilitylinkpositionfootnote'] = 'Add a link to the declaration of accessibility information page to the footnote';
+$string['accessibilitylinkpositionfooter'] = 'Add a link to the declaration of accessibility information page to the footer (questionmark) icon';
+$string['accessibilitylinkpositionboth'] = 'Add a link to the declaration of accessibility information page to the footnote and to the footer (questionmark) icon';
+$string['accessibilitylinkpositionsetting'] = 'Declaration of accessibility information page link position';
+$string['accessibilitylinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the declaration of accessibility information page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+// ... ... Setting: Enable accessibility button.
+$string['enableaccessibilitybuttonsetting'] = 'Enable accessibility button in page navigation';
+$string['enableaccessibilitybuttonsetting_desc'] = 'Link to the accessibility form will be visible as accessibility icon above the footer (questionmark) icon.';
+// ... Section: Accessibility supportpage.
+$string['accessibilitysupportheading'] = 'Accessibility support';
+// ... ... Setting: Enable Accessibility support page.
+$string['enableaccessibilitysupportsetting'] = 'Enable accessibility support page';
+$string['accessibilitysupportdisabled'] = 'The accessibility support page is disabled for this site. There is nothing to see here.';
+$string['enableaccessibilitysupportwithoutlogin'] = 'Enable page to be shown without login';
+$string['enableaccessibilitysupportwithoutlogin_desc'] = 'Enable accessibility support page to be shown without login. If this setting is enabled, the accessibility support page will be shown to users who are not logged in. If this setting is disabled, the accessibility support page will be shown only to logged in users.';
+// ... ... Setting: Accessibility support page content.
+$string['accessibilitysupportcontentsetting'] = 'Accessibility support information page content';
+$string['accessibilitysupportcontentsetting_desc'] = 'In this setting, you can add rich text content which will be shown on the accessibility support information page. The page will contain a form to send feedback or to report a barrier. The following information can be sent along with the message: Moodle version, Referrer page, Systeminfo.';
+$string['accessibilitysupportcontentdefault'] = '<p>If you have any feedback or want to report a barrier, please use the form below.</p><p>Do you work with assistive technology such as screen readers, magnifiers, voice control or speech recognition software? If yes, please specify which ones. If you have any other feedback or want to report a barrier, please describe it here.</p><p>The following information can be sent along with your message: Moodle version, Referrer page, Systeminfo</p>';
+// ... ... Setting: Accessibility support page title.
+$string['accessibilitysupportpagetitledefault'] = 'Accessibility support';
+$string['accessibilitysupportpagetitlesetting'] = 'Accessibility support information page title';
+$string['accessibilitysupportpagetitlesetting_desc'] = 'In this setting, you can define the title of the accessibility support information page. This text will be used as link text to the accessibility support information page as well if you configure \'Accessibility support information page link position\' accordingly.';
+// ... ... Setting: Accessibility support page link position.
+$string['accessibilitysupportlinkpositionnone'] = 'Do not automatically show a link to the accessibility support information page';
+$string['accessibilitysupportlinkpositionfootnote'] = 'Add a link to the accessibility support information page to the footnote';
+$string['accessibilitysupportlinkpositionfooter'] = 'Add a link to the accessibility support information page to the footer (questionmark) icon';
+$string['accessibilitysupportlinkpositionboth'] = 'Add a link to the accessibility support information page to the footnote and to the footer (questionmark) icon';
+$string['accessibilitysupportlinkpositionsetting'] = 'Accessibility support information page link position';
+$string['accessibilitysupportlinkpositionsetting_desc'] = 'In this setting, you can configure if a link to the accessibility support information page should be added automatically to the Moodle page. If you do not want to show a link automatically, you can add a link to {$a->url} from anywhere in Moodle manually.';
+// ... ... Setting: Accessibility support form
+$string['enablesendanonymouscheckboxsetting'] = 'Enable anonymous checkbox in accessibility form';
+$string['enablesendanonymouscheckboxsetting_desc'] = 'With this setting, you can enable the checkbox to send feedback anonymously in the accessibility form. Users can decide if they want to send feedback anonymously (without sending their username and email address) or not.';
+$string['enablesendtechinfocheckboxsetting'] = 'Enable checkbox for sending technical information in accessibility form';
+$string['enablesendtechinfocheckboxsetting_desc'] = 'With this setting, you can enable the checkbox for sending technical information in the accessibility form. Users can decide if they want to send technical information.';
+$string['accessibilitysupportanonymouscheckbox'] = 'I prefer to send feedback anonymously';
+$string['accessibilitysupportdefaultsubject'] = 'Accessibility feedback / barrier report';
+$string['accessibilitysupportemailsubject'] = 'Accessibility feedback / barrier report - {$a}';
+$string['accessibilitysupporttechinfocheckbox'] = 'I agree to send the following technical information along with my message';
+$string['accessibilitysupporttechinfo'] = 'Technical information';
+$string['accessibilitysupporttechinfolabel'] = 'Technical information to send';
+$string['accessibilitysupportmessagesent'] = 'Accessibility feedback message sent';
+$string['accessibilitysysteminfomessage'] = "Referrer page:\n{\$a->referrerpage}\nSystem info:\n{systeminfo}";
+// ... ... Setting: Accessibility support email
+$string['accessibilitysupportname'] = 'Accessibility support name';
+$string['accessibilitysupportname_desc'] = 'Name of the person or other entity providing accessibility support via the accessibility support form.';
+$string['accessibilitysupportemail'] = 'Accessibility support email';
+$string['accessibilitysupportemail_desc'] = 'Email address to which the feedback or barrier report should be sent. If you leave this field empty, the feedback will be sent to the site support email configured under \'Server / Support Contact\' or to the site administrator.';
+$string['accessibilitysupportsentforanonymoususer'] = 'User requested to send feedback anonymously';
+$string['accessibilitysupportanonymoususer'] = 'Anonymous user';
+$string['accessibilitysupportanonymousemail'] = 'anonymous@email';
 // Settings: Info banners tab.
 $string['infobannertab'] = 'Info banner';
 // ... Section: Info banners.
@@ -1302,3 +1370,6 @@ $string['upgradenotice_2022080922_logo'] = 'logo';
 $string['upgradenotice_2022080922_logocompact'] = 'compact logo';
 $string['upgradenotice_2022080922_copied'] = 'The existing <strong>{$a}</strong> from the Moodle core settings has been copied to the Boost Union {$a} setting during this upgrade. Please double-check the result.';
 $string['upgradenotice_2022080922_notcopied'] = 'The <strong>{$a}</strong> setting within Boost Union is empty now. If you want to use a {$a} within Boost Union from now on, just upload it into the Boost Union {$a} setting later.';
+
+// Accessibility.
+$string['sendaccessibilityfeedback'] = 'Send accessibility feedback';
