@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-31 - Bugfix: Fix possible site failure when a cohort or role used as restriction of a smart menu item is deleted, resolves #737.
 * 2024-10-24 - Release: Change support thread URL in README to a tiny URL.
 
 ### v4.4-r4
