@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-10-31 - Bugfix: Fix possible site failure when a cohort or role used as restriction of a smart menu item is deleted, resolves #737.
 * 2024-10-24 - Release: Change support thread URL in README to a tiny URL.
 * 2024-10-24 - Tests: Try to fix Behat error 'Warning: Undefined array key 1' on Moodle 4.5, resolves #734.
 
