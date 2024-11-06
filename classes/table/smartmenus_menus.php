@@ -158,7 +158,7 @@ class smartmenus_menus extends \core_table\sql_table {
         $updown = '';
 
         // Get spacer icon.
-        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', ['class' => 'iconsmall']);
+        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', ['class' => 'iconsmall theme_boost_union-sortorderspacer']);
 
         // If there is more than one smart menu and we do not handle the first (number 0) smart menu.
         if ($this->count > 0) {
