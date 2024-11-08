@@ -128,6 +128,8 @@ define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_NONE', 0);
 define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_DOWNLOAD', 1);
 define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB', 2);
 
+use theme_boost_union\snippets;
+
 /**
  * Returns the main SCSS content.
  *
@@ -158,6 +160,9 @@ function theme_boost_union_get_main_scss_content($theme) {
     // would end of _after_ the code from theme_boost_get_extra_scss() and not _before_.
     // Thus, we sadly have to get and include the external Post SCSS here already.
     $scss .= theme_boost_union_get_external_scss('post');
+
+    // Get and include the SCSS of the enabled SCSS snippets.
+    $scss .= snippets::get_enabled_snippet_scss();
 
     return $scss;
 }
@@ -300,7 +305,7 @@ function theme_boost_union_get_extra_scss($theme) {
     // However, due to the way how the theme_*_get_extra_scss callback functions are searched and called within Boost child theme
     // hierarchy Boost Union not only gets the extra SCSS from this function here but only from theme_boost_get_extra_scss as well.
     //
-    // There, the CSS snippets for the background image and the login background images are added already to the SCSS codebase.
+    // There, the SCSS snippets for the background image and the login background images are added already to the SCSS codebase.
     // Additionally, the custom SCSS from $theme->settings->scss (which hits the SCSS settings from theme_boost_union even though
     // the code is within theme_boost) is already added to the SCSS codebase as well.
     //
@@ -662,4 +667,17 @@ function theme_boost_union_before_session_start() {
 
     // Manipulate Moodle core hooks.
     theme_boost_union_manipulate_hooks();
+}
+
+/**
+ * Get icon mapping for FontAwesome.
+ * This function is only processed when the Moodle cache is cleared and not on every page load.
+ */
+function theme_boost_union_get_fontawesome_icon_map() {
+    // Create the icon map with the icons.
+    $iconmapping = [
+        'theme_boost_union:info' => 'fa-info-circle',
+    ];
+
+    return $iconmapping;
 }

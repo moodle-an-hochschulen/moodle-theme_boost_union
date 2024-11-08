@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-09-04 - Feature: Add first version of CSS snippets feature, credits go to all members of the MoodleMootDACH dev camp team 22.
+
 ### v4.5-r2
 
 * 2024-10-31 - Bugfix: Fix possible site failure when a cohort or role used as restriction of a smart menu item is deleted, resolves #737.
