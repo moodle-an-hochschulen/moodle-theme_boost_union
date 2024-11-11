@@ -763,10 +763,13 @@ The plugin is maintained by\
 Moodle an Hochschulen e.V.
 
 in cooperation with\
-lern.link GmbH
+ssystems GmbH
 
 together with\
 bdecent GmbH
+
+and\
+lern.link GmbH
 
 
 Copyright
@@ -814,6 +817,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * RWTH Aachen, Amrita Deb Dutta: Code
 * RWTH Aachen, Josha Bartsch: Code
 * Solent University, Mark Sharp: Code
+* ssystems GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
 * Technische Universität Berlin, Lars Bonczek: Code
 * University of Graz, André Menrath: Code
 * University of Lübeck, Christian Wolters: Code, Peer Review, Ideating

@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-11-11 - Release: Add ssystems GmbH to the list of maintainers in README.md.
+
 ### v4.1-r32
 
 * 2024-10-31 - Bugfix: Fix possible site failure when a cohort or role used as restriction of a smart menu item is deleted, resolves #737.
