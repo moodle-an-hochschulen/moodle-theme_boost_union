@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-11-13 - Upstream change: Adopt changes from MDL-78999 ('Site logo does not appear in mobile view'), resolves #753.
 * 2024-11-11 - Release: Add ssystems GmbH to the list of maintainers in README.md.
 
 ### v4.5-r2
