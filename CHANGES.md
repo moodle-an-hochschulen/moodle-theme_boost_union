@@ -18,45 +18,6 @@ Changes
 
 * 2024-10-23 - Backport: Use the before_session_start() callback instead of the after_config() callback on Moodle 4.4, resolves #721.
 
-### v4.5-r1
-
-* 2024-10-15 - Upgrade: Update FontAwesome icon mappings for handling external links.
-* 2024-10-15 - Upgrade: Add note to the 'Login providers' settings that Boost Union will continue to use its own settings, even after MDL-80967 was integrated in Moodle 4.5
-* 2024-10-15 - Upgrade: Enhance the 'activity type icons in course index' feature to support subsections in 4.5 + align the icon stylings to 4.5
-* 2024-10-14 - Upgrade: Fix broken Behat scenario 'Smartmenu: Menus: Presentation - Display smart menu description in different places'
-* 2024-10-14 - Upgrade: Fix broken Behat scenario 'Smartmenus: Menu items: Presentation - Display the menu items title with icon'
-* 2024-10-14 - Upgrade: Fix broken Behat scenario 'Setting: Custom icons files - Upload custom icons files'
-* 2024-10-14 - Upgrade: Fix broken Behat scenario 'Flavours: Caching - After deleting a cohort, the flavour which applies now should take direct effect'
-* 2024-10-14 - Upgrade: Fix broken Behat scenario 'Setting: Footer - Suppress icons in front of the footer links'
-* 2024-10-14 - Upgrade: Adopt changes from MDL-82183 and use several new class names, at least in our own / non-adopted code.
-* 2024-10-14 - Upgrade: Adopt changes from MDL-81960 and use new \core\url class, at least in our own / non-adopted code.
-* 2024-10-14 - Upgrade: Adopt changes from MDL-81920 and use new \core\lang_string class.
-* 2024-10-14 - Upgrade: Adopt changes from MDL-81031 and use new \core\user class.
-* 2024-10-14 - Upgrade: Adopt changes from MDL-66903 and use new \core\component class.
-* 2024-10-14 - Upgrade: Adopt changes from MDL-82158 and use new cache classes.
-* 2024-10-13 - Upgrade: Adopt changes from MDL-75671 into custom Boost Union code.
-* 2024-10-13 - Upgrade: Remove legacy implementation of before_standard_html_head, resolves #606.
-* 2024-10-13 - Upgrade: Adopt changes from MDL-82183 where lib/outputrenderers.php was split up.
-* 2024-10-13 - Upgrade: Adopt changes from MDL-75671 in navbar.mustache
-* 2024-10-13 - Upgrade: Adopt changes from MDL-81725 in cm.mustache
-* 2024-10-13 - Upgrade: Adopt changes from MDL-75671 in cm.mustache
-* 2024-10-13 - Upgrade: Adopt changes from MDL-75671 in event-list-item.mustache
-* 2024-10-13 - Upgrade: Adopt changes from MDL-75671 in view-cards.mustache
-* 2024-10-10 - Upgrade: Adopt changes from MDL-81818 to remove old bootstrap classes
-* 2024-10-10 - Upgrade: Adopt changes from MDL-74251 to remove old icon classes
-* 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in user_menu.mustache
-* 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in user_action_menu_submenu_items.mustache
-* 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in primary-drawer-mobile.mustache
-* 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in drawers.mustache
-* 2024-10-10 - Upgrade: Adopt changes from MDL-75671 in upcoming_mini.mustache
-* 2024-10-10 - Upgrade: Adopt changes from MDL-74251 and MDL-75671 in loginform.mustache
-* 2024-10-10 - Upgrade: Adopt change from MDL-75671 in full_header.mustache
-* 2024-10-10 - Upgrade: Use the before_session_start() callback instead of the after_config() callback on Moodle 4.5, resolves #721.
-* 2024-10-10 - Upgrade: Adopt change from MDL-75671 in course_listitem_actions().
-* 2024-10-10 - Upgrade: Fix removed /cache/classes/loaders.php which prevented the theme from being used on Moodle 4.5, resolves #708.
-* 2024-10-07 - Prepare compatibility for Moodle 4.5.
->>>>>>> c1dc186 (Release: Change support thread URL in README to a tiny URL.)
-
 ### v4.4-r3
 
 * 2024-10-21 - Improvement: Add link to policyoverviewnavigation setting, resolves #732.
