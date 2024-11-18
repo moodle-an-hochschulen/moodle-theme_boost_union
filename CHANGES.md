@@ -27,7 +27,7 @@ Changes
 * 2024-08-11 - Updated Moodle Plugin CI to latest upstream recommendations
 * 2024-07-24 - Test: Fix broken Behat scenario 'Suppress 'Chat to course participants' link', resolves #696
 
-### v4.3-r15 
+### v4.3-r15
 
 * 2024-07-11 - Bugfix: Allow external SCSS to use SCSS variables by disabling the SCSS validation, resolves #683.
 * 2024-06-23 - Upstream change: Adopt change in view-chards.mustache from MDL-70829.
@@ -35,7 +35,7 @@ Changes
 * 2024-06-13 - Cleanup: Change @codingStandardsIgnore tags to phpcs:disable, resolves #676.
 * 2024-06-12 - Cleanup: Fix CSS warnings in external SCSS tests, resolves #674.
 
-### v4.3-r14 
+### v4.3-r14
 
 * 2024-06-10 - Cleanup: Introduce a dedicated Behat step to deactivate and activate debugging, resolves #670.
 * 2024-05-05 - Cleanup: Fix 'Implicitly marking a parameter as nullable is deprecated since PHP 8.4' codechecker warning, resolves #667.
