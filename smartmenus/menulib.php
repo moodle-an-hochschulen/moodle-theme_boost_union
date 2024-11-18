@@ -97,8 +97,8 @@ class smartmenu_helper {
         // Restriction by roles.
         $this->restriction_byroles($query);
 
-        // Restricted to admins.
-        if (!$this->restriction_byadminrole()) {
+        // Restricted by site admin status.
+        if (!$this->restriction_byadmin()) {
             return false;
         }
 
@@ -186,15 +186,21 @@ class smartmenu_helper {
     }
 
     /**
-     * Verify if the menu is restricted to admins.
+     * Verify if the menu is restricted to site admins.
      *
-     * @return bool True if the user is a site admin
+     * @return bool True if the menu is available for this user, otherwise false.
      */
-    public function restriction_byadminrole() {
-        // Check if the item is restricted to admins.
-        if ($this->data->byadmin) {
-            return is_siteadmin($this->userid); // Returns true if the user is a site admin.
+    public function restriction_byadmin() {
+        // If the item is restricted to site admins only.
+        if ($this->data->byadmin == smartmenu::BYADMIN_ADMINS) {
+            return is_siteadmin($this->userid);
+
+            // Otherwise, if the item is restricted to non-site admins only.
+        } else if ($this->data->byadmin == smartmenu::BYADMIN_NONADMINS) {
+            return !is_siteadmin($this->userid);
         }
+
+        // Allow the item to be viewed by the user.
         return true;
     }
 

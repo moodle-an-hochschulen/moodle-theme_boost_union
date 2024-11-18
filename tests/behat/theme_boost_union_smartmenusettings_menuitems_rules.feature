@@ -109,7 +109,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
     And I click on ".action-edit" "css_element" in the "Resources" "table_row"
     And I expand all fieldsets
-    And I set the field "Only for site admin" to "<byadmin>"
+    And I set the field "Show to" to "<byadmin>"
     And I click on "Save changes" "button"
     And I <adminshouldorshouldnot> see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
     And I log out
@@ -117,9 +117,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then I <student1shouldorshouldnot> see smart menu "Quick links" item "Resources" in location "Main, Menu, User, Bottom"
 
     Examples:
-      | byadmin                     | adminshouldorshouldnot              | student1shouldorshouldnot |
-      | 1                           | should                              | should not                |
-      | 0                           | should                              | should                    |
+      | byadmin | adminshouldorshouldnot | student1shouldorshouldnot |
+      | 0       | should                 | should                    |
+      | 1       | should                 | should not                |
+      | 2       | should not             | should                    |
 
   @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on the user assignment in single cohorts

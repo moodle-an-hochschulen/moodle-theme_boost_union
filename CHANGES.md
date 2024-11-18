@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-11-18 - Improvement: Add the possibility to restrict smart menus and smart menu items to site admins and non-site admins only, resolves #421.
 * 2024-11-18 - Bugfix: Footer displacement on pages with minimal content, resolves #655.
 * 2024-11-18 - Upstream change: Adopt changes from MDL-77732 ('Custom menu items do not receive active behaviour'), resolves #436 #620 #384 #715.
 * 2024-11-13 - Upstream change: Adopt changes from MDL-78999 ('Site logo does not appear in mobile view'), resolves #753.
