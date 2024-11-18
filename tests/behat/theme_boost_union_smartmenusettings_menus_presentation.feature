@@ -424,3 +424,70 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | 1        | 0        | 0        | after     | before    | after     |
       | 0        | 0        | 2        | before    | after     | after     |
       | 0        | 1        | 2        | before    | after     | before    |
+
+  @javascript
+  Scenario: Smartmenu: Menus: Presentation - Verify that the correct menu item is displayed as active when viewing the main menu item's page.
+    Given I log in as "admin"
+    And I create smart menu with the following fields to these values:
+      | Title             | Quick links |
+      | Menu location(s)  | Main        |
+      | Menu mode         | Inline      |
+    And I set "Quick links" smart menu items with the following fields to these values:
+      | Title          | Test node                           |
+      | Menu item type | Static                              |
+      | URL            | /admin/tool/dataprivacy/summary.php |
+      | CSS class      | testnode01                          |
+    When I am on site homepage
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should contain "active"
+    And the "class" attribute of ".primary-navigation .testnode01 a" "css_element" should not contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation .testnode01" "css_element"
+    And I click on "Test node" "link" in the ".primary-navigation" "css_element"
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should not contain "active"
+    And the "class" attribute of ".primary-navigation .testnode01 a" "css_element" should contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation .testnode01" "css_element"
+
+  @javascript
+  Scenario: Smartmenu: Menus: Presentation - Verify that the correct menu item is displayed as active when viewing the submenu item's page.
+    Given I log in as "admin"
+    And I create smart menu with the following fields to these values:
+      | Title             | Quick links |
+      | Menu location(s)  | Main        |
+      | Menu mode         | Submenu     |
+      | CSS class         | testnode01  |
+    And I set "Quick links" smart menu items with the following fields to these values:
+      | Title          | Test node                           |
+      | Menu item type | Static                              |
+      | URL            | /admin/tool/dataprivacy/summary.php |
+    When I am on site homepage
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should contain "active"
+    And the "class" attribute of ".primary-navigation .testnode01 a" "css_element" should not contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation .testnode01" "css_element"
+    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
+    And I click on "Test node" "link" in the ".primary-navigation" "css_element"
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should not contain "active"
+    And the "class" attribute of ".primary-navigation .testnode01 a" "css_element" should contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation .testnode01" "css_element"
+
+  @javascript
+  Scenario: Smartmenu: Menus: Presentation - Verify that the correct _custom_ menu item is displayed as active when viewing the custom menu item's page (Moodle core behaviour which must not be broken by the smart menus)
+    Given I log in as "admin"
+    And I navigate to "Appearance > Advanced theme settings" in site administration
+    And I set the field "Custom menu items" to multiline:
+    """
+    Test node|/admin/tool/dataprivacy/summary.php
+    """
+    And I click on "Save changes" "button"
+    When I am on site homepage
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should contain "active"
+    And the "class" attribute of ".primary-navigation .nav-item:nth-child(5) a" "css_element" should not contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation .nav-item:nth-child(5)" "css_element"
+    And I click on "Test node" "link" in the ".primary-navigation" "css_element"
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should not contain "active"
+    And the "class" attribute of ".primary-navigation .nav-item:nth-child(5) a" "css_element" should contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation .nav-item:nth-child(5)" "css_element"
