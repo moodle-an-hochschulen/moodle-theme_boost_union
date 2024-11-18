@@ -80,7 +80,7 @@ Changes
 * 2024-07-04 - Upgrade: Fix Behat tests which broke due to the introduction of section pages in Moodle core.
 * 2024-07-04 - Upgrade: Adopt changes in boostnavbar.php from Boost core.
 * 2024-07-04 - Upgrade: Fix Behat tests which broke due to changes in the section naming in Moodle core.
-* 2024-07-04 - Upgrade: Adapt a Behat test as planned regarding the new theme selector in Moodle core. 
+* 2024-07-04 - Upgrade: Adapt a Behat test as planned regarding the new theme selector in Moodle core.
 * 2024-07-04 - Upgrade: Fix Behat tests which broke due to changes on the MyCourses page in Moodle core.
 * 2024-06-25 - Upgrade: Adopt and handle core changes for the footersuppressstandardfooter_* settings, moving from callback functions to hooks.
 * 2024-06-19 - Upgrade: Adopt changes in event-list-item.mustache from block_timeline in core.
@@ -89,7 +89,7 @@ Changes
 * 2024-06-19 - Upgrade: Adopt changes in navbar.mustache from Boost core.
 * 2024-06-01 - Prepare compatibility for Moodle 4.4.
 
-### v4.3-r15 
+### v4.3-r15
 
 * 2024-07-11 - Bugfix: Allow external SCSS to use SCSS variables by disabling the SCSS validation, resolves #683.
 * 2024-06-23 - Upstream change: Adopt change in view-chards.mustache from MDL-70829.
@@ -97,7 +97,7 @@ Changes
 * 2024-06-13 - Cleanup: Change @codingStandardsIgnore tags to phpcs:disable, resolves #676.
 * 2024-06-12 - Cleanup: Fix CSS warnings in external SCSS tests, resolves #674.
 
-### v4.3-r14 
+### v4.3-r14
 
 * 2024-06-10 - Cleanup: Introduce a dedicated Behat step to deactivate and activate debugging, resolves #670.
 * 2024-05-05 - Cleanup: Fix 'Implicitly marking a parameter as nullable is deprecated since PHP 8.4' codechecker warning, resolves #667.
