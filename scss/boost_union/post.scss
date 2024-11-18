@@ -645,10 +645,13 @@ body.theme-boost-union-commincourse {
 
 /* To support additional block regions around the main content area, Boost Union introduced
    the main-inner-wrapper HTML element. Unfortunately, this breaks the Flexbox flow of Moodle core.
-   To make it work again, we have to set the Flexbox flex attribute in the main-inner-wrapper element as well. */
-.main-inner-wrapper {
+   To make it work again, we have to set the Flexbox flex attribute in the main-inner-wrapper element as well.
+   In addition to that, we set the Flexbox attribute for the #page element as well as it turned out to be necessary. */
+.main-inner-wrapper,
+#page-wrapper #page {
     flex: 1 0 auto;
 }
+
 
 /*---------------------------------------
  * Settings: Additional block regions - The offcanvas region.
