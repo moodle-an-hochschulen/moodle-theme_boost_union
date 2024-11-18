@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-11-18 - Upstream change: Adopt changes from MDL-77732 ('Custom menu items do not receive active behaviour'), resolves #436 #620 #384 #715.
 * 2024-11-13 - Upstream change: Adopt changes from MDL-78999 ('Site logo does not appear in mobile view'), resolves #753.
 * 2024-11-11 - Release: Add ssystems GmbH to the list of maintainers in README.md.
 
