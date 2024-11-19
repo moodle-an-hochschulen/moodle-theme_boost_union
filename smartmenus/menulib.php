@@ -97,6 +97,11 @@ class smartmenu_helper {
         // Restriction by roles.
         $this->restriction_byroles($query);
 
+        // Restricted by site admin status.
+        if (!$this->restriction_byadmin()) {
+            return false;
+        }
+
         // Restriction by cohorts.
         $this->restriction_bycohorts($query);
 
@@ -178,6 +183,25 @@ class smartmenu_helper {
             'systemcontext' => context_system::instance()->id,
         ];
         $query->params += array_merge($params, $inparam);
+    }
+
+    /**
+     * Verify if the menu is restricted to site admins.
+     *
+     * @return bool True if the menu is available for this user, otherwise false.
+     */
+    public function restriction_byadmin() {
+        // If the item is restricted to site admins only.
+        if ($this->data->byadmin == smartmenu::BYADMIN_ADMINS) {
+            return is_siteadmin($this->userid);
+
+            // Otherwise, if the item is restricted to non-site admins only.
+        } else if ($this->data->byadmin == smartmenu::BYADMIN_NONADMINS) {
+            return !is_siteadmin($this->userid);
+        }
+
+        // Allow the item to be viewed by the user.
+        return true;
     }
 
     /**
