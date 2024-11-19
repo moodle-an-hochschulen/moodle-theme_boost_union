@@ -208,6 +208,24 @@ class smartmenu_edit_form extends \moodleform {
         $mform->setType('rolecontext', PARAM_INT);
         $mform->addHelpButton('rolecontext', 'smartmenusrolecontext', 'theme_boost_union');
 
+        // Add restrict visibility by admin as header element.
+        $mform->addElement('header', 'restrictbyadminheader',
+                get_string('smartmenusrestrictbyadminheader', 'theme_boost_union'));
+        if (isset($this->_customdata['menu']) && $this->_customdata['menu']->byadmin) {
+            $mform->setExpanded('restrictbyadminheader');
+        }
+
+        // Add restriction as select element.
+        $rolecontext = [
+            smartmenu::BYADMIN_ALL => get_string('smartmenusbyadmin_all', 'theme_boost_union'),
+            smartmenu::BYADMIN_ADMINS => get_string('smartmenusbyadmin_admins', 'theme_boost_union'),
+            smartmenu::BYADMIN_NONADMINS => get_string('smartmenusbyadmin_nonadmins', 'theme_boost_union'),
+        ];
+        $mform->addElement('select', 'byadmin', get_string('smartmenusbyadmin', 'theme_boost_union'), $rolecontext);
+        $mform->setDefault('byadmin', smartmenu::BYADMIN_ALL);
+        $mform->setType('byadmin', PARAM_INT);
+        $mform->addHelpButton('byadmin', 'smartmenusbyadmin', 'theme_boost_union');
+
         // Add restrict visibility by cohorts as header element.
         $mform->addElement('header', 'restrictbycohortsheader',
                 get_string('smartmenusrestrictbycohortsheader', 'theme_boost_union'));
