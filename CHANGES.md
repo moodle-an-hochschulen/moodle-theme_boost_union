@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-11-18 - Improvement: Add the possibility to restrict smart menus and smart menu items to site admins and non-site admins only, resolves #421.
 * 2024-11-18 - Bugfix: Footer displacement on pages with minimal content, resolves #655.
 * 2024-11-11 - Release: Add ssystems GmbH to the list of maintainers in README.md.
 
