@@ -262,6 +262,24 @@ class smartmenu {
     public const MODE_SUBMENU = 1;
 
     /**
+     * Restrict to admins: Show to all users.
+     * @var int
+     */
+    public const BYADMIN_ALL = 0;
+
+    /**
+     * Restrict to admins: Show only to admins.
+     * @var int
+     */
+    public const BYADMIN_ADMINS = 1;
+
+    /**
+     * Restrict to admins: Show only to non-admins.
+     * @var int
+     */
+    public const BYADMIN_NONADMINS = 2;
+
+    /**
      * Cache key for the menus list.
      */
     public const CACHE_MENUSLIST = 'menuslist';
