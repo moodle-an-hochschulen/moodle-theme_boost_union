@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.4-r6
 
 * 2024-11-19 - Upgrade: Support more seamless upgrade to 4.5 by only requiring /cache/classes/loaders.php if it is present, resolves #708.
 * 2024-11-19 - Bugfix: The starred courses popover showed a JavaScript error in the browser JS console, resolves #759.
