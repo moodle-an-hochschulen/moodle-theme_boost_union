@@ -60,7 +60,6 @@
 require(['jquery', 'core/popover_region_controller'], function($, Controller) {
     var container = $('#nav-popover-favourites-container');
     var controller = new Controller(container);
-    controller.registerEventListeners();
     controller.registerListNavigationEventListeners();
 });
 {{/js}}
