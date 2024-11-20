@@ -1932,6 +1932,12 @@ function theme_boost_union_yesno_to_boolstring($var) {
 function theme_boost_union_get_navbar_starredcoursespopover() {
     global $USER, $OUTPUT;
 
+    // If a theme other than Boost Union or a child theme of it is active, return directly.
+    // This is necessary as the callback is called regardless of the active theme.
+    if (theme_boost_union_is_active_theme() != true) {
+        return '';
+    }
+
     // The popover is relevant only for logged-in users. If the user is not logged in, return directly.
     if (!isloggedin()) {
         return '';
@@ -2031,7 +2037,7 @@ function theme_boost_union_get_navbar_starredcoursespopover() {
  * @return string|void The legacy implementation will return a string, the hook implementation will return nothing.
  */
 function theme_boost_union_callbackimpl_before_standard_html(&$hook = null) {
-    global $CFG, $PAGE;
+    global $CFG;
 
     // Require local library.
     require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
@@ -2041,7 +2047,7 @@ function theme_boost_union_callbackimpl_before_standard_html(&$hook = null) {
 
     // If a theme other than Boost Union or a child theme of it is active, return directly.
     // This is necessary as the callback is called regardless of the active theme.
-    if ($PAGE->theme->name != 'boost_union' && !in_array('boost_union', $PAGE->theme->parents)) {
+    if (theme_boost_union_is_active_theme() != true) {
         if ($hook != null) {
             return;
         } else {
@@ -2409,4 +2415,20 @@ function theme_boost_union_remove_hookmanipulation() {
 
     // Remove the hook overrides.
     $cache->delete('overrides');
+}
+
+/**
+ * Helper function to check if Boost Union or a child theme of Boost Union is active.
+ * This is needed at multiple locations to avoid that callbacks in Boost Union affect other active themes.
+ *
+ * @return bool
+ */
+function theme_boost_union_is_active_theme() {
+    global $PAGE;
+
+    if ($PAGE->theme->name == 'boost_union' || in_array('boost_union', $PAGE->theme->parents)) {
+        return true;
+    } else {
+        return false;
+    }
 }
