@@ -66,6 +66,7 @@ class behat_theme_boost_union_generator extends behat_generator_base {
                     'cohorts' => 'cohorts',
                     'operator' => 'operator',
                     'languages' => 'languages',
+                    'byadmin' => 'byadmin',
                 ],
             ],
 
@@ -92,6 +93,7 @@ class behat_theme_boost_union_generator extends behat_generator_base {
                     'cohorts' => 'cohorts',
                     'operator' => 'operator',
                     'languages' => 'languages',
+                    'byadmin' => 'byadmin',
                 ],
             ],
         ];
@@ -275,6 +277,17 @@ class behat_theme_boost_union_generator extends behat_generator_base {
      */
     protected function get_operator_id(string $operator): int {
         return $this->option_id('operator', $operator, smartmenu::get_operator_options());
+    }
+
+    /**
+     * Return the ID for the given byadmin setting.
+     *
+     * @param string $byadmin
+     * @return int
+     * @throws Exception
+     */
+    protected function get_byadmin_id(string $byadmin): int {
+        return $this->option_id('byadmin', $byadmin, smartmenu::get_byadmin_options());
     }
 
     /**

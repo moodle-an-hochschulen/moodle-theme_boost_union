@@ -41,46 +41,26 @@ class theme_boost_union_generator extends component_generator_base {
         if (empty($location)) {
             throw new Exception('A Smart menu location must be specified.');
         }
-        $validlocations = [
-            smartmenu::LOCATION_MAIN,
-            smartmenu::LOCATION_MENU,
-            smartmenu::LOCATION_BOTTOM,
-            smartmenu::LOCATION_USER,
-        ];
+        $validlocations = array_keys(smartmenu::get_locations());
         if (!empty(array_diff($validlocations, $location))) {
             throw new Exception('Invalid Smart menu location.');
         }
-        $validdescriptions = [
-            smartmenu::DESC_NEVER,
-            smartmenu::DESC_ABOVE,
-            smartmenu::DESC_BELOW,
-            smartmenu::DESC_HELP,
-        ];
+        $validdescriptions = array_keys(smartmenu::get_showdescription_options());
         $showdescription = $data['showdescription'] ?? smartmenu::DESC_NEVER;
         if (!in_array($showdescription, $validdescriptions)) {
             throw new Exception('Invalid showdescription.');
         }
-        $validtypes = [
-            smartmenu::TYPE_LIST,
-            smartmenu::TYPE_CARD,
-        ];
+        $validtypes = array_keys(smartmenu::get_types());
         $type = $data['type'] ?? smartmenu::TYPE_LIST;
         if (!in_array($type, $validtypes)) {
             throw new Exception('Invalid showdescription.');
         }
-        $validmodes = [
-            smartmenu::MODE_SUBMENU,
-            smartmenu::MODE_INLINE,
-        ];
+        $validmodes = array_keys(smartmenu::get_mode_options());
         $mode = $data['mode'] ?? smartmenu::MODE_SUBMENU;
         if (!in_array($mode, $validmodes)) {
             throw new Exception('Invalid mode.');
         }
-        $validbehaviours = [
-            smartmenu::MOREMENU_DONOTCHANGE,
-            smartmenu::MOREMENU_INTO,
-            smartmenu::MOREMENU_OUTSIDE,
-        ];
+        $validbehaviours = array_keys(smartmenu::get_moremenu_options());
         $moremenubehaviour = $data['moremenubehaviour'] ?? smartmenu::MOREMENU_DONOTCHANGE;
         if (!in_array($moremenubehaviour, $validbehaviours)) {
             throw new Exception('Invalid moremenubehaviour.');
@@ -90,30 +70,17 @@ class theme_boost_union_generator extends component_generator_base {
         $cardform = null;
         $cardoverflowbehaviour = null;
         if ($type === smartmenu::TYPE_CARD) {
-            $validcardsizes = [
-                smartmenu::CARDSIZE_TINY,
-                smartmenu::CARDSIZE_SMALL,
-                smartmenu::CARDSIZE_MEDIUM,
-                smartmenu::CARDSIZE_LARGE,
-            ];
+            $validcardsizes = array_keys(smartmenu::get_cardsize_options());
             $cardsize = $data['cardsize'] ?? smartmenu::CARDSIZE_SMALL;
             if (!in_array($cardsize, $validcardsizes)) {
                 throw new Exception('Invalid cardsize.');
             }
-            $validcardforms = [
-                smartmenu::CARDFORM_SQUARE,
-                smartmenu::CARDFORM_PORTRAIT,
-                smartmenu::CARDFORM_LANDSCAPE,
-                smartmenu::CARDFORM_FULLWIDTH,
-            ];
+            $validcardforms = array_keys(smartmenu::get_cardform_options());
             $cardform = $data['cardform'] ?? smartmenu::CARDFORM_SQUARE;
             if (!in_array($cardform, $validcardforms)) {
                 throw new Exception('Invalid cardform.');
             }
-            $validbehaviours = [
-                smartmenu::CARDOVERFLOWBEHAVIOUR_NOWRAP,
-                smartmenu::CARDOVERFLOWBEHAVIOUR_WRAP,
-            ];
+            $validbehaviours = array_keys(smartmenu::get_cardoverflowbehaviour_options());
             $cardoverflowbehaviour = strtolower($data['cardoverflowbehaviour']) ?? smartmenu::CARDOVERFLOWBEHAVIOUR_NOWRAP;
             if (!in_array($cardoverflowbehaviour, $validbehaviours)) {
                 throw new Exception('Invalid cardoverflowbehaviour.');
@@ -124,6 +91,7 @@ class theme_boost_union_generator extends component_generator_base {
             $rolecontext,
             $cohorts,
             $operator,
+            $byadmin,
             $languages,
             $startdate,
             $enddate,
@@ -148,6 +116,7 @@ class theme_boost_union_generator extends component_generator_base {
             'rolecontext' => $rolecontext,
             'cohorts' => $cohorts,
             'operator' => $operator,
+            'byadmin' => $byadmin,
             'languages' => $languages,
             'start_date' => $startdate,
             'end_date' => $enddate,
@@ -174,11 +143,7 @@ class theme_boost_union_generator extends component_generator_base {
 
         $sortorder = $data['sortorder'] ?? $DB->count_records('theme_boost_union_menus') + 1;
 
-        $validtypes = [
-            smartmenu_item::TYPESTATIC,
-            smartmenu_item::TYPEHEADING,
-            smartmenu_item::TYPEDYNAMIC,
-        ];
+        $validtypes = array_keys(smartmenu_item::get_types());
         $type = $data['type'] ?? smartmenu_item::TYPESTATIC;
         if (!in_array($type, $validtypes)) {
             throw new Exception('Invalid type.');
@@ -202,24 +167,12 @@ class theme_boost_union_generator extends component_generator_base {
         $displayfield = null;
         $textcount = null;
         if ($type == smartmenu_item::TYPEDYNAMIC) {
-            $validsorts = [
-                smartmenu_item::LISTSORT_FULLNAME_ASC,
-                smartmenu_item::LISTSORT_FULLNAME_DESC,
-                smartmenu_item::LISTSORT_SHORTNAME_ASC,
-                smartmenu_item::LISTSORT_SHORTNAME_DESC,
-                smartmenu_item::LISTSORT_COURSEID_ASC,
-                smartmenu_item::LISTSORT_COURSEID_DESC,
-                smartmenu_item::LISTSORT_COURSEIDNUMBER_ASC,
-                smartmenu_item::LISTSORT_COURSEIDNUMBER_DESC,
-            ];
+            $validsorts = array_keys(smartmenu_item::get_listsort_options());
             $listsort = $data['listsort'] ?? smartmenu_item::LISTSORT_FULLNAME_ASC;
             if (!in_array($listsort, $validsorts)) {
                 throw new Exception('Invalid listsort.');
             }
-            $validdisplayfields = [
-                smartmenu_item::FIELD_FULLNAME,
-                smartmenu_item::FIELD_SHORTNAME,
-            ];
+            $validdisplayfields = array_keys(smartmenu_item::get_displayfield_options());
             $displayfield = $data['displayfield'] ?? smartmenu_item::FIELD_FULLNAME;
             if (!in_array($displayfield, $validdisplayfields)) {
                 throw new Exception('Invalid displayfield.');
@@ -236,30 +189,19 @@ class theme_boost_union_generator extends component_generator_base {
             throw new Exception('Invalid mode.');
         }
 
-        $validdisplays = [
-            smartmenu_item::DISPLAY_SHOWTITLEICON,
-            smartmenu_item::DISPLAY_HIDETITLE,
-            smartmenu_item::DISPLAY_HIDETITLEMOBILE,
-        ];
+        $validdisplays = array_keys(smartmenu_item::get_display_options());
         $display = $data['display'] ?? smartmenu_item::DISPLAY_SHOWTITLEICON;
         if (!in_array($display, $validdisplays)) {
             throw new Exception('Invalid display.');
         }
 
-        $validtargets = [
-            smartmenu_item::TARGET_SAME,
-            smartmenu_item::TARGET_NEW,
-        ];
+        $validtargets = array_keys(smartmenu_item::get_target_options());
         $target = $data['target'] ?? smartmenu_item::TARGET_SAME;
         if (!in_array($target, $validtargets)) {
             throw new Exception('Invalid target.');
         }
 
-        $validtextpositions = [
-            smartmenu_item::POSITION_BELOW,
-            smartmenu_item::POSITION_OVERLAYTOP,
-            smartmenu_item::POSITION_OVERLAYBOTTOM,
-        ];
+        $validtextpositions = array_keys(smartmenu_item::get_textposition_options());
         $textposition = $data['textposition'] ?? smartmenu_item::POSITION_BELOW;
         if (!in_array($textposition, $validtextpositions)) {
             throw new Exception('Invalid text position.');
@@ -270,6 +212,7 @@ class theme_boost_union_generator extends component_generator_base {
             $rolecontext,
             $cohorts,
             $operator,
+            $byadmin,
             $languages,
             $startdate,
             $enddate,
@@ -304,6 +247,7 @@ class theme_boost_union_generator extends component_generator_base {
             'mobile' => $data['mobile'] ?? 0,
             'roles' => $roles,
             'rolecontext' => $rolecontext,
+            'byadmin' => $byadmin,
             'cohorts' => $cohorts,
             'operator' => $operator,
             'languages' => $languages,
@@ -341,6 +285,11 @@ class theme_boost_union_generator extends component_generator_base {
                 throw new Exception('Invalid operator.');
             }
         }
+        $validbyadmins = array_keys(smartmenu::get_byadmin_options());
+        $byadmin = $data['byadmin'] ?? smartmenu::BYADMIN_ALL;
+        if (!in_array($byadmin, $validbyadmins)) {
+            throw new Exception('Invalid byadmin.');
+        }
         $languages = $data['languages'] ?? [];
         $startdate = $data['start_date'] ?? 0;
         $enddate = $data['end_date'] ?? 0;
@@ -349,6 +298,7 @@ class theme_boost_union_generator extends component_generator_base {
             $rolecontext,
             json_encode($cohorts),
             $operator,
+            $byadmin,
             json_encode($languages),
             $startdate,
             $enddate,

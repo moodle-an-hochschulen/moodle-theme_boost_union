@@ -329,12 +329,8 @@ class smartmenu_item_edit_form extends \moodleform {
         }
 
         // Add restriction as select element.
-        $rolecontext = [
-            smartmenu::BYADMIN_ALL => get_string('smartmenusbyadmin_all', 'theme_boost_union'),
-            smartmenu::BYADMIN_ADMINS => get_string('smartmenusbyadmin_admins', 'theme_boost_union'),
-            smartmenu::BYADMIN_NONADMINS => get_string('smartmenusbyadmin_nonadmins', 'theme_boost_union'),
-        ];
-        $mform->addElement('select', 'byadmin', get_string('smartmenusbyadmin', 'theme_boost_union'), $rolecontext);
+        $byadminoptions = smartmenu::get_byadmin_options();
+        $mform->addElement('select', 'byadmin', get_string('smartmenusbyadmin', 'theme_boost_union'), $byadminoptions);
         $mform->setDefault('byadmin', smartmenu::BYADMIN_ALL);
         $mform->setType('byadmin', PARAM_INT);
         $mform->addHelpButton('byadmin', 'smartmenusbyadmin', 'theme_boost_union');
