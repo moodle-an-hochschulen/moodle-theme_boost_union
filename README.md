@@ -2,6 +2,9 @@ moodle-theme_boost_union
 ========================
 
 [![Moodle Plugin CI](https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/workflows/Moodle%20Plugin%20CI/badge.svg?branch=main)](https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/actions?query=workflow%3A%22Moodle+Plugin+CI%22+branch%3Amain)
+[![PHP Support](https://img.shields.io/badge/php-7.4_--_8.3-blue)](https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/actions)
+[![Moodle Support](https://img.shields.io/badge/Moodle-%3E%3D%204.4-blue)](https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/actions)
+[![GitHub contributors](https://img.shields.io/github/contributors/moodle-an-hochschulen/moodle-theme_boost_union)](https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/graphs/contributors)
 
 Theme Boost Union is an enhanced child theme of Boost which is intended, on the one hand, to make Boost simply more configurable and, on the other hand, to provide helpful additional features for the daily Moodle operation of admins, teachers and students.
 
