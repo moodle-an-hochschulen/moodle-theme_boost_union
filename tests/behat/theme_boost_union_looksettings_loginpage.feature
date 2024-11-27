@@ -270,7 +270,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | no           | auto            | should       | should not   |
       | no           | always          | should       | should not   |
 
-  Scenario: Setting: Enable side entrance login - Use the side entrance login page
+  Scenario: Setting: Enable side entrance login - Use the side entrance login page - Simply login
     Given the following config values are set as admin:
       | config                  | value  | plugin            |
       | sideentranceloginenable | always | theme_boost_union |
@@ -281,3 +281,32 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | Password | admin |
     And I press "Log in"
     Then I should see "Welcome, Admin" in the "page-header" "region"
+
+  Scenario Outline: Setting: Enable side entrance login - Use the side entrance login page - Visit the side entrace login page again as a already logged in user
+    Given the following "courses" exist:
+      | fullname | shortname |
+      | Course 1 | C1        |
+    And the following "course enrolments" exist:
+      | user  | course | role           |
+      | admin | C1     | editingteacher |
+    And the following config values are set as admin:
+      | config            | value               |
+      | alternateloginurl | <alternateloginurl> |
+    And the following config values are set as admin:
+      | config                  | value  | plugin            |
+      | sideentranceloginenable | always | theme_boost_union |
+    When I am on local login page
+    And I set the following fields to these values:
+    # With behat, the password is always the same as the username.
+      | Username | admin |
+      | Password | admin |
+    And I press "Log in"
+    And I am on "Course 1" course homepage
+    And I should see "Course 1" in the "#page-header" "css_element"
+    And I am on local login page
+    And I should see "You are already logged in"
+
+    Examples:
+      | alternateloginurl |
+      |                   |
+      | /foo              |

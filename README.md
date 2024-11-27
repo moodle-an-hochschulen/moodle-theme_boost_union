@@ -939,6 +939,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * Moodle.NRW / Ruhr University Bochum, Tim Trappen: Code, Ideating
 * moodleSCHULE e.V., Ralf Krause: German translation and curation, Ideating
 * Plakos GmbH, Waldemar Erdmann: Funding, Ideating
+* Ruhr University Bochum, Thorsten Bartel: Code
 * Ruhr University Bochum, Melanie Treitinger: Code, Ideating
 * RWTH Aachen, Amrita Deb Dutta: Code
 * RWTH Aachen, Josha Bartsch: Code
