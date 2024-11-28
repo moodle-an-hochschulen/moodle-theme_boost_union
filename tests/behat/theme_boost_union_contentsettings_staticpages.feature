@@ -1,4 +1,4 @@
-@theme @theme_boost_union @theme_boost_union_contentsettings @theme_boost_union_contentsettings_staticpages
+@theme @theme_boost_union @theme_boost_union_contentsettings @theme_boost_union_contentsettings_staticpages @theme_boost_union_footer @theme_boost_union_footnote
 Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on the "Content" page
   In order to use the features
   As admin
