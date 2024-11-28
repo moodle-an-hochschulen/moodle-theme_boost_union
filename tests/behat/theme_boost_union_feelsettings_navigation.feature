@@ -1,4 +1,4 @@
-@theme @theme_boost_union @theme_boost_union_feelsettings @theme_boost_union_feelsettings_navigation
+@theme @theme_boost_union @theme_boost_union_feelsettings @theme_boost_union_feelsettings_navigation @theme_boost_union_footer
 Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on the "Feel" page
   In order to use the features
   As admin
