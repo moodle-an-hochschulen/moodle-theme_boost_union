@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-03-26 - Bugfix: Make outside-left and outside-right block regions really responsive, resolves #266.
 * 2025-03-24 - Bugfix: SmartMenu caused JavaScript error 'Uncaught TypeError: moreMenu is null', resolves #850.
 * 2025-03-10 - Bugfix: Guests could not use the side entrance login page, resolves #653.
 * 2025-03-10 - Bugfix: Fix unwanted redirect to IdP from locallogin.php in case alternateloginurl is set, resolves #775.

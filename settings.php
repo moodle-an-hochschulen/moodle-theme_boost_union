@@ -1749,15 +1749,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, $description);
         $tab->add($setting);
 
-        // Add experimental warning.
-        $name = 'theme_boost_union/blockregionsheadingexperimental';
-        $notification = new \core\output\notification(get_string('blockregionsheading_experimental', 'theme_boost_union'),
-                \core\output\notification::NOTIFY_WARNING);
-        $notification->set_show_closebutton(false);
-        $description = $OUTPUT->render($notification);
-        $setting = new admin_setting_heading($name, '', $description);
-        $tab->add($setting);
-
         // Settings: Additional block regions for 'x' layout.
         // List of region strings.
         $regionstr = (array) get_strings([
