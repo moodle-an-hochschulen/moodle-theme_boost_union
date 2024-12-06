@@ -18,12 +18,12 @@ use theme_boost_union\smartmenu;
 use theme_boost_union\smartmenu_item;
 
 /**
- * Behat generator for Boost Union
+ * Theme Boost Union - Behat generator.
  *
- * @package   theme_boost_union
- * @copyright 2024 onwards Catalyst IT EU {@link https://catalyst-eu.net}
- * @author    Mark Johnson <mark.johnson@catalyst-eu.net>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    theme_boost_union
+ * @copyright  2024 onwards Catalyst IT EU {@link https://catalyst-eu.net}
+ * @author     Mark Johnson <mark.johnson@catalyst-eu.net>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_boost_union_generator extends behat_generator_base {
     /**
