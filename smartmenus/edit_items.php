@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme boost union - Edit menu items.
+ * Theme Boost Union - Edit menu items.
  *
  * @package    theme_boost_union
  * @copyright  2023 bdecent GmbH <https://bdecent.de>
