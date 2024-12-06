@@ -1042,9 +1042,12 @@ class smartmenu_item {
             return false;
         }
 
-        // Add custom css class.
-        $class[] = 'boost-union-smartitem';
+        // Add marker class to make clear that this is a Boost Union smart menu item.
+        $class[] = 'boost-union-smartmenuitem';
+
+        // Add custom CSS class.
         $class[] = $this->item->cssclass;
+
         // Add classes for hide items in specific viewport.
         $class[] = $this->item->desktop ? 'd-lg-none' : 'd-lg-inline-flex';
         $class[] = $this->item->tablet ? 'd-md-none' : 'd-md-inline-flex';
@@ -1052,11 +1055,14 @@ class smartmenu_item {
 
         // Add classes for item title placement on card.
         $class[] = $this->get_textposition_class();
-        // Menu item class.
+
+        // Add menu item class.
         $types = [self::TYPESTATIC => 'static', self::TYPEDYNAMIC => 'dynamic', self::TYPEHEADING => 'heading'];
         $class[] = 'menu-item-'.($types[$this->item->type] ?? '');
+
         // Add classes to item data.
         $this->item->classes = $class;
+
         // Load the location of menu, used to collect menus for locations in menu inline mode.
         $this->item->location = $this->menu->location;
 
@@ -1330,20 +1336,17 @@ class smartmenu_item {
     }
 
     /**
-     * Returns the display options for the menu items.
+     * Return the options for the display setting.
      *
-     * @param int|null $option The display option to retrieve. If null, returns all display options.
-     * @return array|string The array of display options if $option is null, or the display option string if $option is set.
-     * @throws coding_exception if $option is set but invalid.
+     * @return array
+     * @throws \coding_exception
      */
-    public static function get_display_options(?int $option = null) {
-        $displayoptions = [
+    public static function get_display_options() {
+        return [
             self::DISPLAY_SHOWTITLEICON => get_string('smartmenusmenuitemdisplayoptionsshowtitleicon', 'theme_boost_union'),
             self::DISPLAY_HIDETITLE => get_string('smartmenusmenuitemdisplayoptionshidetitle', 'theme_boost_union'),
             self::DISPLAY_HIDETITLEMOBILE => get_string('smartmenusmenuitemdisplayoptionshidetitlemobile', 'theme_boost_union'),
         ];
-
-        return ($option !== null && isset($displayoptions[$option])) ? $displayoptions[$option] : $displayoptions;
     }
 
     /**

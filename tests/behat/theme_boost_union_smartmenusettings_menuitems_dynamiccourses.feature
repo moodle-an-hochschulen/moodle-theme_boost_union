@@ -121,10 +121,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | category_subcats | <subcat>        |
     When I log in as "student1"
     Then "Course 01" "theme_boost_union > Smart menu item" should exist in the "List menu" "theme_boost_union > Main menu smart menu"
+    And "Course 01" "theme_boost_union > Smart menu item" should exist in the "List menu" "theme_boost_union > Menu bar smart menu"
+    And "Course 01" "theme_boost_union > Smart menu item" should exist in the "List menu" "theme_boost_union > User menu smart menu"
+    And "Course 01" "theme_boost_union > Smart menu item" should exist in the "List menu" "theme_boost_union > Bottom bar smart menu"
     And "Course 01a" "theme_boost_union > Smart menu item" <shouldornot> exist in the "List menu" "theme_boost_union > Main menu smart menu"
-    And "Course 01a" "theme_boost_union > Smart menu item" <shouldornot> exist in the "List menu" "theme_boost_union > Menu bar smart menu"
-    And "Course 01a" "theme_boost_union > Smart menu item" <shouldornot> exist in the "List menu" "theme_boost_union > User menu smart menu"
-    And "Course 01a" "theme_boost_union > Smart menu item" <shouldornot> exist in the "List menu" "theme_boost_union > Bottom bar smart menu"
     And "Course 01b" "theme_boost_union > Smart menu item" <shouldornot> exist in the "List menu" "theme_boost_union > Main menu smart menu"
     And "Course 01aa" "theme_boost_union > Smart menu item" <shouldornot> exist in the "List menu" "theme_boost_union > Main menu smart menu"
 
@@ -246,7 +246,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | title            | Dynamic courses     |
       | itemtype         | Dynamic courses     |
       | customfields     | Test field: <value> |
-    When I log in as "<user>"
+    When I log in as "student1"
     Then "Course 07" "theme_boost_union > Smart menu item" <course1> exist in the "List menu" "theme_boost_union > Main menu smart menu"
     And "Course 07" "theme_boost_union > Smart menu item" <course1> exist in the "List menu" "theme_boost_union > Menu bar smart menu"
     And "Course 07" "theme_boost_union > Smart menu item" <course1> exist in the "List menu" "theme_boost_union > User menu smart menu"
@@ -256,9 +256,9 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     And "Course 04" "theme_boost_union > Smart menu item" <course4> exist in the "List menu" "theme_boost_union > Main menu smart menu"
 
     Examples:
-      | value  | user     | course1    | course2    | course3    | course4    |
-      | value1 | student1 | should     | should     | should not | should not |
-      | value2 | student1 | should not | should not | should     | should not |
+      | value  | course1    | course2    | course3    | course4    |
+      | value1 | should     | should     | should not | should not |
+      | value2 | should not | should not | should     | should not |
 
   @javascript
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Sort the course list based on the given setting
