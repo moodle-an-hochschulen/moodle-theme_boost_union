@@ -409,6 +409,7 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | <config>              | <settingvalue> | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
+    # Change to a large window size as the block region width is not applied on small screens when the blocks are wrapped.
     And I change window size to "large"
     And I am on "Course 1" course homepage
     And I turn editing mode on
