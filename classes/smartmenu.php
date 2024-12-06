@@ -594,11 +594,18 @@ class smartmenu {
                 return false;
             }
 
+            // Add marker class to make clear that this is a Boost Union smart menu.
             $this->menu->classes[] = 'boost-union-smartmenu';
+
+            // Add custom CSS class.
+            $this->menu->classes[] = $this->menu->cssclass;
+
+            // Add CSS classes for card menus.
             $this->menu->classes[] = $this->get_cardform(); // Html class for the card form size, Potrait, Square, landscape.
             $this->menu->classes[] = $this->get_cardsize(); // HTML class for the card Size, tiny, small, medium, large.
             $this->menu->classes[] = $this->get_cardwrap(); // HtML class for the card overflow behaviour.
-            $this->menu->classes[] = $this->menu->cssclass;// Custom class selector for menu.
+
+            // Add CSS classes for more behaviour.
             $this->menu->classes[] = ($this->menu->moremenubehavior == self::MOREMENU_OUTSIDE) ? "force-menu-out" : '';
 
             // Card type menus doesn't supports inline menus.
