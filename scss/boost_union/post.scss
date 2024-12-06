@@ -1232,7 +1232,7 @@ body.theme-boost-union-commincourse {
     }
 }
 
-/* And on smaller screens. */
+/* And on really small screens. */
 @include media-breakpoint-down(sm) {
     /* Padding has been added to the center region block, which contains the left and right regions,
     as well as the main content region, to create space between the main content and the window screen. */
