@@ -107,7 +107,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | student1 | C1a    | student |
       | student1 | C1b    | student |
       | student1 | C1aa   | student |
-<<<<<<< HEAD
     When I log in as "admin"
     And I navigate to smart menu "List menu" items
     And I click on ".action-edit" "css_element" in the "Dynamic courses" "table_row"
@@ -120,22 +119,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     And I <shouldornot> see smart menu "List menu" item "Course 01a" in location "Main, Menu, User, Bottom"
     And I <shouldornot> see smart menu "List menu" item "Course 01b" in location "Main, Menu, User, Bottom"
     And I <shouldornot> see smart menu "List menu" item "Course 01aa" in location "Main, Menu, User, Bottom"
-=======
-    And the following "theme_boost_union > smart menu item" exists:
-      | menu             | List menu       |
-      | title            | Dynamic courses |
-      | itemtype         | Dynamic courses |
-      | categories       | CAT1            |
-      | category_subcats | <subcat>        |
-    When I log in as "student1"
-    Then "Course 01" "theme_boost_union > Smart menu item" should exist in the "List menu" "theme_boost_union > Main menu smart menu"
-    And "Course 01" "theme_boost_union > Smart menu item" should exist in the "List menu" "theme_boost_union > Menu bar smart menu"
-    And "Course 01" "theme_boost_union > Smart menu item" should exist in the "List menu" "theme_boost_union > User menu smart menu"
-    And "Course 01" "theme_boost_union > Smart menu item" should exist in the "List menu" "theme_boost_union > Bottom bar smart menu"
-    And "Course 01a" "theme_boost_union > Smart menu item" <shouldornot> exist in the "List menu" "theme_boost_union > Main menu smart menu"
-    And "Course 01b" "theme_boost_union > Smart menu item" <shouldornot> exist in the "List menu" "theme_boost_union > Main menu smart menu"
-    And "Course 01aa" "theme_boost_union > Smart menu item" <shouldornot> exist in the "List menu" "theme_boost_union > Main menu smart menu"
->>>>>>> 1c1bd47 (Review changes)
 
     Examples:
       | subcat | shouldornot |
@@ -242,32 +225,47 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     Given the following "custom field categories" exist:
       | name   | component   | area   | itemid |
       | Others | core_course | course | 0      |
-    And the following "custom fields" exist:
-      | name       | category  | type | shortname |
-      | Test field | Others    | text | testfield |
-    And the following "courses" exist:
-      | fullname  | shortname | customfield_testfield |
-      | Course 07 | C7        | value1                |
-      | Course 08 | C8        | value1                |
-      | Course 09 | C9        | value2                |
-    And the following "theme_boost_union > smart menu item" exists:
-      | menu             | List menu           |
-      | title            | Dynamic courses     |
-      | itemtype         | Dynamic courses     |
-      | customfields     | Test field: <value> |
-    When I log in as "student1"
-    Then "Course 07" "theme_boost_union > Smart menu item" <course1> exist in the "List menu" "theme_boost_union > Main menu smart menu"
-    And "Course 07" "theme_boost_union > Smart menu item" <course1> exist in the "List menu" "theme_boost_union > Menu bar smart menu"
-    And "Course 07" "theme_boost_union > Smart menu item" <course1> exist in the "List menu" "theme_boost_union > User menu smart menu"
-    And "Course 07" "theme_boost_union > Smart menu item" <course1> exist in the "List menu" "theme_boost_union > Bottom bar smart menu"
-    And "Course 08" "theme_boost_union > Smart menu item" <course2> exist in the "List menu" "theme_boost_union > Main menu smart menu"
-    And "Course 09" "theme_boost_union > Smart menu item" <course3> exist in the "List menu" "theme_boost_union > Main menu smart menu"
-    And "Course 04" "theme_boost_union > Smart menu item" <course4> exist in the "List menu" "theme_boost_union > Main menu smart menu"
+    And I log in as "admin"
+    And I navigate to "Courses > Course custom fields" in site administration
+    And I click on "Add a new custom field" "link"
+    And I click on "Short text" "link"
+    And I set the following fields to these values:
+      | Name       | Test field |
+      | Short name | testfield  |
+    And I click on "Save changes" "button" in the "Adding a new Short text" "dialogue"
+    And I follow "Dashboard"
+    And I am on "Course 01" course homepage
+    And I navigate to "Settings" in current page administration
+    And I set the following fields to these values:
+      | Test field | value1 |
+    And I click on "Save and display" "button"
+    And I am on "Course 02" course homepage
+    And I navigate to "Settings" in current page administration
+    And I set the following fields to these values:
+      | Test field | value1 |
+    And I click on "Save and display" "button"
+    And I am on "Course 03" course homepage
+    And I navigate to "Settings" in current page administration
+    And I set the following fields to these values:
+      | Test field | value2 |
+    And I click on "Save and display" "button"
+    When I log in as "admin"
+    And I navigate to smart menu "List menu" items
+    And I click on ".action-edit" "css_element" in the "Dynamic courses" "table_row"
+    And I should see "Test field"
+    And I set the field "Test field" to "<value>"
+    And I press "Save changes"
+    And I log out
+    And I log in as "<user>"
+    Then I <course1> see smart menu "List menu" item "Course 01" in location "Main, Menu, User, Bottom"
+    And I <course2> see smart menu "List menu" item "Course 02" in location "Main, Menu, User, Bottom"
+    And I <course3> see smart menu "List menu" item "Course 03" in location "Main, Menu, User, Bottom"
+    And I <course4> see smart menu "List menu" item "Course 04" in location "Main, Menu, User, Bottom"
 
     Examples:
-      | value  | course1    | course2    | course3    | course4    |
-      | value1 | should     | should     | should not | should not |
-      | value2 | should not | should not | should     | should not |
+      | value  | user     | course1    | course2    | course3    | course4    |
+      | value1 | student1 | should     | should     | should not | should not |
+      | value2 | student1 | should not | should not | should     | should not |
 
   @javascript
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Sort the course list based on the given setting
