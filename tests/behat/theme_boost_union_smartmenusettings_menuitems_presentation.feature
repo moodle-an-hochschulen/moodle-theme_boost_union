@@ -5,8 +5,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   I need to be able to configure the theme Boost Union plugin
 
   Background:
-    Given I log in as "admin"
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname               | shortname | category |
       | Test course1           | C1        | 0        |
       | Test course2           | C2        | 0        |
@@ -14,32 +13,33 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And the following "users" exist:
       | username |
       | user1    |
-    And I create smart menu with the following fields to these values:
-      | Title            | Quick links              |
-      | Menu location(s) | Main, Menu, User, Bottom |
+    And the following "theme_boost_union > smart menu" exists:
+      | title    | Quick links                                      |
+      | location | Main navigation, Menu bar, User menu, Bottom bar |
 
   @javascript
   Scenario Outline: Smartmenus: Menu items: Presentation - Open the smart menu items in different targets
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links       |
+      | title    | Available courses |
+      | itemtype | Dynamic courses   |
+      | category | 0                 |
+      | itemmode | Inline            |
+      | target   | <setting>         |
     When I log in as "admin"
-    And I set "Quick links" smart menu items with the following fields to these values:
-      | Title                            | Available courses |
-      | Menu item type                   | Dynamic courses   |
-      | Dynamic courses: Course category | Category 1        |
-      | Menu item mode                   | Inline            |
-      | Link target                      | <setting>         |
-    And I should see "Available courses" in the "smartmenus_items" "table"
     # Menu items in main navigation
+    Then "Test course1" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     Then I should see smart menu "Quick links" item "Test course1" in location "Main"
     And the "target" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
     # Menu items in user menu.
-    And I should see smart menu "Quick links" item "Test course1" in location "User"
+    Then "Test course1" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > User menu smart menu"
     And the "target" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
     # Menu items in bottom menu.
-    Then I should see smart menu "Quick links" item "Test course1" in location "Bottom"
+    Then "Test course1" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
     And the "target" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
     Then I change the viewport size to "large"
     # Menu items in menubar.
-    And I should see smart menu "Quick links" item "Test course1" in location "Menu"
+    Then "Test course1" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Menu bar smart menu"
     And the "target" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
 
     Examples:
@@ -49,18 +49,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Include the custom css class for a smart menu item
-    When I log in as "admin"
-    And I set "Quick links" smart menu items with the following fields to these values:
-      | Title          | Resources         |
-      | Menu item type | Static            |
-      | Menu item URL  | http://moodle.org |
-    And I navigate to smart menu "Quick links" items
-    And I click on ".action-edit" "css_element" in the "Resources" "table_row"
-    And I expand all fieldsets
-    And I set the field "CSS class" to "static-item-resources"
-    And I click on "Save changes" "button"
-    And I should see "Resources" in the "smartmenus_items" "table"
-    And the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links           |
+      | title    | Resources             |
+      | itemtype | Static                |
+      | url      | http://moodle.org     |
+      | cssclass | static-item-resources |
+    When I am on the "Quick links" "theme_boost_union > Smart menu > Items" page logged in as "admin"
+    Then the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
     And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
     And I change the viewport size to "740x900"
@@ -82,16 +78,22 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
 
   @javascript
   Scenario Outline: Smartmenus: Menu items: Presentation - Display the different fields as smart menu item title
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu         | Quick links       |
+      | title        | Available courses |
+      | itemtype     | Dynamic courses   |
+      | category     | 0                 |
+      | displayfield | <selectnamefield> |
+      | textcount    | <numberofwords>   |
     When I log in as "admin"
-    And I set "Quick links" smart menu items with the following fields to these values:
-      | Title                                     | Available courses |
-      | Menu item type                            | Dynamic courses   |
-      | Dynamic courses: Course category          | Category 1        |
-      | Dynamic courses: Course name presentation | <selectnamefield> |
-      | Dynamic courses: Number of words          | <numberofwords>   |
-    And I should see "Available courses" in the "smartmenus_items" "table"
-    And I should see smart menu "Quick links" item "<showntitle>" in location "Main, Menu, User, Bottom"
-    And I should not see smart menu "Quick links" item "<notshowntitle>" in location "Main, Menu, User, Bottom"
+    Then "<showntitle>" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And "<showntitle>" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Menu bar smart menu"
+    And "<showntitle>" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > User menu smart menu"
+    And "<showntitle>" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
+    And "<notshowntitle>" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And "<notshowntitle>" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Menu bar smart menu"
+    And "<notshowntitle>" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > User menu smart menu"
+    And "<notshowntitle>" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
 
     Examples:
       | selectnamefield   | numberofwords | showntitle             | notshowntitle          |

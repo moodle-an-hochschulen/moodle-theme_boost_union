@@ -592,10 +592,18 @@ class smartmenu {
                 return false;
             }
 
+            // Add marker class to make clear that this is a Boost Union smart menu.
+            $this->menu->classes[] = 'boost-union-smartmenu';
+
+            // Add custom CSS class.
+            $this->menu->classes[] = $this->menu->cssclass;
+
+            // Add CSS classes for card menus.
             $this->menu->classes[] = $this->get_cardform(); // Html class for the card form size, Potrait, Square, landscape.
             $this->menu->classes[] = $this->get_cardsize(); // HTML class for the card Size, tiny, small, medium, large.
             $this->menu->classes[] = $this->get_cardwrap(); // HtML class for the card overflow behaviour.
-            $this->menu->classes[] = $this->menu->cssclass;// Custom class selector for menu.
+
+            // Add CSS classes for more behaviour.
             $this->menu->classes[] = ($this->menu->moremenubehavior == self::MOREMENU_OUTSIDE) ? "force-menu-out" : '';
 
             // Card type menus doesn't supports inline menus.
@@ -883,6 +891,136 @@ class smartmenu {
     public static function get_type($type) {
         $types = self::get_types();
         return $types[$type] ?? false;
+    }
+
+    /**
+     * Return options for the mode setting.
+     *
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function get_mode_options(): array {
+        return [
+            self::MODE_SUBMENU => get_string('smartmenusmodesubmenu', 'theme_boost_union'),
+            self::MODE_INLINE => get_string('smartmenusmodeinline', 'theme_boost_union'),
+        ];
+    }
+
+    /**
+     * Return options for the showdescription setting.
+     *
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function get_showdescription_options(): array {
+        return [
+            self::DESC_NEVER => get_string('smartmenusmenushowdescriptionnever', 'theme_boost_union'),
+            self::DESC_ABOVE => get_string('smartmenusmenushowdescriptionabove', 'theme_boost_union'),
+            self::DESC_BELOW => get_string('smartmenusmenushowdescriptionbelow', 'theme_boost_union'),
+            self::DESC_HELP => get_string('smartmenusmenushowdescriptionhelp', 'theme_boost_union'),
+        ];
+    }
+
+    /**
+     * Return options for the moremenu setting.
+     *
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function get_moremenu_options(): array {
+        return [
+            self::MOREMENU_DONOTCHANGE => get_string('dontchange', 'theme_boost_union'),
+            self::MOREMENU_INTO => get_string('smartmenusmenumoremenubehaviorforceinto', 'theme_boost_union'),
+            self::MOREMENU_OUTSIDE => get_string('smartmenusmenumoremenubehaviorkeepoutside', 'theme_boost_union'),
+        ];
+    }
+
+    /**
+     * Return options for the cardsize setting.
+     *
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function get_cardsize_options(): array {
+        return [
+            self::CARDSIZE_TINY => get_string('smartmenusmenucardsizetiny', 'theme_boost_union').' (50px)',
+            self::CARDSIZE_SMALL => get_string('smartmenusmenucardsizesmall', 'theme_boost_union').' (100px)',
+            self::CARDSIZE_MEDIUM => get_string('smartmenusmenucardsizemedium', 'theme_boost_union').' (150px)',
+            self::CARDSIZE_LARGE => get_string('smartmenusmenucardsizelarge', 'theme_boost_union').' (200px)',
+        ];
+    }
+
+    /**
+     * Return options for the cardform setting.
+     *
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function get_cardform_options(): array {
+        return[
+            self::CARDFORM_SQUARE =>
+                get_string('smartmenusmenucardformsquare', 'theme_boost_union').' (1/1)',
+            self::CARDFORM_PORTRAIT =>
+                get_string('smartmenusmenucardformportrait', 'theme_boost_union').' (2/3)',
+            self::CARDFORM_LANDSCAPE =>
+                get_string('smartmenusmenucardformlandscape', 'theme_boost_union').' (3/2)',
+            self::CARDFORM_FULLWIDTH =>
+                get_string('smartmenusmenucardformfullwidth', 'theme_boost_union'),
+        ];
+    }
+
+    /**
+     * Return options for the cardoverflowbehaviour setting.
+     *
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function get_cardoverflowbehaviour_options(): array {
+        return [
+            self::CARDOVERFLOWBEHAVIOUR_NOWRAP =>
+                get_string('smartmenusmenucardoverflowbehaviornowrap', 'theme_boost_union'),
+            self::CARDOVERFLOWBEHAVIOUR_WRAP =>
+                get_string('smartmenusmenucardoverflowbehaviorwrap', 'theme_boost_union'),
+        ];
+    }
+
+    /**
+     * Return options for the rolecontext setting.
+     *
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function get_rolecontext_options(): array {
+        return [
+            self::ANYCONTEXT => get_string('any'),
+            self::SYSTEMCONTEXT => get_string('coresystem'),
+        ];
+    }
+
+    /**
+     * Return options for the byadmin setting.
+     *
+     * @return array
+     */
+    public static function get_byadmin_options(): array {
+        return [
+            self::BYADMIN_ALL => get_string('smartmenusbyadmin_all', 'theme_boost_union'),
+            self::BYADMIN_ADMINS => get_string('smartmenusbyadmin_admins', 'theme_boost_union'),
+            self::BYADMIN_NONADMINS => get_string('smartmenusbyadmin_nonadmins', 'theme_boost_union'),
+        ];
+    }
+
+    /**
+     * Return options for the operator setting.
+     *
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function get_operator_options(): array {
+        return [
+            self::ANY => get_string('any'),
+            self::ALL => get_string('all'),
+        ];
     }
 
     /**
