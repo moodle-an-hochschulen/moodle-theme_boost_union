@@ -98,10 +98,7 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('url', 'smartmenusmenuitemurl', 'theme_boost_union');
 
         // Add mode as select element.
-        $modeoptions = [
-                smartmenu_item::MODE_INLINE => get_string('smartmenusmodeinline', 'theme_boost_union'),
-                smartmenu_item::MODE_SUBMENU => get_string('smartmenusmodesubmenu', 'theme_boost_union'),
-        ];
+        $modeoptions = smartmenu_item::get_mode_options();
         $mform->addElement('select', 'mode', get_string('smartmenusmenuitemmode', 'theme_boost_union'), $modeoptions);
         $mform->setDefault('mode', smartmenu_item::MODE_INLINE);
         $mform->setType('mode', PARAM_INT);
@@ -138,14 +135,7 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('enrolmentrole', 'smartmenusdynamiccoursesenrolmentrole', 'theme_boost_union');
 
         // Add completion status (for the dynamic courses menu item type) as autocomplete element.
-        $completionstatusoptions = [
-                smartmenu_item::COMPLETION_ENROLLED =>
-                        get_string('smartmenusdynamiccoursescompletionstatusenrolled', 'theme_boost_union'),
-                smartmenu_item::COMPLETION_INPROGRESS =>
-                        get_string('smartmenusdynamiccoursescompletionstatusinprogress', 'theme_boost_union'),
-                smartmenu_item::COMPLETION_COMPLETED =>
-                        get_string('smartmenusdynamiccoursescompletionstatuscompleted', 'theme_boost_union'),
-        ];
+        $completionstatusoptions = smartmenu_item::get_completionstatus_options();
         $completionstatuswidget = $mform->addElement('autocomplete', 'completionstatus',
                 get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
                 get_string('smartmenusdynamiccoursescompletionstatus', 'theme_boost_union'), $completionstatusoptions);
@@ -155,14 +145,7 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('completionstatus', 'smartmenusdynamiccoursescompletionstatus', 'theme_boost_union');
 
         // Add date range (for the dynamic courses menu item type) as autocomplete element.
-        $daterangeoptions = [
-                smartmenu_item::RANGE_PAST =>
-                        get_string('smartmenusdynamiccoursesdaterangepast', 'theme_boost_union'),
-                smartmenu_item::RANGE_PRESENT =>
-                        get_string('smartmenusdynamiccoursesdaterangepresent', 'theme_boost_union'),
-                smartmenu_item::RANGE_FUTURE =>
-                        get_string('smartmenusdynamiccoursesdaterangefuture', 'theme_boost_union'),
-        ];
+        $daterangeoptions = smartmenu_item::get_daterange_options();
         $daterangewidget = $mform->addElement('autocomplete', 'daterange',
                 get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
                 get_string('smartmenusdynamiccoursesdaterange', 'theme_boost_union'), $daterangeoptions);
@@ -196,13 +179,7 @@ class smartmenu_item_edit_form extends \moodleform {
         $PAGE->requires->js_call_amd('theme_boost_union/fontawesome-popover', 'init', ['#id_menuicon', $systemcontextid]);
 
         // Add title presentation and select element.
-        $displayoptions = [
-            smartmenu_item::DISPLAY_SHOWTITLEICON =>
-                    get_string('smartmenusmenuitemdisplayoptionsshowtitleicon', 'theme_boost_union'),
-            smartmenu_item::DISPLAY_HIDETITLE => get_string('smartmenusmenuitemdisplayoptionshidetitle', 'theme_boost_union'),
-            smartmenu_item::DISPLAY_HIDETITLEMOBILE =>
-                    get_string('smartmenusmenuitemdisplayoptionshidetitlemobile', 'theme_boost_union'),
-        ];
+        $displayoptions = smartmenu_item::get_display_options();
         $mform->addElement('select', 'display', get_string('smartmenusmenuitemdisplayoptions', 'theme_boost_union'),
                 $displayoptions);
         $mform->setDefault('display', smartmenu_item::DISPLAY_SHOWTITLEICON);
@@ -215,10 +192,7 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('tooltip', 'smartmenusmenuitemtooltip', 'theme_boost_union');
 
         // Add link target as select element.
-        $targetoptions = [
-                smartmenu_item::TARGET_SAME => get_string('smartmenusmenuitemlinktargetsamewindow', 'theme_boost_union'),
-                smartmenu_item::TARGET_NEW => get_string('smartmenusmenuitemlinktargetnewtab', 'theme_boost_union'),
-        ];
+        $targetoptions = smartmenu_item::get_target_options();
         $mform->addElement('select', 'target', get_string('smartmenusmenuitemlinktarget', 'theme_boost_union'),
                 $targetoptions);
         $mform->setDefault('target', smartmenu_item::TARGET_SAME);
@@ -256,24 +230,7 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('cssclass', 'smartmenusmenuitemcssclass', 'theme_boost_union');
 
         // Add course list ordering (for the dynamic courses menu item type) as select element.
-        $listsortoptions = [
-                smartmenu_item::LISTSORT_FULLNAME_ASC =>
-                        get_string('smartmenusmenuitemlistsortfullnameasc', 'theme_boost_union'),
-                smartmenu_item::LISTSORT_FULLNAME_DESC =>
-                        get_string('smartmenusmenuitemlistsortfullnamedesc', 'theme_boost_union'),
-                smartmenu_item::LISTSORT_SHORTNAME_ASC =>
-                        get_string('smartmenusmenuitemlistsortshortnameasc', 'theme_boost_union'),
-                smartmenu_item::LISTSORT_SHORTNAME_DESC =>
-                        get_string('smartmenusmenuitemlistsortshortnamedesc', 'theme_boost_union'),
-                smartmenu_item::LISTSORT_COURSEID_ASC =>
-                        get_string('smartmenusmenuitemlistsortcourseidasc', 'theme_boost_union'),
-                smartmenu_item::LISTSORT_COURSEID_DESC =>
-                        get_string('smartmenusmenuitemlistsortcourseiddesc', 'theme_boost_union'),
-                smartmenu_item::LISTSORT_COURSEIDNUMBER_ASC =>
-                        get_string('smartmenusmenuitemlistsortcourseidnumberasc', 'theme_boost_union'),
-                smartmenu_item::LISTSORT_COURSEIDNUMBER_DESC =>
-                        get_string('smartmenusmenuitemlistsortcourseidnumberdesc', 'theme_boost_union'),
-        ];
+        $listsortoptions = smartmenu_item::get_listsort_options();
         $mform->addElement('select', 'listsort',
                 get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
                 get_string('smartmenusmenuitemlistsort', 'theme_boost_union'), $listsortoptions);
@@ -283,10 +240,7 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('listsort', 'smartmenusmenuitemlistsort', 'theme_boost_union');
 
         // Add course name presentation (for the dynamic courses menu item type) as select element.
-        $displayfieldoptions = [
-                smartmenu_item::FIELD_FULLNAME => get_string('smartmenusmenuitemdisplayfieldcoursefullname', 'theme_boost_union'),
-                smartmenu_item::FIELD_SHORTNAME => get_string('smartmenusmenuitemdisplayfieldcourseshortname', 'theme_boost_union'),
-        ];
+        $displayfieldoptions = smartmenu_item::get_displayfield_options();
         $mform->addElement('select', 'displayfield',
                 get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
                 get_string('smartmenusmenuitemdisplayfield', 'theme_boost_union'), $displayfieldoptions);
@@ -318,14 +272,7 @@ class smartmenu_item_edit_form extends \moodleform {
             $mform->addHelpButton('image', 'smartmenusmenuitemcardimage', 'theme_boost_union');
 
             // Add card text position as select element.
-            $textpositionoptions = [
-                    smartmenu_item::POSITION_BELOW =>
-                            get_string('smartmenusmenuitemtextpositionbelowimage', 'theme_boost_union'),
-                    smartmenu_item::POSITION_OVERLAYTOP =>
-                            get_string('smartmenusmenuitemtextpositionoverlaytop', 'theme_boost_union'),
-                    smartmenu_item::POSITION_OVERLAYBOTTOM =>
-                            get_string('smartmenusmenuitemtextpositionoverlaybottom', 'theme_boost_union'),
-            ];
+            $textpositionoptions = smartmenu_item::get_textposition_options();
             $mform->addElement('select', 'textposition',
                     get_string('smartmenusmenuitemtextposition', 'theme_boost_union'), $textpositionoptions);
             $mform->setDefault('textposition', smartmenu_item::POSITION_BELOW);
@@ -368,10 +315,7 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('roles', 'smartmenusbyrole', 'theme_boost_union');
 
         // Add context as select element.
-        $rolecontext = [
-                smartmenu::ANYCONTEXT => get_string('any'),
-                smartmenu::SYSTEMCONTEXT => get_string('coresystem'),
-        ];
+        $rolecontext = smartmenu::get_rolecontext_options();
         $mform->addElement('select', 'rolecontext', get_string('smartmenusrolecontext', 'theme_boost_union'), $rolecontext);
         $mform->setDefault('rolecontext', smartmenu::ANYCONTEXT);
         $mform->setType('rolecontext', PARAM_INT);
@@ -385,12 +329,8 @@ class smartmenu_item_edit_form extends \moodleform {
         }
 
         // Add restriction as select element.
-        $rolecontext = [
-            smartmenu::BYADMIN_ALL => get_string('smartmenusbyadmin_all', 'theme_boost_union'),
-            smartmenu::BYADMIN_ADMINS => get_string('smartmenusbyadmin_admins', 'theme_boost_union'),
-            smartmenu::BYADMIN_NONADMINS => get_string('smartmenusbyadmin_nonadmins', 'theme_boost_union'),
-        ];
-        $mform->addElement('select', 'byadmin', get_string('smartmenusbyadmin', 'theme_boost_union'), $rolecontext);
+        $byadminoptions = smartmenu::get_byadmin_options();
+        $mform->addElement('select', 'byadmin', get_string('smartmenusbyadmin', 'theme_boost_union'), $byadminoptions);
         $mform->setDefault('byadmin', smartmenu::BYADMIN_ALL);
         $mform->setType('byadmin', PARAM_INT);
         $mform->addHelpButton('byadmin', 'smartmenusbyadmin', 'theme_boost_union');
@@ -418,10 +358,7 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('cohorts', 'smartmenusbycohort', 'theme_boost_union');
 
         // Add operator as select element.
-        $operatoroptions = [
-                smartmenu::ANY => get_string('any'),
-                smartmenu::ALL => get_string('all'),
-        ];
+        $operatoroptions = smartmenu::get_operator_options();
         $mform->addElement('select', 'operator', get_string('smartmenusoperator', 'theme_boost_union'), $operatoroptions);
         $mform->setDefault('operator', smartmenu::ANY);
         $mform->setType('operator', PARAM_INT);
