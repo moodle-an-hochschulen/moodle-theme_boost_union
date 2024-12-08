@@ -4,6 +4,12 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-12-06 - Tests: Add several Behat optimisations to bring down the test suite run time, resolves #765.
+* 2024-12-06 - Upstream change: Adopt changes from MDL-83759 ('System notification navbar popover is misplaced in Moodle 4.4 and 4.5')
+* 2024-12-06 - Upstream change: Adopt changes from MDL-75610 ('Quiz activity name no longer being displayed in quiz landing page when using Safe Exam Browser'), resolves #766.
+
 ### v4.5-r3
 
 * 2024-11-19 - Bugfix: The starred courses popover showed a JavaScript error in the browser JS console, resolves #759.

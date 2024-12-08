@@ -1,4 +1,4 @@
-@theme @theme_boost_union @theme_boost_union_goodiesfordesigners
+@theme @theme_boost_union @theme_boost_union_goodiesfordesigners @theme_boost_union_footnote
 Feature: Using the goodies for designers in the theme_boost_union plugin
   In order to use the features
   As designer

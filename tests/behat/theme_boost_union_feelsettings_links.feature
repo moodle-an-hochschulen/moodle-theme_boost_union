@@ -1,4 +1,4 @@
-@theme @theme_boost_union @theme_boost_union_feelsettings @theme_boost_union_feelsettings_links
+@theme @theme_boost_union @theme_boost_union_feelsettings @theme_boost_union_feelsettings_links @theme_boost_union_footnote
 Feature: Configuring the theme_boost_union plugin for the "Links" tab on the "Feel" page
   In order to use the features
   As admin

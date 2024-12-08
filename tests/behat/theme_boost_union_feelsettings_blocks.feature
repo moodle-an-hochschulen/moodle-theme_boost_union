@@ -20,10 +20,8 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
 
-  @javascript
   Scenario Outline: Setting: Enable additional block regions (on a course page and the frontpage where all regions are offered)
-    When I log in as "admin"
-    And I am on site homepage
+    When I am on the "Acceptance test site" "Course" page logged in as "admin"
     And I turn editing mode on
     Then "#theme-block-region-<region>" "css_element" should not exist
     And the following config values are set as admin:
@@ -31,8 +29,7 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | blockregionsforfrontpage | <settingvalue> | theme_boost_union |
     And I reload the page
     Then "#theme-block-region-<region>" "css_element" <should> exist
-    And I am on "Course 1" course homepage
-    And I turn editing mode on
+    And I am on "Course 1" course homepage with editing mode on
     Then "#theme-block-region-<region>" "css_element" should not exist
     And the following config values are set as admin:
       | config                | value          | plugin            |
@@ -57,10 +54,8 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | outside-top      | outside-bottom                                                                                                                                                                  | should not |
       | outside-top      | footer-left,footer-right                                                                                                                                                        | should not |
 
-  @javascript
   Scenario Outline: Setting: Enable additional block regions (on the Dashboard page where all but the content-* regions are offered)
-    When I log in as "admin"
-    And I follow "Dashboard"
+    When I am on the "Homepage" page logged in as "admin"
     And I turn editing mode on
     Then "#theme-block-region-<region>" "css_element" should not exist
     And the following config values are set as admin:
@@ -86,7 +81,6 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | outside-top      | outside-bottom                                                                                                                                      | should not |
       | outside-top      | footer-left,footer-right                                                                                                                            | should not |
 
-  @javascript
   Scenario Outline: Setting: Enable additional block regions (on the admin overview page where not all regions are offered)
     When I log in as "admin"
     And I follow "Site administration"
@@ -115,30 +109,18 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | outside-top      | outside-bottom                                                                                                    | should not |
       | outside-top      | footer-left,footer-right                                                                                          | should not |
 
-  @javascript
   Scenario Outline: Setting: Use additional block regions (on a course page and the frontpage where all regions are offered)
     Given the following config values are set as admin:
       | config                   | value          | plugin            |
       | blockregionsforfrontpage | <settingvalue> | theme_boost_union |
       | blockregionsforcourse    | <settingvalue> | theme_boost_union |
-    When I log in as "admin"
-    And I am on site homepage
-    And I turn editing mode on
-    And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
-    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
-    And I should see "Online users" in the ".modal-body" "css_element"
-    And I click on "Online users" "link" in the ".modal-body" "css_element"
-    And I am on site homepage
-    And I turn editing mode off
+    And the following "blocks" exist:
+      | blockname      | contextlevel | reference            | pagetypepattern | defaultregion |
+      | online_users   | Course       | Acceptance test site | site-index      | <region>      |
+      | calendar_month | Course       | C1                   | course-view-*   | <region>      |
+    When I am on the "Acceptance test site" "Course" page logged in as "admin"
     Then I should see "Online users" in the "#theme-block-region-<region>" "css_element"
-    And I am on "Course 1" course homepage
-    And I turn editing mode on
-    And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
-    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
-    And I should see "Calendar" in the ".modal-body" "css_element"
-    And I click on "Calendar" "link" in the ".modal-body" "css_element"
-    And I am on "Course 1" course homepage
-    And I turn editing mode off
+    When I am on "Course 1" course homepage
     Then I should see "Calendar" in the "#theme-block-region-<region>" "css_element"
 
     Examples:
@@ -154,20 +136,14 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | content-lower  | content-lower  |
       | header         | header         |
 
-  @javascript
   Scenario Outline: Setting: Use additional block regions (on the Dashboard page where all but the content-* regions are offered)
     Given the following config values are set as admin:
       | config                     | value          | plugin            |
       | blockregionsformydashboard | <settingvalue> | theme_boost_union |
-    When I log in as "admin"
-    And I follow "Dashboard"
-    And I turn editing mode on
-    And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
-    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
-    And I should see "Online users" in the ".modal-body" "css_element"
-    And I click on "Online users" "link" in the ".modal-body" "css_element"
-    And I follow "Dashboard"
-    And I turn editing mode off
+    And the following "blocks" exist:
+      | blockname      | contextlevel | reference | pagetypepattern | defaultregion |
+      | online_users   | System       | 1         | my-index        | <region>      |
+    When I am on the "Homepage" page logged in as "admin"
     Then I should see "Online users" in the "#theme-block-region-<region>" "css_element"
 
     Examples:
@@ -181,20 +157,15 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | footer-center  | footer-center  |
       | header         | header         |
 
-  @javascript
   Scenario Outline: Setting: Use additional block regions (on the admin overview page where not all regions are offered)
     Given the following config values are set as admin:
       | config               | value          | plugin            |
       | blockregionsforadmin | <settingvalue> | theme_boost_union |
+    And the following "blocks" exist:
+      | blockname      | contextlevel | reference | pagetypepattern | defaultregion |
+      | online_users   | System       | 1         | admin-search    | <region>      |
     When I log in as "admin"
     And I follow "Site administration"
-    And I turn editing mode on
-    And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
-    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
-    And I should see "Online users" in the ".modal-body" "css_element"
-    And I click on "Online users" "link" in the ".modal-body" "css_element"
-    And I follow "Site administration"
-    And I turn editing mode off
     Then I should see "Online users" in the "#theme-block-region-<region>" "css_element"
 
     Examples:
@@ -207,8 +178,7 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
 
   @javascript
   Scenario Outline: Setting: Enable and use the off-canvas block regions (Compared to the other regions, these regions are slightly different and thus they are not covered in the Scenario outlines above).
-    When I log in as "admin"
-    And I am on site homepage
+    When I am on the "Acceptance test site" "Course" page logged in as "admin"
     Then "#theme_boost_union-offcanvas-btn" "css_element" should not exist
     And "#theme_boost_union-drawers-offcanvas" "css_element" should not exist
     And "#theme-block-region-offcanvas-editing" "css_element" should not be visible
@@ -239,9 +209,9 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     And "#theme-block-region-<region>" "css_element" should exist
     And "#theme-block-region-<region>" "css_element" should be visible
     And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
-    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
-    And I should see "Online users" in the ".modal-body" "css_element"
-    And I click on "Online users" "link" in the ".modal-body" "css_element"
+    And the following "blocks" exist:
+      | blockname      | contextlevel | reference            | pagetypepattern | defaultregion |
+      | online_users   | Course       | Acceptance test site | site-index      | <region>      |
     And I am on site homepage
     And I turn editing mode off
     Then "#theme_boost_union-offcanvas-btn" "css_element" should exist
@@ -263,20 +233,14 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | offcanvas-center | offcanvas-center                                                                                                                             |
       | offcanvas-left   | outside-top,outside-left,outside-right,outside-bottom,footer-left,footer-right,footer-center,offcanvas-left,offcanvas-center,offcanvas-right |
 
-  @javascript
   Scenario Outline: Setting: Set capabilities to control the editability of additional block regions (for all regions except offcanvas regions)
     Given the following config values are set as admin:
       | config                | value    | plugin            |
       | blockregionsforcourse | <region> | theme_boost_union |
-    When I log in as "admin"
-    And I am on "Course 1" course homepage
-    And I turn editing mode on
-    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
-    And I should see "Online users" in the ".modal-body" "css_element"
-    And I click on "Online users" "link" in the ".modal-body" "css_element"
-    And I log out
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage
+    And the following "blocks" exist:
+      | blockname      | contextlevel | reference | pagetypepattern | defaultregion |
+      | online_users   | Course       | C1        | course-view-*   | <region>      |
+    When I am on the "Course 1" "Course" page logged in as "teacher1"
     And I turn editing mode on
     Then "#theme-block-region-<region>" "css_element" should exist
     And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
@@ -305,16 +269,10 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     Given the following config values are set as admin:
       | config                | value    | plugin            |
       | blockregionsforcourse | <region> | theme_boost_union |
-    When I log in as "admin"
-    And I am on "Course 1" course homepage
-    And I turn editing mode on
-    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
-    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
-    And I should see "Online users" in the ".modal-body" "css_element"
-    And I click on "Online users" "link" in the ".modal-body" "css_element"
-    And I log out
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage
+    And the following "blocks" exist:
+      | blockname      | contextlevel | reference | pagetypepattern | defaultregion |
+      | online_users   | Course       | C1        | course-view-*   | <region>      |
+    When I am on the "Course 1" "Course" page logged in as "teacher1"
     And I turn editing mode on
     And I click on "#theme_boost_union-offcanvas-btn" "css_element"
     Then "#theme-block-region-<region>" "css_element" should exist
@@ -333,20 +291,14 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | offcanvas-center | editregionoffcanvascenter |
       | offcanvas-right  | editregionoffcanvasright  |
 
-  @javascript
   Scenario Outline: Setting: Set capabilities to control the visibility of additional block regions (for all regions except offcanvas regions)
     Given the following config values are set as admin:
       | config                | value    | plugin            |
       | blockregionsforcourse | <region> | theme_boost_union |
-    When I log in as "admin"
-    And I am on "Course 1" course homepage
-    And I turn editing mode on
-    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
-    And I should see "Online users" in the ".modal-body" "css_element"
-    And I click on "Online users" "link" in the ".modal-body" "css_element"
-    And I log out
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage
+    And the following "blocks" exist:
+      | blockname      | contextlevel | reference | pagetypepattern | defaultregion |
+      | online_users   | Course       | C1        | course-view-*   | <region>      |
+    When I am on the "Course 1" "Course" page logged in as "teacher1"
     Then "#theme-block-region-<region>" "css_element" should exist
     And I should see "Online users" in the "#theme-block-region-<region>" "css_element"
     And the following "permission overrides" exist:
@@ -374,16 +326,10 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     Given the following config values are set as admin:
       | config                | value    | plugin            |
       | blockregionsforcourse | <region> | theme_boost_union |
-    When I log in as "admin"
-    And I am on "Course 1" course homepage
-    And I turn editing mode on
-    And I click on "#theme_boost_union-offcanvas-btn" "css_element"
-    And I click on "Add a block" "link" in the "#theme-block-region-<region>" "css_element"
-    And I should see "Online users" in the ".modal-body" "css_element"
-    And I click on "Online users" "link" in the ".modal-body" "css_element"
-    And I log out
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage
+    And the following "blocks" exist:
+      | blockname      | contextlevel | reference | pagetypepattern | defaultregion |
+      | online_users   | Course       | C1        | course-view-*   | <region>      |
+    When I am on the "Course 1" "Course" page logged in as "teacher1"
     And I click on "#theme_boost_union-offcanvas-btn" "css_element"
     Then "#theme-block-region-<region>" "css_element" should exist
     And I should see "Online users" in the "#theme-block-region-<region>" "css_element"
@@ -408,8 +354,7 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | blockregionsforcourse | <region>       | theme_boost_union |
       | <config>              | <settingvalue> | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
-    When I log in as "admin"
-    And I am on "Course 1" course homepage
+    When I am on the "Course 1" "Course" page logged in as "admin"
     And I turn editing mode on
     And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
     Then DOM element "#theme-block-region-<region>" should have computed style "width" "<settingvalue>"
@@ -426,8 +371,7 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | config                | value          | plugin            |
       | blockregionsforcourse | <region>       | theme_boost_union |
       | <config>              | <settingvalue> | theme_boost_union |
-    When I log in as "admin"
-    And I am on "Course 1" course homepage
+    When I am on the "Course 1" "Course" page logged in as "admin"
     And I turn editing mode on
     And I should see "Add a block" in the "#theme-block-region-<region>" "css_element"
     Then the "class" attribute of "#theme-block-region-<region>" "css_element" should contain "theme-block-region-outside-<settingvalue>"
@@ -446,8 +390,7 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | config                | value          | plugin            |
       | blockregionsforcourse | footer-left    | theme_boost_union |
       | <config>              | <settingvalue> | theme_boost_union |
-    When I log in as "admin"
-    And I am on "Course 1" course homepage
+    When I am on the "Course 1" "Course" page logged in as "admin"
     And I turn editing mode on
     And I should see "Add a block" in the "#theme-block-region-footer-left" "css_element"
     Then the "class" attribute of "#theme-block-region-footer" "css_element" should contain "theme-block-region-footer-<settingvalue>"
@@ -462,8 +405,7 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     Given the following config values are set as admin:
       | config                  | value          | plugin            |
       | outsideregionsplacement | <settingvalue> | theme_boost_union |
-    When I log in as "admin"
-    And I am on site homepage
+    When I am on the "Acceptance test site" "Course" page logged in as "admin"
     And I turn editing mode on
     Then the "class" attribute of ".main-inner-wrapper" "css_element" should contain "<classcontain>"
     And the "class" attribute of ".main-inner-wrapper" "css_element" should not contain "<classnotcontain>"
@@ -473,13 +415,11 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | nextmaincontent | main-inner-outside-nextmaincontent | main-inner-outside-nearwindowedges |
       | nearwindowedges | main-inner-outside-nearwindowedges | main-inner-outside-nextmaincontent |
 
-  @javascript
   Scenario: Verify orders of all block regions
     Given the following config values are set as admin:
       | config                   | value                                                                                                                                                                           | plugin            |
       | blockregionsforfrontpage | outside-top,outside-left,outside-right,outside-bottom,footer-left,footer-right,footer-center,offcanvas-left,offcanvas-right,offcanvas-center,content-upper,content-lower,header | theme_boost_union |
-    When I log in as "admin"
-    And I am on site homepage
+    When I am on the "Acceptance test site" "Course" page logged in as "admin"
     And I turn editing mode on
     Then "#theme-block-region-offcanvas-editing" "css_element" should appear before "#theme-block-region-outside-top" "css_element"
     And "#theme-block-region-outside-top" "css_element" should appear before "#theme-block-region-header" "css_element"
@@ -505,18 +445,10 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     Given the following config values are set as admin:
       | config                                       | value     | plugin            |
       | showsitehomerighthandblockdraweronfirstlogin | <setting> | theme_boost_union |
-    And I log in as "admin"
-    And I am on site homepage
-    And I turn editing mode on
-    And I add the "Text" block
-    And I configure the "(new text block)" block
-    And I set the following fields to these values:
-      | Text block title | Text on all pages            |
-      | Content          | This is visible on all pages |
-    And I press "Save changes"
-    And I log out
-    When I log in as "student1"
-    And I am on site homepage
+    And the following "blocks" exist:
+      | blockname    | contextlevel | reference            | pagetypepattern | defaultregion |
+      | online_users | Course       | Acceptance test site | site-index      | side-pre      |
+    When I am on the "Acceptance test site" "Course" page logged in as "student1"
     Then the "class" attribute of ".drawer-right" "css_element" <shouldcontain> "show"
 
     Examples:
@@ -528,16 +460,9 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     Given the following config values are set as admin:
       | config                                  | value     | plugin            |
       | showsitehomerighthandblockdraweronvisit | <setting> | theme_boost_union |
-    And I log in as "admin"
-    And I am on site homepage
-    And I turn editing mode on
-    And I add the "Text" block
-    And I configure the "(new text block)" block
-    And I set the following fields to these values:
-      | Text block title | Text on all pages            |
-      | Content          | This is visible on all pages |
-    And I press "Save changes"
-    And I log out
+    And the following "blocks" exist:
+      | blockname    | contextlevel | reference            | pagetypepattern | defaultregion |
+      | online_users | Course       | Acceptance test site | site-index      | side-pre      |
     When I am on site homepage
     Then the "class" attribute of ".drawer-right" "css_element" <shouldcontain> "show"
 
@@ -550,16 +475,9 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     Given the following config values are set as admin:
       | config                                       | value     | plugin            |
       | showsitehomerighthandblockdraweronguestlogin | <setting> | theme_boost_union |
-    And I log in as "admin"
-    And I am on site homepage
-    And I turn editing mode on
-    And I add the "Text" block
-    And I configure the "(new text block)" block
-    And I set the following fields to these values:
-      | Text block title | Text on all pages            |
-      | Content          | This is visible on all pages |
-    And I press "Save changes"
-    And I log out
+    And the following "blocks" exist:
+      | blockname    | contextlevel | reference            | pagetypepattern | defaultregion |
+      | online_users | Course       | Acceptance test site | site-index      | side-pre      |
     When I log in as "guest"
     And I am on site homepage
     Then the "class" attribute of ".drawer-right" "css_element" <shouldcontain> "show"

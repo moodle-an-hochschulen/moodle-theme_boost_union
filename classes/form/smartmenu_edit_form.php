@@ -80,10 +80,7 @@ class smartmenu_edit_form extends \moodleform {
         $mform->addRule('location', get_string('required'), 'required');
 
         // Add mode as select element.
-        $modeoptions = [
-                smartmenu::MODE_SUBMENU => get_string('smartmenusmodesubmenu', 'theme_boost_union'),
-                smartmenu::MODE_INLINE => get_string('smartmenusmodeinline', 'theme_boost_union'),
-        ];
+        $modeoptions = smartmenu::get_mode_options();
         $mform->addElement('select', 'mode', get_string('smartmenusmenumode', 'theme_boost_union'), $modeoptions);
         $mform->setDefault('mode', smartmenu::MODE_SUBMENU);
         $mform->setType('mode', PARAM_INT);
@@ -102,12 +99,7 @@ class smartmenu_edit_form extends \moodleform {
         $mform->addHelpButton('type', 'smartmenusmenutype', 'theme_boost_union');
 
         // Add show description as select element.
-        $showdescriptionoptions = [
-                smartmenu::DESC_NEVER => get_string('smartmenusmenushowdescriptionnever', 'theme_boost_union'),
-                smartmenu::DESC_ABOVE => get_string('smartmenusmenushowdescriptionabove', 'theme_boost_union'),
-                smartmenu::DESC_BELOW => get_string('smartmenusmenushowdescriptionbelow', 'theme_boost_union'),
-                smartmenu::DESC_HELP => get_string('smartmenusmenushowdescriptionhelp', 'theme_boost_union'),
-        ];
+        $showdescriptionoptions = smartmenu::get_showdescription_options();
         $mform->addElement('select', 'showdesc', get_string('smartmenusmenushowdescription', 'theme_boost_union'),
                 $showdescriptionoptions);
         $mform->setDefault('showdesc', smartmenu::DESC_NEVER);
@@ -115,11 +107,7 @@ class smartmenu_edit_form extends \moodleform {
         $mform->addHelpButton('showdesc', 'smartmenusmenushowdescription', 'theme_boost_union');
 
         // Add more menu behavior as select element.
-        $moremenuoptions = [
-                smartmenu::MOREMENU_DONOTCHANGE => get_string('dontchange', 'theme_boost_union'),
-                smartmenu::MOREMENU_INTO => get_string('smartmenusmenumoremenubehaviorforceinto', 'theme_boost_union'),
-                smartmenu::MOREMENU_OUTSIDE => get_string('smartmenusmenumoremenubehaviorkeepoutside', 'theme_boost_union'),
-        ];
+        $moremenuoptions = smartmenu::get_moremenu_options();
         $mform->addElement('select', 'moremenubehavior', get_string('smartmenusmenumoremenubehavior', 'theme_boost_union'),
                 $moremenuoptions);
         $mform->setDefault('moremenubehavior', smartmenu::MOREMENU_DONOTCHANGE);
@@ -132,12 +120,7 @@ class smartmenu_edit_form extends \moodleform {
         $mform->setType('cssclass', PARAM_TEXT);
 
         // Add card size as select element.
-        $cardsizeoptions = [
-                smartmenu::CARDSIZE_TINY => get_string('smartmenusmenucardsizetiny', 'theme_boost_union').' (50px)',
-                smartmenu::CARDSIZE_SMALL => get_string('smartmenusmenucardsizesmall', 'theme_boost_union').' (100px)',
-                smartmenu::CARDSIZE_MEDIUM => get_string('smartmenusmenucardsizemedium', 'theme_boost_union').' (150px)',
-                smartmenu::CARDSIZE_LARGE => get_string('smartmenusmenucardsizelarge', 'theme_boost_union').' (200px)',
-        ];
+        $cardsizeoptions = smartmenu::get_cardsize_options();
         $mform->addElement('select', 'cardsize', get_string('smartmenusmenucardsize', 'theme_boost_union'), $cardsizeoptions);
         $mform->setDefault('cardsize', smartmenu::CARDSIZE_TINY);
         $mform->setType('cardsize', PARAM_INT);
@@ -145,16 +128,7 @@ class smartmenu_edit_form extends \moodleform {
         $mform->addHelpButton('cardsize', 'smartmenusmenucardsize', 'theme_boost_union');
 
         // Add card form as select element.
-        $cardformoptions = [
-                smartmenu::CARDFORM_SQUARE =>
-                        get_string('smartmenusmenucardformsquare', 'theme_boost_union').' (1/1)',
-                smartmenu::CARDFORM_PORTRAIT =>
-                        get_string('smartmenusmenucardformportrait', 'theme_boost_union').' (2/3)',
-                smartmenu::CARDFORM_LANDSCAPE =>
-                        get_string('smartmenusmenucardformlandscape', 'theme_boost_union').' (3/2)',
-                smartmenu::CARDFORM_FULLWIDTH =>
-                        get_string('smartmenusmenucardformfullwidth', 'theme_boost_union'),
-        ];
+        $cardformoptions = smartmenu::get_cardform_options();
         $mform->addElement('select', 'cardform',
                 get_string('smartmenusmenucardform', 'theme_boost_union'), $cardformoptions);
         $mform->setDefault('cardform', smartmenu::CARDFORM_SQUARE);
@@ -163,12 +137,7 @@ class smartmenu_edit_form extends \moodleform {
         $mform->addHelpButton('cardform', 'smartmenusmenucardform', 'theme_boost_union');
 
         // Add card overflow behaviour as select element.
-        $cardoverflowoptions = [
-                smartmenu::CARDOVERFLOWBEHAVIOUR_NOWRAP =>
-                        get_string('smartmenusmenucardoverflowbehaviornowrap', 'theme_boost_union'),
-                smartmenu::CARDOVERFLOWBEHAVIOUR_WRAP =>
-                        get_string('smartmenusmenucardoverflowbehaviorwrap', 'theme_boost_union'),
-        ];
+        $cardoverflowoptions = smartmenu::get_cardoverflowbehaviour_options();
         $mform->addElement('select', 'cardoverflowbehavior',
                 get_string('smartmenusmenucardoverflowbehavior', 'theme_boost_union'), $cardoverflowoptions);
         $mform->setDefault('cardoverflowbehaviour', smartmenu::CARDOVERFLOWBEHAVIOUR_NOWRAP);
@@ -199,10 +168,7 @@ class smartmenu_edit_form extends \moodleform {
         $mform->addHelpButton('roles', 'smartmenusbyrole', 'theme_boost_union');
 
         // Add context as select element.
-        $rolecontext = [
-                smartmenu::ANYCONTEXT => get_string('any'),
-                smartmenu::SYSTEMCONTEXT => get_string('coresystem'),
-        ];
+        $rolecontext = smartmenu::get_rolecontext_options();
         $mform->addElement('select', 'rolecontext', get_string('smartmenusrolecontext', 'theme_boost_union'), $rolecontext);
         $mform->setDefault('rolecontext', smartmenu::ANYCONTEXT);
         $mform->setType('rolecontext', PARAM_INT);
@@ -216,12 +182,8 @@ class smartmenu_edit_form extends \moodleform {
         }
 
         // Add restriction as select element.
-        $rolecontext = [
-            smartmenu::BYADMIN_ALL => get_string('smartmenusbyadmin_all', 'theme_boost_union'),
-            smartmenu::BYADMIN_ADMINS => get_string('smartmenusbyadmin_admins', 'theme_boost_union'),
-            smartmenu::BYADMIN_NONADMINS => get_string('smartmenusbyadmin_nonadmins', 'theme_boost_union'),
-        ];
-        $mform->addElement('select', 'byadmin', get_string('smartmenusbyadmin', 'theme_boost_union'), $rolecontext);
+        $byadminoptions = smartmenu::get_byadmin_options();
+        $mform->addElement('select', 'byadmin', get_string('smartmenusbyadmin', 'theme_boost_union'), $byadminoptions);
         $mform->setDefault('byadmin', smartmenu::BYADMIN_ALL);
         $mform->setType('byadmin', PARAM_INT);
         $mform->addHelpButton('byadmin', 'smartmenusbyadmin', 'theme_boost_union');
@@ -249,10 +211,7 @@ class smartmenu_edit_form extends \moodleform {
         $mform->addHelpButton('cohorts', 'smartmenusbycohort', 'theme_boost_union');
 
         // Add operator as select element.
-        $operatoroptions = [
-                smartmenu::ANY => get_string('any'),
-                smartmenu::ALL => get_string('all'),
-        ];
+        $operatoroptions = smartmenu::get_operator_options();
         $mform->addElement('select', 'operator', get_string('smartmenusoperator', 'theme_boost_union'), $operatoroptions);
         $mform->setDefault('operator', smartmenu::ANY);
         $mform->setType('operator', PARAM_INT);
