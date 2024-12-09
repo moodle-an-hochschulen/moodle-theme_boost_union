@@ -45,16 +45,24 @@ class behat_theme_boost_union extends behat_base {
         $parts = explode('>', strtolower($page));
         $section = trim($parts[0]);
         if (count($parts) < 2) {
-            return match ($section) {
-                'settings' => new moodle_url('/theme/boost_union/settings_overview.php'),
-                'look' => new moodle_url('/admin/settings.php?section=theme_boost_union_look'),
-                'feel' => new moodle_url('/admin/settings.php?section=theme_boost_union_feel'),
-                'content' => new moodle_url('/admin/settings.php?section=theme_boost_union_content'),
-                'functionality' => new moodle_url('/admin/settings.php?section=theme_boost_union_functionality'),
-                'flavours' => new moodle_url('/theme/boost_union/flavours/overview.php'),
-                'smart menus' => new moodle_url('/theme/boost_union/smartmenus/menus.php'),
-                default => throw new Exception('Unrecognised theme_boost_union page "' . $page . '."')
-            };
+            switch ($section) {
+                case 'settings':
+                    return new moodle_url('/theme/boost_union/settings_overview.php');
+                case 'look':
+                    return new moodle_url('/admin/settings.php?section=theme_boost_union_look');
+                case 'feel':
+                    return new moodle_url('/admin/settings.php?section=theme_boost_union_feel');
+                case 'content':
+                    return new moodle_url('/admin/settings.php?section=theme_boost_union_content');
+                case 'functionality':
+                    return new moodle_url('/admin/settings.php?section=theme_boost_union_functionality');
+                case 'flavours':
+                    return new moodle_url('/theme/boost_union/flavours/overview.php');
+                case 'smart menus':
+                    return new moodle_url('/theme/boost_union/smartmenus/menus.php');
+                default:
+                    throw new Exception('Unrecognised theme_boost_union page "' . $page . '."');
+            }
         }
         $suffix = trim($parts[1]);
         $tabs = [];
@@ -75,11 +83,19 @@ class behat_theme_boost_union extends behat_base {
                     'h5p',
                     'mobile',
                 ];
-                $suffix = match ($suffix) {
-                    'general', 'general settings' => 'general',
-                    'my courses', 'dashboard / my courses' => 'dashboard',
-                    default => str_replace([' ', '-'], ['', ''], $suffix)
-                };
+                switch ($suffix) {
+                    case 'general':
+                    case 'general settings':
+                        $suffix = 'general';
+                        break;
+                    case 'my courses':
+                    case 'dashboard / my courses':
+                        $suffix = 'dashboard';
+                        break;
+                    default:
+                        $suffix = str_replace([' ', '-'], ['', ''], $suffix);
+                        break;
+                }
                 break;
 
             case 'feel':
@@ -90,10 +106,14 @@ class behat_theme_boost_union extends behat_base {
                     'links',
                     'misc',
                 ];
-                $suffix = match ($suffix) {
-                    'miscellaneous' => 'misc',
-                    default => str_replace([' ', '-'], ['', ''], $suffix)
-                };
+                switch ($suffix) {
+                    case 'miscellaneous':
+                        $suffix = 'misc';
+                        break;
+                    default:
+                        $suffix = str_replace([' ', '-'], ['', ''], $suffix);
+                        break;
+                }
                 break;
 
             case 'content':
@@ -104,15 +124,26 @@ class behat_theme_boost_union extends behat_base {
                     'tiles',
                     'slider',
                 ];
-                $suffix = match ($suffix) {
-                    'advertisement tiles' => 'tiles',
-                    default => str_replace([' ', '-'], ['', ''], $suffix)
-                };
-                $section = match ($suffix) {
-                    'infobanner' => 'infobanners',
-                    'tiles', 'slider' => '',
-                    default => $section,
-                };
+                switch ($suffix) {
+                    case 'advertisement tiles':
+                        $suffix = 'tiles';
+                        break;
+                    default:
+                        $suffix = str_replace([' ', '-'], ['', ''], $suffix);
+                        break;
+                }
+                switch ($suffix) {
+                    case 'infobanner':
+                        $section = 'infobanners';
+                        break;
+                    case 'tiles':
+                    case 'slider':
+                        $section = '';
+                        break;
+                    default:
+                        // No change to $section.
+                        break;
+                }
                 break;
 
             case 'functionality':
