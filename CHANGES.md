@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.3-r20
 
 * 2024-12-06 - Tests: Add several Behat optimisations to bring down the test suite run time, resolves #765.
 
