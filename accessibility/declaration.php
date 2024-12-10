@@ -24,18 +24,16 @@
  */
 
 // Include config.php.
-// @codingStandardsIgnoreStart
 // Let codechecker ignore the next line because otherwise it would complain about a missing login check
 // after requiring config.php which is really not needed.
-require(__DIR__ . '/../../../config.php');
-// @codingStandardsIgnoreEnd
+require(__DIR__ . '/../../../config.php'); // phpcs:disable moodle.Files.RequireLogin.Missing
 
 // Require the necessary libraries.
 require_once($CFG->dirroot.'/theme/boost_union/lib.php');
 require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
 
 // Set page URL.
-$PAGE->set_url('/theme/boost_union/pages/accessibility.php');
+$PAGE->set_url('/theme/boost_union/accessibility/declaration.php');
 
 // Set page layout.
 $PAGE->set_pagelayout('standard');
@@ -44,16 +42,16 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_context(context_system::instance());
 
 // Add page name as body class.
-$PAGE->add_body_class('theme_boost_union-accessibility');
+$PAGE->add_body_class('theme_boost_union-accessibilitydeclaration');
 
 // Get theme config.
 $config = get_config('theme_boost_union');
 
-// If the Declaration of accessibility page is disabled, we just show a short friendly warning page and are done.
-if ($config->enableaccessibility != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+// If the declaration of accessibility page is disabled, we just show a short friendly warning page and are done.
+if ($config->enableaccessibilitydeclaration != THEME_BOOST_UNION_SETTING_SELECT_YES) {
     echo $OUTPUT->header();
-    $notification = new \core\output\notification(get_string('accessibilitydisabled', 'theme_boost_union'),
-            \core\output\notification::NOTIFY_INFO);
+    $notification = new \core\output\notification(get_string('accessibilitydeclarationdisabled', 'theme_boost_union'),
+        \core\output\notification::NOTIFY_INFO);
     $notification->set_show_closebutton(false);
     echo $OUTPUT->render($notification);
     echo $OUTPUT->footer();
@@ -61,16 +59,16 @@ if ($config->enableaccessibility != THEME_BOOST_UNION_SETTING_SELECT_YES) {
 }
 
 // Set page title.
-$PAGE->set_title(theme_boost_union_get_staticpage_pagetitle('accessibility'));
+$PAGE->set_title(theme_boost_union_get_accessibility_pagetitle('declaration'));
 
 // Start page output.
 echo $OUTPUT->header();
 
 // Show page heading.
-echo $OUTPUT->heading(theme_boost_union_get_staticpage_pagetitle('accessibility'));
+echo $OUTPUT->heading(theme_boost_union_get_accessibility_pagetitle('declaration'));
 
-// Output Declaration of accessibility page content.
-echo format_text($config->accessibilitycontent, FORMAT_MOODLE, ['trusted' => true, 'noclean' => true]);
+// Output declaration of accessibility page content.
+echo format_text($config->accessibilitydeclarationcontent, FORMAT_MOODLE, ['trusted' => true, 'noclean' => true]);
 
 // Finish page.
 echo $OUTPUT->footer();

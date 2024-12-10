@@ -565,11 +565,11 @@ In this tab there are the following settings:
 
 #### Declaration of accessibility
 
-With these settings, you can add rich text content which will be shown on the declaration of accessibility page.
+With these settings, you can add rich text content which will be shown on a declaration of accessibility page.
 
-#### Accessibility support
+#### Accessibility support page
 
-With these settings, you can add rich text content and configure the form which will be shown on the accessibility support page.
+With these settings, you can enable the accessibility support page which provides a contact form for accessibility issues.
 
 #### Tab "Information banners"
 
@@ -869,6 +869,6 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * University of Bayreuth, Nikolai Jahreis: Code
 * University of Graz, André Menrath: Code
 * University of Lübeck, Christian Wolters: Code, Peer Review, Ideating
-* Zurich University of Applied Sciences (ZHAW): Funding, Ideating, Code
+* Zurich University of Applied Sciences (ZHAW): Code, Funding, Ideating
 
 Additionally, we thank all other contributors who contributed ideas, feedback and code snippets within the Github issues and pull requests as well as all contributors who contributed additional translations in AMOS, the Moodle translation tool.

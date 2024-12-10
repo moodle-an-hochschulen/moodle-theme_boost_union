@@ -77,6 +77,12 @@ $templatecontext['cards'][] = [
     'url' => new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_functionality']),
 ];
 $templatecontext['cards'][] = [
+    'label' => get_string('configtitleaccessibility', 'theme_boost_union'),
+    'desc' => get_string('settingsoverview_accessibility_desc', 'theme_boost_union'),
+    'btn' => 'primary',
+    'url' => new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_accessibility']),
+];
+$templatecontext['cards'][] = [
     'label' => get_string('configtitleflavours', 'theme_boost_union'),
     'desc' => get_string('settingsoverview_flavours_desc', 'theme_boost_union'),
     'btn' => 'primary',
