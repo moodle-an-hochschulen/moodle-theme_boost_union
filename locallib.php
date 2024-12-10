@@ -338,6 +338,45 @@ function theme_boost_union_get_staticpage_pagetitle($page) {
 }
 
 /**
+ * Build the link to a accessibility page.
+ *
+ * @param string $page The accessibility page's identifier.
+ * @return string.
+ */
+function theme_boost_union_get_accessibility_link($page) {
+    // Compose the URL object.
+    $url = new core\url('/theme/boost_union/accessibility/'.$page.'.php');
+
+    // Return the string representation of the URL.
+    return $url->out();
+}
+
+/**
+ * Build the page title of a accessibility page.
+ *
+ * @param string $page The accessibility page's identifier.
+ * @return string.
+ */
+function theme_boost_union_get_accessibility_pagetitle($page) {
+    // Re-use the theme_boost_union_get_staticpage_pagetitle() as we are basically doing the same thing here.
+    return theme_boost_union_get_staticpage_pagetitle('accessibility'.$page);
+}
+
+/**
+ * Build the screenreader link title to the accessibility support page.
+ *
+ * @return string.
+ */
+function theme_boost_union_get_accessibility_srlinktitle() {
+    $supporttitle = get_config('theme_boost_union', 'accessibilitysupportpagesrlinktitle');
+    if (empty($supporttitle)) {
+        $supporttitle = get_string('accessibilitysupportpagesrlinktitledefault', 'theme_boost_union');
+    }
+
+    return $supporttitle;
+}
+
+/**
  * Helper function to check if a given info banner should be shown on this page.
  * This function checks
  * a) if the banner is enabled at all
@@ -2100,7 +2139,7 @@ function theme_boost_union_callbackimpl_before_standard_top_of_body_html(&$hook 
 
     // If a theme other than Boost Union or a child theme of it is active, return directly.
     // This is necessary as the callback is called regardless of the active theme.
-    if ($PAGE->theme->name != 'boost_union' && !in_array('boost_union', $PAGE->theme->parents)) {
+    if (theme_boost_union_is_active_theme() != true) {
         if ($hook != null) {
             return;
         } else {
@@ -2111,8 +2150,8 @@ function theme_boost_union_callbackimpl_before_standard_top_of_body_html(&$hook 
     // Require local library.
     require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
-    // Add the accessibility form skip link to the page.
-    $html .= theme_boost_union_get_accessibility_form_skip_link();
+    // Add the accessibility support skip link to the page.
+    $html .= theme_boost_union_get_accessibility_support_skip_link();
 
     if ($hook != null) {
         // Add the HTML code to the hook.
@@ -2278,24 +2317,33 @@ function theme_boost_union_get_external_scss($type) {
 }
 
 /**
- * Build the link to the accessibility form visible for screen readers.
+ * Build the link to the accessibility support page visible for screen readers.
  *
  * @return string
  * @throws coding_exception
  * @throws dml_exception
  */
-function theme_boost_union_get_accessibility_form_skip_link() {
+function theme_boost_union_get_accessibility_support_skip_link() {
     $output = '';
 
+    // If the accessibility support is enabled.
     $enableaccessibilitysupportsetting = get_config('theme_boost_union', 'enableaccessibilitysupport');
-    if ($enableaccessibilitysupportsetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-        // Add link for screen readers to accessibility feedback form.
-        $supporturl = new \moodle_url('/theme/boost_union/pages/accessibilitysupport.php');
-        $supporttitle = get_string('sendaccessibilityfeedback', 'theme_boost_union');
-        $output .= \html_writer::link($supporturl, $supporttitle, [
-            'id' => 'access-support-form-sr-link',
-            'class' => 'sr-only sr-only-focusable',
-        ]);
+    if (isset($enableaccessibilitysupportsetting) && $enableaccessibilitysupportsetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+
+        // If user login is either not required or if the user is logged in.
+        $allowaccessibilitysupportwithoutloginsetting = get_config('theme_boost_union', 'allowaccessibilitysupportwithoutlogin');
+        if (!(isset($allowaccessibilitysupportwithoutloginsetting) &&
+                $allowaccessibilitysupportwithoutloginsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) ||
+                (isloggedin() && !isguestuser())) {
+
+            // Add link for screen readers to accessibility support page.
+            $supporturl = new \core\url('/theme/boost_union/accessibility/support.php');
+            $supporttitle = theme_boost_union_get_accessibility_srlinktitle();
+            $output .= \core\output\html_writer::link($supporturl, $supporttitle, [
+                'id' => 'access-support-form-sr-link',
+                'class' => 'sr-only sr-only-focusable',
+            ]);
+        }
     }
 
     return $output;

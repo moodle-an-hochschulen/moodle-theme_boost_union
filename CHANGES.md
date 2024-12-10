@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-12-15 - Feature: Add declaration of accessibility page and accessibility support page, resolves #567.
+
 ### v4.5-r4
 
 * 2024-12-06 - Tests: Add several Behat optimisations to bring down the test suite run time, resolves #765.
@@ -12,7 +16,6 @@ Changes
 
 ### v4.5-r3
 
-* 2024-11-20 - Improvement: Implement accessibility statement and feedback mechanism, resolves #567.
 * 2024-11-19 - Bugfix: The starred courses popover showed a JavaScript error in the browser JS console, resolves #759.
 * 2024-11-19 - Bugfix: The starred courses popover in the navbar must only be shown if Boost Union or Boost Union child is active, resolves #759.
 * 2024-11-18 - Improvement: Add the possibility to restrict smart menus and smart menu items to site admins and non-site admins only, resolves #421.
