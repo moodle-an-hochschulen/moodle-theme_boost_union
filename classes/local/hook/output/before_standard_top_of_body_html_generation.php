@@ -15,20 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Hook: Allows plugins to add any elements on top of the page <body> html tag.
+ * Theme Boost Union - Hook: Allows plugins to add any elements at the top of the page <body> html tag.
  *
  * @package    theme_boost_union
- * @copyright  2024 Alexander Bias <bias@alexanderbias.de>
+ * @copyright  2024 Simon Schoenenberger <scgo@zhaw.ch>
+ * @copyright  on behalf of Zurich University of Applied Sciences (ZHAW)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace theme_boost_union\local\hook\output;
 
 /**
- * Hook to allow plugins to add any elements on top of the page <body> html tag.
+ * Hook to allow plugins to add any elements at the top of the page <body> html tag.
  *
  * @package    theme_boost_union
- * @copyright  2024 Alexander Bias <bias@alexanderbias.de>
+ * @copyright  2024 Simon Schoenenberger <scgo@zhaw.ch>
+ * @copyright  on behalf of Zurich University of Applied Sciences (ZHAW)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class before_standard_top_of_body_html_generation {

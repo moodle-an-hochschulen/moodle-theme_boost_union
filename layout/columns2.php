@@ -117,6 +117,9 @@ require_once(__DIR__ . '/includes/courserelatedhints.php');
 // Include the content for the back to top button.
 require_once(__DIR__ . '/includes/backtotopbutton.php');
 
+// Include the content for the Boost Union footer buttons.
+require_once(__DIR__ . '/includes/footerbuttons.php');
+
 // Include the content for the scrollspy.
 require_once(__DIR__ . '/includes/scrollspy.php');
 
