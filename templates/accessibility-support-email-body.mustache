@@ -15,20 +15,26 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost_union/accessibility_site_support_email_body
+    @template theme_boost_union/accessibility-support-email-body
 
-    Support email email body.
+    Boost Union accessibility support email body.
+
+    Context variables required for this template:
+    * name - The sender's name
+    * email - The sender's email
+    * subject - The email subject
+    * message - The email message
 
     Example context (json):
     {
-        "subject": "email subject",
         "notloggedinuser": true,
         "sendanonymous": false,
         "sendtechinfo": true,
         "name": "Sender name",
         "email": "sender@mail.com",
+        "subject": "email subject",
         "message": "Support request message",
-        "techinfo": "Moodle: 4.3.5 (Build: 20240610) (2023100905)..."
+        "techinfo": "Referrer page: http://localhost/foo/bar"
     }
 }}
 {{#notloggedinuser}}
@@ -44,12 +50,12 @@
 {{#str}}subject{{/str}}: {{subject}}
 
 {{#str}}message{{/str}}:
-
----
 {{message}}
----
+
+============================================================================
 
 {{#str}}accessibilitysupporttechinfo, theme_boost_union{{/str}}:
+
 {{#sendtechinfo}}
 {{techinfo}}
 {{/sendtechinfo}}

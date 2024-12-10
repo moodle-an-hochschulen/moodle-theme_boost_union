@@ -87,21 +87,21 @@ class behat_theme_boost_union_base_content extends behat_base {
     }
 
     /**
-     * Open the accessibility page.
+     * Open the accessibility declaration page.
      *
-     * @Given /^I am on accessibility page$/
+     * @Given /^I am on accessibilitydeclaration page$/
      */
-    public function i_am_on_accessibility_page() {
-        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/accessibility.php']);
+    public function i_am_on_accessibilitydeclaration_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/accessibility/declaration.php']);
     }
 
     /**
-     * Open the accessibilitysupport page.
+     * Open the accessibility support page.
      *
      * @Given /^I am on accessibilitysupport page$/
      */
     public function i_am_on_accessibilitysupport_page() {
-        $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/accessibilitysupport.php']);
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/accessibility/support.php']);
     }
 
     /**
