@@ -386,6 +386,31 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 break;
         }
 
+        // If this is the login page and the page has the accessibility button, add a class to the body attributes.
+        // This is currently just needed to make sure in SCSS that the footnote is not covered by the accessibility button.
+        if ($this->page->pagelayout == 'login') {
+
+            // If the accessibility button is enabled.
+            $enableaccessibilitysupportsetting = get_config('theme_boost_union', 'enableaccessibilitysupport');
+            $enableaccessibilitysupportfooterbuttonsetting =
+                    get_config('theme_boost_union', 'enableaccessibilitysupportfooterbutton');
+            if (isset($enableaccessibilitysupportsetting) &&
+                    $enableaccessibilitysupportsetting == THEME_BOOST_UNION_SETTING_SELECT_YES &&
+                    isset($enableaccessibilitysupportfooterbuttonsetting) &&
+                    $enableaccessibilitysupportfooterbuttonsetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+
+                // If user login is either not required or if the user is logged in.
+                $allowaccessibilitysupportwithoutloginsetting =
+                        get_config('theme_boost_union', 'allowaccessibilitysupportwithoutlogin');
+                if (!(isset($allowaccessibilitysupportwithoutloginsetting) &&
+                        $allowaccessibilitysupportwithoutloginsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) ||
+                        (isloggedin() && !isguestuser())) {
+
+                    $additionalclasses[] = 'theme_boost-union-accessibilitybutton';
+                }
+            }
+        }
+
         return ' id="' . $this->body_id() . '" class="' . $this->body_css_classes($additionalclasses) . '"';
     }
 

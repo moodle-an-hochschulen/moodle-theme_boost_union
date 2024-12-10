@@ -34,6 +34,7 @@ class behat_theme_boost_union extends behat_base {
      * | Feel          | "Feel" settings page          |
      * | Content       | "Content" settings page       |
      * | Functionality | "Functionality" settings page |
+     * | Accessibility | "Accessibility" settings page |
      * | Flavours      | Flavours listing page         |
      * | Smart menus   | Smart menus listing page      |
      *
@@ -51,6 +52,7 @@ class behat_theme_boost_union extends behat_base {
                 'feel' => new moodle_url('/admin/settings.php?section=theme_boost_union_feel'),
                 'content' => new moodle_url('/admin/settings.php?section=theme_boost_union_content'),
                 'functionality' => new moodle_url('/admin/settings.php?section=theme_boost_union_functionality'),
+                'accessibility' => new moodle_url('/admin/settings.php?section=theme_boost_union_accessibility'),
                 'flavours' => new moodle_url('/theme/boost_union/flavours/overview.php'),
                 'smart menus' => new moodle_url('/theme/boost_union/smartmenus/menus.php'),
                 default => throw new Exception('Unrecognised theme_boost_union page "' . $page . '."')
@@ -119,6 +121,13 @@ class behat_theme_boost_union extends behat_base {
                 $tabs = [
                     'courses',
                     'administration',
+                ];
+                break;
+
+            case 'accessibility':
+                $tabs = [
+                    'declaration',
+                    'support',
                 ];
                 break;
 
