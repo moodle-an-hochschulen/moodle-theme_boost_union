@@ -133,12 +133,23 @@ if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
 
 // If the accessibility button is enabled.
 $enableaccessibilitysupportsetting = get_config('theme_boost_union', 'enableaccessibilitysupport');
-$accessibilitybuttonsetting = get_config('theme_boost_union', 'enableaccessibilitybutton');
-if ($enableaccessibilitysupportsetting == THEME_BOOST_UNION_SETTING_SELECT_YES &&
-        $accessibilitybuttonsetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-    // Add marker to show this link.
-    $templatecontext['accessibilitybutton'] = true;
-    $templatecontext['accessibilityformurl'] = new moodle_url('/theme/boost_union/pages/accessibilitysupport.php');
+$enableaccessibilitysupportfooterbuttonsetting = get_config('theme_boost_union', 'enableaccessibilitysupportfooterbutton');
+if (isset($enableaccessibilitysupportsetting) &&
+        $enableaccessibilitysupportsetting == THEME_BOOST_UNION_SETTING_SELECT_YES &&
+        isset($enableaccessibilitysupportfooterbuttonsetting) &&
+        $enableaccessibilitysupportfooterbuttonsetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+
+    // If user login is either not required or if the user is logged in.
+    $allowaccessibilitysupportwithoutloginsetting = get_config('theme_boost_union', 'allowaccessibilitysupportwithoutlogin');
+    if (!(isset($allowaccessibilitysupportwithoutloginsetting) &&
+            $allowaccessibilitysupportwithoutloginsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) ||
+            (isloggedin() && !isguestuser())) {
+
+        // Add marker to show this link.
+        $templatecontext['accessibilitybutton'] = true;
+        $templatecontext['accessibilitybuttonlink'] = new moodle_url('/theme/boost_union/accessibility/support.php');
+        $templatecontext['accessibilitybuttonsrlinktitle'] = theme_boost_union_get_accessibility_srlinktitle();
+    }
 
     // Otherwise.
 } else {

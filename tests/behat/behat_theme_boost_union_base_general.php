@@ -276,4 +276,13 @@ class behat_theme_boost_union_base_general extends behat_base {
         set_config('debug', 32767);
         set_config('debugdisplay', 1);
     }
+
+    /**
+     * Open the login page.
+     *
+     * @Given /^I am on login page$/
+     */
+    public function i_am_on_login_page() {
+        $this->execute('behat_general::i_visit', ['/login/index.php']);
+    }
 }

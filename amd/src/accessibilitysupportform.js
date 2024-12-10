@@ -28,12 +28,15 @@
  * @param {HTMLElement} form
  */
 function fillFormFields(form) {
+    // Get the system information field.
     const systemInfoField = form.querySelector('[name=techinfo]');
 
+    // If the system information field does not exist, return.
     if (!systemInfoField) {
         return;
     }
 
+    // Compose the system information.
     const systemInfo = [
         `windowSize="${window.innerWidth}×${window.innerHeight}"`,
         `prefersReducedMotion=${window.matchMedia('(prefers-reduced-motion: reduce)').matches}`,
@@ -42,23 +45,31 @@ function fillFormFields(form) {
         `vendor="${navigator.vendor}"`,
         `userAgent="${navigator.userAgent}"`,
     ];
+
+    // Prepare fields to replace placeholders later.
     const replaceFields = {
         'systeminfo': systemInfo.join('\n'),
     };
 
+    // Get the current value of the system information field.
     var infoMessage = systemInfoField.value;
 
+    // Replace the placeholders with the actual values.
+    // Currently, only the system information "{systeminfo}" is replaced.
     for (let field in replaceFields) {
         let value = replaceFields[field];
-        infoMessage = infoMessage.replace(`{${field}}`, value);
+        infoMessage = infoMessage.replace(`##${field}##`, value);
     }
-
     systemInfoField.value = infoMessage;
-    // Only set readable. Browser does not send field value if field is disabled.
+
+    // Set the system information to readonly. Browsers do not send field values if a field is disabled.
     systemInfoField.readOnly = true;
 }
 
 export const init = (config) => {
+    // Get the provided form ID from the config.
     const form = document.getElementById(config.formId);
+
+    // Fill the form fields with system information.
     fillFormFields(form);
 };

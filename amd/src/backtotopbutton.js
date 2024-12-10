@@ -41,8 +41,8 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, Notificatio
 
         // If the string has arrived, add backtotop button to DOM and add scroll and click handlers.
         $.when(stringsPromise).then(function(string) {
-            // Add a fontawesome icon after the footer as the back to top button.
-            $('#top-buttons').prepend('<button id="back-to-top" ' +
+            // Add a fontawesome icon to the footer as the back to top button.
+            $('#boost-union-footer-buttons').prepend('<button id="back-to-top" ' +
                     'class="btn btn-icon bg-secondary icon-no-margin d-print-none"' +
                     'aria-label="' + string + '">' +
                     '<i aria-hidden="true" class="fa fa-chevron-up fa-fw "></i></button>');

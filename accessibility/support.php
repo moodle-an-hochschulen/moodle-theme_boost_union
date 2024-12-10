@@ -24,18 +24,16 @@
  */
 
 // Include config.php.
-// @codingStandardsIgnoreStart
 // Let codechecker ignore the next line because otherwise it would complain about a missing login check
 // after requiring config.php which is really not needed.
-require(__DIR__ . '/../../../config.php');
-// @codingStandardsIgnoreEnd
+require(__DIR__ . '/../../../config.php'); // phpcs:disable moodle.Files.RequireLogin.Missing
 
 // Require the necessary libraries.
 require_once($CFG->dirroot.'/theme/boost_union/lib.php');
 require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
 
 // Set page URL.
-$PAGE->set_url('/theme/boost_union/pages/accessibilitysupport.php');
+$PAGE->set_url('/theme/boost_union/accessibility/support.php');
 
 // Set page layout.
 $PAGE->set_pagelayout('standard');
@@ -49,11 +47,11 @@ $PAGE->add_body_class('theme_boost_union-accessibilitysupport');
 // Get theme config.
 $config = get_config('theme_boost_union');
 
-// If the Accessibility supportpage is disabled, we just show a short friendly warning page and are done.
+// If the accessibility support page is disabled, we just show a short friendly warning page and are done.
 if ($config->enableaccessibilitysupport != THEME_BOOST_UNION_SETTING_SELECT_YES) {
     echo $OUTPUT->header();
     $notification = new \core\output\notification(get_string('accessibilitysupportdisabled', 'theme_boost_union'),
-            \core\output\notification::NOTIFY_INFO);
+        \core\output\notification::NOTIFY_INFO);
     $notification->set_show_closebutton(false);
     echo $OUTPUT->render($notification);
     echo $OUTPUT->footer();
@@ -61,15 +59,17 @@ if ($config->enableaccessibilitysupport != THEME_BOOST_UNION_SETTING_SELECT_YES)
 }
 
 // If user login is required, we redirect to the login page.
-if ($config->enableaccessibilitysupportwithoutlogin != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+if (isset($config->allowaccessibilitysupportwithoutlogin) &&
+        $config->allowaccessibilitysupportwithoutlogin != THEME_BOOST_UNION_SETTING_SELECT_YES) {
     if (!isloggedin() || isguestuser()) {
         redirect(get_login_url());
     }
 }
 
 // Set page title.
-$PAGE->set_title(theme_boost_union_get_staticpage_pagetitle('accessibilitysupport'));
+$PAGE->set_title(theme_boost_union_get_accessibility_pagetitle('support'));
 
+// Initialize the accessibility support form.
 $form = new \theme_boost_union\form\accessibilitysupport_form();
 
 // Get the page where we came from.
@@ -78,10 +78,14 @@ if (!$referrerpage) {
     $referrerpage = $CFG->wwwroot;
 }
 
+// If the form was cancelled.
 if ($form->is_cancelled()) {
-    // Redirect to the previous page when the form was canceled.
+    // Redirect to the previous page when the form was cancelled.
     redirect($referrerpage);
+
+    // Otherwise, if the form was submitted and validated.
 } else if ($form->is_submitted() && $form->is_validated() && confirm_sesskey()) {
+    // Get the form data.
     $data = $form->get_data();
 
     // Remove the automatic system information field when the sendtechinfo field was unchecked by the user.
@@ -89,6 +93,7 @@ if ($form->is_cancelled()) {
         unset($data->techinfo);
     }
 
+    // If we have a valid user.
     $validuser = isloggedin() && !isguestuser();
     if ($validuser) {
         // Use the current user as sender when logged in.
@@ -107,46 +112,75 @@ if ($form->is_cancelled()) {
         $data->email = get_string('accessibilitysupportanonymousemail', 'theme_boost_union');
     }
 
-    $subject = get_string('accessibilitysupportemailsubject', 'theme_boost_union', format_string($SITE->fullname));
+    // Compose the mail content from form data.
+    $subjectprefix = get_string('accessibilitysupportusermailsubject', 'theme_boost_union');
+    $subject = '['.$subjectprefix.'] '.$data->subject;
     $renderer = $PAGE->get_renderer('core');
-    // Render email body with form data.
-    $message = $renderer->render_from_template('theme_boost_union/accessibility_support_email_body', $data);
-
-    $accessibilityemail = get_config('theme_boost_union', 'accessibilitysupportemail');
-    $accessibilityname = get_config('theme_boost_union', 'accessibilitysupportname');
+    $message = $renderer->render_from_template('theme_boost_union/accessibility-support-email-body', $data);
 
     // Configure the noreply user as receiver when an accessibility support email was configured.
+    $accessibilityemail = get_config('theme_boost_union', 'accessibilitysupportusermail');
+    // If an accessibility support email was configured, we use it as receiver.
     if ($accessibilityemail) {
         // We need to create a dummy user record to send the mail.
         // The user record is only used to send the mail.
-        $supportuser = core_user::get_noreply_user();
+        $supportuser = \core_user::get_noreply_user();
         $supportuser->email = $accessibilityemail;
-        if ($accessibilityname) {
-            $supportuser->firstname = $accessibilityname;
-        }
+        $supportuser->firstname = get_string('accessibilitysupportuserfirstname', 'theme_boost_union');
+        $supportuser->lastname = get_string('accessibilitysupportuserlastname', 'theme_boost_union');
+
+        // Otherwise.
     } else {
-        // Use the default support user as receiver when no accessibility support email was configured.
-        $supportuser = core_user::get_support_user();
+        // Use the default support user as receiver.
+        $supportuser = \core_user::get_support_user();
     }
 
-    // Show fallback page with contact information when the email could not be sent.
-    if (!email_to_user($supportuser, $from, $subject, $message)) {
-        $supportemail = $CFG->supportemail;
-        $form->set_data($data);
-        $templatectx = [
-            'supportemail' => $validuser ? html_writer::link("mailto:{$supportemail}", $supportemail) : false,
-            'supportform' => $form->render(),
-        ];
+    // Send the email.
+    $sendresult = email_to_user($supportuser, $from, $subject, $message);
 
-        // Render the support fallback page.
-        $formoutput = $renderer->render_from_template('theme_boost_union/accessibility_support_not_available', $templatectx);
+    // Show fallback page with contact information when the email could not be sent.
+    if (!$sendresult) {
+        // If we have a valid user (who should be allowed to see email addresses).
+        if ($validuser) {
+            // Get the notification support email address to be shown as fallback for valid users.
+            $supportemail = $supportuser->email;
+
+            // Prepare the notification text.
+            $notificationtext = get_string('accessibilitysupportmessagenotsent', 'theme_boost_union');
+            $notificationtext .= '<br />';
+            $notificationtext .= get_string('accessibilitysupportmessagetryalternative', 'theme_boost_union', $supportemail);
+
+            // Otherwise.
+        } else {
+            // Prepare the notification text.
+            $notificationtext = get_string('accessibilitysupportmessagenotsent', 'theme_boost_union');
+            $notificationtext .= '<br />';
+            $notificationtext .= get_string('accessibilitysupportmessagetryagain', 'theme_boost_union');
+        }
+
+        $notification = new \core\output\notification($notificationtext, \core\output\notification::NOTIFY_ERROR);
+        $notification->set_show_closebutton(false);
+        $formoutput = $OUTPUT->render($notification);
+
+        // Set the form data with the subitted data.
+        $form->set_data($data);
+
+        // Render the form.
+        $formoutput .= $form->render();
+
+        // Otherwise, if the message was sent.
     } else {
+        // Unset the referrer page session variable (to avoid harming future form submissions).
+        unset($SESSION->boost_union_accessibility_pagereferrer);
+
         // Redirect to the previous page and show message when the email was successfully sent.
         $level = \core\output\notification::NOTIFY_SUCCESS;
         redirect($referrerpage, get_string('accessibilitysupportmessagesent', 'theme_boost_union'), 3, $level);
     }
+
+    // Otherwise, when the form was not submitted yet.
 } else {
-    // Render the form when it was not submitted yet.
+    // Render the form.
     $formoutput = $form->render();
 }
 
@@ -161,9 +195,9 @@ $PAGE->requires->js_call_amd('theme_boost_union/accessibilitysupportform', 'init
 echo $OUTPUT->header();
 
 // Show page heading.
-echo $OUTPUT->heading(theme_boost_union_get_staticpage_pagetitle('accessibilitysupport'));
+echo $OUTPUT->heading(theme_boost_union_get_accessibility_pagetitle('support'));
 
-// Output Accessibility support page content.
+// Output accessibility support page content.
 echo format_text($config->accessibilitysupportcontent, FORMAT_MOODLE, ['trusted' => true, 'noclean' => true]);
 
 // Output the form.
