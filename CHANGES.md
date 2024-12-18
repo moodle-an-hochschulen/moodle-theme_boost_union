@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-12-15 - Improvement: Implement accessibility statement and feedback mechanism, resolves #567.
+
 ### v4.5-r4
 
 * 2024-12-06 - Tests: Add several Behat optimisations to bring down the test suite run time, resolves #765.

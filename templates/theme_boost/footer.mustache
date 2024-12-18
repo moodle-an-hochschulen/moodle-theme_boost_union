@@ -33,6 +33,7 @@
             "communication_link": "<a href=\"#\">Communication room</a>"
         },
         "anystaticpagelinkedfromfooter": true,
+        "anyaccessibilitypagelinkedfromfooter": true,
         "imprintlinkpositionfooter": true,
         "imprintlink": "https://localhost/theme/boost_union/pages/imprint.php",
         "imprintpagetitle": "Imprint",
@@ -60,6 +61,12 @@
         "offerslinkpositionfooter": true,
         "offerslink": "https://localhost/theme/boost_union/pages/offers.php",
         "offerspagetitle": "Offers",
+        "accessibilitydeclarationlinkpositionfooter": true,
+        "accessibilitydeclarationlink": "https://localhost/theme/boost_union/accessibility/declaration.php",
+        "accessibilitydeclarationpagetitle": "Declaration of accessibility",
+        "accessibilitysupportlinkpositionfooter": true,
+        "accessibilitysupportlink": "https://localhost/theme/boost_union/accessibility/support.php",
+        "accessibilitysupporttitle": "Accessibility support",
         "page1linkpositionfooter": true,
         "page1link": "https://localhost/theme/boost_union/pages/page1.php",
         "page1pagetitle": "Generic page 1",
@@ -82,9 +89,12 @@
     * Added the possibility to show the maintenance page link.
     * Added the possibility to show the about us page link.
     * Added the possibility to show the offers page link.
+    * Added the possibility to show the accessibility declaration page link.
+    * Added the possibility to show the accessibility support page link.
     * Added the possibility to show the generic page 1 link.
     * Added the possibility to show the generic page 2 link.
     * Added the possibility to show the generic page 3 link.
+    * Added the accessibility button (and the element to allow JS to add the back-to-top button).
     * Added the bottom menu bar to show menus in footer for mobile devices.
     * Added the possibility to suppress the footer button (question mark in the circle).
     * Added the possibility to suppress each link in the footer popover individually.
@@ -112,6 +122,13 @@
                 {{#pix}}e/question, core{{/pix}}
             </button>
         {{/footerbutton }}
+        <div id="boost-union-footer-buttons">
+            {{#accessibilitybutton}}
+                <a id="btn-accessibility-support" class="btn btn-icon bg-secondary icon-no-margin d-print-none" href="{{accessibilitybuttonlink}}" aria-label="{{accessibilitybuttonsrlinktitle}}">
+                    <i class="icon fa fa-universal-access fa-fw" aria-hidden="true"></i>
+                </a>
+            {{/accessibilitybutton}}
+        </div>
     </div>
     {{#footerbutton }}
         <div class="footer-content-popover container" data-region="footer-content-popover">
@@ -202,6 +219,21 @@
                     {{/ page3linkpositionfooter }}
                 </div>
             {{/anystaticpagelinkedfromfooter}}
+            {{#anyaccessibilitypagelinkedfromfooter}}
+                <div class="footer-section p-3 border-bottom">
+                    {{# accessibilitydeclarationlinkpositionfooter }}
+                        <div class="footer-support-link theme_boost_union_footer_accessibilitydeclarationlink">
+                            <a href="{{ accessibilitydeclarationlink }}"><i class="icon fa fa-universal-access fa-fw " aria-hidden="true"></i>{{ accessibilitydeclarationpagetitle }}</a>
+                        </div>
+                    {{/ accessibilitydeclarationlinkpositionfooter }}
+
+                     {{# accessibilitysupportlinkpositionfooter }}
+                        <div class="footer-support-link theme_boost_union_footer_accessibilitysupportlink">
+                            <a href="{{ accessibilitysupportlink }}"><i class="icon fa fa-universal-access fa-fw " aria-hidden="true"></i>{{ accessibilitysupportpagetitle }}</a>
+                        </div>
+                    {{/ accessibilitysupportlinkpositionfooter }}
+                </div>
+            {{/anyaccessibilitypagelinkedfromfooter}}
             {{#footershowlogininfo}}
                 <div class="footer-section p-3 border-bottom">
                     <div class="logininfo">
