@@ -2938,6 +2938,27 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if('theme_boost_union/accessibilitysupportpagesrlinktitle', 'theme_boost_union/enableaccessibilitysupport',
                 'neq', THEME_BOOST_UNION_SETTING_SELECT_YES);
 
+        // Setting: Add re-captcha to accessibility support page.
+        $name = 'theme_boost_union/accessibilitysupportrecaptcha';
+        $title = get_string('accessibilitysupportrecaptcha', 'theme_boost_union', null, true);
+        $authsettingsurl = new moodle_url('/admin/settings.php', ['section' => 'manageauths']);
+        $supportformsurl = new moodle_url('/user/contactsitesupport.php');
+        $description = get_string('accessibilitysupportrecaptcha_desc', 'theme_boost_union',
+                ['settings' => $authsettingsurl, 'support' => $supportformsurl], true);
+        $accessibilitysupportrecaptchaoptions = [
+                THEME_BOOST_UNION_SETTING_SELECT_NEVER =>
+                        get_string('never', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SELECT_ALWAYS =>
+                        get_string('always', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SELECT_ONLYGUESTSANDNONLOGGEDIN =>
+                        get_string('forguestsonly', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NEVER,
+                $accessibilitysupportrecaptchaoptions);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/accessibilitysupportrecaptcha', 'theme_boost_union/enableaccessibilitysupport',
+                'neq', THEME_BOOST_UNION_SETTING_SELECT_YES);
+
         // Add tab to settings page.
         $page->add($tab);
 
