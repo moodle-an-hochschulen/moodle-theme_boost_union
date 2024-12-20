@@ -127,10 +127,17 @@ class accessibilitysupport_form extends \moodleform {
             $mform->hardFreeze('email');
         }
 
-        if (!empty($CFG->recaptchapublickey) && !empty($CFG->recaptchaprivatekey)) {
-            $mform->addElement('recaptcha', 'recaptcha_element', get_string('security_question', 'auth'));
-            $mform->addHelpButton('recaptcha_element', 'recaptcha', 'auth');
-            $mform->closeHeaderBefore('recaptcha_element');
+        // If the admin enabled re-captcha on this page.
+        $accessibilitysupportrecaptcha = get_config('theme_boost_union', 'accessibilitysupportrecaptcha');
+        if (isset($accessibilitysupportrecaptcha) &&
+                ($accessibilitysupportrecaptcha == THEME_BOOST_UNION_SETTING_SELECT_ALWAYS) ||
+                ($accessibilitysupportrecaptcha == THEME_BOOST_UNION_SETTING_SELECT_ONLYGUESTSANDNONLOGGEDIN &&
+                        (!isloggedin() || isguestuser()))) {
+            if (!empty($CFG->recaptchapublickey) && !empty($CFG->recaptchaprivatekey)) {
+                $mform->addElement('recaptcha', 'recaptcha_element', get_string('security_question', 'auth'));
+                $mform->addHelpButton('recaptcha_element', 'recaptcha', 'auth');
+                $mform->closeHeaderBefore('recaptcha_element');
+            }
         }
 
         $this->add_action_buttons(true, get_string('submit'));
