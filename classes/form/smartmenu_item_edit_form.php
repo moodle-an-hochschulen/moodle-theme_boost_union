@@ -53,6 +53,13 @@ class smartmenu_item_edit_form extends \moodleform {
                 $CFG->dirroot.'/theme/boost_union/classes/formelement/colorpicker.php',
                 '\theme_boost_union\formelement\colorpicker'
         );
+        // Register validation rule for the QuickForm colorpicker element.
+        \MoodleQuickForm::registerRule(
+                'theme_boost_union_colorpicker_rule',
+                null,
+                '\theme_boost_union\formelement\colorpicker_rule',
+                $CFG->dirroot.'/theme/boost_union/classes/formelement/colorpicker_rule.php'
+        );
 
         // Get an easier handler for the form.
         $mform = $this->_form;
@@ -283,12 +290,14 @@ class smartmenu_item_edit_form extends \moodleform {
             $mform->addElement('theme_boost_union_colorpicker', 'textcolor',
                     get_string('smartmenusmenuitemcardtextcolor', 'theme_boost_union'));
             $mform->setType('textcolor', PARAM_TEXT);
+            $mform->addRule('textcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
             $mform->addHelpButton('textcolor', 'smartmenusmenuitemcardtextcolor', 'theme_boost_union');
 
             // Add card background color as color picker element.
             $mform->addElement('theme_boost_union_colorpicker', 'backgroundcolor',
                     get_string('smartmenusmenuitemcardbackgroundcolor', 'theme_boost_union'));
             $mform->setType('backgroundcolor', PARAM_TEXT);
+            $mform->addRule('backgroundcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
             $mform->addHelpButton('backgroundcolor', 'smartmenusmenuitemcardbackgroundcolor', 'theme_boost_union');
         }
 

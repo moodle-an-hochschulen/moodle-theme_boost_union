@@ -42,6 +42,9 @@ $string['forguestsonly'] = 'Only for guests and non-logged-in users';
 // Settings: General strings.
 $string['dontchange'] = 'Do not change anything';
 
+// Settings: General warnings.
+$string['warningslashargumentsdisabled'] = 'Warning: The <a href="{$a->url}">slasharguments setting</a> is disabled in your Moodle configuration currently. However, this setting is required for the correct operation of the following Boost Union setting. Please enable slasharguments, otherwise the following Boost Union setting will not have any effect.';
+
 // Settings: Overview page.
 $string['settingsoverview'] = 'Settings overview';
 $string['settingsoverview_title'] = 'Boost Union settings overview';
@@ -1174,11 +1177,13 @@ $string['flavoursbootstrapcolorsuccess'] = 'Bootstrap color for "Success"';
 $string['flavoursbootstrapcolorsuccess_help'] = 'With this setting, the flavour will override the Bootstrap "success" color which is configured in Boost Union\'s look settings.';
 $string['flavoursbootstrapcolorwarning'] = 'Bootstrap color for "Warning"';
 $string['flavoursbootstrapcolorwarning_help'] = 'With this setting, the flavour will override the Bootstrap "warning" color which is configured in Boost Union\'s look settings.';
-$string['flavoursbrandcolour'] = 'Brand colour ';
-$string['flavoursbrandcolour_help'] = 'With this setting, the flavour will override the brand colour which is configured in Boost Union\'s look settings.';
+$string['flavoursbrandcolor'] = 'Brand color';
+$string['flavoursbrandcolor_help'] = 'With this setting, the flavour will override the brand color which is configured in Boost Union\'s look settings.';
 $string['flavourscreateflavour'] = 'Create flavour';
-$string['flavourscustomcss'] = 'Custom SCSS';
-$string['flavourscustomcss_help'] = 'With this setting, you can write custom SCSS for the flavour. It will be appended to the stack of CSS code which is shipped to the browser as soon as the flavour applies.';
+$string['flavourscustomscss'] = 'Raw SCSS';
+$string['flavourscustomscss_help'] = 'With this setting, you can write custom SCSS for the flavour. It will be appended to the stack of CSS code which is shipped to the browser as soon as the flavour applies.';
+$string['flavourscustomscsspre'] = 'Raw initial SCSS';
+$string['flavourscustomscsspre_help'] = 'With this setting, you can write custom initial SCSS for the flavour. It will be used when building the CSS code which is shipped to the browser as soon as the flavour applies.';
 $string['flavoursdelete'] = 'Delete';
 $string['flavoursdeleteflavour'] = 'Delete flavour';
 $string['flavoursdeleteconfirmation'] = 'Do you really want to delete the flavour <em>{$a}</em>?';
