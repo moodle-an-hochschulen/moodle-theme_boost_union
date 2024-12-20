@@ -137,7 +137,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I set the field "Title" to "My shiny new flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header.
     # This is just to make it easy to detect the effect of this flavour.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     #page-header h1 { display: none; }
     """

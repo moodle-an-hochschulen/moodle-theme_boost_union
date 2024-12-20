@@ -33,7 +33,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Title" to "Effective flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: none; }
     """
@@ -58,7 +58,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Title" to "Effective flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: none; }
     """
@@ -77,7 +77,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Title" to "Non-effective flavour"
     # We add a small CSS snippet to the flavour which shows the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: block; }
     """
@@ -113,7 +113,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Title" to "Effective flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: none; }
     """
@@ -132,7 +132,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Title" to "Non-effective flavour"
     # We add a small CSS snippet to the flavour which shows the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: block; }
     """
@@ -162,7 +162,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Title" to "Effective flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: none; }
     """
@@ -180,7 +180,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Title" to "Non-effective flavour"
     # We add a small CSS snippet to the flavour which shows the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: block; }
     """
@@ -221,7 +221,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Title" to "Effective flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: none; }
     """
@@ -239,7 +239,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Title" to "Non-effective flavour"
     # We add a small CSS snippet to the flavour which shows the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: block; }
     """
@@ -276,7 +276,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Title" to "Effective flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: none; }
     """
@@ -294,7 +294,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Title" to "Non-effective flavour"
     # We add a small CSS snippet to the flavour which shows the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: block; }
     """
@@ -334,7 +334,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Title" to "Effective flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: none; }
     """
@@ -352,7 +352,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, cachin
     And I set the field "Title" to "Non-effective flavour"
     # We add a small CSS snippet to the flavour which shows the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: block; }
     """

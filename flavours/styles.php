@@ -17,8 +17,14 @@
 /**
  * This file is responsible for serving the one huge CSS of each theme.
  *
- * @package   core
- * @copyright 2009 Petr Skoda (skodak)  {@link http://skodak.org} modified by 2023 Mario Wehr for bost union theme
+ * This file is copied and modified from /theme/styles.php.
+ * It is only called to serve the Boost Union CSS if a flavour is applied to the page.
+ * If no flavour is applied, the original /theme/styles.php is called.
+ * This is controlled by theme_boost_union_alter_css_urls().
+ *
+ * @package   theme_boost_union
+ * @copyright 2023 Mario Wehr
+ *            based on code 2009 by Petr Skoda (skodak)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -47,8 +53,8 @@ if ($slashargument = min_get_slash_argument()) {
     list($themename, $rev, $flavourid, $type) = explode('/', $slashargument, 4);
     $themename = min_clean_param($themename, 'SAFEDIR');
     $rev       = min_clean_param($rev, 'RAW');
-    $flavourid   = min_clean_param($flavourid, 'SAFEDIR');
-    $typeid      = min_clean_param($type, 'SAFEDIR');
+    $flavourid = min_clean_param($flavourid, 'INT');
+    $type      = min_clean_param($type, 'SAFEDIR');
 
 } else {
     $themename = min_optional_param('theme', 'standard', 'SAFEDIR');
@@ -56,6 +62,18 @@ if ($slashargument = min_get_slash_argument()) {
     $type      = min_optional_param('type', 'all', 'SAFEDIR');
     $usesvg    = (bool)min_optional_param('svg', '1', 'INT');
 }
+
+// If no flavourid is provided, this file must have been called by mistake.
+// In this case, we simply die.
+if (empty($flavourid)) {
+    css_send_css_not_found();
+}
+
+// Store the active flavour in the global scope.
+// This global variable is only set here and read in two functions in lib.php.
+// This approach feels a bit hacky but it is the most efficient way to get the flavour ID into that function.
+global $themeboostunionappliedflavour;
+$themeboostunionappliedflavour = $flavourid;
 
 // Check if we received a theme sub revision which allows us
 // to handle local caching on a per theme basis.
@@ -67,24 +85,31 @@ if (!is_null($themesubrev)) {
     $themesubrev = min_clean_param($themesubrev, 'INT');
 }
 
+// Note: We only check validity of the revision number here, we do not check the theme sub-revision because this is
+// not solely based on time.
+if (!min_is_revision_valid_and_current($rev)) {
+    // If the rev is invalid, normalise it to -1 to disable all caching.
+    $rev = -1;
+}
+
 // Check that type fits into the expected values.
 if (!in_array($type, ['all', 'all-rtl', 'editor', 'editor-rtl'])) {
     css_send_css_not_found();
 }
 
-// @codingStandardsIgnoreStart
+// phpcs:disable Generic.CodeAnalysis.EmptyStatement.DetectedIf
 if (file_exists("$CFG->dirroot/theme/$themename/config.php")) {
     // The theme exists in standard location - ok.
+// phpcs:disable Generic.CodeAnalysis.EmptyStatement.DetectedIf
 } else if (!empty($CFG->themedir) && file_exists("$CFG->themedir/$themename/config.php")) {
     // Alternative theme location contains this theme - ok.
-    // @codingStandardsIgnoreEnd
 } else {
     header('HTTP/1.0 404 not found');
     die('Theme was not found, sorry.');
 }
 
 $candidatedir = "$CFG->localcachedir/theme/$rev/$themename/css";
-$candidatesheet = "{$candidatedir}/" . theme_styles_get_filename($type, $themesubrev, $flavourid, $usesvg);
+$candidatesheet = "{$candidatedir}/" . theme_boost_union_flavour_styles_get_filename($type, $themesubrev, $flavourid, $usesvg);
 $etag = theme_styles_get_etag($themename, $rev, $type, $themesubrev, $usesvg);
 
 if (file_exists($candidatesheet)) {
@@ -122,7 +147,7 @@ if ($themerev <= 0 || $themerev != $rev || $themesubrev != $currentthemesubrev) 
     $cache = false;
 
     $candidatedir = "$CFG->localcachedir/theme/$rev/$themename/css";
-    $candidatesheet = "{$candidatedir}/" . theme_styles_get_filename($type, $themesubrev, $flavourid, $usesvg);
+    $candidatesheet = "{$candidatedir}/" . theme_boost_union_flavour_styles_get_filename($type, $themesubrev, $flavourid, $usesvg);
     $etag = theme_styles_get_etag($themename, $rev, $type, $themesubrev, $usesvg);
 }
 
@@ -171,7 +196,7 @@ if ($sendaftergeneration || $lock) {
 
     // The content does not exist locally.
     // Generate and save it.
-    $candidatesheet = theme_styles_generate_and_store($theme, $rev, $themesubrev, $candidatedir, $flavourid);
+    $candidatesheet = theme_boost_union_flavour_styles_generate_and_store($theme, $rev, $themesubrev, $candidatedir, $flavourid);
 
     if ($lock) {
         $lock->release();
@@ -197,16 +222,17 @@ if ($sendaftergeneration || $lock) {
  * @param   int             $rev The theme revision
  * @param   int             $themesubrev The theme sub-revision
  * @param   string          $candidatedir The directory that it should be stored in
+ * @param   int             $flavourid The flavour ID
  * @return  string          The path that the primary CSS was written to
  */
-function theme_styles_generate_and_store($theme, $rev, $themesubrev, $candidatedir, $flavourid) {
+function theme_boost_union_flavour_styles_generate_and_store($theme, $rev, $themesubrev, $candidatedir, $flavourid) {
     global $CFG;
     require_once("{$CFG->libdir}/filelib.php");
 
     // Generate the content first.
-    if (!$csscontent = theme_boost_union_get_css_cached_content($theme, $flavourid)) {
+    if (!$csscontent = theme_boost_union_flavour_get_css_cached_content($theme, $flavourid)) {
         $csscontent = $theme->get_css_content();
-        theme_boost_union_set_css_content_cache($theme, $csscontent);
+        theme_boost_union_flavour_set_css_content_cache($theme, $flavourid, $csscontent);
     }
 
     if ($theme->get_rtl_mode()) {
@@ -216,7 +242,8 @@ function theme_styles_generate_and_store($theme, $rev, $themesubrev, $candidated
     }
 
     // Determine the candidatesheet path.
-    $candidatesheet = "{$candidatedir}/" . theme_styles_get_filename($type, $flavourid, $themesubrev, $theme->use_svg_icons());
+    $candidatesheet = "{$candidatedir}/" . theme_boost_union_flavour_styles_get_filename($type, $themesubrev, $flavourid,
+            $theme->use_svg_icons());
 
     // Store the CSS.
     css_store_css($theme, $candidatesheet, $csscontent);
@@ -225,8 +252,19 @@ function theme_styles_generate_and_store($theme, $rev, $themesubrev, $candidated
     // This file is used as a fallback when waiting for a theme to compile and is not versioned in any way.
     $fallbacksheet = make_temp_directory("theme/{$theme->name}")
         . "/"
-        . theme_styles_get_filename($type, $flavourid, $theme->use_svg_icons());
+        . theme_boost_union_flavour_styles_get_filename($type, $themesubrev, $flavourid, $theme->use_svg_icons());
     css_store_css($theme, $fallbacksheet, $csscontent);
+
+    // Delete older revisions from localcache.
+    $themecachedirs = glob("{$CFG->localcachedir}/theme/*", GLOB_ONLYDIR);
+    foreach ($themecachedirs as $localcachedir) {
+        $cachedrev = [];
+        preg_match("/\/theme\/([0-9]+)$/", $localcachedir, $cachedrev);
+        $cachedrev = isset($cachedrev[1]) ? intval($cachedrev[1]) : 0;
+        if ($cachedrev > 0 && $cachedrev < $rev) {
+            fulldelete($localcachedir);
+        }
+    }
 
     // Delete older theme subrevision CSS from localcache.
     $subrevfiles = glob("{$CFG->localcachedir}/theme/{$rev}/{$theme->name}/css/*.css");
@@ -257,7 +295,7 @@ function theme_styles_fallback_content($theme) {
     }
 
     $type = $theme->get_rtl_mode() ? 'all-rtl' : 'all';
-    $filename = theme_styles_get_filename($type);
+    $filename = theme_boost_union_flavour_styles_get_filename($type);
 
     $fallbacksheet = "{$CFG->tempdir}/theme/{$theme->name}/{$filename}";
     if (file_exists($fallbacksheet)) {
@@ -272,10 +310,11 @@ function theme_styles_fallback_content($theme) {
  *
  * @param   string  $type The requested sheet type
  * @param   int     $themesubrev The theme sub-revision
+ * @param   int     $flavourid The flavour ID
  * @param   bool    $usesvg Whether SVGs are allowed
  * @return  string  The filename for this sheet
  */
-function theme_styles_get_filename($type, $themesubrev = 0, $flavourid = 0, $usesvg = true) {
+function theme_boost_union_flavour_styles_get_filename($type, $themesubrev = 0, $flavourid = 0, $usesvg = true) {
     $filename = $type;
     $filename .= ($themesubrev > 0) ? "_{$themesubrev}" : '';
     $filename .= ($flavourid > 0) ? "_{$flavourid}" : '';
@@ -307,10 +346,14 @@ function theme_styles_get_etag($themename, $rev, $type, $themesubrev, $usesvg) {
 /**
  * Return cached post processed CSS content.
  *
+ * This function is copied and modified from /lib/classes/output/theme_config.php
+ *
+ * @param theme_config $theme The theme to be generated
+ * @param int $flavourid The flavour ID
  * @return bool|string The cached css content or false if not found.
  */
-function theme_boost_union_get_css_cached_content($theme, $flavourid) {
-    $key = theme_boost_union_get_css_cache_key($theme, $flavourid);
+function theme_boost_union_flavour_get_css_cached_content($theme, $flavourid) {
+    $key = theme_boost_union_flavour_get_css_cache_key($theme, $flavourid);
     $cache = cache::make('core', 'postprocessedcss');
 
     return $cache->get($key);
@@ -319,9 +362,13 @@ function theme_boost_union_get_css_cached_content($theme, $flavourid) {
 /**
  * Generate the css content cache key.
  *
+ * This function is copied and modified from /lib/classes/output/theme_config.php
+ *
+ * @param theme_config $theme The theme to be generated
+ * @param int $flavourid The flavour ID
  * @return string The post processed css cache key.
  */
-function theme_boost_union_get_css_cache_key($theme, $flavourid) {
+function theme_boost_union_flavour_get_css_cache_key($theme, $flavourid) {
     $nosvg = (!$theme->use_svg_icons()) ? 'nosvg_' : '';
     $rtlmode = ($theme->get_rtl_mode() == true) ? 'rtl' : 'ltr';
 
@@ -331,13 +378,16 @@ function theme_boost_union_get_css_cache_key($theme, $flavourid) {
 /**
  * Set post processed CSS content cache.
  *
+ * This function is copied and modified from /lib/classes/output/theme_config.php
+ *
+ * @param theme_config $theme The theme to be generated
+ * @param int $flavourid The flavour ID
  * @param string $csscontent The post processed CSS content.
  * @return bool True if the content was successfully cached.
  */
-function theme_boost_union_set_css_content_cache($theme, $csscontent) {
-
+function theme_boost_union_flavour_set_css_content_cache($theme, $flavourid, $csscontent) {
     $cache = cache::make('core', 'postprocessedcss');
-    $key = $theme->get_css_cache_key();
+    $key = theme_boost_union_flavour_get_css_cache_key($theme, $flavourid);
 
     return $cache->set($key, $csscontent);
 }

@@ -315,31 +315,33 @@ function theme_boost_union_flavour_exists_for_cohort($cohortid) {
 }
 
 /**
- * Helper function do get a config key from flavour item.
+ * Helper function to get a config item from the given flavour ID.
  *
- * @param string $flavourid
- * @param string $configkey
+ * This function should only be used during the SCSS generation process (where the generated SCSS will be cached afterwards).
+ * It should not be used during the page output directly as it will fetch the flavour config item directly from the database.
  *
- * @return string/bool
+ * @param string $flavourid The flavour id.
+ * @param string $configkey The config key.
+ * @return string|null The config item if it exists, otherwise null.
  */
-function theme_boost_union_get_flavour_config_item_for_id(string $flavourid, string $configkey) {
+function theme_boost_union_get_flavour_config_item_for_flavourid(string $flavourid, string $configkey) {
     global $DB;
 
-    $cache = cache::make('theme_boost_union', 'flavours');
+    // Initialize static variable for the flavour record as this function might be called multiple times during a page output.
+    static $flavourrecord;
 
-    $flavouridkey = 'flavour_' . $flavourid;
-    // Get the cached flavour config for the current user flavour id.
-    $flavourconfig = $cache->get($flavouridkey);
-
-    // If we got a cached flavour config.
-    if ($flavourconfig == false) {
-        $flavourconfig = $DB->get_record('theme_boost_union_flavours', ['id' => $flavourid]);
-        $cache->set($flavouridkey, $flavourconfig);
+    // If the flavour has not been been fetched yet.
+    if ($flavourrecord == null) {
+        // Get the given flavour record with the given flavour ID from the database.
+        $flavourrecord = $DB->get_record('theme_boost_union_flavours', ['id' => $flavourid]);
     }
 
-    if (isset($flavourconfig->{$configkey})) { // ...isset returns true only if property exits and value != null;.
-        return $flavourconfig->{$configkey};
+    // If the flavour record has a config item with the given key.
+    if (isset($flavourrecord->{$configkey})) {
+        // Return it.
+        return $flavourrecord->{$configkey};
     }
 
-    return false;
+    // Fallback: Return null.
+    return null;
 }

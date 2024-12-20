@@ -14,135 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_boost_union\form;
-
-use renderer_base;
-
-defined('MOODLE_INTERNAL') || die();
-
-global $CFG;
-
-require_once($CFG->dirroot . '/lib/form/editor.php');
-
 /**
- * Form element for handling the colour picker.
+ * Theme Boost Union - Form element for color picker
  *
  * @package    theme_boost_union
- * @copyright  2023 Mario Wehr <m.wehr@fh-kaernten.at>
+ * @copyright  2023 bdecent GmbH <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_boost_union_colourpicker_form_element extends \HTML_QuickForm_element implements \templatable {
 
-    // String html for help button, if empty then no help.
-    public $_helpbutton = '';
+namespace theme_boost_union\formelement;
 
-    /**
-     * Class constructor
-     *
-     * @param    string     Name of the element
-     * @param    mixed      Label(s) for the element
-     * @param    mixed      Associative array of tag attributes or HTML attributes name="value" pairs
-     * @since     1.0
-     * @access    public
-     * @return    void
-     */
-    public function __construct($elementname=null, $elemenlabel=null, $attributes=null) {
-        parent::__construct($elementname, $elemenlabel, $attributes);
-        $this->_type = 'static';
-    }
-
-    /**
-     * Sets name of editor
-     *
-     * @param string $name name of element
-     */
-    // @codingStandardsIgnoreStart
-    public function setName($name) {
-        $this->updateAttributes(array('name' => $name));
-    }
-    // @codingStandardsIgnoreEnd
-    /**
-     * Returns name of element
-     *
-     * @return string
-     */
-    // @codingStandardsIgnoreStart
-    function getName() {
-        return $this->getAttribute('name');
-    }
-    // @codingStandardsIgnoreEnd
-    /**
-     * get html for help button
-     *
-     * @return string html for help button
-     */
-    // @codingStandardsIgnoreStart
-    public function getHelpButton() {
-        return $this->_helpbutton;
-    }
-    // @codingStandardsIgnoreEnd
-    /**
-     * Sets the value of the form element
-     *
-     * @param string $value
-     */
-    // @codingStandardsIgnoreStart
-    public function setvalue($value) {
-        $this->updateAttributes(array('value' => $value));
-    }
-    // @codingStandardsIgnoreEnd
-    /**
-     * Gets the value of the form element
-     */
-    public function getvalue() {
-        return $this->getAttribute('value');
-    }
-
-    /**
-     * Returns the html string to display this element.
-     *
-     * @return string
-     */
-    public function tohtml() {
-        global $PAGE, $OUTPUT;
-
-        $icon = new \pix_icon('i/loading', get_string('loading', 'admin'), 'moodle', ['class' => 'loadingicon']);
-        $context = (object) [
-            'icon' => $icon->export_for_template($OUTPUT),
-            'name' => $this->getAttribute('name'),
-            'id' => $this->getAttribute('id'),
-            'value' => $this->getAttribute('value'),
-            "readonly" => false,
-            'haspreviewconfig' => false,
-        ];
-        $PAGE->requires->js_init_call('M.util.init_colour_picker', array($this->getAttribute('id'), null));
-        return $OUTPUT->render_from_template('core_admin/setting_configcolourpicker', $context);
-    }
-
-    /**
-     * Function to export the renderer data in a format that is suitable for a mustache template.
-     *
-     * @param \renderer_base $output Used to do a final render of any components that need to be rendered for export.
-     * @return \stdClass|array
-     */
-    public function export_for_template(renderer_base $output) {
-        $context['html'] = $this->toHtml();
-        $context['id'] = $this->getAttribute('id');
-        return $context;
-    }
-}
+use HTML_QuickForm_Rule;
 
 /**
- * Colour picker validation rule
+ * Validation rule for color picker
  *
- * @package    theme_boost_union
- * @copyright  2023 Mario Wehr <m.wehr@fh-kaernten.at>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * This class is copied and modified from admin_setting_configcolourpicker in /lib/adminlib.php.
+ *
+ * @package   theme_boost_union
+ * @copyright 2023 Mario Wehr <m.wehr@fh-kaernten.at>
+ *            based on code 2010 by Sam Hemelryk
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_boost_union_colourpicker_rule extends \HTML_QuickForm_Rule {
-
+class colorpicker_rule extends HTML_QuickForm_Rule {
     /**
-     * Validates the colour that was entered by the user
+     * Validates the colour that was entered by the user.
      *
      * @param string $value Value to check
      * @param int|string|array $options Not used yet
@@ -151,7 +47,7 @@ class theme_boost_union_colourpicker_rule extends \HTML_QuickForm_Rule {
     public function validate($value, $options = null) {
 
         // List of valid HTML colour names.
-        $colornames = array(
+        $colornames = [
             'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure',
             'beige', 'bisque', 'black', 'blanchedalmond', 'blue',
             'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse',
@@ -182,8 +78,8 @@ class theme_boost_union_colourpicker_rule extends \HTML_QuickForm_Rule {
             'seagreen', 'seashell', 'sienna', 'silver', 'skyblue', 'slateblue',
             'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan',
             'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'white',
-            'whitesmoke', 'yellow', 'yellowgreen'
-        );
+            'whitesmoke', 'yellow', 'yellowgreen',
+        ];
 
         if (preg_match('/^#?([[:xdigit:]]{3}){1,2}$/', $value)) {
             if (strpos($value, '#') !== 0) {
