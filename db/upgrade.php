@@ -348,53 +348,61 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023102046, 'theme', 'boost_union');
     }
 
-    if ($oldversion < 2024100705) {
+    if ($oldversion < 2023102050) {
 
         // Define table theme_boost_union_flavours to be altered.
         $table = new xmldb_table('theme_boost_union_flavours');
 
-        // Define field brandcolor to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('brandcolor', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        // Define field look_rawscsspre to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_rawscsspre', XMLDB_TYPE_TEXT, null, null, null, null, null);
 
-        // Conditionally launch add field brandcolor.
+        // Conditionally launch add field look_rawscsspre.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-        // Define field bootstrapcolorsuccess to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('bootstrapcolorsuccess', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        // Define field look_brandcolor to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_brandcolor', XMLDB_TYPE_CHAR, '32', null, null, null, null);
 
-        // Conditionally launch add field bootstrapcolorsuccess.
+        // Conditionally launch add field look_brandcolor.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-        // Define field bootstrapcolorinfo to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('bootstrapcolorinfo', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        // Define field look_bootstrapcolorsuccess to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_bootstrapcolorsuccess', XMLDB_TYPE_CHAR, '32', null, null, null, null);
 
-        // Conditionally launch add field bootstrapcolorinfo.
+        // Conditionally launch add field look_bootstrapcolorsuccess.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-        // Define field bootstrapcolorwarning to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('bootstrapcolorwarning', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        // Define field look_bootstrapcolorinfo to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_bootstrapcolorinfo', XMLDB_TYPE_CHAR, '32', null, null, null, null);
 
-        // Conditionally launch add field bootstrapcolorwarning.
+        // Conditionally launch add field look_bootstrapcolorinfo.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-        // Define field bootstrapcolordanger to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('bootstrapcolordanger', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        // Define field look_bootstrapcolorwarning to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_bootstrapcolorwarning', XMLDB_TYPE_CHAR, '32', null, null, null, null);
 
-        // Conditionally launch add field bootstrapcolordanger.
+        // Conditionally launch add field look_bootstrapcolorwarning.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field look_bootstrapcolordanger to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_bootstrapcolordanger', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field look_bootstrapcolordanger.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
         // Boost_union savepoint reached.
-        upgrade_plugin_savepoint(true, 2024100705, 'theme', 'boost_union');
+        upgrade_plugin_savepoint(true, 2023102050, 'theme', 'boost_union');
     }
 
     return true;

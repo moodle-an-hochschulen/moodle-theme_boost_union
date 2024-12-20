@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-12-22 - Feature: Allow overwriting of brand colors and the usage of SCSS (instead of pure CSS) in flavours, resolves #155.
 * 2024-12-15 - Feature: Add declaration of accessibility page and accessibility support page, resolves #567.
 
 ### v4.3-r20
