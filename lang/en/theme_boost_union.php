@@ -34,6 +34,11 @@ $string['choosereadme'] = 'Theme Boost Union is an enhanced child theme of Boost
 $string['configtitle'] = 'Boost Union';
 $string['githubissueslink'] = '<a href="https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues">Github issues</a>';
 
+// General select options.
+$string['never'] = 'Never';
+$string['always'] = 'Always';
+$string['forguestsonly'] = 'Only for guests and non-logged-in users';
+
 // Settings: General strings.
 $string['dontchange'] = 'Do not change anything';
 
@@ -1149,6 +1154,9 @@ $string['accessibilitysupportuserlastname'] = 'support';
 $string['accessibilitysupportpagesrlinktitledefault'] = 'Get accessibility support';
 $string['accessibilitysupportpagesrlinktitlesetting'] = 'Accessibility support page screenreader link title';
 $string['accessibilitysupportpagesrlinktitlesetting_desc'] = 'In this setting, you can define the screenreader link title for the accessibility support page. This text will be used as link text which is only shown to screenreaders.';
+// ... ... Setting: Add re-captcha to accessibility support page
+$string['accessibilitysupportrecaptcha'] = 'Add re-captcha to accessibility support page';
+$string['accessibilitysupportrecaptcha_desc'] = 'With this setting, you control if a re-captcha is added to the accessibility support page. This is to prevent spam and abuse of the accessibility support form, just like it is done within <a href="{$a->support}">Moodle core\'s support form</a>. However, adding re-captchas add an additional accessibility barrier for users who use screenreaders or other assistive technologies which might be counter-productive in this case. Thus, please choose wisely if you want to enable this setting. Please also note that, even if enabled, the re-captcha is not shown until you set the necessary <a href="{$a->settings}">API keys in the authentication settings</a>.';
 
 // Settings: Flavours page.
 $string['configtitleflavours'] = 'Flavours';
