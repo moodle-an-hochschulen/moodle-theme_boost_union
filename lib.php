@@ -128,6 +128,10 @@ define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_NONE', 0);
 define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_DOWNLOAD', 1);
 define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB', 2);
 
+define('THEME_BOOST_UNION_SETTING_SELECT_NEVER', 'never');
+define('THEME_BOOST_UNION_SETTING_SELECT_ALWAYS', 'always');
+define('THEME_BOOST_UNION_SETTING_SELECT_ONLYGUESTSANDNONLOGGEDIN', 'guestandnonloggedin');
+
 /**
  * Returns the main SCSS content.
  *
@@ -548,6 +552,23 @@ function theme_boost_union_before_standard_html_head() {
 
     // Call and return callback implementation.
     return theme_boost_union_callbackimpl_before_standard_html();
+}
+
+/**
+ * Callback to add body elements on top (for releases up to Moodle 4.3).
+ *
+ * @return string
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_boost_union_before_standard_top_of_body_html() {
+    global $CFG;
+
+    // Require local library.
+    require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+
+    // Call and return callback implementation.
+    return theme_boost_union_callbackimpl_before_standard_top_of_body_html();
 }
 
 /**

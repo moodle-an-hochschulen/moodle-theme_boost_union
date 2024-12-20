@@ -559,6 +559,18 @@ With these settings, you can add rich text content which will be shown on a gene
 
 With these settings, you can add rich text content which will be shown on a generic page 3.
 
+#### Tab "Accessibility"
+
+In this tab there are the following settings:
+
+#### Declaration of accessibility
+
+With these settings, you can add rich text content which will be shown on a declaration of accessibility page.
+
+#### Accessibility support page
+
+With these settings, you can enable the accessibility support page which provides a contact form for accessibility issues.
+
 #### Tab "Information banners"
 
 In this tab, you can enable and configure multiple information banners to be shown on selected pages.
@@ -857,6 +869,6 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * University of Bayreuth, Nikolai Jahreis: Code
 * University of Graz, André Menrath: Code
 * University of Lübeck, Christian Wolters: Code, Peer Review, Ideating
-* Zurich University of Applied Sciences (ZHAW): Funding, Ideating
+* Zurich University of Applied Sciences (ZHAW): Code, Funding, Ideating
 
 Additionally, we thank all other contributors who contributed ideas, feedback and code snippets within the Github issues and pull requests as well as all contributors who contributed additional translations in AMOS, the Moodle translation tool.

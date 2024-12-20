@@ -141,5 +141,30 @@ if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
         // Add marker to hide the icons.
         $templatecontext['suppressfooterlinkicons'] = true;
     }
+}
 
+// If the accessibility button is enabled.
+$enableaccessibilitysupportsetting = get_config('theme_boost_union', 'enableaccessibilitysupport');
+$enableaccessibilitysupportfooterbuttonsetting = get_config('theme_boost_union', 'enableaccessibilitysupportfooterbutton');
+if (isset($enableaccessibilitysupportsetting) &&
+        $enableaccessibilitysupportsetting == THEME_BOOST_UNION_SETTING_SELECT_YES &&
+        isset($enableaccessibilitysupportfooterbuttonsetting) &&
+        $enableaccessibilitysupportfooterbuttonsetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+
+    // If user login is either not required or if the user is logged in.
+    $allowaccessibilitysupportwithoutloginsetting = get_config('theme_boost_union', 'allowaccessibilitysupportwithoutlogin');
+    if (!(isset($allowaccessibilitysupportwithoutloginsetting) &&
+            $allowaccessibilitysupportwithoutloginsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) ||
+            (isloggedin() && !isguestuser())) {
+
+        // Add marker to show this link.
+        $templatecontext['accessibilitybutton'] = true;
+        $templatecontext['accessibilitybuttonlink'] = new \core\url('/theme/boost_union/accessibility/support.php');
+        $templatecontext['accessibilitybuttonsrlinktitle'] = theme_boost_union_get_accessibility_srlinktitle();
+    }
+
+    // Otherwise.
+} else {
+    // Add marker to hide this link.
+    $templatecontext['accessibilitybutton'] = false;
 }

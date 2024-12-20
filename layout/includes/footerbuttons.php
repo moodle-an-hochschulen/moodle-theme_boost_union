@@ -15,24 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Hook callbacks.
+ * Theme Boost Union - footer buttons include.
  *
  * @package    theme_boost_union
- * @copyright  2024 Alexander Bias <bias@alexanderbias.de>
+ * @copyright  2024 Alexander Bias, ssystems GmbH <abias@ssystems.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$callbacks = [
-    [
-        'hook' => \core\hook\output\before_standard_head_html_generation::class,
-        'callback' => 'theme_boost_union\local\hook\output\before_standard_head_html_generation::callback',
-        'priority' => 0,
-    ],
-    [
-        'hook' => \core\hook\output\before_standard_top_of_body_html_generation::class,
-        'callback' => 'theme_boost_union\local\hook\output\before_standard_top_of_body_html_generation::callback',
-        'priority' => 0,
-    ],
-];
+$backtotopbutton = get_config('theme_boost_union', 'backtotopbutton');
+$accessibilitysupportfooterbutton = get_config('theme_boost_union', 'enableaccessibilitysupportfooterbutton');
+
+// Add footer buttons AMC module if a Boost Union footer button is enabled.
+if ($backtotopbutton == THEME_BOOST_UNION_SETTING_SELECT_YES ||
+        $accessibilitysupportfooterbutton == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    $PAGE->requires->js_call_amd('theme_boost_union/footerbuttons', 'init');
+}
