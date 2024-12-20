@@ -226,3 +226,30 @@ Feature: Configuring the theme_boost_union plugin for the "Support page" tab on 
 
   # Unfortunately, this can't be tested with Behat yet as we do not have a way to test sent emails yet (or rather block the sending of the email).
   # Scenario: Sending the accessibility support form fails and the fallback message is shown
+
+  @javascript
+  Scenario Outline: Setting: Add re-captcha to accessibility support page
+    Given the following config values are set as admin:
+      | config              | value |
+      | recaptchapublickey  | foo   |
+      | recaptchaprivatekey | bar   |
+    And the following config values are set as admin:
+      | config                                | value     | plugin            |
+      | enableaccessibilitysupport            | yes       | theme_boost_union |
+      | allowaccessibilitysupportwithoutlogin | yes       | theme_boost_union |
+      | accessibilitysupportrecaptcha         | <setting> | theme_boost_union |
+    When I am on accessibilitysupport page
+    Then "#fitem_id_recaptcha_element" "css_element" <nonshouldornot> exist
+    And I log in as "guest"
+    And I am on accessibilitysupport page
+    And "#fitem_id_recaptcha_element" "css_element" <guestshouldornot> exist
+    And I log out
+    And I log in as "student1"
+    And I am on accessibilitysupport page
+    And "#fitem_id_recaptcha_element" "css_element" <usershouldornot> exist
+
+    Examples:
+      | setting             | nonshouldornot | guestshouldornot | usershouldornot |
+      | never               | should not     | should not       | should not      |
+      | always              | should         | should           | should          |
+      | guestandnonloggedin | should         | should           | should not      |
