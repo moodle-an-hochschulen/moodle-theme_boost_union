@@ -15,12 +15,17 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union Login - Form element for color picker
+ * Theme Boost Union - Form element for color picker
  *
  * @package    theme_boost_union
  * @copyright  2023 bdecent GmbH <https://bdecent.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+namespace theme_boost_union\formelement;
+
+use MoodleQuickForm_text;
+use renderer_base;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -35,9 +40,9 @@ require_once($CFG->dirroot.'/lib/form/text.php');
  * @copyright 2023 bdecent GmbH <https://bdecent.de>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class moodlequickform_themeboostunion_colorpicker extends MoodleQuickForm_text implements \core\output\templatable {
+class colorpicker extends MoodleQuickForm_text implements \core\output\templatable {
 
-    use templatable_form_element {
+    use \templatable_form_element {
         export_for_template as export_for_template_base;
     }
 
