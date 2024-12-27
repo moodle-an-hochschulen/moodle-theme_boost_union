@@ -703,6 +703,63 @@ https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_child
 While Boost Union Child will surely help you to realize all your local Boost Union dreams, please do yourself and the whole community a favour and verify that your planned features are indeed not interesting as a pull request or feature request for the whole Boost Union community and could be contributed to Boost Union directly instead.
 
 
+SCSS stack order
+----------------
+
+Within Boost Union, you have multiple possibilities to add your own SCSS code to the Moodle page. And many of the Boost Union settings add SCSS code as well to realize the particular setting's goal. However, as you know, in SCSS the order of the instructions is key.
+
+The following list should give you an insight in which order all the SCSS code is added to the CSS stack which is shipped to the browser in the end.
+To fully understand this list, you have to be aware of two terms in Moodle theming:
+
+* _Pre SCSS_ or _Raw Initial SCSS_:\
+  This SCSS code is used only to initialize SCSS variables and not to write real SCSS code directly.
+* _Post SCSS_ or _Raw SCSS_:\
+  This SCSS code is the real SCSS code which is compiled to CSS for the browser and which might consume the SCSS variables which have been set in the Pre SCSS.
+
+Having said that, here's the order how all the SCSS code is added to the SCSS stack:
+
+1. All plugins' `styles.css` files:\
+   Each Moodle plugin can ship with a `styles.css` file which contains CSS code (not SCSS code!) for the plugin. These files are added at the very beginning in the order of the plugin names and types.
+
+2. `theme_boost` > `get_pre_scss()`:
+   * Adds the Boost Union Pre SCSS from the theme settings\
+     (which is set on `/admin/settings.php?section=theme_boost_union_look#theme_boost_union_look_scss`).\
+     Note: In fact, this function adds the _active theme's_ Pre SCSS which becomes important if you use a Boost Union Child theme.
+
+3. `theme_boost_union` > `get_pre_scss()`:
+   * Adds the Boost Union Pre SCSS from disk\
+     (which is located on `/theme/boost_union/scss/boost_union/pre.scss` and which is empty currently)
+   * Sets several SCSS variables based on Boost Union or Boost Union flavour settings
+   * Adds the Boost Union external Pre SCSS\
+     (which is set on `/admin/settings.php?section=theme_boost_union_look#theme_boost_union_look_scss`)
+   * Adds the Boost Union flavour Pre SCSS\
+     (which is set within the active flavour on `/theme/boost_union/flavours/overview.php`)
+
+4. `theme_boost_union` > `get_main_scss()`:
+   * Calls the `theme_boost` > `get_main_scss()` function
+     * Adds the Boost Core Preset\
+       (which is set on `/admin/settings.php?section=themesettingboost` and defaults to the `/theme/boost/scss/preset/default.scss` file).
+       With this preset, the FontAwesome library, the Bootstrap library and all the Moodle core stylings are added which means that this preset is the place where all the Moodle core style is added.
+   * Adds the Boost Union Post SCSS from disk\
+     (which is located on `/theme/boost_union/scss/boost_union/post.scss`)
+     This file holds all the Boost Union specific SCSS code which can be added to the stack without being dependent on specific configurations like configured colors or sizes.
+   * Add the Boost Union external SCSS\
+     (which is set on `/admin/settings.php?section=theme_boost_union_look#theme_boost_union_look_scss`)
+
+5. `theme_boost` > `get_extra_scss()`:
+   * Adds the Boost Union Post SCSS from the theme settings\
+     (which is set on `/admin/settings.php?section=theme_boost_union_look#theme_boost_union_look_scss`).\
+     Note: In fact, this function adds the _active theme's_ Post SCSS which becomes important if you use a Boost Union Child theme.
+   * Adds the page background image and login page background image
+
+6. `theme_boost_union` > `get_extra_scss()`:
+   * Overrides / enhances the background images which have been set before
+   * Adds the Boost Union flavour Post SCSS\
+     (which is set within the active flavour on `/theme/boost_union/flavours/overview.php`)
+   * Adds the Boost Union features' SCSS.
+     This is the Boost Union specific SCSS code which has to be added to the stack based on specific configurations, for example for changing the activity icon purposes or for changing the login form order.
+
+
 Plugin repositories
 -------------------
 
