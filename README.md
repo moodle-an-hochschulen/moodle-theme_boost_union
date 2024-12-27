@@ -877,6 +877,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * lern.link GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
 * lern.link GmbH, Lukas MuLu Müller: Code
 * lern.link GmbH, Beata Waloszczyk: Code
+* Lutheran University of Applied Sciences Nuremberg: Funding
 * Moodle.NRW / Ruhr University Bochum, Annika Lambert: Code
 * Moodle.NRW / Ruhr University Bochum, Matthias Buttgereit: Code, Ideating
 * Moodle.NRW / Ruhr University Bochum, Tim Trappen: Code, Ideating
