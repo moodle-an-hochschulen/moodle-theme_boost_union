@@ -47,11 +47,11 @@ class smartmenu_item_edit_form extends \moodleform {
         global $DB, $PAGE, $CFG;
 
         // Require and register the QuickForm colorpicker element.
-        require_once($CFG->dirroot.'/theme/boost_union/form/element-colorpicker.php');
+        require_once($CFG->dirroot.'/theme/boost_union/classes/formelement/colorpicker.php');
         \MoodleQuickForm::registerElementType(
                 'theme_boost_union_colorpicker',
-                $CFG->dirroot.'/theme/boost_union/form/element-colorpicker.php',
-                'moodlequickform_themeboostunion_colorpicker'
+                $CFG->dirroot.'/theme/boost_union/classes/formelement/colorpicker.php',
+                '\theme_boost_union\formelement\colorpicker'
         );
 
         // Get an easier handler for the form.
