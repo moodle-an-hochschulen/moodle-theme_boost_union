@@ -147,9 +147,6 @@ function theme_boost_union_get_main_scss_content($theme) {
     // Initialize SCSS code.
     $scss = '';
 
-    // Include pre.scss from Boost Union.
-    $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/pre.scss');
-
     // Get and include the main SCSS from Boost Core.
     // This particularly covers the theme preset which is set in Boost Core and not Boost Union.
     $scss .= theme_boost_get_main_scss_content(theme_config::load('boost'));
@@ -198,6 +195,19 @@ function theme_boost_union_get_pre_scss($theme) {
 
     // Initialize SCSS code.
     $scss = '';
+
+    // You might think that this pre SCSS function is only called for the activated theme.
+    // However, due to the way how the theme_*_get_pre_scss callback functions are searched and called within Boost child theme
+    // hierarchy Boost Union not only gets the pre SCSS from this function here but only from theme_boost_get_pre_scss as well.
+    //
+    // There, the custom Pre SCSS from $theme->settings->scsspre (which hits the SCSS settings from theme_boost_union even though
+    // the code is within theme_boost) is already added to the SCSS codebase.
+    //
+    // We have to accept this fact here and must not copy the code from theme_boost_get_pre_scss into this function.
+    // Instead, we must only add additionally CSS code which is based on any Boost Union-only functionality.
+
+    // Include pre.scss from Boost Union.
+    $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/pre.scss');
 
     // Add SCSS constants for evaluating select setting values in SCSS code.
     $scss .= '$boostunionsettingyes: '.THEME_BOOST_UNION_SETTING_SELECT_YES. ";\n";
