@@ -1,4 +1,3 @@
-<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,19 +14,32 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Version file
+ * Theme Boost Union - JS code for footer buttons
  *
- * @package    theme_boost_union
+ * @module     theme_boost_union/backtotopbutton
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+define(['jquery'], function($) {
+    "use strict";
 
-$plugin->component = 'theme_boost_union';
-$plugin->version = 2024100705;
-$plugin->release = 'v4.5-r4';
-$plugin->requires = 2024100700;
-$plugin->supported = [405, 405];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = ['theme_boost' => 2024100700];
+    /**
+     * Initializing.
+     */
+    function initFooterButtons() {
+        // This will check if there is a communication button shown on the page already.
+        // If yes, it will add a class to the body tag which will be later used to align the Boost Union footer buttons
+        // with the communications button.
+        // This is necessary as the communications button would otherwise be overlaid by the Boost Union footer buttons.
+        if ($('#page-footer .btn-footer-communication').length) {
+            $('body').addClass('theme-boost-union-commincourse');
+        }
+    }
+
+    return {
+        init: function() {
+            initFooterButtons();
+        }
+    };
+});

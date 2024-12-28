@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2024-12-15 - Feature: Add declaration of accessibility page and accessibility support page, resolves #567.
+
 ### v4.5-r4
 
 * 2024-12-06 - Tests: Add several Behat optimisations to bring down the test suite run time, resolves #765.

@@ -41,8 +41,8 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, Notificatio
 
         // If the string has arrived, add backtotop button to DOM and add scroll and click handlers.
         $.when(stringsPromise).then(function(string) {
-            // Add a fontawesome icon after the footer as the back to top button.
-            $('#page-footer').after('<button id="back-to-top" ' +
+            // Add a fontawesome icon to the footer as the back to top button.
+            $('#boost-union-footer-buttons').prepend('<button id="back-to-top" ' +
                     'class="btn btn-icon bg-secondary icon-no-margin d-print-none"' +
                     'aria-label="' + string + '">' +
                     '<i aria-hidden="true" class="fa fa-chevron-up fa-fw "></i></button>');
@@ -72,14 +72,6 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, Notificatio
                 $('html, body').animate({scrollTop: 0}, 500);
                 $('#back-to-top').blur();
             });
-
-            // This will check if there is a communication button shown on the page already.
-            // If yes, it will add a class to the body tag which will be later used to align the back-to-top button
-            // with the communications button.
-            // This is necessary as the communications button would otherwise be overlaid by the back-to-top button.
-            if ($('#page-footer .btn-footer-communication').length) {
-                $('body').addClass('theme-boost-union-commincourse');
-            }
 
             return true;
         }).fail(Notification.exception);

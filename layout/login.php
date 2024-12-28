@@ -22,6 +22,7 @@
  * Modifications compared to this layout file:
  * * Include footnote
  * * Include static pages
+ * * Include accessibility pages
  * * Include info banners
  *
  * @package   theme_boost_union
@@ -52,6 +53,9 @@ require_once(__DIR__ . '/includes/footnote.php');
 
 // Include the template content for the static pages.
 require_once(__DIR__ . '/includes/staticpages.php');
+
+// Include the template content for the accessibility pages.
+require_once(__DIR__ . '/includes/accessibilitypages.php');
 
 // Include the template content for the footer button.
 require_once(__DIR__ . '/includes/footer.php');

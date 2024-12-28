@@ -516,69 +516,118 @@ body.hascourseindexcmicons {
 }
 
 /*---------------------------------------
- * Setting: Back to top button.
+ * Setting: Boost Union footer buttons (i.e. Back to top button and Accessibility button).
  --------------------------------------*/
 
-#back-to-top {
-    /* Hide the back to top icon initially. It will be unhidden by JS only. */
-    display: none;
-    /* Place the back to top button at a fixed place. */
+/* Boost Union footer buttons container */
+#boost-union-footer-buttons {
+    /* Place the Boost Union footer buttons at a fixed place. */
     position: fixed;
     right: 2rem;
-    /* As a start, the back to top button is shown in the bottom right corner. */
+    /* As a start, the Boost Union footer buttons are shown in the bottom right corner. */
     bottom: 2rem;
-    /* Make sure that the back to top button is not covered by anything else. */
+    /* Make sure that the Boost Union footer buttons are not covered by anything else. */
     z-index: $zindex-dropdown;
-    /* Animate position together with footer button. */
+    /* Animate position together with Moodle core footer button. */
     @include transition(0.2s);
+
+    /* Add margin between the individual buttons. */
+    .btn {
+        display: block;
+        margin-top: 0.75rem;
+    }
+
+    /* Style accessibility button. */
+    #btn-accessibility-support {
+        /* Use some clever CSS tricks to present the fa-universal-access icon without its border. */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        border: 6px solid $secondary;
+        transition: 0.2s;
+
+        .icon {
+            width: 1.75rem;
+            height: 1.75rem;
+            max-width: none;
+            max-height: none;
+            font-size: 1.75rem;
+            color: $secondary;
+            transition: 0.2s;
+        }
+
+        &,
+        &:hover,
+        &:focus {
+            background: #000 !important; /* stylelint-disable-line declaration-no-important */
+        }
+
+        &:hover,
+        &:focus {
+            border-color: #b1bbc4;
+
+            .icon {
+                color: #b1bbc4;
+            }
+        }
+    }
+
+    /* Style back to top button. */
+    #back-to-top {
+        /* Hide the back to top icon initially. It will be unhidden by JS only. */
+        display: none;
+
+        i::before {
+            /* Move the caret icon slightly up for a nicer look. */
+            vertical-align: 0.3rem;
+        }
+    }
 }
-/* If the sticky footer is shown by Moodle core, the back to top button has to have a higher starting position. */
-body.hasstickyfooter #back-to-top {
+
+/* If the sticky footer is shown by Moodle core, the Boost Union footer buttons have to have a higher starting position. */
+body.hasstickyfooter #boost-union-footer-buttons {
     bottom: 7rem;
-}
-#back-to-top i::before {
-    /* Move the caret icon slightly up for a nicer look. */
-    vertical-align: 0.3rem;
 }
 
 /* If we are on a small screen and the footer button is shown in the bottom right corner,
-   the back to top button has to be shown above of the footer button. */
+   the Boost Union footer buttons have to be shown above of the footer button. */
 body.theme_boost-union-footerbuttonall.jsenabled,
 body.theme_boost-union-footerbuttonmobile.jsenabled {
     @include media-breakpoint-down(xs) {
-        #back-to-top {
+        #boost-union-footer-buttons {
             bottom: 5rem;
         }
     }
-    /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
+    /* And if the sticky footer is shown by Moodle core, move the Boost Union footer buttons more upwards. */
     &.hasstickyfooter {
         @include media-breakpoint-down(xs) {
-            #back-to-top {
+            #boost-union-footer-buttons {
                 bottom: 10rem;
             }
         }
     }
 }
 /* If we are on a larger screen and the footer button is shown in the bottom right corner,
-   the back to top button has to be shown above of the footer button. */
+   the Boost Union footer buttons have to be shown above of the footer button. */
 body.theme_boost-union-footerbuttonall.jsenabled,
 body.theme_boost-union-footerbuttondesktop.jsenabled {
     @include media-breakpoint-up(sm) {
-        #back-to-top {
+        #boost-union-footer-buttons {
             bottom: 5rem;
         }
     }
-    /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
+    /* And if the sticky footer is shown by Moodle core, move the Boost Union footer buttons more upwards. */
     &.hasstickyfooter {
         @include media-breakpoint-up(sm) {
-            #back-to-top {
+            #boost-union-footer-buttons {
                 bottom: 10rem;
             }
         }
     }
 }
-/* If the communications button is shown, the back to top button has to be moved more upwards.
-   To realize this, our back-to-top JS has added a class to the body tag. */
+/* If the communications button is shown, the Boost Union footer buttons have to be moved more upwards.
+   To realize this, our footerbuttons JS has added a class to the body tag. */
 body.theme-boost-union-commincourse {
     /* If we are on a small screen,
        we do not need to do anything (yet) as the communication button is not shown on small screens (yet). */
@@ -586,16 +635,16 @@ body.theme-boost-union-commincourse {
     /* If we are on a larger screen and the footer button is not shown in the bottom right corner. */
     &.theme_boost-union-footerbuttonnone.jsenabled,
     &.theme_boost-union-footerbuttonmobile.jsenabled {
-        /* We have to move the back to top button more upwards.*/
+        /* We have to move the Boost Union footer buttons more upwards.*/
         @include media-breakpoint-up(sm) {
-            #back-to-top {
+            #boost-union-footer-buttons {
                 bottom: 5rem;
             }
         }
-        /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
+        /* And if the sticky footer is shown by Moodle core, move the Boost Union footer buttons more upwards. */
         &.hasstickyfooter {
             @include media-breakpoint-up(sm) {
-                #back-to-top {
+                #boost-union-footer-buttons {
                     bottom: 10rem;
                 }
             }
@@ -605,16 +654,16 @@ body.theme-boost-union-commincourse {
     /* If we are on a larger screen and the footer button is shown in the bottom right corner. */
     &.theme_boost-union-footerbuttonall.jsenabled,
     &.theme_boost-union-footerbuttondesktop.jsenabled {
-        /* We have to move the back to top button even more upwards.*/
+        /* We have to move the Boost Union footer buttons even more upwards.*/
         @include media-breakpoint-up(sm) {
-            #back-to-top {
+            #boost-union-footer-buttons {
                 bottom: 8rem;
             }
         }
-        /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
+        /* And if the sticky footer is shown by Moodle core, move the Boost Union footer buttons more upwards. */
         &.hasstickyfooter {
             @include media-breakpoint-up(sm) {
-                #back-to-top {
+                #boost-union-footer-buttons {
                     bottom: 13rem;
                 }
             }
@@ -623,13 +672,17 @@ body.theme-boost-union-commincourse {
 }
 
 /* If the right-hand drawer is opened. */
-#page.drawers.show-drawer-right #back-to-top {
+#page.drawers.show-drawer-right #boost-union-footer-buttons {
     /* On larger screens, the drawer opens near the main content.
-       The back to top button can be moved nicely to the left. */
+       The Boost Union footer buttons can be moved nicely to the left. */
     @include media-breakpoint-up(lg) {
-        /* Move the back to top button when right drawer is shown. */
+        /* Move the Boost Union footer buttons when right drawer is shown. */
         right: calc(#{$drawer-right-width} + 2rem);
     }
+}
+
+/* If the right-hand drawer is opened. */
+#page.drawers.show-drawer-right #back-to-top {
     /* On smaller screens, the drawer opens as an overlay over the main content.
        The back to top button looks misplaced then. */
     @include media-breakpoint-down(lg) {
@@ -1037,8 +1090,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 
         /* Add horizontal margin and padding to align the footnote with the main page content.
            The numbers are adopted from the main content areas of the Moodle page.
-           Add another right padding as well to avoid that the content gets covered by the footer and back-to-top
-           buttons. */
+           Add another right padding as well to avoid that the content gets covered by the footer and Boost Union footer buttons. */
         margin-left: .5rem;
         padding-left: 15px;
         margin-right: .5rem;
@@ -1056,7 +1108,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 
         /* Add horizontal margin and padding to align the footnote with the main page content.
            The numbers are adopted from the main content areas of the Moodle page.
-           Add another right padding as well to avoid that the content gets covered by the back-to-top button. */
+           Add another right padding as well to avoid that the content gets covered by the Boost Union footer buttons. */
         margin-left: 15px;
         padding-left: 1rem;
         margin-right: 15px;
@@ -1102,21 +1154,27 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 
 /* And on really small screens. */
 @include media-breakpoint-down(xs) {
-    body.pagelayout-login.loginbackgroundimage #footnote {
-        /* Add white background color and a small bottom margin
-           to make the footnote work with background images.
-           This is necessary as this isn't covered by the normal background styles already
-           (which are only applied to pages > 768px. */
-        background-color: $white;
+    body.pagelayout-login.loginbackgroundimage {
+        #footnote {
+            /* Add white background color and a small bottom margin
+            to make the footnote work with background images.
+            This is necessary as this isn't covered by the normal background styles already
+            (which are only applied to pages > 768px. */
+            background-color: $white;
 
-        /* Change horizontal margin and padding to
-           make the footnote work with background images.
-           We do not need any additional right padding as there isn't a back-to-top button nor a footer button
+            /* Change horizontal margin and padding to
+            make the footnote work with background images. */
+            margin-left: 0;
+            padding-left: calc(15px + 1rem);
+            margin-right: 0;
+        }
+
+        /* If (and only if) the accessibility button is not shown on the login page,
+           we do not need any additional right padding as there isn't a Boost Union footer button nor a footer button
            on the login page on this screen size. */
-        margin-left: 0;
-        padding-left: calc(15px + 1rem);
-        margin-right: 0;
-        padding-right: calc(15px + 1rem);
+        &:not(.theme_boost-union-accessibilitybutton) #footnote {
+            padding-right: calc(15px + 1rem);
+        }
     }
 }
 
@@ -2373,8 +2431,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 @include media-breakpoint-down(xs) {
     /* If the bottom bar is shown. */
     body.theme-boost-union-bottombar {
-        /* The back to top button has to be moved more upwards. */
-        #back-to-top {
+        /* The Boost Union footer buttons have to be moved more upwards. */
+        #boost-union-footer-buttons {
             bottom: calc(60px + 1rem);
         }
 
@@ -2385,8 +2443,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             .btn-footer-popover {
                 bottom: calc(60px + 1rem);
             }
-            /* And the back to top button has to be moved even more upwards. */
-            #back-to-top {
+            /* And the Boost Union footer buttons have to be moved even more upwards. */
+            #boost-union-footer-buttons {
                 bottom: calc(60px + 4rem);
             }
         }
@@ -2396,8 +2454,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 @include media-breakpoint-only(sm) {
     /* If the bottom bar is shown. */
     body.theme-boost-union-bottombar {
-        /* The back to top button has to be moved more upwards. */
-        #back-to-top {
+        /* The Boost Union footer buttons have to be moved more upwards. */
+        #boost-union-footer-buttons {
             bottom: calc(60px + 1rem);
         }
 
@@ -2408,8 +2466,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             .btn-footer-popover {
                 bottom: calc(60px + 1rem);
             }
-            /* And the back to top button has to be moved even more upwards. */
-            #back-to-top {
+            /* And the Boost Union footer buttons have to be moved even more upwards. */
+            #boost-union-footer-buttons {
                 bottom: calc(60px + 4rem);
             }
         }
@@ -2421,9 +2479,9 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         .btn-footer-communication {
             bottom: calc(60px + 1rem);
         }
-        /* The back to top button has to be moved even more upwards.
+        /* The Boost Union footer buttons have to be moved even more upwards.
            This has to use !important as the selector above would be more specific otherwise. */
-        #back-to-top {
+        #boost-union-footer-buttons {
             bottom: calc(60px + 4rem) !important; /* stylelint-disable-line declaration-no-important */
         }
 
@@ -2438,9 +2496,9 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             .btn-footer-communication {
                 bottom: calc(60px + 4rem);
             }
-            /* And the back to top button has to be moved even more upwards.
+            /* And the Boost Union footer buttons have to be moved even more upwards.
                This has to use !important as the selector above would be more specific otherwise. */
-            #back-to-top {
+            #boost-union-footer-buttons {
                 bottom: calc(60px + 7rem) !important; /* stylelint-disable-line declaration-no-important */
             }
         }
