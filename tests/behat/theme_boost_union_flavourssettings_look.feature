@@ -129,17 +129,85 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   # Scenario: Flavours: Background image - Do not upload a background image (with a global background image being served properly)
 
   @javascript
-  Scenario: Flavours: Custom SCSS - Add custom SCSS to the page
+  Scenario: Flavours: Brand color - Set the brand color
+    Given the following "categories" exist:
+      | name   | category | idnumber |
+      | Cat 1  | 0        | CAT1     |
+    And the following "courses" exist:
+      | fullname  | shortname | category |
+      | Course 1  | C1        | CAT1     |
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
     And I set the field "Title" to "My shiny new flavour"
-    # We add a small CSS snippet to the flavour which hides the heading in the page header.
-    # This is just to make it easy to detect the effect of this flavour.
+    And I set the field "look_brandcolor" to "#FF0000"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    And the following "activities" exist:
+      | activity | name      | intro                                                     | course |
+      | label    | Label one | <span class="mytesttext text-primary">My test text</span> | C1     |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I should see "My test text"
+    Then DOM element ".mytesttext" should have computed style "color" "rgb(255, 0, 0)"
+
+  @javascript
+  Scenario Outline: Flavours: Bootstrap colors - Set the Bootstrap colors
+    Given the following "categories" exist:
+      | name   | category | idnumber |
+      | Cat 1  | 0        | CAT1     |
+    And the following "courses" exist:
+      | fullname  | shortname | category |
+      | Course 1  | C1        | CAT1     |
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I set the field "look_bootstrapcolor<type>" to "<colorhex>"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    And the following "activities" exist:
+      | activity | name      | intro                                                    | course |
+      | label    | Label one | <span class="mytesttext text-<type>">My test text</span> | C1     |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I should see "My test text"
+    Then DOM element ".mytesttext" should have computed style "color" "<colorrgb>"
+
+    Examples:
+      | type    | colorhex | colorrgb         |
+      | success | #FF0000  | rgb(255, 0, 0)   |
+      | info    | #00FF00  | rgb(0, 255, 0)   |
+      | warning | #0000FF  | rgb(0, 0, 255)   |
+      | danger  | #FFFF00  | rgb(255, 255, 0) |
+
+  @javascript
+  Scenario: Flavours: Raw (initial) SCSS - Add custom SCSS to the page
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    # We add a SCSS variable and a small SCSS snippet to the flavour which hides the heading in the page header.
+    # This is just to make it easy to detect the effect of this flavour and to verify that SCSS is compiled correctly.
+    And I set the field "Raw initial SCSS" to multiline:
+    """
+    $myvariable: none;
+    """
     And I set the field "Raw SCSS" to multiline:
     """
-    #page-header h1 { display: none; }
+    #page-header h1 { display: $myvariable; }
     """
     And I click on "Save changes" "button"
     And I should see "Flavours" in the "#region-main h2" "css_element"
