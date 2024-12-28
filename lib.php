@@ -807,14 +807,13 @@ function theme_boost_union_alter_css_urls(&$urls) {
     // Require flavours library.
     require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
 
+    // In the original code, Bas commented: "No CSS switch during behat runs, or it will take ages to run a scenario."
+    // While there is a reason for this in Bas' context, We do not have to care about this as we do only change the URL
+    // if a flavour applies and in these cases, the CSS must be switched in any case.
+
     // If any flavour applies to this page.
     $flavour = theme_boost_union_get_flavour_which_applies();
     if ($flavour != null) {
-        if (defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING) {
-            // No CSS switch during behat runs, or it will take ages to run a scenario.
-            return;
-        }
-
         // Iterate over the CSS URLs.
         foreach (array_keys($urls) as $i) {
             // If we have a moodle_url object.
