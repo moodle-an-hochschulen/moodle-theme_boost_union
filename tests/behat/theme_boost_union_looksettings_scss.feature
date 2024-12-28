@@ -10,33 +10,20 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
       | Course 1 | C1        |
 
   @javascript
-  Scenario: Setting: Raw initial SCSS - Add custom SCSS to the theme
+  Scenario: Setting: Raw (initial) SCSS - Add custom SCSS to the theme
     When I log in as "admin"
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
-    # We add a small CSS snippet to the page which hides the heading in the page header.
-    # This is just to make it easy to detect the effect of this custom SCSS code.
+    # We add a SCSS variable and a small SCSS snippet to the page which hides the heading in the page header.
+    # This is just to make it easy to detect the effect of this custom SCSS code and to verify that SCSS is compiled correctly.
     And I set the field "Raw initial SCSS" to multiline:
     """
-    #page-header h1 { display: none; }
+    $myvariable: none;
     """
-    And I press "Save changes"
-    And Behat debugging is enabled
-    And I am on "Course 1" course homepage
-    Then I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
-
-  @javascript
-  Scenario: Setting: Raw SCSS - Add custom SCSS to the theme
-    When I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
-    # We add a small CSS snippet to the page which hides the heading in the page header.
-    # This is just to make it easy to detect the effect of this custom SCSS code.
     And I set the field "Raw SCSS" to multiline:
     """
-    #page-header h1 { display: none; }
+    #page-header h1 { display: $myvariable; }
     """
     And I press "Save changes"
     And Behat debugging is enabled
