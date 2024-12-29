@@ -6,6 +6,9 @@ Changes
 
 ### Unreleased
 
+* 2024-12-25 - Documentation: Explain the SCSS stack order in the README.
+* 2024-12-25 - Bugfix: Fix the order in which all the pre SCSS assets are added to the SCSS stack, resolves #788.
+* 2024-12-22 - Feature: Allow overwriting of brand colors and the usage of SCSS (instead of pure CSS) in flavours, resolves #155.
 * 2024-12-15 - Feature: Add declaration of accessibility page and accessibility support page, resolves #567.
 
 ### v4.5-r4

@@ -313,3 +313,35 @@ function theme_boost_union_flavour_exists_for_cohort($cohortid) {
     // We didn't find any matching cohort, return false.
     return false;
 }
+
+/**
+ * Helper function to get a config item from the given flavour ID.
+ *
+ * This function should only be used during the SCSS generation process (where the generated SCSS will be cached afterwards).
+ * It should not be used during the page output directly as it will fetch the flavour config item directly from the database.
+ *
+ * @param string $flavourid The flavour id.
+ * @param string $configkey The config key.
+ * @return string|null The config item if it exists, otherwise null.
+ */
+function theme_boost_union_get_flavour_config_item_for_flavourid(string $flavourid, string $configkey) {
+    global $DB;
+
+    // Initialize static variable for the flavour record as this function might be called multiple times during a page output.
+    static $flavourrecord;
+
+    // If the flavour has not been been fetched yet.
+    if ($flavourrecord == null) {
+        // Get the given flavour record with the given flavour ID from the database.
+        $flavourrecord = $DB->get_record('theme_boost_union_flavours', ['id' => $flavourid]);
+    }
+
+    // If the flavour record has a config item with the given key.
+    if (isset($flavourrecord->{$configkey})) {
+        // Return it.
+        return $flavourrecord->{$configkey};
+    }
+
+    // Fallback: Return null.
+    return null;
+}

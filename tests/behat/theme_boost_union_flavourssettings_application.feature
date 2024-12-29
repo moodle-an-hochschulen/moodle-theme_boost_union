@@ -55,7 +55,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I set the field "Title" to "Cat 1 flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: none; }
     """
@@ -94,7 +94,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I set the field "Title" to "Cat 1 flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: none; }
     """
@@ -133,7 +133,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I set the field "Title" to "Cat 1 flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header on course pages and category overview pages.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: none; }
     """
@@ -169,7 +169,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I set the field "Title" to "Cohort 1 flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header on the dashboard.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-my #page-header h1 { display: none; }
     """
@@ -199,7 +199,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I set the field "Title" to "Cohort 1 flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header on the dashboard.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-my #page-header h1 { display: none; }
     """
@@ -231,7 +231,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I set the field "Title" to "Cat 1a flavour"
     # We add a small CSS snippet to the flavour which colorizes the heading in the page header on the dashboard.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { color: red; }
     """
@@ -249,7 +249,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I set the field "Title" to "Cat 1b flavour"
     # We add a small CSS snippet to the flavour which hides the heading in the page header on the dashboard.
     # This is just to make it easy to detect if this flavour is applied or not.
-    And I set the field "Custom CSS" to multiline:
+    And I set the field "Raw SCSS" to multiline:
     """
     .path-course-view #page-header h1, .path-course-index #page-header h1 { display: none; }
     """

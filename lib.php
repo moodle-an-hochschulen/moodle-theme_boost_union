@@ -141,13 +141,11 @@ define('THEME_BOOST_UNION_SETTING_SELECT_ONLYGUESTSANDNONLOGGEDIN', 'guestandnon
 function theme_boost_union_get_main_scss_content($theme) {
     global $CFG;
 
-    $scss = '';
-
     // Require Boost Core library.
     require_once($CFG->dirroot.'/theme/boost/lib.php');
 
-    // Include pre.scss from Boost Union.
-    $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/pre.scss');
+    // Initialize SCSS code.
+    $scss = '';
 
     // Get and include the main SCSS from Boost Core.
     // This particularly covers the theme preset which is set in Boost Core and not Boost Union.
@@ -178,7 +176,38 @@ function theme_boost_union_get_pre_scss($theme) {
     // Require local library.
     require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
+    // Pick the active flavour from the global scope.
+    // This global variable is set in /theme/boost_union/flavour/styles.php.
+    // It is only set by that file and only needed in this and another single function in this file.
+    // This approach feels a bit hacky but it is the most efficient way to get the flavour ID into this function.
+    global $themeboostunionappliedflavour;
+    if (isset($themeboostunionappliedflavour)) {
+        $flavourid = $themeboostunionappliedflavour;
+    } else {
+        $flavourid = null;
+    }
+
+    // If any flavour applies to this page.
+    if ($flavourid != null) {
+        // Require flavours library.
+        require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+    }
+
+    // Initialize SCSS code.
     $scss = '';
+
+    // You might think that this pre SCSS function is only called for the activated theme.
+    // However, due to the way how the theme_*_get_pre_scss callback functions are searched and called within Boost child theme
+    // hierarchy Boost Union not only gets the pre SCSS from this function here but only from theme_boost_get_pre_scss as well.
+    //
+    // There, the custom Pre SCSS from $theme->settings->scsspre (which hits the SCSS settings from theme_boost_union even though
+    // the code is within theme_boost) is already added to the SCSS codebase.
+    //
+    // We have to accept this fact here and must not copy the code from theme_boost_get_pre_scss into this function.
+    // Instead, we must only add additionally CSS code which is based on any Boost Union-only functionality.
+
+    // Include pre.scss from Boost Union.
+    $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/pre.scss');
 
     // Add SCSS constants for evaluating select setting values in SCSS code.
     $scss .= '$boostunionsettingyes: '.THEME_BOOST_UNION_SETTING_SELECT_YES. ";\n";
@@ -193,12 +222,44 @@ function theme_boost_union_get_pre_scss($theme) {
         'bootstrapcolordanger' => ['danger'],
     ];
 
+    // Define the configurables which can be overridden by flavours.
+    // The key is the configurable and the value is the field name in mdl_theme_boost_union_flavours.
+    $flavourconfigurable = [
+        'brandcolor' => 'look_brandcolor',
+        'bootstrapcolorsuccess' => 'look_bootstrapcolorsuccess',
+        'bootstrapcolorinfo' => 'look_bootstrapcolorinfo',
+        'bootstrapcolorwarning' => 'look_bootstrapcolorwarning',
+        'bootstrapcolordanger' => 'look_bootstrapcolordanger',
+    ];
+
     // Prepend variables first.
     foreach ($configurable as $configkey => $targets) {
-        $value = get_config('theme_boost_union', $configkey);
+        // Get the global config value for the given config key.
+        $value = isset($theme->settings->{$configkey}) ? $theme->settings->{$configkey} : null;
+
+        // If any flavour applies to this page.
+        if ($flavourid != null) {
+            // If the configurable can be overridden by flavours.
+            if (array_key_exists($configkey, $flavourconfigurable)) {
+                // Pick the flavour config key.
+                $flavourconfigkey = $flavourconfigurable[$configkey];
+            }
+            // Get the flavour config value for the given flavour id.
+            $flavourvalue = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, $flavourconfigkey);
+            // If the value is not set, continue.
+            if ($flavourvalue == null || empty($flavourvalue)) {
+                continue;
+            }
+            // Otherwise, override the global config value with the flavour value.
+            $value = $flavourvalue;
+        }
+
+        // If the value is not set, continue.
         if (!($value)) {
             continue;
         }
+
+        // Otherwise, set the SCSS variable.
         array_map(function($target) use (&$scss, $value) {
             $scss .= '$' . $target . ': ' . $value . ";\n";
         }, (array) $targets);
@@ -277,9 +338,14 @@ function theme_boost_union_get_pre_scss($theme) {
     // Get and include the external Pre SCSS.
     $scss .= theme_boost_union_get_external_scss('pre');
 
-    // Prepend pre-scss.
-    if (get_config('theme_boost_union', 'scsspre')) {
-        $scss .= get_config('theme_boost_union', 'scsspre');
+    // If any flavour applies to this page.
+    if ($flavourid != null) {
+        // If there is any raw Pre SCSS in the flavour.
+        $flavourrawscsspre = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, 'look_rawscsspre');
+        // Append it to the SCSS stack.
+        if ($flavourrawscsspre != null && !empty($flavourrawscsspre)) {
+            $scss .= $flavourrawscsspre;
+        }
     }
 
     return $scss;
@@ -296,6 +362,23 @@ function theme_boost_union_get_extra_scss($theme) {
 
     // Require the necessary libraries.
     require_once($CFG->dirroot . '/course/lib.php');
+
+    // Pick the active flavour from the global scope.
+    // This global variable is set in /theme/boost_union/flavour/styles.php.
+    // It is only set by that file and only needed in this and another single function in this file.
+    // This approach feels a bit hacky but it is the most efficient way to get the flavour ID into this function.
+    global $themeboostunionappliedflavour;
+    if (isset($themeboostunionappliedflavour)) {
+        $flavourid = $themeboostunionappliedflavour;
+    } else {
+        $flavourid = null;
+    }
+
+    // If any flavour applies to this page.
+    if ($flavourid != null) {
+        // Require flavours library.
+        require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+    }
 
     // Initialize extra SCSS.
     $content = '';
@@ -357,10 +440,34 @@ function theme_boost_union_get_extra_scss($theme) {
     $content .= "background-attachment: fixed;";
     $content .= '}';
 
-    // Note: Boost Union is also capable of overriding the background image in its flavours.
-    // In contrast to the other flavour assets like the favicon overriding, this isn't done here in place as this function
-    // is composing Moodle core CSS which has to remain flavour-independent.
-    // Instead, the flavour is overriding the background image later in flavours/styles.php.
+    // One more thing: Boost Union is also capable of overriding the background image in its flavours.
+    // So, if any flavour applies to this page.
+    if ($flavourid != null) {
+        // And if the flavour has a background image.
+        $backgroundimage = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, 'look_backgroundimage');
+        if ($backgroundimage != null && !empty($backgroundimage)) {
+            // Compose the URL to the flavour's background image.
+            $backgroundimageurl = moodle_url::make_pluginfile_url(
+                    context_system::instance()->id, 'theme_boost_union', 'flavours_look_backgroundimage', $flavourid,
+                    '/'.theme_get_revision(), '/'.$backgroundimage);
+
+            // And add it to the SCSS code, adhering the fact that we must not overwrite the login page background image again.
+            $content .= 'body:not(.pagelayout-login) { ';
+            $content .= 'background-image: url("'.$backgroundimageurl.'");';
+            $content .= '}';
+        }
+    }
+
+    // Now we want to add the custom SCSS from the flavour.
+    // If any flavour applies to this page.
+    if ($flavourid != null) {
+        // If there is any raw SCSS in the flavour.
+        $flavourrawscss = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, 'look_rawscss');
+        // Append it to the SCSS stack.
+        if ($flavourrawscss != null && !empty($flavourrawscss)) {
+            $content .= $flavourrawscss;
+        }
+    }
 
     // For the rest of this function, we add SCSS snippets to the SCSS stack based on enabled admin settings.
     // This is done here as it is quite easy to do. As an alternative, it could also been done in post.scss by using
@@ -683,4 +790,50 @@ function theme_boost_union_before_session_start() {
 
     // Manipulate Moodle core hooks.
     theme_boost_union_manipulate_hooks();
+}
+
+/**
+ * Callback function which allows themes to alter the CSS URLs.
+ * We use this function to change the CSS URL to the flavour CSS URL if a flavour applies to the current page.
+ *
+ * @copyright 2023 Mario Wehr
+ *            based on example code by Bas Brands from https://github.com/bmbrands/theme_picture/blob/change_css_urls/lib.php.
+ *
+ * @param mixed $urls The CSS URLs (passed as reference).
+ */
+function theme_boost_union_alter_css_urls(&$urls) {
+    global $CFG;
+
+    // Require flavours library.
+    require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+
+    // In the original code, Bas commented: "No CSS switch during behat runs, or it will take ages to run a scenario."
+    // While there is a reason for this in Bas' context, We do not have to care about this as we do only change the URL
+    // if a flavour applies and in these cases, the CSS must be switched in any case.
+
+    // If any flavour applies to this page.
+    $flavour = theme_boost_union_get_flavour_which_applies();
+    if ($flavour != null) {
+        // Iterate over the CSS URLs.
+        foreach (array_keys($urls) as $i) {
+            // If we have a moodle_url object.
+            if ($urls[$i] instanceof \core\url) {
+                // Take the flavour CSS URL and escape it to be used in a regular expression.
+                $pathstyles = preg_quote($CFG->wwwroot . '/theme/styles.php', '|');
+                // Replace the CSS URL with the flavour CSS URL.
+                // As a result, the file /theme/boost_union/flavours/styles.php is called instead of /theme/styles.php and the
+                // flavour ID is injected into the URL parameters.
+                if (preg_match("|^$pathstyles(/_s)?(.*)$|", $urls[$i]->out(false), $matches)) {
+                    // Do the whole operation only if slasharguments are enabled.
+                    // A warning is shown on the flavour edit page if slasharguments is off.
+                    if (!empty($CFG->slasharguments)) {
+                        $parts = explode('/', $matches[2]);
+                        $parts[3] = $flavour->id . '/' . $parts[3];
+                        $urls[$i] = new moodle_url('/theme/boost_union/flavours/styles.php');
+                        $urls[$i]->set_slashargument($matches[1] . join('/', $parts));
+                    }
+                }
+            }
+        }
+    }
 }

@@ -282,6 +282,9 @@ switch ($action) {
             $fs->delete_area_files($context->id, 'theme_boost_union', 'flavours_look_favicon', $data->id);
             $fs->delete_area_files($context->id, 'theme_boost_union', 'flavours_look_backgroundimage', $data->id);
 
+            // Delete fallback sheet. And delete them all because they get generated on building the all.css.
+            fulldelete($CFG->tempdir . '/theme/boost_union/');
+
             // Reset theme cache.
             // This is necessary as the flavour asset URLs contain the themerev.
             theme_reset_all_caches();

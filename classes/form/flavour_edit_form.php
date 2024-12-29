@@ -51,11 +51,28 @@ class flavour_edit_form extends \moodleform {
      * @throws \coding_exception
      */
     public function definition() {
+        global $CFG, $OUTPUT;
+
         // Get an easier handler for the form.
         $mform = $this->_form;
 
         // Prepare yes-no option for multiple usage.
         $yesnooption = [false => get_string('no'), true => get_string('yes')];
+
+        // Require and register the QuickForm colorpicker element.
+        require_once($CFG->dirroot.'/theme/boost_union/classes/formelement/colorpicker.php');
+        \MoodleQuickForm::registerElementType(
+                'theme_boost_union_colorpicker',
+                $CFG->dirroot.'/theme/boost_union/classes/formelement/colorpicker.php',
+                '\theme_boost_union\formelement\colorpicker'
+        );
+        // Register validation rule for the QuickForm colorpicker element.
+        \MoodleQuickForm::registerRule(
+                'theme_boost_union_colorpicker_rule',
+                null,
+                '\theme_boost_union\formelement\colorpicker_rule',
+                $CFG->dirroot.'/theme/boost_union/classes/formelement/colorpicker_rule.php'
+        );
 
         // Add the flavour ID as hidden element.
         $mform->addElement('hidden', 'id');
@@ -80,6 +97,17 @@ class flavour_edit_form extends \moodleform {
         $mform->addElement('header', 'looksettingsheader', get_string('configtitlelook', 'theme_boost_union'));
         $mform->setExpanded('looksettingsheader');
 
+        // Add logos heading.
+        $context = new \stdClass();
+        $context->title = get_string('logosheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+                'html',
+                // Wrapping the setting headings with a div with the ID "adminsettings" is not really correct as we will have
+                // duplicate IDs on the page. But it is the only way to re-use the correct styling for the setting heading.
+                // (And no, applying the ID to the form does not work either as we would trigger other unwanted stylings).
+                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+        );
+
         // Add logo as filemanager element.
         $mform->addElement('filemanager', 'flavours_look_logo',
                 get_string('logo', 'admin'), null, [
@@ -100,6 +128,14 @@ class flavour_edit_form extends \moodleform {
                 ]);
         $mform->addHelpButton('flavours_look_logocompact', 'flavourslogocompact', 'theme_boost_union');
 
+        // Add favicon heading.
+        $context = new \stdClass();
+        $context->title = get_string('faviconheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+                'html',
+                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+        );
+
         // Add favicon as filemanager element.
         $mform->addElement('filemanager', 'flavours_look_favicon',
                 get_string('faviconsetting', 'theme_boost_union'), null, [
@@ -109,6 +145,14 @@ class flavour_edit_form extends \moodleform {
                         'return_types' => FILE_INTERNAL,
                 ]);
         $mform->addHelpButton('flavours_look_favicon', 'flavoursfavicon', 'theme_boost_union');
+
+        // Add backgroundimages heading.
+        $context = new \stdClass();
+        $context->title = get_string('backgroundimagesheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+                'html',
+                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+        );
 
         // Add backgroundimage as filemanager element.
         $mform->addElement('filemanager', 'flavours_look_backgroundimage',
@@ -120,14 +164,94 @@ class flavour_edit_form extends \moodleform {
                 ]);
         $mform->addHelpButton('flavours_look_backgroundimage', 'flavoursbackgroundimage', 'theme_boost_union');
 
-        // Add custom css as textarea element.
-        // Note: In the current state of implementation, this setting only allows the usage of custom CSS, not SCSS.
-        // It will be appended to the stack of CSS code which is shipped to the browser.
-        // There is a follow-up issue on Github to add SCSS support.
-        // When this is realized, the widget's title string should be changed to 'theme_boost/rawscss'.
-        $mform->addElement('textarea', 'look_rawscss', get_string('flavourscustomcss', 'theme_boost_union'), ['rows' => 15]);
+        // Add brand colors heading.
+        $context = new \stdClass();
+        $context->title = get_string('brandcolorsheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+                'html',
+                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+        );
+
+        // Add brandcolor as colorpicker element.
+        $this->check_slasharguments_warning($mform);
+        $mform->addElement(
+                'theme_boost_union_colorpicker',
+                'look_brandcolor',
+                get_string('flavoursbrandcolor', 'theme_boost_union'),
+                ['id' => 'colourpicker_brandcolour']);
+        $mform->setType('look_brandcolor', PARAM_TEXT);
+        $mform->addRule('look_brandcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
+        $mform->addHelpButton('look_brandcolor', 'flavoursbrandcolor', 'theme_boost_union');
+
+        // Add Bootstrap colors heading.
+        $context = new \stdClass();
+        $context->title = get_string('bootstrapcolorsheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+                'html',
+                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+        );
+
+        // Add Bootstrap color for 'success' as colorpicker element.
+        $this->check_slasharguments_warning($mform);
+        $mform->addElement(
+                'theme_boost_union_colorpicker',
+                'look_bootstrapcolorsuccess',
+                get_string('flavoursbootstrapcolorsuccess', 'theme_boost_union'),
+                ['id' => 'colourpicker_bootstrapcolorsuccess']);
+        $mform->setType('look_bootstrapcolorsuccess', PARAM_TEXT);
+        $mform->addRule('look_bootstrapcolorsuccess', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
+        $mform->addHelpButton('look_bootstrapcolorsuccess', 'flavoursbootstrapcolorsuccess', 'theme_boost_union');
+
+        // Add Bootstrap color for 'info' as colorpicker element.
+        $this->check_slasharguments_warning($mform);
+        $mform->addElement(
+                'theme_boost_union_colorpicker',
+                'look_bootstrapcolorinfo',
+                get_string('flavoursbootstrapcolorinfo', 'theme_boost_union'),
+                ['id' => 'colourpicker_bootstrapcolorinfo']);
+        $mform->setType('look_bootstrapcolorinfo', PARAM_TEXT);
+        $mform->addRule('look_bootstrapcolorinfo', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
+        $mform->addHelpButton('look_bootstrapcolorinfo', 'flavoursbootstrapcolorinfo', 'theme_boost_union');
+
+        // Add Bootstrap color for 'warning' as colorpicker element.
+        $this->check_slasharguments_warning($mform);
+        $mform->addElement(
+                'theme_boost_union_colorpicker',
+                'look_bootstrapcolorwarning',
+                get_string('flavoursbootstrapcolorwarning', 'theme_boost_union'),
+                ['id' => 'colourpicker-bootstrapcolorwarning']);
+        $mform->setType('look_bootstrapcolorwarning', PARAM_TEXT);
+        $mform->addRule('look_bootstrapcolorwarning', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
+        $mform->addHelpButton('look_bootstrapcolorwarning', 'flavoursbootstrapcolorwarning', 'theme_boost_union');
+
+        // Add Bootstrap color for 'danger' as colorpicker element.
+        $this->check_slasharguments_warning($mform);
+        $mform->addElement(
+                'theme_boost_union_colorpicker',
+                'look_bootstrapcolordanger',
+                get_string('flavoursbootstrapcolordanger', 'theme_boost_union'),
+                ['id' => 'colourpicker-bbootstrapcolordanger']);
+        $mform->setType('look_bootstrapcolordanger', PARAM_TEXT);
+        $mform->addRule('look_bootstrapcolordanger', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
+        $mform->addHelpButton('look_bootstrapcolordanger', 'flavoursbootstrapcolordanger', 'theme_boost_union');
+
+        // Add SCSS heading.
+        $context = new \stdClass();
+        $context->title = get_string('scssheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+                'html',
+                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+        );
+
+        // Add custom initial SCSS as textarea element.
+        $mform->addElement('textarea', 'look_rawscsspre', get_string('flavourscustomscsspre', 'theme_boost_union'), ['rows' => 8]);
         $mform->setType('title', PARAM_TEXT);
-        $mform->addHelpButton('look_rawscss', 'flavourscustomcss', 'theme_boost_union');
+        $mform->addHelpButton('look_rawscsspre', 'flavourscustomscsspre', 'theme_boost_union');
+
+        // Add custom SCSS as textarea element.
+        $mform->addElement('textarea', 'look_rawscss', get_string('flavourscustomscss', 'theme_boost_union'), ['rows' => 8]);
+        $mform->setType('title', PARAM_TEXT);
+        $mform->addHelpButton('look_rawscss', 'flavourscustomscss', 'theme_boost_union');
 
         // Add apply-to-cohort as header element.
         $mform->addElement('header', 'applytocohortheader', get_string('flavoursapplytocohorts', 'theme_boost_union'));
@@ -183,5 +307,67 @@ class flavour_edit_form extends \moodleform {
 
         // Add the action buttons.
         $this->add_action_buttons();
+    }
+
+    /**
+     * Theme Boost Union - Flavours edit form validation
+     *
+     * The routine to check the SCSS code is copied and modified from admin_setting_scsscode in /lib/adminlib.php.
+     *
+     * @param array $data array of ("fieldname"=>value) of submitted data
+     * @param array $files array of uploaded files "element_name"=>tmp_file_path
+     * @return array of "element_name"=>"error_description" if there are errors,
+     *         or an empty array if everything is OK (true allowed for backwards compatibility too).
+     */
+    public function validation($data, $files) {
+        global $PAGE;
+
+        $errors = [];
+
+        // If we have any data.
+        if (!empty($data)) {
+            // Iterate over the SCSS fields.
+            foreach (['look_rawscss', 'look_rawscsspre'] as $field) {
+                // Check if the SCSS code can be compiled.
+                if (!empty($data[$field])) {
+                    $compiler = new \core_scss();
+                    try {
+                        if ($scssproperties = $PAGE->theme->get_scss_property()) {
+                            $compiler->setImportPaths($scssproperties[0]);
+                        }
+                        $compiler->compile($data[$field]);
+                    } catch (\ScssPhp\ScssPhp\Exception\ParserException $e) {
+                        $errors[$field] = get_string('scssinvalid', 'admin', $e->getMessage());
+                    // phpcs:disable Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+                    } catch (\ScssPhp\ScssPhp\Exception\CompilerException $e) {
+                        // Silently ignore this - it could be a SCSS variable defined from somewhere
+                        // else which we are not examining here.
+                    }
+                }
+            }
+        }
+
+        return $errors;
+    }
+
+    /**
+     * Helper function which adds a warning notification to the form if slasharguments is disabled.
+     *
+     * @param \MoodleQuickForm $mform The form object.
+     * @return void
+     */
+    private function check_slasharguments_warning($mform) {
+        global $CFG, $OUTPUT;
+
+        // If slasharguments is disabled.
+        if (empty($CFG->slasharguments)) {
+            // Add a warning notification to the form.
+            $slashargumentsurl = new \core\url('/admin/search.php', ['query' => 'slasharguments']);
+            $notification = new \core\output\notification(
+                    get_string('warningslashargumentsdisabled', 'theme_boost_union', ['url' => $slashargumentsurl]),
+                    \core\output\notification::NOTIFY_WARNING);
+            $notification->set_show_closebutton(false);
+            $mform->addElement('html', $OUTPUT->render($notification));
+        }
     }
 }
