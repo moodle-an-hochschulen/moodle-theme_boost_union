@@ -16,7 +16,7 @@
 /**
  * Theme Boost Union - JS code for footer buttons
  *
- * @module     theme_boost_union/backtotopbutton
+ * @module     theme_boost_union/footerbuttons
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
