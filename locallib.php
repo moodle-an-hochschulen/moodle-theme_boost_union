@@ -2291,9 +2291,6 @@ function theme_boost_union_callbackimpl_before_standard_html() {
         return $html;
     }
 
-    // Require local library.
-    require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
-
     // Add the FontAwesome icons to the page.
     theme_boost_union_add_fontawesome_to_page();
 
