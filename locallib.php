@@ -2070,9 +2070,6 @@ function theme_boost_union_callbackimpl_before_standard_html(&$hook = null) {
         }
     }
 
-    // Require local library.
-    require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
-
     // Add the touch icons to the page.
     $html .= theme_boost_union_get_touchicons_html_for_page();
 
