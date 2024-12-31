@@ -405,5 +405,87 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023102050, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2023102051) {
+
+        // Define table theme_boost_union_flavours to be altered.
+        $table = new xmldb_table('theme_boost_union_flavours');
+
+        // Define field look_backgroundimageposition to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_backgroundimageposition', XMLDB_TYPE_CHAR, '32', null, null, null, null,
+                'look_backgroundimage');
+
+        // Conditionally launch add field look_backgroundimageposition.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field look_activityiconcoloradministration to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_activityiconcoloradministration', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field look_activityiconcoloradministration.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field look_activityiconcolorasessment to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_activityiconcolorasessment', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field look_activityiconcolorasessment.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field look_activityiconcolorcollaboration to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_activityiconcolorcollaboration', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field look_activityiconcolorcollaboration.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field look_activityiconcolorcommunication to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_activityiconcolorcommunication', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field look_activityiconcolorcommunication.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field look_activityiconcolorcontent to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_activityiconcolorcontent', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field look_activityiconcolorcontent.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field look_activityiconcolorinteractivecontent to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_activityiconcolorinteractivecontent', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field look_activityiconcolorinteractivecontent.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field look_activityiconcolorinterface to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_activityiconcolorinterface', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field look_activityiconcolorinterface.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field look_navbarcolor to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_navbarcolor', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+
+        // Conditionally launch add field look_navbarcolor.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2023102051, 'theme', 'boost_union');
+    }
+
     return true;
 }
