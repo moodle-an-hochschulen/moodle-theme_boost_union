@@ -37,6 +37,7 @@ $string['githubissueslink'] = '<a href="https://github.com/moodle-an-hochschulen
 // General select options.
 $string['never'] = 'Never';
 $string['always'] = 'Always';
+$string['nochange'] = 'No change';
 $string['forguestsonly'] = 'Only for guests and non-logged-in users';
 
 // Settings: General strings.
@@ -1158,6 +1159,20 @@ $string['accessibilitysupportrecaptcha_desc'] = 'With this setting, you control 
 
 // Settings: Flavours page.
 $string['configtitleflavours'] = 'Flavours';
+$string['flavoursactivityiconcoloradministration'] = 'Activity icon color for "Administration"';
+$string['flavoursactivityiconcoloradministration_help'] = 'With this setting, the flavour will override the activity icon "Administration" color which is configured in Boost Union\'s look settings.';
+$string['flavoursactivityiconcolorassessment'] = 'Activity icon color for "Assessment"';
+$string['flavoursactivityiconcolorassessment_help'] = 'With this setting, the flavour will override the activity icon "Assessment" color which is configured in Boost Union\'s look settings.';
+$string['flavoursactivityiconcolorcollaboration'] = 'Activity icon color for "Collaboration"';
+$string['flavoursactivityiconcolorcollaboration_help'] = 'With this setting, the flavour will override the activity icon "Collaboration" color which is configured in Boost Union\'s look settings.';
+$string['flavoursactivityiconcolorcommunication'] = 'Activity icon color for "Communication"';
+$string['flavoursactivityiconcolorcommunication_help'] = 'With this setting, the flavour will override the activity icon "Communication" color which is configured in Boost Union\'s look settings.';
+$string['flavoursactivityiconcolorcontent'] = 'Activity icon color for "Content"';
+$string['flavoursactivityiconcolorcontent_help'] = 'With this setting, the flavour will override the activity icon "Content" color which is configured in Boost Union\'s look settings.';
+$string['flavoursactivityiconcolorinteractivecontent'] = 'Activity icon color for "Interactive content"';
+$string['flavoursactivityiconcolorinteractivecontent_help'] = 'With this setting, the flavour will override the activity icon "Interactive content" color which is configured in Boost Union\'s look settings.';
+$string['flavoursactivityiconcolorinterface'] = 'Activity icon color for "Interface"';
+$string['flavoursactivityiconcolorinterface_help'] = 'With this setting, the flavour will override the activity icon "Interface" color which is configured in Boost Union\'s look settings.';
 $string['flavoursappliesto'] = 'Applies to';
 $string['flavoursapplytocategories'] = 'Apply to course categories';
 $string['flavoursapplytocategories_help'] = 'Here, you define if this flavour should be applied to course categories.';
@@ -1169,6 +1184,8 @@ $string['flavoursapplytocohorts_ids'] = 'Cohorts';
 $string['flavoursapplytocohorts_ids_help'] = 'Here, you define one or more particular cohorts which this flavour should be applied to. As soon as the user is a member of one of the configured cohorts, the flavour is applied.<br /><br />Please note that, if you define more than one cohorts, there is no need for the user to be a member of all of them at the same time.<br /><br />Please also note that at the current state of implementation category cohorts are treated just as if they were system cohorts.';
 $string['flavoursbackgroundimage'] = 'Background image';
 $string['flavoursbackgroundimage_help'] = 'With this setting, the flavour will override the background image which is configured in Boost Union\'s look settings.';
+$string['flavoursbackgroundimageposition'] = 'Background image position';
+$string['flavoursbackgroundimageposition_help'] = 'With this setting, the flavour will override the background image position which is configured in Boost Union\'s look settings.';
 $string['flavoursbacktooverview'] = 'Back to flavour overview';
 $string['flavoursbootstrapcolordanger'] = 'Bootstrap color for "Danger"';
 $string['flavoursbootstrapcolordanger_help'] = 'With this setting, the flavour will override the Bootstrap "danger" color which is configured in Boost Union\'s look settings.';
@@ -1202,6 +1219,8 @@ $string['flavourslogo'] = 'Logo';
 $string['flavourslogo_help'] = 'With this setting, the flavour will override the logo which is configured in Boost Union\'s look settings.';
 $string['flavourslogocompact'] = 'Compact logo';
 $string['flavourslogocompact_help'] = 'With this setting, the flavour will override the logo which is configured in Boost Union\'s look settings.';
+$string['flavoursnavbarcolor'] = 'Navbar color';
+$string['flavoursnavbarcolor_help'] = 'With this setting, the flavour will override the navbar color which is configured in Boost Union\'s look settings.';
 $string['flavoursnotificationcreated'] = 'The flavour was created successfully';
 $string['flavoursnotificationdeleted'] = 'The flavour was deleted successfully';
 $string['flavoursnotificationedited'] = 'The flavour was edited successfully';
