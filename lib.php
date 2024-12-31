@@ -26,6 +26,8 @@
 define('THEME_BOOST_UNION_SETTING_SELECT_YES', 'yes');
 define('THEME_BOOST_UNION_SETTING_SELECT_NO', 'no');
 
+define('THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE', 'nochange');
+
 define('THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_NONE', 'none');
 define('THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTNOTE', 'footnote');
 define('THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTER', 'footer');
@@ -294,26 +296,39 @@ function theme_boost_union_get_pre_scss($theme) {
     }
 
     // Overwrite Boost core SCSS variables which are stored in a SCSS map and thus couldn't be added to $configurable above.
-    // Set variables for the activity icon colors.
+    // Define all activity icon purposes (without the 'other' purpose as this is not branded).
+    $purposes = [MOD_PURPOSE_ADMINISTRATION,
+            MOD_PURPOSE_ASSESSMENT,
+            MOD_PURPOSE_COLLABORATION,
+            MOD_PURPOSE_COMMUNICATION,
+            MOD_PURPOSE_CONTENT,
+            MOD_PURPOSE_INTERFACE];
+    // Init activity icon colors SCSS map.
     $activityiconcolors = [];
-    if (get_config('theme_boost_union', 'activityiconcoloradministration')) {
-        $activityiconcolors[] = '"administration": '.get_config('theme_boost_union', 'activityiconcoloradministration');
+    // Iterate over all purposes.
+    foreach ($purposes as $purpose) {
+        // Init / reset activity icon color.
+        $activityiconcolor = null;
+        // Get the global activity icon color.
+        if (get_config('theme_boost_union', 'activityiconcolor'.$purpose)) {
+            $activityiconcolor = get_config('theme_boost_union', 'activityiconcolor'.$purpose);
+        }
+        // If any flavour applies to this page.
+        if ($flavourid != null) {
+            // Get the activity icon color value for the given flavour id.
+            $flavourvalue = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, 'look_activityiconcolor'.$purpose);
+            // If a flavour value is set.
+            if ($flavourvalue != null && !empty($flavourvalue)) {
+                // Override the global config value with the flavour value.
+                $activityiconcolor = $flavourvalue;
+            }
+        }
+        // Set the activity icon color in the SCSS map.
+        if ($activityiconcolor != null) {
+            $activityiconcolors[] = '"'.$purpose.'": '.$activityiconcolor;
+        }
     }
-    if (get_config('theme_boost_union', 'activityiconcolorassessment')) {
-        $activityiconcolors[] = '"assessment": '.get_config('theme_boost_union', 'activityiconcolorassessment');
-    }
-    if (get_config('theme_boost_union', 'activityiconcolorcollaboration')) {
-        $activityiconcolors[] = '"collaboration": '.get_config('theme_boost_union', 'activityiconcolorcollaboration');
-    }
-    if (get_config('theme_boost_union', 'activityiconcolorcommunication')) {
-        $activityiconcolors[] = '"communication": '.get_config('theme_boost_union', 'activityiconcolorcommunication');
-    }
-    if (get_config('theme_boost_union', 'activityiconcolorcontent')) {
-        $activityiconcolors[] = '"content": '.get_config('theme_boost_union', 'activityiconcolorcontent');
-    }
-    if (get_config('theme_boost_union', 'activityiconcolorinterface')) {
-        $activityiconcolors[] = '"interface": '.get_config('theme_boost_union', 'activityiconcolorinterface');
-    }
+    // Compose and set the SCSS map.
     if (count($activityiconcolors) > 0) {
         $activityiconscss = '$activity-icon-colors: ('."\n";
         $activityiconscss .= implode(",\n", $activityiconcolors);
@@ -447,7 +462,7 @@ function theme_boost_union_get_extra_scss($theme) {
     $content .= "background-attachment: fixed;";
     $content .= '}';
 
-    // One more thing: Boost Union is also capable of overriding the background image in its flavours.
+    // One more thing: Boost Union is also capable of overriding the background image and background image position in its flavours.
     // So, if any flavour applies to this page.
     if ($flavourid != null) {
         // And if the flavour has a background image.
@@ -461,6 +476,16 @@ function theme_boost_union_get_extra_scss($theme) {
             // And add it to the SCSS code, adhering the fact that we must not overwrite the login page background image again.
             $content .= 'body:not(.pagelayout-login) { ';
             $content .= 'background-image: url("'.$backgroundimageurl.'");';
+            $content .= '}';
+        }
+        // And if a background image position is set in the flavour.
+        $backgroundimageposition = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid,
+                'look_backgroundimageposition');
+        if ($backgroundimageposition != null && $backgroundimageposition != THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE) {
+            // Set the background position in the SCSS code, adhering the fact that we must not overwrite the login page
+            // background image position again.
+            $content .= 'body:not(.pagelayout-login) { ';
+            $content .= "background-position: ".$backgroundimageposition.";";
             $content .= '}';
         }
     }
