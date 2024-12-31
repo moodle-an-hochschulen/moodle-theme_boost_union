@@ -260,12 +260,11 @@ function theme_boost_union_get_pre_scss($theme) {
             }
             // Get the flavour config value for the given flavour id.
             $flavourvalue = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, $flavourconfigkey);
-            // If the value is not set, continue.
-            if ($flavourvalue == null || empty($flavourvalue)) {
-                continue;
+            // If a flavour value is set.
+            if ($flavourvalue != null && !empty($flavourvalue)) {
+                // Override the global config value with the flavour value.
+                $value = $flavourvalue;
             }
-            // Otherwise, override the global config value with the flavour value.
-            $value = $flavourvalue;
         }
 
         // If the value is not set, continue.
