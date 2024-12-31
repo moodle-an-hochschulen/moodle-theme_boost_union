@@ -26,6 +26,8 @@
 define('THEME_BOOST_UNION_SETTING_SELECT_YES', 'yes');
 define('THEME_BOOST_UNION_SETTING_SELECT_NO', 'no');
 
+define('THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE', 'nochange');
+
 define('THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_NONE', 'none');
 define('THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTNOTE', 'footnote');
 define('THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTER', 'footer');
@@ -298,8 +300,21 @@ function theme_boost_union_get_pre_scss($theme) {
             MOD_PURPOSE_INTERFACE];
     // Iterate over all purposes.
     foreach ($purposes as $purpose) {
-        // Get color setting.
+        // Get color setting from global settings.
         $activityiconcolor = get_config('theme_boost_union', 'activityiconcolor'.$purpose);
+
+        // If any flavour applies to this page.
+        if ($flavourid != null) {
+            // Get color setting from flavour.
+            $activityiconcolorflavour = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid,
+                    'look_activityiconcolor'.$purpose);
+
+            // If a flavour color is set.
+            if (!empty($activityiconcolorflavour)) {
+                // Override the global color setting with the flavour color setting.
+                $activityiconcolor = $activityiconcolorflavour;
+            }
+        }
 
         // If a color is set.
         if (!empty($activityiconcolor)) {
@@ -440,7 +455,7 @@ function theme_boost_union_get_extra_scss($theme) {
     $content .= "background-attachment: fixed;";
     $content .= '}';
 
-    // One more thing: Boost Union is also capable of overriding the background image in its flavours.
+    // One more thing: Boost Union is also capable of overriding the background image and background image position in its flavours.
     // So, if any flavour applies to this page.
     if ($flavourid != null) {
         // And if the flavour has a background image.
@@ -454,6 +469,16 @@ function theme_boost_union_get_extra_scss($theme) {
             // And add it to the SCSS code, adhering the fact that we must not overwrite the login page background image again.
             $content .= 'body:not(.pagelayout-login) { ';
             $content .= 'background-image: url("'.$backgroundimageurl.'");';
+            $content .= '}';
+        }
+        // And if a background image position is set in the flavour.
+        $backgroundimageposition = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid,
+                'look_backgroundimageposition');
+        if ($backgroundimageposition != null && $backgroundimageposition != THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE) {
+            // Set the background position in the SCSS code, adhering the fact that we must not overwrite the login page
+            // background image position again.
+            $content .= 'body:not(.pagelayout-login) { ';
+            $content .= "background-position: ".$backgroundimageposition.";";
             $content .= '}';
         }
     }

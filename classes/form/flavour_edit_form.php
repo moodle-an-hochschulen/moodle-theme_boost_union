@@ -164,6 +164,39 @@ class flavour_edit_form extends \moodleform {
                 ]);
         $mform->addHelpButton('flavours_look_backgroundimage', 'flavoursbackgroundimage', 'theme_boost_union');
 
+        // Add background image position select element.
+        $this->check_slasharguments_warning($mform);
+        $backgroundimagepositionoptions = [
+                THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE =>
+                        get_string('nochange', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER,
+                THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
+                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM, ];
+        $backgroundimagepositionselect = $mform->addElement(
+                'select',
+                'look_backgroundimageposition',
+                get_string('flavoursbackgroundimageposition', 'theme_boost_union'),
+                $backgroundimagepositionoptions,
+                );
+        $mform->setType('look_backgroundimageposition', PARAM_TEXT);
+        $backgroundimagepositionselect->setSelected([THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE]);
+        $mform->addHelpButton('look_backgroundimageposition', 'flavoursbackgroundimageposition', 'theme_boost_union');
+
         // Add brand colors heading.
         $context = new \stdClass();
         $context->title = get_string('brandcolorsheading', 'theme_boost_union', null, true);
@@ -234,6 +267,67 @@ class flavour_edit_form extends \moodleform {
         $mform->setType('look_bootstrapcolordanger', PARAM_TEXT);
         $mform->addRule('look_bootstrapcolordanger', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_bootstrapcolordanger', 'flavoursbootstrapcolordanger', 'theme_boost_union');
+
+        // Add activity icon colors heading.
+        $context = new \stdClass();
+        $context->title = get_string('activityiconcolorsheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+                'html',
+                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+        );
+
+        // Define all activity icon purposes (without the 'other' purpose as this is not branded).
+        $purposes = [MOD_PURPOSE_ADMINISTRATION,
+                MOD_PURPOSE_ASSESSMENT,
+                MOD_PURPOSE_COLLABORATION,
+                MOD_PURPOSE_COMMUNICATION,
+                MOD_PURPOSE_CONTENT,
+                MOD_PURPOSE_INTERACTIVECONTENT,
+                MOD_PURPOSE_INTERFACE];
+        // Iterate over all purposes.
+        foreach ($purposes as $purpose) {
+            // Setting: Activity icon color.
+            $this->check_slasharguments_warning($mform);
+            $mform->addElement(
+                    'theme_boost_union_colorpicker',
+                    'look_activityiconcolor'.$purpose,
+                    get_string('flavoursactivityiconcolor'.$purpose, 'theme_boost_union'),
+                            ['id' => 'colourpicker-activityiconcolor'.$purpose]);
+            $mform->setType('look_activityiconcolor'.$purpose, PARAM_TEXT);
+            $mform->addRule('look_activityiconcolor'.$purpose, get_string('validateerror', 'admin'),
+                    'theme_boost_union_colorpicker_rule');
+            $mform->addHelpButton('look_activityiconcolor'.$purpose, 'flavoursactivityiconcolor'.$purpose, 'theme_boost_union');
+        }
+
+        // Add navbar heading.
+        $context = new \stdClass();
+        $context->title = get_string('navbarheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+                'html',
+                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+        );
+
+        // Add navbar color select element.
+        $navbarcoloroptions = [
+                THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE =>
+                        get_string('nochange', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT =>
+                        get_string('navbarcolorsetting_light', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK =>
+                        get_string('navbarcolorsetting_dark', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYLIGHT =>
+                        get_string('navbarcolorsetting_primarylight', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYDARK =>
+                        get_string('navbarcolorsetting_primarydark', 'theme_boost_union'), ];
+        $navbarcolorselect = $mform->addElement(
+                'select',
+                'look_navbarcolor',
+                get_string('flavoursnavbarcolor', 'theme_boost_union'),
+                $navbarcoloroptions,
+                );
+        $mform->setType('look_navbarcolor', PARAM_TEXT);
+        $navbarcolorselect->setSelected([THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE]);
+        $mform->addHelpButton('look_navbarcolor', 'flavoursnavbarcolor', 'theme_boost_union');
 
         // Add SCSS heading.
         $context = new \stdClass();
