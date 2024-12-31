@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-12-30 - Improvement: Add more flavour settings (Activity icon colors, navbar color, background image position), resolves #789.
 * 2024-12-25 - Documentation: Explain the SCSS stack order in the README.
 * 2024-12-25 - Bugfix: Fix the order in which all the pre SCSS assets are added to the SCSS stack, resolves #788.
 * 2024-12-22 - Feature: Allow overwriting of brand colors and the usage of SCSS (instead of pure CSS) in flavours, resolves #155.
