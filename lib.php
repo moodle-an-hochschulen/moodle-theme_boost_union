@@ -249,7 +249,7 @@ function theme_boost_union_get_pre_scss($theme) {
     // Prepend variables first.
     foreach ($configurable as $configkey => $targets) {
         // Get the global config value for the given config key.
-        $value = isset($theme->settings->{$configkey}) ? $theme->settings->{$configkey} : null;
+        $value = get_config('theme_boost_union', $configkey);
 
         // If any flavour applies to this page.
         if ($flavourid != null) {
