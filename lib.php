@@ -441,6 +441,7 @@ function theme_boost_union_get_extra_scss($theme) {
             // And add it to the SCSS code, adhering the fact that we must not overwrite the login page background image again.
             $content .= 'body:not(.pagelayout-login) { ';
             $content .= 'background-image: url("'.$backgroundimageurl.'");';
+            $content .= "background-size: cover;";
             $content .= '}';
         }
         // And if a background image position is set in the flavour.
