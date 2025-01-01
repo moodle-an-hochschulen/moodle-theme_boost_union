@@ -2520,3 +2520,19 @@ function theme_boost_union_is_active_theme() {
         return false;
     }
 }
+
+/**
+ * Helper function to check if a child theme of Boost Union (and _not_ Boost Union itself) is active.
+ * This is needed at multiple locations to improve child theme support in Boost Union already.
+ *
+ * @return bool
+ */
+function theme_boost_union_is_active_childtheme() {
+    global $PAGE;
+
+    if ($PAGE->theme->name != 'boost_union') {
+        return true;
+    } else {
+        return false;
+    }
+}
