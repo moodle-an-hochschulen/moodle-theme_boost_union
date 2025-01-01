@@ -127,14 +127,73 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     # We can't check the uploaded image file visually, but we can verify that the favicon is shipped from the theme_boost_union global favicon filearea.
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/favicon')][contains(@href, 'favicon.ico')]" "xpath_element" should exist
 
-  # Unfortunately, this can't be tested with Behat yet as the background image is added via external CSS which can't be referenced with XPath
-  # Scenario: Flavours: Background image - Upload a background image (with a global background image not having been uploaded before)
+  @javascript @_file_upload
+  Scenario: Flavours: Background image - Upload a background image (with a global background image not having been uploaded before)
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I upload "theme/boost_union/tests/fixtures/login_bg2.png" file to "Background image" filemanager
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    And I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then DOM element "body" should have computed style "background-size" "cover"
+    And DOM element "body" should have background image with file name "login_bg2.png"
 
-  # Unfortunately, this can't be tested with Behat yet as the background image is added via external CSS which can't be referenced with XPath
-  # Scenario: Flavours: Background image - Upload a background image (with a global background image being overridden)
+  @javascript @_file_upload
+  Scenario: Flavours: Background image - Upload a background image (with a global background image being overridden)
+    Given I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Background image" filemanager
+    And I press "Save changes"
+    And Behat debugging is enabled
+    When I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I upload "theme/boost_union/tests/fixtures/login_bg2.png" file to "Background image" filemanager
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    And I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then DOM element "body" should have computed style "background-size" "cover"
+    And DOM element "body" should have background image with file name "login_bg2.png"
 
-  # Unfortunately, this can't be tested with Behat yet as the background image is added via external CSS which can't be referenced with XPath
-  # Scenario: Flavours: Background image - Do not upload a background image (with a global background image being served properly)
+  @javascript @_file_upload
+  Scenario: Flavours: Background image - Do not upload a background image (with a global background image being served properly)
+    Given I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Background image" filemanager
+    And I press "Save changes"
+    And Behat debugging is enabled
+    When I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    And I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then DOM element "body" should have computed style "background-size" "cover"
+    And DOM element "body" should have background image with file name "login_bg1.png"
 
   @javascript @_file_upload
   Scenario Outline: Flavours: Background image - Define the background image position (with a global color not having been set before)
