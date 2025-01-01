@@ -4,12 +4,14 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
   As admin
   I need to be able to configure the theme Boost Union plugin
 
+  @javascript
   Scenario: Setting: Login page background images - Do not upload any login background image
     When I am on site homepage
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     Then the "class" attribute of "body" "css_element" should contain "path-login"
     And the "class" attribute of "body" "css_element" should not contain "loginbackgroundimage"
     And the "class" attribute of "body" "css_element" should not contain "loginbackgroundimage1"
+    And DOM element "body" should have computed style "background-image" "none"
 
   @javascript @_file_upload
   Scenario: Setting: Login page background images - Upload one custom login background image
@@ -25,6 +27,8 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     Then the "class" attribute of "body" "css_element" should contain "path-login"
     And the "class" attribute of "body" "css_element" should contain "loginbackgroundimage"
     And the "class" attribute of "body" "css_element" should contain "loginbackgroundimage1"
+    And DOM element "body" should have computed style "background-size" "cover"
+    And DOM element "body" should have background image with file name "login_bg1.png"
 
   @javascript @_file_upload
   Scenario: Setting: Login page background images - Upload multiple custom login background image (and have one picked randomly)
@@ -45,6 +49,8 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     # However, the random image picking function is designed to detect Behat runs and will then always ship the
     # image matching the number of uploaded images (i.e. if you upload 3 images, you will get the third).
     And the "class" attribute of "body" "css_element" should contain "loginbackgroundimage3"
+    And DOM element "body" should have computed style "background-size" "cover"
+    And DOM element "body" should have background image with file name "login_bg3.png"
 
   @javascript @_file_upload
   Scenario Outline: Setting: Login page background images - Define the background image position.

@@ -153,6 +153,25 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     And "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/favicon')][contains(@href, 'favicon.ico')]" "xpath_element" should not exist
 
   @javascript @_file_upload
+  Scenario: Setting: Background image - Upload a background image.
+    When I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Background image" filemanager
+    And I press "Save changes"
+    And Behat debugging is enabled
+    And I am on site homepage
+    Then DOM element "body" should have computed style "background-size" "cover"
+    And DOM element "body" should have background image with file name "login_bg1.png"
+
+  @javascript
+  Scenario: Setting: Background image - Do not upload a background image (countercheck).
+    When I log in as "admin"
+    And I am on site homepage
+    Then DOM element "body" should have computed style "background-image" "none"
+
+  @javascript @_file_upload
   Scenario Outline: Setting: Background image - Define the background image position.
     Given the following config values are set as admin:
       | config                  | value      | plugin            |

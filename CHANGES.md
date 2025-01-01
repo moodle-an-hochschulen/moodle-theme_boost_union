@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-12-31 - Tests: Increase the test coverage for the background image setting, helps to resolve theme_boost_union_child/#5
 * 2024-12-31 - Bugfix: In flavours, not setting the brand color / bootstrap colors in a flavour did not result in the global brand color / bootstrap colors being served properly, resolves #790.
 * 2024-12-30 - Improvement: Add more flavour settings (Activity icon colors, navbar color, background image position), resolves #789.
 * 2024-12-25 - Documentation: Explain the SCSS stack order in the README.
