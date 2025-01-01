@@ -213,6 +213,13 @@ function theme_boost_union_get_pre_scss($theme) {
     // We have to accept this fact here and must not copy the code from theme_boost_get_pre_scss into this function.
     // Instead, we must only add additionally CSS code which is based on any Boost Union-only functionality.
 
+    // But, well, there is one exception: Boost Union Child themes.
+    // Due to the described call chain, Boost Union Child won't get all the necessary extra SCSS.
+    // Thus, we fetch Boost's extra SCSS if the current theme is not Union itself (i.e. a Boost Union Child theme is active).
+    if (theme_boost_union_is_active_childtheme() == true) {
+        $scss .= theme_boost_get_pre_scss(theme_config::load('boost_union'));
+    }
+
     // Include pre.scss from Boost Union.
     $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/pre.scss');
 
@@ -415,7 +422,14 @@ function theme_boost_union_get_extra_scss($theme) {
     // We have to accept this fact here and must not copy the code from theme_boost_get_extra_scss into this function.
     // Instead, we must only add additionally CSS code which is based on any Boost Union-only functionality.
 
-    // In contrast to Boost core, Boost Union should add the login page background to the body element as well.
+    // But, well, there is one exception: Boost Union Child themes.
+    // Due to the described call chain, Boost Union Child won't get all the necessary extra SCSS.
+    // Thus, we fetch Boost's extra SCSS if the current theme is not Union itself (i.e. a Boost Union Child theme is active).
+    if (theme_boost_union_is_active_childtheme() == true) {
+        $content .= theme_boost_get_extra_scss(theme_config::load('boost_union'));
+    }
+
+    // Now, in contrast to Boost core, Boost Union should add the login page background to the body element as well.
     // Thus, check if a login background image is set.
     $loginbackgroundimagepresent = get_config('theme_boost_union', 'loginbackgroundimage');
     if (!empty($loginbackgroundimagepresent)) {
