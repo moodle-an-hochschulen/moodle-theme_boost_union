@@ -82,6 +82,33 @@ class behat_theme_boost_union_base_general extends behat_base {
     }
 
     /**
+     * Checks if the given DOM element has a background image with the given file name.
+     *
+     * @copyright 2024 Alexander Bias <bias@alexanderbias.de>
+     * @Then DOM element :arg1 should have background image with file name :arg2
+     * @param string $selector
+     * @param string $filename
+     * @throws ExpectationException
+     */
+    public function dom_element_should_have_background_image($selector, $filename) {
+        $stylejs = "
+            return (
+                window.getComputedStyle(document.querySelector('$selector')).getPropertyValue('background-image')
+            )
+        ";
+        $computedstyle = $this->evaluate_script($stylejs);
+        $urlmatches = [];
+        preg_match('/url\(["\']?(.*?)["\']?\)/', $computedstyle, $urlmatches);
+        $urlfromjs = $urlmatches[1];
+        $basenamefromjs = basename($urlfromjs);
+        if ($basenamefromjs != $filename) {
+            throw new ExpectationException('The \''.$selector.'\' DOM element does not have a background image with the file '.
+                    'name \''.$filename.'\', it has the file name \''.$basenamefromjs.'\' instead.',
+                            $this->getSession());
+        }
+    }
+
+    /**
      * Checks if the given DOM element has a CSS filter which is close enough to the given hex color.
      *
      * @copyright 2024 Alexander Bias <bias@alexanderbias.de>
