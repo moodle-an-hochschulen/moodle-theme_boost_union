@@ -26,6 +26,8 @@
 define('THEME_BOOST_UNION_SETTING_SELECT_YES', 'yes');
 define('THEME_BOOST_UNION_SETTING_SELECT_NO', 'no');
 
+define('THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE', 'nochange');
+
 define('THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_NONE', 'none');
 define('THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTNOTE', 'footnote');
 define('THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTER', 'footer');
@@ -206,6 +208,13 @@ function theme_boost_union_get_pre_scss($theme) {
     // We have to accept this fact here and must not copy the code from theme_boost_get_pre_scss into this function.
     // Instead, we must only add additionally CSS code which is based on any Boost Union-only functionality.
 
+    // But, well, there is one exception: Boost Union Child themes.
+    // Due to the described call chain, Boost Union Child won't get all the necessary extra SCSS.
+    // Thus, we fetch Boost's extra SCSS if the current theme is not Union itself (i.e. a Boost Union Child theme is active).
+    if (theme_boost_union_is_active_childtheme() == true) {
+        $scss .= theme_boost_get_pre_scss(\core\output\theme_config::load('boost_union'));
+    }
+
     // Include pre.scss from Boost Union.
     $scss .= file_get_contents($CFG->dirroot . '/theme/boost_union/scss/boost_union/pre.scss');
 
@@ -235,7 +244,7 @@ function theme_boost_union_get_pre_scss($theme) {
     // Prepend variables first.
     foreach ($configurable as $configkey => $targets) {
         // Get the global config value for the given config key.
-        $value = isset($theme->settings->{$configkey}) ? $theme->settings->{$configkey} : null;
+        $value = get_config('theme_boost_union', $configkey);
 
         // If any flavour applies to this page.
         if ($flavourid != null) {
@@ -246,12 +255,11 @@ function theme_boost_union_get_pre_scss($theme) {
             }
             // Get the flavour config value for the given flavour id.
             $flavourvalue = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, $flavourconfigkey);
-            // If the value is not set, continue.
-            if ($flavourvalue == null || empty($flavourvalue)) {
-                continue;
+            // If a flavour value is set.
+            if ($flavourvalue != null && !empty($flavourvalue)) {
+                // Override the global config value with the flavour value.
+                $value = $flavourvalue;
             }
-            // Otherwise, override the global config value with the flavour value.
-            $value = $flavourvalue;
         }
 
         // If the value is not set, continue.
@@ -298,8 +306,21 @@ function theme_boost_union_get_pre_scss($theme) {
             MOD_PURPOSE_INTERFACE];
     // Iterate over all purposes.
     foreach ($purposes as $purpose) {
-        // Get color setting.
+        // Get color setting from global settings.
         $activityiconcolor = get_config('theme_boost_union', 'activityiconcolor'.$purpose);
+
+        // If any flavour applies to this page.
+        if ($flavourid != null) {
+            // Get color setting from flavour.
+            $activityiconcolorflavour = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid,
+                    'look_activityiconcolor'.$purpose);
+
+            // If a flavour color is set.
+            if (!empty($activityiconcolorflavour)) {
+                // Override the global color setting with the flavour color setting.
+                $activityiconcolor = $activityiconcolorflavour;
+            }
+        }
 
         // If a color is set.
         if (!empty($activityiconcolor)) {
@@ -394,7 +415,14 @@ function theme_boost_union_get_extra_scss($theme) {
     // We have to accept this fact here and must not copy the code from theme_boost_get_extra_scss into this function.
     // Instead, we must only add additionally CSS code which is based on any Boost Union-only functionality.
 
-    // In contrast to Boost core, Boost Union should add the login page background to the body element as well.
+    // But, well, there is one exception: Boost Union Child themes.
+    // Due to the described call chain, Boost Union Child won't get all the necessary extra SCSS.
+    // Thus, we fetch Boost's extra SCSS if the current theme is not Union itself (i.e. a Boost Union Child theme is active).
+    if (theme_boost_union_is_active_childtheme() == true) {
+        $content .= theme_boost_get_extra_scss(\core\output\theme_config::load('boost_union'));
+    }
+
+    // Now, in contrast to Boost core, Boost Union should add the login page background to the body element as well.
     // Thus, check if a login background image is set.
     $loginbackgroundimagepresent = get_config('theme_boost_union', 'loginbackgroundimage');
     if (!empty($loginbackgroundimagepresent)) {
@@ -440,7 +468,7 @@ function theme_boost_union_get_extra_scss($theme) {
     $content .= "background-attachment: fixed;";
     $content .= '}';
 
-    // One more thing: Boost Union is also capable of overriding the background image in its flavours.
+    // One more thing: Boost Union is also capable of overriding the background image and background image position in its flavours.
     // So, if any flavour applies to this page.
     if ($flavourid != null) {
         // And if the flavour has a background image.
@@ -454,6 +482,17 @@ function theme_boost_union_get_extra_scss($theme) {
             // And add it to the SCSS code, adhering the fact that we must not overwrite the login page background image again.
             $content .= 'body:not(.pagelayout-login) { ';
             $content .= 'background-image: url("'.$backgroundimageurl.'");';
+            $content .= "background-size: cover;";
+            $content .= '}';
+        }
+        // And if a background image position is set in the flavour.
+        $backgroundimageposition = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid,
+                'look_backgroundimageposition');
+        if ($backgroundimageposition != null && $backgroundimageposition != THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE) {
+            // Set the background position in the SCSS code, adhering the fact that we must not overwrite the login page
+            // background image position again.
+            $content .= 'body:not(.pagelayout-login) { ';
+            $content .= "background-position: ".$backgroundimageposition.";";
             $content .= '}';
         }
     }
