@@ -59,6 +59,29 @@ class behat_theme_boost_union_base_general extends behat_base {
     }
 
     /**
+     * Checks if the given DOM element does not have the given computed style.
+     *
+     * @copyright 2024 Alexander Bias <bias@alexanderbias.de>
+     * @Then DOM element :arg1 should not have computed style :arg2 :arg3
+     * @param string $selector
+     * @param string $style
+     * @param string $value
+     * @throws ExpectationException
+     */
+    public function dom_element_should_not_have_computed_style($selector, $style, $value) {
+        $stylejs = "
+            return (
+                window.getComputedStyle(document.querySelector('$selector')).getPropertyValue('$style')
+            )
+        ";
+        $computedstyle = $this->evaluate_script($stylejs);
+        if ($computedstyle == $value) {
+            throw new ExpectationException('The \''.$selector.'\' DOM element does have the computed style \''.
+                $style.'\'=\''.$computedstyle.'\', but it should not have it.', $this->getSession());
+        }
+    }
+
+    /**
      * Checks if the given DOM element has a background image with the given file name.
      *
      * @copyright 2024 Alexander Bias <bias@alexanderbias.de>
@@ -278,6 +301,15 @@ class behat_theme_boost_union_base_general extends behat_base {
      */
     public function purge_theme_cache_and_reload_theme() {
         theme_reset_all_caches();
+    }
+
+    /**
+     * Purges all caches
+     *
+     * @Given /^all caches are purged$/
+     */
+    public function purge_all_caches() {
+        purge_caches();
     }
 
     /**
