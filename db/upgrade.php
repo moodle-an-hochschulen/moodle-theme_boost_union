@@ -410,67 +410,67 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         // Define table theme_boost_union_flavours to be altered.
         $table = new xmldb_table('theme_boost_union_flavours');
 
-        // Define field look_backgroundimageposition to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('look_backgroundimageposition', XMLDB_TYPE_CHAR, '32', null, null, null, null,
+        // Define field look_backgroundimagepos to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_backgroundimagepos', XMLDB_TYPE_CHAR, '32', null, null, null, null,
                 'look_backgroundimage');
 
-        // Conditionally launch add field look_backgroundimageposition.
+        // Conditionally launch add field look_backgroundimagepos.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-        // Define field look_activityiconcoloradministration to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('look_activityiconcoloradministration', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        // Define field look_aicoladministration to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_aicoladministration', XMLDB_TYPE_CHAR, '32', null, null, null, null);
 
-        // Conditionally launch add field look_activityiconcoloradministration.
+        // Conditionally launch add field look_aicoladministration.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-        // Define field look_activityiconcolorasessment to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('look_activityiconcolorasessment', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        // Define field look_aicolassessment to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_aicolassessment', XMLDB_TYPE_CHAR, '32', null, null, null, null);
 
-        // Conditionally launch add field look_activityiconcolorasessment.
+        // Conditionally launch add field look_aicolassessment.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-        // Define field look_activityiconcolorcollaboration to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('look_activityiconcolorcollaboration', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        // Define field look_aicolcollaboration to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_aicolcollaboration', XMLDB_TYPE_CHAR, '32', null, null, null, null);
 
-        // Conditionally launch add field look_activityiconcolorcollaboration.
+        // Conditionally launch add field look_aicolcollaboration.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-        // Define field look_activityiconcolorcommunication to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('look_activityiconcolorcommunication', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        // Define field look_aicolcommunication to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_aicolcommunication', XMLDB_TYPE_CHAR, '32', null, null, null, null);
 
-        // Conditionally launch add field look_activityiconcolorcommunication.
+        // Conditionally launch add field look_aicolcommunication.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-        // Define field look_activityiconcolorcontent to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('look_activityiconcolorcontent', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        // Define field look_aicolcontent to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_aicolcontent', XMLDB_TYPE_CHAR, '32', null, null, null, null);
 
-        // Conditionally launch add field look_activityiconcolorcontent.
+        // Conditionally launch add field look_aicolcontent.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-        // Define field look_activityiconcolorinteractivecontent to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('look_activityiconcolorinteractivecontent', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        // Define field look_aicolinteractivecontent to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_aicolinteractivecontent', XMLDB_TYPE_CHAR, '32', null, null, null, null);
 
-        // Conditionally launch add field look_activityiconcolorinteractivecontent.
+        // Conditionally launch add field look_aicolinteractivecontent.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-        // Define field look_activityiconcolorinterface to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('look_activityiconcolorinterface', XMLDB_TYPE_CHAR, '32', null, null, null, null);
+        // Define field look_aicolinterface to be added to theme_boost_union_flavours.
+        $field = new xmldb_field('look_aicolinterface', XMLDB_TYPE_CHAR, '32', null, null, null, null);
 
-        // Conditionally launch add field look_activityiconcolorinterface.
+        // Conditionally launch add field look_aicolinterface.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }

@@ -189,13 +189,13 @@ class flavour_edit_form extends \moodleform {
                         THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM, ];
         $backgroundimagepositionselect = $mform->addElement(
                 'select',
-                'look_backgroundimageposition',
+                'look_backgroundimagepos',
                 get_string('flavoursbackgroundimageposition', 'theme_boost_union'),
                 $backgroundimagepositionoptions,
                 );
-        $mform->setType('look_backgroundimageposition', PARAM_TEXT);
+        $mform->setType('look_backgroundimagepos', PARAM_TEXT);
         $backgroundimagepositionselect->setSelected([THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE]);
-        $mform->addHelpButton('look_backgroundimageposition', 'flavoursbackgroundimageposition', 'theme_boost_union');
+        $mform->addHelpButton('look_backgroundimagepos', 'flavoursbackgroundimageposition', 'theme_boost_union');
 
         // Add brand colors heading.
         $context = new \stdClass();
@@ -290,13 +290,13 @@ class flavour_edit_form extends \moodleform {
             $this->check_slasharguments_warning($mform);
             $mform->addElement(
                     'theme_boost_union_colorpicker',
-                    'look_activityiconcolor'.$purpose,
+                    'look_aicol'.$purpose,
                     get_string('flavoursactivityiconcolor'.$purpose, 'theme_boost_union'),
                             ['id' => 'colourpicker-activityiconcolor'.$purpose]);
-            $mform->setType('look_activityiconcolor'.$purpose, PARAM_TEXT);
-            $mform->addRule('look_activityiconcolor'.$purpose, get_string('validateerror', 'admin'),
+            $mform->setType('look_aicol'.$purpose, PARAM_TEXT);
+            $mform->addRule('look_aicol'.$purpose, get_string('validateerror', 'admin'),
                     'theme_boost_union_colorpicker_rule');
-            $mform->addHelpButton('look_activityiconcolor'.$purpose, 'flavoursactivityiconcolor'.$purpose, 'theme_boost_union');
+            $mform->addHelpButton('look_aicol'.$purpose, 'flavoursactivityiconcolor'.$purpose, 'theme_boost_union');
         }
 
         // Add navbar heading.
