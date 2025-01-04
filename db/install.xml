@@ -33,7 +33,6 @@
         <FIELD NAME="look_aicolcollaboration" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_aicolcommunication" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_aicolcontent" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="look_aicolinteractivecontent" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_aicolinterface" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_navbarcolor" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
