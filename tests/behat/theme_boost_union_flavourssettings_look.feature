@@ -204,7 +204,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I expand all fieldsets
     And I set the field "Title" to "My shiny new flavour"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Background image" filemanager
-    And I set the field "look_backgroundimageposition" to "<position>"
+    And I set the field "look_backgroundimagepos" to "<position>"
     And I select "Yes" from the "Apply to course categories" singleselect
     And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
     And I click on "Cat 1" item in the autocomplete list
@@ -231,7 +231,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I expand all fieldsets
     And I set the field "Title" to "My shiny new flavour"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Background image" filemanager
-    And I set the field "look_backgroundimageposition" to "<position>"
+    And I set the field "look_backgroundimagepos" to "<position>"
     And I select "Yes" from the "Apply to course categories" singleselect
     And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
     And I click on "Cat 1" item in the autocomplete list
@@ -259,7 +259,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I expand all fieldsets
     And I set the field "Title" to "My shiny new flavour"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Background image" filemanager
-    And I set the field "look_backgroundimageposition" to "No change"
+    And I set the field "look_backgroundimagepos" to "No change"
     And I select "Yes" from the "Apply to course categories" singleselect
     And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
     And I click on "Cat 1" item in the autocomplete list
@@ -444,7 +444,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
     And I set the field "Title" to "My shiny new flavour"
-    And I set the field "look_activityiconcolor<purposename>" to "<colorhex>"
+    And I set the field "look_aicol<purposename>" to "<colorhex>"
     And I select "Yes" from the "Apply to course categories" singleselect
     And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
     And I click on "Cat 1" item in the autocomplete list
@@ -484,7 +484,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I should see "Create flavour" in the "#page-header h1" "css_element"
     And I expand all fieldsets
     And I set the field "Title" to "My shiny new flavour"
-    And I set the field "look_activityiconcolor<purposename>" to "<colorhex>"
+    And I set the field "look_aicol<purposename>" to "<colorhex>"
     And I select "Yes" from the "Apply to course categories" singleselect
     And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
     And I click on "Cat 1" item in the autocomplete list
