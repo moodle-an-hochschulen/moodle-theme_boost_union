@@ -245,12 +245,12 @@ function theme_boost_union_get_pre_scss($theme) {
         'bootstrapcolorinfo' => 'look_bootstrapcolorinfo',
         'bootstrapcolorwarning' => 'look_bootstrapcolorwarning',
         'bootstrapcolordanger' => 'look_bootstrapcolordanger',
-        'activityiconcoloradministration' => 'look_activityiconcoloradministration',
-        'activityiconcolorassessment' => 'look_activityiconcolorassessment',
-        'activityiconcolorcollaboration' => 'look_activityiconcolorcollaboration',
-        'activityiconcolorcommunication' => 'look_activityiconcolorcommunication',
-        'activityiconcolorcontent' => 'look_activityiconcolorcontent',
-        'activityiconcolorinterface' => 'look_activityiconcolorinterface',
+        'activityiconcoloradministration' => 'look_aicoladministration',
+        'activityiconcolorassessment' => 'look_aicolassessment',
+        'activityiconcolorcollaboration' => 'look_aicolcollaboration',
+        'activityiconcolorcommunication' => 'look_aicolcommunication',
+        'activityiconcolorcontent' => 'look_aicolcontent',
+        'activityiconcolorinterface' => 'look_aicolinterface',
     ];
 
     // Prepend variables first.
@@ -460,7 +460,7 @@ function theme_boost_union_get_extra_scss($theme) {
         }
         // And if a background image position is set in the flavour.
         $backgroundimageposition = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid,
-                'look_backgroundimageposition');
+                'look_backgroundimagepos');
         if ($backgroundimageposition != null && $backgroundimageposition != THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE) {
             // Set the background position in the SCSS code, adhering the fact that we must not overwrite the login page
             // background image position again.
