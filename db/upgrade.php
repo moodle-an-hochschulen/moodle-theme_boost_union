@@ -459,14 +459,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
             $dbman->add_field($table, $field);
         }
 
-        // Define field look_aicolinteractivecontent to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('look_aicolinteractivecontent', XMLDB_TYPE_CHAR, '32', null, null, null, null);
-
-        // Conditionally launch add field look_aicolinteractivecontent.
-        if (!$dbman->field_exists($table, $field)) {
-            $dbman->add_field($table, $field);
-        }
-
         // Define field look_aicolinterface to be added to theme_boost_union_flavours.
         $field = new xmldb_field('look_aicolinterface', XMLDB_TYPE_CHAR, '32', null, null, null, null);
 
