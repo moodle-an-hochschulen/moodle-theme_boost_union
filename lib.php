@@ -322,7 +322,7 @@ function theme_boost_union_get_pre_scss($theme) {
         // If any flavour applies to this page.
         if ($flavourid != null) {
             // Get the activity icon color value for the given flavour id.
-            $flavourvalue = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, 'look_activityiconcolor'.$purpose);
+            $flavourvalue = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, 'look_aicol'.$purpose);
             // If a flavour value is set.
             if ($flavourvalue != null && !empty($flavourvalue)) {
                 // Override the global config value with the flavour value.
@@ -494,7 +494,7 @@ function theme_boost_union_get_extra_scss($theme) {
         }
         // And if a background image position is set in the flavour.
         $backgroundimageposition = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid,
-                'look_backgroundimageposition');
+                'look_backgroundimagepos');
         if ($backgroundimageposition != null && $backgroundimageposition != THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE) {
             // Set the background position in the SCSS code, adhering the fact that we must not overwrite the login page
             // background image position again.
