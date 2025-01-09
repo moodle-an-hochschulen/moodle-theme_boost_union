@@ -1,0 +1,52 @@
+/**
+ * Snippet Title: Visual depth
+ * Scope:         global
+ * Goal:          eyecandy
+ * Description:   A less flat design than the original Boost theme. Realized with box-shadows on a number of page elements and a colour gradient on the page background.
+ * Creator:       Nils Promer
+ *
+ * @copyright     2024 University of Applied Science Hamburg
+ * @author        Nils Promer <nils.promer@haw-hamburg.de>
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+
+body {
+    background: radial-gradient(circle,#bbbbbb 0%,#dddddd 51%,#f0f0f0 100%)
+}
+
+.navbar.fixed-top {
+   box-shadow: rgba(62, 64, 72, 0.4) 0 4px 6px;
+}
+
+.main-inner {
+   box-shadow: rgba(149, 157, 165, 0.6) 0 4px 6px;
+}
+
+section.block {
+    box-shadow: rgba(149, 157, 165, 0.15) 0 4px 6px;
+}
+
+.add_block_button a {
+   box-shadow: rgba(149, 157, 165, 0.15) 0 4px 6px;
+}
+
+.pagelayout-frontpage .coursebox {
+   box-shadow: rgba(149, 157, 165, 0.15) 0 4px 6px;
+}
+
+.pagelayout-mycourses .course-card {
+    box-shadow: rgba(149, 157, 165, 0.15) 0 4px 6px;
+}
+
+#page-course-view-topics .section-item {
+    box-shadow: rgba(149, 157, 165, 0.15) 0 4px 6px;
+}
+
+.drawer-toggles .drawer-toggler .btn {
+    box-shadow: rgba(62, 64, 72, 0.4) 0 4px 6px;
+}
+
+.btn-footer-popover {
+    box-shadow: rgba(62, 64, 72, 0.4) 0 4px 6px;
+}
