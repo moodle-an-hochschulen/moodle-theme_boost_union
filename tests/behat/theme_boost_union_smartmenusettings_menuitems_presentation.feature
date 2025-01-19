@@ -30,7 +30,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     # Menu items in main navigation
     Then "Test course1" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     Then I should see smart menu "Quick links" item "Test course1" in location "Main"
-    And the "target" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
+    And the "target" attribute of "//div[contains(@class, 'primary-navigation')]//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
     # Menu items in user menu.
     Then "Test course1" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > User menu smart menu"
     And the "target" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
@@ -66,10 +66,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I expand all fieldsets
     And I set the field "CSS class" to "course-resource-links"
     And I click on "Save changes" "button"
-    And the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
-    And the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
-    And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
-    And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
+    And the "class" attribute of "//div[contains(@class, 'primary-navigation')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
+    And the "class" attribute of "//div[contains(@class, 'primary-navigation')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
+    And the "class" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
+    And the "class" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
     And I change the viewport size to "740x900"
@@ -132,8 +132,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I click on "Quick links" "link" in the "#usermenu-carousel" "css_element"
     Then I should see "External links" in the "#usermenu-carousel .menu-item-heading" "css_element"
     And I should see "Resources" in the "#usermenu-carousel .menu-item-static" "css_element"
-    And the "href" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(@class, 'menu-item-heading')]" "xpath_element" should contain "#"
-    And the "href" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(@class, 'menu-item-static')]" "xpath_element" should contain "https://moodle.org"
+    And the "href" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(@class, 'menu-item-heading')]" "xpath_element" should contain "#"
+    And the "href" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(@class, 'menu-item-static')]" "xpath_element" should contain "https://moodle.org"
     # Menu items in bottom menu.
     And I change the viewport size to "740x900"
     And I click on "Quick links" "link" in the ".bottom-navigation" "css_element"
@@ -371,3 +371,33 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | menumode | menutitle          |
       | Submenu  | Links              |
       | Inline   | Smartmenu Resource |
+
+  @javascript
+  Scenario: Smartmenu: Menus: Application - Make full submenu header clickable
+    When I log in as "admin"
+    And I set "Quick links" smart menu items with the following fields to these values:
+      | Title                            | Available courses |
+      | Menu item type                   | Dynamic courses   |
+      | Dynamic courses: Course category | Category 1        |
+      | Menu item mode                   | Submenu           |
+    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
+    And I click on "Available courses" "link" in the ".primary-navigation" "css_element"
+    And I should see "Test course1" in the ".primary-navigation" "css_element"
+    And I should see "Test course2" in the ".primary-navigation" "css_element"
+    And I should see "Available courses" in the ".primary-navigation .header .carousel-navigation-link" "css_element"
+    # Verify the full header element is clickable.
+    And I click on ".carousel-item.active .header" "css_element" in the ".primary-navigation" "css_element"
+    And I should see "Available courses" in the ".primary-navigation .carousel-item" "css_element"
+    And I should not see "Available courses" in the ".primary-navigation .header .carousel-navigation-link" "css_element"
+    And I should not see "Test course1" in the ".primary-navigation" "css_element"
+    # User menu
+    And I click on "#user-menu-toggle" "css_element"
+    And I click on "Quick links" "link" in the "#usermenu-carousel" "css_element"
+    And I click on "Available courses" "link" in the "#usermenu-carousel" "css_element"
+    And I should see "Test course1" in the "#usermenu-carousel" "css_element"
+    And I should see "Test course2" in the "#usermenu-carousel" "css_element"
+    And I should see "Available courses" in the "#usermenu-carousel .carousel-item.active .header .carousel-navigation-link" "css_element"
+    And I click on ".carousel-item.active .header" "css_element" in the "#usermenu-carousel" "css_element"
+    And I should see "Available courses" in the "#usermenu-carousel .carousel-item.active" "css_element"
+    And I should not see "Available courses" in the "#usermenu-carousel .carousel-item.active .header .carousel-navigation-link" "css_element"
+    And I should not see "Test course1" in the "#usermenu-carousel" "css_element"
