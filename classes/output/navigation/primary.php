@@ -96,46 +96,58 @@ class primary extends \core\navigation\output\primary {
         }
 
         // Get the menus for the main menu loation.
-        // And convert the children menu items into submenus.
         $locationmainmenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_MAIN, $smartmenus);
-        $locationmainmenuconverted = $this->convert_submenus($locationmainmenu);
 
         // Separate the menus for the menubar location.
-        // And convert the children menu items into submenus.
         $locationmenubarmenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_MENU, $smartmenus);
-        $locationmenubarmenuconverted = $this->convert_submenus($locationmenubarmenu);
 
         // Separate the menus for the usermenu location.
         // (There is no need to concert the submenus in this case).
         $locationusermenus = smartmenu::get_menus_forlocation(smartmenu::LOCATION_USER, $smartmenus);
 
         // Separate the menus for the bottom menu location.
-        // And convert the children menu items into submenus.
         $locationbottommenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_BOTTOM, $smartmenus);
-        $locationbottommenuconverted = $this->convert_submenus($locationbottommenu);
 
         // Primary menu.
         // Merge the smart menu nodes which contain the main menu location with the primary and custom menu nodes.
-        $mainmenudata = array_merge($this->get_primary_nav(), $this->get_custom_menu($output), $locationmainmenuconverted);
-        $moremenu = new \core\navigation\output\more_menu((object) $mainmenudata, 'navbar-nav', false);
+        // Update the active and open states to the nodes based on the current page.
+        // And convert the children menu items into submenus.
+        $locationmainmenucustommerged = array_merge($this->get_custom_menu($output), $locationmainmenu);
+        $mainmenudata = $this->merge_primary_and_custom($this->get_primary_nav(), $locationmainmenucustommerged);
+        $locationmainmenuconverted = $this->convert_submenus($mainmenudata);
+
+        $moremenu = new \core\navigation\output\more_menu((object) $locationmainmenuconverted, 'navbar-nav', false);
 
         // Menubar.
         // Items of menus only added in the menubar.
+        // Convert the children menu items into submenus.
         // Removed the menu nodes from menubar, each item will be displayed as menu in menubar.
-        if (!empty($locationmenubarmenuconverted)) {
+        if (!empty($locationmenubarmenu)) {
+            $locationmenubarmenuconverted = $this->convert_submenus($locationmenubarmenu);
             $menubarmoremenu = new \core\navigation\output\more_menu((object) $locationmenubarmenuconverted,
                     'navbar-nav-menu-bar', false);
         }
 
         // Bottom bar.
         // Include the menu navigation menus to the mobile menu when the bottom bar doesn't have any menus.
+        // Mobile navigation menu, uses the expand/collapse method for submenus, for the reason the unconverted menus are used.
+        $locationbottommenuscustommerged = array_merge($this->get_custom_menu($output), $locationbottommenu);
         $mobileprimarynav = (!empty($locationbottommenu))
-            ? array_merge($this->get_primary_nav(), $this->get_custom_menu($output), $locationbottommenu)
-            : array_merge($this->get_primary_nav(), $this->get_custom_menu($output), $locationmainmenu);
+            ? $this->merge_primary_and_custom(
+                $this->get_primary_nav(), $locationbottommenuscustommerged, true)
+            : $this->merge_primary_and_custom(
+                $this->get_primary_nav(), $locationmainmenucustommerged, true);
 
-        if (!empty($locationbottommenu)) {
-            $mobilemenudata = array_merge($this->get_primary_nav(), $this->get_custom_menu($output), $locationbottommenuconverted);
-            $bottombar = new \core\navigation\output\more_menu((object) $mobilemenudata, 'navbar-nav-bottom-bar', false);
+        if (!empty($mobileprimarynav)) {
+            // Merge the bottom menu with main menu if there is any bottom menu available. otherwise use the main menu.
+            // And convert the children menu items into submenus.
+            $bottomprimarynav = (!empty($locationbottommenu))
+                ? $this->merge_primary_and_custom($this->get_primary_nav(), $locationbottommenuscustommerged, true)
+                : $this->merge_primary_and_custom($this->get_primary_nav(), $locationmainmenucustommerged, true);
+            $locationbottommenuconverted = $this->convert_submenus($bottomprimarynav);
+
+            $bottombar = new \core\navigation\output\more_menu((object) $locationbottommenuconverted,
+                    'navbar-nav-bottom-bar', false);
             $bottombardata = $bottombar->export_for_template($output);
             $bottombardata['drawer'] = (!empty($locationbottommenu)) ? true : false;
         }
@@ -351,7 +363,8 @@ class primary extends \core\navigation\output\primary {
 
         // Create a deep clone of menus, direct use of menus mismatch with the usermenus format.
         $primarymenu = array_map(function($item) {
-            return clone $item;
+            // Convert core primary menus array to object before cloning to maintain type formats.
+            return clone (object) $item;
         }, $menus);
 
         foreach ($primarymenu as $key => $parentmenu) {
