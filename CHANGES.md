@@ -3,9 +3,9 @@ moodle-theme_boost_union
 
 Changes
 -------
-
 ### Unreleased
 
+* 2025-02-04 - Bugfix: Fix smart menu dynamic course items not updating properly based on course role assignments, resolves #749.
 * 2025-02-04 - Bugfix: Smart menu item pointing to external site gets highlighted as active by mistake, resolves #758.
 * 2025-02-04 - Improvement: Allow changing of home URL on small devices as well, resolves #802.
 * 2025-01-31 - Improvement: Add option to include alt text for item image in smart menu cards, resolves #752.
