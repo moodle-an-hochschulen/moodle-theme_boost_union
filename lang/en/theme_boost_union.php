@@ -1306,6 +1306,8 @@ $string['smartmenusmenuitemcardbackgroundcolor'] = 'Card background color';
 $string['smartmenusmenuitemcardbackgroundcolor_help'] = 'Select the background color for the card of the menu item';
 $string['smartmenusmenuitemcardimage'] = 'Card image';
 $string['smartmenusmenuitemcardimage_help'] = 'Select an image to display next to the menu item title in the card.';
+$string['smartmenusmenuitemcardimagealt'] = 'Card image alt text';
+$string['smartmenusmenuitemcardimagealt_help'] = 'The alt text for the card image of this menu item. You can use the placeholder {menutitle} to insert the configured menu item title into your own alt text. If you leave this field completely empty, the menu item text will be used automatically as alt text.';
 $string['smartmenusmenuitemcardtextcolor'] = 'Card text color';
 $string['smartmenusmenuitemcardtextcolor_help'] = 'Select the color for the card of the menu item.';
 $string['smartmenusmenuitemcreate'] = 'Create menu item';
@@ -1467,6 +1469,3 @@ $string['upgradenotice_2022080922_logo'] = 'logo';
 $string['upgradenotice_2022080922_logocompact'] = 'compact logo';
 $string['upgradenotice_2022080922_copied'] = 'The existing <strong>{$a}</strong> from the Moodle core settings has been copied to the Boost Union {$a} setting during this upgrade. Please double-check the result.';
 $string['upgradenotice_2022080922_notcopied'] = 'The <strong>{$a}</strong> setting within Boost Union is empty now. If you want to use a {$a} within Boost Union from now on, just upload it into the Boost Union {$a} setting later.';
-
-$string['smartmenusmenuitemcardimagealt'] = 'Card image alt text';
-$string['smartmenusmenuitemcardimagealt_help'] = 'The alt text for the card image of the menu item. Use placeholder {menutitle} to insert the menu item title.';

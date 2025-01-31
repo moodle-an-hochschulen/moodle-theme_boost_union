@@ -373,12 +373,11 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Inline   | Smartmenu Resource |
 
   Scenario Outline: Smartmenus: Menu items: Image alt text for the dynamic menu items
-    And the following "theme_boost_union > smart menu" exists:
+    Given the following "theme_boost_union > smart menu" exists:
       | title    | Courses                                          |
       | location | Main navigation, Menu bar, User menu, Bottom bar |
       | type     | Card                                             |
-      # | cardoverflowbehaviour | nowrap |
-    Given the following "theme_boost_union > smart menu item" exists:
+    And the following "theme_boost_union > smart menu item" exists:
       | menu     | Courses           |
       | title    | Available courses |
       | itemtype | Dynamic courses   |
@@ -387,8 +386,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | imagealt | <setting>         |
     When I log in as "admin"
     Then the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Test course1')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<testcourse1result>"
-    Then the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Test course2')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<testcourse2result>"
-    Then the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Test course word count')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<testcourse3result>"
+    And the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Test course2')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<testcourse2result>"
+    And the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Test course word count')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<testcourse3result>"
 
     Examples:
       | setting                     | testcourse1result            | testcourse2result            | testcourse3result                      |
@@ -397,17 +396,17 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       |                             | Test course1                 | Test course2                 | Test course word count                 |
 
   Scenario Outline: Smartmenus: Menu items: Image alt text for the static menu items
-    And the following "theme_boost_union > smart menu" exists:
+    Given the following "theme_boost_union > smart menu" exists:
       | title    | Links                                            |
       | location | Main navigation, Menu bar, User menu, Bottom bar |
       | type     | Card                                             |
-    Given the following "theme_boost_union > smart menu item" exists:
+    And the following "theme_boost_union > smart menu item" exists:
       | menu     | Links             |
       | title    | Moodle org        |
       | itemtype | Static            |
       | url      | http://moodle.org |
       | imagealt | <link1setting>    |
-    Given the following "theme_boost_union > smart menu item" exists:
+    And the following "theme_boost_union > smart menu item" exists:
       | menu     | Links                       |
       | title    | Moodle Plugins              |
       | itemtype | Static                      |
@@ -420,5 +419,5 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Examples:
       | link1setting                  | link2setting                      | link1result                   | link2result                       |
       | Image of moodle official site | Image of moodle plugins directory | Image of moodle official site | Image of moodle plugins directory |
-      | Image of {menutitle}          |  Image of {menutitle}             | Image of Moodle org           | Image of Moodle Plugins           |
+      | Image of {menutitle}          | Image of {menutitle}              | Image of Moodle org           | Image of Moodle Plugins           |
       |                               |                                   | Moodle org                    | Moodle Plugins                    |
