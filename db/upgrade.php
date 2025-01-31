@@ -487,5 +487,22 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2024100707, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2024100709) {
+
+        // Define table theme_boost_union_menuitems to be altered.
+        $table = new xmldb_table('theme_boost_union_menuitems');
+
+        // Define field imagealt to be added to theme_boost_union_menuitems.
+        $field = new xmldb_field('imagealt', XMLDB_TYPE_CHAR, '255', null, null, null, null, 'menuicon');
+
+        // Conditionally launch add field imagealt.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2024100709, 'theme', 'boost_union');
+    }
+
     return true;
 }
