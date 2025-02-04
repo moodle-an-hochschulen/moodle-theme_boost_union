@@ -46,6 +46,7 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | home,myhome           | Home           | Dashboard           |
       | courses,siteadminnode | My courses     | Site administration |
 
+  @javascript
   Scenario Outline: Setting: Alternative logo link URL.
     Given the following config values are set as admin:
       | config                 | value     | plugin            |
@@ -57,6 +58,9 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     When I log in as "admin"
     And I am on homepage
     Then the "href" attribute of ".navbar-brand" "css_element" should contain "<href>"
+    And I change window size to "mobile"
+    And I click on "Side panel" "button"
+    Then the "href" attribute of "#theme_boost-drawers-primary .drawerheader [data-region='site-home-link']" "css_element" should contain "<href>"
 
     Examples:
       | setting         | href            |

@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-02-04 - Improvement: Allow changing of home URL on small devices as well, resolves #802.
 * 2025-01-31 - Improvement: Add option to include alt text for item image in smart menu cards, resolves #752.
 
 ### v4.5-r5
