@@ -115,7 +115,6 @@ class primary extends \core\navigation\output\primary {
         $locationmainmenucustommerged = array_merge($this->get_custom_menu($output), $locationmainmenu);
         $mainmenudata = $this->merge_primary_and_custom($this->get_primary_nav(), $locationmainmenucustommerged);
         $locationmainmenuconverted = $this->convert_submenus($mainmenudata);
-
         $moremenu = new \core\navigation\output\more_menu((object) $locationmainmenuconverted, 'navbar-nav', false);
 
         // Menubar.

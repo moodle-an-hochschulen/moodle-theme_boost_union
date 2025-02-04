@@ -6,6 +6,11 @@ Changes
 
 ### Unreleased
 
+* 2025-02-04 - Bugfix: Smart menu 3rd level submenus were being cut-off in responsive / mobile view, resolves #356.
+               Please note: This is a comparably large visual change which effectively replaces the presentation of a 3rd level smart menu (which can only be realized with dynamic courses menu items up to now). flyout menus in the main navigation area and the menu bar area with the 'sliding door' submenu behaviour which has been used in the user menu only up to now.
+               Please test your particular
+* 2025-02-04 - Bugfix: Smart menu 3rd level submenus had a font color which differed from the 2nd level and might have been even invisible, resolves #459.
+* 2025-02-04 - Bugfix: Long smart menus were not scrollable vertically, resolves #406.
 * 2025-02-04 - Bugfix: Fix smart menu dynamic course items not updating properly based on course role assignments, resolves #749.
 * 2025-02-04 - Bugfix: Smart menu item pointing to external site gets highlighted as active by mistake, resolves #758.
 * 2025-02-04 - Improvement: Allow changing of home URL on small devices as well, resolves #802.
@@ -126,10 +131,6 @@ Changes
 * 2024-06-18 - Release: Let codechecker ignore some sniffs in the language pack.
 * 2024-06-13 - Cleanup: Change @codingStandardsIgnore tags to phpcs:disable, resolves #676.
 * 2024-06-12 - Cleanup: Fix CSS warnings in external SCSS tests, resolves #674.
-* 2024-04-08 - Bugfix: Smart menu 3rd level submenus were being cut-off in responsive / mobile view, resolves #356.
-               Please note: This is a comparably large change which effectively replaces the flyout menus in the main navigation area and the menu bar area with the 'sliding door' submenu behaviour which has been used in the user menu only up to now.
-* 2024-04-08 - Bugfix: Smart menu 3rd level submenus had a font color which differed from the 2nd level and might have been even invisible, resolves #459.
-* 2024-04-08 - Bugfix: Long smart menus were not scrollable vertically, resolves #406.
 
 ### v4.3-r14
 

@@ -432,22 +432,22 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Menu item mode                   | Submenu           |
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
     And I click on "Available courses" "link" in the ".primary-navigation" "css_element"
-    And I should see "Test course1" in the ".primary-navigation" "css_element"
+    Then I should see "Test course1" in the ".primary-navigation" "css_element"
     And I should see "Test course2" in the ".primary-navigation" "css_element"
     And I should see "Available courses" in the ".primary-navigation .header .carousel-navigation-link" "css_element"
-    # Verify the full header element is clickable.
+    # Primary navigation.
     And I click on ".carousel-item.active .header" "css_element" in the ".primary-navigation" "css_element"
-    And I should see "Available courses" in the ".primary-navigation .carousel-item" "css_element"
+    Then I should see "Available courses" in the ".primary-navigation .carousel-item" "css_element"
     And I should not see "Available courses" in the ".primary-navigation .header .carousel-navigation-link" "css_element"
     And I should not see "Test course1" in the ".primary-navigation" "css_element"
-    # User menu
+    # User menu (where the header becomes fully clickable as soon as a smart menu is added).
     And I click on "#user-menu-toggle" "css_element"
     And I click on "Quick links" "link" in the "#usermenu-carousel" "css_element"
     And I click on "Available courses" "link" in the "#usermenu-carousel" "css_element"
-    And I should see "Test course1" in the "#usermenu-carousel" "css_element"
+    Then I should see "Test course1" in the "#usermenu-carousel" "css_element"
     And I should see "Test course2" in the "#usermenu-carousel" "css_element"
     And I should see "Available courses" in the "#usermenu-carousel .carousel-item.active .header .carousel-navigation-link" "css_element"
     And I click on ".carousel-item.active .header" "css_element" in the "#usermenu-carousel" "css_element"
-    And I should see "Available courses" in the "#usermenu-carousel .carousel-item.active" "css_element"
+    Then I should see "Available courses" in the "#usermenu-carousel .carousel-item.active" "css_element"
     And I should not see "Available courses" in the "#usermenu-carousel .carousel-item.active .header .carousel-navigation-link" "css_element"
     And I should not see "Test course1" in the "#usermenu-carousel" "css_element"
