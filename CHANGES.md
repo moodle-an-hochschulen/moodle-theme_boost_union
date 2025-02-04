@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-02-04 - Bugfix: Fix smart menu dynamic course items not updating properly based on course role assignments, resolves #749.
 * 2025-01-31 - Improvement: Add option to include alt text for item image in smart menu cards, resolves #752.
 
 ### v4.1-r35
