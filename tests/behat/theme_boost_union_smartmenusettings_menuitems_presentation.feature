@@ -143,7 +143,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And the "href" attribute of "//div[@class='bottom-navigation']//a[contains(@class, 'menu-item-static')]" "xpath_element" should contain "https://moodle.org"
 
   @javascript
-  Scenario: Smartmenus: Menu items - Display the menu items in different order
+  Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different order
     When I log in as "admin"
     And I set "Quick links" smart menu items with the following fields to these values:
       | Title          | Demo item 01        |
@@ -170,7 +170,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And "Demo item 01" "text" should appear after "Demo item 02" "text"
 
   @javascript
-  Scenario Outline: Smartmenus: Menu items - Display the menu items in different viewports
+  Scenario Outline: Smartmenus: Menu items: Presentation - Display the menu items in different viewports
     When I log in as "admin"
     And I set "Quick links" smart menu items with the following fields to these values:
       | Title          | Resources          |
@@ -353,7 +353,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And ".dropdown-divider" "css_element" should exist in the "nav.menubar" "css_element"
 
   @javascript
-  Scenario Outline: Smartmenus: Menu items: Hide empty menus
+  Scenario Outline: Smartmenus: Menu items: Presentation - Hide empty menus
     When I log in as "admin"
     And I create smart menu with the following fields to these values:
       | Title            | Links                    |
@@ -372,7 +372,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Submenu  | Links              |
       | Inline   | Smartmenu Resource |
 
-  Scenario Outline: Smartmenus: Menu items: Image alt text for the dynamic menu items
+  Scenario Outline: Smartmenus: Menu items: Presentation - Image alt text for the dynamic menu items
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Courses                                          |
       | location | Main navigation, Menu bar, User menu, Bottom bar |
@@ -395,7 +395,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Image of course {menutitle} | Image of course Test course1 | Image of course Test course2 | Image of course Test course word count |
       |                             | Test course1                 | Test course2                 | Test course word count                 |
 
-  Scenario Outline: Smartmenus: Menu items: Image alt text for the static menu items
+  Scenario Outline: Smartmenus: Menu items: Presentation - Image alt text for the static menu items
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Links                                            |
       | location | Main navigation, Menu bar, User menu, Bottom bar |
@@ -423,7 +423,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       |                               |                                   | Moodle org                    | Moodle Plugins                    |
 
   @javascript
-  Scenario: Smartmenu: Menus: Application - Make full submenu header clickable
+  Scenario: Smartmenus: Menu items: Presentation - Make full submenu header clickable
     When I log in as "admin"
     And I set "Quick links" smart menu items with the following fields to these values:
       | Title                            | Available courses |
