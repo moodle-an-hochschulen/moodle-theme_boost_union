@@ -1149,9 +1149,24 @@ class smartmenu_item {
             }
         }
 
-        // Generate dynamic image for empty image cards.
-        if (empty($itemimage) && $this->menu->type == smartmenu::TYPE_CARD) {
-            $itemimage = $this->get_itemimage($this->item->id);
+        // Update the card type menus before create node.
+        if ($this->menu->type == smartmenu::TYPE_CARD) {
+
+            // Generate dynamic image for empty image cards.
+            if (empty($itemimage)) {
+                $itemimage = $this->get_itemimage($this->item->id);
+            }
+
+            // Use the menu title as image alt if image alt text not given.
+            $imagealt = $this->item->imagealt ?: $title;
+            // Update the image alt text if it contains placeholders.
+            if (strpos($imagealt, '{') !== false) {
+                $placeholders = ['menutitle' => $title];
+                foreach ($placeholders as $placeholder => $value) {
+                    $imagealt = str_replace('{' . $placeholder . '}', $value, $imagealt);
+                }
+            }
+            $imagealt = format_string($imagealt);
         }
 
         $data = [
@@ -1170,6 +1185,7 @@ class smartmenu_item {
             'link' => 1,
             'sort' => uniqid(), // Support third level menu.
             'sortstring' => format_string($sortstring),
+            'imagealt' => $imagealt ?? $title,
         ];
 
         if ($haschildren && !empty($children)) {
