@@ -323,17 +323,15 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | title    | Future Courses Menu                              |
       | location | Main navigation, Menu bar, User menu, Bottom bar |
     And the following "theme_boost_union > smart menu item" exists:
-      | menu             | Future Courses Menu |
-      | title            | Future Courses      |
-      | itemtype         | Dynamic courses     |
-      | daterange        | Future              |
-      | enrolmentrole    | student             |
-    And I am logged in as "admin"
-    And I am on the "Future Courses Menu > Future Courses" "theme_boost_union > smart menu item" page
+      | menu          | Future Courses Menu |
+      | title         | Future Courses      |
+      | itemtype      | Dynamic courses     |
+      | daterange     | Future              |
+      | enrolmentrole | student             |
     And the following "courses" exist:
-      | fullname  | shortname | category | enablecompletion | startdate     | enddate         |
-      | Future 01 | F1        | CAT1     | 1                | ## +10 days ##| ## +20 days ##  |
-      | Future 02 | F2        | CAT1     | 1                | ## +15 days ##| ## +25 days ##  |
+      | fullname  | shortname | category | enablecompletion | startdate      | enddate        |
+      | Future 01 | F1        | CAT1     | 1                | ## +10 days ## | ## +20 days ## |
+      | Future 02 | F2        | CAT1     | 1                | ## +15 days ## | ## +25 days ## |
     And the following "course enrolments" exist:
       | user     | course | role    |
       | student1 | F1     | student |
@@ -343,9 +341,12 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     And the following "course enrolments" exist:
       | user     | course | role    |
       | student1 | F2     | student |
-    And I log in as "student1"
+    And I reload the page
+    Then "Future 01" "theme_boost_union > Smart menu item" should exist in the "Future Courses Menu" "theme_boost_union > Main menu smart menu"
     And "Future 02" "theme_boost_union > Smart menu item" should exist in the "Future Courses Menu" "theme_boost_union > Main menu smart menu"
-    Then I am on the "Future 02" "enrolled users" page logged in as "admin"
+    And I log out
+    And I log in as "admin"
+    And I am on the "Future 02" "enrolled users" page
     And I click on "Unenrol" "icon" in the "student1" "table_row"
     And I click on "Unenrol" "button" in the "Unenrol" "dialogue"
     And I log out

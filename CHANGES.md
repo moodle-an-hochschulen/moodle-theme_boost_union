@@ -3,6 +3,7 @@ moodle-theme_boost_union
 
 Changes
 -------
+
 ### Unreleased
 
 * 2025-02-04 - Bugfix: Fix smart menu dynamic course items not updating properly based on course role assignments, resolves #749.
