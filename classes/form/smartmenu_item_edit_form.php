@@ -278,6 +278,11 @@ class smartmenu_item_edit_form extends \moodleform {
                     $filepickeroptions);
             $mform->addHelpButton('image', 'smartmenusmenuitemcardimage', 'theme_boost_union');
 
+            // Add alt text option for the card image.
+            $mform->addElement('text', 'imagealt', get_string('smartmenusmenuitemcardimagealt', 'theme_boost_union'));
+            $mform->setType('imagealt', PARAM_TEXT);
+            $mform->addHelpButton('imagealt', 'smartmenusmenuitemcardimagealt', 'theme_boost_union');
+
             // Add card text position as select element.
             $textpositionoptions = smartmenu_item::get_textposition_options();
             $mform->addElement('select', 'textposition',
