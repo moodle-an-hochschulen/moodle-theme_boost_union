@@ -6,6 +6,11 @@ Changes
 
 ### Unreleased
 
+* 2025-02-04 - Bugfix: Smart menu 3rd level submenus were being cut-off in responsive / mobile view, resolves #356.
+               Please note: This is a comparably large visual change which effectively replaces the presentation of a 3rd level smart menu (which can only be realized with dynamic courses menu items up to now). flyout menus in the main navigation area and the menu bar area with the 'sliding door' submenu behaviour which has been used in the user menu only up to now.
+               Please test your particular
+* 2025-02-04 - Bugfix: Smart menu 3rd level submenus had a font color which differed from the 2nd level and might have been even invisible, resolves #459.
+* 2025-02-04 - Bugfix: Long smart menus were not scrollable vertically, resolves #406.
 * 2025-02-04 - Bugfix: Fix smart menu dynamic course items not updating properly based on course role assignments, resolves #749.
 * 2025-01-31 - Improvement: Add option to include alt text for item image in smart menu cards, resolves #752.
 

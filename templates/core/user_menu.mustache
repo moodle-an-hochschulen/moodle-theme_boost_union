@@ -60,6 +60,8 @@
     * Include submenus custom return id, helps to get back to the submenus parent from third level child.
     * Add icon support to items.
     * Add user full name at the top of the user menu.
+    * Support submenus with more than one level (for adding smart menus into the user menu).
+    * Make submenu headers fully clickable as soon as at least one smart menu exists on the page.
 }}
 <div class="usermenu">
     {{#unauthenticateduser}}
@@ -97,13 +99,28 @@
                         {{#submenus}}
                             <div id="carousel-item-{{id}}" role="menu" class="carousel-item submenu" tabindex="-1" aria-label="{{title}}">
                                 <div class="d-flex flex-column h-100">
+                                    {{#includesmartmenu}}
+                                    {{! Make submenu headers fully clickable. }}
                                     <div class="header">
-                                        <button type="button" class="btn btn-icon carousel-navigation-link text-decoration-none text-body" data-carousel-target-id="carousel-item-{{#returnid}}{{returnid}}{{/returnid}}{{^returnid}}main{{/returnid}}" aria-label="{{#str}}usermenugoback{{/str}}">
+                                        <a href="#" class="carousel-navigation-link" data-carousel-target-id="carousel-item-{{#returnid}}{{returnid}}{{/returnid}}{{^returnid}}main{{/returnid}}"
+                                            aria-label="{{#str}}usermenugoback{{/str}}">
+                                            <button type="button" class="btn btn-icon text-decoration-none text-body">
+                                                <span class="dir-rtl-hide">{{#pix}}i/arrow-left{{/pix}}</span>
+                                                <span class="dir-ltr-hide">{{#pix}}i/arrow-right{{/pix}}</span>
+                                            </button>
+                                            <span class="pl-2" id="carousel-item-title-{{id}}">{{#text}}{{{text}}}{{/text}}{{^text}}{{title}}{{/text}}</span>
+                                        </a>
+                                    </div>
+                                    {{/includesmartmenu}}
+                                    {{^includesmartmenu}}
+                                    <div class="header">
+                                        <button type="button" class="btn btn-icon carousel-navigation-link text-decoration-none text-body" data-carousel-target-id="carousel-item-main" aria-label="{{#str}}usermenugoback{{/str}}">
                                             <span class="dir-rtl-hide">{{#pix}}i/arrow-left{{/pix}}</span>
                                             <span class="dir-ltr-hide">{{#pix}}i/arrow-right{{/pix}}</span>
                                         </button>
-                                        <span class="pl-2" id="carousel-item-title-{{id}}">{{#text}}{{{text}}}{{/text}}{{^text}}{{title}}{{/text}}</span>
+                                        <span class="pl-2" id="carousel-item-title-{{id}}">{{title}}</span>
                                     </div>
+                                    {{/includesmartmenu}}
                                     <div class="dropdown-divider"></div>
                                     <div class="items h-100 overflow-auto" role="menu" aria-labelledby="carousel-item-title-{{id}}">
                                         {{> core/user_action_menu_submenu_items }}

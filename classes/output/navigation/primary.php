@@ -64,6 +64,7 @@ class primary extends \core\navigation\output\primary {
      * * Build the smart menus and its items as navigation nodes.
      * * Generate the nodes for different locations based on the menus locations.
      * * Combine the smart menus nodes with core primary menus.
+     * * Convert the children menus into submenus like usermenus.
      *
      * @param renderer_base|null $output
      * @return array
@@ -95,41 +96,60 @@ class primary extends \core\navigation\output\primary {
             return parent::export_for_template($output);
         }
 
-        // Get the menus for the main menu.
-        $mainmenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_MAIN, $smartmenus);
+        // Get the menus for the main menu loation.
+        $locationmainmenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_MAIN, $smartmenus);
 
-        // Separate the menus for the menubar.
-        $menubarmenus = smartmenu::get_menus_forlocation(smartmenu::LOCATION_MENU, $smartmenus);
+        // Separate the menus for the menubar location.
+        $locationmenubarmenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_MENU, $smartmenus);
 
-        // Separate the menus for the user menus.
+        // Separate the menus for the usermenu location.
+        // (There is no need to concert the submenus in this case).
         $locationusermenus = smartmenu::get_menus_forlocation(smartmenu::LOCATION_USER, $smartmenus);
 
-        // Separate the menus for the bottom menu.
-        $locationbottom = smartmenu::get_menus_forlocation(smartmenu::LOCATION_BOTTOM, $smartmenus);
+        // Separate the menus for the bottom menu location.
+        $locationbottommenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_BOTTOM, $smartmenus);
 
+        // Primary menu.
         // Merge the smart menu nodes which contain the main menu location with the primary and custom menu nodes.
-        $mainsmartmenumergedcustom = array_merge($this->get_custom_menu($output), $mainmenu);
-        $menudata = (object) $this->merge_primary_and_custom($this->get_primary_nav(), $mainsmartmenumergedcustom);
-        $moremenu = new \core\navigation\output\more_menu((object) $menudata, 'navbar-nav', false);
+        // Update the active and open states to the nodes based on the current page.
+        // And convert the children menu items into submenus.
+        $locationmainmenucustommerged = array_merge($this->get_custom_menu($output), $locationmainmenu);
+        $mainmenudata = $this->merge_primary_and_custom($this->get_primary_nav(), $locationmainmenucustommerged);
+        $locationmainmenuconverted = $this->convert_submenus($mainmenudata);
+        $moremenu = new \core\navigation\output\more_menu((object) $locationmainmenuconverted, 'navbar-nav', false);
 
         // Menubar.
         // Items of menus only added in the menubar.
+        // Convert the children menu items into submenus.
         // Removed the menu nodes from menubar, each item will be displayed as menu in menubar.
-        if (!empty($menubarmenus)) {
-            $menubarmoremenu = new \core\navigation\output\more_menu((object) $menubarmenus, 'navbar-nav-menu-bar', false);
+        if (!empty($locationmenubarmenu)) {
+            $locationmenubarmenuconverted = $this->convert_submenus($locationmenubarmenu);
+            $menubarmoremenu = new \core\navigation\output\more_menu((object) $locationmenubarmenuconverted,
+                    'navbar-nav-menu-bar', false);
         }
 
         // Bottom bar.
         // Include the menu navigation menus to the mobile menu when the bottom bar doesn't have any menus.
-        $mergecustombottommenus = array_merge($this->get_custom_menu($output), $locationbottom);
-        $mobileprimarynav = (!empty($locationbottom))
-            ? $this->merge_primary_and_custom($this->get_primary_nav(), $mergecustombottommenus, true)
-            : $this->merge_primary_and_custom($this->get_primary_nav(), $mainsmartmenumergedcustom, true);
+        // Mobile navigation menu, uses the expand/collapse method for submenus, for the reason the unconverted menus are used.
+        $locationbottommenuscustommerged = array_merge($this->get_custom_menu($output), $locationbottommenu);
+        $mobileprimarynav = (!empty($locationbottommenu))
+            ? $this->merge_primary_and_custom(
+                $this->get_primary_nav(), $locationbottommenuscustommerged, true)
+            : $this->merge_primary_and_custom(
+                $this->get_primary_nav(), $locationmainmenucustommerged, true);
 
         if (!empty($mobileprimarynav)) {
-            $bottombar = new \core\navigation\output\more_menu((object) $mobileprimarynav, 'navbar-nav-bottom-bar', false);
+            // Merge the bottom menu with main menu if there is any bottom menu available. otherwise use the main menu.
+            // And convert the children menu items into submenus.
+            $bottomprimarynav = (!empty($locationbottommenu))
+                ? $this->merge_primary_and_custom($this->get_primary_nav(), $locationbottommenuscustommerged, true)
+                : $this->merge_primary_and_custom($this->get_primary_nav(), $locationmainmenucustommerged, true);
+            $locationbottommenuconverted = $this->convert_submenus($bottomprimarynav);
+
+            $bottombar = new \core\navigation\output\more_menu((object) $locationbottommenuconverted,
+                    'navbar-nav-bottom-bar', false);
             $bottombardata = $bottombar->export_for_template($output);
-            $bottombardata['drawer'] = (!empty($locationbottom)) ? true : false;
+            $bottombardata['drawer'] = (!empty($locationbottommenu)) ? true : false;
         }
 
         // Usermenu.
@@ -141,7 +161,8 @@ class primary extends \core\navigation\output\primary {
         // Check if any of the smartmenus are going to be included on the page.
         // This is used as flag to include the smart menu's JS file in mustache templates later
         // as well as for controlling the smart menu SCSS.
-        $includesmartmenu = (!empty($mainmenu) || !empty($menubarmenus) || !empty($locationusermenus) || !empty($locationbottom));
+        $includesmartmenu = (!empty($locationmainmenu) || !empty($locationmenubarmenu) ||
+                !empty($locationusermenus) || !empty($locationbottommenu));
 
         return [
             'mobileprimarynav' => $mobileprimarynav,
@@ -230,9 +251,10 @@ class primary extends \core\navigation\output\primary {
      *
      * @param array $usermenu
      * @param array $menus
+     * @param bool $forusermenu If false, the divider and logout nodes are unchanged.
      * @return void
      */
-    public function build_usermenus(&$usermenu, $menus) {
+    public function build_usermenus(&$usermenu, $menus, $forusermenu = true) {
 
         if (empty($menus)) {
             return [];
@@ -240,14 +262,21 @@ class primary extends \core\navigation\output\primary {
 
         $logout = !empty($usermenu['items']) ? array_pop($usermenu['items']) : '';
         foreach ($menus as $menu) {
+            // Cast the menu to an object, if needed.
+            $menu = !is_object($menu) ? (object) $menu : $menu;
+
             // Menu with empty childrens.
             if (!isset($menu->children)) {
+                $menu->link = !(isset($menu->divider) && $menu->divider);
+                $menu->submenulink = false;
                 $usermenu['items'][] = $menu;
                 continue;
             }
 
             // Menu with children, split the children and push them into submenus.
             if (isset($menu->submenuid)) {
+                $menu->link = false;
+                $menu->submenulink = true;
                 $children = $menu->children;
 
                 // Add the second level menus list before the course list to the user menu.
@@ -264,11 +293,13 @@ class primary extends \core\navigation\output\primary {
                 array_walk($children, function(&$value) use (&$usermenu, $menu) {
                     if (isset($value['divider'])) {
                         $value['itemtype'] = 'divider';
-                        $value['link'] = '';
+                        $value['link'] = false;
+                        $value['divider'] = true;
                     }
 
                     // Children is submenu item, add third level submenu.
-                    // Only three levels is available, therefore implemented in a static way, in case wants to use multiple levels.
+                    // Only three levels is available,
+                    // Therefore implemented in a static way, in case wants to use multiple levels.
                     // Convert this into separate function make dynamic.
                     if (!empty($value['children'])) {
                         $uniqueid = uniqid();
@@ -295,19 +326,72 @@ class primary extends \core\navigation\output\primary {
             }
         }
 
-        // Include the divider after smart menus items to make difference from logout.
-        $divider = [
-            'title' => '####',
-            'itemtype' => 'divider',
-            'divider' => 1,
-            'link' => '',
-        ];
-        array_push($usermenu['items'], $divider);
+        // If the menu is to be used as user menu.
+        if ($forusermenu) {
+            // Include the divider after smart menus items to make difference from logout.
+            $divider = [
+                'title' => '####',
+                'itemtype' => 'divider',
+                'divider' => 1,
+                'link' => '',
+            ];
+            array_push($usermenu['items'], $divider);
 
-        // Update the logout menu at end of menus.
-        if (!empty($logout)) {
-            array_push($usermenu['items'], $logout);
+            // Update the logout menu at end of menus.
+            if (!empty($logout)) {
+                array_push($usermenu['items'], $logout);
+            }
         }
+    }
+
+    /**
+     * Converts the second-level children of moremenu into submenu format, similar to usermenu.
+     *
+     * Updates the ID of first-level submenus as the value of 'sort', where 'sort' contains unique IDs.
+     * Splits the children of first-level submenus into 'items' and 'submenus', where 'items' contain the first-level main menus
+     * and 'submenus' contain their children.
+     *
+     * @param array $menus The array of menus to build submenus for.
+     * @return array The updated array of menus with submenus built.
+     */
+    protected function convert_submenus($menus) {
+
+        // Verify the empty entries.
+        if (empty($menus)) {
+            return $menus;
+        }
+
+        // Create a deep clone of menus, direct use of menus mismatch with the usermenus format.
+        $primarymenu = array_map(function($item) {
+            // Convert core primary menus array to object before cloning to maintain type formats.
+            return clone (object) $item;
+        }, $menus);
+
+        foreach ($primarymenu as $key => $parentmenu) {
+
+            // Menu doesn't contain any children menus, continue to the next menu.
+            if (!$parentmenu->haschildren || $parentmenu->card) {
+                continue;
+            }
+
+            $submenu = [];
+            // Children menus of this menu.
+            $children = $parentmenu->children;
+
+            // Updates the ID of first-level submenus as the value of 'sort', where 'sort' contains unique IDs.
+            array_walk($children, function(&$val) use ($parentmenu) {
+                $val['submenuid'] = $val['sort'];
+            });
+
+            // Update the format of children menus into submenus, similar to usermenu.
+            $this->build_usermenus($submenu, (object) $children, false);
+
+            // Splits the children of first-level submenus into 'items' and 'submenus'.
+            $primarymenu[$key]->children = ['items' => $submenu['items'] ?? []];
+            $primarymenu[$key]->submenus = $submenu['submenus'] ?? [];
+        }
+
+        return $primarymenu;
     }
 
     /**
