@@ -20,6 +20,12 @@
     The smart menus more menu children.
     This is a modified version of core/moremenu_children.
 
+    Modifications compared to the original template:
+    * Added the carousel-target data to the li item.
+    * Main items are wrapped with carousel-item.
+    * Second-level submenus are rendered as separate carousel items.
+    * Make submenu headers fully clickable.
+
     Example context (json):
     {
         "divider": "",
@@ -32,7 +38,7 @@
     }
 }}
 {{#haschildren}}
-    <li class="dropdown nav-item {{#menuclasses}}{{.}} {{/menuclasses}} " role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
+    <li class="dropdown theme-boost-union-smartmenu-carousel nav-item {{#menuclasses}}{{.}} {{/menuclasses}} " role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
         <a class="dropdown-toggle nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}" id="drop-down-{{moremenuid}}" role="menuitem" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" href="#" aria-controls="drop-down-menu-{{moremenuid}}"
             {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
@@ -42,51 +48,73 @@
         >
             {{{text}}}
         </a>
-        <div class="dropdown-menu" role="menu" id="drop-down-menu-{{moremenuid}}" aria-labelledby="drop-down-{{moremenuid}}">
-            {{#helpicon}}<div class="menu-helpicon">{{{helpicon}}}</div>{{/helpicon}}
-            {{#abovehelptext}}<div class="menu-description">{{{helptext}}}</div>{{/abovehelptext}}
-            {{#children}}
-                {{^divider}}
-                    {{#haschildren}}
-                    <div class="dropdown-submenu" role="none" >
-                    {{/haschildren}}
-                    {{#is_action_link}}
-                        <a class="dropdown-item {{#itemdata.classes}}{{.}} {{/itemdata.classes}}" role="menuitem" {{#actionattributes}}{{name}}="{{value}}" {{/actionattributes}} href="{{{url}}}{{{action}}}"
-                            {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
-                            {{#attributes}}{{name}}="{{value}}" {{/attributes}}
-                            data-disableactive="true"
-                            tabindex="-1"
-                        >
-                            {{{text}}}
-                        </a>
-                        {{#action_link_actions}}
-                            {{> core/actions }}
-                        {{/action_link_actions}}
-                    {{/is_action_link}}
-                    {{^is_action_link}}
-                        <a class="dropdown-item {{#itemdata.classes}}{{.}} {{/itemdata.classes}}" role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}}
-                            {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
-                            {{#attributes}}{{name}}="{{value}}" {{/attributes}}
-                            data-disableactive="true"
-                            tabindex="-1"
-                        >
-                            {{{text}}}
-                        </a>
-                    {{/is_action_link}}
-                    {{#haschildren}}
-                        <ul>
-                            {{#children}}
-                                {{> theme_boost_union/smartmenus-moremenu-children}}
-                            {{/children}}
-                        </ul>
+        <div class="dropdown-menu boost-union-moremenu" role="menu" id="drop-down-menu-{{moremenuid}}" aria-labelledby="drop-down-{{moremenuid}}">
+            <div data-toggle="smartmenu-carousel" class="carousel slide" data-touch="false" data-interval="false" data-keyboard="false">
+                <div class="carousel-inner">
+                {{#children}}
+                    {{! Smart menus }}
+                    {{#submenuid}}
+                    <div id="carousel-item-main" class="carousel-item active" role="menu" tabindex="-1">
+                        {{#helpicon}}<div class="menu-helpicon">{{{helpicon}}}</div>{{/helpicon}}
+                        {{#abovehelptext}}{{#helptext}}<div class="menu-description">{{{helptext}}}</div>{{/helptext}}{{/abovehelptext}}
+                        {{> core/user_action_menu_items }}
+                        {{#belowhelptext}}{{#helptext}}<div class="menu-description">{{{helptext}}}</div>{{/helptext}}{{/belowhelptext}}
                     </div>
-                    {{/haschildren}}
-                {{/divider}}
-                {{#divider}}
-                    <div class="dropdown-divider"></div>
-                {{/divider}}
-            {{/children}}
-            {{#belowhelptext}}<div class="menu-description">{{{helptext}}}</div>{{/belowhelptext}}
+                    {{/submenuid}}
+                    {{! Moodle core menus }}
+                    {{^items}}
+                        {{^divider}}
+                            {{#is_action_link}}
+                                <a class="dropdown-item {{#itemdata.classes}}{{.}} {{/itemdata.classes}}" role="menuitem" {{#actionattributes}}{{name}}="{{value}}" {{/actionattributes}} href="{{{url}}}{{{action}}}"
+                                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                                    {{#attributes}}{{name}}="{{value}}" {{/attributes}}
+                                    data-disableactive="true"
+                                    tabindex="-1"
+                                >
+                                    {{{text}}}
+                                </a>
+                                {{#action_link_actions}}
+                                    {{> core/actions }}
+                                {{/action_link_actions}}
+                            {{/is_action_link}}
+                            {{^is_action_link}}
+                                <a class="dropdown-item {{#itemdata.classes}}{{.}} {{/itemdata.classes}}" role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}}
+                                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                                    {{#attributes}}{{name}}="{{value}}" {{/attributes}}
+                                    data-disableactive="true"
+                                    tabindex="-1"
+                                >
+                                    {{{text}}}
+                                </a>
+                            {{/is_action_link}}
+                        {{/divider}}
+                        {{#divider}}
+                            <div class="dropdown-divider"></div>
+                        {{/divider}}
+                    {{/items}}
+                {{/children}}
+                {{#submenus}}
+                    {{! Make submenu headers fully clickable. }}
+                    <div id="carousel-item-{{id}}" role="menu" class="carousel-item submenu" tabindex="-1" aria-label="{{title}}">
+                        <div class="d-flex flex-column h-100">
+                            <div class="header">
+                                <a href="#" class=" carousel-navigation-link" data-carousel-target-id="carousel-item-{{#returnid}}{{returnid}}{{/returnid}}{{^returnid}}main{{/returnid}}" aria-label="{{#str}}usermenugoback{{/str}}">
+                                    <button type="button" class="btn btn-icon text-decoration-none text-body">
+                                        <span class="dir-rtl-hide">{{#pix}}i/arrow-left{{/pix}}</span>
+                                        <span class="dir-ltr-hide">{{#pix}}i/arrow-right{{/pix}}</span>
+                                    </button>
+                                    <span class="pl-2" id="carousel-item-title-{{id}}">{{#title}}{{{title}}}{{/title}}{{^title}}{{{text}}}{{/title}}</span>
+                                </a>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="items h-100 overflow-auto" role="menu" aria-labelledby="carousel-item-title-{{id}}">
+                                {{> core/user_action_menu_submenu_items }}
+                            </div>
+                        </div>
+                    </div>
+                {{/submenus}}
+                </div>
+            </div>
         </div>
     </li>
 {{/haschildren}}
