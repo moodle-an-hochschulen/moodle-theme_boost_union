@@ -496,5 +496,18 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023102053, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2023102056) {
+
+        // Set the smart menu item mode to inline for all menu items which are not of the dynamic courses type.
+        // This is necessary as the smart menu item mode setting has been removed from these menu item types and the
+        // smart menu item form only saves the inline mode as default since then.
+        $DB->execute('UPDATE {theme_boost_union_menuitems}
+                      SET mode = '.\theme_boost_union\smartmenu_item::MODE_INLINE.'
+                      WHERE type != '.\theme_boost_union\smartmenu_item::TYPEDYNAMIC);
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2023102056, 'theme', 'boost_union');
+    }
+
     return true;
 }
