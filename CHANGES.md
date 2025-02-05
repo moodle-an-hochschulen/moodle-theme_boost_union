@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-02-04 - Improvement: Hide the 'Menu item mode' settings for smart menu items which are not of the 'dynamic courses' item type, resolves #804.
 * 2025-02-04 - Bugfix: Fix smart menu dynamic course items not updating properly based on course role assignments, resolves #749.
 * 2025-01-31 - Improvement: Add option to include alt text for item image in smart menu cards, resolves #752.
 
