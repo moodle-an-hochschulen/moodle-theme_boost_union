@@ -693,6 +693,8 @@ As you have read in the introduction, the main design principle of Boost Union i
   As soon as you click the footer button (questionmark icon) in the bottom right corner of the screen, a popover with several links appears. However, the content of this link list is far from being well-structured and looks more like a garage sale. When implementing the settings to individually suppress each of these popover links, we had to make some code re-arrangements which result in the fact that the popover links are slightly more well-structured even if you do not enable any setting in Boost Union.
 * Suppress footer outputs by plugin / core component:
   Due to the way how the settings `theme_boost_union | footersuppressstandardfooter_*` had to be built, it was not possible to quickly and reliably detect if Boost Union (or a Boost Union child theme) is the active theme. Thus, these settings are also applied if another theme than Boost Union is active. Please make sure to disable these settings if Boost Union is installed but should not be used.
+* Clickable header in the user's menu third level:
+  Due to the way how the smart menu was integrated into the user menu, as soon as at least one smart menu exists on the page, the header of the language menu in the user menu is now fully clickable - compared to Boost core where only the 'back' arrow in the language menu is clickable. This should be a neglectible difference to Boost core.
 
 
 Companion plugin local_navbarplus
