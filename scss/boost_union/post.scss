@@ -1453,6 +1453,10 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 border-bottom: 0;
                 background-color: #f8f9fa;
                 z-index: 1031;
+                /* The position of the message drawer has been adjusted slightly top to accommodate the top header. */
+                ~ [data-region=right-hand-drawer].drawer {
+                    top: 100px;
+                }
                 /* The position of the side drawer has been adjusted slightly below to accommodate the top header. */
                 ~ .drawer.drawer-left {
                     top: 101px;
@@ -1463,11 +1467,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 /* The position of the main page has been adjusted slightly below to accommodate the top header. */
                 ~ #page.drawers {
                     margin-top: 100px;
-                    /* The position of the drawer button to toggle has been adjusted slightly
-                    below to accommodate the top header.
-                    .drawer-toggles .drawer-toggler {
-                        top: 110px;
-                    }*/
                 }
                 .moremenu {
                     .more-nav {
@@ -1478,7 +1477,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                                 position: static;
                             }
                             &.nav-item {
-                                &:first-child {
+                                &:first-child,
+                                &:nth-child(2) {
                                     /* The position of the dropdown menu should not extend beyond the visible area of
                                        the screen */
                                     .dropdown-menu {
@@ -1490,10 +1490,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                             a {
                                 &:not(.active) {
                                     border-bottom: 0;
-                                    padding: 10px;
-                                }
-                                > * {
-                                    cursor: pointer;
                                 }
                                 /* Background color added in the menubar menu link on hover */
                                 &.nav-link:hover {
@@ -1502,6 +1498,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                             }
                             /* The positions of the dropdown menu added */
                             .dropdown-menu {
+                                float: none;
                                 left: auto;
                                 right: 0;
                                 li {
@@ -1513,12 +1510,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                                 .card-block-wrapper .card-block a {
                                     padding: 0;
                                 }
-                            }
-                            /* Added max-height and overflow auto for scollbar when the card item reach the dropdown
-                               height */
-                            &.dropdownmoremenu .dropdown-menu .dropdown-menu {
-                                max-height: 300px;
-                                overflow-y: auto;
                             }
                         }
                     }
@@ -1653,15 +1644,23 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     }
                 }
             }
-            /* Minimum width is adde for the dropdown, overlay y axis is visible to show the sub dropdown menus*/
-            > div:not(.navbar-nav) .dropdown:not(.card-dropdown) .dropdown-menu {
-                min-width: 200px;
-                overflow-y: visible;
-            }
             /* The icon tag aligned top at the usermenu link */
             .usermenu .dropdown-menu {
-                .submenu .items a.dropdown-item {
-                    align-items: baseline;
+                .submenu {
+                    /* Remove the padding on the User submenu header */
+                    .header {
+                        padding: 0;
+                        /* Centered align the User submenu header, added padding and removed the underline for the link */
+                        .carousel-navigation-link {
+                            text-decoration: none;
+                            padding: .1rem .75rem;
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                    .items a.dropdown-item {
+                        align-items: baseline;
+                    }
                 }
                 /* Usermenu dropdown item position relative for it's submenu */
                 .dropdown-item {
@@ -1672,11 +1671,19 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     }
                 }
             }
+            /* Dropdown more menu back button arrow margin */
+            .boost-union-moremenu.dropdown-menu .carousel-navigation-link > * {
+                pointer-events: none;
+                img {
+                    margin: 0;
+                }
+            }
         }
         .moremenu {
             .more-nav li.nav-item {
                 /* Menu link icon aligned center */
                 a {
+                    display: flex;
                     align-items: center;
                     label {
                         margin-bottom: 0;
@@ -1686,7 +1693,16 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 /* The full width style is added for the menu link inside the "More" menu */
                 &.dropdownmoremenu .dropdown-menu li.nav-item.dropdown {
                     width: 100%;
+                    &.card-dropdown .dropdown-toggle:after {
+                        content: '\f105';
+                    }
                     .dropdown-toggle {
+                        &:after {
+                            font-size: 10px;
+                            margin-top: 7px;
+                            position: absolute;
+                            right: 0.75rem;
+                        }
                         /* Header dropdown toggle menu link color added */
                         &:hover,
                         &:focus,
@@ -1697,24 +1713,24 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     /* Header dropdown menu border added and position added not to conflict
                         with the screen in the responsive alignment */
                     .dropdown-menu {
-                        border: 1px solid rgba(0, 0, 0, 0.15);
-                        padding: 0.5rem 0;
-                        position: absolute;
-                        top: 0;
-                        left: auto;
-                        right: 100%;
-                        /* Removed the background color for the menu link of the submenu link*/
-                        .dropdown-item {
-                            &:not(:hover):not(:focus):not(:active) {
-                                background: none;
-                            }
-                        }
+                        max-height: none;
+                        border-radius: 0;
+                        overflow: visible;
                     }
                     &.card-dropdown {
+                        /* Minimum width, maximum width and height, aligned center, and position
+                        fixed of card dropdown menu below the nav header */
                         .dropdown-menu {
-                            min-width: 420px;
+                            min-width: 220px;
+                            max-width: 90%;
                             max-height: calc(100vh - 120px);
                             text-align: center;
+                            padding: 5px;
+                            overflow: auto;
+                            position: fixed;
+                            right: 0;
+                            top: 100px;
+                            left: 0;
                         }
                         &.card-form-fullwidth {
                             .dropdown-menu .card-block-wrapper {
@@ -1725,10 +1741,18 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 }
             }
             .dropdown {
-                /* Top margin removed and overlay y axis is visible to show the dropdowm menu without the scrollbar */
+                /* Minimum width , max-height added to display the dropdown menu items, Top margin removed
+                and overlay y axis is auto to show the dropdowm menu with the scrollbar */
                 .dropdown-menu {
-                    overflow-y: visible;
+                    min-width: 220px;
+                    max-width: 260px;
+                    max-height: calc(100vh - 200px);
+                    overflow: auto;
                     margin-top: 0;
+                    /* The more menu item with inline to display in full width */
+                    .nav-item {
+                        min-width: 100%;
+                    }
                     /* Menu description font size, padding, border-radius and background color added */
                     .menu-description {
                         font-size: 12px;
@@ -1740,21 +1764,33 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                             margin-bottom: 0;
                         }
                     }
-                    /* Padding and Position added for the "help icon" in menu */
+                    /* Text aligned center and margin bottom added for the "help icon" in menu help icon */
                     .menu-helpicon {
                         text-align: center;
-                        padding-right: 10px;
                         margin-bottom: 10px;
                         /* Margin removed in the menu description help icon in the menu */
                         i {
                             margin: 0;
+                            /* color white is added in the menu description help icon in the menu */
+                            &:before {
+                                color: var(--info);
+                            }
                         }
                     }
                     /* The font size and opacity reduced when the Menu link is selected as "Heading" option in the
                        settings */
                     .dropdown-item {
-                        /* Dropdown menu link alignment at top */
+                        /* Dropdown menu link alignment at top, white-space is used to arrange the large text in the
+                        next line*/
                         align-items: baseline;
+                        white-space: normal;
+                        /* The icon width, height and font size is changed to normal size when the
+                        large size icon (class="iconsize-big") is used in the "i" tag */
+                        i.icon {
+                            width: auto;
+                            height: auto;
+                            font-size: 16px;
+                        }
                         /* The "Tick" icon removed when the menu link is clicked */
                         &:before {
                             display: none;
@@ -1849,8 +1885,9 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 /* Card layout - The below styles are header dropdown Card style menus */
                 &.card-dropdown {
                     /* The header card dropdown menu width, padding, removed border radius and top margin, added
-                    white background color and it's position styles */
+                    white background color and it's position styles, max-width as none to show the card dropdown to full width */
                     .dropdown-menu {
+                        max-width: none;
                         width: 100%;
                         border-radius: 0;
                         background-color: #f0efef;
@@ -1860,136 +1897,152 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                         top: 100%;
                         left: 0;
                         /* The header card dropdown menu items styles */
-                        /* Margin added to the card block right & bottom and vertical align added to
-                        align the card block center to each other */
-                        .card-block {
-                            margin-right: 15px;
-                            margin-bottom: 15px;
-                            display: inline-block;
-                            vertical-align: top;
-                            flex-direction: column;
-                            /* The image parent div added for the card dropdown items */
-                            .img-block {
-                                width: 100%;
-                                height: 200px;
-                                /* The image size added for the card dropdown items */
-                                img {
+                        /* Aligned the card dropdown to center */
+                        .card-block-wrapper {
+                            text-align: center;
+                            /* Margin added to the card block right & bottom and vertical align added to
+                            align the card block center to each other */
+                            .card-block {
+                                margin-right: 15px;
+                                margin-bottom: 15px;
+                                display: inline-block;
+                                vertical-align: top;
+                                flex-direction: column;
+                                /* The image parent div added for the card dropdown items */
+                                .img-block {
                                     width: 100%;
-                                    height: 100%;
-                                    object-fit: cover;
+                                    height: 200px;
+                                    /* The image size added for the card dropdown items */
+                                    img {
+                                        width: 100%;
+                                        height: 100%;
+                                        object-fit: cover;
+                                    }
+                                    > a {
+                                        padding: 0;
+                                        display: initial;
+                                    }
                                 }
-                                > a {
-                                    padding: 0;
-                                }
-                            }
-                            /* The card dropdown items content block width, padding, background color
-                            and aligned center styles added */
-                            .content-block {
-                                width: 100%;
-                                padding: 10px;
-                                background-color: rgba(0, 0, 0, 0.5);
-                                display: flex;
-                                align-items: center;
-                                /* The margin added to the heading in the content block for the card dropdown items */
-                                h5 {
+                                /* The card dropdown items content block width, text aligned left padding, background color
+                                and aligned center styles added */
+                                .content-block {
                                     width: 100%;
-                                    margin-bottom: 0;
-                                    overflow: hidden;
-                                    /* The font style, color, paddign added to the link of the heading
+                                    text-align: left;
+                                    padding: 10px;
+                                    background-color: rgba(0, 0, 0, 0.5);
+                                    display: flex;
+                                    align-items: center;
+                                    /* The margin added to the heading in the content block for the card dropdown items */
+                                    h5 {
+                                        width: 100%;
+                                        margin-bottom: 0;
+                                        overflow: hidden;
+                                        /* The font style, color, paddign added to the link of the heading
+                                        in the content block for the card dropdown items. Background none is added when the
+                                        background is not given in the settings for the menu items */
+                                        a {
+                                            font-size: 14px;
+                                            color: $white;
+                                            font-weight: bold;
+                                            padding: 0;
+                                            background: none;
+                                            /* Background removed for the link of the heading on hover
+                                            in the content block for the card dropdown items */
+                                            &:hover,
+                                            &:focus,
+                                            &:active {
+                                                background: none;
+                                            }
+                                            /* The icon color is intended to correspond with the text color specified in the menu
+                                            item settings. However, the icon color in the card dropdown menu may be overridden by
+                                            the color defined in the theme style for the navigation, particularly when using the
+                                            "dark" and "bg primary" options in the header. To ensure the desired icon color is
+                                            maintained, the icon color is set to "inherit" with the use of "!important".
+                                            This ensures that the color specified in the text setting will be applied to the icon.
+                                            */
+                                            i {
+                                                color: inherit !important; /* stylelint-disable-line declaration-no-important */
+                                            }
+                                        }
+                                    }
+                                    /* The line height added and "Go" button block aligned right side
                                     in the content block for the card dropdown items */
-                                    a {
-                                        font-size: 14px;
-                                        color: $white;
-                                        font-weight: bold;
-                                        padding: 0;
-                                        /* Background removed for the link of the heading on hover
-                                        in the content block for the card dropdown items */
-                                        &:hover,
-                                        &:focus,
-                                        &:active {
-                                            background: none;
-                                        }
-                                    }
-                                }
-                                /* The line height added and "Go" button block aligned right side
-                                in the content block for the card dropdown items */
-                                .btn-block {
-                                    width: auto;
-                                    line-height: 10px;
-                                    text-align: right;
-                                    margin-left: 5px;
-                                    a {
-                                        /* The color and padding added for the "Go" button in
-                                        the content block of the card dropdown items */
-                                        color: #fff;
-                                        padding: 0;
-                                        &:hover,
-                                        &:focus,
-                                        &:active {
-                                            /* Background removed for the link of the button on
-                                            hover in the content block for the card dropdown items */
-                                            background: none;
-                                        }
-                                    }
-                                }
-                            }
-                            /* The below style is added when the Menu link as "Heading" in "card layout" Menu
-                               settings */
-                            &.menu-item-heading {
-                                /* The Card menu as "Heading" option content block style */
-                                .content-block {
-                                    /* The Card menu content heading menu link font-size and opacity added */
-                                    h5 a {
-                                        font-size: 16px;
-                                        opacity: .6;
-                                        /* The Card menu content heading menu link icon font-size added */
-                                        i {
-                                            font-size: 16px;
-                                        }
-                                    }
-                                    /* The Card Menu as "Heading" option content block "Go" button link is hidden */
                                     .btn-block {
-                                        display: none;
+                                        width: auto;
+                                        line-height: 10px;
+                                        text-align: right;
+                                        margin-left: 5px;
+                                        a {
+                                            /* The color and padding added for the "Go" button in
+                                            the content block of the card dropdown items. Background none is added when the
+                                            background is not given in the settings for the menu items */
+                                            color: #fff;
+                                            padding: 0;
+                                            background: none;
+                                            &:hover,
+                                            &:focus,
+                                            &:active {
+                                                /* Background removed for the link of the button on
+                                                hover in the content block for the card dropdown items */
+                                                background: none;
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                            /* The "Text position" of the menu link is selected as "Top overlay"
-                            or "Below overlay" in the "Card Appearance" settings */
-                            &.card-text-overlay-top,
-                            &.card-text-overlay-bottom {
-                                /* The position relative to the card dropdown  */
-                                position: relative;
-                                /* The border, background, box-shadow, outline are removed for the card overlay link and
-                                   the width, height, position is added to redirect to course for the card top overlay &
-                                   card bottom overlay */
-                                > a {
-                                    width: 100%;
-                                    height: 100%;
-                                    border: 0;
-                                    background: none;
-                                    box-shadow: none;
-                                    outline: none;
-                                    position: absolute;
-                                    top: 0;
-                                    left: 0;
-                                    z-index: 1;
+                                /* The below style is added when the Menu link as "Heading" in "card layout" Menu
+                                settings */
+                                &.menu-item-heading {
+                                    /* The Card menu as "Heading" option content block style */
+                                    .content-block {
+                                        /* The Card menu content heading menu link font-size and opacity added */
+                                        h5 a {
+                                            font-size: 16px;
+                                            opacity: .6;
+                                        }
+                                        /* The Card Menu as "Heading" option content block "Go" button link is hidden */
+                                        .btn-block {
+                                            display: none;
+                                        }
+                                    }
                                 }
-                                /* The width and position of the menu link at the top of the card block in the card
-                                   dropdown menu */
-                                .content-block {
-                                    width: 100%;
-                                    height: 100%;
-                                    align-items: flex-start;
-                                    position: absolute;
-                                    top: 0;
-                                    left: 0;
+                                /* The "Text position" of the menu link is selected as "Top overlay"
+                                or "Below overlay" in the "Card Appearance" settings */
+                                &.card-text-overlay-top,
+                                &.card-text-overlay-bottom {
+                                    /* The position relative to the card dropdown  */
+                                    position: relative;
+                                    /* The border, background, box-shadow, outline are removed for the card overlay link and
+                                    the width, height, position is added to redirect to course for the card top overlay &
+                                    card bottom overlay */
+                                    > a {
+                                        width: 100%;
+                                        height: 100%;
+                                        border: 0;
+                                        background: none;
+                                        box-shadow: none;
+                                        outline: none;
+                                        position: absolute;
+                                        top: 0;
+                                        left: 0;
+                                        z-index: 1;
+                                    }
+                                    /* The width and position of the menu link at the top of the card block in the card
+                                    dropdown menu */
+                                    .content-block {
+                                        width: 100%;
+                                        height: 100%;
+                                        align-items: flex-start;
+                                        position: absolute;
+                                        top: 0;
+                                        left: 0;
+                                    }
                                 }
-                            }
-                            /* The "Text position" of the menu link bottom
-                            of the card block in the "Below overlay" option */
-                            &.card-text-overlay-bottom {
-                                .content-block {
-                                    align-items: flex-end;
+                                /* The "Text position" of the menu link bottom
+                                of the card block in the "Below overlay" option */
+                                &.card-text-overlay-bottom {
+                                    .content-block {
+                                        align-items: flex-end;
+                                    }
                                 }
                             }
                         }
@@ -2104,16 +2157,129 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 }
             }
         }
+        .boost-union-moremenu.dropdown-menu {
+            /* Minimum width for the dropdown submenu */
+            .carousel .carousel-inner .carousel-item.submenu {
+                min-width: 235px;
+            }
+            /* Added the arrow icon styles for the dropdown menus */
+            .dropdown-item.carousel-navigation-link:after {
+                content: '\f0da';
+                font-family: '#{$fa-style-family}';
+                font-weight: 900;
+                font-size: 1rem;
+                position: absolute;
+                right: 0.7rem;
+            }
+            /* Added the arrow icon styles for the dropdown sub menu header */
+            .submenu .header {
+                font-size: .975rem;
+                display: flex;
+                align-items: center;
+            }
+        }
+        /* Removed the margin for the carousel back button arrow */
+        &.fixed-bottom .boost-union-moremenu.dropdown-menu .carousel-navigation-link > * {
+            pointer-events: none;
+            img {
+                margin: 0;
+            }
+        }
     }
+    /* Align the drawer content list group item in center*/
     .drawer-primary .drawercontent .list-group .list-group-item {
         align-items: center;
+        /* The icon width, height and font size is changed to normal size when
+        the large size icon (class="iconsize-big") is used in the "i" tag in the bottom menu */
+        i.icon {
+            width: auto;
+            height: auto;
+            font-size: 16px;
+        }
+    }
+    /* Drop down more menu carousel item */
+    .theme-boost-union-smartmenu-carousel {
+        /* Drop down more menu carousel item header */
+        .moremenu-carousel-item-header {
+            display: none;
+        }
+        .carousel-navigation-link > * {
+            pointer-events: none;
+            /* Drop down more menu carousel item header image */
+            img {
+                margin: 0;
+            }
+        }
+        /* Make the carousel navigation link to full width and cursor as pointor */
+        .carousel-navigation-link {
+            width: 100%;
+            cursor: pointer;
+            /* Removed the underline on hovering the link */
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+    /* Dropdown carousel more menu*/
+    .dropdownmoremenu {
+        /* Dropdown carousel more menu position */
+        .boost-union-moremenu-carousel {
+            position: absolute;
+            /* Dropdown carousel dropdown more menu position to static to
+            work on the carousel menu */
+            .dropdown-menu {
+                position: static;
+            }
+        }
+        .theme-boost-union-smartmenu-carousel {
+            /* Display dropdown carousel more menu header item*/
+            .moremenu-carousel-item-header {
+                display: block;
+                /* Dropdown carousel more menu header title and arrow style*/
+                .header {
+                    font-size: .975rem;
+                    padding: 0.25rem 0.75rem;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+            .items {
+                /* Added the arrow icon styles for the carousel dropdown menus */
+                .dropdown-item.carousel-navigation-link:after {
+                    content: '\f0da';
+                    font-family: '#{$fa-style-family}';
+                    font-weight: 900;
+                    font-size: 1rem;
+                    position: absolute;
+                    right: 0.7rem;
+                }
+            }
+            /* Added the arrow icon styles for the dropdown sub menu header */
+            .submenu {
+                padding-top: 10px;
+                .header {
+                    font-size: .975rem;
+                    padding: 0 0.75rem;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+    }
+    /* Hide the ul dropdown menu list */
+    .theme-boost-union-moremenu-carousel .dropdown-menu.hide-on-show {
+        display: none;
+    }
+    /* Changed the transition time to 0.3 seconds when smart menus are enabled */
+    .carousel .carousel-inner .carousel-item {
+        transition: transform 0.3s ease-in-out;
     }
 }
 
 /* The nav drawer position to the top in the responsive alignment */
 @include media-breakpoint-down(md) {
     .navbar.fixed-top.boost-union-menubar ~ .drawer {
-        top: 40px;
+        top: 100px; /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
         &.drawer-right {
             top: 0;
         }
@@ -2181,6 +2347,10 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             }
         }*/
     }
+    /* The card menu of the drodown item margin right is removed when the card dropdown menu is inside the "More" menu */
+    .theme-boost-union-smartmenu .navbar .moremenu .dropdown.card-dropdown .dropdown-menu .card-block-wrapper .card-block {
+        margin-right: 0;
+    }
 }
 
 
@@ -2217,6 +2387,11 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                         > a {
                             &.dropdown-toggle {
                                 padding-right: 25px;
+                                /* The footer bottom icon changes to an upward-facing angle
+                                when the bottom dropdown menu is visible outside the More menu. */
+                                &:not(.active):after {
+                                    content: '\f106';
+                                }
                             }
                             &:not(.active) {
                                 border-bottom: 0;
@@ -2230,7 +2405,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                                 &:after {
                                     margin-left: 5px;
                                     position: absolute;
-                                    right: 0;
+                                    right: 5px;
                                 }
                             }
                         }
