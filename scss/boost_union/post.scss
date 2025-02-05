@@ -1,8 +1,10 @@
 .pagelayout-frontpage .course-card {
     margin-bottom: 0.5em;
 }
-.pagelayout-frontpage .course-card .coursenamecontainer {
-    height: 2em;
+@media (min-width: 768px) {
+    .pagelayout-frontpage .course-card .coursenamecontainer {
+        height: 3rem;
+    }
 }
 .pagelayout-frontpage .course-card .customfields .customfield,
 .pagelayout-coursecategory .course-card .customfields .customfield {
