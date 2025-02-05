@@ -321,9 +321,9 @@ $string['courseoverviewshowcourseimagessetting_desc'] = 'With this setting, you 
 // ... ... Setting: Show course completion progress.
 $string['courseoverviewshowprogresssetting'] = 'Show course completion progress';
 $string['courseoverviewshowprogresssetting_desc'] = 'With this setting, you can control whether the course completion progress is visible inside the course overview block or not.';
-// ... ... Setting: Enable cards on course index.
-$string['enablecards'] = 'Enable cards on course index';
-$string['enablecardsdesc'] = 'Display courses as cards on site and course index.';
+// ... ... Setting: Enable cards on site index.
+$string['enablecards'] = 'Enable cards on site index';
+$string['enablecardsdesc'] = 'Display courses as cards on site index and category index.';
 // ... ... Setting: Enable course summary on course cards.
 $string['enablecardssummary'] = 'Enable summary on course cards';
 $string['enablecardssummarydesc'] = 'This setting controls were to hide or display the course summary in the course cards.';
