@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-02-04 - Improvement: Hide the 'Menu item mode' settings for smart menu items which are not of the 'dynamic courses' item type, resolves #804.
 * 2025-02-04 - Bugfix: Smart menu 3rd level submenus were being cut-off in responsive / mobile view, resolves #356.
                Please note: This is a comparably large visual change which effectively replaces the presentation of a 3rd level smart menu (which can only be realized with dynamic courses menu items up to now). flyout menus in the main navigation area and the menu bar area with the 'sliding door' submenu behaviour which has been used in the user menu only up to now.
                Please test your particular
