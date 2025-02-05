@@ -109,6 +109,7 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addElement('select', 'mode', get_string('smartmenusmenuitemmode', 'theme_boost_union'), $modeoptions);
         $mform->setDefault('mode', smartmenu_item::MODE_INLINE);
         $mform->setType('mode', PARAM_INT);
+        $mform->hideIf('mode', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
         $mform->addHelpButton('mode', 'smartmenusmenuitemmode', 'theme_boost_union');
 
         // Add category (for the dynamic courses menu item type) as autocomplete element.
