@@ -1124,7 +1124,6 @@ body.theme-boost-union-commincourse {
         #page .main-inner-outside-left-right .main-inner,
         #page .main-inner-outside-left .main-inner,
         #page .main-inner-outside-right .main-inner {
-            max-width: 100%; /* This width makes the content fully expand in responsive view. */
             width: auto;
         }
     }
@@ -1147,8 +1146,19 @@ body.theme-boost-union-commincourse {
     }
 
     /* Set the width of the main region content to 50%, allowing the left and right block regions to have a wider width */
-    body.limitedwidth #page.drawers .main-inner-wrapper .main-inner {
-        flex: auto;
+    body.limitedwidth #page.drawers .main-inner-wrapper {
+        .main-inner {
+            flex: auto;
+        }
+        /* The region block is aligned closer to the center, near the main content block. */
+        &.main-inner-outside-nextmaincontent {
+            align-self: normal;
+            justify-content: center;
+            .main-inner {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
     }
 }
 
@@ -1199,6 +1209,12 @@ body.theme-boost-union-commincourse {
         .main-inner-outside-right.main-inner-outside-nearwindowedges {
             flex-direction: column;
             align-items: center;
+        }
+        #page .main-inner-outside-left-right .main-inner,
+        #page .main-inner-outside-left .main-inner,
+        #page .main-inner-outside-right .main-inner {
+            max-width: 100%; /* This width makes the content fully expand in responsive view. */
+            width: 100%;
         }
     }
     /* Removed the left and right padding from the main content region. */
