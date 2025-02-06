@@ -1196,7 +1196,6 @@ body.theme-boost-union-commincourse {
         #page .main-inner-outside-left-right .main-inner,
         #page .main-inner-outside-left .main-inner,
         #page .main-inner-outside-right .main-inner {
-            max-width: 100%; /* This width makes the content fully expand in responsive view. */
             width: auto;
         }
     }
@@ -1288,24 +1287,6 @@ body.theme-boost-union-commincourse {
         #page .main-inner-outside-right .main-inner {
             max-width: 100%; /* This width makes the content fully expand in responsive view. */
             width: 100%;
-        }
-    }
-    /* Removed the left and right padding from the main content region. */
-    body.limitedwidth #page.drawers .main-inner-wrapper {
-        .main-inner {
-            padding: 0;
-            margin-bottom: 0;
-            .header-maxwidth,
-            div[role="main"] {
-                padding-left: 0;
-                padding-right: 0;
-                padding-bottom: 0;
-                margin-bottom: 0;
-            }
-        }
-        /* Removed the bottom margin of the right region block. */
-        #theme-block-region-outside-right {
-            margin-bottom: 3rem;
         }
     }
     /* Removed the left and right padding from the main content region. */
