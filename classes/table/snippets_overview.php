@@ -242,6 +242,7 @@ class snippets_overview extends \table_sql {
                     'data-description' => $data->description,
                     'data-creator' => $data->creator,
                     'data-usagenote' => $data->usagenote,
+                    'data-testedon' => $data->testedon,
                     'data-image' => $data->image,
                     'data-id' => $data->id,
                     'data-code' => snippets::get_snippet_scss($data->path, $data->source),

@@ -72,6 +72,7 @@ const buildModal = async(element) => {
         goalbadge: element.getAttribute('data-goal-badge'),
         scopebadge: element.getAttribute('data-scope-badge'),
         creator: element.getAttribute('data-creator'),
+        testedon: element.getAttribute('data-testedon'),
         usagenote: element.getAttribute('data-usagenote'),
         id: element.getAttribute('data-id'),
         code: element.getAttribute('data-code'),
