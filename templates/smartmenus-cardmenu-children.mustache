@@ -52,7 +52,7 @@
                                 <span class="card-item-overlay"></span>
                             </a>
                             <div class="img-block">
-                                <a href="{{{url}}}{{{action}}}"><img src="{{{itemimage}}}" alt="" role="presentation"></a>
+                                <a href="{{{url}}}{{{action}}}"><img src="{{{itemimage}}}" alt="{{{imagealt}}}" role="presentation"></a>
                             </div>
                             <div class="content-block"
                                 style="{{#itemdata.backgroundcolor}}background-color:{{{itemdata.backgroundcolor}}};{{/itemdata.backgroundcolor}}">
@@ -64,7 +64,7 @@
                                 </h5>
                                 {{^is_action_link}}
                                 <div class="btn-block">
-                                    <a class="dropdown-item " role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}} data-disableactive="true" tabindex="-1" {{#attributes}}{{name}}="{{value}}"{{/attributes}}>
+                                    <a class="dropdown-item " role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}} data-disableactive="true" tabindex="-1" {{#attributes}}{{name}}="{{value}}"{{/attributes}} style="{{#itemdata.textcolor}} color:{{{itemdata.textcolor}}};{{/itemdata.textcolor}}">
                                         <i class="fa fa-long-arrow-right"></i>
                                     </a>
                                 </div>

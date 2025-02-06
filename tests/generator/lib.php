@@ -81,7 +81,7 @@ class theme_boost_union_generator extends component_generator_base {
                 throw new Exception('Invalid cardform.');
             }
             $validbehaviours = array_keys(smartmenu::get_cardoverflowbehaviour_options());
-            $cardoverflowbehaviour = strtolower($data['cardoverflowbehaviour']) ?? smartmenu::CARDOVERFLOWBEHAVIOUR_NOWRAP;
+            $cardoverflowbehaviour = strtolower($data['cardoverflowbehaviour'] ?? smartmenu::CARDOVERFLOWBEHAVIOUR_NOWRAP);
             if (!in_array($cardoverflowbehaviour, $validbehaviours)) {
                 throw new Exception('Invalid cardoverflowbehaviour.');
             }
@@ -239,6 +239,7 @@ class theme_boost_union_generator extends component_generator_base {
             'tooltip' => $data['tooltip'] ?? null,
             'target' => $target,
             'cssclass' => $data['cssclass'] ?? null,
+            'imagealt' => $data['imagealt'] ?? null,
             'textposition' => $textposition,
             'textcolor' => $data['textcolor'] ?? null,
             'backgroundcolor' => $data['backgroundcolor'] ?? null,

@@ -6,7 +6,17 @@ Changes
 
 ### Unreleased
 
-* 2024-09-04 - Feature: Add first version of CSS snippets feature, credits go to all members of the MoodleMootDACH dev camp team 22.
+* 2025-02-04 - Feature: Add first version of CSS snippets feature, credits go to all members of the MoodleMootDACH dev camp team 22.
+* 2025-02-04 - Improvement: Hide the 'Menu item mode' settings for smart menu items which are not of the 'dynamic courses' item type, resolves #804.
+* 2025-02-04 - Bugfix: Smart menu 3rd level submenus were being cut-off in responsive / mobile view, resolves #356.
+               Please note: This is a comparably large visual change which effectively replaces the presentation of a 3rd level smart menu (which can only be realized with dynamic courses menu items up to now). flyout menus in the main navigation area and the menu bar area with the 'sliding door' submenu behaviour which has been used in the user menu only up to now.
+               Please test your particular
+* 2025-02-04 - Bugfix: Smart menu 3rd level submenus had a font color which differed from the 2nd level and might have been even invisible, resolves #459.
+* 2025-02-04 - Bugfix: Long smart menus were not scrollable vertically, resolves #406.
+* 2025-02-04 - Bugfix: Fix smart menu dynamic course items not updating properly based on course role assignments, resolves #749.
+* 2025-02-04 - Bugfix: Smart menu item pointing to external site gets highlighted as active by mistake, resolves #758.
+* 2025-02-04 - Improvement: Allow changing of home URL on small devices as well, resolves #802.
+* 2025-01-31 - Improvement: Add option to include alt text for item image in smart menu cards, resolves #752.
 
 ### v4.5-r5
 

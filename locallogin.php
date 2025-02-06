@@ -17,7 +17,7 @@
 /**
  * Theme Boost Union - Local login page
  *
- * This file is copied, reduced and modified from /login/index.php.
+ * This file is copied and modified / reduced from /login/index.php.
  *
  * @package   theme_boost_union
  * @copyright 2023 Alexander Bias <bias@alexanderbias.de>

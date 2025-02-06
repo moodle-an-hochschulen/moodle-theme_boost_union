@@ -109,6 +109,7 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addElement('select', 'mode', get_string('smartmenusmenuitemmode', 'theme_boost_union'), $modeoptions);
         $mform->setDefault('mode', smartmenu_item::MODE_INLINE);
         $mform->setType('mode', PARAM_INT);
+        $mform->hideIf('mode', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
         $mform->addHelpButton('mode', 'smartmenusmenuitemmode', 'theme_boost_union');
 
         // Add category (for the dynamic courses menu item type) as autocomplete element.
@@ -277,6 +278,11 @@ class smartmenu_item_edit_form extends \moodleform {
             $mform->addElement('filemanager', 'image', get_string('smartmenusmenuitemcardimage', 'theme_boost_union'), null,
                     $filepickeroptions);
             $mform->addHelpButton('image', 'smartmenusmenuitemcardimage', 'theme_boost_union');
+
+            // Add alt text option for the card image.
+            $mform->addElement('text', 'imagealt', get_string('smartmenusmenuitemcardimagealt', 'theme_boost_union'));
+            $mform->setType('imagealt', PARAM_TEXT);
+            $mform->addHelpButton('imagealt', 'smartmenusmenuitemcardimagealt', 'theme_boost_union');
 
             // Add card text position as select element.
             $textpositionoptions = smartmenu_item::get_textposition_options();

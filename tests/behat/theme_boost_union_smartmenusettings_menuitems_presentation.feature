@@ -30,7 +30,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     # Menu items in main navigation
     Then "Test course1" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     Then I should see smart menu "Quick links" item "Test course1" in location "Main"
-    And the "target" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
+    And the "target" attribute of "//div[contains(@class, 'primary-navigation')]//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
     # Menu items in user menu.
     Then "Test course1" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > User menu smart menu"
     And the "target" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
@@ -66,10 +66,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I expand all fieldsets
     And I set the field "CSS class" to "course-resource-links"
     And I click on "Save changes" "button"
-    And the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
-    And the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
-    And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
-    And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
+    And the "class" attribute of "//div[contains(@class, 'primary-navigation')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
+    And the "class" attribute of "//div[contains(@class, 'primary-navigation')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
+    And the "class" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
+    And the "class" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
     And I change the viewport size to "740x900"
@@ -132,8 +132,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I click on "Quick links" "link" in the "#usermenu-carousel" "css_element"
     Then I should see "External links" in the "#usermenu-carousel .menu-item-heading" "css_element"
     And I should see "Resources" in the "#usermenu-carousel .menu-item-static" "css_element"
-    And the "href" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(@class, 'menu-item-heading')]" "xpath_element" should contain "#"
-    And the "href" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(@class, 'menu-item-static')]" "xpath_element" should contain "https://moodle.org"
+    And the "href" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(@class, 'menu-item-heading')]" "xpath_element" should contain "#"
+    And the "href" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(@class, 'menu-item-static')]" "xpath_element" should contain "https://moodle.org"
     # Menu items in bottom menu.
     And I change the viewport size to "740x900"
     And I click on "Quick links" "link" in the ".bottom-navigation" "css_element"
@@ -143,7 +143,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And the "href" attribute of "//div[@class='bottom-navigation']//a[contains(@class, 'menu-item-static')]" "xpath_element" should contain "https://moodle.org"
 
   @javascript
-  Scenario: Smartmenus: Menu items - Display the menu items in different order
+  Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different order
     When I log in as "admin"
     And I set "Quick links" smart menu items with the following fields to these values:
       | Title          | Demo item 01        |
@@ -170,7 +170,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And "Demo item 01" "text" should appear after "Demo item 02" "text"
 
   @javascript
-  Scenario Outline: Smartmenus: Menu items - Display the menu items in different viewports
+  Scenario Outline: Smartmenus: Menu items: Presentation - Display the menu items in different viewports
     When I log in as "admin"
     And I set "Quick links" smart menu items with the following fields to these values:
       | Title          | Resources          |
@@ -353,7 +353,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And ".dropdown-divider" "css_element" should exist in the "nav.menubar" "css_element"
 
   @javascript
-  Scenario Outline: Smartmenus: Menu items: Hide empty menus
+  Scenario Outline: Smartmenus: Menu items: Presentation - Hide empty menus
     When I log in as "admin"
     And I create smart menu with the following fields to these values:
       | Title            | Links                    |
@@ -371,3 +371,83 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | menumode | menutitle          |
       | Submenu  | Links              |
       | Inline   | Smartmenu Resource |
+
+  Scenario Outline: Smartmenus: Menu items: Presentation - Image alt text for the dynamic menu items
+    Given the following "theme_boost_union > smart menu" exists:
+      | title    | Courses                                          |
+      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | type     | Card                                             |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Courses           |
+      | title    | Available courses |
+      | itemtype | Dynamic courses   |
+      | category | 0                 |
+      | itemmode | Inline            |
+      | imagealt | <setting>         |
+    When I log in as "admin"
+    Then the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Test course1')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<testcourse1result>"
+    And the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Test course2')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<testcourse2result>"
+    And the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Test course word count')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<testcourse3result>"
+
+    Examples:
+      | setting                     | testcourse1result            | testcourse2result            | testcourse3result                      |
+      | Image of course             | Image of course              | Image of course              | Image of course                        |
+      | Image of course {menutitle} | Image of course Test course1 | Image of course Test course2 | Image of course Test course word count |
+      |                             | Test course1                 | Test course2                 | Test course word count                 |
+
+  Scenario Outline: Smartmenus: Menu items: Presentation - Image alt text for the static menu items
+    Given the following "theme_boost_union > smart menu" exists:
+      | title    | Links                                            |
+      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | type     | Card                                             |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Links             |
+      | title    | Moodle org        |
+      | itemtype | Static            |
+      | url      | http://moodle.org |
+      | imagealt | <link1setting>    |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Links                       |
+      | title    | Moodle Plugins              |
+      | itemtype | Static                      |
+      | url      | https://moodle.org/plugins/ |
+      | imagealt | <link2setting>              |
+    When I log in as "admin"
+    Then the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Moodle org')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<link1result>"
+    And the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Moodle Plugins')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<link2result>"
+
+    Examples:
+      | link1setting                  | link2setting                      | link1result                   | link2result                       |
+      | Image of moodle official site | Image of moodle plugins directory | Image of moodle official site | Image of moodle plugins directory |
+      | Image of {menutitle}          | Image of {menutitle}              | Image of Moodle org           | Image of Moodle Plugins           |
+      |                               |                                   | Moodle org                    | Moodle Plugins                    |
+
+  @javascript
+  Scenario: Smartmenus: Menu items: Presentation - Make full submenu header clickable
+    When I log in as "admin"
+    And I set "Quick links" smart menu items with the following fields to these values:
+      | Title                            | Available courses |
+      | Menu item type                   | Dynamic courses   |
+      | Dynamic courses: Course category | Category 1        |
+      | Menu item mode                   | Submenu           |
+    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
+    And I click on "Available courses" "link" in the ".primary-navigation" "css_element"
+    Then I should see "Test course1" in the ".primary-navigation" "css_element"
+    And I should see "Test course2" in the ".primary-navigation" "css_element"
+    And I should see "Available courses" in the ".primary-navigation .header .carousel-navigation-link" "css_element"
+    # Primary navigation.
+    And I click on ".carousel-item.active .header" "css_element" in the ".primary-navigation" "css_element"
+    Then I should see "Available courses" in the ".primary-navigation .carousel-item" "css_element"
+    And I should not see "Available courses" in the ".primary-navigation .header .carousel-navigation-link" "css_element"
+    And I should not see "Test course1" in the ".primary-navigation" "css_element"
+    # User menu (where the header becomes fully clickable as soon as a smart menu is added).
+    And I click on "#user-menu-toggle" "css_element"
+    And I click on "Quick links" "link" in the "#usermenu-carousel" "css_element"
+    And I click on "Available courses" "link" in the "#usermenu-carousel" "css_element"
+    Then I should see "Test course1" in the "#usermenu-carousel" "css_element"
+    And I should see "Test course2" in the "#usermenu-carousel" "css_element"
+    And I should see "Available courses" in the "#usermenu-carousel .carousel-item.active .header .carousel-navigation-link" "css_element"
+    And I click on ".carousel-item.active .header" "css_element" in the "#usermenu-carousel" "css_element"
+    Then I should see "Available courses" in the "#usermenu-carousel .carousel-item.active" "css_element"
+    And I should not see "Available courses" in the "#usermenu-carousel .carousel-item.active .header .carousel-navigation-link" "css_element"
+    And I should not see "Test course1" in the "#usermenu-carousel" "css_element"

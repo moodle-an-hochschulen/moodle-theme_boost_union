@@ -489,6 +489,32 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2024100709) {
+        // Define table theme_boost_union_menuitems to be altered.
+        $table = new xmldb_table('theme_boost_union_menuitems');
+
+        // Define field imagealt to be added to theme_boost_union_menuitems.
+        $field = new xmldb_field('imagealt', XMLDB_TYPE_CHAR, '255', null, null, null, null, 'menuicon');
+
+        // Conditionally launch add field imagealt.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2024100709, 'theme', 'boost_union');
+    }
+
+    if ($oldversion < 2024100712) {
+        // Set the smart menu item mode to inline for all menu items which are not of the dynamic courses type.
+        // This is necessary as the smart menu item mode setting has been removed from these menu item types and the
+        // smart menu item form only saves the inline mode as default since then.
+        $DB->execute('UPDATE {theme_boost_union_menuitems}
+                      SET mode = '.\theme_boost_union\smartmenu_item::MODE_INLINE.'
+                      WHERE type != '.\theme_boost_union\smartmenu_item::TYPEDYNAMIC);
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2024100712, 'theme', 'boost_union');
+
         // Define table theme_boost_union_snippets to be created.
         $table = new xmldb_table('theme_boost_union_snippets');
 
@@ -506,9 +532,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         if (!$dbman->table_exists($table)) {
             $dbman->create_table($table);
         }
-
-        // Boost_union savepoint reached.
-        upgrade_plugin_savepoint(true, 2024100709, 'theme', 'boost_union');
     }
 
     // Load the builtin SCSS snippets into the database.
