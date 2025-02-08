@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-03-05 - Improvement: Smart menus now display hidden courses to users with the appropriate capability, resolves #407.
+
 ### v4.5-r8
 
 * 2025-02-17 - Bugfix: Remove the possibility to set the activity purpose for subsections to avoid that activities within subsections get tinted with the wrong color, resolves #823.
