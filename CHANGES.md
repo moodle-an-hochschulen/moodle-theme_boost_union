@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-04-15 - Improvement: Smart menus now display hidden courses to users with the appropriate capability, resolves #407.
+
 ### v4.5-r13
 
 * 2025-04-06 - Bugfix: Enrol page used modified course listing renderer from category index / site home as well, resolves #895.
