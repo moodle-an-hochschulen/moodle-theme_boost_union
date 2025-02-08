@@ -247,6 +247,24 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->hideIf('listsort', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
         $mform->addHelpButton('listsort', 'smartmenusmenuitemlistsort', 'theme_boost_union');
 
+        // Add Display only visible courses as checkbox.
+        $mform->addElement('advcheckbox', 'displayhiddencourses',
+                get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
+                get_string('smartmenusmenuitemdisplayonlyvisiblecourses', 'theme_boost_union'),
+                get_string('smartmenusmenuitemhidehiddencourses', 'theme_boost_union'));
+        $mform->setType('displayhiddencourses', PARAM_BOOL);
+        $mform->addHelpButton('displayhiddencourses', 'smartmenusmenuitemdisplayonlyvisiblecourses', 'theme_boost_union');
+        $mform->hideIf('displayhiddencourses', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
+
+        // Dynamic courses: Hidden courses sorting.
+        $hiddencoursesortoptions = smartmenu_item::get_hiddencoursesorting_options();
+        $mform->addElement('select', 'hiddencoursesort',
+                get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
+                get_string('smartmenusmenuitemhiddencoursessorting', 'theme_boost_union'), $hiddencoursesortoptions);
+        $mform->hideIf('hiddencoursesort', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
+        $mform->hideIf('hiddencoursesort', 'displayhiddencourses', 'eq', smartmenu_item::DISPLAY_VISIBLECOURSESONLY);
+        $mform->addHelpButton('displayhiddencourses', 'smartmenusmenuitemhiddencoursessorting', 'theme_boost_union');
+
         // Add course name presentation (for the dynamic courses menu item type) as select element.
         $displayfieldoptions = smartmenu_item::get_displayfield_options();
         $mform->addElement('select', 'displayfield',
