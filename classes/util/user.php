@@ -16,14 +16,12 @@
 
 namespace theme_boost_union\util;
 
-use stdClass;
-use user_picture;
-
 /**
- * User class utility class
+ * Theme Boost Union - User utility class
  *
  * @package    theme_boost_union
- * @copyright  2022 Willian Mano {@link https://conecti.me}
+ * @copyright  2024 Daniel Neis Araujo {@link https://www.adapta.online}
+ *             based on code 2022 Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class user {
@@ -33,40 +31,45 @@ class user {
     protected $user;
 
     /**
-     * Class constructor
+     * Class constructor.
      *
-     * @param stdClass $user
-     *
+     * @param \stdClass|int $user The user object or user ID.
      */
     public function __construct($user = null) {
-        global $USER, $DB;
+        global $USER;
 
+        // If a user ID is given instead of a full user object (which is not really encouraged but also not forbidden).
         if (!is_object($user)) {
-            $user = $DB->get_record('user', ['id' => $user], '*', MUST_EXIST);
+            // Get the full user object.
+            $user = \core_user::get_user($user, '*', MUST_EXIST);
         }
 
+        // If we still don't have a user object, use the current user.
         if (!$user) {
             $user = $USER;
         }
 
+        // Remember the user.
         $this->user = $user;
     }
 
     /**
-     * Returns the user picture
+     * Returns the user picture URL.
      *
-     * @param int $imgsize
-     *
-     * @return \moodle_url
+     * @param int $imgsize The image size (in pixels)
+     * @return string The user picture URL
      * @throws \coding_exception
      */
     public function get_user_picture($imgsize = 100) {
         global $PAGE;
 
-        $userimg = new user_picture($this->user);
+        // Create a new user picture object.
+        $userimg = new \user_picture($this->user);
 
+        // Set the image size.
         $userimg->size = $imgsize;
 
+        // Return the user picture URL.
         return $userimg->get_url($PAGE)->out();
     }
 }

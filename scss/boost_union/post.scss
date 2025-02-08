@@ -1,99 +1,3 @@
-.pagelayout-frontpage .course-card {
-    margin-bottom: 0.5em;
-}
-@media (min-width: 768px) {
-    .pagelayout-frontpage .course-card .coursenamecontainer {
-        height: 3rem;
-    }
-}
-.pagelayout-frontpage .course-card .customfields .customfield,
-.pagelayout-coursecategory .course-card .customfields .customfield {
-    font-size: 80%;
-    margin-bottom: 0.25rem;
-}
-.pagelayout-frontpage .course-card .customfields .customfield:last-of-type,
-.pagelayout-coursecategory .course-card .customfields .customfield:last-of-type {
-    margin-bottom: 0;
-}
-.pagelayout-frontpage .course-card .customfields,
-.pagelayout-coursecategory .course-card .customfields {
-    margin-top: 1.5em;
-    margin-bottom: 1em;
-    height: 3em;
-    overflow-y: scroll;
-}
-.pagelayout-frontpage .course-card .customfields .customfield .customfieldname,
-.pagelayout-frontpage .course-card .customfields .customfield .customfieldseparator,
-.pagelayout-coursecategory .course-card .customfields .customfield .customfieldname,
-.pagelayout-coursecategory .course-card .customfields .customfield .customfieldseparator {
-    font-weight: 500;
-}
-.pagelayout-frontpage .course-card .enrolmenticons,
-.pagelayout-coursecategory .course-card .enrolmenticons {
-    position: absolute;
-    bottom: 8px;
-    right: 0;
-}
-.pagelayout-frontpage .course-card .enrolmenticons .enrolmenticon,
-.pagelayout-coursecategory .course-card .enrolmenticons .enrolmenticon {
-    padding: 4px 8px;
-    background-color: #fff;
-    color: #0f47ad;
-    border-radius: 0.5rem;
-    margin: 0 4px;
-}
-.pagelayout-frontpage .course-card .enrolmenticons .enrolmenticon .icon,
-.pagelayout-coursecategory .course-card .enrolmenticons .enrolmenticon .icon {
-    margin-right: 0;
-}
-.pagelayout-frontpage .course-card .course-contacts {
-    height: 6em;
-    overflow-y: scroll;
-}
-.pagelayout-frontpage .course-card .course-contacts .contact .info,
-.pagelayout-coursecategory .course-card .course-contacts .contact .info {
-    margin-left: 1em;
-}
-.pagelayout-frontpage .course-card .info .name,
-.pagelayout-coursecategory .course-card .info .name {
-    margin-bottom: 0;
-}
-.pagelayout-frontpage .course-card .course-contacts .contact,
-.pagelayout-coursecategory .course-card .course-contacts .contact {
-    display: flex;
-}
-.pagelayout-frontpage .course-card .course-contacts .contact:not(:first-of-type),
-.pagelayout-coursecategory .course-card .course-contacts .contact:not(:first-of-type) {
-    margin-top: 0.4rem;
-}
-.pagelayout-frontpage .course-card .course-contacts .contact img,
-.pagelayout-coursecategory .course-card .course-contacts .contact img {
-    width: 36px;
-    height: 36px;
-    border: 1px solid #dee2e6;
-    margin-left: 1em;
-}
-.pagelayout-frontpage .course-card .course-contacts .contact p.role,
-.pagelayout-coursecategory .course-card .course-contacts .contact p.role {
-    color: #1d2125;
-    font-size: 80%;
-}
-.pagelayout-frontpage .course-card .course-card-footer,
-.pagelayout-coursecategory .course-card .course-card-footer {
-    padding: 0 0.8rem 0.8rem 0.8rem;
-}
-.pagelayout-frontpage .course_category_tree .category .categoryname.aabtn,
-.pagelayout-coursecategory .course_category_tree .category .categoryname.aabtn {
-    font-size: 1.5em;
-}
-
-.pagelayout-frontpage .course-card .course-summary,
-.pagelayout-coursecategory .course-card .course-summary {
-    height: 10em;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
 /*=======================================
  * Settings: Look -> Site branding
  ======================================*/
@@ -361,6 +265,104 @@
 /* Make background of login panel slightly transparent. */
 .login-container.login-container-80t {
     background-color: rgba(255, 255, 255, 0.8);
+}
+
+/*=======================================
+ * Settings: Look -> Category index / site home
+ ======================================*/
+
+/*---------------------------------------
+ * Setting: Enable course cards
+ --------------------------------------*/
+
+/* Only on site home and the category index pages. */
+.pagelayout-frontpage,
+.pagelayout-coursecategory {
+
+    /* For course cards. */
+    .course-card {
+        /* The course contact section.
+           There are some things which can't be set with Bootstrap classes in Mustache. */
+        .coursecontacts {
+            /* Push the contacts over the course image. */
+            margin-top: -18px;
+
+            /* Make sure that the concact images are small enough even though the avatar file is bigger. */
+            .contact img {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        /* The custom fields section.
+           We can't use Bootstrap classes in Mustache here as these elements are output by a renderer which we do not influence. */
+        .customfields {
+            /* Use a smaller font and some space for each custom fields. */
+            .customfield {
+                font-size: 80%;
+                @extend small;
+                @extend .mb-2;
+            }
+            .customfield:last-of-type {
+                @extend .mb-0;
+            }
+
+            /* Highlight the field name. */
+            .customfieldname, .customfieldseparator {
+                @extend strong;
+            }
+        }
+
+        /* The enrolment icons section. */
+        .enrolmenticons {
+            .enrolmenticon {
+                /* Make the icon grey instead of black. */
+                color: $gray-600;
+
+                /* Add some padding to the container. */
+                margin-right: 0.5rem;
+
+                /* But not to the last one. */
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                /* And not to the icon itself. */
+                .icon {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+
+    /* Adopt the styles for the course-info-container from .block .block-cards
+       We would have loved to do this with @extend, but SCSS does not support this case. */
+    .theme_boost_union-block-cards {
+        span.categoryname {
+            color: $gray-900;
+        }
+        .progress {
+            height: 0.5rem;
+        }
+        .progress-text {
+            color: $gray-600;
+        }
+    }
+
+    /* For the course details modal. */
+    .modal-body {
+        /* The contact card */
+        .contact {
+            // Control the width on multiple screen sizes.
+            width: 100%;
+            @include media-breakpoint-up(sm) {
+                width: 50%;
+            }
+            @include media-breakpoint-up(lg) {
+                width: 25%;
+            }
+        }
+    }
 }
 
 

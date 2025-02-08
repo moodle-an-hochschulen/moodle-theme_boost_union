@@ -1,63 +1,159 @@
-<div class=""col d-flex px-0 mb-2>
-<div class="card course-card mx-1 {{^visible}}dimmed{{/visible}}" role="listitem" data-region="course-content" data-course-id="{{{id}}}">
-    <a href="{{courseurl}}" tabindex="-1">
-        <div class="card-img-top course-card-img" style="background-image: url({{{image}}});">
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/coursecard
+
+    This template renders the a card for the course cards.
+    This is a modified version of core_course/coursecard and is used to show the course cards on site home and the category.
+    In addition to that it contains the partials from block_myoverview/view-cards.
+
+    Example context (json):
+    {
+        "courses": [
+            {
+                "name": "Assignment due 1",
+                "viewurl": "https://moodlesite/course/view.php?id=2",
+                "courseimage": "https://moodlesite/pluginfile/123/course/overviewfiles/123.jpg",
+                "fullname": "course 3",
+                "hasprogress": true,
+                "progress": 10,
+                "visible": true
+            }
+        ]
+    }
+}}
+<div class="card course-card mx-1 mb-2" role="listitem"
+    data-region="course-content"
+    data-course-id="{{{id}}}">
+    {{#showcoursecardimage}}
+    <a href="{{viewurl}}" tabindex="-1">
+        <div class="card-img-top" style='background-image: url("{{{courseimage}}}");'>
             <span class="sr-only">{{fullname}}</span>
-            {{#hasenrolmenticons}}
-                <div class="enrolmenticons d-flex">
-                    {{#enrolmenticons}}
-                        <div class="enrolmenticon">
-                            {{{.}}}
-                        </div>
-                    {{/enrolmenticons}}
-                </div>
-            {{/hasenrolmenticons}}
         </div>
     </a>
-    <div class="card-body course-info-container">
-        <div class="d-flex align-items-start">
-            <div class="w-100 coursenamecontainer">
-                <a href="{{courseurl}}" class="aalink coursename mr-2 mb-1 {{^visible}}dimmed{{/visible}}">
-                    {{{fullname}}}
-                </a>
+    {{#showcoursecardcontacts}}
+        {{#hascontacts}}
+            <div class="coursecontacts mx-3 d-flex flex-wrap">
+                {{#contacts}}
+                    {{#canviewuserdetails}}<a href="{{config.wwwroot}}/user/profile.php?id={{{id}}}" tabindex="-1">{{/canviewuserdetails}}
+                        <div class="contact mr-2 mb-2">
+                            <img src="{{{userpicture}}}" class="rounded-circle shadow-sm" alt="{{{contactname}}}" data-toggle="tooltip" title="{{{contactname}}}" />
+                        </div>
+                    {{#canviewuserdetails}}</a>{{/canviewuserdetails}}
+                {{/contacts}}
             </div>
-        </div>
-
-        {{#displaycustomfields}}
-        <div class="customfields">
-            {{{customfields}}}
-        </div>
-        {{/displaycustomfields}}
-
-        {{#displaysummary}}
-        <div class="course-summary">
-            {{{summary}}}
-        </div>
-        {{/displaysummary}}
-    </div>
-    {{#hasprogress}}
+        {{/hascontacts}}
+    {{/showcoursecardcontacts}}
+    {{/showcoursecardimage}}
+    <div class="card-body course-info-container px-3" id="course-info-container-{{id}}">
         <div class="d-flex align-items-start">
-            <div class="card-footer dashboard-card-footer border-0 bg-white w-100">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="{{{progress}}}" style="width: {{{progress}}}%" aria-valuemin="0" aria-valuemax="{{{progress}}}"></div>
-                </div>
-                <p class="mb-0">{{#str}}completepercent, block_myoverview, {{progress}}{{/str}}</p>
-            </div>
-        </div>
-    {{/hasprogress}}
-
-    {{#displayteachers}}
-        <div class="course-contacts">
-            {{#contacts}}
-                <a href="{{config.wwwroot}}/user/profile.php?id={{{id}}}" class="contact" data-toggle="tooltip" title="{{{fullname}}}">
-                    <img src="{{{userpicture}}}" class="rounded-circle" alt="{{{fullname}}}">
-                    <div class="info">
-                        <p class="name">{{{fullname}}}</p>
-                        <p class="role">{{{role}}}</p>
+            <div class="w-100">
+                {{#showshortname}}
+                    <div class="text-muted muted d-flex mb-1 flex-wrap">
+                        <span class="sr-only">
+                            {{#str}}aria:courseshortname, core_course{{/str}}
+                        </span>
+                        <div>
+                            {{{shortname}}}
+                        </div>
                     </div>
+                {{/showshortname}}
+                <a href="{{viewurl}}" class="aalink coursename me-2 mb-1">
+                    <span class="sr-only">
+                        {{#str}}aria:coursename, core_course{{/str}}
+                    </span>
+                    <span class="multiline" title="{{fullname}}">
+                        <span class="sr-only">{{{fullname}}}</span>
+                        <span aria-hidden="true">
+                            {{#shortentext}}55, {{{fullname}}} {{/shortentext}}
+                        </span>
+                    </span>
                 </a>
-            {{/contacts}}
+                <div class="text-muted muted d-flex flex-wrap">
+                    {{#showcoursecardcategory}}
+                        <span class="sr-only">
+                            {{#str}}aria:coursecategory, core_course{{/str}}
+                        </span>
+                        <span class="categoryname text-truncate">
+                            {{{coursecategory}}}
+                        </span>
+                    {{/showcoursecardcategory}}
+                </div>
+                {{^visible}}
+                    <div class="d-flex flex-wrap">
+                        <span class="badge bg-info text-white">{{#str}} hiddenfromstudents {{/str}}</span>
+                    </div>
+                {{/visible}}
+            </div>
         </div>
-    {{/displayteachers}}
-</div>
+    </div>
+
+    {{#showcardbuttons}}
+        <div class="d-flex align-items-start mt-0 px-3 py-2">
+            {{#showcoursecardgoto}}
+                <a href="{{viewurl}}" tabindex="-1" class="gotobutton btn btn-primary mr-2">
+                    {{#str}}coursecardgoto, theme_boost_union{{/str}}
+                </a>
+            {{/showcoursecardgoto}}
+            {{#showcoursecardpopup}}
+                <button class="popupbutton btn btn-secondary"
+                        data-action="coursecard-details"
+                        data-title="{{fullname}}"
+                        {{#hassummary}}data-summary="{{summary}}"{{/hassummary}}
+                        {{#hascontacts}}data-coursecontacts="{{#contacts}}{{> theme_boost_union/coursecardcontact-dataattrib}}{{/contacts}}"{{/hascontacts}}
+                        {{#hascustomfields}}data-customfields="{{customfields}}">{{/hascustomfields}}
+                    {{#str}}coursecardpopup, theme_boost_union{{/str}}
+                </button>
+            {{/showcoursecardpopup}}
+        </div>
+    {{/showcardbuttons}}
+
+    {{#showcoursecardfields}}
+        {{#hascustomfields}}
+            <div class="d-flex align-items-start mt-2 py-2 border-top">
+                <div class="customfields mx-3 ">
+                    {{{customfields}}}
+                </div>
+            </div>
+        {{/hascustomfields}}
+    {{/showcoursecardfields}}
+
+    {{#showcardfooter}}
+        <div class="d-flex align-items-start mt-0 pt-0 border-top">
+            {{#showcoursecardprogress}}
+                {{#hasprogress}}
+                    <div class="card-footer border-0 pl-3 bg-white border-radius w-100">
+                        {{> block_myoverview/progress-bar}}
+                    </div>
+                {{/hasprogress}}
+            {{/showcoursecardprogress}}
+            {{#showcoursecardenrolicons}}
+                {{#hasenrolicons}}
+                    <div class="card-footer menu border-0 pr-3 bg-white ms-auto">
+                        <div class="enrolmenticons d-flex">
+                            {{#enrolmenticons}}
+                                <div class="enrolmenticon">
+                                    {{{.}}}
+                                </div>
+                            {{/enrolmenticons}}
+                        </div>
+                    </div>
+                {{/hasenrolicons}}
+            {{/showcoursecardenrolicons}}
+        </div>
+    {{/showcardfooter}}
 </div>
