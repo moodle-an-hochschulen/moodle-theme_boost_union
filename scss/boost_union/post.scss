@@ -2021,6 +2021,13 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 a {
                     display: flex;
                     align-items: center;
+                    &.dimmed {
+                        color: $text-muted;
+                        &.dropdown-item:hover {
+                            color: $white;
+                            opacity: .7;
+                        }
+                    }
                     label {
                         margin-bottom: 0;
                     }
