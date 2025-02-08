@@ -321,18 +321,52 @@ $string['courseoverviewshowcourseimagessetting_desc'] = 'With this setting, you 
 // ... ... Setting: Show course completion progress.
 $string['courseoverviewshowprogresssetting'] = 'Show course completion progress';
 $string['courseoverviewshowprogresssetting_desc'] = 'With this setting, you can control whether the course completion progress is visible inside the course overview block or not.';
-// ... ... Setting: Enable cards on site index.
-$string['enablecards'] = 'Enable cards on site index';
-$string['enablecardsdesc'] = 'Display courses as cards on site index and category index.';
-// ... ... Setting: Enable course summary on course cards.
-$string['enablecardssummary'] = 'Enable summary on course cards';
-$string['enablecardssummarydesc'] = 'This setting controls were to hide or display the course summary in the course cards.';
-// ... ... Setting: Enable custom fields on course cards.
-$string['enablecardscfields'] = 'Enable custom fields on course cards';
-$string['enablecardscfieldsdesc'] = 'This setting controls were to hide or display the course custom fields in the course cards.';
-// ... ... Setting: Enable teachers pictures on course cards.
-$string['enableteacherspic'] = 'Enable teachers pictures';
-$string['enableteacherspicdesc'] = 'This setting controls were to hide or display the teachers\' pictures in the course cards.';
+
+// Settings: Category index / site home tab.
+$string['categoryindextab'] = 'Category index / Site home';
+// ... Section: Course cards.
+$string['coursecardsheading'] = 'Course cards';
+// ... ... Setting: Enable course cards.
+$string['enablecoursecards'] = 'Enable course cards';
+$string['enablecoursecards_desc'] = 'If this setting is enabled, the courses / course lists on the category index pages and on site home will be presented as course cards (similar to the course cards on the \'My courses\' page).';
+$string['enablecoursecards_note'] = 'Please note: When you enable course cards, the <a href="{$a->url1}">coursesperpage</a> setting is still respected and will control how many cards will be shown. However, the <a href="{$a->url2}">courseswithsummarieslimit</a> setting does not have any effect anymore – all courses will be shown with full details. Please take care not to set <a href="{$a->url1}">coursesperpage</a> too high to avoid long page load times on pages with many courses.';
+// ... ... Setting: Course card column count.
+$string['coursecardscolumncount'] = 'Course card column count';
+$string['coursecardscolumncount_desc'] = 'The course card grid will be presented in a responsive way and its columns will wrap on smaller screens. With this setting, you just control the maximum number of columns in the course card grid on larger screens. Setting the maximum number of columns to 2 instead of 3 might make the course cards look more spacious and less crowded.';
+// ... ... Setting: Show course image on course cards.
+$string['showcoursecardimage'] = 'Show course image on course cards';
+$string['showcoursecardimage_desc'] = 'With this setting, you control if the course image is shown in the course cards or not.';
+// ... ... Setting: Show course contacts on course cards.
+$string['showcoursecardcontacts'] = 'Show course contacts on course cards';
+$string['showcoursecardcontacts_desc'] = 'With this setting, you control if the course contact\'s pictures are shown in the course cards or not. The contact pictures are shown together with the course image, thus presenting course contacts without presenting the course image is not possible.';
+// ... ... Setting: Show course shortname on course cards.
+$string['showcoursecardshortname'] = 'Show course shortname on course cards';
+$string['showcoursecardshortname_desc'] = 'With this setting, you control if the course shortname is shown in the course cards or not.';
+// ... ... Setting: Show course category on course cards.
+$string['showcoursecardcategory'] = 'Show course category on course cards';
+$string['showcoursecardcategory_desc'] = 'With this setting, you control if the course category is shown in the course cards or not.';
+// ... ... Setting: Show goto button on course cards.
+$string['showcoursecardgoto'] = 'Show goto button on course cards';
+$string['showcoursecardgoto_desc'] = 'With this setting, you control if a \'Go to course\' button is shown in the course cards or not. If this setting is disabled, the user is still able to go to the course by clicking on the course title or course image.';
+$string['coursecardgoto'] = 'Go to course';
+// ... ... Setting: Show details popup on course cards.
+$string['showcoursecardpopup'] = 'Show details popup on course cards';
+$string['showcoursecardpopup_desc'] = 'With this setting, you control if a \'Course details\' button is shown in the course cards or not. With this button, the user can open a details popup which contains the course summary, the course contacts and the course fields. The popup will contain this information regardless if you enabled it on the course card itself or not.';
+$string['coursecardpopup'] = 'Details';
+$string['coursesummary'] = 'Course summary';
+$string['nocoursesummary'] = 'This course does not have a summary';
+$string['coursecontacts'] = 'Course contact';
+$string['viewprofile'] = 'View profile';
+$string['coursefields'] = 'Course classification';
+// ... ... Setting: Show course fields on course cards.
+$string['showcoursecardfields'] = 'Show course fields on course cards';
+$string['showcoursecardfields_desc'] = 'With this setting, you control if the custom course fields are shown in the course cards or not.';
+// ... ... Setting: Show course enrolment icons on course cards.
+$string['showcoursecardenrolicons'] = 'Show course enrolment icons on course cards';
+$string['showcoursecardenrolicons_desc'] = 'With this setting, you control if the course enrolment icons are shown in the course cards or not.';
+// ... ... Setting: Show course completion progress on course cards.
+$string['showcoursecardprogress'] = 'Show course completion progress on course cards';
+$string['showcoursecardprogress_desc'] = 'With this setting, you control if the course completion progress are shown in the course cards or not.';
 
 // Settings: Blocks tab.
 // The string for this tab is the same as on the 'Feel' page.

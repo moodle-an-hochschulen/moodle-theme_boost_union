@@ -225,6 +225,14 @@ With this setting, you can control whether the course image is visible inside th
 
 With this setting, you can control whether the course completion progress is visible inside the course overview block or not.
 
+#### Tab "Category index / Site home"
+
+##### Course cards
+
+###### Enable course cards
+
+If this setting is enabled, the courses / course lists on the category index pages and on site home will be presented as course cards (similar to the course cards on the 'My courses' page). You can configure the look of the course cards with multiple dependent settings.
+
 #### Tab "Blocks"
 
 ##### Timeline block
@@ -901,6 +909,7 @@ This theme is a collaboration result of multiple organisations.
 Moodle an Hochschulen e.V. would like to thank these main contributors (in alphabetical order of the institutions) for their work:
 
 * Academic Moodle Cooperation (AMC): Ideating, Code
+* Adapta, Daniel Neis Araujo: Code
 * Baden-Württemberg Cooperative State University (DHBW), Katja Neubehler: Code
 * bdecent GmbH, Stefan Scholz: Code, Ideating, Funding
 * Bern University of Applied Sciences (BFH), Luca Bösch: Code, Peer Review, Ideating

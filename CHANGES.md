@@ -6,6 +6,7 @@ Changes
 
 ### v4.5-r8
 
+* 2025-02-07 - Feature: Show the course list on site home and on the category index pages as cards, resolves #558.
 * 2025-02-17 - Bugfix: Remove the possibility to set the activity purpose for subsections to avoid that activities within subsections get tinted with the wrong color, resolves #823.
 * 2025-02-12 - Bugfix: Accessibility page link in description differed from real location, resolves #818.
 
