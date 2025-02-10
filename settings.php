@@ -25,6 +25,9 @@
 use theme_boost_union\admin_setting_configdatetime;
 use theme_boost_union\admin_setting_configstoredfilealwayscallback;
 use theme_boost_union\admin_setting_configtext_url;
+use theme_boost_union\admin_settingspage_tabs_with_external;
+use theme_boost_union\admin_externalpage_in_tab;
+use theme_boost_union\snippets;
 use core\di;
 use core\hook\manager as hook_manager;
 
@@ -106,6 +109,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 new core\url('/theme/boost_union/flavours/overview.php'),
                 'theme/boost_union:configure');
         $ADMIN->add('theme_boost_union', $flavourspage);
+
+        // Create SCSS snippets settings page as external page
+        // (and allow users with the theme/boost_union:configure capability to access it).
+        $snippetspage = new admin_externalpage('theme_boost_union_snippets_overview',
+                get_string('configtitlesnippets', 'theme_boost_union', null, true),
+                new moodle_url('/theme/boost_union/snippets/overview.php'),
+                'theme/boost_union:configure');
+        $ADMIN->add('theme_boost_union', $snippetspage);
 
         // Create Smart Menus settings page as external page.
         // (and allow users with the theme/boost_union:configure capability to access it).
@@ -2791,7 +2802,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Add tab to settings page.
         $page->add($tab);
 
-
         // Create administration tab.
         $tab = new admin_settingpage('theme_boost_union_functionality_administration',
             get_string('administrationtab', 'theme_boost_union', null, true));
@@ -3043,6 +3053,75 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Add settings page to the admin settings category.
         $ADMIN->add('theme_boost_union', $page);
 
+        // Create SCSS snippets settings page with tabs (and external pages).
+        // (and allow users with the theme/boost_union:configure capability to access it).
+        $page = new admin_settingspage_tabs_with_external('theme_boost_union_snippets',
+                get_string('configtitlesnippets', 'theme_boost_union', null, true),
+                'theme/boost_union:configure');
+
+        // Create SCSS snippets overview tab
+        // (and allow users with the theme/boost_union:configure capability to access it).
+        $tab = new admin_externalpage_in_tab('theme_boost_union_snippets_overview',
+                get_string('snippetsoverview', 'theme_boost_union', null, true),
+                new moodle_url('/theme/boost_union/snippets/overview.php'),
+                'theme/boost_union:configure');
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+        // Create SCSS snippets settings tab.
+        $tab = new admin_settingpage('theme_boost_union_snippets_settings',
+                get_string('snippetssettings', 'theme_boost_union', null, true));
+
+        // Create built-in snippets heading.
+        $name = 'theme_boost_union/builtinsnippetsheading';
+        $title = get_string('snippetsbuiltinsnippetsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Enable built-in snippets.
+        $name = 'theme_boost_union/enablebuiltinsnippets';
+        $title = get_string('enablebuiltinsnippets', 'theme_boost_union', null, true);
+        $description = get_string('enablebuiltinsnippets_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Create uploaded snippets heading.
+        $name = 'theme_boost_union/uploadedsnippetsheading';
+        $title = get_string('snippetsuploadedsnippetsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Enable uploaded snippets.
+        $name = 'theme_boost_union/enableuploadedsnippets';
+        $title = get_string('enableuploadedsnippets', 'theme_boost_union', null, true);
+        $description = get_string('enableuploadedsnippets_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Uploaded snippets.
+        $name = 'theme_boost_union/uploadedsnippets';
+        $title = get_string('uploadedsnippets', 'theme_boost_union', null, true);
+        $snippetrepourl = 'https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_snippets';
+        $description = get_string('uploadedsnippets_desc', 'theme_boost_union', ['url' => $snippetrepourl], true);
+        $uploadedsnippetsextensions = array_map(function($item) {
+            return '.'.$item;
+        }, snippets::ALLOWED_PREVIEW_FILE_EXTENSIONS);;
+        $uploadedsnippetsextensions[] = '.scss';
+        $uploadedsnippetsextensions[] = '.zip';
+        $setting = new admin_setting_configstoredfile($name, $title, $description, 'snippets', 0,
+                ['maxfiles' => -1, 'subdirs' => 1, 'accepted_types' => $uploadedsnippetsextensions]);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/uploadedsnippets', 'theme_boost_union/enableuploadedsnippets', 'neq',
+        THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+        // Add settings page to the admin settings category.
+        $ADMIN->add('theme_boost_union', $page);
     }
 
     // Add JS to remember the active admin tab to the page.
