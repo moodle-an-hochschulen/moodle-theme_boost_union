@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-02-08 - Improvement: Smart menus now display hidden courses to users with the appropriate capability, resolves #407.
+
 ### v4.5-r6
 
 * 2025-02-04 - Improvement: Hide the 'Menu item mode' settings for smart menu items which are not of the 'dynamic courses' item type, resolves #804.

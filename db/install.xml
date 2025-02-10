@@ -86,6 +86,8 @@
         <FIELD NAME="daterange" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="customfields" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="listsort" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="displayhiddencourses" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="hiddencoursesort" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="displayfield" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="textcount" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="mode" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
