@@ -779,7 +779,8 @@ class smartmenu_item {
                 $tooltip = get_string('hiddenfromstudents');
             }
 
-            $items[] = $this->generate_node_data($coursename, $url, $rkey, $tooltip, 'link', false, [], $itemimage, $sortdata, $itemclasses);
+            $items[] = $this->generate_node_data(
+                $coursename, $url, $rkey, $tooltip, 'link', false, [], $itemimage, $sortdata, $itemclasses);
         }
 
         // Sort the courses based on the configured setting.
@@ -1119,7 +1120,7 @@ class smartmenu_item {
     protected function filter_courses_list($record, $courseid) {
 
         // Filter by course visibility.
-        if ($this->item->displayhiddencourses == smartmenu_item::DISPLAY_VISIBLECOURSESONLY) {
+        if ($this->item->displayhiddencourses == self::DISPLAY_VISIBLECOURSESONLY) {
             return true;
         }
 
