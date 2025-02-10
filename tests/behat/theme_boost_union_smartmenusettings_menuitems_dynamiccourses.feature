@@ -387,7 +387,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | teacher        | 0             | should                   | should                   |
       | guest          | 0             | should                   | should not               |
 
-
   @javascript
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Hidden courses sorting in the menu item
     Given the following "courses" exist:
