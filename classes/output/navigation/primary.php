@@ -356,8 +356,9 @@ class primary extends \core\navigation\output\primary {
      */
     protected function convert_submenus($menus) {
 
-        // Verify the empty entries.
+        // If the given menu is empty for whatever reason.
         if (empty($menus)) {
+            // Return the menu directly.
             return $menus;
         }
 
@@ -367,10 +368,19 @@ class primary extends \core\navigation\output\primary {
             return clone (object) $item;
         }, $menus);
 
+        // Iterate over the primary menu items.
         foreach ($primarymenu as $key => $parentmenu) {
 
-            // Menu doesn't contain any children menus, continue to the next menu.
+            // The given menu is not a smart menu (but most probably a Moodle core main navigation item or a custom menu).
+            if (!property_exists($parentmenu, 'menudata')) {
+                // We must not convert this menu unless we want to break Moodle completely.
+                // Continue to the next menu.
+                continue;
+            }
+
+            // The given menu doesn't contain any children menus or is card menu.
             if (!$parentmenu->haschildren || $parentmenu->card) {
+                // Continue to the next menu.
                 continue;
             }
 
