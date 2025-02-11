@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2024-02-11 - Bugfix: Using smart menus together with custom menus broke Moodle, resolves #814, regression of #602.
 * 2025-02-10 - Bugfix: Adopt accessibility changes from MDL-67683 which led to Boost Union Behat failures on Moodle core 4.5.2 and 4.4.6, resolves #813.
                Please note: This change raises Boost Union's required Moodle core version to 4.5.2.
 
