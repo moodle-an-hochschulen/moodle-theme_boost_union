@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-02-12 - Bugfix: Accessibility page link in description differed from real location, resolves #818.
+
 ### v4.4-r10
 
 * 2025-02-11 - Bugfix: Using smart menus together with custom menus broke Moodle, resolves #814, regression of #602.

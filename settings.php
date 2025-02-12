@@ -2860,7 +2860,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Setting: Declaration of accessibility page link position.
         $name = 'theme_boost_union/accessibilitydeclarationlinkposition';
         $title = get_string('accessibilitydeclarationlinkpositionsetting', 'theme_boost_union', null, true);
-        $pageurl = theme_boost_union_get_staticpage_link('accessibility');
+        $pageurl = theme_boost_union_get_accessibility_link('declaration');
         $description = get_string('accessibilitydeclarationlinkpositionsetting_desc', 'theme_boost_union', ['url' => $pageurl],
                 true);
         $linkpositionoption =
