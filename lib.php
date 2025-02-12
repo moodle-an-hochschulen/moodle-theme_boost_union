@@ -209,8 +209,8 @@ function theme_boost_union_get_pre_scss($theme) {
     // Instead, we must only add additionally CSS code which is based on any Boost Union-only functionality.
 
     // But, well, there is one exception: Boost Union Child themes.
-    // Due to the described call chain, Boost Union Child won't get all the necessary extra SCSS.
-    // Thus, we fetch Boost's extra SCSS if the current theme is not Union itself (i.e. a Boost Union Child theme is active).
+    // Due to the described call chain, Boost Union Child won't get all the necessary pre SCSS.
+    // Thus, we fetch Boost's pre SCSS if the current theme is not Union itself (i.e. a Boost Union Child theme is active).
     if (theme_boost_union_is_active_childtheme() == true) {
         $scss .= theme_boost_get_pre_scss(theme_config::load('boost_union'));
     }
