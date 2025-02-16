@@ -227,11 +227,9 @@ With this setting, you can control whether the course completion progress is vis
 
 #### Tab "Category index / Site home"
 
-##### Course cards
+##### Course listing
 
-###### Enable course cards
-
-If this setting is enabled, the courses / course lists on the category index pages and on site home will be presented as course cards (similar to the course cards on the 'My courses' page). You can configure the look of the course cards with multiple dependent settings.
+In this section, you can modify the look & feel of the course listing on the category index pages and on site home. As an alternative to the way how Moodle core presents them, you can present the course listing as course cards (similar to the course cards on the 'My courses' page) or course list  (similar to the course list on the 'My courses' page). And, of course, you can configure the look of the course cards or rows with multiple dependent settings.
 
 #### Tab "Blocks"
 

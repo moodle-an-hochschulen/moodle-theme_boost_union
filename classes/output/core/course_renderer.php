@@ -43,7 +43,7 @@ class course_renderer extends \core_course_renderer {
      * get_courses_display_option() and get_and_erase_attributes() are called.
      *
      * Modifications compared to the original function:
-     * * Build the course card grid if enabled, otherwise call the parent function to build the default view.
+     * * Build the modified course listing if enabled, otherwise call the parent function to build the default view.
      *
      * @param coursecat_helper $chelper various display options
      * @param array $courses the list of courses to display
@@ -52,8 +52,9 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function coursecat_courses(coursecat_helper $chelper, $courses, $totalcount = null) {
-        // If course cards are not enabled.
-        if (get_config('theme_boost_union', 'enablecoursecards') != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // If the course listing should remain unchanged.
+        $courselistingpresetation = get_config('theme_boost_union', 'courselistingpresentation');
+        if (!isset($courselistingpresetation) || $courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
             // Call the parent function to present the default view.
             return parent::coursecat_courses($chelper, $courses, $totalcount);
         }
@@ -114,33 +115,58 @@ class course_renderer extends \core_course_renderer {
             $content .= $pagingbar;
         }
 
-        // Build the course card grid.
-        // Use the same wrapper classes as in /course/templates/coursecards.mustache.
-        // Set the row-cols-lg class depending on the coursecardscolumncount setting.
-        // And add the theme_boost_union-block-cards class to be used in the CSS.
-        $maxcols = get_config('theme_boost_union', 'coursecardscolumncount');
-        $content .= html_writer::start_tag('div',
-                ['class' => 'card-grid mx-0 row row-cols-1 row-cols-sm-2 row-cols-lg-'.$maxcols.' theme_boost_union-block-cards',
-                        'data-region' => 'card-deck',
-                        'role' => 'list',
-                ]
-        );
-
-        // Iterate over the courses.
-        foreach ($courses as $course) {
-            // Build the course card.
+        // If course cards are enabled.
+        if ($courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_CARDS) {
+            // Start the course listing as card grid.
             // Use the same wrapper classes as in /course/templates/coursecards.mustache.
-            $content .= html_writer::start_tag('div', ['class' => 'col d-flex px-0 mb-2']);
-            $content .= $this->coursecat_coursebox($chelper, $course);
-            $content .= html_writer::end_tag('div');
+            // Set the row-cols-lg class depending on the coursecardscolumncount setting.
+            // And add the theme_boost_union-courselisting class to be used in the CSS.
+            $maxcols = get_config('theme_boost_union', 'coursecardscolumncount');
+            $maxcolslg = $maxcols;
+            $maxcolssm = ($maxcols > 1) ? $maxcols : 1;
+            $content .= html_writer::start_tag('div',
+                    [
+                        'class' => 'card-grid mx-0 row row-cols-1 row-cols-sm-'.$maxcolssm.' row-cols-lg-'.$maxcolslg.
+                                ' theme_boost_union-courselisting',
+                        'role' => 'list',
+                    ]
+            );
+
+            // Iterate over the courses.
+            foreach ($courses as $course) {
+                // Build the course card.
+                // Use the same wrapper classes as in /course/templates/coursecards.mustache.
+                $content .= html_writer::start_tag('div', ['class' => 'col d-flex px-0 mb-2']);
+                $content .= $this->coursecat_coursebox($chelper, $course);
+                $content .= html_writer::end_tag('div');
+            }
+
+            // Or if the course list is enabled.
+        } else if ($courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_LIST) {
+            // Start the course listing as course list.
+            // And add the theme_boost_union-courselisting class to be used in the CSS.
+            $content .= html_writer::start_tag('div',
+                    [
+                        'class' => 'mx-0 row no-gutters theme_boost_union-courselisting',
+                        'role' => 'list',
+                    ]
+            );
+
+            // Iterate over the courses.
+            foreach ($courses as $course) {
+                // Build the course list.
+                $content .= html_writer::start_tag('div', ['class' => 'col-12']);
+                $content .= $this->coursecat_coursebox($chelper, $course);
+                $content .= html_writer::end_tag('div');
+            }
         }
 
-        // End the course card grid.
+        // End the course listing.
         $content .= html_writer::end_tag('div');
 
-        // If the course card popup is enabled, add the necessary JS.
-        if (get_config('theme_boost_union', 'showcoursecardpopup') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-            $this->page->requires->js_call_amd('theme_boost_union/coursecarddetailsmodal', 'init');
+        // If the course listing details modal is enabled, add the necessary JS.
+        if (get_config('theme_boost_union', 'courselistinghowpopup') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            $this->page->requires->js_call_amd('theme_boost_union/courselistingdetailsmodal', 'init');
         }
 
         if (!empty($pagingbar)) {
@@ -163,7 +189,7 @@ class course_renderer extends \core_course_renderer {
      * please use {@link core_course_renderer::course_info_box()}
      *
      * Modifications compared to the original function:
-     * * Show the course card view if enabled, otherwise call the parent function to present the default view.
+     * * Show the course listing view if enabled, otherwise call the parent function to present the default view.
      *
      * @param coursecat_helper $chelper various display options
      * @param core_course_list_element|stdClass $course
@@ -172,8 +198,9 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function coursecat_coursebox(coursecat_helper $chelper, $course, $additionalclasses = '') {
-        // If course cards are not enabled.
-        if (get_config('theme_boost_union', 'enablecoursecards') != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // If the course listing should remain unchanged.
+        $courselistingpresetation = get_config('theme_boost_union', 'courselistingpresentation');
+        if (!isset($courselistingpresetation) || $courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
             // Call the parent function to present the default view.
             return parent::coursecat_coursebox($chelper, $course, $additionalclasses);
         }
@@ -201,97 +228,98 @@ class course_renderer extends \core_course_renderer {
      * This method is called from coursecat_coursebox() and may be re-used in AJAX
      *
      * Modifications compared to the original function:
-     * * Compose the course card view if enabled, otherwise call the parent function to compose the default view.
+     * * Compose the course listing view if enabled, otherwise call the parent function to compose the default view.
      *
      * @param coursecat_helper $chelper various display options
      * @param stdClass|core_course_list_element $course
      * @return string
      */
     protected function coursecat_coursebox_content(coursecat_helper $chelper, $course) {
-        // If course cards are not enabled.
-        if (get_config('theme_boost_union', 'enablecoursecards') != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // If the course listing should remain unchanged.
+        $courselistingpresetation = get_config('theme_boost_union', 'courselistingpresentation');
+        if (!isset($courselistingpresetation) || $courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
             // Call the parent function to compose the default view.
             return parent::coursecat_coursebox_content($chelper, $course);
         }
 
-        // Prepare a static skeleton for the course card templatedata.
-        // This is done to avoid that we check the same stuff for every card again and again.
+        // Prepare a static skeleton for the course listing templatedata.
+        // This is done to avoid that we check the same stuff for every card / list element again and again.
         static $skeleton;
         if ($skeleton == null) {
             $skeleton = [];
 
             // Enable course image, if configured.
-            if (get_config('theme_boost_union', 'showcoursecardimage') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                $skeleton['showcoursecardimage'] = true;
+            if (get_config('theme_boost_union', 'courselistinghowimage') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $skeleton['showcourseimage'] = true;
             } else {
-                $skeleton['showcoursecardimage'] = false;
+                $skeleton['showcourseimage'] = false;
             }
 
             // Enable course contacts, if configured.
-            if (get_config('theme_boost_union', 'showcoursecardcontacts') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                $skeleton['showcoursecardcontacts'] = true;
+            if (get_config('theme_boost_union', 'courselistingshowcontacts') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $skeleton['showcoursecontacts'] = true;
             } else {
-                $skeleton['showcoursecardcontacts'] = false;
+                $skeleton['showcoursecontacts'] = false;
             }
 
             // Enable course shortname, if configured.
-            if (get_config('theme_boost_union', 'showcoursecardshortname') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            if (get_config('theme_boost_union', 'courselistinghowshortname') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 $skeleton['showshortname'] = true;
             } else {
                 $skeleton['showshortname'] = false;
             }
 
             // Enable course category, if configured.
-            if (get_config('theme_boost_union', 'showcoursecardcategory') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                $skeleton['showcoursecardcategory'] = true;
+            if (get_config('theme_boost_union', 'courselistinghowcategory') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $skeleton['showcoursecategory'] = true;
             } else {
-                $skeleton['showcoursecardcategory'] = false;
+                $skeleton['showcoursecategory'] = false;
             }
 
             // Enable course goto button, if configured.
-            if (get_config('theme_boost_union', 'showcoursecardgoto') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                $skeleton['showcoursecardgoto'] = true;
+            if (get_config('theme_boost_union', 'courselistinghowgoto') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $skeleton['showcoursegoto'] = true;
             } else {
-                $skeleton['showcoursecardgoto'] = false;
+                $skeleton['showcoursegoto'] = false;
             }
 
             // Enable course details popup, if configured.
-            if (get_config('theme_boost_union', 'showcoursecardpopup') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                $skeleton['showcoursecardpopup'] = true;
+            if (get_config('theme_boost_union', 'courselistinghowpopup') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $skeleton['showcoursepopup'] = true;
             } else {
-                $skeleton['showcoursecardpopup'] = false;
+                $skeleton['showcoursepopup'] = false;
             }
 
             // Enable course buttons area, if necessary.
-            if ($skeleton['showcoursecardgoto'] || $skeleton['showcoursecardpopup']) {
-                $skeleton['showcardbuttons'] = true;
+            if ($skeleton['showcoursegoto'] || $skeleton['showcoursepopup']) {
+                $skeleton['showbuttons'] = true;
             } else {
-                $skeleton['showcardbuttons'] = false;
+                $skeleton['showbuttons'] = false;
             }
 
             // Enable course fields, if configured.
-            if (get_config('theme_boost_union', 'showcoursecardfields') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                $skeleton['showcoursecardfields'] = true;
+            if (get_config('theme_boost_union', 'courselistinghowfields') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $skeleton['showcoursefields'] = true;
             } else {
-                $skeleton['showcoursecardfields'] = false;
+                $skeleton['showcoursefields'] = false;
             }
 
             // Enable course enrol icons, if configured.
-            if (get_config('theme_boost_union', 'showcoursecardenrolicons') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                $skeleton['showcoursecardenrolicons'] = true;
+            if (get_config('theme_boost_union', 'courselistinghowenrolicons') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $skeleton['showcourseenrolicons'] = true;
             } else {
-                $skeleton['showcoursecardenrolicons'] = false;
+                $skeleton['showcourseenrolicons'] = false;
             }
 
             // Enable course progress, if configured.
-            if (get_config('theme_boost_union', 'showcoursecardprogress') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                $skeleton['showcoursecardprogress'] = true;
+            if (get_config('theme_boost_union', 'courselistinghowprogress') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $skeleton['showcourseprogress'] = true;
             } else {
-                $skeleton['showcoursecardprogress'] = false;
+                $skeleton['showcourseprogress'] = false;
             }
 
             // Check if the user can view user details, if necessary
-            if ($skeleton['showcoursecardcontacts'] || $skeleton['showcoursecardpopup']) {
+            if ($skeleton['showcoursecontacts'] || $skeleton['showcoursepopup']) {
                 $skeleton['canviewuserdetails'] = has_capability('moodle/user:viewdetails', \context_system::instance()) &&
                         (isloggedin() || isguestuser() && get_config('forceloginforprofiles') != true);
             }
@@ -318,12 +346,12 @@ class course_renderer extends \core_course_renderer {
         $templatedata['viewurl'] = new \core\url('/course/view.php', ['id' => $course->id]);
 
         // Amend course image, if enabled.
-        if ($templatedata['showcoursecardimage']) {
+        if ($templatedata['showcourseimage']) {
             $templatedata['courseimage'] = $courseutil->get_courseimage();
         }
 
         // Amend course contacts, if enabled.
-        if ($templatedata['showcoursecardcontacts'] || $templatedata['showcoursecardpopup']) {
+        if ($templatedata['showcoursecontacts'] || $templatedata['showcoursepopup']) {
             $templatedata['contacts'] = $courseutil->get_course_contacts();
             $templatedata['hascontacts'] = (count($templatedata['contacts']) > 0);
         }
@@ -334,24 +362,24 @@ class course_renderer extends \core_course_renderer {
         }
 
         // Amend course category, if enabled.
-        if ($skeleton['showcoursecardcategory']) {
+        if ($skeleton['showcoursecategory']) {
             $templatedata['coursecategory'] = $courseutil->get_category();
         }
 
         // Amend course summary, if enabled.
-        if ($templatedata['showcoursecardpopup']) {
+        if ($templatedata['showcoursepopup']) {
             $templatedata['summary'] = $courseutil->get_summary($chelper);
             $templatedata['hassummary'] = ($templatedata['summary'] != false);
         }
 
         // Amend custom fields, if enabled.
-        if ($templatedata['showcoursecardfields'] || $templatedata['showcoursecardpopup']) {
+        if ($templatedata['showcoursefields'] || $templatedata['showcoursepopup']) {
             $templatedata['customfields'] = $courseutil->get_custom_fields();
             $templatedata['hascustomfields'] = ($templatedata['customfields'] != false);
         }
 
         // Amend course enrolment icons, if enabled.
-        if ($templatedata['showcoursecardenrolicons']) {
+        if ($templatedata['showcourseenrolicons']) {
             $courseenrolmenticons = $courseutil->get_enrolment_icons();
             $courseenrolmenticons = !empty($courseenrolmenticons) ? $this->render_enrolment_icons($courseenrolmenticons) : false;
             $templatedata['enrolmenticons'] = $courseenrolmenticons;
@@ -359,22 +387,30 @@ class course_renderer extends \core_course_renderer {
         }
 
         // Amend course progress, if enabled.
-        if ($templatedata['showcoursecardprogress']) {
+        if ($templatedata['showcourseprogress']) {
             $courseprogress = $courseutil->get_progress();
             $templatedata['progress'] = (int) $courseprogress;
             $templatedata['hasprogress'] = ($courseprogress != null);
         }
 
         // Enable card footer, if necessary.
-        if ($templatedata['showcoursecardenrolicons'] && $templatedata['hasenrolicons']) {
+        if ($templatedata['showcourseenrolicons'] && $templatedata['hasenrolicons']) {
             $templatedata['showcardfooter'] = true;
         }
-        if ($templatedata['showcoursecardprogress'] && $templatedata['hasprogress']) {
+        if ($templatedata['showcourseprogress'] && $templatedata['hasprogress']) {
             $templatedata['showcardfooter'] = true;
         }
 
-        // Render the template.
-        $content = $this->render_from_template('theme_boost_union/coursecard', $templatedata);
+        // If course cards are enabled.
+        if ($courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_CARDS) {
+            // Render the card template.
+            $content = $this->render_from_template('theme_boost_union/courselistingcard', $templatedata);
+
+            // Or if the course list is enabled.
+        } else if ($courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_LIST) {
+            // Render the list template.
+            $content = $this->render_from_template('theme_boost_union/courselistinglist', $templatedata);
+        }
 
         // And return it.
         return $content;

@@ -272,17 +272,17 @@
  ======================================*/
 
 /*---------------------------------------
- * Setting: Enable course cards
+ * Setting:  Course listing presentation
  --------------------------------------*/
 
 /* Only on site home and the category index pages. */
 .pagelayout-frontpage,
 .pagelayout-coursecategory {
 
-    /* For course cards. */
-    .course-card {
+    /* In the Boost Union course listing. */
+    .theme_boost_union-courselisting {
         /* The course contact section.
-           There are some things which can't be set with Bootstrap classes in Mustache. */
+        There are some things which can't be set with Bootstrap classes in Mustache. */
         .coursecontacts {
             /* Push the contacts over the course image. */
             margin-top: -18px;
@@ -294,9 +294,20 @@
             }
         }
 
+        /* For the course list only. */
+        .course-listitem {
+            /* The course image. */
+            .list-image {
+                height: 5rem;
+                width: 20rem;
+                background-position: center;
+                background-size: cover;
+            }
+        }
+
         /* The custom fields section.
            We can't use Bootstrap classes in Mustache here as these elements are output by a renderer which we do not influence. */
-        .customfields {
+           .customfields {
             /* Use a smaller font and some space for each custom fields. */
             .customfield {
                 font-size: 80%;
@@ -333,14 +344,8 @@
                 }
             }
         }
-    }
 
-    /* Adopt the styles for the course-info-container from .block .block-cards
-       We would have loved to do this with @extend, but SCSS does not support this case. */
-    .theme_boost_union-block-cards {
-        span.categoryname {
-            color: $gray-900;
-        }
+        /* The progress section. */
         .progress {
             height: 0.5rem;
         }
@@ -350,7 +355,7 @@
     }
 
     /* For the course details modal. */
-    .modal-body {
+    .theme_boost_union-courselisting-modal {
         /* The contact card */
         .contact {
             // Control the width on multiple screen sizes.

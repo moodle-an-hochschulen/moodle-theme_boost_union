@@ -12,9 +12,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost_union/coursecardcontact-dataattrib
+    @template theme_boost_union/courselistingdetailsmodal-contact-dataattrib
 
-    Boost Union course card contact template.
+    Boost Union course listing details modal contact template.
 
     Context variables required for this template:
     * id - The id of the user.
@@ -42,7 +42,7 @@
         &lt;/div&gt;
         {{#canviewuserdetails}}
             &lt;div class=&quot;card-footer text-center&quot;&gt;
-                &lt;a href=&quot;{{config.wwwroot}}/user/profile.php?id={{id}}&quot; class=&quot;btn btn-secondary&quot;&gt;{{#str}}viewprofile, theme_boost_union{{/str}}&lt;/a&gt;
+                &lt;a href=&quot;{{config.wwwroot}}/user/profile.php?id={{id}}&quot; class=&quot;btn btn-secondary&quot;&gt;{{#str}}courselistingviewprofile, theme_boost_union{{/str}}&lt;/a&gt;
             &lt;/div&gt;
         {{/canviewuserdetails}}
     &lt;/div&gt;
