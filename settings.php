@@ -877,115 +877,124 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $tab = new admin_settingpage('theme_boost_union_look_categoryindex',
                 get_string('categoryindextab', 'theme_boost_union', null, true));
 
-        // Create Course cards heading.
-        $name = 'theme_boost_union/coursecardsheading';
-        $title = get_string('coursecardsheading', 'theme_boost_union', null, true);
+        // Create Course listing heading.
+        $name = 'theme_boost_union/courselistingheading';
+        $title = get_string('courselistingheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
-        // Setting: Enable course cards.
-        $name = 'theme_boost_union/enablecoursecards';
-        $title = get_string('enablecoursecards', 'theme_boost_union');
+        // Setting: Course listing presentation.
+        $name = 'theme_boost_union/courselistingpresentation';
+        $title = get_string('courselistingpresentation', 'theme_boost_union');
         $coursesperpageurl = new core\url('/admin/search.php', ['query' => 'coursesperpage']);
         $coursesummariesurl = new core\url('/admin/search.php', ['query' => 'courseswithsummarieslimit']);
-        $description = get_string('enablecoursecards_desc', 'theme_boost_union').'<br />'.
-                get_string('enablecoursecards_note', 'theme_boost_union',
+        $description = get_string('courselistingpresentation_desc', 'theme_boost_union').'<br />'.
+                get_string('courselistingpresentation_note', 'theme_boost_union',
                         ['url1' => $coursesperpageurl, 'url2' => $coursesummariesurl]);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $courselistingpresentationoptions = [
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE =>
+                        get_string('courselistingpresentation_nochange', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_CARDS =>
+                        get_string('courselistingpresentation_cards', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_LIST =>
+                        get_string('courselistingpresentation_list', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE, $courselistingpresentationoptions);
         $tab->add($setting);
 
         // Setting: Course cards column count.
         $name = 'theme_boost_union/coursecardscolumncount';
         $title = get_string('coursecardscolumncount', 'theme_boost_union');
         $description = get_string('coursecardscolumncount_desc', 'theme_boost_union');
-        $coursecardscolumncountoptions = [2 => 2, 3 => 3];
+        $coursecardscolumncountoptions = [1 => 1, 2 => 2, 3 => 3];
         $setting = new admin_setting_configselect($name, $title, $description, 3, $coursecardscolumncountoptions);
         $tab->add($setting);
-        $page->hide_if('theme_boost_union/coursecardscolumncount', 'theme_boost_union/enablecoursecards', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
+        $page->hide_if('theme_boost_union/coursecardscolumncount', 'theme_boost_union/courselistingpresentation', 'neq',
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_CARDS);
 
-        // Setting: Show course image on course cards.
-        $name = 'theme_boost_union/showcoursecardimage';
-        $title = get_string('showcoursecardimage', 'theme_boost_union');
-        $description = get_string('showcoursecardimage_desc', 'theme_boost_union');
+        // Setting: Show course image in the course listing.
+        $name = 'theme_boost_union/courselistinghowimage';
+        $title = get_string('courselistinghowimage', 'theme_boost_union');
+        $description = get_string('courselistinghowimage_desc', 'theme_boost_union');
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
-        $page->hide_if('theme_boost_union/showcoursecardimage', 'theme_boost_union/enablecoursecards', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
+        $page->hide_if('theme_boost_union/courselistinghowimage', 'theme_boost_union/courselistingpresentation', 'eq',
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
-        // Setting: Show course contacts on course cards.
-        $name = 'theme_boost_union/showcoursecardcontacts';
-        $title = get_string('showcoursecardcontacts', 'theme_boost_union');
-        $description = get_string('showcoursecardcontacts_desc', 'theme_boost_union');
+        // Setting: Show course contacts in the course listing.
+        $name = 'theme_boost_union/courselistingshowcontacts';
+        $title = get_string('courselistingshowcontacts', 'theme_boost_union');
+        $description = get_string('courselistingshowcontacts_desc', 'theme_boost_union');
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
-        $page->hide_if('theme_boost_union/showcoursecardcontacts', 'theme_boost_union/enablecoursecards', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
-        $page->hide_if('theme_boost_union/showcoursecardcontacts', 'theme_boost_union/showcoursecardimage', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
-
-        // Setting: Show course shortname on course cards.
-        $name = 'theme_boost_union/showcoursecardshortname';
-        $title = get_string('showcoursecardshortname', 'theme_boost_union');
-        $description = get_string('showcoursecardshortname_desc', 'theme_boost_union');
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $tab->add($setting);
-        $page->hide_if('theme_boost_union/showcoursecardshortname', 'theme_boost_union/enablecoursecards', 'neq',
+        $page->hide_if('theme_boost_union/courselistingshowcontacts', 'theme_boost_union/courselistingpresentation', 'eq',
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
+        $page->hide_if('theme_boost_union/courselistingshowcontacts', 'theme_boost_union/courselistinghowimage', 'neq',
                 THEME_BOOST_UNION_SETTING_SELECT_YES);
 
-        // Setting: Show course category on course cards.
-        $name = 'theme_boost_union/showcoursecardcategory';
-        $title = get_string('showcoursecardcategory', 'theme_boost_union');
-        $description = get_string('showcoursecardcategory_desc', 'theme_boost_union');
+        // Setting: Show course shortname in the course listing.
+        $name = 'theme_boost_union/courselistinghowshortname';
+        $title = get_string('courselistinghowshortname', 'theme_boost_union');
+        $description = get_string('courselistinghowshortname_desc', 'theme_boost_union');
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
-        $page->hide_if('theme_boost_union/showcoursecardcategory', 'theme_boost_union/enablecoursecards', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
+        $page->hide_if('theme_boost_union/courselistinghowshortname', 'theme_boost_union/courselistingpresentation', 'eq',
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
-        // Setting: Show goto button on course cards.
-        $name = 'theme_boost_union/showcoursecardgoto';
-        $title = get_string('showcoursecardgoto', 'theme_boost_union');
-        $description = get_string('showcoursecardgoto_desc', 'theme_boost_union');
+        // Setting: Show course category in the course listing.
+        $name = 'theme_boost_union/courselistinghowcategory';
+        $title = get_string('courselistinghowcategory', 'theme_boost_union');
+        $description = get_string('courselistinghowcategory_desc', 'theme_boost_union');
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
-        $page->hide_if('theme_boost_union/showcoursecardgoto', 'theme_boost_union/enablecoursecards', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
+        $page->hide_if('theme_boost_union/courselistinghowcategory', 'theme_boost_union/courselistingpresentation', 'eq',
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
-        // Setting: Show details popup on course cards.
-        $name = 'theme_boost_union/showcoursecardpopup';
-        $title = get_string('showcoursecardpopup', 'theme_boost_union');
-        $description = get_string('showcoursecardpopup_desc', 'theme_boost_union');
+        // Setting: Show goto button in the course listing.
+        $name = 'theme_boost_union/courselistinghowgoto';
+        $title = get_string('courselistinghowgoto', 'theme_boost_union');
+        $description = get_string('courselistinghowgoto_desc', 'theme_boost_union');
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
-        $page->hide_if('theme_boost_union/showcoursecardpopup', 'theme_boost_union/enablecoursecards', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
+        $page->hide_if('theme_boost_union/courselistinghowgoto', 'theme_boost_union/courselistingpresentation', 'eq',
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
-        // Setting: Show course fields on course cards.
-        $name = 'theme_boost_union/showcoursecardfields';
-        $title = get_string('showcoursecardfields', 'theme_boost_union');
-        $description = get_string('showcoursecardfields_desc', 'theme_boost_union');
+        // Setting: Show details popup in the course listing.
+        $name = 'theme_boost_union/courselistinghowpopup';
+        $title = get_string('courselistinghowpopup', 'theme_boost_union');
+        $description = get_string('courselistinghowpopup_desc', 'theme_boost_union');
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
-        $page->hide_if('theme_boost_union/showcoursecardfields', 'theme_boost_union/enablecoursecards', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
+        $page->hide_if('theme_boost_union/courselistinghowpopup', 'theme_boost_union/courselistingpresentation', 'eq',
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
-        // Setting: Show course enrolment icons on course cards.
-        $name = 'theme_boost_union/showcoursecardenrolicons';
-        $title = get_string('showcoursecardenrolicons', 'theme_boost_union');
-        $description = get_string('showcoursecardenrolicons_desc', 'theme_boost_union');
+        // Setting: Show course fields in the course listing.
+        $name = 'theme_boost_union/courselistinghowfields';
+        $title = get_string('courselistinghowfields', 'theme_boost_union');
+        $description = get_string('courselistinghowfields_desc', 'theme_boost_union');
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
-        $page->hide_if('theme_boost_union/showcoursecardenrolicons', 'theme_boost_union/enablecoursecards', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
+        $page->hide_if('theme_boost_union/courselistinghowfields', 'theme_boost_union/courselistingpresentation', 'eq',
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
-        // Setting: Show course completion progress on course cards.
-        $name = 'theme_boost_union/showcoursecardprogress';
-        $title = get_string('showcoursecardprogress', 'theme_boost_union');
-        $description = get_string('showcoursecardprogress_desc', 'theme_boost_union');
+        // Setting: Show course enrolment icons in the course listing.
+        $name = 'theme_boost_union/courselistinghowenrolicons';
+        $title = get_string('courselistinghowenrolicons', 'theme_boost_union');
+        $description = get_string('courselistinghowenrolicons_desc', 'theme_boost_union');
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
-        $page->hide_if('theme_boost_union/showcoursecardprogress', 'theme_boost_union/enablecoursecards', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
+        $page->hide_if('theme_boost_union/courselistinghowenrolicons', 'theme_boost_union/courselistingpresentation', 'eq',
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
+
+        // Setting: Show course completion progress in the course listing.
+        $name = 'theme_boost_union/courselistinghowprogress';
+        $title = get_string('courselistinghowprogress', 'theme_boost_union');
+        $description = get_string('courselistinghowprogress_desc', 'theme_boost_union');
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/courselistinghowprogress', 'theme_boost_union/courselistingpresentation', 'eq',
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
         // Add tab to settings page.
         $page->add($tab);
