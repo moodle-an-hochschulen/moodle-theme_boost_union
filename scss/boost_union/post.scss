@@ -307,7 +307,7 @@
 
         /* The custom fields section.
            We can't use Bootstrap classes in Mustache here as these elements are output by a renderer which we do not influence. */
-           .customfields {
+        .customfields {
             /* Use a smaller font and some space for each custom fields. */
             .customfield {
                 font-size: 80%;
@@ -319,7 +319,8 @@
             }
 
             /* Highlight the field name. */
-            .customfieldname, .customfieldseparator {
+            .customfieldname,
+            .customfieldseparator {
                 @extend strong;
             }
         }
