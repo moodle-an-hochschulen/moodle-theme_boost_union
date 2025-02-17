@@ -613,6 +613,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $installedactivities = get_module_types_names();
         // Iterate over all existing activities.
         foreach ($installedactivities as $modname => $modinfo) {
+            // If this is the subsection activity type which must not be tinted itself.
+            if ($modname == 'subsection') {
+                // Skip it.
+                continue;
+            }
+
             // Get default purpose of activity module.
             $defaultpurpose = plugin_supports('mod', $modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
             // If the plugin does not have any default purpose.
