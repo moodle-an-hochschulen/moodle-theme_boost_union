@@ -330,14 +330,8 @@ function theme_boost_union_get_pre_scss($theme) {
 
         // If a color is set.
         if (!empty($activityiconcolor)) {
-            // Set the activity-icon-*-bg variable which was replaced by the CSS filters in Moodle 4.4 but which is still part
-            // of the codebase.
+            // Set the activity-icon-*-bg variable which will be replaced with the CSS filters by Moodle core.
             $scss .= '$activity-icon-'.$purpose.'-bg: '.$activityiconcolor.";\n";
-
-            // Set the activity-icon-*-filter variable which holds the CSS filters for the activity icon colors now.
-            $solver = new \theme_boost_union\lib\hextocssfilter\solver($activityiconcolor);
-            $cssfilterresult = $solver->solve();
-            $scss .= '$activity-icon-'.$purpose.'-filter: '.$cssfilterresult['filter'].";\n";
         }
     }
 

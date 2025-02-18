@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Upgrade: Adapt activity coloring for Moodle 5.0 and remove the activityiconcolorfidelity setting, resolves #824.
 * 2025-04-10 - Upgrade: Remove activitiestintenabled setting as the activities block is gone in Moodle 5.0.
 * 2025-04-10 - Upgrade: Adapt Behat tests as the subsections are now enabled by default
 * 2025-04-10 - Upgrade: Adopt changes regarding dismisssing alerts for the infobanner feature in Boost Union
