@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-02-18 - Bugfix: Correct activity icon colors, resolves #831
 * 2025-02-12 - Bugfix: Accessibility page link in description differed from real location, resolves #818.
 
 ### v4.4-r10
