@@ -574,20 +574,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
         }
 
-        // Setting: Activity icon color fidelity.
-        $name = 'theme_boost_union/activityiconcolorfidelity';
-        $title = get_string('activityiconcolorfidelitysetting', 'theme_boost_union', null, true);
-        $description = get_string('activityiconcolorfidelitysetting_desc', 'theme_boost_union', null, true);
-        $activityiconcolorfidelityoptions = [
-                1 => get_string('activityiconcolorfidelity_oneshot', 'theme_boost_union'),
-                10 => get_string('activityiconcolorfidelity_sometries', 'theme_boost_union'),
-                100 => get_string('activityiconcolorfidelity_detailled', 'theme_boost_union'),
-                500 => get_string('activityiconcolorfidelity_insane', 'theme_boost_union'),
-            ];
-        $setting = new admin_setting_configselect($name, $title, $description, 1, $activityiconcolorfidelityoptions);
-        $setting->set_updatedcallback('theme_reset_all_caches');
-        $tab->add($setting);
-
         // Create activity icons purpose heading.
         $name = 'theme_boost_union/activitypurposeheading';
         $title = get_string('activitypurposeheading', 'theme_boost_union', null, true);

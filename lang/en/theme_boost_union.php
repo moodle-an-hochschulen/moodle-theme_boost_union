@@ -213,13 +213,6 @@ $string['activityiconcolorinteractivecontentsetting_desc'] = 'The activity icon 
 // ... ... Setting: Activity icon color for 'Interface'.
 $string['activityiconcolorinterfacesetting'] = 'Activity icon color for "Interface"';
 $string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for "Interface"';
-// ... ... Setting: Activity icon color fidelity'.
-$string['activityiconcolorfidelitysetting'] = 'Activity icon color fidelity';
-$string['activityiconcolorfidelitysetting_desc'] = 'With the settings above, you set a hex color which will be used to tint the particular activity icon. However, technically, the activity icon is tinted with a CSS filter. Boost Union uses a sophisticated algorithm to determine a CSS filter which matches the given hex color visually, but this algorithm is based on a randomized search and might produce suboptimal results when it is run just once. With this setting, you can allow Boost Union to run the algorithm multiple times and pick the filter which deviates least from the hex color at the end. Please note that this setting has an impact on the cache purging times (the more iterations you allow, the longer Moodle will take to purge the theme cache), but it will not have an impact on page load times.';
-$string['activityiconcolorfidelity_oneshot'] = 'One shot (1 iteration)';
-$string['activityiconcolorfidelity_sometries'] = 'Some tries (up to 10 iterations)';
-$string['activityiconcolorfidelity_detailled'] = 'Detailled research (up to 100 iterations)';
-$string['activityiconcolorfidelity_insane'] = 'Insane quest (up to 500 iterations)';
 // ... Section: Activity icon purposes.
 $string['activitypurposeheading'] = 'Activity icon purposes';
 $string['activitypurposeheading_desc'] = 'With these settings, you can override the activity icon background color which is defined by the activity\'s purpose (and which is a hardcoded plugin feature in each activity).';

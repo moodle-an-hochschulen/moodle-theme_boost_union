@@ -1430,7 +1430,7 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
             $scss .= ' {';
             // If the purpose is now different than 'other', change the filter to the new color.
             if ($activitypurpose != MOD_PURPOSE_OTHER) {
-                $scss .= 'filter: var(--activity' . $activitypurpose . ') !important;';
+                $scss .= '@include recolor-icon-important(map-get($activity-icon-colors, "'.$activitypurpose.'"), 1);';
 
                 // Otherwise, the filter is removed (as there is no '--activityother' variable).
             } else {
