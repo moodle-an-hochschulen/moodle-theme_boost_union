@@ -111,7 +111,7 @@ class behat_theme_boost_union_base_general extends behat_base {
     /**
      * Checks if the given DOM element has a CSS filter which is close enough to the given hex color.
      *
-     * @copyright 2024 Alexander Bias <bias@alexanderbias.de>
+     * @copyright 2025 Alexander Bias <abias@ssystems.de>
      * @Then DOM element :arg1 should have a CSS filter close enough to hex color :arg2
      * @param string $selector
      * @param string $color
@@ -125,14 +125,79 @@ class behat_theme_boost_union_base_general extends behat_base {
         ";
         $computedfilter = $this->evaluate_script($stylejs);
 
-        // Check if the computed filter is close enough to the given color.
-        $solver = new \theme_boost_union\lib\hextocssfilter\solver($color);
-        $closeenough = $solver->filter_is_close_enough($computedfilter, '2');
+        // Assess the filter.
+        $closeenough = $this->assess_icon_tinting_filter_against_hex($computedfilter, $color);
 
         if ($closeenough != true) {
             throw new ExpectationException('The \''.$selector.'\' DOM element with the CSS filter \''.
                 $computedfilter.'\', is not close enough to the color \''.$color.'\'.', $this->getSession());
         }
+    }
+
+    /**
+     * Checks if the given DOM element does not have a CSS filter which is close to the given hex color.
+     *
+     * @copyright 2025 Alexander Bias <abias@ssystems.de>
+     * @Then DOM element :arg1 should not have a CSS filter close to hex color :arg2
+     * @param string $selector
+     * @param string $color
+     * @throws ExpectationException
+     */
+    public function dom_element_should_not_have_css_filter_close_to_hex($selector, $color) {
+        $stylejs = "
+            return (
+                window.getComputedStyle(document.querySelector('$selector')).getPropertyValue('filter')
+            )
+        ";
+        $computedfilter = $this->evaluate_script($stylejs);
+
+        // Assess the filter.
+        $closeenough = $this->assess_icon_tinting_filter_against_hex($computedfilter, $color);
+
+        if ($closeenough == true) {
+            throw new ExpectationException('The \''.$selector.'\' DOM element with the CSS filter \''.
+                $computedfilter.'\', is too close to the color \''.$color.'\'.', $this->getSession());
+        }
+    }
+
+    /**
+     * Assesses if the given CSS filter is close to the given hex color or not.
+     *
+     * @copyright 2025 Alexander Bias <abias@ssystems.de>
+     * @param string $filter
+     * @param string $color
+     * @return bool
+     * @throws ExpectationException
+     */
+    private function assess_icon_tinting_filter_against_hex($filter, $color) {
+        // Extract the matrix values from the filter (and unescape the quotes in the filter before doing that).
+        $valuesmatches = [];
+        if (!preg_match('/values="([\d\.\s]+)"/', stripslashes($filter), $valuesmatches)) {
+            throw new ExpectationException('The given CSS filter does not have feColorMatrix values.', $this->getSession());
+        }
+        $matrixvaluesstring = $valuesmatches[1];
+        $matrixvalues = array_map('floatval', preg_split('/\s+/', trim($matrixvaluesstring)));
+
+        // The color components are at positions 4, 9, and 14 (zero-indexed).
+        $ractual = isset($matrixvalues[4]) ? $matrixvalues[4] : 0;
+        $gactual = isset($matrixvalues[9]) ? $matrixvalues[9] : 0;
+        $bactual = isset($matrixvalues[14]) ? $matrixvalues[14] : 0;
+
+        // Convert the hex color to RGB values.
+        $hex = ltrim($color, '#');
+        $rexpected = hexdec(substr($hex, 0, 2)) / 255;
+        $gexpected = hexdec(substr($hex, 2, 2)) / 255;
+        $bexpected = hexdec(substr($hex, 4, 2)) / 255;
+
+        // Compare with some tolerance (1%).
+        $tolerance = 0.01;
+        $closeenough =
+            abs($ractual - $rexpected) <= $tolerance &&
+            abs($gactual - $gexpected) <= $tolerance &&
+            abs($bactual - $bexpected) <= $tolerance;
+
+        // Return.
+        return $closeenough;
     }
 
     /**

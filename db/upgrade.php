@@ -534,6 +534,9 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         // Remove the activitiestintenabled setting from Boost Union.
         unset_config('activitiestintenabled', 'theme_boost_union');
 
+        // Remove the activityiconcolorfidelity setting from Boost Union.
+        unset_config('activityiconcolorfidelity', 'theme_boost_union');
+
         // Boost_union savepoint reached.
         upgrade_plugin_savepoint(true, 2025041400, 'theme', 'boost_union');
 
