@@ -36,6 +36,33 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
       | interactivecontent | lesson  | #00FFFF  | invert(0.25) sepia(0.63) saturate(11.52) hue-rotate(344deg) brightness(0.94) contrast(0.91) |
 
   @javascript
+  Scenario Outline: Setting: Activity icon colors - Setting the color (for activities in subsections)
+    Given I enable "subsection" "mod" plugin
+    And the following "courses" exist:
+      | fullname           | shortname | category | numsections | initsections |
+      | Subsectioncourse 1 | SC1       | 0        | 3           | 1            |
+    And the following "activities" exist:
+      | activity   | name             		   | course | idnumber | section |
+      | subsection | Subsection1      	     | SC1    | sub      | 1       |
+      | <modname>  | Activity in Subsection1 | SC1    | subact   | 4       |
+    And the following config values are set as admin:
+      | config                         | value      | plugin            |
+      | activityiconcolor<purposename> | <colorhex> | theme_boost_union |
+      | activityiconcolorfidelity      | 500        | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "admin"
+    And I am on "Subsectioncourse 1" course homepage
+    # First, we test that the default filter is _not_ set anymore.
+    Then DOM element ".modtype_subsection .modtype_<modname> .activityicon" should not have computed style "filter" "<originalfilter>"
+    # And then, as the hex color to CSS filter conversion results are not reproducible, we test if the applied filter is close enough to the hex color.
+    And DOM element ".modtype_subsection .modtype_<modname> .activityicon" should have a CSS filter close enough to hex color "<colorhex>"
+
+    # We only test one example. That's enough to verify that subsections work.
+    Examples:
+      | purposename | modname | colorhex  | originalfilter                                                                              |
+      | content     | book    | #FFFF00 | invert(0.49) sepia(0.52) saturate(46.75) hue-rotate(156deg) brightness(0.89) contrast(1.02) |
+
+  @javascript
   Scenario Outline: Setting: Activity icon purposes - Setting the purpose
     Given I log in as "admin"
     And Behat debugging is disabled
@@ -62,6 +89,31 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
       | Assignment | Assignment name | Collaboration | assign | invert(0.25) sepia(0.54) saturate(62.26) hue-rotate(245deg) brightness(1) contrast(1.02)   |
       | Book       | Name            | Communication | book   | invert(0.48) sepia(0.74) saturate(48.87) hue-rotate(11deg) brightness(1.02) contrast(1.01) |
       | Assignment | Assignment name | Other         | assign | none                                                                                       |
+
+  @javascript @testme
+  Scenario Outline: Setting: Activity icon purposes - Setting the purpose (for activities in subsections)
+    Given I enable "subsection" "mod" plugin
+    And the following "courses" exist:
+      | fullname           | shortname | category | numsections | initsections |
+      | Subsectioncourse 1 | SC1       | 0        | 3           | 1            |
+    And the following "activities" exist:
+      | activity   | name             		   | course | idnumber | section |
+      | subsection | Subsection1      	     | SC1    | sub      | 1       |
+      | <mod>      | Activity in Subsection1 | SC1    | subact   | 4       |
+    And I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Activity branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I select "<purpose>" from the "<modname>" singleselect
+    And I press "Save changes"
+    And Behat debugging is enabled
+    When I am on "Subsectioncourse 1" course homepage
+    Then DOM element ".modtype_subsection .modtype_<mod> .activityicon" should have computed style "filter" "<filter>"
+
+    # We only test one example. That's enough to verify that subsections work.
+    Examples:
+      | modname | titlesetting | purpose       | mod  | filter                                                                                     |
+      | Book    | Name         | Communication | book | invert(0.48) sepia(0.74) saturate(48.87) hue-rotate(11deg) brightness(1.02) contrast(1.01) |
 
   @javascript @_file_upload
   Scenario Outline: Setting: Custom icons files - Upload custom icons files
