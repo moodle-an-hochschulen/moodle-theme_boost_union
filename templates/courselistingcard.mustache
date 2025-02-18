@@ -97,8 +97,43 @@
         </div>
     </div>
 
+    {{#showdetailsbar}}
+        <div class="d-flex align-items-start mt-0 mb-2">
+            {{#showcourseprogress}}
+                {{#hasprogress}}
+                    <div class="border-0 pl-3 border-radius w-100">
+                        {{> block_myoverview/progress-bar}}
+                    </div>
+                {{/hasprogress}}
+            {{/showcourseprogress}}
+            {{#showcourseenrolicons}}
+                {{#hasenrolicons}}
+                    <div class="menu border-0 pr-3 ms-auto">
+                        <div class="enrolmenticons d-flex">
+                            {{#enrolmenticons}}
+                                <div class="enrolmenticon">
+                                    {{{.}}}
+                                </div>
+                            {{/enrolmenticons}}
+                        </div>
+                    </div>
+                {{/hasenrolicons}}
+            {{/showcourseenrolicons}}
+        </div>
+    {{/showdetailsbar}}
+
+    {{#showcoursefields}}
+        {{#hascustomfields}}
+            <div class="d-flex align-items-start mt-0 px-3 py-2 border-top">
+                <div class="customfields">
+                    {{{customfields}}}
+                </div>
+            </div>
+        {{/hascustomfields}}
+    {{/showcoursefields}}
+
     {{#showbuttons}}
-        <div class="d-flex align-items-start mt-0 px-3 py-2">
+        <div class="d-flex card-footer align-items-start mt-0 px-3 py-2 border-top">
             {{#showcoursegoto}}
                 <a href="{{viewurl}}" tabindex="-1" class="gotobutton btn btn-primary mr-2">
                     {{#str}}courselistinggoto, theme_boost_union{{/str}}
@@ -116,39 +151,4 @@
             {{/showcoursepopup}}
         </div>
     {{/showbuttons}}
-
-    {{#showcoursefields}}
-        {{#hascustomfields}}
-            <div class="d-flex align-items-start mt-2 py-2 border-top">
-                <div class="customfields mx-3 ">
-                    {{{customfields}}}
-                </div>
-            </div>
-        {{/hascustomfields}}
-    {{/showcoursefields}}
-
-    {{#showcardfooter}}
-        <div class="d-flex align-items-start mt-0 pt-0 border-top">
-            {{#showcourseprogress}}
-                {{#hasprogress}}
-                    <div class="card-footer border-0 pl-3 bg-white border-radius w-100">
-                        {{> block_myoverview/progress-bar}}
-                    </div>
-                {{/hasprogress}}
-            {{/showcourseprogress}}
-            {{#showcourseenrolicons}}
-                {{#hasenrolicons}}
-                    <div class="card-footer menu border-0 pr-3 bg-white ms-auto">
-                        <div class="enrolmenticons d-flex">
-                            {{#enrolmenticons}}
-                                <div class="enrolmenticon">
-                                    {{{.}}}
-                                </div>
-                            {{/enrolmenticons}}
-                        </div>
-                    </div>
-                {{/hasenrolicons}}
-            {{/showcourseenrolicons}}
-        </div>
-    {{/showcardfooter}}
 </div>

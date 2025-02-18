@@ -324,8 +324,8 @@ class course_renderer extends \core_course_renderer {
                         (isloggedin() || isguestuser() && get_config('forceloginforprofiles') != true);
             }
 
-            // Disable card footer as a start.
-            $skeleton['showcardfooter'] = false;
+            // Disable details bar as a start.
+            $skeleton['showdetailsbar'] = false;
         }
 
         // Create a copy of the skeleton for this particular course.
@@ -362,7 +362,7 @@ class course_renderer extends \core_course_renderer {
         }
 
         // Amend course category, if enabled.
-        if ($skeleton['showcoursecategory']) {
+        if ($templatedata['showcoursecategory']) {
             $templatedata['coursecategory'] = $courseutil->get_category();
         }
 
@@ -393,12 +393,17 @@ class course_renderer extends \core_course_renderer {
             $templatedata['hasprogress'] = ($courseprogress != null);
         }
 
-        // Enable card footer, if necessary.
+        // Enable detailsbar, if necessary.
         if ($templatedata['showcourseenrolicons'] && $templatedata['hasenrolicons']) {
-            $templatedata['showcardfooter'] = true;
+            $templatedata['showdetailsbar'] = true;
         }
         if ($templatedata['showcourseprogress'] && $templatedata['hasprogress']) {
-            $templatedata['showcardfooter'] = true;
+            $templatedata['showdetailsbar'] = true;
+        }
+
+        // Enable sidebar (in the list view), if necessary.
+        if ($templatedata['showbuttons'] || $templatedata['showcoursefields']) {
+            $templatedata['showsidebar'] = true;
         }
 
         // If course cards are enabled.
