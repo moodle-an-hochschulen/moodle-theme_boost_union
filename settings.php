@@ -951,6 +951,33 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if('theme_boost_union/courselistinghowcategory', 'theme_boost_union/courselistingpresentation', 'eq',
                 THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
+        // Setting: Show course completion progress in the course listing.
+        $name = 'theme_boost_union/courselistinghowprogress';
+        $title = get_string('courselistinghowprogress', 'theme_boost_union');
+        $description = get_string('courselistinghowprogress_desc', 'theme_boost_union');
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/courselistinghowprogress', 'theme_boost_union/courselistingpresentation', 'eq',
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
+
+        // Setting: Show course enrolment icons in the course listing.
+        $name = 'theme_boost_union/courselistinghowenrolicons';
+        $title = get_string('courselistinghowenrolicons', 'theme_boost_union');
+        $description = get_string('courselistinghowenrolicons_desc', 'theme_boost_union');
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/courselistinghowenrolicons', 'theme_boost_union/courselistingpresentation', 'eq',
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
+
+        // Setting: Show course fields in the course listing.
+        $name = 'theme_boost_union/courselistinghowfields';
+        $title = get_string('courselistinghowfields', 'theme_boost_union');
+        $description = get_string('courselistinghowfields_desc', 'theme_boost_union');
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/courselistinghowfields', 'theme_boost_union/courselistingpresentation', 'eq',
+                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
+
         // Setting: Show goto button in the course listing.
         $name = 'theme_boost_union/courselistinghowgoto';
         $title = get_string('courselistinghowgoto', 'theme_boost_union');
@@ -967,33 +994,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
         $page->hide_if('theme_boost_union/courselistinghowpopup', 'theme_boost_union/courselistingpresentation', 'eq',
-                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
-
-        // Setting: Show course fields in the course listing.
-        $name = 'theme_boost_union/courselistinghowfields';
-        $title = get_string('courselistinghowfields', 'theme_boost_union');
-        $description = get_string('courselistinghowfields_desc', 'theme_boost_union');
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $tab->add($setting);
-        $page->hide_if('theme_boost_union/courselistinghowfields', 'theme_boost_union/courselistingpresentation', 'eq',
-                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
-
-        // Setting: Show course enrolment icons in the course listing.
-        $name = 'theme_boost_union/courselistinghowenrolicons';
-        $title = get_string('courselistinghowenrolicons', 'theme_boost_union');
-        $description = get_string('courselistinghowenrolicons_desc', 'theme_boost_union');
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $tab->add($setting);
-        $page->hide_if('theme_boost_union/courselistinghowenrolicons', 'theme_boost_union/courselistingpresentation', 'eq',
-                THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
-
-        // Setting: Show course completion progress in the course listing.
-        $name = 'theme_boost_union/courselistinghowprogress';
-        $title = get_string('courselistinghowprogress', 'theme_boost_union');
-        $description = get_string('courselistinghowprogress_desc', 'theme_boost_union');
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $tab->add($setting);
-        $page->hide_if('theme_boost_union/courselistinghowprogress', 'theme_boost_union/courselistingpresentation', 'eq',
                 THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
         // Add tab to settings page.

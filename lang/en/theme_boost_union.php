@@ -348,6 +348,15 @@ $string['courselistinghowshortname_desc'] = 'With this setting, you control if t
 // ... ... Setting: Show course category in the course listing.
 $string['courselistinghowcategory'] = 'Show course category in the course listing';
 $string['courselistinghowcategory_desc'] = 'With this setting, you control if the course category is shown in the course listing or not.';
+// ... ... Setting: Show course completion progress in the course listing.
+$string['courselistinghowprogress'] = 'Show course completion progress in the course listing';
+$string['courselistinghowprogress_desc'] = 'With this setting, you control if the course completion progress are shown in the course listing or not.';
+// ... ... Setting: Show course enrolment icons in the course listing.
+$string['courselistinghowenrolicons'] = 'Show course enrolment icons in the course listing';
+$string['courselistinghowenrolicons_desc'] = 'With this setting, you control if the course enrolment icons are shown in the course listing or not.';
+// ... ... Setting: Show course fields in the course listing.
+$string['courselistinghowfields'] = 'Show course fields in the course listing';
+$string['courselistinghowfields_desc'] = 'With this setting, you control if the custom course fields are shown in the course listing or not.';
 // ... ... Setting: Show goto button in the course listing.
 $string['courselistinghowgoto'] = 'Show goto button in the course listing';
 $string['courselistinghowgoto_desc'] = 'With this setting, you control if a \'Go to course\' button is shown in the course listing or not. If this setting is disabled, the user is still able to go to the course by clicking on the course title or course image.';
@@ -361,15 +370,6 @@ $string['courselistingnosummary'] = 'This course does not have a summary';
 $string['courselistingcontacts'] = 'Course contact';
 $string['courselistingviewprofile'] = 'View profile';
 $string['courselistingfields'] = 'Course classification';
-// ... ... Setting: Show course fields in the course listing.
-$string['courselistinghowfields'] = 'Show course fields in the course listing';
-$string['courselistinghowfields_desc'] = 'With this setting, you control if the custom course fields are shown in the course listing or not.';
-// ... ... Setting: Show course enrolment icons in the course listing.
-$string['courselistinghowenrolicons'] = 'Show course enrolment icons in the course listing';
-$string['courselistinghowenrolicons_desc'] = 'With this setting, you control if the course enrolment icons are shown in the course listing or not.';
-// ... ... Setting: Show course completion progress in the course listing.
-$string['courselistinghowprogress'] = 'Show course completion progress in the course listing';
-$string['courselistinghowprogress_desc'] = 'With this setting, you control if the course completion progress are shown in the course listing or not.';
 
 // Settings: Blocks tab.
 // The string for this tab is the same as on the 'Feel' page.
