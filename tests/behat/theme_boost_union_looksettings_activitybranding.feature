@@ -90,7 +90,7 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
       | Book       | Name            | Communication | book   | invert(0.48) sepia(0.74) saturate(48.87) hue-rotate(11deg) brightness(1.02) contrast(1.01) |
       | Assignment | Assignment name | Other         | assign | none                                                                                       |
 
-  @javascript @testme
+  @javascript
   Scenario Outline: Setting: Activity icon purposes - Setting the purpose (for activities in subsections)
     Given I enable "subsection" "mod" plugin
     And the following "courses" exist:
