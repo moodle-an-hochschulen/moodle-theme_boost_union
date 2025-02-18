@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-02-18 - Bugfix: Fix activity coloring for Moodle 5.0, resolves #824
 * 2025-02-17 - Bugfix: Remove the possibility to set the activity purpose for subsections to avoid that activities within subsections get tinted with the wrong color, resolves #823.
 * 2025-02-12 - Bugfix: Accessibility page link in description differed from real location, resolves #818.
 
