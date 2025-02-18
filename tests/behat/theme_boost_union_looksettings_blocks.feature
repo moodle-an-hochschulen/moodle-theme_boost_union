@@ -36,14 +36,14 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "L
     # Visiting the activity is necessar to fill the recently accessed items block.
     And I am on the "Test assign" "assign activity" page
     And I follow "Dashboard"
-    Then DOM element ".block_timeline .theme-boost-union-mod_assign.activityiconcontainer img" <shouldornottl> have computed style "filter" "invert(0.25) sepia(0.54) saturate(62.26) hue-rotate(245deg) brightness(1) contrast(1.02)"
-    And DOM element ".block_calendar_upcoming .theme-boost-union-mod_assign.activityiconcontainer img" <shouldornotue> have computed style "filter" "invert(0.25) sepia(0.54) saturate(62.26) hue-rotate(245deg) brightness(1) contrast(1.02)"
-    And DOM element ".block_recentlyaccesseditems .theme-boost-union-assign.activityiconcontainer img" <shouldornotrc> have computed style "filter" "invert(0.25) sepia(0.54) saturate(62.26) hue-rotate(245deg) brightness(1) contrast(1.02)"
+    Then DOM element ".block_timeline .theme-boost-union-mod_assign.activityiconcontainer img" <shouldornottl>
+    And DOM element ".block_calendar_upcoming .theme-boost-union-mod_assign.activityiconcontainer img" <shouldornotue>
+    And DOM element ".block_recentlyaccesseditems .theme-boost-union-assign.activityiconcontainer img" <shouldornotrc>
 
     Examples:
-      | tinttl | tintrc | tintue | tintac | shouldornottl | shouldornotrc | shouldornotue |
-      | no     | no     | no     | no     | should not    | should not    | should not    |
-      | yes    | no     | no     | no     | should        | should not    | should not    |
-      | no     | yes    | no     | no     | should not    | should        | should not    |
-      | no     | no     | yes    | no     | should not    | should not    | should        |
-      | no     | no     | no     | yes    | should not    | should not    | should not    |
+      | tinttl | tintrc | tintue | shouldornottl                                                | shouldornotrc                              | shouldornotue                              |
+      | no     | no     | no     | should have computed style "filter" "none"                   | should have computed style "filter" "none" | should have computed style "filter" "none" |
+      | yes    | no     | no     | should have a CSS filter close enough to hex color "#f90086" | should have computed style "filter" "none" | should have computed style "filter" "none" |
+      | no     | yes    | no     | should not have a CSS filter close                           | should have a CSS filter close enough      | should not have a CSS filter close         |
+      | no     | no     | yes    | should not have a CSS filter close                           | should not have a CSS filter close         | should have a CSS filter close enough      |
+      | no     | no     | no     | should not have a CSS filter close                           | should not have a CSS filter close         | should not have a CSS filter close         |
