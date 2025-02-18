@@ -331,7 +331,7 @@ function theme_boost_union_get_pre_scss($theme) {
             // Set the activity-icon-*-filter variable which holds the CSS filters for the activity icon colors now.
             $solver = new \theme_boost_union\lib\hextocssfilter\solver($activityiconcolor);
             $cssfilterresult = $solver->solve();
-            $scss .= '$activity-icon-'.$purpose.'-filter: '.$cssfilterresult['filter'].";\n";
+            $scss .= '$activity-icon-'.$purpose.'-filter: brightness(0) saturate(100%) '.$cssfilterresult['filter'].";\n";
         }
     }
 
