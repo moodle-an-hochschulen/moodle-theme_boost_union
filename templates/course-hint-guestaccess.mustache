@@ -32,9 +32,9 @@
     }
 }}
 <div class="course-hint-guestaccess alert alert-warning">
-    <div class="media">
-        <div class="me-3 icon-size-5"><i class="fa fa-exclamation-circle fa-3x"></i></div>
-        <div class="media-body align-self-center">
+    <div class="d-flex">
+        <div class="flex-shrink-0 me-3 icon-size-5"><i class="fa fa-exclamation-circle fa-3x"></i></div>
+        <div class="flex-grow-1 align-self-center">
             {{#str}} showhintcourseguestaccessgeneral, theme_boost_union, { "role": "{{role}}" } {{/str}}
             {{#showselfenrollink}}
                 <br>{{#str}} showhintcourseguestaccesslink, theme_boost_union, { "url": "{{config.wwwroot}}/enrol/index.php?id={{courseid}}" } {{/str}}
