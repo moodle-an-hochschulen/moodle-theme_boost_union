@@ -32,9 +32,9 @@
     }
 }}
 <div class="course-hint-hidden alert alert-warning">
-    <div class="media">
-        <div class="me-3 icon-size-5"><i class="fa fa-exclamation-circle fa-3x"></i></div>
-        <div class="media-body align-self-center">
+    <div class="d-flex">
+        <div class="flex-shrink-0 me-3 icon-size-5"><i class="fa fa-exclamation-circle fa-3x"></i></div>
+        <div class="flex-grow-1 align-self-center">
             {{{hintcoursehiddentext}}}
             {{#showcoursesettingslink}}
                 <br>{{#str}} showhintcoursehiddensettingslink, theme_boost_union, { "url": "{{config.wwwroot}}/course/edit.php?id={{courseid}}" } {{/str}}
