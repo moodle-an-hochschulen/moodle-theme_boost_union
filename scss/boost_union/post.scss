@@ -275,9 +275,10 @@
  * Setting:  Course listing presentation
  --------------------------------------*/
 
-/* Only on site home and the category index pages. */
+/* Only on site home and the category index pages - and on the course search page. */
 .pagelayout-frontpage,
-.pagelayout-coursecategory {
+.pagelayout-coursecategory,
+#page-course-search {
 
     /* In the Boost Union course listing. */
     .theme_boost_union-courselisting {
