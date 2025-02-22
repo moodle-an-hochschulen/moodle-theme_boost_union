@@ -281,8 +281,25 @@
 
     /* In the Boost Union course listing. */
     .theme_boost_union-courselisting {
+        /* For the card view only. */
+        &.theme_boost_union-courselisting-card {
+            /* Revert the gutter between the cards to align the card deck with the category summary. */
+            margin-left: -0.25rem;
+            margin-right: -0.25rem;
+        }
+
+        /* For the course list only. */
+        &.theme_boost_union-courselisting-list {
+            /* The course image. */
+            .list-image {
+                height: 5rem;
+                background-position: center;
+                background-size: cover;
+            }
+        }
+
         /* The course contact section.
-        There are some things which can't be set with Bootstrap classes in Mustache. */
+           There are some things which can't be set with Bootstrap classes in Mustache. */
         .coursecontacts {
             /* Push the contacts over the course image. */
             margin-top: -18px;
@@ -291,16 +308,6 @@
             .contact img {
                 width: 35px;
                 height: 35px;
-            }
-        }
-
-        /* For the course list only. */
-        .course-listitem {
-            /* The course image. */
-            .list-image {
-                height: 5rem;
-                background-position: center;
-                background-size: cover;
             }
         }
 
@@ -365,6 +372,148 @@
             }
             @include media-breakpoint-up(lg) {
                 width: 25%;
+            }
+        }
+    }
+
+    /* The Boost Union course category info. */
+    .theme_boost_union-coursecategoryinfo {
+        /* Put the category info into a box. */
+        @extend .border;
+        @extend .rounded;
+        @extend .p-3;
+        @extend .mb-3;
+        @extend .small;
+    }
+
+    /* The sticky category heading. */
+    .theme_boost_union-stickycategory {
+        top: $navbar-height;
+    }
+    &.theme_boost_union-courselisting-card .theme_boost_union-stickycategory {
+        width: calc(100% - 0.5rem);
+    }
+
+    /* The Boost Union course category listing.
+       We do not document each single rule here. It's just a fiddly attempt to improve the look of the tree. */
+    .theme_boost_union-catlisting {
+        > .collapsible-actions {
+            @extend .border;
+            @extend .border-bottom-0;
+            @extend .rounded-top;
+            @extend .px-3;
+            @extend .py-2;
+            @extend .pb-1;
+            @extend .mb-0;
+
+            a.collapseexpand {
+                @extend .btn;
+                @extend .btn-secondary;
+                @extend .btn-sm;
+            }
+        }
+
+        > .content > .subcategories {
+            @extend .border;
+            @extend .rounded-bottom;
+            @extend .bg-light;
+            @extend .mb-3;
+
+            > .category {
+                @extend .px-2;
+                @extend .border-bottom;
+
+                &:last-child {
+                    @extend .pb-2;
+                    @extend .rounded-bottom;
+                    @extend .border-bottom-0;
+                }
+
+                &:not(.collapsed) {
+                    @extend .border-bottom;
+                }
+                &:not(.collapsed):last-of-type {
+                    @extend .border-bottom-0;
+                }
+            }
+
+            .category {
+                .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem);
+                    margin-left: calc(-2rem - 8px);
+                    @extend .border;
+                    @extend .rounded;
+                    @extend .shadow;
+                    @extend .bg-white;
+                    @extend .my-2;
+
+                    &.theme_boost_union-courselisting-list {
+                        @extend .px-3;
+                    }
+                }
+
+                /* Support up to 8 subcategory levels, from level 9 on the course listing would not be indented correctly anymore. */
+                [data-depth="2"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 16px);
+                    margin-left: calc(-2rem - 8px - 16px);
+                }
+                [data-depth="3"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 32px);
+                    margin-left: calc(-2rem - 8px - 32px);
+                }
+                [data-depth="4"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 48px);
+                    margin-left: calc(-2rem - 8px - 48px);
+                }
+                [data-depth="5"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 64px);
+                    margin-left: calc(-2rem - 8px - 64px);
+                }
+                [data-depth="6"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 80px);
+                    margin-left: calc(-2rem - 8px - 80px);
+                }
+                [data-depth="7"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 96px);
+                    margin-left: calc(-2rem - 8px - 96px);
+                }
+                [data-depth="8"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 112px);
+                    margin-left: calc(-2rem - 8px - 112px);
+                }
+
+                .categoryname .spinner {
+                    margin-left: 0.5rem;
+                }
+            }
+        }
+    }
+
+    /* The Boost Union course category listing with a course listing in it.
+       Some of the rules above are already only applied to category listings with course listings in it.
+       But some have to be checked explicitely. We do this here with .theme_boost_union-catlisting-cl as we do not want to use
+       a :has(.theme_boost_union-courselisting) selector.
+       We do not document each single rule here either. */
+    .theme_boost_union-catlisting.theme_boost_union-catlisting-cl {
+
+        > .content > .subcategories {
+
+            .category {
+                @extend .py-2;
+
+                &:last-child {
+                    @extend .pb-0;
+                }
+
+                &.with_children:not(.collapsed) {
+                    > .content > .courses {
+                        @extend .mt-4;
+                    }
+                }
+            }
+
+            > .category:last-child {
+                @extend .py-2;
             }
         }
     }
