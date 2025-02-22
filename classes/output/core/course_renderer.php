@@ -524,7 +524,7 @@ class course_renderer extends \core_course_renderer {
      * Returns HTML to display a course category as a part of a tree
      *
      * This is an internal function, to display a particular category and all its contents
-     * use {@link core_course_renderer::course_category()}
+     * use \core_course_renderer::course_category()
      *
      * Modifications compared to the original function:
      * * Style the category number badge if enabled, otherwise call the parent function to compose the default view.
@@ -537,10 +537,14 @@ class course_renderer extends \core_course_renderer {
     protected function coursecat_category(coursecat_helper $chelper, $coursecat, $depth) {
         // If the category listing should remain unchanged.
         $categorylistingpresentation = get_config('theme_boost_union', 'categorylistingpresentation');
-        if (!isset($categorylistingpresentation) || $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE) {
+        if (!isset($categorylistingpresentation) ||
+                $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE) {
             // Call the parent function to compose the default view.
             return parent::coursecat_category($chelper, $coursecat, $depth);
         }
+
+        // This code is based on the original function, we do not want to fix the coding style flaws from it.
+        // phpcs:disable
 
         // open category tag
         $classes = array('category');
@@ -600,6 +604,8 @@ class course_renderer extends \core_course_renderer {
 
         // Return the course category tree HTML
         return $content;
+
+        // phpcs:enable
     }
 
     /**
@@ -615,10 +621,14 @@ class course_renderer extends \core_course_renderer {
     protected function coursecat_tree(coursecat_helper $chelper, $coursecat) {
         // If the category listing should remain unchanged.
         $categorylistingpresentation = get_config('theme_boost_union', 'categorylistingpresentation');
-        if (!isset($categorylistingpresentation) || $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE) {
+        if (!isset($categorylistingpresentation) ||
+                $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE) {
             // Call the parent function to compose the default view.
             return parent::coursecat_tree($chelper, $coursecat);
         }
+
+        // This code is based on the original function, we do not want to fix the coding style flaws from it.
+        // phpcs:disable
 
         // Reset the category expanded flag for this course category tree first.
         $this->categoryexpandedonload = false;
@@ -664,6 +674,8 @@ class course_renderer extends \core_course_renderer {
         $content .= html_writer::end_tag('div'); // .course_category_tree
 
         return $content;
+
+        // phpcs:enable
     }
 
     /**
@@ -681,10 +693,14 @@ class course_renderer extends \core_course_renderer {
 
         // If the category listing should remain unchanged.
         $categorylistingpresentation = get_config('theme_boost_union', 'categorylistingpresentation');
-        if (!isset($categorylistingpresentation) || $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE) {
+        if (!isset($categorylistingpresentation) ||
+                $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE) {
             // Call the parent function to compose the default view.
             return parent::course_category($category);
         }
+
+        // This code is based on the original function, we do not want to fix the coding style flaws from it.
+        // phpcs:disable
 
         $usertop = core_course_category::user_top();
         if (empty($category)) {
@@ -757,5 +773,7 @@ class course_renderer extends \core_course_renderer {
         $output .= $this->coursecat_tree($chelper, $coursecat);
 
         return $output;
+
+        // phpcs:enable
     }
 }
