@@ -996,6 +996,27 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if('theme_boost_union/courselistinghowpopup', 'theme_boost_union/courselistingpresentation', 'eq',
                 THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
+        // Create Category listing heading.
+        $name = 'theme_boost_union/categorylistingheading';
+        $title = get_string('categorylistingheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Category listing presentation.
+        $name = 'theme_boost_union/categorylistingpresentation';
+        $title = get_string('categorylistingpresentation', 'theme_boost_union');
+        $description = get_string('categorylistingpresentation_desc', 'theme_boost_union').'<br />'.
+                get_string('categorylistingpresentation_note', 'theme_boost_union');
+        $catlistingpresentationoptions = [
+                THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE =>
+                        get_string('categorylistingpresentation_nochange', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_CATLISTPRES_BOXLIST =>
+                        get_string('categorylistingpresentation_boxlist', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect($name, $title, $description,
+        THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE, $catlistingpresentationoptions);
+        $tab->add($setting);
+
         // Add tab to settings page.
         $page->add($tab);
 

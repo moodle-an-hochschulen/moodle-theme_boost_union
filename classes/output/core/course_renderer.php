@@ -18,7 +18,10 @@ namespace theme_boost_union\output\core;
 
 use html_writer;
 use coursecat_helper;
+use lang_string;
+use moodle_url;
 use stdClass;
+use core_course_category;
 use core_course_list_element;
 use theme_boost_union\util\course;
 
@@ -44,6 +47,7 @@ class course_renderer extends \core_course_renderer {
      *
      * Modifications compared to the original function:
      * * Build the modified course listing if enabled, otherwise call the parent function to build the default view.
+     * * Show the category name in the course listing if enabled.
      *
      * @param coursecat_helper $chelper various display options
      * @param array $courses the list of courses to display
@@ -118,28 +122,73 @@ class course_renderer extends \core_course_renderer {
         // If course cards are enabled.
         if ($courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_CARDS) {
             // Start the course listing as card grid.
-            // Use the same wrapper classes as in /course/templates/coursecards.mustache.
-            // Set the row-cols-lg class depending on the coursecardscolumncount setting.
             // And add the theme_boost_union-courselisting class to be used in the CSS.
-            $maxcols = get_config('theme_boost_union', 'coursecardscolumncount');
-            $maxcolslg = $maxcols;
-            $maxcolssm = ($maxcols > 1) ? $maxcols : 1;
             $content .= html_writer::start_tag('div',
                     [
-                        'class' => 'card-grid mx-0 row row-cols-1 row-cols-sm-'.$maxcolssm.' row-cols-lg-'.$maxcolslg.
-                                ' theme_boost_union-courselisting',
+                        'class' => 'row no-gutters px-2 theme_boost_union-courselisting theme_boost_union-courselisting-card',
                         'role' => 'list',
                     ]
             );
+            $content .= html_writer::start_tag('div', ['class' => 'col-12']);
+
+            // Initialize the category id.
+            $cat = null;
 
             // Iterate over the courses.
             foreach ($courses as $course) {
+                // If we are looking at a new category.
+                if ($cat == null || $cat->id != $course->category) {
+                    // End the previous course card grid if necessary.
+                    if ($cat != null) {
+                        $content .= html_writer::end_tag('div');
+                    }
+
+                    // Set the category id.
+                    $cat = $course->category;
+
+                    // Get the category.
+                    $cat = \core_course_category::get($course->category, IGNORE_MISSING);
+
+                    // Show the category heading as sticky header.
+                    $content .= html_writer::start_tag('div',
+                            ['class' => 'theme_boost_union-stickycategory bg-white rounded-bottom mb-3 pt-3 mx-1 px-0 sticky-top']);
+                    $content .= html_writer::start_tag('div', ['class' => 'border rounded px-3 pt-3 pb-2 bg-light']);
+                    $content .= html_writer::tag('h6', $cat->name);
+                    $content .= html_writer::end_div();
+                    $content .= html_writer::end_div();
+                    $catshowend = true;
+
+                    // Start the course card grid.
+                    // Use the same wrapper classes as in /course/templates/coursecards.mustache.
+                    // Set the row-cols-lg class depending on the coursecardscolumncount setting.
+                    $maxcols = get_config('theme_boost_union', 'coursecardscolumncount');
+                    $maxcolslg = $maxcols;
+                    $maxcolssm = ($maxcols > 1) ? $maxcols : 1;
+                    $content .= html_writer::start_tag('div',
+                            [
+                                'class' => 'card-grid row no-gutters row-cols-1 row-cols-sm-'.$maxcolssm.' row-cols-lg-'.$maxcolslg,
+                                'role' => 'list',
+                            ]
+                    );
+
+                }
+
                 // Build the course card.
                 // Use the same wrapper classes as in /course/templates/coursecards.mustache.
                 $content .= html_writer::start_tag('div', ['class' => 'col d-flex px-0 mb-2']);
                 $content .= $this->coursecat_coursebox($chelper, $course);
                 $content .= html_writer::end_tag('div');
+
             }
+
+            // End the course card grid, if there were any courses.
+            if (count($courses) > 0) {
+                $content .= html_writer::end_tag('div');
+            }
+
+            // End the course listing.
+            $content .= html_writer::end_tag('div');
+            $content .= html_writer::end_tag('div');
 
             // Or if the course list is enabled.
         } else if ($courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_LIST) {
@@ -147,22 +196,55 @@ class course_renderer extends \core_course_renderer {
             // And add the theme_boost_union-courselisting class to be used in the CSS.
             $content .= html_writer::start_tag('div',
                     [
-                        'class' => 'mx-0 row no-gutters theme_boost_union-courselisting',
+                        'class' => 'theme_boost_union-courselisting theme_boost_union-courselisting-list',
                         'role' => 'list',
                     ]
             );
 
+            // Initialize the category id.
+            $cat = null;
+
             // Iterate over the courses.
             foreach ($courses as $course) {
+                // If we are looking at a new category.
+                if ($cat == null || $cat->id != $course->category) {
+                    // End the previous category list if necessary.
+                    if ($cat != null) {
+                        $content .= html_writer::end_tag('div');
+                    }
+
+                    // Set the category id.
+                    $cat = $course->category;
+
+                    // Get the category.
+                    $cat = \core_course_category::get($course->category, IGNORE_MISSING);
+
+                    // Start the category list.
+                    $content .= html_writer::start_div('row no-gutters categorylist');
+
+                    // Show the category heading as sticky header.
+                    $content .= html_writer::start_tag('div',
+                            ['class' => 'theme_boost_union-stickycategory col-12 bg-white rounded-bottom mb-3 pt-3 sticky-top']);
+                    $content .= html_writer::start_tag('div', ['class' => 'border rounded px-3 pt-3 pb-2 bg-light']);
+                    $content .= html_writer::tag('h6', $cat->name);
+                    $content .= html_writer::end_div();
+                    $content .= html_writer::end_div();
+                }
+
                 // Build the course list.
                 $content .= html_writer::start_tag('div', ['class' => 'col-12']);
                 $content .= $this->coursecat_coursebox($chelper, $course);
                 $content .= html_writer::end_tag('div');
             }
-        }
 
-        // End the course listing.
-        $content .= html_writer::end_tag('div');
+            // End the category list, if there were any courses.
+            if (count($courses) > 0) {
+                $content .= html_writer::end_tag('div');
+            }
+
+            // End the course listing.
+            $content .= html_writer::end_tag('div');
+        }
 
         // If the course listing details modal is enabled, add the necessary JS.
         if (get_config('theme_boost_union', 'courselistinghowpopup') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
@@ -436,5 +518,244 @@ class course_renderer extends \core_course_renderer {
         }
 
         return $data;
+    }
+
+    /**
+     * Returns HTML to display a course category as a part of a tree
+     *
+     * This is an internal function, to display a particular category and all its contents
+     * use {@link core_course_renderer::course_category()}
+     *
+     * Modifications compared to the original function:
+     * * Style the category number badge if enabled, otherwise call the parent function to compose the default view.
+     *
+     * @param coursecat_helper $chelper various display options
+     * @param core_course_category $coursecat
+     * @param int $depth depth of this category in the current tree
+     * @return string
+     */
+    protected function coursecat_category(coursecat_helper $chelper, $coursecat, $depth) {
+        // If the category listing should remain unchanged.
+        $categorylistingpresentation = get_config('theme_boost_union', 'categorylistingpresentation');
+        if (!isset($categorylistingpresentation) || $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE) {
+            // Call the parent function to compose the default view.
+            return parent::coursecat_category($chelper, $coursecat, $depth);
+        }
+
+        // open category tag
+        $classes = array('category');
+        if (empty($coursecat->visible)) {
+            $classes[] = 'dimmed_category';
+        }
+        if ($chelper->get_subcat_depth() > 0 && $depth >= $chelper->get_subcat_depth()) {
+            // do not load content
+            $categorycontent = '';
+            $classes[] = 'notloaded';
+            if ($coursecat->get_children_count() ||
+                    ($chelper->get_show_courses() >= self::COURSECAT_SHOW_COURSES_COLLAPSED && $coursecat->get_courses_count())) {
+                $classes[] = 'with_children';
+                $classes[] = 'collapsed';
+            }
+        } else {
+            // load category content
+            $categorycontent = $this->coursecat_category_content($chelper, $coursecat, $depth);
+            $classes[] = 'loaded';
+            if (!empty($categorycontent)) {
+                $classes[] = 'with_children';
+                // Category content loaded with children.
+                $this->categoryexpandedonload = true;
+            }
+        }
+
+        // Make sure JS file to expand category content is included.
+        $this->coursecat_include_js();
+
+        $content = html_writer::start_tag('div', array(
+            'class' => join(' ', $classes),
+            'data-categoryid' => $coursecat->id,
+            'data-depth' => $depth,
+            'data-showcourses' => $chelper->get_show_courses(),
+            'data-type' => self::COURSECAT_TYPE_CATEGORY,
+        ));
+
+        // category name
+        $categoryname = $coursecat->get_formatted_name();
+        $categoryname = html_writer::link(new moodle_url('/course/index.php',
+                array('categoryid' => $coursecat->id)),
+                $categoryname);
+        if ($chelper->get_show_courses() == self::COURSECAT_SHOW_COURSES_COUNT
+                && ($coursescount = $coursecat->get_courses_count())) {
+            $categoryname .= html_writer::tag('span', $coursescount,
+                    array('title' => get_string('numberofcourses'), 'class' => 'numberofcourse badge badge-pill badge-secondary ml-2'));
+        }
+        $content .= html_writer::start_tag('div', array('class' => 'info'));
+
+        $content .= html_writer::tag(($depth > 1) ? 'h4' : 'h3', $categoryname, array('class' => 'categoryname aabtn'));
+        $content .= html_writer::end_tag('div'); // .info
+
+        // add category content to the output
+        $content .= html_writer::tag('div', $categorycontent, array('class' => 'content'));
+
+        $content .= html_writer::end_tag('div'); // .category
+
+        // Return the course category tree HTML
+        return $content;
+    }
+
+    /**
+     * Returns HTML to display a tree of subcategories and courses in the given category
+     *
+     * Modifications compared to the original function:
+     * * Style the category tree if enabled, otherwise call the parent function to compose the default view.
+     *
+     * @param coursecat_helper $chelper various display options
+     * @param core_course_category $coursecat top category (this category's name and description will NOT be added to the tree)
+     * @return string
+     */
+    protected function coursecat_tree(coursecat_helper $chelper, $coursecat) {
+        // If the category listing should remain unchanged.
+        $categorylistingpresentation = get_config('theme_boost_union', 'categorylistingpresentation');
+        if (!isset($categorylistingpresentation) || $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE) {
+            // Call the parent function to compose the default view.
+            return parent::coursecat_tree($chelper, $coursecat);
+        }
+
+        // Reset the category expanded flag for this course category tree first.
+        $this->categoryexpandedonload = false;
+        $categorycontent = $this->coursecat_category_content($chelper, $coursecat, 0);
+        if (empty($categorycontent)) {
+            return '';
+        }
+
+        // If the modified course listing within the category tree is enabled.
+        $courselistingpresetation = get_config('theme_boost_union', 'courselistingpresentation');
+        if (isset($courselistingpresetation) && $courselistingpresetation != THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
+            $additionalclasses = 'theme_boost_union-catlisting-cl';
+        }
+
+        // Start content generation
+        $content = '';
+        $attributes = $chelper->get_and_erase_attributes('theme_boost_union-catlisting '.$additionalclasses.
+                ' course_category_tree clearfix');
+        $content .= html_writer::start_tag('div', $attributes);
+
+        if ($coursecat->get_children_count()) {
+            $classes = array(
+                'collapseexpand', 'aabtn'
+            );
+
+            // Check if the category content contains subcategories with children's content loaded.
+            if ($this->categoryexpandedonload) {
+                $classes[] = 'collapse-all';
+                $linkname = get_string('collapseall');
+            } else {
+                $linkname = get_string('expandall');
+            }
+
+            // Only show the collapse/expand if there are children to expand.
+            $content .= html_writer::start_tag('div', array('class' => 'collapsible-actions'));
+            $content .= html_writer::link('#', $linkname, array('class' => implode(' ', $classes)));
+            $content .= html_writer::end_tag('div');
+            $this->page->requires->strings_for_js(array('collapseall', 'expandall'), 'moodle');
+        }
+
+        $content .= html_writer::tag('div', $categorycontent, array('class' => 'content'));
+
+        $content .= html_writer::end_tag('div'); // .course_category_tree
+
+        return $content;
+    }
+
+    /**
+     * Renders HTML to display particular course category - list of it's subcategories and courses
+     *
+     * Invoked from /course/index.php
+     *
+     * Modifications compared to the original function:
+     * * Style the category description if enabled, otherwise call the parent function to compose the default view.
+     *
+     * @param int|stdClass|core_course_category $category
+     */
+    public function course_category($category) {
+        global $CFG;
+
+        // If the category listing should remain unchanged.
+        $categorylistingpresentation = get_config('theme_boost_union', 'categorylistingpresentation');
+        if (!isset($categorylistingpresentation) || $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE) {
+            // Call the parent function to compose the default view.
+            return parent::course_category($category);
+        }
+
+        $usertop = core_course_category::user_top();
+        if (empty($category)) {
+            $coursecat = $usertop;
+        } else if (is_object($category) && $category instanceof core_course_category) {
+            $coursecat = $category;
+        } else {
+            $coursecat = core_course_category::get(is_object($category) ? $category->id : $category);
+        }
+        $site = get_site();
+        $actionbar = new \core_course\output\category_action_bar($this->page, $coursecat);
+        $output = $this->render_from_template('core_course/category_actionbar', $actionbar->export_for_template($this));
+
+        if (core_course_category::is_simple_site()) {
+            // There is only one category in the system, do not display link to it.
+            $strfulllistofcourses = get_string('fulllistofcourses');
+            $this->page->set_title($strfulllistofcourses);
+        } else if (!$coursecat->id || !$coursecat->is_uservisible()) {
+            $strcategories = get_string('categories');
+            $this->page->set_title($strcategories);
+        } else {
+            $strfulllistofcourses = get_string('fulllistofcourses');
+            $this->page->set_title($strfulllistofcourses);
+        }
+
+        // Print current category description
+        $chelper = new coursecat_helper();
+        if ($description = $chelper->get_category_formatted_description($coursecat)) {
+            $output .= $this->box($description, array('class' => 'theme_boost_union-coursecategoryinfo generalbox info'));
+        }
+
+        // Prepare parameters for courses and categories lists in the tree
+        $chelper->set_show_courses(self::COURSECAT_SHOW_COURSES_AUTO)
+                ->set_attributes(array('class' => 'category-browse category-browse-'.$coursecat->id));
+
+        $coursedisplayoptions = array();
+        $catdisplayoptions = array();
+        $browse = optional_param('browse', null, PARAM_ALPHA);
+        $perpage = optional_param('perpage', $CFG->coursesperpage, PARAM_INT);
+        $page = optional_param('page', 0, PARAM_INT);
+        $baseurl = new moodle_url('/course/index.php');
+        if ($coursecat->id) {
+            $baseurl->param('categoryid', $coursecat->id);
+        }
+        if ($perpage != $CFG->coursesperpage) {
+            $baseurl->param('perpage', $perpage);
+        }
+        $coursedisplayoptions['limit'] = $perpage;
+        $catdisplayoptions['limit'] = $perpage;
+        if ($browse === 'courses' || !$coursecat->get_children_count()) {
+            $coursedisplayoptions['offset'] = $page * $perpage;
+            $coursedisplayoptions['paginationurl'] = new moodle_url($baseurl, array('browse' => 'courses'));
+            $catdisplayoptions['nodisplay'] = true;
+            $catdisplayoptions['viewmoreurl'] = new moodle_url($baseurl, array('browse' => 'categories'));
+            $catdisplayoptions['viewmoretext'] = new lang_string('viewallsubcategories');
+        } else if ($browse === 'categories' || !$coursecat->get_courses_count()) {
+            $coursedisplayoptions['nodisplay'] = true;
+            $catdisplayoptions['offset'] = $page * $perpage;
+            $catdisplayoptions['paginationurl'] = new moodle_url($baseurl, array('browse' => 'categories'));
+            $coursedisplayoptions['viewmoreurl'] = new moodle_url($baseurl, array('browse' => 'courses'));
+            $coursedisplayoptions['viewmoretext'] = new lang_string('viewallcourses');
+        } else {
+            // we have a category that has both subcategories and courses, display pagination separately
+            $coursedisplayoptions['viewmoreurl'] = new moodle_url($baseurl, array('browse' => 'courses', 'page' => 1));
+            $catdisplayoptions['viewmoreurl'] = new moodle_url($baseurl, array('browse' => 'categories', 'page' => 1));
+        }
+        $chelper->set_courses_display_options($coursedisplayoptions)->set_categories_display_options($catdisplayoptions);
+
+        // Display course category tree.
+        $output .= $this->coursecat_tree($chelper, $coursecat);
+
+        return $output;
     }
 }

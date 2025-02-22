@@ -329,7 +329,7 @@ $string['courselistingheading'] = 'Course listing';
 // ... ... Setting: Course listing presentation.
 $string['courselistingpresentation'] = 'Course listing presentation';
 $string['courselistingpresentation_desc'] = 'With this setting, you can modify the look & feel of the course listing on the category index pages and on site home. As an alternative to the way how Moodle core presents them, you can present the course listing as course cards (similar to the course cards on the \'My courses\' page) or as course list (similar to the course list on the \'My courses\' page).';
-$string['courselistingpresentation_nochange'] = 'Usability nightmare (unchanged as presented by Moodle core)';
+$string['courselistingpresentation_nochange'] = 'Designer\'s nightmare (unchanged as presented by Moodle core)';
 $string['courselistingpresentation_cards'] = 'Course cards';
 $string['courselistingpresentation_list'] = 'Course list';
 $string['courselistingpresentation_note'] = 'Please note: If you enable course cards or course lists, the <a href="{$a->url1}">coursesperpage</a> setting is still respected and will control how many cards / rows will be shown. However, the <a href="{$a->url2}">courseswithsummarieslimit</a> setting does not have any effect anymore – all courses will be shown with full details. Please take care not to set <a href="{$a->url1}">coursesperpage</a> too high to avoid long page load times on pages with many courses.';
@@ -370,6 +370,14 @@ $string['courselistingnosummary'] = 'This course does not have a summary';
 $string['courselistingcontacts'] = 'Course contact';
 $string['courselistingviewprofile'] = 'View profile';
 $string['courselistingfields'] = 'Course classification';
+// ... Section: Category listing.
+$string['categorylistingheading'] = 'Category listing';
+// ... ... Setting: Category listing presentation.
+$string['categorylistingpresentation'] = 'Category listing presentation';
+$string['categorylistingpresentation_desc'] = 'With this setting, you can modify the look & feel of the category listing on the category index pages and on site home. As an alternative to the way how Moodle core presents them, you can present the category listing as a refreshed list of boxes.';
+$string['categorylistingpresentation_nochange'] = 'Designer\'s nightmare (unchanged as presented by Moodle core)';
+$string['categorylistingpresentation_boxlist'] = 'List of boxes';
+$string['categorylistingpresentation_note'] = 'Please note: If you enabled the \'Course listing presentation\' setting above, we recommend to enable this setting as well. Both were designed to work together.';
 
 // Settings: Blocks tab.
 // The string for this tab is the same as on the 'Feel' page.
