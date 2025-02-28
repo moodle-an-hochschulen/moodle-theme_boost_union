@@ -470,7 +470,7 @@ class course_renderer extends \core_course_renderer {
         if ($templatedata['showcourseprogress']) {
             $courseprogress = $courseutil->get_progress();
             $templatedata['progress'] = (int) $courseprogress;
-            $templatedata['hasprogress'] = ($courseprogress != null);
+            $templatedata['hasprogress'] = ($courseprogress !== null);
         }
 
         // Enable detailsbar, if necessary.
@@ -637,6 +637,7 @@ class course_renderer extends \core_course_renderer {
 
         // If the modified course listing within the category tree is enabled.
         $courselistingpresetation = get_config('theme_boost_union', 'courselistingpresentation');
+        $additionalclasses = '';
         if (isset($courselistingpresetation) && $courselistingpresetation != THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
             // Add a CSS class to allow styling the category listing.
             $additionalclasses = 'theme_boost_union-catlisting-cl';
