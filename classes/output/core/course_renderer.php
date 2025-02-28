@@ -30,11 +30,12 @@ use theme_boost_union\util\course;
  *
  * @package    theme_boost_union
  * @copyright  2024 Daniel Neis Araujo {@link https://www.adapta.online}
+ *             2025 Alexander Bias, ssystems GmbH <abias@ssystems.de>
+ *             based on code 2010 Sam Hemelryk
  *             based on code 2022 Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class course_renderer extends \core_course_renderer {
-
     /**
      * Renders the list of courses
      *
@@ -125,7 +126,7 @@ class course_renderer extends \core_course_renderer {
             // And add the theme_boost_union-courselisting class to be used in the CSS.
             $content .= html_writer::start_tag('div',
                     [
-                        'class' => 'row no-gutters px-2 theme_boost_union-courselisting theme_boost_union-courselisting-card',
+                        'class' => 'row no-gutters theme_boost_union-courselisting theme_boost_union-courselisting-card',
                         'role' => 'list',
                     ]
             );
@@ -170,7 +171,6 @@ class course_renderer extends \core_course_renderer {
                                 'role' => 'list',
                             ]
                     );
-
                 }
 
                 // Build the course card.
@@ -178,7 +178,6 @@ class course_renderer extends \core_course_renderer {
                 $content .= html_writer::start_tag('div', ['class' => 'col d-flex px-0 mb-2']);
                 $content .= $this->coursecat_coursebox($chelper, $course);
                 $content .= html_writer::end_tag('div');
-
             }
 
             // End the course card grid, if there were any courses.
@@ -254,7 +253,6 @@ class course_renderer extends \core_course_renderer {
         if (!empty($pagingbar)) {
             $content .= $pagingbar;
         }
-
         if (!empty($morelink)) {
             $content .= $morelink;
         }
@@ -590,7 +588,7 @@ class course_renderer extends \core_course_renderer {
         if ($chelper->get_show_courses() == self::COURSECAT_SHOW_COURSES_COUNT
                 && ($coursescount = $coursecat->get_courses_count())) {
             $categoryname .= html_writer::tag('span', $coursescount,
-                    array('title' => get_string('numberofcourses'), 'class' => 'numberofcourse badge badge-pill badge-secondary ml-2'));
+                    array('title' => get_string('numberofcourses'), 'class' => 'numberofcourse badge badge-pill badge-secondary ms-2'));
         }
         $content .= html_writer::start_tag('div', array('class' => 'info'));
 
@@ -640,6 +638,7 @@ class course_renderer extends \core_course_renderer {
         // If the modified course listing within the category tree is enabled.
         $courselistingpresetation = get_config('theme_boost_union', 'courselistingpresentation');
         if (isset($courselistingpresetation) && $courselistingpresetation != THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
+            // Add a CSS class to allow styling the category listing.
             $additionalclasses = 'theme_boost_union-catlisting-cl';
         }
 

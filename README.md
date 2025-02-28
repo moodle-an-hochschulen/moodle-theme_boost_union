@@ -231,6 +231,10 @@ With this setting, you can control whether the course completion progress is vis
 
 In this section, you can modify the look & feel of the course listing on the category index pages and on site home. As an alternative to the way how Moodle core presents them, you can present the course listing as course cards (similar to the course cards on the 'My courses' page) or course list  (similar to the course list on the 'My courses' page). And, of course, you can configure the look of the course cards or rows with multiple dependent settings.
 
+##### Category listing
+
+With this setting, you can modify the look & feel of the category listing on the category index pages and on site home. As an alternative to the way how Moodle core presents them, you can present the category listing as a refreshed list of boxes.
+
 #### Tab "Blocks"
 
 ##### Timeline block

@@ -496,9 +496,7 @@
        a :has(.theme_boost_union-courselisting) selector.
        We do not document each single rule here either. */
     .theme_boost_union-catlisting.theme_boost_union-catlisting-cl {
-
         > .content > .subcategories {
-
             .category {
                 @extend .py-2;
 
@@ -510,6 +508,10 @@
                     > .content > .courses {
                         @extend .mt-4;
                     }
+                }
+
+                .theme_boost_union-courselisting-card {
+                    @extend .px-2;
                 }
             }
 
