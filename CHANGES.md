@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.4-r11
 
 * 2025-02-12 - Bugfix: Accessibility page link in description differed from real location, resolves #818.
 
