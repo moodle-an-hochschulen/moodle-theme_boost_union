@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r8
 
 * 2025-02-17 - Bugfix: Remove the possibility to set the activity purpose for subsections to avoid that activities within subsections get tinted with the wrong color, resolves #823.
 * 2025-02-12 - Bugfix: Accessibility page link in description differed from real location, resolves #818.
