@@ -917,7 +917,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/courselistinghowimage';
         $title = get_string('courselistinghowimage', 'theme_boost_union');
         $description = get_string('courselistinghowimage_desc', 'theme_boost_union');
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
         $page->hide_if('theme_boost_union/courselistinghowimage', 'theme_boost_union/courselistingpresentation', 'eq',
                 THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
@@ -964,7 +964,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/courselistinghowenrolicons';
         $title = get_string('courselistinghowenrolicons', 'theme_boost_union');
         $description = get_string('courselistinghowenrolicons_desc', 'theme_boost_union');
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
         $page->hide_if('theme_boost_union/courselistinghowenrolicons', 'theme_boost_union/courselistingpresentation', 'eq',
                 THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
@@ -982,7 +982,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/courselistinghowgoto';
         $title = get_string('courselistinghowgoto', 'theme_boost_union');
         $description = get_string('courselistinghowgoto_desc', 'theme_boost_union');
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
         $page->hide_if('theme_boost_union/courselistinghowgoto', 'theme_boost_union/courselistingpresentation', 'eq',
                 THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
@@ -991,7 +991,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/courselistinghowpopup';
         $title = get_string('courselistinghowpopup', 'theme_boost_union');
         $description = get_string('courselistinghowpopup_desc', 'theme_boost_union');
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
         $page->hide_if('theme_boost_union/courselistinghowpopup', 'theme_boost_union/courselistingpresentation', 'eq',
                 THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
