@@ -120,6 +120,15 @@ class course_renderer extends \core_course_renderer {
             $content .= $pagingbar;
         }
 
+        // Check if we should show the category sticky headers.
+        $categorylistingpresentation = get_config('theme_boost_union', 'categorylistingpresentation');
+        if (isset($categorylistingpresentation) && $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_BOXLIST &&
+                $chelper->get_show_courses() <= self::COURSECAT_SHOW_COURSES_COLLAPSED) {
+            $showstickyheaders = true;
+        } else {
+            $showstickyheaders = false;
+        }
+
         // If course cards are enabled.
         if ($courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_CARDS) {
             // Start the course listing as card grid.
@@ -135,12 +144,20 @@ class course_renderer extends \core_course_renderer {
             // Initialize the category id.
             $cat = null;
 
+            // Initialize the card grid started flag.
+            $cardgridstarted = false;
+
+            // Get the card grid config.
+            $maxcols = get_config('theme_boost_union', 'coursecardscolumncount');
+            $maxcolslg = $maxcols;
+            $maxcolssm = ($maxcols > 1) ? $maxcols : 1;
+
             // Iterate over the courses.
             foreach ($courses as $course) {
                 // If we are looking at a new category.
                 if ($cat == null || $cat->id != $course->category) {
                     // End the previous course card grid if necessary.
-                    if ($cat != null) {
+                    if ($showstickyheaders == true && $cat != null) {
                         $content .= html_writer::end_tag('div');
                     }
 
@@ -150,27 +167,28 @@ class course_renderer extends \core_course_renderer {
                     // Get the category.
                     $cat = \core_course_category::get($course->category, IGNORE_MISSING);
 
-                    // Show the category heading as sticky header.
-                    $content .= html_writer::start_tag('div',
-                            ['class' => 'theme_boost_union-stickycategory bg-white rounded-bottom mb-3 pt-3 mx-1 px-0 sticky-top']);
-                    $content .= html_writer::start_tag('div', ['class' => 'border rounded px-3 pt-3 pb-2 bg-light']);
-                    $content .= html_writer::tag('h6', $cat->name);
-                    $content .= html_writer::end_div();
-                    $content .= html_writer::end_div();
-                    $catshowend = true;
+                    // Show the category heading as sticky header, if necessary.
+                    if ($showstickyheaders == true) {
+                        $content .= html_writer::start_tag('div',
+                                ['class' => 'theme_boost_union-stickycategory bg-white rounded-bottom mb-3 pt-3 mx-1 px-0 sticky-top']);
+                        $content .= html_writer::start_tag('div', ['class' => 'border rounded px-3 pt-3 pb-2 bg-light']);
+                        $content .= html_writer::tag('h6', $cat->name);
+                        $content .= html_writer::end_div();
+                        $content .= html_writer::end_div();
+                    }
 
-                    // Start the course card grid.
+                    // Start a new course card grid, if necessary.
                     // Use the same wrapper classes as in /course/templates/coursecards.mustache.
                     // Set the row-cols-lg class depending on the coursecardscolumncount setting.
-                    $maxcols = get_config('theme_boost_union', 'coursecardscolumncount');
-                    $maxcolslg = $maxcols;
-                    $maxcolssm = ($maxcols > 1) ? $maxcols : 1;
-                    $content .= html_writer::start_tag('div',
-                            [
-                                'class' => 'card-grid row no-gutters row-cols-1 row-cols-sm-'.$maxcolssm.' row-cols-lg-'.$maxcolslg,
-                                'role' => 'list',
-                            ]
-                    );
+                    if ($showstickyheaders == true || $cardgridstarted == false) {
+                        $content .= html_writer::start_tag('div',
+                                [
+                                    'class' => 'card-grid row no-gutters row-cols-1 row-cols-sm-'.$maxcolssm.' row-cols-lg-'.$maxcolslg,
+                                    'role' => 'list',
+                                ]
+                        );
+                        $cardgridstarted = true;
+                    }
                 }
 
                 // Build the course card.
@@ -208,7 +226,7 @@ class course_renderer extends \core_course_renderer {
                 // If we are looking at a new category.
                 if ($cat == null || $cat->id != $course->category) {
                     // End the previous category list if necessary.
-                    if ($cat != null) {
+                    if ($showstickyheaders == true && $cat != null) {
                         $content .= html_writer::end_tag('div');
                     }
 
@@ -221,13 +239,15 @@ class course_renderer extends \core_course_renderer {
                     // Start the category list.
                     $content .= html_writer::start_div('row no-gutters categorylist');
 
-                    // Show the category heading as sticky header.
-                    $content .= html_writer::start_tag('div',
-                            ['class' => 'theme_boost_union-stickycategory col-12 bg-white rounded-bottom mb-3 pt-3 sticky-top']);
-                    $content .= html_writer::start_tag('div', ['class' => 'border rounded px-3 pt-3 pb-2 bg-light']);
-                    $content .= html_writer::tag('h6', $cat->name);
-                    $content .= html_writer::end_div();
-                    $content .= html_writer::end_div();
+                    // Show the category heading as sticky header, if necessary.
+                    if ($showstickyheaders == true) {
+                        $content .= html_writer::start_tag('div',
+                                ['class' => 'theme_boost_union-stickycategory col-12 bg-white rounded-bottom mb-3 pt-3 sticky-top']);
+                        $content .= html_writer::start_tag('div', ['class' => 'border rounded px-3 pt-3 pb-2 bg-light']);
+                        $content .= html_writer::tag('h6', $cat->name);
+                        $content .= html_writer::end_div();
+                        $content .= html_writer::end_div();
+                    }
                 }
 
                 // Build the course list.

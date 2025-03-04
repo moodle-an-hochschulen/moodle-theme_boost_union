@@ -768,3 +768,36 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     And I should see "test" in the ".theme_boost_union-courselisting-modal .customfields .customfield.customfield_text .customfieldvalue" "css_element"
     And I should see "Field 2" in the ".theme_boost_union-courselisting-modal .customfields .customfield.customfield_select .customfieldname" "css_element"
     And I should see "a" in the ".theme_boost_union-courselisting-modal .customfields .customfield.customfield_select .customfieldvalue" "css_element"
+
+  @javascript
+  Scenario Outline: Setting: Course listing presentation / Category listing presentation: Verify the appearance of the sticky category headers
+    Given the following config values are set as admin:
+      | config                      | value           | plugin            |
+      | courselistingpresentation   | <coursevalue>   | theme_boost_union |
+      | categorylistingpresentation | <categoryvalue> | theme_boost_union |
+    When I log in as "student1"
+    And I am on site homepage
+    # Check the 'Combo list' view on site home as a whole (and focus directly on the subcategories)
+    And I click on ".info" "css_element" in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
+    Then ".theme_boost_union-stickycategory" "css_element" <cattreeshouldornot> exist in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
+    # Check the 'Enrolled courses' view on site home
+    And ".theme_boost_union-stickycategory" "css_element" <singlecatshouldornot> exist in the "#frontpage-course-list" "css_element"
+    # Check the 'List of courses' view on site home
+    And ".theme_boost_union-stickycategory" "css_element" <singlecatshouldornot> exist in the "#frontpage-available-course-list" "css_element"
+    # Check the categoriy overview page of a category without subcategories
+    And I am on the "CATA" category page
+    Then ".theme_boost_union-stickycategory" "css_element" <singlecatshouldornot> exist in the ".course_category_tree" "css_element"
+    # Check the categoriy overview page of a category with subcategories
+    And I am on the "CATB" category page
+    Then ".theme_boost_union-stickycategory" "css_element" <singlecatshouldornot> exist in the ".course_category_tree" "css_element"
+    And I click on ".info" "css_element" in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
+    And ".theme_boost_union-stickycategory" "css_element" <cattreeshouldornot> exist in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
+
+    Examples:
+      | coursevalue  | categoryvalue | singlecatshouldornot | cattreeshouldornot |
+      | nochange     | nochange      | should not           | should not         |
+      | nochange     | boxlist       | should not           | should not         |
+      | cards        | nochange      | should not           | should not         |
+      | list         | nochange      | should not           | should not         |
+      | cards        | boxlist       | should not           | should             |
+      | list         | boxlist       | should not           | should             |
