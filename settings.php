@@ -624,6 +624,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $installedactivities = get_module_types_names();
         // Iterate over all existing activities.
         foreach ($installedactivities as $modname => $modinfo) {
+            // If this is the subsection activity type which must not be tinted itself.
+            if ($modname == 'subsection') {
+                // Skip it.
+                continue;
+            }
+
             // Get default purpose of activity module.
             $defaultpurpose = plugin_supports('mod', $modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
             // If the plugin does not have any default purpose.
@@ -2879,7 +2885,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Setting: Declaration of accessibility page link position.
         $name = 'theme_boost_union/accessibilitydeclarationlinkposition';
         $title = get_string('accessibilitydeclarationlinkpositionsetting', 'theme_boost_union', null, true);
-        $pageurl = theme_boost_union_get_staticpage_link('accessibility');
+        $pageurl = theme_boost_union_get_accessibility_link('declaration');
         $description = get_string('accessibilitydeclarationlinkpositionsetting_desc', 'theme_boost_union', ['url' => $pageurl],
                 true);
         $linkpositionoption =

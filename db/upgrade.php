@@ -540,5 +540,14 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         snippets::add_builtin_snippets();
     }
 
+    if ($oldversion < 2024100716) {
+
+        // Remove the activitypurposesubsection setting from Boost Union.
+        unset_config('activitypurposesubsection', 'theme_boost_union');
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2024100716, 'theme', 'boost_union');
+    }
+
     return true;
 }

@@ -42,7 +42,7 @@ class theme_boost_union_generator extends component_generator_base {
             throw new Exception('A Smart menu location must be specified.');
         }
         $validlocations = array_keys(smartmenu::get_locations());
-        if (!empty(array_diff($validlocations, $location))) {
+        if (!empty(array_diff($location, $validlocations))) {
             throw new Exception('Invalid Smart menu location.');
         }
         $validdescriptions = array_keys(smartmenu::get_showdescription_options());

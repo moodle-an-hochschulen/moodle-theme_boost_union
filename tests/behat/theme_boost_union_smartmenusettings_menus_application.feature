@@ -84,3 +84,41 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I add a smart menu static item item "Privacy" "https://moodle.org/privacy"
     Then I should see "Bottom" in the "SmartMenu Policy" "table_row"
     And I should see smart menu "SmartMenu Policy" in location "Bottom"
+
+  @javascript
+  Scenario: Smartmenu: Menus: Application - Show a smart menu in the main navigation together with a custom menu
+    Given I log in as "admin"
+    And I navigate to "Appearance > Advanced theme settings" in site administration
+    And I set the field "Custom menu items" to multiline:
+    """
+    Custom menu
+    -Custom node 1|/foo/
+    -Custom node 2|/bar/foobar.php
+    """
+    And I press "Save changes"
+    And the following "theme_boost_union > smart menu" exists:
+      | title    | Smart menu      |
+      | location | Main navigation |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Smart menu        |
+      | title    | Smart menu node 1 |
+      | itemtype | Static            |
+      | url      | /foooo            |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Smart menu        |
+      | title    | Smart menu node 2 |
+      | itemtype | Static            |
+      | url      | /baaar            |
+    And I log out
+    And I log in as "user1"
+    # Resize the window to avoid that menus fall into the "More" menu and influence this test.
+    And I change window size to "large"
+    Then I should see smart menu "Smart menu" in location "Main"
+    And "Smart menu node 1" "theme_boost_union > Smart menu item" should exist in the "Smart menu" "theme_boost_union > Main menu smart menu"
+    And "Smart menu node 2" "theme_boost_union > Smart menu item" should exist in the "Smart menu" "theme_boost_union > Main menu smart menu"
+    And I should see "Custom menu" in the "nav" "css_element"
+    And I click on "Custom menu" "link" in the "nav" "css_element"
+    And I should see "Custom node 1" in the "nav" "css_element"
+    And I should see "Custom node 2" in the "nav" "css_element"
+    And "Custom menu" "link" should appear before "Smart menu" "link" in the "nav" "css_element"
+    And "My courses" "link" should appear before "Custom menu" "link" in the "nav" "css_element"
