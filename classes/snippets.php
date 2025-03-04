@@ -79,93 +79,88 @@ class snippets {
     const SOURCE_BUILTIN = 'theme_boost_union';
 
     /**
+     * Constant for identifying uploaded snippets.
+     *
+     * @var string
+     */
+    const SOURCE_UPLOADED = 'uploaded';
+
+    /**
      * Gets the snippet file based on the meta information.
      *
-     * @param string $path The snippet's path.
-     * @param string $source The snippet's source.
-     *
+     * @param string $path The snippet's path.     *
      * @return string|null
      */
-    public static function get_snippet_file($path, $source): string|null {
+    public static function get_builtin_snippet_file($path): string|null {
         global $CFG;
 
-        // Get the snippet file based on the different sources.
-        // Builtin SCSS Snippets.
-        if ($source === self::SOURCE_BUILTIN) {
-            // Compose the file path.
-            $file = $CFG->dirroot . self::BUILTIN_SNIPPETS_BASE_PATH . $path;
-
-            // Other snippet sources (which are currently not supported).
-        } else {
-            return null;
-        }
+        $file = $CFG->dirroot . self::BUILTIN_SNIPPETS_BASE_PATH . $path;
 
         return is_readable($file) ? $file : null;
     }
 
     /**
-     * Get the preview images URL for a builtin snippet.
+     * Get the preview images path via looking for a file with the same path and name.
      *
      * The preview file has currently the same path but a different file extension.
      *
      * @param string $path The snippet's path.
-     * @param string $source The snippet's source.
-     * @return string|null The URL of the preview image.
+     * @return string|null The preview image's file path.
      */
-    public static function get_builtin_snippet_preview_url($path, $source) {
+    public static function get_snippet_preview_file($path, $source) {
         global $CFG;
 
-        // Search for the .scss suffix in the path.
-        $search = '.scss';
-        $pos = strrpos($path, $search);
-        if ($pos !== false) {
-            // Compose the file pattern that searched for files with the same basename and the supported extensions.
-            $pattern = $CFG->dirroot .
-                self::BUILTIN_SNIPPETS_BASE_PATH .
-                substr_replace(
-                    $path,
-                    '.{' . implode(',', self::ALLOWED_PREVIEW_FILE_EXTENSIONS) . '}',
-                    $pos,
-                    strlen($search)
+        if ( $source === self::SOURCE_BUILTIN) {
+            // Search for the .scss suffix in the path.
+            $search = '.scss';
+            $pos = strrpos($path, $search);
+            if ($pos !== false) {
+                // Compose the file pattern that searched for files with the same basename and the supported extensions.
+                $pattern = $CFG->dirroot .
+                    self::BUILTIN_SNIPPETS_BASE_PATH .
+                    substr_replace(
+                        $path,
+                        '.{' . implode(',', self::ALLOWED_PREVIEW_FILE_EXTENSIONS) . '}',
+                        $pos,
+                        strlen($search)
                 );
-            // Search for the preview file.
-            $files = glob($pattern, GLOB_BRACE);
-            // Select the first match of the found preview file(s).
-            if (!empty($files)) {
-                $file = $files[0];
-                // Compose the files URL.
-                $url = new \moodle_url(substr($file, strlen($CFG->dirroot)));
-                // And check if the file is readable.
-                return is_readable($file) ? $url : null;
+                // Search for the preview file.
+                $files = glob($pattern, GLOB_BRACE);
+                // Select the first match of the found preview file(s).
+                if (!empty($files)) {
+                    $file = $files[0];
+                    // Compose the files URL.
+                    $url = new \moodle_url(substr($file, strlen($CFG->dirroot)));
+                    // And check if the file is readable.
+                    return is_readable($file) ? $url : null;
+                }
+            }
+        } else if ($source === self::SOURCE_UPLOADED) {
+            $systemcontext = \core\context\system::instance();
+            $fs = get_file_storage();
+            $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'snippets', false, 'itemid', false);
+
+            foreach ($files as $file) {
+                $pathinfo = pathinfo($file->get_filename());
+                $filename = $pathinfo['filename'];
+                $extension = $pathinfo['extension'];
+                if (str_starts_with(basename($path), $filename) && $extension != 'scss') {
+                    $filename = basename($path);
+                    $url = \moodle_url::make_pluginfile_url(
+                        $file->get_contextid(),
+                        $file->get_component(),
+                        $file->get_filearea(),
+                        $file->get_itemid(),
+                        $file->get_filepath(),
+                        $file->get_filename(),
+                    );
+                    return $url;
+                }
             }
         }
 
         // If anything went wrong, return null just as if no snippet preview is present.
         return null;
-    }
-
-    /**
-     * Gets the snippet's preview file URL.
-     *
-     * @param string $path The snippet's path.
-     * @param string $source The snippet's source.
-     *
-     * @return string|null The URL of the snippets preview image.
-     */
-    public static function get_snippet_preview_url($path, $source): string|null {
-        global $CFG;
-
-        $url = null;
-
-        // Get the snippet file based on the different sources.
-        // Builtin SCSS Snippets.
-        if ($source === self::SOURCE_BUILTIN) {
-            $url = self::get_builtin_snippet_preview_url($path, $source);
-            // Other snippet sources (which are currently not supported).
-        } else {
-            return $url;
-        }
-        return $url;
     }
 
     /**
@@ -179,16 +174,27 @@ class snippets {
      * @return string
      */
     public static function get_snippet_scss($path, $source): string {
-        // Get the snippets file, based on the source.
-        $file = self::get_snippet_file($path, $source);
+        if ($source === self::SOURCE_BUILTIN) {
+            // Get the snippets file, based on the source.
+            $file = self::get_builtin_snippet_file($path);
 
-        // If the file does not exist or is not readable, we simply return an empty string.
-        if (is_null($file)) {
-            return '';
+            // If the file does not exist or is not readable, we simply return an empty string.
+            if (!$file) {
+                return '';
+            }
+
+            // Get and return the whole file content (which will contain the SCSS comments as well).
+            $scss = file_get_contents($file);
+        } else if ($source === self::SOURCE_UPLOADED) {
+            $fs = \get_file_storage();
+            $systemcontext = \core\context\system::instance();
+            $file = $fs->get_file($systemcontext->id, 'theme_boost_union', 'snippets', 0, '/', $path);
+            if ($file) {
+                $scss = $file->get_content();
+            }
+        } else {
+            $scss = '';
         }
-
-        // Get and return the whole file content (which will contain the SCSS comments as well).
-        $scss = file_get_contents($file);
 
         // Return the SCSS or an empty string if reading the file has failed.
         return $scss ?: '';
@@ -203,25 +209,43 @@ class snippets {
      * @return stdClass|null The snippet metadata object, or null if the snippet was not found.
      */
     public static function get_snippet_meta($path, $source): stdClass|null {
-        // Get the snippets file, based on the source.
-        $file = self::get_snippet_file($path, $source);
+        if ($source === self::SOURCE_BUILTIN) {
+            // Get the snippets file, based on the source.
+            $file = self::get_builtin_snippet_file($path );
 
-        // If the file does not exist or is not readable, we can not proceed.
-        if (is_null($file)) {
+            // If the file does not exist or is not readable, we can not proceed.
+            if (is_null($file)) {
+                return null;
+            }
+
+            // Extract the meta from the SCSS file's top level multiline comment in WordPress style.
+            $headers = self::get_snippet_meta_from_file($file);
+
+            if (!$headers) {
+                return null;
+            }
+
+            // Get the preview image as well.
+            $image = self::get_snippet_preview_file($path, $source);
+
+        } else if ($source === self::SOURCE_UPLOADED) {
+            $fs = \get_file_storage();
+            $systemcontext = \core\context\system::instance();
+            $file = $fs->get_file($systemcontext->id, 'theme_boost_union', 'snippets', 0, '/', basename($path));
+            if ($file) {
+                $headers = self::get_snippet_meta_from_file_content($file->get_content());
+            }
+            // Get the preview image as well.
+            $file = $fs->get_file($systemcontext->id, 'theme_boost_union', 'snippets', 0, '/', basename($path));
+
+            $image = self::get_snippet_preview_file($file->get_filename(), $source);
+        } else {
             return null;
         }
 
-        // Extract the meta from the SCSS file's top level multiline comment in WordPress style.
-        $headers = self::get_snippet_meta_from_file($file);
-
-        // The title is the only required meta-key that actually must be set.
-        // If it is not present, we can not proceed.
-        if (!array_key_exists('Snippet Title', $headers)) {
+        if (!$headers) {
             return null;
         }
-
-        // Get the preview image as well.
-        $image = self::get_snippet_preview_url($path, $source);
 
         // Create an object containing the metadata.
         $snippet = new stdClass();
@@ -233,7 +257,10 @@ class snippets {
         $snippet->usagenote = $headers['Usage note'];
         $snippet->testedon = $headers['Tested on'];
         $snippet->source = $source;
-        $snippet->image = $image;
+
+        if ($image) {
+            $snippet->image = $image;
+        }
 
         return $snippet;
     }
@@ -322,7 +349,7 @@ class snippets {
     }
 
     /**
-     * Retrieves metadata from a file.
+     * Retrieves Snippet metadata from a files content.
      *
      * Searches for metadata in the first 8 KB of a file, such as a plugin or theme.
      * Each piece of metadata must be on its own line. Fields can not span multiple
@@ -333,22 +360,19 @@ class snippets {
      *
      * @copyright forked from https://developer.wordpress.org/reference/functions/get_file_data/
      *
-     * @param string $file            Absolute path to the file.
+     * @param string $filedata   The filedata
      *
-     * @return string[] Array of file header values keyed by header name.
+     * @return string[]|false Array of file header values keyed by header name. False if file not valid.
      */
-    public static function get_snippet_meta_from_file($file): array {
-        // Pull only the first 8 KB of the file in.
-        $filedata = file_get_contents( $file, false, null, 0, 8192);
-
-        if ( false === $filedata ) {
-            $filedata = '';
-        }
-
+    public static function get_snippet_meta_from_file_content($filedata): array|false {
         // Make sure we catch CR-only line endings.
         $filedata = str_replace( "\r", "\n", $filedata );
 
         $headers = [];
+
+        if (empty($filedata)) {
+            return false;
+        }
 
         // Scan for each snippet header meta information in the files top scss comment.
         foreach (self::SNIPPET_HEADERS as $regex) {
@@ -360,7 +384,28 @@ class snippets {
             }
         }
 
-        return $headers;
+        // The title is the only required meta-key that actually must be set.
+        // If it is not present, we can not proceed.
+        if (array_key_exists('Snippet Title', $headers) && !empty($headers['Snippet Title'])) {
+            return $headers;
+        }
+
+        return false;
+    }
+
+    /**
+     * Retrieves Snippet metadata from a file.
+     *
+     * @param mixed $filename
+     * @return bool|string[]
+     */
+    public static function get_snippet_meta_from_file($filename) {
+        $filedata = file_get_contents( $filename, false, null, 0, 8192);
+
+        if ( false === $filedata ) {
+            $filedata = '';
+        }
+        return self::get_snippet_meta_from_file_content($filedata);
     }
 
     /**
@@ -400,9 +445,184 @@ class snippets {
         if (get_config('theme_boost_union', 'enablebuiltinsnippets') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
             $sources[] = self::SOURCE_BUILTIN;
         }
+        // If builtin snippets are enabled.
+        if (get_config('theme_boost_union', 'enableuploadedsnippets') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            $sources[] = self::SOURCE_UPLOADED;
+        }
 
         // Return.
         return $sources;
+    }
+
+    /**
+     * Process a SCSS snippet file – check if it is a valid snippet and add it to the filearea.
+     *
+     * @param mixed $filename
+     * @param mixed $zipdir
+     * @return void
+     */
+    private static function process_scss_file($filename, $zipdir): void {
+        $filecontent = \file_get_contents($zipdir.'/'.$filename, false);
+
+        if (!$filecontent) {
+            return;
+        }
+
+        // Kind of validate the snippet.
+        if (!self::get_snippet_meta_from_file_content($filecontent)) {
+            return;
+        }
+
+        $fs            = get_file_storage();
+        $systemcontext = \context_system::instance();
+
+        $filerecord = [
+            'contextid' => $systemcontext->id,
+            'component' => 'theme_boost_union',
+            'filearea' => 'snippets',
+            'itemid' => 0,
+            'filepath' => '/',
+            'filename' => $filename,
+            'timecreated' => time(),
+            'timemodified' => time(),
+        ];
+
+        // First check if the file already exists and if so, delete it.
+        if ($fs->file_exists(
+            $filerecord['contextid'],
+            $filerecord['component'],
+            $filerecord['filearea'],
+            $filerecord['itemid'],
+            $filerecord['filepath'],
+            $filerecord['filename']
+        )) {
+            $existingfile = $fs->get_file(
+                $filerecord['contextid'],
+                $filerecord['component'],
+                $filerecord['filearea'],
+                $filerecord['itemid'],
+                $filerecord['filepath'],
+                $filerecord['filename']
+            );
+            if ($existingfile) {
+                $existingfile->delete();
+            }
+        }
+
+        // Save snippet to filearea for uploaded snippets.
+        $fs->create_file_from_string($filerecord, $filecontent);
+
+        // Save preview image for that snippet if it exists.
+        $preview = self::get_snippet_preview_file($zipdir.'/'.$filename, self::SOURCE_UPLOADED);
+
+        if ($preview) {
+            // Get the filename from the full path.
+            $previewfilename = basename($preview);
+
+            // Update the file record for the preview file.
+            $filerecord['filename'] = $previewfilename;
+
+            // Save the preview file.
+            $fs->create_file_from_pathname($filerecord, $preview);
+        }
+    }
+
+    /**
+     * Process a SCSS Snippets within a ZIP file and add valid ones to the library.
+     *
+     * @param mixed $file
+     * @return void
+     */
+    private static function process_zip_file($file) {
+        $fp            = get_file_packer('application/zip');
+        $zipdir        = \make_request_directory(false);
+        $zipcontents   = $fp->extract_to_pathname($file, $zipdir);
+
+        if (!$zipcontents) {
+            $file->delete();
+            return;
+        }
+
+        foreach ($zipcontents as $filename => $unzipresult) {
+            if ($unzipresult && $filename && strtolower(substr($filename, -5)) === '.scss') {
+                self::process_scss_file($filename, $zipdir);
+            }
+        }
+
+        $file->delete();
+    }
+
+    /**
+     * Summary of add_uploaded_snippet
+     * @param mixed $file
+     * @param mixed $source
+     * @return void
+     */
+    public static function parse_uploaded_snippets() {
+        $systemcontext = \context_system::instance();
+        $fs            = get_file_storage();
+        $rawfiles      = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'snippets', false, 'itemid', false);
+
+        // Parse all zip files. All valid .scss snippet files will be extracted to the root filearea path along with their previews.
+        // All other files will be deleted.
+        foreach ($rawfiles as $file) {
+            if ($file->get_mimetype() === 'application/zip') {
+                self::process_zip_file($file);
+            }
+        }
+
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'snippets', false, 'itemid', false);
+
+        global $DB;
+
+        // Get builtin snippets which are known in the database.
+        $snippets = $DB->get_records(
+            'theme_boost_union_snippets',
+            [],
+            'sortorder DESC',
+            'id,path,sortorder'
+        );
+
+        // Get the highest sortorder present.
+        $sortorder = empty($snippets) ? 0 : intval(reset($snippets)->sortorder);
+
+        // Prepare an array with all the present builtin snippet paths.
+        $presentpaths = array_map(function($snippet) {
+            return $snippet->path;
+        }, $snippets);
+
+        $transaction = $DB->start_delegated_transaction();
+
+        foreach ($files as $file) {
+            // Only use scss files.
+            if ($file->get_mimetype() !== 'text/x-scss') {
+                continue;
+            }
+
+            // Validate the files again.
+            $filecontent = $file->get_content();
+            if (!self::get_snippet_meta_from_file_content($filecontent)) {
+                continue;
+            }
+
+            $path = $file->get_filename();
+
+            if (!in_array($path, $presentpaths)) {
+                // Add it to the database (raising the sort order).
+                $DB->insert_record(
+                    'theme_boost_union_snippets',
+                    [
+                        'path' => $path,
+                        'source' => self::SOURCE_UPLOADED,
+                        'sortorder' => ++$sortorder,
+                    ]
+                );
+            }
+        }
+
+        $transaction->allow_commit();
+
+        return;
     }
 
     /**
@@ -419,7 +639,7 @@ class snippets {
         // Get builtin snippets which are known in the database.
         $snippets = $DB->get_records(
                 'theme_boost_union_snippets',
-                ['source' => self::SOURCE_BUILTIN],
+                [],
                 'sortorder DESC',
                 'id,path,sortorder'
         );

@@ -2382,7 +2382,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             // Setting: Advertisement tile background image.
             $name = 'theme_boost_union/tile'.$i.'backgroundimage';
             $title = get_string('tilebackgroundimagesetting', 'theme_boost_union', ['no' => $i], true);
-            $description = get_string('tilebackgroundimagesetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('tilebackgroundimagesetting_desc', 'theme_boost_union', ['no' => $i], lazyload: true);
             $setting = new admin_setting_configstoredfile($name, $title, $description, 'tilebackgroundimage'.$i, 0,
                 ['maxfiles' => 1, 'accepted_types' => 'web_image']);
             $setting->set_updatedcallback('theme_reset_all_caches');
@@ -3111,8 +3111,10 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         }, snippets::ALLOWED_PREVIEW_FILE_EXTENSIONS);;
         $uploadedsnippetsextensions[] = '.scss';
         $uploadedsnippetsextensions[] = '.zip';
-        $setting = new admin_setting_configstoredfile($name, $title, $description, 'snippets', 0,
+        $setting = new admin_setting_configstoredfilealwayscallback($name, $title, $description, 'snippets', 0,
                 ['maxfiles' => -1, 'subdirs' => 1, 'accepted_types' => $uploadedsnippetsextensions]);
+        $setting->set_updatedcallback('theme_boost_union_parse_uploaded_sippets');
+
         $tab->add($setting);
         $page->hide_if('theme_boost_union/uploadedsnippets', 'theme_boost_union/enableuploadedsnippets', 'neq',
         THEME_BOOST_UNION_SETTING_SELECT_YES);

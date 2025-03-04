@@ -672,7 +672,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         send_stored_file($file, DAYSECS * 90, 0, $forcedownload, $options);
 
         // Serve the files from the smart menu card images.
-    } else if ($filearea === 'smartmenus_itemimage' && $context->contextlevel === CONTEXT_SYSTEM) {
+    } else if (in_array($filearea, ['smartmenus_itemimage', 'snippets']) && $context->contextlevel === CONTEXT_SYSTEM) {
         // Get file storage.
         $fs = get_file_storage();
 
@@ -880,4 +880,14 @@ function theme_boost_union_alter_css_urls(&$urls) {
             }
         }
     }
+}
+
+/**
+ * Callback to refresh uploaded SCSS snippets when the theme_boost_union/uploadedsnippets config setting changes.
+ *
+ * @return void
+ */
+function theme_boost_union_parse_uploaded_sippets() {
+    snippets::parse_uploaded_snippets();
+    theme_reset_all_caches();
 }

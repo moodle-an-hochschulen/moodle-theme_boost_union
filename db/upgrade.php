@@ -536,7 +536,9 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
 
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
-    snippets::add_builtin_snippets();
+    if (get_config( 'theme_boost_union', 'enablebuiltinsnippets')) {
+        snippets::add_builtin_snippets();
+    }
 
     return true;
 }
