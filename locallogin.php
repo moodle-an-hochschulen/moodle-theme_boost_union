@@ -47,7 +47,8 @@ $PAGE->set_context(context_system::instance());
 $config = get_config('theme_boost_union');
 
 // If the local login is not disabled, we just show a short friendly warning page and are done.
-if ($config->loginlocalloginenable != THEME_BOOST_UNION_SETTING_SELECT_NO) {
+// Also check if alternateloginurl for auth in general is set, so we can provide manual backup.
+if ($config->loginlocalloginenable != THEME_BOOST_UNION_SETTING_SELECT_NO && empty($CFG->alternateloginurl)) {
     echo $OUTPUT->header();
     $loginurl = new core\url('/login/index.php');
     $notification = new \core\output\notification(
@@ -61,8 +62,8 @@ if ($config->loginlocalloginenable != THEME_BOOST_UNION_SETTING_SELECT_NO) {
 
 // If the user is already logged in or is a guest user.
 if (isloggedin() || isguestuser()) {
-    // We just redirect him to the standard login page to handle this case.
-    redirect('/login/index.php');
+    // We just redirect him to the starting page to handle this case.
+    redirect('/index.php');
 }
 
 // Set page title.
