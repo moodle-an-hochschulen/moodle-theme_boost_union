@@ -231,6 +231,8 @@ class theme_boost_union_generator extends component_generator_base {
             'daterange' => $daterange,
             'customfields' => $customfields,
             'listsort' => $listsort,
+            'displayhiddencourses' => $data['displayhiddencourses'] ?? 0,
+            'hiddencoursesort' => $data['hiddencoursesort'] ?? 0,
             'displayfield' => $displayfield,
             'textcount' => $textcount,
             'mode' => $mode,
