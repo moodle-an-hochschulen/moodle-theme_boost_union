@@ -1,0 +1,56 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/courselistingdetailsmodal
+
+    Boost Union course listing details modal template.
+
+    Context variables required for this template:
+    * title - The title of the course.
+    * summary - The summary of the course.
+    * coursecontacts - The contacts of the course.
+    * customfields - The custom fields of the course.
+
+    Example context (json):
+    {
+        "title": "My super awesome course",
+        "summary": "<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>",
+        "customfields": "<div class='customfield customfield_semester customfield_semester'><span class='customfieldname'>Semester</span><span class='customfieldseparator'>: </span><span class='customfieldvalue'>ST 2025</span></div>",
+        "coursecontacts": "The course contacts from coursecardcontact-dataattrib would be here",
+        "canviewuserdetails": true
+    }
+}}
+<div class="theme_boost_union-courselisting-modal">
+    <div class="coursesummary">
+        <h6>{{#str}}courselistingummary, theme_boost_union{{/str}}</h6>
+        {{#summary}}
+            {{{summary}}}
+        {{/summary}}
+        {{^summary}}
+            <p>{{#str}}courselistingnosummary, theme_boost_union{{/str}}</p>
+        {{/summary}}
+    </div>
+    {{#coursecontacts}}
+        <div class="coursecontacts mt-4 pt-4 border-top">
+            <h6>{{#str}}courselistingcontacts, theme_boost_union{{/str}}</h6>
+            <div class="d-flex flex-wrap">{{{coursecontacts}}}</div>
+        </div>
+    {{/coursecontacts}}
+    {{#customfields}}
+        <div class="customfields mt-4 pt-4 border-top">
+            <h6>{{#str}}courselistingfields, theme_boost_union{{/str}}</h6>
+            {{{customfields}}}
+        </div>
+    {{/customfields}}
+</div>

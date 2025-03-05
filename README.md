@@ -225,6 +225,16 @@ With this setting, you can control whether the course image is visible inside th
 
 With this setting, you can control whether the course completion progress is visible inside the course overview block or not.
 
+#### Tab "Category index / Site home"
+
+##### Course listing
+
+In this section, you can modify the look & feel of the course listing on the category index pages and on site home. As an alternative to the way how Moodle core presents them, you can present the course listing as course cards (similar to the course cards on the 'My courses' page) or course list  (similar to the course list on the 'My courses' page). And, of course, you can configure the look of the course cards or rows with multiple dependent settings.
+
+##### Category listing
+
+With this setting, you can modify the look & feel of the category listing on the category index pages and on site home. As an alternative to the way how Moodle core presents them, you can present the category listing as a refreshed list of boxes.
+
 #### Tab "Blocks"
 
 ##### Timeline block
@@ -901,6 +911,7 @@ This theme is a collaboration result of multiple organisations.
 Moodle an Hochschulen e.V. would like to thank these main contributors (in alphabetical order of the institutions) for their work:
 
 * Academic Moodle Cooperation (AMC): Ideating, Code
+* Adapta, Daniel Neis Araujo: Code
 * Baden-Württemberg Cooperative State University (DHBW), Katja Neubehler: Code
 * bdecent GmbH, Stefan Scholz: Code, Ideating, Funding
 * Bern University of Applied Sciences (BFH), Luca Bösch: Code, Peer Review, Ideating
