@@ -4,6 +4,12 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-02-22 - Feature: Add some styling to the category listings on site home and on the category index pages, resolves #840.
+* 2025-02-16 - Feature: Show the course listing on site home and on the category index pages as (proper) list, resolves #573.
+* 2025-02-07 - Feature: Show the course listing on site home and on the category index pages as cards, resolves #558.
+
 ### v4.5-r8
 
 * 2025-02-17 - Bugfix: Remove the possibility to set the activity purpose for subsections to avoid that activities within subsections get tinted with the wrong color, resolves #823.
