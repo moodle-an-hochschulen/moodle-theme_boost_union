@@ -889,5 +889,6 @@ function theme_boost_union_alter_css_urls(&$urls) {
  */
 function theme_boost_union_parse_uploaded_sippets() {
     snippets::parse_uploaded_snippets();
+    snippets::cleanup_snippets();
     theme_reset_all_caches();
 }

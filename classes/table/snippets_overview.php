@@ -92,6 +92,8 @@ class snippets_overview extends \table_sql {
 
         // Initialize values for the updown feature.
         $this->count = 0;
+
+
         $this->totalsnippets = $DB->count_records('theme_boost_union_snippets');
     }
 
@@ -245,7 +247,7 @@ class snippets_overview extends \table_sql {
                     'data-testedon' => $data->testedon,
                     'data-image' => $data->image,
                     'data-id' => $data->id,
-                    'data-code' => snippets::get_snippet_scss($data->path, $data->source),
+                    'data-code' => snippets::get_snippet_scss($data->name, $data->source),
                     ],
         ];
 

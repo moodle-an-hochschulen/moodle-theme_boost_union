@@ -88,52 +88,37 @@ class snippets {
     /**
      * Gets the snippet file based on the meta information.
      *
-     * @param string $path The snippet's path.     *
+     * @param string $name The snippet's path.
      * @return string|null
      */
-    public static function get_builtin_snippet_file($path): string|null {
+    public static function get_builtin_snippet_file($name): string|null {
         global $CFG;
 
-        $file = $CFG->dirroot . self::BUILTIN_SNIPPETS_BASE_PATH . $path;
+        $file = $CFG->dirroot . self::BUILTIN_SNIPPETS_BASE_PATH . $name;
 
         return is_readable($file) ? $file : null;
     }
 
     /**
-     * Get the preview images path via looking for a file with the same path and name.
+     * Get the preview images url via looking for a file with the same name.
      *
-     * The preview file has currently the same path but a different file extension.
+     * The preview file has currently the same name but a different file extension.
      *
-     * @param string $path The snippet's path.
-     * @return string|null The preview image's file path.
+     * @param string $name The snippet's name.
+     * @param string $source The snippets source (uploaded, built-in etc.)
+     * @return string|null The preview image's file url.
      */
-    public static function get_snippet_preview_file($path, $source) {
+    public static function get_snippet_preview_url($name, $source) {
         global $CFG;
 
         if ( $source === self::SOURCE_BUILTIN) {
-            // Search for the .scss suffix in the path.
-            $search = '.scss';
-            $pos = strrpos($path, $search);
-            if ($pos !== false) {
-                // Compose the file pattern that searched for files with the same basename and the supported extensions.
-                $pattern = $CFG->dirroot .
-                    self::BUILTIN_SNIPPETS_BASE_PATH .
-                    substr_replace(
-                        $path,
-                        '.{' . implode(',', self::ALLOWED_PREVIEW_FILE_EXTENSIONS) . '}',
-                        $pos,
-                        strlen($search)
-                );
-                // Search for the preview file.
-                $files = glob($pattern, GLOB_BRACE);
-                // Select the first match of the found preview file(s).
-                if (!empty($files)) {
-                    $file = $files[0];
-                    // Compose the files URL.
-                    $url = new \moodle_url(substr($file, strlen($CFG->dirroot)));
-                    // And check if the file is readable.
-                    return is_readable($file) ? $url : null;
-                }
+            $basepath = $CFG->dirroot . self::BUILTIN_SNIPPETS_BASE_PATH;
+            $file = self::search_preview_file($basepath, $name);
+            if ($file) {
+                // Compose the files URL.
+                $url = new \moodle_url(substr($file, strlen($CFG->dirroot)));
+                // And check if the file is readable.
+                return is_readable($file) ? $url : null;
             }
         } else if ($source === self::SOURCE_UPLOADED) {
             $systemcontext = \core\context\system::instance();
@@ -144,8 +129,8 @@ class snippets {
                 $pathinfo = pathinfo($file->get_filename());
                 $filename = $pathinfo['filename'];
                 $extension = $pathinfo['extension'];
-                if (str_starts_with(basename($path), $filename) && $extension != 'scss') {
-                    $filename = basename($path);
+                if (str_starts_with(basename($name), $filename) && in_array($extension, self::ALLOWED_PREVIEW_FILE_EXTENSIONS)) {
+                    $filename = basename($name);
                     $url = \moodle_url::make_pluginfile_url(
                         $file->get_contextid(),
                         $file->get_component(),
@@ -168,15 +153,15 @@ class snippets {
      *
      * Returns an empty string as a fallback if the snippet is not found.
      *
-     * @param string $path The snippet's path.
+     * @param string $name The snippet's name.
      * @param string $source The snippet's source.
      *
      * @return string
      */
-    public static function get_snippet_scss($path, $source): string {
+    public static function get_snippet_scss($name, $source): string {
         if ($source === self::SOURCE_BUILTIN) {
             // Get the snippets file, based on the source.
-            $file = self::get_builtin_snippet_file($path);
+            $file = self::get_builtin_snippet_file($name);
 
             // If the file does not exist or is not readable, we simply return an empty string.
             if (!$file) {
@@ -188,7 +173,7 @@ class snippets {
         } else if ($source === self::SOURCE_UPLOADED) {
             $fs = \get_file_storage();
             $systemcontext = \core\context\system::instance();
-            $file = $fs->get_file($systemcontext->id, 'theme_boost_union', 'snippets', 0, '/', $path);
+            $file = $fs->get_file($systemcontext->id, 'theme_boost_union', 'snippets', 0, '/', $name);
             if ($file) {
                 $scss = $file->get_content();
             }
@@ -201,17 +186,17 @@ class snippets {
     }
 
     /**
-     * Get the meta data of a snippet defined in the snippet code based on its path and source.
+     * Get the meta data of a snippet defined in the snippet code based on its name and source.
      *
-     * @param string $path The snippet's path.
+     * @param string $name The snippet's path.
      * @param string $source The snippet's source.
      *
      * @return stdClass|null The snippet metadata object, or null if the snippet was not found.
      */
-    public static function get_snippet_meta($path, $source): stdClass|null {
+    public static function get_snippet_meta($name, $source): stdClass|null {
         if ($source === self::SOURCE_BUILTIN) {
             // Get the snippets file, based on the source.
-            $file = self::get_builtin_snippet_file($path );
+            $file = self::get_builtin_snippet_file($name );
 
             // If the file does not exist or is not readable, we can not proceed.
             if (is_null($file)) {
@@ -226,25 +211,19 @@ class snippets {
             }
 
             // Get the preview image as well.
-            $image = self::get_snippet_preview_file($path, $source);
+            $image = self::get_snippet_preview_url($name, $source);
 
         } else if ($source === self::SOURCE_UPLOADED) {
             $fs = \get_file_storage();
             $systemcontext = \core\context\system::instance();
-            $file = $fs->get_file($systemcontext->id, 'theme_boost_union', 'snippets', 0, '/', basename($path));
-            if ($file) {
-                $headers = self::get_snippet_meta_from_file_content($file->get_content());
+            $file = $fs->get_file($systemcontext->id, 'theme_boost_union', 'snippets', 0, '/', basename($name));
+            if (!$file) {
+                return null;
             }
+
+            $headers = self::get_snippet_meta_from_file_content($file->get_content());
             // Get the preview image as well.
-            $file = $fs->get_file($systemcontext->id, 'theme_boost_union', 'snippets', 0, '/', basename($path));
-
-            $image = self::get_snippet_preview_file($file->get_filename(), $source);
-        } else {
-            return null;
-        }
-
-        if (!$headers) {
-            return null;
+            $image = self::get_snippet_preview_url($file->get_filename(), $source);
         }
 
         // Create an object containing the metadata.
@@ -257,10 +236,7 @@ class snippets {
         $snippet->usagenote = $headers['Usage note'];
         $snippet->testedon = $headers['Tested on'];
         $snippet->source = $source;
-
-        if ($image) {
-            $snippet->image = $image;
-        }
+        $snippet->image = $image;
 
         return $snippet;
     }
@@ -281,7 +257,7 @@ class snippets {
         // Iterate over the snippets which are present in the database.
         foreach ($snippetrecordset as $snippetrecord) {
             // Get the meta information from the SCSS files' top multiline comment.
-            $snippet = self::get_snippet_meta($snippetrecord->path, $snippetrecord->source);
+            $snippet = self::get_snippet_meta($snippetrecord->name, $snippetrecord->source);
             // Only if snippet metadata is found, it will be added to the returned snippets array.
             if ($snippet) {
                 // Merge the two objects.
@@ -325,7 +301,7 @@ class snippets {
         // Iterate over all records.
         foreach ($data as $snippet) {
             // And add the SCSS code to the stack.
-            $scss .= self::get_snippet_scss($snippet->path, $snippet->source);
+            $scss .= self::get_snippet_scss($snippet->name, $snippet->source);
         }
 
         // Close the recordset.
@@ -413,7 +389,7 @@ class snippets {
      *
      * @return string[]
      */
-    private static function get_builtin_snippet_paths(): array {
+    private static function get_builtin_snippet_names(): array {
         global $CFG;
         // Get an array of all .scss files in the directory.
         $files = glob($CFG->dirroot . self::BUILTIN_SNIPPETS_BASE_PATH . '*.scss');
@@ -513,7 +489,7 @@ class snippets {
         $fs->create_file_from_string($filerecord, $filecontent);
 
         // Save preview image for that snippet if it exists.
-        $preview = self::get_snippet_preview_file($zipdir.'/'.$filename, self::SOURCE_UPLOADED);
+        $preview = self::search_preview_file($zipdir, $filename);
 
         if ($preview) {
             // Get the filename from the full path.
@@ -525,6 +501,38 @@ class snippets {
             // Save the preview file.
             $fs->create_file_from_pathname($filerecord, $preview);
         }
+    }
+
+    /**
+     * Search for a snippet preview image in the same path.
+     *
+     * @param string $basepath
+     * @param string $name
+     * @return string|null
+     */
+    private static function search_preview_file($basepath, $name): string|null {
+        // Ensure there is a directory seperator at the end of the base path.
+        $basepath = rtrim($basepath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        // Search for the .scss suffix in the path.
+        $search = '.scss';
+        $pos = strrpos($name, $search);
+        if ($pos !== false) {
+            // Compose the file pattern that searched for files with the same basename and the supported extensions.
+            $pattern = $basepath .
+                substr_replace(
+                    $name,
+                    '.{' . implode(',', self::ALLOWED_PREVIEW_FILE_EXTENSIONS) . '}',
+                    $pos,
+                    strlen($search)
+            );
+            // Search for the preview file.
+            $files = glob($pattern, GLOB_BRACE);
+            // Select the first match of the found preview file(s).
+            if (!empty($files)) {
+                return $files[0];
+            }
+        }
+        return null;
     }
 
     /**
@@ -554,8 +562,7 @@ class snippets {
 
     /**
      * Summary of add_uploaded_snippet
-     * @param mixed $file
-     * @param mixed $source
+     *
      * @return void
      */
     public static function parse_uploaded_snippets() {
@@ -575,20 +582,20 @@ class snippets {
 
         global $DB;
 
-        // Get builtin snippets which are known in the database.
+        // Get snippets which are known in the database.
         $snippets = $DB->get_records(
             'theme_boost_union_snippets',
             [],
             'sortorder DESC',
-            'id,path,sortorder'
+            'id,name,sortorder,source'
         );
 
         // Get the highest sortorder present.
         $sortorder = empty($snippets) ? 0 : intval(reset($snippets)->sortorder);
 
-        // Prepare an array with all the present builtin snippet paths.
-        $presentpaths = array_map(function($snippet) {
-            return $snippet->path;
+        // Prepare an array with all the present snippet names.
+        $presentnames = array_map(function($snippet) {
+            return $snippet->name;
         }, $snippets);
 
         $transaction = $DB->start_delegated_transaction();
@@ -605,14 +612,14 @@ class snippets {
                 continue;
             }
 
-            $path = $file->get_filename();
+            $name = $file->get_filename();
 
-            if (!in_array($path, $presentpaths)) {
+            if (!in_array($name, $presentnames)) {
                 // Add it to the database (raising the sort order).
                 $DB->insert_record(
                     'theme_boost_union_snippets',
                     [
-                        'path' => $path,
+                        'name' => $name,
                         'source' => self::SOURCE_UPLOADED,
                         'sortorder' => ++$sortorder,
                     ]
@@ -626,6 +633,65 @@ class snippets {
     }
 
     /**
+     * Return the area files of the uploaded snippets.
+     *
+     * @return \stored_file[]
+     */
+    private static function get_uploaded_snippet_files() {
+        $systemcontext = \context_system::instance();
+        $fs            = get_file_storage();
+        return $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'snippets', false, 'itemid', false);
+    }
+
+    /**
+     * Remove non existing snippets from the database and remove possible gaps in the sortorder.
+     *
+     * @return void
+     */
+    public static function cleanup_snippets(): void {
+        global $DB;
+
+        // Get snippets which are in the database.
+        $snippets = $DB->get_records(
+            'theme_boost_union_snippets',
+            [],
+            'sortorder DESC',
+            'id,name,sortorder,source'
+        );
+
+        // Delete snippets from the DB that are not existing anymore in the file area.
+        $uploaded = array_map(function ($file) {
+            return $file->get_filename();
+        }, self::get_uploaded_snippet_files());
+
+        // Merge all currently available snippets from all sources.
+        $existing = array_merge($uploaded, self::get_builtin_snippet_names());
+
+        // Get snippets that are in the DB but not available.
+        $delete = [];
+        foreach ($snippets as $key => $snippet) {
+            if (!in_array($snippet->name, $existing)) {
+                $delete[] = $snippet->id;
+            }
+        }
+
+        if (!empty($delete)) {
+            // Delete snippets that are not available anymore.
+            $DB->delete_records_list('theme_boost_union_snippets', 'id', $delete);
+            // Fetch remaining snippets, ordered by sortorder.
+            $remaining = $DB->get_records('theme_boost_union_snippets', null, 'sortorder ASC');
+            // Update each remaining snippet with a new sort order to remove gaps.
+            $newsortorder = 1;
+            foreach ($remaining as $snippet) {
+                if ($snippet->sortorder != $newsortorder) {
+                    $DB->set_field('theme_boost_union_snippets', 'sortorder', $newsortorder, ['id' => $snippet->id]);
+                }
+                $newsortorder++;
+            }
+        }
+    }
+
+    /**
      * Make sure that the builtin snippets are in the database.
      *
      * @return void
@@ -634,35 +700,35 @@ class snippets {
         global $DB;
 
         // Get builtin snippets that are present on disk.
-        $paths = self::get_builtin_snippet_paths();
+        $names = self::get_builtin_snippet_names();
 
         // Get builtin snippets which are known in the database.
         $snippets = $DB->get_records(
                 'theme_boost_union_snippets',
                 [],
                 'sortorder DESC',
-                'id,path,sortorder'
+                'id,name,sortorder'
         );
 
         // Get the highest sortorder present.
         $sortorder = empty($snippets) ? 0 : intval(reset($snippets)->sortorder);
 
-        // Prepare an array with all the present builtin snippet paths.
-        $presentpaths = array_map(function($snippet) {
-            return $snippet->path;
+        // Prepare an array with all the present builtin snippet names.
+        $presentnames = array_map(function($snippet) {
+            return $snippet->name;
         }, $snippets);
 
         $transaction = $DB->start_delegated_transaction();
 
         // Iterate over the builtin snippets that are present on disk.
-        foreach ($paths as $path) {
+        foreach ($names as $name) {
             // If the snippet is not in the database yet.
-            if (!in_array($path, $presentpaths)) {
+            if (!in_array($name, $presentnames)) {
                 // Add it to the database (raising the sort order).
                 $DB->insert_record(
                     'theme_boost_union_snippets',
                     [
-                        'path' => $path,
+                        'name' => $name,
                         'source' => self::SOURCE_BUILTIN,
                         'sortorder' => ++$sortorder,
                     ]
@@ -670,11 +736,7 @@ class snippets {
             }
         }
 
-        // Note: snippets which exist in the database and do not exist on disk won't be removed from the database in
-        // in this process.
-        // They will stay there until the theme is removed. This is to make sure that snippet settings do not get lost
-        // even if they appear from disk temporarily.
-        // But such snippets will be ignored later when the snippet table is processed and when the SCSS is composed.
+        self::cleanup_snippets();
 
         $transaction->allow_commit();
     }

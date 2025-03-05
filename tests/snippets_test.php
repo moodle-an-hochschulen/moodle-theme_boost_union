@@ -80,7 +80,7 @@ final class snippets_test extends advanced_testcase {
         // Delete one snippet from the database.
         $DB->delete_records(
             'theme_boost_union_snippets',
-            ['source' => 'theme_boost_union', 'path' => 'visual_depth.scss']
+            ['source' => 'theme_boost_union', 'name' => 'visual_depth.scss']
         );
 
         $count = $DB->count_records(
@@ -96,7 +96,7 @@ final class snippets_test extends advanced_testcase {
         // The builtin snippet which was just deleted from the db should be registered again.
         $snippet = $DB->get_record(
             'theme_boost_union_snippets',
-            ['source' => 'theme_boost_union', 'path' => 'visual_depth.scss']
+            ['source' => 'theme_boost_union', 'name' => 'visual_depth.scss']
         );
 
         $this->assertNotEmpty($snippet);
