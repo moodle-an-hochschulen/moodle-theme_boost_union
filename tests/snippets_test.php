@@ -145,7 +145,7 @@ final class snippets_test extends advanced_testcase {
         // Enable a builtin snippet directly via the DB.
         $snippet = $DB->get_record(
             'theme_boost_union_snippets',
-            ['source' => 'theme_boost_union', 'path' => 'visual_depth.scss']
+            ['source' => 'theme_boost_union', 'name' => 'visual_depth.scss']
         );
         $snippet->enabled = 1;
         $DB->update_record('theme_boost_union_snippets', $snippet);
