@@ -170,7 +170,8 @@ class course_renderer extends \core_course_renderer {
                     // Show the category heading as sticky header, if necessary.
                     if ($showstickyheaders == true) {
                         $content .= html_writer::start_tag('div',
-                                ['class' => 'theme_boost_union-stickycategory bg-white rounded-bottom mb-3 pt-3 mx-1 px-0 sticky-top']);
+                                ['class' =>
+                                        'theme_boost_union-stickycategory bg-white rounded-bottom mb-3 pt-3 mx-1 px-0 sticky-top']);
                         $content .= html_writer::start_tag('div', ['class' => 'border rounded px-3 pt-3 pb-2 bg-light']);
                         $content .= html_writer::tag('h6', $cat->name);
                         $content .= html_writer::end_div();
@@ -182,9 +183,9 @@ class course_renderer extends \core_course_renderer {
                     // Set the row-cols-lg class depending on the coursecardscolumncount setting.
                     if ($showstickyheaders == true || $cardgridstarted == false) {
                         $content .= html_writer::start_tag('div',
-                                [
-                                    'class' => 'card-grid row no-gutters row-cols-1 row-cols-sm-'.$maxcolssm.' row-cols-lg-'.$maxcolslg,
-                                    'role' => 'list',
+                                ['class' =>
+                                        'card-grid row no-gutters row-cols-1 row-cols-sm-'.$maxcolssm.' row-cols-lg-'.$maxcolslg,
+                                  'role' => 'list',
                                 ]
                         );
                         $cardgridstarted = true;
@@ -242,7 +243,8 @@ class course_renderer extends \core_course_renderer {
                     // Show the category heading as sticky header, if necessary.
                     if ($showstickyheaders == true) {
                         $content .= html_writer::start_tag('div',
-                                ['class' => 'theme_boost_union-stickycategory col-12 bg-white rounded-bottom mb-3 pt-3 sticky-top']);
+                                ['class' =>
+                                        'theme_boost_union-stickycategory col-12 bg-white rounded-bottom mb-3 pt-3 sticky-top']);
                         $content .= html_writer::start_tag('div', ['class' => 'border rounded px-3 pt-3 pb-2 bg-light']);
                         $content .= html_writer::tag('h6', $cat->name);
                         $content .= html_writer::end_div();
