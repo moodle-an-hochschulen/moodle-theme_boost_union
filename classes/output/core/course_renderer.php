@@ -58,8 +58,8 @@ class course_renderer extends \core_course_renderer {
      */
     protected function coursecat_courses(coursecat_helper $chelper, $courses, $totalcount = null) {
         // If the course listing should remain unchanged.
-        $courselistingpresetation = get_config('theme_boost_union', 'courselistingpresentation');
-        if (!isset($courselistingpresetation) || $courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
+        $courselistingpresentation = get_config('theme_boost_union', 'courselistingpresentation');
+        if (!isset($courselistingpresentation) || $courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
             // Call the parent function to present the default view.
             return parent::coursecat_courses($chelper, $courses, $totalcount);
         }
@@ -130,7 +130,7 @@ class course_renderer extends \core_course_renderer {
         }
 
         // If course cards are enabled.
-        if ($courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_CARDS) {
+        if ($courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_CARDS) {
             // Start the course listing as card grid.
             // And add the theme_boost_union-courselisting class to be used in the CSS.
             $content .= html_writer::start_tag('div',
@@ -209,7 +209,7 @@ class course_renderer extends \core_course_renderer {
             $content .= html_writer::end_tag('div');
 
             // Or if the course list is enabled.
-        } else if ($courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_LIST) {
+        } else if ($courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_LIST) {
             // Start the course listing as course list.
             // And add the theme_boost_union-courselisting class to be used in the CSS.
             $content .= html_writer::start_tag('div',
@@ -267,11 +267,6 @@ class course_renderer extends \core_course_renderer {
             $content .= html_writer::end_tag('div');
         }
 
-        // If the course listing details modal is enabled, add the necessary JS.
-        if (get_config('theme_boost_union', 'courselistinghowpopup') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-            $this->page->requires->js_call_amd('theme_boost_union/courselistingdetailsmodal', 'init');
-        }
-
         if (!empty($pagingbar)) {
             $content .= $pagingbar;
         }
@@ -301,8 +296,8 @@ class course_renderer extends \core_course_renderer {
      */
     protected function coursecat_coursebox(coursecat_helper $chelper, $course, $additionalclasses = '') {
         // If the course listing should remain unchanged.
-        $courselistingpresetation = get_config('theme_boost_union', 'courselistingpresentation');
-        if (!isset($courselistingpresetation) || $courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
+        $courselistingpresentation = get_config('theme_boost_union', 'courselistingpresentation');
+        if (!isset($courselistingpresentation) || $courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
             // Call the parent function to present the default view.
             return parent::coursecat_coursebox($chelper, $course, $additionalclasses);
         }
@@ -338,8 +333,8 @@ class course_renderer extends \core_course_renderer {
      */
     protected function coursecat_coursebox_content(coursecat_helper $chelper, $course) {
         // If the course listing should remain unchanged.
-        $courselistingpresetation = get_config('theme_boost_union', 'courselistingpresentation');
-        if (!isset($courselistingpresetation) || $courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
+        $courselistingpresentation = get_config('theme_boost_union', 'courselistingpresentation');
+        if (!isset($courselistingpresentation) || $courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
             // Call the parent function to compose the default view.
             return parent::coursecat_coursebox_content($chelper, $course);
         }
@@ -509,12 +504,12 @@ class course_renderer extends \core_course_renderer {
         }
 
         // If course cards are enabled.
-        if ($courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_CARDS) {
+        if ($courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_CARDS) {
             // Render the card template.
             $content = $this->render_from_template('theme_boost_union/courselistingcard', $templatedata);
 
             // Or if the course list is enabled.
-        } else if ($courselistingpresetation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_LIST) {
+        } else if ($courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_LIST) {
             // Render the list template.
             $content = $this->render_from_template('theme_boost_union/courselistinglist', $templatedata);
         }
@@ -639,6 +634,22 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function coursecat_tree(coursecat_helper $chelper, $coursecat) {
+        // If the course listing details modal is enabled and should be shown, add the necessary JS.
+        // This has to be done here even if categorylistingpresentation is set to nochange to make sure that
+        // the JS is loaded in any case.
+        static $detailsmodalchecked = null;
+        if ($detailsmodalchecked == null) {
+            $courselistingpresentation = get_config('theme_boost_union', 'courselistingpresentation');
+            $courselistinghowpopup = get_config('theme_boost_union', 'courselistinghowpopup');
+            if (isset($courselistingpresentation) &&
+                    $courselistingpresentation != THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE &&
+                    isset($courselistinghowpopup) &&
+                    $courselistinghowpopup == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $this->page->requires->js_call_amd('theme_boost_union/courselistingdetailsmodal', 'init');
+            }
+            $detailsmodalchecked = true;
+        }
+
         // If the category listing should remain unchanged.
         $categorylistingpresentation = get_config('theme_boost_union', 'categorylistingpresentation');
         if (!isset($categorylistingpresentation) ||
@@ -658,9 +669,9 @@ class course_renderer extends \core_course_renderer {
         }
 
         // If the modified course listing within the category tree is enabled.
-        $courselistingpresetation = get_config('theme_boost_union', 'courselistingpresentation');
+        $courselistingpresentation = get_config('theme_boost_union', 'courselistingpresentation');
         $additionalclasses = '';
-        if (isset($courselistingpresetation) && $courselistingpresetation != THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
+        if (isset($courselistingpresentation) && $courselistingpresentation != THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
             // Add a CSS class to allow styling the category listing.
             $additionalclasses = 'theme_boost_union-catlisting-cl';
         }
