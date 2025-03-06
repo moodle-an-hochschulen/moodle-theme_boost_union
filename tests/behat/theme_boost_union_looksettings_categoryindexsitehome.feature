@@ -682,6 +682,62 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | list        | yes          | .course-listitem .popupbutton          | should      |
 
   @javascript
+  Scenario Outline: Setting: Show details popup in the course listing: Click the button
+    Given the following config values are set as admin:
+      | config                    | value          | plugin            |
+      | courselistingpresentation | <coursevalue>  | theme_boost_union |
+      | courselistinghowpopup     | yes            | theme_boost_union |
+    When I log in as "student1"
+    And I am on site homepage
+    # Check the 'Combo list' view on site home as a whole
+    Then "<selector>" "css_element" should exist in the "#frontpage-category-combo" "css_element"
+    And I click on "<selector>" "css_element" in the "#frontpage-category-combo" "css_element"
+    And ".modal-dialog" "css_element" should be visible
+    And I click on ".modal-dialog .btn-close" "css_element"
+    # Check a subcategory in the 'Combo list' view on site home
+    And I reload the page
+    And I click on ".info" "css_element" in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector>" "css_element" should exist in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
+    And I click on "<selector>" "css_element" in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
+    And ".modal-dialog" "css_element" should be visible
+    And I click on ".modal-dialog .btn-close" "css_element"
+    # Check the 'Enrolled courses' view on site home
+    And I reload the page
+    And "<selector>" "css_element" should exist in the "#frontpage-course-list" "css_element"
+    And I click on "<selector>" "css_element" in the "#frontpage-course-list" "css_element"
+    And ".modal-dialog" "css_element" should be visible
+    And I click on ".modal-dialog .btn-close" "css_element"
+    # Check the 'List of courses' view on site home
+    And I reload the page
+    And "<selector>" "css_element" should exist in the "#frontpage-available-course-list" "css_element"
+    And I click on "<selector>" "css_element" in the "#frontpage-available-course-list" "css_element"
+    And ".modal-dialog" "css_element" should be visible
+    And I click on ".modal-dialog .btn-close" "css_element"
+    # Check the categoriy overview page of a category without subcategories
+    And I am on the "CATA" category page
+    Then "<selector>" "css_element" should exist in the ".course_category_tree" "css_element"
+    And I click on "<selector>" "css_element" in the ".course_category_tree" "css_element"
+    And ".modal-dialog" "css_element" should be visible
+    And I click on ".modal-dialog .btn-close" "css_element"
+    # Check the categoriy overview page of a category with subcategories
+    And I am on the "CATB" category page
+    Then "<selector>" "css_element" should exist in the ".course_category_tree" "css_element"
+    And I click on "<selector>" "css_element" in the ".course_category_tree" "css_element"
+    And ".modal-dialog" "css_element" should be visible
+    And I click on ".modal-dialog .btn-close" "css_element"
+    And I reload the page
+    And I click on ".info" "css_element" in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector>" "css_element" should exist in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
+    And I click on "<selector>" "css_element" in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
+    And ".modal-dialog" "css_element" should be visible
+    And I click on ".modal-dialog .btn-close" "css_element"
+
+    Examples:
+      | coursevalue | selector                               |
+      | cards       | .course-card .card-footer .popupbutton |
+      | list        | .course-listitem .popupbutton          |
+
+  @javascript
   Scenario Outline: Setting: Show details popup in the course listing: Check the content: Course summary
     Given the following config values are set as admin:
       | config                    | value | plugin            |
