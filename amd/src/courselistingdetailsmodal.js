@@ -28,7 +28,6 @@ import Templates from 'core/templates';
 import {getString} from 'core/str';
 
 const SELECTORS = {
-    SNIPPETS_CONTAINER: 'theme_boost_union-courselisting',
     DETAILS: '[data-action="courselisting-details"]',
 };
 
