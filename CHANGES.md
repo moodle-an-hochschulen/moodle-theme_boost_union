@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r9
 
 * 2025-02-22 - Feature: Add some styling to the category listings on site home and on the category index pages, resolves #840.
 * 2025-02-16 - Feature: Show the course listing on site home and on the category index pages as (proper) list, resolves #573.
