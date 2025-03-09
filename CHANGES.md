@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-03-08 - Improvement: Add setting to limit the maximum width of the navbar logo if it is too broad or has a special aspect ratio, resolves #544.
+
 ### v4.5-r9
 
 * 2025-02-22 - Feature: Add some styling to the category listings on site home and on the category index pages, resolves #840.
