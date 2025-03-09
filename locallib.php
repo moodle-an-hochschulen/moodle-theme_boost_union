@@ -1680,6 +1680,28 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
     return $scss;
 }
 
+
+/**
+ * Returns the SCSS code to be used in the navbar.
+ *
+ * @param theme_config $theme The theme config object.
+ * @return string
+ */
+function theme_boost_union_get_scss_navbar($theme) {
+    // Initialize SCSS snippet.
+    $scss = '';
+
+    // Set styles bases on the maxlogowidth setting.
+    if (!empty(get_config('theme_boost_union', 'maxlogowidth'))) {
+        $scss .= '.navbar-brand, .navbar-brand .logo {
+                max-width: '.get_config('theme_boost_union', 'maxlogowidth').';
+                height: auto;
+        }'.PHP_EOL;
+    }
+
+    return $scss;
+}
+
 /**
  * Helper function which returns an array of login methods on the login page.
  *
