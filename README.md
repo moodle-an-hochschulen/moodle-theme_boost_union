@@ -944,6 +944,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * ssystems GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
 * Technische Universität Berlin, Lars Bonczek: Code
 * University of Bayreuth, Nikolai Jahreis: Code
+* University of California, San Francisco, Stefan Topfstedt: Code
 * University of Graz, André Menrath: Code
 * University of Lübeck, Christian Wolters: Code, Peer Review, Ideating
 * Zurich University of Applied Sciences (ZHAW): Code, Funding, Ideating
