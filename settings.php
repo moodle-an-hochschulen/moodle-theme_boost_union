@@ -845,6 +845,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
         }
 
+        // Create side entrance login heading.
+        $name = 'theme_boost_union/sideentranceloginheading';
+        $title = get_string('sideentranceloginheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Enable side entrance login.
+        $name = 'theme_boost_union/sideentranceloginenable';
+        $title = get_string('sideentranceloginenablesetting', 'theme_boost_union', null, true);
+        $localloginurl = new core\url('/theme/boost_union/locallogin.php');
+        $sideentranceoptions = [
+                THEME_BOOST_UNION_SETTING_SELECT_AUTO => get_string('auto', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SELECT_ALWAYS => get_string('always', 'theme_boost_union'),
+        ];
+        $description = get_string('sideentranceloginenablesetting_desc', 'theme_boost_union', ['url' => $localloginurl], true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_AUTO,
+                $sideentranceoptions);
+        $tab->add($setting);
+
         // Add tab to settings page.
         $page->add($tab);
 

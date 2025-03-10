@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-03-10 - Improvement: Allow the side entrace login page to be enabled independent from the localloginenable setting, resolves #782
+
 ### v4.5-r10
 
 * 2025-03-10 - Bugfix: The course details modal did not work on all site home widgets, resolves #851.

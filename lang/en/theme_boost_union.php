@@ -37,6 +37,7 @@ $string['githubissueslink'] = '<a href="https://github.com/moodle-an-hochschulen
 // General select options.
 $string['never'] = 'Never';
 $string['always'] = 'Always';
+$string['auto'] = 'Automatically';
 $string['nochange'] = 'No change';
 $string['forguestsonly'] = 'Only for guests and non-logged-in users';
 
@@ -293,10 +294,10 @@ $string['loginprovidersheading'] = 'Login providers';
 $string['loginprovidersheading_desc'] = 'Please note: Boost Union has its own login providers settings and does not use the \'{$a->settingname}\' setting from <a href="{$a->url}">Moodle core\'s authentication setting</a>.';
 // ... ... Setting: Local login form.
 $string['loginlocalloginenablesetting'] = 'Local login';
-$string['loginlocalloginenablesetting_desc'] = 'With this setting, you control if the local login form is shown on the login page or not. By default, the local login form is shown and users an login into the site as normal. If you disable this setting, the local login form is hidden. This allows you to just provide login buttons for external identity providers like OAuth2 or OIDC.';
-$string['loginlocalloginenablesetting_note'] = 'Please note: As soon as you hide the local login form, you risk that admins cannot log in anymore with a local account if there is a problem with the external identity provider. To allow local logins anyway in such cases, a <a href="{$a->url}">side entrance local login page</a> is provided. On this side entrance local login page, all of Moodle\'s login security measures apply as well.';
+$string['loginlocalloginenablesetting_desc'] = 'With this setting, you control if the local login form is shown on the login page or not. By default, the local login form is shown and users can login into the site as normal. If you disable this setting, the local login form is hidden. This allows you to just provide login buttons for external identity providers like OAuth2 or OIDC.';
+$string['loginlocalloginenablesetting_note'] = 'Please note: As soon as you hide the local login form, you risk that admins cannot log in anymore with a local account if there is a problem with the external identity provider. To allow local logins anyway in such cases, the <a href="{$a->url}">side entrance local login page</a> (see below for details) is enabled automatically.';
 $string['loginlocalloginformhead'] = 'Local login';
-$string['loginlocalloginlocalnotdisabled'] = 'The local login is enabled on the standard login form. There is no need to log in on this local login page here. Please use the <a href="{$a->url}">standard login page</a> for logging in.';
+$string['loginlocalloginlocalnotdisabled'] = 'There is no need to log in on this side entrance login page here. Please use the <a href="{$a->url}">standard login page</a> for logging in.';
 // ... ... Setting: Local login intro.
 $string['loginlocalshowintrosetting'] = 'Local login intro';
 $string['loginlocalshowintrosetting_desc'] = 'With this setting, you control if a <em>\'{$a}\'</em> intro is shown above the local login form or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand which credentials to use in the local login form, especially if you provide more than one login method or if you have changed the order of the login methods.';
@@ -313,6 +314,11 @@ $string['loginorderlocalsetting'] = 'Local login';
 $string['loginorderidpsetting'] = 'IDP login';
 $string['loginorderfirsttimesignupsetting'] = 'Information for first time visitors & Self registration';
 $string['loginorderguestsetting'] = 'Guest login';
+// ... Section: Side entrance login.
+$string['sideentranceloginheading'] = 'Side entrance login';
+// ... ... Setting: Endable side entrance login.
+$string['sideentranceloginenablesetting'] = 'Enable side entrance login';
+$string['sideentranceloginenablesetting_desc'] = 'With this setting, you can enable a <a href="{$a->url}">side entrance local login page</a>. It is enabled automatically if you disable the local login form (see above), but you can also enable it constantly to allow local users to bypass the main login page and login process which is particularly helpful in SSO setups. On the side entrance local login page, all of Moodle\'s login security measures apply as well, of course.';
 
 // Settings: Dashboard / My courses tab.
 $string['dashboardtab'] = 'Dashboard / My courses';

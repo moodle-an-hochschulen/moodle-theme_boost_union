@@ -46,8 +46,9 @@ $PAGE->set_context(context_system::instance());
 // Get theme config.
 $config = get_config('theme_boost_union');
 
-// If the local login is not disabled, we just show a short friendly warning page and are done.
-if ($config->loginlocalloginenable != THEME_BOOST_UNION_SETTING_SELECT_NO) {
+// If the side entrance local login is not enabled, we just show a short friendly warning page and are done.
+if ($config->sideentranceloginenable != THEME_BOOST_UNION_SETTING_SELECT_ALWAYS &&
+        $config->loginlocalloginenable != THEME_BOOST_UNION_SETTING_SELECT_NO) {
     echo $OUTPUT->header();
     $loginurl = new core\url('/login/index.php');
     $notification = new \core\output\notification(
