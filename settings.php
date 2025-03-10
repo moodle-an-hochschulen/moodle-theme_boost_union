@@ -801,8 +801,11 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/loginlocalloginenable';
         $title = get_string('loginlocalloginenablesetting', 'theme_boost_union', null, true);
         $localloginurl = new core\url('/theme/boost_union/locallogin.php');
-        $description = get_string('loginlocalloginenablesetting_desc', 'theme_boost_union', null, true).'<br /><br />'.
-                get_string('loginlocalloginenablesetting_note', 'theme_boost_union', ['url' => $localloginurl], true);
+        $description = get_string('loginlocalloginenablesetting_desc', 'theme_boost_union', null, true);
+        $localloginnotification = new \core\output\notification(get_string('loginlocalloginenablesetting_note', 'theme_boost_union',
+                ['url' => $localloginurl], true), \core\output\notification::NOTIFY_WARNING);
+        $localloginnotification->set_show_closebutton(false);
+        $description .= $OUTPUT->render($localloginnotification);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
 
