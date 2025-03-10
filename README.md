@@ -203,9 +203,7 @@ With this setting, you can make the login form slightly transparent to let the b
 
 ###### Local login
 
-With this setting, you control if the local login form is shown on the login page or not. By default, the local login form is shown and users an login into the site as normal. If you disable this setting, the local login form is hidden. This allows you to just provide login buttons for external identity providers like OAuth2 or OIDC.
-
-Please note: As soon as you hide the local login form, you risk that admins cannot log in anymore with a local account if there is a problem with the external identity provider. To allow local logins anyway in such cases, a side entrance local login page is provided on /theme/boost_union/locallogin.php. On this side entrance local login page, all of Moodle's login security measures apply as well.
+With this setting, you control if the local login form is shown on the login page or not. By default, the local login form is shown and users can login into the site as normal. If you disable this setting, the local login form is hidden. This allows you to just provide login buttons for external identity providers like OAuth2 or OIDC.
 
 ###### Local login intro
 
@@ -218,6 +216,10 @@ With this setting, you control if the 'Log in using your account on' intro is sh
 ##### Login order
 
 With these settings, you control the order of the login methods in the login form. The presented order will be defined from lowest to highest ordinal number, skipping all login methods and login form elements which are disabled in Moodle.
+
+##### Side entrance login
+
+With this setting, you can enable a side entrance local login page. It is enabled automatically if you disable the local login form (see above), but you can also enable is constantly to allow local users to bypass the main login page and login process which is particularly helpful in SSO setups. On the side entrance local login page, all of Moodle's login security measures apply as well, of course.
 
 #### Tab "Dashboard / My courses"
 
