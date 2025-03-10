@@ -23,6 +23,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_boost_union\snippets;
+
 /**
  * Function to upgrade theme_boost_union
  * @param int $oldversion the version we are upgrading from
@@ -325,7 +327,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2024100702) {
-
         // Define field byadmin to be added to theme_boost_union_menus.
         $table = new xmldb_table('theme_boost_union_menus');
         $field = new xmldb_field('byadmin', XMLDB_TYPE_INTEGER, '9', null, XMLDB_NOTNULL, null, '0', 'visible');
@@ -488,7 +489,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2024100709) {
-
         // Define table theme_boost_union_menuitems to be altered.
         $table = new xmldb_table('theme_boost_union_menuitems');
 
@@ -505,7 +505,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2024100712) {
-
         // Set the smart menu item mode to inline for all menu items which are not of the dynamic courses type.
         // This is necessary as the smart menu item mode setting has been removed from these menu item types and the
         // smart menu item form only saves the inline mode as default since then.
@@ -515,6 +514,30 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
 
         // Boost_union savepoint reached.
         upgrade_plugin_savepoint(true, 2024100712, 'theme', 'boost_union');
+
+        // Define table theme_boost_union_snippets to be created.
+        $table = new xmldb_table('theme_boost_union_snippets');
+
+        // Adding fields to table theme_boost_union_snippets.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('sortorder', XMLDB_TYPE_INTEGER, '18', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('source', XMLDB_TYPE_CHAR, '255', null, null, null, 'theme_boost_union');
+        $table->add_field('path', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+        $table->add_field('enabled', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0');
+
+        // Adding keys to table theme_boost_union_snippets.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+
+        // Conditionally launch create table for theme_boost_union_snippets.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+    }
+
+    // Load the builtin SCSS snippets into the database.
+    // This is done with every plugin update, regardless of the plugin version.
+    if (get_config( 'theme_boost_union', 'enablebuiltinsnippets')) {
+        snippets::add_builtin_snippets();
     }
 
     if ($oldversion < 2024100716) {

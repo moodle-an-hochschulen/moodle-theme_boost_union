@@ -37,6 +37,7 @@ class behat_theme_boost_union extends behat_base {
      * | Accessibility | "Accessibility" settings page |
      * | Flavours      | Flavours listing page         |
      * | Smart menus   | Smart menus listing page      |
+     * | CSS snippets  | CSS snippets overview page    |
      *
      * @param string $page name of the page, with the component name removed e.g. 'Admin notification'.
      * @return moodle_url the corresponding URL.
@@ -55,6 +56,7 @@ class behat_theme_boost_union extends behat_base {
                 'accessibility' => new moodle_url('/admin/settings.php?section=theme_boost_union_accessibility'),
                 'flavours' => new moodle_url('/theme/boost_union/flavours/overview.php'),
                 'smart menus' => new moodle_url('/theme/boost_union/smartmenus/menus.php'),
+                'css snippets' => new moodle_url('/theme/boost_union/snippets/overview.php'),
                 default => throw new Exception('Unrecognised theme_boost_union page "' . $page . '."')
             };
         }
