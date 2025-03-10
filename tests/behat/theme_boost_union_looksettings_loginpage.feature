@@ -310,3 +310,36 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | alternateloginurl |
       |                   |
       | /foo              |
+
+  Scenario: Setting: Enable side entrance login - Use the side entrance login page - Visit the side entrace login page as a guest user
+    Given the following "courses" exist:
+      | fullname | shortname |
+      | Course 1 | C1        |
+    And the following "course enrolments" exist:
+      | user  | course | role           |
+      | admin | C1     | editingteacher |
+    And the following config values are set as admin:
+      | config           | value |
+      | guestloginbutton | 1     |
+      | autologinguests  | 1     |
+    And the following config values are set as admin:
+      | config                  | value  | plugin            |
+      | sideentranceloginenable | always | theme_boost_union |
+    When I log in as "admin"
+    And I am on the "Course 1" "enrolment methods" page
+    And I click on "Edit" "link" in the "Guest access" "table_row"
+    And I set the following fields to these values:
+      | Allow guest access | Yes |
+    And I press "Save changes"
+    And I log out
+    And I am on "Course 1" course homepage
+    And I should see "You are currently using guest access"
+    And I am on local login page
+    Then "form#login" "css_element" should exist
+    And I set the following fields to these values:
+    # With behat, the password is always the same as the username.
+      | Username | admin |
+      | Password | admin |
+    And I press "Log in"
+    And I should see "Hi, Admin" in the "page-header" "region"
+    And I should not see "You are currently using guest access"

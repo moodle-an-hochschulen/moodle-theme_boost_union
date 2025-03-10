@@ -65,8 +65,8 @@ if ($config->sideentranceloginenable != THEME_BOOST_UNION_SETTING_SELECT_ALWAYS 
     die;
 }
 
-// If the user is already logged in or is a guest user.
-if (isloggedin() || isguestuser()) {
+// If the user is already logged in and is _not_ a guest user (as guest users should be able to use the side entrale local login).
+if (isloggedin() && !isguestuser()) {
     // We just redirect him to the standard login page to handle this case.
     // And, if alternateloginurl is set, add the loginredirect parameter.
     if (!empty($CFG->alternateloginurl)) {
