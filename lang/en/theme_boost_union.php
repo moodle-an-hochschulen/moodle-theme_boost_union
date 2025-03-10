@@ -1103,6 +1103,7 @@ $string['accessibilitydeclarationlinkpositionsetting_desc'] = 'In this setting, 
 $string['accessibilitysupporttab'] = 'Support page';
 // ... Section: Accessibility support page.
 $string['accessibilitysupportheading'] = 'Accessibility support page';
+$string['accessibilitysupportsubmit'] = 'Submit';
 // ... ... Setting: Enable accessibility support page.
 $string['enableaccessibilitysupportsetting'] = 'Enable accessibility support page';
 $string['enableaccessibilitysupportsetting_desc'] = 'With this setting, you can enable a accessibility support page. It will behave similar to <a href="{$a->url}">Moodle core\'s site support page</a>.';
