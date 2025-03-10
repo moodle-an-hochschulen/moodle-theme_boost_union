@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-03-09 - Bugfix: The theme's SCSS could not be built if setting activityiconcolorfidelity was not set yet, resolves #838
 * 2025-03-09 - Upgrade: Remove theme_boost_union_before_standard_html_head and theme_boost_union_before_standard_top_of_body_html callbacks from Moodle 4.5 and 4.4 releases finally, resolves #640.
 * 2025-03-09 - Improvement: Introduce a Boost Union specific string for "submit" to be used in the accessbility support form which allows better translatons, resolves #830.
 * 2025-03-08 - Upgrade: Replace .media Bootstrap class according to MDL-80396, resolves #835.
