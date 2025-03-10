@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-03-10 - Bugfix: Guests could not use the side entrance login page, resolves #653.
 * 2025-03-10 - Bugfix: Fix unwanted redirect to IdP from locallogin.php in case alternateloginurl is set, resolves #775.
 * 2025-03-10 - Improvement: Show a clearer warning to the admin about the risks of disabling the local login form, resolves #777.
 * 2025-03-10 - Improvement: Allow the side entrace login page to be enabled independent from the localloginenable setting, resolves #782
