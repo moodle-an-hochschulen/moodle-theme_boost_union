@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-03-09 - Improvement: Introduce a Boost Union specific string for "submit" to be used in the accessbility support form which allows better translatons, resolves #830.
 * 2025-03-08 - Improvement: Add setting to limit the maximum width of the navbar logo if it is too broad or has a special aspect ratio, resolves #544.
 
 ### v4.4-r12
