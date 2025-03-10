@@ -454,7 +454,8 @@
                     }
                 }
 
-                /* Support up to 8 subcategory levels, from level 9 on the course listing would not be indented correctly anymore. */
+                /* Support up to 8 subcategory levels,
+                   from level 9 on the course listing would not be indented correctly anymore. */
                 [data-depth="2"] .theme_boost_union-courselisting {
                     width: calc(100% + 4rem + 16px);
                     margin-left: calc(-2rem - 8px - 16px);
