@@ -186,6 +186,9 @@ class solver {
 
         // Get the number of iterations which the admin wanted us to do.
         $imax = get_config('theme_boost_union', 'activityiconcolorfidelity');
+        if (!isset($imax) || !is_numeric($imax)) {
+            $imax = 1;
+        }
 
         // Try the configured number of iterations to find a filter which fits really well (i.e. loss < 0.005).
         $i = 0;
