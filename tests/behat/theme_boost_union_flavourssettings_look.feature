@@ -435,9 +435,6 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
 
   @javascript
   Scenario Outline: Flavours: Activity icon colors - Setting the color (with a global color not having been set before)
-    Given the following config values are set as admin:
-      | config                    | value | plugin            |
-      | activityiconcolorfidelity | 500   | theme_boost_union |
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
@@ -470,9 +467,6 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     Given the following config values are set as admin:
       | config                         | value   | plugin            |
       | activityiconcolor<purposename> | #00FFFF | theme_boost_union |
-    And the following config values are set as admin:
-      | config                    | value | plugin            |
-      | activityiconcolorfidelity | 500   | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Flavours" in site administration
@@ -502,9 +496,6 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     Given the following config values are set as admin:
       | config                         | value      | plugin            |
       | activityiconcolor<purposename> | <colorhex> | theme_boost_union |
-    And the following config values are set as admin:
-      | config                    | value | plugin            |
-      | activityiconcolorfidelity | 500   | theme_boost_union |
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on "Create flavour" "button"
