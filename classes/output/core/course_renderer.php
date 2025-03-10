@@ -37,6 +37,33 @@ use theme_boost_union\util\course;
  */
 class course_renderer extends \core_course_renderer {
     /**
+     * Override the constructor so that we can inject the AMD modal.
+     *
+     * @param \moodle_page $page
+     * @param string $target
+     */
+    public function __construct(\moodle_page $page, $target) {
+        // If the course listing details modal is enabled and should be shown, add the necessary JS.
+        // This has to be done here even if categorylistingpresentation is set to nochange to make sure that
+        // the JS is loaded in any case.
+        static $detailsmodalchecked = null;
+        if ($detailsmodalchecked == null) {
+            $courselistingpresentation = get_config('theme_boost_union', 'courselistingpresentation');
+            $courselistinghowpopup = get_config('theme_boost_union', 'courselistinghowpopup');
+            if (isset($courselistingpresentation) &&
+                    $courselistingpresentation != THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE &&
+                    isset($courselistinghowpopup) &&
+                    $courselistinghowpopup == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $page->requires->js_call_amd('theme_boost_union/courselistingdetailsmodal', 'init');
+            }
+            $detailsmodalchecked = true;
+        }
+
+        // Call parent constructor.
+        parent::__construct($page, $target);
+    }
+
+    /**
      * Renders the list of courses
      *
      * This is internal function, please use \core_course_renderer::courses_list() or another public
@@ -634,22 +661,6 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function coursecat_tree(coursecat_helper $chelper, $coursecat) {
-        // If the course listing details modal is enabled and should be shown, add the necessary JS.
-        // This has to be done here even if categorylistingpresentation is set to nochange to make sure that
-        // the JS is loaded in any case.
-        static $detailsmodalchecked = null;
-        if ($detailsmodalchecked == null) {
-            $courselistingpresentation = get_config('theme_boost_union', 'courselistingpresentation');
-            $courselistinghowpopup = get_config('theme_boost_union', 'courselistinghowpopup');
-            if (isset($courselistingpresentation) &&
-                    $courselistingpresentation != THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE &&
-                    isset($courselistinghowpopup) &&
-                    $courselistinghowpopup == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                $this->page->requires->js_call_amd('theme_boost_union/courselistingdetailsmodal', 'init');
-            }
-            $detailsmodalchecked = true;
-        }
-
         // If the category listing should remain unchanged.
         $categorylistingpresentation = get_config('theme_boost_union', 'categorylistingpresentation');
         if (!isset($categorylistingpresentation) ||
