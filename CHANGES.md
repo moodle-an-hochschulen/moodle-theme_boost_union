@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r38
 
 * 2025-03-09 - Improvement: Introduce a Boost Union specific string for "submit" to be used in the accessbility support form which allows better translatons, resolves #830.
 
