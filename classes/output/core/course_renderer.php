@@ -198,7 +198,7 @@ class course_renderer extends \core_course_renderer {
                     if ($showstickyheaders == true) {
                         $content .= html_writer::start_tag('div',
                                 ['class' =>
-                                        'theme_boost_union-stickycategory bg-white rounded-bottom mb-3 pt-3 mx-1 px-0 sticky-top']);
+                                        'theme_boost_union-stickycategory bg-white rounded-bottom mb-3 pt-3 mx-1 px-0']);
                         $content .= html_writer::start_tag('div', ['class' => 'border rounded px-3 pt-3 pb-2 bg-light']);
                         $content .= html_writer::tag('h6', $cat->name);
                         $content .= html_writer::end_div();
@@ -271,7 +271,7 @@ class course_renderer extends \core_course_renderer {
                     if ($showstickyheaders == true) {
                         $content .= html_writer::start_tag('div',
                                 ['class' =>
-                                        'theme_boost_union-stickycategory col-12 bg-white rounded-bottom mb-3 pt-3 sticky-top']);
+                                        'theme_boost_union-stickycategory col-12 bg-white rounded-bottom mb-3 pt-3']);
                         $content .= html_writer::start_tag('div', ['class' => 'border rounded px-3 pt-3 pb-2 bg-light']);
                         $content .= html_writer::tag('h6', $cat->name);
                         $content .= html_writer::end_div();

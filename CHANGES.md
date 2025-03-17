@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-03-17 - Bugfix: Remove unneeded class that would make menus appear under the category header, resolves #866.
+
 ### v4.5-r10
 
 * 2025-03-10 - Bugfix: The course details modal did not work on all site home widgets, resolves #851.
