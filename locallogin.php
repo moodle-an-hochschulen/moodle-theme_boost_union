@@ -46,8 +46,14 @@ $PAGE->set_context(context_system::instance());
 // Get theme config.
 $config = get_config('theme_boost_union');
 
-// If the local login is not disabled, we just show a short friendly warning page and are done.
-if ($config->loginlocalloginenable != THEME_BOOST_UNION_SETTING_SELECT_NO) {
+// If
+// 1. the side entrance local login is not always enabled,
+// 2. the side entrance local login is not in auto mode and the local login is disabled,
+// 3. no alternateloginurl is set for which the side entrance local login would be needed as fallback,
+// we just show a short friendly warning page and are done.
+if ($config->sideentranceloginenable != THEME_BOOST_UNION_SETTING_SELECT_ALWAYS &&
+        $config->loginlocalloginenable != THEME_BOOST_UNION_SETTING_SELECT_NO &&
+        empty($CFG->alternateloginurl)) {
     echo $OUTPUT->header();
     $loginurl = new moodle_url('/login/index.php');
     $notification = new \core\output\notification(
@@ -59,10 +65,15 @@ if ($config->loginlocalloginenable != THEME_BOOST_UNION_SETTING_SELECT_NO) {
     die;
 }
 
-// If the user is already logged in or is a guest user.
-if (isloggedin() || isguestuser()) {
+// If the user is already logged in and is _not_ a guest user (as guest users should be able to use the side entrale local login).
+if (isloggedin() && !isguestuser()) {
     // We just redirect him to the standard login page to handle this case.
-    redirect('/login/index.php');
+    // And, if alternateloginurl is set, add the loginredirect parameter.
+    if (!empty($CFG->alternateloginurl)) {
+        redirect('/login/index.php?loginredirect=0');
+    } else {
+        redirect('/login/index.php');
+    }
 }
 
 // Set page title.
