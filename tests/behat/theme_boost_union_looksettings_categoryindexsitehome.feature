@@ -6,8 +6,11 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
 
   Background:
     Given the following config values are set as admin:
-      | config            | value   |
-      | frontpageloggedin | 2,4,5,6 |
+      | config                    | value   |
+      | frontpageloggedin         | 2,4,5,6 |
+      # We set courseswithsummarieslimit to a really small value as we have just some test courses and want to especially test
+      # what happens when there are not enough courses to exceed this setting.
+      | courseswithsummarieslimit | 1 |
     And the following "users" exist:
       | username |
       | student1 |
