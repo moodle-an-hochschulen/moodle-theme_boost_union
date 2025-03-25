@@ -399,6 +399,13 @@
         width: calc(100% - 0.5rem);
     }
 
+    /* The goto button. */
+    .dimmed_category .gotobutton {
+        /* Make sure that a dimmed category (and thus dimmed links in the course cards / course list) do not affect
+            the button label color. */
+        color: #fff;
+    }
+
     /* The Boost Union course category listing.
        We do not document each single rule here. It's just a fiddly attempt to improve the look of the tree. */
     .theme_boost_union-catlisting {
