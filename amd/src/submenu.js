@@ -126,11 +126,15 @@ const moreMenuCardItem = () => {
     const initMoreMenuCardItem = () => {
         // Get the primary navigation more menu and initialize card menu update.
         var primaryNav = document.querySelector('.primary-navigation ul.more-nav .dropdownmoremenu');
-        registerMoreMenuCardItem(primaryNav);
+        if (primaryNav !== null) { // Confirm the primary navigation exists.
+            registerMoreMenuCardItem(primaryNav);
+        }
 
         // Get the menubar more menu and initialize card menu update.
         var menuBar = document.querySelector('nav.menubar ul.more-nav .dropdownmoremenu');
-        registerMoreMenuCardItem(menuBar);
+        if (menuBar !== null) { // Confirm the menubar exists.
+            registerMoreMenuCardItem(menuBar);
+        }
     };
 
     /**
