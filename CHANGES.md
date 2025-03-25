@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-03-24 - Bugfix: SmartMenu caused JavaScript error 'Uncaught TypeError: moreMenu is null', resolves #850.
+
 ### v4.3-r25
 
 * 2025-03-09 - Improvement: Introduce a Boost Union specific string for "submit" to be used in the accessbility support form which allows better translatons, resolves #830.
