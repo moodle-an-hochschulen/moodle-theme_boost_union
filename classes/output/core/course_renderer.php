@@ -76,6 +76,7 @@ class course_renderer extends \core_course_renderer {
      * Modifications compared to the original function:
      * * Build the modified course listing if enabled, otherwise call the parent function to build the default view.
      * * Show the category name in the course listing if enabled.
+     * * In 'auto' course display mode, always show the category in expanded mode.
      *
      * @param coursecat_helper $chelper various display options
      * @param array $courses the list of courses to display
@@ -98,14 +99,11 @@ class course_renderer extends \core_course_renderer {
             // Courses count is cached during courses retrieval.
             return '';
         }
-
         if ($chelper->get_show_courses() == self::COURSECAT_SHOW_COURSES_AUTO) {
-            // In 'auto' course display mode we analyse if number of courses is more or less than $CFG->courseswithsummarieslimit.
-            if ($totalcount <= $CFG->courseswithsummarieslimit) {
-                $chelper->set_show_courses(self::COURSECAT_SHOW_COURSES_EXPANDED);
-            } else {
-                $chelper->set_show_courses(self::COURSECAT_SHOW_COURSES_COLLAPSED);
-            }
+            // In 'auto' course display mode we always show the category in expanded mode.
+            // This is done to avoid that sticky headers appear on the category overview page if $CFG->courseswithsummarieslimit
+            // is set to a too small value.
+            $chelper->set_show_courses(self::COURSECAT_SHOW_COURSES_EXPANDED);
         }
 
         // Prepare content of paging bar if it is needed.
