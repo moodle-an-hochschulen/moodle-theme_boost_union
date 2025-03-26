@@ -367,7 +367,7 @@
     .theme_boost_union-courselisting-modal {
         /* The contact card */
         .contact {
-            // Control the width on multiple screen sizes.
+            /* Control the width on multiple screen sizes. */
             width: 100%;
             @include media-breakpoint-up(sm) {
                 width: 50%;
@@ -391,9 +391,19 @@
     /* The sticky category heading. */
     .theme_boost_union-stickycategory {
         top: $navbar-height;
+
+        /* Make sure that the sticky category header does not cover the more menu. */
+        z-index: 999;
     }
     &.theme_boost_union-courselisting-card .theme_boost_union-stickycategory {
         width: calc(100% - 0.5rem);
+    }
+
+    /* The goto button. */
+    .dimmed_category .gotobutton {
+        /* Make sure that a dimmed category (and thus dimmed links in the course cards / course list) do not affect
+            the button label color. */
+        color: #fff;
     }
 
     /* The Boost Union course category listing.
