@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-03-26 - Bugfix: Footer button got pushed upwards even though no bottom menu bar was present, resolves #784.
 * 2025-03-25 - Bugfix: If a course category is hidden, the "go to course" button (in the course cards view) got a wrong color, resolves #877.
 * 2025-03-25 - Bugfix: Make sure that the sticky category headers (in the course cards view) does not cover the more menu, resolves #866.
 * 2025-03-25 - Bugfix: Do not show the sticky category headers (in the course cards view) for categories with just a few courses, resolves #866.
