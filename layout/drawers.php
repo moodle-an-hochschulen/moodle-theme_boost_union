@@ -134,7 +134,8 @@ $primarymenu = $primary->export_for_template($renderer);
 if (isset($primarymenu['includesmartmenu']) && $primarymenu['includesmartmenu'] == true) {
     $extraclasses[] = 'theme-boost-union-smartmenu';
 }
-if (isset($primarymenu['bottombar']) && !empty($primarymenu['includesmartmenu'])) {
+
+if (!empty($primarymenu['bottombar']) && !empty($primarymenu['bottombar']['drawer']) && !empty($primarymenu['includesmartmenu'])) {
     $extraclasses[] = 'theme-boost-union-bottombar';
 }
 
