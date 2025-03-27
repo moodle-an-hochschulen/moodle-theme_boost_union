@@ -14,7 +14,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
   Scenario: Smartmenus: Menu items: Management - When a smart menu is just created, no smart menu items exist
     When I log in as "admin"
     And I navigate to smart menus
-    And I should see "Smart menus" in the "#region-main h2" "css_element"
+    And I should see "Smart menus" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
     And I should see "Quick links" in the "#region-main h4" "css_element"
     Then I should see "There aren't any items added to this smart menu yet. Please add an item to this menu."
@@ -26,7 +26,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
   Scenario: Smart menus: Menu items: Management - Create a new smart menu item
     When I log in as "admin"
     And I navigate to smart menus
-    And I should see "Smart menus" in the "#region-main h2" "css_element"
+    And I should see "Smart menus" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
     And I should see "Quick links" in the "#region-main h4" "css_element"
     And I click on "Add menu item" "button"

@@ -130,7 +130,10 @@ $table->define_baseurl($PAGE->url, ['menu' => $menu->id]);
 
 // Start page output.
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('smartmenus', 'theme_boost_union'));
+echo \theme_boost_union\admin_settingspage_tabs_with_tertiary::get_tertiary_navigation_for_externalpage(
+        new \moodle_url('/theme/boost_union/smartmenus/menus.php'));
+
+// Subheading.
 if (isset($menu->title)) {
     $menuheading = format_string($menu->title);
     $settingstitle = get_string('smartmenussettings', 'theme_boost_union');
