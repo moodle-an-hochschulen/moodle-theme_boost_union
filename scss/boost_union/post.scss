@@ -399,8 +399,8 @@
         width: calc(100% - 0.5rem);
     }
 
-    // Adjust position of stickycategory if there is a menu bar.
-    :has(nav.boost-union-menubar) .theme_boost_union-stickycategory  {
+    /* Adjust position of stickycategory if there is a menu bar. */
+    :has(nav.boost-union-menubar) .theme_boost_union-stickycategory {
         top: calc(#{$navbar-height} + #{$smartmenu-menubar-height});
     }
 
@@ -2608,6 +2608,11 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     .theme-boost-union-smartmenu .navbar .moremenu .dropdown.card-dropdown .dropdown-menu .card-block-wrapper .card-block {
         margin-right: 0;
     }
+}
+
+/* Adjust height for drawers if there is a smartmenu menu bar. */
+:has(nav.boost-union-menubar) .drawercontent {
+    height: calc(100% - #{$navbar-height} - #{$smartmenu-menubar-height});
 }
 
 
