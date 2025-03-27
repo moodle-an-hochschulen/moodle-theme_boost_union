@@ -105,7 +105,7 @@ $table->define_baseurl($PAGE->url);
 
 // Start page output.
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('smartmenus', 'theme_boost_union'));
+echo \theme_boost_union\admin_settingspage_tabs_with_tertiary::get_tertiary_navigation_for_externalpage();
 
 // Show smart menus description.
 echo get_string('smartmenus_desc', 'theme_boost_union');

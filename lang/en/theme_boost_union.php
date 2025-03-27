@@ -43,6 +43,7 @@ $string['forguestsonly'] = 'Only for guests and non-logged-in users';
 
 // Settings: General strings.
 $string['dontchange'] = 'Do not change anything';
+$string['tertiarysettings'] = 'List of Boost Union settings pages';
 
 // Settings: General warnings.
 $string['warningslashargumentsdisabled'] = 'Warning: The <a href="{$a->url}">slasharguments setting</a> is disabled in your Moodle configuration currently. However, this setting is required for the correct operation of the following Boost Union setting. Please enable slasharguments, otherwise the following Boost Union setting will not have any effect.';
