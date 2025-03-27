@@ -2433,6 +2433,20 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
         $tab->add($setting);
 
+        // Setting: Outside left and right regions vertical offset.
+        $outsideregionsalignmentoptions = [
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSVERTICALALIGN_DEFAULT =>
+                        get_string('outsideregionsverticalaligndefault', 'theme_boost_union', null, false),
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSVERTICALALIGN_PAGECONTENT =>
+                        get_string('outsideregionsverticalalignpagecontent', 'theme_boost_union', null, false),
+        ];
+        $name = 'theme_boost_union/blockoutsideregionsverticaloffset';
+        $title = get_string('blockoutsideregionsverticalalignment', 'theme_boost_union', null, true);
+        $description = get_string('blockoutsideregionsverticalalignment_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSVERTICALALIGN_DEFAULT, $outsideregionsalignmentoptions);
+        $tab->add($setting);
+
         // Setting: Block region width for Outside (bottom) region.
         $name = 'theme_boost_union/blockregionoutsidebottomwidth';
         $title = get_string('blockregionoutsidebottomwidth', 'theme_boost_union', null, true);

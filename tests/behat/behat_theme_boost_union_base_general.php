@@ -480,4 +480,36 @@ class behat_theme_boost_union_base_general extends behat_base {
     public function i_am_on_login_page() {
         $this->execute('behat_general::i_visit', ['/login/index.php']);
     }
+
+    /**
+     * Find the given elements are vertically aligned
+     *
+     * @Then /^DOM elements "(?P<s>(?:[^"]|\\")*)" should vertically aligned$/
+     *
+     * @param string $elements List of elements joined with comma.
+     * @throws ExpectationException
+     */
+    public function dom_elements_are_vertically_aligned($elements) {
+        $elements = explode(',', $elements);
+        $top = null;
+        foreach ($elements as $selector) {
+            // Confirm the element is exists.
+            $elementexists = "return document.querySelector('$selector')";
+            $elementexists = $this->evaluate_script($elementexists);
+            if ($elementexists === null) {
+                throw new ExpectationException('The element \''.$selector.'\' does not exist', $this->getSession());
+            }
+
+            $js = "return document.querySelector('$selector').getBoundingClientRect().top";
+            $newtop = $this->evaluate_script($js);
+            if ($top === null) {
+                $top = $newtop;
+            } else {
+                if ($newtop !== $top) {
+                    throw new ExpectationException('The elements are not vertically aligned', $this->getSession());
+                }
+                $top = $newtop;
+            }
+        }
+    }
 }

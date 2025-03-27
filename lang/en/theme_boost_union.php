@@ -691,6 +691,11 @@ $string['blockregionoutsidetopwidth_desc'] = 'With this setting, you can set the
 $string['outsideregionswidthfullwidth'] = 'Full width';
 $string['outsideregionswidthcoursecontentwidth'] = 'Course content width';
 $string['outsideregionswidthherowidth'] = 'Hero width';
+// ... ... Setting: Outside left and right regions vertical offset.
+$string['blockoutsideregionsverticalalignment'] = 'Outside regions vertical alignment';
+$string['blockoutsideregionsverticalalignment_desc'] = 'With this setting, you can control the vertical alignment of the outside regions. You can choose to align them with the page content or leave them by default.';
+$string['outsideregionsverticalaligndefault'] = 'None';
+$string['outsideregionsverticalalignpagecontent'] = 'Align the outside regions vertically with the page content';
 // ... ... Setting: Block region width for Outside (bottom) region.
 $string['blockregionoutsidebottomwidth'] = 'Block region width for \'Outside (bottom)\' region';
 $string['blockregionoutsidebottomwidth_desc'] = 'With this setting, you can set the width of the \'Outside (bottom)\' block region which is shown below the main content. You can choose between full width, course content width and hero width.';

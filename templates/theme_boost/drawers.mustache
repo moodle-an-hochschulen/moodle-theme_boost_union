@@ -62,6 +62,7 @@
     * Include theme_boost_union/slider template
     * Added additional block regions (including JS for offcanvas region)
     * Added smartmenu js to support third level submenus.
+    * Added blockregions JS to support vertical alignment of outside regions. Included placeholders for the outside left and right regions.
 }}
 {{> theme_boost/head }}
 
@@ -149,7 +150,8 @@
 
         <div class="main-inner-wrapper {{{maininnerwrapperclass}}} {{{outsideregionsplacement}}}">
             {{#regions.outsideleft.hasblocks}}
-                <section id="theme-block-region-outside-left" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                <section id="theme-block-region-outside-left" class="theme-block-region {{#blockregionsdata.outsideregions.verticaloffset}}invisible{{/blockregionsdata.outsideregions.verticaloffset}}" aria-label="{{#str}}blocks{{/str}}">
+                    {{#blockregionsdata.outsideregions.verticaloffset}}<div class="outside-region-placeholder"></div>{{/blockregionsdata.outsideregions.verticaloffset}}
                     {{{ regions.outsideleft.addblockbutton }}}
                     {{{ regions.outsideleft.regionhtml }}}
                  </section>
@@ -263,7 +265,8 @@
         </div>
 
         {{#regions.outsideright.hasblocks}}
-            <section id="theme-block-region-outside-right" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+            <section id="theme-block-region-outside-right" class="theme-block-region {{#blockregionsdata.outsideregions.verticaloffset}}invisible{{/blockregionsdata.outsideregions.verticaloffset}}" aria-label="{{#str}}blocks{{/str}}">
+                {{#blockregionsdata.outsideregions.verticaloffset}}<div class="outside-region-placeholder"></div>{{/blockregionsdata.outsideregions.verticaloffset}}
                 {{{ regions.outsideright.addblockbutton }}}
                 {{{ regions.outsideright.regionhtml }}}
             </section>
@@ -312,10 +315,11 @@
 </html>
 {{#js}}
 M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer'{{#regions.offcanvas.hasblocks}},'theme_boost_union/offcanvas'{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, 'theme_boost_union/smartmenu'{{/includesmartmenu}}], function(Loader, Drawer{{#regions.offcanvas.hasblocks}},OffCanvas{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, SmartMenu{{/includesmartmenu}}) {
+require(['theme_boost/loader', 'theme_boost/drawer'{{#regions.offcanvas.hasblocks}},'theme_boost_union/offcanvas'{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, 'theme_boost_union/smartmenu'{{/includesmartmenu}}{{#blockregionsdata.includeblockregionsamd}}, 'theme_boost_union/blockregions'{{/blockregionsdata.includeblockregionsamd}}], function(Loader, Drawer{{#regions.offcanvas.hasblocks}},OffCanvas{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, SmartMenu{{/includesmartmenu}}{{#blockregionsdata.includeblockregionsamd}}, BlockRegions{{/blockregionsdata.includeblockregionsamd}}) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
 {{#regions.offcanvas.hasblocks}}OffCanvas.init();{{/regions.offcanvas.hasblocks}}
 {{#includesmartmenu}}SmartMenu.init();{{/includesmartmenu}}
+{{#blockregionsdata.outsideregions.verticaloffset}}BlockRegions.OutsideRegionsVerticalAlignment();{{/blockregionsdata.outsideregions.verticaloffset}}
 });
 {{/js}}

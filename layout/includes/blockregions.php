@@ -171,6 +171,23 @@ class additionalregions {
     }
 
     /**
+     * Include the additional data for block regions.
+     *
+     * @return array $blockregionsdata
+     */
+    public function addblockregions_additionaldata() {
+
+        $blockregionsdata = [];
+        // Find the block regions js need to be added.
+        $outsideregionsalignment = get_config('theme_boost_union', 'blockoutsideregionsverticaloffset');
+        if ($outsideregionsalignment == THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSVERTICALALIGN_PAGECONTENT) {
+            $blockregionsdata['outsideregions'] = ['verticaloffset' => true];
+            $blockregionsdata['includeblockregionsamd'] = true;
+        }
+        return $blockregionsdata;
+    }
+
+    /**
      * Generate data to export for layouts.
      *
      * @return array region data
@@ -184,6 +201,9 @@ class additionalregions {
 
         $maininnerwrapperclass = $this->maininnerwrapperclass($regionsdata);
 
+        // Include the block regions additional data.
+        $blockregionsdata = $this->addblockregions_additionaldata();
+
         return [
             'regions' => $regionsdata,
             'userisediting' => $PAGE->user_is_editing(),
@@ -193,6 +213,7 @@ class additionalregions {
                     get_config('theme_boost_union', 'blockregionoutsidebottomwidth'),
             'outsidetopwidth' => 'theme-block-region-outside-' . get_config('theme_boost_union', 'blockregionoutsidetopwidth'),
             'footerwidth' => 'theme-block-region-footer-' . get_config('theme_boost_union', 'blockregionfooterwidth'),
+            'blockregionsdata' => $blockregionsdata,
         ];
     }
 }
