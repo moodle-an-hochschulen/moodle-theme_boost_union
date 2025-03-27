@@ -58,8 +58,7 @@ $pageurl = new core\url('/theme/boost_union/smartmenus/items.php', ['menu' => $m
 $context = context_system::instance();
 
 // Access checks.
-require_login();
-require_capability('theme/boost_union:configure', $context);
+admin_externalpage_setup('theme_boost_union_smartmenus', '', null, $pageurl);
 
 // Prepare the page (to make sure that all necessary information is already set even if we just handle the actions as a start).
 $PAGE->set_context($context);
