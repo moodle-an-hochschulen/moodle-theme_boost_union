@@ -65,7 +65,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I press the escape key
     And I set the field "Include subcategories" to "0"
     And I click on "Save changes" "button"
-    And I should see "Flavours" in the "#region-main h2" "css_element"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And I should see "Course categories" in the "Cat 1 flavour" "table_row"
     And I log out
     And I log in as "teacher1"
@@ -104,7 +104,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I press the escape key
     And I set the field "Include subcategories" to "1"
     And I click on "Save changes" "button"
-    And I should see "Flavours" in the "#region-main h2" "css_element"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And I should see "Course categories" in the "Cat 1 flavour" "table_row"
     And I log out
     And I log in as "teacher1"
@@ -143,13 +143,13 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I press the escape key
     And I set the field "Include subcategories" to "0"
     And I click on "Save changes" "button"
-    And I should see "Flavours" in the "#region-main h2" "css_element"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And I should see "Course categories" in the "Cat 1 flavour" "table_row"
     And I click on ".action-edit" "css_element" in the "Cat 1 flavour" "table_row"
     And I expand all fieldsets
     And I select "No" from the "Apply to course categories" singleselect
     And I click on "Save changes" "button"
-    And I should see "Flavours" in the "#region-main h2" "css_element"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And I should not see "Course categories" in the "Cat 1 flavour" "table_row"
     And I log out
     And I log in as "teacher1"
@@ -178,7 +178,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I click on "Cohort 1" item in the autocomplete list
     And I press the escape key
     And I click on "Save changes" "button"
-    And I should see "Flavours" in the "#region-main h2" "css_element"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And I should see "Cohorts" in the "Cohort 1 flavour" "table_row"
     And I log out
     And I log in as "teacher1"
@@ -208,13 +208,13 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I click on "Cohort 1" item in the autocomplete list
     And I press the escape key
     And I click on "Save changes" "button"
-    And I should see "Flavours" in the "#region-main h2" "css_element"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And I should see "Cohorts" in the "Cohort 1 flavour" "table_row"
     And I click on ".action-edit" "css_element" in the "Cohort 1 flavour" "table_row"
     And I expand all fieldsets
     And I select "No" from the "Apply to cohorts" singleselect
     And I click on "Save changes" "button"
-    And I should see "Flavours" in the "#region-main h2" "css_element"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And I should not see "Cohorts" in the "Cohort 1 flavour" "table_row"
     And I log out
     And I log in as "teacher1"
@@ -241,7 +241,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I press the escape key
     And I set the field "Include subcategories" to "0"
     And I click on "Save changes" "button"
-    And I should see "Flavours" in the "#region-main h2" "css_element"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And I should see "Course categories" in the "Cat 1a flavour" "table_row"
     And I click on "Create flavour" "button"
     And I should see "Create flavour" in the "#page-header h1" "css_element"
@@ -259,7 +259,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I press the escape key
     And I set the field "Include subcategories" to "0"
     And I click on "Save changes" "button"
-    And I should see "Flavours" in the "#region-main h2" "css_element"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And I should see "Course categories" in the "Cat 1b flavour" "table_row"
     And I log out
     And I log in as "teacher1"
