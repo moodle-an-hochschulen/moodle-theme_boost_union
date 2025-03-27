@@ -407,6 +407,9 @@ class behat_theme_boost_union_base_general extends behat_base {
      * Find the given elements are vertically aligned
      *
      * @Then /^DOM elements "(?P<s>(?:[^"]|\\")*)" should vertically aligned$/
+     *
+     * @param string $elements List of elements joined with comma.
+     * @throws ExpectationException
      */
     public function dom_elements_are_vertically_aligned($elements) {
         $elements = explode(',', $elements);

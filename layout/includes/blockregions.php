@@ -201,7 +201,7 @@ class additionalregions {
 
         $maininnerwrapperclass = $this->maininnerwrapperclass($regionsdata);
 
-        // Include the block regions additional data
+        // Include the block regions additional data.
         $blockregionsdata = $this->addblockregions_additionaldata();
 
         return [
