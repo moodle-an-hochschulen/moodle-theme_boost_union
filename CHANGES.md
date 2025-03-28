@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.3-r26
 
 * 2025-03-26 - Bugfix: Footer button got pushed upwards even though no bottom menu bar was present, resolves #784.
 * 2025-03-24 - Bugfix: SmartMenu caused JavaScript error 'Uncaught TypeError: moreMenu is null', resolves #850.
