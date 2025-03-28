@@ -48,7 +48,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     Then "#loginlogo #logoimage" "css_element" should not exist
 
   @javascript @_file_upload
-  Scenario: Setting: Compact logo - Upload a PNG logo to the theme and check that it is resized
+  Scenario: Setting: Logo - Upload a PNG logo to the theme and check that it is resized on the server-side
     When I log in as "admin"
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
@@ -58,10 +58,10 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     And Behat debugging is enabled
     And I log out
     And I click on "Log in" "link" in the ".logininfo" "css_element"
-    Then "//div[@id='loginlogo']//img[@id='logoimage'][contains(@src, 'pluginfile.php/1/theme_boost_union/logo/0x200/')]" "xpath_element" should exist
+    Then "//div[@id='loginlogo']//img[@id='logoimage'][contains(@src, 'pluginfile.php/1/theme_boost_union/logo/0x200/')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
 
   @javascript @_file_upload
-  Scenario: Setting: Compact logo - Upload a SVG logo to the theme and check that it is not resized
+  Scenario: Setting: Logo - Upload a SVG logo to the theme and check that it is not resized on the server-side
     When I log in as "admin"
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
@@ -71,7 +71,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     And Behat debugging is enabled
     And I log out
     And I click on "Log in" "link" in the ".logininfo" "css_element"
-    Then "//div[@id='loginlogo']//img[@id='logoimage'][contains(@src, 'pluginfile.php/1/theme_boost_union/logo/1/')]" "xpath_element" should exist
+    Then "//div[@id='loginlogo']//img[@id='logoimage'][contains(@src, 'pluginfile.php/1/theme_boost_union/logo/1/')][contains(@src, 'moodlelogo.svg')]" "xpath_element" should exist
 
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a custom compact logo to the theme
@@ -110,7 +110,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     And I press "Save changes"
     And Behat debugging is enabled
     And I am on site homepage
-    Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact/300x300/')]" "xpath_element" should exist
+    Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact/300x300/')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
 
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a SVG compact logo to the theme and check that it is not resized on the server-side
@@ -122,7 +122,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     And I press "Save changes"
     And Behat debugging is enabled
     And I am on site homepage
-    Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact/1/')]" "xpath_element" should exist
+    Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact/1/')][contains(@src, 'moodlelogo.svg')]" "xpath_element" should exist
 
   @javascript @_file_upload
   Scenario: Setting: Favicon - Upload a custom favicon to the theme
