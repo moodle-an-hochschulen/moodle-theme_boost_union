@@ -7,7 +7,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
   Scenario: Smart menus: Menus: Management - When the theme is installed, no smart menus exist
     When I log in as "admin"
     And I navigate to smart menus
-    And  I should see "Smart menus" in the "#region-main h2" "css_element"
+    And  I should see "Smart menus" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     Then I should see "There aren't any smart menus created yet. Please create your first smart menu to get things going."
     And "table" "css_element" should not exist in the "#region-main" "css_element"
     And "Create menu" "button" should exist in the "#region-main" "css_element"
@@ -17,13 +17,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
   Scenario: Smart menus: Menus: Management - Create a new smart menu
     When I log in as "admin"
     And I navigate to smart menus
-    And I should see "Smart menus" in the "#region-main h2" "css_element"
+    And I should see "Smart menus" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And I click on "Create menu" "button"
     And I set the following fields to these values:
       | Title            | Links |
       | Menu location(s) | Main  |
     And I click on "Save and return" "button"
-    And I should see "Smart menus" in the "#region-main h2" "css_element"
+    And I should see "Smart menus" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     Then I should not see "There aren't any smart menus created yet. Please create your first smart menu to get things going."
     And "table" "css_element" should exist in the "#region-main" "css_element"
     And the following should exist in the "smartmenus" table:
