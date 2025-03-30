@@ -25,6 +25,7 @@
 use theme_boost_union\admin_setting_configdatetime;
 use theme_boost_union\admin_setting_configstoredfilealwayscallback;
 use theme_boost_union\admin_setting_configtext_url;
+use theme_boost_union\admin_settingspage_tabs_with_tertiary;
 use core\di;
 use core\hook\manager as hook_manager;
 
@@ -137,12 +138,11 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // (with 2 or 3 digits) or a viewport width number (from 0 to 100). Additionally the field can be left blank.
         $smallwidthoremptyregex = '/^((\d{1,2}|100)%)|((\d{1,2}|100)vw)|(\d{2,3}px)|(^(?!.*\S))$/';
 
-        // Create Look settings page with tabs
+        // Create Look settings page with tabs and tertiary navigation
         // (and allow users with the theme/boost_union:configure capability to access it).
-        $page = new theme_boost_admin_settingspage_tabs('theme_boost_union_look',
+        $page = new admin_settingspage_tabs_with_tertiary('theme_boost_union_look',
                 get_string('configtitlelook', 'theme_boost_union', null, true),
                 'theme/boost_union:configure');
-
 
         // Create general settings tab.
         $tab = new admin_settingpage('theme_boost_union_look_general', get_string('generalsettings', 'theme_boost', null, true));
@@ -1589,9 +1589,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $ADMIN->add('theme_boost_union', $page);
 
 
-        // Create Feel settings page with tabs
+        // Create Feel settings page with tabs and tertiary navigation
         // (and allow users with the theme/boost_union:configure capability to access it).
-        $page = new theme_boost_admin_settingspage_tabs('theme_boost_union_feel',
+        $page = new admin_settingspage_tabs_with_tertiary('theme_boost_union_feel',
                 get_string('configtitlefeel', 'theme_boost_union', null, true),
                 'theme/boost_union:configure');
 
@@ -2050,9 +2050,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $ADMIN->add('theme_boost_union', $page);
 
 
-        // Create Content settings page with tabs
+        // Create Content settings page with tabs and tertiary navigation
         // (and allow users with the theme/boost_union:configure capability to access it).
-        $page = new theme_boost_admin_settingspage_tabs('theme_boost_union_content',
+        $page = new admin_settingspage_tabs_with_tertiary('theme_boost_union_content',
                 get_string('configtitlecontent', 'theme_boost_union', null, true),
                 'theme/boost_union:configure');
 
@@ -2923,9 +2923,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $ADMIN->add('theme_boost_union', $page);
 
 
-        // Create Functionality settings page with tabs
+        // Create Functionality settings page with tabs and tertiary navigation
         // (and allow users with the theme/boost_union:configure capability to access it).
-        $page = new theme_boost_admin_settingspage_tabs('theme_boost_union_functionality',
+        $page = new admin_settingspage_tabs_with_tertiary('theme_boost_union_functionality',
                 get_string('configtitlefunctionality', 'theme_boost_union', null, true),
                 'theme/boost_union:configure');
 
@@ -3009,9 +3009,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $ADMIN->add('theme_boost_union', $page);
 
 
-        // Create Accessibility settings page with tabs
+        // Create Accessibility settings page with tabs and tertiary navigation
         // (and allow users with the theme/boost_union:configure capability to access it).
-        $page = new theme_boost_admin_settingspage_tabs('theme_boost_union_accessibility',
+        $page = new admin_settingspage_tabs_with_tertiary('theme_boost_union_accessibility',
                 get_string('configtitleaccessibility', 'theme_boost_union', null, true),
                 'theme/boost_union:configure');
 

@@ -2082,12 +2082,18 @@ function theme_boost_union_callbackimpl_before_standard_html(&$hook = null) {
     // Initialize HTML.
     $html = '';
 
-    // If a theme other than Boost Union or a child theme of it is active, return directly.
-    // This is necessary as the callback is called regardless of the active theme.
+    // Add some SCSS to the page to style the tertiary navigation.
+    $html .= \theme_boost_union\admin_settingspage_tabs_with_tertiary::get_tertiary_navigation_css_for_head();
+
+    // If a theme other than Boost Union or a child theme of it is active, return now.
+    // This is necessary as the callback is called regardless of the active theme and we must not add the Boost Union specific
+    // CSS then.
     if (theme_boost_union_is_active_theme() != true) {
         if ($hook != null) {
-            return;
+            // Add the HTML code to the hook.
+            $hook->add_html($html);
         } else {
+            // Return the HTML code.
             return $html;
         }
     }

@@ -58,8 +58,7 @@ $pageurl = new core\url('/theme/boost_union/smartmenus/items.php', ['menu' => $m
 $context = context_system::instance();
 
 // Access checks.
-require_login();
-require_capability('theme/boost_union:configure', $context);
+admin_externalpage_setup('theme_boost_union_smartmenus', '', null, $pageurl);
 
 // Prepare the page (to make sure that all necessary information is already set even if we just handle the actions as a start).
 $PAGE->set_context($context);
@@ -130,7 +129,10 @@ $table->define_baseurl($PAGE->url, ['menu' => $menu->id]);
 
 // Start page output.
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('smartmenus', 'theme_boost_union'));
+echo \theme_boost_union\admin_settingspage_tabs_with_tertiary::get_tertiary_navigation_for_externalpage(
+        new \core\url('/theme/boost_union/smartmenus/menus.php'));
+
+// Subheading.
 if (isset($menu->title)) {
     $menuheading = format_string($menu->title);
     $settingstitle = get_string('smartmenussettings', 'theme_boost_union');
