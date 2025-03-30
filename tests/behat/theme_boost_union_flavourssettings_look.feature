@@ -83,7 +83,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I set the field "Title" to "My shiny new flavour"
     And I upload "theme/boost_union/tests/fixtures/flavourlogo.png" file to "Compact logo" filemanager
     And I click on "Save changes" "button"
-    And I should see "Flavours" in the "#page-header h2" "css_element"
+    And I should see "Flavours" in the "#region-main h2" "css_element"
     And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/flavours_look_logocompact/')][contains(@src, '/300x300/')][contains(@src, 'flavourlogo.png')]" "xpath_element" should exist
 
@@ -96,7 +96,7 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I set the field "Title" to "My shiny new flavour"
     And I upload "theme/boost_union/tests/fixtures/flavourlogo.svg" file to "Compact logo" filemanager
     And I click on "Save changes" "button"
-    And I should see "Flavours" in the "#page-header h2" "css_element"
+    And I should see "Flavours" in the "#region-main h2" "css_element"
     And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/flavours_look_logocompact/')][contains(@src, '/1/')][contains(@src, 'flavourlogo.svg')]" "xpath_element" should exist
 

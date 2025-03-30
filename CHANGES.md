@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-03-29 - Bugfix: Remove assumption that syscontext->id = 1, resolves #627
 * 2025-03-28 - Improvement: Add resizing to flavour logo and compact logo, resolves #212.
 
 ### v4.1-r39
