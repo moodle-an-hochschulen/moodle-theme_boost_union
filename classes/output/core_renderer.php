@@ -239,10 +239,30 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     // Remember this fact for subsequent runs of this function.
                     $hasflavourlogo = true;
 
+                    // If the flavour logo is a SVG image, do not add a size to the path.
+                    $flavourlogoextension = pathinfo($flavour->look_logocompact, PATHINFO_EXTENSION);
+                    if (in_array($flavourlogoextension, ['svg', 'svgz'])) {
+                        // The theme_boost_union_pluginfile() function will look for a filepath and will extract the size from that.
+                        // If we add a path without an 'x' in it, it will then be interpreted by theme_boost_union_pluginfile()
+                        // as "no resize requested".
+                        // This mechanism is used for the normal compact logo as well.
+                        $flavourfilepath = '1/';
+
+                        // Otherwise, add a size to the path.
+                    } else {
+                        // Hide the requested size in the file path.
+                        $flavourfilepath = ((int)$maxwidth . 'x' . (int)$maxheight) . '/';
+                    }
+
                     // Compose the URL to the flavour's compact logo.
                     $flavourlogourl = moodle_url::make_pluginfile_url(
-                            context_system::instance()->id, 'theme_boost_union', 'flavours_look_logocompact', $flavour->id,
-                            '/'.theme_get_revision(), '/'.$flavour->look_logocompact);
+                        context_system::instance()->id,
+                        'theme_boost_union',
+                        'flavours_look_logocompact',
+                        $flavour->id.'/'.$flavourfilepath,
+                        theme_get_revision(),
+                        '/'.$flavour->look_logocompact
+                    );
 
                     // Return the URL.
                     return $flavourlogourl;
