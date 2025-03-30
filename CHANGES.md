@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-03-28 - Improvement: Add resizing to flavour logo and compact logo, resolves #212.
+
 ### v4.1-r39
 
 * 2025-03-26 - Bugfix: Footer button got pushed upwards even though no bottom menu bar was present, resolves #784.
