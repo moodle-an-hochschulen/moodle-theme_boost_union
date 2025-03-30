@@ -75,6 +75,32 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
 
   @javascript @_file_upload
+  Scenario: Setting: Compact logo - Upload a PNG compact logo and check that it is resized on the server-side
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I set the field "Title" to "My shiny new flavour"
+    And I upload "theme/boost_union/tests/fixtures/flavourlogo.png" file to "Compact logo" filemanager
+    And I click on "Save changes" "button"
+    And I should see "Flavours" in the "#page-header h2" "css_element"
+    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
+    Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/flavours_look_logocompact/')][contains(@src, '/300x300/')][contains(@src, 'flavourlogo.png')]" "xpath_element" should exist
+
+  @javascript @_file_upload
+  Scenario: Setting: Compact logo - Upload a SVG compact logo and check that it is not resized on the server-side
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I set the field "Title" to "My shiny new flavour"
+    And I upload "theme/boost_union/tests/fixtures/flavourlogo.svg" file to "Compact logo" filemanager
+    And I click on "Save changes" "button"
+    And I should see "Flavours" in the "#page-header h2" "css_element"
+    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
+    Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/flavours_look_logocompact/')][contains(@src, '/1/')][contains(@src, 'flavourlogo.svg')]" "xpath_element" should exist
+
+  @javascript @_file_upload
   Scenario: Flavours: Favicon - Upload a favicon (with a global favicon not having been uploaded before)
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Flavours" in site administration

@@ -619,25 +619,74 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         // to apply a flavour to the login page / for non-logged-in users at the moment.
         if ($CFG->forcelogin) {
             require_login();
+            $serveoptions = ['cacheability' => 'private'];
+        } else {
+            $serveoptions = ['cacheability' => 'public'];
         }
 
-        // Get file storage.
-        $fs = get_file_storage();
-
-        // Get the file from the filestorage.
+        // Get the parameters from the request.
         $filename = clean_param(array_pop($args), PARAM_FILE);
-        array_pop($args); // This is the themerev number in the $args array which is used for browser caching, here we ignore it.
+        $themerev = array_pop($args);
+        $size = array_pop($args);
         $itemid = clean_param(array_pop($args), PARAM_INT);
-        if ((!$file = $fs->get_file($context->id, 'theme_boost_union', $filearea, $itemid, '/', $filename)) ||
-                $file->is_directory()) {
+
+        // Get the current theme rev.
+        $themerevnow = theme_get_revision();
+
+        // If the theme designer mode is on (= current theme rev is -1).
+        if ($themerevnow <= 0) {
+            // Normalize it to 0 as -1 doesn't play well with paths.
+            $themerevnow = 0;
+        }
+
+        // Extract the requested width and height.
+        $maxwidth = 0;
+        $maxheight = 0;
+        if (preg_match('/^\d+x\d+$/', $size)) {
+            list($maxwidth, $maxheight) = explode('x', $size);
+            $maxwidth = clean_param($maxwidth, PARAM_INT);
+            $maxheight = clean_param($maxheight, PARAM_INT);
+        }
+
+        // Initalize lifetime as 0 = not cached.
+        $lifetime = 0;
+        // If a cached file is requested and if the requested revision matches the current revision.
+        if ($themerev > 0 && $themerevnow == $themerev) {
+            // Set lifetime with 60 days.
+            $lifetime = DAYSECS * 60;
+        }
+
+        // Check if we've got a cached file to return. When lifetime is 0 then we don't want the cached one.
+        $candidate = $CFG->localcachedir . "/theme_boost_union/$themerev/$filearea/$itemid/{$maxwidth}x{$maxheight}/$filename";
+        if (file_exists($candidate) && $lifetime > 0) {
+            send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $serveoptions);
+        }
+
+        // Find the original file.
+        $fs = get_file_storage();
+        $filepath = "/{$context->id}/theme_boost_union/{$filearea}/{$itemid}/{$filename}";
+        if (!$file = $fs->get_file_by_hash(sha1($filepath))) {
             send_file_not_found();
         }
 
-        // Unlock session during file serving.
-        \core\session\manager::write_close();
+        // Check whether width/height are specified, and we can resize the image (some types such as ICO cannot be resized).
+        if (($maxwidth === 0 && $maxheight === 0) ||
+                !$filedata = $file->resize_image($maxwidth, $maxheight)) {
 
-        // Send stored file (and cache it for 90 days, similar to other static assets within Moodle).
-        send_stored_file($file, DAYSECS * 90, 0, $forcedownload, $options);
+            if ($lifetime) {
+                file_safe_save_content($file->get_content(), $candidate);
+            }
+            send_stored_file($file, $lifetime, 0, false, $serveoptions);
+        }
+
+        // If we don't want to cache the file, serve now and quit.
+        if (!$lifetime) {
+            send_content_uncached($filedata, $filename);
+        }
+
+        // Save, serve and quit.
+        file_safe_save_content($filedata, $candidate);
+        send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $serveoptions);
 
         // Serve the files from the smart menu card images.
     } else if ($filearea === 'smartmenus_itemimage' && $context->contextlevel === CONTEXT_SYSTEM) {
