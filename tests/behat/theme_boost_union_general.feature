@@ -15,7 +15,7 @@ Feature: Configuring the theme_boost_union plugin as admin
     And I should see "Settings overview" in the ".breadcrumb" "css_element"
 
   @javascript
-  Scenario: Allow admins to use the tertiary navigation to navigation between the individual Boost Union admin pages
+  Scenario: Allow admins to use the tertiary navigation to navigate between the individual Boost Union admin pages
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Quick links     |
       | location | Main navigation |
