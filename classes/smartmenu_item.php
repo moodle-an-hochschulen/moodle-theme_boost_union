@@ -59,13 +59,13 @@ class smartmenu_item {
     const TYPESTATIC = 1;
 
     /**
-     * Represents the type of a dynamic element.
+     * Represents the type of a dynamic courses element.
      * @var int
      */
     const TYPEDYNAMIC = 2;
 
     /**
-     * Represents the type of a dynamic element.
+     * Represents the type of a docs element.
      * @var int
      */
     const TYPEDOCS = 3;
@@ -778,14 +778,29 @@ class smartmenu_item {
     }
 
     /**
-     * Generate a node data for doc link item. Use get_docs_url to get the link and generate the data.
+     * Generate the item object for a docs item. Use get_docs_url to get the link and generate the data.
      *
-     * @return array
+     * This logic function is copied and modified from page_doc_link() in /lib/classes/output/core_renderer.php
+     *
+     * @return array|null The node data or null if the docs are disabled or the user does not have moodle/site:doclinks capability.
      */
     protected function generate_docs_item() {
         global $PAGE;
+
+        // Get the docs URL.
         $path = page_get_doc_link_path($PAGE);
+
+        // If the path is empty, docs are either disabled or the user does not have the moodle/site:doclinks capability
+        // in the given context.
+        // In this case, return directly to avoid creating the node.
+        if (empty($path)) {
+            return null;
+        }
+
+        // Get the docs URL.
         $docurl = get_docs_url($path);
+
+        // Generate and return the node.
         return $this->generate_node_data(
             $this->item->title,
             $docurl,
@@ -1107,17 +1122,26 @@ class smartmenu_item {
                 $cacheable = true;
                 break;
 
+            case self::TYPEDOCS:
+                $docs = $this->generate_docs_item();
+
+                // If the returned node is null, return directly as we do not have a docs node to build.
+                if ($docs === null) {
+                    return false;
+                }
+
+                $result = [$docs]; // Return the result as recursive array useful to merge with dynamic items.
+                $type = 'docs';
+
+                // Make this node non cacheable as its link will change throughout the individual Moodle pages.
+                $cacheable = false;
+
+                break;
+
             case self::TYPEDYNAMIC:
                 $result = $this->generate_dynamic_item();
                 $type = 'dynamic';
                 $cacheable = true;
-                break;
-
-            case self::TYPEDOCS:
-                $docs = $this->generate_docs_item();
-                $result = [$docs]; // Return the result as recursive array useful to merge with dynamic items.
-                $type = 'docs';
-                $cacheable = false;
                 break;
 
             case self::TYPEHEADING:
@@ -1385,8 +1409,8 @@ class smartmenu_item {
     public static function get_types(?int $type = null) {
         $types = [
                 self::TYPESTATIC => get_string('smartmenusmenuitemtypestatic', 'theme_boost_union'),
-                self::TYPEDOCS => get_string('smartmenusmenuitemtypedocs', 'theme_boost_union'),
                 self::TYPEHEADING => get_string('smartmenusmenuitemtypeheading', 'theme_boost_union'),
+                self::TYPEDOCS => get_string('smartmenusmenuitemtypedocs', 'theme_boost_union'),
                 self::TYPEDYNAMIC => get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union'),
         ];
 
