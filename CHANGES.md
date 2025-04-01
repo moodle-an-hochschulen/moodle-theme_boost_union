@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r40
 
 * 2025-03-29 - Bugfix: Remove assumption that syscontext->id = 1, resolves #627
 * 2025-03-28 - Improvement: Add resizing to flavour logo and compact logo, resolves #212.
