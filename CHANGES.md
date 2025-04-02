@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-04-02 - Bugfix: Unset width restrictions for dropdowns in custommenu and smartmenu, resolves #883.
+
 ### v4.5-r12
 
 * 2025-03-29 - Bugfix: Remove assumption that syscontext->id = 1, resolves #627

@@ -2471,6 +2471,12 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 text-decoration: none;
             }
         }
+        &.dropdown {
+            .boost-union-moremenu.dropdown-menu {
+                max-width: unset;
+                width: max-content;
+            }
+        }
     }
     /* Dropdown carousel more menu*/
     .dropdownmoremenu {
