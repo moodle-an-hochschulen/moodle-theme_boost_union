@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-04-02 - Bugfix: Adjust position of drawers and stickcategoryheader with active smartmenu top bar, resolves #870 #879.
+
 ### v4.5-r12
 
 * 2025-03-29 - Bugfix: Remove assumption that syscontext->id = 1, resolves #627
