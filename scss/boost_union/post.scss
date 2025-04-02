@@ -399,9 +399,11 @@
         width: calc(100% - 0.5rem);
     }
 
-    /* Adjust position of stickycategory if there is a menu bar. */
+    /* Adjust position of stickycategory if there is a menu bar.
+       Substract one additional pixel to avoid that the scrolled content shines through betweem the navbar
+       and the sticky category. */
     :has(nav.boost-union-menubar) .theme_boost_union-stickycategory {
-        top: calc(#{$navbar-height} + #{$smartmenu-menubar-height});
+        top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 1px);
     }
 
     /* The goto button. */
@@ -1706,7 +1708,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             /* Added height and background color for the top header,
             z-index is added to show the top header dropdown menu above the header block */
             &.boost-union-menubar { /* boost-union-menubar class is added for the top header */
-                height: $smartmenu-menubar-height;
+                height: $boost-union-smartmenu-menubar-height;
                 border-bottom: 0;
                 background-color: #f8f9fa;
                 z-index: 1031;
@@ -2612,7 +2614,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 
 /* Adjust height for drawers if there is a smartmenu menu bar. */
 :has(nav.boost-union-menubar) .drawercontent {
-    height: calc(100% - #{$navbar-height} - #{$smartmenu-menubar-height});
+    height: calc(100% - #{$navbar-height} - #{$boost-union-smartmenu-menubar-height});
 }
 
 
