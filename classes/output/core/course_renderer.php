@@ -322,7 +322,8 @@ class course_renderer extends \core_course_renderer {
     protected function coursecat_coursebox(coursecat_helper $chelper, $course, $additionalclasses = '') {
         // If the course listing should remain unchanged.
         $courselistingpresentation = get_config('theme_boost_union', 'courselistingpresentation');
-        if (!isset($courselistingpresentation) || $courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
+        if (!isset($courselistingpresentation) || $courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE
+            || !course::has_boostunion_coursebox()) {
             // Call the parent function to present the default view.
             return parent::coursecat_coursebox($chelper, $course, $additionalclasses);
         }
@@ -359,7 +360,8 @@ class course_renderer extends \core_course_renderer {
     protected function coursecat_coursebox_content(coursecat_helper $chelper, $course) {
         // If the course listing should remain unchanged.
         $courselistingpresentation = get_config('theme_boost_union', 'courselistingpresentation');
-        if (!isset($courselistingpresentation) || $courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
+        if (!isset($courselistingpresentation) || $courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE
+            || !course::has_boostunion_coursebox()) {
             // Call the parent function to compose the default view.
             return parent::coursecat_coursebox_content($chelper, $course);
         }

@@ -187,4 +187,37 @@ class course {
         // Get and return the user progress.
         return \core_completion\progress::get_course_progress_percentage(get_course($this->course->id), $userid);
     }
+
+    /**
+     * Checks if the Boost Union specific coursebox should be displayed on page.
+     *
+     * @return bool true if the coursebox should be displayed.
+     */
+    public static function has_boostunion_coursebox(): bool {
+        global $CFG, $PAGE;
+
+        $currenturl = $PAGE->url->out();
+
+        // Check if user is on the frontpage.
+        $context = $PAGE->context;
+        if ($context->contextlevel == CONTEXT_COURSE && $context->instanceid == SITEID) {
+            // Allow display of coursebox.
+            return true;
+        }
+
+        // List of other page urls where the coursebox is allowed.
+        $pageswithboostunioncoursebox = [
+              '/course/index.php',
+        ];
+
+        foreach ($pageswithboostunioncoursebox as $page) {
+            // Check if user is on one of the other allowed pages.
+            if (str_contains($currenturl, $page)) {
+                // Allow display of coursebox.
+                return true;
+            }
+        }
+        return false;
+
+    }
 }
