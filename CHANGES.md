@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.4-r16
 
 * 2025-04-06 - Bugfix: Enrol page used modified course listing renderer from category index / site home as well, resolves #895.
 * 2025-04-01 - Feature: Add moodle documentation smartmenu item type, resolves #657.
