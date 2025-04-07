@@ -87,7 +87,9 @@ class course_renderer extends \core_course_renderer {
     protected function coursecat_courses(coursecat_helper $chelper, $courses, $totalcount = null) {
         // If the course listing should remain unchanged.
         $courselistingpresentation = get_config('theme_boost_union', 'courselistingpresentation');
-        if (!isset($courselistingpresentation) || $courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE) {
+        if (!isset($courselistingpresentation) ||
+                $courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE ||
+                $this->page_has_boostunion_modification() == false) {
             // Call the parent function to present the default view.
             return parent::coursecat_courses($chelper, $courses, $totalcount);
         }
@@ -322,8 +324,9 @@ class course_renderer extends \core_course_renderer {
     protected function coursecat_coursebox(coursecat_helper $chelper, $course, $additionalclasses = '') {
         // If the course listing should remain unchanged.
         $courselistingpresentation = get_config('theme_boost_union', 'courselistingpresentation');
-        if (!isset($courselistingpresentation) || $courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE
-            || !course::has_boostunion_coursebox()) {
+        if (!isset($courselistingpresentation) ||
+                $courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE ||
+                $this->page_has_boostunion_modification() == false) {
             // Call the parent function to present the default view.
             return parent::coursecat_coursebox($chelper, $course, $additionalclasses);
         }
@@ -360,8 +363,9 @@ class course_renderer extends \core_course_renderer {
     protected function coursecat_coursebox_content(coursecat_helper $chelper, $course) {
         // If the course listing should remain unchanged.
         $courselistingpresentation = get_config('theme_boost_union', 'courselistingpresentation');
-        if (!isset($courselistingpresentation) || $courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE
-            || !course::has_boostunion_coursebox()) {
+        if (!isset($courselistingpresentation) ||
+                $courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE ||
+                $this->page_has_boostunion_modification() == false) {
             // Call the parent function to compose the default view.
             return parent::coursecat_coursebox_content($chelper, $course);
         }
@@ -580,7 +584,8 @@ class course_renderer extends \core_course_renderer {
         // If the category listing should remain unchanged.
         $categorylistingpresentation = get_config('theme_boost_union', 'categorylistingpresentation');
         if (!isset($categorylistingpresentation) ||
-                $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE) {
+                $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE ||
+                $this->page_has_boostunion_modification() == false) {
             // Call the parent function to compose the default view.
             return parent::coursecat_category($chelper, $coursecat, $depth);
         }
@@ -664,7 +669,8 @@ class course_renderer extends \core_course_renderer {
         // If the category listing should remain unchanged.
         $categorylistingpresentation = get_config('theme_boost_union', 'categorylistingpresentation');
         if (!isset($categorylistingpresentation) ||
-                $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE) {
+                $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE ||
+                $this->page_has_boostunion_modification() == false) {
             // Call the parent function to compose the default view.
             return parent::coursecat_tree($chelper, $coursecat);
         }
@@ -738,7 +744,8 @@ class course_renderer extends \core_course_renderer {
         // If the category listing should remain unchanged.
         $categorylistingpresentation = get_config('theme_boost_union', 'categorylistingpresentation');
         if (!isset($categorylistingpresentation) ||
-                $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE) {
+                $categorylistingpresentation == THEME_BOOST_UNION_SETTING_CATLISTPRES_NOCHANGE ||
+                $this->page_has_boostunion_modification() == false) {
             // Call the parent function to compose the default view.
             return parent::course_category($category);
         }
@@ -819,5 +826,49 @@ class course_renderer extends \core_course_renderer {
         return $output;
 
         // phpcs:enable
+    }
+
+    /**
+     * Helper function which checks if the Boost Union specific modifications (for the coursebox)
+     * should be used on the current page.
+     *
+     * @return bool true if the modifications should be used.
+     */
+    private function page_has_boostunion_modification(): bool {
+
+        // First, check if this function is called from /course/category.ajax.php.
+        // This is the case when the course listing is loaded via AJAX on the category overview pages and on the frontpage
+        // were we want to allow the modification.
+        // It is slightly fragile as we rely just on the URL of the script and do not know if it will be called
+        // by some other code which must not be modified in the future.
+        // But it should hopyfully be ok for now.
+        if ($this->page->url->compare(new \core\url('/course/category.ajax.php'), URL_MATCH_BASE)) {
+            // Allow modification.
+            return true;
+        }
+
+        // Then, check if user is on site home.
+        $context = $this->page->context;
+        if ($context->contextlevel == CONTEXT_COURSE && $context->instanceid == SITEID) {
+            // Allow modification.
+            return true;
+        }
+
+        // List of other page URLs where the modification is allowed.
+        $pageswithboostunionmodification = [
+              '/course/index.php',
+        ];
+
+        // Iterate over these pages.
+        foreach ($pageswithboostunionmodification as $page) {
+            // Check if user is on one of the other allowed pages.
+            if ($this->page->url->compare(new \core\url($page), URL_MATCH_BASE)) {
+                // Allow modification.
+                return true;
+            }
+        }
+
+        // Fallback.
+        return false;
     }
 }
