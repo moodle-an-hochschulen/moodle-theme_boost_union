@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-06 - Bugfix: Enrol page used modified course listing renderer from category index / site home as well, resolves #895.
 * 2025-04-01 - Feature: Add moodle documentation smartmenu item type, resolves #657.
 
 ### v4.4-r15
