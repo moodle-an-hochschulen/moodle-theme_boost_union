@@ -1714,6 +1714,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 z-index: 1031;
                 /* The position of the message drawer has been adjusted slightly top to accommodate the top header. */
                 ~ [data-region=right-hand-drawer].drawer {
+                    height: calc(100% - #{$navbar-height} - #{$boost-union-smartmenu-menubar-height});
                     top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 2px);
                 }
                 /* The position of the side drawer has been adjusted slightly below to accommodate the top header. */
