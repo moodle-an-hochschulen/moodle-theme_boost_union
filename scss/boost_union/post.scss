@@ -1714,18 +1714,18 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 z-index: 1031;
                 /* The position of the message drawer has been adjusted slightly top to accommodate the top header. */
                 ~ [data-region=right-hand-drawer].drawer {
-                    top: 100px;
+                    top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 2px);
                 }
                 /* The position of the side drawer has been adjusted slightly below to accommodate the top header. */
                 ~ .drawer.drawer-left {
-                    top: 101px;
+                    top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 1px);
                 }
                 ~ .drawer.drawer-right {
-                    top: 101px;
+                    top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 1px);
                 }
                 /* The position of the main page has been adjusted slightly below to accommodate the top header. */
                 ~ #page.drawers {
-                    margin-top: 100px;
+                    top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 2px);
                 }
                 .moremenu {
                     .more-nav {
@@ -2538,7 +2538,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 /* The nav drawer position to the top in the responsive alignment */
 @include media-breakpoint-down(md) {
     .navbar.fixed-top.boost-union-menubar ~ .drawer {
-        top: 100px; /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
+        /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
+        top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 2px);
         &.drawer-right {
             top: 0;
         }
@@ -2548,7 +2549,15 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 /* The nav drawer position to the top in the responsive alignment */
 @include media-breakpoint-up(md) {
     .navbar.fixed-top.boost-union-menubar ~ #page.drawers .drawer-toggles .drawer-toggler {
-        top: 110px;
+        top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} + 8px);
+    }
+
+    /* Adjust height for drawer content if there is a smartmenu menu bar. */
+    .navbar.fixed-top.boost-union-menubar ~ .drawer {
+        height: calc(100% - #{$navbar-height});
+        .drawercontent {
+            height: calc(100% - #{$navbar-height} - #{$boost-union-smartmenu-menubar-height});
+        }
     }
 }
 
@@ -2596,6 +2605,10 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             max-width: 315px;
             padding-bottom: 0;
             top: 0;
+            /* Undo height adjustments of drawer content as drawer is placed above menubar. */
+            .drawercontent {
+                height: calc(100% - #{$navbar-height});
+            }
         }
         /*~ #page.drawers {
             The position of the drawer button to toggle has been adjusted slightly
@@ -2611,12 +2624,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         margin-right: 0;
     }
 }
-
-/* Adjust height for drawers if there is a smartmenu menu bar. */
-:has(nav.boost-union-menubar) .drawercontent {
-    height: calc(100% - #{$navbar-height} - #{$boost-union-smartmenu-menubar-height});
-}
-
 
 /*---------------------------------------
  * Footer menu
