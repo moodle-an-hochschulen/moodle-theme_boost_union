@@ -2582,6 +2582,30 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 top: 101px;
             }
         }
+        /* Top and footer menubar are both activated */
+        &.boost-union-menubar.smartmenu-bottom-navigation {
+
+            /* Adjust height for drawer content if there is a smartmenu menu bar. */
+            ~ .drawer {
+                height: calc(100% - #{$navbar-height});
+                .drawercontent {
+                    height: calc(100% - #{$navbar-height} - #{$boost-union-smartmenu-menubar-height});
+                }
+            }
+
+            /* Adjust positioning of left drawers to compensate for footer bar. */
+            ~ #theme_boost-drawers-primary,
+            ~ #theme_boost-drawers-courseindex {
+                top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 1px);
+            }
+
+            /* Adjust drawer height for message drawer */
+            ~ [data-region=right-hand-drawer].drawer {
+                /* Compensate for two navbars (top and bottom) and top menubar */
+                height: calc(100% - #{$navbar-height} - #{$boost-union-smartmenu-menubar-height} - #{$navbar-height} + 2px);
+            }
+
+        }
         /* When the menu in the footer bottom is clicked, its navigation drawer
             position appears below the header when the header menubar is disabled. */
         ~ .drawer-bottom.drawer {

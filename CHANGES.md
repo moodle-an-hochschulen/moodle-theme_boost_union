@@ -6,7 +6,7 @@ Changes
 
 ### Unreleased
 
-* 2025-04-02 - Bugfix: Adjust position of drawers and stickcategoryheader with active smartmenu top bar, resolves #870 #879.
+* 2025-04-02 - Bugfix: Adjust position of drawers and stickcategoryheader with active smartmenus bars, resolves #870 #879 #899.
 
 ### v4.5-r13
 
