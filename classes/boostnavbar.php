@@ -105,7 +105,9 @@ class boostnavbar extends \theme_boost\boostnavbar {
             }
             // Remove the course breadcrumb node.
             if (!str_starts_with($this->page->pagetype, 'course-view-section-')) {
-                $this->remove($this->page->course->id, \breadcrumb_navigation_node::TYPE_COURSE);
+                if (!str_starts_with($this->page->pagetype, 'section-view-topics')) {
+                    $this->remove($this->page->course->id, \breadcrumb_navigation_node::TYPE_COURSE);
+                }
             }
             // Remove the navbar nodes that already exist in the secondary navigation menu.
             $this->remove_items_that_exist_in_navigation($PAGE->secondarynav);
