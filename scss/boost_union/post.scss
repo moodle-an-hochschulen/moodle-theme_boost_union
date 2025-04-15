@@ -1339,7 +1339,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 /* Static pages links dividers. */
 #footnote {
     .theme_boost_union_footnote_link {
-        border-right: 2px solid $nav-divider-color;
+        border-right: 2px solid $breadcrumb-divider-color;
     }
     .theme_boost_union_footnote_link:last-of-type {
         border-right: none;
