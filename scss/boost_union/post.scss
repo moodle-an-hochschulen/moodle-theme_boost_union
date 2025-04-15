@@ -19,13 +19,13 @@
  * Setting: Navbar color
  --------------------------------------*/
 
-/* Moodle core already presents the light navbar with dark font color (.navbar-light.bg-white) perfectly.
+/* Moodle core already presents the light navbar with dark font color (.bg-body) perfectly.
    There is nothing to change here. */
 
 /* Tweak the dark navbar with light font color
    and the primary color navbar with light font color. */
-.navbar.navbar-dark.bg-dark,
-.navbar.navbar-dark.bg-primary {
+.navbar.bg-dark[data-bs-theme="dark"],
+.navbar.bg-primary[data-bs-theme="dark"] {
     /* Remove the white border at the bottom of the navbar as it looks odd with a dark navbar. */
     border-bottom: none;
 
@@ -77,12 +77,6 @@
         color: $white !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    /* Revert color of the close icon in the search panel in the navbar as this icon is still dark on white
-       within the input form. */
-    #searchform-navbar .btn-close .icon {
-        color: #6a737b !important; /* stylelint-disable-line declaration-no-important */
-    }
-
     /* Change the color of the edit switch label in the navbar to white.
        This has to use !important as Moodle core would change the color to text-primary as soon as editing is on. */
     .editmode-switch-form,
@@ -90,20 +84,8 @@
         color: $white !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    /* Adapt the color of the edit switch widget to fit onto the dark background. */
-    .custom-control-input:checked ~ .custom-control-label::before {
-        background-color: $white;
-        border-color: #c8c8c8;
-    }
-    .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
-        background-color: #8f959e;
-    }
-
     /* Change the color of the offcanvas button to fit onto the dark background. */
     #theme_boost_union-offcanvas-btn {
-        color: #c8c8c8;
-    }
-    #theme_boost_union-offcanvas-btn:hover {
         color: #fff;
     }
 
@@ -126,7 +108,7 @@
 }
 
 /* Tweak the dark navbar with light font color a little bit more. */
-.navbar.navbar-dark.bg-dark {
+.navbar.bg-dark[data-bs-theme="dark"] {
     /* If we are showing the search form, we need to show the border again as dark border
        as otherwise the active node's bottom bar might peek through. */
     &:has(#searchform-navbar.show) {
@@ -146,9 +128,21 @@
         }
     }
 
+    /* Adapt the color of the edit switch widget to fit onto the dark background. */
+    .form-check-input {
+        background-color: var(--bs-body-bg);
+        border-color: #c8c8c8;
+    }
+
     /* Change the background color of the search panel in the navbar. */
     #searchform-navbar {
-        background-color: #343a40;
+        @extend .bg-dark;
+
+        /* Make sure that the search form's submit button is black as well. */
+        .simplesearchform .btn-submit {
+            background-color: var(--bs-body-bg);
+            color: #6a737b;
+        }
     }
 
     /* Change the color of the language selector drop down items when hovered, focused and active to dark grey
@@ -164,7 +158,7 @@
 }
 
 /* Tweak the primary color navbar with light font color a little bit more. */
-.navbar.navbar-dark.bg-primary {
+.navbar.bg-primary[data-bs-theme="dark"] {
     /* If we are showing the search form, we need to show the border again as dark border
        as otherwise the active node's bottom bar might peek through. */
     &:has(#searchform-navbar.show) {
@@ -184,13 +178,27 @@
         }
     }
 
+    /* Adapt the color of the edit switch widget to fit onto the dark background. */
+    .form-check-input {
+        background-color: $primary;
+        border-color: #c8c8c8;
+    }
+
     /* Change the background color of the search panel in the navbar. */
     #searchform-navbar {
         background-color: $primary;
+
+        /* Make sure that the search form input elements are colorized as well. */
+        input,
+        button {
+            background-color: $primary;
+            border-color: $white;
+            color: $white;
+        }
     }
 
     /* Change the color of the active nav items's bottom border to white as this would be presented in the
-   primary color otherwise. */
+        primary color otherwise. */
     .nav-link.active {
         border-bottom-color: $white;
     }
@@ -203,7 +211,7 @@
 }
 
 /* Tweak the primary color navbar with dark font color. */
-.navbar.navbar-light.bg-primary {
+.navbar.bg-primary[data-bs-theme="light"] {
     /* Change the color of the active nav items's bottom border to dark grey as this would be presented in the
        primary color as well otherwise. */
     .nav-link.active {
@@ -228,17 +236,22 @@
     }
 
     /* Adapt the color of the edit switch widget to fit onto the dark background. */
-    .custom-control-input:checked ~ .custom-control-label::before {
-        background-color: $white;
+    .form-check-input {
+        background-color: $primary;
         border-color: #c8c8c8;
-    }
-    .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
-        background-color: #8f959e;
     }
 
     /* Change the background color of the search panel in the navbar. */
     #searchform-navbar {
         background-color: $primary;
+
+        /* Make sure that the search form input elements are colorized as well. */
+        input,
+        button {
+            background-color: $primary;
+            border-color: #c8c8c8;
+            color: #c8c8c8;
+        }
     }
 
     /* Change the color of the login link in the navbar to dark grey and to darker grey when hovered. */

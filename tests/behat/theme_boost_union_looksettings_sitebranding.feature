@@ -256,10 +256,11 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
       | navbarcolor | <setting> | theme_boost_union |
     When I log in as "admin"
     Then the "class" attribute of ".navbar" "css_element" should contain "<classes>"
+    And the "data-bs-theme" attribute of ".navbar" "css_element" should <databstheme>
 
     Examples:
-      | setting      | classes                 |
-      | light        | navbar-light bg-white   |
-      | dark         | navbar-dark bg-dark     |
-      | primarylight | navbar-light bg-primary |
-      | primarydark  | navbar-dark bg-primary  |
+      | setting      | classes    | databstheme     |
+      | light        | bg-body    | not be set      |
+      | dark         | bg-dark    | contain "dark"  |
+      | primarylight | bg-primary | contain "light" |
+      | primarydark  | bg-primary | contain "dark"  |
