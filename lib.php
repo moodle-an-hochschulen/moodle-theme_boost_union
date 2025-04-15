@@ -288,10 +288,6 @@ function theme_boost_union_get_pre_scss($theme) {
     if (get_config('theme_boost_union', 'coursecontentmaxwidth')) {
         $scss .= '$course-content-maxwidth: '.get_config('theme_boost_union', 'coursecontentmaxwidth').";\n";
     }
-    // Set variables which are influenced by the mediumcontentmaxwidth setting.
-    if (get_config('theme_boost_union', 'mediumcontentmaxwidth')) {
-        $scss .= '$medium-content-maxwidth: '.get_config('theme_boost_union', 'mediumcontentmaxwidth').";\n";
-    }
     // Set variables which are influenced by the h5pcontentmaxwidth setting.
     if (get_config('theme_boost_union', 'h5pcontentmaxwidth')) {
         $scss .= '$h5p-content-maxwidth: '.get_config('theme_boost_union', 'h5pcontentmaxwidth').";\n";

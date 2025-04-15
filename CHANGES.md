@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Upgrade: Remove mediumwidth setting, resolves #780
 * 2025-04-10 - Upgrade: Replace the $nav-divider-color SCSS variable in post.scss which does not exist anymore and prevented the Boost Union SCSS from being compiled.
 * 2025-04-10 - Prepare compatibility for Moodle 5.0.
 
