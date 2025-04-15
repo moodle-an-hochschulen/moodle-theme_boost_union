@@ -1939,7 +1939,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     align-items: center;
                     &.dimmed {
                         color: $text-muted;
-                        &:hover {
+                        &.dropdown-item:hover {
                             color: $white;
                             opacity: .7;
                         }

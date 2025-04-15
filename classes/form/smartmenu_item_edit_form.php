@@ -248,10 +248,13 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('listsort', 'smartmenusmenuitemlistsort', 'theme_boost_union');
 
         // Add Display only visible courses as checkbox.
-        $mform->addElement('advcheckbox', 'displayhiddencourses',
+        $displayoptions = [
+                smartmenu_item::DISPLAY_ALLCOURSES => get_string('smartmenusmenuitemdisplayallcourses', 'theme_boost_union'),
+                smartmenu_item::DISPLAY_VISIBLECOURSESONLY => get_string('smartmenusmenuitemhidehiddencourses', 'theme_boost_union'),
+        ];
+        $mform->addElement('select', 'displayhiddencourses',
                 get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
-                get_string('smartmenusmenuitemdisplayonlyvisiblecourses', 'theme_boost_union'),
-                get_string('smartmenusmenuitemhidehiddencourses', 'theme_boost_union'));
+                get_string('smartmenusmenuitemdisplayonlyvisiblecourses', 'theme_boost_union'), $displayoptions);
         $mform->setType('displayhiddencourses', PARAM_BOOL);
         $mform->addHelpButton('displayhiddencourses', 'smartmenusmenuitemdisplayonlyvisiblecourses', 'theme_boost_union');
         $mform->hideIf('displayhiddencourses', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
@@ -263,7 +266,7 @@ class smartmenu_item_edit_form extends \moodleform {
                 get_string('smartmenusmenuitemhiddencoursessorting', 'theme_boost_union'), $hiddencoursesortoptions);
         $mform->hideIf('hiddencoursesort', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
         $mform->hideIf('hiddencoursesort', 'displayhiddencourses', 'eq', smartmenu_item::DISPLAY_VISIBLECOURSESONLY);
-        $mform->addHelpButton('displayhiddencourses', 'smartmenusmenuitemhiddencoursessorting', 'theme_boost_union');
+        $mform->addHelpButton('hiddencoursesort', 'smartmenusmenuitemhiddencoursessorting', 'theme_boost_union');
 
         // Add course name presentation (for the dynamic courses menu item type) as select element.
         $displayfieldoptions = smartmenu_item::get_displayfield_options();

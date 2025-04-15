@@ -235,7 +235,14 @@ class smartmenu_item {
     const LISTSORT_COURSEIDNUMBER_DESC = 7;
 
     /**
-     * Display the only te visible courses in the dynamic menu item.
+     * Display all courses including hidden courses, in the dynamic menu item.
+     *
+     * @var int
+     */
+    const DISPLAY_ALLCOURSES = 0;
+
+    /**
+     * Display the only visible courses in the dynamic menu item.
      * @var int
      */
     const DISPLAY_VISIBLECOURSESONLY = 1;
@@ -905,7 +912,7 @@ class smartmenu_item {
             $likesql = implode(' OR ', $likesqlparts);
 
             // Add the categories filter to the query.
-            $query->where[] = "c.category $insql OR $likesql";
+            $query->where[] = "(c.category $insql OR $likesql)";
             $query->params += $inparams;
             $query->params += $likeparams;
 
@@ -1318,13 +1325,11 @@ class smartmenu_item {
 
         // Include the additional item classes.
         $itemdata = clone($this->item);
-        if (!empty($itemclasses)) {
-            $itemdata->classes = array_merge($this->item->classes, $itemclasses);
-        }
+        $itemdata->classes = array_merge($this->item->classes, $itemclasses);
 
         $data = [
             'itemdata' => $itemdata,
-            'menuclasses' => $this->item->classes, // If menu is inline, need to add the item custom class in dropdown.
+            'menuclasses' => $itemdata->classes, // If menu is inline, need to add the item custom class in dropdown.
             'location' => $this->menu->location,
             'url' => $url ?: 'javascript:void(0)',
             'key' => $key != null ? $key : 'item-'.$this->item->id,
