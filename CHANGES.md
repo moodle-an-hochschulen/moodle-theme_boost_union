@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-04-10 - Prepare compatibility for Moodle 5.0.
+
 ### v4.5-r17
 
 * 2025-05-21 - Bugfix: Smart menu "Visibility by language" restriction was not applied correctly after changes of the current language, resolves #697.
