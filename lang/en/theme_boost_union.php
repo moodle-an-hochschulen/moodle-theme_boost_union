@@ -127,9 +127,6 @@ $string['pagewidthheading'] = 'Page width';
 // ... ... Setting: Course content max width.
 $string['coursecontentmaxwidthsetting'] = 'Course content max width';
 $string['coursecontentmaxwidthsetting_desc'] = 'With this setting, you can override Moodle\'s course content width without manual SCSS modifications. This width is used as page width of course pages and within several activities. By default, Moodle uses a course content max width of 830px. You can enter other pixel-based values like 1200px, but you can also enter a percentage-based value like 100% or a viewport-width value like 90vw.';
-// ... ... Setting: Medium content max width.
-$string['mediumcontentmaxwidthsetting'] = 'Medium content max width';
-$string['mediumcontentmaxwidthsetting_desc'] = 'With this setting, you can override Moodle\'s medium content width without manual SCSS modifications. This page width is used in certain activities like the database activity. By default, Moodle uses a medium content max width of 1120px. You can enter other pixel-based values like 1200px, but you can also enter a percentage-based value like 100% or a viewport-width value like 90vw.';
 // ... Section: Drawer width.
 $string['drawerwidthheading'] = 'Drawer width';
 // ... ... Setting: Course content max width.

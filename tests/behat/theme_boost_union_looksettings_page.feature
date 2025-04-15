@@ -20,19 +20,6 @@ Feature: Configuring the theme_boost_union plugin for the "Page" tab on the "Loo
     Then DOM element ".main-inner" should have computed style "max-width" "600px"
 
   @javascript
-  Scenario: Setting: Medium content max width - Overwrite the medium content max width setting
-    Given the following config values are set as admin:
-      | config                | value | plugin            |
-      | mediumcontentmaxwidth | 600px | theme_boost_union |
-    And the theme cache is purged and the theme is reloaded
-    And the following "activities" exist:
-      | activity | name               | course |
-      | data     | Test database name | C1     |
-    When I log in as "admin"
-    And I am on the "Test database name" "data activity" page
-    Then DOM element ".main-inner" should have computed style "max-width" "600px"
-
-  @javascript
   Scenario: Setting: Course index drawer width - Overwrite the course index drawer width setting
     Given the following config values are set as admin:
       | config                 | value | plugin            |
