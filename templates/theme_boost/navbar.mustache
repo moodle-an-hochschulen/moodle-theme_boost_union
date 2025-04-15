@@ -72,12 +72,12 @@
     {{> core/moremenu}}
 </nav>
 {{/menubar}}
-<nav class="navbar fixed-top {{navbarcolorclasses}} navbar-expand {{#bottombar.drawer}} smartmenu-bottom-navigation {{/bottombar.drawer}}" aria-label="{{#str}}sitemenubar, admin{{/str}}">
+<nav class="navbar fixed-top {{navbarcolorclasses}} navbar-expand {{#bottombar.drawer}} smartmenu-bottom-navigation {{/bottombar.drawer}}" {{#databstheme}}data-bs-theme="{{databstheme}}"{{/databstheme}} aria-label="{{#str}}sitemenubar, admin{{/str}}">
     <div class="container-fluid">
         {{^bottombar.drawer}}
         <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
             <span class="navbar-toggler-icon"></span>
-            <span class="sr-only">{{#str}}sidepanel, core{{/str}}</span>
+            <span class="visually-hidden">{{#str}}sidepanel, core{{/str}}</span>
         </button>
         {{/bottombar.drawer}}
 

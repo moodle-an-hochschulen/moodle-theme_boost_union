@@ -580,13 +580,14 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     When I log in as "admin"
     And I am on "Course 1" course homepage
     Then the "class" attribute of ".navbar" "css_element" should contain "<classes>"
+    And the "data-bs-theme" attribute of ".navbar" "css_element" should <databstheme>
 
     Examples:
-      | setting      | classes                 |
-      | light        | navbar-light bg-white   |
-      | dark         | navbar-dark bg-dark     |
-      | primarylight | navbar-light bg-primary |
-      | primarydark  | navbar-dark bg-primary  |
+      | setting      | classes    | databstheme     |
+      | light        | bg-body    | not be set      |
+      | dark         | bg-dark    | contain "dark"  |
+      | primarylight | bg-primary | contain "light" |
+      | primarydark  | bg-primary | contain "dark"  |
 
   @javascript
   Scenario Outline: Setting: Navbar color - Set the navbar color (with the global setting being overridden)
@@ -609,11 +610,12 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I am on "Course 1" course homepage
     Then the "class" attribute of ".navbar" "css_element" should contain "<classes>"
     And the "class" attribute of ".navbar" "css_element" should not contain "<shouldnotclasses>"
+    And the "data-bs-theme" attribute of ".navbar" "css_element" should <databstheme>
 
     # We only test 1 out of 4 color types as we have tested the rest already in the previous scenario.
     Examples:
-      | globalsetting | setting | classes               | shouldnotclasses    |
-      | dark          | light   | navbar-light bg-white | navbar-dark bg-dark |
+      | globalsetting | setting | classes | databstheme | shouldnotclasses |
+      | dark          | light   | bg-body | not be set  | bg-dark          |
 
   @javascript
   Scenario Outline: Setting: Navbar color - Do not set the navbar color (with a global setting being served properly)
@@ -635,11 +637,12 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     When I log in as "admin"
     And I am on "Course 1" course homepage
     Then the "class" attribute of ".navbar" "css_element" should contain "<classes>"
+    And the "data-bs-theme" attribute of ".navbar" "css_element" should <databstheme>
 
     # We only test 1 out of 4 color types as we have tested the rest already in the previous scenario.
     Examples:
-      | setting | classes             |
-      | dark    | navbar-dark bg-dark |
+      | setting | classes | databstheme    |
+      | dark    | bg-dark | contain "dark" |
 
   @javascript
   Scenario: Flavours: Raw (initial) SCSS - Add custom SCSS to the page
