@@ -250,7 +250,8 @@ class smartmenu_item_edit_form extends \moodleform {
         // Add Display only visible courses as checkbox.
         $displayoptions = [
                 smartmenu_item::DISPLAY_ALLCOURSES => get_string('smartmenusmenuitemdisplayallcourses', 'theme_boost_union'),
-                smartmenu_item::DISPLAY_VISIBLECOURSESONLY => get_string('smartmenusmenuitemhidehiddencourses', 'theme_boost_union'),
+                smartmenu_item::DISPLAY_VISIBLECOURSESONLY =>
+                        get_string('smartmenusmenuitemhidehiddencourses', 'theme_boost_union'),
         ];
         $mform->addElement('select', 'displayhiddencourses',
                 get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
