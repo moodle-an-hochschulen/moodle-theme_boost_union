@@ -1899,6 +1899,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT, $outsideregionsplacementoptions);
         $tab->add($setting);
 
+        // Setting: Wrap outside left and right regions below maincontent (on mobile).
+        $name = 'theme_boost_union/blockregionoutsidewrap';
+        $title = get_string('outsideregionswrap', 'theme_boost_union', null, true);
+        $description = get_string('outsideregionswrap_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
         // Create site home right-hand blocks drawer behaviour heading.
         $name = 'theme_boost_union/sitehomerighthandblockdrawerbehaviour';
         $title = get_string('sitehomerighthandblockdrawerbehaviour', 'theme_boost_union', null, true);

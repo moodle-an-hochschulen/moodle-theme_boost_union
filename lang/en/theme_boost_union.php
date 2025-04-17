@@ -662,6 +662,9 @@ $string['outsideregionsplacement'] = 'Outside regions horizontal placement';
 $string['outsideregionsplacement_desc'] = 'With this setting, you can control if, on larger screens, the \'Outside (left)\' and \'Outside (right)\' block regions should be placed near the main content area or rather near the window edges.';
 $string['outsideregionsplacementnextmaincontent'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions next to the main content area';
 $string['outsideregionsplacementnearwindowedges'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions near the window edges';
+// ... ... Setting: Wrap outside left and right regions below main content.
+$string['outsideregionswrap'] = 'Wrap outside left and right regions below main content';
+$string['outsideregionswrap_desc'] = 'With this setting, you can control if the \'Outside (left)\' and \'Outside (right)\' block regions should be wrapped below the main content area on smaller screens.';
 // ... Section: Site home right-hand block drawer behaviour.
 $string['sitehomerighthandblockdrawerbehaviour'] = 'Site home right-hand block drawer';
 // ... ... Setting: Show right-hand block drawer of site home on visit.

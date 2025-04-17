@@ -486,3 +486,24 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | setting | shouldcontain      |
       | yes     | should contain     |
       | no      | should not contain |
+
+  @javascript
+  Scenario Outline: Setting: Wrap outside regions below main content
+    Given the following config values are set as admin:
+      | config                 | value     | plugin            |
+      | blockregionoutsidewrap | <setting> | theme_boost_union |
+      | blockregionsforcourse  | outside-left,outside-right | theme_boost_union |
+    And the following "blocks" exist:
+      | blockname    | contextlevel | reference | pagetypepattern | defaultregion |
+      | online_users | Course       | C1        | course-view-*   | outside-left  |
+      | myprofile    | Course       | C1        | course-view-*   | outside-right |
+    When I am on the "Course 1" "Course" page logged in as "student1"
+
+    Then the "class" attribute of ".main-inner-wrapper" "css_element" <shouldcontain> "left-region-nextmaincontent"
+    And I change window size to "mobile"
+    Then ".main-inner#topofscroll" "css_element" should display <beforeafter> "#theme-block-region-outside-left" "css_element"
+
+    Examples:
+      | setting | shouldcontain      | beforeafter |
+      | yes     | should contain     | before      |
+      | no      | should not contain | after       |

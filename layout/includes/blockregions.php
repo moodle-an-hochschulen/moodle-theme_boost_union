@@ -112,6 +112,13 @@ class additionalregions {
             $maininnerwrapperclass = 'main-inner-outside-none';
         }
 
+        // If outside-regions wrap below main content is enabled.
+        $outsideregionswrap = get_config('theme_boost_union', 'blockregionoutsidewrap');
+        if ($outsideregionswrap == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            // Include class in main inner wrapper to wrap the outside regions below main content.
+            $maininnerwrapperclass .= ' left-region-nextmaincontent ';
+        }
+
         return $maininnerwrapperclass;
     }
 
