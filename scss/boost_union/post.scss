@@ -399,6 +399,13 @@
         width: calc(100% - 0.5rem);
     }
 
+    /* Adjust position of stickycategory if there is a menu bar.
+       Substract one additional pixel to avoid that the scrolled content shines through betweem the navbar
+       and the sticky category. */
+    :has(nav.boost-union-menubar) .theme_boost_union-stickycategory {
+        top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 1px);
+    }
+
     /* The goto button. */
     .dimmed_category .gotobutton {
         /* Make sure that a dimmed category (and thus dimmed links in the course cards / course list) do not affect
@@ -1701,24 +1708,25 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             /* Added height and background color for the top header,
             z-index is added to show the top header dropdown menu above the header block */
             &.boost-union-menubar { /* boost-union-menubar class is added for the top header */
-                height: 42px;
+                height: $boost-union-smartmenu-menubar-height;
                 border-bottom: 0;
                 background-color: #f8f9fa;
                 z-index: 1031;
                 /* The position of the message drawer has been adjusted slightly top to accommodate the top header. */
                 ~ [data-region=right-hand-drawer].drawer {
-                    top: 100px;
+                    height: calc(100% - #{$navbar-height} - #{$boost-union-smartmenu-menubar-height});
+                    top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 2px);
                 }
                 /* The position of the side drawer has been adjusted slightly below to accommodate the top header. */
                 ~ .drawer.drawer-left {
-                    top: 101px;
+                    top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 1px);
                 }
                 ~ .drawer.drawer-right {
-                    top: 101px;
+                    top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 1px);
                 }
                 /* The position of the main page has been adjusted slightly below to accommodate the top header. */
                 ~ #page.drawers {
-                    margin-top: 100px;
+                    top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 2px);
                 }
                 .moremenu {
                     .more-nav {
@@ -2531,7 +2539,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 /* The nav drawer position to the top in the responsive alignment */
 @include media-breakpoint-down(md) {
     .navbar.fixed-top.boost-union-menubar ~ .drawer {
-        top: 100px; /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
+        /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
+        top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 2px);
         &.drawer-right {
             top: 0;
         }
@@ -2541,7 +2550,15 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 /* The nav drawer position to the top in the responsive alignment */
 @include media-breakpoint-up(md) {
     .navbar.fixed-top.boost-union-menubar ~ #page.drawers .drawer-toggles .drawer-toggler {
-        top: 110px;
+        top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} + 8px);
+    }
+
+    /* Adjust height for drawer content if there is a smartmenu menu bar. */
+    .navbar.fixed-top.boost-union-menubar ~ .drawer {
+        height: calc(100% - #{$navbar-height});
+        .drawercontent {
+            height: calc(100% - #{$navbar-height} - #{$boost-union-smartmenu-menubar-height});
+        }
     }
 }
 
@@ -2564,6 +2581,30 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             ~ .drawer-bottom.drawer {
                 top: 101px;
             }
+        }
+        /* Top and footer menubar are both activated */
+        &.boost-union-menubar.smartmenu-bottom-navigation {
+
+            /* Adjust height for drawer content if there is a smartmenu menu bar. */
+            ~ .drawer {
+                height: calc(100% - #{$navbar-height});
+                .drawercontent {
+                    height: calc(100% - #{$navbar-height} - #{$boost-union-smartmenu-menubar-height});
+                }
+            }
+
+            /* Adjust positioning of left drawers to compensate for footer bar. */
+            ~ #theme_boost-drawers-primary,
+            ~ #theme_boost-drawers-courseindex {
+                top: calc(#{$navbar-height} + #{$boost-union-smartmenu-menubar-height} - 1px);
+            }
+
+            /* Adjust drawer height for message drawer */
+            ~ [data-region=right-hand-drawer].drawer {
+                /* Compensate for two navbars (top and bottom) and top menubar */
+                height: calc(100% - #{$navbar-height} - #{$boost-union-smartmenu-menubar-height} - #{$navbar-height} + 2px);
+            }
+
         }
         /* When the menu in the footer bottom is clicked, its navigation drawer
             position appears below the header when the header menubar is disabled. */
@@ -2589,6 +2630,10 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             max-width: 315px;
             padding-bottom: 0;
             top: 0;
+            /* Undo height adjustments of drawer content as drawer is placed above menubar. */
+            .drawercontent {
+                height: calc(100% - #{$navbar-height});
+            }
         }
         /*~ #page.drawers {
             The position of the drawer button to toggle has been adjusted slightly
@@ -2604,7 +2649,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         margin-right: 0;
     }
 }
-
 
 /*---------------------------------------
  * Footer menu

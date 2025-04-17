@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-04-02 - Bugfix: Adjust position of drawers and stickcategoryheader with active smartmenus bars, resolves #870 #879 #899.
+
 ### v4.5-r13
 
 * 2025-04-06 - Bugfix: Enrol page used modified course listing renderer from category index / site home as well, resolves #895.
