@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-04-17 - Improvement: Improve wrapping of the outside-left and outside-right regions, resolves #255.
+
 ### v4.5-r13
 
 * 2025-04-06 - Bugfix: Enrol page used modified course listing renderer from category index / site home as well, resolves #895.
