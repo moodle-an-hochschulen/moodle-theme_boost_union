@@ -15,10 +15,10 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | username |
       | student1 |
     And the following "categories" exist:
-      | name        | category | idnumber |
-      | Category A  | 0        | CATA     |
-      | Category B  | 0        | CATB     |
-      | Category BB | CATB     | CATBB    |
+      | name                                                                                                    | category | idnumber |
+      | <span lang="en" class="multilang">Category A</span><span lang="de" class="multilang">Kategorie A</span> | 0        | CATA     |
+      | Category B                                                                                              | 0        | CATB     |
+      | Category BB                                                                                             | CATB     | CATBB    |
     And the following "courses" exist:
       | fullname | shortname | category | enablecompletion | showcompletionconditions |
       | Course 1 | C1        | CATA     | 1                | 1                        |
@@ -29,6 +29,8 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | student1 | C1     | student |
       | student1 | C2     | student |
       | student1 | C3     | student |
+    And the "multilang" filter is "on"
+    And the "multilang" filter applies to "content and headings"
 
   @javascript
   Scenario Outline: Setting: Course listing presentation: Set the setting
@@ -860,3 +862,14 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | list         | nochange      | should not           | should not         |
       | cards        | boxlist       | should not           | should             |
       | list         | boxlist       | should not           | should             |
+
+  @javascript
+  Scenario: Setting: Course listing presentation / Category listing presentation: Verify multilang capability of the sticky category headers
+    Given the following config values are set as admin:
+      | config                      | value   | plugin            |
+      | courselistingpresentation   | cards   | theme_boost_union |
+      | categorylistingpresentation | boxlist | theme_boost_union |
+    When I log in as "student1"
+    And I am on site homepage
+    Then I should see "Category A"
+    And I should not see "Kategorie A"

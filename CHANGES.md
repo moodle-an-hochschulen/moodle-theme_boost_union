@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-04-22 - Bugfix: Support multilang course category names in stickyheaders, resolves #905.
+
 ### v4.4-r16
 
 * 2025-04-06 - Bugfix: Enrol page used modified course listing renderer from category index / site home as well, resolves #895.
