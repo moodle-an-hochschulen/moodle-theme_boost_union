@@ -1154,7 +1154,9 @@ body.theme-boost-union-commincourse {
         &.main-inner-outside-nextmaincontent {
             align-self: normal;
             justify-content: center;
-            .main-inner {
+            /* "The left and right margins have been removed from the main inner region to make it full-width,
+                ensuring that the main region remains unaffected when the left and right blocks are disabled." */
+            &:not(.main-inner-outside-none) .main-inner {
                 margin-left: 0;
                 margin-right: 0;
             }

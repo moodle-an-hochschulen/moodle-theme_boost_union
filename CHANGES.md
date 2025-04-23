@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-24 - Bugfix: Make outside-left and outside-right block regions really responsive, resolves #266.
 * 2025-04-22 - Bugfix: Support multilang course category names in stickyheaders, resolves #905.
 
 ### v4.5-r13
