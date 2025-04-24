@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-13 - Bugfix: The header block region is not aligned properly if outside-left and outside-right have unequal widths, resolves #252
 * 2026-10-13 - Bugfix: Let clicks on the slider's caption box pass through to the linked background image as the caption box's paddings created an unclickable area on the image, resolves #1196
 * 2026-10-11 - Improvement: Remove the precompiled CSS callback which just returned Boost Core's fallback CSS file another time as Moodle core already adds this file from Boost's own callback in case of a SCSS compilation error, resolves #89
 * 2026-10-10 - Bugfix: Validate the block region width settings for the 'Outside (left)' and 'Outside (right)' regions as invalid values would break the SCSS compilation, resolves #1433
