@@ -123,6 +123,12 @@
 
 /* Tweak the dark navbar with light font color a little bit more. */
 .navbar.navbar-dark.bg-dark {
+    /* If we are showing the search form, we need to show the border again as dark border
+       as otherwise the active node's bottom bar might peek through. */
+    &:has(#searchform-navbar.show) {
+        border-bottom: 1px solid #343a40;
+    }
+
     /* Change the background color of the custom child menu and user menu navigation items in the navbar
        to dark grey when hovered and focused (especially during keyboard navigation) */
     .nav-item.dropdown.show,
@@ -155,6 +161,12 @@
 
 /* Tweak the primary color navbar with light font color a little bit more. */
 .navbar.navbar-dark.bg-primary {
+    /* If we are showing the search form, we need to show the border again as dark border
+       as otherwise the active node's bottom bar might peek through. */
+    &:has(#searchform-navbar.show) {
+        border-bottom: 1px solid $primary;
+    }
+
     /* Change the background color of the custom child menu and user menu navigation items in the navbar
        to dark grey when hovered and focused (especially during keyboard navigation) */
     .nav-item.dropdown.show,
