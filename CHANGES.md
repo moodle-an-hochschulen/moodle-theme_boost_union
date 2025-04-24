@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Upgrade: Adopt changes to classes/boostnavbar.php
 * 2025-04-10 - Upgrade: Adopt changes to drawer.mustache
 * 2025-04-10 - Upgrade: Adopt Bootstrap changes to navbar.mustache and the colored navbar feature.
                Please note: The bg-dark color has changed in Bootstrap 5 which results in Boost Union in a even darker navbar.
