@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Upgrade: Adopt changes to drawers.mustache
 * 2025-04-10 - Upgrade: Adopt changes to classes/boostnavbar.php
 * 2025-04-10 - Upgrade: Adopt changes to drawer.mustache
 * 2025-04-10 - Upgrade: Adopt Bootstrap changes to navbar.mustache and the colored navbar feature.
