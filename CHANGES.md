@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-24 - Bugfix: The header block region is not aligned properly if outside-left and outside-right have unequal widths, resolves #252.
 * 2025-04-22 - Bugfix: Support multilang course category names in stickyheaders, resolves #905.
 
 ### v4.5-r13
