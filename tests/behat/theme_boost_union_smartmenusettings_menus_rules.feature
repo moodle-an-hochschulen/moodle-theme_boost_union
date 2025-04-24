@@ -339,3 +339,57 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I expand all fieldsets
     And "Test role 1" "autocomplete_selection" should not exist
     And "Test role 2" "autocomplete_selection" should exist
+
+  @javascript
+  Scenario: Smartmenu: Menus: Rules - Restriction by language display on forced language courses
+    Given the following "courses" exist:
+      | fullname           | shortname | category |
+      | Forced Language de | FL1       | 0        |
+      | Forced Language fr | FL2       | 0        |
+    And the following "theme_boost_union > smart menu" exists:
+      | title    | Language de      |
+      | location | Main navigation  |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Language de          |
+      | title    | Language menu node 1 |
+      | itemtype | Static               |
+      | url      | /bar                 |
+    And the following "theme_boost_union > smart menu" exists:
+      | title    | Language fr     |
+      | location | Main navigation |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Language fr      |
+      | title    | Language menu fr |
+      | itemtype | Static           |
+      | url      | /bar             |
+    And I am on "Forced Language fr" course homepage with editing mode on
+    And I follow "Settings"
+    And I set the following fields to these values:
+      | id_lang | fr |
+    And I press "Save and display"
+    And I am on "Forced Language de" course homepage with editing mode on
+    And I follow "Settings"
+    And I set the following fields to these values:
+      | id_lang | de |
+    And I press "Save and display"
+    And I click on "Website-Administration" "link"
+    And I navigate to smart menus
+    And I click on ".action-edit" "css_element" in the "Language de" "table_row"
+    And I expand all fieldsets
+    And I set the field "By language" to "Deutsch ‎(de)‎"
+    And I click on "Save and return" "button"
+    And I click on ".action-edit" "css_element" in the "Language fr" "table_row"
+    And I expand all fieldsets
+    And I set the field "By language" to "Français ‎(fr)‎"
+    And I click on "Save and return" "button"
+    And I log out
+    And I log in as "student1"
+    And I am on "Forced Language de" course homepage
+    Then I should see smart menu "Language de" in location "Main"
+    And I should not see smart menu "Language fr" in location "Main"
+    And I am on "Forced Language fr" course homepage
+    Then I should not see smart menu "Language de" in location "Main"
+    And I should see smart menu "Language fr" in location "Main"
+    And I am on "Test" course homepage
+    Then I should not see smart menu "Language de" in location "Main"
+    And I should not see smart menu "Language fr" in location "Main"

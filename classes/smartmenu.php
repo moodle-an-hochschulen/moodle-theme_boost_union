@@ -1100,9 +1100,6 @@ class smartmenu {
 
         $nodes = [];
 
-        // Verify the language changes in user session, if changed than purge the menus and items cache for the user session.
-        self::verify_lang_session_changes();
-
         $cache = cache::make('theme_boost_union', 'smartmenus');
         // Fetch the list of menus from cache.
         $topmenus = $cache->get(self::CACHE_MENUSLIST);
@@ -1128,7 +1125,13 @@ class smartmenu {
                 $cache->delete($cachekey);
             }
 
-            if ($node = self::instance($menu)->build($removecache)) {
+            $menuinstance = self::instance($menu);
+            if ($node = $menuinstance->build($removecache)) {
+                // Ensure that the menu meets the on-page load restrictions.
+                if (!$menuinstance->helper->verify_onload_restrictions()) {
+                    continue;
+                }
+
                 if (isset($node->menudata)) {
                     $nodes[] = $node;
                 } else {
@@ -1141,24 +1144,5 @@ class smartmenu {
         smartmenu_helper::clear_user_cachepreferencemenu();
 
         return $nodes;
-    }
-
-    /**
-     * Verifies and handles changes in the session language.
-     * Clears cached smart menus and items when the user changes the language using the language menu.
-     *
-     * @return void
-     */
-    protected static function verify_lang_session_changes() {
-        global $SESSION, $USER;
-        // Make sure the lang is updated for the session.
-        if ($lang = optional_param('lang', '', PARAM_SAFEDIR)) {
-            // Confirm the cache is not already purged for this language change. To avoid multiple purge.
-            if (!isset($SESSION->prevlang) || $SESSION->prevlang != $lang) {
-                // Set the purge cache preference for this session user. Cache will purged in the build_smartmenu method.
-                smartmenu_helper::set_user_purgecache($USER->id);
-                $SESSION->prevlang = $lang; // Save this lang for verification.
-            }
-        }
     }
 }
