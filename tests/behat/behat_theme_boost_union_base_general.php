@@ -467,4 +467,44 @@ class behat_theme_boost_union_base_general extends behat_base {
     public function i_am_on_login_page() {
         $this->execute('behat_general::i_visit', ['/login/index.php']);
     }
+
+    /**
+     * Checks if two DOM elements have the same position value.
+     *
+     * @Then DOM elements :arg1 and :arg2 should have the same :arg3 position value
+     * @param string $selector1
+     * @param string $selector2
+     * @param string $position
+     * @throws ExpectationException
+     */
+    public function dom_elements_should_have_same_position_value($selector1, $selector2, $position) {
+
+        $positions = ['top', 'right', 'bottom', 'left'];
+
+        if (!in_array($position, $positions)) {
+            throw new ExpectationException('The position \''.$position.'\' is not valid.
+                Valid positions are: '.implode(', ', $positions), $this->getSession());
+        }
+
+        $positionjs1 = "
+            return (
+                window.getComputedStyle(document.querySelector('$selector1')).$position
+            )
+        ";
+        $positionjs2 = "
+            return (
+                window.getComputedStyle(document.querySelector('$selector2')).$position
+            )
+        ";
+
+        $positionvalue1 = $this->evaluate_script($positionjs1);
+        $positionvalue2 = $this->evaluate_script($positionjs2);
+
+        if ($positionvalue1 != $positionvalue2) {
+            throw new ExpectationException('The \''.$selector1.'\' and \''.$selector2.'\'
+                DOM elements does not have the same \''.$position.'\' position value.
+                \''.$selector1.'\' has \''.$positionvalue1.'\' and \''.$selector2.'\' has \''.$positionvalue2.'\'.',
+                $this->getSession());
+        }
+    }
 }
