@@ -1070,6 +1070,10 @@ class smartmenu_item {
 
         smartmenu_helper::purge_cache_date_reached($this->cache, $this->item, 'itemlastcheckdate');
 
+        if (!$this->helper->verify_onload_restrictions()) {
+            return false;
+        }
+
         $cachekey = "{$this->item->id}_u_{$USER->id}";
         if ($result = $this->cache->get($cachekey)) {
             return $result;

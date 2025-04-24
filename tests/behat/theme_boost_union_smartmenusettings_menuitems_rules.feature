@@ -298,3 +298,48 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I am on the "Quick links" "theme_boost_union > Smart menu > Items" page
     Then I should not see "Test role 1" in the "Resources" "table_row"
     And I should see "Test role 2" in the "Resources" "table_row"
+
+  @javascript
+  Scenario: Smartmenu: Menu items: Rules - Restriction by language display on forced language courses
+    Given the following "language packs" exist:
+      | language |
+      | de       |
+      | fr       |
+    And the following "courses" exist:
+      | fullname           | shortname | category |
+      | Forced Language de | FL1       | 0        |
+      | Forced Language fr | FL2       | 0        |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu      | Quick links      |
+      | title     | Language menu de |
+      | itemtype  | Static           |
+      | url       | /bar             |
+      | languages | de               |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu      | Quick links      |
+      | title     | Language menu fr |
+      | itemtype  | Static           |
+      | url       | /bar             |
+      | languages | fr               |
+    And I am on "Forced Language fr" course homepage with editing mode on
+    And I follow "Settings"
+    And I set the following fields to these values:
+      | id_lang | fr |
+    And I press "Save and display"
+    And I am on "Forced Language de" course homepage with editing mode on
+    And I follow "Settings"
+    And I set the following fields to these values:
+      | id_lang | de |
+    And I press "Save and display"
+    And I click on "Website-Administration" "link"
+    And I log out
+    And I log in as "student1"
+    And I am on "Forced Language de" course homepage
+    Then "Language menu de" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And "Language menu fr" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And I am on "Forced Language fr" course homepage
+    Then "Language menu de" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And "Language menu fr" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And I am on "Test" course homepage
+    Then "Language menu de" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And "Language menu fr" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"

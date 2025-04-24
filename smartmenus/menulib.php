@@ -288,6 +288,20 @@ class smartmenu_helper {
     }
 
     /**
+     * Validates menu restrictions that must be checked during page load.
+     *
+     * @return bool True if all onload restrictions are satisfied, false otherwise.
+     */
+    public function verify_onload_restrictions() {
+
+        if (!$this->restriction_bylanguage()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Fetch the list of menus which is used the triggered ID in the access rules for the given method.
      *
      * Find the menus which contains the given ID in the access rule (Role or cohorts).
