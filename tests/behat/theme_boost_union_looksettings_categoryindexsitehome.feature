@@ -15,10 +15,10 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | username |
       | student1 |
     And the following "categories" exist:
-      | name                                                                                                    | category | idnumber |
-      | <span lang="en" class="multilang">Category A</span><span lang="de" class="multilang">Kategorie A</span> | 0        | CATA     |
-      | Category B                                                                                              | 0        | CATB     |
-      | Category BB                                                                                             | CATB     | CATBB    |
+      | name        | category | idnumber |
+      | Category A  | 0        | CATA     |
+      | Category B  | 0        | CATB     |
+      | Category BB | CATB     | CATBB    |
     And the following "courses" exist:
       | fullname | shortname | category | enablecompletion | showcompletionconditions |
       | Course 1 | C1        | CATA     | 1                | 1                        |
@@ -29,8 +29,6 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | student1 | C1     | student |
       | student1 | C2     | student |
       | student1 | C3     | student |
-    And the "multilang" filter is "on"
-    And the "multilang" filter applies to "content and headings"
 
   @javascript
   Scenario Outline: Setting: Course listing presentation: Set the setting
@@ -869,7 +867,15 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | config                      | value   | plugin            |
       | courselistingpresentation   | cards   | theme_boost_union |
       | categorylistingpresentation | boxlist | theme_boost_union |
+    And the following "categories" exist:
+      | name                                                                                                    | category | idnumber |
+      | <span lang="en" class="multilang">Category C</span><span lang="de" class="multilang">Kategorie C</span> | 0        | CATC     |
+    And the following "courses" exist:
+      | fullname | shortname | category |
+      | Course 4 | C4        | CATC     |
+    And the "multilang" filter is "on"
+    And the "multilang" filter applies to "content and headings"
     When I log in as "student1"
     And I am on site homepage
-    Then I should see "Category A"
-    And I should not see "Kategorie A"
+    Then I should see "Category C"
+    And I should not see "Kategorie C"
