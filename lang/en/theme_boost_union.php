@@ -1039,8 +1039,8 @@ $string['sliderfrontpagepositionsetting'] = 'Position of the slider on site home
 $string['sliderfrontpagepositionsetting_desc'] = 'The slider is shown on site home only. With this setting, you control if the slider is displayed before the site home content or after the site home content. If you want to show only the slider on site home and nothing else, all other site home content can be removed by changing the <a href="{$a->url}">site home settings</a>.';
 $string['sliderfrontpagepositionsetting_afterafter'] = 'After the site home content (and after the advertisement tiles)';
 $string['sliderfrontpagepositionsetting_afterbefore'] = 'After the site home content (but before the advertisement tiles)';
-$string['sliderfrontpagepositionsetting_beforeafter'] = 'Before the site home content (and after the advertisement tiles)';
-$string['sliderfrontpagepositionsetting_beforebefore'] = 'Before the site home content (but before the advertisement tiles)';
+$string['sliderfrontpagepositionsetting_beforeafter'] = 'Before the site home content (but after the advertisement tiles)';
+$string['sliderfrontpagepositionsetting_beforebefore'] = 'Before the site home content (and before the advertisement tiles)';
 $string['sliderindicatornavsetting'] = 'Enable slider indicator navigation';
 $string['sliderindicatornavsetting_desc'] = 'With this setting, you can add navigation indicators on the bottom of the slider.';
 $string['sliderintervalsetting'] = 'Slider interval speed';
