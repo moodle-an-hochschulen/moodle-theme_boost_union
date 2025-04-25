@@ -1028,8 +1028,7 @@ body.theme-boost-union-commincourse {
     min-height: 300px;
     top: -100vh;
     width: 100vw;
-    z-index: 1050; /* This z-index is equal to $zindex-modal and puts the drawer on top of
-                      the whole page regardless what Moodle does for the .drawer class. */
+    z-index: $zindex-modal;
 
     /* And show it as soon as the drawer is set to be shown. */
     &.show {
@@ -1042,7 +1041,7 @@ body.theme-boost-union-commincourse {
         /* Position the icon. */
         .btn {
             margin-left: auto;
-            margin-right: 10px;
+            margin-right: 17px;
         }
 
         /* Make the close icon more visible. */
