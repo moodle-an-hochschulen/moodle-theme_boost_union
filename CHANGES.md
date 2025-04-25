@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Upgrade: Adopt changes to moremenu.mustache
 * 2025-04-10 - Upgrade: Adopt changes to primary-drawer-mobile.mustache
 * 2025-04-10 - Preemptive regression fix: Communication button in course did not use the same Bootstrap 5 styling as the footer (questionmark) button, resolves #912.
 * 2025-04-10 - Upgrade: Adopt changes to footer.mustache and all Boost Union footer buttons.
