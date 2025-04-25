@@ -33,7 +33,7 @@
 }}
 {{#haschildren}}
     <li class="dropdown nav-item {{#card}} card-dropdown {{/card}} {{#menudata.classes}} {{.}} {{/menudata.classes}}" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
-        <a class="dropdown-toggle nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}} {{#menu.cssclass}} {{menu.cssclass}}{{/menu.cssclass}}" id="drop-down-{{moremenuid}}" role="menuitem" data-toggle="dropdown"
+        <a class="dropdown-toggle nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}} {{#menu.cssclass}} {{menu.cssclass}}{{/menu.cssclass}}" id="drop-down-{{moremenuid}}" role="menuitem" data-bs-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" href="#" aria-controls="drop-down-menu-{{moremenuid}}"
             {{#isactive}}aria-current="true"{{/isactive}}
             {{^isactive}}tabindex="-1"{{/isactive}}
@@ -59,7 +59,7 @@
 
                                 <h5>
                                     {{^is_action_link}}
-                                        <a class="dropdown-item menu-item-{{itemtype}} " {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}} role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}} data-disableactive="true" tabindex="-1" {{#attributes}}{{name}}="{{value}}"{{/attributes}} style="{{#itemdata.textcolor}} color:{{{itemdata.textcolor}}};{{/itemdata.textcolor}}">{{{text}}}</a>
+                                        <a class="dropdown-item menu-item-{{itemtype}} " {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}} role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}} data-disableactive="true" tabindex="-1" {{#attributes}}{{name}}="{{value}}"{{/attributes}} style="{{#itemdata.textcolor}} color:{{{itemdata.textcolor}}};{{/itemdata.textcolor}}">{{{text}}}</a>
                                     {{/is_action_link}}
                                 </h5>
                                 {{^is_action_link}}
@@ -87,12 +87,12 @@
         {{#istablist}}
             {{^is_action_link}}
                 <a role="tab" class="nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}"
-                    href="{{tab}}" data-toggle="tab" data-text="{{{text}}}"
+                    href="{{tab}}" data-bs-toggle="tab" data-text="{{{text}}}"
                     {{#isactive}}aria-selected="true"{{/isactive}}
                     data-disableactive="true"
                     {{^isactive}}tabindex="-1"{{/isactive}}
                     {{#attributes}}{{name}}="{{value}}"{{/attributes}}
-                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}
+                    {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}}
                 >
                     {{{text}}}
                 </a>
@@ -106,7 +106,7 @@
                     data-disableactive="true"
                     {{^isactive}}tabindex="-1"{{/isactive}}
                     {{#attributes}}{{name}}="{{value}}"{{/attributes}}
-                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}
+                    {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}}
                 >
                     {{{text}}}
                 </a>
