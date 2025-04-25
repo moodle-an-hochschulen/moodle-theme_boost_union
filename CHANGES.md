@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Upgrade: Adopt changes to other data-bs-* attributes used in Boost Union
 * 2025-04-10 - Upgrade: Adopt changes to courselistingcard.mustache
 * 2025-04-10 - Upgrade: Adopt changes to courselistinglist.mustache
 * 2025-04-10 - Upgrade: Adopt changes to smartmenus-*menu-children.mustache

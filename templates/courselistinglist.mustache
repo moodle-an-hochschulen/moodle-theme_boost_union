@@ -54,7 +54,7 @@
                             {{#contacts}}
                                 {{#canviewuserdetails}}<a href="{{config.wwwroot}}/user/profile.php?id={{{id}}}" tabindex="-1">{{/canviewuserdetails}}
                                     <div class="contact me-2 mb-2">
-                                        <img src="{{{userpicture}}}" class="rounded-circle shadow-sm" alt="{{{contactname}}}" data-toggle="tooltip" title="{{{contactname}}}" />
+                                        <img src="{{{userpicture}}}" class="rounded-circle shadow-sm" alt="{{{contactname}}}" data-bs-toggle="tooltip" title="{{{contactname}}}" />
                                     </div>
                                 {{#canviewuserdetails}}</a>{{/canviewuserdetails}}
                             {{/contacts}}
