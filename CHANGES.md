@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-25 - Improvement: Fix a small glitch in the slider's language strings
 * 2025-04-24 - Bugfix: Make sure that the navbar highlight is not shown in the dark navbar, resolves #908.
 * 2025-04-22 - Bugfix: Support multilang course category names in stickyheaders, resolves #905.
 
