@@ -39,9 +39,9 @@
 }}
 {{#haschildren}}
     <li class="dropdown theme-boost-union-smartmenu-carousel nav-item {{#menuclasses}}{{.}} {{/menuclasses}} " role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
-        <a class="dropdown-toggle nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}" id="drop-down-{{moremenuid}}" role="menuitem" data-toggle="dropdown"
+        <a class="dropdown-toggle nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}" id="drop-down-{{moremenuid}}" role="menuitem" data-bs-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" href="#" aria-controls="drop-down-menu-{{moremenuid}}"
-            {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+            {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
             {{#attributes}}{{name}}="{{value}}" {{/attributes}}
             {{#isactive}}aria-current="true"{{/isactive}}
             {{^isactive}}tabindex="-1"{{/isactive}}
@@ -49,7 +49,7 @@
             {{{text}}}
         </a>
         <div class="dropdown-menu boost-union-moremenu" role="menu" id="drop-down-menu-{{moremenuid}}" aria-labelledby="drop-down-{{moremenuid}}">
-            <div data-toggle="smartmenu-carousel" class="carousel slide" data-touch="false" data-interval="false" data-keyboard="false">
+            <div data-bs-toggle="smartmenu-carousel" class="carousel slide" data-touch="false" data-interval="false" data-keyboard="false">
                 <div class="carousel-inner">
                 {{#children}}
                     {{! Smart menus }}
@@ -66,7 +66,7 @@
                         {{^divider}}
                             {{#is_action_link}}
                                 <a class="dropdown-item {{#itemdata.classes}}{{.}} {{/itemdata.classes}}" role="menuitem" {{#actionattributes}}{{name}}="{{value}}" {{/actionattributes}} href="{{{url}}}{{{action}}}"
-                                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                                    {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
                                     {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                                     data-disableactive="true"
                                     tabindex="-1"
@@ -79,7 +79,7 @@
                             {{/is_action_link}}
                             {{^is_action_link}}
                                 <a class="dropdown-item {{#itemdata.classes}}{{.}} {{/itemdata.classes}}" role="menuitem" href="{{{url}}}{{{action}}}" {{#isactive}}aria-current="true"{{/isactive}}
-                                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                                    {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
                                     {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                                     data-disableactive="true"
                                     tabindex="-1"
@@ -122,8 +122,8 @@
     <li data-key="{{key}}" class="nav-item {{#menuclasses}}{{.}} {{/menuclasses}}" role="none" data-forceintomoremenu="{{#forceintomoremenu}}true{{/forceintomoremenu}}{{^forceintomoremenu}}false{{/forceintomoremenu}}">
         {{#istablist}}
             {{#is_action_link}}
-                <a role="tab" class="nav-link {{#classes}}{{.}} {{/classes}}" href="{{tab}}" data-toggle="tab" data-text="{{{text}}}"
-                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                <a role="tab" class="nav-link {{#classes}}{{.}} {{/classes}}" href="{{tab}}" data-bs-toggle="tab" data-text="{{{text}}}"
+                    {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
                     {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                     data-disableactive="true"
                     tabindex="-1"
@@ -136,8 +136,8 @@
             {{/is_action_link}}
             {{^is_action_link}}
                 <a role="tab" class="nav-link {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}"
-                    href="{{tab}}" data-toggle="tab" data-text="{{{text}}}"
-                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                    href="{{tab}}" data-bs-toggle="tab" data-text="{{{text}}}"
+                    {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
                     {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                     {{#isactive}}aria-selected="true"{{/isactive}}
                     data-disableactive="true"
@@ -150,7 +150,7 @@
         {{^istablist}}
             {{#is_action_link}}
                 <a role="menuitem" class="nav-link {{#itemdata.classes}}{{.}} {{/itemdata.classes}} {{#classes}}{{.}} {{/classes}}" {{#actionattributes}}{{name}}="{{value}}" {{/actionattributes}} href="{{{url}}}{{{action}}}"
-                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                    {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
                     {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                     data-disableactive="true"
                     tabindex="-1"
@@ -164,7 +164,7 @@
             {{^is_action_link}}
                 <a role="menuitem" class="nav-link {{#itemdata.classes}}{{.}} {{/itemdata.classes}} {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}"
                     href="{{{url}}}{{{action}}}"
-                    {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
+                    {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}}{{^tooltip}}{{#title}}title="{{.}}"{{/title}}{{/tooltip}}
                     {{#attributes}}{{name}}="{{value}}" {{/attributes}}
                     {{#isactive}}aria-current="true"{{/isactive}}
                     data-disableactive="true"
