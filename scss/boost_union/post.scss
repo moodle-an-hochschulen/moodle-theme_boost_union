@@ -854,7 +854,7 @@ body.hascourseindexcmicons {
     /* Add margin between the individual buttons. */
     .btn {
         display: block;
-        margin-top: 0.75rem;
+        margin-top: 1rem;
     }
 
     /* Style accessibility button. */
@@ -897,11 +897,6 @@ body.hascourseindexcmicons {
     #back-to-top {
         /* Hide the back to top icon initially. It will be unhidden by JS only. */
         display: none;
-
-        i::before {
-            /* Move the caret icon slightly up for a nicer look. */
-            vertical-align: 0.3rem;
-        }
     }
 }
 
