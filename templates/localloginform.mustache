@@ -36,11 +36,11 @@
     <form class="login-form" action="{{loginurl}}" method="post" id="login">
         <input type="hidden" name="logintoken" value="{{logintoken}}">
         <div class="login-form-username mb-3">
-            <label for="username" class="sr-only">{{#str}}username{{/str}}</label>
+            <label for="username" class="visually-hidden">{{#str}}username{{/str}}</label>
             <input type="text" name="username" id="username" class="form-control form-control-lg" placeholder="{{#cleanstr}}username{{/cleanstr}}">
         </div>
         <div class="login-form-password mb-3">
-            <label for="password" class="sr-only">{{#str}} password {{/str}}</label>
+            <label for="password" class="visually-hidden">{{#str}} password {{/str}}</label>
             <input type="password" name="password" id="password" value="" class="form-control form-control-lg" placeholder="{{#cleanstr}}password{{/cleanstr}}">
         </div>
         <div class="login-form-submit mb-3">
