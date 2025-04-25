@@ -31,11 +31,11 @@ import {space, enter} from 'core/key_codes';
  * Smartmenu submenu constants.
  */
 const Selectors = {
-    smartMenuCarousel: '[data-toggle="smartmenu-carousel"]',
+    smartMenuCarousel: '[data-bs-toggle="smartmenu-carousel"]',
     smartMenuCarouselClass: '.theme-boost-union-smartmenu-carousel',
-    smartMenuCarouselItem: '[data-toggle="smartmenu-carousel"] .carousel-item',
-    smartMenuCarouselItemActive: '[data-toggle="smartmenu-carousel"] .carousel-item.active',
-    smartMenuCarouselNavigationLink: '[data-toggle="smartmenu-carousel"] .carousel-navigation-link',
+    smartMenuCarouselItem: '[data-bs-toggle="smartmenu-carousel"] .carousel-item',
+    smartMenuCarouselItemActive: '[data-bs-toggle="smartmenu-carousel"] .carousel-item.active',
+    smartMenuCarouselNavigationLink: '[data-bs-toggle="smartmenu-carousel"] .carousel-navigation-link',
     smartMenuDropDownItems: 'ul.dropdown-menu li.nav-item',
     dropDownMenu: '.dropdown-menu',
     roleMenu: '[role="menu"]',
