@@ -2362,7 +2362,7 @@ function theme_boost_union_get_accessibility_support_skip_link() {
             $supporttitle = theme_boost_union_get_accessibility_srlinktitle();
             $output .= \core\output\html_writer::link($supporturl, $supporttitle, [
                 'id' => 'access-support-form-sr-link',
-                'class' => 'sr-only sr-only-focusable',
+                'class' => 'visually-hidden visually-hidden-focusable',
             ]);
         }
     }
