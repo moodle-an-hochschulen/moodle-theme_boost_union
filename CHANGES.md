@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-04-25 - Improvement: Fix a small glitch in the slider's language strings
+
 ### v4.1-r40
 
 * 2025-03-29 - Bugfix: Remove assumption that syscontext->id = 1, resolves #627
