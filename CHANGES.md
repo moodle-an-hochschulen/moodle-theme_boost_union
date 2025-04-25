@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Upgrade: Fix the appearance of the off-canvas block region
 * 2025-04-10 - Upgrade: Adopt changes for course index view feature in Boost Union
 * 2025-04-10 - Upgrade: Adopt changes to other sr-only classes used in Boost Union
 * 2025-04-10 - Upgrade: Adopt changes to submenu.js
