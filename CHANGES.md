@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Upgrade: Adopt changes to cm.mustache
 * 2025-04-10 - Upgrade: Adopt changes to user_menu.mustache
 * 2025-04-10 - Upgrade: Adopt changes to loginform.mustache
 * 2025-04-10 - Upgrade: Adopt changes to moremenu.mustache
