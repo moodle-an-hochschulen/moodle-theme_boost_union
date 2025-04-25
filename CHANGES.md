@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Upgrade: Adopt changes to footer.mustache and all Boost Union footer buttons.
 * 2025-04-10 - Upgrade: Adopt changes to drawers.mustache
 * 2025-04-10 - Upgrade: Adopt changes to classes/boostnavbar.php
 * 2025-04-10 - Upgrade: Adopt changes to drawer.mustache
