@@ -43,7 +43,7 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, Notificatio
         $.when(stringsPromise).then(function(string) {
             // Add a fontawesome icon to the footer as the back to top button.
             $('#boost-union-footer-buttons').prepend('<button id="back-to-top" ' +
-                    'class="btn btn-icon bg-secondary icon-no-margin d-print-none"' +
+                    'class="btn btn-icon rounded-circle bg-secondary d-print-none"' +
                     'aria-label="' + string + '">' +
                     '<i aria-hidden="true" class="fa fa-chevron-up fa-fw "></i></button>');
 
