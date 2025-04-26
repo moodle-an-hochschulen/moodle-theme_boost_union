@@ -448,6 +448,48 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I should not see "Test course1" in the "#usermenu-carousel" "css_element"
 
   @javascript
+  Scenario: Smartmenus: Menu items: Presentation - Ensure long text in menu items wraps correctly
+    Given the following "courses" exist:
+      | shortname | fullname                                             | category |
+      | Long text | Test long course name to verify proper menu wrapping | 0        |
+    And the following "theme_boost_union > smart menu" exists:
+      | title    | Course listings                                  |
+      | location | Main navigation, Menu bar, User menu, Bottom bar |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Course listings   |
+      | title    | All courses       |
+      | itemtype | Dynamic courses   |
+      | category | 0                 |
+      | itemmode | Submenu           |
+    And the following "course enrolments" exist:
+      | user  | course    | role    |
+      | user1 | Long text | student |
+    And I log out
+    When I log in as "user1"
+    # Primary navigation.
+    And I click on "Course listings" "link" in the ".primary-navigation" "css_element"
+    And I click on "All courses" "link" in the ".primary-navigation" "css_element"
+    Then I should see "Test long course name to verify proper menu wrapping" in the ".primary-navigation" "css_element"
+    And DOM elements ".primary-navigation div.carousel-item.active div.items" ".primary-navigation div.carousel-item.active" should have same computed property "scrollWidth"
+    # Menu bar.
+    Then I click on "Course listings" "link" in the ".boost-union-menubar" "css_element"
+    And I click on "All courses" "link" in the ".boost-union-menubar" "css_element"
+    And I should see "Test long course name to verify proper menu wrapping" in the ".boost-union-menubar" "css_element"
+    And DOM elements ".boost-union-menubar div.carousel-item.active div.items" ".boost-union-menubar div.carousel-item.active" should have same computed property "scrollWidth"
+    # User menu.
+    Then I click on "#user-menu-toggle" "css_element"
+    And I click on "Course listings" "link" in the "#usermenu-carousel" "css_element"
+    And I click on "All courses" "link" in the "#usermenu-carousel" "css_element"
+    And I should see "Test long course name to verify proper menu wrapping" in the "#usermenu-carousel" "css_element"
+    And DOM elements "div#usermenu-carousel div.carousel-item.active div.items" "div#usermenu-carousel div.carousel-item.active" should have same computed property "scrollWidth"
+    # Bottom menu.
+    Then I change the viewport size to "740x900"
+    And I click on "Course listings" "link" in the ".bottom-navigation" "css_element"
+    And I click on "All courses" "link" in the ".bottom-navigation" "css_element"
+    And I should see "Test long course name to verify proper menu wrapping" in the ".bottom-navigation" "css_element"
+    And DOM elements ".bottom-navigation div.carousel-item.active div.items" ".bottom-navigation div.carousel-item.active" should have same computed property "scrollWidth"
+
+@javascript
   Scenario: Smartmenus: Menu items: Presentation - Opening a smart menu submenu should not scroll to top of the page
     Given the following "theme_boost_union > smart menu" exists:
       | title     | All courses     |
