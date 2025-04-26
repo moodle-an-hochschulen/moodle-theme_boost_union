@@ -467,4 +467,26 @@ class behat_theme_boost_union_base_general extends behat_base {
     public function i_am_on_login_page() {
         $this->execute('behat_general::i_visit', ['/login/index.php']);
     }
+
+    /**
+     * Checks if the given DOM elements have the given same computed property value.
+     *
+     * @Then DOM elements :arg1 :arg2 should have same computed property :arg3
+     * @param string $selector
+     * @param string $property
+     * @param string $value
+     * @throws ExpectationException
+     */
+    public function dom_elements_should_have_computed_property($selector1, $selector2, $property) {
+        $stylejs = "
+            return (
+                document.querySelector('$selector1').$property == document.querySelector('$selector2').$property
+            )
+        ";
+        $computedstyle = $this->evaluate_script($stylejs);
+        if (!$computedstyle) {
+            throw new ExpectationException('The \''.$selector1.'\' and \''.$selector2.'\' DOM elements does not have the same computed property value \''.
+                $property. '\', but it should have it.', $this->getSession());
+        }
+    }
 }
