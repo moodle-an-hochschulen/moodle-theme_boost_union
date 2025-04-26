@@ -472,9 +472,9 @@ class behat_theme_boost_union_base_general extends behat_base {
      * Checks if the given DOM elements have the given same computed property value.
      *
      * @Then DOM elements :arg1 :arg2 should have same computed property :arg3
-     * @param string $selector
+     * @param string $selector1
+     * @param string $selector2
      * @param string $property
-     * @param string $value
      * @throws ExpectationException
      */
     public function dom_elements_should_have_computed_property($selector1, $selector2, $property) {
@@ -485,7 +485,8 @@ class behat_theme_boost_union_base_general extends behat_base {
         ";
         $computedstyle = $this->evaluate_script($stylejs);
         if (!$computedstyle) {
-            throw new ExpectationException('The \''.$selector1.'\' and \''.$selector2.'\' DOM elements does not have the same computed property value \''.
+            throw new ExpectationException('The \''.$selector1.'\' and \''.$selector2.'\'
+                DOM elements does not have the same computed property value \''.
                 $property. '\', but it should have it.', $this->getSession());
         }
     }
