@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-08-02 - Improvement: Bring back the original hover effect in the language menu, resolves #803.
 * 2025-08-02 - Bugfix: Make sure that smart menu 3rd level does not get horizontal scroll bars, resolves #807.
 * 2025-07-28 - Bugfix: Reposition Boost Union footer buttons correctly if sticky footer is shown, resolves #1033
 * 2025-07-28 - Improvement: Query SCSS snippets table during theme refresh only if the table exists, resolves #1024
