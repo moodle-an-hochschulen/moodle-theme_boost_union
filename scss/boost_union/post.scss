@@ -909,14 +909,14 @@ body.hasstickyfooter #boost-union-footer-buttons {
    the Boost Union footer buttons have to be shown above of the footer button. */
 body.theme_boost-union-footerbuttonall.jsenabled,
 body.theme_boost-union-footerbuttonmobile.jsenabled {
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         #boost-union-footer-buttons {
             bottom: 5rem;
         }
     }
     /* And if the sticky footer is shown by Moodle core, move the Boost Union footer buttons more upwards. */
     &.hasstickyfooter {
-        @include media-breakpoint-down(xs) {
+        @include media-breakpoint-down(sm) {
             #boost-union-footer-buttons {
                 bottom: 10rem;
             }
@@ -1195,7 +1195,7 @@ body.theme-boost-union-commincourse {
 }
 
 /* And on smaller screens. */
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
     /* Change the outside-left and outside-right blocks to full width (with some horizontal space). */
     #theme-block-region-outside-left,
     #theme-block-region-outside-right {
@@ -1240,7 +1240,7 @@ body.theme-boost-union-commincourse {
     }
 
     /* And on smaller screens. */
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         &.theme-block-region-outside-fullwidth,
         &.theme-block-region-outside-coursecontentwidth,
         &.theme-block-region-footer-fullwidth,
@@ -1284,7 +1284,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
     }
 
     /* And on smaller screens. */
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         /* Just show the block full width with some horizontal space. */
         padding-left: 15px;
         padding-right: 15px;
@@ -1313,7 +1313,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 }
 
 /* And on smaller screens. */
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
     /* Add some horizontal space on the small screen. */
     #theme-block-region-footer {
         padding-left: 15px;
@@ -1406,7 +1406,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 }
 
 /* And on really small screens. */
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
     #footnote {
         /* On really small screens, there isn't any background image, so there's no need for a white background. */
 
@@ -1457,7 +1457,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 }
 
 /* And on really small screens. */
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
     body.pagelayout-login.loginbackgroundimage {
         #footnote {
             /* Add white background color and a small bottom margin
@@ -1532,7 +1532,7 @@ body.theme_boost-union-footerbuttonmobile.jsenabled {
         }
     }
     /* On smaller screens. */
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         /* Show the footer button.
            This uses !important to make really sure that the element is shown regardless of other CSS rules. */
         .btn-footer-popover {
@@ -1697,7 +1697,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
  ======================================*/
 
 /* Remove horizontal paddings on the tile / slider container on smaller screens to align it with the main frontpage content. */
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
     #themeboostunionadvtiles,
     #themeboostunionslider-wrapper {
         padding-left: 0;
@@ -2569,7 +2569,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 }
 
 /* The nav drawer position to the top in the responsive alignment */
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(lg) {
     .navbar.fixed-top.boost-union-menubar ~ .drawer {
         top: 100px; /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
         &.drawer-right {
@@ -2585,7 +2585,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     }
 }
 
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
     .navbar.fixed-top {
         /* The header z-index is increased to show at top when the footer bottom menu is added */
         &.smartmenu-bottom-navigation {
@@ -2910,7 +2910,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 /* End of Footer Menu */
 
 /* On small screens (where the bottom bar could be visible). */
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
     /* If the bottom bar is shown. */
     body.theme-boost-union-bottombar {
         /* The Boost Union footer buttons have to be moved more upwards. */
@@ -2987,7 +2987,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     }
 }
 
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
     /* The padding for the footer to visible the footer bottom menu because it is in the position style */
     /* Boost union footer bottom menu style when the smart menu is enabled */
     body.theme-boost-union-bottombar #page-wrapper #page {
@@ -3150,7 +3150,7 @@ body.dir-rtl {
  --------------------------------------*/
 
 /* On smaller screens. */
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
     /* Move the learning tools floating button up as soon as the bottom menu is shown. */
     body.theme-boost-union-bottombar .learningtools-action-info .floating-button {
         bottom: 4rem;
@@ -3213,7 +3213,7 @@ body.dir-rtl {
     }
 
     /* On not-so-large screens. */
-    @include media-breakpoint-down(lg) { /* This means less than 300px per outside block region. */
+    @include media-breakpoint-down(xl) { /* This means less than 300px per outside block region. */
         /* Stack content vertically. */
         .main-inner-outside-nextmaincontent {
             display: flex;

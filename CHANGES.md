@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Upgrade: Adopt Bootstrap changes to the media-breakpoint-down mixin
 * 2025-04-10 - Upgrade: Adopt Bootstrap changes to the slider feature in Boost Union
 * 2025-04-10 - Upgrade: Fix the appearance of the off-canvas block region
 * 2025-04-10 - Upgrade: Adopt changes for course index view feature in Boost Union
