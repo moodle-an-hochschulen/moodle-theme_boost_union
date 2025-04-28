@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-04-28 - Improvement: Remove a surplus CSS statement regarding the back-to-top button.
+
 ### v4.5-r14
 
 * 2025-04-25 - Improvement: Fix a small glitch in the slider's language strings
