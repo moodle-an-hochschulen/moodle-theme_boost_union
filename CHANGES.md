@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Upgrade: Adapt Behat tests as the subsections are now enabled by default
 * 2025-04-10 - Upgrade: Adopt changes regarding dismisssing alerts for the infobanner feature in Boost Union
 * 2025-04-10 - Upgrade: Adopt Bootstrap changes to the media-breakpoint-down mixin
 * 2025-04-10 - Upgrade: Adopt Bootstrap changes to the slider feature in Boost Union

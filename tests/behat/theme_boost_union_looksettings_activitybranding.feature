@@ -19,7 +19,8 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
     When I log in as "admin"
     And I am on "Course 1" course homepage
     And I turn editing mode on
-    And I click on "Add an activity or resource" "button" in the "New section" "section"
+    And I click on "Add content" "button" in the "New section" "section"
+    And I click on "Activity or resource" "button" in the "New section" "section"
     # First, we test that the default filter is _not_ set anymore.
     Then DOM element ".chooser-container .activityiconcontainer.modicon_<modname> img" should not have computed style "filter" "<originalfilter>"
     # And then, as the hex color to CSS filter conversion results are not reproducible, we test if the applied filter is close enough to the hex color.
@@ -76,7 +77,8 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
     And I add a <mod> activity to course "Course 1" section "0" and I fill the form with:
       | <titlesetting> | Test name |
     Then DOM element ".activity.modtype_<mod> .activityiconcontainer.courseicon img" should have computed style "filter" "<filter>"
-    And I click on "Add an activity or resource" "button" in the "New section" "section"
+    And I click on "Add content" "button" in the "New section" "section"
+    And I click on "Activity or resource" "button" in the "New section" "section"
     Then DOM element ".chooser-container .activityiconcontainer.modicon_<mod> img" should have computed style "filter" "<filter>"
     And I am on the "Test name" "<mod> activity" page
     Then DOM element "#page-header .modicon_<mod>.activityiconcontainer img" should have computed style "filter" "<filter>"
