@@ -46,9 +46,9 @@
 }}
 
 {{#infobanners}}
-    <div id="themeboostunioninfobanner{{no}}" class="themeboostunioninfobanner alert {{#bsclass}}alert-{{{ bsclass }}}{{/bsclass}}" role="alert">
+    <div id="themeboostunioninfobanner{{no}}" class="themeboostunioninfobanner alert {{#dismissible}}fade show{{/dismissible}} {{#bsclass}}alert-{{{ bsclass }}}{{/bsclass}}" role="alert">
         {{#dismissible}}
-            <button type="button" id="themeboostunioninfobanner{{no}}close" class="close" data-dismiss="alert" data-infobanner-no="{{no}}" aria-label="{{#str}}infobannerclose, theme_boost_union{{/str}}">
+            <button type="button" id="themeboostunioninfobanner{{no}}close" class="close" data-bs-dismiss="alert" data-infobanner-no="{{no}}" aria-label="{{#str}}infobannerclose, theme_boost_union{{/str}}">
                 <span aria-hidden="true">&times;</span>
             </button>
         {{/dismissible}}
