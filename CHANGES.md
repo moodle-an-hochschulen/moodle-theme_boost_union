@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.3-r28
 
 * 2025-04-25 - Improvement: Fix a small glitch in the slider's language strings
 
