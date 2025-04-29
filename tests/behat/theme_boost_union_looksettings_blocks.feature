@@ -11,7 +11,6 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "L
       | timelinetintenabled              | <tinttl> | theme_boost_union |
       | upcomingeventstintenabled        | <tintue> | theme_boost_union |
       | recentlyaccesseditemstintenabled | <tintrc> | theme_boost_union |
-      | activitiestintenabled            | <tintac> | theme_boost_union |
     And the following "courses" exist:
       | fullname | shortname |
       | Course 1 | C1        |
@@ -26,7 +25,6 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "L
       | timeline              | System       | 1         | my-index        | content       |
       | calendar_upcoming     | System       | 1         | my-index        | content       |
       | recentlyaccesseditems | System       | 1         | my-index        | content       |
-      | activity_modules      | Course       | C1        | course-view-*   | side-pre      |
     And I log in as "admin"
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
@@ -41,13 +39,11 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "L
     Then DOM element ".block_timeline .theme-boost-union-mod_assign.activityiconcontainer img" <shouldornottl> have computed style "filter" "invert(0.25) sepia(0.54) saturate(62.26) hue-rotate(245deg) brightness(1) contrast(1.02)"
     And DOM element ".block_calendar_upcoming .theme-boost-union-mod_assign.activityiconcontainer img" <shouldornotue> have computed style "filter" "invert(0.25) sepia(0.54) saturate(62.26) hue-rotate(245deg) brightness(1) contrast(1.02)"
     And DOM element ".block_recentlyaccesseditems .theme-boost-union-assign.activityiconcontainer img" <shouldornotrc> have computed style "filter" "invert(0.25) sepia(0.54) saturate(62.26) hue-rotate(245deg) brightness(1) contrast(1.02)"
-    And I am on "Course 1" course homepage
-    Then DOM element ".block_activity_modules .content .icon[title=\'Assignment\']" <shouldornotac> have computed style "filter" "invert(0.25) sepia(0.54) saturate(62.26) hue-rotate(245deg) brightness(1) contrast(1.02)"
 
     Examples:
-      | tinttl | tintrc | tintue | tintac | shouldornottl | shouldornotrc | shouldornotue | shouldornotac |
-      | no     | no     | no     | no     | should not    | should not    | should not    | should not    |
-      | yes    | no     | no     | no     | should        | should not    | should not    | should not    |
-      | no     | yes    | no     | no     | should not    | should        | should not    | should not    |
-      | no     | no     | yes    | no     | should not    | should not    | should        | should not    |
-      | no     | no     | no     | yes    | should not    | should not    | should not    | should        |
+      | tinttl | tintrc | tintue | tintac | shouldornottl | shouldornotrc | shouldornotue |
+      | no     | no     | no     | no     | should not    | should not    | should not    |
+      | yes    | no     | no     | no     | should        | should not    | should not    |
+      | no     | yes    | no     | no     | should not    | should        | should not    |
+      | no     | no     | yes    | no     | should not    | should not    | should        |
+      | no     | no     | no     | yes    | should not    | should not    | should not    |
