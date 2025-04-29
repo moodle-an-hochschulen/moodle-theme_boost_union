@@ -391,11 +391,6 @@ $string['upcomingeventsheading'] = 'Upcoming events block';
 // Setting: Tint activity icons in the upcoming events block.
 $string['upcomingeventstintenabled'] = 'Tint upcoming events activity icons';
 $string['upcomingeventstintenabled_desc'] = 'With this setting, you can tint the activity icons in the upcoming events block based on the activity purposes. By default, Moodle core displays them just as black icons.';
-// ... Section: Recently accessed items block.
-$string['recentlyaccesseditemsheading'] = 'Recently accessed items block';
-// Setting: Tint activity icons in the recently accessed items block.
-$string['recentlyaccesseditemstintenabled'] = 'Tint recently accessed items activity icons';
-$string['recentlyaccesseditemstintenabled_desc'] = 'With this setting, you can tint the activity icons in the recently accessed items block based on the activity purposes. By default, Moodle core displays them just as black icons.';
 
 // Settings: Course tab.
 $string['coursetab'] = 'Course';
