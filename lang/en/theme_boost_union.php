@@ -403,11 +403,6 @@ $string['recentlyaccesseditemsheading'] = 'Recently accessed items block';
 // Setting: Tint activity icons in the recently accessed items block.
 $string['recentlyaccesseditemstintenabled'] = 'Tint recently accessed items activity icons';
 $string['recentlyaccesseditemstintenabled_desc'] = 'With this setting, you can tint the activity icons in the recently accessed items block based on the activity purposes. By default, Moodle core displays them just as black icons.';
-// ... Section: Activities block.
-$string['activitiesheading'] = 'Activities block';
-// Setting: Tint activity icons in the activities block.
-$string['activitiestintenabled'] = 'Tint activities activity icons';
-$string['activitiestintenabled_desc'] = 'With this setting, you can tint the activity icons in the activities block based on the activity purposes. By default, Moodle core displays them just as black icons.';
 
 // Settings: Course tab.
 $string['coursetab'] = 'Course';
