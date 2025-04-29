@@ -1413,10 +1413,6 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
         if (get_config('theme_boost_union', 'recentlyaccesseditemstintenabled') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
             $blocksscss[] = '.block_recentlyaccesseditems .theme-boost-union-'.$modname.'.activityiconcontainer img';
         }
-        // If the admin wanted us to tint the activities block as well.
-        if (get_config('theme_boost_union', 'activitiestintenabled') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-            $blocksscss[] = '.block_activity_modules .content .icon[title="'.$modinfo.'"]';
-        }
         $blocksscss = implode(', ', $blocksscss);
 
         // If the activity purpose setting is set and differs from the activity's default purpose.

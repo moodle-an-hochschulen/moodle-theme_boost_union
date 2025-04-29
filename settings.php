@@ -1093,20 +1093,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create Activities block heading.
-        $name = 'theme_boost_union/activitiesheading';
-        $title = get_string('activitiesheading', 'theme_boost_union', null, true);
-        $setting = new admin_setting_heading($name, $title, null);
-        $tab->add($setting);
-
-        // Setting: Tint activity icons in the activities block.
-        $name = 'theme_boost_union/activitiestintenabled';
-        $title = get_string('activitiestintenabled', 'theme_boost_union', null, true);
-        $description = get_string('activitiestintenabled_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $setting->set_updatedcallback('theme_reset_all_caches');
-        $tab->add($setting);
-
         // Add tab to settings page.
         $page->add($tab);
 
