@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Upgrade: Adapt width of advertisement tiles on site home, resolves #917.
 * 2025-04-10 - Upgrade: Support the new activity overview page when changing activity icon purposes in Boost Union.
 * 2025-04-10 - Upgrade: Remove recentlyaccesseditemstintenabled setting as the icons in this block are tinted by default now in Moodle 5.0.
 * 2025-04-10 - Upgrade: Adapt activity coloring for Moodle 5.0 and remove the activityiconcolorfidelity setting, resolves #824.

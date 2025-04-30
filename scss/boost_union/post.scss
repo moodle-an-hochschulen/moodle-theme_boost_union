@@ -1634,9 +1634,9 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 /* Style the advertisement tile cards. */
 #themeboostunionadvtiles [class*="col-"] .card {
     background-size: cover;
-    /* d-flex align-items-stretch align-self-stretch classes in mustache template require to set width to inherit
+    /* d-flex align-items-stretch align-self-stretch classes in mustache template require to set width explicitely
        (Otherwise width is flexible dependent on content). */
-    width: inherit;
+    width: 100%;
 }
 
 /* Classes for the content style of advertisement tiles. */
