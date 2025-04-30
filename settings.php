@@ -1713,6 +1713,30 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, $description);
         $tab->add($setting);
 
+        // Add guest role warning (If the guestroleupgradedfrompre500 setting is set to true).
+        if (get_config('theme_boost_union', 'guestroleupgradedfrompre500') == 1) {
+            $name = 'theme_boost_union/blockregionsheadingguestrole';
+            $guestrolefixurl = new core\url('/theme/boost_union/settings_update_guestrole.php',
+                    ['sesskey' => sesskey(), 'fix' => 1]);
+            $guestrolekeepurl = new core\url('/theme/boost_union/settings_update_guestrole.php',
+                    ['sesskey' => sesskey(), 'fix' => 0]);
+            $guestrolenote = \core\output\html_writer::tag('p',
+                    get_string('blockregionsheading_guestrole', 'theme_boost_union', null, true));
+            $guestrolenote .= \core\output\html_writer::link(
+                    $guestrolefixurl,
+                    get_string('blockregionsheading_guestrole_fix', 'theme_boost_union', null, true),
+                    ['class' => 'btn btn-secondary mt-1 me-3', 'role' => 'button']);
+            $guestrolenote .= \core\output\html_writer::link(
+                    $guestrolekeepurl,
+                    get_string('blockregionsheading_guestrole_keep', 'theme_boost_union', null, true),
+                    ['class' => 'btn btn-secondary mt-1', 'role' => 'button']);
+            $notification = new \core\output\notification($guestrolenote, \core\output\notification::NOTIFY_ERROR);
+            $notification->set_show_closebutton(false);
+            $description = $OUTPUT->render($notification);
+            $setting = new admin_setting_heading($name, '', $description);
+            $tab->add($setting);
+        }
+
         // Add experimental warning.
         $name = 'theme_boost_union/blockregionsheadingexperimental';
         $notification = new \core\output\notification(get_string('blockregionsheading_experimental', 'theme_boost_union'),

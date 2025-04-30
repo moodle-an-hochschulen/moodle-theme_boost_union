@@ -6,6 +6,8 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Improvement: Change the defaults of the theme/boost_union:viewregion* capabilities for the guest role on new Boost Union installatins, resolves #893.
+               Please note: Boost Union instances which are upgraded from a release before v5.0 will see a notification on /admin/settings.php?section=theme_boost_union_feel#theme_boost_union_feel_blocks and will have the possibility there to fix the defaults of the role automatically.
 * 2025-04-10 - Upgrade: Adapt width of advertisement tiles on site home, resolves #917.
 * 2025-04-10 - Upgrade: Support the new activity overview page when changing activity icon purposes in Boost Union.
 * 2025-04-10 - Upgrade: Remove recentlyaccesseditemstintenabled setting as the icons in this block are tinted by default now in Moodle 5.0.
