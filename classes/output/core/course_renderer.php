@@ -265,11 +265,11 @@ class course_renderer extends \core_course_renderer {
                     // Get the category.
                     $cat = \core_course_category::get($course->category, IGNORE_MISSING);
 
-                    // Start the category list.
-                    $content .= html_writer::start_div('row no-gutters categorylist');
-
                     // Show the category heading as sticky header, if necessary.
                     if ($showstickyheaders == true) {
+                        // Start the category list.
+                        $content .= html_writer::start_div('row no-gutters categorylist');
+
                         $content .= html_writer::start_tag('div',
                                 ['class' =>
                                         'theme_boost_union-stickycategory col-12 bg-white rounded-bottom mb-3 pt-3 sticky-top']);

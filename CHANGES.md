@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-30 - Bugfix: Fix a HTML nesting glitch for the course lists on site home, resolves #919.
 * 2025-04-28 - Improvement: Remove a surplus CSS statement regarding the back-to-top button.
 
 ### v4.5-r14
