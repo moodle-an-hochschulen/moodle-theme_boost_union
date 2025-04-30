@@ -51,6 +51,7 @@
                 {{#contacts}}
                     {{#canviewuserdetails}}<a href="{{config.wwwroot}}/user/profile.php?id={{{id}}}" tabindex="-1">{{/canviewuserdetails}}
                         <div class="contact me-2 mb-2">
+                            {{! The Bootstrap tooltip which we set with the data-bs-toggle attribute might not be shown on pages where this template is lazy-loaded (e.g. the combo list on site home). But we accept this. }}
                             <img src="{{{userpicture}}}" class="rounded-circle shadow-sm" alt="{{{contactname}}}" data-bs-toggle="tooltip" title="{{{contactname}}}" />
                         </div>
                     {{#canviewuserdetails}}</a>{{/canviewuserdetails}}
