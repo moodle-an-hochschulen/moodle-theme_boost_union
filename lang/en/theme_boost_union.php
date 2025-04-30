@@ -1019,9 +1019,8 @@ $string['slidertab'] = 'Slider';
 // ... Section: Slider general.
 $string['slidergeneralheading'] = 'Slider general';
 $string['slideranimationsetting'] = 'Slider animation type';
-$string['slideranimationsetting_desc'] = 'With this setting, you control the slider animation. \'Slide\' applies a sliding animation, \'Fade\' applies a fading animation and \'None\' removes all animations.';
+$string['slideranimationsetting_desc'] = 'With this setting, you control the slider animation. \'Slide\' applies a sliding animation and \'Fade\' applies a fading animation.';
 $string['slideranimationsetting_fade'] = 'Fade';
-$string['slideranimationsetting_none'] = 'None';
 $string['slideranimationsetting_slide'] = 'Slide';
 $string['sliderarrownavsetting'] = 'Enable arrow navigation';
 $string['sliderarrownavsetting_desc'] = 'With this setting, you can add navigation arrows on both sides of the slider.';

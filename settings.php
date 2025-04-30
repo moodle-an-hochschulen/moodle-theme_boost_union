@@ -2701,8 +2701,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Setting: Slider animation type.
         $slideranimationoptions = [
-                THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_NONE =>
-                        get_string('slideranimationsetting_none', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_FADE =>
                         get_string('slideranimationsetting_fade', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_SLIDE =>
