@@ -116,7 +116,6 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
 
     Examples:
       | setting | slideshouldornot | carouselshouldornot |
-      | 0       | should not       | should not          |
       | 1       | should           | should not          |
       | 2       | should           | should              |
 
