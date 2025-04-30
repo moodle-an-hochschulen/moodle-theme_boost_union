@@ -218,6 +218,7 @@ $string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for
 // ... Section: Activity icon purposes.
 $string['activitypurposeheading'] = 'Activity icon purposes';
 $string['activitypurposeheading_desc'] = 'With these settings, you can override the activity icon background color which is defined by the activity\'s purpose (and which is a hardcoded plugin feature in each activity).';
+$string['activitypurposeheadingpleasenote'] = 'Please note: On the activities overview page within a course, all resource activities like "book" are all combined under a "resources" section. Thus, the purpose of these individual activitiy types cannot / do not need to be changed on this page. You can just change the color of the "resources" icon color with the setting above.';
 $string['activitypurposeheadingtechnote'] = 'Technical note: Due to the way how Moodle core implements the activity purposes and their colors, the activity purposes are only overridden with CSS by Boost Union. Currently, all areas in Moodle core which show colored activity icons should be covered. If you spot any area or third party plugin which continues to show the unchanged activity purpose colors, please report it on {$a}.';
 $string['activitypurposeadministration'] = 'Administration';
 $string['activitypurposeassessment'] = 'Assessment';
