@@ -2525,8 +2525,11 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         display: none;
     }
     /* Changed the transition time to 0.3 seconds when smart menus are enabled */
-    .carousel .carousel-inner .carousel-item {
-        transition: transform 0.3s ease-in-out;
+    .theme-boost-union-smartmenu-carousel,
+    #usermenu-carousel {
+        .carousel-inner .carousel-item {
+            transition: transform 0.3s ease-in-out;
+        }
     }
 }
 
