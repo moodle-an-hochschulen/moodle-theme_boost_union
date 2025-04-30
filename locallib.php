@@ -1417,7 +1417,8 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
             // Add CSS to modify the activity purpose color in the activity chooser and the activity icon.
             $scss .= '.activity.modtype_'.$modname.' .activityiconcontainer.courseicon img,';
             $scss .= '.modchoosercontainer .modicon_'.$modname.'.activityiconcontainer img,';
-            $scss .= '#page-header .modicon_'.$modname.'.activityiconcontainer img';
+            $scss .= '#page-header .modicon_'.$modname.'.activityiconcontainer img,';
+            $scss .= '#page-course-overview #'.$modname.'_overview_title .activityiconcontainer img';
             // Add CSS for the configured blocks.
             if (strlen($blocksscss) > 0) {
                 $scss .= ', '.$blocksscss;
