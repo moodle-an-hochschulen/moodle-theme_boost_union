@@ -80,13 +80,16 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
     Then DOM element ".chooser-container .activityiconcontainer.modicon_<mod> img" should have a CSS filter close enough to hex color "<colorhex>"
     And I am on the "Test name" "<mod> activity" page
     Then DOM element "#page-header .modicon_<mod>.activityiconcontainer img" should have a CSS filter close enough to hex color "<colorhex>"
+    And I am on the "Course 1" "course > activities" page
+    Then DOM element "#page-course-overview #<mod>_overview_title .activityiconcontainer img" should have a CSS filter close enough to hex color "<colorhex>"
 
     # We do not want to burn too much CPU time by testing all plugins. We just test two plugins which is fine as all plugins are handled with the same PHP code.
     # These examples will work until Moodle core changes the default colors of the module purpose types.
+    # Note: Testing individual resource activities like "book" is not possible here as they are all combined under the "Resources" section on the actitivities overview page.
     Examples:
       | modname    | titlesetting    | purpose       | mod    | colorhex |
       | Assignment | Assignment name | Collaboration | assign | #5b40ff  |
-      | Book       | Name            | Communication | book   | #eb6200  |
+      | Forum      | Forum name      | Communication | forum  | #eb6200  |
 
   @javascript
   Scenario: Setting: Activity icon purposes - Removing the purpose
@@ -107,6 +110,8 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
     Then DOM element ".chooser-container .activityiconcontainer.modicon_assign img" should have computed style "filter" "none"
     And I am on the "Test name" "assign activity" page
     Then DOM element "#page-header .modicon_assign.activityiconcontainer img" should have computed style "filter" "none"
+    And I am on the "Course 1" "course > activities" page
+    Then DOM element "#page-course-overview #assign_overview_title .activityiconcontainer img" should have computed style "filter" "none"
 
   @javascript
   Scenario Outline: Setting: Activity icon purposes - Setting the purpose (for activities in subsections)
