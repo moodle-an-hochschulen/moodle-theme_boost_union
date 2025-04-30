@@ -539,7 +539,15 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
 
         // Boost_union savepoint reached.
         upgrade_plugin_savepoint(true, 2025041400, 'theme', 'boost_union');
+    }
 
+    if ($oldversion < 2025041401) {
+
+        // Set the guestroleupgradedfrompre500 marker to be used by the settings_update_guestrole.php script.
+        set_config('guestroleupgradedfrompre500', 1, 'theme_boost_union');
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2025041401, 'theme', 'boost_union');
     }
 
     return true;
