@@ -550,5 +550,17 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025041401, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2025041402) {
+
+        // Remove the THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_NONE option from the slideranimation setting.
+        $oldconfig = get_config('theme_boost_union', 'slideranimation');
+        if ($oldconfig == 0) {
+            set_config('slideranimation', THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_SLIDE, 'theme_boost_union');
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2025041402, 'theme', 'boost_union');
+    }
+
     return true;
 }
