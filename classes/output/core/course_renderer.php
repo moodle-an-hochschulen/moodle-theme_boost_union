@@ -159,7 +159,9 @@ class course_renderer extends \core_course_renderer {
         // If course cards are enabled.
         if ($courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_CARDS) {
             // Start the course listing as card grid.
-            // And add the theme_boost_union-courselisting class to be used in the CSS.
+            // And add the theme_boost_union-courselisting-wrapper and theme_boost_union-courselisting
+            // classes to be used in the CSS.
+            $content .= html_writer::start_tag('div', ['class' => 'theme_boost_union-courselisting-wrapper']);
             $content .= html_writer::start_tag('div',
                     [
                         'class' => 'row no-gutters theme_boost_union-courselisting theme_boost_union-courselisting-card',
@@ -235,11 +237,14 @@ class course_renderer extends \core_course_renderer {
             // End the course listing.
             $content .= html_writer::end_tag('div');
             $content .= html_writer::end_tag('div');
+            $content .= html_writer::end_tag('div');
 
             // Or if the course list is enabled.
         } else if ($courselistingpresentation == THEME_BOOST_UNION_SETTING_COURSELISTPRES_LIST) {
             // Start the course listing as course list.
-            // And add the theme_boost_union-courselisting class to be used in the CSS.
+            // And add the theme_boost_union-courselisting-wrapper and theme_boost_union-courselisting
+            // classes to be used in the CSS.
+            $content .= html_writer::start_tag('div', ['class' => 'theme_boost_union-courselisting-wrapper']);
             $content .= html_writer::start_tag('div',
                     [
                         'class' => 'theme_boost_union-courselisting theme_boost_union-courselisting-list',
@@ -293,6 +298,7 @@ class course_renderer extends \core_course_renderer {
             }
 
             // End the course listing.
+            $content .= html_writer::end_tag('div');
             $content .= html_writer::end_tag('div');
         }
 
