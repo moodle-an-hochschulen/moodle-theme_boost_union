@@ -288,7 +288,7 @@ class course_renderer extends \core_course_renderer {
             }
 
             // End the category list, if there were any courses.
-            if (count($courses) > 0) {
+            if ($showstickyheaders == true && count($courses) > 0) {
                 $content .= html_writer::end_tag('div');
             }
 
