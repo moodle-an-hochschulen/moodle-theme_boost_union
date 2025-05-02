@@ -507,6 +507,15 @@
                     margin-left: calc(-2rem - 8px - 112px);
                 }
 
+                /* On small screens, we must not let the category listing exceed the container's width to avoid horizontal
+                   scroll bars. */
+                @include media-breakpoint-down(sm) {
+                    .theme_boost_union-courselisting-wrapper {
+                        width: calc(100% - 4rem);
+                        margin-left: 2rem;
+                    }
+                }
+
                 .categoryname .spinner {
                     margin-left: 0.5rem;
                 }
