@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-05-02 - Bugfix: On mobile devices, the course listing combo box produced horizontal scroll bars, resolves #926.
 * 2025-04-30 - Bugfix: Modified smart menu transition time had an impact on the slider, resolves #922.
 * 2025-04-30 - Bugfix: Fix a HTML nesting glitch for the course lists on site home, resolves #919.
 * 2025-04-28 - Improvement: Remove a surplus CSS statement regarding the back-to-top button.
