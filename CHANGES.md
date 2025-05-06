@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-05-06 - Tests: The fine-grained personal access token (theme-boost_union-extscsstest.behat) had expired, resolves #932
+
 ### v4.1-r41
 
 * 2025-04-25 - Improvement: Fix a small glitch in the slider's language strings
