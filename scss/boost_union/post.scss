@@ -555,6 +555,21 @@
     }
 }
 
+/* The search page 'show all' button, if the search page has modified course listings. */
+#page-course-search {
+    .paging:has(+ .theme_boost_union-courselisting-wrapper),
+    .theme_boost_union-courselisting-wrapper ~ .paging {
+        @extend .text-end;
+
+        a {
+            @extend .btn;
+            @extend .btn-secondary;
+            @extend .btn-sm;
+            @extend .mb-3;
+        }
+    }
+}
+
 
 /*=======================================
  * Settings: Look -> Course
