@@ -865,6 +865,7 @@ class course_renderer extends \core_course_renderer {
         // List of other page URLs where the modification is allowed.
         $pageswithboostunionmodification = [
               '/course/index.php',
+              '/course/search.php',
         ];
 
         // Iterate over these pages.
