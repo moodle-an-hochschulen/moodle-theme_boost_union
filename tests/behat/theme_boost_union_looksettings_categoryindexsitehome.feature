@@ -879,3 +879,21 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     And I am on site homepage
     Then I should see "Category C"
     And I should not see "Kategorie C"
+
+  @javascript
+  Scenario Outline: Setting: Course listing presentation: Set the setting (and check that the course search page as special page is styled as well)
+    Given the following config values are set as admin:
+      | config                    | value          | plugin            |
+      | courselistingpresentation | <settingvalue> | theme_boost_union |
+    When I log in as "student1"
+    And I am on course index
+    And I set the field "Search courses" to "Course"
+    And I press "Search courses"
+    Then ".theme_boost_union-courselisting-<cssclass1>" "css_element" <shouldornot1> exist in the ".course-search-result" "css_element"
+    And ".theme_boost_union-courselisting-<cssclass2>" "css_element" <shouldornot2> exist in the ".course-search-result" "css_element"
+
+    Examples:
+      | settingvalue | cssclass1 | shouldornot1 | cssclass2 | shouldornot2 |
+      | nochange     | card      | should not   | list      | should not   |
+      | cards        | card      | should       | list      | should not   |
+      | list         | list      | should       | card      | should not   |
