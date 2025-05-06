@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-05-06 - Tests: The fine-grained personal access token (theme-boost_union-extscsstest.behat) had expired, resolves #932
 * 2025-05-06 - Regression: Course search page did not use the improved course listings anymore, resolves #930
 * 2025-05-02 - Bugfix: On mobile devices, the course listing combo box produced horizontal scroll bars, resolves #926.
 * 2025-04-30 - Bugfix: Modified smart menu transition time had an impact on the slider, resolves #922.

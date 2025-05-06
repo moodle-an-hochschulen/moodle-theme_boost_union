@@ -78,8 +78,8 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
       # The Github key which is placed here is is a fine-grained access token which was especially created for this Behat scenario and which will expire on 2025-05-06 due to Github's token lifetime policy.
       # It is sliced into three pieces to avoid that Github's code scanning engine will find and invalidate it.
       | pathfield                           | filepath      | githubkey1                   | githubkey3                   | githubkey2                 |
-      | External Pre SCSS Github file path  | /extscss.scss | 11AAIKUFQ0r5mGRLvI53V1_spQkU | 7kSEWBd25CNtUJE7UBA6dPdya3zM | C5O4Xo453LqQgKoXVAsmuKuC1q |
-      | External Post SCSS Github file path | /extscss.scss | 11AAIKUFQ0r5mGRLvI53V1_spQkU | 7kSEWBd25CNtUJE7UBA6dPdya3zM | C5O4Xo453LqQgKoXVAsmuKuC1q |
+      | External Pre SCSS Github file path  | /extscss.scss | 11AAIKUFQ0qSd02UyssSAH_lZMPG | zhFKQ8BAXCIUTY42MEYHVUqNmxRV | uCMzlLtYlUefPWmY5xTAFhSvSn |
+      | External Post SCSS Github file path | /extscss.scss | 11AAIKUFQ0qSd02UyssSAH_lZMPG | zhFKQ8BAXCIUTY42MEYHVUqNmxRV | uCMzlLtYlUefPWmY5xTAFhSvSn |
 
   @javascript
   Scenario Outline: Setting: External SCSS - Add a broken SCSS download URL to the theme
