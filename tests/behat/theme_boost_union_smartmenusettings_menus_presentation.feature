@@ -491,3 +491,43 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And the "class" attribute of ".primary-navigation .nav-item:nth-child(5) a" "css_element" should contain "active"
     And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation [data-key='home']" "css_element"
     And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation .nav-item:nth-child(5)" "css_element"
+
+  @javascript
+  Scenario Outline: Smartmenu: Menus: Presentation - Ensure the menu bar is not displayed when no menus are present
+    Given the following "theme_boost_union > smart menu" exists:
+      | title    | Menu bar links |
+      | location | Menu bar       |
+      | mode     | Inline         |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Menu bar links    |
+      | title    | Moodle org        |
+      | itemtype | Static            |
+      | url      | http://moodle.org |
+      | itemmode | Inline            |
+      | desktop  | <item1desk>       |
+      | tablet   | <item1tab>        |
+      | mobile   | <item1mob>        |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Menu bar links              |
+      | title    | Moodle Plugins              |
+      | itemtype | Static                      |
+      | url      | https://moodle.org/plugins/ |
+      | itemmode | Inline                      |
+      | desktop  | <item2desk>                 |
+      | tablet   | <item2tab>                  |
+      | mobile   | <item2mob>                  |
+    When I am on site homepage
+    And I change the window size to "large"
+    And ".boost-union-menubar" "css_element" <menubarshouldornot> be visible
+    And I change the viewport size to "764x820"
+    And ".boost-union-menubar" "css_element" <menubartabshouldornot> be visible
+    And I change the window size to "mobile"
+    And ".boost-union-menubar" "css_element" <menubarmobshouldornot> be visible
+
+    Examples:
+      | item1desk | item1tab | item1mob | item2desk | item2tab | item2mob | menubarshouldornot | menubartabshouldornot | menubarmobshouldornot |
+      | 1         | 1        | 1        | 1         | 1        | 1        | should not         | should not            | should not            |
+      | 0         | 1        | 1        | 1         | 1        | 1        | should             | should not            | should not            |
+      | 1         | 0        | 1        | 1         | 1        | 1        | should not         | should                | should not            |
+      | 1         | 1        | 0        | 1         | 1        | 0        | should not         | should not            | should                |
+      | 0         | 0        | 1        | 0         | 0        | 1        | should             | should                | should not            |
