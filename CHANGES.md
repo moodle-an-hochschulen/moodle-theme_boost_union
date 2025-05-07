@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-05-07 - Bugfix: Smart menu: menu bar displayed although there are no items to display, resolves #849.
+
 ### v4.5-r15
 
 * 2025-05-06 - Tests: The fine-grained personal access token (theme-boost_union-extscsstest.behat) had expired, resolves #932
