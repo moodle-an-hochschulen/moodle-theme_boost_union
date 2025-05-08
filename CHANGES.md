@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-05-08 - Bugfix: Smart menu menu bar (and bottom bar) overlay the message drawer, resolves #816
 * 2025-05-08 - Bugfix: Smart menu item icon was not black when hovered on a black navbar, resolves #936
 
 ### v4.5-r15
