@@ -159,6 +159,29 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And I should not see "Course 3" in the ".popover-region-favourites .popover-region-content-container" "css_element"
     And I should not see "Course 4" in the ".popover-region-favourites .popover-region-content-container" "css_element"
 
+  @javascript
+  Scenario Outline: Setting: Starred courses popover cog icon link target
+    Given the following config values are set as admin:
+      | config                   | value     | plugin            |
+      | shownavbarstarredcourses | yes       | theme_boost_union |
+      | starredcourseslinktarget | <setting> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "student1"
+    And I follow "My courses"
+    And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
+    And I click on "Star this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
+    And I reload the page
+    And I click on "nav.navbar #usernavigation .popover-region-favourites .nav-link" "css_element"
+    Then the "href" attribute of ".popover-region-favourites .popover-region-header-actions a" "css_element" should contain "<href>"
+    And the "title" attribute of ".popover-region-favourites .popover-region-header-actions a" "css_element" should contain "Set starred courses on the '<page>' page"
+    And I click on ".popover-region-favourites .popover-region-header-actions a" "css_element"
+    Then I should see "<page>" in the ".page-header-headings h1" "css_element"
+
+    Examples:
+      | setting   | href            | page       |
+      | mycourses | /my/courses.php | My courses |
+      | dashboard | /my/            | Dashboard  |
+
   Scenario Outline: Setting: Course category breadcrumbs
     Given the following "categories" exist:
       | name           | category | idnumber | category |
