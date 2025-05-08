@@ -45,6 +45,10 @@
     .nav-link:hover,
     .nav-link:focus {
         color: $black !important; /* stylelint-disable-line declaration-no-important */
+
+        .icon {
+            color: $black !important; /* stylelint-disable-line declaration-no-important */
+        }
     }
 
     /* Change the background color and colors of open custom menu parent navigation items in the navbar

@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-05-08 - Bugfix: Smart menu item icon was not black when hovered on a black navbar, resolves #936
+
 ### v4.1-r42
 
 * 2025-05-06 - Tests: The fine-grained personal access token (theme-boost_union-extscsstest.behat) had expired, resolves #932
