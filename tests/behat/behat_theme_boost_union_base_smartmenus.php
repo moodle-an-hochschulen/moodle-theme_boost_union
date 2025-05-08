@@ -26,6 +26,7 @@ require_once(__DIR__.'/../../../../lib/behat/behat_base.php');
 
 use Behat\Gherkin\Node\{TableNode, PyStringNode};
 use Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
+use Behat\Mink\Exception\ExpectationException;
 
 /**
  * Class behat_theme_boost_union_base_smartmenus
@@ -285,6 +286,48 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
         if (in_array('Menu', $locations)) {
             $this->execute('behat_general::i_click_on_in_the', [$menu, 'link', 'nav.menubar', 'css_element']);
             $this->execute('behat_general::assert_element_not_contains_text', [$item, '.boost-union-menubar', 'css_element']);
+        }
+    }
+
+    /**
+     * Verify that the message drawer is displayed without overlapping the bottom bar or the main navigation.
+     *
+     * @Given /^I should see the message drawer on the viewport$/
+     */
+    public function i_should_see_message_drawer_on_viewport() {
+        $script = "
+            return (function() {
+                var drawer = document.querySelector('.message-app[data-region=\"message-drawer\"]');
+                var bottomBar = document.querySelector('.boost-union-bottom-menu');
+                var topNav = document.querySelector('.primary-navigation')?.closest('.navbar');
+
+                const drawerRect = drawer.getBoundingClientRect();
+                const bottomBarRect = bottomBar ? bottomBar.getBoundingClientRect() : null;
+                const topNavRect = topNav ? topNav.getBoundingClientRect() : null;
+
+                if (bottomBarRect?.top) {
+                    if (drawerRect.bottom > bottomBarRect.top) {
+                        return false;
+                    }
+                } else {
+                    if (drawerRect.bottom > window.innerHeight) {
+                        return false;
+                    }
+                }
+
+                if (topNavRect) {
+                    if (topNavRect.bottom - Math.floor(drawerRect.top) > 1) {
+                        return false;
+                    }
+                }
+
+                return true;
+
+            })();";
+
+        if (!$this->evaluate_script($script)) {
+            throw new ExpectationException(
+                'The message drawer is overlapping with other elements on the viewport', $this->getSession());
         }
     }
 }

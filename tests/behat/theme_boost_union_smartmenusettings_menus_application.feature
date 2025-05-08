@@ -171,3 +171,37 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Main navigation, Bottom bar | Main navigation, Bottom bar | should               | should              | should               | Main navigation, Bottom bar | Main navigation             | should                   | should not              | should                   |
       | Main navigation, Bottom bar | Main navigation, Bottom bar | should               | should              | should               | Main navigation             | Main navigation             | should not               | should not              | should not               |
       | Main navigation             | Main navigation             | should not           | should not          | should not           | Main navigation, Bottom bar | Main navigation, Bottom bar | should                   | should                  | should                   |
+
+  @javascript
+  Scenario Outline: Smartmenu: Menus: Application - Verify the message drawer display its content fully
+    Given the following "theme_boost_union > smart menu" exists:
+      | title    | Smart menu           |
+      | location | <smartmenulocations> |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Smart menu        |
+      | title    | Smart menu node 1 |
+      | itemtype | Static            |
+      | url      | /foo              |
+    And I log in as "admin"
+    Then I change window size to "large"
+    Then I open messaging
+    And I click on ".view-overview-body .list-group-item" "css_element" in the ".message-app[data-region=\"message-drawer\"]" "css_element"
+    And I should see the message drawer on the viewport
+    And ".message-app[data-region=\"message-drawer\"] .closewidget .icon.fa-xmark" "css_element" should be visible
+    And ".message-app[data-region=\"message-drawer\"] .footer-container [data-action=\"send-message\"] .icon" "css_element" should be visible
+    And I click on ".footer-container [data-action=\"send-message\"] .icon" "css_element" in the ".message-app[data-region=\"message-drawer\"]" "css_element"
+    And I click on ".closewidget .icon.fa-xmark" "css_element" in the ".message-app[data-region=\"message-drawer\"]" "css_element"
+    Then I change window size to "600x1000"
+    And I open messaging
+    And I click on ".view-overview-body .list-group-item" "css_element" in the ".message-app[data-region=\"message-drawer\"]" "css_element"
+    And I should see the message drawer on the viewport
+    And ".message-app[data-region=\"message-drawer\"] .closewidget .icon.fa-xmark" "css_element" should be visible
+    And ".message-app[data-region=\"message-drawer\"] .footer-container [data-action=\"send-message\"] .icon" "css_element" should be visible
+    Then I click on ".footer-container [data-action=\"send-message\"] .icon" "css_element" in the ".message-app[data-region=\"message-drawer\"]" "css_element"
+    And I click on ".closewidget .icon.fa-xmark" "css_element" in the ".message-app[data-region=\"message-drawer\"]" "css_element"
+
+    Examples:
+      | smartmenulocations                    |
+      | Main navigation, Bottom bar, Menu bar |
+      | Main navigation, Bottom bar           |
+      | Main navigation, Menu bar             |
