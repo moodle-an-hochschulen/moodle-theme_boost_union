@@ -25,6 +25,7 @@
     * Main items are wrapped with carousel-item.
     * Second-level submenus are rendered as separate carousel items.
     * Make submenu headers fully clickable.
+    * Set the submenus' data-bs-theme attribute to light even if the navbar is dark
 
     Example context (json):
     {
@@ -48,7 +49,7 @@
         >
             {{{text}}}
         </a>
-        <div class="dropdown-menu boost-union-moremenu" role="menu" id="drop-down-menu-{{moremenuid}}" aria-labelledby="drop-down-{{moremenuid}}">
+        <div class="dropdown-menu boost-union-moremenu" role="menu" id="drop-down-menu-{{moremenuid}}" data-bs-theme="light" aria-labelledby="drop-down-{{moremenuid}}">
             <div data-bs-toggle="smartmenu-carousel" class="carousel slide" data-touch="false" data-interval="false" data-keyboard="false">
                 <div class="carousel-inner">
                 {{#children}}

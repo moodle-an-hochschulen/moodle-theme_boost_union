@@ -29,13 +29,8 @@
     /* Remove the white border at the bottom of the navbar as it looks odd with a dark navbar. */
     border-bottom: none;
 
-    /* Change the color of the site name in the navbar to white. */
-    .navbar-brand {
-        color: $white;
-    }
-
     /* Change the color of the navigation items in the navbar to white
-       and to black when hovered (as Moodle core will then show a white background).
+       and to black on white when hovered (Bootstrap already makes the background white when hovered, but not when focused).
        This has to use !important as Moodle core already uses !important for some of its hover states. */
     .nav-link {
         color: $white;
@@ -46,17 +41,11 @@
     .nav-link:hover,
     .nav-link:focus {
         color: $black !important; /* stylelint-disable-line declaration-no-important */
+        background-color: $white;
 
         .icon {
             color: $black !important; /* stylelint-disable-line declaration-no-important */
         }
-    }
-
-    /* Change the background color and colors of open custom menu parent navigation items in the navbar
-       as they are built differently from single navigation items. */
-    .nav-item.dropdown.show .nav-link.dropdown-toggle {
-        background-color: #f8f9fa;
-        color: $black;
     }
 
     /* Change the color of the icons in the navbar as well as the toggle icon in the usermenu
@@ -65,15 +54,6 @@
     .nav-link .icon,
     .nav-link a .icon,
     .usermenu .dropdown-toggle {
-        color: $white !important; /* stylelint-disable-line declaration-no-important */
-    }
-
-    /* Change the color of the icons in the dropdown menu to a dark grey and to white when hovered.
-       This has to use !important as Moodle core already uses !important for the icon colors. */
-    .dropdown-menu .dropdown-item .icon {
-        color: #1d2125 !important; /* stylelint-disable-line declaration-no-important */
-    }
-    .dropdown-menu .dropdown-item:hover .icon {
         color: $white !important; /* stylelint-disable-line declaration-no-important */
     }
 
@@ -101,9 +81,18 @@
         color: #343a40 !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    /* Change the color of the language selector link in the navbar to white. */
-    .langmenu .dropdown .dropdown-toggle {
-        color: $white;
+    /* Change the color of the footer in the notification popover to normal.
+       This cannot be done with data-bs-theme as we did not overwrite the corresponding mustache template. */
+    .popover-region-footer-container {
+        background-color: $white;
+    }
+
+    /* Change the link colors in the notification popover to a more solid color. */
+    .popover-region-container {
+        .see-all-link,
+        .view-more {
+            color: $primary;
+        }
     }
 }
 
@@ -117,43 +106,31 @@
 
     /* Change the background color of the custom child menu and user menu navigation items in the navbar
        to dark grey when hovered and focused (especially during keyboard navigation) */
-    .nav-item.dropdown.show,
+    .nav-item .dropdown-menu.show,
     #user-action-menu.show {
         a.dropdown-item {
             background-color: inherit;
         }
         a.dropdown-item:hover,
         a.dropdown-item:focus {
-            background-color: #343a40;
+            background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity));
         }
     }
 
     /* Adapt the color of the edit switch widget to fit onto the dark background. */
-    .form-check-input {
+    .editmode-switch-form input {
         background-color: var(--bs-body-bg);
-        border-color: #c8c8c8;
+        border-color: $white;
     }
 
     /* Change the background color of the search panel in the navbar. */
     #searchform-navbar {
         @extend .bg-dark;
-
-        /* Make sure that the search form's submit button is black as well. */
-        .simplesearchform .btn-submit {
-            background-color: var(--bs-body-bg);
-            color: #6a737b;
-        }
     }
-
-    /* Change the color of the language selector drop down items when hovered, focused and active to dark grey
-       as this would be presented in the primary color otherwise. */
-    .langmenu {
-        .dropdown-item:active,
-        .dropdown-item:hover,
-        .dropdown-item:focus,
-        .dropdown-item:focus-within {
-            background-color: $dark;
-        }
+    /* Make sure that the search form's submit button is black as well. */
+    .simplesearchform .btn-submit {
+        background-color: var(--bs-body-bg);
+        color: #6a737b;
     }
 }
 
@@ -167,7 +144,7 @@
 
     /* Change the background color of the custom child menu and user menu navigation items in the navbar
        to dark grey when hovered and focused (especially during keyboard navigation) */
-    .nav-item.dropdown.show,
+    .nav-item .dropdown-menu.show,
     #user-action-menu.show {
         a.dropdown-item {
             background-color: inherit;
@@ -178,10 +155,10 @@
         }
     }
 
-    /* Adapt the color of the edit switch widget to fit onto the dark background. */
-    .form-check-input {
+    /* Adapt the color of the edit switch widget to fit onto the primary color background. */
+    .editmode-switch-form input {
         background-color: $primary;
-        border-color: #c8c8c8;
+        border-color: $white;
     }
 
     /* Change the background color of the search panel in the navbar. */
@@ -197,16 +174,17 @@
         }
     }
 
+    /* Change the color of the divider to white.
+       This has to use !important as Moodle core already uses !important for the border-left color.*/
+    .divider {
+        background-color: $white;
+        border-left: none !important; /* stylelint-disable-line declaration-no-important */
+    }
+
     /* Change the color of the active nav items's bottom border to white as this would be presented in the
         primary color otherwise. */
     .nav-link.active {
         border-bottom-color: $white;
-    }
-
-    /* Change the color of the language selector icon to a light grey as well.
-        This has to use !important as Moodle core already uses !important for the icon colors. */
-    .langmenu .icon {
-        color: #c8c8c8 !important; /* stylelint-disable-line declaration-no-important */
     }
 }
 
@@ -218,39 +196,51 @@
         border-bottom-color: rgba($black, .6);
     }
 
-    /* Change the background color and colors of open custom menu parent navigation items in the navbar
-   as they are built differently from single navigation items. */
-    .nav-item.dropdown.show .nav-link.dropdown-toggle {
-        background-color: #f8f9fa;
-        color: $black;
+    /* Change the color of the navigation items in the navbar
+       to black on white when hovered (Bootstrap already makes the background white when hovered, but not when focused).
+       This has to use !important as Moodle core already uses !important for some of its hover states. */
+    .nav-link:hover,
+    .nav-link:focus {
+        color: $black !important; /* stylelint-disable-line declaration-no-important */
+        background-color: $white;
+    }
+
+    /* Change the font color of the custom child menu and user menu navigation items in the navbar
+       to black when hovered and focused (especially during keyboard navigation).
+       This will then diverge from the way how Boost core shows these menu items in the unchanged navbar,
+       but we do have to expect in this particular case here that the primary color is rather light. */
+    .nav-item .dropdown-menu.show,
+    #user-action-menu.show {
+        a.dropdown-item:hover,
+        a.dropdown-item:focus {
+            color: var(--bs-dropdown-link-color);
+        }
     }
 
     /* Change the color of the edit switch label in the navbar to dark grey.
        This has to use !important as Moodle core wants to use the color text-primary as soon as editing is on. */
     .editmode-switch-form,
     .editmode-switch-form label {
-        color: rgba($black, .6) !important; /* stylelint-disable-line declaration-no-important */
+        color: var(--bs-nav-link-color) !important; /* stylelint-disable-line declaration-no-important */
     }
     .editmode-switch-form label:hover {
-        color: rgba($black, .9) !important; /* stylelint-disable-line declaration-no-important */
+        color: var(--bs-nav-link-color) !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    /* Adapt the color of the edit switch widget to fit onto the dark background. */
-    .form-check-input {
+    /* Adapt the color of the edit switch widget to fit onto the primary color background. */
+    .editmode-switch-form input {
         background-color: $primary;
-        border-color: #c8c8c8;
+        background-image: #{escape-svg($form-switch-bg-image)};
+        border-color: var(--bs-nav-link-color);
     }
 
     /* Change the background color of the search panel in the navbar. */
     #searchform-navbar {
         background-color: $primary;
 
-        /* Make sure that the search form input elements are colorized as well. */
-        input,
-        button {
-            background-color: $primary;
-            border-color: #c8c8c8;
-            color: #c8c8c8;
+        /* Make sure that the search form input element have a real border, even if focused. */
+        input:focus {
+            border-color: var(--bs-gray-500);
         }
     }
 
@@ -1143,7 +1133,7 @@ body.theme-boost-union-commincourse {
             }
             i {
                 font-size: 20px;
-                line-height: 30px;
+                line-height: 25px;
             }
         }
     }
