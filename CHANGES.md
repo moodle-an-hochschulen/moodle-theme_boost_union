@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-05-08 - Preemptive regression fix: Moodle 5.0 showed the footer (questionmark) icon on mobiles as well, resolves #928.
 * 2025-04-10 - Upgrade: Remove the 'none' option from the slider animation type as this seems not to anymore out of the box in Bootstrap 5.
 * 2025-04-10 - Upgrade: Adapt some more deprecated Bootstrap classes.
 * 2025-04-10 - Improvement: Change the defaults of the theme/boost_union:viewregion* capabilities for the guest role on new Boost Union installatins, resolves #893.
