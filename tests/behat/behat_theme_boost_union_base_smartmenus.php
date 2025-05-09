@@ -290,33 +290,36 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
     }
 
     /**
-     * Verify that the message drawer is displayed without overlapping the bottom bar or the main navigation.
+     * Verify that the element is displayed without overlapping the bottom bar or the main navigation.
      *
-     * @Given /^I should see the message drawer on the viewport$/
+     * @Then DOM element :arg1 should visible on the viewport
+     *
+     * @param string $selector
+     * @throws ExpectationException
      */
-    public function i_should_see_message_drawer_on_viewport() {
+    public function i_should_see_element_on_viewport($selector) {
         $script = "
             return (function() {
-                var drawer = document.querySelector('.message-app[data-region=\"message-drawer\"]');
+                var element = document.querySelector('$selector');
                 var bottomBar = document.querySelector('.boost-union-bottom-menu');
                 var topNav = document.querySelector('.primary-navigation')?.closest('.navbar');
 
-                const drawerRect = drawer.getBoundingClientRect();
+                const elementRect = element.getBoundingClientRect();
                 const bottomBarRect = bottomBar ? bottomBar.getBoundingClientRect() : null;
                 const topNavRect = topNav ? topNav.getBoundingClientRect() : null;
 
                 if (bottomBarRect?.top) {
-                    if (drawerRect.bottom > bottomBarRect.top) {
+                    if (elementRect.bottom > bottomBarRect.top) {
                         return false;
                     }
                 } else {
-                    if (drawerRect.bottom > window.innerHeight) {
+                    if (elementRect.bottom > window.innerHeight) {
                         return false;
                     }
                 }
 
                 if (topNavRect) {
-                    if (topNavRect.bottom - Math.floor(drawerRect.top) > 1) {
+                    if (topNavRect.bottom - Math.floor(elementRect.top) > 1) {
                         return false;
                     }
                 }
