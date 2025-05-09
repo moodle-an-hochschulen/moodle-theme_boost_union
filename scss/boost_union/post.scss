@@ -1934,6 +1934,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             }
             /* The icon tag aligned top at the usermenu link */
             .usermenu .dropdown-menu {
+                max-height: calc(100vh - 170px);
                 .submenu {
                     /* Remove the padding on the User submenu header */
                     .header {

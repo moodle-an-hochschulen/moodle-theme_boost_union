@@ -186,7 +186,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then I change window size to "large"
     Then I open messaging
     And I click on ".view-overview-body .list-group-item" "css_element" in the ".message-app[data-region=\"message-drawer\"]" "css_element"
-    And I should see the message drawer on the viewport
+    And DOM element ".message-app" should visible on the viewport
     And ".message-app[data-region=\"message-drawer\"] .closewidget .icon.fa-xmark" "css_element" should be visible
     And ".message-app[data-region=\"message-drawer\"] .footer-container [data-action=\"send-message\"] .icon" "css_element" should be visible
     And I click on ".footer-container [data-action=\"send-message\"] .icon" "css_element" in the ".message-app[data-region=\"message-drawer\"]" "css_element"
@@ -194,11 +194,34 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then I change window size to "600x1000"
     And I open messaging
     And I click on ".view-overview-body .list-group-item" "css_element" in the ".message-app[data-region=\"message-drawer\"]" "css_element"
-    And I should see the message drawer on the viewport
+    And DOM element ".message-app" should visible on the viewport
     And ".message-app[data-region=\"message-drawer\"] .closewidget .icon.fa-xmark" "css_element" should be visible
     And ".message-app[data-region=\"message-drawer\"] .footer-container [data-action=\"send-message\"] .icon" "css_element" should be visible
     Then I click on ".footer-container [data-action=\"send-message\"] .icon" "css_element" in the ".message-app[data-region=\"message-drawer\"]" "css_element"
     And I click on ".closewidget .icon.fa-xmark" "css_element" in the ".message-app[data-region=\"message-drawer\"]" "css_element"
+
+    Examples:
+      | smartmenulocations                    |
+      | Main navigation, Bottom bar, Menu bar |
+      | Main navigation, Bottom bar           |
+      | Main navigation, Menu bar             |
+
+  @javascript
+  Scenario Outline: Smartmenu: Menus: Application - Ensure the user menu remains fully visible on smaller screens
+    Given the following "theme_boost_union > smart menu" exists:
+      | title    | Smart menu           |
+      | location | <smartmenulocations> |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Smart menu        |
+      | title    | Smart menu node 1 |
+      | itemtype | Static            |
+      | url      | /foo              |
+    And I log in as "admin"
+    Then I change window size to "large"
+    And I click on ".usermenu" "css_element" in the "#usernavigation" "css_element"
+    And DOM element "#usernavigation #user-action-menu" should visible on the viewport
+    Then I change window size to "530x650"
+    And DOM element "#usernavigation #user-action-menu" should visible on the viewport
 
     Examples:
       | smartmenulocations                    |
