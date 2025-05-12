@@ -2263,8 +2263,29 @@ function theme_boost_union_get_navbar_starredcoursespopover() {
         });
     }
 
+    // Get the cog icon link target.
+    $cogiconlinktarget = get_config('theme_boost_union', 'starredcourseslinktarget');
+    switch($cogiconlinktarget) {
+        case THEME_BOOST_UNION_SETTING_STARREDCOURSES_LINKTARGET_DASHBOARD:
+            $cogiconlinktargeturl = new \core\url('/my/');
+            $cogiconlinktargettitle =
+                    get_string('shownavbarstarredcourses_config', 'theme_boost_union', get_string('myhome', 'core'));
+            break;
+        case THEME_BOOST_UNION_SETTING_STARREDCOURSES_LINKTARGET_MYCOURSES:
+        default:
+            $cogiconlinktargeturl = new \core\url('/my/courses.php');
+            $cogiconlinktargettitle =
+                    get_string('shownavbarstarredcourses_config', 'theme_boost_union', get_string('mycourses', 'core'));
+            break;
+    }
+
     // Compose the popover menu.
-    $html = $OUTPUT->render_from_template('theme_boost_union/popover-favourites', ['favourites' => $coursesfortemplate]);
+    $html = $OUTPUT->render_from_template('theme_boost_union/popover-favourites',
+            [
+                'favourites' => $coursesfortemplate,
+                'cogiconlinktargeturl' => $cogiconlinktargeturl,
+                'cogiconlinktargettitle' => $cogiconlinktargettitle,
+            ]);
 
     return $html;
 }
