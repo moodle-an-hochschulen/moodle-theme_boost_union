@@ -379,6 +379,10 @@ With this setting, you can add a 'Set preferred language' setting to the languag
 
 With this setting, you can show a popover menu with links to starred courses next to the messages and notifications menus.
 
+###### Starred courses popover cog icon link target
+
+With this setting, you can set the link target of the cog icon in the starred courses popover. By default, the cog icon links to the 'My courses' page. However, you can also link to the 'Dashboard' page, especially if you have disabled the 'My courses' page in the primary navigation.
+
 ##### Breadcrumbs
 
 ###### Display the category breadcrumbs in the course header
