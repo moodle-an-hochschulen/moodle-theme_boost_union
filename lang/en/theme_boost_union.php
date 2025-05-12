@@ -478,8 +478,11 @@ $string['navbarheading'] = 'Navbar';
 // ... ... Setting: Show starred courses popover in the navbar.
 $string['shownavbarstarredcoursessetting'] = 'Show starred courses popover in the navbar';
 $string['shownavbarstarredcoursessetting_desc'] = 'With this setting, you can show a popover menu with links to starred courses next to the messages and notifications menus.';
-$string['shownavbarstarredcourses_config'] = 'Set starred courses on the \'My courses\' page';
+$string['shownavbarstarredcourses_config'] = 'Set starred courses on the \'{$a}\' page';
 $string['shownavbarstarredcourses_label'] = 'Starred courses';
+// ... ... Setting: Starred courses popover cog icon link target.
+$string['starredcourseslinktargetsetting'] = 'Starred courses popover cog icon link target';
+$string['starredcourseslinktargetsetting_desc'] = 'With this setting, you can set the link target of the cog icon in the starred courses popover. By default, the cog icon links to the \'My courses\' page. However, you can also link to the \'Dashboard\' page, especially if you have disabled the \'My courses\' page in the primary navigation.';
 // ... Section: Breadcrumbs.
 $string['breadcrumbsheading'] = 'Breadcrumbs';
 // ... ... Setting: Course category breadcrumb.
