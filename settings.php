@@ -2041,6 +2041,34 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
+        // Create AI tab.
+        $tab = new admin_settingpage('theme_boost_union_feel_ai', get_string('aitab', 'theme_boost_union', null, true));
+
+        // Create AI course assistance placement heading.
+        $name = 'theme_boost_union/aiplacementcourseassistheading';
+        $title = get_string('aiplacementcourseassistheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: AI course assistance placement button location.
+        $name = 'theme_boost_union/aiplacementcourseassistlocation';
+        $title = get_string('aiplacementcourseassistlocationsetting', 'theme_boost_union', null, true);
+        $description = get_string('aiplacementcourseassistlocationsetting_desc', 'theme_boost_union', null, true);
+        $aiplacementcourseassistlocationoptions = [
+                THEME_BOOST_UNION_SETTING_AIPLACEMENT_COURSEASSIST_LOCATION_DEFAULT =>
+                        get_string('aiplacementcourseassistlocationsetting_default', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_AIPLACEMENT_COURSEASSIST_LOCATION_HEADERACTION =>
+                        get_string('aiplacementcourseassistlocationsetting_headeraction', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_AIPLACEMENT_COURSEASSIST_LOCATION_DEFAULT, $aiplacementcourseassistlocationoptions);
+        $setting->set_updatedcallback('theme_boost_union_remove_hookmanipulation');
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
         // Create misc tab.
         $tab = new admin_settingpage('theme_boost_union_feel_misc', get_string('misctab', 'theme_boost_union', null, true));
 

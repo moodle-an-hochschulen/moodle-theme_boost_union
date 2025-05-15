@@ -22,8 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use core\di;
-use core\hook\manager as hook_manager;
+use core\hook\output\after_http_headers;
 
 /**
  * Build the course related hints HTML code.
@@ -2532,6 +2531,14 @@ function theme_boost_union_manipulate_hooks() {
                         ['disabled' => true];
                 // phpcs:enable
             }
+        }
+
+        // If the location of the AI course assistance placement button has been changed by Boost Union's settings.
+        $locationsetting = get_config('theme_boost_union', 'aiplacementcourseassistlocation');
+        if (isset($locationsetting) && $locationsetting != THEME_BOOST_UNION_SETTING_AIPLACEMENT_COURSEASSIST_LOCATION_DEFAULT) {
+            // Disable the placement's after_http_headers hook to prevent the button from being added in the default location.
+            $callbackmethod = \aiplacement_courseassist\hook_callbacks::class . '::after_http_headers';
+            $CFG->hooks_callback_overrides[after_http_headers::class][$callbackmethod] = ['disabled' => true];
         }
 
         // Remember the hook overrides in the cache.
