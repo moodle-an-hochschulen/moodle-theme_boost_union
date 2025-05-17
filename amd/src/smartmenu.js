@@ -30,7 +30,14 @@ define(["jquery", "core/moremenu", "theme_boost_union/submenu"], function($, Mor
         dropDownItem: "dropdown-item",
         classes: {
             dropDownMenuList: ".dropdownmoremenu ul.dropdown-menu",
-            forceOut: ".dropdownmoremenu .force-menu-out"
+            forceOut: ".dropdownmoremenu .force-menu-out",
+            dropdownmoremenu: '.dropdownmoremenu',
+            primaryNavigation: '.primary-navigation',
+
+        },
+        regions: {
+            moredropdown: '[data-region="moredropdown"]'
+
         }
     };
 
@@ -92,7 +99,6 @@ define(["jquery", "core/moremenu", "theme_boost_union/submenu"], function($, Mor
             setOutMenuPositions(primaryNav); // Create a data flag to maintain the original position of the menus.
             moveOutMoreMenu(primaryNav);
         }
-
 
         var menuBar = document.querySelector('nav.menubar ul.more-nav');
         if (menuBar != undefined) {
@@ -214,6 +220,7 @@ define(["jquery", "core/moremenu", "theme_boost_union/submenu"], function($, Mor
 
     return {
         init: () => {
+
             SubMenu.init();
             cardScroll();
             autoCollapse();
@@ -225,6 +232,30 @@ define(["jquery", "core/moremenu", "theme_boost_union/submenu"], function($, Mor
                     icon.addEventListener('click', (e) => {
                         e.stopPropagation();
                     });
+                });
+            }
+
+            const toggledropdown = e => e.stopPropagation();
+
+            // If there are dropdowns in the MoreMenu, add a new
+            // event listener to show the contents on click and prevent the
+            // moreMenu from closing.
+            // In moodle 5.0, only the first moremenu is initialized. if the menubar and primary navigation are present,
+            // the moremenu is initialized on the menubar.
+            // So we need to add the event listener to the primary navigation if the menubar is present.
+            var primaryNav = document
+                    .querySelector(Selectors.classes.primaryNavigation + ' ' + Selectors.classes.dropdownmoremenu);
+
+            if (document.querySelector(Selectors.classes.dropdownmoremenu) !== primaryNav) {
+
+                primaryNav?.addEventListener('show.bs.dropdown', () => {
+                    const moreDropdown = document.querySelector(Selectors.classes.primaryNavigation)
+                        ?.querySelector(Selectors.regions.moredropdown);
+                    moreDropdown?.querySelectorAll('.dropdown').forEach((dropdown) => {
+                        dropdown.removeEventListener('click', toggledropdown, true);
+                        dropdown.addEventListener('click', toggledropdown, true);
+                    });
+
                 });
             }
         }

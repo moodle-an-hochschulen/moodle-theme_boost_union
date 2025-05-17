@@ -180,7 +180,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | tablet         | <hidetablet>       |
       | mobile         | <hidemobile>       |
     Then I <desktopshouldornot> see smart menu "Quick links" item "Resources" in location "Menu, Main, User"
-    And I change window size to "800x980"
+    And I change window size to "990x900"
     Then I <tabletshouldornot> see smart menu "Quick links" item "Resources" in location "User, Menu"
     And I click on "More" "link" in the ".primary-navigation" "css_element"
     Then I <tabletshouldornot> see smart menu "Quick links" item "Resources" in location "Main"
