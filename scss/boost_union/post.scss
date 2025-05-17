@@ -209,13 +209,13 @@
        to black when hovered and focused (especially during keyboard navigation).
        This will then diverge from the way how Boost core shows these menu items in the unchanged navbar,
        but we do have to expect in this particular case here that the primary color is rather light. */
-        .nav-item .dropdown-menu.show,
-        #user-action-menu.show {
-            a.dropdown-item:hover,
-            a.dropdown-item:focus {
-                color: var(--bs-dropdown-link-color);
-            }
+    .nav-item .dropdown-menu.show,
+    #user-action-menu.show {
+        a.dropdown-item:hover,
+        a.dropdown-item:focus {
+            color: var(--bs-dropdown-link-color);
         }
+    }
 
     /* Change the color of the edit switch label in the navbar to dark grey.
        This has to use !important as Moodle core wants to use the color text-primary as soon as editing is on. */
@@ -2296,7 +2296,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                                     }
                                     /* The line height added and "Go" button block aligned right side
                                     in the content block for the card dropdown items */
-                                    .btn-block {
+                                    .card-btn-block {
                                         width: auto;
                                         line-height: 10px;
                                         text-align: right;
@@ -2329,7 +2329,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                                             opacity: .6;
                                         }
                                         /* The Card Menu as "Heading" option content block "Go" button link is hidden */
-                                        .btn-block {
+                                        .card-btn-block {
                                             display: none;
                                         }
                                     }

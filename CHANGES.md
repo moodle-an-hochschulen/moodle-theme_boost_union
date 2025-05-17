@@ -6,6 +6,8 @@ Changes
 
 ### Unreleased
 
+* 2025-05-17 - Upgrade: Failing smart menu Behat tests on Moodle 5.0, resolves #929.
+* 2025-05-17 - Adopt changes from /lib/amd/src/usermenu.js to /theme/boost_union/amd/src/submenu.js, resolves #913.
 * 2025-05-08 - Preemptive regression fix: Moodle 5.0 showed the footer (questionmark) icon on mobiles as well, resolves #928.
 * 2025-04-10 - Upgrade: Remove the 'none' option from the slider animation type as this seems not to anymore out of the box in Bootstrap 5.
 * 2025-04-10 - Upgrade: Adapt some more deprecated Bootstrap classes.

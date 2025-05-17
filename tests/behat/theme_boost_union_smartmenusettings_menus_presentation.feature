@@ -239,7 +239,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I <menu3shouldornotlarge> see smart menu "Quick links 03" in location "Main"
     And ".primary-navigation .dropdownmoremenu" "css_element" <moreshouldornotlarge> be visible
     # Make the screen smaller and test the "More" behaviour in the navbar
-    And I change the viewport size to "tablet"
+    And I change the viewport size to "850x1024"
     Then I <menu1shouldornottablet> see smart menu "Quick links 01" in location "Main"
     And I <menu2shouldornottablet> see smart menu "Quick links 02" in location "Main"
     And I <menu3shouldornottablet> see smart menu "Quick links 03" in location "Main"
@@ -294,7 +294,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I follow "Dashboard"
     # Make the screen smaller and test the "More" behaviour in the navbar
     # This pixel screen size is essentially the same than the 'tablet' size, but for some strange reason Behat on moodle-docker made the screen too small in this scenario
-    And I change the viewport size to "768x1024"
+    And I change the viewport size to "850x1024"
     And I click on "More" "link" in the ".primary-navigation" "css_element"
     Then I should see smart menu "Quick links 01" in location "Main"
     And I should see smart menu "Quick links 02" in location "Main"
