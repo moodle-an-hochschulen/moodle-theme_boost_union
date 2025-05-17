@@ -24,7 +24,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import $ from 'jquery';
+import Carousel from 'theme_boost/bootstrap/carousel';
 import {space, enter} from 'core/key_codes';
 
 /**
@@ -54,6 +54,8 @@ const Selectors = {
  * @param {HTMLElement} smartMenu
  */
 const registerEventListeners = (smartMenu) => {
+
+    const smartMenuCarousel = smartMenu.querySelector(Selectors.smartMenuCarousel);
 
     // Handle click events in the smart menu.
     smartMenu.addEventListener('click', (e) => {
@@ -93,18 +95,20 @@ const registerEventListeners = (smartMenu) => {
         // Get the position (index) of the targeted carousel item within the parent container element.
         const index = Array.from(targetedCarouselItem.parentNode.children).indexOf(targetedCarouselItem);
         // Navigate to the targeted carousel item.
-        $(smartMenu.querySelector(Selectors.smartMenuCarousel)).carousel(index);
+        Carousel.getOrCreateInstance(smartMenuCarousel).to(index);
+
     };
 
     // Handle the 'hide.bs.dropdown' event (Fired when the dropdown menu is being closed).
-    $(Selectors.smartMenu).on('hide.bs.dropdown', () => {
+    smartMenu.addEventListener('hide.bs.dropdown', () => {
         // Reset the state once the smart menu dropdown is closed and return back to the first (main) carousel item
         // if necessary.
-        $(smartMenu.querySelector(Selectors.smartMenuCarousel)).carousel(0);
+        Carousel.getOrCreateInstance(smartMenuCarousel).to(0);
+
     });
 
     // Handle the 'slid.bs.carousel' event (Fired when the carousel has completed its slide transition).
-    $(Selectors.smartMenuCarousel).on('slid.bs.carousel', () => {
+    smartMenuCarousel?.addEventListener('slid.bs.carousel', () => {
         const activeCarouselItem = smartMenu.querySelector(Selectors.smartMenuCarouselItemActive);
         // Set the focus on the newly activated carousel item.
         if (activeCarouselItem !== null) {
@@ -178,8 +182,8 @@ const moreMenuCardItem = () => {
         // Parent moremenu.
         var parentMenu = moreMenu.parentNode;
         // Hide all opened card menus on dropdown shown.
-        $(parentMenu).on('shown.bs.dropdown', hideOpenMenus);
-        $(parentMenu).on('hidden.bs.dropdown', hideOpenMenus);
+        parentMenu.addEventListener('shown.bs.dropdown', hideOpenMenus);
+        parentMenu.addEventListener('hidden.bs.dropdown', hideOpenMenus);
     };
 
     /**
