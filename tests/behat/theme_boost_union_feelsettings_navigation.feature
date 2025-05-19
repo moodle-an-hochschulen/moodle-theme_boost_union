@@ -164,8 +164,8 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And the theme cache is purged and the theme is reloaded
     When I log in as "student1"
     And I follow "My courses"
-    And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
-    And I click on "Star this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
+    And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card dashboard-card') and contains(.,'Course 1')]" "xpath_element"
+    And I click on "Star this course" "link" in the "//div[contains(@class, 'card dashboard-card') and contains(.,'Course 1')]" "xpath_element"
     And I reload the page
     And I click on "nav.navbar #usernavigation .popover-region-favourites .nav-link" "css_element"
     Then the "href" attribute of ".popover-region-favourites .popover-region-header-actions a" "css_element" should contain "<href>"
