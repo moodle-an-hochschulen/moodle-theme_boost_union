@@ -37,7 +37,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     # Menu items in bottom menu.
     Then "Test course1" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
     And the "target" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
-    Then I change the viewport size to "large"
+    Then I change window size to "large"
     # Menu items in menubar.
     Then "Test course1" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Menu bar smart menu"
     And the "target" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Test course1')]" "xpath_element" <should>
@@ -59,9 +59,9 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
     And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
-    And I change the viewport size to "740x900"
+    And I change window size to "740x900"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
-    And I change the viewport size to "large"
+    And I change window size to "large"
     And I click on ".action-edit" "css_element" in the "Resources" "table_row"
     And I expand all fieldsets
     And I set the field "CSS class" to "course-resource-links"
@@ -72,7 +72,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
-    And I change the viewport size to "740x900"
+    And I change window size to "740x900"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
 
@@ -135,7 +135,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And the "href" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(@class, 'menu-item-heading')]" "xpath_element" should contain "#"
     And the "href" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(@class, 'menu-item-static')]" "xpath_element" should contain "https://moodle.org"
     # Menu items in bottom menu.
-    And I change the viewport size to "740x900"
+    And I change window size to "740x900"
     And I click on "Quick links" "link" in the ".bottom-navigation" "css_element"
     Then I should see "External links" in the ".bottom-navigation .menu-item-heading" "css_element"
     And I should see "Resources" in the ".bottom-navigation .menu-item-static" "css_element"
