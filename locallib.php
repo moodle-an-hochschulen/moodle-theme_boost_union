@@ -2267,13 +2267,13 @@ function theme_boost_union_get_navbar_starredcoursespopover() {
     $cogiconlinktarget = get_config('theme_boost_union', 'starredcourseslinktarget');
     switch($cogiconlinktarget) {
         case THEME_BOOST_UNION_SETTING_STARREDCOURSES_LINKTARGET_DASHBOARD:
-            $cogiconlinktargeturl = new \core\url('/my/');
+            $cogiconlinktargeturl = new moodle_url('/my/');
             $cogiconlinktargettitle =
                     get_string('shownavbarstarredcourses_config', 'theme_boost_union', get_string('myhome', 'core'));
             break;
         case THEME_BOOST_UNION_SETTING_STARREDCOURSES_LINKTARGET_MYCOURSES:
         default:
-            $cogiconlinktargeturl = new \core\url('/my/courses.php');
+            $cogiconlinktargeturl = new moodle_url('/my/courses.php');
             $cogiconlinktargettitle =
                     get_string('shownavbarstarredcourses_config', 'theme_boost_union', get_string('mycourses', 'core'));
             break;
