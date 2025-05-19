@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.4-r19
 
 * 2025-05-08 - Feature: Allow the admin to configure the link target of the cog icon in the starred courses popover, resolves #939
 * 2025-05-08 - Bugfix: Smart menu item icon was not black when hovered on a black navbar, resolves #936
