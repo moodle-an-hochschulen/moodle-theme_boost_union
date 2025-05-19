@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-05-19 - Bugfix: Fix broken starred courses popover which resulted in a faulty feature backport.
+
 ### v4.4-r19
 
 * 2025-05-08 - Feature: Allow the admin to configure the link target of the cog icon in the starred courses popover, resolves #939
