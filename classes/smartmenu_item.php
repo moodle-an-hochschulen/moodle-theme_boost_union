@@ -1391,7 +1391,7 @@ class smartmenu_item {
             // Fetch no-selection string.
             Str.get_string("noselection", "form").then((noSelection) => {
                 dropdowns.forEach((elem) => {
-                    elem.classList.add("custom-select");
+                    elem.classList.add("form-select");
                     // Change the field type to autcomplete, it fix the suggestion box alignment.
                     elem.parentNode.setAttribute("data-fieldtype", "autocomplete");
                     Auto.enhance(elem, "", false, "", false, true, noSelection);

@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-04-10 - Upgrade: Replace Bootstrap class custom-select with form-select
 * 2025-05-17 - Upgrade: Failing smart menu Behat tests on Moodle 5.0, resolves #929.
 * 2025-05-17 - Upgrade: Adopt changes from /lib/amd/src/usermenu.js to /theme/boost_union/amd/src/submenu.js, resolves #913.
 * 2025-04-10 - Upgrade: Fix the inline-block presentation of the date settings in the infobanner settings.
