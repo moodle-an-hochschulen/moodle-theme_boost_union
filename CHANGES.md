@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.4-r20
 
 * 2025-05-19 - Bugfix: Fix broken starred courses popover which resulted in a faulty feature backport.
 
