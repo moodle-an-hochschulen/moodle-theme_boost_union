@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-05-20 - Release: Set the Boost Union logo and tagline as screenshot for the theme overview page, resolves #925
+
 ### v4.4-r20
 
 * 2025-05-19 - Bugfix: Fix broken starred courses popover which resulted in a faulty feature backport.
