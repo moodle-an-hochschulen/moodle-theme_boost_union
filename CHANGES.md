@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-05-20 - Release: Set the Boost Union logo and tagline as screenshot for the theme overview page, resolves #925
 * 2025-05-19 - Bugfix: Fix broken starred courses popover which resulted in a faulty feature backport.
 
 ### v4.3-r30
