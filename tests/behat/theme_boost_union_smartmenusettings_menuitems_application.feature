@@ -71,14 +71,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I should see "Test course1" in the ".carousel-item.active" "css_element"
     And I should see "Test course2" in the ".carousel-item.active" "css_element"
     # Submenu items in bottom menu.
-    And I change window size to "740x900"
+    And I change viewport size to "740x900"
     And I click on "Quick links" "link" in the ".bottom-navigation" "css_element"
     And I should see "Available courses" in the ".bottom-navigation" "css_element"
     And I should not see "Test course1" in the ".bottom-navigation" "css_element"
     And I click on "Available courses" "link" in the ".bottom-navigation" "css_element"
     And I should see "Test course1" in the ".bottom-navigation" "css_element"
     And I should see "Test course2" in the ".bottom-navigation" "css_element"
-    And I change window size to "large"
+    And I change viewport size to "large"
     # Submenu items in menubar.
     And I click on "Quick links" "link" in the "nav.menubar" "css_element"
     And I should see "Available courses" in the "nav.menubar" "css_element"
