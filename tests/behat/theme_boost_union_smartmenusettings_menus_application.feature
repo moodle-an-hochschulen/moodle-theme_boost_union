@@ -112,7 +112,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I log out
     And I log in as "user1"
     # Resize the window to avoid that menus fall into the "More" menu and influence this test.
-    And I change window size to "large"
+    And I change viewport size to "large"
     Then I should see smart menu "Smart menu" in location "Main"
     And "Smart menu node 1" "theme_boost_union > Smart menu item" should exist in the "Smart menu" "theme_boost_union > Main menu smart menu"
     And "Smart menu node 2" "theme_boost_union > Smart menu item" should exist in the "Smart menu" "theme_boost_union > Main menu smart menu"
@@ -143,12 +143,12 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | url      | /bar              |
     And I log out
     And I log in as "user1"
-    And I change window size to "mobile"
+    And I change viewport size to "mobile"
     Then I <smartmenushouldornot> see smart menu "Smart menu" in location "Bottom"
     And I <helpmenushouldornot> see smart menu "Help menu" in location "Bottom"
     And the "class" attribute of "body" "css_element" <bodyclassshouldornot> contain "theme-boost-union-bottombar"
     And I log out
-    And I change window size to "large"
+    And I change viewport size to "large"
     And I log in as "admin"
     And I navigate to smart menus
     And I click on ".action-edit" "css_element" in the "Smart menu" "table_row"
@@ -161,7 +161,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I click on "Save and return" "button"
     And I log out
     And I log in as "user1"
-    And I change window size to "mobile"
+    And I change viewport size to "mobile"
     Then I <smartmenueditshouldornot> see smart menu "Smart menu" in location "Bottom"
     And I <helpmenueditshouldornot> see smart menu "Help menu" in location "Bottom"
     And the "class" attribute of "body" "css_element" <bodyclasseditshouldornot> contain "theme-boost-union-bottombar"
