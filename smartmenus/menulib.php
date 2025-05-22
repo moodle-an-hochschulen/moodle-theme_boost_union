@@ -652,8 +652,18 @@ class smartmenu_helper {
      * @return void
      */
     public static function set_user_purgecache($userid) {
-        // Clear all the menu and item caches for this user.
-        set_user_preference('theme_boost_union_menu_purgesessioncache', true, $userid);
+        global $SESSION;
+
+        // If the user is a guest.
+        if (!isloggedin() || isguestuser($userid)) {
+            // Store the flag to clear the menu cache for this user in the session as guests do not have user preferences.
+            $SESSION->theme_boost_union_menu_purgesessioncache = true;
+
+            // Otherwise.
+        } else {
+            // Store a user preference to clear all the menu and item caches for this user.
+            set_user_preference('theme_boost_union_menu_purgesessioncache', true, $userid);
+        }
     }
 
     /**
@@ -661,8 +671,18 @@ class smartmenu_helper {
      * @return void
      */
     public static function clear_user_cachepreferencemenu() {
-        global $USER;
-        set_user_preference('theme_boost_union_menu_purgesessioncache', false, $USER);
+        global $SESSION, $USER;
+
+        // If the user is a guest.
+        if (!isloggedin() || isguestuser($USER)) {
+            // Remove the flag to clear the menu cache.
+            unset($SESSION->theme_boost_union_menu_purgesessioncache);
+
+            // Otherwise.
+        } else {
+            // Remove the user preference to clear all the menu and item caches.
+            set_user_preference('theme_boost_union_menu_purgesessioncache', false, $USER);
+        }
     }
 
     /**
