@@ -197,6 +197,100 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | en, de     | should                    | should not                | should                   |
 
   @javascript
+  Scenario: Smartmenu: Menu items: Rules - Rules - Show smart menu item based on the user's prefered language - Handle the case of forced language courses
+    Given the following "language packs" exist:
+      | language |
+      | de       |
+      | fr       |
+    And the following "courses" exist:
+      | fullname           | shortname | category |
+      | Forced Language de | FL1       | 0        |
+      | Forced Language fr | FL2       | 0        |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu      | Quick links      |
+      | title     | Language menu de |
+      | itemtype  | Static           |
+      | url       | /bar             |
+      | languages | de               |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu      | Quick links      |
+      | title     | Language menu fr |
+      | itemtype  | Static           |
+      | url       | /bar             |
+      | languages | fr               |
+    And I am on "Forced Language fr" course homepage with editing mode on
+    And I follow "Settings"
+    And I set the following fields to these values:
+      | id_lang | fr |
+    And I press "Save and display"
+    And I am on "Forced Language de" course homepage with editing mode on
+    And I follow "Settings"
+    And I set the following fields to these values:
+      | id_lang | de |
+    And I press "Save and display"
+    And I log out
+    And I log in as "student1"
+    And I am on "Forced Language de" course homepage
+    Then "Language menu de" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And "Language menu fr" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And I am on "Forced Language fr" course homepage
+    Then "Language menu de" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And "Language menu fr" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And I am on "Test" course homepage
+    Then "Language menu de" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And "Language menu fr" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+
+  @javascript
+  Scenario: Smartmenu: Menu items: Rules - Rules - Show smart menu item based on the user's prefered language - Handle the case of guests changing their language
+    Given the following "language packs" exist:
+      | language |
+      | de       |
+      | fr       |
+    And the following config values are set as admin:
+      | name             | value |
+      | guestloginbutton | 1     |
+      | autologinguests  | 1     |
+      | forcelogin       | 1     |
+    And the following "courses" exist:
+      | fullname           | shortname | category |
+      | Forced Language de | FL1       | 0        |
+      | Forced Language fr | FL2       | 0        |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu      | Quick links      |
+      | title     | Language menu de |
+      | itemtype  | Static           |
+      | url       | /bar             |
+      | languages | de               |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu      | Quick links      |
+      | title     | Language menu fr |
+      | itemtype  | Static           |
+      | url       | /bar             |
+      | languages | fr               |
+    And I am on "Forced Language fr" course homepage with editing mode on
+    And I follow "Settings"
+    And I set the following fields to these values:
+      | id_lang | fr |
+    And I press "Save and display"
+    And I am on "Forced Language de" course homepage with editing mode on
+    And I follow "Settings"
+    And I set the following fields to these values:
+      | id_lang | de |
+    And I press "Save and display"
+    And I log out
+    And I should see "You are currently using guest access"
+    Then "Language menu de" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And "Language menu fr" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And I click on "#lang-menu-toggle" "css_element"
+    And I click on "Deutsch ‎(de)‎" "link" in the "#lang-action-menu" "css_element"
+    Then "Language menu de" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And "Language menu fr" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And I click on "#lang-menu-toggle" "css_element"
+    And I click on "Français ‎(fr)‎" "link" in the "#lang-action-menu" "css_element"
+    Then "Language menu de" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+    And "Language menu fr" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Main menu smart menu"
+
+  @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on the custom date range
     Given the following "theme_boost_union > smart menu item" exists:
       | menu        | Quick links        |
