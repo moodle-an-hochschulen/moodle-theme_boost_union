@@ -126,6 +126,49 @@ function theme_boost_union_get_course_related_hints() {
         $html .= $OUTPUT->render_from_template('theme_boost_union/course-hint-guestaccess', $templatecontext);
     }
 
+    // If the setting showhintcourseguestenrol is set, a hint for users is shown that the course allows unrestricted guest access.
+    // This hint is only shown if the course is visible, the guest acess is enabled and if the user has the
+    // capability "theme/boost_union:viewhintcourseguestenrol".
+    if (get_config('theme_boost_union', 'showhintcourseguestenrol') == THEME_BOOST_UNION_SETTING_SELECT_YES
+            && has_capability('theme/boost_union:viewhintcourseguestenrol', \context_course::instance($COURSE->id))
+            && $PAGE->has_set_url()
+            && $PAGE->url->compare(new core\url('/course/view.php'), URL_MATCH_BASE)
+            && $COURSE->visible == true) {
+
+        // Get the active enrol instances for this course.
+        $enrolinstances = enrol_get_instances($COURSE->id, true);
+
+        // Iterate over the instances.
+        foreach ($enrolinstances as $instance) {
+            // Check if unrestricted guest access is possible.
+            if ($instance->enrol == 'guest' && empty($instance->password)) {
+
+                // Prepare template context.
+                $templatecontext = ['courseid' => $COURSE->id];
+
+                // Add the flag if guest auth is enabled (and users without Moodle accounts can access the course as well).
+                if ($CFG->guestloginbutton == 1) {
+                    $templatecontext['guestauthenabled'] = true;
+                } else {
+                    $templatecontext['guestauthenabled'] = false;
+                }
+
+                // If the user has the capability to config guest enrolments, add the call for action to the template context.
+                if (has_capability('enrol/guest:config', \context_course::instance($COURSE->id))) {
+                    $templatecontext['showenrolsettingslink'] = true;
+                } else {
+                    $templatecontext['showenrolsettingslink'] = false;
+                }
+
+                // Render template and add it to HTML code.
+                $html .= $OUTPUT->render_from_template('theme_boost_union/course-hint-guestenrol', $templatecontext);
+
+                // Skip the rest of the loop.
+                break;
+            }
+        }
+    }
+
     // If the setting showhintcourseselfenrol is set, a hint for users is shown that the course allows unrestricted self
     // enrolment. This hint is only shown if the course is visible, the self enrolment is visible and if the user has the
     // capability "theme/boost_union:viewhintcourseselfenrol".
