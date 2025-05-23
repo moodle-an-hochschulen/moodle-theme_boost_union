@@ -32,6 +32,16 @@ $capabilities = [
         'contextlevel' => CONTEXT_SYSTEM,
         'riskbitmask' => RISK_XSS | RISK_CONFIG,
     ],
+    // Ability to see a hint for unrestricted guest enrolment in a visible course.
+    'theme/boost_union:viewhintcourseguestenrol' => [
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => [
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+        ],
+    ],
     // Ability to see a hint for unrestricted self enrolment in a visible course.
     'theme/boost_union:viewhintcourseselfenrol' => [
         'captype' => 'read',
