@@ -1084,8 +1084,8 @@ $string['configtitlefunctionality'] = 'Functionality';
 
 // Settings: Courses tab.
 $string['coursestab'] = 'Courses';
-// ... Section: Course related hints.
-$string['courserelatedhintsheading'] = 'Course related hints';
+// ... Section: Course related hints for teachers.
+$string['courserelatedhintsforteachersheading'] = 'Course related hints for teachers';
 // ... ... Setting: Show hint for switched role setting.
 $string['showswitchedroleincoursesetting'] = 'Show hint for switched role';
 $string['showswitchedroleincoursesetting_desc'] = 'With this setting a hint will appear in the course header if the user has switched the role in the course. By default, this information is only displayed right near the user\'s avatar in the user menu. By enabling this option, you can show this information - together with a link to switch back - within the course page as well.';
@@ -1099,11 +1099,6 @@ $string['showhintcoursehiddensettingslink'] = 'You can change the visibility in 
 $string['showhintforumnotificationssetting'] = 'Show hint for forum notifications in hidden courses';
 $string['showhintforumnotificationssetting_desc'] = 'With this setting a hint will not only appear in the course header but also in forums as long as the visibility of the course is hidden. This is to clarify that notifications within a forum are not send to students and to help the teachers understand this circumstance.';
 $string['showhintforumnotifications'] = 'This course is currently <strong>hidden</strong>. This means that <strong>students will not be notified</strong> online or by email of any messages you post in this forum.';
-// ... ... Setting: Show hint for guest access.
-$string['showhintcoursguestaccesssetting'] = 'Show hint for guest access';
-$string['showhintcourseguestaccesssetting_desc'] = 'With this setting a hint will appear in the course header when a user is accessing it with the guest access feature. If the course provides an active self enrolment, a link to that page is also presented to the user.';
-$string['showhintcourseguestaccessgeneral'] = 'You are currently viewing this course as <strong>{$a->role}</strong>.';
-$string['showhintcourseguestaccesslink'] = 'To have full access to the course, you can <a href="{$a->url}">self enrol into this course</a>.';
 // ... ... Setting: Show hint for unrestricted self enrolment.
 $string['showhintcourseselfenrolsetting'] = 'Show hint for self enrolment without enrolment key';
 $string['showhintcourseselfenrolsetting_desc'] = 'With this setting a hint will appear in the course header if the course is visible and an enrolment without enrolment key is currently possible.';
@@ -1116,6 +1111,13 @@ $string['showhintcourseselfenrolsince'] = 'The <strong>{$a->name}</strong> enrol
 $string['showhintcourseselfenrolfromuntil'] = 'The <strong>{$a->name}</strong> enrolment instance allows unrestricted self enrolment from {$a->from} until {$a->until}.';
 $string['showhintcourseselfenrolsinceuntil'] = 'The <strong>{$a->name}</strong> enrolment instance allows unrestricted self enrolment until {$a->until}.';
 $string['showhintcourseselfenrolinstancecallforaction'] = 'If you don\'t want any Moodle user to have access to this course freely, please restrict the self enrolment settings.';
+// ... Section: Course related hints for students.
+$string['courserelatedhintsforstudentsheading'] = 'Course related hints for students';
+// ... ... Setting: Show hint for guest access.
+$string['showhintcoursguestaccesssetting'] = 'Show hint for guest access';
+$string['showhintcourseguestaccesssetting_desc'] = 'With this setting a hint will appear in the course header when a user is accessing it with the guest access feature. If the course provides an active self enrolment, a link to that page is also presented to the user.';
+$string['showhintcourseguestaccessgeneral'] = 'You are currently viewing this course as <strong>{$a->role}</strong>.';
+$string['showhintcourseguestaccesslink'] = 'To have full access to the course, you can <a href="{$a->url}">self enrol into this course</a>.';
 
 // Settings: Accessibility page.
 $string['configtitleaccessibility'] = 'Accessibility';
