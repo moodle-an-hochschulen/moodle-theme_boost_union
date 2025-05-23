@@ -2947,9 +2947,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $tab = new admin_settingpage('theme_boost_union_functionality_courses',
                 get_string('coursestab', 'theme_boost_union', null, true));
 
-        // Create course related hints heading.
-        $name = 'theme_boost_union/courserelatedhintsheading';
-        $title = get_string('courserelatedhintsheading', 'theme_boost_union', null, true);
+        // Create course related hints for teachers heading.
+        $name = 'theme_boost_union/courserelatedhintsforteachersheading';
+        $title = get_string('courserelatedhintsforteachersheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
@@ -2977,17 +2977,23 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if('theme_boost_union/showhintforumnotifications', 'theme_boost_union/showhintcoursehidden', 'neq',
                 THEME_BOOST_UNION_SETTING_SELECT_YES);
 
-        // Setting: Show hint guest for access.
-        $name = 'theme_boost_union/showhintcourseguestaccess';
-        $title = get_string('showhintcoursguestaccesssetting', 'theme_boost_union', null, true);
-        $description = get_string('showhintcourseguestaccesssetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $tab->add($setting);
-
         // Setting: Show hint for self enrolment without enrolment key.
         $name = 'theme_boost_union/showhintcourseselfenrol';
         $title = get_string('showhintcourseselfenrolsetting', 'theme_boost_union', null, true);
         $description = get_string('showhintcourseselfenrolsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Create course related hints for students heading.
+        $name = 'theme_boost_union/courserelatedhintsforstudentsheading';
+        $title = get_string('courserelatedhintsforstudentsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Show hint guest for access.
+        $name = 'theme_boost_union/showhintcourseguestaccess';
+        $title = get_string('showhintcoursguestaccesssetting', 'theme_boost_union', null, true);
+        $description = get_string('showhintcourseguestaccesssetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
