@@ -629,6 +629,10 @@ With this setting a hint will appear in the course header as long as the visibil
 
 With this setting a hint will appear in the course header if the course is visible and an enrolment without enrolment key is currently possible.
 
+###### Show hint for guest access without guest password
+
+With this setting a hint will appear in the course header if the course is visible and guest access without guest password is currently possible.
+
 ##### Course related hints for students
 
 ###### Show hint for guest access
@@ -666,6 +670,10 @@ This capability is used to control who is able to configure the theme as non-adm
 ### theme/boost_union:viewhintcourseselfenrol
 
 This capability is used to control who is able to see a hint for unrestricted self enrolment in a visible course (if this feature was enabled in the theme settings). By default, it is assigned to teachers, non-editing teachers and managers.
+
+### theme/boost_union:viewhintcourseguestenrol
+
+This capability is used to control who is able to see a hint for guest access in a visible course (if this feature was enabled in the theme settings). By default, it is assigned to teachers, non-editing teachers and managers.
 
 ### theme/boost_union:viewhintinhiddencourse
 
