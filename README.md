@@ -607,7 +607,7 @@ In this tab, you can enable and configure multiple slides to be shown on site ho
 
 In this tab there are the following settings:
 
-##### Course related hints
+##### Course related hints for teachers
 
 ###### Show hint for switched role
 
@@ -621,13 +621,15 @@ With this setting a hint will not only appear in the course header but also in f
 
 With this setting a hint will appear in the course header as long as the visibility of the course is hidden.
 
-###### Show hint for guest access
-
-With this setting a hint will appear in the course header when a user is accessing it with the guest access feature.
-
 ###### Show hint for self enrolment without enrolment key
 
 With this setting a hint will appear in the course header if the course is visible and an enrolment without enrolment key is currently possible.
+
+##### Course related hints for students
+
+###### Show hint for guest access
+
+With this setting a hint will appear in the course header when a user is accessing it with the guest access feature.
 
 #### Tab "Administration"
 
