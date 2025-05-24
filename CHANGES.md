@@ -4,6 +4,11 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-05-24 - Bugfix: Smart menu menu bar cuts off user menu on small displays, resolves #817
+* 2025-05-24 - Bugfix: Smart menu menu bar (and bottom bar) overlay the message drawer, resolves #816
+
 ### v4.5-r17
 
 * 2025-05-21 - Bugfix: Smart menu "Visibility by language" restriction was not applied correctly after changes of the current language, resolves #697.
