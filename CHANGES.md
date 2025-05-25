@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-05-25 - Bugfix: Fix a faulty HTML structure in the slider feature, resolves #965.
 * 2025-05-23 - Feature: Add course related hint for guest access for teachers as well, resolves #960.
 * 2025-05-23 - Improvement: Re-sort the settings for the course related hints.
 
