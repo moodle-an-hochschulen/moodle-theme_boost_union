@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.0-r1
 
 * 2025-04-10 - Upgrade: Replace Bootstrap class custom-select with form-select
 * 2025-05-17 - Upgrade: Failing smart menu Behat tests on Moodle 5.0, resolves #929.
