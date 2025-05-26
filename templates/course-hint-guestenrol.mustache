@@ -34,15 +34,15 @@
     <div class="d-flex">
         <div class="flex-shrink-0 me-3 icon-size-5"><i class="fa fa-exclamation-circle fa-3x"></i></div>
         <div class="flex-grow-1 align-self-center">
-            {{#str}} showhintcourseguestenrolhint, theme_boost_union {{/str}}
+            {{#str}} showhintcourseguestenrolhint, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
             {{#guestauthenabled}}
-                {{#str}} showhintcourseguestenroleveryone, theme_boost_union {{/str}}
+                {{#str}} showhintcourseguestenroleveryone, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
             {{/guestauthenabled}}
             {{^guestauthenabled}}
-                {{#str}} showhintcourseguestenrolauthonly, theme_boost_union {{/str}}
+                {{#str}} showhintcourseguestenrolauthonly, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
             {{/guestauthenabled}}
             {{#showenrolsettingslink}}
-                <br>{{#str}} showhintcourseguestenrolcallforaction, theme_boost_union, { "url": "{{config.wwwroot}}/enrol/instances.php?id={{courseid}}" } {{/str}}
+                <br>{{#str}} showhintcourseguestenrolcallforaction, theme_boost_union, { "url": "{{config.wwwroot}}/enrol/instances.php?id={{courseid}}", "courseid": "{{courseid}}" } {{/str}}
             {{/showenrolsettingslink}}
         </div>
     </div>
