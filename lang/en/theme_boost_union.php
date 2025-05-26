@@ -1114,6 +1114,7 @@ $string['showhintcourseselfenrolinstancecallforaction'] = 'If you don\'t want an
 // ... ... Setting: Show hint for unrestricted guest enrolment.
 $string['showhintcourseguestenrolsetting'] = 'Show hint for guest access without guest password';
 $string['showhintcourseguestenrolsetting_desc'] = 'With this setting a hint will appear in the course header if the course is visible and guest access without a guest password is currently possible.';
+$string['showhintcourseguestenrolsetting_note'] = 'Note: If you want to enhance the hint with a link to the course of any kind, you have the {&dollar;a->courseid} placeholder available which can be used in the language customization.';
 $string['showhintcourseguestenrolhint'] = 'This course is currently visible to everyone and <strong>guest access without a guest password</strong> is possible.';
 $string['showhintcourseguestenrolauthonly'] = 'All logged-in Moodle users can access the content of this course freely without enrolling into the course.';
 $string['showhintcourseguestenroleveryone'] = 'All Moodle users and even users without a Moodle account can access the content of this course freely without enrolling into the course.';
