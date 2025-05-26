@@ -4,6 +4,11 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-05-23 - Feature: Add course related hint for guest access for teachers as well, resolves #960.
+* 2025-05-23 - Improvement: Re-sort the settings for the course related hints.
+
 ### v5.0-r1
 
 * 2025-04-10 - Upgrade: Replace Bootstrap class custom-select with form-select
