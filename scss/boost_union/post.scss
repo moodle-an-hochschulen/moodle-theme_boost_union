@@ -75,6 +75,12 @@
         color: $white;
     }
 
+    /* Change the color of the language selector link (which appears for visitors in the navbar) to white.
+       as this would be presented in the primary color otherwise. */
+    #lang-menu-toggle {
+        color: $white;
+    }
+
     /* Change the color of the notification action buttons to dark grey.
        This has to use !important as Moodle core already uses !important for the icon colors. */
     .popover-region-container a .icon {
