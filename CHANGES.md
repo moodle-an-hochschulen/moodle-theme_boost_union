@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r18
 
 * 2025-05-26 - Improvement: Enhance course related hint for guest access for teachers by a possibility to build own guest access link, resolves #960.
 * 2025-05-23 - Feature: Add course related hint for guest access for teachers as well, resolves #960.
