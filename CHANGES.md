@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.0-r2
 
 * 2025-05-26 - Bugfix: Language selector menu for visitors did not respect navbar color, resolves #966.
 * 2025-05-26 - Bugfix: Main navigation more menu did not respect navbar color, resolves #967
