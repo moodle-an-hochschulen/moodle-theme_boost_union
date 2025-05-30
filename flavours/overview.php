@@ -113,8 +113,12 @@ $table->define_baseurl($PAGE->url);
 echo $OUTPUT->header();
 echo \theme_boost_union\admin_settingspage_tabs_with_tertiary::get_tertiary_navigation_for_externalpage();
 
-// Show flavours description.
-echo get_string('flavoursoverview_desc', 'theme_boost_union');
+// Show flavours intro.
+$intro = new \core\output\notification(
+        get_string('flavoursoverview_desc', 'theme_boost_union'), \core\output\notification::NOTIFY_INFO);
+$intro->set_show_closebutton(false);
+$intro->set_extra_classes(['mb-5', 'alert-light']);
+echo $OUTPUT->render($intro);
 
 // Prepare 'Create flavours' button.
 $createbutton = $OUTPUT->box_start();
