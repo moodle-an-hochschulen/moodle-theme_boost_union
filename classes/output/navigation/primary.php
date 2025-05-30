@@ -123,18 +123,18 @@ class primary extends \core\navigation\output\primary {
         // Removed the menu nodes from menubar, each item will be displayed as menu in menubar.
         if (!empty($locationmenubarmenu)) {
 
+            // Set the visibility of the menu bar for mobile, tablet, and desktop based on its child items.
             $hidedesktop = $hidemobile = $hidetablet = 1;
             foreach ($locationmenubarmenu as $key => $menu) {
-                // Find the menu has any children display in desktop.
+                // Check if the menu has any children to be displayed on desktop.
                 if (!isset($menu->desktop) || empty($menu->desktop)) {
                     $hidedesktop = 0;
                 }
-
-                // Find the menu has any children display in tablet.
+                // Check if the menu has any children to be displayed on tablets.
                 if (!isset($menu->tablet) || empty($menu->tablet)) {
                     $hidetablet = 0;
                 }
-                // Find the menu has any children display in mobile.
+                // Check if the menu has any children to be displayed on mobiles.
                 if (!isset($menu->mobile) || empty($menu->mobile)) {
                     $hidemobile = 0;
                 }
@@ -149,7 +149,6 @@ class primary extends \core\navigation\output\primary {
             $menubarclasses[] = $hidedesktop ? 'd-lg-none' : 'd-lg-flex';
             $menubarclasses[] = $hidetablet ? 'd-md-none' : 'd-md-flex';
             $menubarclasses[] = $hidemobile ? 'd-none' : 'd-flex';
-
             $menubartemplatedata['classes'] = implode(' ', $menubarclasses);
 
         }
