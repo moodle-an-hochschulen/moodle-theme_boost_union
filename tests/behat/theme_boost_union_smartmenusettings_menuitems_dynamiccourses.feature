@@ -371,7 +371,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | itemtype              | Dynamic courses |
       | displayhiddencourses  | <visiblecourse> |
     When I log in as "<user>"
-    And "Course 10" "theme_boost_union > Smart menu item" <visiblecourseshouldornot> exist in the "List menu" "theme_boost_union > Main menu smart menu"
+    Then "Course 10" "theme_boost_union > Smart menu item" <visiblecourseshouldornot> exist in the "List menu" "theme_boost_union > Main menu smart menu"
     And "Course 10" "theme_boost_union > Smart menu item" <visiblecourseshouldornot> exist in the "List menu" "theme_boost_union > Menu bar smart menu"
     And "Course 10" "theme_boost_union > Smart menu item" <visiblecourseshouldornot> exist in the "List menu" "theme_boost_union > Bottom bar smart menu"
     And "Course 11" "theme_boost_union > Smart menu item" <hiddencourseshoouldornot> exist in the "List menu" "theme_boost_union > Main menu smart menu"
@@ -415,8 +415,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | hiddencoursesort      | <hiddencoursesort> |
     When I log in as "<user>"
     Then "<firstcourse>" "theme_boost_union > Smart menu item" should appear before "<secondcourse>" "theme_boost_union > Smart menu item" in the "List menu" "theme_boost_union > Main menu smart menu"
-    Then "<secondcourse>" "theme_boost_union > Smart menu item" should appear before "<thirdcourse>" "theme_boost_union > Smart menu item" in the "List menu" "theme_boost_union > Main menu smart menu"
-    Then "<thirdcourse>" "theme_boost_union > Smart menu item" should appear before "<lastcourse>" "theme_boost_union > Smart menu item" in the "List menu" "theme_boost_union > Main menu smart menu"
+    And "<secondcourse>" "theme_boost_union > Smart menu item" should appear before "<thirdcourse>" "theme_boost_union > Smart menu item" in the "List menu" "theme_boost_union > Main menu smart menu"
+    And "<thirdcourse>" "theme_boost_union > Smart menu item" should appear before "<lastcourse>" "theme_boost_union > Smart menu item" in the "List menu" "theme_boost_union > Main menu smart menu"
 
     Examples:
       | user     | hiddencoursesort | firstcourse  | secondcourse  | thirdcourse  | lastcourse  |

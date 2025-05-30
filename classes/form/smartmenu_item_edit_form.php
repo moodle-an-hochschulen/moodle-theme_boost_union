@@ -247,7 +247,7 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->hideIf('listsort', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
         $mform->addHelpButton('listsort', 'smartmenusmenuitemlistsort', 'theme_boost_union');
 
-        // Add Display only visible courses as checkbox.
+        // Add Display only visible courses as select element.
         $displayoptions = [
                 smartmenu_item::DISPLAY_ALLCOURSES => get_string('smartmenusmenuitemdisplayallcourses', 'theme_boost_union'),
                 smartmenu_item::DISPLAY_VISIBLECOURSESONLY =>
@@ -260,7 +260,7 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('displayhiddencourses', 'smartmenusmenuitemdisplayonlyvisiblecourses', 'theme_boost_union');
         $mform->hideIf('displayhiddencourses', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
 
-        // Dynamic courses: Hidden courses sorting.
+        // Add Hidden courses sorting as select element.
         $hiddencoursesortoptions = smartmenu_item::get_hiddencoursesorting_options();
         $mform->addElement('select', 'hiddencoursesort',
                 get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.

@@ -120,6 +120,7 @@
         a.dropdown-item:hover,
         a.dropdown-item:focus {
             background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity));
+            color: $white;
         }
     }
 
@@ -158,6 +159,7 @@
         a.dropdown-item:hover,
         a.dropdown-item:focus {
             background-color: $primary;
+            color: $white;
         }
     }
 

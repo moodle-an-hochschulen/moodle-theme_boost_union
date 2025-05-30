@@ -242,7 +242,7 @@ class smartmenu_item {
     const DISPLAY_ALLCOURSES = 0;
 
     /**
-     * Display the only visible courses in the dynamic menu item.
+     * Display only the visible courses in the dynamic menu item.
      * @var int
      */
     const DISPLAY_VISIBLECOURSESONLY = 1;
@@ -1113,7 +1113,6 @@ class smartmenu_item {
         if ($this->item->displayhiddencourses == self::DISPLAY_VISIBLECOURSESONLY) {
             // Add condition to fetch only visible courses.
             $query->where[] = 'c.visible = 1';
-
         }
     }
 
