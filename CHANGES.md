@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-05-27 - Bugfix: The page scrolled to the top when a dynamic courses submenu got clicked, resolves #962.
+
 ### v4.5-r18
 
 * 2025-05-26 - Improvement: Enhance course related hint for guest access for teachers by a possibility to build own guest access link, resolves #960.
