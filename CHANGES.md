@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-05-27 - Bugfix: The page scrolled to the top when a dynamic courses submenu got clicked, resolves #962.
+
 ### v5.0-r2
 
 * 2025-05-26 - Bugfix: Language selector menu for visitors did not respect navbar color, resolves #966.
