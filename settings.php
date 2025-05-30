@@ -1709,8 +1709,18 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create block regions heading.
         $name = 'theme_boost_union/blockregionsheading';
         $title = get_string('blockregionsheading', 'theme_boost_union', null, true);
-        $description = get_string('blockregionsheading_desc', 'theme_boost_union', null, true);
+        $description = '';
         $setting = new admin_setting_heading($name, $title, $description);
+        $tab->add($setting);
+
+        // Show block regions intro.
+        $name = 'theme_boost_union/blockregionsintro';
+        $blockregionsintro = new \core\output\notification(
+                get_string('blockregionsheading_desc', 'theme_boost_union'), \core\output\notification::NOTIFY_INFO);
+        $blockregionsintro->set_show_closebutton(false);
+        $blockregionsintro->set_extra_classes(['alert-light']);
+        $description = $OUTPUT->render($blockregionsintro);
+        $setting = new admin_setting_heading($name, '', $description);
         $tab->add($setting);
 
         // Add guest role warning (If the guestroleupgradedfrompre500 setting is set to true).

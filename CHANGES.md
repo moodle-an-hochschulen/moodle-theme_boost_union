@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-05-30 - Improvement: Transform the plain paragraphs on some settings pages into Bootstrap alerts for a nicer look.
 * 2025-05-27 - Bugfix: The page scrolled to the top when a dynamic courses submenu got clicked, resolves #962.
 
 ### v5.0-r2
