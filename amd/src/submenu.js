@@ -62,6 +62,7 @@ const registerEventListeners = (smartMenu) => {
 
         // Handle click event on the carousel navigation (control) links in the smart menu.
         if (e.target.matches(Selectors.smartMenuCarouselNavigationLink)) {
+            e.preventDefault();
             carouselManagement(e);
         }
 
