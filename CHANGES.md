@@ -6,7 +6,7 @@ Changes
 
 ### Unreleased
 
-* 2025-05-27 - Bugfix: The page scrolls to the top when a dynamic courses submenu gets clicked, resolves #962.
+* 2025-05-27 - Bugfix: The page scrolled to the top when a dynamic courses submenu got clicked, resolves #962.
 
 ### v5.0-r2
 
