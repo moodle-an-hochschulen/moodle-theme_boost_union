@@ -451,3 +451,23 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then I should see "Available courses" in the "#usermenu-carousel .carousel-item.active" "css_element"
     And I should not see "Available courses" in the "#usermenu-carousel .carousel-item.active .header .carousel-navigation-link" "css_element"
     And I should not see "Test course1" in the "#usermenu-carousel" "css_element"
+
+  @javascript
+  Scenario: Smartmenus: Menu items: Presentation - Opening a smart menu submenu should not scroll to top of the page
+    Given the following "theme_boost_union > smart menu" exists:
+      | title     | All courses     |
+      | location  | Main navigation |
+      | mode      | Submenu         |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | All courses     |
+      | title    | Category 1      |
+      | itemtype | Dynamic courses |
+      | itemmode | Submenu         |
+    When I log in as "admin"
+    And I change the viewport size to "medium"
+    And I am on "Test course1" course homepage
+    And I make the navbar fixed
+    Then I scroll page to DOM element with ID "page-footer"
+    And I click on "All courses" "link" in the ".primary-navigation" "css_element"
+    And I click on "Category 1" "link" in the ".primary-navigation" "css_element"
+    Then page top is not at the top of the viewport
