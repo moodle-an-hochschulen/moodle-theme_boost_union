@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-05-27 - Bugfix: Smart menu: menu bar was displayed although there were no items to display, resolves #849.
 * 2025-05-27 - Bugfix: The page scrolled to the top when a dynamic courses submenu got clicked, resolves #962.
 
 ### v5.0-r2

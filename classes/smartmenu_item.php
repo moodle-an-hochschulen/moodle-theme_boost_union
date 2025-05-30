@@ -1251,6 +1251,9 @@ class smartmenu_item {
             'sort' => uniqid(), // Support third level menu.
             'sortstring' => format_string($sortstring),
             'imagealt' => $imagealt ?? $title,
+            'desktop' => $this->item->desktop,
+            'tablet' => $this->item->tablet,
+            'mobile' => $this->item->mobile,
         ];
 
         if ($haschildren && !empty($children)) {
