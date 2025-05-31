@@ -31,6 +31,7 @@ use stdClass;
 use cache;
 use core\output\html_writer;
 use core_course\external\course_summary_exporter;
+use context_course;
 
 require_once($CFG->dirroot.'/theme/boost_union/smartmenus/menulib.php');
 
@@ -232,6 +233,31 @@ class smartmenu_item {
      * @var int
      */
     const LISTSORT_COURSEIDNUMBER_DESC = 7;
+
+    /**
+     * Display all courses including hidden courses, in the dynamic menu item.
+     *
+     * @var int
+     */
+    const DISPLAY_ALLCOURSES = 0;
+
+    /**
+     * Display only the visible courses in the dynamic menu item.
+     * @var int
+     */
+    const DISPLAY_VISIBLECOURSESONLY = 1;
+
+    /**
+     * Sort hidden and visible courses together, based on other sorting options for dynamic menu item.
+     * @var int
+     */
+    const HIDDENCOURSESORT_TOGETHER = 0;
+
+    /**
+     * Sort the hidden courses at the end of the list for dynamic menu item.
+     * @var int
+     */
+    const HIDDENCOURSESORT_END = 1;
 
     /**
      * The ID of the menu item.
@@ -663,10 +689,11 @@ class smartmenu_item {
         if ($this->item->mode == self::MODE_SUBMENU && $this->menu->type == smartmenu::TYPE_CARD) {
             return [];
         }
+
         $query = (object) [
             'select' => ['c.*'],
             'join' => [],
-            'where' => ["c.visible > 0"],
+            'where' => [],
             'params' => [],
         ];
 
@@ -684,6 +711,9 @@ class smartmenu_item {
 
         // Custom field based courses filter.
         $this->get_customfield_sql($query);
+
+        // Visibility based courses filter.
+        $this->get_visibility_sql($query);
 
         // Build the queries.
         $select = implode(',', array_filter($query->select));
@@ -707,9 +737,15 @@ class smartmenu_item {
             return [];
         }
 
+        $records = array_filter($records, [$this, 'filter_courses_list'], ARRAY_FILTER_USE_BOTH);
+
         $items = [];
         // Build the items data into nodes.
         foreach ($records as $record) {
+
+            $itemclasses = []; // Additional classes for the item.
+            $tooltip = null; // Tooltip for the item.
+
             $url = new \core\url('/course/view.php', ['id' => $record->id]);
             $rkey = 'item-'.$this->item->id.'-dynamic-'.$record->id;
             // Get the course image from overview files.
@@ -739,7 +775,19 @@ class smartmenu_item {
                     break;
             }
 
-            $items[] = $this->generate_node_data($coursename, $url, $rkey, null, 'link', false, [], $itemimage, $sortstring);
+            $sortdata = [
+                'string' => format_string($sortstring),
+                'visibility' => $record->visible,
+            ];
+
+            if (!$record->visible) {
+                $itemclasses[] = 'dimmed';
+                $itemclasses[] = 'muted';
+                $tooltip = get_string('hiddenfromstudents');
+            }
+
+            $items[] = $this->generate_node_data(
+                $coursename, $url, $rkey, $tooltip, 'link', false, [], $itemimage, $sortdata, $itemclasses);
         }
 
         // Sort the courses based on the configured setting.
@@ -751,14 +799,21 @@ class smartmenu_item {
                 case self::LISTSORT_COURSEID_ASC:
                 case self::LISTSORT_COURSEIDNUMBER_ASC:
                 default:
-                    return strnatcasecmp($course1['sortstring'], $course2['sortstring']);
+                    return strnatcasecmp($course1['sortdata']['string'], $course2['sortdata']['string']);
                 case self::LISTSORT_FULLNAME_DESC:
                 case self::LISTSORT_SHORTNAME_DESC:
                 case self::LISTSORT_COURSEID_DESC:
                 case self::LISTSORT_COURSEIDNUMBER_DESC:
-                    return strnatcasecmp($course2['sortstring'], $course1['sortstring']);
+                    return strnatcasecmp($course2['sortdata']['string'], $course1['sortdata']['string']);
             }
         });
+
+        // Sort the course items by visibility.
+        if ($this->item->hiddencoursesort == self::HIDDENCOURSESORT_END) {
+            usort($items, function($course1, $course2) {
+                return $course2['sortdata']['visibility'] <=> $course1['sortdata']['visibility'];
+            });
+        }
 
         // Submenu only contains the title as separate node.
         if ($this->item->mode == self::MODE_SUBMENU) {
@@ -857,7 +912,7 @@ class smartmenu_item {
             $likesql = implode(' OR ', $likesqlparts);
 
             // Add the categories filter to the query.
-            $query->where[] = "c.category $insql OR $likesql";
+            $query->where[] = "(c.category $insql OR $likesql)";
             $query->params += $inparams;
             $query->params += $likeparams;
 
@@ -1048,6 +1103,38 @@ class smartmenu_item {
     }
 
     /**
+     * Generates the SQL statement for the visibility condition.
+     *
+     * @param  stdclass $query The database query object.
+     * @return void
+     */
+    protected function get_visibility_sql(&$query) {
+
+        if ($this->item->displayhiddencourses == self::DISPLAY_VISIBLECOURSESONLY) {
+            // Add condition to fetch only visible courses.
+            $query->where[] = 'c.visible = 1';
+        }
+    }
+
+    /**
+     * Filters the course list by the capability to view hidden courses.
+     *
+     * @param stdclass $record The course record.
+     * @param int $courseid The ID of the course.
+     * @return bool True if the course should be included, false otherwise.
+     */
+    protected function filter_courses_list($record, $courseid) {
+
+        // Filter by course visibility.
+        if ($this->item->displayhiddencourses == self::DISPLAY_VISIBLECOURSESONLY) {
+            return true;
+        }
+
+        // Filter by course visibility or user capability to view hidden courses.
+        return $record->visible || has_capability('moodle/course:viewhiddencourses', context_course::instance($record->id));
+    }
+
+    /**
      * Defines a build method that generates the HTML markup for a menu item.
      *
      * First, it checks if the menu item is cached and returns it if found.
@@ -1182,12 +1269,13 @@ class smartmenu_item {
      * @param int $haschildren Whether the item has children or not, defaults to 0.
      * @param array $children An array of child nodes, defaults to an empty array.
      * @param string $itemimage Card image url for item.
-     * @param string $sortstring The string to be used for sorting the items.
+     * @param array $sortdata The string to be used for sorting the items.
+     * @param array $itemclasses List of additional css classes for the menu item node.
      *
      * @return array An associative array of node data for the item.
      */
     public function generate_node_data($title, $url, $key = null, $tooltip = null,
-        $itemtype = 'link', $haschildren = 0, $children = [], $itemimage = '', $sortstring = '') {
+        $itemtype = 'link', $haschildren = 0, $children = [], $itemimage = '', $sortdata = [], $itemclasses = []) {
 
         global $OUTPUT;
 
@@ -1234,9 +1322,13 @@ class smartmenu_item {
             $imagealt = format_string($imagealt);
         }
 
+        // Include the additional item classes.
+        $itemdata = clone($this->item);
+        $itemdata->classes = array_merge($this->item->classes, $itemclasses);
+
         $data = [
-            'itemdata' => $this->item,
-            'menuclasses' => $this->item->classes, // If menu is inline, need to add the item custom class in dropdown.
+            'itemdata' => $itemdata,
+            'menuclasses' => $itemdata->classes, // If menu is inline, need to add the item custom class in dropdown.
             'location' => $this->menu->location,
             'url' => $url ?: 'javascript:void(0)',
             'key' => $key != null ? $key : 'item-'.$this->item->id,
@@ -1249,7 +1341,7 @@ class smartmenu_item {
             'itemtype' => 'link',
             'link' => 1,
             'sort' => uniqid(), // Support third level menu.
-            'sortstring' => format_string($sortstring),
+            'sortdata' => $sortdata,
             'imagealt' => $imagealt ?? $title,
         ];
 
@@ -1545,6 +1637,18 @@ class smartmenu_item {
                 get_string('smartmenusmenuitemtextpositionoverlaytop', 'theme_boost_union'),
             self::POSITION_OVERLAYBOTTOM =>
                 get_string('smartmenusmenuitemtextpositionoverlaybottom', 'theme_boost_union'),
+        ];
+    }
+
+    /**
+     * Return the options for the hidden courses sorting setting.
+     *
+     * @return array
+     */
+    public static function get_hiddencoursesorting_options() {
+        return [
+            self::HIDDENCOURSESORT_TOGETHER => get_string('smartmenusmenuitemhiddencoursesortingtogether', 'theme_boost_union'),
+            self::HIDDENCOURSESORT_END => get_string('smartmenusmenuitemhiddencoursesortingend', 'theme_boost_union'),
         ];
     }
 
