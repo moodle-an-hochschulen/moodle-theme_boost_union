@@ -120,6 +120,7 @@
         a.dropdown-item:hover,
         a.dropdown-item:focus {
             background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity));
+            color: $white;
         }
     }
 
@@ -158,6 +159,7 @@
         a.dropdown-item:hover,
         a.dropdown-item:focus {
             background-color: $primary;
+            color: $white;
         }
     }
 
@@ -2021,6 +2023,13 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 a {
                     display: flex;
                     align-items: center;
+                    &.dimmed {
+                        color: $text-muted;
+                        &.dropdown-item:hover {
+                            color: $white;
+                            opacity: .7;
+                        }
+                    }
                     label {
                         margin-bottom: 0;
                     }

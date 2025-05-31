@@ -353,3 +353,74 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     When I log in as "student1"
     Then "Future 01" "theme_boost_union > Smart menu item" should exist in the "Future Courses Menu" "theme_boost_union > Main menu smart menu"
     And "Future 02" "theme_boost_union > Smart menu item" should not exist in the "Future Courses Menu" "theme_boost_union > Main menu smart menu"
+
+  Scenario Outline: Smartmenus: Menu items: Dynamic courses - Display only visible courses
+    Given the following "courses" exist:
+      | fullname  | shortname | category | visible |
+      | Course 10 | C10       | CAT1     | 1       |
+      | Course 11 | C11       | CAT1     | 0       |
+    And the following "course enrolments" exist:
+      | user     | course  | role           |
+      | teacher  | C11     | editingteacher |
+      | teacher  | C10     | editingteacher |
+      | student1 | C10     | student        |
+      | student1 | C11     | student        |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu                  | List menu       |
+      | title                 | Dynamic courses |
+      | itemtype              | Dynamic courses |
+      | displayhiddencourses  | <visiblecourse> |
+    When I log in as "<user>"
+    Then "Course 10" "theme_boost_union > Smart menu item" <visiblecourseshouldornot> exist in the "List menu" "theme_boost_union > Main menu smart menu"
+    And "Course 10" "theme_boost_union > Smart menu item" <visiblecourseshouldornot> exist in the "List menu" "theme_boost_union > Menu bar smart menu"
+    And "Course 10" "theme_boost_union > Smart menu item" <visiblecourseshouldornot> exist in the "List menu" "theme_boost_union > Bottom bar smart menu"
+    And "Course 11" "theme_boost_union > Smart menu item" <hiddencourseshoouldornot> exist in the "List menu" "theme_boost_union > Main menu smart menu"
+    And "Course 11" "theme_boost_union > Smart menu item" <hiddencourseshoouldornot> exist in the "List menu" "theme_boost_union > Menu bar smart menu"
+    And "Course 11" "theme_boost_union > Smart menu item" <hiddencourseshoouldornot> exist in the "List menu" "theme_boost_union > Bottom bar smart menu"
+
+    Examples:
+      | user           | visiblecourse | visiblecourseshouldornot | hiddencourseshoouldornot |
+      | student1       | 1             | should                   | should not               |
+      | teacher        | 1             | should                   | should not               |
+      | guest          | 1             | should                   | should not               |
+      | student1       | 0             | should                   | should not               |
+      | teacher        | 0             | should                   | should                   |
+      | guest          | 0             | should                   | should not               |
+
+  @javascript
+  Scenario Outline: Smartmenus: Menu items: Dynamic courses - Hidden courses sorting in the menu item
+    Given the following "courses" exist:
+      | fullname  | shortname | category | visible |
+      | Course 10 | C10       | CAT1     | 0       |
+      | Course 11 | C11       | CAT1     | 1       |
+      | Course 12 | C12       | CAT1     | 0       |
+      | Course 13 | C13       | CAT1     | 1       |
+
+    And the following "course enrolments" exist:
+      | user     | course  | role           |
+      | teacher  | C10     | editingteacher |
+      | teacher  | C11     | editingteacher |
+      | teacher  | C12     | editingteacher |
+      | teacher  | C13     | editingteacher |
+      | student1 | C10     | student        |
+      | student1 | C11     | student        |
+      | student1 | C12     | student        |
+      | student1 | C13     | student        |
+
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu                  | List menu          |
+      | title                 | Dynamic courses    |
+      | itemtype              | Dynamic courses    |
+      | displayhiddencourses  | 0                  |
+      | hiddencoursesort      | <hiddencoursesort> |
+    When I log in as "<user>"
+    Then "<firstcourse>" "theme_boost_union > Smart menu item" should appear before "<secondcourse>" "theme_boost_union > Smart menu item" in the "List menu" "theme_boost_union > Main menu smart menu"
+    And "<secondcourse>" "theme_boost_union > Smart menu item" should appear before "<thirdcourse>" "theme_boost_union > Smart menu item" in the "List menu" "theme_boost_union > Main menu smart menu"
+    And "<thirdcourse>" "theme_boost_union > Smart menu item" should appear before "<lastcourse>" "theme_boost_union > Smart menu item" in the "List menu" "theme_boost_union > Main menu smart menu"
+
+    Examples:
+      | user     | hiddencoursesort | firstcourse  | secondcourse  | thirdcourse  | lastcourse  |
+      | student1 | 0                | Course 05    | Course 06     | Course 11    | Course 13   |
+      | teacher  | 0                | Course 10    | Course 11     | Course 12    | Course 13   |
+      | student1 | 1                | Course 05    | Course 06     | Course 11    | Course 13   |
+      | teacher  | 1                | Course 11    | Course 13     | Course 10    | Course 12   |
