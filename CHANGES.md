@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.0-r3
 
 * 2025-05-30 - Improvement: Smart menus now display hidden courses to users with the appropriate capability, resolves #407.
                Please note: With this change, existing dynamic courses smart menu items will start to show hidden courses as this is what most users expect. If you do not want to show hidden courses, please change the newly introduced 'Show hidden courses' setting in your existing menu items after the theme update.
