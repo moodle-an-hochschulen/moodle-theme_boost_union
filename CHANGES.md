@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-07-01 - Feature: Add first version of CSS snippets feature, credits go to all members of the MoodleMootDACH 2024 dev camp team no. 22, resolves #988
 * 2025-06-06 - Feature: Add color picker settings for calendar branding, resolves #434.
 * 2025-06-30 - Regression: Flavour favicon images were not working, resolves #942
 * 2025-06-30 - Regression: Flavour background images were not working, resolves #942
