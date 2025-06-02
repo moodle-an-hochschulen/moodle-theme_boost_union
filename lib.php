@@ -143,6 +143,8 @@ define('THEME_BOOST_UNION_SETTING_CATLISTPRES_BOXLIST', 'boxlist');
 define('THEME_BOOST_UNION_SETTING_STARREDCOURSES_LINKTARGET_MYCOURSES', 'mycourses');
 define('THEME_BOOST_UNION_SETTING_STARREDCOURSES_LINKTARGET_DASHBOARD', 'dashboard');
 
+use theme_boost_union\snippets;
+
 /**
  * Returns the main SCSS content.
  *
@@ -171,6 +173,9 @@ function theme_boost_union_get_main_scss_content($theme) {
     // would end of _after_ the code from theme_boost_get_extra_scss() and not _before_.
     // Thus, we sadly have to get and include the external Post SCSS here already.
     $scss .= theme_boost_union_get_external_scss('post');
+
+    // Get and include the SCSS of the enabled SCSS snippets.
+    $scss .= snippets::get_enabled_snippet_scss();
 
     return $scss;
 }
@@ -407,7 +412,7 @@ function theme_boost_union_get_extra_scss($theme) {
     // However, due to the way how the theme_*_get_extra_scss callback functions are searched and called within Boost child theme
     // hierarchy Boost Union not only gets the extra SCSS from this function here but only from theme_boost_get_extra_scss as well.
     //
-    // There, the CSS snippets for the background image and the login background images are added already to the SCSS codebase.
+    // There, the SCSS snippets for the background image and the login background images are added already to the SCSS codebase.
     // Additionally, the custom SCSS from $theme->settings->scss (which hits the SCSS settings from theme_boost_union even though
     // the code is within theme_boost) is already added to the SCSS codebase as well.
     //
@@ -718,7 +723,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $serveoptions);
 
         // Serve the files from the smart menu card images.
-    } else if ($filearea === 'smartmenus_itemimage' && $context->contextlevel === CONTEXT_SYSTEM) {
+    } else if (in_array($filearea, ['smartmenus_itemimage', 'snippets']) && $context->contextlevel === CONTEXT_SYSTEM) {
         // Get file storage.
         $fs = get_file_storage();
 
@@ -894,4 +899,24 @@ function theme_boost_union_alter_css_urls(&$urls) {
             }
         }
     }
+}
+
+/**
+ * Callback to refresh uploaded SCSS snippets when the theme_boost_union/uploadedsnippets config setting changes.
+ *
+ * @return void
+ */
+function theme_boost_union_parse_uploaded_sippets() {
+    snippets::parse_uploaded_snippets();
+    snippets::cleanup_snippets();
+    theme_reset_all_caches();
+}
+
+/**
+ * Map icons for font-awesome themes.
+ */
+function theme_boost_union_get_fontawesome_icon_map() {
+    return [
+        'theme_boost_union:info' => 'fa-info-circle',
+    ];
 }

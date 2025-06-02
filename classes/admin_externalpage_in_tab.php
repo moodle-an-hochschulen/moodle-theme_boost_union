@@ -15,19 +15,30 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Version file
+ * Theme Boost Union - External admin settings page which can be placed within a tab
  *
  * @package    theme_boost_union
- * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @copyright  2024 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace theme_boost_union;
 
-$plugin->component = 'theme_boost_union';
-$plugin->version = 2025041408;
-$plugin->release = 'v5.0-r3';
-$plugin->requires = 2025041400;
-$plugin->supported = [500, 500];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = ['theme_boost' => 2025041400];
+/**
+ * Class admin_externalpage_in_tab.
+ *
+ * @package    theme_boost_union
+ * @copyright  2024 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class admin_externalpage_in_tab extends \admin_externalpage {
+    /**
+     * Dummy function just to make /admin/settings.php happy.
+     * It returns just an empty string.
+     *
+     * @return string
+     */
+    public function output_html() {
+        return '';
+    }
+}

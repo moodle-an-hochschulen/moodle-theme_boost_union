@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-05-30 - Feature: Add first version of CSS snippets feature, credits go to all members of the MoodleMootDACH dev camp team 22.
+
 ### v5.0-r3
 
 * 2025-05-30 - Improvement: Smart menus now display hidden courses to users with the appropriate capability, resolves #407.
