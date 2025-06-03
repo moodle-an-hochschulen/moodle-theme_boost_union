@@ -809,7 +809,8 @@ class smartmenu_item {
         });
 
         // Sort the course items by visibility.
-        if ($this->item->hiddencoursesort == self::HIDDENCOURSESORT_END) {
+        if (property_exists($this->item, 'hiddencoursesort') &&
+                $this->item->hiddencoursesort == self::HIDDENCOURSESORT_END) {
             usort($items, function($course1, $course2) {
                 return $course2['sortdata']['visibility'] <=> $course1['sortdata']['visibility'];
             });
@@ -1110,7 +1111,8 @@ class smartmenu_item {
      */
     protected function get_visibility_sql(&$query) {
 
-        if ($this->item->displayhiddencourses == self::DISPLAY_VISIBLECOURSESONLY) {
+        if (property_exists($this->item, 'displayhiddencourses') &&
+                $this->item->displayhiddencourses == self::DISPLAY_VISIBLECOURSESONLY) {
             // Add condition to fetch only visible courses.
             $query->where[] = 'c.visible = 1';
         }
@@ -1126,7 +1128,8 @@ class smartmenu_item {
     protected function filter_courses_list($record, $courseid) {
 
         // Filter by course visibility.
-        if ($this->item->displayhiddencourses == self::DISPLAY_VISIBLECOURSESONLY) {
+        if (property_exists($this->item, 'displayhiddencourses') &&
+                $this->item->displayhiddencourses == self::DISPLAY_VISIBLECOURSESONLY) {
             return true;
         }
 
