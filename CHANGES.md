@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-06-04 - Bugfix: Prevent debug message regarding newly introduced "displayhiddencourses" and "hiddencoursesort" option in dynamic courses items, resolves #970
+
 ### v4.5-r19
 
 * 2025-05-30 - Improvement: Smart menus now display hidden courses to users with the appropriate capability, resolves #407.
