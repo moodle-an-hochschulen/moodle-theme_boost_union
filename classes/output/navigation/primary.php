@@ -149,7 +149,6 @@ class primary extends \core\navigation\output\primary {
             $menubarclasses[] = $hidedesktop ? 'd-lg-none' : 'd-lg-flex';
             $menubarclasses[] = $hidetablet ? 'd-md-none' : 'd-md-flex';
             $menubarclasses[] = $hidemobile ? 'd-none' : 'd-flex';
-
             $menubartemplatedata['classes'] = implode(' ', $menubarclasses);
 
         }
