@@ -718,6 +718,44 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     /**
+     * Start output by sending the HTTP headers, and printing the HTML <head>
+     * and the start of the <body>.
+     *
+     * To control what is printed, you should set properties on $PAGE.
+     *
+     * @return string HTML that you must output this, preferably immediately.
+     */
+    public function header() {
+        global $CFG, $SESSION, $USER;
+
+        // Get the header output from the parent class.
+        $output = parent::header();
+
+        // If the admin decided to suppress the login info in the footer,
+        // the 'failed login attempts' counter in the navbar will not be reset as this is only done by the
+        // user_count_login_failures() function from the login_info() function which is not called anymore in this case.
+        //
+        // The header() function calls the user_count_login_failures() function as well, but does not set the parameter
+        // to reset the failed login attempts counter (see issue #658 for details).
+        // So we call the user_count_login_failures() function here with the reset parameter set to true here to ensure that the
+        // failed login attempts counter is reset anyway when the footer is suppressed.
+        //
+        // As an alternative to this approach, we could have overwritten the header() function completely here, just changing
+        // the line calling the user_count_login_failures(). This would have resulted in a mainantenance overhead
+        // and would not have had any performance benefits as the original Moodle calls user_count_login_failures() twice as well.
+        $footersuppresslogininfosetting = get_config('theme_boost_union', 'footersuppresslogininfo');
+        if (isset($footersuppresslogininfosetting) && $footersuppresslogininfosetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            if (isset($SESSION->justloggedin) && !empty($CFG->displayloginfailures)) {
+                require_once($CFG->dirroot.'/user/lib.php');
+                user_count_login_failures($USER, true);
+            }
+        }
+
+        // Return the parent header() output.
+        return $output;
+    }
+
+    /**
      * Returns a string containing a link to the user documentation.
      * Also contains an icon by default. Shown to teachers and admin only.
      *
