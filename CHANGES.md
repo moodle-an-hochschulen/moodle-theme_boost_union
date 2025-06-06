@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-06-04 - Bugfix: Enabling the footersuppresslogininfo setting prevented the reset of the failed login attempts counter, resolves #658
+
 ### v4.1-r44
 
 * 2025-05-21 - Bugfix: Smart menu "Visibility by language" restriction was not applied correctly after changes of the current language, resolves #697.
