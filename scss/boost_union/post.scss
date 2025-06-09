@@ -874,19 +874,6 @@ body.hascourseindexcmicons {
  * Setting: Boost Union footer buttons (i.e. Back to top button and Accessibility button).
  --------------------------------------*/
 
-/* Preemptive regression fix for MDL-85326 until Moodle 5.0.1 is released. */
-body:not(.jsenabled) {
-    .btn-footer-popover {
-        display: none !important; // stylelint-disable-line declaration-no-important
-    }
-}
-
-@include media-breakpoint-down(sm) {
-    .jsenabled .btn-footer-popover {
-        display: none;
-    }
-}
-
 /* Boost Union footer buttons container */
 #boost-union-footer-buttons {
     /* Place the Boost Union footer buttons at a fixed place. */

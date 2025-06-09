@@ -6,6 +6,8 @@ Changes
 
 ### Unreleased
 
+* 2025-06-09 - Upstream change: Remove preemptive regression fix after MDL-85326 was integrated, resolves #928.
+               Please note: This change raises the required Moodle core version to 5.0.1
 * 2025-06-09 - Tests: Fix a failing Behat test on the 'Allow admins to use the tertiary navigation' scenario, resolves #973
 * 2025-06-06 - Upstream change: Adopt changes from MDL-85323 to locallogin.php
 * 2025-06-06 - Upstream change: Adopt changes from MDL-85450 to upcoming-mini.mustache
