@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-06-06 - Upstream change: Adopt changes from MDL-85323 to locallogin.php
 * 2025-06-06 - Upstream change: Adopt changes from MDL-85450 to upcoming-mini.mustache
 * 2025-06-06 - Upstream change: Adopt changes from MDL-85220 to view-chards.mustache
 * 2025-06-04 - Bugfix: Enabling the footersuppresslogininfo setting prevented the reset of the failed login attempts counter, resolves #658
