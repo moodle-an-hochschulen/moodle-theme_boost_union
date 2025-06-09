@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-06-06 - Feature: Add color picker settings for calendar branding, resolves #434.
 * 2025-06-30 - Regression: Flavour favicon images were not working, resolves #942
 * 2025-06-30 - Regression: Flavour background images were not working, resolves #942
 * 2025-06-30 - Improvement: Allow the "guest access" hint for teachers to be shown as well if a guest password is set, resolves #984
