@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-06-09 - Tests: Fix a failing Behat test on the 'Allow admins to use the tertiary navigation' scenario, resolves #973
 * 2025-06-04 - Bugfix: Enabling the footersuppresslogininfo setting prevented the reset of the failed login attempts counter, resolves #658
 
 ### v4.4-r22
