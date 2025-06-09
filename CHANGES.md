@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-06-06 - Upstream change: Adopt changes from MDL-85220 to view-chards.mustache
 * 2025-06-04 - Bugfix: Enabling the footersuppresslogininfo setting prevented the reset of the failed login attempts counter, resolves #658
 * 2025-06-04 - Bugfix: Prevent debug message regarding newly introduced "displayhiddencourses" and "hiddencoursesort" option in dynamic courses items, resolves #970
 
