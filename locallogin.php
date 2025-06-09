@@ -43,6 +43,9 @@ $PAGE->set_pagelayout('login');
 // Set page context.
 $PAGE->set_context(context_system::instance());
 
+// Do not allow caching of this page.
+$PAGE->set_cacheable(false);
+
 // Get theme config.
 $config = get_config('theme_boost_union');
 
