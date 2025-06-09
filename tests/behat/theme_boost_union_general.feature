@@ -62,6 +62,7 @@ Feature: Configuring the theme_boost_union plugin as admin
     And I should see "Smart menus" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And "h2:has(+ .admin_settingspage_tabs_with_tertiary)" "css_element" should not be visible
     # And we have to test the 'all settings on one page' page as well as this is an individual page.
+    And Behat debugging is disabled
     And I set the field "List of Boost Union settings pages" to "All settings on one page"
     Then "body#page-admin-setting-theme_boost_union" "css_element" should exist
     And ".admin_settingspage_tabs_with_tertiary" "css_element" should not exist
