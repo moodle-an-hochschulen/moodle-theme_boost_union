@@ -26,6 +26,7 @@ namespace theme_boost_union\output;
 
 use context_course;
 use context_system;
+use core\hook\output\after_http_headers;
 use moodle_url;
 use stdClass;
 use core\di;
@@ -458,6 +459,20 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 'd-print-none',
                 ['id' => 'region-main-settings-menu']
             ));
+        }
+
+        // If the AI course assistance placement button has been moved to the activity header by Boost Union's settings.
+        $locationsetting = get_config('theme_boost_union', 'aiplacementcourseassistlocation');
+        if ($locationsetting == THEME_BOOST_UNION_SETTING_AIPLACEMENT_COURSEASSIST_LOCATION_HEADERACTION) {
+            // Render button using a fake after_http_headers hook.
+            $fakehook = new after_http_headers($this);
+            // If the following method is renamed or moved, please make sure to update theme_boost_union_manipulate_hooks() as well.
+            \aiplacement_courseassist\hook_callbacks::after_http_headers($fakehook);
+            $buttonhtml = $fakehook->get_output();
+            if ($buttonhtml) {
+                // Add button as a header action.
+                $this->page->add_header_action($buttonhtml);
+            }
         }
 
         $header = new stdClass();
