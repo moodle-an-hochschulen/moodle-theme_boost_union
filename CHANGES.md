@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r45
 
 * 2025-06-04 - Bugfix: Enabling the footersuppresslogininfo setting prevented the reset of the failed login attempts counter, resolves #658
 
