@@ -1309,6 +1309,14 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 }
 
 /* Block region: Header. */
+
+/* Removed the top and bottom padding and margin from the header region block. */
+#page.drawers .region-block-header .main-inner {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
 #theme-block-region-header {
     /* On larger screens. */
     @include media-breakpoint-up(md) {
