@@ -1371,6 +1371,27 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 
 
 /*=======================================
+ * Settings: Feel -> AI.
+ ======================================*/
+
+/*---------------------------------------
+ * Settings: Course assistance placement.
+ --------------------------------------*/
+
+/* When the AI course assistance placement button is a header action, remove padding and disable text wrapping to
+   prevent long activity titles from causing the button icon and text to be wrapped onto separate lines. */
+#page-header .header-action .course-assist-controls {
+    /* This uses !important to override the styles from the "py-3" bootstrap class used in aiplacement_courseassist/actions. */
+    padding-top: 0 !important; /* stylelint-disable-line declaration-no-important */
+    padding-bottom: 0 !important; /* stylelint-disable-line declaration-no-important */
+    .btn {
+        /* Prevent wrapping when the button is not a dropdown toggle. */
+        white-space: nowrap;
+    }
+}
+
+
+/*=======================================
  * Settings: Content -> Footer.
  ======================================*/
 
