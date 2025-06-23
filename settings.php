@@ -1982,6 +1982,27 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
+        // Create home site tab.
+        $tab = new admin_settingpage('theme_boost_union_feel_homesite',
+            get_string('homesitetab', 'theme_boost_union', null, true));
+
+        // Create login link heading.
+        $name = 'theme_boost_union/loginlinkheading';
+        $title = get_string('loginlinkheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Display login link as button.
+        $name = 'theme_boost_union/loginlinkbuttonenabled';
+        $title = get_string('loginlinkbuttonenabled', 'theme_boost_union', null, true);
+        $description = get_string('loginlinkbuttonenabled_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
         // Create page layouts tab.
         $tab = new admin_settingpage('theme_boost_union_feel_pagelayouts',
                 get_string('pagelayoutstab', 'theme_boost_union', null, true));
