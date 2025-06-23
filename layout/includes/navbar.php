@@ -74,3 +74,10 @@ if ($showfullnameinusermenusetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
     // Set a flag in the templatecontext.
     $templatecontext['showfullnameinusermenu'] = true;
 }
+
+// If displaying the login link as button is activated.
+$loginlinkbuttonenabledsetting = get_config('theme_boost_union', 'loginlinkbuttonenabled');
+if ($loginlinkbuttonenabledsetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    // Set a flag in the templatecontext.
+    $templatecontext['loginlinkbuttonenabled'] = true;
+}
