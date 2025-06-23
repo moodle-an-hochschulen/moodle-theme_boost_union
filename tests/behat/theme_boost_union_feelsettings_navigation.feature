@@ -360,3 +360,16 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     When I follow "Forum 2"
     Then "#prev-activity-link" "css_element" should not exist
     And "#next-activity-link" "css_element" should not exist
+
+  @javascript
+  Scenario Outline: Setting: Show login link as button.
+    Given the following config values are set as admin:
+      | config                 | value     | plugin            |
+      | loginlinkbuttonenabled | <setting> | theme_boost_union |
+    When I am on site homepage
+    Then ".btn.btn-primary" "css_element" <shouldornot> exist in the ".login.ps-2 > a" "css_element"
+
+    Examples:
+      | setting | shouldornot |
+      | yes     | should      |
+      | no      | should not  |

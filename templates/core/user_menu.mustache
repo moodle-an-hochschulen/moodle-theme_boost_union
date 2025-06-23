@@ -50,7 +50,8 @@
                 "items": []
             }
         ],
-        "showfullnameinusermenu": true
+        "showfullnameinusermenu": true,
+        "loginlinkbuttonenabled": true
     }
 }}
 {{!
@@ -72,7 +73,7 @@
                 <div class="divider border-start h-75 align-self-center mx-2"></div>
             {{/guest}}
             {{#url}}
-                <a href="{{url}}">{{#str}} login, core {{/str}}</a>
+                <a href="{{url}}"{{#loginlinkbuttonenabled}} class="btn btn-primary"{{/loginlinkbuttonenabled}}>{{#str}} login, core {{/str}}</a>
             {{/url}}
         </span>
     {{/unauthenticateduser}}
