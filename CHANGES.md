@@ -4,6 +4,11 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-06-24 - Improvement: Bring back the original hover effect in the language menu, resolves #803.
+* 2025-06-24 - Bugfix: Make sure that smart menu 3rd level does not get horizontal scroll bars, resolves #807.
+
 ### v5.0-r4
 
 * 2025-06-09 - Upstream change: Remove preemptive regression fix after MDL-85326 was integrated, resolves #928.
