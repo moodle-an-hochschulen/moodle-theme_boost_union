@@ -90,6 +90,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                         'theme_boost_union',
                         'flavours_look_favicon',
                         $flavour->id,
+                        '/64x64'.
                         '/'.theme_get_revision(),
                         '/'.$flavour->look_favicon
                     );
