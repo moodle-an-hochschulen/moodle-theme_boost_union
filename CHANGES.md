@@ -4,6 +4,11 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-06-30 - Regression: Flavour favicon images were not working, resolves #942
+* 2025-06-30 - Regression: Flavour background images were not working, resolves #942
+
 ### v4.1-r45
 
 * 2025-06-04 - Bugfix: Enabling the footersuppresslogininfo setting prevented the reset of the failed login attempts counter, resolves #658
