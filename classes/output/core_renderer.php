@@ -85,7 +85,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     // Compose the URL to the flavour's favicon.
                     $flavourfaviconurl = moodle_url::make_pluginfile_url(
                             context_system::instance()->id, 'theme_boost_union', 'flavours_look_favicon', $flavour->id,
-                            '/'.theme_get_revision(), '/'.$flavour->look_favicon);
+                            '/64x64'.'/'.theme_get_revision(), '/'.$flavour->look_favicon);
 
                     // Return the URL.
                     return $flavourfaviconurl;

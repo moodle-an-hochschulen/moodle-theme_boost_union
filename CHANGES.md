@@ -4,6 +4,11 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-06-30 - Regression: Flavour favicon images were not working, resolves #942
+* 2025-06-30 - Regression: Flavour background images were not working, resolves #942
+
 ### v4.4-r23
 
 * 2025-06-09 - Tests: Fix a failing Behat test on the 'Allow admins to use the tertiary navigation' scenario, resolves #973
