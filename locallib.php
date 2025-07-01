@@ -126,10 +126,12 @@ function theme_boost_union_get_course_related_hints() {
         $html .= $OUTPUT->render_from_template('theme_boost_union/course-hint-guestaccess', $templatecontext);
     }
 
-    // If the setting showhintcourseguestenrol is set, a hint for users is shown that the course allows unrestricted guest access.
+    // If the setting showhintcourseguestenrol is set, a hint for users is shown that the course allows guest access.
     // This hint is only shown if the course is visible, the guest acess is enabled and if the user has the
     // capability "theme/boost_union:viewhintcourseguestenrol".
-    if (get_config('theme_boost_union', 'showhintcourseguestenrol') == THEME_BOOST_UNION_SETTING_SELECT_YES
+    $showhintcourseguestenrol = get_config('theme_boost_union', 'showhintcourseguestenrol');
+    if (($showhintcourseguestenrol == THEME_BOOST_UNION_SETTING_GUESTACCESSHINT_WITHOUTPASSWORD ||
+         $showhintcourseguestenrol == THEME_BOOST_UNION_SETTING_GUESTACCESSHINT_ALWAYS)
             && has_capability('theme/boost_union:viewhintcourseguestenrol', \context_course::instance($COURSE->id))
             && $PAGE->has_set_url()
             && $PAGE->url->compare(new core\url('/course/view.php'), URL_MATCH_BASE)
@@ -140,8 +142,13 @@ function theme_boost_union_get_course_related_hints() {
 
         // Iterate over the instances.
         foreach ($enrolinstances as $instance) {
-            // Check if unrestricted guest access is possible.
-            if ($instance->enrol == 'guest' && empty($instance->password)) {
+            // Check if guest access is possible based on setting.
+            // If WITHOUTPASSWORD is set, only show hint when no password is set.
+            // If ALWAYS is set, show hint regardless of password.
+            if ($instance->enrol == 'guest' &&
+                ($showhintcourseguestenrol == THEME_BOOST_UNION_SETTING_GUESTACCESSHINT_ALWAYS ||
+                 (empty($instance->password) &&
+                        $showhintcourseguestenrol == THEME_BOOST_UNION_SETTING_GUESTACCESSHINT_WITHOUTPASSWORD))) {
 
                 // Prepare template context.
                 $templatecontext = ['courseid' => $COURSE->id];
@@ -151,6 +158,13 @@ function theme_boost_union_get_course_related_hints() {
                     $templatecontext['guestauthenabled'] = true;
                 } else {
                     $templatecontext['guestauthenabled'] = false;
+                }
+
+                // Add the flag if the guest access password is set.
+                if (!empty($instance->password)) {
+                    $templatecontext['guestpasswordset'] = true;
+                } else {
+                    $templatecontext['guestpasswordset'] = false;
                 }
 
                 // If the user has the capability to config guest enrolments, add the call for action to the template context.

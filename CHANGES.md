@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-06-30 - Improvement: Allow the "guest access" hint for teachers to be shown as well if a guest password is set, resolves #984
+
 ### v5.0-r4
 
 * 2025-06-09 - Upstream change: Remove preemptive regression fix after MDL-85326 was integrated, resolves #928.

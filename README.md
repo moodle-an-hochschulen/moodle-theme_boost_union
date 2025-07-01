@@ -625,9 +625,9 @@ With this setting a hint will appear in the course header as long as the visibil
 
 With this setting a hint will appear in the course header if the course is visible and an enrolment without enrolment key is currently possible.
 
-###### Show hint for guest access without guest password
+###### Show hint for guest enrolment
 
-With this setting a hint will appear in the course header if the course is visible and guest access without guest password is currently possible.
+With this setting a hint will appear in the course header if the course is visible and guest enrolment is currently possible.
 
 ##### Course related hints for students
 

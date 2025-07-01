@@ -587,5 +587,24 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025041406, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2025041410) {
+
+        // Get the current showhintcourseguestenrol setting.
+        $oldsetting = get_config('theme_boost_union', 'showhintcourseguestenrol');
+
+        // If the setting was set to THEME_BOOST_UNION_SETTING_SELECT_YES.
+        if ($oldsetting === THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            // Update it to THEME_BOOST_UNION_SETTING_GUESTACCESSHINT_WITHOUTPASSWORD.
+            set_config('showhintcourseguestenrol', THEME_BOOST_UNION_SETTING_GUESTACCESSHINT_WITHOUTPASSWORD, 'theme_boost_union');
+
+            // Show an upgrade notice about this change.
+            $message = get_string('upgradenotice_2025041410', 'theme_boost_union');
+            echo $OUTPUT->notification($message, 'info');
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2025041410, 'theme', 'boost_union');
+    }
+
     return true;
 }

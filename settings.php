@@ -2966,12 +2966,21 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
-        // Setting: Show hint for guest enrolment without guest password.
+        // Setting: Show hint for guest enrolment.
         $name = 'theme_boost_union/showhintcourseguestenrol';
         $title = get_string('showhintcourseguestenrolsetting', 'theme_boost_union', null, true);
         $description = get_string('showhintcourseguestenrolsetting_desc', 'theme_boost_union', null, true).'<br />'.
                 get_string('showhintcourseguestenrolsetting_note', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $guestaccessoptions = [
+                THEME_BOOST_UNION_SETTING_SELECT_NO =>
+                        get_string('no'),
+                THEME_BOOST_UNION_SETTING_GUESTACCESSHINT_WITHOUTPASSWORD =>
+                        get_string('showhintcourseguestenrolsetting_withoutpassword', 'theme_boost_union', null, true),
+                THEME_BOOST_UNION_SETTING_GUESTACCESSHINT_ALWAYS =>
+                        get_string('showhintcourseguestenrolsetting_always', 'theme_boost_union', null, true),
+        ];
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO,
+                $guestaccessoptions);
         $tab->add($setting);
 
         // Create course related hints for students heading.
