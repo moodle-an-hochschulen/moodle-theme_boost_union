@@ -34,15 +34,35 @@
     <div class="d-flex">
         <div class="flex-shrink-0 me-3 icon-size-5"><i class="fa fa-exclamation-circle fa-3x"></i></div>
         <div class="flex-grow-1 align-self-center">
-            {{#str}} showhintcourseguestenrolhint, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+            {{#guestpasswordset}}
+                {{#str}} showhintcourseguestenrolhintalways, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+            {{/guestpasswordset}}
+            {{^guestpasswordset}}
+                {{#str}} showhintcourseguestenrolhint, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+            {{/guestpasswordset}}
             {{#guestauthenabled}}
-                {{#str}} showhintcourseguestenroleveryone, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+                {{#guestpasswordset}}
+                    {{#str}} showhintcourseguestenroleveryonealways, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+                {{/guestpasswordset}}
+                {{^guestpasswordset}}
+                    {{#str}} showhintcourseguestenroleveryone, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+                {{/guestpasswordset}}
             {{/guestauthenabled}}
             {{^guestauthenabled}}
-                {{#str}} showhintcourseguestenrolauthonly, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+                {{#guestpasswordset}}
+                    {{#str}} showhintcourseguestenrolauthonlyalways, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+                {{/guestpasswordset}}
+                {{^guestpasswordset}}
+                    {{#str}} showhintcourseguestenrolauthonly, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+                {{/guestpasswordset}}
             {{/guestauthenabled}}
             {{#showenrolsettingslink}}
-                <br>{{#str}} showhintcourseguestenrolcallforaction, theme_boost_union, { "url": "{{config.wwwroot}}/enrol/instances.php?id={{courseid}}", "courseid": "{{courseid}}" } {{/str}}
+                {{#guestpasswordset}}
+                    <br>{{#str}} showhintcourseguestenrolcallforactionalways, theme_boost_union, { "url": "{{config.wwwroot}}/enrol/instances.php?id={{courseid}}", "courseid": "{{courseid}}" } {{/str}}
+                {{/guestpasswordset}}
+                {{^guestpasswordset}}
+                    <br>{{#str}} showhintcourseguestenrolcallforaction, theme_boost_union, { "url": "{{config.wwwroot}}/enrol/instances.php?id={{courseid}}", "courseid": "{{courseid}}" } {{/str}}
+                {{/guestpasswordset}}
             {{/showenrolsettingslink}}
         </div>
     </div>
