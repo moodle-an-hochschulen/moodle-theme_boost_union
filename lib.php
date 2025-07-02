@@ -241,6 +241,19 @@ function theme_boost_union_get_pre_scss($theme) {
         'bootstrapcolorinfo' => ['info'],
         'bootstrapcolorwarning' => ['warning'],
         'bootstrapcolordanger' => ['danger'],
+        'calendareventcolormaincategory' => ['calendarEventCategoryColor'],
+        'calendareventcolorbordercategory' => ['calendarEventCategoryBorderColor'],
+        'calendareventcolormaincourse' => ['calendarEventCourseColor'],
+        'calendareventcolorbordercourse' => ['calendarEventCourseBorderColor'],
+        'calendareventcolormaingroup' => ['calendarEventGroupColor'],
+        'calendareventcolorbordergroup' => ['calendarEventGroupBorderColor'],
+        'calendareventcolormainsite' => ['calendarEventGlobalColor'],
+        'calendareventcolorbordersite' => ['calendarEventGlobalBorderColor'],
+        'calendareventcolormainuser' => ['calendarEventUserColor'],
+        'calendareventcolorborderuser' => ['calendarEventUserBorderColor'],
+        'calendareventcolormainother' => ['calendarEventOtherColor'],
+        'calendareventcolorborderother' => ['calendarEventOtherBorderColor'],
+        'calendariconscolor' => ['calendarEventColor'],
     ];
 
     // Define the configurables which can be overridden by flavours.
