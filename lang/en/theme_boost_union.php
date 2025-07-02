@@ -261,6 +261,29 @@ $string['modiconversion'] = 'Icon version';
 $string['modicongtmoodle4'] = 'Moodle 4 icon';
 $string['modiconltmoodle311'] = 'Moodle 3 legacy icon';
 
+// Settings: Calendar branding tab.
+$string['calendarbrandingtab'] = 'Calendar branding';
+// Placeholders: Calendar event types.
+$string['calendareventtypecategory'] = 'Category';
+$string['calendareventtypecourse'] = 'Course';
+$string['calendareventtypegroup'] = 'Group';
+$string['calendareventtypeother'] = 'Other';
+$string['calendareventtypesite'] = 'Site';
+$string['calendareventtypeuser'] = 'User';
+// ... Section: Event types.
+$string['calendareventcolorsheading'] = 'Calendar event type: {$a}';
+// ... ... Setting: Main color of the calendar event.
+$string['calendareventcolormainsetting'] = 'Main color of the calendar event type "{$a}"';
+$string['calendareventcolormainsetting_desc'] = 'The main color of the calendar event type "{$a}" which is used for icons and backgrounds.';
+// ... ... Setting: Border color of the calendar event.
+$string['calendareventcolorbordersetting'] = 'Border color of the calendar event type "{$a}"';
+$string['calendareventcolorbordersetting_desc'] = 'The color of the calendar event type "{$a}" which is used for borders.';
+// ... Section: General calendar branding.
+$string['calendarbrandingheading'] = 'General calendar branding';
+// ... ... Setting: Calendar icon colors.
+$string['calendariconscolorsetting'] = 'Calendar icon colors';
+$string['calendariconscolorsetting_desc'] = 'The color of some icons which are used in the calendar views. The default color is blue, but this might clash with the calendar branding colors which you might set above.';
+
 // Settings: Login page tab.
 $string['loginpagetab'] = 'Login page';
 // ... Section: Login page background images.
