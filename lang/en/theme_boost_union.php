@@ -581,6 +581,9 @@ $string['addpreferredlangsetting_desc'] = 'With this setting, you can add a \'Se
 $string['setpreferredlanglink'] = 'Set preferred language';
 // ... Section: Navbar heading.
 $string['navbarheading'] = 'Navbar';
+// Setting: Display login link as button.
+$string['loginlinkbuttonenabled'] = 'Display "Log in" link as button';
+$string['loginlinkbuttonenabled_desc'] = 'With this setting, you can have the "Log in" link in the top of the page shown as button. This can help your users to recognize the fact they they are not logged in already.';
 // ... ... Setting: Show starred courses popover in the navbar.
 $string['shownavbarstarredcoursessetting'] = 'Show starred courses popover in the navbar';
 $string['shownavbarstarredcoursessetting_desc'] = 'With this setting, you can show a popover menu with links to starred courses next to the messages and notifications menus.';
@@ -686,14 +689,6 @@ $string['showsitehomerighthandblockdraweronfirstloginsetting_desc'] = 'With this
 // ... ... Setting: Show right-hand block drawer of site home on guest login.
 $string['showsitehomerighthandblockdraweronguestloginsetting'] = 'Show right-hand block drawer of site home on guest login';
 $string['showsitehomerighthandblockdraweronguestloginsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in as a guest.';
-
-// Settings: Home site tab.
-$string['homesitetab'] = 'Home site';
-// ... Section: Log in link block.
-$string['loginlinkheading'] = 'Log in link';
-// Setting: Display "Login" link as button.
-$string['loginlinkbuttonenabled'] = 'Display "Log in" link as button';
-$string['loginlinkbuttonenabled_desc'] = 'With this setting, you can have the "Log in" link in the top of the page shown as button.';
 
 // Settings: Page layouts tab.
 $string['pagelayoutstab'] = 'Page layouts';
