@@ -434,7 +434,7 @@ class course_renderer extends \core_course_renderer {
             }
 
             // Enable course fields, if configured.
-            if (get_config('theme_boost_union', 'courselistinghowfields') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            if (get_config('theme_boost_union', 'courselistingshowfields') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 $skeleton['showcoursefields'] = true;
             } else {
                 $skeleton['showcoursefields'] = false;
