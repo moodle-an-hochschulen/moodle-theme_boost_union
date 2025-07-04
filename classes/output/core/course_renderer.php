@@ -527,6 +527,16 @@ class course_renderer extends \core_course_renderer {
             $courseprogress = $courseutil->get_progress();
             $templatedata['progress'] = (int) $courseprogress;
             $templatedata['hasprogress'] = ($courseprogress !== null);
+
+            // If progress should be shown as progress bar.
+            $courseprogressstyle = get_config('theme_boost_union', 'courselistingprogressstyle');
+            if ($courseprogressstyle == THEME_BOOST_UNION_SETTING_COURSEPROGRESSSTYLE_BAR) {
+                $templatedata['progressstyleasbar'] = true;
+
+                // Otherwise.
+            } else {
+                $templatedata['progressstyleasbar'] = false;
+            }
         }
 
         // Enable detailsbar, if necessary.

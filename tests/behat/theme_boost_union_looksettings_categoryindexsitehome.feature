@@ -416,6 +416,30 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | list        | .course-listitem .progress-text |
 
   @javascript
+  Scenario Outline: Setting: Show course completion progress in the course listing: Check the style
+    Given the following config values are set as admin:
+      | config                     | value         | plugin            |
+      | courselistingpresentation  | <coursevalue> | theme_boost_union |
+      | courselistinghowprogress   | yes           | theme_boost_union |
+      | courselistingprogressstyle | <style>       | theme_boost_union |
+    And the following "activities" exist:
+      | activity | name              | course | completion |
+      | assign   | Activity sample 1 | C1     | 1          |
+      | assign   | Activity sample 1 | C2     | 1          |
+      | assign   | Activity sample 1 | C3     | 1          |
+    When I log in as "student1"
+    And I am on the "CATA" category page
+    Then "<selector>" "css_element" should exist in the ".course_category_tree" "css_element"
+    And "div.progress-bar[role='progressbar']" "css_element" <barshouldornot> exist in the "<selector>" "css_element"
+
+    Examples:
+      | coursevalue | selector                        | style      | barshouldornot |
+      | cards       | .course-card .progress-text     | percentage | should not     |
+      | cards       | .course-card .progress-text     | bar        | should         |
+      | list        | .course-listitem .progress-text | percentage | should not     |
+      | list        | .course-listitem .progress-text | bar        | should         |
+
+  @javascript
   Scenario Outline: Setting: Show course enrolment icons in the course listing: Set the setting
     Given the following config values are set as admin:
       | config                     | value          | plugin            |
