@@ -138,6 +138,9 @@ class admin_settingspage_tabs_with_tertiary extends \theme_boost_admin_settingsp
         $this->add_tertiary_item(new \core\url('/theme/boost_union/flavours/overview.php'),
                 get_string('configtitleflavours', 'theme_boost_union', null, true));
 
+        $this->add_tertiary_item(new \core\url('/theme/boost_union/snippets/overview.php'),
+                get_string('configtitlesnippets', 'theme_boost_union', null, true));
+
         $this->add_tertiary_item(new \core\url('/theme/boost_union/smartmenus/menus.php'),
                 get_string('smartmenus', 'theme_boost_union', null, true));
 
@@ -194,7 +197,7 @@ class admin_settingspage_tabs_with_tertiary extends \theme_boost_admin_settingsp
      *
      * @return string The tertiary navigation menu HTML (or empty string).
      */
-    private function render_tertiary_navigation() {
+    protected function render_tertiary_navigation() {
         global $OUTPUT;
 
         // If there are any tertiary items.

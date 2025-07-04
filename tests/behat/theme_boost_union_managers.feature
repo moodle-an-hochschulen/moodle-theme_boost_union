@@ -31,6 +31,11 @@ Feature: Configuring the theme_boost_union plugin as manager
     And "body#page-admin-theme-boost_union-flavours-overview" "css_element" should exist
     And I should see "Flavours" in the "#region-main" "css_element"
     And I should see "Create flavour" in the "#region-main" "css_element"
+    # However, we have to test the 'snippets' page as well as this is an external admin page.
+    And I navigate to "Appearance > Boost Union > SCSS snippets" in site administration
+    And "body#page-admin-theme-boost_union-snippets-overview" "css_element" should exist
+    And I should see "SCSS snippets" in the "#region-main" "css_element"
+    And I should see "There aren't any SCSS snippets which can be used" in the "#region-main" "css_element"
     # And we have to test the 'smart menus' page as well as this is an external admin page.
     And I navigate to "Appearance > Boost Union > Smart menus" in site administration
     And "body#page-admin-theme-boost_union-smartmenus-menus" "css_element" should exist
