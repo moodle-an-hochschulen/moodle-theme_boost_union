@@ -153,8 +153,30 @@ class course {
             // Get the course handler.
             $handler = \core_course\customfield\course_handler::create();
 
-            // Get and return the custom fields.
-            return $handler->display_custom_fields_data($this->course->get_custom_fields());
+            // Get the selected fields from the settings.
+            $selectedfields = get_config('theme_boost_union', 'courselistingselectfields');
+
+            // If specific fields are selected, filter the fields.
+            if (!empty($selectedfields)) {
+                $selectedfields = explode(',', $selectedfields);
+                $allfields = $this->course->get_custom_fields();
+                $filteredfields = [];
+
+                // Only keep selected fields.
+                foreach ($allfields as $key => $field) {
+                    if (in_array($field->get_field()->get('id'), $selectedfields)) {
+                        $filteredfields[$key] = $field;
+                    }
+                }
+
+                // Get and return the filtered custom fields.
+                if (!empty($filteredfields)) {
+                    return $handler->display_custom_fields_data($filteredfields);
+                }
+            }
+
+            // If no fields are selected or the filtered fields are empty, return nothing.
+            return '';
         }
 
         // Fallback.
