@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-07-05 - Improvement: Allow the admin to select the custom course fields on the course cards, resolves #846
 * 2025-07-04 - Feature: Show course progress as progress bar on the course cards, resolves #844
 * 2025-07-03 - Improvement: Show the login link in the navbar as button, resolves #979.
 * 2025-06-06 - Feature: Add color picker settings for calendar branding, resolves #434.
