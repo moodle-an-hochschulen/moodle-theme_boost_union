@@ -381,6 +381,10 @@ With this setting, you can add a 'Set preferred language' setting to the languag
 
 ##### Navbar
 
+###### Display "Log in" link as button
+
+With this setting, you can have the "Log in" link in the top of the page shown as button. This can help your users to recognize the fact they they are not logged in already.
+
 ###### Show starred courses popover in the navbar
 
 With this setting, you can show a popover menu with links to starred courses next to the messages and notifications menus.
