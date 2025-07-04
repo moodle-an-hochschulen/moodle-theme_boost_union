@@ -520,7 +520,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | list        | .course-listitem .enrolmenticons |
 
   @javascript
-  Scenario Outline: Setting: Show course fields in the course listing: Set the setting
+  Scenario Outline: Setting: Show course fields in the course listing: Set the setting (to disabled)
     Given the following config values are set as admin:
       | config                    | value          | plugin            |
       | courselistingpresentation | <coursevalue>  | theme_boost_union |
@@ -575,9 +575,90 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Examples:
       | coursevalue | settingvalue | selector                       | shouldornot |
       | cards       | no           | .course-card .customfields     | should not  |
-      | cards       | yes          | .course-card .customfields     | should      |
       | list        | no           | .course-listitem .customfields | should not  |
-      | list        | yes          | .course-listitem .customfields | should      |
+
+  @javascript
+  Scenario Outline: Setting: Show course fields in the course listing: Set the setting (to enabled, with various fields selected)
+    Given the following config values are set as admin:
+      | config                    | value          | plugin            |
+      | courselistingpresentation | <coursevalue>  | theme_boost_union |
+      | courselistinghowfields    | <settingvalue> | theme_boost_union |
+    And the following "custom field categories" exist:
+      | name          | component   | area   | itemid |
+      | Fieldcategory | core_course | course | 0      |
+    And the following "custom fields" exist:
+      | name    | category      | type     | shortname | description | configdata            |
+      | Field 1 | Fieldcategory | text     | f1        | d1          |                       |
+      | Field 2 | Fieldcategory | select   | f2        | d2          | {"options":"a\nb\nc"} |
+    And I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Category index / Site home" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I set the field "Field 1" to "<field1value>"
+    And I set the field "Field 2" to "<field2value>"
+    And I press "Save changes"
+    And Behat debugging is enabled
+    And I am on "Course 1" course homepage
+    And I navigate to "Settings" in current page administration
+    And I set the following fields to these values:
+      | Field 1 | test |
+      | Field 2 | a    |
+    And I press "Save and display"
+    And I am on "Course 2" course homepage
+    And I navigate to "Settings" in current page administration
+    And I set the following fields to these values:
+      | Field 1 | test |
+      | Field 2 | a    |
+    And I press "Save and display"
+    And I am on "Course 3" course homepage
+    And I navigate to "Settings" in current page administration
+    And I set the following fields to these values:
+      | Field 1 | test |
+      | Field 2 | a    |
+    And I press "Save and display"
+    And I log out
+    When I log in as "student1"
+    And I am on site homepage
+    # Check the 'Combo list' view on site home as a whole
+    Then "<selector>" "css_element" <shouldornot> exist in the "#frontpage-category-combo" "css_element"
+    And "<selector> .customfield_f1" "css_element" <field1shouldornot> exist in the "#frontpage-category-combo" "css_element"
+    And "<selector> .customfield_f2" "css_element" <field2shouldornot> exist in the "#frontpage-category-combo" "css_element"
+    # Check a subcategory in the 'Combo list' view on site home
+    And I click on ".info" "css_element" in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector>" "css_element" <shouldornot> exist in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector> .customfield_f1" "css_element" <field1shouldornot> exist in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector> .customfield_f2" "css_element" <field2shouldornot> exist in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
+    # Check the 'Enrolled courses' view on site home
+    And "<selector>" "css_element" <shouldornot> exist in the "#frontpage-course-list" "css_element"
+    And "<selector> .customfield_f1" "css_element" <field1shouldornot> exist in the "#frontpage-course-list" "css_element"
+    And "<selector> .customfield_f2" "css_element" <field2shouldornot> exist in the "#frontpage-course-list" "css_element"
+    # Check the 'List of courses' view on site home
+    And "<selector>" "css_element" <shouldornot> exist in the "#frontpage-available-course-list" "css_element"
+    And "<selector> .customfield_f1" "css_element" <field1shouldornot> exist in the "#frontpage-available-course-list" "css_element"
+    And "<selector> .customfield_f2" "css_element" <field2shouldornot> exist in the "#frontpage-available-course-list" "css_element"
+    # Check the categoriy overview page of a category without subcategories
+    And I am on the "CATA" category page
+    Then "<selector>" "css_element" <shouldornot> exist in the ".course_category_tree" "css_element"
+    And "<selector> .customfield_f1" "css_element" <field1shouldornot> exist in the ".course_category_tree" "css_element"
+    And "<selector> .customfield_f2" "css_element" <field2shouldornot> exist in the ".course_category_tree" "css_element"
+    # Check the categoriy overview page of a category with subcategories
+    And I am on the "CATB" category page
+    Then "<selector>" "css_element" <shouldornot> exist in the ".course_category_tree" "css_element"
+    And "<selector> .customfield_f1" "css_element" <field1shouldornot> exist in the ".course_category_tree" "css_element"
+    And "<selector> .customfield_f2" "css_element" <field2shouldornot> exist in the ".course_category_tree" "css_element"
+    And I click on ".info" "css_element" in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector>" "css_element" <shouldornot> exist in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector> .customfield_f1" "css_element" <field1shouldornot> exist in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector> .customfield_f2" "css_element" <field2shouldornot> exist in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
+
+    Examples:
+      | coursevalue | settingvalue | field1value | field2value | selector                       | shouldornot | field1shouldornot | field2shouldornot |
+      | cards       | yes          | 0           | 0           | .course-card .customfields     | should not  | should not        | should not        |
+      | cards       | yes          | 1           | 0           | .course-card .customfields     | should      | should            | should not        |
+      | cards       | yes          | 1           | 1           | .course-card .customfields     | should      | should            | should            |
+      | list        | yes          | 0           | 0           | .course-listitem .customfields | should not  | should not        | should not        |
+      | list        | yes          | 1           | 0           | .course-listitem .customfields | should      | should            | should not        |
+      | list        | yes          | 1           | 1           | .course-listitem .customfields | should      | should            | should            |
 
   @javascript
   Scenario Outline: Setting: Show course fields in the course listing: Check the content
@@ -593,6 +674,12 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | Field 1 | Fieldcategory | text     | f1        | d1          |                       |
       | Field 2 | Fieldcategory | select   | f2        | d2          | {"options":"a\nb\nc"} |
     And I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Category index / Site home" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I set the field "Field 1" to "1"
+    And I set the field "Field 2" to "1"
+    And I press "Save changes"
     And I am on "Course 1" course homepage
     And I navigate to "Settings" in current page administration
     And I set the following fields to these values:
@@ -624,6 +711,44 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | coursevalue | selector                       |
       | cards       | .course-card .customfields     |
       | list        | .course-listitem .customfields |
+
+  @javascript
+  Scenario Outline: Setting: Show course fields in the course listing: No fields existing
+    Given the following config values are set as admin:
+      | config                    | value          | plugin            |
+      | courselistingpresentation | <coursevalue>  | theme_boost_union |
+      | courselistinghowfields    | <settingvalue> | theme_boost_union |
+    And I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Category index / Site home" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I should see "There isn't any usable custom course field yet."
+    And Behat debugging is enabled
+    And I log out
+    When I log in as "student1"
+    And I am on site homepage
+    # Check the 'Combo list' view on site home as a whole
+    Then "<selector>" "css_element" <shouldornot> exist in the "#frontpage-category-combo" "css_element"
+    # Check a subcategory in the 'Combo list' view on site home
+    And I click on ".info" "css_element" in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector>" "css_element" <shouldornot> exist in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
+    # Check the 'Enrolled courses' view on site home
+    And "<selector>" "css_element" <shouldornot> exist in the "#frontpage-course-list" "css_element"
+    # Check the 'List of courses' view on site home
+    And "<selector>" "css_element" <shouldornot> exist in the "#frontpage-available-course-list" "css_element"
+    # Check the categoriy overview page of a category without subcategories
+    And I am on the "CATA" category page
+    Then "<selector>" "css_element" <shouldornot> exist in the ".course_category_tree" "css_element"
+    # Check the categoriy overview page of a category with subcategories
+    And I am on the "CATB" category page
+    Then "<selector>" "css_element" <shouldornot> exist in the ".course_category_tree" "css_element"
+    And I click on ".info" "css_element" in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector>" "css_element" <shouldornot> exist in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
+
+    Examples:
+      | coursevalue | settingvalue | selector                       | shouldornot |
+      | cards       | yes          | .course-card .customfields     | should not  |
+      | list        | yes          | .course-listitem .customfields | should not  |
 
   @javascript
   Scenario Outline: Setting: Show goto button in the course listing: Set the setting
@@ -821,11 +946,12 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | admin    | should      |
 
   @javascript
-  Scenario: Setting: Show details popup in the course listing: Check the content: Course classification
+  Scenario: Setting: Show details popup in the course listing: Check the content: Course classification (with all fields selected - no need to test other combinations as the function to fetch the fields is the same as on the cards itself
     Given the following config values are set as admin:
       | config                    | value | plugin            |
       | courselistingpresentation | cards | theme_boost_union |
       | courselistinghowpopup     | yes   | theme_boost_union |
+      | courselistingshowfields   | yes   | theme_boost_union |
     And the following "custom field categories" exist:
       | name          | component   | area   | itemid |
       | Fieldcategory | core_course | course | 0      |
