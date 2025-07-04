@@ -570,5 +570,27 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2024100739, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2024100742) {
+
+        // Get the current courselistinghowfields setting.
+        $oldsetting = get_config('theme_boost_union', 'courselistinghowfields');
+
+        // If the old setting exists, migrate it to the new setting name.
+        if ($oldsetting !== false) {
+            // Set the new config.
+            set_config('courselistingshowfields', $oldsetting, 'theme_boost_union');
+
+            // Delete the old config.
+            unset_config('courselistinghowfields', 'theme_boost_union');
+
+            // Show an upgrade notice about this change.
+            $message = get_string('upgradenotice_2025041413', 'theme_boost_union');
+            echo $OUTPUT->notification($message, 'info');
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2024100742, 'theme', 'boost_union');
+    }
+
     return true;
 }
