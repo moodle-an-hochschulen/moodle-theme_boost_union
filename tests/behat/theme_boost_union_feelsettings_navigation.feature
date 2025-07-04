@@ -106,6 +106,19 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | no      | should not  |
 
   @javascript
+  Scenario Outline: Setting: Show login link as button.
+    Given the following config values are set as admin:
+      | config                 | value     | plugin            |
+      | loginlinkbuttonenabled | <setting> | theme_boost_union |
+    When I am on site homepage
+    Then ".btn.btn-primary" "css_element" <shouldornot> exist in the ".login.ps-2 > a" "css_element"
+
+    Examples:
+      | setting | shouldornot |
+      | yes     | should      |
+      | no      | should not  |
+
+  @javascript
   Scenario Outline: Setting: Show starred courses popover in the navbar.
     Given the following config values are set as admin:
       | config                   | value     | plugin            |

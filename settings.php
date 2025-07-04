@@ -1667,6 +1667,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
+        // Setting: Display login link as button.
+        $name = 'theme_boost_union/loginlinkbuttonenabled';
+        $title = get_string('loginlinkbuttonenabled', 'theme_boost_union', null, true);
+        $description = get_string('loginlinkbuttonenabled_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
         // Setting: Show starred courses popover in the navbar.
         $name = 'theme_boost_union/shownavbarstarredcourses';
         $title = get_string('shownavbarstarredcoursessetting', 'theme_boost_union', null, true);
