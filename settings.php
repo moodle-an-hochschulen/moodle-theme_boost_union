@@ -1037,12 +1037,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
         // Setting: Show course fields in the course listing.
-        $name = 'theme_boost_union/courselistinghowfields';
-        $title = get_string('courselistinghowfields', 'theme_boost_union');
-        $description = get_string('courselistinghowfields_desc', 'theme_boost_union');
+        $name = 'theme_boost_union/courselistingshowfields';
+        $title = get_string('courselistingshowfields', 'theme_boost_union');
+        $description = get_string('courselistingshowfields_desc', 'theme_boost_union');
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
-        $page->hide_if('theme_boost_union/courselistinghowfields', 'theme_boost_union/courselistingpresentation', 'eq',
+        $page->hide_if('theme_boost_union/courselistingshowfields', 'theme_boost_union/courselistingpresentation', 'eq',
                 THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
         // Setting: Select course fields to be shown in the course listing.
@@ -1067,7 +1067,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
             $page->hide_if('theme_boost_union/courselistingselectfields', 'theme_boost_union/courselistingpresentation', 'eq',
                     THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
-            $page->hide_if('theme_boost_union/courselistingselectfields', 'theme_boost_union/courselistinghowfields', 'neq',
+            $page->hide_if('theme_boost_union/courselistingselectfields', 'theme_boost_union/courselistingshowfields', 'neq',
                     THEME_BOOST_UNION_SETTING_SELECT_YES);
 
             // Otherwise.
@@ -1084,7 +1084,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
             $page->hide_if('theme_boost_union/courselistingselectfields', 'theme_boost_union/courselistingpresentation', 'eq',
                     THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
-            $page->hide_if('theme_boost_union/courselistingselectfields', 'theme_boost_union/courselistinghowfields', 'neq',
+            $page->hide_if('theme_boost_union/courselistingselectfields', 'theme_boost_union/courselistingshowfields', 'neq',
                     THEME_BOOST_UNION_SETTING_SELECT_YES);
         }
 

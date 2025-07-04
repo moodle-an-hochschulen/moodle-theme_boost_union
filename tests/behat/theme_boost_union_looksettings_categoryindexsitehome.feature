@@ -500,7 +500,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value          | plugin            |
       | courselistingpresentation | <coursevalue>  | theme_boost_union |
-      | courselistinghowfields    | <settingvalue> | theme_boost_union |
+      | courselistingshowfields   | <settingvalue> | theme_boost_union |
     And the following "custom field categories" exist:
       | name          | component   | area   | itemid |
       | Fieldcategory | core_course | course | 0      |
@@ -558,7 +558,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value          | plugin            |
       | courselistingpresentation | <coursevalue>  | theme_boost_union |
-      | courselistinghowfields    | <settingvalue> | theme_boost_union |
+      | courselistingshowfields   | <settingvalue> | theme_boost_union |
     And the following "custom field categories" exist:
       | name          | component   | area   | itemid |
       | Fieldcategory | core_course | course | 0      |
@@ -641,7 +641,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value         | plugin            |
       | courselistingpresentation | <coursevalue> | theme_boost_union |
-      | courselistinghowfields    | yes           | theme_boost_union |
+      | courselistingshowfields   | yes           | theme_boost_union |
     And the following "custom field categories" exist:
       | name          | component   | area   | itemid |
       | Fieldcategory | core_course | course | 0      |
@@ -693,7 +693,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value          | plugin            |
       | courselistingpresentation | <coursevalue>  | theme_boost_union |
-      | courselistinghowfields    | <settingvalue> | theme_boost_union |
+      | courselistingshowfields   | <settingvalue> | theme_boost_union |
     And I log in as "admin"
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
