@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-07-03 - Improvement: Allow the admin to select the custom course fields on the course cards, resolves #846
 * 2025-06-06 - Feature: Add color picker settings for calendar branding, resolves #434.
 * 2025-06-30 - Regression: Flavour favicon images were not working, resolves #942
 * 2025-06-30 - Regression: Flavour background images were not working, resolves #942
