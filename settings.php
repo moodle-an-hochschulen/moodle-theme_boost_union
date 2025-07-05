@@ -1049,6 +1049,22 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if('theme_boost_union/courselistinghowprogress', 'theme_boost_union/courselistingpresentation', 'eq',
                 THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
+        // Setting: Course completion progress style.
+        $name = 'theme_boost_union/courselistingprogressstyle';
+        $title = get_string('courseistingprogressstyle', 'theme_boost_union', null, true);
+        $description = get_string('courseistingprogressstyle_desc', 'theme_boost_union', null, true);
+        $courseprogressstyleoptions = [
+                THEME_BOOST_UNION_SETTING_COURSEPROGRESSSTYLE_PERCENTAGE =>
+                        get_string('courseistingprogressstyle_percentage', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_COURSEPROGRESSSTYLE_BAR =>
+                        get_string('courseistingprogressstyle_bar', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_COURSEPROGRESSSTYLE_PERCENTAGE, $courseprogressstyleoptions);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/courselistingprogressstyle', 'theme_boost_union/courselistinghowprogress', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
         // Setting: Show course enrolment icons in the course listing.
         $name = 'theme_boost_union/courselistinghowenrolicons';
         $title = get_string('courselistinghowenrolicons', 'theme_boost_union');

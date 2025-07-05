@@ -384,6 +384,11 @@ $string['courselistinghowcategory_desc'] = 'With this setting, you control if th
 // ... ... Setting: Show course completion progress in the course listing.
 $string['courselistinghowprogress'] = 'Show course completion progress in the course listing';
 $string['courselistinghowprogress_desc'] = 'With this setting, you control if the course completion progress are shown in the course listing or not.';
+// ... ... Setting: Course completion progress style.
+$string['courseistingprogressstyle'] = 'Course completion progress style';
+$string['courseistingprogressstyle_desc'] = 'With this setting, you control how the course completion progress is displayed. You can choose between a simple percentage text or a progress bar.';
+$string['courseistingprogressstyle_percentage'] = 'Percentage text';
+$string['courseistingprogressstyle_bar'] = 'Progress bar';
 // ... ... Setting: Show course enrolment icons in the course listing.
 $string['courselistinghowenrolicons'] = 'Show course enrolment icons in the course listing';
 $string['courselistinghowenrolicons_desc'] = 'With this setting, you control if the course enrolment icons are shown in the course listing or not.';

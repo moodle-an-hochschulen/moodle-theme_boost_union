@@ -31,6 +31,7 @@
                 "fullname": "course 3",
                 "hasprogress": true,
                 "progress": 10,
+                "progressstyleasbar": false,
                 "visible": true
             }
         ]
@@ -103,8 +104,13 @@
         <div class="d-flex align-items-start mt-0 mb-2">
             {{#showcourseprogress}}
                 {{#hasprogress}}
-                    <div class="border-0 ps-3 border-radius w-100">
-                        {{> block_myoverview/progress-bar}}
+                    <div class="border-0 px-3 border-radius w-100">
+                        {{#progressstyleasbar}}
+                            {{> theme_boost_union/progress-bar}}
+                        {{/progressstyleasbar}}
+                        {{^progressstyleasbar}}
+                            {{> block_myoverview/progress-bar}}
+                        {{/progressstyleasbar}}
                     </div>
                 {{/hasprogress}}
             {{/showcourseprogress}}
