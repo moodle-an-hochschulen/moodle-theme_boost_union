@@ -384,8 +384,12 @@ $string['courseistingprogressstyle_bar'] = 'Progress bar';
 $string['courselistinghowenrolicons'] = 'Show course enrolment icons in the course listing';
 $string['courselistinghowenrolicons_desc'] = 'With this setting, you control if the course enrolment icons are shown in the course listing or not.';
 // ... ... Setting: Show course fields in the course listing.
-$string['courselistinghowfields'] = 'Show course fields in the course listing';
-$string['courselistinghowfields_desc'] = 'With this setting, you control if the custom course fields are shown in the course listing or not.';
+$string['courselistingshowfields'] = 'Show course fields in the course listing';
+$string['courselistingshowfields_desc'] = 'With this setting, you control if the custom course fields are shown in the course listing or not.';
+// ... ... Setting: Select course fields to be shown in the course listing.
+$string['courselistingselectfields'] = 'Select course fields to be shown in the course listing';
+$string['courselistingselectfields_desc'] = 'With this setting, you can select which specific custom course fields are shown in the course listing. If none are selected, no fields will be shown.';
+$string['courselistingselectfields_nofield'] = 'With this setting, you can select which specific custom course fields are shown in the course listing. There isn\'t any usable custom course field yet. Please go the <a href="{$a->url}">{$a->linktitle}</a> and create a custom course field first.';
 // ... ... Setting: Show goto button in the course listing.
 $string['courselistinghowgoto'] = 'Show goto button in the course listing';
 $string['courselistinghowgoto_desc'] = 'With this setting, you control if a \'Go to course\' button is shown in the course listing or not. If this setting is disabled, the user is still able to go to the course by clicking on the course title or course image.';
@@ -1584,3 +1588,4 @@ $string['upgradenotice_2022080922_logocompact'] = 'compact logo';
 $string['upgradenotice_2022080922_copied'] = 'The existing <strong>{$a}</strong> from the Moodle core settings has been copied to the Boost Union {$a} setting during this upgrade. Please double-check the result.';
 $string['upgradenotice_2022080922_notcopied'] = 'The <strong>{$a}</strong> setting within Boost Union is empty now. If you want to use a {$a} within Boost Union from now on, just upload it into the Boost Union {$a} setting later.';
 $string['upgradenotice_2025041410'] = 'The setting "Show hint for guest access" has been updated to support more options. Your existing configuration (which was set to "Yes") has been migrated to the new option "Yes, but only if no guest access password is set".';
+$string['upgradenotice_2025041413'] = 'The setting "courselistinghowfields" has been renamed to "courselistingshowfields" to fix a typo. Your existing configuration has been migrated to the new setting name.';

@@ -1053,13 +1053,56 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
 
         // Setting: Show course fields in the course listing.
-        $name = 'theme_boost_union/courselistinghowfields';
-        $title = get_string('courselistinghowfields', 'theme_boost_union');
-        $description = get_string('courselistinghowfields_desc', 'theme_boost_union');
+        $name = 'theme_boost_union/courselistingshowfields';
+        $title = get_string('courselistingshowfields', 'theme_boost_union');
+        $description = get_string('courselistingshowfields_desc', 'theme_boost_union');
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
-        $page->hide_if('theme_boost_union/courselistinghowfields', 'theme_boost_union/courselistingpresentation', 'eq',
+        $page->hide_if('theme_boost_union/courselistingshowfields', 'theme_boost_union/courselistingpresentation', 'eq',
                 THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
+
+        // Setting: Select course fields to be shown in the course listing.
+        // Prepare course fields options.
+        $coursehandler = \core_course\customfield\course_handler::create();
+        $coursefields = $coursehandler->get_fields();
+        // If there are existing fields.
+        if (count($coursefields) > 0) {
+            // Get all field details.
+            $fieldsarray = [];
+            $fieldsdefault = [];
+            foreach ($coursefields as $field) {
+                $fieldid = $field->get('id');
+                $fieldsarray[$fieldid] = $field->get('name');
+                $fieldsdefault[$fieldid] = 1; // By default, all fields are selected.
+            }
+            // Build the setting.
+            $name = 'theme_boost_union/courselistingselectfields';
+            $title = get_string('courselistingselectfields', 'theme_boost_union', null, true);
+            $description = get_string('courselistingselectfields_desc', 'theme_boost_union', null, true);
+            $setting = new admin_setting_configmulticheckbox($name, $title, $description, $fieldsdefault, $fieldsarray);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/courselistingselectfields', 'theme_boost_union/courselistingpresentation', 'eq',
+                    THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
+            $page->hide_if('theme_boost_union/courselistingselectfields', 'theme_boost_union/courselistingshowfields', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+            // Otherwise.
+        } else {
+            // Build an empty setting.
+            $customfieldurl = new \core\url('/course/customfield.php');
+            $customfieldlink = ['url' => $customfieldurl->out(),
+                    'linktitle' => get_string('course_customfield', 'admin', null, true),
+            ];
+            $name = 'theme_boost_union/courselistingselectfields';
+            $title = get_string('courselistingselectfields', 'theme_boost_union', null, true);
+            $description = get_string('courselistingselectfields_nofield', 'theme_boost_union', $customfieldlink, true);
+            $setting = new admin_setting_configempty($name, $title, $description);
+            $tab->add($setting);
+            $page->hide_if('theme_boost_union/courselistingselectfields', 'theme_boost_union/courselistingpresentation', 'eq',
+                    THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
+            $page->hide_if('theme_boost_union/courselistingselectfields', 'theme_boost_union/courselistingshowfields', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+        }
 
         // Setting: Show goto button in the course listing.
         $name = 'theme_boost_union/courselistinghowgoto';
