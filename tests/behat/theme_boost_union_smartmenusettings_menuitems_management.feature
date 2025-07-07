@@ -179,3 +179,19 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     Then "Info" "table_row" should appear after "Courses" "table_row"
     And I click on ".sort-smartmenuitems-up-action" "css_element" in the "Info" "table_row"
     And "Info" "table_row" should appear before "Courses" "table_row"
+
+  @javascript
+  Scenario Outline: Smartmenus: Menu items: Management - Menu item structure header is shown or hidden based on menu item type
+    When I log in as "admin"
+    And I navigate to smart menu "Quick links" items
+    And I click on "Add menu item" "button"
+    And I set the field "Menu item type" to "<type>"
+    Then "fieldset#id_structureheader" "css_element" <visibility>
+
+    Examples:
+      | type                 | visibility            |
+      | Static               | should be visible     |
+      | Dynamic courses      | should be visible     |
+      | Heading              | should not be visible |
+      | Moodle documentation | should not be visible |
+      | Divider              | should not be visible |
