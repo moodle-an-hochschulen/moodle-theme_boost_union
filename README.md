@@ -667,6 +667,10 @@ By default, on the course management page, Moodle requires you to either open th
 
 Boost Union's flavours offer a possibility to override particular Moodle look & feel settings in particular contexts. On this page, you can create and manage flavours.
 
+### Settings page "CSS Snippets"
+
+Boost Union's CSS snippets offer a possibility to add small (or slightly larger) amounts of CSS to the Moodle site. This can be particularly handy for fixing small visual glitches in Moodle core or for adding eye candy to your Moodle site.
+
 ### Settings page "Smart menus"
 
 Smart menus allow site administrators to create customizable menus that can be placed in different locations on the site, such as the site main menu, bottom mobile menu, and user menu. The menus can be configured to display different types of content, including links to other pages or resources, category links, or user profile links. On this page, you can create and manage smart menus.
@@ -826,8 +830,10 @@ Having said that, here's the order how all the SCSS code is added to the SCSS st
    * Adds the Boost Union Post SCSS from disk\
      (which is located on `/theme/boost_union/scss/boost_union/post.scss`)
      This file holds all the Boost Union specific SCSS code which can be added to the stack without being dependent on specific configurations like configured colors or sizes.
-   * Add the Boost Union external SCSS\
+   * Adds the Boost Union external SCSS\
      (which is set on `/admin/settings.php?section=theme_boost_union_look#theme_boost_union_look_scss`)
+   * Adds the Boost Union SCSS snippets\
+     (which are enabled on `/theme/boost_union/snippets/overview.php`)
 
 5. `theme_boost` > `get_extra_scss()`:
    * Adds the Boost Union Post SCSS from the theme settings\

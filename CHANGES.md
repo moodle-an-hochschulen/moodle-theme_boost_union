@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-07-06 - Feature: Add first version of CSS snippets feature, credits go to all members of the MoodleMootDACH 2024 dev camp team no. 22, resolves #988
+
 ### v4.5-r21
 
 * 2025-07-05 - Chore: Rename the setting 'courselistinghowfields' to 'courselistingshowfields' to fix a typo
