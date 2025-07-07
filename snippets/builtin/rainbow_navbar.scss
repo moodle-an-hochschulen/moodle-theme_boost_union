@@ -5,6 +5,7 @@
  * Description:   17 May is a special day for the queer community - the international day against homophobia, biphobia and transphobia. This snippet changes the background of the navbar to rainbow colors to commemorate and support this special day.
  * Creator:       Nils Promer and Alexander Brehm
  * Tested on:     Moodle 5.0, Firefox for Mac
+ * Usage note:    To use this snippet, the 'theme_boost_union | navbarcolor' setting must be set to 'Light navbar with dark font color'. Otherwise, the snippet's SCSS would interfere with the configured navbar color.
  *
  * @copyright     2024 University of Applied Science Hamburg
  * @author        Nils Promer <nils.promer@haw-hamburg.de>, Alexander Brehm <alexander.brehm@haw-hamburg.de>
@@ -14,10 +15,6 @@
 .navbar {
     @extend .navbar-dark;
     @extend .bg-dark;
-}
-
-.navbar {
-    box-sizing: unset;
 }
 
 .navbar {
@@ -36,37 +33,28 @@
         hsl(240, 100%, 50%) 93%,
         hsl(217, 100%, 31%) 100%
     );
-    border-bottom: 1px solid #158d25;
 }
 
 .primary-navigation .nav-item .nav-link {
-    position: relative;
     text-transform: uppercase;
     font-weight: bold;
     color: #fff;
-    height: 61px;
 }
 
 .primary-navigation .navigation .nav-link.active,
 .navbar.navbar-dark.bg-primary .nav-link.active {
-    border-bottom: none;
-}
-
-.primary-navigation li.nav-item a.nav-link.active::after {
-    content: "";
-    position: absolute;
-    bottom: 14px;
-    height: 2px;
-    left: 0;
-    right: 0;
-    margin: 0 0.5em;
-    background-color: #fff;
+    padding-bottom: calc(var(--bs-nav-link-padding-y) - 5px);
+    border-bottom-width: 5px;
+    border-bottom-color: #fff;;
 }
 
 .primary-navigation {
     .nav-link:hover,
-    .nav-link:active {
-        color: hsl(217, 100%, 31%);
+    .nav-link:active
+    .nav-link:focus,
+    .nav-link[aria-haspopup='true'][aria-expanded='true'] {
+        background-color: #fff;
+        color: $primary;;
     }
 }
 
@@ -74,9 +62,14 @@
 .nav-link a .icon
 .navbar-dark a .icon,
 .navbar a .icon,
-.usermenu .dropdown-toggle {
+.usermenu .dropdown-toggle,
+#usernavigation .login a {
     color: $white !important; /* stylelint-disable-line declaration-no-important */
 }
+.popover-region-container a .icon {
+    color: #343a40 !important; /* stylelint-disable-line declaration-no-important */
+}
+
 
 .editmode-switch-form,
 .editmode-switch-form label {
