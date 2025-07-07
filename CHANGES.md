@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.4-r24
 
 * 2025-06-30 - Regression: Flavour favicon images were not working, resolves #942
 * 2025-06-30 - Regression: Flavour background images were not working, resolves #942
