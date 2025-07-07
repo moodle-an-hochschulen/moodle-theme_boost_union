@@ -1,0 +1,96 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/snippetsdetailsmodal
+
+    Boost Union CSS snippets details modal template.
+
+    Example context (json):
+    {
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+        "image": "https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/main/pix/screenshot.png",
+        "goalbadge": "<span class="badge bg-primary text-light">Bugfix</span>",
+        "scopebadge": "<span class="badge bg-primary text-light">Global</span>",
+        "sourcebadge": "<span class="badge bg-primary text-light">Boost Union built-in</span>",
+        "code": "body { color: red; }",
+        "id": 42
+    }
+}}
+<div>
+    {{#description}}
+        <div class="mb-4">
+            <h6>{{#str}}snippetsdescription, theme_boost_union{{/str}}</h6>
+            <p>{{{description}}}</p>
+        </div>
+    {{/description}}
+    {{#image}}
+        <div class="mb-4">
+            <h6>{{#str}}snippetsdetailspreview, theme_boost_union{{/str}}</h6>
+            <img src="{{image}}" alt="{{#str}}snippetsdetailspreview, theme_boost_union{{/str}}" class="w-100 p-2 border rounded">
+        </div>
+    {{/image}}
+    {{#usagenote}}
+        <div class="mb-4">
+            <h6>{{#str}}snippetsusagenote, theme_boost_union{{/str}}</h6>
+            <p>{{{usagenote}}}</p>
+        </div>
+    {{/usagenote}}
+    <h6>{{#str}}snippetsdetails, theme_boost_union{{/str}}</h6>
+    <table class="table table-striped">
+        <tbody>
+            {{#creator}}
+                <tr>
+                    <th scope="row">{{#str}}snippetscreator, theme_boost_union{{/str}}</th>
+                    <td>{{{creator}}}</td>
+                </tr>
+            {{/creator}}
+            {{#sourcebadge}}
+                <tr>
+                    <th scope="row">{{#str}}snippetssource, theme_boost_union{{/str}}</th>
+                    <td>{{{sourcebadge}}}</td>
+                </tr>
+            {{/sourcebadge}}
+            {{#goalbadge}}
+                <tr>
+                    <th scope="row">{{#str}}snippetsgoal, theme_boost_union{{/str}}</th>
+                    <td>{{{goalbadge}}}</td>
+                </tr>
+            {{/goalbadge}}
+            {{#scopebadge}}
+                <tr>
+                    <th scope="row">{{#str}}snippetsscope, theme_boost_union{{/str}}</th>
+                    <td>{{{scopebadge}}}</td>
+                </tr>
+            {{/scopebadge}}
+            {{#trackerissue}}
+                <tr>
+                    <th scope="row">{{#str}}snippetstrackerissue, theme_boost_union{{/str}}</th>
+                    <td><a href="https://moodle.atlassian.net/browse/{{{trackerissue}}}" target="_blank">{{{trackerissue}}}</a></td>
+                </tr>
+            {{/trackerissue}}
+            {{#testedon}}
+                <tr>
+                    <th scope="row">{{#str}}snippetstestedon, theme_boost_union{{/str}}</th>
+                    <td>{{{testedon}}}</td>
+                </tr>
+            {{/testedon}}
+        </tbody>
+    </table>
+    {{#code}}
+        <div class="mt-4">
+            <a class="btn btn-secondary" data-bs-toggle="collapse" href="#snippetcollapse{{id}}" role="button" aria-expanded="false" aria-controls="snippetcollapse{{id}}">{{#str}}snippetsshowthecode, theme_boost_union{{/str}}</a>
+            <div class="collapse mt-2 border rounded p-3" id="snippetcollapse{{id}}"><pre><code>{{{code}}}</code></pre></div>
+        </div>
+    {{/code}}
+</div>

@@ -23,6 +23,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_boost_union\snippets;
+
 /**
  * Function to upgrade theme_boost_union
  * @param int $oldversion the version we are upgrading from
@@ -627,6 +629,34 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         // Boost_union savepoint reached.
         upgrade_plugin_savepoint(true, 2025041413, 'theme', 'boost_union');
     }
+
+    if ($oldversion < 2025041415) {
+
+        // Define table theme_boost_union_snippets to be created.
+        $table = new xmldb_table('theme_boost_union_snippets');
+
+        // Adding fields to table theme_boost_union_snippets.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('name', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+        $table->add_field('sortorder', XMLDB_TYPE_INTEGER, '18', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('source', XMLDB_TYPE_CHAR, '255', null, null, null, 'theme_boost_union');
+        $table->add_field('enabled', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0');
+
+        // Adding keys to table theme_boost_union_snippets.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+
+        // Conditionally launch create table for theme_boost_union_snippets.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2025041415, 'theme', 'boost_union');
+    }
+
+    // Load the builtin SCSS snippets into the database.
+    // This is done with every plugin update, regardless of the plugin version.
+    snippets::add_builtin_snippets();
 
     return true;
 }
