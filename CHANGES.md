@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r21
 
 * 2025-07-05 - Chore: Rename the setting 'courselistinghowfields' to 'courselistingshowfields' to fix a typo
 * 2025-07-05 - Improvement: Allow the admin to select the custom course fields on the course cards, resolves #846
