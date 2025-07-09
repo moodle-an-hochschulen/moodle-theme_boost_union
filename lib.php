@@ -795,57 +795,6 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
 }
 
 /**
- * Fetches the list of icons and creates an icon suggestion list to be sent to a fragment.
- *
- * @param array $args An array of arguments.
- * @return string The rendered HTML of the icon suggestion list.
- */
-function theme_boost_union_output_fragment_icons_list($args) {
-    global $OUTPUT, $PAGE;
-
-    // Proceed only if a context was given as argument.
-    if ($args['context']) {
-        // Initialize rendered icon list.
-        $icons = [];
-
-        // Load the theme config.
-        $theme = \core\output\theme_config::load($PAGE->theme->name);
-
-        // Get the FA system.
-        $faiconsystem = \core\output\icon_system_fontawesome::instance($theme->get_icon_system());
-
-        // Get the icon list.
-        $iconlist = $faiconsystem->get_core_icon_map();
-
-        // Add an empty element to the beginning of the icon list.
-        array_unshift($iconlist, '');
-
-        // Iterate over the icons.
-        foreach ($iconlist as $iconkey => $icontxt) {
-            // Split the component from the icon key.
-            $icon = explode(':', $iconkey);
-
-            // Pick the icon key.
-            $iconstr = isset($icon[1]) ? $icon[1] : 'moodle';
-
-            // Pick the component.
-            $component = isset($icon[0]) ? $icon[0] : '';
-
-            // Render the pix icon.
-            $icon = new \core\output\pix_icon($iconstr,  "", $component);
-            $icons[] = [
-                'icon' => $faiconsystem->render_pix_icon($OUTPUT, $icon),
-                'value' => $iconkey,
-                'label' => $icontxt,
-            ];
-        }
-
-        // Return the rendered icon list.
-        return $OUTPUT->render_from_template('theme_boost_union/fontawesome-iconpicker-popover', ['options' => $icons]);
-    }
-}
-
-/**
  * Define preferences which may be set via the core_user_set_user_preferences external function.
  *
  * @uses \core\user::is_current_user

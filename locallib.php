@@ -2641,3 +2641,39 @@ function theme_boost_union_is_active_childtheme() {
         return false;
     }
 }
+
+/**
+ * Helper function to build the map of FA icons to be used in the smart menu item icon autocomplete setting.
+ *
+ * @return array The icon map.
+ */
+function theme_boost_union_build_fa_icon_map() {
+    global $PAGE;
+
+    // Initialize icon map.
+    $iconmap = [];
+
+    // Load the theme config.
+    $theme = \core\output\theme_config::load($PAGE->theme->name);
+
+    // Get the FA system.
+    $faiconsystem = \core\output\icon_system_fontawesome::instance($theme->get_icon_system());
+
+    // Get the raw icon map.
+    $iconmapraw = $faiconsystem->get_core_icon_map();
+
+    // Iterate over the raw icon map.
+    foreach ($iconmapraw as $iconname => $faname) {
+
+        // Fill the icon into the icon list, but only if it is not already used.
+        if (!in_array($faname, $iconmap)) {
+            $iconmap[$iconname] = $faname;
+        }
+    }
+
+    // Sort the icons array by label attribute.
+    asort($iconmap);
+
+    // Return icon map.
+    return $iconmap;
+}
