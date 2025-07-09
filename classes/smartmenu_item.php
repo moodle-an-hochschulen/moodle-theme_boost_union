@@ -72,6 +72,12 @@ class smartmenu_item {
     const TYPEDOCS = 3;
 
     /**
+     * Represents the type of a divider element.
+     * @var int
+     */
+    const TYPEDIVIDER = 4;
+
+    /**
      * Represents the completion status of an item where the status is 'enrolled'.
      * @var int
      */
@@ -657,6 +663,21 @@ class smartmenu_item {
     }
 
     /**
+     * Generate a node data for a divider item.
+     *
+     * @return array The node data.
+     */
+    protected function generate_divider() {
+        return $this->generate_node_data(
+            '', // Empty title (regardless of what's in the database).
+            '#', // URL.
+            null, // Default key.
+            '', // Empty tooltip (regardless of what's in the database).
+            'divider'
+        );
+    }
+
+    /**
      * Generate the item as static menu item, Send the custom URL to core\url to make this work with relative URL.
      *
      * @return string
@@ -1190,6 +1211,7 @@ class smartmenu_item {
             self::TYPEDYNAMIC => 'dynamic',
             self::TYPEHEADING => 'heading',
             self::TYPEDOCS => 'docs',
+            self::TYPEDIVIDER => 'divider',
         ];
 
         $class[] = 'menu-item-'.($types[$this->item->type] ?? '');
@@ -1231,6 +1253,13 @@ class smartmenu_item {
             case self::TYPEDYNAMIC:
                 $result = $this->generate_dynamic_item();
                 $type = 'dynamic';
+                $cacheable = true;
+                break;
+
+            case self::TYPEDIVIDER:
+                $divider = $this->generate_divider();
+                $result = [$divider]; // Return the result as recursive array useful to merge with dynamic items.
+                $type = 'divider';
                 $cacheable = true;
                 break;
 
@@ -1359,10 +1388,10 @@ class smartmenu_item {
             ], ];
         }
 
-        if (preg_match("/^#+$/", format_string($title))) {
-            // In main menu divider is separate property.
-            // For lang menu divider is mentioned in itemtype.
-            // Updated the item type in the build_user_menu in primary navigation class method.
+        // If the type is divider or if the title is a series of '#' characters, mark it as a divider.
+        // The series of '#' characters is just a fallback support dividers as they were created before #453 although these should
+        // not exist anymore after this patch.
+        if ($itemtype == 'divider' || preg_match("/^#+$/", format_string($title))) {
             $data['divider'] = true;
         }
         return $data;
@@ -1507,6 +1536,7 @@ class smartmenu_item {
                 self::TYPEHEADING => get_string('smartmenusmenuitemtypeheading', 'theme_boost_union'),
                 self::TYPEDOCS => get_string('smartmenusmenuitemtypedocs', 'theme_boost_union'),
                 self::TYPEDYNAMIC => get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union'),
+                self::TYPEDIVIDER => get_string('smartmenusmenuitemtypedivider', 'theme_boost_union'),
         ];
 
         return ($type !== null && isset($types[$type])) ? $types[$type] : $types;

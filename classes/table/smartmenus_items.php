@@ -25,6 +25,7 @@
 namespace theme_boost_union\table;
 
 use core\output\html_writer;
+use theme_boost_union\smartmenu_item;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -103,7 +104,13 @@ class smartmenus_items extends \core_table\sql_table {
      * @return string Language formatted title of item.
      */
     public function col_title($row) {
-        // Return the title after filter.
+        // If the type is a divider, set a fixed title (as the title is most probably empty).
+        if ($row->type == smartmenu_item::TYPEDIVIDER) {
+            // Return the divider title.
+            return '&horbar;&horbar;&horbar;&horbar;';
+        }
+
+        // Otherwise, return the title after filter.
         return format_string($row->title);
     }
 
