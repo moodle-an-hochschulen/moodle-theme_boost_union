@@ -1,5 +1,5 @@
 @theme @theme_boost_union @theme_boost_union_smartmenusettings @theme_boost_union_smartmenusettings_menuitems @theme_boost_union_smartmenusettings_menuitems_docslink
-Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, using a dynamic documentationn link item
+Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, using a dynamic documentation link item
   In order to use the features
   As admin
   I need to be able to configure the theme Boost Union plugin
