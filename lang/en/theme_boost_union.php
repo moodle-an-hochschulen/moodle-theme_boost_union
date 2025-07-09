@@ -1528,6 +1528,7 @@ $string['smartmenusmenuitemedit'] = 'Edit menu item';
 $string['smartmenusmenuitemeditsuccess'] = 'Smart menu item updated successfully';
 $string['smartmenusmenuitemicon'] = 'Icon';
 $string['smartmenusmenuitemicon_help'] = 'The icon to display next to the menu item title.';
+$string['smartmenusmenuitemicon_placeholder'] = 'Pick icon';
 $string['smartmenusmenuitemlinktarget'] = 'Link target';
 $string['smartmenusmenuitemlinktarget_help'] = 'The target for the link of the menu item. The menu item link will open in this target when clicked (i.e. in the same window or in a new tab).';
 $string['smartmenusmenuitemlinktargetnewtab'] = 'New tab';

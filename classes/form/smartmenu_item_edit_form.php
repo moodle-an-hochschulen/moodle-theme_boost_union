@@ -170,22 +170,33 @@ class smartmenu_item_edit_form extends \moodleform {
                 get_string('smartmenusmenuitempresentationheader', 'theme_boost_union'));
         $mform->setExpanded('presentationheader');
 
-        // Add icon as input element.
-        // Build icon list.
-        $theme = \core\output\theme_config::load($PAGE->theme->name);
-        $faiconsystem = \core\output\icon_system_fontawesome::instance($theme->get_icon_system());
-        $iconlist = $faiconsystem->get_core_icon_map();
-        array_unshift($iconlist, '');
-        // Create element.
-        $iconwidget = $mform->addElement('select', 'menuicon',
-                get_string('smartmenusmenuitemicon', 'theme_boost_union'), $iconlist);
+        // Add icon as autocomplete element.
+        $iconmap = theme_boost_union_build_fa_icon_map();
+        $options = [
+            'multiple' => false,
+            'noselectionstring' => get_string('none', 'moodle'),
+            'placeholder' => get_string('smartmenusmenuitemicon_placeholder', 'theme_boost_union'),
+            'showsuggestions' => true,
+            'valuehtmlcallback' => function($value) use ($iconmap) {
+                global $OUTPUT;
+
+                if (empty($value) || !isset($iconmap[$value])) {
+                    return false;
+                }
+
+                $icon = (object)[
+                    'iconclass' => $iconmap[$value],
+                    'iconname' => $iconmap[$value],
+                ];
+
+                return $OUTPUT->render_from_template('theme_boost_union/form_autocomplete_fontawesome_icon', $icon);
+            }
+        ];
+        $iconwidget = $mform->addElement('autocomplete', 'menuicon',
+                get_string('smartmenusmenuitemicon', 'theme_boost_union'), $iconmap, $options);
         $mform->setType('menuicon', PARAM_TEXT);
-        $iconwidget->setMultiple(false);
         $mform->addHelpButton('menuicon', 'smartmenusmenuitemicon', 'theme_boost_union');
         $mform->hideIf('menuicon', 'type', 'eq', smartmenu_item::TYPEDIVIDER);
-        // Include the fontawesome icon picker to the element.
-        $systemcontextid = \context_system::instance()->id;
-        $PAGE->requires->js_call_amd('theme_boost_union/fontawesome-popover', 'init', ['#id_menuicon', $systemcontextid]);
 
         // Add title presentation and select element.
         $displayoptions = smartmenu_item::get_display_options();
@@ -473,8 +484,17 @@ class smartmenu_item_edit_form extends \moodleform {
     public function get_data() {
         $data = parent::get_data();
 
-        if ($data && isset($data->type) && $data->type == smartmenu_item::TYPEDIVIDER) {
-            $data->title = ''; // Explicitly set title to empty for dividers.
+        if ($data) {
+            // Explicitly set title to empty for dividers.
+            if (isset($data->type) && $data->type == smartmenu_item::TYPEDIVIDER) {
+                $data->title = '';
+            }
+
+            // Explicitely clear the icon if no icon is contained in the data.
+            // This is necessary to clear previously set icons.
+            if (!property_exists($data, 'menuicon')) {
+                $data->menuicon = 0;
+            }
         }
 
         return $data;
