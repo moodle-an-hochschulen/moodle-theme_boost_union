@@ -210,7 +210,7 @@ class primary extends \core\navigation\output\primary {
                     if ($sm->title == $needle) {
                         // Create and inject a divider node.
                         $dividernode = [
-                            'title' => '####',
+                            'title' => '', // Empty title.
                             'itemtype' => 'divider',
                             'divider' => 1,
                             'link' => '',
@@ -245,7 +245,7 @@ class primary extends \core\navigation\output\primary {
      *
      * User menu and its submenus are connected using submenuid. Added submenuid for submenu items if that has children.
      * Add all the items before logout menu. Removed the logout menu, then add the items into user menu items,
-     * once all items are added, separator included before logout
+     * once all items are added, divider included before logout
      * if any smart menus are included then added the logout menu to menu items.
      *
      * @param array $usermenu
@@ -329,7 +329,7 @@ class primary extends \core\navigation\output\primary {
         if ($forusermenu) {
             // Include the divider after smart menus items to make difference from logout.
             $divider = [
-                'title' => '####',
+                'title' => '', // Empty title.
                 'itemtype' => 'divider',
                 'divider' => 1,
                 'link' => '',

@@ -618,6 +618,30 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2024100744, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2024100745) {
+        // Convert existing hash-based dividers to real dividers.
+        // These were created by using TYPEHEADING with a title of "###".
+        $dividers = $DB->get_records_sql(
+            "SELECT * FROM {theme_boost_union_menuitems}
+                WHERE type = :type AND title LIKE :title",
+            ['type' => \theme_boost_union\smartmenu_item::TYPEHEADING, 'title' => '###%']
+        );
+
+        // Update each divider to use the new divider type.
+        foreach ($dividers as $divider) {
+            $divider->type = \theme_boost_union\smartmenu_item::TYPEDIVIDER;
+            $divider->title = ''; // Empty title to clear the existing hashes in the title.
+            $DB->update_record('theme_boost_union_menuitems', $divider);
+        }
+
+        // Show an upgrade notice about this change.
+        $message = get_string('upgradenotice_2025041416', 'theme_boost_union');
+        echo $OUTPUT->notification($message, 'info');
+
+        // Savepoint reached.
+        upgrade_plugin_savepoint(true, 2024100745, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
