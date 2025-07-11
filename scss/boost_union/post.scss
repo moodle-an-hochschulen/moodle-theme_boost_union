@@ -3029,6 +3029,25 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     flex-direction: column;
 }
 
+/*---------------------------------------
+ * Form element: Icon autocomplete
+ --------------------------------------*/
+
+/* For now, this is only used on the smart menu items editing page. */
+#page-theme-boost_union-smartmenus-edit_items #fitem_id_menuicon {
+
+    /* Raise the min-width to make space for the badges. */
+    .form-autocomplete-suggestions {
+        min-width: 400px;
+    }
+
+    /* Wrap the icon names to avoid that they clash with the icon source badge. */
+    .wrapiconwidth {
+        hyphens: auto;
+        max-width: 200px;
+    }
+}
+
 
 /*---------------------------------------
  * Settings: Setting pages with item lists
