@@ -91,4 +91,11 @@ $definitions = [
                 'canuselocalstore' => true,
                 'staticacceleration' => false,
         ],
+        // This cache stores the FontAwesome icon map to avoid rebuilding it on every request.
+        'fontawesomeicons' => [
+                'mode' => \core_cache\store::MODE_APPLICATION,
+                'simplekeys' => true,
+                'simpledata' => false,
+                'canuselocalstore' => true,
+        ],
 ];

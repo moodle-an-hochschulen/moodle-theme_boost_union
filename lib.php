@@ -916,9 +916,54 @@ function theme_boost_union_parse_uploaded_sippets() {
 
 /**
  * Map icons for font-awesome themes.
+ * This function is only processed when the Moodle cache is cleared and not on every page load.
+ * That's why we created the theme_boost_union_reset_fontawesome_icon_map function and call it everytime a smart menu item
+ * is saved with an icon.
  */
 function theme_boost_union_get_fontawesome_icon_map() {
-    return [
+    // Init icon mapping with icons which are included in any case.
+    $iconmapping = [
         'theme_boost_union:info' => 'fa-info-circle',
     ];
+
+    // Get the FontAwesome icons which are used by smart menus currently.
+    $faicons = \theme_boost_union\smartmenu_item::get_all_fa_icons();
+
+    // Get the list of all Font Awesome icons.
+    $allicons = theme_boost_union_build_fa_icon_map();
+
+    // Process the icons one by one.
+    foreach ($faicons as $i) {
+
+        // Determine the fa class.
+        $faclass = str_replace('theme_boost_union:', '', $i);
+
+        // Append known icon source.
+        if ($allicons[$i]['source'] == 'fasolid') {
+            $faclass .= ' fas';
+        } else if ($allicons[$i]['source'] == 'fabrand') {
+            $faclass .= ' fab';
+        }
+
+        // Add the icon to the mapping.
+        $iconmapping[$i] = $faclass;
+    }
+
+    // Return.
+    return $iconmapping;
+}
+
+/**
+ * Helper function to reset the icon system used as callback function when saving a smart menu item with an icon.
+ */
+function theme_boost_union_reset_fontawesome_icon_map() {
+    // Reset the icon system cache.
+    // There is the function \core\output\icon_system::reset_caches() which does seem to be only usable in unit tests.
+    // Thus, we clear the icon system cache brutally.
+    $instance = \core\output\icon_system::instance(\core\output\icon_system::FONTAWESOME);
+    $cache = \cache::make('core', 'fontawesomeiconmapping');
+    $mapkey = 'mapping_'.preg_replace('/[^a-zA-Z0-9_]/', '_', get_class($instance));
+    $cache->delete($mapkey);
+    // And rebuild it brutally.
+    $instance->get_icon_name_map();
 }

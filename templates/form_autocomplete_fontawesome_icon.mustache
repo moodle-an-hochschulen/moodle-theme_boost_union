@@ -20,14 +20,18 @@
     Boost Union Template for displaying icons in the smartmenu items autocomplete dropdown.
 
     Context variables required for this template:
-    * iconclass - The Font Awesome icon class
-    * iconname - The name/description of the icon
+    * class - The Font Awesome icon class
+    * name - The name/description of the icon
+    * source - The source of the icon
+    * sourcecolor - The bootstrap color to be used for the source
 
     Example context (json):
     {
-        "iconclass": "fa-home",
-        "iconname": "fa-home"
+        "class": "fa-user-lock",
+        "name": "core:i/permissions",
+        "source": "Moodle core",
+        "sourcecolor": "warning"
     }
 }}
 
-<i class="fa fa-fw mr-1 {{iconclass}}" aria-hidden="true"></i>&nbsp;<small>{{iconname}}</small>
+<span class="d-inline-block align-top"><i class="fa fa-fw mx-1 {{class}} align-middle" aria-hidden="true"></i></span>&nbsp;<small class="d-inline-block text-break wrapiconwidth">{{name}}</small>{{#source}}<span class="badge {{{sourcecolor}}} float-end ms-2">{{{source}}}</span>{{/source}}
