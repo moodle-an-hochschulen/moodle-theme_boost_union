@@ -15,19 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Version file
+ * Theme Boost Union - Web services definition
  *
  * @package    theme_boost_union
- * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @copyright  2025 Alexander Bias, ssystems GmbH <abias@ssystems.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'theme_boost_union';
-$plugin->version = 2025041418;
-$plugin->release = 'v5.0-r5';
-$plugin->requires = 2025041401;
-$plugin->supported = [500, 500];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = ['theme_boost' => 2025041400];
+$functions = [
+    'theme_boost_union_get_fontawesome_icons' => [
+        'classname'     => 'theme_boost_union\external\get_fontawesome_icons',
+        'methodname'    => 'execute',
+        'description'   => 'Get FontAwesome icons for autocomplete form widget',
+        'type'          => 'read',
+        'ajax'          => true,
+        'loginrequired' => false,
+    ],
+];

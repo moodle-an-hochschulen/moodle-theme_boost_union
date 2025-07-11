@@ -1513,8 +1513,14 @@ $string['smartmenusmenuitemduplicatesuccess'] = 'Menu item duplicated successful
 $string['smartmenusmenuitemedit'] = 'Edit menu item';
 $string['smartmenusmenuitemeditsuccess'] = 'Smart menu item updated successfully';
 $string['smartmenusmenuitemicon'] = 'Icon';
-$string['smartmenusmenuitemicon_help'] = 'The icon to display next to the menu item title.';
+$string['smartmenusmenuitemicon_help'] = 'The icon to display next to the menu item title.<br /><br />You can either select an icon from the Moodle core icon library, or use a FontAwesome icon. This is an important difference:<ul><li>Moodle core icons:<br />Moodle core defines its icons as "pix icons" and maps FontAwesome icons to these pix icons. The particular FontAwesome icon which is mapped is not guaranteed to be stable forever and might change in future Moodle core versions. Additionally, there are Moodle core pix icons which come with an additional Bootstrap color added to the icon.</li><li>FontAwesome icons:<br />FontAwesome icons are used as-is and their presentation will remain stable in future Moodle releases. It may just happen that the FontAwesome glyph may change if Moodle core upgrades to a future FontAwesome release.</li></ul>If you are in doubt and do not need to stick to a particular Moodle core pix icon, you should prefer to use a FontAwesome icon here.';
 $string['smartmenusmenuitemicon_placeholder'] = 'Pick icon';
+$string['smartmenusmenuitemicon_noicon'] = 'No icon selected';
+$string['smartmenusmenuitemicon_sourcecore'] = 'Moodle core';
+$string['smartmenusmenuitemicon_sourcefablank'] = 'FontAwesome Blank icon';
+$string['smartmenusmenuitemicon_sourcefasolid'] = 'FontAwesome Solid';
+$string['smartmenusmenuitemicon_sourcefabrand'] = 'FontAwesome Brands';
+$string['smartmenusmenuitemicon_ajaxtoomanyicons'] = 'Too many icons ({$a}) to display. Please narrow your search.';
 $string['smartmenusmenuitemlinktarget'] = 'Link target';
 $string['smartmenusmenuitemlinktarget_help'] = 'The target for the link of the menu item. The menu item link will open in this target when clicked (i.e. in the same window or in a new tab).';
 $string['smartmenusmenuitemlinktargetnewtab'] = 'New tab';
@@ -1636,6 +1642,7 @@ $string['cachedef_smartmenus'] = 'Smart menus';
 $string['cachedef_smartmenu_items'] = 'Smart menu items';
 $string['cachedef_touchiconsios'] = 'Touch icon files for iOS';
 $string['cachedef_hookoverrides'] = 'Hook overrides';
+$string['cachedef_fontawesomeicons'] = 'FontAwesome icon map';
 
 // Scheduled tasks.
 $string['task_purgecache'] = 'Purge theme cache';
