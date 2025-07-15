@@ -890,4 +890,49 @@ class course_renderer extends \core_course_renderer {
         // Fallback.
         return false;
     }
+
+    /**
+     * Renders the activity navigation using a custom template.
+     *
+     * @param \core_course\output\activity_navigation $page Activity navigation object to render.
+     * @return string Rendered HTML for the activity navigation.
+     */
+    public function render_activity_navigation(\core_course\output\activity_navigation $page) {
+        // Export the data to be used by the Mustache template.
+        $data = $page->export_for_template($this->output);
+
+        // Replace standard Arrows with Font Awesome Icons - Left Arrow.
+        if (!empty($data->prevlink)) {
+            // Trim any extra spaces from the text.
+            $text = trim($data->prevlink->text);
+
+            // Decode HTML entities to convert encoded characters (e.g., &#x25C0;) to their Unicode representation (e.g., ◀).
+            $text = html_entity_decode($text, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, 'UTF-8');
+
+            // Remove the existing left arrow symbol (◀) from the text.
+            $text = mb_substr($text, 1);
+
+            // Add the custom Font Awesome icon for the left arrow and update the text.
+            $data->prevlink->text = '<i class="fas fa-caret-left"></i> ' . $text;
+        }
+
+        // Replace standard Arrows with Font Awesome Icons - Right Arrow.
+        if (!empty($data->nextlink)) {
+            // Trim any extra spaces from the text.
+            $text = trim($data->nextlink->text);
+
+            // Decode HTML entities to convert encoded characters (e.g., &#x25B6;) to their Unicode representation (e.g., ▶).
+            $text = html_entity_decode($text, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, 'UTF-8');
+
+            // Remove the existing right arrow symbol (▶) from the text.
+            $text = mb_substr($text, 0, -2);
+
+            // Add the custom Font Awesome icon for the right arrow and update the text.
+            $data->nextlink->text = $text . ' <i class="fas fa-caret-right"></i>';
+        }
+
+        // Render the template with the modified data and return it.
+        return $this->output->render_from_template('core_course/activity_navigation', $data);
+    }
+
 }

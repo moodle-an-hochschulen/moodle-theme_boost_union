@@ -1608,6 +1608,12 @@ $string['smartmenusrolecontext_help'] = 'Select the context for which the user\'
 $string['smartmenussavechangesandconfigure'] = 'Save and configure items';
 $string['smartmenussettings'] = 'Smart menu settings';
 
+// Activity and section navigation.
+$string['nextactivity'] = 'Next Activity';
+$string['prevactivity'] = 'Previous Activity';
+$string['nextsection'] = 'Next Unit';
+$string['prevsection'] = 'Unit Overview';
+
 // Privacy API.
 $string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
 
