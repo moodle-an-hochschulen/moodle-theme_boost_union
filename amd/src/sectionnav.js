@@ -1,7 +1,7 @@
 import jQuery from 'jquery';
 import {call as fetchMany} from 'core/ajax';
 
-export const section_nav = (courseid, section) => fetchMany([{
+export const sectionnav = (courseid, section) => fetchMany([{
     methodname: 'theme_boost_union_section_nav',
     args: {
         courseid,
@@ -9,15 +9,15 @@ export const section_nav = (courseid, section) => fetchMany([{
     }
 }])[0];
 
-export const init = async (courseid, section) => {
-    jQuery(document).ready(async function () {
-        let result = await section_nav(courseid, section);
+export const init = async(courseid, section) => {
+    jQuery(document).ready(async function() {
+        let result = await sectionnav(courseid, section);
 
         let prev = jQuery('.section-navigation .prevsection');
         let next = jQuery('.section-navigation .nextsection');
 
         if (prev.length > 0 && result.prevlink !== null && result.prevname !== null) {
-            prev.each(function () {
+            prev.each(function() {
                 let that = jQuery(this).find('a');
                 if (that.length > 0) {
                     that.html(result.prevname);
@@ -32,7 +32,7 @@ export const init = async (courseid, section) => {
         }
 
         if (next.length > 0 && result.nextlink !== null && result.nextname !== null) {
-            next.each(function () {
+            next.each(function() {
                 let that = jQuery(this).find('a');
                 if (that.length > 0) {
                     that.html(result.nextname);
