@@ -58,7 +58,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And the "class" attribute of "//div[contains(@class, 'primary-navigation')]//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links-menu"
     And the "class" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Quick links')]" "xpath_element" should contain "quick-links-menu"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links-menu"
-    And I change viewport size to "740x900"
+    And I change viewport size to "mobile"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links-menu"
     And I change viewport size to "large"
     And I navigate to smart menus
@@ -72,7 +72,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And the "class" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Quick links')]" "xpath_element" should contain "quick-links"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should not contain "quick-links-menu"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links"
-    And I change viewport size to "740x900"
+    And I change viewport size to "mobile"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should not contain "quick-links-menu"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links"
 
@@ -239,7 +239,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I <menu3shouldornotlarge> see smart menu "Quick links 03" in location "Main"
     And ".primary-navigation .dropdownmoremenu" "css_element" <moreshouldornotlarge> be visible
     # Make the screen smaller and test the "More" behaviour in the navbar
-    And I change viewport size to "tablet"
+    # This screen size should be 'tablet', but due to MDL-81892, we have to test on a larger screen.
+    And I change viewport size to "820x1024"
     Then I <menu1shouldornottablet> see smart menu "Quick links 01" in location "Main"
     And I <menu2shouldornottablet> see smart menu "Quick links 02" in location "Main"
     And I <menu3shouldornottablet> see smart menu "Quick links 03" in location "Main"
@@ -293,8 +294,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | hidenodesprimarynavigation | home,myhome,courses,siteadminnode | theme_boost_union |
     And I follow "Dashboard"
     # Make the screen smaller and test the "More" behaviour in the navbar
-    # This pixel screen size is essentially the same than the 'tablet' size, but for some strange reason Behat on moodle-docker made the screen too small in this scenario
-    And I change viewport size to "768x1024"
+    # This screen size should be 'tablet', but due to MDL-81892, we have to test on a larger screen.
+    And I change viewport size to "820x1024"
     And I click on "More" "link" in the ".primary-navigation" "css_element"
     Then I should see smart menu "Quick links 01" in location "Main"
     And I should see smart menu "Quick links 02" in location "Main"
@@ -407,8 +408,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | hidenodesprimarynavigation | home,myhome,courses,siteadminnode | theme_boost_union |
     And I follow "Dashboard"
     # Make the screen smaller and test the "More" behaviour in the navbar
-    # This pixel screen size is essentially the same than the 'tablet' size, but for some strange reason Behat on moodle-docker made the screen too small in this scenario
-    And I change viewport size to "768x1024"
+    And I change viewport size to "tablet"
     And I click on "More" "link" in the ".boost-union-menubar" "css_element"
     Then I should see smart menu "Quick links reeeeeally overlong title 01" in location "Menu"
     And I should see smart menu "Quick links reeeeeally overlong title 02" in location "Menu"
