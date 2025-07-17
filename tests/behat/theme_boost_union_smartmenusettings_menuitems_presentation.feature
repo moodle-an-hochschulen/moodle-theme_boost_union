@@ -59,7 +59,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
     And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
-    And I change viewport size to "740x900"
+    And I change viewport size to "mobile"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
     And I change viewport size to "large"
     And I click on ".action-edit" "css_element" in the "Resources" "table_row"
@@ -72,7 +72,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And the "class" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
-    And I change viewport size to "740x900"
+    And I change viewport size to "mobile"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
 
@@ -180,7 +180,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | tablet         | <hidetablet>       |
       | mobile         | <hidemobile>       |
     Then I <desktopshouldornot> see smart menu "Quick links" item "Resources" in location "Menu, Main, User"
-    And I change window size to "990x900"
+    And I change viewport size to "tablet"
     Then I <tabletshouldornot> see smart menu "Quick links" item "Resources" in location "User, Menu"
     And I click on "More" "link" in the ".primary-navigation" "css_element"
     Then I <tabletshouldornot> see smart menu "Quick links" item "Resources" in location "Main"

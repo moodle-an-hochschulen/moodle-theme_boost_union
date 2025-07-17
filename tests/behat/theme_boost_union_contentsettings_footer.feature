@@ -55,18 +55,18 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And I follow "Dashboard"
     And I change viewport size to "large"
     Then ".btn-footer-popover" "css_element" <desktopshouldornot> <visibleorexist>
-    And I change viewport size to "480x800"
+    And I change viewport size to "mobile"
     Then ".btn-footer-popover" "css_element" <mobileshouldornot> <visibleorexist>
     And I am on "Course 1" course homepage
     And I change viewport size to "large"
     Then ".btn-footer-popover" "css_element" <desktopshouldornot> <visibleorexist>
-    And I change viewport size to "480x800"
+    And I change viewport size to "mobile"
     Then ".btn-footer-popover" "css_element" <mobileshouldornot> <visibleorexist>
     And I log out
     And I follow "Log in"
     And I change viewport size to "large"
     Then ".btn-footer-popover" "css_element" <desktopshouldornot> <visibleorexist>
-    And I change viewport size to "480x800"
+    And I change viewport size to "mobile"
     Then ".btn-footer-popover" "css_element" <mobileshouldornot> <visibleorexist>
 
     Examples:
