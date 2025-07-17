@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-07-16 - Tests: Fix / Improve Behat tests which deal with viewport sizes, resolves #1004 and #952.
 * 2025-07-08 - Feature: Add a dedicated divider menu item type for smart menus, resolves #453.
                Please note: Existing dividers created using heading type with hash signs will be automatically converted to the new divider type during this version update.
 * 2025-07-07 - Bugfix: SCSS Snippets overview page did not show previews of uploaded snippets, resolves #993
