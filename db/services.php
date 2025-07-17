@@ -15,19 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Version file
+ * External services configuration for theme_boost_union.
+ *
+ * This file defines the external functions available for AJAX calls in the theme.
  *
  * @package    theme_boost_union
- * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @copyright  2024 oncampus GmbH
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'theme_boost_union';
-$plugin->version = 2024100746;
-$plugin->release = 'v4.5-r21';
-$plugin->requires = 2024100702;
-$plugin->supported = [405, 405];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = ['theme_boost' => 2024100700];
+$functions = [
+    'theme_boost_union_section_nav' => [
+        'classname'   => 'theme_boost_union\external\section_nav',
+        'description' => 'Ajax to get navigation for a given section in given course.',
+        'type'        => 'read',
+        'ajax'        => true,
+        'services'    => [],
+    ],
+];
