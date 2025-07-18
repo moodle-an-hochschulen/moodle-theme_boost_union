@@ -439,7 +439,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
      */
     public function full_header() {
         global $SITE;
-        
         // Check if the setting to use course short name in header is enabled.
         if (get_config('theme_boost_union', 'useshortnameinheader') &&
             $this->page->course && $this->page->course->id != $SITE->id) {
