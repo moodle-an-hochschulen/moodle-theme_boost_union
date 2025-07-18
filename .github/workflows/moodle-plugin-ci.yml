@@ -107,6 +107,9 @@ jobs:
         if: ${{ !cancelled() }}
         run: moodle-plugin-ci phpunit --fail-on-warning
 
+      - name: Raise Behat timeout (Required for theme_boost_union_general.feature)
+        run: moodle-plugin-ci add-config '$CFG->behat_increasetimeout = 3;'
+
       - name: Behat features
         id: behat
         if: ${{ !cancelled() }}
