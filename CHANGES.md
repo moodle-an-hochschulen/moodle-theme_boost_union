@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.0-r6
 
 * 2025-07-18 - Improvement: Allow all (solid and brands) FontAwesome icons for smart menu items, resolves #493
                Please note: Smart menu item icons are now distinguished if they come from Moodle core or from FontAwesome. Please have a look at the help icon for smart menu item icons if you are interested in the details.
