@@ -2648,3 +2648,128 @@ function theme_boost_union_is_active_childtheme() {
         return false;
     }
 }
+
+/**
+ * Helper function to build the map of FA icons to be used in the smart menu item icon autocomplete setting.
+ * It returns both the Moodle core icon mappings and all other available FontAwesome icons.
+ *
+ * @return array An array which holds the full icon map.
+ */
+function theme_boost_union_build_fa_icon_map() {
+    global $CFG;
+
+    // Check if we have the icon map in the cache.
+    $cache = \cache::make('theme_boost_union', 'fontawesomeicons');
+    $iconmap = $cache->get('iconmap');
+
+    // If the icon map is already in the cache, return it.
+    if ($iconmap !== false) {
+        return $iconmap;
+    }
+
+    // Initialize icon map if not in cache.
+    $iconmap = [];
+
+    // Step 1: Get all Moodle core icon mappings.
+
+    // Load the theme config.
+    $theme = \core\output\theme_config::load('boost_union');
+
+    // Get the FA system.
+    $faiconsystem = \core\output\icon_system_fontawesome::instance($theme->get_icon_system());
+
+    // Get the raw icon map.
+    $iconmapraw = $faiconsystem->get_core_icon_map();
+
+    // Iterate over the raw icon map.
+    foreach ($iconmapraw as $iconname => $faname) {
+        // Fill the icon into the icon list.
+        $iconmap[$iconname] = [
+            'class' => $faname,
+            'source' => 'core',
+        ];
+    }
+
+    // Define the FontAwesome variables file path first.
+    $variablesfile = $CFG->dirroot . '/theme/boost/scss/fontawesome/_variables.scss';
+
+    // If the variables file exists.
+    if (file_exists($variablesfile)) {
+        // Read the variables file content.
+        $content = file_get_contents($variablesfile);
+
+        // Step 2: Add all available FontAwesome solid icons from $fa-icons array.
+
+        // Extract the $fa-icons section using a quite simple approach.
+        // Find the beginning of $fa-icons array.
+        $faiconsstart = strpos($content, '$fa-icons:');
+        if ($faiconsstart !== false) {
+            // Find the end of $fa-icons array (right before $fa-brand-icons starts).
+            $fabrandstart = strpos($content, '$fa-brand-icons:', $faiconsstart);
+            if ($fabrandstart !== false) {
+                // Extract just the $fa-icons section.
+                $faiconsection = substr($content, $faiconsstart, $fabrandstart - $faiconsstart);
+
+                // Extract all icon names from the $fa-icons array with a simple pattern.
+                preg_match_all('/"([a-z0-9\-]+)"/', $faiconsection, $solidmatches);
+
+                // If we found any icon names.
+                if (!empty($solidmatches[1])) {
+                    // Process the icons.
+                    foreach ($solidmatches[1] as $iconname) {
+                        $fasolidclass = 'fa-'. $iconname;
+
+                        // Add icon to the icon map, ignoring the fact by purpose that the icon could already be there from core.
+                        $iconmap['theme_boost_union:fa-'.$iconname] = [
+                            'class' => $fasolidclass,
+                            'source' => 'fasolid',
+                        ];
+                    }
+                }
+            }
+        }
+
+        // Step 3: Add all available FontAwesome brand icons from $fa-brand-icons array.
+
+        // Find the beginning of $fa-brand-icons array.
+        $fabrandstart = strpos($content, '$fa-brand-icons:');
+        if ($fabrandstart !== false) {
+            // Extract the $fa-brand-icons section.
+            $fabrandsection = substr($content, $fabrandstart);
+
+            // Extract all brand icon names from the $fa-brand-icons array with a simple pattern.
+            preg_match_all('/"([a-z0-9\-]+)"/', $fabrandsection, $brandmatches);
+
+            // If we found any brand icon names.
+            if (!empty($brandmatches[1])) {
+                // Process the brand icons.
+                foreach ($brandmatches[1] as $brandname) {
+                    $fabrandclass = 'fa-'. $brandname;
+
+                    // Add brand icon to the icon map.
+                    $iconmap['theme_boost_union:fa-'.$brandname] = [
+                        'class' => $fabrandclass,
+                        'source' => 'fabrand',
+                    ];
+                }
+            }
+        }
+    }
+
+    // Sort the icons array by key.
+    asort($iconmap);
+
+    // Step 4: Add the blank FontAwesome icon to the very beginning of the icon map.
+    // This icon is not contained in the FontAwesome variables file, but should be usable as smart menu item.
+    $blankicon = [
+        'class' => 'fa-fw',
+        'source' => 'fablank',
+    ];
+    $iconmap = ['theme_boost_union:fa-fw' => $blankicon] + $iconmap;
+
+    // Store the icon map in cache for future requests.
+    $cache->set('iconmap', $iconmap);
+
+    // Return icon map.
+    return $iconmap;
+}

@@ -642,6 +642,19 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2024100745, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2024100747) {
+
+        // The old smart menu item icon picker stored the value '0' for no icon.
+        // We need to update these to an empty string to match the new icon picker behavior.
+        // Find all menu items where menuicon is '0' and update them to have an empty string.
+        $DB->execute("UPDATE {theme_boost_union_menuitems}
+                SET menuicon = ''
+                WHERE menuicon = '0'");
+
+        // Savepoint reached.
+        upgrade_plugin_savepoint(true, 2024100747, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();

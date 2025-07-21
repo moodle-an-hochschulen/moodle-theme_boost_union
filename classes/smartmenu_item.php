@@ -1753,6 +1753,11 @@ class smartmenu_item {
                 ]);
             }
 
+            // Reset the fontawesome mapping cache if an icon was newly set or changed.
+            if (!empty($record->menuicon) && $oldrecord->menuicon != $record->menuicon) {
+                theme_boost_union_reset_fontawesome_icon_map();
+            }
+
             // Delete the cached data of its menu. Menu will recreate with this item.
             $menucache->delete_menu($formdata->menu);
             // Purge the current item cache for all users.
@@ -1771,6 +1776,11 @@ class smartmenu_item {
             $DB->execute($sql, ['sortorder' => $record->sortorder, 'item' => $itemid, 'menuid' => $record->menu]);
             // Show the menu item inserted success notification.
             \core\notification::success(get_string('smartmenusmenuitemcreatesuccess', 'theme_boost_union'));
+
+            // Reset the fontawesome mapping cache if an icon was set.
+            if (!empty($record->menuicon)) {
+                theme_boost_union_reset_fontawesome_icon_map();
+            }
 
             // Delete the cached data of its menu. Menu will recreate with this item.
             $menucache->delete_menu($formdata->menu);
@@ -1808,4 +1818,29 @@ class smartmenu_item {
         ];
     }
 
+    /**
+     * Get a list of all icons which are currently set in the menu items.
+     *
+     * @return array An array of icon names.
+     */
+    public static function get_all_fa_icons() {
+        global $DB;
+
+        // Define the query to search for icons in the menu items table.
+        $sql = "SELECT DISTINCT menuicon
+                FROM {theme_boost_union_menuitems}
+                WHERE menuicon IS NOT NULL AND menuicon != '0'";
+
+        // Get the icons from the database.
+        $icons = $DB->get_fieldset_sql($sql);
+
+        // Drop non-FA icons.
+        $icons = array_filter($icons, function($icon) {
+            // Check if the icon is a Font Awesome icon.
+            return (strpos($icon, 'theme_boost_union:fa-') === 0);
+        });
+
+        // Return.
+        return $icons;
+    }
 }

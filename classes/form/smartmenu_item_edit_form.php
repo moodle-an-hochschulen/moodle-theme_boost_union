@@ -170,22 +170,70 @@ class smartmenu_item_edit_form extends \moodleform {
                 get_string('smartmenusmenuitempresentationheader', 'theme_boost_union'));
         $mform->setExpanded('presentationheader');
 
-        // Add icon as input element.
-        // Build icon list.
-        $theme = \core\output\theme_config::load($PAGE->theme->name);
-        $faiconsystem = \core\output\icon_system_fontawesome::instance($theme->get_icon_system());
-        $iconlist = $faiconsystem->get_core_icon_map();
-        array_unshift($iconlist, '');
-        // Create element.
-        $iconwidget = $mform->addElement('select', 'menuicon',
-                get_string('smartmenusmenuitemicon', 'theme_boost_union'), $iconlist);
+        // Add icon as autocomplete element.
+        $iconmap = theme_boost_union_build_fa_icon_map();
+        $options = [
+            'multiple' => false,
+            'ajax' => 'theme_boost_union/fontawesome_icon_selector',
+            'noselectionstring' => get_string('smartmenusmenuitemicon_noicon', 'theme_boost_union'),
+            'placeholder' => get_string('smartmenusmenuitemicon_placeholder', 'theme_boost_union'),
+            'showsuggestions' => true,
+            // The valuehtmlcallback function is purely needed for formatting the element which is auto-selected after loading
+            // an existing menu item again.
+            // All other elements are formatted in JS in fontawesome_icon_selector.js.
+            // That's why we duplicate the formatting logic from JS here in PHP.
+            // And we just add this function if the menuicon is set in the custom data already. Otherwise, for an unknown reason,
+            // the layout of the autocomplete element breaks.
+            'valuehtmlcallback' => isset($this->_customdata['menuitem']) && !empty($this->_customdata['menuitem']->menuicon) ?
+                function($value) use ($iconmap) {
+                    global $OUTPUT;
+
+                    // If this is a Moodle core icon.
+                    if (isset($iconmap[$value]['source']) && $iconmap[$value]['source'] == 'core') {
+                        $icon = (object)[
+                            'class' => $iconmap[$value]['class'],
+                            'name' => $value,
+                            'source' => get_string('smartmenusmenuitemicon_sourcecore', 'theme_boost_union'),
+                            'sourcecolor' => 'bg-warning text-dark',
+                        ];
+
+                        // Otherwise, if this is a FontAwesome solid icon.
+                    } else if (isset($iconmap[$value]['source']) && $iconmap[$value]['source'] == 'fasolid') {
+                        $icon = (object)[
+                            'class' => 'fas '.$iconmap[$value]['class'],
+                            'name' => $iconmap[$value]['class'],
+                            'source' => get_string('smartmenusmenuitemicon_sourcefasolid', 'theme_boost_union'),
+                            'sourcecolor' => 'bg-success',
+                        ];
+
+                        // Otherwise, if this is a FontAwesome brands icon.
+                    } else if (isset($iconmap[$value]['source']) && $iconmap[$value]['source'] == 'fabrand') {
+                        $icon = (object)[
+                            'class' => 'fab '.$iconmap[$value]['class'],
+                            'name' => $iconmap[$value]['class'],
+                            'source' => get_string('smartmenusmenuitemicon_sourcefabrand', 'theme_boost_union'),
+                            'sourcecolor' => 'bg-success',
+                        ];
+
+                        // Otherwise, if this is the FontAwesome blank icon.
+                    } else if (isset($iconmap[$value]['source']) && $iconmap[$value]['source'] == 'fablank') {
+                        $icon = (object)[
+                            'class' => 'fab '.$iconmap[$value]['class'],
+                            'name' => $iconmap[$value]['class'],
+                            'source' => get_string('smartmenusmenuitemicon_sourcefablank', 'theme_boost_union'),
+                            'sourcecolor' => 'bg-success',
+                        ];
+                    }
+                    // All other icon sources (which should not appear) will be ignored.
+
+                    return $OUTPUT->render_from_template('theme_boost_union/form_autocomplete_fontawesome_icon', $icon);
+                } : null,
+        ];
+        $iconwidget = $mform->addElement('autocomplete', 'menuicon',
+                get_string('smartmenusmenuitemicon', 'theme_boost_union'), [], $options);
         $mform->setType('menuicon', PARAM_TEXT);
-        $iconwidget->setMultiple(false);
         $mform->addHelpButton('menuicon', 'smartmenusmenuitemicon', 'theme_boost_union');
         $mform->hideIf('menuicon', 'type', 'eq', smartmenu_item::TYPEDIVIDER);
-        // Include the fontawesome icon picker to the element.
-        $systemcontextid = \context_system::instance()->id;
-        $PAGE->requires->js_call_amd('theme_boost_union/fontawesome-popover', 'init', ['#id_menuicon', $systemcontextid]);
 
         // Add title presentation and select element.
         $displayoptions = smartmenu_item::get_display_options();
@@ -473,8 +521,17 @@ class smartmenu_item_edit_form extends \moodleform {
     public function get_data() {
         $data = parent::get_data();
 
-        if ($data && isset($data->type) && $data->type == smartmenu_item::TYPEDIVIDER) {
-            $data->title = ''; // Explicitly set title to empty for dividers.
+        if ($data) {
+            // Explicitly set title to empty for dividers.
+            if (isset($data->type) && $data->type == smartmenu_item::TYPEDIVIDER) {
+                $data->title = '';
+            }
+
+            // Explicitly clear the icon if no icon is contained in the data.
+            // This is necessary to clear previously set icons.
+            if (!property_exists($data, 'menuicon')) {
+                $data->menuicon = 0;
+            }
         }
 
         return $data;
