@@ -1382,6 +1382,7 @@ $string['snippetsoverview_notes3'] = 'After each change which you make on this p
 $string['snippetsscope'] = 'Scope';
 $string['snippetsscopecourse'] = 'Course';
 $string['snippetsscopedashboard'] = 'Dashboard';
+$string['snippetsscopesitehome'] = 'Site home';
 $string['snippetsscopeglobal'] = 'Global';
 $string['snippetsshowdetails'] = 'Show details';
 $string['snippetssnippets'] = 'SCSS snippets';
