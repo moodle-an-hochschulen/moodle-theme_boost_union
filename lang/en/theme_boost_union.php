@@ -1369,11 +1369,13 @@ $string['snippetsscope'] = 'Scope';
 $string['snippetsscopecourse'] = 'Course';
 $string['snippetsscopedashboard'] = 'Dashboard';
 $string['snippetsscopeglobal'] = 'Global';
+$string['snippetsscopesitehome'] = 'Site home';
 $string['snippetsshowdetails'] = 'Show details';
 $string['snippetssnippets'] = 'SCSS snippets';
 $string['snippetssource'] = 'Source';
 $string['snippetssourcetheme_boost_union'] = 'Boost Union built-in';
 $string['snippetssourceuploaded'] = 'Upload';
+$string['snippetssourcecommunity_repository'] = 'Community Repository';
 $string['snippetstestedon'] = 'Tested on';
 $string['snippetstitle'] = 'Title';
 $string['snippetstrackerissue'] = 'Tracker issue';
@@ -1386,6 +1388,11 @@ $string['snippetsbuiltinsnippetsheading'] = 'Built-in snippets';
 // ... ... Setting: Enable built-in snippets.
 $string['enablebuiltinsnippets'] = 'Enable built-in snippets';
 $string['enablebuiltinsnippets_desc'] = 'With this setting, you can enable or disable the built-in SCSS snippets which are shipped with the Boost Union codebase. If you disable this setting, all built-in SCSS snippets are ignored and never added to the SCSS stack.';
+// ... Section: Community snippets repository.
+$string['snippetsrepositoryheading'] = 'Community snippets repository';
+// ... ... Setting: Enable community snippets repository.
+$string['enablecommunitysnippets'] = 'Enable community snippets repository';
+$string['enablecommunitysnippets_desc'] = 'Enabling this setting allows you to receive SCSS snippets from the  <a href="{$a->url}" target="_blank">Boost Union community repository</a>. If you disable this setting, you will no longer be able to use SCSS snippets from the communnity repository, and any previously used snippets from this source will be ignored and will never be added to the SCSS stack.';
 // ... Section: Uploaded snippets.
 $string['snippetsuploadedsnippetsheading'] = 'Uploaded snippets';
 $string['snippetsuploadedsnippetsheading_desc'] = 'In addition to the built-in SCSS snippets which are officially maintained by the Boost Union team, there is the <a href="{$a}" target="_blank">SCSS snippets repository on Github</a> which is meant as a community hub for Boost Union SCSS snippets. Please find the instructions for using community SCSS snippets as well as the boilerplate to create your own local SCSS snippets in that repository.';
@@ -1638,6 +1645,10 @@ $string['cachedef_hookoverrides'] = 'Hook overrides';
 
 // Scheduled tasks.
 $string['task_purgecache'] = 'Purge theme cache';
+$string['task_refreshcommunitysnippets'] = 'Refresh SCSS community snippets';
+$string['taskconfigure_refreshcommunitysnippets'] = 'Configure community snippets sync task';
+$string['taskmanage_refreshcommunitysnippets'] = 'Manage synchronization of community snippets';
+$string['taskrun_refreshcommunitysnippets'] = 'Synchronise community snippets now';
 
 // Upgrade notices.
 $string['upgradenotice_2022080922'] = 'From this release on, Boost Union has its own logo and compact logo settings and does not use these files from the Moodle core settings anymore.';

@@ -776,7 +776,8 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $serveoptions);
 
         // Serve the files from the smart menu card images.
-    } else if (in_array($filearea, ['smartmenus_itemimage', 'snippets']) && $context->contextlevel === CONTEXT_SYSTEM) {
+    } else if (in_array($filearea, ['smartmenus_itemimage', 'snippets', 'uploadedsnippets', 'communitysnippets'])
+            && $context->contextlevel === CONTEXT_SYSTEM) {
         // Get file storage.
         $fs = get_file_storage();
 
@@ -788,7 +789,6 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
 
         // Send stored file (and cache it for 90 days, similar to other static assets within Moodle).
         send_stored_file($file, DAYSECS * 90, 0, $forcedownload, $options);
-
     } else {
         send_file_not_found();
     }
@@ -961,6 +961,24 @@ function theme_boost_union_alter_css_urls(&$urls) {
  */
 function theme_boost_union_parse_uploaded_sippets() {
     snippets::parse_uploaded_snippets();
+    snippets::cleanup_snippets();
+    theme_reset_all_caches();
+}
+
+/**
+ * Callback to refresh uploaded SCSS snippets when the theme_boost_union/uploadedsnippets config setting changes.
+ *
+ * @return void
+ */
+function theme_boost_union_refresh_community_sippets() {
+    $task = \core\task\manager::get_scheduled_task('theme_boost_union\task\refresh_snippets_from_community_repository');
+    if (in_array(snippets::SOURCE_COMMUNITY_REPOSITORY, snippets::get_enabled_sources(), true)) {
+        snippets::refresh_community_repository();
+        $task->enable();
+    } else {
+        $task->disable();
+    }
+
     snippets::cleanup_snippets();
     theme_reset_all_caches();
 }

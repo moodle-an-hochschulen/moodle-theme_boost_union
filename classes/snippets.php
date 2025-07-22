@@ -87,6 +87,20 @@ class snippets {
     const SOURCE_UPLOADED = 'uploaded';
 
     /**
+     * Constant for identifying snippets from the community repository.
+     *
+     * @var string
+     */
+    const SOURCE_COMMUNITY_REPOSITORY = 'community_repository';
+
+    /**
+     * URL of the Boost Union Community Snippets Repository.
+     *
+     * @var string
+     */
+    const COMMUNITY_REPOSITORY = 'https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_snippets';
+
+    /**
      * Gets the snippet file based on the meta information.
      *
      * @param string $name The snippet's path.
@@ -121,11 +135,9 @@ class snippets {
                 // And check if the file is readable.
                 return is_readable($file) ? $url : null;
             }
-        } else if ($source === self::SOURCE_UPLOADED) {
-            // Get snippets file storage.
-            $systemcontext = \core\context\system::instance();
-            $fs = get_file_storage();
-            $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'uploadedsnippets', false, 'itemid', false);
+        } else if ($source === self::SOURCE_UPLOADED || $source === self::SOURCE_COMMUNITY_REPOSITORY) {
+            // Get uploaded snippets files.
+            $files = self::get_snippet_files($source);
 
             // Iterate over the files.
             foreach ($files as $file) {
@@ -175,11 +187,8 @@ class snippets {
 
             // Get and return the whole file content (which will contain the SCSS comments as well).
             $scss = file_get_contents($file);
-        } else if ($source === self::SOURCE_UPLOADED) {
-            // Get the file from the file storage.
-            $fs = \get_file_storage();
-            $systemcontext = \core\context\system::instance();
-            $file = $fs->get_file($systemcontext->id, 'theme_boost_union', 'uploadedsnippets', 0, '/', $name);
+        } else if ($source === self::SOURCE_UPLOADED || $source === self::SOURCE_COMMUNITY_REPOSITORY) {
+            $file = self::get_snippet_scss_file($name, $source);
 
             // If we have found a file.
             if ($file) {
@@ -192,6 +201,21 @@ class snippets {
 
         // Return the SCSS or an empty string if reading the file has failed.
         return $scss ?: '';
+    }
+
+    /**
+     * Get an an snippet scss file from the file storage.
+     *
+     * @param mixed $name
+     * @param mixed $source
+     * @return \stored_file|bool
+     */
+    private static function get_snippet_scss_file($name, $source) {
+        // Get the file from the file storage.
+        $fs = \get_file_storage();
+        $systemcontext = \core\context\system::instance();
+        $filearea = self::get_filearea($source);
+        return $fs->get_file($systemcontext->id, 'theme_boost_union', $filearea, 0, '/', $name);
     }
 
     /**
@@ -222,11 +246,9 @@ class snippets {
             // Get the preview image as well.
             $image = self::get_snippet_preview_url($name, $source);
 
-        } else if ($source === self::SOURCE_UPLOADED) {
+        } else if ($source === self::SOURCE_UPLOADED || $source === self::SOURCE_COMMUNITY_REPOSITORY) {
             // Get the file from the file storage.
-            $fs = \get_file_storage();
-            $systemcontext = \core\context\system::instance();
-            $file = $fs->get_file($systemcontext->id, 'theme_boost_union', 'uploadedsnippets', 0, '/', basename($name));
+            $file = self::get_snippet_scss_file($name, $source);
 
             // If we have not found a file.
             if (!$file) {
@@ -444,6 +466,10 @@ class snippets {
         if (get_config('theme_boost_union', 'enableuploadedsnippets') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
             $sources[] = self::SOURCE_UPLOADED;
         }
+        // If community snippets are enabled.
+        if (get_config('theme_boost_union', 'enablecommunitysnippets') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            $sources[] = self::SOURCE_COMMUNITY_REPOSITORY;
+        }
 
         // Return.
         return $sources;
@@ -456,7 +482,7 @@ class snippets {
      * @param mixed $zipdir
      * @return void
      */
-    private static function process_uploaded_scss_file($filename, $zipdir): void {
+    private static function process_scss_file($filename, $zipdir, $source): void {
         $filecontent = \file_get_contents($zipdir.'/'.$filename, false);
 
         if (!$filecontent) {
@@ -474,6 +500,11 @@ class snippets {
             return;
         }
 
+        $filearea = self::get_filearea($source);
+        if (!$filearea) {
+            return;
+        }
+
         // Get file storage.
         $fs = get_file_storage();
         $systemcontext = \context_system::instance();
@@ -482,7 +513,7 @@ class snippets {
         $filerecord = [
             'contextid' => $systemcontext->id,
             'component' => 'theme_boost_union',
-            'filearea' => 'uploadedsnippets',
+            'filearea' => $filearea,
             'itemid' => 0,
             'filepath' => '/',
             'filename' => basename($filename),
@@ -514,6 +545,8 @@ class snippets {
 
         // Save snippet to filearea for uploaded snippets.
         $fs->create_file_from_string($filerecord, $filecontent);
+
+        mtrace("Refreshed snippet: $filename");
 
         // Save preview image for that snippet if it exists.
         $preview = self::search_preview_file($zipdir, $filename);
@@ -548,6 +581,8 @@ class snippets {
 
             // Save the preview file.
             $fs->create_file_from_pathname($filerecord, $preview);
+
+            mtrace("Refreshed preview file for: $filename");
         }
     }
 
@@ -584,12 +619,27 @@ class snippets {
     }
 
     /**
+     * Get the filearea for a snippet source.
+     *
+     * @param mixed $source
+     * @return string|bool
+     */
+    private static function get_filearea($source) {
+        if ($source === self::SOURCE_UPLOADED) {
+            return 'uploadedsnippets';
+        } else if ($source === self::SOURCE_COMMUNITY_REPOSITORY) {
+            return 'communitysnippets';
+        }
+        return false;
+    }
+
+    /**
      * Process the SCSS snippets within an uploaded ZIP file and add valid ones to the library.
      *
      * @param mixed $file
      * @return void
      */
-    private static function process_zip_file($file) {
+    private static function process_zip_file($file, $source) {
         // Extract the zip file to a temporary directory.
         $fp = get_file_packer('application/zip');
         $zipdir = \make_request_directory(false);
@@ -604,7 +654,7 @@ class snippets {
         // Iterate over the extracted files and process them.
         foreach ($zipcontents as $filename => $unzipresult) {
             if ($unzipresult && $filename && strtolower(substr($filename, -5)) === '.scss') {
-                self::process_uploaded_scss_file($filename, $zipdir);
+                self::process_scss_file($filename, $zipdir, $source);
             }
         }
 
@@ -620,21 +670,26 @@ class snippets {
     public static function parse_uploaded_snippets() {
         global $DB;
 
+        $filearea = self::get_filearea(self::SOURCE_UPLOADED);
+        if (!$filearea) {
+            return;
+        }
+
         // Get the files from the file storage.
         $systemcontext = \context_system::instance();
         $fs = get_file_storage();
-        $rawfiles = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'uploadedsnippets', false, 'itemid', false);
+        $rawfiles = $fs->get_area_files($systemcontext->id, 'theme_boost_union', $filearea, false, 'itemid', false);
 
         // Parse all zip files. All valid .scss snippet files will be extracted to the root filearea path along with their previews.
         // All other files will be deleted.
         foreach ($rawfiles as $file) {
             if ($file->get_mimetype() === 'application/zip') {
-                self::process_zip_file($file);
+                self::process_zip_file($file, self::SOURCE_UPLOADED);
             }
         }
 
         // Get the files from the file storage again, now that we have processed the zip files.
-        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'uploadedsnippets', false, 'itemid', false);
+        $files = $fs->get_area_files($systemcontext->id, 'theme_boost_union', $filearea, false, 'itemid', false);
 
         // Get snippets which are known in the database.
         $snippets = $DB->get_records(
@@ -694,10 +749,113 @@ class snippets {
      *
      * @return \stored_file[]
      */
-    private static function get_uploaded_snippet_files() {
+    private static function get_snippet_files($source) {
         $systemcontext = \context_system::instance();
         $fs = get_file_storage();
-        return $fs->get_area_files($systemcontext->id, 'theme_boost_union', 'uploadedsnippets', false, 'itemid', false);
+        $filearea = self::get_filearea($source);
+        if (!$filearea) {
+            return [];
+        }
+        return $fs->get_area_files($systemcontext->id, 'theme_boost_union', $filearea, false, 'itemid', false);
+    }
+
+    /**
+     * Fetch snippets from the community repository and add them to the database.
+     *
+     * @return void
+     */
+    public static function refresh_community_repository() {
+        global $DB;
+
+        $url = self::COMMUNITY_REPOSITORY . '/archive/refs/heads/main.zip';
+
+        $content = @file_get_contents($url);
+        if ($content === false) {
+            throw new \moodle_exception('Could not fetch the community repository archive as zip.');
+        }
+
+        // Get the files from the file storage.
+        $context = \context_system::instance();
+        $fs = get_file_storage();
+
+        $files = self::get_snippet_files(self::SOURCE_COMMUNITY_REPOSITORY);
+
+        mtrace("Downloaded latest snippet repository from $url");
+
+        $filearea = self::get_filearea(self::SOURCE_COMMUNITY_REPOSITORY);
+        if (!$filearea) {
+            return;
+        }
+
+        $filerecord = [
+            'contextid' => $context->id,
+            'component' => 'theme_boost_union',
+            'filearea' => $filearea,
+            'itemid' => 0,
+            'filepath' => '/',
+            'filename' => 'main.zip',
+            'timecreated' => time(),
+            'timemodified' => time(),
+        ];
+
+        $archive = $fs->create_file_from_string($filerecord, $content);
+
+        self::process_zip_file($archive, self::SOURCE_COMMUNITY_REPOSITORY);
+
+        // Get the files from the file storage again, now that we have processed the zip files.
+        $files = self::get_snippet_files(self::SOURCE_COMMUNITY_REPOSITORY);
+
+        // Get snippets which are known in the database.
+        $snippets = $DB->get_records(
+            'theme_boost_union_snippets',
+            [],
+            'sortorder DESC',
+            'id,name,sortorder,source'
+        );
+
+        // Get the highest sortorder present.
+        $sortorder = empty($snippets) ? 0 : intval(reset($snippets)->sortorder);
+
+        // Prepare an array with all the present snippet names.
+        $presentnames = array_map(function($snippet) {
+            return [$snippet->name, $snippet->source];
+        }, $snippets);
+
+        // Start a transaction to ensure that the database is not left in an inconsistent state.
+        $transaction = $DB->start_delegated_transaction();
+
+        // Iterate over the files.
+        foreach ($files as $file) {
+            // Only use scss files.
+            if ($file->get_mimetype() !== 'text/x-scss') {
+                continue;
+            }
+
+            // Validate the files again.
+            $filecontent = $file->get_content();
+            if (!self::get_snippet_meta_from_file_content($filecontent)) {
+                continue;
+            }
+
+            // Get the filename.
+            $name = $file->get_filename();
+
+            // If the snippet is not in the database yet.
+            if (!in_array([$name, self::SOURCE_COMMUNITY_REPOSITORY], $presentnames)) {
+                // Add it to the database (raising the sort order).
+                $DB->insert_record(
+                    'theme_boost_union_snippets',
+                    [
+                        'name' => $name,
+                        'source' => self::SOURCE_COMMUNITY_REPOSITORY,
+                        'sortorder' => ++$sortorder,
+                    ]
+                );
+            }
+        }
+
+        // Commit transaction.
+        $transaction->allow_commit();
     }
 
     /**
@@ -719,10 +877,15 @@ class snippets {
         // Get existing existing uploaded snippets.
         $uploaded = array_map(function ($file) {
             return $file->get_filename();
-        }, self::get_uploaded_snippet_files());
+        }, self::get_snippet_files(self::SOURCE_UPLOADED));
+
+        // Get existing existing uploaded snippets.
+        $community = array_map(function ($file) {
+            return $file->get_filename();
+        }, self::get_snippet_files(self::SOURCE_COMMUNITY_REPOSITORY));
 
         // Merge all currently available snippets from all sources.
-        $existing = array_merge($uploaded, self::get_builtin_snippet_names());
+        $existing = array_merge($uploaded, $community, self::get_builtin_snippet_names());
 
         // Get snippets that are in the DB but not available.
         $delete = [];
