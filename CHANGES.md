@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-07-22 - Tests: Fix broken PHPUnit tests for SCSS snippets, resolves #1015
+
 ### v4.5-r22
 
 * 2025-07-18 - Improvement: Allow all (solid and brands) FontAwesome icons for smart menu items, resolves #493

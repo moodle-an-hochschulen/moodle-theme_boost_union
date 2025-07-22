@@ -38,13 +38,14 @@ final class snippets_test extends advanced_testcase {
      * @return void
      */
     public function test_parse_snippet_header(): void {
-        $meta = snippets::get_snippet_meta('visual_depth.scss', 'theme_boost_union');
-        $this->assertEquals('Visual depth', $meta->title);
+        $meta = snippets::get_snippet_meta('debugging_footer.scss', 'theme_boost_union');
+        $this->assertEquals('Debugging footer', $meta->title);
         $this->assertEquals('global', $meta->scope);
-        $this->assertEquals('eyecandy', $meta->goal);
+        $this->assertEquals('devsonly', $meta->goal);
         $this->assertEquals(
-            'A less flat design than the original Boost theme. Realized with ' .
-            'box-shadows on a number of page elements and a colour gradient on the page background.',
+            "By default, the performance footer in Moodle aligns with the content width and integrates in the page layout in a ".
+            "suboptimal way. This snippet changes the performance footer to be full-width and 'below the fold'. Additionally, it ".
+            "slightly improves the content styling in the performance footer as well.",
             $meta->description
         );
     }
@@ -80,7 +81,7 @@ final class snippets_test extends advanced_testcase {
         // Delete one snippet from the database.
         $DB->delete_records(
             'theme_boost_union_snippets',
-            ['source' => 'theme_boost_union', 'name' => 'visual_depth.scss']
+            ['source' => 'theme_boost_union', 'name' => 'debugging_footer.scss']
         );
 
         $count = $DB->count_records(
@@ -96,7 +97,7 @@ final class snippets_test extends advanced_testcase {
         // The builtin snippet which was just deleted from the db should be registered again.
         $snippet = $DB->get_record(
             'theme_boost_union_snippets',
-            ['source' => 'theme_boost_union', 'name' => 'visual_depth.scss']
+            ['source' => 'theme_boost_union', 'name' => 'debugging_footer.scss']
         );
 
         $this->assertNotEmpty($snippet);
@@ -145,7 +146,7 @@ final class snippets_test extends advanced_testcase {
         // Enable a builtin snippet directly via the DB.
         $snippet = $DB->get_record(
             'theme_boost_union_snippets',
-            ['source' => 'theme_boost_union', 'name' => 'visual_depth.scss']
+            ['source' => 'theme_boost_union', 'name' => 'debugging_footer.scss']
         );
         $snippet->enabled = 1;
         $DB->update_record('theme_boost_union_snippets', $snippet);
@@ -155,7 +156,7 @@ final class snippets_test extends advanced_testcase {
 
         // Verify that the Snippets SCSS content is now queried.
         $this->assertNotEquals('', $scss);
-        $this->assertStringContainsString('Snippet Title: Visual depth', $scss);
+        $this->assertStringContainsString('Snippet Title: Debugging footer', $scss);
     }
 
     /**
@@ -168,9 +169,9 @@ final class snippets_test extends advanced_testcase {
     public function test_lookup_visual_preview_file(): void {
         global $CFG;
 
-        $file = snippets::get_snippet_preview_url('visual_depth.scss', 'theme_boost_union');
+        $file = snippets::get_snippet_preview_url('debugging_footer.scss', 'theme_boost_union');
 
         // Check that indeed the present webp preview for this snippet is returned.
-        $this->assertEquals($CFG->wwwroot . '/theme/boost_union/snippets/builtin/visual_depth.webp', $file);
+        $this->assertEquals($CFG->wwwroot . '/theme/boost_union/snippets/builtin/debugging_footer.webp', $file);
     }
 }
