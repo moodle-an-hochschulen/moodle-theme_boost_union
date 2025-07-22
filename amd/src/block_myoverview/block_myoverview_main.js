@@ -1,4 +1,3 @@
-<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,19 +14,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Version file
+ * Javascript to initialise the myoverview block.
  *
- * @package    theme_boost_union
- * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @copyright Copyright (c) 2024 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+import * as View from 'theme_boost_union/block_myoverview/block_myoverview_view';
+import * as ViewNav from 'theme_boost_union/block_myoverview/block_myoverview_view_nav';
 
-$plugin->component = 'theme_boost_union';
-$plugin->version = 2024100749.01;
-$plugin->release = 'v4.5-r23';
-$plugin->requires = 2024100702;
-$plugin->supported = [405, 405];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = ['theme_boost' => 2024100700];
+/**
+ * Initialise all of the modules for the overview block.
+ *
+ * @param {object} root The root element for the overview block.
+ */
+export const init = (root) => {
+    // Initialise the course navigation elements.
+    ViewNav.init(root);
+    // Initialise the courses view modules.
+    View.init(root);
+};
