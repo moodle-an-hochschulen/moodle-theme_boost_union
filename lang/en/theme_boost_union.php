@@ -361,6 +361,8 @@ $string['sideentranceloginenablesetting_desc'] = 'With this setting, you can ena
 $string['dashboardtab'] = 'Dashboard / My courses';
 // ... Section: Course overview block.
 $string['courseoverviewheading'] = 'Course overview block';
+$string['courseoverviewallyears'] = 'All years';
+$string['courseoverviewyear'] = 'Year';
 // ... ... Setting: Show course images.
 $string['courseoverviewshowcourseimagessetting'] = 'Show course images';
 $string['courseoverviewshowcourseimagessetting_desc'] = 'With this setting, you can control whether the course image is visible inside the course overview block or not. It is possible to choose a different setting for Card view, Summary view, and List view.';
