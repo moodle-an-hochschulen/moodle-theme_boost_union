@@ -237,7 +237,7 @@ With this setting, you can enable a side entrance local login page. It is enable
 
 ###### Show course images
 
-With this setting, you can control whether the course image is visible inside the course overview block or not. It is possible to choose a different setting for Card view, Summary view, and List view. 
+With this setting, you can control whether the course image is visible inside the course overview block or not. It is possible to choose a different setting for Card view, Summary view, and List view.
 
 ###### Show course completion progress
 
@@ -732,6 +732,21 @@ In addition to our mission to provide admin settings for each and every feature 
   As an alternative to the markexternallinks and markmailtolinks settings which automatically mark these kind of links, you can also add the .externallink and .mailtolink class to a ```<a>``` HTML tag to manually mark any link as an external / as a mailto link.
 * Themerev as SCSS variable:
   During a custom SCSS design project, you might come into the situation that you have to link to an uploaded image or other asset which is served by Moodle's pluginfile.php script. Unfortunately, these URLs contain a theme revision parameter. To be able to use these URLs properly in custom SCSS and to avoid breaking Moodle's caching features, Boost Union provides the $themerev SCSS variable to be used in your custom SCSS.
+
+
+CLI tools
+---------
+
+This plugin provides the following CLI tools:
+
+### cli/repopulate_scss_snippets.php
+
+Normally, the built-in SCSS snippets are re-populated if the Boost Union version is raised. This is triggered in db/upgrade.php.
+This is perfectly fine as long as admins to not want to fiddle with the list of buit-in snippets manually.
+
+To ease such admin tasks as well as the crafting of SCSS Snippet PRs,
+this CLI script can be run and will re-populate the list of built-in SCSS snippets based on the list of snippets
+which exist on disk in the theme/boost_union/snippets/builtin directory.
 
 
 Exceptions to our main design principle
