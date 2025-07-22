@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-07-22 - Tests: Fix failing Behat test with the tertiary navigation, resolves #1009
 * 2025-07-22 - Tests: Fix broken PHPUnit tests for SCSS snippets, resolves #1015
 
 ### v5.0-r6
