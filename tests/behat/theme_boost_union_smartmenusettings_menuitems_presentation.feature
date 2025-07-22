@@ -59,7 +59,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
     And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
-    And I change viewport size to "740x900"
+    And I change viewport size to "mobile"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "static-item-resources"
     And I change viewport size to "large"
     And I click on ".action-edit" "css_element" in the "Resources" "table_row"
@@ -72,7 +72,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And the "class" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
-    And I change viewport size to "740x900"
+    And I change viewport size to "mobile"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should not contain "static-item-resources"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Resources')]" "xpath_element" should contain "course-resource-links"
 
@@ -180,7 +180,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | tablet         | <hidetablet>       |
       | mobile         | <hidemobile>       |
     Then I <desktopshouldornot> see smart menu "Quick links" item "Resources" in location "Menu, Main, User"
-    And I change window size to "990x900"
+    And I change viewport size to "tablet"
     Then I <tabletshouldornot> see smart menu "Quick links" item "Resources" in location "User, Menu"
     And I click on "More" "link" in the ".primary-navigation" "css_element"
     Then I <tabletshouldornot> see smart menu "Quick links" item "Resources" in location "Main"
@@ -204,27 +204,40 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Title presentation | <presentationtitle> |
     And I should see "Resources" in the "smartmenus_items" "table"
     And I click on ".action-edit" "css_element" in the "Resources" "table_row"
-    And I click on "input[name='iconsearch']" "css_element"
-    And I click on ".fa-circle-info" "css_element" in the ".fontawesome-picker .popover-body" "css_element"
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_menuicon" "css_element"
+    And I should see "<iconname>" in the "#fitem_id_menuicon .form-autocomplete-suggestions [data-value='<iconvalue>'] small" "css_element"
+    And I should see "<iconbadge>" in the "#fitem_id_menuicon .form-autocomplete-suggestions [data-value='<iconvalue>'] span.badge" "css_element"
+    And the "class" attribute of "#fitem_id_menuicon .form-autocomplete-suggestions [data-value='<iconvalue>'] i.fa" "css_element" should contain "<faicon>"
+    And I click on "<iconname>" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    And I click on ".action-edit" "css_element" in the "Resources" "table_row"
+    # Open the menu item entry again to check the style of the auto-selected value.
+    And I should see "<iconname>" in the "#fitem_id_menuicon .form-autocomplete-selection [data-value='<iconvalue>'] small" "css_element"
+    And I should see "<iconbadge>" in the "#fitem_id_menuicon .form-autocomplete-selection [data-value='<iconvalue>'] span.badge" "css_element"
+    And the "class" attribute of "#fitem_id_menuicon .form-autocomplete-selection [data-value='<iconvalue>'] i.fa" "css_element" should contain "<faicon>"
     And I click on "Save changes" "button"
     And I <desktopshouldornot> see smart menu "Quick links" item "Resources" in location "Main, Menu, User"
-    Then ".fa-circle-info" "css_element" should exist in the ".primary-navigation .dropdown-item.menu-item-heading" "css_element"
-    And ".fa-circle-info" "css_element" should exist in the ".boost-union-menubar .dropdown-item" "css_element"
-    And ".fa-circle-info" "css_element" should exist in the "#usermenu-carousel .carousel-item.submenu .dropdown-item" "css_element"
+    Then ".<faicon>" "css_element" should exist in the ".primary-navigation .dropdown-item.menu-item-heading" "css_element"
+    And ".<faicon>" "css_element" should exist in the ".boost-union-menubar .dropdown-item" "css_element"
+    And ".<faicon>" "css_element" should exist in the "#usermenu-carousel .carousel-item.submenu .dropdown-item" "css_element"
     And I change viewport size to "mobile"
     And I <mobiletitleshould> see smart menu "Quick links" item "Resources" in location "Menu, User"
     And I click on "More" "button" in the ".bottom-navigation" "css_element"
     And I click on "Quick links" "link" in the "#theme_boost-drawers-primary" "css_element"
     And I <mobiletitleshould> see "Resources" in the "#theme_boost-drawers-primary" "css_element"
-    Then ".fa-circle-info" "css_element" should exist in the ".primary-navigation .dropdown-item.menu-item-heading" "css_element"
-    And ".fa-circle-info" "css_element" should exist in the ".boost-union-menubar .dropdown-item" "css_element"
-    And ".fa-circle-info" "css_element" should exist in the "#usermenu-carousel .carousel-item.submenu .dropdown-item" "css_element"
+    Then ".<faicon>" "css_element" should exist in the ".primary-navigation .dropdown-item.menu-item-heading" "css_element"
+    And ".<faicon>" "css_element" should exist in the ".boost-union-menubar .dropdown-item" "css_element"
+    And ".<faicon>" "css_element" should exist in the "#usermenu-carousel .carousel-item.submenu .dropdown-item" "css_element"
 
     Examples:
-      | presentationtitle                                      | desktopshouldornot | mobiletitleshould |
-      | Show text and icon as title                            | should             | should            |
-      | Hide title text and show only icon (on all devices)    | should not         | should not        |
-      | Hide title text and show only icon (on mobile devices) | should             | should not        |
+      | presentationtitle                                      | iconname          | iconvalue                        | iconbadge         | faicon         | desktopshouldornot | mobiletitleshould |
+      | Show text and icon as title                            | fa-circle-info    | theme_boost_union:fa-circle-info | FontAwesome Solid | fa-circle-info | should             | should            |
+      | Show text and icon as title                            | core:i/circleinfo | core:i/circleinfo                | Moodle core       | fa-circle-info | should             | should            |
+      | Hide title text and show only icon (on all devices)    | fa-circle-info    | theme_boost_union:fa-circle-info | FontAwesome Solid | fa-circle-info | should not         | should not        |
+      | Hide title text and show only icon (on all devices)    | core:i/circleinfo | core:i/circleinfo                | Moodle core       | fa-circle-info | should not         | should not        |
+      | Hide title text and show only icon (on mobile devices) | fa-circle-info    | theme_boost_union:fa-circle-info | FontAwesome Solid | fa-circle-info | should             | should not        |
+      | Hide title text and show only icon (on mobile devices) | core:i/circleinfo | core:i/circleinfo                | Moodle core       | fa-circle-info | should             | should not        |
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Display the tooltip on hover over the menu items
