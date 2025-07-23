@@ -1,0 +1,21 @@
+/**
+ * Snippet Title: Tertiary navigation button
+ * Scope:         global
+ * Goal:          accessibility
+ * Description:   This snippet increases the visibility of the dropdown toggle in the tertiary navigation (e.g. on the "Participants" page in courses).
+ * Creator:       Stefan Scholz
+ * Tested on:     Moodle 5.0, Firefox for Mac
+ *
+ * @copyright     2025 bdecent gmbh
+ * @author        Stefan Scholz <sts@bdecent.de>
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+.tertiary-navigation-selector .dropdown-toggle::after {
+    background: #f1f1f1;
+    border-radius: 100%;
+    font-size: 16px;
+    height: 30px;
+    padding: 6px 4px;
+    width: 30px;
+}
