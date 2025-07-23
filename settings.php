@@ -3425,6 +3425,52 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Create repository community snippets heading.
+        $name = 'theme_boost_union/snippetsrepositoryheading';
+        $title = get_string('snippetsrepositoryheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Enable community snippets repository.
+        $name = 'theme_boost_union/enablecommunitysnippets';
+        $title = get_string('enablecommunitysnippets', 'theme_boost_union', null, true);
+        $description = get_string(
+            'enablecommunitysnippets_desc',
+            'theme_boost_union',
+            ['url' => snippets::COMMUNITY_REPOSITORY],
+            true
+        );
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_boost_union_refresh_community_sippets');
+        $tab->add($setting);
+
+        // Helpers: configure and run community snippets repository task.
+        $url = new moodle_url(
+            '/admin/tool/task/scheduledtasks.php',
+            ['action' => 'edit', 'task' => 'theme_boost_union\task\refresh_snippets_from_community_repository']
+        );
+        $buttons = html_writer::link(
+            $url,
+            get_string('taskconfigure_refreshcommunitysnippets',
+            'theme_boost_union'),
+            ['target' => '_blank', 'class' => 'btn btn-secondary m-1']
+        );
+        $url = new moodle_url(
+            '/admin/tool/task/schedule_task.php',
+        ['action' => 'edit', 'task' => 'theme_boost_union\task\refresh_snippets_from_community_repository']
+        );
+        $buttons .= html_writer::link(
+            $url,
+            get_string('taskrun_refreshcommunitysnippets',
+            'theme_boost_union'),
+            ['target' => '_blank', 'class' => 'btn btn-primary m-1']
+        );
+        $setting = new admin_setting_description(
+            'synccommunitysnippets',
+            get_string('taskmanage_refreshcommunitysnippets', 'theme_boost_union'),
+            $buttons);
+        $tab->add($setting);
+
         // Create uploaded snippets heading.
         $name = 'theme_boost_union/uploadedsnippetsheading';
         $title = get_string('snippetsuploadedsnippetsheading', 'theme_boost_union', null, true);
