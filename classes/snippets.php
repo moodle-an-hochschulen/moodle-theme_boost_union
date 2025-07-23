@@ -25,6 +25,7 @@
 namespace theme_boost_union;
 
 use stdClass;
+use stored_file;
 
 /**
  * Library class containing solely static functions for dealing with SCSS snippets.
@@ -478,8 +479,9 @@ class snippets {
     /**
      * Process an uploaded SCSS snippet file – check if it is a valid snippet and add it to the filearea.
      *
-     * @param mixed $filename
-     * @param mixed $zipdir
+     * @param string $filename
+     * @param string $zipdir
+     * @param string $source
      * @return void
      */
     private static function process_scss_file($filename, $zipdir, $source): void {
@@ -636,7 +638,8 @@ class snippets {
     /**
      * Process the SCSS snippets within an uploaded ZIP file and add valid ones to the library.
      *
-     * @param mixed $file
+     * @param stored_file $file
+     * @param string $source
      * @return void
      */
     private static function process_zip_file($file, $source) {
@@ -747,6 +750,7 @@ class snippets {
     /**
      * Return the area files of the uploaded snippets.
      *
+     * @param string source
      * @return \stored_file[]
      */
     private static function get_snippet_files($source) {
@@ -776,10 +780,8 @@ class snippets {
 
         // Get the files from the file storage.
         $context = \context_system::instance();
-        $fs = get_file_storage();
-
-        $files = self::get_snippet_files(self::SOURCE_COMMUNITY_REPOSITORY);
-
+        $fs      = get_file_storage();
+        $files   = self::get_snippet_files(self::SOURCE_COMMUNITY_REPOSITORY);
         mtrace("Downloaded latest snippet repository from $url");
 
         $filearea = self::get_filearea(self::SOURCE_COMMUNITY_REPOSITORY);
