@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-07-25 - Improvement: Introduce SCSS variable for smart menu menubar and bottom bar height, resolves #1023
 * 2025-07-22 - SCSS Snippet: Tertiary navigation button, resolves #1017
 * 2025-07-22 - Improvement: Add CLI script to re-populate the list of built-in SCSS snippets, resolves #1019
 * 2025-07-22 - Tests: Fix failing Behat test with the tertiary navigation, resolves #1009
