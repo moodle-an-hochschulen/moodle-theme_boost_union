@@ -517,11 +517,11 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | tablet   | <item2tab>                  |
       | mobile   | <item2mob>                  |
     When I am on site homepage
-    And I change the window size to "large"
+    And I change the viewport size to "large"
     And ".boost-union-menubar" "css_element" <menubarshouldornot> be visible
-    And I change the viewport size to "764x820"
+    And I change the viewport size to "tablet"
     And ".boost-union-menubar" "css_element" <menubartabshouldornot> be visible
-    And I change the window size to "mobile"
+    And I change the viewport size to "mobile"
     And ".boost-union-menubar" "css_element" <menubarmobshouldornot> be visible
 
     Examples:
