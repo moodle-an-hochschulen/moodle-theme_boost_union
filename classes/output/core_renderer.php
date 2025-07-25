@@ -438,6 +438,16 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string HTML to display the main header.
      */
     public function full_header() {
+        global $SITE;
+        // Check if the setting to use course short name in header is enabled.
+        if (get_config('theme_boost_union', 'useshortnameinheader') &&
+            $this->page->course && $this->page->course->id != $SITE->id) {
+            // Set the page heading to the course short name instead of full name.
+            $this->page->set_heading(format_string($this->page->course->shortname, true, [
+                'context' => \context_course::instance($this->page->course->id),
+            ]));
+        }
+
         $pagetype = $this->page->pagetype;
         $homepage = get_home_page();
         $homepagetype = null;
