@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.1-r47
 
 * 2025-07-25 - Bugfix: Text and media elements (aka. labels) were shown in the course index also in non edit mode - which should not happen until Moodle 4.2 and which was caused by a wrong feature backport in Boost Union, resolves #637
 
