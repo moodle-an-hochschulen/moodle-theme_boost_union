@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-07-28 - Improvement: Query SCSS snippets table during theme refresh only if the table exists, resolves #1024
 * 2025-07-25 - Improvement: Introduce SCSS variable for smart menu menubar and bottom bar height, resolves #1023
 
 ### v4.5-r23
