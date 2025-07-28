@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-07-25 - Improvement: Introduce SCSS variable for smart menu menubar and bottom bar height, resolves #1023
+
 ### v4.5-r23
 
 * 2025-07-22 - SCSS Snippet: Tertiary navigation button, resolves #1017
