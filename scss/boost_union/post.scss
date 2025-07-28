@@ -1302,6 +1302,22 @@ body.theme-boost-union-commincourse {
     }
 }
 
+@include media-breakpoint-down(lg) {
+    body.limitedwidth #page.drawers .main-inner-wrapper {
+        .main-inner {
+            padding: 0;
+            margin-bottom: 0;
+            .header-maxwidth,
+            div[role="main"] {
+                padding-left: 0;
+                padding-right: 0;
+                padding-bottom: 0;
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
 /* On larger screens only. */
 @include media-breakpoint-only(md) {
     /* Center the main region content while maintaining full width for the left and right block regions,
@@ -1340,17 +1356,6 @@ body.theme-boost-union-commincourse {
     }
     /* Removed the left and right padding from the main content region. */
     body.limitedwidth #page.drawers .main-inner-wrapper {
-        .main-inner {
-            padding: 0;
-            margin-bottom: 0;
-            .header-maxwidth,
-            div[role="main"] {
-                padding-left: 0;
-                padding-right: 0;
-                padding-bottom: 0;
-                margin-bottom: 0;
-            }
-        }
         /* Removed the bottom margin of the right region block. */
         #theme-block-region-outside-right {
             margin-bottom: 3rem;
