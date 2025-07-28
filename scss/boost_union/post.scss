@@ -1832,10 +1832,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     visibility: visible;
                 }
             }
-            /* The position of the main page has been adjusted slightly below to accommodate the top header. */
-            ~ #page.drawers {
-                margin-top: 60px;
-            }
             .moremenu .more-nav li.card-dropdown {
                 /* The position of the card dropdown block has been set to static,
                 so it will always appear under the card menu link. */
@@ -2636,14 +2632,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             padding-bottom: 0;
             top: 0;
         }
-        /*~ #page.drawers {
-            The position of the drawer button to toggle has been adjusted slightly
-            below on the course view page to accommodate the top header.
-            .drawer-toggles .drawer-left-toggle,
-            .drawer-toggles .drawer-right-toggle {
-                top: calc(60px + 0.7rem);
-            }
-        }*/
     }
     /* The card menu of the drodown item margin right is removed when the card dropdown menu is inside the "More" menu */
     .theme-boost-union-smartmenu .navbar .moremenu .dropdown.card-dropdown .dropdown-menu .card-block-wrapper .card-block {
@@ -2927,7 +2915,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     body.theme-boost-union-bottombar {
         /* The Boost Union footer buttons have to be moved more upwards. */
         #boost-union-footer-buttons {
-            bottom: calc(60px + 1rem);
+            bottom: calc(#{$bu-smartmenu-bottombar-height} + 1rem);
         }
 
         /* If the footer button is shown. */
@@ -2935,11 +2923,11 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         &.theme_boost-union-footerbuttonmobile.jsenabled {
             /* The footer button has to be moved more upwards. */
             .btn-footer-popover {
-                bottom: calc(60px + 1rem);
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 1rem);
             }
             /* And the Boost Union footer buttons have to be moved even more upwards. */
             #boost-union-footer-buttons {
-                bottom: calc(60px + 4rem);
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 4rem);
             }
         }
     }
@@ -2950,7 +2938,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     body.theme-boost-union-bottombar {
         /* The Boost Union footer buttons have to be moved more upwards. */
         #boost-union-footer-buttons {
-            bottom: calc(60px + 1rem);
+            bottom: calc(#{$bu-smartmenu-bottombar-height} + 1rem);
         }
 
         /* If the footer button is shown. */
@@ -2958,11 +2946,11 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         &.theme_boost-union-footerbuttondesktop.jsenabled {
             /* The footer button has to be moved more upwards. */
             .btn-footer-popover {
-                bottom: calc(60px + 1rem);
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 1rem);
             }
             /* And the Boost Union footer buttons have to be moved even more upwards. */
             #boost-union-footer-buttons {
-                bottom: calc(60px + 4rem);
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 4rem);
             }
         }
     }
@@ -2971,12 +2959,12 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     body.theme-boost-union-bottombar.theme-boost-union-commincourse {
         /* The communication button has to be moved more upwards. */
         .btn-footer-communication {
-            bottom: calc(60px + 1rem);
+            bottom: calc(#{$bu-smartmenu-bottombar-height} + 1rem);
         }
         /* The Boost Union footer buttons have to be moved even more upwards.
            This has to use !important as the selector above would be more specific otherwise. */
         #boost-union-footer-buttons {
-            bottom: calc(60px + 4rem) !important; /* stylelint-disable-line declaration-no-important */
+            bottom: calc(#{$bu-smartmenu-bottombar-height} + 4rem) !important; /* stylelint-disable-line declaration-no-important */
         }
 
         /* If the footer button is shown. */
@@ -2984,16 +2972,16 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         &.theme_boost-union-footerbuttondesktop.jsenabled {
             /* The footer button has to be moved more upwards. */
             .btn-footer-popover {
-                bottom: calc(60px + 1rem);
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 1rem);
             }
             /* The communication button has to be moved even more upwards. */
             .btn-footer-communication {
-                bottom: calc(60px + 4rem);
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 4rem);
             }
             /* And the Boost Union footer buttons have to be moved even more upwards.
                This has to use !important as the selector above would be more specific otherwise. */
             #boost-union-footer-buttons {
-                bottom: calc(60px + 7rem) !important; /* stylelint-disable-line declaration-no-important */
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 7rem) !important; /* stylelint-disable-line declaration-no-important */
             }
         }
     }
