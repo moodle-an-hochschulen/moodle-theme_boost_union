@@ -912,7 +912,7 @@ body.theme_boost-union-footerbuttonmobile.jsenabled {
     &.hasstickyfooter {
         @include media-breakpoint-down(xs) {
             #boost-union-footer-buttons {
-                bottom: 10rem;
+                bottom: calc(5rem + #{$stickyfooter-height} - 1rem);
             }
         }
     }
@@ -930,7 +930,7 @@ body.theme_boost-union-footerbuttondesktop.jsenabled {
     &.hasstickyfooter {
         @include media-breakpoint-up(sm) {
             #boost-union-footer-buttons {
-                bottom: 10rem;
+                bottom: calc(5rem + #{$stickyfooter-height} - 1rem);
             }
         }
     }
@@ -954,7 +954,7 @@ body.theme-boost-union-commincourse {
         &.hasstickyfooter {
             @include media-breakpoint-up(sm) {
                 #boost-union-footer-buttons {
-                    bottom: 10rem;
+                    bottom: calc(5rem + #{$stickyfooter-height} - 1rem);
                 }
             }
         }
@@ -973,7 +973,7 @@ body.theme-boost-union-commincourse {
         &.hasstickyfooter {
             @include media-breakpoint-up(sm) {
                 #boost-union-footer-buttons {
-                    bottom: 13rem;
+                    bottom: calc(8rem + #{$stickyfooter-height} - 1rem);
                 }
             }
         }
