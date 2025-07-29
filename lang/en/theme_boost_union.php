@@ -450,6 +450,8 @@ $string['coursetab'] = 'Course';
 // ... Section: Course header.
 $string['courseheaderheading'] = 'Course Header';
 // ... ... Setting: Course header.
+$string['useshortnameinheader'] = 'Show course short name in header';
+$string['useshortnameinheader_desc'] = 'If enabled, the course short name will be shown in the course page header instead of the full name.';
 $string['courseheaderimageenabled'] = 'Display the course image in the course header';
 $string['courseheaderimageenabled_desc'] = 'When enabled, the course image (which can be uploaded in a course\'s course settings) is displayed in the header of a course. The course images are shown there in addition to the \'My courses\' page where they are always shown.';
 $string['courseheaderimagefallback'] = 'Fallback course header image';
