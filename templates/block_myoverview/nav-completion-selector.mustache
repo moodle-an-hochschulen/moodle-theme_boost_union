@@ -1,0 +1,47 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template block_myoverview/nav-completion-selector
+
+    This template renders completion dropdown.
+}}
+<div class="mb-1 mr-1 d-flex flex-wrap align-items-center">
+    <div class="dropdown">
+        <button id="progressdropdown" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="{{#str}} progress, moodle {{/str}}">
+            <span data-active-item-text>
+                {{#str}} progress, moodle {{/str}}
+            </span>
+        </button>
+        <ul class="dropdown-menu" role="menu" data-show-active-item data-skip-active-class="true" aria-labelledby="progressdropdown">
+            <li>
+                <a class="dropdown-item" href="#" data-filter="progress" data-value="all" aria-label="{{#str}} all, moodle {{/str}}" role="menuitem">
+                    {{#str}} all, moodle {{/str}}
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="#" data-filter="progress" data-value="completed" aria-label="{{#str}} completed, moodle {{/str}}" role="menuitem" {{#completed}}aria-current="true"{{/completed}}>
+                    {{#str}} completed, moodle {{/str}}
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="#" data-filter="progress" data-value="notcompleted" aria-label="{{#str}} notcompleted, completion {{/str}}" role="menuitem" {{#notcompleted}}aria-current="true"{{/notcompleted}}>
+                    {{#str}} notcompleted, completion {{/str}}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
