@@ -63,6 +63,7 @@ class get_fontawesome_icons extends external_api {
     public static function execute(string $query): array {
         global $DB, $PAGE;
 
+        $overflow = false;
         $params = external_api::validate_parameters(self::execute_parameters(), [
             'query' => $query,
         ]);

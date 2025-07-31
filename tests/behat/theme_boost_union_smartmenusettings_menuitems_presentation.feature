@@ -18,6 +18,18 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | location | Main navigation, Menu bar, User menu, Bottom bar |
 
   @javascript
+  Scenario: Smartmenus: Menu items: Setup - select an icon
+    When I log in as "admin"
+    And I navigate to smart menus
+    And I click on "Create menu" "button"
+    And I set the following fields to these values:
+      | Title            | Menu |
+      | Menu location(s) | Main |
+    And I click on "Save and configure items" "button"
+    And I click on "Add menu item" "button"
+    And I set the field "Icon" to "folder"
+
+  @javascript
   Scenario Outline: Smartmenus: Menu items: Presentation - Open the smart menu items in different targets
     Given the following "theme_boost_union > smart menu item" exists:
       | menu     | Quick links       |
