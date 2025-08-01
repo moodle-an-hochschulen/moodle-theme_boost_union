@@ -18,18 +18,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | location | Main navigation, Menu bar, User menu, Bottom bar |
 
   @javascript
-  Scenario: Smartmenus: Menu items: Setup - select an icon
-    When I log in as "admin"
-    And I navigate to smart menus
-    And I click on "Create menu" "button"
-    And I set the following fields to these values:
-      | Title            | Menu |
-      | Menu location(s) | Main |
-    And I click on "Save and configure items" "button"
-    And I click on "Add menu item" "button"
-    And I set the field "Icon" to "folder"
-
-  @javascript
   Scenario Outline: Smartmenus: Menu items: Presentation - Open the smart menu items in different targets
     Given the following "theme_boost_union > smart menu item" exists:
       | menu     | Quick links       |
@@ -206,6 +194,23 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | 0           | 1          | 1          | should             | should not        | should not        |
       | 1           | 0          | 0          | should not         | should            | should            |
       | 1           | 0          | 1          | should not         | should            | should not        |
+
+  @javascript
+  Scenario: Smartmenus: Menu items: Presentation - Select an existing icon from the icon autocomplete list
+    When I log in as "admin"
+    And I set "Quick links" smart menu items with the following fields to these values:
+      | Title              | Resources           |
+      | Menu item type     | Heading             |
+    And I should see "Resources" in the "smartmenus_items" "table"
+    And I click on ".action-edit" "css_element" in the "Resources" "table_row"
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_menuicon" "css_element"
+    And I set the field "Icon" to "fa-folder"
+    And I should see "path_folder" in the "#fitem_id_menuicon .form-autocomplete-selection" "css_element"
+
+  # Unfortunately, this can't be tested with Behat as Behat would throw an
+  # 'Unable to find 'nonexistingicon' in the list of options, and unable to create a new option (InvalidArgumentException)'
+  # exception when trying to select an unexisting icon.
+  # Scenario: Smartmenus: Menu items: Presentation - Select an unexisting icon from the icon autocomplete list
 
   @javascript
   Scenario Outline: Smartmenus: Menu items: Presentation - Display the menu items title with icon

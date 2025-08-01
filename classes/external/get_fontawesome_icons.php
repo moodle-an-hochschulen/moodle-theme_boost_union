@@ -63,7 +63,6 @@ class get_fontawesome_icons extends external_api {
     public static function execute(string $query): array {
         global $DB, $PAGE;
 
-        $overflow = false;
         $params = external_api::validate_parameters(self::execute_parameters(), [
             'query' => $query,
         ]);
@@ -80,6 +79,7 @@ class get_fontawesome_icons extends external_api {
         // Filter icons based on the search query if provided.
         $results = [];
         $count = 0;
+        $overflow = false;
         if (!empty($query)) {
             foreach ($iconmap as $key => $icon) {
                 if (empty($key)) {
