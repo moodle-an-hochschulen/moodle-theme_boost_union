@@ -1770,6 +1770,14 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 /* Boost union header menu style when the smart menu is enabled */
 .theme-boost-union-smartmenu {
     .navbar {
+        /* Submenu header text color, spacing and arrow icon background color on hover */
+        .dropdown-menu .submenu .header .carousel-navigation-link {
+            color: inherit;
+            padding: .25rem .75rem;
+            &:hover button {
+                background-color: #e9ecef;
+            }
+        }
         &.fixed-top {
             /* Added height and background color for the top header,
             z-index is added to show the top header dropdown menu above the header block */
@@ -1982,6 +1990,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                         }
                     }
                     .items a.dropdown-item {
+                        white-space: normal;
                         align-items: baseline;
                     }
                 }
