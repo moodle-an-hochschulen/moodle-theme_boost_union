@@ -486,3 +486,41 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | setting | shouldcontain      |
       | yes     | should contain     |
       | no      | should not contain |
+
+  @javascript
+  Scenario Outline: Setting: Align header region with main content region width
+    Given the following config values are set as admin:
+      | config                       | value                          | plugin            |
+      | blockregionsforcourse        | <regions>                      | theme_boost_union |
+      | blockregionoutsideleftwidth  | <blockregionoutsideleftwidth>  | theme_boost_union |
+      | blockregionoutsiderightwidth | <blockregionoutsiderightwidth> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I am on the "Course 1" "Course" page logged in as "admin"
+    And I turn editing mode on
+    And I change window size to "large"
+    Then DOM element ".empty-placeholder-region#theme-block-region-outside-left" should have computed style "width" "<blockregionoutsideleftwidth>"
+    Then DOM element ".empty-placeholder-region#theme-block-region-outside-right" should have computed style "width" "<blockregionoutsiderightwidth>"
+    Then DOM elements '.region-block-header .main-inner' and '.main-inner#topofscroll' should have the same 'left' position value
+
+    Examples:
+      | regions                           | blockregionoutsideleftwidth | blockregionoutsiderightwidth |
+      | outside-left,outside-right,header | 300px                       | 300px                        |
+      | outside-left,outside-right,header | 200px                       | 400px                        |
+      | outside-left,outside-right,header | 400px                       | 200px                        |
+
+  Scenario Outline: Setting: Check existence of empty placeholder regions on header region
+    Given the following config values are set as admin:
+      | config                | value     | plugin            |
+      | blockregionsforcourse | <regions> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I am on the "Course 1" "Course" page logged in as "admin"
+    And I turn editing mode on
+    And ".region-block-header .empty-placeholder-region#theme-block-region-outside-left" "css_element" <outsideleftregionshouldornot> exist
+    And ".region-block-header .empty-placeholder-region#theme-block-region-outside-right" "css_element" <outsiderightregionshouldornot> exist
+
+    Examples:
+      | regions                           | outsideleftregionshouldornot | outsiderightregionshouldornot |
+      | outside-left,outside-right,header | should                       | should                        |
+      | outside-left,header               | should                       | should not                    |
+      | outside-right,header              | should not                   | should                        |
+      | outside-left,outside-right        | should not                   | should not                    |

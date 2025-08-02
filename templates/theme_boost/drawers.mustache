@@ -62,6 +62,7 @@
     * Include theme_boost_union/slider template
     * Added additional block regions (including JS for offcanvas region)
     * Added smartmenu js to support third level submenus.
+    * Added empty placeholder outside left and right regions in the header region.
 }}
 {{> theme_boost/head }}
 
@@ -141,19 +142,29 @@
         {{/regions.outsidetop.hasblocks}}
 
         {{#regions.header.hasblocks}}
-            <section id="theme-block-region-header" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
-                {{{ regions.header.addblockbutton }}}
-                {{{ regions.header.regionhtml }}}
-            </section>
+        <div class="region-block-header {{{maininnerwrapperclass}}} {{{outsideregionsplacement}}}">
+            {{#regions.outsideleft.hasblocks}}
+                <section id="theme-block-region-outside-left" class="theme-block-region empty-placeholder-region"></section>
+            {{/regions.outsideleft.hasblocks}}
+            <div class="main-inner">
+                <section id="theme-block-region-header" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                    {{{ regions.header.addblockbutton }}}
+                    {{{ regions.header.regionhtml }}}
+                </section>
+            </div>
+            {{#regions.outsideright.hasblocks}}
+                <section id="theme-block-region-outside-right" class="theme-block-region empty-placeholder-region"></section>
+            {{/regions.outsideright.hasblocks}}
+        </div>
         {{/regions.header.hasblocks}}
 
         <div class="main-inner-wrapper {{{maininnerwrapperclass}}} {{{outsideregionsplacement}}}">
-            {{#regions.outsideleft.hasblocks}}
-                <section id="theme-block-region-outside-left" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
-                    {{{ regions.outsideleft.addblockbutton }}}
-                    {{{ regions.outsideleft.regionhtml }}}
-                 </section>
-            {{/regions.outsideleft.hasblocks}}
+        {{#regions.outsideleft.hasblocks}}
+            <section id="theme-block-region-outside-left" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                {{{ regions.outsideleft.addblockbutton }}}
+                {{{ regions.outsideleft.regionhtml }}}
+            </section>
+        {{/regions.outsideleft.hasblocks}}
 
         <div id="topofscroll" class="main-inner">
             <div class="drawer-toggles d-flex">

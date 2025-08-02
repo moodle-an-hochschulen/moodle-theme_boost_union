@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-08-02 - Bugfix: The header block region is not aligned properly if outside-left and outside-right have unequal widths, resolves #252.
 * 2025-07-28 - Bugfix: Reposition Boost Union footer buttons correctly if sticky footer is shown, resolves #1033
 * 2025-07-28 - Improvement: Query SCSS snippets table during theme refresh only if the table exists, resolves #1024
 * 2025-07-25 - Improvement: Introduce SCSS variable for smart menu menubar and bottom bar height, resolves #1023
