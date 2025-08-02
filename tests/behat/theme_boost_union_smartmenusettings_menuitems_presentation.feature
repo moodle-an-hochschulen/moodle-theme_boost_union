@@ -489,7 +489,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I should see "Test long course name to verify proper menu wrapping" in the ".bottom-navigation" "css_element"
     And DOM elements ".bottom-navigation div.carousel-item.active div.items" ".bottom-navigation div.carousel-item.active" should have same computed property "scrollWidth"
 
-@javascript
+  @javascript
   Scenario: Smartmenus: Menu items: Presentation - Opening a smart menu submenu should not scroll to top of the page
     Given the following "theme_boost_union > smart menu" exists:
       | title     | All courses     |
