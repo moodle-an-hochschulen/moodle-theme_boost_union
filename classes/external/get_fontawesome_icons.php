@@ -79,6 +79,7 @@ class get_fontawesome_icons extends external_api {
         // Filter icons based on the search query if provided.
         $results = [];
         $count = 0;
+        $overflow = false;
         if (!empty($query)) {
             foreach ($iconmap as $key => $icon) {
                 if (empty($key)) {
