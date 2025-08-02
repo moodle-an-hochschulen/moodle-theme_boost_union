@@ -1789,10 +1789,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 ~ .drawer.drawer-right {
                     top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height} + 1px);
                 }
-                /* The position of the main page has been adjusted slightly below to accommodate the top header. */
-                ~ #page.drawers {
-                    margin-top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height});
-                }
                 .moremenu {
                     height: $bu-smartmenu-menubar-height;
 
@@ -1846,16 +1842,16 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                        header. */
                     &.fixed-top {
                         margin-top: $bu-smartmenu-menubar-height;
-                        /* The position of the card dropdown block has been set to static,
-                        so it will always appear under the card menu link. */
-                        .moremenu .dropdown.card-dropdown {
-                            position: static;
-                            .dropdown-menu {
-                                overflow-y: auto;
-                            }
-                            &:not(.card-overflow-no-wrap) .dropdown-menu {
-                                max-height: calc(100vh - 300px);
-                            }
+                    }
+                    /* The position of the card dropdown block has been set to static,
+                    so it will always appear under the card menu link. */
+                    .moremenu .dropdown.card-dropdown {
+                        position: static;
+                        .dropdown-menu {
+                            overflow-y: auto;
+                        }
+                        &:not(.card-overflow-no-wrap) .dropdown-menu {
+                            max-height: calc(100vh - 300px);
                         }
                     }
                 }
@@ -2609,6 +2605,32 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     }
 }
 
+@include media-breakpoint-up(lg) {
+    .theme-boost-union-smartmenu .navbar.fixed-top.boost-union-menubar.d-lg-none {
+        /* Margin top has been added to the Header block to ensure that it does not conflict with the top header. */
+        + .navbar.fixed-top {
+            margin-top: 0;
+        }
+        ~ #page.drawers {
+            /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
+            margin-top: $bu-smartmenu-menubar-height;
+        }
+    }
+}
+
+@include media-breakpoint-only(md) {
+    .theme-boost-union-smartmenu .navbar.fixed-top.boost-union-menubar.d-md-none {
+        /* Margin top has been added to the Header block to ensure that it does not conflict with the top header. */
+        + .navbar.fixed-top {
+            margin-top: 0;
+        }
+        ~ #page.drawers {
+            /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
+            margin-top: $bu-smartmenu-menubar-height;
+        }
+    }
+}
+
 /* The nav drawer position to the top in the responsive alignment */
 @include media-breakpoint-down(lg) {
     .navbar.fixed-top.boost-union-menubar ~ .drawer {
@@ -2674,8 +2696,20 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         }
     }
     /* The card menu of the drodown item margin right is removed when the card dropdown menu is inside the "More" menu */
-    .theme-boost-union-smartmenu .navbar .moremenu .dropdown.card-dropdown .dropdown-menu .card-block-wrapper .card-block {
-        margin-right: 0;
+    .theme-boost-union-smartmenu .navbar {
+        .moremenu .dropdown.card-dropdown .dropdown-menu .card-block-wrapper .card-block {
+            margin-right: 0;
+        }
+        &.fixed-top.boost-union-menubar.d-none {
+            /* Margin top has been added to the Header block to ensure that it does not conflict with the top header. */
+            + .navbar.fixed-top {
+                margin-top: 0;
+            }
+            ~ #page.drawers {
+                /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
+                margin-top: $bu-smartmenu-menubar-height;
+            }
+        }
     }
 }
 
