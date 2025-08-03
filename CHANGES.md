@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-08-18 - Bugfix: Make outside-left and outside-right block regions really responsive, resolves #266.
 * 2025-08-01 - Bugfix: Smart menu: menu bar was displayed although there were no items to display, resolves #849.
 
 ### v5.0-r8
