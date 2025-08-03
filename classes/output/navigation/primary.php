@@ -122,9 +122,35 @@ class primary extends \core\navigation\output\primary {
         // Convert the children menu items into submenus.
         // Removed the menu nodes from menubar, each item will be displayed as menu in menubar.
         if (!empty($locationmenubarmenu)) {
+
+            // Set the visibility of the menu bar for mobile, tablet, and desktop based on its child items.
+            $hidedesktop = $hidemobile = $hidetablet = 1;
+            foreach ($locationmenubarmenu as $key => $menu) {
+                // Check if the menu has any children to be displayed on desktop.
+                if (!isset($menu->desktop) || empty($menu->desktop)) {
+                    $hidedesktop = 0;
+                }
+                // Check if the menu has any children to be displayed on tablets.
+                if (!isset($menu->tablet) || empty($menu->tablet)) {
+                    $hidetablet = 0;
+                }
+                // Check if the menu has any children to be displayed on mobiles.
+                if (!isset($menu->mobile) || empty($menu->mobile)) {
+                    $hidemobile = 0;
+                }
+            }
+
             $locationmenubarmenuconverted = $this->convert_submenus($locationmenubarmenu);
             $menubarmoremenu = new \core\navigation\output\more_menu((object) $locationmenubarmenuconverted,
                     'navbar-nav-menu-bar', false);
+            $menubartemplatedata = $menubarmoremenu->export_for_template($output);
+
+            // Define the visibility classes for the menubar.
+            $menubarclasses[] = $hidedesktop ? 'd-lg-none' : 'd-lg-flex';
+            $menubarclasses[] = $hidetablet ? 'd-md-none' : 'd-md-flex';
+            $menubarclasses[] = $hidemobile ? 'd-none' : 'd-flex';
+            $menubartemplatedata['classes'] = implode(' ', $menubarclasses);
+
         }
 
         // Bottom bar.
@@ -166,7 +192,7 @@ class primary extends \core\navigation\output\primary {
         return [
             'mobileprimarynav' => $mobileprimarynav,
             'moremenu' => $moremenu->export_for_template($output),
-            'menubar' => isset($menubarmoremenu) ? $menubarmoremenu->export_for_template($output) : false,
+            'menubar' => $menubartemplatedata ?? false,
             'lang' => !isloggedin() || isguestuser() ? $languagemenu->export_for_template($output) : [],
             'user' => $usermenu ?? [],
             'bottombar' => $bottombardata ?? false,

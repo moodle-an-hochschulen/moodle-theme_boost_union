@@ -169,31 +169,93 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And "Demo item 02" "text" should appear after "Demo item 03" "text"
     And "Demo item 01" "text" should appear after "Demo item 02" "text"
 
+  # The following "Smartmenus: Menu items: Presentation - Display the menu items in different viewports" scenarios look like they
+  # could be combined into a single scenario outline, but they are not because with the scenario outline approach, the test
+  # would attempt to open menus that were hidden due to having no items.
+
   @javascript
-  Scenario Outline: Smartmenus: Menu items: Presentation - Display the menu items in different viewports
+  Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different viewports - hide the menu items on mobile devices
     When I log in as "admin"
     And I set "Quick links" smart menu items with the following fields to these values:
       | Title          | Resources          |
       | Menu item type | Static             |
       | Menu item URL  | https://moodle.org |
-      | desktop        | <hidedesktop>      |
-      | tablet         | <hidetablet>       |
-      | mobile         | <hidemobile>       |
-    Then I <desktopshouldornot> see smart menu "Quick links" item "Resources" in location "Menu, Main, User"
+      | desktop        | 0                  |
+      | tablet         | 0                  |
+      | mobile         | 1                  |
+    Then I should see smart menu "Quick links" item "Resources" in location "Menu, Main, User"
     And I change viewport size to "tablet"
-    Then I <tabletshouldornot> see smart menu "Quick links" item "Resources" in location "User, Menu"
+    Then I should see smart menu "Quick links" item "Resources" in location "User, Menu"
     And I click on "More" "link" in the ".primary-navigation" "css_element"
-    Then I <tabletshouldornot> see smart menu "Quick links" item "Resources" in location "Main"
+    Then I should see smart menu "Quick links" item "Resources" in location "Main"
     And I change viewport size to "mobile"
-    Then I <mobileshouldornot> see smart menu "Quick links" item "Resources" in location "Menu, User"
-    And I <mobileshouldornot> see smart menu "Quick links" item "Resources" in location "Bottom"
+    Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Menu bar smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Bottom bar smart menu" should not be visible
 
-    Examples:
-      | hidedesktop | hidetablet | hidemobile | desktopshouldornot | tabletshouldornot | mobileshouldornot |
-      | 0           | 0          | 1          | should             | should            | should not        |
-      | 0           | 1          | 1          | should             | should not        | should not        |
-      | 1           | 0          | 0          | should not         | should            | should            |
-      | 1           | 0          | 1          | should not         | should            | should not        |
+  @javascript
+  Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different viewports - hide the menu items on tablet and mobile devices
+    When I log in as "admin"
+    And I set "Quick links" smart menu items with the following fields to these values:
+      | Title          | Resources          |
+      | Menu item type | Static             |
+      | Menu item URL  | https://moodle.org |
+      | desktop        | 0                  |
+      | tablet         | 1                  |
+      | mobile         | 1                  |
+    Then I should see smart menu "Quick links" item "Resources" in location "Menu, Main, User"
+    And I change viewport size to "tablet"
+    Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Menu bar smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
+    And I click on "More" "link" in the ".primary-navigation" "css_element"
+    Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Main menu smart menu" should not be visible
+    And I change viewport size to "mobile"
+    Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Menu bar smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Bottom bar smart menu" should not be visible
+
+  @javascript
+  Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different viewports - hide the menu items on desktop devices
+    When I log in as "admin"
+    And I set "Quick links" smart menu items with the following fields to these values:
+      | Title          | Resources          |
+      | Menu item type | Static             |
+      | Menu item URL  | https://moodle.org |
+      | desktop        | 1                  |
+      | tablet         | 0                  |
+      | mobile         | 0                  |
+    Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Main menu smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Menu bar smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
+    And I change viewport size to "tablet"
+    Then I should see smart menu "Quick links" item "Resources" in location "User, Menu"
+    And I click on "More" "link" in the ".primary-navigation" "css_element"
+    Then I should see smart menu "Quick links" item "Resources" in location "Main"
+    And I change viewport size to "mobile"
+    Then I should see smart menu "Quick links" item "Resources" in location "Menu, User"
+    And I should see smart menu "Quick links" item "Resources" in location "Bottom"
+
+  @javascript
+  Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different viewports - hide the menu items on desktop and mobile devices
+    When I log in as "admin"
+    And I set "Quick links" smart menu items with the following fields to these values:
+      | Title          | Resources          |
+      | Menu item type | Static             |
+      | Menu item URL  | https://moodle.org |
+      | desktop        | 1                  |
+      | tablet         | 0                  |
+      | mobile         | 1                  |
+    Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Main menu smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Menu bar smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
+    And I change viewport size to "tablet"
+    Then I should see smart menu "Quick links" item "Resources" in location "User, Menu"
+    And I click on "More" "link" in the ".primary-navigation" "css_element"
+    Then I should see smart menu "Quick links" item "Resources" in location "Main"
+    And I change viewport size to "mobile"
+    Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Menu bar smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Bottom bar smart menu" should not be visible
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Select an existing icon from the icon autocomplete list
