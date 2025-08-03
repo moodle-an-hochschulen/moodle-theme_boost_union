@@ -1868,6 +1868,10 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     visibility: visible;
                 }
             }
+            /* The position of the main page has been adjusted slightly below to accommodate the top header. */
+            ~ #page.drawers {
+                margin-top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height});
+            }
             .moremenu .more-nav li.card-dropdown {
                 /* The position of the card dropdown block has been set to static,
                 so it will always appear under the card menu link. */
