@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-08-01 - Bugfix: Smart menu: menu bar was displayed although there were no items to display, resolves #849.
+
 ### v4.5-r24
 
 * 2025-07-31 - Bugfix: Uninitialized $overflow might have caused the smart menu item icon picker to fail, resolves #1035
