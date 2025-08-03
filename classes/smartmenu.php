@@ -679,6 +679,28 @@ class smartmenu {
                 // Setup the childrens to parent menu node.
                 $nodes->haschildren = (count($builditems) > 0) ? true : false;
                 $nodes->children = $builditems;
+
+                // Set the visibility of the menu node for mobile, tablet, and desktop based on its child items.
+                foreach ($builditems as $key => $item) {
+                    // If any of the items are visible on the desktop, the menu node should also be visible on the desktop.
+                    if (!isset($item['desktop']) || empty($item['desktop'])) {
+                        $hidemenudesktop = 0;
+                    }
+                    // If any of the items are visible on the tablet, the menu node should also be visible on the tablet.
+                    if (!isset($item['tablet']) || empty($item['tablet'])) {
+                        $hidemenutablet = 0;
+                    }
+                    // If any of the items are visible on the mobile, the menu node should also be visible on the mobile.
+                    if (!isset($item['mobile']) || empty($item['mobile'])) {
+                        $hidemenumobile = 0;
+                    }
+                }
+
+                // Include the menu node visibility based on its child items.
+                $nodes->desktop = $hidemenudesktop ?? true;
+                $nodes->tablet = $hidemenutablet ?? true;
+                $nodes->mobile = $hidemenumobile ?? true;
+
             } else {
                 // If menu is inline mode, then it items are displayed directly in menus.
                 // Set the menuitems as separate menu node in cache.
