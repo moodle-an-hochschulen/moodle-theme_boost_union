@@ -33,4 +33,13 @@ $functions = [
         'ajax'          => true,
         'loginrequired' => false,
     ],
+    'theme_boost_union_block_myoverview_filters'              => [
+        'classname'       => 'theme_boost_union\\webservice\\ws_block_myoverview',
+        'methodname'      => 'service',
+        'description'     => 'Returns the list of courses from the filters applied in the course overview block',
+        'type'            => 'read',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
+    ],
 ];
