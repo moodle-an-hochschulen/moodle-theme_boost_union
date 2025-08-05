@@ -15,20 +15,19 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template block_myoverview/nav-year-selector
+    @template block_myoverview/progress-bar
 
-    This template renders year dropdown.
+    This template renders a simple progress bar.
 
+    Example context (json):
+    {
+        "progress": 50
+    }
 }}
-{{#years}}
-<div class="dropdown mb-1 me-1">
-    <button id="yeardropdown" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="{{#str}} courseoverviewyear, theme_boost_union {{/str}}">
-        <span data-active-item-text>
-            {{{yearplaceholder}}}
-        </span>
-    </button>
-    <ul class="dropdown-menu" role="menu" data-show-active-item data-skip-active-class="true" data-active-item-text aria-labelledby="yeardropdown">
-        {{{years}}}
-    </ul>
+<div class="progress-text">
+    <span class="sr-only">{{#str}}aria:courseprogress, block_myoverview{{/str}}</span>
+    {{#str}}completepercent, block_myoverview, <span>{{progress}}</span>{{/str}}
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: {{progress}}%" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
 </div>
-{{/years}}

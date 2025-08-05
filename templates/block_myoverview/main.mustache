@@ -23,10 +23,10 @@
     {}
 }}
 
-<div id="block-myoverview-{{uniqid}}" class="block-myoverview block-cards this-is-a-custom-class" data-region="myoverview" role="navigation">
+<div id="block-myoverview-{{uniqid}}" class="block-myoverview block-cards" data-region="myoverview" role="navigation">
     <hr class="mt-0"/>
 
-    <div role="search" data-region="filter" class="d-flex align-items-center my-2" aria-label="{{#str}} aria:controls, block_myoverview {{/str}}">
+    <div role="search" data-region="filter" class="d-flex align-items-center" aria-label="{{#str}} aria:controls, block_myoverview {{/str}}">
         <div class="row no-gutters">
             {{> block_myoverview/nav-grouping-selector }}
 
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <div class="container-fluid p-0">
+    <div class="container-fluid block-myoverview-content">
         {{> block_myoverview/courses-view }}
     </div>
 </div>

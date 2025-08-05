@@ -24,7 +24,7 @@
 
 namespace theme_boost_union\output;
 
-use block_myoverview\output\main as main;
+use block_myoverview\output\main;
 use html_writer;
 use stdClass;
 
@@ -50,17 +50,50 @@ class block_myoverview_renderer extends \block_myoverview\output\renderer {
 
         $data = $main->export_for_template($this);
 
+        $yearpreference = get_user_preferences('boost_union_my_courses_year_user_preference') ?? 'all';
+        $progresspreference = get_user_preferences('boost_union_my_courses_progress_user_preference') ?? 'all';
+        $data['progresspreference'] = $progresspreference;
+
+        if ($yearpreference != 'all') {
+            $yearplaceholder = $yearpreference;
+        } else {
+            $yearplaceholder = get_string('courseoverviewyear', 'theme_boost_union');
+        }
+        $data['yearplaceholder']  = $yearplaceholder;
+
+        if ($progresspreference == 'completed') {
+            $data['completed']  = true;
+            $data['completionplaceholder']  = get_string('completed', 'moodle');
+        } else if ($progresspreference == 'notcompleted') {
+            $data['notcompleted']  = true;
+            $data['completionplaceholder']  = get_string('notcompleted', 'completion');
+        } else {
+            $data['completionplaceholder']  = get_string('progress', 'moodle');
+        }
+
         $courses = enrol_get_my_courses('enddate', 'fullname ASC, id DESC');
         $coursesyears = [];
         foreach ($courses as $course) {
             if (!empty($course->enddate)) {
                 $endyear = userdate($course->enddate, '%Y');
-                $yearlink = html_writer::tag('a', $endyear,[
-                    'class' => 'dropdown-item',
-                    'href' => '#',
-                    'data-filter' => 'year',
-                    'data-value' => $endyear
-                ]);
+                if ($yearpreference == $endyear) {
+                    $yearlink = html_writer::tag('a', $endyear,[
+                        'class' => 'dropdown-item',
+                        'href' => '#',
+                        'data-filter' => 'year',
+                        'data-pref' => $endyear,
+                        'data-value' => $endyear,
+                        'aria-current' => 'true'
+                    ]);
+                } else {
+                    $yearlink = html_writer::tag('a', $endyear,[
+                        'class' => 'dropdown-item',
+                        'href' => '#',
+                        'data-filter' => 'year',
+                        'data-pref' => $endyear,
+                        'data-value' => $endyear,
+                    ]);
+                }
                 $yearitem = new stdClass();
                 $yearitem->$endyear = html_writer::tag('li', $yearlink);
                 $coursesyears[$endyear] = $yearitem;
@@ -72,6 +105,7 @@ class block_myoverview_renderer extends \block_myoverview\output\renderer {
                 'class' => 'dropdown-item',
                 'href' => '#',
                 'data-filter' => 'year',
+                'data-pref' => 'all',
                 'data-value' => 'all'
             ]);
             $yearslist = $allyearslink;
@@ -79,6 +113,7 @@ class block_myoverview_renderer extends \block_myoverview\output\renderer {
                 $yearslist .= $yearlistitem->$year;
             }
             $data['years'] = $yearslist;
+            $data['yearpreference'] = $yearpreference;
         }
 
         return $this->render_from_template('block_myoverview/main', $data);

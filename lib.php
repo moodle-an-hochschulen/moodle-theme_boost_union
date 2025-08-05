@@ -848,6 +848,19 @@ function theme_boost_union_user_preferences(): array {
             'permissioncallback' => [\core\user::class, 'is_current_user'],
         ];
     }
+    $preferences['boost_union_my_courses_year_user_preference'] = [
+            'type' => PARAM_ALPHANUM,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => 'all',
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+    ];
+    $preferences['boost_union_my_courses_progress_user_preference'] = [
+            'type' => PARAM_ALPHANUM,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => 'all',
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+    ];
+
     return $preferences;
 }
 
