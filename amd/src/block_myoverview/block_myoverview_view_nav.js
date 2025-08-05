@@ -42,6 +42,10 @@ const updatePreferences = (filter, value) => {
         type = 'block_myoverview_user_sort_preference';
     } else if (filter === 'customfieldvalue') {
         type = 'block_myoverview_user_grouping_customfieldvalue_preference';
+    } else if (filter === 'year') {
+        type = 'boost_union_my_courses_year_user_preference';
+    } else if (filter === 'progress') {
+        type = 'boost_union_my_courses_progress_user_preference';
     } else {
         type = 'block_myoverview_user_grouping_preference';
     }
