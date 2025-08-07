@@ -172,7 +172,7 @@ class snippets {
                 $source->get_filearea(),
                 $source->get_itemid(),
                 '/',
-                str_replace( '.scss', $extension, $name)
+                str_replace( '.scss', '.' . $extension, $name)
             );
 
             if ($file) {
