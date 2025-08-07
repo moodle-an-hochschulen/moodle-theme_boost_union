@@ -161,7 +161,7 @@ use theme_boost_union\local\snippets\importer as snippets_manager;
  * @return string
  */
 function theme_boost_union_get_main_scss_content($theme) {
-    global $CFG;
+    global $CFG, $DB;
 
     // Require Boost Core library.
     require_once($CFG->dirroot.'/theme/boost/lib.php');
@@ -184,7 +184,12 @@ function theme_boost_union_get_main_scss_content($theme) {
     $scss .= theme_boost_union_get_external_scss('post');
 
     // Get and include the SCSS of the enabled SCSS snippets.
-    $scss .= snippets::get_enabled_snippet_scss();
+    // But include the snippets only if the snippets table exists in the database.
+    // It's ok to query the database here as this function is only called during a theme cache refresh
+    // and not during each page load.
+    if ($DB->get_manager()->table_exists('theme_boost_union_snippets')) {
+        $scss .= snippets::get_enabled_snippet_scss();
+    }
 
     return $scss;
 }

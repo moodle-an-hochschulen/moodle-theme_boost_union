@@ -35,6 +35,7 @@
 #courseheaderimage,
 #footnote,
 #page.drawers .main-inner,
-input {
+input,
+.tertiary-navigation-selector .dropdown-toggle::after {
     border-radius: 0 !important;
 }
