@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/theme/boost_union/classes/admin_settingspage_tabs_with_tertiary.php');
 require_once($CFG->dirroot . '/theme/boost_union/classes/admin_settingspage_tabs_with_external_and_tertiary.php');
 require_once($CFG->dirroot . '/theme/boost_union/classes/admin_externalpage_in_tab.php');
-require_once($CFG->dirroot . '/theme/boost_union/classes/snippets.php');
+require_once($CFG->dirroot . '/theme/boost_union/classes/local/snippets/snippets.php');
 
 use theme_boost_union\admin_setting_configdatetime;
 use theme_boost_union\admin_setting_configstoredfilealwayscallback;
@@ -37,7 +37,8 @@ use theme_boost_union\admin_setting_configtext_url;
 use theme_boost_union\admin_settingspage_tabs_with_tertiary;
 use theme_boost_union\admin_settingspage_tabs_with_external_and_tertiary;
 use theme_boost_union\admin_externalpage_in_tab;
-use theme_boost_union\snippets;
+use theme_boost_union\local\snippets\snippets;
+use theme_boost_union\local\snippets\source as snippets_source;
 use core\di;
 use core\hook\manager as hook_manager;
 
@@ -3422,7 +3423,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('enablebuiltinsnippets', 'theme_boost_union', null, true);
         $description = get_string('enablebuiltinsnippets_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $setting->set_updatedcallback('theme_reset_all_caches');
+        $setting->set_updatedcallback('theme_boost_union_populate_builtin_snippets');
         $tab->add($setting);
 
         // Create repository community snippets heading.
@@ -3496,13 +3497,16 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('uploadedsnippets', 'theme_boost_union', null, true);
         $snippetrepourl = 'https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_snippets';
         $description = get_string('uploadedsnippets_desc', 'theme_boost_union', ['url' => $snippetrepourl], true);
-        $uploadedsnippetsextensions = array_map(function($item) {
-            return '.'.$item;
-        }, snippets::ALLOWED_PREVIEW_FILE_EXTENSIONS);;
         $uploadedsnippetsextensions[] = '.scss';
         $uploadedsnippetsextensions[] = '.zip';
-        $setting = new admin_setting_configstoredfilealwayscallback($name, $title, $description, 'uploadedsnippets', 0,
-                ['maxfiles' => -1, 'subdirs' => 0, 'accepted_types' => $uploadedsnippetsextensions]);
+        $setting = new admin_setting_configstoredfilealwayscallback(
+            $name,
+            $title,
+            $description,
+            snippets_source::UPLOADED->get_filearea(),
+            snippets_source::UPLOADED->get_itemid(),
+            ['maxfiles' => -1, 'subdirs' => 0, 'accepted_types' => $uploadedsnippetsextensions]
+        );
         $setting->set_updatedcallback('theme_boost_union_parse_uploaded_sippets');
 
         $tab->add($setting);

@@ -12,11 +12,11 @@ Feature: Configuring the theme_boost_union plugin on the "SCSS Snippets" page.
 
   @javascript
   Scenario: SCSS snippets: Settings - Builtin-snippets are enabled.
-    Given the following config values are set as admin:
-      | config                | value | plugin            |
-      | enablebuiltinsnippets | yes   | theme_boost_union |
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > SCSS snippets" in site administration
+    And I click on "Settings" "link" in the "#region-main .nav-tabs" "css_element"
+    And I select "yes" from the "s_theme_boost_union_enablebuiltinsnippets" singleselect
+    And I press "Save changes"
     Then I should not see "There aren't any SCSS snippets which can be used"
     And I should see "Rainbow navbar"
 
@@ -241,4 +241,4 @@ Feature: Configuring the theme_boost_union plugin on the "SCSS Snippets" page.
     And I should not see "@copyright"
     And I click on "Show the SCSS code" "link"
     And I should see ".primary-navigation .nav-item .nav-link"
-    And I should see "@copyright"
+    Then I should see "@extend .navbar-dark;"

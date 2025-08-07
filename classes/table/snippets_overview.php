@@ -26,7 +26,7 @@
 
 namespace theme_boost_union\table;
 
-use theme_boost_union\snippets;
+use theme_boost_union\local\snippets\snippets;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -254,7 +254,7 @@ class snippets_overview extends \table_sql {
                     'data-trackerissue' => $data->trackerissue,
                     'data-image' => $data->image,
                     'data-id' => $data->id,
-                    'data-code' => snippets::get_snippet_scss($data->name, $data->source),
+                    'data-code' => $data->scss,
                     ],
         ];
 
