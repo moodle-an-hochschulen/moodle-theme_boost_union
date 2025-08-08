@@ -6,6 +6,8 @@ Changes
 
 ### Unreleased
 
+* 2025-08-04 - Bugfix: Make outside-left and outside-right block regions really responsive, resolves #266.
+* 2025-08-01 - Bugfix: Smart menu: menu bar was displayed although there were no items to display, resolves #849.
 * 2025-07-31 - Bugfix: Uninitialized $overflow might have caused the smart menu item icon picker to fail, resolves #1035
 * 2025-07-28 - Bugfix: Reposition Boost Union footer buttons correctly if sticky footer is shown, resolves #1033
 * 2025-07-28 - Improvement: Query SCSS snippets table during theme refresh only if the table exists, resolves #1024
@@ -190,6 +192,7 @@ Changes
 
 ### v4.5-r6
 
+* 2025-02-06 - Bugfix: Make outside-left and outside-right block regions really responsive, resolves #266.
 * 2025-02-04 - Improvement: Hide the 'Menu item mode' settings for smart menu items which are not of the 'dynamic courses' item type, resolves #804.
 * 2025-02-04 - Bugfix: Smart menu 3rd level submenus were being cut-off in responsive / mobile view, resolves #356.
                Please note: This is a comparably large visual change which effectively replaces the presentation of a 3rd level smart menu (which can only be realized with dynamic courses menu items up to now). Flyout menus in the main navigation area and the menu bar area have been replaced with the 'sliding door' submenu behaviour which has been used in the user menu only up to now. If you are using dynamic courses menu items, please test your particular smart menu setup before updating to this Boost Union release.
