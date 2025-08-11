@@ -225,7 +225,7 @@ class importer {
         // Save snippet to filearea for uploaded snippets.
         $fs->create_file_from_string($filerecord, $filecontent);
 
-        self::cli_log("Refreshed snippet: $filename");
+        self::cli_log('Refreshed snippet: ' . $source->value . ' – ' . $filename . '\n');
 
         // Save preview image for that snippet if it exists.
         $preview = self::search_preview_file($zipdir, $filename);
