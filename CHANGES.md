@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-08-07 - SCSS Snippet: Tertiary navigation button, targets #989
 * 2025-08-01 - Bugfix: Smart menu: menu bar was displayed although there were no items to display, resolves #849.
 
 ### v5.0-r8
