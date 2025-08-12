@@ -49,7 +49,7 @@ final class importer_test extends \advanced_testcase {
         );
 
         // Since we have added no snippets in between the count should still be the same.
-        $this->assertEquals($count, 5);
+        $this->assertEquals($count, 6);
 
         // Delete one snippet from the database.
         $DB->delete_records(
@@ -62,7 +62,7 @@ final class importer_test extends \advanced_testcase {
             ['source' => 'theme_boost_union']
         );
 
-        $this->assertEquals(4, $count);
+        $this->assertEquals(5, $count);
 
         // Run function that parses and registers new builtin snippets.
         importer::import_builtin_snippets();

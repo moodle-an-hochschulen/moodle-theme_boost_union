@@ -17,7 +17,6 @@
 namespace theme_boost_union\local\snippets;
 
 use advanced_testcase;
-use theme_boost_union\local\snippets\snippets;
 
 /**
  * Theme Boost Union - Tests for (built-in) SCSS Snippets and snippets class.
