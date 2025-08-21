@@ -1657,3 +1657,9 @@ $string['upgradenotice_2022080922_notcopied'] = 'The <strong>{$a}</strong> setti
 $string['upgradenotice_2025041410'] = 'The setting "Show hint for guest access" has been updated to support more options. Your existing configuration (which was set to "Yes") has been migrated to the new option "Yes, but only if no guest access password is set".';
 $string['upgradenotice_2025041413'] = 'The setting "courselistinghowfields" has been renamed to "courselistingshowfields" to fix a typo. Your existing configuration has been migrated to the new setting name.';
 $string['upgradenotice_2025041416'] = 'Smart menu dividers are now available as a dedicated menu item type. Existing dividers (created using heading type with hash signs) have been automatically converted to the new divider type.';
+
+// Login - FHGR
+ $string['manuallogin'] = "Manual Login";
+
+ // Footer -FHGR
+$string['privacyfhgr'] = "Privacy Notice";
