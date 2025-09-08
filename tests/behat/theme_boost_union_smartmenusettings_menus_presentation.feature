@@ -218,7 +218,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Menu mode          | Submenu        |
       | More menu behavior | <menu2beh>     |
     And I create smart menu with a default item with the following fields to these values:
-      | Title              | Quick links 03 |
+      | Title              | Quick links menu 03 |
       | Menu location(s)   | Main           |
       | Menu mode          | Submenu        |
       | More menu behavior | <menu3beh>     |
@@ -236,14 +236,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I change viewport size to "large"
     Then I <menu1shouldornotlarge> see smart menu "Quick links 01" in location "Main"
     And I <menu2shouldornotlarge> see smart menu "Quick links 02" in location "Main"
-    And I <menu3shouldornotlarge> see smart menu "Quick links 03" in location "Main"
+    And I <menu3shouldornotlarge> see smart menu "Quick links menu 03" in location "Main"
     And ".primary-navigation .dropdownmoremenu" "css_element" <moreshouldornotlarge> be visible
     # Make the screen smaller and test the "More" behaviour in the navbar
     # This screen size should be 'tablet', but due to MDL-81892, we have to test on a larger screen.
     And I change viewport size to "880x1024"
     Then I <menu1shouldornottablet> see smart menu "Quick links 01" in location "Main"
     And I <menu2shouldornottablet> see smart menu "Quick links 02" in location "Main"
-    And I <menu3shouldornottablet> see smart menu "Quick links 03" in location "Main"
+    And I <menu3shouldornottablet> see smart menu "Quick links menu 03" in location "Main"
     And ".primary-navigation .dropdownmoremenu" "css_element" <moreshouldornottablet> be visible
 
     Examples:
@@ -279,7 +279,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Menu mode          | Submenu        |
       | More menu behavior | <menu2beh>     |
     And I create smart menu with a default item with the following fields to these values:
-      | Title              | Quick links 03 |
+      | Title              | Quick links menu 03 |
       | Menu location(s)   | Main           |
       | Menu mode          | Submenu        |
       | More menu behavior | <menu3beh>     |
@@ -299,11 +299,11 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I click on "More" "link" in the ".primary-navigation" "css_element"
     Then I should see smart menu "Quick links 01" in location "Main"
     And I should see smart menu "Quick links 02" in location "Main"
-    And I should see smart menu "Quick links 03" in location "Main"
+    And I should see smart menu "Quick links menu 03" in location "Main"
     # Finally verify the order of the menu items (as they are may have been re-ordered due to their settings)
     And "Quick links 01" "text" should appear <menu1and2> "Quick links 02" "text"
-    And "Quick links 02" "text" should appear <menu2and3> "Quick links 03" "text"
-    And "Quick links 01" "text" should appear <menu1and3> "Quick links 03" "text"
+    And "Quick links 02" "text" should appear <menu2and3> "Quick links menu 03" "text"
+    And "Quick links 01" "text" should appear <menu1and3> "Quick links menu 03" "text"
 
     Examples:
       # Behaviour option IDs: 0 = Do not change anything, 1 = Force into more menu, 2 = Keep outside of more menu
