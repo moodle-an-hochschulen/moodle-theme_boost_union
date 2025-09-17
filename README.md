@@ -265,25 +265,9 @@ With this setting, you can tint the activity icons in the activities block based
 
 ##### Course Header
 
-###### Display the course image in the course header
+###### Enable enhanced course header
 
-When enabled, the course image (which can be uploaded in a course's course settings) is displayed in the header of a course. The course images are shown there in addition to the 'My courses' page where they are always shown.
-
-###### Fallback course header image
-
-If you upload an image in this setting, it is used as fallback image and is displayed in the course header if no course image is uploaded in a particular course's course settings. If you do not upload an image here, a course header image is only shown in a particular course if a course image is uploaded in this particular course's course settings.
-
-###### Course header image layout
-
-With this setting, you control the layout of the course header image and the course title.
-
-###### Course header image height
-
-With this setting, you control the height of the presented course header image.
-
-###### Course header image position
-
-With this setting, you control the positioning of the course header image within the course header container. The first value is the horizontal position, the second value is the vertical position.
+When enabled, the course header (which is just the course title in Moodle core) is enhanced by additional elements like the course image (which can be uploaded in a course's course settings) and other course metadata, depending how you configure the course header in detail.
 
 ##### Course index
 
@@ -653,6 +637,14 @@ These capabilities are used to control who is allowed to see a particular block 
 
 These capabilities are used to control who is allowed to edit a particular block region. By default, they are assigned to teachers, non-editing teachers and managers.
 
+### theme/boost_union:overridecourseheaderincourse
+
+This capability is used to control who is able to override the course header settings in a course (if this feature was enabled in the theme settings). By default, it is assigned to teachers and managers.
+
+### theme/boost_union:transfercourseheaderduringimport
+
+This capability is used to control who will trigger the transfer of a course header during course import. Controlling this by a capability is an option due to technical limitations, please see the "Backup & Restore" section in this file for details. By default, it is assigned to managers.
+
 
 Scheduled Tasks
 ---------------
@@ -695,6 +687,24 @@ This is perfectly fine as long as admins to not want to fiddle with the list of 
 To ease such admin tasks as well as the crafting of SCSS Snippet PRs,
 this CLI script can be run and will re-populate the list of built-in SCSS snippets based on the list of snippets
 which exist on disk in the theme/boost_union/snippets/builtin directory.
+
+
+Backup & Restore
+----------------
+
+This plugin has the following support for backup & restore:
+
+### Course-specific settings
+
+The course-specific settings which can be set within a particular course's settings page, for example for the course header feature, are included in course backups.
+
+However, it has to be noted that this fully works only for these backup & restore cases:
+* Creating a course backup file and restoring it onto the same site. In this case, course-specific settings are always added to the course backup. And during restore, the teacher can decide if he wants to restore course-specific settings or not.
+* Copying / duplicating the course on the same site. In this case, course-specific settings are always duplicated together with the rest of the course.
+
+For these backup & restore strategies, functional limitations apply:
+* Importing course content from one course into another course on the same site. In this case, course-specific settings can be transferred from the source course to the target course, but Boost Union can't let the teacher decide the question within the course import wizard during a particular import. This is due to functional limitations in Moodle core. Instead, the administrator has to configure the desired global behaviour for Boost Union as a whole.
+* Creating a course backup file and restoring it onto another site. In this case, depending on the Boost Union version and configuration on the target site, the course-specific settings might have no effect or get lost during the restore.
 
 
 Exceptions to our main design principle
