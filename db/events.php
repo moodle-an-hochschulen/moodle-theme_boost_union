@@ -74,6 +74,10 @@ $observers = [
                 'callback' => '\theme_boost_union\eventobservers::course_updated',
         ],
         [
+                'eventname' => 'core\event\course_restored',
+                'callback' => '\theme_boost_union\eventobservers::course_restored',
+        ],
+        [
                 'eventname' => 'core\event\course_category_deleted',
                 'callback' => '\theme_boost_union\eventobservers::category_updated',
         ],
@@ -81,5 +85,4 @@ $observers = [
                 'eventname' => 'core\event\course_category_updated',
                 'callback' => '\theme_boost_union\eventobservers::category_updated',
         ],
-
 ];

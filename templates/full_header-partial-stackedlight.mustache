@@ -1,0 +1,58 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/full_header-stackedlight
+
+    This template renders a Boost Union course header.
+
+    Example context (json):
+    {
+        "contextheader": "context_header_html",
+        "courseheaderimageurl": "http://localhost/boostunionmoodle/pluginfile.php/14/course/overviewfiles/ex.png",
+        "courseheaderheight": "300px",
+        "courseheaderimageposition": "center center"
+    }
+}}
+{{!
+    This template is a partial version of core/full_header
+
+    Modifications compared to the original template:
+    * Provide the layout for the "Stacked Light" course header layout option,
+      but only if a course header image URL is set as otherwise the whole layout would not make sense.
+}}
+{{#courseheaderimageurl}}
+    <div id="courseheaderimage" class="p-3 mb-3 courseheaderimage-light"
+            style="background-image: url('{{{courseheaderimageurl}}}');
+                    {{#courseheaderheight}}min-height: {{{.}}};{{/courseheaderheight}}
+                    {{#courseheaderimageposition}}background-position: {{{.}}};{{/courseheaderimageposition}}">
+        <div class="d-flex align-items-center">
+            {{#contextheader}}
+                <div class="me-auto">
+                    {{{contextheader}}}
+                </div>
+            {{/contextheader}}
+            <div class="header-actions-container ms-auto" data-region="header-actions-container">
+                {{#headeractions}}
+                    <div class="header-action ms-2">{{{.}}}</div>
+                {{/headeractions}}
+            </div>
+        </div>
+    </div>
+{{/courseheaderimageurl}}
+{{^courseheaderimageurl}}
+    {{> theme_boost_union/full_header-partial-original }}
+{{/courseheaderimageurl}}

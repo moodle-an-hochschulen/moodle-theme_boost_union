@@ -628,7 +628,7 @@
  ======================================*/
 
 /*---------------------------------------
- * Setting: Course header image.
+ * Setting: Course header.
  --------------------------------------*/
 #courseheaderimage {
     background-size: cover;
@@ -642,7 +642,7 @@
     color: black;
     text-shadow: 0 0 5px white;
 }
-/* If the header actions are placed _within_ the course header image element, i.e. the title is stacked on the image.*/
+/* If the header actions are placed _within_ the course header element, i.e. the title is stacked on the image.*/
 #courseheaderimage .header-action {
     /* Add a background color of white to the header actions to make sure that they can be read properly. */
     background-color: white;

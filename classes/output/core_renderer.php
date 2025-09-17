@@ -33,6 +33,7 @@ use core\hook\manager as hook_manager;
 use core\hook\output\before_standard_footer_html_generation;
 use core\output\html_writer;
 use core_block\output\block_contents;
+use theme_boost_union\coursesettings;
 
 /**
  * Extending the core_renderer interface.
@@ -470,31 +471,38 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $header->courseheader = $this->course_header();
         $header->headeractions = $this->page->get_header_actions();
 
-        // Add the course header image for rendering.
-        if ($this->page->pagelayout == 'course' && (get_config('theme_boost_union', 'courseheaderimageenabled')
-                        == THEME_BOOST_UNION_SETTING_SELECT_YES)) {
-            // If course header images are activated, we get the course header image url
-            // (which might be the fallback image depending on the course settings and theme settings).
-            $header->courseheaderimageurl = theme_boost_union_get_course_header_image_url();
-            // Additionally, get the course header image height.
-            $header->courseheaderimageheight = get_config('theme_boost_union', 'courseheaderimageheight');
-            // Additionally, get the course header image position.
-            $header->courseheaderimageposition = get_config('theme_boost_union', 'courseheaderimageposition');
-            // Additionally, get the template context attributes for the course header image layout.
-            $courseheaderimagelayout = get_config('theme_boost_union', 'courseheaderimagelayout');
-            switch($courseheaderimagelayout) {
-                case THEME_BOOST_UNION_SETTING_COURSEIMAGELAYOUT_HEADINGABOVE:
-                    $header->courseheaderimagelayoutheadingabove = true;
-                    $header->courseheaderimagelayoutstackedclass = '';
-                    break;
-                case THEME_BOOST_UNION_SETTING_COURSEIMAGELAYOUT_STACKEDDARK:
-                    $header->courseheaderimagelayoutheadingabove = false;
-                    $header->courseheaderimagelayoutstackedclass = 'dark';
-                    break;
-                case THEME_BOOST_UNION_SETTING_COURSEIMAGELAYOUT_STACKEDLIGHT:
-                    $header->courseheaderimagelayoutheadingabove = false;
-                    $header->courseheaderimagelayoutstackedclass = 'light';
-                    break;
+        // Initialize a marker that course header is not enabled.
+        $header->courseheaderenabled = false;
+
+        // If we are on a course page.
+        if ($this->page->pagelayout == 'course') {
+            // If enabled, add the enhanced course header data for rendering.
+            if (coursesettings::get_config_with_course_override('courseheaderenabled') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                // Set a marker that course header is enabled.
+                $header->courseheaderenabled = true;
+                // If course headers are activated, we get the course header image url
+                // (which might be the global image depending on the course settings and theme settings).
+                $header->courseheaderimageurl = theme_boost_union_get_course_header_image_url();
+                // Additionally, get the course header height.
+                $header->courseheaderheight = coursesettings::get_config_with_course_override('courseheaderheight');
+                // Additionally, get the course header image position.
+                $header->courseheaderimageposition = coursesettings::get_config_with_course_override('courseheaderimageposition');
+                // Additionally, determine the partial template for the course header layout.
+                $courseheaderlayout = coursesettings::get_config_with_course_override('courseheaderlayout');
+                switch($courseheaderlayout) {
+                    case THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_HEADINGABOVE:
+                        $courseheadertemplate = 'theme_boost_union/full_header-partial-headingabove';
+                        break;
+                    case THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_STACKEDDARK:
+                        $courseheadertemplate = 'theme_boost_union/full_header-partial-stackeddark';
+                        break;
+                    case THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_STACKEDLIGHT:
+                        $courseheadertemplate = 'theme_boost_union/full_header-partial-stackedlight';
+                        break;
+                }
+                // Render the course header partial template for the course header and add it to the header data.
+                // This approach is taken as Mustache does not support dynamicly named partials.
+                $header->courseheaderhtml = $this->render_from_template($courseheadertemplate, $header);
             }
         }
 

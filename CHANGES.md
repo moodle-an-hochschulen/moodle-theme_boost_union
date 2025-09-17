@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-09-17 - Feature: Enhance the adaptability of the course header including the possibility for teachers to configure it per course, resolves #138.
 * 2025-08-01 - Bugfix: Smart menu: menu bar was displayed although there were no items to display, resolves #849.
 
 ### v5.0-r8
