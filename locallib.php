@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_boost_union\coursesettings;
+
 /**
  * Build the course related hints HTML code.
  * This function evaluates and composes all course related hints which may appear on a course page below the course header.
@@ -1193,7 +1195,7 @@ function theme_boost_union_get_externaladminpage_heading() {
 
 /**
  * Helper function which returns the course header image url, picking the current course from the course settings
- * or the fallback image from the theme.
+ * or the global image from the theme.
  * If no course header image can should be shown for the current course, the function returns null.
  *
  * @return null | string
@@ -1207,16 +1209,80 @@ function theme_boost_union_get_course_header_image_url() {
         return null;
     }
 
-    // Get the course image.
-    $courseimage = \core_course\external\course_summary_exporter::get_course_image($PAGE->course);
+    // Check if this course format is excluded from the course header feature.
+    if (isset($PAGE->course->format) && coursesettings::is_courseformat_excluded_from_courseheaderfeature($PAGE->course->format)) {
+        return null;
+    }
 
-    // If the course has a course image.
-    if ($courseimage) {
-        // Then return it directly.
-        return $courseimage;
+    // Get the configured course header image source.
+    $courseheaderimagesource = get_config('theme_boost_union', 'courseheaderimagesource');
 
-        // Otherwise, if a fallback image is configured.
-    } else if (get_config('theme_boost_union', 'courseheaderimagefallback')) {
+    // Handle the different image source options.
+    switch ($courseheaderimagesource) {
+        case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_COURSEPLUSGLOBAL:
+            // Try course overview files first, then global fallback.
+            $courseimage = \core_course\external\course_summary_exporter::get_course_image($PAGE->course);
+            if ($courseimage) {
+                return $courseimage;
+            }
+            // Fall through to global image.
+            return theme_boost_union_get_global_course_header_image_url();
+
+        case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_COURSENOGLOBAL:
+            // Only course image, no fallback.
+            return \core_course\external\course_summary_exporter::get_course_image($PAGE->course);
+
+        case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_DEDICATEDPLUSGLOBAL:
+            // Try dedicated course images first, then global fallback.
+            $dedicatedimage = theme_boost_union_get_dedicated_course_header_image_url($PAGE->course->id);
+            if ($dedicatedimage) {
+                return $dedicatedimage;
+            }
+            // Fall through to global image.
+            return theme_boost_union_get_global_course_header_image_url();
+
+        case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_DEDICATEDNOGLOBAL:
+            // Only dedicated course images, no fallback.
+            return theme_boost_union_get_dedicated_course_header_image_url($PAGE->course->id);
+
+        case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_DEDICATEDPLUSCOURSEPLUSGLOBAL:
+            // Try dedicated course images first.
+            $dedicatedimage = theme_boost_union_get_dedicated_course_header_image_url($PAGE->course->id);
+            if ($dedicatedimage) {
+                return $dedicatedimage;
+            }
+            // Then try course overview files.
+            $courseimage = \core_course\external\course_summary_exporter::get_course_image($PAGE->course);
+            if ($courseimage) {
+                return $courseimage;
+            }
+            // Fall through to global image.
+            return theme_boost_union_get_global_course_header_image_url();
+
+        case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_DEDICATEDPLUSCOURSENOGLOBAL:
+            // Try dedicated course images first.
+            $dedicatedimage = theme_boost_union_get_dedicated_course_header_image_url($PAGE->course->id);
+            if ($dedicatedimage) {
+                return $dedicatedimage;
+            }
+            // Then try course overview files, no fallback.
+            return \core_course\external\course_summary_exporter::get_course_image($PAGE->course);
+
+        case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_GLOBAL:
+        default:
+            // Only global image.
+            return theme_boost_union_get_global_course_header_image_url();
+    }
+}
+
+/**
+ * Helper function to get the global course header image URL.
+ *
+ * @return core\url|null The URL to the global course header image or null if none is configured.
+ */
+function theme_boost_union_get_global_course_header_image_url() {
+    // If a global image is configured.
+    if (get_config('theme_boost_union', 'courseheaderimageglobal')) {
         // Get the system context.
         $systemcontext = \context_system::instance();
 
@@ -1227,7 +1293,7 @@ function theme_boost_union_get_course_header_image_url() {
         $files = $fs->get_area_files(
             $systemcontext->id,
             'theme_boost_union',
-            'courseheaderimagefallback',
+            'courseheaderimageglobal',
             false,
             'itemid',
             false
@@ -1236,15 +1302,46 @@ function theme_boost_union_get_course_header_image_url() {
         // Just pick the first file - we are sure that there is just one file.
         $file = reset($files);
 
-        // Build and return the image URL.
-        return core\url::make_pluginfile_url(
-            $file->get_contextid(),
-            $file->get_component(),
-            $file->get_filearea(),
-            $file->get_itemid(),
-            $file->get_filepath(),
-            $file->get_filename()
-        );
+        // If we have a file, build and return the image URL.
+        if ($file) {
+            return core\url::make_pluginfile_url(
+                $file->get_contextid(),
+                $file->get_component(),
+                $file->get_filearea(),
+                $file->get_itemid(),
+                $file->get_filepath(),
+                $file->get_filename()
+            );
+        }
+    }
+
+    // As no picture was found, return null.
+    return null;
+}
+
+/**
+ * Helper function to get the dedicated course header image URL for a specific course.
+ *
+ * @param int $courseid The course ID.
+ * @return core\url|null The URL to the dedicated course header image or null if none is configured.
+ */
+function theme_boost_union_get_dedicated_course_header_image_url($courseid) {
+    // Get the course context.
+    $coursecontext = \context_course::instance($courseid);
+
+    // Get filearea.
+    $fs = get_file_storage();
+
+    // Get all files from the dedicated course header image filearea.
+    $files = $fs->get_area_files($coursecontext->id, 'theme_boost_union', 'courseheaderimage', 0, 'itemid', false);
+
+    // Just pick the first file - we are sure that there is just one file per course.
+    $file = reset($files);
+
+    // If we have a file, build and return the image URL.
+    if ($file) {
+        return core\url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+            $file->get_itemid(), $file->get_filepath(), $file->get_filename());
     }
 
     // As no picture was found, return null.

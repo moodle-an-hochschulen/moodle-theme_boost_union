@@ -227,4 +227,52 @@ class eventobservers {
         // Clear the cache of menu when the course/module completion updated for user.
         smartmenu_helper::set_user_purgecache($event->relateduserid);
     }
+
+    /**
+     * Event observer for when a course is restored.
+     *
+     * This observer is triggered when a course is restored and handles the special case
+     * of course imports (MODE_IMPORT) where theme plugins are not automatically called by Moodle core.
+     *
+     * @param \core\event\course_restored $event The course restored event.
+     */
+    public static function course_restored(\core\event\course_restored $event): void {
+        global $DB;
+
+        // Get event data.
+        $eventdata = $event->get_data();
+        $other = $eventdata['other'] ?? [];
+
+        // If this is not a course restore with the specific 'course import' conditions we're looking for, return directly.
+        $iscourseimport = isset($other['type']) && $other['type'] === \backup::TYPE_1COURSE
+            && isset($other['mode']) && $other['mode'] === \backup::MODE_IMPORT
+            && isset($other['operation']) && $other['operation'] === \backup::OPERATION_RESTORE
+            && isset($other['samesite']) && $other['samesite'] === true;
+        if (!$iscourseimport) {
+            return;
+        }
+
+        // Get the original and new course IDs.
+        $originalcourseid = $other['originalcourseid'] ?? null;
+        $newcourseid = $eventdata['courseid'] ?? null;
+
+        // If we don't have both course IDs for any reason, return.
+        if (!$originalcourseid || !$newcourseid) {
+            return;
+        }
+
+        // If the original course does not have any theme-specific settings to transfer, return.
+        if (!$DB->record_exists('theme_boost_union_course', ['courseid' => $originalcourseid])) {
+            return;
+        }
+
+        // Get the original course settings to transfer.
+        $originalsettings = $DB->get_records('theme_boost_union_course', ['courseid' => $originalcourseid]);
+
+        // Transfer course settings from original course to new course.
+        \theme_boost_union\util\course_settings_transfer::transfer_course_settings($originalsettings, $newcourseid);
+
+        // Transfer course files from original course to new course.
+        \theme_boost_union\util\course_settings_transfer::transfer_course_files($originalcourseid, $newcourseid);
+    }
 }
