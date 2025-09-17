@@ -1,0 +1,143 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/full_header-partial-headingabove
+
+    This template renders a Boost Union course header.
+
+    Example context (json):
+    {
+        "contextheader": "context_header_html",
+        "courseheaderimageurl": "http://localhost/boostunionmoodle/pluginfile.php/14/course/overviewfiles/ex.png",
+        "courseheaderheight": "300px",
+        "courseheaderimageposition": "center center"
+    }
+}}
+{{!
+    This template is a partial version of core/full_header
+
+    Modifications compared to the original template:
+    * Provide the layout for the "Heading above" course header layout option,
+      but only if a course header image URL is set as otherwise the whole layout would not make sense.
+}}
+{{#courseheaderimageurl}}
+    <div id="bucourseheader" class="headingabove mb-3">
+        {{#showshortname}}
+            <div class="text-muted muted d-flex flex-wrap">
+                <span class="visually-hidden">{{#str}}aria:courseshortname, core_course{{/str}}</span>
+                <div class="text-truncate small">
+                    <span class="shortname">
+                        {{{shortname}}}
+                    </span>
+                </div>
+            </div>
+        {{/showshortname}}
+        <div class="d-flex align-items-center">
+            {{#contextheader}}
+                <div class="me-auto d-flex flex-column">
+                    {{{contextheader}}}
+                </div>
+            {{/contextheader}}
+            <div class="header-actions-container ms-auto" data-region="header-actions-container">
+                {{#headeractions}}
+                    <div class="header-action ms-2">{{{.}}}</div>
+                {{/headeractions}}
+            </div>
+        </div>
+        {{#showcoursecategory}}
+            <div class="text-muted muted d-flex flex-wrap mb-2">
+                <span class="visually-hidden">{{#str}}aria:coursecategory, core_course{{/str}}</span>
+                <span class="categoryname text-truncate">{{{coursecategory}}}</span>
+            </div>
+        {{/showcoursecategory}}
+        {{#showiconsbar}}
+            <div class="courseheadericonsbar mx-3 d-flex justify-content-end flex-wrap">
+                {{#showcoursecontacts}}
+                    {{#hascontacts}}
+                        <div class="coursecontacts d-flex flex-wrap">
+                            {{#contacts}}
+                                {{#canviewuserdetails}}<a href="{{config.wwwroot}}/user/profile.php?id={{{id}}}" tabindex="-1">{{/canviewuserdetails}}
+                                    <div class="contact me-2">
+                                        <img src="{{{userpicture}}}" class="rounded-circle shadow-sm" alt="{{{contactname}}}" data-bs-toggle="tooltip" title="{{{contactname}}}" />
+                                    </div>
+                                {{#canviewuserdetails}}</a>{{/canviewuserdetails}}
+                            {{/contacts}}
+                        </div>
+                    {{/hascontacts}}
+                {{/showcoursecontacts}}
+                {{#showcoursepopup}}
+                    <div class="coursepopup d-flex flex-wrap">
+                        <button class="popupbutton btn btn-icon rounded-circle bg-secondary"
+                                data-action="course-details"
+                                data-title="{{fullname}}"
+                                data-bs-toggle="tooltip"
+                                title="{{#str}} courseheadershowpopup_label, theme_boost_union {{/str}}"
+                                {{#hassummary}}data-summary="{{summary}}"{{/hassummary}}
+                                {{#hascontacts}}data-coursecontacts="{{#contacts}}{{> theme_boost_union/coursedetailsmodal-contact-dataattrib}}{{/contacts}}"{{/hascontacts}}
+                                {{#hascustomfields}}data-customfields="{{customfields}}"{{/hascustomfields}}>
+                            <i class="icon fa fa-info fa-fw" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                {{/showcoursepopup}}
+            </div>
+        {{/showiconsbar}}
+        <div id="courseheaderimage" class="d-flex flex-column p-3 rounded{{#showcourseprogress}}{{#hasprogress}}{{#progressstyleasbar}}-top{{/progressstyleasbar}}{{/hasprogress}}{{/showcourseprogress}}"
+                style="background-image: url('{{{courseheaderimageurl}}}');
+                    {{#courseheaderheight}}min-height: {{{.}}};{{/courseheaderheight}}
+                    {{#courseheaderimageposition}}background-position: {{{.}}};{{/courseheaderimageposition}}">
+            <div class="mt-auto d-flex justify-content-between w-100">
+                {{#showcoursefields}}
+                    {{#hascustomfields}}
+                        {{#customfieldsstyleasbadge}}
+                            <div class="d-flex me-auto">
+                                <div class="customfields">
+                                    {{{customfields}}}
+                                </div>
+                            </div>
+                        {{/customfieldsstyleasbadge}}
+                        {{^customfieldsstyleasbadge}}
+                            <div class="d-flex me-auto bg-light px-2 py-1 opacity-75 small rounded align-self-end">
+                                <div class="customfields">
+                                    {{{customfields}}}
+                                </div>
+                            </div>
+                        {{/customfieldsstyleasbadge}}
+                    {{/hascustomfields}}
+                {{/showcoursefields}}
+                {{#showcourseprogress}}
+                    {{#hasprogress}}
+                        {{^progressstyleasbar}}
+                            <div class="d-flex ms-auto bg-light px-2 py-1 opacity-75 small rounded align-self-end">
+                                {{> block_myoverview/progress-bar}}
+                            </div>
+                        {{/progressstyleasbar}}
+                    {{/hasprogress}}
+                {{/showcourseprogress}}
+            </div>
+        </div>
+        {{#showcourseprogress}}
+            {{#hasprogress}}
+                {{#progressstyleasbar}}
+                    {{> theme_boost_union/full_header-progress-bar}}
+                {{/progressstyleasbar}}
+            {{/hasprogress}}
+        {{/showcourseprogress}}
+    </div>
+{{/courseheaderimageurl}}
+{{^courseheaderimageurl}}
+    {{> theme_boost_union/full_header-partial-original }}
+{{/courseheaderimageurl}}

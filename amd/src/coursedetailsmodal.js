@@ -14,9 +14,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - JS code for course listing details modal.
+ * Theme Boost Union - JS code for course details modal.
  *
- * @module     theme_boost_union/courselistingdetailsmodal
+ * @module     theme_boost_union/coursedetailsmodal
  * @copyright  2025 Alexander Bias, ssystems GmbH <abias@ssystems.de>
  *             based on core_admin/themeselector/preview_modal by David Woloszyn <david.woloszyn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,7 +28,7 @@ import Templates from 'core/templates';
 import {getString} from 'core/str';
 
 const SELECTORS = {
-    DETAILS: '[data-action="courselisting-details"]',
+    DETAILS: '[data-action="course-details"]',
 };
 
 /**
@@ -72,7 +72,7 @@ const buildModal = async(element) => {
 
     await ModalCancel.create({
         title: data.title,
-        body: Templates.render('theme_boost_union/courselistingdetailsmodal', data),
+        body: Templates.render('theme_boost_union/coursedetailsmodal', data),
         large: true,
         buttons: {
             'cancel': getString('closebuttontitle', 'moodle'),

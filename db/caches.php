@@ -97,4 +97,12 @@ $definitions = [
                 'simpledata' => false,
                 'canuselocalstore' => true,
         ],
+        // This cache stores the course-specific setting overrides to avoid database queries on every request.
+        'courseoverrides' => [
+                'mode' => \core_cache\store::MODE_APPLICATION,
+                'simplekeys' => true,
+                'simpledata' => true,
+                'canuselocalstore' => true,
+                'staticacceleration' => false,
+        ],
 ];
