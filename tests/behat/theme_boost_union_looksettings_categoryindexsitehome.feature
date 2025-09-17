@@ -900,9 +900,9 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Then ".course-card .card-footer .popupbutton" "css_element" should exist in the ".course_category_tree" "css_element"
     And I click on ".course-card .card-footer .popupbutton" "css_element"
     And I should see "Course 1" in the ".modal-dialog .modal-header" "css_element"
-    And ".theme_boost_union-courselisting-modal .coursesummary" "css_element" should exist
-    And I should see "Course summary" in the ".theme_boost_union-courselisting-modal .coursesummary" "css_element"
-    And I should see "<summarydisplayed>" in the ".theme_boost_union-courselisting-modal .coursesummary" "css_element"
+    And ".theme_boost_union-coursedetails-modal .coursesummary" "css_element" should exist
+    And I should see "Course summary" in the ".theme_boost_union-coursedetails-modal .coursesummary" "css_element"
+    And I should see "<summarydisplayed>" in the ".theme_boost_union-coursedetails-modal .coursesummary" "css_element"
 
     Examples:
       | summarycontent      | summarydisplayed                    |
@@ -928,11 +928,11 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Then ".course-card .card-footer .popupbutton" "css_element" should exist in the ".course_category_tree" "css_element"
     And I click on ".course-card .card-footer .popupbutton" "css_element"
     And I should see "Course 1" in the ".modal-dialog .modal-header" "css_element"
-    And ".theme_boost_union-courselisting-modal .coursecontacts" "css_element" should exist
-    And I should see "Course contact" in the ".theme_boost_union-courselisting-modal .coursecontacts" "css_element"
-    And I should see "Jane Doe" in the ".theme_boost_union-courselisting-modal .coursecontacts .contact:nth-of-type(1)" "css_element"
-    And I should see "John Doe" in the ".theme_boost_union-courselisting-modal .coursecontacts .contact:nth-of-type(2)" "css_element"
-    And ".theme_boost_union-courselisting-modal .coursecontacts .contact .card-footer .btn" "css_element" <shouldornot> exist
+    And ".theme_boost_union-coursedetails-modal .coursecontacts" "css_element" should exist
+    And I should see "Course contact" in the ".theme_boost_union-coursedetails-modal .coursecontacts" "css_element"
+    And I should see "Jane Doe" in the ".theme_boost_union-coursedetails-modal .coursecontacts .contact:nth-of-type(1)" "css_element"
+    And I should see "John Doe" in the ".theme_boost_union-coursedetails-modal .coursecontacts .contact:nth-of-type(2)" "css_element"
+    And ".theme_boost_union-coursedetails-modal .coursecontacts .contact .card-footer .btn" "css_element" <shouldornot> exist
 
     Examples:
       | loginas  | shouldornot |
@@ -973,11 +973,11 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Then ".course-card .card-footer .popupbutton" "css_element" should exist in the ".course_category_tree" "css_element"
     And I click on ".course-card .card-footer .popupbutton" "css_element"
     And I should see "Course 1" in the ".modal-dialog .modal-header" "css_element"
-    And ".theme_boost_union-courselisting-modal .customfields" "css_element" should exist
-    And I should see "Field 1" in the ".theme_boost_union-courselisting-modal .customfields .customfield.customfield_text .customfieldname" "css_element"
-    And I should see "test" in the ".theme_boost_union-courselisting-modal .customfields .customfield.customfield_text .customfieldvalue" "css_element"
-    And I should see "Field 2" in the ".theme_boost_union-courselisting-modal .customfields .customfield.customfield_select .customfieldname" "css_element"
-    And I should see "a" in the ".theme_boost_union-courselisting-modal .customfields .customfield.customfield_select .customfieldvalue" "css_element"
+    And ".theme_boost_union-coursedetails-modal .customfields" "css_element" should exist
+    And I should see "Field 1" in the ".theme_boost_union-coursedetails-modal .customfields .customfield.customfield_text .customfieldname" "css_element"
+    And I should see "test" in the ".theme_boost_union-coursedetails-modal .customfields .customfield.customfield_text .customfieldvalue" "css_element"
+    And I should see "Field 2" in the ".theme_boost_union-coursedetails-modal .customfields .customfield.customfield_select .customfieldname" "css_element"
+    And I should see "a" in the ".theme_boost_union-coursedetails-modal .customfields .customfield.customfield_select .customfieldvalue" "css_element"
 
   @javascript
   Scenario Outline: Setting: Course listing presentation / Category listing presentation: Verify the appearance of the sticky category headers

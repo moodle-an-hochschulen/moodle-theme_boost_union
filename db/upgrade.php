@@ -785,6 +785,98 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025041434, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2025041438) {
+        // Define table theme_boost_union_course to be created.
+        $table = new xmldb_table('theme_boost_union_course');
+
+        // Adding fields to table.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('name', XMLDB_TYPE_CHAR, '100', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('value', XMLDB_TYPE_TEXT, null, null, null, null, null);
+
+        // Adding keys to table.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+        $table->add_key('courseid', XMLDB_KEY_FOREIGN, ['courseid'], 'course', ['id']);
+
+        // Adding indexes for performance.
+        $table->add_index('courseidname', XMLDB_INDEX_UNIQUE, ['courseid', 'name']);
+
+        // Create the table if it doesn't exist.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Additionally, rename multiple course header settings.
+        $oldvalue = get_config('theme_boost_union', 'courseheaderimageenabled');
+        if ($oldvalue !== false) {
+            set_config('courseheaderenabled', $oldvalue, 'theme_boost_union');
+            unset_config('courseheaderimageenabled', 'theme_boost_union');
+        }
+        $oldvalue = get_config('theme_boost_union', 'courseheaderimagelayout');
+        if ($oldvalue !== false) {
+            set_config('courseheaderlayout', $oldvalue, 'theme_boost_union');
+            unset_config('courseheaderimagelayout', 'theme_boost_union');
+        }
+        $oldvalue = get_config('theme_boost_union', 'courseheaderimageheight');
+        if ($oldvalue !== false) {
+            set_config('courseheaderheight', $oldvalue, 'theme_boost_union');
+            unset_config('courseheaderimageheight', 'theme_boost_union');
+        }
+        $oldvalue = get_config('theme_boost_union', 'courseheaderimagefallback');
+        if ($oldvalue !== false) {
+            set_config('courseheaderimageglobal', $oldvalue, 'theme_boost_union');
+            unset_config('courseheaderimagefallback', 'theme_boost_union');
+        }
+
+        // Move any existing file in the courseheaderimagefallback filearea to the new courseheaderimageglobal filearea.
+        // Get file storage.
+        $fs = get_file_storage();
+
+        // Get all files in the old filearea (excluding directories).
+        $oldfiles = $fs->get_area_files(
+            context_system::instance()->id,
+            'theme_boost_union',
+            'courseheaderimagefallback',
+            false,
+            'itemid, filepath, filename',
+            false
+        );
+
+        // Move each file to the new filearea using File API.
+        foreach ($oldfiles as $oldfile) {
+            // Create file record for new location.
+            $filerecord = [
+                'contextid' => $oldfile->get_contextid(),
+                'component' => $oldfile->get_component(),
+                'filearea' => 'courseheaderimageglobal',
+                'itemid' => $oldfile->get_itemid(),
+                'filepath' => $oldfile->get_filepath(),
+                'filename' => $oldfile->get_filename(),
+            ];
+
+            // Create file in new filearea (File API handles pathnamehash automatically).
+            if (
+                !$fs->file_exists(
+                    $filerecord['contextid'],
+                    $filerecord['component'],
+                    $filerecord['filearea'],
+                    $filerecord['itemid'],
+                    $filerecord['filepath'],
+                    $filerecord['filename']
+                )
+            ) {
+                $fs->create_file_from_storedfile($filerecord, $oldfile);
+            }
+
+            // Delete the old file.
+            $oldfile->delete();
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2025041438, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
