@@ -337,7 +337,7 @@
  ======================================*/
 
 /*---------------------------------------
- * Setting:  Course listing presentation
+ * Setting: Course listing presentation
  --------------------------------------*/
 
 /* Only on site home and the category index pages - and on the course search page. */
@@ -364,37 +364,10 @@
             }
         }
 
-        /* The course contact section.
-           There are some things which can't be set with Bootstrap classes in Mustache. */
+        /* The course contact section. */
         .coursecontacts {
             /* Push the contacts over the course image. */
             margin-top: -18px;
-
-            /* Make sure that the concact images are small enough even though the avatar file is bigger. */
-            .contact img {
-                width: 35px;
-                height: 35px;
-            }
-        }
-
-        /* The custom fields section.
-           We can't use Bootstrap classes in Mustache here as these elements are output by a renderer which we do not influence. */
-        .customfields {
-            /* Use a smaller font and some space for each custom fields. */
-            .customfield {
-                font-size: 80%;
-                @extend small;
-                @extend .mb-2;
-            }
-            .customfield:last-of-type {
-                @extend .mb-0;
-            }
-
-            /* Highlight the field name. */
-            .customfieldname,
-            .customfieldseparator {
-                @extend strong;
-            }
         }
 
         /* The enrolment icons section. */
@@ -424,21 +397,6 @@
         }
         .progress-text {
             color: $gray-600;
-        }
-    }
-
-    /* For the course details modal. */
-    .theme_boost_union-courselisting-modal {
-        /* The contact card */
-        .contact {
-            /* Control the width on multiple screen sizes. */
-            width: 100%;
-            @include media-breakpoint-up(sm) {
-                width: 50%;
-            }
-            @include media-breakpoint-up(lg) {
-                width: 25%;
-            }
         }
     }
 
@@ -628,26 +586,90 @@
  ======================================*/
 
 /*---------------------------------------
- * Setting: Course header image.
+ * Setting: Course header.
  --------------------------------------*/
-#courseheaderimage {
-    background-size: cover;
-    @include border-radius();
+
+/* For Boost Union course headers only. */
+#bucourseheader {
+
+    /* The course header image. */
+    #courseheaderimage {
+        background-size: cover;
+    }
+
+    /* The course title. */
+    &:has(.categoryname) .page-context-header {
+        /* Remove bottom margin of the course title if a category name is shown below it.
+           Using !important seemed to be less bad than overwriting just another mustache template for a tiny change. */
+        margin-bottom: 0 !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    /* The popup button. */
+    .popupbutton {
+        /* Make sure that the popup icon matches the avatars */
+        width: 35px;
+        height: 35px;
+
+        /* Align the color with the grey background of the avatars.*/
+        background-color: rgb(230,230,230) !important;
+    }
+
+    /* The headingabove layout and the stacked* layouts only. */
+    &.headingabove,
+    &.stackeddark,
+    &.stackedlight {
+        /* The course header icons bar. */
+        .courseheadericonsbar {
+            /* Push the iconsbar over the course image. */
+            margin-bottom: -18px;
+        }
+
+        /* Fit the header-actions better into the page. */
+        .header-action {
+            button {
+                margin-bottom: 1rem;
+                @extend .pe-0;
+            }
+            button i {
+                @extend .me-0;
+            }
+        }
+    }
+
+    /* The stacked* layouts only. */
+    &.stackeddark,
+    &.stackedlight {
+        /* Add a tiny padding-left to the left-aligned texts to make sure that the shadow is not cropped by the container. */
+        .page-header-headings h1,
+        .shortname,
+        .categoryname {
+            padding-left: 2px;
+        }
+    }
+
+    /* The stackeddark layout only. */
+    &.stackeddark {
+        /* Set the font color and the text shadow for better readability on the background. */
+        .page-header-headings h1,
+        .shortname,
+        .categoryname {
+            color: white;
+            text-shadow: 0 0 5px black;
+        }
+    }
+
+    /* The stackedlight layout only. */
+    &.stackedlight {
+        /* Set the font color and the text shadow for better readability on the background. */
+        .page-header-headings h1,
+        .shortname,
+        .categoryname {
+            color: black;
+            text-shadow: 0 0 5px white;
+        }
+    }
 }
-.courseheaderimage-dark {
-    color: white;
-    text-shadow: 0 0 5px black;
-}
-.courseheaderimage-light {
-    color: black;
-    text-shadow: 0 0 5px white;
-}
-/* If the header actions are placed _within_ the course header image element, i.e. the title is stacked on the image.*/
-#courseheaderimage .header-action {
-    /* Add a background color of white to the header actions to make sure that they can be read properly. */
-    background-color: white;
-    @include border-radius();
-}
+
 
 /*---------------------------------------
  * Setting: Course module icons in course index.
@@ -793,6 +815,67 @@ body.hascourseindexcmicons {
             .courseindex-cmicon-icon {
                 filter: brightness(0) invert(1);
             }
+        }
+    }
+}
+
+
+/*=======================================
+ * Settings: Look -> Category index / site home + Course
+ ======================================*/
+
+/*---------------------------------------
+ * Course details.
+ --------------------------------------*/
+
+ // For the course details which are shown within the course listings and within the course header in the same way.
+ .theme_boost_union-courselisting,
+ #bucourseheader {
+    /* The custom fields. */
+    .customfields {
+        /* Style the custom fields if shown as text.
+            We can't use Bootstrap classes in Mustache here as these elements are output by a renderer which we do not influence. */
+
+        /* Use a smaller font. */
+        .customfield {
+            font-size: 80%;
+        }
+        /* Highlight the field name. */
+        .customfieldname,
+        .customfieldseparator {
+            @extend strong;
+        }
+    }
+
+    /* The course contact images. */
+    .contact img {
+        /* Make sure that the contact images are small enough even though the avatar file is bigger. */
+        width: 35px;
+        height: 35px;
+    }
+    /* Remove the blue background which is added to focussed links by Moodle core. */
+    a:focus:has(.contact) {
+        background: none;
+        outline: none;
+        box-shadow: none;
+    }
+}
+
+
+ /*---------------------------------------
+ * Course popup/modal.
+ --------------------------------------*/
+
+.theme_boost_union-coursedetails-modal {
+    /* The contact card */
+    .contact {
+        /* Control the width on multiple screen sizes. */
+        width: 100%;
+        @include media-breakpoint-up(sm) {
+            width: 50%;
+        }
+        @include media-breakpoint-up(lg) {
+            width: 25%;
         }
     }
 }
