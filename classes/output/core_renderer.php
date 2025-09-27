@@ -464,7 +464,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // If the AI course assistance placement button has been moved to the activity header by Boost Union's settings.
         $locationsetting = get_config('theme_boost_union', 'aiplacementcourseassistlocation');
-        if ($locationsetting == THEME_BOOST_UNION_SETTING_AIPLACEMENT_COURSEASSIST_LOCATION_HEADERACTION) {
+        if (isset($locationsetting) &&
+            $locationsetting == THEME_BOOST_UNION_SETTING_AIPLACEMENT_COURSEASSIST_LOCATION_HEADERACTION) {
             // Render button using a fake after_http_headers hook.
             $fakehook = new after_http_headers($this);
             // If the following method is renamed or moved, please make sure to update theme_boost_union_manipulate_hooks() as well.

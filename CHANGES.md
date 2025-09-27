@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-09-27 - Feature: Change AI course assistance placement button location, resolves #894
 * 2025-08-01 - Bugfix: Smart menu: menu bar was displayed although there were no items to display, resolves #849.
 
 ### v5.0-r8
