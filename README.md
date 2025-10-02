@@ -771,8 +771,9 @@ Due to the way how some Boost Union features had to be built, you have to be awa
 
 * $CFG->hooks_callback_overrides:
   With this setting, you can override hook definitions in config.php - see https://moodledev.io/docs/4.4/apis/core/hooks#hooks-overview-page.
-  However, if you use the `theme_boost_union | footersuppressstandardfooter_*` settings, this forced setting will be set as well during each page load.
-  Using the Boost Union settings and overriding hooks manually in config.php at the same time should work, but is not officially supported and tested by Boost Union.
+  However, if you use the `theme_boost_union | footersuppressstandardfooter_*` settings or the `theme_boost_union | aiplacementcourseassistlocation` setting, 
+  this forced setting will be set as well during each page load. Using the Boost Union settings and overriding hooks manually in config.php at the same time should work,
+  but is not officially supported and tested by Boost Union. Attention: This applies even if Boost Union is not selected as the current theme!
 
 
 Support for other companion plugins

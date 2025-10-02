@@ -22,8 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use core\di;
-use core\hook\manager as hook_manager;
+use core\hook\output\after_http_headers;
 
 /**
  * Build the course related hints HTML code.
@@ -2134,6 +2133,27 @@ function theme_boost_union_get_navbar_starredcoursespopover() {
 }
 
 /**
+ * Callback to add elements after header.
+ * This function is implemented here and used from theme_boost_union\local\hook\output\after_http_headers.
+ *
+ * We use this callback
+ * -> to call the course assist AI placement hook callback if it has been disabled in {@see theme_boost_union_manipulate_hooks()}
+ *    but Boost Union is not active.
+ *
+ * @param \core\hook\output\after_http_headers $hook
+ */
+function theme_boost_union_callbackimpl_after_http_headers($hook) {
+    // If Boost Union is NOT active.
+    if (!theme_boost_union_is_active_theme()) {
+        // And if the AI placement hook callback has been disabled by Boost Union's {@see theme_boost_union_manipulate_hooks()}.
+        if (theme_boost_union_should_disable_aiplacement_courseassist_after_http_headers_hook_callback()) {
+            // Then we need to call the original hook from here.
+            \aiplacement_courseassist\hook_callbacks::after_http_headers($hook);
+        }
+    }
+}
+
+/**
  * Callback to add head elements.
  * This function is implemented here and used from two locations:
  * -> function theme_boost_union_before_standard_html_head in lib.php (for releases up to Moodle 4.3)
@@ -2441,6 +2461,21 @@ function theme_boost_union_get_pluginname_from_callbackname($callback) {
 }
 
 /**
+ * Helper function which determines whether the AI placement hook callback should be disabled by Boost Union.
+ *
+ * This is called from two places:
+ * - {@see theme_boost_union_manipulate_hooks()} (where it's actually disabled) and
+ * - {@see theme_boost_union_callbackimpl_after_http_headers()} (to check whether it has been disabled).
+ *
+ * @return bool
+ */
+function theme_boost_union_should_disable_aiplacement_courseassist_after_http_headers_hook_callback() {
+    // Check whether the location of the AI course assistance placement button has been changed in Boost Union's settings.
+    $locationsetting = get_config('theme_boost_union', 'aiplacementcourseassistlocation');
+    return isset($locationsetting) && $locationsetting != THEME_BOOST_UNION_SETTING_AIPLACEMENT_COURSEASSIST_LOCATION_DEFAULT;
+}
+
+/**
  * Helper function which is called from the before_session_start() callback which manipulates Moodle core's hooks.
  */
 function theme_boost_union_manipulate_hooks() {
@@ -2582,6 +2617,19 @@ function theme_boost_union_manipulate_hooks() {
                         ['disabled' => true];
                 // phpcs:enable
             }
+        }
+
+        // If the location of the AI course assistance placement button has been changed in Boost Union's settings.
+        if (theme_boost_union_should_disable_aiplacement_courseassist_after_http_headers_hook_callback()) {
+            // Disable the placement's after_http_headers hook to prevent the button from being added in the default location.
+            $callbackmethod = \aiplacement_courseassist\hook_callbacks::class . '::after_http_headers';
+            $CFG->hooks_callback_overrides[after_http_headers::class][$callbackmethod] = ['disabled' => true];
+
+            // Disabling this hook leads to a problem when Boost Union is not active on the current page: The AI actions button is
+            // not added in the original location, but it's also not added in the new location (because Boost Union is not active).
+            // Unfortunately, we cannot determine whether Boost Union is active in this function because there is no $PAGE, yet.
+            // To make sure that the button appears in the original location, we call the callback which is disabled here from
+            // our own callback theme_boost_union_callbackimpl_after_http_headers() instead if Boost Union is not active.
         }
 
         // Remember the hook overrides in the cache.
