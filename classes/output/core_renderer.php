@@ -549,7 +549,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $context->ariarole = !empty($bc->attributes['role']) ? $bc->attributes['role'] : '';
         $context->class = $bc->attributes['class'];
         $context->type = $bc->attributes['data-block'];
-        $context->title = $bc->title;
+        $context->title = (string) $bc->title;
+        $context->showtitle = $context->title !== '';
         $context->content = $bc->content;
         $context->annotation = $bc->annotation;
         $context->footer = $bc->footer;
