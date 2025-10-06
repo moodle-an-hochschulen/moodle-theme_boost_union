@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-10-06 - Bugfix: Block titles were missing after changes in Moodle core in MDL-86541, resolves #1061.
 * 2025-08-01 - Bugfix: Smart menu: menu bar was displayed although there were no items to display, resolves #849.
 
 ### v4.5-r24
