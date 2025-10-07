@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.0-r9
 
 * 2025-10-06 - Bugfix: Block titles were missing after changes in Moodle core in MDL-86541, resolves #1061.
 * 2025-08-01 - Bugfix: Smart menu: menu bar was displayed although there were no items to display, resolves #849.
