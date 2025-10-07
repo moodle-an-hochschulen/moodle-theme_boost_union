@@ -64,10 +64,19 @@
         </div>
         {{#welcomemessage}}
             <div class="d-flex align-items-center">
-                {{> core/welcome }}
+                <div class="me-auto d-flex flex-column">
+                    {{#contextheader}}
+                    <div>
+                        {{{contextheader}}}
+                    </div>
+                    {{/contextheader}}
+                    <div>
+                        {{> core/welcome }}
+                    </div>
+                </div>
                 <div class="header-actions-container ms-auto" data-region="header-actions-container">
                     {{#headeractions}}
-                        <div class="header-action ms-2">{{{.}}}</div>
+                    <div class="header-action ms-2">{{{.}}}</div>
                     {{/headeractions}}
                 </div>
             </div>
@@ -75,14 +84,19 @@
         {{^welcomemessage}}
             {{^courseheaderimageurl}}
                 <div class="d-flex align-items-center">
-                    {{#contextheader}}
-                        <div class="me-auto">
+                    <div class="me-auto d-flex flex-column">
+                        {{#contextheader}}
+                        <div>
                             {{{contextheader}}}
                         </div>
-                    {{/contextheader}}
+                        {{/contextheader}}
+                        <div>
+                            {{> core/welcome }}
+                        </div>
+                    </div>
                     <div class="header-actions-container ms-auto" data-region="header-actions-container">
                         {{#headeractions}}
-                            <div class="header-action ms-2">{{{.}}}</div>
+                        <div class="header-action ms-2">{{{.}}}</div>
                         {{/headeractions}}
                     </div>
                 </div>
@@ -90,14 +104,19 @@
             {{#courseheaderimageurl}}
                 {{#courseheaderimagelayoutheadingabove}}
                     <div class="d-flex align-items-center">
-                        {{#contextheader}}
-                            <div class="me-auto">
+                        <div class="me-auto d-flex flex-column">
+                            {{#contextheader}}
+                            <div>
                                 {{{contextheader}}}
                             </div>
-                        {{/contextheader}}
+                            {{/contextheader}}
+                            <div>
+                                {{> core/welcome }}
+                            </div>
+                        </div>
                         <div class="header-actions-container ms-auto" data-region="header-actions-container">
                             {{#headeractions}}
-                                <div class="header-action ms-2">{{{.}}}</div>
+                            <div class="header-action ms-2">{{{.}}}</div>
                             {{/headeractions}}
                         </div>
                     </div>
@@ -113,14 +132,19 @@
                                     {{#courseheaderimageheight}}min-height: {{{.}}};{{/courseheaderimageheight}}
                                     {{#courseheaderimageposition}}background-position: {{{.}}};{{/courseheaderimageposition}}">
                         <div class="d-flex align-items-center">
-                            {{#contextheader}}
-                                <div class="me-auto">
+                            <div class="me-auto d-flex flex-column">
+                                {{#contextheader}}
+                                <div>
                                     {{{contextheader}}}
                                 </div>
-                            {{/contextheader}}
+                                {{/contextheader}}
+                                <div>
+                                    {{> core/welcome }}
+                                </div>
+                            </div>
                             <div class="header-actions-container ms-auto" data-region="header-actions-container">
                                 {{#headeractions}}
-                                    <div class="header-action ms-2">{{{.}}}</div>
+                                <div class="header-action ms-2">{{{.}}}</div>
                                 {{/headeractions}}
                             </div>
                         </div>
