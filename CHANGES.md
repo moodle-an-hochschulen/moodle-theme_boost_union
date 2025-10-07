@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-10-07 - Upstream change: Adopt changes from MDL-81702 to remove site home link from drawers, resolves #1065
 * 2025-10-07 - Upstream change: Adopt changes from MDL-81455 to fix the welcome message heading on the dashboard, resolves #1066
 
 ### v5.0-r9
