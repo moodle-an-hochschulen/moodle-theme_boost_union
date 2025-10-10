@@ -107,6 +107,9 @@ $table->define_baseurl($PAGE->url);
 echo $OUTPUT->header();
 echo \theme_boost_union\admin_settingspage_tabs_with_tertiary::get_tertiary_navigation_for_externalpage();
 
+// Show alert if Boost Union is not the active theme.
+echo theme_boost_union_is_not_active_alert();
+
 // Show smart menus intro.
 $intro = new \core\output\notification(
         get_string('smartmenus_desc', 'theme_boost_union'), \core\output\notification::NOTIFY_INFO);
