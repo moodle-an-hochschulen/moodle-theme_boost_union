@@ -171,7 +171,36 @@ class course {
 
                 // Get and return the filtered custom fields.
                 if (!empty($filteredfields)) {
-                    return $handler->display_custom_fields_data($filteredfields);
+
+                    // Get the field styling from the settings.
+                    $stylefields = get_config('theme_boost_union', 'courselistingstylefields');
+
+                    // If the style is set to badge, render the fields as Bootstrap badges.
+                    // We avoid the effort to create a custom renderer for this small change.
+                    if ($stylefields === THEME_BOOST_UNION_SETTING_SHOWAS_BADGE) {
+                        $badges = '';
+                        foreach ($filteredfields as $field) {
+                            // Get field names and value.
+                            $fieldname = $field->get_field()->get('name');
+                            $fieldshortname = $field->get_field()->get('shortname');
+                            $fieldtype = $field->get_field()->get('type');
+                            $fieldvalue = $field->export_value();
+
+                            // Only render if there's a value.
+                            if (!empty($fieldvalue)) {
+                                $badges .= \html_writer::start_span('customfieldbadge customfield_' . $fieldtype . ' mr-2');
+                                $badges .= \html_writer::span($fieldname . ': ', 'customfieldname visually-hidden');
+                                $badges .= \html_writer::span($fieldvalue, 'customfieldvalue badge badge-info');
+                                $badges .= \html_writer::end_span();
+                            }
+                        }
+                        return $badges;
+
+                        // Otherwise, if we should output plain text.
+                    } else {
+                        // Use the standard renderer for custom fields.
+                        return $handler->display_custom_fields_data($filteredfields);
+                    }
                 }
             }
 
