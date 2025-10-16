@@ -80,13 +80,15 @@ Feature: Configuring the theme_boost_union plugin as admin
   @javascript
   Scenario: Show inactive-theme warning on settings overview and all Boost Union sub pages
     Given I log in as "admin"
-    And I navigate to "Appearance > Themes" in site administration
-    # Ensure Boost Union is NOT active (switch to Boost).
-    And I click on "Select theme" "button" in the "#theme-select-form-boost" "css_element"
-    # Overview page should show the warning.
+    # First, check that the warning does NOT show when Boost Union is active.
     When I navigate to "Appearance > Boost Union > Settings overview" in site administration
-    Then "//div[@role='main']//div[contains(@class,'alert') and contains(@class,'alert-warning') and @role='alert']" "xpath_element" should appear before "//div[@role='main']//h2[contains(normalize-space(.), 'Boost Union settings overview')]" "xpath_element"
-    And I should see "Boost Union (or a child theme of Boost Union) is currently not the active theme" in the ".alert-warning" "css_element"
+    Then I should not see "Boost Union (or a child theme of Boost Union) is currently not the active theme"
+    # Then, ensure that Boost Union is NOT active anymore (switch to Boost).
+    And I navigate to "Appearance > Themes" in site administration
+    And I click on "Select theme" "button" in the "#theme-select-form-boost" "css_element"
+    # The Settings overview page should now show the warning.
+    When I navigate to "Appearance > Boost Union > Settings overview" in site administration
+    Then "Boost Union (or a child theme of Boost Union) is currently not the active theme" "text" should appear after "Boost Union settings overview" "text"
     # Look
     When Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
@@ -113,7 +115,7 @@ Feature: Configuring the theme_boost_union plugin as admin
     When I navigate to "Appearance > Boost Union > SCSS snippets" in site administration
     Then "Boost Union (or a child theme of Boost Union) is currently not the active theme" "text" should appear after ".admin_settingspage_tabs_with_tertiary" "css_element"
     # SCSS snippets > Settings
-    And I click on "//a[contains(@href, '/admin/settings.php?section=theme_boost_union_snippets')]" "xpath_element"
+    And I click on "Settings" "link" in the "#region-main .nav-tabs" "css_element"
     Then "Boost Union (or a child theme of Boost Union) is currently not the active theme" "text" should appear after ".admin_settingspage_tabs_with_tertiary" "css_element"
     # Smart menus
     When I navigate to "Appearance > Boost Union > Smart menus" in site administration

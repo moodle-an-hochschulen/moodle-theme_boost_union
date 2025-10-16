@@ -48,11 +48,11 @@ $PAGE->set_title(get_string('settingsoverview_title', 'theme_boost_union'));
 // Start page output.
 echo $OUTPUT->header();
 
-// Show alert if the Boost Union theme is not active.
-echo theme_boost_union_is_not_active_alert();
-
 // Show page heading.
 echo $OUTPUT->heading(get_string('settingsoverview_title', 'theme_boost_union'));
+
+// Show alert if Boost Union is not the active theme.
+echo theme_boost_union_is_not_active_alert();
 
 // First, compose template context for Boost Union setting pages.
 $templatecontext['cards'][] = [

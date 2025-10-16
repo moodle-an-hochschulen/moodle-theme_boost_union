@@ -2633,7 +2633,7 @@ function theme_boost_union_is_active_theme() {
  * @return string HTML for the alert.
  */
 function theme_boost_union_is_not_active_alert() {
-    global $SCRIPT, $OUTPUT;
+    global $OUTPUT;
 
     // Check if Boost Union or a child theme of it is active.
     if (theme_boost_union_is_active_theme()) {
