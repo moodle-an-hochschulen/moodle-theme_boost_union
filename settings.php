@@ -1124,6 +1124,21 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                     THEME_BOOST_UNION_SETTING_SELECT_YES);
         }
 
+        // Setting: Show course fields in the course listing.
+        $name = 'theme_boost_union/courselistingstylefields';
+        $title = get_string('courselistingstylefields', 'theme_boost_union');
+        $description = get_string('courselistingstylefields_desc', 'theme_boost_union');
+        $stylefieldsoptions = [
+                THEME_BOOST_UNION_SETTING_SHOWAS_TEXT => get_string('showastext', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SHOWAS_BADGE => get_string('showasbadge', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SHOWAS_TEXT, $stylefieldsoptions);
+        $tab->add($setting);
+            $page->hide_if('theme_boost_union/courselistingstylefields', 'theme_boost_union/courselistingpresentation', 'eq',
+                    THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE);
+            $page->hide_if('theme_boost_union/courselistingstylefields', 'theme_boost_union/courselistingshowfields', 'neq',
+                    THEME_BOOST_UNION_SETTING_SELECT_YES);
+
         // Setting: Show goto button in the course listing.
         $name = 'theme_boost_union/courselistinghowgoto';
         $title = get_string('courselistinghowgoto', 'theme_boost_union');
