@@ -40,6 +40,8 @@ $string['always'] = 'Always';
 $string['auto'] = 'Automatically';
 $string['nochange'] = 'No change';
 $string['forguestsonly'] = 'Only for guests and non-logged-in users';
+$string['showastext'] = 'Show as text';
+$string['showasbadge'] = 'Show as badge';
 
 // Settings: General strings.
 $string['dontchange'] = 'Do not change anything';
@@ -400,6 +402,9 @@ $string['courselistingshowfields_desc'] = 'With this setting, you control if the
 $string['courselistingselectfields'] = 'Select course fields to be shown in the course listing';
 $string['courselistingselectfields_desc'] = 'With this setting, you can select which specific custom course fields are shown in the course listing. If none are selected, no fields will be shown.';
 $string['courselistingselectfields_nofield'] = 'With this setting, you can select which specific custom course fields are shown in the course listing. There isn\'t any usable custom course field yet. Please go the <a href="{$a->url}">{$a->linktitle}</a> and create a custom course field first.';
+// ... ... Setting: Style course fields in the course listing.
+$string['courselistingstylefields'] = 'Style course fields in the course listing';
+$string['courselistingstylefields_desc'] = 'With this setting, you can control how the custom course fields are displayed in the course listing. You can choose between showing them as text (showing the field value together with the field name as label) or as badge (showing just the field value).';
 // ... ... Setting: Show goto button in the course listing.
 $string['courselistinghowgoto'] = 'Show goto button in the course listing';
 $string['courselistinghowgoto_desc'] = 'With this setting, you control if a \'Go to course\' button is shown in the course listing or not. If this setting is disabled, the user is still able to go to the course by clicking on the course title or course image.';

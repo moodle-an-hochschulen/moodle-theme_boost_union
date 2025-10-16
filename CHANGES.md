@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-10-15 - Improvement: On course cards, display the course fields as Bootstrap badges, resolves #1070
+
 ### v4.5-r26
 
 * 2025-10-07 - Upstream change: Adopt changes from MDL-81702 to remove site home link from drawers, resolves #1065
