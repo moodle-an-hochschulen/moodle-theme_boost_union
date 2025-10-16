@@ -661,11 +661,12 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | list        | yes          | 1           | 1           | .course-listitem .customfields | should      | should            | should            |
 
   @javascript
-  Scenario Outline: Setting: Show course fields in the course listing: Check the content
+  Scenario Outline: Setting: Show course fields in the course listing: Check the content and style
     Given the following config values are set as admin:
       | config                    | value         | plugin            |
       | courselistingpresentation | <coursevalue> | theme_boost_union |
       | courselistingshowfields   | yes           | theme_boost_union |
+      | courselistingstylefields  | <stylevalue>  | theme_boost_union |
     And the following "custom field categories" exist:
       | name          | component   | area   | itemid |
       | Fieldcategory | core_course | course | 0      |
@@ -701,16 +702,18 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     And I log out
     When I log in as "student1"
     And I am on the "CATA" category page
-    Then "<selector>" "css_element" should exist in the ".course_category_tree" "css_element"
-    And I should see "Field 1" in the "<selector> .customfield.customfield_text .customfieldname" "css_element"
-    And I should see "test" in the "<selector> .customfield.customfield_text .customfieldvalue" "css_element"
-    And I should see "Field 2" in the "<selector> .customfield.customfield_select .customfieldname" "css_element"
-    And I should see "a" in the "<selector> .customfield.customfield_select .customfieldvalue" "css_element"
+    Then "<parentselector>" "css_element" should exist in the ".course_category_tree" "css_element"
+    And I should see "Field 1" in the "<parentselector> .<fieldselector>.customfield_text .customfieldname" "css_element"
+    And I should see "test" in the "<parentselector> .<fieldselector>.customfield_text .customfieldvalue" "css_element"
+    And I should see "Field 2" in the "<parentselector> .<fieldselector>.customfield_select .customfieldname" "css_element"
+    And I should see "a" in the "<parentselector> .<fieldselector>.customfield_select .customfieldvalue" "css_element"
 
     Examples:
-      | coursevalue | selector                       |
-      | cards       | .course-card .customfields     |
-      | list        | .course-listitem .customfields |
+      | coursevalue | stylevalue | parentselector                 | fieldselector    |
+      | cards       | text       | .course-card .customfields     | customfield      |
+      | cards       | badge      | .course-card .customfields     | customfieldbadge |
+      | list        | text       | .course-listitem .customfields | customfield      |
+      | list        | badge      | .course-listitem .customfields | customfieldbadge |
 
   @javascript
   Scenario Outline: Setting: Show course fields in the course listing: No fields existing
