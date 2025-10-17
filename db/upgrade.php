@@ -684,6 +684,17 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025041419, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2025041428) {
+        $table = new xmldb_table('theme_boost_union_menuitems');
+        $field = new xmldb_field('email', XMLDB_TYPE_TEXT, null, null, null, null, null, 'url');
+
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_plugin_savepoint(true, 2025041428, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
