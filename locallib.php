@@ -2634,6 +2634,38 @@ function theme_boost_union_is_active_theme() {
 }
 
 /**
+ * Helper function to generate HTML for an alert when Boost Union is not the active theme,
+ * but someone tries to access Boost Union's settings.
+ *
+ * @return string HTML for the alert.
+ */
+function theme_boost_union_is_not_active_alert() {
+    global $OUTPUT;
+
+    // Check if Boost Union or a child theme of it is active.
+    if (theme_boost_union_is_active_theme()) {
+        return '';
+    }
+
+    // Get the URL of the theme selector page for use in the alert.
+    $notificationurl = new core\url('/admin/themeselector.php');
+
+    // Create the notification object.
+    $notification = new core\output\notification(
+        get_string('warningboostunioninactive', 'theme_boost_union', [
+            'url' => $notificationurl->out(),
+        ]),
+        core\output\notification::NOTIFY_WARNING
+    );
+
+    // Do not show a close button.
+    $notification->set_show_closebutton(false);
+
+    // Return the HTML for the alert.
+    return $OUTPUT->render($notification);
+}
+
+/**
  * Helper function to check if a child theme of Boost Union (and _not_ Boost Union itself) is active.
  * This is needed at multiple locations to improve child theme support in Boost Union already.
  *

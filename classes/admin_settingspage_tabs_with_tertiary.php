@@ -183,6 +183,9 @@ class admin_settingspage_tabs_with_tertiary extends \theme_boost_admin_settingsp
         // Add tertiary navigation as a select menu.
         $output .= $this->render_tertiary_navigation();
 
+        // Show alert if Boost Union is not the active theme.
+        $output .= theme_boost_union_is_not_active_alert();
+
         // Append parent output.
         $output .= parent::output_html();
 
