@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-10-16 - Feature: Add Bootstrap alert to Boost Union settings if Boost Union (or Boost Union Child) is not the active theme, resolves #773.
 * 2025-10-15 - Improvement: On course cards, display the course fields as Bootstrap badges, resolves #1070
 
 ### v5.0-r10

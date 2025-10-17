@@ -82,6 +82,9 @@ class admin_settingspage_tabs_with_external_and_tertiary extends \theme_boost_un
         $this->override_selector_active_url(new \core\url('/theme/boost_union/snippets/overview.php'));
         $output .= $this->render_tertiary_navigation();
 
+        // Show alert if Boost Union is not the active theme.
+        $output .= theme_boost_union_is_not_active_alert();
+
         $activetab = optional_param('activetab', '', PARAM_TEXT);
         $context = ['tabs' => []];
         $havesetactive = false;
