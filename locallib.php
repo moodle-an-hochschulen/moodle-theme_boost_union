@@ -2174,6 +2174,7 @@ function theme_boost_union_callbackimpl_before_standard_html(&$hook = null) {
         if ($hook != null) {
             // Add the HTML code to the hook.
             $hook->add_html($html);
+            return;
         } else {
             // Return the HTML code.
             return $html;
@@ -2186,6 +2187,7 @@ function theme_boost_union_callbackimpl_before_standard_html(&$hook = null) {
     if ($hook != null) {
         // Add the HTML code to the hook.
         $hook->add_html($html);
+        return;
     } else {
         // Return the HTML code.
         return $html;
