@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-10-15 - Tests: Switch Github actions workflows to reusable workflows by Moodle an Hochschulen e.V.
 * 2025-10-20 - Tests: Add tests for Boost Union features which might but must not affect other active themes, resolves #761
 * 2025-10-16 - Feature: Add Bootstrap alert to Boost Union settings if Boost Union (or Boost Union Child) is not the active theme, resolves #773.
 * 2025-10-15 - Improvement: On course cards, display the course fields as Bootstrap badges, resolves #1070
