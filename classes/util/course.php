@@ -191,9 +191,9 @@ class course {
 
                             // Only render if there's a value.
                             if (!empty($fieldvalue)) {
-                                $badges .= \html_writer::start_span('customfieldbadge customfield_' . $fieldtype . ' mr-2');
+                                $badges .= \html_writer::start_span('customfieldbadge customfield_' . $fieldtype . ' me-2');
                                 $badges .= \html_writer::span($fieldname . ': ', 'customfieldname visually-hidden');
-                                $badges .= \html_writer::span($fieldvalue, 'customfieldvalue badge badge-info');
+                                $badges .= \html_writer::span($fieldvalue, 'customfieldvalue badge bg-info');
                                 $badges .= \html_writer::end_span();
                             }
                         }
