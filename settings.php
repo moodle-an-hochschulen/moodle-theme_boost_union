@@ -155,10 +155,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme/boost_union:configure'
         );
         $ADMIN->add('theme_boost_union', $smartmenuspage);
-    }
 
-    // Create full settings page structure.
-    else if ($ADMIN->fulltree) { // phpcs:disable moodle.ControlStructures.ControlSignature.Found
+        // Create full settings page structure.
+    } else if ($ADMIN->fulltree) {
         // Require the necessary libraries.
         require_once($CFG->dirroot . '/theme/boost_union/lib.php');
         require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
@@ -1412,7 +1411,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 THEME_BOOST_UNION_SETTING_SHOWAS_TEXT => get_string('showastext', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_SHOWAS_BADGE => get_string('showasbadge', 'theme_boost_union'),
         ];
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SHOWAS_TEXT, $stylefieldsoptions);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_SHOWAS_TEXT,
+            $stylefieldsoptions
+        );
         $tab->add($setting);
             $page->hide_if(
                 'theme_boost_union/courselistingstylefields',

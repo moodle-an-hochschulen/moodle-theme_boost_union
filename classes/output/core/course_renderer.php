@@ -238,9 +238,9 @@ class course_renderer extends \core_course_renderer {
                         $content .= html_writer::start_tag(
                             'div',
                             ['class' =>
-                                        'card-grid row no-gutters row-cols-1 row-cols-sm-' . $maxcolssm . ' row-cols-lg-' . $maxcolslg,
-                                  'role' => 'list',
-                                ]
+                                'card-grid row no-gutters row-cols-1 row-cols-sm-' . $maxcolssm . ' row-cols-lg-' . $maxcolslg,
+                                'role' => 'list',
+                            ]
                         );
                         $cardgridstarted = true;
                     }

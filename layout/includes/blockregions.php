@@ -189,7 +189,8 @@ class additionalregions {
             'userisediting' => $PAGE->user_is_editing(),
             'maininnerwrapperclass' => $maininnerwrapperclass,
             'outsideregionsplacement' => 'main-inner-outside-' . get_config('theme_boost_union', 'outsideregionsplacement'),
-            'outsidebottomwidth' => 'theme-block-region-outside-' . get_config('theme_boost_union', 'blockregionoutsidebottomwidth'),
+            'outsidebottomwidth' => 'theme-block-region-outside-' .
+                    get_config('theme_boost_union', 'blockregionoutsidebottomwidth'),
             'outsidetopwidth' => 'theme-block-region-outside-' . get_config('theme_boost_union', 'blockregionoutsidetopwidth'),
             'footerwidth' => 'theme-block-region-footer-' . get_config('theme_boost_union', 'blockregionfooterwidth'),
         ];

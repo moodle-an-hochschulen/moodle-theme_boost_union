@@ -104,6 +104,7 @@ class boostnavbar extends \theme_boost\boostnavbar {
                         // Remove if it is a course category breadcrumb node.
                         $this->remove($item->key, \breadcrumb_navigation_node::TYPE_CATEGORY);
                     }
+                    break;
                 case THEME_BOOST_UNION_SETTING_SELECT_YES:
                     break;
             }
@@ -121,12 +122,18 @@ class boostnavbar extends \theme_boost\boostnavbar {
                 case 'group-assign':
                     // Remove the 'Groups' navbar node in the Groupings, Grouping, group Overview and Assign pages.
                     $this->remove('groups');
+                    // PhpCS complains here: "There must be a comment when fall-through is intentional in a non-empty case body."
+                    // However, this code is copied as-is from theme/boost/classes/boostnavbar.php.
+                    // So we leave a comment here to make phpcs happy.
                 case 'backup-backup':
                 case 'backup-restorefile':
                 case 'backup-copy':
                 case 'course-reset':
                     // Remove the 'Import' navbar node in the Backup, Restore, Copy course and Reset pages.
                     $this->remove('import');
+                    // PhpCS complains here: "There must be a comment when fall-through is intentional in a non-empty case body."
+                    // However, this code is copied as-is from theme/boost/classes/boostnavbar.php.
+                    // So we leave a comment here to make phpcs happy.
                 case 'course-user':
                     $this->remove('mygrades');
                     $this->remove('grades');
