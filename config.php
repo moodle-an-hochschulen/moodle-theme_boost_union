@@ -50,7 +50,7 @@ if (!empty($referrerurl)) {
 }
 $THEME->usefallback = !$pagewithoutthemefallback;
 
-$THEME->scss = function($theme) {
+$THEME->scss = function ($theme) {
     return theme_boost_union_get_main_scss_content($theme);
 };
 

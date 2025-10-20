@@ -32,7 +32,6 @@ namespace theme_boost_union;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class admin_setting_configtext_url extends \admin_setting_configtext {
-
     /**
      * Validate the contents of the configtext to ensure it's a valid URL.
      *
@@ -49,7 +48,7 @@ class admin_setting_configtext_url extends \admin_setting_configtext {
         }
 
         // Require file library.
-        require_once($CFG->libdir.'/filelib.php');
+        require_once($CFG->libdir . '/filelib.php');
 
         // If the URL is invalid, respond with an error message.
         if (filter_var($data, FILTER_VALIDATE_URL) === false) {

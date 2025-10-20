@@ -34,7 +34,7 @@ define('NO_DEBUG_DISPLAY', true);
 
 define('ABORT_AFTER_CONFIG', true);
 require('../../../config.php');
-require_once($CFG->dirroot.'/lib/csslib.php');
+require_once($CFG->dirroot . '/lib/csslib.php');
 
 if ($slashargument = min_get_slash_argument()) {
     $slashargument = ltrim($slashargument, '/');
@@ -50,12 +50,11 @@ if ($slashargument = min_get_slash_argument()) {
         $usesvg = true;
     }
 
-    list($themename, $rev, $flavourid, $type) = explode('/', $slashargument, 4);
+    [$themename, $rev, $flavourid, $type] = explode('/', $slashargument, 4);
     $themename = min_clean_param($themename, 'SAFEDIR');
     $rev       = min_clean_param($rev, 'RAW');
     $flavourid = min_clean_param($flavourid, 'INT');
     $type      = min_clean_param($type, 'SAFEDIR');
-
 } else {
     $themename = min_optional_param('theme', 'standard', 'SAFEDIR');
     $rev       = min_optional_param('rev', 0, 'RAW');
@@ -162,7 +161,6 @@ if ($type === 'editor' || $type === 'editor-rtl') {
     } else {
         css_send_uncached_css($csscontent);
     }
-
 }
 
 if (($fallbacksheet = theme_styles_fallback_content($theme)) && !$theme->has_css_cached_content()) {
@@ -207,7 +205,6 @@ if ($sendaftergeneration || $lock) {
             // Do not pollute browser caches if invalid revision requested,
             // let's ignore legacy IE breakage here too.
             css_send_uncached_css(file_get_contents($candidatesheet));
-
         } else {
             // Real browsers - this is the expected result!
             css_send_cached_css($candidatesheet, $etag);
@@ -242,8 +239,12 @@ function theme_boost_union_flavour_styles_generate_and_store($theme, $rev, $them
     }
 
     // Determine the candidatesheet path.
-    $candidatesheet = "{$candidatedir}/" . theme_boost_union_flavour_styles_get_filename($type, $themesubrev, $flavourid,
-            $theme->use_svg_icons());
+    $candidatesheet = "{$candidatedir}/" . theme_boost_union_flavour_styles_get_filename(
+        $type,
+        $themesubrev,
+        $flavourid,
+        $theme->use_svg_icons()
+    );
 
     // Store the CSS.
     css_store_css($theme, $candidatesheet, $csscontent);

@@ -183,11 +183,10 @@ function theme_boost_union_get_flavour_which_applies() {
 
             // If the flavour is configured to apply to cohorts.
             if ($f->applytocohorts == true) {
-
                 // If the user cohorts have not be fetched up to now.
                 if ($usercohorts == null) {
                     // Require cohort library.
-                    require_once($CFG->dirroot.'/cohort/lib.php');
+                    require_once($CFG->dirroot . '/cohort/lib.php');
 
                     // Get and remember the user's cohorts.
                     $usercohorts = cohort_get_user_cohorts($USER->id);
@@ -248,8 +247,14 @@ function theme_boost_union_flavours_get_filename($filearea, $itemid) {
     $fs = get_file_storage();
 
     // Get all files from the given filearea.
-    $files = $fs->get_area_files($context->id, 'theme_boost_union', 'flavours_'.$filearea, $itemid,
-            'sortorder,filepath,filename', false);
+    $files = $fs->get_area_files(
+        $context->id,
+        'theme_boost_union',
+        'flavours_' . $filearea,
+        $itemid,
+        'sortorder,filepath,filename',
+        false
+    );
     if ($files) {
         // Just pick the first file - we are sure that there is just one file.
         $file = reset($files);
@@ -276,7 +281,7 @@ function theme_boost_union_flavours_cohorts_is_member($userid, $cohorts) {
 
     if (!empty($cohorts)) {
         // Create IN statement for cohorts.
-        list($in, $params) = $DB->get_in_or_equal($cohorts);
+        [$in, $params] = $DB->get_in_or_equal($cohorts);
         // Add param for userid.
         $params[] = $userid;
         // Return true if "userid = " . $userid . " AND cohortid IN " . $cohorts.

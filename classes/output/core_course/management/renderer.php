@@ -26,7 +26,7 @@ namespace theme_boost_union\output\core_course\management;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot.'/course/classes/management_renderer.php');
+require_once($CFG->dirroot . '/course/classes/management_renderer.php');
 
 use core_course_category;
 use core_course_list_element;

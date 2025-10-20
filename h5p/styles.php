@@ -32,11 +32,11 @@ define('NO_UPGRADE_CHECK', true);
 // Require config.
 // Let codechecker ignore the next line because otherwise it would complain about a missing login check
 // after requiring config.php which is really not needed.
-require(__DIR__.'/../../../config.php'); // phpcs:disable moodle.Files.RequireLogin.Missing
+require(__DIR__ . '/../../../config.php'); // phpcs:disable moodle.Files.RequireLogin.Missing
 
 // Require css sending libraries.
-require_once($CFG->dirroot.'/lib/csslib.php');
-require_once($CFG->dirroot.'/lib/configonlylib.php');
+require_once($CFG->dirroot . '/lib/csslib.php');
+require_once($CFG->dirroot . '/lib/configonlylib.php');
 
 // Initialize SCSS code.
 $scss = '';

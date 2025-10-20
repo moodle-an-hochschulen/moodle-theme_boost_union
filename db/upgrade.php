@@ -36,7 +36,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     $dbman = $DB->get_manager();
 
     if ($oldversion < 2022080916) {
-
         // Define table theme_boost_union_flavours to be created.
         $table = new xmldb_table('theme_boost_union_flavours');
 
@@ -70,7 +69,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2022080922) {
-
         // Start composing the notification to inform the admin.
         $message = \core\output\html_writer::tag('p', get_string('upgradenotice_2022080922', 'theme_boost_union'));
 
@@ -106,7 +104,7 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
                     $newfile = $fs->create_file_from_storedfile($filerecord, $file);
 
                     // Set the theme config to the file name.
-                    set_config($setting, '/'.$newfile->get_filename(), 'theme_boost_union');
+                    set_config($setting, '/' . $newfile->get_filename(), 'theme_boost_union');
 
                     // Remember the logo copying status.
                     $logocopied = true;
@@ -116,14 +114,20 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
             // If the logo has been copied.
             if ($logocopied == true) {
                 // Add the corresponding note to the notification.
-                $message .= \core\output\html_writer::tag('p', get_string('upgradenotice_2022080922_copied', 'theme_boost_union',
-                        get_string('upgradenotice_2022080922_'.$setting, 'theme_boost_union')));
+                $message .= \core\output\html_writer::tag('p', get_string(
+                    'upgradenotice_2022080922_copied',
+                    'theme_boost_union',
+                    get_string('upgradenotice_2022080922_' . $setting, 'theme_boost_union')
+                ));
 
                 // Otherwise, if no logo was copied.
             } else {
                 // Add the corresponding note to the notification.
-                $message .= \core\output\html_writer::tag('p', get_string('upgradenotice_2022080922_notcopied', 'theme_boost_union',
-                        get_string('upgradenotice_2022080922_'.$setting, 'theme_boost_union')));
+                $message .= \core\output\html_writer::tag('p', get_string(
+                    'upgradenotice_2022080922_notcopied',
+                    'theme_boost_union',
+                    get_string('upgradenotice_2022080922_' . $setting, 'theme_boost_union')
+                ));
             }
         }
 
@@ -139,7 +143,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2023010517) {
-
         // Define table theme_boost_union_menus to be created.
         $table = new xmldb_table('theme_boost_union_menus');
 
@@ -227,7 +230,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2023010519) {
-
         // Define table theme_boost_union_menus to be altered.
         $table = new xmldb_table('theme_boost_union_menus');
 
@@ -242,7 +244,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2023010521) {
-
         // Remove the THEME_BOOST_UNION_SETTING_COURSEBREADCRUMBS_DONTCHANGE option from the categorybreadcrumbs setting
         // and replace it with THEME_BOOST_UNION_SETTING_SELECT_NO if necessary.
         $oldconfig = get_config('theme_boost_union', 'categorybreadcrumbs');
@@ -281,7 +282,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2023102009) {
-
         // Changing precision of field description_format on table theme_boost_union_flavours to (2).
         $table = new xmldb_table('theme_boost_union_flavours');
         $field = new xmldb_field('description_format', XMLDB_TYPE_INTEGER, '2', null, null, null, null, 'description');
@@ -294,7 +294,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2023102021) {
-
         // Remove the preset setting from Boost Union.
         unset_config('preset', 'theme_boost_union');
 
@@ -327,7 +326,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2024100702) {
-
         // Define field byadmin to be added to theme_boost_union_menus.
         $table = new xmldb_table('theme_boost_union_menus');
         $field = new xmldb_field('byadmin', XMLDB_TYPE_INTEGER, '9', null, XMLDB_NOTNULL, null, '0', 'visible');
@@ -351,7 +349,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2024100706) {
-
         // Define table theme_boost_union_flavours to be altered.
         $table = new xmldb_table('theme_boost_union_flavours');
 
@@ -408,13 +405,20 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2024100707) {
-
         // Define table theme_boost_union_flavours to be altered.
         $table = new xmldb_table('theme_boost_union_flavours');
 
         // Define field look_backgroundimagepos to be added to theme_boost_union_flavours.
-        $field = new xmldb_field('look_backgroundimagepos', XMLDB_TYPE_CHAR, '32', null, null, null, null,
-                'look_backgroundimage');
+        $field = new xmldb_field(
+            'look_backgroundimagepos',
+            XMLDB_TYPE_CHAR,
+            '32',
+            null,
+            null,
+            null,
+            null,
+            'look_backgroundimage'
+        );
 
         // Conditionally launch add field look_backgroundimagepos.
         if (!$dbman->field_exists($table, $field)) {
@@ -490,7 +494,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2024100709) {
-
         // Define table theme_boost_union_menuitems to be altered.
         $table = new xmldb_table('theme_boost_union_menuitems');
 
@@ -507,20 +510,18 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2024100712) {
-
         // Set the smart menu item mode to inline for all menu items which are not of the dynamic courses type.
         // This is necessary as the smart menu item mode setting has been removed from these menu item types and the
         // smart menu item form only saves the inline mode as default since then.
         $DB->execute('UPDATE {theme_boost_union_menuitems}
-                      SET mode = '.\theme_boost_union\smartmenu_item::MODE_INLINE.'
-                      WHERE type != '.\theme_boost_union\smartmenu_item::TYPEDYNAMIC);
+                      SET mode = ' . \theme_boost_union\smartmenu_item::MODE_INLINE . '
+                      WHERE type != ' . \theme_boost_union\smartmenu_item::TYPEDYNAMIC);
 
         // Boost_union savepoint reached.
         upgrade_plugin_savepoint(true, 2024100712, 'theme', 'boost_union');
     }
 
     if ($oldversion < 2024100716) {
-
         // Remove the activitypurposesubsection setting from Boost Union.
         unset_config('activitypurposesubsection', 'theme_boost_union');
 
@@ -529,7 +530,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2025041400) {
-
         // Remove the mediumcontentmaxwidth setting from Boost Union.
         unset_config('mediumcontentmaxwidth', 'theme_boost_union');
 
@@ -544,7 +544,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2025041401) {
-
         // Set the guestroleupgradedfrompre500 marker to be used by the settings_update_guestrole.php script.
         set_config('guestroleupgradedfrompre500', 1, 'theme_boost_union');
 
@@ -553,7 +552,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2025041402) {
-
         // Remove the THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_NONE option from the slideranimation setting.
         $oldconfig = get_config('theme_boost_union', 'slideranimation');
         if ($oldconfig == 0) {
@@ -565,7 +563,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2025041406) {
-
         // Define table theme_boost_union_menus to be altered.
         $table = new xmldb_table('theme_boost_union_menuitems');
 
@@ -590,7 +587,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2025041410) {
-
         // Get the current showhintcourseguestenrol setting.
         $oldsetting = get_config('theme_boost_union', 'showhintcourseguestenrol');
 
@@ -609,7 +605,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2025041413) {
-
         // Get the current courselistinghowfields setting.
         $oldsetting = get_config('theme_boost_union', 'courselistinghowfields');
 
@@ -631,7 +626,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2025041415) {
-
         // Define table theme_boost_union_snippets to be created.
         $table = new xmldb_table('theme_boost_union_snippets');
 
@@ -679,7 +673,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2025041419) {
-
         // The old smart menu item icon picker stored the value '0' for no icon.
         // We need to update these to an empty string to match the new icon picker behavior.
         // Find all menu items where menuicon is '0' and update them to have an empty string.

@@ -29,8 +29,8 @@
 require(__DIR__ . '/../../../config.php'); // phpcs:disable moodle.Files.RequireLogin.Missing
 
 // Require the necessary libraries.
-require_once($CFG->dirroot.'/theme/boost_union/lib.php');
-require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+require_once($CFG->dirroot . '/theme/boost_union/lib.php');
+require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
 // Set page URL.
 $PAGE->set_url('/theme/boost_union/accessibility/support.php');
@@ -50,8 +50,10 @@ $config = get_config('theme_boost_union');
 // If the accessibility support page is disabled, we just show a short friendly warning page and are done.
 if ($config->enableaccessibilitysupport != THEME_BOOST_UNION_SETTING_SELECT_YES) {
     echo $OUTPUT->header();
-    $notification = new \core\output\notification(get_string('accessibilitysupportdisabled', 'theme_boost_union'),
-        \core\output\notification::NOTIFY_INFO);
+    $notification = new \core\output\notification(
+        get_string('accessibilitysupportdisabled', 'theme_boost_union'),
+        \core\output\notification::NOTIFY_INFO
+    );
     $notification->set_show_closebutton(false);
     echo $OUTPUT->render($notification);
     echo $OUTPUT->footer();
@@ -59,8 +61,10 @@ if ($config->enableaccessibilitysupport != THEME_BOOST_UNION_SETTING_SELECT_YES)
 }
 
 // If user login is required, we redirect to the login page.
-if (isset($config->allowaccessibilitysupportwithoutlogin) &&
-        $config->allowaccessibilitysupportwithoutlogin != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+if (
+    isset($config->allowaccessibilitysupportwithoutlogin) &&
+        $config->allowaccessibilitysupportwithoutlogin != THEME_BOOST_UNION_SETTING_SELECT_YES
+) {
     if (!isloggedin() || isguestuser()) {
         redirect(get_login_url());
     }
@@ -114,7 +118,7 @@ if ($form->is_cancelled()) {
 
     // Compose the mail content from form data.
     $subjectprefix = get_string('accessibilitysupportusermailsubject', 'theme_boost_union');
-    $subject = '['.$subjectprefix.'] '.$data->subject;
+    $subject = '[' . $subjectprefix . '] ' . $data->subject;
     $renderer = $PAGE->get_renderer('core');
     $message = $renderer->render_from_template('theme_boost_union/accessibility-support-email-body', $data);
 

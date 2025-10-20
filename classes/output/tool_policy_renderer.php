@@ -24,7 +24,6 @@ namespace theme_boost_union\output;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class tool_policy_renderer extends \tool_policy\output\renderer {
-
     /**
      * Overrides the header() function.
      *
@@ -36,7 +35,6 @@ class tool_policy_renderer extends \tool_policy\output\renderer {
         // Check that only the /admin/tool/policy/viewall.php page is affected.
         $pageurl = new \core\url('/admin/tool/policy/viewall.php');
         if ($pageurl->compare($this->page->url, URL_MATCH_BASE) == true) {
-
             // If the admin wants to show navigation on the policy page.
             $config = get_config('theme_boost_union', 'policyoverviewnavigation');
             if (isset($config) && $config == THEME_BOOST_UNION_SETTING_SELECT_YES) {
