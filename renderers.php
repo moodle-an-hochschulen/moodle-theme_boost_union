@@ -25,6 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
+
 /**
  * Extend the core_h5p renderer.
  *
