@@ -49,7 +49,6 @@ require_once($CFG->libdir . '/adminlib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class admin_settingspage_tabs_with_tertiary extends \theme_boost_admin_settingspage_tabs {
-
     /**
      * List of tertiary navigation items.
      *
@@ -120,29 +119,45 @@ class admin_settingspage_tabs_with_tertiary extends \theme_boost_admin_settingsp
      */
     private function init_boost_union_tertiary_settings() {
         // First, add all Boost Union setting pages.
-        $this->add_tertiary_item(new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_look']),
-                get_string('configtitlelook', 'theme_boost_union', null, true));
+        $this->add_tertiary_item(
+            new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_look']),
+            get_string('configtitlelook', 'theme_boost_union', null, true)
+        );
 
-        $this->add_tertiary_item(new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_feel']),
-                get_string('configtitlefeel', 'theme_boost_union', null, true));
+        $this->add_tertiary_item(
+            new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_feel']),
+            get_string('configtitlefeel', 'theme_boost_union', null, true)
+        );
 
-        $this->add_tertiary_item(new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_content']),
-                get_string('configtitlecontent', 'theme_boost_union', null, true));
+        $this->add_tertiary_item(
+            new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_content']),
+            get_string('configtitlecontent', 'theme_boost_union', null, true)
+        );
 
-        $this->add_tertiary_item(new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_functionality']),
-                get_string('configtitlefunctionality', 'theme_boost_union', null, true));
+        $this->add_tertiary_item(
+            new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_functionality']),
+            get_string('configtitlefunctionality', 'theme_boost_union', null, true)
+        );
 
-        $this->add_tertiary_item(new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_accessibility']),
-                get_string('configtitleaccessibility', 'theme_boost_union', null, true));
+        $this->add_tertiary_item(
+            new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_accessibility']),
+            get_string('configtitleaccessibility', 'theme_boost_union', null, true)
+        );
 
-        $this->add_tertiary_item(new \core\url('/theme/boost_union/flavours/overview.php'),
-                get_string('configtitleflavours', 'theme_boost_union', null, true));
+        $this->add_tertiary_item(
+            new \core\url('/theme/boost_union/flavours/overview.php'),
+            get_string('configtitleflavours', 'theme_boost_union', null, true)
+        );
 
-        $this->add_tertiary_item(new \core\url('/theme/boost_union/snippets/overview.php'),
-                get_string('configtitlesnippets', 'theme_boost_union', null, true));
+        $this->add_tertiary_item(
+            new \core\url('/theme/boost_union/snippets/overview.php'),
+            get_string('configtitlesnippets', 'theme_boost_union', null, true)
+        );
 
-        $this->add_tertiary_item(new \core\url('/theme/boost_union/smartmenus/menus.php'),
-                get_string('smartmenus', 'theme_boost_union', null, true));
+        $this->add_tertiary_item(
+            new \core\url('/theme/boost_union/smartmenus/menus.php'),
+            get_string('smartmenus', 'theme_boost_union', null, true)
+        );
 
         // Then, add navigation items for all Boost Union Child themes.
         // Use a static variable here as we do not want to search for such plugins more than once, even if the function
@@ -165,8 +180,10 @@ class admin_settingspage_tabs_with_tertiary extends \theme_boost_admin_settingsp
         }
 
         // Finally, add the category overview link.
-        $this->add_tertiary_item(new \core\url('/admin/category.php', ['category' => 'theme_boost_union']),
-                get_string('settingsoverview_all', 'theme_boost_union', null, true));
+        $this->add_tertiary_item(
+            new \core\url('/admin/category.php', ['category' => 'theme_boost_union']),
+            get_string('settingsoverview_all', 'theme_boost_union', null, true)
+        );
     }
 
     /**
@@ -218,13 +235,17 @@ class admin_settingspage_tabs_with_tertiary extends \theme_boost_admin_settingsp
             $tertiarymenu = new \core\output\select_menu('boostuniontertiary', $selectoptions, $this->selectoractiveurl);
 
             // Add visually-hidden label to the select menu.
-            $tertiarymenu->set_label(get_string('tertiarysettings', 'theme_boost_union', null, true),
-                    ['class' => 'visually-hidden']);
+            $tertiarymenu->set_label(
+                get_string('tertiarysettings', 'theme_boost_union', null, true),
+                ['class' => 'visually-hidden']
+            );
 
             // Build the tertiary navigation select menu.
-            $navigation = \html_writer::tag('div',
+            $navigation = \html_writer::tag(
+                'div',
                 $OUTPUT->render_from_template('core/tertiary_navigation_selector', $tertiarymenu->export_for_template($OUTPUT)),
-                ['class' => 'tertiary-navigation admin_settingspage_tabs_with_tertiary pb-2 pt-0', 'id' => 'tertiary-navigation']);
+                ['class' => 'tertiary-navigation admin_settingspage_tabs_with_tertiary pb-2 pt-0', 'id' => 'tertiary-navigation']
+            );
 
             // Return.
             return $navigation;

@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__.'/../../config.php');
+require_once(__DIR__ . '/../../config.php');
 
 // Require login and sesskey.
 require_login();
@@ -44,7 +44,6 @@ if (get_config('theme_boost_union', 'guestroleupgradedfrompre500') != 1) {
 
 // If the admin wants to fix the guest role.
 if ($fix == true) {
-
     // Fix the guest role.
     $guestarchetyperoles = get_archetype_roles('guest');
     if ($guestarchetyperoles) {
@@ -85,7 +84,9 @@ if ($fix == true) {
 unset_config('guestroleupgradedfrompre500', 'theme_boost_union');
 
 // Redirect with a nice message.
-$redirecturl = new core\url('/admin/settings.php',
-        ['section' => 'theme_boost_union_feel'],
-        'theme_boost_union_feel_blocks');
+$redirecturl = new core\url(
+    '/admin/settings.php',
+    ['section' => 'theme_boost_union_feel'],
+    'theme_boost_union_feel_blocks'
+);
 redirect($redirecturl, $redirectmessage, \core\output\notification::NOTIFY_SUCCESS);

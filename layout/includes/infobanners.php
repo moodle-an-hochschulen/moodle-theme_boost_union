@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 // Require the necessary libraries.
-require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
 $config = get_config('theme_boost_union');
 
@@ -43,20 +43,20 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_INFOBANNER_COUNT; $i++) {
         // Gather this info banner's data.
         // Info banner content.
         $formatoptions = ['noclean' => true, 'newlines' => false];
-        $contentsettingname = 'infobanner'.$i.'content';
+        $contentsettingname = 'infobanner' . $i . 'content';
         $content = format_text($config->{$contentsettingname}, FORMAT_HTML, $formatoptions);
 
         // Info banner Bootstrap class.
-        $bsclasssettingname = 'infobanner'.$i.'bsclass';
+        $bsclasssettingname = 'infobanner' . $i . 'bsclass';
         $bsclass = $config->{$bsclasssettingname};
 
         // Info banner ordering.
-        $ordersettingname = 'infobanner'.$i.'order';
+        $ordersettingname = 'infobanner' . $i . 'order';
         $order = $config->{$ordersettingname};
 
         // Info banner dismissible status (but not on the login page as the user preference can't be stored there).
         if ($PAGE->pagelayout != 'login') {
-            $dismissiblesettingname = 'infobanner'.$i.'dismissible';
+            $dismissiblesettingname = 'infobanner' . $i . 'dismissible';
             if ($config->{$dismissiblesettingname} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 $dismissible = true;
             } else {

@@ -28,11 +28,11 @@
 // Include config.php.
 // Let codechecker ignore the next line because otherwise it would complain about a missing login check
 // after requiring config.php which is really not needed.
-require(__DIR__.'/../../config.php'); // phpcs:disable moodle.Files.RequireLogin.Missing
+require(__DIR__ . '/../../config.php'); // phpcs:disable moodle.Files.RequireLogin.Missing
 
 // Require the necessary libraries.
-require_once($CFG->dirroot.'/lib/authlib.php');
-require_once($CFG->dirroot.'/theme/boost_union/lib.php');
+require_once($CFG->dirroot . '/lib/authlib.php');
+require_once($CFG->dirroot . '/theme/boost_union/lib.php');
 
 // Set page URL.
 $PAGE->set_url('/theme/boost_union/locallogin.php');
@@ -54,14 +54,17 @@ $config = get_config('theme_boost_union');
 // 2. the side entrance local login is not in auto mode and the local login is disabled,
 // 3. no alternateloginurl is set for which the side entrance local login would be needed as fallback,
 // we just show a short friendly warning page and are done.
-if ($config->sideentranceloginenable != THEME_BOOST_UNION_SETTING_SELECT_ALWAYS &&
+if (
+    $config->sideentranceloginenable != THEME_BOOST_UNION_SETTING_SELECT_ALWAYS &&
         $config->loginlocalloginenable != THEME_BOOST_UNION_SETTING_SELECT_NO &&
-        empty($CFG->alternateloginurl)) {
+        empty($CFG->alternateloginurl)
+) {
     echo $OUTPUT->header();
     $loginurl = new core\url('/login/index.php');
     $notification = new \core\output\notification(
-            get_string('loginlocalloginlocalnotdisabled', 'theme_boost_union', ['url' => $loginurl]),
-            \core\output\notification::NOTIFY_INFO);
+        get_string('loginlocalloginlocalnotdisabled', 'theme_boost_union', ['url' => $loginurl]),
+        \core\output\notification::NOTIFY_INFO
+    );
     $notification->set_show_closebutton(false);
     echo $OUTPUT->render($notification);
     echo $OUTPUT->footer();

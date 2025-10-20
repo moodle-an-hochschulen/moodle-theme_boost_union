@@ -28,7 +28,9 @@ $backtotopbutton = get_config('theme_boost_union', 'backtotopbutton');
 $accessibilitysupportfooterbutton = get_config('theme_boost_union', 'enableaccessibilitysupportfooterbutton');
 
 // Add footer buttons AMC module if a Boost Union footer button is enabled.
-if ($backtotopbutton == THEME_BOOST_UNION_SETTING_SELECT_YES ||
-        $accessibilitysupportfooterbutton == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+if (
+    $backtotopbutton == THEME_BOOST_UNION_SETTING_SELECT_YES ||
+        $accessibilitysupportfooterbutton == THEME_BOOST_UNION_SETTING_SELECT_YES
+) {
     $PAGE->requires->js_call_amd('theme_boost_union/footerbuttons', 'init');
 }

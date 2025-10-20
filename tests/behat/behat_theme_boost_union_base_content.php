@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__.'/../../../../lib/behat/behat_base.php');
+require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 
 /**
  * Class behat_theme_boost_union_base_content

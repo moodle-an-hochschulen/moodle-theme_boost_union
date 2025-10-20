@@ -34,7 +34,6 @@ use moodle_url;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class admin_externalpage_tabs {
-
     /**
      * @var array Holds the tabs in this tab tree.
      */

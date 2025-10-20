@@ -29,8 +29,8 @@
 require_once(__DIR__ . '/../../../../lib/tests/behat/behat_navigation.php');
 require_once(__DIR__ . '/../../../boost/tests/behat/behat_theme_boost_behat_navigation.php');
 
-use Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
-use Behat\Mink\Exception\ExpectationException as ExpectationException;
+use Behat\Mink\Exception\ElementNotFoundException;
+use Behat\Mink\Exception\ExpectationException;
 
 /**
  * Navigation-related step definition overrides for the Boost Union theme.

@@ -28,9 +28,9 @@
 
 require_once(__DIR__ . '/../../../../repository/upload/tests/behat/behat_repository_upload.php');
 
-use Behat\Mink\Exception\DriverException as DriverException,
-    Behat\Mink\Exception\ExpectationException as ExpectationException,
-    Behat\Gherkin\Node\TableNode as TableNode;
+use Behat\Mink\Exception\DriverException,
+    Behat\Mink\Exception\ExpectationException,
+    Behat\Gherkin\Node\TableNode;
 
 /**
  * Repository upload-related step definition overrides for the Boost Union theme.
