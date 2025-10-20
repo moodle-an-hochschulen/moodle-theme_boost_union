@@ -49,6 +49,18 @@ Feature: Configuring the theme_boost_union plugin for the "Support page" tab on 
       | yes     | should      |
       | no      | should not  |
 
+  Scenario: Setting: Enable accessibility support page - Do not add the screen reader link to the page if Boost Union is not the active theme (cross-theme check).
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | config                     | value | plugin            |
+      | enableaccessibilitysupport | yes   | theme_boost_union |
+    And I navigate to "Appearance > Themes" in site administration
+    And I click on "Select theme" "button" in the "#theme-select-form-boost" "css_element"
+    And I log out
+    When I log in as "student1"
+    And I am on site homepage
+    Then "#access-support-form-sr-link" "css_element" should not exist
+
   Scenario Outline: Setting: Allow accessibility support page without login - Check real user and guest
     Given the following config values are set as admin:
       | config                                 | value     | plugin            |

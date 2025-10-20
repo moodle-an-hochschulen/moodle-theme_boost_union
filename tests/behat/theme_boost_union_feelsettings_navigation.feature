@@ -137,6 +137,22 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | no      | should not  |
 
   @javascript
+  Scenario: Setting: Do not show starred courses popover in the navbar if Boost Union is not the active theme (cross-theme check).
+    Given the following config values are set as admin:
+      | config                   | value | plugin            |
+      | shownavbarstarredcourses | yes   | theme_boost_union |
+    And I log in as "admin"
+    And I navigate to "Appearance > Themes" in site administration
+    And I click on "Select theme" "button" in the "#theme-select-form-boost" "css_element"
+    And I log out
+    When I log in as "student1"
+    And I follow "My courses"
+    And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
+    And I click on "Star this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
+    And I reload the page
+    Then "nav.navbar #usernavigation .popover-region-favourites" "css_element" should not exist
+
+  @javascript
   Scenario: Setting: Show starred courses popover in the navbar (and make sure that I see the right courses there).
     Given the following config values are set as admin:
       | config                   | value | plugin            |
