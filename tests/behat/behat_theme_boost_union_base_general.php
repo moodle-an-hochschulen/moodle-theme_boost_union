@@ -53,8 +53,11 @@ class behat_theme_boost_union_base_general extends behat_base {
         ";
         $computedstyle = $this->evaluate_script($stylejs);
         if ($computedstyle != $value) {
-            throw new ExpectationException('The \'' . $selector . '\' DOM element does not have the computed style \'' .
-                    $style . '\'=\'' . $value . '\', it has the computed style \'' . $computedstyle . '\' instead.', $this->getSession());
+            throw new ExpectationException(
+                'The \'' . $selector . '\' DOM element does not have the computed style \'' .
+                    $style . '\'=\'' . $value . '\', it has the computed style \'' . $computedstyle . '\' instead.',
+                $this->getSession()
+            );
         }
     }
 
@@ -336,7 +339,10 @@ class behat_theme_boost_union_base_general extends behat_base {
             $positionelement > $positionviewport + 50 ||
                 $positionelement < $positionviewport - 50
         ) { // Allow some deviation of 50px of the scrolling position.
-            throw new ExpectationException('The DOM element \'' . $selector . '\' is not a the top of the page', $this->getSession());
+            throw new ExpectationException(
+                'The DOM element \'' . $selector . '\' is not a the top of the page',
+                $this->getSession()
+            );
         }
     }
 
@@ -364,7 +370,10 @@ class behat_theme_boost_union_base_general extends behat_base {
         $eq = Normalizer::normalize('"' . $v . '"', Normalizer::FORM_C);
 
         if (!($result == $eq)) {
-            throw new ExpectationException("Didn't find a match for '" . $v . "' with " . $s . ":" . $ps . ".", $this->getSession());
+            throw new ExpectationException(
+                "Didn't find a match for '" . $v . "' with " . $s . ":" . $ps . ".",
+                $this->getSession()
+            );
         }
     }
 

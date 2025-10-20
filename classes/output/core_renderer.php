@@ -668,7 +668,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         foreach ($pluginswithfunction as $plugintype => $plugins) {
             foreach ($plugins as $pluginname => $function) {
                 // If the given plugin's output is suppressed by Boost Union's settings.
-                $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_' . $plugintype . '_' . $pluginname);
+                $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_' . $plugintype . '_' .
+                        $pluginname);
                 if (isset($suppresssetting) && $suppresssetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                     // Skip the plugin.
                     continue;
