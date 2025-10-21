@@ -205,7 +205,7 @@ class snippets {
     public static function get_snippet_meta($name, $source): stdClass|null {
         if ($source === self::SOURCE_BUILTIN) {
             // Get the snippets file, based on the source.
-            $file = self::get_builtin_snippet_file($name );
+            $file = self::get_builtin_snippet_file($name);
 
             // If the file does not exist or is not readable, we can not proceed.
             if (is_null($file)) {
@@ -221,7 +221,6 @@ class snippets {
 
             // Get the preview image as well.
             $image = self::get_snippet_preview_url($name, $source);
-
         } else if ($source === self::SOURCE_UPLOADED) {
             // Get the file from the file storage.
             $fs = \get_file_storage();
@@ -300,12 +299,12 @@ class snippets {
             // We do this by restricting the query to an impossible source.
             $whereparts[] = 'impossible';
         }
-        list($insql, $inparams) = $DB->get_in_or_equal($whereparts, SQL_PARAMS_NAMED);
+        [$insql, $inparams] = $DB->get_in_or_equal($whereparts, SQL_PARAMS_NAMED);
 
         // Compose SQL base query.
         $sql = "SELECT *
                 FROM {theme_boost_union_snippets} s
-                WHERE enabled = '1' AND source ".$insql.
+                WHERE enabled = '1' AND source " . $insql .
                 " ORDER BY sortorder";
         $sqlparams = $inparams;
 
@@ -359,7 +358,7 @@ class snippets {
      */
     public static function get_snippet_meta_from_file_content($filedata): array|false {
         // Make sure we catch CR-only line endings.
-        $filedata = str_replace( "\r", "\n", $filedata );
+        $filedata = str_replace("\r", "\n", $filedata);
 
         // If the file is empty, we can not proceed.
         if (empty($filedata)) {
@@ -371,8 +370,10 @@ class snippets {
 
         // Scan for each snippet header meta information in the files top scss comment.
         foreach (self::SNIPPET_HEADERS as $regex) {
-            if (preg_match('/^(?:[ \t]*)?[ \t\/*#@]*' . preg_quote($regex, '/') . ':(.*)$/mi', $filedata, $match)
-                && $match[1]) {
+            if (
+                preg_match('/^(?:[ \t]*)?[ \t\/*#@]*' . preg_quote($regex, '/') . ':(.*)$/mi', $filedata, $match)
+                && $match[1]
+            ) {
                 $headers[$regex] = self::cleanup_header_comment($match[1]);
             } else {
                 $headers[$regex] = '';
@@ -416,7 +417,7 @@ class snippets {
         // If there are files.
         if (is_array($files)) {
             // Return an array of the basenames of the files.
-            $basenames = array_map(function($file) {
+            $basenames = array_map(function ($file) {
                 return basename($file);
             }, $files);
             return $basenames;
@@ -457,7 +458,7 @@ class snippets {
      * @return void
      */
     private static function process_uploaded_scss_file($filename, $zipdir): void {
-        $filecontent = \file_get_contents($zipdir.'/'.$filename, false);
+        $filecontent = \file_get_contents($zipdir . '/' . $filename, false);
 
         if (!$filecontent) {
             return;
@@ -491,14 +492,16 @@ class snippets {
         ];
 
         // First check if the file already exists and if so, delete it.
-        if ($fs->file_exists(
-            $filerecord['contextid'],
-            $filerecord['component'],
-            $filerecord['filearea'],
-            $filerecord['itemid'],
-            $filerecord['filepath'],
-            $filerecord['filename']
-        )) {
+        if (
+            $fs->file_exists(
+                $filerecord['contextid'],
+                $filerecord['component'],
+                $filerecord['filearea'],
+                $filerecord['itemid'],
+                $filerecord['filepath'],
+                $filerecord['filename']
+            )
+        ) {
             $existingfile = $fs->get_file(
                 $filerecord['contextid'],
                 $filerecord['component'],
@@ -525,14 +528,16 @@ class snippets {
             $filerecord['filename'] = $previewfilename;
 
             // Again, check first if the file already exists and if so, delete it.
-            if ($fs->file_exists(
-                $filerecord['contextid'],
-                $filerecord['component'],
-                $filerecord['filearea'],
-                $filerecord['itemid'],
-                $filerecord['filepath'],
-                $filerecord['filename']
-            )) {
+            if (
+                $fs->file_exists(
+                    $filerecord['contextid'],
+                    $filerecord['component'],
+                    $filerecord['filearea'],
+                    $filerecord['itemid'],
+                    $filerecord['filepath'],
+                    $filerecord['filename']
+                )
+            ) {
                 $existingfile = $fs->get_file(
                     $filerecord['contextid'],
                     $filerecord['component'],
@@ -572,7 +577,7 @@ class snippets {
                     '.{' . implode(',', self::ALLOWED_PREVIEW_FILE_EXTENSIONS) . '}',
                     $pos,
                     strlen($search)
-            );
+                );
             // Search for the preview file.
             $files = glob($pattern, GLOB_BRACE);
             // Select the first match of the found preview file(s).
@@ -648,7 +653,7 @@ class snippets {
         $sortorder = empty($snippets) ? 0 : intval(reset($snippets)->sortorder);
 
         // Prepare an array with all the present snippet names.
-        $presentnames = array_map(function($snippet) {
+        $presentnames = array_map(function ($snippet) {
             return [$snippet->name, $snippet->source];
         }, $snippets);
 
@@ -762,17 +767,17 @@ class snippets {
 
         // Get builtin snippets which are known in the database.
         $snippets = $DB->get_records(
-                'theme_boost_union_snippets',
-                [],
-                'sortorder DESC',
-                'id,name,sortorder'
+            'theme_boost_union_snippets',
+            [],
+            'sortorder DESC',
+            'id,name,sortorder'
         );
 
         // Get the highest sortorder present.
         $sortorder = empty($snippets) ? 0 : intval(reset($snippets)->sortorder);
 
         // Prepare an array with all the present builtin snippet names.
-        $presentnames = array_map(function($snippet) {
+        $presentnames = array_map(function ($snippet) {
             return $snippet->name;
         }, $snippets);
 

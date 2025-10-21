@@ -223,14 +223,16 @@ class solver {
      */
     public function filter_is_close_enough($cssfilters, $loss) {
         // Verify input data.
-        if (strlen($cssfilters) < 1 ||
+        if (
+            strlen($cssfilters) < 1 ||
                 strpos($cssfilters, 'invert') === false ||
                 strpos($cssfilters, 'sepia') === false ||
                 strpos($cssfilters, 'saturate') === false ||
                 strpos($cssfilters, 'hue-rotate') === false ||
                 strpos($cssfilters, 'brightness') === false ||
                 strpos($cssfilters, 'contrast') === false ||
-                is_numeric($loss) == false) {
+                is_numeric($loss) == false
+        ) {
             return false;
         }
 

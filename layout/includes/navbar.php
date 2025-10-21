@@ -30,8 +30,10 @@ require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
 // Get the flavour which applies to this page.
 $flavour = theme_boost_union_get_flavour_which_applies();
 // If a flavour applies to this page and if a navbar color is set in the flavour.
-if ($flavour != null &&
-        isset($flavour->look_navbarcolor) && $flavour->look_navbarcolor != THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE) {
+if (
+    $flavour != null &&
+        isset($flavour->look_navbarcolor) && $flavour->look_navbarcolor != THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE
+) {
     // Pick the navbar color from the flavour.
     $navbarcolorsetting = $flavour->look_navbarcolor;
 
@@ -41,7 +43,7 @@ if ($flavour != null &&
     $navbarcolorsetting = get_config('theme_boost_union', 'navbarcolor');
 }
 // Compose the navbar color classes based on the navbarcolor setting.
-switch($navbarcolorsetting) {
+switch ($navbarcolorsetting) {
     case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK:
         $templatecontext['navbarcolorclasses'] = 'navbar-dark bg-dark';
         break;

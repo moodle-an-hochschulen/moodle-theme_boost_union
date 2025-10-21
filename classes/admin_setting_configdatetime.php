@@ -39,7 +39,6 @@ namespace theme_boost_union;
  * them as an array named after $name (so we only use $name2 internally for the setting)
  */
 class admin_setting_configdatetime extends \admin_setting {
-
     /**
      * Get the selected time.
      *
@@ -86,47 +85,47 @@ class admin_setting_configdatetime extends \admin_setting {
         $default = $this->get_defaultsetting();
 
         if (is_array($default)) {
-            $defaultinfo = $default['y'].'-'.$default['M'].'-'.$default['d'].' '.$default['h'].':'.$default['m'];
+            $defaultinfo = $default['y'] . '-' . $default['M'] . '-' . $default['d'] . ' ' . $default['h'] . ':' . $default['m'];
         } else {
             $defaultinfo = null;
         }
 
         $return = '<div class="form-datetime defaultsnext">';
 
-        $return .= '<select id="'.$this->get_id().'y" name="'.$this->get_full_name().'[y]" class="custom-select me-2">';
+        $return .= '<select id="' . $this->get_id() . 'y" name="' . $this->get_full_name() . '[y]" class="custom-select me-2">';
         for ($i = 2020; $i <= date("Y") + 10; $i++) {
-            $return .= '<option value="'.$i.'"'.($i == $data['y'] ? ' selected="selected"' : '').'>'.$i.'</option>';
+            $return .= '<option value="' . $i . '"' . ($i == $data['y'] ? ' selected="selected"' : '') . '>' . $i . '</option>';
         }
         $return .= '</select>';
 
-        $return .= '<select id="'.$this->get_id().'M" name="'.$this->get_full_name().'[M]" class="custom-select me-2">';
+        $return .= '<select id="' . $this->get_id() . 'M" name="' . $this->get_full_name() . '[M]" class="custom-select me-2">';
         for ($i = 1; $i <= 12; $i++) {
             $sel = ($i == $data['M'] ? ' selected="selected"' : '');
             $dateobj = \DateTime::createFromFormat('!m', $i);
-            $return .= '<option value="'.$i.'"'.$sel.'>'.userdate($dateobj->getTimestamp(), '%B').'</option>';
+            $return .= '<option value="' . $i . '"' . $sel . '>' . userdate($dateobj->getTimestamp(), '%B') . '</option>';
         }
         $return .= '</select>';
 
-        $return .= '<select id="'.$this->get_id().'d" name="'.$this->get_full_name().'[d]" class="custom-select me-2">';
+        $return .= '<select id="' . $this->get_id() . 'd" name="' . $this->get_full_name() . '[d]" class="custom-select me-2">';
         for ($i = 1; $i <= 31; $i++) {
             $sel = ($i == $data['d'] ? ' selected="selected"' : '');
-            $return .= '<option value="'.$i.'"'.$sel.'>'.sprintf('%02d', $i).'</option>';
+            $return .= '<option value="' . $i . '"' . $sel . '>' . sprintf('%02d', $i) . '</option>';
         }
         $return .= '</select>';
 
-        $return .= '<select id="'.$this->get_id().'h" name="'.$this->get_full_name().'[h]" class="custom-select me-1">';
+        $return .= '<select id="' . $this->get_id() . 'h" name="' . $this->get_full_name() . '[h]" class="custom-select me-1">';
         for ($i = 0; $i < 24; $i++) {
             $sel = ($i == $data['h'] ? ' selected="selected"' : '');
-            $return .= '<option value="'.$i.'"'.$sel.'>'.sprintf('%02d', $i).'</option>';
+            $return .= '<option value="' . $i . '"' . $sel . '>' . sprintf('%02d', $i) . '</option>';
         }
         $return .= '</select>';
 
         $return .= '<span class="me-1">:</span>';
 
-        $return .= '<select id="'.$this->get_id().'m" name="'.$this->get_full_name().'[m]" class="custom-select me-2">';
+        $return .= '<select id="' . $this->get_id() . 'm" name="' . $this->get_full_name() . '[m]" class="custom-select me-2">';
         for ($i = 0; $i < 60; $i += 5) {
             $sel = ($i == $data['m'] ? ' selected="selected"' : '');
-            $return .= '<option value="'.$i.'"'.$sel.'>'.sprintf('%02d', $i).'</option>';
+            $return .= '<option value="' . $i . '"' . $sel . '>' . sprintf('%02d', $i) . '</option>';
         }
         $return .= '</select>';
 

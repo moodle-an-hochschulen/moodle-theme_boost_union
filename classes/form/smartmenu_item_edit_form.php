@@ -27,8 +27,8 @@ namespace theme_boost_union\form;
 defined('MOODLE_INTERNAL') || die();
 
 // Require forms library.
-require_once($CFG->libdir.'/formslib.php');
-require_once($CFG->dirroot.'/cohort/lib.php');
+require_once($CFG->libdir . '/formslib.php');
+require_once($CFG->dirroot . '/cohort/lib.php');
 
 use theme_boost_union\smartmenu_item;
 use theme_boost_union\smartmenu;
@@ -37,7 +37,6 @@ use theme_boost_union\smartmenu;
  * Smart menu items edit form.
  */
 class smartmenu_item_edit_form extends \moodleform {
-
     /**
      * Define form elements.
      *
@@ -47,18 +46,18 @@ class smartmenu_item_edit_form extends \moodleform {
         global $DB, $PAGE, $CFG;
 
         // Require and register the QuickForm colorpicker element.
-        require_once($CFG->dirroot.'/theme/boost_union/classes/formelement/colorpicker.php');
+        require_once($CFG->dirroot . '/theme/boost_union/classes/formelement/colorpicker.php');
         \MoodleQuickForm::registerElementType(
-                'theme_boost_union_colorpicker',
-                $CFG->dirroot.'/theme/boost_union/classes/formelement/colorpicker.php',
-                '\theme_boost_union\formelement\colorpicker'
+            'theme_boost_union_colorpicker',
+            $CFG->dirroot . '/theme/boost_union/classes/formelement/colorpicker.php',
+            '\theme_boost_union\formelement\colorpicker'
         );
         // Register validation rule for the QuickForm colorpicker element.
         \MoodleQuickForm::registerRule(
-                'theme_boost_union_colorpicker_rule',
-                null,
-                '\theme_boost_union\formelement\colorpicker_rule',
-                $CFG->dirroot.'/theme/boost_union/classes/formelement/colorpicker_rule.php'
+            'theme_boost_union_colorpicker_rule',
+            null,
+            '\theme_boost_union\formelement\colorpicker_rule',
+            $CFG->dirroot . '/theme/boost_union/classes/formelement/colorpicker_rule.php'
         );
 
         // Get an easier handler for the form.
@@ -75,8 +74,11 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->setDefault('menu', $menuid);
 
         // Add general settings as header element.
-        $mform->addElement('header', 'generalsettingsheader',
-                get_string('smartmenusgeneralsectionheader', 'theme_boost_union'));
+        $mform->addElement(
+            'header',
+            'generalsettingsheader',
+            get_string('smartmenusgeneralsectionheader', 'theme_boost_union')
+        );
         $mform->setExpanded('generalsettingsheader');
 
         // Add the menu item type as select element.
@@ -94,8 +96,11 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('title', 'smartmenusmenuitemtitle', 'theme_boost_union');
 
         // Add structure as header element.
-        $mform->addElement('header', 'structureheader',
-                get_string('smartmenusmenuitemstructureheader', 'theme_boost_union'));
+        $mform->addElement(
+            'header',
+            'structureheader',
+            get_string('smartmenusmenuitemstructureheader', 'theme_boost_union')
+        );
         $mform->setExpanded('structureheader');
 
         // Add menu item URL (for the static menu item type) as input element.
@@ -114,29 +119,40 @@ class smartmenu_item_edit_form extends \moodleform {
 
         // Add category (for the dynamic courses menu item type) as autocomplete element.
         $categoriesoptions = \core_course_category::make_categories_list();
-        $catwidget = $mform->addElement('autocomplete', 'category',
-                get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
-                get_string('smartmenusdynamiccoursescoursecategory', 'theme_boost_union'), $categoriesoptions);
+        $catwidget = $mform->addElement(
+            'autocomplete',
+            'category',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusdynamiccoursescoursecategory', 'theme_boost_union'),
+            $categoriesoptions
+        );
         $mform->setType('category', PARAM_INT);
         $mform->hideIf('category', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
         $catwidget->setMultiple(true);
         $mform->addHelpButton('category', 'smartmenusdynamiccoursescoursecategory', 'theme_boost_union');
 
         // Add include-subcategories as checkbox.
-        $mform->addElement('advcheckbox', 'category_subcats',
-                get_string('smartmenusdynamiccoursescoursecategorysubcats', 'theme_boost_union'));
+        $mform->addElement(
+            'advcheckbox',
+            'category_subcats',
+            get_string('smartmenusdynamiccoursescoursecategorysubcats', 'theme_boost_union')
+        );
         $mform->setType('category_subcats', PARAM_BOOL);
         $mform->addHelpButton('category_subcats', 'smartmenusdynamiccoursescoursecategorysubcats', 'theme_boost_union');
         $mform->hideIf('category_subcats', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
 
         // Add roles (for the dynamic courses menu item type) as autocomplete element.
         $courseroles = get_roles_for_contextlevels(CONTEXT_COURSE);
-        list($insql, $inparams) = $DB->get_in_or_equal(array_values($courseroles));
+        [$insql, $inparams] = $DB->get_in_or_equal(array_values($courseroles));
         $roles = $DB->get_records_sql("SELECT * FROM {role} WHERE id $insql", $inparams);
         $rolesoptions = role_fix_names($roles, null, ROLENAME_ALIAS, true);
-        $roleswidget = $mform->addElement('autocomplete', 'enrolmentrole',
-                get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
-                get_string('smartmenusdynamiccoursesenrolmentrole', 'theme_boost_union'), $rolesoptions);
+        $roleswidget = $mform->addElement(
+            'autocomplete',
+            'enrolmentrole',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusdynamiccoursesenrolmentrole', 'theme_boost_union'),
+            $rolesoptions
+        );
         $mform->setType('enrolmentrole', PARAM_INT);
         $mform->hideIf('enrolmentrole', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
         $roleswidget->setMultiple(true);
@@ -144,9 +160,13 @@ class smartmenu_item_edit_form extends \moodleform {
 
         // Add completion status (for the dynamic courses menu item type) as autocomplete element.
         $completionstatusoptions = smartmenu_item::get_completionstatus_options();
-        $completionstatuswidget = $mform->addElement('autocomplete', 'completionstatus',
-                get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
-                get_string('smartmenusdynamiccoursescompletionstatus', 'theme_boost_union'), $completionstatusoptions);
+        $completionstatuswidget = $mform->addElement(
+            'autocomplete',
+            'completionstatus',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusdynamiccoursescompletionstatus', 'theme_boost_union'),
+            $completionstatusoptions
+        );
         $mform->setType('completionstatus', PARAM_INT);
         $mform->hideIf('completionstatus', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
         $completionstatuswidget->setMultiple(true);
@@ -154,9 +174,13 @@ class smartmenu_item_edit_form extends \moodleform {
 
         // Add date range (for the dynamic courses menu item type) as autocomplete element.
         $daterangeoptions = smartmenu_item::get_daterange_options();
-        $daterangewidget = $mform->addElement('autocomplete', 'daterange',
-                get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
-                get_string('smartmenusdynamiccoursesdaterange', 'theme_boost_union'), $daterangeoptions);
+        $daterangewidget = $mform->addElement(
+            'autocomplete',
+            'daterange',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusdynamiccoursesdaterange', 'theme_boost_union'),
+            $daterangeoptions
+        );
         $mform->setType('daterange', PARAM_INT);
         $mform->hideIf('daterange', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
         $daterangewidget->setMultiple(true);
@@ -166,8 +190,11 @@ class smartmenu_item_edit_form extends \moodleform {
         smartmenu_item::load_custom_field_config($mform);
 
         // Add presentation as header element.
-        $mform->addElement('header', 'presentationheader',
-                get_string('smartmenusmenuitempresentationheader', 'theme_boost_union'));
+        $mform->addElement(
+            'header',
+            'presentationheader',
+            get_string('smartmenusmenuitempresentationheader', 'theme_boost_union')
+        );
         $mform->setExpanded('presentationheader');
 
         // Add icon as autocomplete element.
@@ -185,7 +212,7 @@ class smartmenu_item_edit_form extends \moodleform {
             // And we just add this function if the menuicon is set in the custom data already. Otherwise, for an unknown reason,
             // the layout of the autocomplete element breaks.
             'valuehtmlcallback' => isset($this->_customdata['menuitem']) && !empty($this->_customdata['menuitem']->menuicon) ?
-                function($value) use ($iconmap) {
+                function ($value) use ($iconmap) {
                     global $OUTPUT;
 
                     // If this is a Moodle core icon.
@@ -200,7 +227,7 @@ class smartmenu_item_edit_form extends \moodleform {
                         // Otherwise, if this is a FontAwesome solid icon.
                     } else if (isset($iconmap[$value]['source']) && $iconmap[$value]['source'] == 'fasolid') {
                         $icon = (object)[
-                            'class' => 'fas '.$iconmap[$value]['class'],
+                            'class' => 'fas ' . $iconmap[$value]['class'],
                             'name' => $iconmap[$value]['class'],
                             'source' => get_string('smartmenusmenuitemicon_sourcefasolid', 'theme_boost_union'),
                             'sourcecolor' => 'bg-success',
@@ -209,7 +236,7 @@ class smartmenu_item_edit_form extends \moodleform {
                         // Otherwise, if this is a FontAwesome brands icon.
                     } else if (isset($iconmap[$value]['source']) && $iconmap[$value]['source'] == 'fabrand') {
                         $icon = (object)[
-                            'class' => 'fab '.$iconmap[$value]['class'],
+                            'class' => 'fab ' . $iconmap[$value]['class'],
                             'name' => $iconmap[$value]['class'],
                             'source' => get_string('smartmenusmenuitemicon_sourcefabrand', 'theme_boost_union'),
                             'sourcecolor' => 'bg-success',
@@ -218,7 +245,7 @@ class smartmenu_item_edit_form extends \moodleform {
                         // Otherwise, if this is the FontAwesome blank icon.
                     } else if (isset($iconmap[$value]['source']) && $iconmap[$value]['source'] == 'fablank') {
                         $icon = (object)[
-                            'class' => 'fab '.$iconmap[$value]['class'],
+                            'class' => 'fab ' . $iconmap[$value]['class'],
                             'name' => $iconmap[$value]['class'],
                             'source' => get_string('smartmenusmenuitemicon_sourcefablank', 'theme_boost_union'),
                             'sourcecolor' => 'bg-success',
@@ -229,16 +256,25 @@ class smartmenu_item_edit_form extends \moodleform {
                     return $OUTPUT->render_from_template('theme_boost_union/form_autocomplete_fontawesome_icon', $icon);
                 } : null,
         ];
-        $iconwidget = $mform->addElement('autocomplete', 'menuicon',
-                get_string('smartmenusmenuitemicon', 'theme_boost_union'), [], $options);
+        $iconwidget = $mform->addElement(
+            'autocomplete',
+            'menuicon',
+            get_string('smartmenusmenuitemicon', 'theme_boost_union'),
+            [],
+            $options
+        );
         $mform->setType('menuicon', PARAM_TEXT);
         $mform->addHelpButton('menuicon', 'smartmenusmenuitemicon', 'theme_boost_union');
         $mform->hideIf('menuicon', 'type', 'eq', smartmenu_item::TYPEDIVIDER);
 
         // Add title presentation and select element.
         $displayoptions = smartmenu_item::get_display_options();
-        $mform->addElement('select', 'display', get_string('smartmenusmenuitemdisplayoptions', 'theme_boost_union'),
-                $displayoptions);
+        $mform->addElement(
+            'select',
+            'display',
+            get_string('smartmenusmenuitemdisplayoptions', 'theme_boost_union'),
+            $displayoptions
+        );
         $mform->setDefault('display', smartmenu_item::DISPLAY_SHOWTITLEICON);
         $mform->setType('display', PARAM_INT);
         $mform->hideIf('display', 'type', 'eq', smartmenu_item::TYPEDIVIDER);
@@ -252,8 +288,12 @@ class smartmenu_item_edit_form extends \moodleform {
 
         // Add link target as select element.
         $targetoptions = smartmenu_item::get_target_options();
-        $mform->addElement('select', 'target', get_string('smartmenusmenuitemlinktarget', 'theme_boost_union'),
-                $targetoptions);
+        $mform->addElement(
+            'select',
+            'target',
+            get_string('smartmenusmenuitemlinktarget', 'theme_boost_union'),
+            $targetoptions
+        );
         $mform->setDefault('target', smartmenu_item::TARGET_SAME);
         $mform->setType('target', PARAM_INT);
         $mform->hideIf('target', 'type', 'eq', smartmenu_item::TYPEDIVIDER);
@@ -262,16 +302,36 @@ class smartmenu_item_edit_form extends \moodleform {
         // Add responsive hiding as checkbox group.
         $responsivegroup = [];
         // Hide on desktop.
-        $responsivegroup[] = $mform->createElement('advcheckbox', 'desktop',
-                get_string('smartmenusmenuitemresponsivedesktop', 'theme_boost_union'), null, ['group' => 1]);
+        $responsivegroup[] = $mform->createElement(
+            'advcheckbox',
+            'desktop',
+            get_string('smartmenusmenuitemresponsivedesktop', 'theme_boost_union'),
+            null,
+            ['group' => 1]
+        );
         // Hide on tablet.
-        $responsivegroup[] = $mform->createElement('advcheckbox', 'tablet',
-                get_string('smartmenusmenuitemresponsivetablet', 'theme_boost_union'), null, ['group' => 1]);
+        $responsivegroup[] = $mform->createElement(
+            'advcheckbox',
+            'tablet',
+            get_string('smartmenusmenuitemresponsivetablet', 'theme_boost_union'),
+            null,
+            ['group' => 1]
+        );
         // Hide on mobile.
-        $responsivegroup[] = $mform->createElement('advcheckbox', 'mobile',
-                get_string('smartmenusmenuitemresponsivemobile', 'theme_boost_union'), null, ['group' => 1]);
-        $mform->addGroup($responsivegroup, 'responsive',
-                get_string('smartmenusmenuitemresponsive', 'theme_boost_union'), '', false);
+        $responsivegroup[] = $mform->createElement(
+            'advcheckbox',
+            'mobile',
+            get_string('smartmenusmenuitemresponsivemobile', 'theme_boost_union'),
+            null,
+            ['group' => 1]
+        );
+        $mform->addGroup(
+            $responsivegroup,
+            'responsive',
+            get_string('smartmenusmenuitemresponsive', 'theme_boost_union'),
+            '',
+            false
+        );
         $mform->hideIf('responsive', 'type', 'eq', smartmenu_item::TYPEDIVIDER);
         $mform->addHelpButton('responsive', 'smartmenusmenuitemresponsive', 'theme_boost_union');
 
@@ -293,9 +353,13 @@ class smartmenu_item_edit_form extends \moodleform {
 
         // Add course list ordering (for the dynamic courses menu item type) as select element.
         $listsortoptions = smartmenu_item::get_listsort_options();
-        $mform->addElement('select', 'listsort',
-                get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
-                get_string('smartmenusmenuitemlistsort', 'theme_boost_union'), $listsortoptions);
+        $mform->addElement(
+            'select',
+            'listsort',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusmenuitemlistsort', 'theme_boost_union'),
+            $listsortoptions
+        );
         $mform->setDefault('listsort', smartmenu_item::LISTSORT_FULLNAME_ASC);
         $mform->setType('listsort', PARAM_INT);
         $mform->hideIf('listsort', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
@@ -307,36 +371,51 @@ class smartmenu_item_edit_form extends \moodleform {
                 smartmenu_item::DISPLAY_VISIBLECOURSESONLY =>
                         get_string('smartmenusmenuitemhidehiddencourses', 'theme_boost_union'),
         ];
-        $mform->addElement('select', 'displayhiddencourses',
-                get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
-                get_string('smartmenusmenuitemdisplayonlyvisiblecourses', 'theme_boost_union'), $displayoptions);
+        $mform->addElement(
+            'select',
+            'displayhiddencourses',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusmenuitemdisplayonlyvisiblecourses', 'theme_boost_union'),
+            $displayoptions
+        );
         $mform->setType('displayhiddencourses', PARAM_BOOL);
         $mform->addHelpButton('displayhiddencourses', 'smartmenusmenuitemdisplayonlyvisiblecourses', 'theme_boost_union');
         $mform->hideIf('displayhiddencourses', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
 
         // Add Hidden courses sorting as select element.
         $hiddencoursesortoptions = smartmenu_item::get_hiddencoursesorting_options();
-        $mform->addElement('select', 'hiddencoursesort',
-                get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
-                get_string('smartmenusmenuitemhiddencoursessorting', 'theme_boost_union'), $hiddencoursesortoptions);
+        $mform->addElement(
+            'select',
+            'hiddencoursesort',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusmenuitemhiddencoursessorting', 'theme_boost_union'),
+            $hiddencoursesortoptions
+        );
         $mform->hideIf('hiddencoursesort', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
         $mform->hideIf('hiddencoursesort', 'displayhiddencourses', 'eq', smartmenu_item::DISPLAY_VISIBLECOURSESONLY);
         $mform->addHelpButton('hiddencoursesort', 'smartmenusmenuitemhiddencoursessorting', 'theme_boost_union');
 
         // Add course name presentation (for the dynamic courses menu item type) as select element.
         $displayfieldoptions = smartmenu_item::get_displayfield_options();
-        $mform->addElement('select', 'displayfield',
-                get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
-                get_string('smartmenusmenuitemdisplayfield', 'theme_boost_union'), $displayfieldoptions);
+        $mform->addElement(
+            'select',
+            'displayfield',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusmenuitemdisplayfield', 'theme_boost_union'),
+            $displayfieldoptions
+        );
         $mform->setDefault('displayfield', smartmenu_item::FIELD_FULLNAME);
         $mform->setType('displayfield', PARAM_INT);
         $mform->hideIf('displayfield', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
         $mform->addHelpButton('displayfield', 'smartmenusmenuitemdisplayfield', 'theme_boost_union');
 
         // Add number of words (for the dynamic courses menu item type) as input element.
-        $mform->addElement('text', 'textcount',
-                get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union').': '.
-                get_string('smartmenusmenuitemtextcount', 'theme_boost_union'));
+        $mform->addElement(
+            'text',
+            'textcount',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusmenuitemtextcount', 'theme_boost_union')
+        );
         $mform->setType('textcount', PARAM_INT);
         $mform->addRule('textcount', get_string('err_numeric', 'form'), 'numeric', null, 'client');
         $mform->hideIf('textcount', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
@@ -345,14 +424,22 @@ class smartmenu_item_edit_form extends \moodleform {
         // If the menu is configured to be presented as cards.
         if (isset($this->_customdata['menutype']) && $this->_customdata['menutype'] == smartmenu::TYPE_CARD) {
             // Add card appearance as header element.
-            $mform->addElement('header', 'cardpresentationheader',
-                    get_string('smartmenusmenuitemcardappearanceheader', 'theme_boost_union'));
+            $mform->addElement(
+                'header',
+                'cardpresentationheader',
+                get_string('smartmenusmenuitemcardappearanceheader', 'theme_boost_union')
+            );
             $mform->setExpanded('cardpresentationheader');
 
             // Add card image as filepicker element.
             $filepickeroptions = smartmenu_item::image_filepickeroptions();
-            $mform->addElement('filemanager', 'image', get_string('smartmenusmenuitemcardimage', 'theme_boost_union'), null,
-                    $filepickeroptions);
+            $mform->addElement(
+                'filemanager',
+                'image',
+                get_string('smartmenusmenuitemcardimage', 'theme_boost_union'),
+                null,
+                $filepickeroptions
+            );
             $mform->addHelpButton('image', 'smartmenusmenuitemcardimage', 'theme_boost_union');
 
             // Add alt text option for the card image.
@@ -362,33 +449,48 @@ class smartmenu_item_edit_form extends \moodleform {
 
             // Add card text position as select element.
             $textpositionoptions = smartmenu_item::get_textposition_options();
-            $mform->addElement('select', 'textposition',
-                    get_string('smartmenusmenuitemtextposition', 'theme_boost_union'), $textpositionoptions);
+            $mform->addElement(
+                'select',
+                'textposition',
+                get_string('smartmenusmenuitemtextposition', 'theme_boost_union'),
+                $textpositionoptions
+            );
             $mform->setDefault('textposition', smartmenu_item::POSITION_BELOW);
             $mform->setType('textposition', PARAM_INT);
             $mform->addHelpButton('textposition', 'smartmenusmenuitemtextposition', 'theme_boost_union');
 
             // Add card text color as color picker element.
-            $mform->addElement('theme_boost_union_colorpicker', 'textcolor',
-                    get_string('smartmenusmenuitemcardtextcolor', 'theme_boost_union'));
+            $mform->addElement(
+                'theme_boost_union_colorpicker',
+                'textcolor',
+                get_string('smartmenusmenuitemcardtextcolor', 'theme_boost_union')
+            );
             $mform->setType('textcolor', PARAM_TEXT);
             $mform->addRule('textcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
             $mform->addHelpButton('textcolor', 'smartmenusmenuitemcardtextcolor', 'theme_boost_union');
 
             // Add card background color as color picker element.
-            $mform->addElement('theme_boost_union_colorpicker', 'backgroundcolor',
-                    get_string('smartmenusmenuitemcardbackgroundcolor', 'theme_boost_union'));
+            $mform->addElement(
+                'theme_boost_union_colorpicker',
+                'backgroundcolor',
+                get_string('smartmenusmenuitemcardbackgroundcolor', 'theme_boost_union')
+            );
             $mform->setType('backgroundcolor', PARAM_TEXT);
             $mform->addRule('backgroundcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
             $mform->addHelpButton('backgroundcolor', 'smartmenusmenuitemcardbackgroundcolor', 'theme_boost_union');
         }
 
         // Add restrict visibility by roles as header element.
-        $mform->addElement('header', 'restrictbyrolesheader',
-                get_string('smartmenusrestrictbyrolesheader', 'theme_boost_union'));
+        $mform->addElement(
+            'header',
+            'restrictbyrolesheader',
+            get_string('smartmenusrestrictbyrolesheader', 'theme_boost_union')
+        );
         // Set the header to expanded if the restriction is already set.
-        if (isset($this->_customdata['menuitem']) &&
-                count(json_decode($this->_customdata['menuitem']->roles)) > 0) {
+        if (
+            isset($this->_customdata['menuitem']) &&
+                count(json_decode($this->_customdata['menuitem']->roles)) > 0
+        ) {
             $mform->setExpanded('restrictbyrolesheader');
         }
 
@@ -400,8 +502,12 @@ class smartmenu_item_edit_form extends \moodleform {
                 $roleoptions[$role->id] = $role->localname;
             }
         }
-        $byroleswidget = $mform->addElement('autocomplete', 'roles', get_string('smartmenusbyrole', 'theme_boost_union'),
-                $roleoptions);
+        $byroleswidget = $mform->addElement(
+            'autocomplete',
+            'roles',
+            get_string('smartmenusbyrole', 'theme_boost_union'),
+            $roleoptions
+        );
         $byroleswidget->setMultiple(true);
         $mform->addHelpButton('roles', 'smartmenusbyrole', 'theme_boost_union');
 
@@ -413,8 +519,11 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('rolecontext', 'smartmenusrolecontext', 'theme_boost_union');
 
         // Add restrict visibility by admin as header element.
-        $mform->addElement('header', 'restrictbyadminheader',
-                get_string('smartmenusrestrictbyadminheader', 'theme_boost_union'));
+        $mform->addElement(
+            'header',
+            'restrictbyadminheader',
+            get_string('smartmenusrestrictbyadminheader', 'theme_boost_union')
+        );
         if (isset($this->_customdata['menuitem']) && $this->_customdata['menuitem']->byadmin) {
             $mform->setExpanded('restrictbyadminheader');
         }
@@ -427,11 +536,16 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('byadmin', 'smartmenusbyadmin', 'theme_boost_union');
 
         // Add restrict visibility by cohorts as header element.
-        $mform->addElement('header', 'restrictbycohortsheader',
-                get_string('smartmenusrestrictbycohortsheader', 'theme_boost_union'));
+        $mform->addElement(
+            'header',
+            'restrictbycohortsheader',
+            get_string('smartmenusrestrictbycohortsheader', 'theme_boost_union')
+        );
         // Set the header to expanded if the restriction is already set.
-        if (isset($this->_customdata['menuitem']) &&
-                count(json_decode($this->_customdata['menuitem']->cohorts)) > 0) {
+        if (
+            isset($this->_customdata['menuitem']) &&
+                count(json_decode($this->_customdata['menuitem']->cohorts)) > 0
+        ) {
             $mform->setExpanded('restrictbycohortsheader');
         }
 
@@ -439,12 +553,16 @@ class smartmenu_item_edit_form extends \moodleform {
         $cohortslist = \cohort_get_all_cohorts(0, 0);
         $cohortoptions = $cohortslist['cohorts'];
         if ($cohortoptions) {
-            array_walk($cohortoptions, function(&$value) {
+            array_walk($cohortoptions, function (&$value) {
                 $value = $value->name;
             });
         }
-        $bycohortswidget = $mform->addElement('autocomplete', 'cohorts', get_string('smartmenusbycohort', 'theme_boost_union'),
-                $cohortoptions);
+        $bycohortswidget = $mform->addElement(
+            'autocomplete',
+            'cohorts',
+            get_string('smartmenusbycohort', 'theme_boost_union'),
+            $cohortoptions
+        );
         $bycohortswidget->setMultiple(true);
         $mform->addHelpButton('cohorts', 'smartmenusbycohort', 'theme_boost_union');
 
@@ -456,11 +574,16 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->addHelpButton('operator', 'smartmenusoperator', 'theme_boost_union');
 
         // Add restrict visibility by language as header element.
-        $mform->addElement('header', 'restrictbylanguageheader',
-                get_string('smartmenusrestrictbylanguageheader', 'theme_boost_union'));
+        $mform->addElement(
+            'header',
+            'restrictbylanguageheader',
+            get_string('smartmenusrestrictbylanguageheader', 'theme_boost_union')
+        );
         // Set the header to expanded if the restriction is already set.
-        if (isset($this->_customdata['menuitem']) &&
-                count(json_decode($this->_customdata['menuitem']->languages)) > 0) {
+        if (
+            isset($this->_customdata['menuitem']) &&
+                count(json_decode($this->_customdata['menuitem']->languages)) > 0
+        ) {
             $mform->setExpanded('restrictbylanguageheader');
         }
 
@@ -470,28 +593,45 @@ class smartmenu_item_edit_form extends \moodleform {
         foreach ($languagelist as $key => $lang) {
             $langoptions[$key] = $lang;
         }
-        $bylanguagewidget = $mform->addElement('autocomplete', 'languages',
-                get_string('smartmenusbylanguage', 'theme_boost_union'), $langoptions);
+        $bylanguagewidget = $mform->addElement(
+            'autocomplete',
+            'languages',
+            get_string('smartmenusbylanguage', 'theme_boost_union'),
+            $langoptions
+        );
         $bylanguagewidget->setMultiple(true);
         $mform->addHelpButton('languages', 'smartmenusbylanguage', 'theme_boost_union');
 
         // Add restrict visibility by date as header element.
-        $mform->addElement('header', 'restrictbydateheader',
-                get_string('smartmenusrestrictbydateheader', 'theme_boost_union'));
+        $mform->addElement(
+            'header',
+            'restrictbydateheader',
+            get_string('smartmenusrestrictbydateheader', 'theme_boost_union')
+        );
         // Set the header to expanded if the restriction is already set.
-        if (isset($this->_customdata['menuitem']) &&
-                ($this->_customdata['menuitem']->start_date > 0 || $this->_customdata['menuitem']->end_date > 0)) {
+        if (
+            isset($this->_customdata['menuitem']) &&
+                ($this->_customdata['menuitem']->start_date > 0 || $this->_customdata['menuitem']->end_date > 0)
+        ) {
             $mform->setExpanded('restrictbydateheader');
         }
 
         // Add from as datepicker element.
-        $mform->addElement('date_time_selector', 'start_date',
-                get_string('smartmenusbydatefrom', 'theme_boost_union'), ['optional' => true]);
+        $mform->addElement(
+            'date_time_selector',
+            'start_date',
+            get_string('smartmenusbydatefrom', 'theme_boost_union'),
+            ['optional' => true]
+        );
         $mform->addHelpButton('start_date', 'smartmenusbydatefrom', 'theme_boost_union');
 
         // Add until as datepicker element.
-        $mform->addElement('date_time_selector', 'end_date',
-                get_string('smartmenusbydateuntil', 'theme_boost_union'), ['optional' => true]);
+        $mform->addElement(
+            'date_time_selector',
+            'end_date',
+            get_string('smartmenusbydateuntil', 'theme_boost_union'),
+            ['optional' => true]
+        );
         $mform->addHelpButton('end_date', 'smartmenusbydateuntil', 'theme_boost_union');
 
         // Add the action buttons.

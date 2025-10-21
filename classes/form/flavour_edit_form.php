@@ -29,10 +29,10 @@ namespace theme_boost_union\form;
 defined('MOODLE_INTERNAL') || die();
 
 // Require forms library.
-require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir . '/formslib.php');
 
 // Require cohort library.
-require_once($CFG->dirroot.'/cohort/lib.php');
+require_once($CFG->dirroot . '/cohort/lib.php');
 
 /**
  * Flavours edit form.
@@ -44,7 +44,6 @@ require_once($CFG->dirroot.'/cohort/lib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class flavour_edit_form extends \moodleform {
-
     /**
      * Define form elements.
      *
@@ -60,18 +59,18 @@ class flavour_edit_form extends \moodleform {
         $yesnooption = [false => get_string('no'), true => get_string('yes')];
 
         // Require and register the QuickForm colorpicker element.
-        require_once($CFG->dirroot.'/theme/boost_union/classes/formelement/colorpicker.php');
+        require_once($CFG->dirroot . '/theme/boost_union/classes/formelement/colorpicker.php');
         \MoodleQuickForm::registerElementType(
-                'theme_boost_union_colorpicker',
-                $CFG->dirroot.'/theme/boost_union/classes/formelement/colorpicker.php',
-                '\theme_boost_union\formelement\colorpicker'
+            'theme_boost_union_colorpicker',
+            $CFG->dirroot . '/theme/boost_union/classes/formelement/colorpicker.php',
+            '\theme_boost_union\formelement\colorpicker'
         );
         // Register validation rule for the QuickForm colorpicker element.
         \MoodleQuickForm::registerRule(
-                'theme_boost_union_colorpicker_rule',
-                null,
-                '\theme_boost_union\formelement\colorpicker_rule',
-                $CFG->dirroot.'/theme/boost_union/classes/formelement/colorpicker_rule.php'
+            'theme_boost_union_colorpicker_rule',
+            null,
+            '\theme_boost_union\formelement\colorpicker_rule',
+            $CFG->dirroot . '/theme/boost_union/classes/formelement/colorpicker_rule.php'
         );
 
         // Add the flavour ID as hidden element.
@@ -101,67 +100,87 @@ class flavour_edit_form extends \moodleform {
         $context = new \stdClass();
         $context->title = get_string('logosheading', 'theme_boost_union', null, true);
         $mform->addElement(
-                'html',
-                // Wrapping the setting headings with a div with the ID "adminsettings" is not really correct as we will have
+            'html',
+            // Wrapping the setting headings with a div with the ID "adminsettings" is not really correct as we will have
                 // duplicate IDs on the page. But it is the only way to re-use the correct styling for the setting heading.
                 // (And no, applying the ID to the form does not work either as we would trigger other unwanted stylings).
-                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+                '<div id="adminsettings">' . $OUTPUT->render_from_template('core_admin/setting_heading', $context) . '</div>'
         );
 
         // Add logo as filemanager element.
-        $mform->addElement('filemanager', 'flavours_look_logo',
-                get_string('logo', 'admin'), null, [
+        $mform->addElement(
+            'filemanager',
+            'flavours_look_logo',
+            get_string('logo', 'admin'),
+            null,
+            [
                         'subdirs' => 0,
                         'maxfiles' => 1,
                         'accepted_types' => 'web_image',
                         'return_types' => FILE_INTERNAL,
-                ]);
+            ]
+        );
         $mform->addHelpButton('flavours_look_logo', 'flavourslogo', 'theme_boost_union');
 
         // Add logocompact as filemanager element.
-        $mform->addElement('filemanager', 'flavours_look_logocompact',
-                get_string('logocompact', 'admin'), null, [
+        $mform->addElement(
+            'filemanager',
+            'flavours_look_logocompact',
+            get_string('logocompact', 'admin'),
+            null,
+            [
                         'subdirs' => 0,
                         'maxfiles' => 1,
                         'accepted_types' => 'web_image',
                         'return_types' => FILE_INTERNAL,
-                ]);
+            ]
+        );
         $mform->addHelpButton('flavours_look_logocompact', 'flavourslogocompact', 'theme_boost_union');
 
         // Add favicon heading.
         $context = new \stdClass();
         $context->title = get_string('faviconheading', 'theme_boost_union', null, true);
         $mform->addElement(
-                'html',
-                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+            'html',
+            '<div id="adminsettings">' . $OUTPUT->render_from_template('core_admin/setting_heading', $context) . '</div>'
         );
 
         // Add favicon as filemanager element.
-        $mform->addElement('filemanager', 'flavours_look_favicon',
-                get_string('faviconsetting', 'theme_boost_union'), null, [
+        $mform->addElement(
+            'filemanager',
+            'flavours_look_favicon',
+            get_string('faviconsetting', 'theme_boost_union'),
+            null,
+            [
                         'subdirs' => 0,
                         'maxfiles' => 1,
                         'accepted_types' => 'image',
                         'return_types' => FILE_INTERNAL,
-                ]);
+            ]
+        );
         $mform->addHelpButton('flavours_look_favicon', 'flavoursfavicon', 'theme_boost_union');
 
         // Add backgroundimages heading.
         $context = new \stdClass();
         $context->title = get_string('backgroundimagesheading', 'theme_boost_union', null, true);
         $mform->addElement(
-                'html',
-                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+            'html',
+            '<div id="adminsettings">' . $OUTPUT->render_from_template('core_admin/setting_heading', $context) . '</div>'
         );
 
         // Add backgroundimage as filemanager element.
-        $mform->addElement('filemanager', 'flavours_look_backgroundimage',
-                get_string('backgroundimagesetting', 'theme_boost_union'), null, [
+        $mform->addElement(
+            'filemanager',
+            'flavours_look_backgroundimage',
+            get_string('backgroundimagesetting', 'theme_boost_union'),
+            null,
+            [
                         'subdirs' => 0,
                         'maxfiles' => 1,
                         'accepted_types' => 'web_image',
                         'return_types' => FILE_INTERNAL,
-                ]);
+            ]
+        );
         $mform->addHelpButton('flavours_look_backgroundimage', 'flavoursbackgroundimage', 'theme_boost_union');
 
         // Add background image position select element.
@@ -188,11 +207,11 @@ class flavour_edit_form extends \moodleform {
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
                         THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM, ];
         $backgroundimagepositionselect = $mform->addElement(
-                'select',
-                'look_backgroundimagepos',
-                get_string('flavoursbackgroundimageposition', 'theme_boost_union'),
-                $backgroundimagepositionoptions,
-                );
+            'select',
+            'look_backgroundimagepos',
+            get_string('flavoursbackgroundimageposition', 'theme_boost_union'),
+            $backgroundimagepositionoptions,
+        );
         $mform->setType('look_backgroundimagepos', PARAM_TEXT);
         $backgroundimagepositionselect->setSelected([THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE]);
         $mform->addHelpButton('look_backgroundimagepos', 'flavoursbackgroundimageposition', 'theme_boost_union');
@@ -201,17 +220,18 @@ class flavour_edit_form extends \moodleform {
         $context = new \stdClass();
         $context->title = get_string('brandcolorsheading', 'theme_boost_union', null, true);
         $mform->addElement(
-                'html',
-                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+            'html',
+            '<div id="adminsettings">' . $OUTPUT->render_from_template('core_admin/setting_heading', $context) . '</div>'
         );
 
         // Add brandcolor as colorpicker element.
         $this->check_slasharguments_warning($mform);
         $mform->addElement(
-                'theme_boost_union_colorpicker',
-                'look_brandcolor',
-                get_string('flavoursbrandcolor', 'theme_boost_union'),
-                ['id' => 'colourpicker_brandcolour']);
+            'theme_boost_union_colorpicker',
+            'look_brandcolor',
+            get_string('flavoursbrandcolor', 'theme_boost_union'),
+            ['id' => 'colourpicker_brandcolour']
+        );
         $mform->setType('look_brandcolor', PARAM_TEXT);
         $mform->addRule('look_brandcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_brandcolor', 'flavoursbrandcolor', 'theme_boost_union');
@@ -220,17 +240,18 @@ class flavour_edit_form extends \moodleform {
         $context = new \stdClass();
         $context->title = get_string('bootstrapcolorsheading', 'theme_boost_union', null, true);
         $mform->addElement(
-                'html',
-                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+            'html',
+            '<div id="adminsettings">' . $OUTPUT->render_from_template('core_admin/setting_heading', $context) . '</div>'
         );
 
         // Add Bootstrap color for 'success' as colorpicker element.
         $this->check_slasharguments_warning($mform);
         $mform->addElement(
-                'theme_boost_union_colorpicker',
-                'look_bootstrapcolorsuccess',
-                get_string('flavoursbootstrapcolorsuccess', 'theme_boost_union'),
-                ['id' => 'colourpicker_bootstrapcolorsuccess']);
+            'theme_boost_union_colorpicker',
+            'look_bootstrapcolorsuccess',
+            get_string('flavoursbootstrapcolorsuccess', 'theme_boost_union'),
+            ['id' => 'colourpicker_bootstrapcolorsuccess']
+        );
         $mform->setType('look_bootstrapcolorsuccess', PARAM_TEXT);
         $mform->addRule('look_bootstrapcolorsuccess', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_bootstrapcolorsuccess', 'flavoursbootstrapcolorsuccess', 'theme_boost_union');
@@ -238,10 +259,11 @@ class flavour_edit_form extends \moodleform {
         // Add Bootstrap color for 'info' as colorpicker element.
         $this->check_slasharguments_warning($mform);
         $mform->addElement(
-                'theme_boost_union_colorpicker',
-                'look_bootstrapcolorinfo',
-                get_string('flavoursbootstrapcolorinfo', 'theme_boost_union'),
-                ['id' => 'colourpicker_bootstrapcolorinfo']);
+            'theme_boost_union_colorpicker',
+            'look_bootstrapcolorinfo',
+            get_string('flavoursbootstrapcolorinfo', 'theme_boost_union'),
+            ['id' => 'colourpicker_bootstrapcolorinfo']
+        );
         $mform->setType('look_bootstrapcolorinfo', PARAM_TEXT);
         $mform->addRule('look_bootstrapcolorinfo', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_bootstrapcolorinfo', 'flavoursbootstrapcolorinfo', 'theme_boost_union');
@@ -249,10 +271,11 @@ class flavour_edit_form extends \moodleform {
         // Add Bootstrap color for 'warning' as colorpicker element.
         $this->check_slasharguments_warning($mform);
         $mform->addElement(
-                'theme_boost_union_colorpicker',
-                'look_bootstrapcolorwarning',
-                get_string('flavoursbootstrapcolorwarning', 'theme_boost_union'),
-                ['id' => 'colourpicker-bootstrapcolorwarning']);
+            'theme_boost_union_colorpicker',
+            'look_bootstrapcolorwarning',
+            get_string('flavoursbootstrapcolorwarning', 'theme_boost_union'),
+            ['id' => 'colourpicker-bootstrapcolorwarning']
+        );
         $mform->setType('look_bootstrapcolorwarning', PARAM_TEXT);
         $mform->addRule('look_bootstrapcolorwarning', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_bootstrapcolorwarning', 'flavoursbootstrapcolorwarning', 'theme_boost_union');
@@ -260,10 +283,11 @@ class flavour_edit_form extends \moodleform {
         // Add Bootstrap color for 'danger' as colorpicker element.
         $this->check_slasharguments_warning($mform);
         $mform->addElement(
-                'theme_boost_union_colorpicker',
-                'look_bootstrapcolordanger',
-                get_string('flavoursbootstrapcolordanger', 'theme_boost_union'),
-                ['id' => 'colourpicker-bbootstrapcolordanger']);
+            'theme_boost_union_colorpicker',
+            'look_bootstrapcolordanger',
+            get_string('flavoursbootstrapcolordanger', 'theme_boost_union'),
+            ['id' => 'colourpicker-bbootstrapcolordanger']
+        );
         $mform->setType('look_bootstrapcolordanger', PARAM_TEXT);
         $mform->addRule('look_bootstrapcolordanger', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_bootstrapcolordanger', 'flavoursbootstrapcolordanger', 'theme_boost_union');
@@ -272,8 +296,8 @@ class flavour_edit_form extends \moodleform {
         $context = new \stdClass();
         $context->title = get_string('activityiconcolorsheading', 'theme_boost_union', null, true);
         $mform->addElement(
-                'html',
-                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+            'html',
+            '<div id="adminsettings">' . $OUTPUT->render_from_template('core_admin/setting_heading', $context) . '</div>'
         );
 
         // Define all activity icon purposes (without the 'other' purpose as this is not branded).
@@ -289,22 +313,26 @@ class flavour_edit_form extends \moodleform {
             // Setting: Activity icon color.
             $this->check_slasharguments_warning($mform);
             $mform->addElement(
-                    'theme_boost_union_colorpicker',
-                    'look_aicol'.$purpose,
-                    get_string('flavoursactivityiconcolor'.$purpose, 'theme_boost_union'),
-                            ['id' => 'colourpicker-activityiconcolor'.$purpose]);
-            $mform->setType('look_aicol'.$purpose, PARAM_TEXT);
-            $mform->addRule('look_aicol'.$purpose, get_string('validateerror', 'admin'),
-                    'theme_boost_union_colorpicker_rule');
-            $mform->addHelpButton('look_aicol'.$purpose, 'flavoursactivityiconcolor'.$purpose, 'theme_boost_union');
+                'theme_boost_union_colorpicker',
+                'look_aicol' . $purpose,
+                get_string('flavoursactivityiconcolor' . $purpose, 'theme_boost_union'),
+                ['id' => 'colourpicker-activityiconcolor' . $purpose]
+            );
+            $mform->setType('look_aicol' . $purpose, PARAM_TEXT);
+            $mform->addRule(
+                'look_aicol' . $purpose,
+                get_string('validateerror', 'admin'),
+                'theme_boost_union_colorpicker_rule'
+            );
+            $mform->addHelpButton('look_aicol' . $purpose, 'flavoursactivityiconcolor' . $purpose, 'theme_boost_union');
         }
 
         // Add navbar heading.
         $context = new \stdClass();
         $context->title = get_string('navbarheading', 'theme_boost_union', null, true);
         $mform->addElement(
-                'html',
-                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+            'html',
+            '<div id="adminsettings">' . $OUTPUT->render_from_template('core_admin/setting_heading', $context) . '</div>'
         );
 
         // Add navbar color select element.
@@ -320,11 +348,11 @@ class flavour_edit_form extends \moodleform {
                 THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYDARK =>
                         get_string('navbarcolorsetting_primarydark', 'theme_boost_union'), ];
         $navbarcolorselect = $mform->addElement(
-                'select',
-                'look_navbarcolor',
-                get_string('flavoursnavbarcolor', 'theme_boost_union'),
-                $navbarcoloroptions,
-                );
+            'select',
+            'look_navbarcolor',
+            get_string('flavoursnavbarcolor', 'theme_boost_union'),
+            $navbarcoloroptions,
+        );
         $mform->setType('look_navbarcolor', PARAM_TEXT);
         $navbarcolorselect->setSelected([THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE]);
         $mform->addHelpButton('look_navbarcolor', 'flavoursnavbarcolor', 'theme_boost_union');
@@ -333,8 +361,8 @@ class flavour_edit_form extends \moodleform {
         $context = new \stdClass();
         $context->title = get_string('scssheading', 'theme_boost_union', null, true);
         $mform->addElement(
-                'html',
-                '<div id="adminsettings">'.$OUTPUT->render_from_template('core_admin/setting_heading', $context).'</div>'
+            'html',
+            '<div id="adminsettings">' . $OUTPUT->render_from_template('core_admin/setting_heading', $context) . '</div>'
         );
 
         // Add custom initial SCSS as textarea element.
@@ -366,8 +394,13 @@ class flavour_edit_form extends \moodleform {
         foreach ($cohortdata['cohorts'] as $cohort) {
             $cohortoptions[$cohort->id] = $cohort->name;
         }
-        $mform->addElement('autocomplete', 'applytocohorts_ids', get_string('cohorts', 'cohort'), $cohortoptions,
-                ['multiple' => true]);
+        $mform->addElement(
+            'autocomplete',
+            'applytocohorts_ids',
+            get_string('cohorts', 'cohort'),
+            $cohortoptions,
+            ['multiple' => true]
+        );
         $mform->hideIf('applytocohorts_ids', 'applytocohorts', 'neq', 1);
         $mform->addHelpButton('applytocohorts_ids', 'flavoursapplytocohorts_ids', 'theme_boost_union');
 
@@ -379,22 +412,34 @@ class flavour_edit_form extends \moodleform {
         }
 
         // Add apply-to-category as select element.
-        $mform->addElement('select', 'applytocategories', get_string('flavoursapplytocategories', 'theme_boost_union'),
-                $yesnooption);
+        $mform->addElement(
+            'select',
+            'applytocategories',
+            get_string('flavoursapplytocategories', 'theme_boost_union'),
+            $yesnooption
+        );
         $mform->setDefault('applytocategories', false);
         $mform->setType('applytocategories', PARAM_BOOL);
         $mform->addHelpButton('applytocategories', 'flavoursapplytocategories', 'theme_boost_union');
 
         // Add category list as autocomplete field.
         $categoryoptions = \core_course_category::make_categories_list();
-        $mform->addElement('autocomplete', 'applytocategories_ids', get_string('categories'), $categoryoptions,
-                ['multiple' => true]);
+        $mform->addElement(
+            'autocomplete',
+            'applytocategories_ids',
+            get_string('categories'),
+            $categoryoptions,
+            ['multiple' => true]
+        );
         $mform->hideIf('applytocategories_ids', 'applytocategories', 'neq', 1);
         $mform->addHelpButton('applytocategories_ids', 'flavoursapplytocategories_ids', 'theme_boost_union');
 
         // Add include-subcategories as checkbox.
-        $mform->addElement('advcheckbox', 'applytocategories_subcats',
-                get_string('flavoursincludesubcategories', 'theme_boost_union'));
+        $mform->addElement(
+            'advcheckbox',
+            'applytocategories_subcats',
+            get_string('flavoursincludesubcategories', 'theme_boost_union')
+        );
         $mform->setType('applytocategories_subcats', PARAM_BOOL);
         $mform->addHelpButton('applytocategories_subcats', 'flavoursincludesubcategories', 'theme_boost_union');
         $mform->hideIf('applytocategories_subcats', 'applytocategories', 'neq', 1);
@@ -458,8 +503,9 @@ class flavour_edit_form extends \moodleform {
             // Add a warning notification to the form.
             $slashargumentsurl = new \core\url('/admin/search.php', ['query' => 'slasharguments']);
             $notification = new \core\output\notification(
-                    get_string('warningslashargumentsdisabled', 'theme_boost_union', ['url' => $slashargumentsurl]),
-                    \core\output\notification::NOTIFY_WARNING);
+                get_string('warningslashargumentsdisabled', 'theme_boost_union', ['url' => $slashargumentsurl]),
+                \core\output\notification::NOTIFY_WARNING
+            );
             $notification->set_show_closebutton(false);
             $mform->addElement('html', $OUTPUT->render($notification));
         }

@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 // Require the necessary libraries.
-require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
 // Get theme config.
 $config = get_config('theme_boost_union');
@@ -40,22 +40,24 @@ $advertisementtiles = [];
 // Iterate over all advertisement tiles.
 for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
     // If the tile is enabled? (regardless if it contains any content).
-    if (isset($config->{'tile'.$i.'enabled'}) &&
-            $config->{'tile'.$i.'enabled'} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    if (
+        isset($config->{'tile' . $i . 'enabled'}) &&
+            $config->{'tile' . $i . 'enabled'} == THEME_BOOST_UNION_SETTING_SELECT_YES
+    ) {
         // Flip the show-advertisement-tiles flag to true.
         $templatecontext['showadvtiles'] = true;
 
         // Get and set the tile's title.
-        $title = format_string(trim($config->{'tile'.$i.'title'}));
+        $title = format_string(trim($config->{'tile' . $i . 'title'}));
 
         // Get and set the tile's content.
         $formatoptions = ['noclean' => true];
-        $content = format_text($config->{'tile'.$i.'content'}, FORMAT_HTML, $formatoptions);
+        $content = format_text($config->{'tile' . $i . 'content'}, FORMAT_HTML, $formatoptions);
 
         // Get and set the tile's link.
-        $link = $config->{'tile'.$i.'link'};
-        $linktitle = format_string(trim($config->{'tile'.$i.'linktitle'}));
-        if ($config->{'tile'.$i.'linktarget'} == THEME_BOOST_UNION_SETTING_LINKTARGET_NEWTAB) {
+        $link = $config->{'tile' . $i . 'link'};
+        $linktitle = format_string(trim($config->{'tile' . $i . 'linktitle'}));
+        if ($config->{'tile' . $i . 'linktarget'} == THEME_BOOST_UNION_SETTING_LINKTARGET_NEWTAB) {
             $linktargetnewtab = true;
         } else {
             $linktargetnewtab = false;
@@ -65,14 +67,14 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
         $bgimage = theme_boost_union_get_urloftilebackgroundimage($i);
 
         // Get and set the tile's background image position.
-        $bgimageposition = $config->{'tile'.$i.'backgroundimageposition'};
+        $bgimageposition = $config->{'tile' . $i . 'backgroundimageposition'};
 
         // Get and set the tile's order.
         // The order is not needed for the mustache template, but the usort() method will need it later.
-        $order = $config->{'tile'.$i.'order'};
+        $order = $config->{'tile' . $i . 'order'};
 
         // Get and set the tile's content style class.
-        switch ($config->{'tile'.$i.'contentstyle'}) {
+        switch ($config->{'tile' . $i . 'contentstyle'}) {
             case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_NOCHANGE:
                 $contentstyleclass = '';
                 break;
