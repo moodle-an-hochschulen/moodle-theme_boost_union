@@ -31,7 +31,7 @@ use core\output\html_writer;
 defined('MOODLE_INTERNAL') || die();
 
 // Require table library.
-require_once($CFG->libdir.'/tablelib.php');
+require_once($CFG->libdir . '/tablelib.php');
 
 /**
  * List of flavours.
@@ -43,7 +43,6 @@ require_once($CFG->libdir.'/tablelib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class flavours_overview extends \core_table\sql_table {
-
     /**
      * @var int $count Flavours count.
      */
@@ -69,7 +68,7 @@ class flavours_overview extends \core_table\sql_table {
         $headers[] = get_string('flavourstitle', 'theme_boost_union');
         $headers[] = get_string('flavoursdescription', 'theme_boost_union');
         $headers[] = get_string('flavoursappliesto', 'theme_boost_union');
-        $headers[] = get_string('up') .'/'. get_string('down');
+        $headers[] = get_string('up') . '/' . get_string('down');
         $headers[] = get_string('actions');
         $columns[] = 'title';
         $columns[] = 'description';
@@ -109,10 +108,19 @@ class flavours_overview extends \core_table\sql_table {
         // If there is more than one flavour and we do not handle the first (number 0) flavour.
         if ($this->count > 0) {
             // Add the up icon.
-            $updown .= html_writer::link($actionurl->out(false,
-                    ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]),
-                    $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
-                            ['class' => 'iconsmall']), ['class' => 'sort-flavour-up-action']);
+            $updown .= html_writer::link(
+                $actionurl->out(
+                    false,
+                    ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]
+                ),
+                $OUTPUT->pix_icon(
+                    't/up',
+                    get_string('up'),
+                    'moodle',
+                    ['class' => 'iconsmall']
+                ),
+                ['class' => 'sort-flavour-up-action']
+            );
 
             // Otherwise, just add a spacer.
         } else {
@@ -123,10 +131,19 @@ class flavours_overview extends \core_table\sql_table {
         if ($this->count < ($this->totalflavours - 1)) {
             // Add the down icon.
             $updown .= '&nbsp;';
-            $updown .= html_writer::link($actionurl->out(false,
-                    ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]),
-                    $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
-                            ['class' => 'iconsmall']), ['class' => 'sort-flavour-down-action']);
+            $updown .= html_writer::link(
+                $actionurl->out(
+                    false,
+                    ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]
+                ),
+                $OUTPUT->pix_icon(
+                    't/down',
+                    get_string('down'),
+                    'moodle',
+                    ['class' => 'iconsmall']
+                ),
+                ['class' => 'sort-flavour-down-action']
+            );
 
             // Otherwise, just add a spacer.
         } else {
@@ -152,16 +169,20 @@ class flavours_overview extends \core_table\sql_table {
 
         // If apply-to-categories is enabled, add a badge.
         if ($data->applytocategories == true) {
-            $badges[] = html_writer::tag('span',
-                    get_string('categories'),
-                    ['class' => 'badge bg-primary text-light']);
+            $badges[] = html_writer::tag(
+                'span',
+                get_string('categories'),
+                ['class' => 'badge bg-primary text-light']
+            );
         }
 
         // If apply-to-cohorts is enabled, add a badge.
         if ($data->applytocohorts == true) {
-            $badges[] = html_writer::tag('span',
-                    get_string('cohorts', 'cohort'),
-                    ['class' => 'badge bg-primary text-light']);
+            $badges[] = html_writer::tag(
+                'span',
+                get_string('cohorts', 'cohort'),
+                ['class' => 'badge bg-primary text-light']
+            );
         }
 
         // Implode and return the badges.
@@ -191,16 +212,20 @@ class flavours_overview extends \core_table\sql_table {
 
         // Edit.
         $actions[] = [
-                'url' => new \core\url('/theme/boost_union/flavours/edit.php',
-                        ['action' => 'edit', 'id' => $data->id, 'sesskey' => sesskey()]),
+                'url' => new \core\url(
+                    '/theme/boost_union/flavours/edit.php',
+                    ['action' => 'edit', 'id' => $data->id, 'sesskey' => sesskey()]
+                ),
                 'icon' => new \core\output\pix_icon('t/edit', get_string('flavoursedit', 'theme_boost_union')),
                 'attributes' => ['class' => 'action-edit'],
         ];
 
         // Delete.
         $actions[] = [
-                'url' => new \core\url('/theme/boost_union/flavours/edit.php',
-                        ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]),
+                'url' => new \core\url(
+                    '/theme/boost_union/flavours/edit.php',
+                    ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]
+                ),
                 'icon' => new \core\output\pix_icon('t/delete', get_string('flavourspreview', 'theme_boost_union')),
                 'attributes' => ['class' => 'action-delete'],
         ];
@@ -248,9 +273,10 @@ class flavours_overview extends \core_table\sql_table {
 
         // Show notification as html element.
         $notification = new \core\output\notification(
-                get_string('flavoursnothingtodisplay', 'theme_boost_union'), \core\output\notification::NOTIFY_INFO);
+            get_string('flavoursnothingtodisplay', 'theme_boost_union'),
+            \core\output\notification::NOTIFY_INFO
+        );
         $notification->set_show_closebutton(false);
         echo $OUTPUT->render($notification);
     }
-
 }

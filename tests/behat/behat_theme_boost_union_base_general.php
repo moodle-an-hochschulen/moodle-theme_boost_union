@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__.'/../../../../lib/behat/behat_base.php');
+require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 
 use Behat\Mink\Exception\ExpectationException;
 use Behat\Mink\Exception\DriverException;
@@ -53,8 +53,11 @@ class behat_theme_boost_union_base_general extends behat_base {
         ";
         $computedstyle = $this->evaluate_script($stylejs);
         if ($computedstyle != $value) {
-            throw new ExpectationException('The \''.$selector.'\' DOM element does not have the computed style \''.
-                    $style.'\'=\''.$value.'\', it has the computed style \''.$computedstyle.'\' instead.', $this->getSession());
+            throw new ExpectationException(
+                'The \'' . $selector . '\' DOM element does not have the computed style \'' .
+                    $style . '\'=\'' . $value . '\', it has the computed style \'' . $computedstyle . '\' instead.',
+                $this->getSession()
+            );
         }
     }
 
@@ -76,8 +79,8 @@ class behat_theme_boost_union_base_general extends behat_base {
         ";
         $computedstyle = $this->evaluate_script($stylejs);
         if ($computedstyle == $value) {
-            throw new ExpectationException('The \''.$selector.'\' DOM element does have the computed style \''.
-                $style.'\'=\''.$computedstyle.'\', but it should not have it.', $this->getSession());
+            throw new ExpectationException('The \'' . $selector . '\' DOM element does have the computed style \'' .
+                $style . '\'=\'' . $computedstyle . '\', but it should not have it.', $this->getSession());
         }
     }
 
@@ -102,9 +105,11 @@ class behat_theme_boost_union_base_general extends behat_base {
         $urlfromjs = $urlmatches[1];
         $basenamefromjs = basename($urlfromjs);
         if ($basenamefromjs != $filename) {
-            throw new ExpectationException('The \''.$selector.'\' DOM element does not have a background image with the file '.
-                    'name \''.$filename.'\', it has the file name \''.$basenamefromjs.'\' instead.',
-                            $this->getSession());
+            throw new ExpectationException(
+                'The \'' . $selector . '\' DOM element does not have a background image with the file ' .
+                    'name \'' . $filename . '\', it has the file name \'' . $basenamefromjs . '\' instead.',
+                $this->getSession()
+            );
         }
     }
 
@@ -129,8 +134,8 @@ class behat_theme_boost_union_base_general extends behat_base {
         $closeenough = $this->assess_icon_tinting_filter_against_hex($computedfilter, $color);
 
         if ($closeenough != true) {
-            throw new ExpectationException('The \''.$selector.'\' DOM element with the CSS filter \''.
-                $computedfilter.'\', is not close enough to the color \''.$color.'\'.', $this->getSession());
+            throw new ExpectationException('The \'' . $selector . '\' DOM element with the CSS filter \'' .
+                $computedfilter . '\', is not close enough to the color \'' . $color . '\'.', $this->getSession());
         }
     }
 
@@ -155,8 +160,8 @@ class behat_theme_boost_union_base_general extends behat_base {
         $closeenough = $this->assess_icon_tinting_filter_against_hex($computedfilter, $color);
 
         if ($closeenough == true) {
-            throw new ExpectationException('The \''.$selector.'\' DOM element with the CSS filter \''.
-                $computedfilter.'\', is too close to the color \''.$color.'\'.', $this->getSession());
+            throw new ExpectationException('The \'' . $selector . '\' DOM element with the CSS filter \'' .
+                $computedfilter . '\', is too close to the color \'' . $color . '\'.', $this->getSession());
         }
     }
 
@@ -236,7 +241,7 @@ class behat_theme_boost_union_base_general extends behat_base {
         try {
             $this->getSession()->executeScript($scrolljs);
         } catch (Exception $e) {
-            throw new \Exception('Scrolling the page to the \''.$selector.'\' DOM element failed');
+            throw new \Exception('Scrolling the page to the \'' . $selector . '\' DOM element failed');
         }
     }
 
@@ -330,9 +335,14 @@ class behat_theme_boost_union_base_general extends behat_base {
             )
         ";
         $positionviewport = $this->evaluate_script($posviewportjs);
-        if ($positionelement > $positionviewport + 50 ||
-                $positionelement < $positionviewport - 50) { // Allow some deviation of 50px of the scrolling position.
-            throw new ExpectationException('The DOM element \''.$selector.'\' is not a the top of the page', $this->getSession());
+        if (
+            $positionelement > $positionviewport + 50 ||
+                $positionelement < $positionviewport - 50
+        ) { // Allow some deviation of 50px of the scrolling position.
+            throw new ExpectationException(
+                'The DOM element \'' . $selector . '\' is not a the top of the page',
+                $this->getSession()
+            );
         }
     }
 
@@ -353,14 +363,17 @@ class behat_theme_boost_union_base_general extends behat_base {
         }
 
         $getvalueofpseudoelementjs = "return (
-            window.getComputedStyle(document.querySelector(\"". $s ."\"), ':".$ps."').getPropertyValue(\"".$pr."\")
+            window.getComputedStyle(document.querySelector(\"" . $s . "\"), ':" . $ps . "').getPropertyValue(\"" . $pr . "\")
         )";
 
         $result = Normalizer::normalize($this->evaluate_script($getvalueofpseudoelementjs), Normalizer::FORM_C);
-        $eq = Normalizer::normalize('"'.$v.'"', Normalizer::FORM_C);
+        $eq = Normalizer::normalize('"' . $v . '"', Normalizer::FORM_C);
 
         if (!($result == $eq)) {
-            throw new ExpectationException("Didn't find a match for '".$v."' with ".$s.":".$ps.".", $this->getSession());
+            throw new ExpectationException(
+                "Didn't find a match for '" . $v . "' with " . $s . ":" . $ps . ".",
+                $this->getSession()
+            );
         }
     }
 
@@ -381,13 +394,13 @@ class behat_theme_boost_union_base_general extends behat_base {
         }
 
         $getvalueofpseudoelementjs = "return (
-            window.getComputedStyle(document.querySelector(\"". $s ."\"), ':".$ps."').getPropertyValue(\"".$pr."\")
+            window.getComputedStyle(document.querySelector(\"" . $s . "\"), ':" . $ps . "').getPropertyValue(\"" . $pr . "\")
         )";
 
         $result = Normalizer::normalize($this->evaluate_script($getvalueofpseudoelementjs), Normalizer::FORM_C);
         $needle = Normalizer::normalize($v, Normalizer::FORM_C);
         if (strpos($result, $needle) === false) {
-            throw new ExpectationException("Didn't find '".$v."' in ".$s.":".$ps.".", $this->getSession());
+            throw new ExpectationException("Didn't find '" . $v . "' in " . $s . ":" . $ps . ".", $this->getSession());
         }
     }
 
@@ -407,13 +420,13 @@ class behat_theme_boost_union_base_general extends behat_base {
         }
 
         $pseudoelementcontent = "return (
-            window.getComputedStyle(document.querySelector(\"". $s ."\"), ':".$ps."').getPropertyValue(\"".$pr."\")
+            window.getComputedStyle(document.querySelector(\"" . $s . "\"), ':" . $ps . "').getPropertyValue(\"" . $pr . "\")
         )";
 
         $result = $this->evaluate_script($pseudoelementcontent);
 
         if ($result != "none") {
-            throw new ExpectationException($s.":".$ps.".content is: ".$result, $this->getSession());
+            throw new ExpectationException($s . ":" . $ps . ".content is: " . $result, $this->getSession());
         }
     }
 

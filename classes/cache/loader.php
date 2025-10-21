@@ -30,7 +30,6 @@ use core_cache\application_cache;
  * Custom cache loader to handle the smart menus and items deletion.
  */
 class loader extends application_cache {
-
     /**
      * Delete the cached menus or menu items for all of its users.
      *
@@ -45,10 +44,9 @@ class loader extends application_cache {
      */
     public function delete_menu($id) {
         $store = $this->get_store();
-        $prefix = $id .'_u';
+        $prefix = $id . '_u';
         if ($list = $store->find_by_prefix($prefix)) {
-
-            $keys = array_map(function($key) {
+            $keys = array_map(function ($key) {
                 $key = current(explode('-', $key));
                 return $key;
             }, $list);

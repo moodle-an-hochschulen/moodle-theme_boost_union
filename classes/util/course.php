@@ -53,9 +53,12 @@ class course {
             // If this is a valid image.
             if ($file->is_valid_image()) {
                 // Compose the URL.
-                $url = \core\url::make_file_url('/pluginfile.php',
+                $url = \core\url::make_file_url(
+                    '/pluginfile.php',
                     '/' . $file->get_contextid() . '/' . $file->get_component() . '/' .
-                    $file->get_filearea() . $file->get_filepath() . $file->get_filename(), !$file->is_valid_image());
+                    $file->get_filearea() . $file->get_filepath() . $file->get_filename(),
+                    !$file->is_valid_image()
+                );
 
                 // And return it.
                 return $url->out();
@@ -132,7 +135,8 @@ class course {
         // If there is a summary.
         if ($this->course->has_summary()) {
             // Get and return the summary.
-            return $chelper->get_course_formatted_summary($this->course,
+            return $chelper->get_course_formatted_summary(
+                $this->course,
                 ['overflowdiv' => true, 'noclean' => true, 'para' => false]
             );
         }
@@ -171,7 +175,6 @@ class course {
 
                 // Get and return the filtered custom fields.
                 if (!empty($filteredfields)) {
-
                     // Get the field styling from the settings.
                     $stylefields = get_config('theme_boost_union', 'courselistingstylefields');
 
@@ -188,9 +191,9 @@ class course {
 
                             // Only render if there's a value.
                             if (!empty($fieldvalue)) {
-                                $badges .= \html_writer::start_span('customfieldbadge customfield_' . $fieldtype . ' mr-2');
+                                $badges .= \html_writer::start_span('customfieldbadge customfield_' . $fieldtype . ' me-2');
                                 $badges .= \html_writer::span($fieldname . ': ', 'customfieldname visually-hidden');
-                                $badges .= \html_writer::span($fieldvalue, 'customfieldvalue badge badge-info');
+                                $badges .= \html_writer::span($fieldvalue, 'customfieldvalue badge bg-info');
                                 $badges .= \html_writer::end_span();
                             }
                         }

@@ -28,7 +28,7 @@
 
 require_once(__DIR__ . '/../../../../grade/tests/behat/behat_grade.php');
 
-use Behat\Gherkin\Node\TableNode as TableNode;
+use Behat\Gherkin\Node\TableNode;
 
 /**
  * Grade-related step definition overrides for the Boost Union theme.

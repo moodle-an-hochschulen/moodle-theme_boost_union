@@ -83,7 +83,7 @@ class colorpicker_rule extends HTML_QuickForm_Rule {
 
         if (preg_match('/^#?([[:xdigit:]]{3}){1,2}$/', $value)) {
             if (strpos($value, '#') !== 0) {
-                $value = '#'.$value;
+                $value = '#' . $value;
             }
             return $value;
         } else if (in_array(strtolower($value), $colornames)) {

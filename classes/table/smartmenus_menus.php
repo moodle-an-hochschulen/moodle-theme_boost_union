@@ -29,7 +29,7 @@ use core\output\html_writer;
 defined('MOODLE_INTERNAL') || die();
 
 // Require table library.
-require_once($CFG->libdir.'/tablelib.php');
+require_once($CFG->libdir . '/tablelib.php');
 
 /**
  * List of smart menus.
@@ -39,7 +39,6 @@ require_once($CFG->libdir.'/tablelib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class smartmenus_menus extends \core_table\sql_table {
-
     /**
      * @var int $count Smart menu menus count.
      */
@@ -122,7 +121,7 @@ class smartmenus_menus extends \core_table\sql_table {
         $locations = json_decode($data->location);
 
         // Implode all given locations and show a badge for each of them.
-        return (!empty($locations)) ? implode(' ', array_map(function($value) {
+        return (!empty($locations)) ? implode(' ', array_map(function ($value) {
             $location = \theme_boost_union\smartmenu::get_location($value);
             return html_writer::tag('span', $location, ['class' => 'badge bg-primary text-light']);
         }, $locations)) : "";
@@ -163,10 +162,19 @@ class smartmenus_menus extends \core_table\sql_table {
         // If there is more than one smart menu and we do not handle the first (number 0) smart menu.
         if ($this->count > 0) {
             // Add the up icon.
-            $updown .= html_writer::link($actionurl->out(false,
-                    ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]),
-                    $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
-                            ['class' => 'iconsmall']), ['class' => 'sort-smartmenus-up-action']);
+            $updown .= html_writer::link(
+                $actionurl->out(
+                    false,
+                    ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]
+                ),
+                $OUTPUT->pix_icon(
+                    't/up',
+                    get_string('up'),
+                    'moodle',
+                    ['class' => 'iconsmall']
+                ),
+                ['class' => 'sort-smartmenus-up-action']
+            );
 
             // Otherwise, just add a spacer.
         } else {
@@ -177,10 +185,19 @@ class smartmenus_menus extends \core_table\sql_table {
         if ($this->count < ($this->totalmenus - 1)) {
             // Add the down icon.
             $updown .= '&nbsp;';
-            $updown .= html_writer::link($actionurl->out(false,
-                    ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]),
-                    $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
-                            ['class' => 'iconsmall']), ['class' => 'sort-smartmenus-down-action']);
+            $updown .= html_writer::link(
+                $actionurl->out(
+                    false,
+                    ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]
+                ),
+                $OUTPUT->pix_icon(
+                    't/down',
+                    get_string('down'),
+                    'moodle',
+                    ['class' => 'iconsmall']
+                ),
+                ['class' => 'sort-smartmenus-down-action']
+            );
 
             // Otherwise, just add a spacer.
         } else {
@@ -296,8 +313,9 @@ class smartmenus_menus extends \core_table\sql_table {
 
         // Show notification as html element.
         $notification = new \core\output\notification(
-                get_string('smartmenusmenunothingtodisplay', 'theme_boost_union'),
-                    \core\output\notification::NOTIFY_INFO);
+            get_string('smartmenusmenunothingtodisplay', 'theme_boost_union'),
+            \core\output\notification::NOTIFY_INFO
+        );
         $notification->set_show_closebutton(false);
         echo $OUTPUT->render($notification);
     }
