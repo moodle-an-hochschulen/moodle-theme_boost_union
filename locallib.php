@@ -2561,19 +2561,13 @@ function theme_boost_union_get_pluginname_from_callbackname($callback) {
 function theme_boost_union_manipulate_hooks() {
     global $CFG;
 
-    // If this is called by a CLI script.
-    if (CLI_SCRIPT) {
-        // Return directly.
-        return;
-    }
-
     // If $CFG->hooks_callback_overrides is not set yet.
     if (!isset($CFG->hooks_callback_overrides)) {
         // Initialize it as empty array.
         $CFG->hooks_callback_overrides = [];
     }
 
-    // Note: You might think that this function does not need to be processed during AJAX requests as well.
+    // Note: You might think that this function does not need to be processed during AJAX requests and CLI commands as well.
     // But in this case, due to the way how Moodle's setup works, AJAX requests would "rollback" the hook manipulations
     // and Boost Union would have to compose the manipulated hooks again on the next "real" page load.
     // This would result in longer page load times for real end users.
