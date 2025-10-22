@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-10-22 - Bugfix: Solve possible performance issues due to hook override cache being invalidated by CLI scripts, resolves #1076
 * 2025-10-21 - Tests: Some Behat tests for smart menus failed on 5.0, resolves #1074
 * 2025-10-15 - Make codechecker happy again
 * 2025-10-15 - Tests: Switch Github actions workflows to reusable workflows by Moodle an Hochschulen e.V.
