@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-10-22 - Bugfix: Solve possible performance issues due to hook override cache being invalidated by CLI scripts, resolves #1076
 * 2025-10-15 - Make codechecker happy again
 * 2025-10-15 - Tests: Switch Github actions workflows to reusable workflows by Moodle an Hochschulen e.V.
 * 2025-10-20 - Tests: Add tests for Boost Union features which might but must not affect other active themes, resolves #761
