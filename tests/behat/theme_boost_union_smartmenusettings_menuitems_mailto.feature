@@ -20,6 +20,3 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     And I navigate to "Appearance > Boost Union > Smart menus" in site administration
     Then I should see smart menu "Quick links" item "Mail" in location "Main, Menu, User, Bottom"
     And the "href" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Mail')]" "xpath_element" should contain "mailto:test@test.com"
-    And I go to the courses management page
-    And I should see smart menu "Quick links" item "Mail" in location "Main, Menu, User, Bottom"
-    And the "href" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Mail')]" "xpath_element" should contain "mailto:test@test.com"

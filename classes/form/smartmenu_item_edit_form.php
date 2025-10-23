@@ -713,7 +713,7 @@ class smartmenu_item_edit_form extends \moodleform {
         if ($data['type'] == smartmenu_item::TYPEMAILTO) {
             // Verify that the email field is not empty.
             if (empty($data['email'])) {
-                $errors['email'] = get_string('required');
+                $errors['email'] = get_string('smartmenusmenuitememail_required', 'theme_boost_union');
             }
         }
 
