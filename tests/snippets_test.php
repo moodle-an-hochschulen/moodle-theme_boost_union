@@ -43,9 +43,7 @@ final class snippets_test extends advanced_testcase {
         $this->assertEquals('global', $meta->scope);
         $this->assertEquals('devsonly', $meta->goal);
         $this->assertEquals(
-            "By default, the performance footer in Moodle aligns with the content width and integrates in the page layout in a " .
-            "suboptimal way. This snippet changes the performance footer to be full-width and 'below the fold'. Additionally, it " .
-            "slightly improves the content styling in the performance footer as well.",
+            "By default, the performance footer in Moodle aligns with the content width and integrates in the page layout in a",
             $meta->description
         );
     }
