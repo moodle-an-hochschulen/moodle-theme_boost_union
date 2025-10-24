@@ -6,6 +6,7 @@ Changes
 
 ### v5.0-r11
 
+* 2025-10-24 - Bugfix: Site support form success message is shown below blocks or advert tiles on frontpage, resolves #488
 * 2025-10-22 - Bugfix: Solve possible performance issues due to hook override cache being invalidated by CLI scripts, resolves #1076
 * 2025-10-21 - Tests: Some Behat tests for smart menus failed on 5.0, resolves #1074
 * 2025-10-15 - Make codechecker happy again
