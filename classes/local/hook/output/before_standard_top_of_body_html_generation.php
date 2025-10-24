@@ -43,7 +43,7 @@ class before_standard_top_of_body_html_generation {
         global $CFG;
 
         // Require local library.
-        require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+        require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
         // Call callback implementation.
         theme_boost_union_callbackimpl_before_standard_top_of_body_html($hook);

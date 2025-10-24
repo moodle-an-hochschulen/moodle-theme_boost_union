@@ -22,10 +22,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__.'/../../../../lib/behat/behat_base.php');
+require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 
 use Behat\Gherkin\Node\{TableNode, PyStringNode};
-use Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
+use Behat\Mink\Exception\ElementNotFoundException;
 
 /**
  * Class behat_theme_boost_union_base_smartmenus
@@ -41,8 +41,10 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
      * @Given /^I navigate to smart menus$/
      */
     public function i_navigate_to_smartmenus() {
-        $this->execute('behat_navigation::i_navigate_to_in_site_administration',
-            ['Appearance > Boost Union > Smart menus']);
+        $this->execute(
+            'behat_navigation::i_navigate_to_in_site_administration',
+            ['Appearance > Boost Union > Smart menus']
+        );
     }
 
     /**
@@ -52,8 +54,10 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
      * @param string $menu Menu title.
      */
     public function i_navigate_to_smartmenu_item($menu) {
-        $this->execute('behat_navigation::i_navigate_to_in_site_administration',
-            ['Appearance > Boost Union > Smart menus']);
+        $this->execute(
+            'behat_navigation::i_navigate_to_in_site_administration',
+            ['Appearance > Boost Union > Smart menus']
+        );
         $this->execute('behat_general::i_click_on_in_the', ['.action-list-items', 'css_element', $menu, 'table_row']);
     }
 
@@ -65,8 +69,10 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
      * @param TableNode $data
      */
     public function i_create_smartmenu_with_the_following_fields_to_these_values(TableNode $data) {
-        $this->execute('behat_navigation::i_navigate_to_in_site_administration',
-            ['Appearance > Boost Union > Smart menus']);
+        $this->execute(
+            'behat_navigation::i_navigate_to_in_site_administration',
+            ['Appearance > Boost Union > Smart menus']
+        );
         $this->execute('behat_general::i_click_on', ['Create menu', 'button']);
         $this->execute('behat_forms::i_set_the_following_fields_to_these_values', [$data]);
         $this->execute('behat_general::i_click_on', ['Save and return', 'button']);
@@ -81,8 +87,10 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
      * @param TableNode $data
      */
     public function i_create_smartmenu_with_default_item_with_the_following_fields_to_these_values(TableNode $data) {
-        $this->execute('behat_navigation::i_navigate_to_in_site_administration',
-            ['Appearance > Boost Union > Smart menus']);
+        $this->execute(
+            'behat_navigation::i_navigate_to_in_site_administration',
+            ['Appearance > Boost Union > Smart menus']
+        );
         $this->execute('behat_general::i_click_on', ['Create menu', 'button']);
         $this->execute('behat_forms::i_set_the_following_fields_to_these_values', [$data]);
         $this->execute('behat_general::i_click_on', ['Save and configure items', 'button']);
@@ -131,8 +139,10 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
      * @param TableNode $data
      */
     public function i_create_smartmenus_with_the_following_fields_to_these_values($menu, TableNode $data) {
-        $this->execute('behat_navigation::i_navigate_to_in_site_administration',
-            ['Appearance > Boost Union > Smart menus']);
+        $this->execute(
+            'behat_navigation::i_navigate_to_in_site_administration',
+            ['Appearance > Boost Union > Smart menus']
+        );
         $this->execute('behat_general::i_click_on_in_the', ['.action-list-items', 'css_element', $menu, 'table_row']);
         $this->execute('behat_general::i_click_on', ['Add menu item', 'button']);
         $this->execute('behat_forms::i_set_the_following_fields_to_these_values', [$data]);
@@ -184,8 +194,10 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
         if (in_array('User', $locations)) {
             $this->execute('behat_general::i_click_on', ['#user-menu-toggle', 'css_element']);
             $this->execute('behat_general::i_click_on_in_the', [$menu, 'link', '#usermenu-carousel', 'css_element']);
-            $this->execute('behat_general::assert_element_contains_text',
-                [$item, '#usermenu-carousel .carousel-item.active', 'css_element']);
+            $this->execute(
+                'behat_general::assert_element_contains_text',
+                [$item, '#usermenu-carousel .carousel-item.active', 'css_element']
+            );
             $this->execute('behat_general::i_click_on', ['#user-menu-toggle', 'css_element']);
         }
         if (in_array('Bottom', $locations)) {
@@ -231,8 +243,10 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
             }
             // Only if we have a bottom menu.
             if ($bottommenufound == true) {
-                $this->execute('behat_general::assert_element_not_contains_text',
-                        [$menu, '.boost-union-bottom-menu', 'css_element']);
+                $this->execute(
+                    'behat_general::assert_element_not_contains_text',
+                    [$menu, '.boost-union-bottom-menu', 'css_element']
+                );
             }
             $this->execute('behat_general::i_change_window_size_to', ['viewport', 'large']);
         }
@@ -272,8 +286,10 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
         if (in_array('User', $locations)) {
             $this->execute('behat_general::i_click_on', ['#user-menu-toggle', 'css_element']);
             $this->execute('behat_general::i_click_on_in_the', [$menu, 'link', '#usermenu-carousel', 'css_element']);
-            $this->execute('behat_general::assert_element_not_contains_text',
-                [$item, '#usermenu-carousel .carousel-item.active', 'css_element']);
+            $this->execute(
+                'behat_general::assert_element_not_contains_text',
+                [$item, '#usermenu-carousel .carousel-item.active', 'css_element']
+            );
             $this->execute('behat_general::i_click_on', ['#user-menu-toggle', 'css_element']);
         }
         if (in_array('Bottom', $locations)) {

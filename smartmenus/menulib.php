@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 use cache;
 use context_system;
 
-require_once($CFG->dirroot. '/theme/boost_union/locallib.php');
+require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
 /**
  * Smartmenu helper which contains the methods to verify the access rules for menu and its items.
@@ -41,7 +41,6 @@ require_once($CFG->dirroot. '/theme/boost_union/locallib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class smartmenu_helper {
-
     /**
      * Data record of the item or menu.
      *
@@ -172,7 +171,7 @@ class smartmenu_helper {
             return true;
         }
 
-        list($insql, $inparam) = $DB->get_in_or_equal($roles, SQL_PARAMS_NAMED, 'rl');
+        [$insql, $inparam] = $DB->get_in_or_equal($roles, SQL_PARAMS_NAMED, 'rl');
 
         $contextsql = ($this->data->rolecontext == smartmenu::SYSTEMCONTEXT)
             ? ' AND contextid=:systemcontext ' : '';
@@ -220,7 +219,7 @@ class smartmenu_helper {
             return true;
         }
         // Build insql to confirm the user cohort is available in the configured cohort.
-        list($insql, $inparam) = $DB->get_in_or_equal($cohorts, SQL_PARAMS_NAMED, 'ch');
+        [$insql, $inparam] = $DB->get_in_or_equal($cohorts, SQL_PARAMS_NAMED, 'ch');
 
         // If operator is all then check the count of user assigned cohorts,
         // Confirm the count is same as configured menu/items cohorts count.
@@ -296,12 +295,12 @@ class smartmenu_helper {
      * @param string $method Field to find, Role or Cohort.
      * @return array
      */
-    public static function find_condition_used_menus($id, $method='cohorts') {
+    public static function find_condition_used_menus($id, $method = 'cohorts') {
         global $DB;
 
         $like = $DB->sql_like($method, ':value');
         $sql = "SELECT * FROM {theme_boost_union_menus} WHERE $like";
-        $params = ['value' => '%"'.$id.'"%'];
+        $params = ['value' => '%"' . $id . '"%'];
 
         $records = $DB->get_records_sql($sql, $params);
 
@@ -317,12 +316,12 @@ class smartmenu_helper {
      * @param string $method Field to find, Role or Cohort.
      * @return array
      */
-    public static function find_condition_used_menuitems($id, $method='cohorts') {
+    public static function find_condition_used_menuitems($id, $method = 'cohorts') {
         global $DB;
 
         $like = $DB->sql_like($method, ':value');
         $sql = "SELECT * FROM {theme_boost_union_menuitems} WHERE $like";
-        $params = ['value' => '%"'.$id.'"%'];
+        $params = ['value' => '%"' . $id . '"%'];
 
         $records = $DB->get_records_sql($sql, $params);
         return $records;
@@ -405,7 +404,6 @@ class smartmenu_helper {
             // Remove the deleted role from menu item restrictions.
             self::remove_deleted_condition_menuitems($records, $roleid, 'roles');
         }
-
     }
 
     /**
@@ -420,7 +418,7 @@ class smartmenu_helper {
      * @param string $method Role or cohort which is triggered the purge.
      * @return void
      */
-    public static function remove_deleted_condition_menu($menus, $id, $method='cohorts') {
+    public static function remove_deleted_condition_menu($menus, $id, $method = 'cohorts') {
         global $DB;
 
         if ($menus) {
@@ -452,7 +450,7 @@ class smartmenu_helper {
      * @param string $method Role or cohort which is triggered the purge.
      * @return void
      */
-    public static function remove_deleted_condition_menuitems($menuitems, $id, $method='cohorts') {
+    public static function remove_deleted_condition_menuitems($menuitems, $id, $method = 'cohorts') {
         global $DB;
 
         if ($menuitems) {
@@ -500,7 +498,6 @@ class smartmenu_helper {
             // Remove the menus and item cache for the user.
             array_walk($menus, [self::class, 'remove_user_cachemenu'], $userid);
             array_walk($items, [self::class, 'remove_user_cacheitem'], $userid);
-
         }
     }
 
@@ -695,7 +692,7 @@ class smartmenu_helper {
      */
     public static function color_get_rgba($hexa, $opacity) {
         if (!empty($hexa)) {
-            list($r, $g, $b) = sscanf($hexa, "#%02x%02x%02x");
+            [$r, $g, $b] = sscanf($hexa, "#%02x%02x%02x");
             if ($opacity == '') {
                 $opacity = 0.0;
             } else {

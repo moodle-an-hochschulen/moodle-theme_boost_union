@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 // Require the necessary libraries.
-require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
 // Get theme config.
 $config = get_config('theme_boost_union');
@@ -39,8 +39,10 @@ $slides = [];
 // Iterate over all slides.
 for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
     // If the slide is enabled? (regardless if it contains any content).
-    if (isset($config->{'slide' . $i . 'enabled'}) &&
-            $config->{'slide' . $i . 'enabled'} == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    if (
+        isset($config->{'slide' . $i . 'enabled'}) &&
+            $config->{'slide' . $i . 'enabled'} == THEME_BOOST_UNION_SETTING_SELECT_YES
+    ) {
         // Get and set the slide's background image.
         $bgimage = theme_boost_union_get_urlofslidebackgroundimage($i);
 
@@ -53,30 +55,30 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
         $templatecontext['showslider'] = true;
 
         // Get and set the background image alt attribute.
-        $backgroundimagealt = format_string(trim($config->{'slide'.$i.'backgroundimagealt'}));
+        $backgroundimagealt = format_string(trim($config->{'slide' . $i . 'backgroundimagealt'}));
 
         // Get and set the slide's content.
         $formatoptions = ['noclean' => true];
-        $content = format_text($config->{'slide'.$i.'content'}, FORMAT_HTML, $formatoptions);
+        $content = format_text($config->{'slide' . $i . 'content'}, FORMAT_HTML, $formatoptions);
 
         // Get and set the slide's link.
-        $link = $config->{'slide'.$i.'link'};
-        $linktitle = format_string(trim($config->{'slide'.$i.'linktitle'}));
-        if ($config->{'slide'.$i.'linktarget'} == THEME_BOOST_UNION_SETTING_LINKTARGET_NEWTAB) {
+        $link = $config->{'slide' . $i . 'link'};
+        $linktitle = format_string(trim($config->{'slide' . $i . 'linktitle'}));
+        if ($config->{'slide' . $i . 'linktarget'} == THEME_BOOST_UNION_SETTING_LINKTARGET_NEWTAB) {
             $linktargetnewtab = true;
         } else {
             $linktargetnewtab = false;
         }
 
         // Get and set the slide's caption.
-        $caption = format_string(trim($config->{'slide'.$i.'caption'}));
+        $caption = format_string(trim($config->{'slide' . $i . 'caption'}));
 
         // Get and set the slide's order.
         // The order is not needed for the mustache template, but the usort() method will need it later.
-        $order = $config->{'slide'.$i.'order'};
+        $order = $config->{'slide' . $i . 'order'};
 
         // Get and set the slide's content style class.
-        switch ($config->{'slide'.$i.'contentstyle'}) {
+        switch ($config->{'slide' . $i . 'contentstyle'}) {
             case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHT:
                 $contentstyleclass = 'slide-light';
                 break;
@@ -92,7 +94,7 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
         }
 
         // Get and set the slide's link source.
-        switch ($config->{'slide'.$i.'linksource'}) {
+        switch ($config->{'slide' . $i . 'linksource'}) {
             case THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_BOTH:
                 $linkimage = true;
                 $linktext = true;

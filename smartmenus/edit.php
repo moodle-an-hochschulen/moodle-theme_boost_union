@@ -23,13 +23,13 @@
  */
 
 // Require config.
-require(__DIR__.'/../../../config.php');
+require(__DIR__ . '/../../../config.php');
 
 // Require plugin libraries.
-require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
 // Require admin library.
-require_once($CFG->libdir.'/adminlib.php');
+require_once($CFG->libdir . '/adminlib.php');
 
 // Get parameters.
 $id = optional_param('id', null, PARAM_INT);
@@ -46,8 +46,10 @@ require_capability('theme/boost_union:configure', $context);
 $PAGE->set_context($context);
 $PAGE->set_url(new core\url('/theme/boost_union/smartmenus/edit.php', ['id' => $id, 'sesskey' => sesskey()]));
 $PAGE->set_cacheable(false);
-$PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new core\url('/admin/category.php',
-        ['category' => 'theme_boost_union']));
+$PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new core\url(
+    '/admin/category.php',
+    ['category' => 'theme_boost_union']
+));
 $PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new core\url('/theme/boost_union/smartmenus/menus.php'));
 $PAGE->set_title(theme_boost_union_get_externaladminpage_title(get_string('smartmenus', 'theme_boost_union')));
 if ($id !== null && $id > 0) {

@@ -31,7 +31,7 @@ use moodle_exception;
 use core\navigation\views\primary;
 use cache;
 
-require_once($CFG->dirroot.'/theme/boost_union/smartmenus/menulib.php');
+require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
 /**
  * The menu controller handles actions related to managing menus.
@@ -44,7 +44,6 @@ require_once($CFG->dirroot.'/theme/boost_union/smartmenus/menulib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class smartmenu {
-
     /**
      * The unique identifier for the menu.
      *
@@ -485,7 +484,7 @@ class smartmenu {
                 self::CARDFORM_FULLWIDTH => 'fullwidth',
         ];
 
-        return isset($options[$this->menu->cardform]) ? 'card-form-'.$options[$this->menu->cardform] : '';
+        return isset($options[$this->menu->cardform]) ? 'card-form-' . $options[$this->menu->cardform] : '';
     }
 
     /**
@@ -564,7 +563,7 @@ class smartmenu {
      * @param bool $resetcache True means remove the cache and build. Useful to session based menus and items purge.
      * @return false|object Returns false if the menu is not visible or a menu object otherwise.
      */
-    public function build($resetcache=false) {
+    public function build($resetcache = false) {
         global $OUTPUT, $USER;
         static $itemcache;
 
@@ -583,7 +582,6 @@ class smartmenu {
         if (!empty($nodes)) {
             // List of menu items added to this menu.
             $menuitems = $nodes->menuitems ?? [];
-
         } else {
             // Set flag to store the menu data to cache.
             $storecache = true;
@@ -610,7 +608,6 @@ class smartmenu {
             // Mode is submenu or not set anything then create the menuitems as submenu.
             // Otherwise add the menu items directoly as menu.
             if ($this->menu->mode != self::MODE_INLINE || $this->menu->type == self::TYPE_CARD) {
-
                 $nodes = (object) [
                     'menudata' => $this->menu,
                     // Do not set the title attribute as this would show a standard tooltip based on the
@@ -649,7 +646,6 @@ class smartmenu {
                         ];
                         $nodes->helpicon = $OUTPUT->render_from_template('core/help_icon', $data);
                     }
-
                 }
                 // Menu is set to inline, items classes are loadded in this variable menuclasses in template.
                 $nodes->menuclasses = $this->menu->classes; // Menus classes.
@@ -660,7 +656,6 @@ class smartmenu {
         $menuitems = $menuitems ?: $this->get_menu_items();
 
         if (!empty($menuitems)) {
-
             $builditems = [];
             foreach ($menuitems as $item) {
                 // Need to purge the items for user, remove the cache before build.
@@ -700,17 +695,16 @@ class smartmenu {
                 $nodes->desktop = $hidemenudesktop ?? true;
                 $nodes->tablet = $hidemenutablet ?? true;
                 $nodes->mobile = $hidemenumobile ?? true;
-
             } else {
                 // If menu is inline mode, then it items are displayed directly in menus.
                 // Set the menuitems as separate menu node in cache.
                 // Remove dividers from inline menus.
-                $builditems = array_filter($builditems, function($item) {
+                $builditems = array_filter($builditems, function ($item) {
                     // Remove the item is divider.
                     return !isset($item['divider']) || !$item['divider'];
                 });
 
-                array_walk($builditems, function(&$item) {
+                array_walk($builditems, function (&$item) {
                     // Make the dynamic courses as top menu for user menus dropdown. if menu mode is inline.
                     if ($item['haschildren']) {
                         // Below elements are used to separate the submenus and links for usermenu.
@@ -769,7 +763,6 @@ class smartmenu {
 
         $menulocation = [];
         foreach ($menus as $menu) {
-
             $menu = (object) $menu;
 
             if (isset($menu->menudata->location)) {
@@ -802,7 +795,6 @@ class smartmenu {
 
         // Verfiy and Fetch menu record from DB.
         if ($record = $DB->get_record('theme_boost_union_menus', ['id' => $id])) {
-
             // Decode the multiple option select elements values to array.
             $record = self::update_menu_valuesformat($record);
 
@@ -965,10 +957,10 @@ class smartmenu {
      */
     public static function get_cardsize_options(): array {
         return [
-            self::CARDSIZE_TINY => get_string('smartmenusmenucardsizetiny', 'theme_boost_union').' (50px)',
-            self::CARDSIZE_SMALL => get_string('smartmenusmenucardsizesmall', 'theme_boost_union').' (100px)',
-            self::CARDSIZE_MEDIUM => get_string('smartmenusmenucardsizemedium', 'theme_boost_union').' (150px)',
-            self::CARDSIZE_LARGE => get_string('smartmenusmenucardsizelarge', 'theme_boost_union').' (200px)',
+            self::CARDSIZE_TINY => get_string('smartmenusmenucardsizetiny', 'theme_boost_union') . ' (50px)',
+            self::CARDSIZE_SMALL => get_string('smartmenusmenucardsizesmall', 'theme_boost_union') . ' (100px)',
+            self::CARDSIZE_MEDIUM => get_string('smartmenusmenucardsizemedium', 'theme_boost_union') . ' (150px)',
+            self::CARDSIZE_LARGE => get_string('smartmenusmenucardsizelarge', 'theme_boost_union') . ' (200px)',
         ];
     }
 
@@ -981,11 +973,11 @@ class smartmenu {
     public static function get_cardform_options(): array {
         return[
             self::CARDFORM_SQUARE =>
-                get_string('smartmenusmenucardformsquare', 'theme_boost_union').' (1/1)',
+                get_string('smartmenusmenucardformsquare', 'theme_boost_union') . ' (1/1)',
             self::CARDFORM_PORTRAIT =>
-                get_string('smartmenusmenucardformportrait', 'theme_boost_union').' (2/3)',
+                get_string('smartmenusmenucardformportrait', 'theme_boost_union') . ' (2/3)',
             self::CARDFORM_LANDSCAPE =>
-                get_string('smartmenusmenucardformlandscape', 'theme_boost_union').' (3/2)',
+                get_string('smartmenusmenucardformlandscape', 'theme_boost_union') . ' (3/2)',
             self::CARDFORM_FULLWIDTH =>
                 get_string('smartmenusmenucardformfullwidth', 'theme_boost_union'),
         ];
@@ -1142,8 +1134,10 @@ class smartmenu {
         // Test the flag to purge the cache is set for this user.
         // If the user is a guest.
         if (!isloggedin() || isguestuser()) {
-            if (isset ($SESSION->theme_boost_union_menu_purgesessioncache) &&
-                    $SESSION->theme_boost_union_menu_purgesessioncache == true) {
+            if (
+                isset($SESSION->theme_boost_union_menu_purgesessioncache) &&
+                    $SESSION->theme_boost_union_menu_purgesessioncache == true
+            ) {
                 $removecache = true;
             } else {
                 $removecache = false;

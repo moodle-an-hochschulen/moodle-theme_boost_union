@@ -11,7 +11,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- /* Remove rounded corners around all relevant elements. */
+/* Remove rounded corners around all relevant elements. */
 .activity-item,
 .alert,
 .badge,
@@ -37,5 +37,5 @@
 #page.drawers .main-inner,
 input,
 .tertiary-navigation-selector .dropdown-toggle::after {
-    border-radius: 0 !important;
+    border-radius: 0 !important; /* stylelint-disable-line declaration-no-important */
 }

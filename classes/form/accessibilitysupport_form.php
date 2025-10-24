@@ -28,7 +28,7 @@ namespace theme_boost_union\form;
 defined('MOODLE_INTERNAL') || die;
 
 // Require forms library.
-require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir . '/formslib.php');
 
 /**
  * Accessibility support form.
@@ -41,7 +41,6 @@ require_once($CFG->libdir.'/formslib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class accessibilitysupport_form extends \moodleform {
-
     /**
      * Define form elements.
      *
@@ -59,8 +58,10 @@ class accessibilitysupport_form extends \moodleform {
         // Form field: Send anonymously.
         $sendanonymoussetting = get_config('theme_boost_union', 'allowanonymoussubmits');
         // If the user should be allowed to send the request anonymously.
-        if (isset($sendanonymoussetting) && $sendanonymoussetting == THEME_BOOST_UNION_SETTING_SELECT_YES && isloggedin()
-                && !isguestuser()) {
+        if (
+            isset($sendanonymoussetting) && $sendanonymoussetting == THEME_BOOST_UNION_SETTING_SELECT_YES && isloggedin()
+                && !isguestuser()
+        ) {
             // Checkbox to submit anonymously.
             $accessibilitysupportanonymous = get_string('accessibilitysupportanonymouscheckbox', 'theme_boost_union');
             $mform->addElement('advcheckbox', 'sendanonymous', $accessibilitysupportanonymous);
@@ -106,8 +107,12 @@ class accessibilitysupport_form extends \moodleform {
 
             // Form field: Technical information.
             $textareaoptions = ['rows' => 10];
-            $mform->addElement('textarea', 'techinfo', get_string('accessibilitysupporttechinfolabel', 'theme_boost_union'),
-                    $textareaoptions);
+            $mform->addElement(
+                'textarea',
+                'techinfo',
+                get_string('accessibilitysupporttechinfolabel', 'theme_boost_union'),
+                $textareaoptions
+            );
             $mform->setType('techinfo', PARAM_TEXT);
             $mform->setDefault('techinfo', $this->get_technical_information());
             $mform->hideIf('techinfo', 'sendtechinfo', 'notchecked');
@@ -129,10 +134,12 @@ class accessibilitysupport_form extends \moodleform {
 
         // If the admin enabled re-captcha on this page.
         $accessibilitysupportrecaptcha = get_config('theme_boost_union', 'accessibilitysupportrecaptcha');
-        if (isset($accessibilitysupportrecaptcha) &&
+        if (
+            isset($accessibilitysupportrecaptcha) &&
                 ($accessibilitysupportrecaptcha == THEME_BOOST_UNION_SETTING_SELECT_ALWAYS) ||
                 ($accessibilitysupportrecaptcha == THEME_BOOST_UNION_SETTING_SELECT_ONLYGUESTSANDNONLOGGEDIN &&
-                        (!isloggedin() || isguestuser()))) {
+                        (!isloggedin() || isguestuser()))
+        ) {
             if (!empty($CFG->recaptchapublickey) && !empty($CFG->recaptchaprivatekey)) {
                 $mform->addElement('recaptcha', 'recaptcha_element', get_string('security_question', 'auth'));
                 $mform->addHelpButton('recaptcha_element', 'recaptcha', 'auth');
@@ -228,5 +235,4 @@ class accessibilitysupport_form extends \moodleform {
         // Return the technical information.
         return $techinfo;
     }
-
 }

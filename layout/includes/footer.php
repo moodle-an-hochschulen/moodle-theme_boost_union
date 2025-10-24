@@ -81,9 +81,11 @@ if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
     }
 
     // If any of the 'Documentation for this page', 'Services and support' or 'Contact site support' links are enabled.
-    if (isset($templatecontext['footershowhelp']) && $templatecontext['footershowhelp'] == true ||
+    if (
+        isset($templatecontext['footershowhelp']) && $templatecontext['footershowhelp'] == true ||
             isset($templatecontext['footershowservices']) && $templatecontext['footershowservices'] == true ||
-            isset($templatecontext['footershowcontact']) && $templatecontext['footershowcontact'] == true) {
+            isset($templatecontext['footershowcontact']) && $templatecontext['footershowcontact'] == true
+    ) {
         // Add marker to show popover links.
         $templatecontext['footershowpopoverlinks'] = true;
 
@@ -131,8 +133,10 @@ if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
 
     // If the "Suppress icons in front of the footer links" setting is not enabled.
     $footersuppressfooterlinkiconssetting = get_config('theme_boost_union', 'footersuppressicons');
-    if (!isset($footersuppressfooterlinkiconssetting) ||
-        $footersuppressfooterlinkiconssetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+    if (
+        !isset($footersuppressfooterlinkiconssetting) ||
+        $footersuppressfooterlinkiconssetting != THEME_BOOST_UNION_SETTING_SELECT_YES
+    ) {
         // Add marker to show the icons.
         $templatecontext['suppressfooterlinkicons'] = false;
 
@@ -146,17 +150,19 @@ if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
 // If the accessibility button is enabled.
 $enableaccessibilitysupportsetting = get_config('theme_boost_union', 'enableaccessibilitysupport');
 $enableaccessibilitysupportfooterbuttonsetting = get_config('theme_boost_union', 'enableaccessibilitysupportfooterbutton');
-if (isset($enableaccessibilitysupportsetting) &&
+if (
+    isset($enableaccessibilitysupportsetting) &&
         $enableaccessibilitysupportsetting == THEME_BOOST_UNION_SETTING_SELECT_YES &&
         isset($enableaccessibilitysupportfooterbuttonsetting) &&
-        $enableaccessibilitysupportfooterbuttonsetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-
+        $enableaccessibilitysupportfooterbuttonsetting == THEME_BOOST_UNION_SETTING_SELECT_YES
+) {
     // If user login is either not required or if the user is logged in.
     $allowaccessibilitysupportwithoutloginsetting = get_config('theme_boost_union', 'allowaccessibilitysupportwithoutlogin');
-    if (!(isset($allowaccessibilitysupportwithoutloginsetting) &&
+    if (
+        !(isset($allowaccessibilitysupportwithoutloginsetting) &&
             $allowaccessibilitysupportwithoutloginsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) ||
-            (isloggedin() && !isguestuser())) {
-
+            (isloggedin() && !isguestuser())
+    ) {
         // Add marker to show this link.
         $templatecontext['accessibilitybutton'] = true;
         $templatecontext['accessibilitybuttonlink'] = new \core\url('/theme/boost_union/accessibility/support.php');

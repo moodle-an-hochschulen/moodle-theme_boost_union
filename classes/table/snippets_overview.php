@@ -31,7 +31,7 @@ use theme_boost_union\local\snippets\snippets;
 defined('MOODLE_INTERNAL') || die();
 
 // Require table library.
-require_once($CFG->libdir.'/tablelib.php');
+require_once($CFG->libdir . '/tablelib.php');
 
 /**
  * List of SCSS snippets.
@@ -69,7 +69,7 @@ class snippets_overview extends \table_sql {
         $headers[] = get_string('snippetsgoal', 'theme_boost_union');
         $headers[] = get_string('snippetsscope', 'theme_boost_union');
         $headers[] = get_string('snippetssource', 'theme_boost_union');
-        $headers[] = get_string('up') .'/'. get_string('down');
+        $headers[] = get_string('up') . '/' . get_string('down');
         $headers[] = get_string('actions');
         $columns[] = 'title';
         $columns[] = 'goal';
@@ -124,10 +124,19 @@ class snippets_overview extends \table_sql {
         // If there is more than one snippet and we do not handle the first (number 0) snippet.
         if ($this->count > 0) {
             // Add the up icon.
-            $updown .= \html_writer::link($actionurl->out(false,
-                    ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]),
-                    $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
-                            ['class' => 'iconsmall']), ['class' => 'sort-snippet-up-action']);
+            $updown .= \html_writer::link(
+                $actionurl->out(
+                    false,
+                    ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]
+                ),
+                $OUTPUT->pix_icon(
+                    't/up',
+                    get_string('up'),
+                    'moodle',
+                    ['class' => 'iconsmall']
+                ),
+                ['class' => 'sort-snippet-up-action']
+            );
 
             // Otherwise, just add a spacer.
         } else {
@@ -138,10 +147,19 @@ class snippets_overview extends \table_sql {
         if ($this->count < ($this->totalsnippets - 1)) {
             // Add the down icon.
             $updown .= '&nbsp;';
-            $updown .= \html_writer::link($actionurl->out(false,
-                    ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]),
-                    $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
-                            ['class' => 'iconsmall']), ['class' => 'sort-snippet-down-action']);
+            $updown .= \html_writer::link(
+                $actionurl->out(
+                    false,
+                    ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]
+                ),
+                $OUTPUT->pix_icon(
+                    't/down',
+                    get_string('down'),
+                    'moodle',
+                    ['class' => 'iconsmall']
+                ),
+                ['class' => 'sort-snippet-down-action']
+            );
 
             // Otherwise, just add a spacer.
         } else {
@@ -163,7 +181,7 @@ class snippets_overview extends \table_sql {
      */
     public function col_source($data) {
         // Get the badge for the given source.
-        return $this->pick_and_build_badge('snippetssource'.$data->source);
+        return $this->pick_and_build_badge('snippetssource' . $data->source);
     }
 
     /**
@@ -174,7 +192,7 @@ class snippets_overview extends \table_sql {
      */
     public function col_goal($data) {
         // Get the badge for the given goal.
-        return $this->pick_and_build_badge('snippetsgoal'.$data->goal);
+        return $this->pick_and_build_badge('snippetsgoal' . $data->goal);
     }
 
     /**
@@ -185,7 +203,7 @@ class snippets_overview extends \table_sql {
      */
     public function col_scope($data) {
         // Get the badge for the given scope.
-        return $this->pick_and_build_badge('snippetsscope'.$data->scope);
+        return $this->pick_and_build_badge('snippetsscope' . $data->scope);
     }
 
     /**
@@ -223,15 +241,19 @@ class snippets_overview extends \table_sql {
         // Enable/Disable.
         if ($data->enabled == false) {
             $actions[] = [
-                'url' => new \core\url('/theme/boost_union/snippets/overview.php',
-                        ['action' => 'enable', 'id' => $data->id, 'sesskey' => sesskey()]),
+                'url' => new \core\url(
+                    '/theme/boost_union/snippets/overview.php',
+                    ['action' => 'enable', 'id' => $data->id, 'sesskey' => sesskey()]
+                ),
                 'icon' => new \pix_icon('t/show', get_string('snippetsenable', 'theme_boost_union')),
                 'attributes' => ['class' => 'action-enable'],
             ];
         } else {
             $actions[] = [
-                'url' => new \core\url('/theme/boost_union/snippets/overview.php',
-                        ['action' => 'disable', 'id' => $data->id, 'sesskey' => sesskey()]),
+                'url' => new \core\url(
+                    '/theme/boost_union/snippets/overview.php',
+                    ['action' => 'disable', 'id' => $data->id, 'sesskey' => sesskey()]
+                ),
                 'icon' => new \pix_icon('t/hide', get_string('snippetsdisable', 'theme_boost_union')),
                 'attributes' => ['class' => 'action-disable'],
             ];
@@ -244,9 +266,9 @@ class snippets_overview extends \table_sql {
             'attributes' => ['class' => 'action-details',
                     'data-action' => 'details',
                     'data-title' => $data->title,
-                    'data-source-badge' => $this->pick_and_build_badge('snippetssource'.$data->source),
-                    'data-goal-badge' => $this->pick_and_build_badge('snippetsgoal'.$data->goal),
-                    'data-scope-badge' => $this->pick_and_build_badge('snippetsscope'.$data->scope),
+                    'data-source-badge' => $this->pick_and_build_badge('snippetssource' . $data->source),
+                    'data-goal-badge' => $this->pick_and_build_badge('snippetsgoal' . $data->goal),
+                    'data-scope-badge' => $this->pick_and_build_badge('snippetsscope' . $data->scope),
                     'data-description' => $data->description,
                     'data-creator' => $data->creator,
                     'data-usagenote' => $data->usagenote,
@@ -291,12 +313,12 @@ class snippets_overview extends \table_sql {
             // We do this by restricting the query to an impossible source.
             $whereparts[] = 'impossible';
         }
-        list($insql, $inparams) = $DB->get_in_or_equal($whereparts, SQL_PARAMS_NAMED);
+        [$insql, $inparams] = $DB->get_in_or_equal($whereparts, SQL_PARAMS_NAMED);
 
         // Compose SQL base query.
         $sql = 'SELECT *
                 FROM {theme_boost_union_snippets} s
-                WHERE source '.$insql.
+                WHERE source ' . $insql .
                 ' ORDER BY sortorder';
         $sqlparams = $inparams;
 
@@ -315,7 +337,9 @@ class snippets_overview extends \table_sql {
 
         // Show notification as html element.
         $notification = new \core\output\notification(
-                get_string('snippetsnothingtodisplay', 'theme_boost_union'), \core\output\notification::NOTIFY_INFO);
+            get_string('snippetsnothingtodisplay', 'theme_boost_union'),
+            \core\output\notification::NOTIFY_INFO
+        );
         $notification->set_show_closebutton(false);
         echo $OUTPUT->render($notification);
     }

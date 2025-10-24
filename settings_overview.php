@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__.'/../../config.php');
+require_once(__DIR__ . '/../../config.php');
 
 // Require login.
 require_login();
@@ -50,6 +50,9 @@ echo $OUTPUT->header();
 
 // Show page heading.
 echo $OUTPUT->heading(get_string('settingsoverview_title', 'theme_boost_union'));
+
+// Show alert if Boost Union is not the active theme.
+echo theme_boost_union_is_not_active_alert();
 
 // First, compose template context for Boost Union setting pages.
 $templatecontext['cards'][] = [

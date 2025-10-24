@@ -4,9 +4,24 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.0-r11
 
-* 2025-08-07 - SCSS Snippet: Tertiary navigation button, targets #989
+* 2025-10-22 - Bugfix: Solve possible performance issues due to hook override cache being invalidated by CLI scripts, resolves #1076
+* 2025-10-21 - Tests: Some Behat tests for smart menus failed on 5.0, resolves #1074
+* 2025-10-15 - Make codechecker happy again
+* 2025-10-15 - Tests: Switch Github actions workflows to reusable workflows by Moodle an Hochschulen e.V.
+* 2025-10-20 - Tests: Add tests for Boost Union features which might but must not affect other active themes, resolves #761
+* 2025-10-16 - Feature: Add Bootstrap alert to Boost Union settings if Boost Union (or Boost Union Child) is not the active theme, resolves #773.
+* 2025-10-15 - Improvement: On course cards, display the course fields as Bootstrap badges, resolves #1070
+
+### v5.0-r10
+
+* 2025-10-07 - Upstream change: Adopt changes from MDL-81702 to remove site home link from drawers, resolves #1065
+* 2025-10-07 - Upstream change: Adopt changes from MDL-81455 to fix the welcome message heading on the dashboard, resolves #1066
+
+### v5.0-r9
+
+* 2025-10-06 - Bugfix: Block titles were missing after changes in Moodle core in MDL-86541, resolves #1061.
 * 2025-08-01 - Bugfix: Smart menu: menu bar was displayed although there were no items to display, resolves #849.
 
 ### v5.0-r8

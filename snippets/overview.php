@@ -25,14 +25,14 @@
  */
 
 // Require config.
-require(__DIR__.'/../../../config.php');
+require(__DIR__ . '/../../../config.php');
 
 // Require plugin libraries.
-require_once($CFG->dirroot.'/theme/boost_union/lib.php');
-require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+require_once($CFG->dirroot . '/theme/boost_union/lib.php');
+require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
 // Require admin library.
-require_once($CFG->libdir.'/adminlib.php');
+require_once($CFG->libdir . '/adminlib.php');
 
 // Get parameters.
 $action = optional_param('action', null, PARAM_TEXT);
@@ -64,10 +64,18 @@ if ($action !== null && confirm_sesskey()) {
             $currentsnippet = $DB->get_record('theme_boost_union_snippets', ['id' => $snippetid]);
             $prevsnippet = $DB->get_record('theme_boost_union_snippets', ['sortorder' => $currentsnippet->sortorder - 1]);
             if ($prevsnippet) {
-                $DB->set_field('theme_boost_union_snippets', 'sortorder', $prevsnippet->sortorder,
-                        ['id' => $currentsnippet->id]);
-                $DB->set_field('theme_boost_union_snippets', 'sortorder', $currentsnippet->sortorder,
-                        ['id' => $prevsnippet->id]);
+                $DB->set_field(
+                    'theme_boost_union_snippets',
+                    'sortorder',
+                    $prevsnippet->sortorder,
+                    ['id' => $currentsnippet->id]
+                );
+                $DB->set_field(
+                    'theme_boost_union_snippets',
+                    'sortorder',
+                    $currentsnippet->sortorder,
+                    ['id' => $prevsnippet->id]
+                );
 
                 // Purge the theme cache (as the order has changed and the SCSS has to be re-compiled).
                 theme_reset_all_caches();
@@ -78,10 +86,18 @@ if ($action !== null && confirm_sesskey()) {
             $currentsnippet = $DB->get_record('theme_boost_union_snippets', ['id' => $snippetid]);
             $nextsnippet = $DB->get_record('theme_boost_union_snippets', ['sortorder' => $currentsnippet->sortorder + 1]);
             if ($nextsnippet) {
-                $DB->set_field('theme_boost_union_snippets', 'sortorder', $nextsnippet->sortorder,
-                        ['id' => $currentsnippet->id]);
-                $DB->set_field('theme_boost_union_snippets', 'sortorder', $currentsnippet->sortorder,
-                        ['id' => $nextsnippet->id]);
+                $DB->set_field(
+                    'theme_boost_union_snippets',
+                    'sortorder',
+                    $nextsnippet->sortorder,
+                    ['id' => $currentsnippet->id]
+                );
+                $DB->set_field(
+                    'theme_boost_union_snippets',
+                    'sortorder',
+                    $currentsnippet->sortorder,
+                    ['id' => $nextsnippet->id]
+                );
 
                 // Purge the theme cache (as the order has changed and the SCSS has to be re-compiled).
                 theme_reset_all_caches();
@@ -128,14 +144,21 @@ $table->define_baseurl($PAGE->url);
 echo $OUTPUT->header();
 echo \theme_boost_union\admin_settingspage_tabs_with_tertiary::get_tertiary_navigation_for_externalpage();
 
+// Show alert if Boost Union is not the active theme.
+echo theme_boost_union_is_not_active_alert();
+
 // Create and render the tab tree.
 $tabtree = new \theme_boost_union\admin_externalpage_tabs();
-$tabtree->add_tab('snippetsoverview',
-        new \core\url('/theme/boost_union/snippets/overview.php'),
-        get_string('snippetsoverview', 'theme_boost_union'));
-$tabtree->add_tab('snippetssettings',
-        new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_snippets'], 'theme_boost_union_snippets_settings'),
-        get_string('snippetssettings', 'theme_boost_union'));
+$tabtree->add_tab(
+    'snippetsoverview',
+    new \core\url('/theme/boost_union/snippets/overview.php'),
+    get_string('snippetsoverview', 'theme_boost_union')
+);
+$tabtree->add_tab(
+    'snippetssettings',
+    new \core\url('/admin/settings.php', ['section' => 'theme_boost_union_snippets'], 'theme_boost_union_snippets_settings'),
+    get_string('snippetssettings', 'theme_boost_union')
+);
 echo $tabtree->render_tabtree('snippetsoverview');
 
 // Show snippets intro.

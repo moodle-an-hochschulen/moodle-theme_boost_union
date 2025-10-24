@@ -11,7 +11,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- /* Style the debugging footer, but only if the footer has child elements.
+/* Style the debugging footer, but only if the footer has child elements.
     This is to avoid that the added padding of the footer created an empty black bar at the bottom of the page. */
 .footer-content-debugging:has(.footer-dark-inner > *) {
     /* Take the footer out of the page flow which will place it below the whole page.
@@ -48,7 +48,7 @@
             width: 100%;
 
             table {
-                width: 100% !important;
+                width: 100% !important; /* stylelint-disable-line declaration-no-important */
             }
         }
     }

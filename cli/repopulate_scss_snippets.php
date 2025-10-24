@@ -24,12 +24,14 @@
 
 define('CLI_SCRIPT', true);
 
-require(__DIR__.'/../../../config.php');
-require_once($CFG->libdir.'/clilib.php');
+require(__DIR__ . '/../../../config.php');
+require_once($CFG->libdir . '/clilib.php');
 
 // Get cli options.
-list($options, $unrecognized) = cli_get_params(['help' => false],
-                                               ['h' => 'help']);
+[$options, $unrecognized] = cli_get_params(
+    ['help' => false],
+    ['h' => 'help']
+);
 if ($unrecognized) {
     $unrecognized = implode("\n  ", $unrecognized);
     cli_error(get_string('cliunknowoption', 'admin', $unrecognized));
@@ -88,7 +90,7 @@ try {
     \theme_boost_union\local\snippets\snippets::populate_builtin_snippets();
     cli_writeln('Success: SCSS snippets have been re-populated in the database.');
 } catch (Exception $e) {
-    cli_error('Error: '.$e->getMessage());
+    cli_error('Error: ' . $e->getMessage());
 }
 
 exit(0);

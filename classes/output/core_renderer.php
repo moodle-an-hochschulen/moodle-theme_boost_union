@@ -42,7 +42,6 @@ use core_block\output\block_contents;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class core_renderer extends \theme_boost\output\core_renderer {
-
     /**
      * Returns the moodle_url for the favicon.
      *
@@ -90,9 +89,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
                         'theme_boost_union',
                         'flavours_look_favicon',
                         $flavour->id,
-                        '/64x64'.
-                        '/'.theme_get_revision(),
-                        '/'.$flavour->look_favicon
+                        '/64x64' .
+                        '/' . theme_get_revision(),
+                        '/' . $flavour->look_favicon
                     );
 
                     // Return the URL.
@@ -173,8 +172,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
                         'theme_boost_union',
                         'flavours_look_logo',
                         $flavour->id,
-                        '/'.theme_get_revision(),
-                        '/'.$flavour->look_logo
+                        '/' . theme_get_revision(),
+                        '/' . $flavour->look_logo
                     );
 
                     // Return the URL.
@@ -284,9 +283,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
                         context_system::instance()->id,
                         'theme_boost_union',
                         'flavours_look_logocompact',
-                        $flavour->id.'/'.$flavourfilepath,
+                        $flavour->id . '/' . $flavourfilepath,
                         theme_get_revision(),
-                        '/'.$flavour->look_logocompact
+                        '/' . $flavour->look_logocompact
                     );
 
                     // Return the URL.
@@ -378,7 +377,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // However, theme designers might want to use it.
         $flavour = theme_boost_union_get_flavour_which_applies();
         if ($flavour != null) {
-            $additionalclasses[] = 'flavour'.'-'.$flavour->id;
+            $additionalclasses[] = 'flavour' . '-' . $flavour->id;
         }
 
         // If the admin decided to change the breakpoints of the footer button,
@@ -405,23 +404,24 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // If this is the login page and the page has the accessibility button, add a class to the body attributes.
         // This is currently just needed to make sure in SCSS that the footnote is not covered by the accessibility button.
         if ($this->page->pagelayout == 'login') {
-
             // If the accessibility button is enabled.
             $enableaccessibilitysupportsetting = get_config('theme_boost_union', 'enableaccessibilitysupport');
             $enableaccessibilitysupportfooterbuttonsetting =
                     get_config('theme_boost_union', 'enableaccessibilitysupportfooterbutton');
-            if (isset($enableaccessibilitysupportsetting) &&
+            if (
+                isset($enableaccessibilitysupportsetting) &&
                     $enableaccessibilitysupportsetting == THEME_BOOST_UNION_SETTING_SELECT_YES &&
                     isset($enableaccessibilitysupportfooterbuttonsetting) &&
-                    $enableaccessibilitysupportfooterbuttonsetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-
+                    $enableaccessibilitysupportfooterbuttonsetting == THEME_BOOST_UNION_SETTING_SELECT_YES
+            ) {
                 // If user login is either not required or if the user is logged in.
                 $allowaccessibilitysupportwithoutloginsetting =
                         get_config('theme_boost_union', 'allowaccessibilitysupportwithoutlogin');
-                if (!(isset($allowaccessibilitysupportwithoutloginsetting) &&
+                if (
+                    !(isset($allowaccessibilitysupportwithoutloginsetting) &&
                         $allowaccessibilitysupportwithoutloginsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) ||
-                        (isloggedin() && !isguestuser())) {
-
+                        (isloggedin() && !isguestuser())
+                ) {
                     $additionalclasses[] = 'theme_boost-union-accessibilitybutton';
                 }
             }
@@ -471,8 +471,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $header->headeractions = $this->page->get_header_actions();
 
         // Add the course header image for rendering.
-        if ($this->page->pagelayout == 'course' && (get_config('theme_boost_union', 'courseheaderimageenabled')
-                        == THEME_BOOST_UNION_SETTING_SELECT_YES)) {
+        if (
+            $this->page->pagelayout == 'course' && (get_config('theme_boost_union', 'courseheaderimageenabled')
+                        == THEME_BOOST_UNION_SETTING_SELECT_YES)
+        ) {
             // If course header images are activated, we get the course header image url
             // (which might be the fallback image depending on the course settings and theme settings).
             $header->courseheaderimageurl = theme_boost_union_get_course_header_image_url();
@@ -482,7 +484,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $header->courseheaderimageposition = get_config('theme_boost_union', 'courseheaderimageposition');
             // Additionally, get the template context attributes for the course header image layout.
             $courseheaderimagelayout = get_config('theme_boost_union', 'courseheaderimagelayout');
-            switch($courseheaderimagelayout) {
+            switch ($courseheaderimagelayout) {
                 case THEME_BOOST_UNION_SETTING_COURSEIMAGELAYOUT_HEADINGABOVE:
                     $header->courseheaderimagelayoutheadingabove = true;
                     $header->courseheaderimagelayoutstackedclass = '';
@@ -549,7 +551,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $context->ariarole = !empty($bc->attributes['role']) ? $bc->attributes['role'] : '';
         $context->class = $bc->attributes['class'];
         $context->type = $bc->attributes['data-block'];
-        $context->title = $bc->title;
+        $context->title = (string) $bc->title;
+        $context->showtitle = $context->title !== '';
         $context->content = $bc->content;
         $context->annotation = $bc->annotation;
         $context->footer = $bc->footer;
@@ -559,7 +562,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $regions = theme_boost_union_get_additional_regions();
         $regioncapname = array_search($region, $regions);
         if (!empty($regioncapname) && $context->hascontrols) {
-            $context->hascontrols = has_capability('theme/boost_union:editregion'.$regioncapname, $this->page->context);
+            $context->hascontrols = has_capability('theme/boost_union:editregion' . $regioncapname, $this->page->context);
         }
 
         if ($context->hascontrols) {
@@ -665,7 +668,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         foreach ($pluginswithfunction as $plugintype => $plugins) {
             foreach ($plugins as $pluginname => $function) {
                 // If the given plugin's output is suppressed by Boost Union's settings.
-                $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_'.$plugintype.'_'.$pluginname);
+                $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_' . $plugintype . '_' .
+                        $pluginname);
                 if (isset($suppresssetting) && $suppresssetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                     // Skip the plugin.
                     continue;
@@ -777,7 +781,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $footersuppresslogininfosetting = get_config('theme_boost_union', 'footersuppresslogininfo');
         if (isset($footersuppresslogininfosetting) && $footersuppresslogininfosetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
             if (isset($SESSION->justloggedin) && !empty($CFG->displayloginfailures)) {
-                require_once($CFG->dirroot.'/user/lib.php');
+                require_once($CFG->dirroot . '/user/lib.php');
                 user_count_login_failures($USER, true);
             }
         }
