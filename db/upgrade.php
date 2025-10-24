@@ -23,7 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use theme_boost_union\snippets;
+use theme_boost_union\local\snippets\snippets;
 
 /**
  * Function to upgrade theme_boost_union
@@ -684,9 +684,31 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025041419, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2025041420) {
+        // Migrate filearea and itemid of uploaded scss snippets.
+        $contextid = context_system::instance()->id;
+        $fs = get_file_storage();
+        $oldfiles = $fs->get_area_files($contextid, 'theme_boost_union', 'uploadedsnippets', 0, 'id', false);
+        $count = 0;
+        foreach ($oldfiles as $oldfile) {
+            $filerecord = new stdClass();
+            $filerecord->itemid = \theme_boost_union\local\snippets\source::UPLOADED->get_itemid();
+            $filerecord->filearea = \theme_boost_union\local\snippets\source::UPLOADED->get_filearea();
+            $fs->create_file_from_storedfile($filerecord, $oldfile);
+            $count += 1;
+        }
+
+        if ($count) {
+            $fs->delete_area_files($contextid, 'theme_boost_union', 'uploadedsnippets', 0);
+        }
+
+        // Savepoint reached.
+        upgrade_plugin_savepoint(true, 2025041420, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
-    snippets::add_builtin_snippets();
+    snippets::populate_builtin_snippets();
 
     return true;
 }

@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/theme/boost_union/classes/admin_settingspage_tabs_with_tertiary.php');
 require_once($CFG->dirroot . '/theme/boost_union/classes/admin_settingspage_tabs_with_external_and_tertiary.php');
 require_once($CFG->dirroot . '/theme/boost_union/classes/admin_externalpage_in_tab.php');
-require_once($CFG->dirroot . '/theme/boost_union/classes/snippets.php');
+require_once($CFG->dirroot . '/theme/boost_union/classes/local/snippets/snippets.php');
 
 use theme_boost_union\admin_setting_configdatetime;
 use theme_boost_union\admin_setting_configstoredfilealwayscallback;
@@ -37,7 +37,8 @@ use theme_boost_union\admin_setting_configtext_url;
 use theme_boost_union\admin_settingspage_tabs_with_tertiary;
 use theme_boost_union\admin_settingspage_tabs_with_external_and_tertiary;
 use theme_boost_union\admin_externalpage_in_tab;
-use theme_boost_union\snippets;
+use theme_boost_union\local\snippets\snippets;
+use theme_boost_union\local\snippets\source as snippets_source;
 use core\di;
 use core\hook\manager as hook_manager;
 
@@ -4382,7 +4383,53 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('enablebuiltinsnippets', 'theme_boost_union', null, true);
         $description = get_string('enablebuiltinsnippets_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $setting->set_updatedcallback('theme_reset_all_caches');
+        $setting->set_updatedcallback('theme_boost_union_populate_builtin_snippets');
+        $tab->add($setting);
+
+        // Create repository community snippets heading.
+        $name = 'theme_boost_union/snippetsrepositoryheading';
+        $title = get_string('snippetsrepositoryheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Enable community snippets repository.
+        $name = 'theme_boost_union/enablecommunitysnippets';
+        $title = get_string('enablecommunitysnippets', 'theme_boost_union', null, true);
+        $description = get_string(
+            'enablecommunitysnippets_desc',
+            'theme_boost_union',
+            ['url' => snippets::COMMUNITY_REPOSITORY],
+            true
+        );
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_boost_union_refresh_community_sippets');
+        $tab->add($setting);
+
+        // Helpers: configure and run community snippets repository task.
+        $url = new moodle_url(
+            '/admin/tool/task/scheduledtasks.php',
+            ['action' => 'edit', 'task' => 'theme_boost_union\task\refresh_snippets_from_community_repository']
+        );
+        $buttons = html_writer::link(
+            $url,
+            get_string('taskconfigure_refreshcommunitysnippets',
+            'theme_boost_union'),
+            ['target' => '_blank', 'class' => 'btn btn-secondary m-1']
+        );
+        $url = new moodle_url(
+            '/admin/tool/task/schedule_task.php',
+        ['action' => 'edit', 'task' => 'theme_boost_union\task\refresh_snippets_from_community_repository']
+        );
+        $buttons .= html_writer::link(
+            $url,
+            get_string('taskrun_refreshcommunitysnippets',
+            'theme_boost_union'),
+            ['target' => '_blank', 'class' => 'btn btn-primary m-1']
+        );
+        $setting = new admin_setting_description(
+            'synccommunitysnippets',
+            get_string('taskmanage_refreshcommunitysnippets', 'theme_boost_union'),
+            $buttons);
         $tab->add($setting);
 
         // Create uploaded snippets heading.
@@ -4421,8 +4468,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name,
             $title,
             $description,
-            'uploadedsnippets',
-            0,
+            snippets_source::UPLOADED->get_filearea(),
+            snippets_source::UPLOADED->get_itemid(),
             ['maxfiles' => -1, 'subdirs' => 0, 'accepted_types' => $uploadedsnippetsextensions]
         );
         $setting->set_updatedcallback('theme_boost_union_parse_uploaded_sippets');

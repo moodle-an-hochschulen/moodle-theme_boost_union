@@ -42,7 +42,7 @@ if ($options['help']) {
     $help = "Boost Union: Re-populate built-in SCSS snippets
 
 Normally, the built-in SCSS snippets are re-populated if the Boost Union version is raised. This is triggered in db/upgrade.php.
-This is perfectly fine as long as admins to not want to fiddle with the list of buit-in snippets manually.
+This is perfectly fine as long as admins to not want to fiddle with the list of built-in snippets manually.
 
 To ease such admin tasks as well as the crafting of SCSS Snippet PRs,
 this CLI script can be run and will re-populate the list of built-in SCSS snippets based on the list of snippets
@@ -87,7 +87,7 @@ cli_heading('Boost Union: Re-populate built-in SCSS snippets');
 
 // Execute the function to repopulate the SCSS snippets.
 try {
-    \theme_boost_union\snippets::add_builtin_snippets();
+    \theme_boost_union\local\snippets\snippets::populate_builtin_snippets();
     cli_writeln('Success: SCSS snippets have been re-populated in the database.');
 } catch (Exception $e) {
     cli_error('Error: ' . $e->getMessage());

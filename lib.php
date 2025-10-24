@@ -152,7 +152,8 @@ define('THEME_BOOST_UNION_SETTING_COURSEPROGRESSSTYLE_BAR', 'bar');
 define('THEME_BOOST_UNION_SETTING_SHOWAS_BADGE', 'badge');
 define('THEME_BOOST_UNION_SETTING_SHOWAS_TEXT', 'text');
 
-use theme_boost_union\snippets;
+use theme_boost_union\local\snippets\snippets;
+use theme_boost_union\local\snippets\source as snippet_source;
 
 /**
  * Returns the main SCSS content.
@@ -671,7 +672,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         $context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'backgroundimage' ||
         $filearea === 'loginbackgroundimage' || $filearea === 'additionalresources' ||
                 $filearea === 'customfonts' || $filearea === 'courseheaderimagefallback' ||
-                $filearea === 'touchiconsios' || $filearea === 'uploadedsnippets' ||
+                $filearea === 'touchiconsios' ||
                 preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea) ||
                 preg_match("/slidebackgroundimage[2-9]|1[0-2]?/", $filearea))
     ) {
@@ -801,7 +802,8 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $serveoptions);
 
         // Serve the files from the smart menu card images.
-    } else if (in_array($filearea, ['smartmenus_itemimage', 'snippets']) && $context->contextlevel === CONTEXT_SYSTEM) {
+    } else if (($filearea === 'smartmenus_itemimage' || in_array( $filearea, snippets::get_fileareas(), true )) &&
+                $context->contextlevel === CONTEXT_SYSTEM) {
         // Get file storage.
         $fs = get_file_storage();
 
@@ -932,9 +934,35 @@ function theme_boost_union_alter_css_urls(&$urls) {
  *
  * @return void
  */
+function theme_boost_union_populate_builtin_snippets() {
+    snippets::populate_builtin_snippets();
+    theme_reset_all_caches();
+}
+
+/**
+ * Callback to refresh uploaded SCSS snippets when the theme_boost_union/uploadedsnippets config setting changes.
+ *
+ * @return void
+ */
 function theme_boost_union_parse_uploaded_sippets() {
-    snippets::parse_uploaded_snippets();
-    snippets::cleanup_snippets();
+    snippets::populate_uploaded_snippets();
+    theme_reset_all_caches();
+}
+
+/**
+ * Callback to refresh uploaded SCSS snippets when the theme_boost_union/uploadedsnippets config setting changes.
+ *
+ * @return void
+ */
+function theme_boost_union_refresh_community_sippets() {
+    $task = \core\task\manager::get_scheduled_task(classname: 'theme_boost_union\task\refresh_snippets_from_community_repository');
+    if (in_array(snippet_source::COMMUNITY, snippets::get_enabled_sources(false), true)) {
+        snippets::refresh_community_repository();
+        $task->enable();
+    } else {
+        $task->disable();
+    }
+
     theme_reset_all_caches();
 }
 

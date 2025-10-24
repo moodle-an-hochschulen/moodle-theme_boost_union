@@ -35,4 +35,14 @@ $tasks = [
         'month' => '*',
         'disabled' => 1,
     ],
+    [
+        'classname' => '\theme_boost_union\task\refresh_snippets_from_community_repository',
+        'blocking' => 0,
+        'minute' => '0',
+        'hour' => '0',
+        'day' => '*',
+        'dayofweek' => '*',
+        'month' => '*',
+        'disabled' => 1,
+    ],
 ];

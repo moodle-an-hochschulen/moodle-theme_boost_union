@@ -14,24 +14,35 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace theme_boost_union\task;
+
 /**
- * Theme Boost Union - Install script.
+ * Class refresh_snippets_from_community_repository
  *
  * @package    theme_boost_union
- * @copyright  2024 André Menrath, University of Graz <andre.menrath@uni-graz.at>
+ * @copyright  2025 André Menrath <andre.menrath@uni-graz.at>, University of Graz
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+class refresh_snippets_from_community_repository extends \core\task\scheduled_task {
+    /**
+     * Return localised task name.
+     *
+     * @return string
+     */
+    public function get_name() {
+        return get_string('task_refreshcommunitysnippets', 'theme_boost_union');
+    }
 
-use theme_boost_union\snippets;
+    /**
+     * Execute scheduled task.
+     *
+     * @return boolean
+     */
+    public function execute() {
+        // Simply reset the theme cache.
+        theme_boost_union_refresh_community_sippets();
 
-/**
- * Executed on installation of Boost Union
- *
- * @return bool
- */
-function xmldb_theme_boost_union_install() {
-    // Load the builtin SCSS snippets into the database.
-    snippets::add_builtin_snippets();
-
-    return true;
+        // Return true, just to keep the Moodle scheduler happy.
+        return true;
+    }
 }
