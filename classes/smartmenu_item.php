@@ -77,6 +77,12 @@ class smartmenu_item {
     const TYPEDIVIDER = 4;
 
     /**
+     * Represents the type of a mailto element.
+     * @var int
+     */
+    const TYPEMAILTO = 5;
+
+    /**
      * Represents the completion status of an item where the status is 'enrolled'.
      * @var int
      */
@@ -692,6 +698,24 @@ class smartmenu_item {
     }
 
     /**
+     * Generate the item as mailto menu item.
+     *
+     * @return string
+     */
+    protected function generate_mailto_item() {
+
+        $mailto = 'mailto:' . $this->item->email;
+
+        return $this->generate_node_data(
+            $this->item->title, // Title.
+            $mailto, // Mailto link.
+            null, // Default key.
+            $this->item->tooltip,
+            // Tooltip.
+        );
+    }
+
+    /**
      * Generate the dynamic courses based on the conditions of categories, enrollmentrole,
      * daterange (Past, Present, Future), and customfields.
      *
@@ -1220,6 +1244,7 @@ class smartmenu_item {
         $types = [
             self::TYPESTATIC => 'static',
             self::TYPEDYNAMIC => 'dynamic',
+            self::TYPEMAILTO => 'mailto',
             self::TYPEHEADING => 'heading',
             self::TYPEDOCS => 'docs',
             self::TYPEDIVIDER => 'divider',
@@ -1241,6 +1266,13 @@ class smartmenu_item {
                 $static = $this->generate_static_item();
                 $result = [$static]; // Return the result as recursive array for merge with dynamic items.
                 $type = 'static';
+                $cacheable = true;
+                break;
+
+            case self::TYPEMAILTO:
+                $mailto = $this->generate_mailto_item();
+                $result = [$mailto];
+                $type = 'mailto';
                 $cacheable = true;
                 break;
 
@@ -1553,6 +1585,7 @@ class smartmenu_item {
     public static function get_types(?int $type = null) {
         $types = [
                 self::TYPESTATIC => get_string('smartmenusmenuitemtypestatic', 'theme_boost_union'),
+                self::TYPEMAILTO => get_string('smartmenusmenuitemtypemailto', 'theme_boost_union'),
                 self::TYPEHEADING => get_string('smartmenusmenuitemtypeheading', 'theme_boost_union'),
                 self::TYPEDOCS => get_string('smartmenusmenuitemtypedocs', 'theme_boost_union'),
                 self::TYPEDYNAMIC => get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union'),

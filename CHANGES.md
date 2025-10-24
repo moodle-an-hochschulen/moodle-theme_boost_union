@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-10-23 - Feature: Add a type for smart menu item to use mailto links, resolves #702
+
 ### v4.5-r27
 
 * 2025-10-22 - Bugfix: Solve possible performance issues due to hook override cache being invalidated by CLI scripts, resolves #1076

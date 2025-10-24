@@ -109,6 +109,12 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->hideIf('url', 'type', 'neq', smartmenu_item::TYPESTATIC);
         $mform->addHelpButton('url', 'smartmenusmenuitemurl', 'theme_boost_union');
 
+        // Add menu item email (for the mailto menu item type) as input element.
+        $mform->addElement('text', 'email', get_string('smartmenusmenuitememail', 'theme_boost_union'));
+        $mform->setType('email', PARAM_EMAIL);
+        $mform->hideIf('email', 'type', 'neq', smartmenu_item::TYPEMAILTO);
+        $mform->addHelpButton('email', 'smartmenusmenuitememail', 'theme_boost_union');
+
         // Add mode as select element.
         $modeoptions = smartmenu_item::get_mode_options();
         $mform->addElement('select', 'mode', get_string('smartmenusmenuitemmode', 'theme_boost_union'), $modeoptions);
@@ -701,6 +707,13 @@ class smartmenu_item_edit_form extends \moodleform {
             // Verify that the URL field is not empty.
             if (empty($data['url'])) {
                 $errors['url'] = get_string('required');
+            }
+        }
+
+        if ($data['type'] == smartmenu_item::TYPEMAILTO) {
+            // Verify that the email field is not empty.
+            if (empty($data['email'])) {
+                $errors['email'] = get_string('smartmenusmenuitememail_required', 'theme_boost_union');
             }
         }
 
