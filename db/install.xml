@@ -79,6 +79,7 @@
         <FIELD NAME="type" TYPE="int" LENGTH="9" NOTNULL="false" DEFAULT="1" SEQUENCE="false"/>
         <FIELD NAME="sortorder" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="url" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="email" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="category" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="category_subcats" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="enrolmentrole" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
