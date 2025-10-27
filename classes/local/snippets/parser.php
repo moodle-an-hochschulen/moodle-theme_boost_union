@@ -58,7 +58,7 @@ class parser {
      */
     public static function get_snippet_meta($filecontent): array|false {
         // Make sure we catch CR-only line endings.
-        $filedata = str_replace( "\r", "\n", $filecontent );
+        $filedata = str_replace("\r", "\n", $filecontent);
 
         // If the file is empty, we can not proceed.
         if (empty($filedata)) {
@@ -70,8 +70,7 @@ class parser {
 
         // Scan for each snippet header meta information in the files top scss comment.
         foreach (self::SNIPPET_HEADERS as $regex) {
-            if (preg_match('/^(?:[ \t]*)?[ \t\/*#@]*' . preg_quote($regex, '/') . ':(.*)$/mi', $filecontent, $match)
-                && $match[1]) {
+            if (preg_match('/^(?:[ \t]*)?[ \t\/*#@]*' . preg_quote($regex, '/') . ':(.*)$/mi', $filecontent, $match) && $match[1]) {
                 $headers[$regex] = self::cleanup_header_comment($match[1]);
             } else {
                 $headers[$regex] = '';

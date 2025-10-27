@@ -47,10 +47,10 @@ enum source: string {
      * @return int
      */
     public function get_itemid(): ?int {
-        return match($this) {
-            self::BUILT_IN   => 0,
-            self::UPLOADED   => 1,
-            self::COMMUNITY  => 2,
+        return match ($this) {
+            self::BUILT_IN  => 0,
+            self::UPLOADED  => 1,
+            self::COMMUNITY => 2,
         };
     }
 
@@ -60,7 +60,7 @@ enum source: string {
      * @return string
      */
     public function get_is_enabled_setting_name(): ?string {
-        return match($this) {
+        return match ($this) {
             self::BUILT_IN  => 'enablebuiltinsnippets',
             self::UPLOADED  => 'enableuploadedsnippets',
             self::COMMUNITY => 'enablecommunitysnippets',

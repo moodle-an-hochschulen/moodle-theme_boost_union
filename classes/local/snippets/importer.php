@@ -61,7 +61,7 @@ class importer {
         $sortorder = empty($snippets) ? 0 : intval(reset($snippets)->sortorder);
 
         // Prepare an array with all the present snippet names.
-        $presentnames = array_map(function($snippet) {
+        $presentnames = array_map(function ($snippet) {
             return [$snippet->name, $snippet->source];
         }, $snippets);
 
@@ -114,17 +114,17 @@ class importer {
 
         // Get builtin snippets which are known in the database.
         $snippets = $DB->get_records(
-                'theme_boost_union_snippets',
-                [],
-                'sortorder DESC',
-                'id,name,sortorder'
+            'theme_boost_union_snippets',
+            [],
+            'sortorder DESC',
+            'id,name,sortorder'
         );
 
         // Get the highest sortorder present.
         $sortorder = empty($snippets) ? 0 : intval(reset($snippets)->sortorder);
 
         // Prepare an array with all the present builtin snippet names.
-        $presentnames = array_map(function($snippet) {
+        $presentnames = array_map(function ($snippet) {
             return $snippet->name;
         }, $snippets);
 
@@ -167,7 +167,7 @@ class importer {
         // If there are files.
         if (is_array($files)) {
             // Return an array of the basenames of the files.
-            $basenames = array_map(function($file) {
+            $basenames = array_map(function ($file) {
                 return basename($file);
             }, $files);
             return $basenames;
@@ -187,7 +187,7 @@ class importer {
      * @return void
      */
     public static function import_snippet($filename, $zipdir, $source): void {
-        $filecontent = \file_get_contents($zipdir.'/'.$filename, false);
+        $filecontent = \file_get_contents($zipdir . '/' . $filename, false);
 
         if (!$filecontent) {
             return;
@@ -336,25 +336,17 @@ class importer {
     private static function delete_file_if_exists($filerecord): void {
         $fs = get_file_storage();
 
-        if ($fs->file_exists(
+        $file = $fs->get_file(
             $filerecord['contextid'],
             $filerecord['component'],
             $filerecord['filearea'],
             $filerecord['itemid'],
             $filerecord['filepath'],
             $filerecord['filename']
-        )) {
-            $existingfile = $fs->get_file(
-                $filerecord['contextid'],
-                $filerecord['component'],
-                $filerecord['filearea'],
-                $filerecord['itemid'],
-                $filerecord['filepath'],
-                $filerecord['filename']
-            );
-            if ($existingfile) {
-                $existingfile->delete();
-            }
+        );
+
+        if ($file) {
+            $file->delete();
         }
     }
 
@@ -396,20 +388,20 @@ class importer {
      * @return string|null
      */
     private static function search_preview_file($basepath, $name): string|null {
-        // Ensure there is a directory seperator at the end of the base path.
-        $basepath = rtrim($basepath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         // Search for the .scss suffix in the path.
         $search = '.scss';
         $pos = strrpos($name, $search);
         if ($pos !== false) {
+            // Ensure there is a directory seperator at the end of the base path.
+            $basepath = rtrim($basepath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             // Compose the file pattern that searched for files with the same basename and the supported extensions.
-            $pattern = $basepath .
-                substr_replace(
-                    $name,
-                    '.{' . implode(',', snippets::ALLOWED_PREVIEW_FILE_EXTENSIONS) . '}',
-                    $pos,
-                    strlen($search)
+            $extension = substr_replace(
+                $name,
+                '.{' . implode(',', snippets::ALLOWED_PREVIEW_FILE_EXTENSIONS) . '}',
+                $pos,
+                strlen($search)
             );
+            $pattern = $basepath . $extension;
             // Search for the preview file.
             $files = glob($pattern, GLOB_BRACE);
             // Select the first match of the found preview file(s).

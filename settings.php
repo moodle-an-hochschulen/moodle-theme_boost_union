@@ -4412,24 +4412,23 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
         $buttons = html_writer::link(
             $url,
-            get_string('taskconfigure_refreshcommunitysnippets',
-            'theme_boost_union'),
+            get_string('taskconfigure_refreshcommunitysnippets', 'theme_boost_union'),
             ['target' => '_blank', 'class' => 'btn btn-secondary m-1']
         );
         $url = new moodle_url(
             '/admin/tool/task/schedule_task.php',
-        ['action' => 'edit', 'task' => 'theme_boost_union\task\refresh_snippets_from_community_repository']
+            ['action' => 'edit', 'task' => 'theme_boost_union\task\refresh_snippets_from_community_repository']
         );
         $buttons .= html_writer::link(
             $url,
-            get_string('taskrun_refreshcommunitysnippets',
-            'theme_boost_union'),
+            get_string('taskrun_refreshcommunitysnippets', 'theme_boost_union'),
             ['target' => '_blank', 'class' => 'btn btn-primary m-1']
         );
         $setting = new admin_setting_description(
             'synccommunitysnippets',
             get_string('taskmanage_refreshcommunitysnippets', 'theme_boost_union'),
-            $buttons);
+            $buttons
+        );
         $tab->add($setting);
 
         // Create uploaded snippets heading.

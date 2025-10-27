@@ -103,7 +103,7 @@ class snippets {
     public static function refresh_community_repository() {
         global $DB;
 
-        $url = self::COMMUNITY_REPOSITORY .'/archive/refs/heads/main.zip';
+        $url = self::COMMUNITY_REPOSITORY . '/archive/refs/heads/main.zip';
 
         $content = @file_get_contents($url);
 
@@ -162,7 +162,7 @@ class snippets {
         $context = system::instance();
 
         if ($source === source::BUILT_IN) {
-            return new url( '/theme/boost_union/snippets/builtin/' . str_replace('.scss', '.webp', $name));
+            return new url('/theme/boost_union/snippets/builtin/' . str_replace('.scss', '.webp', $name));
         }
 
         foreach (self::ALLOWED_PREVIEW_FILE_EXTENSIONS as $extension) {
@@ -172,7 +172,7 @@ class snippets {
                 $source->get_filearea(),
                 $source->get_itemid(),
                 '/',
-                str_replace( '.scss', '.' . $extension, $name)
+                str_replace('.scss', '.' . $extension, $name)
             );
 
             if ($file) {
@@ -289,12 +289,12 @@ class snippets {
             // We do this by restricting the query to an impossible source.
             $whereparts[] = 'impossible';
         }
-        list($insql, $inparams) = $DB->get_in_or_equal($whereparts, SQL_PARAMS_NAMED);
+        [$insql, $inparams] = $DB->get_in_or_equal($whereparts, SQL_PARAMS_NAMED);
 
         // Compose SQL base query.
         $sql = "SELECT *
                 FROM {theme_boost_union_snippets} s
-                WHERE enabled = '1' AND source ".$insql.
+                WHERE enabled = '1' AND source " . $insql .
                 " ORDER BY sortorder";
         $sqlparams = $inparams;
 
@@ -324,7 +324,7 @@ class snippets {
      * @param bool $returnvalues Whether to return the values, or the enum object.
      * @return array
      */
-    public static function get_enabled_sources($returnvalues=true): array {
+    public static function get_enabled_sources($returnvalues = true): array {
         $sources = [];
 
         // Check if each snippet source is enabled and add to the sources array.
@@ -335,7 +335,6 @@ class snippets {
                 } else {
                     $sources[] = $source;
                 }
-
             }
         }
 
