@@ -802,8 +802,10 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $serveoptions);
 
         // Serve the files from the smart menu card images.
-    } else if (($filearea === 'smartmenus_itemimage' || in_array( $filearea, snippets::get_fileareas(), true )) &&
-                $context->contextlevel === CONTEXT_SYSTEM) {
+    } else if (
+        ($filearea === 'smartmenus_itemimage' || in_array($filearea, snippets::get_fileareas(), true)) &&
+                $context->contextlevel === CONTEXT_SYSTEM
+    ) {
         // Get file storage.
         $fs = get_file_storage();
 
