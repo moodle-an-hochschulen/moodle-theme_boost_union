@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-10-24 - Bugfix: Site support form success message is shown below blocks or advert tiles on frontpage, resolves #488
 * 2025-10-23 - Feature: Add a type for smart menu item to use mailto links, resolves #702
 
 ### v5.0-r11
