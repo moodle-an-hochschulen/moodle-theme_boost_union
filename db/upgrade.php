@@ -651,7 +651,7 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2024100747, 'theme', 'boost_union');
     }
 
-    if ($oldversion < 2025041428) {
+    if ($oldversion < 2024100756) {
         // Define table theme_boost_union_menuitems to be altered.
         $table = new xmldb_table('theme_boost_union_menuitems');
 
@@ -664,7 +664,7 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         }
 
         // Savepoint reached.
-        upgrade_plugin_savepoint(true, 2025041428, 'theme', 'boost_union');
+        upgrade_plugin_savepoint(true, 2024100756, 'theme', 'boost_union');
     }
 
     // Load the builtin SCSS snippets into the database.
