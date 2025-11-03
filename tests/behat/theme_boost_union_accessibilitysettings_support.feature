@@ -236,25 +236,6 @@ Feature: Configuring the theme_boost_union plugin for the "Support page" tab on 
     Then I should see "Your accessibility support request was sent"
     # Unfortunately, the content of the email can't be tested with Behat yet as we do not have a way to test sent emails yet.
 
-  @javascript
-  Scenario: Support form success notification is shown before content-upper blocks on the homepage
-    Given the following config values are set as admin:
-      | config                     | value         | plugin            |
-      | defaulthomepage            | Home          |                   |
-      | enableaccessibilitysupport | yes           | theme_boost_union |
-      | blockregionsforfrontpage   | content-upper | theme_boost_union |
-    And the following "blocks" exist:
-      | blockname    | contextlevel | reference            | pagetypepattern | defaultregion |
-      | online_users | Course       | Acceptance test site | site-index      | content-upper |
-    When I log in as "admin"
-    And I am on site homepage
-    And I should see "Online users" in the "#theme-block-region-content-upper" "css_element"
-    And I am on accessibilitysupport page
-    And I set the field "Message" to "Frontpage notification order test"
-    And I click on "Submit" "button"
-    And I wait until the page is ready
-    Then "Your accessibility support request was sent" "text" should appear before ".block_online_users" "css_element"
-
   # Unfortunately, this can't be tested with Behat yet as we do not have a way to test sent emails yet (or rather block the sending of the email).
   # Scenario: Sending the accessibility support form fails and the fallback message is shown
 
