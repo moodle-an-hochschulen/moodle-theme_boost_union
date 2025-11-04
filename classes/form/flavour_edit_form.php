@@ -189,23 +189,24 @@ class flavour_edit_form extends \moodleform {
                 THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE =>
                         get_string('nochange', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER,
+                        get_string('imageposition_center_center', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP,
+                        get_string('imageposition_center_top', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM,
+                        get_string('imageposition_center_bottom', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP,
+                        get_string('imageposition_left_top', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER,
+                        get_string('imageposition_left_center', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM,
+                        get_string('imageposition_left_bottom', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP,
+                        get_string('imageposition_right_top', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER,
+                        get_string('imageposition_right_center', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM, ];
+                        get_string('imageposition_right_bottom', 'theme_boost_union'),
+        ];
         $backgroundimagepositionselect = $mform->addElement(
             'select',
             'look_backgroundimagepos',
