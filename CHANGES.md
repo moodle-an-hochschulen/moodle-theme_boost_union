@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-11-03 - Improvement: Use human-understandable values in the background position settings, resolves #1086
 * 2025-10-23 - Feature: Add a type for smart menu item to use mailto links, resolves #702
 
 ### v4.5-r27
