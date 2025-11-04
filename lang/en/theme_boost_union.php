@@ -691,11 +691,6 @@ $string['blockregionoutsidetopwidth_desc'] = 'With this setting, you can set the
 $string['outsideregionswidthfullwidth'] = 'Full width';
 $string['outsideregionswidthcoursecontentwidth'] = 'Course content width';
 $string['outsideregionswidthherowidth'] = 'Hero width';
-// ... ... Setting: Outside left and right regions vertical offset.
-$string['blockoutsideregionsverticalalignment'] = 'Outside regions vertical alignment';
-$string['blockoutsideregionsverticalalignment_desc'] = 'With this setting, you can control the vertical alignment of the outside regions. You can choose to align them with the page content or leave them by default.';
-$string['outsideregionsverticalaligndefault'] = 'None';
-$string['outsideregionsverticalalignpagecontent'] = 'Align the outside regions vertically with the page content';
 // ... ... Setting: Block region width for Outside (bottom) region.
 $string['blockregionoutsidebottomwidth'] = 'Block region width for \'Outside (bottom)\' region';
 $string['blockregionoutsidebottomwidth_desc'] = 'With this setting, you can set the width of the \'Outside (bottom)\' block region which is shown below the main content. You can choose between full width, course content width and hero width.';
@@ -707,6 +702,11 @@ $string['outsideregionsplacement'] = 'Outside regions horizontal placement';
 $string['outsideregionsplacement_desc'] = 'With this setting, you can control if, on larger screens, the \'Outside (left)\' and \'Outside (right)\' block regions should be placed near the main content area or rather near the window edges.';
 $string['outsideregionsplacementnextmaincontent'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions next to the main content area';
 $string['outsideregionsplacementnearwindowedges'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions near the window edges';
+// ... ... Setting: Outside regions vertical alignment.
+$string['outsideregionsverticalalignment'] = 'Outside regions vertical alignment';
+$string['outsideregionsverticalalignment_desc'] = 'With this setting, you can control if, on larger screens, the \'Outside (left)\' and \'Outside (right)\' block regions should be vertically aligned with the page content or not.';
+$string['outsideregionsverticalaligndefault'] = 'None';
+$string['outsideregionsverticalalignpagecontent'] = 'Align \'Outside (left)\' and \'Outside (right)\' regions vertically with the page content';
 // ... Section: Site home right-hand block drawer behaviour.
 $string['sitehomerighthandblockdrawerbehaviour'] = 'Site home right-hand block drawer';
 // ... ... Setting: Show right-hand block drawer of site home on visit.
