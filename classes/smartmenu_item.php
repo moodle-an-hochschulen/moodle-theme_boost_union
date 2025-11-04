@@ -28,6 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 use context_system;
 use stdClass;
+use xmldb_table;
 use cache;
 use core\output\html_writer;
 use core_course\external\course_summary_exporter;
@@ -1878,6 +1879,15 @@ class smartmenu_item {
      */
     public static function get_all_fa_icons() {
         global $DB;
+
+        // Check if the menuitems table exists before trying to query it.
+        // This prevents errors during upgrades from versions where this table does not exist yet.
+        $dbman = $DB->get_manager();
+        $table = new xmldb_table('theme_boost_union_menuitems');
+        if (!$dbman->table_exists($table)) {
+            // If table doesn't exist, return empty array.
+            return [];
+        }
 
         // Define the query to search for icons in the menu items table.
         $sql = "SELECT DISTINCT menuicon
