@@ -1139,6 +1139,13 @@ body.theme-boost-union-commincourse {
  * Settings: Additional block regions - The outside-left and outside-right regions.
  --------------------------------------*/
 
+/* Note: In this section, some selectors are more specific than necessary at first sight.
+   However, we had to be over-precise sometimes to make sure that the selectors are really applied and not
+   overruled by Boost core selectors. */
+
+/* We start by placing the outside regions left and right of the main content area.
+   We do this in several steps for different screen sizes. */
+
 /* On larger screens. */
 @include media-breakpoint-up(md) {
     /* On Moodle pages with limited width (currently: The course main pages, the frontpage and the dashboard).
@@ -1149,100 +1156,191 @@ body.theme-boost-union-commincourse {
         .main-inner-outside-left-right,
         .main-inner-outside-left,
         .main-inner-outside-right {
-            /* Center the main region content to keep the page content in the middle of the page. */
-            text-align: center;
+            /* If the admin configured outside blocks to be shown next to the window edges. */
+            &.main-inner-outside-nearwindowedges {
+                /* Center the main region content to position the page content in the middle of the page,
+                and place the left and right block regions near the window edges. */
+                width: 100%;
+            }
+            /* If the admin configured outside blocks to be shown next to the main content. */
+            &.main-inner-outside-nextmaincontent {
+                /* Center the main region content to keep the left and right block regions near the main region,
+                positioning the page content in the middle of the page. */
+                display: flex;
+                align-self: center;
+            }
 
-            /* Change the block regions to show them properly as block columns. */
-            #theme-block-region-outside-left,
-            #theme-block-region-outside-right,
+            /* Set the width of the main inner region to auto.
+               Using a 100% width in the main inner area (which is the default) would push the side regions outside the page. */
             .main-inner {
-                /* Undo the text-align for the regions in each column to still show the content correctly. */
-                text-align: initial;
+                width: auto;
+            }
+        }
+    }
+}
 
-                /* Display them as inline-block. */
-                display: inline-block;
+/* On even larger screens. */
+@include media-breakpoint-up(lg) {
+    body.limitedwidth {
+        /* If any block region is enabled, handle the block region placement. */
+        #page.drawers .main-inner-wrapper {
+            &.main-inner-outside-left-right,
+            &.main-inner-outside-left,
+            &.main-inner-outside-right {
+                /* Compared to the Moodle default, prevent the main region to shrink if block regions are present. */
+                .main-inner {
+                    flex: auto;
+                }
 
-                /* And make sure that the columns are at the top of the page at all. */
-                vertical-align: top;
+                /* If the admin configured outside blocks to be shown next to the window edges. */
+                &.main-inner-outside-nearwindowedges {
+                    /* Center the main region content to position the page content in the middle of the page,
+                    and place the left and right block regions near the window edges. */
+                    display: flex;
+                }
+
+                /* If the admin configured outside blocks to be shown near the main content block. */
+                &.main-inner-outside-nextmaincontent {
+                    /* Center the main region content. */
+                    align-self: normal;
+                    justify-content: center;
+                    /* Remove the left and right margins from the main inner region to make it full-width. */
+                    .main-inner {
+                        margin-left: 0;
+                        margin-right: 0;
+                    }
+                }
             }
         }
 
-        /* On pages where only the outside-left region is enabled:
-           Reduce the size of the main column to make space for the outside-left column. */
-        .main-inner-outside-left .main-inner {
-            width: calc(98% - #{$blockregionoutsideleftwidth});
-        }
-
-        /* On pages where only the outside-right region is enabled:
-           Reduce the size of the main column to make space for the outside-right column. */
-        .main-inner-outside-right .main-inner {
-            width: calc(98% - #{$blockregionoutsiderightwidth});
-        }
-
-        /* On pages where the outside-left and the outside-right region are enabled:
-           Reduce the size of the main column to make space for the outside-left and outside-right columns. */
-        .main-inner-outside-left-right .main-inner {
-            width: calc(98% - #{$blockregionoutsiderightwidth} - #{$blockregionoutsideleftwidth});
-        }
-
-        /* Set the width and margin of the outside-left region. */
+        /* And set the width and margin of the outside-left and right regions. */
         #theme-block-region-outside-left {
             margin-right: 1rem;
             margin-top: 1.5rem;
             width: $blockregionoutsideleftwidth;
         }
-
-        /* Set the width of the outside-right region. */
         #theme-block-region-outside-right {
             margin-left: 1rem;
             margin-top: 1.5rem;
             width: $blockregionoutsiderightwidth;
         }
 
-        /* If the admin configured outside blocks to be shown next to the main content. */
-        .main-inner-outside-nextmaincontent {
+        /* Additionally, if we have a outside-left and / or a outside-right block region,
+           shrink the page's horizontal padding to make use of the available real estate. */
+        #page.drawers:has(.main-inner-outside-left-right),
+        #page.drawers:has(.main-inner-outside-left),
+        #page.drawers:has(.main-inner-outside-right) {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+    }
+}
+
+/* On even larger screens only. */
+@include media-breakpoint-only(lg) {
+    body.limitedwidth {
+        /* If both outside-left and outside-right block regions are present. */
+        #page .main-inner-outside-left-right {
+            /* Limit the maximum width of the left and right region blocks, so that enough space remains for the main content. */
             #theme-block-region-outside-left,
             #theme-block-region-outside-right {
-                /* Disable float (just to be sure). */
-                float: none;
+                max-width: 200px;
             }
         }
 
-        /* If the admin configured outside blocks to be shown next to the main content. */
-        .main-inner-outside-nearwindowedges {
-            /* Float the outside-left block region to the left. */
-            #theme-block-region-outside-left {
-                float: left;
+        /* And use the possible width for the main content if at least one block region is present. */
+        #page .main-inner-outside-left-right,
+        #page .main-inner-outside-left,
+        #page .main-inner-outside-right {
+            .main-inner {
+                width: 100%;
             }
+        }
+    }
+}
 
-            /* Float the outside-right block region to the right. */
-            #theme-block-region-outside-right {
-                float: right;
-            }
+/* From here on, the outside regions will collapse above and below the main content area.
+   We do this again in multiple steps for different screen sizes. */
 
-            /* Clear the outside-bottom + footer regions so that they are shown correctly after the floated regions. */
-            #theme-block-region-outside-bottom,
-            #theme-block-region-footer {
-                clear: both;
+/* On larger screens only. */
+@include media-breakpoint-only(md) {
+    body.limitedwidth #page.drawers {
+        /* If we have a outside-left and / or a outside-right block region. */
+        .main-inner-outside-left-right,
+        .main-inner-outside-left,
+        .main-inner-outside-right {
+            /* And if the admin configured outside blocks to be shown next to the main content. */
+            &.main-inner-outside-nextmaincontent {
+                /* Center the main region content while maintaining full width for the left and right block regions,
+                   thereby positioning the page content in the middle of the page. */
+                display: block;
+                align-self: auto;
             }
+        }
+
+        /* And change the outside-left and outside-right blocks to full width. */
+        #theme-block-region-outside-left,
+        #theme-block-region-outside-right {
+            width: 100%;
         }
     }
 }
 
 /* And on smaller screens. */
 @include media-breakpoint-down(md) {
-    /* Change the outside-left and outside-right blocks to full width (with some horizontal space). */
-    #theme-block-region-outside-left,
-    #theme-block-region-outside-right {
-        padding-left: 15px;
-        padding-right: 15px;
-        width: 100%;
-    }
-    /* And remove their floating. */
-    .main-inner-outside-nearwindowedges {
+    body.limitedwidth {
+        /* If we have a outside-left and / or a outside-right block region. */
+        .main-inner-outside-left-right,
+        .main-inner-outside-left,
+        .main-inner-outside-right {
+            /* And if the admin configured outside blocks to be shown next to the window edges. */
+            &.main-inner-outside-nearwindowedges {
+                /* Set the width of the main region content, the left and right block regions to have a full width */
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* Remove the left and right padding from the main content region and its header so that the main content and the blocks
+               (which are now shown above and below the main content are nicer aligned. */
+            .main-inner {
+                padding-left: 0;
+                padding-right: 0;
+
+                .header-maxwidth,
+                div[role="main"] {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+            }
+        }
+
+        /* Add some margin to the outside blocks regions as they would stick to the viewport edge otherwise at this breakpoint. */
         #theme-block-region-outside-left,
         #theme-block-region-outside-right {
-            float: none;
+            margin-left: .5rem;
+            margin-right: .5rem;
+        }
+    }
+}
+
+/* Last but not least, we control the y-axis. */
+
+/* On smaller screens. */
+@include media-breakpoint-down(lg) {
+    body.limitedwidth #page.drawers {
+        /* If we have a outside-left and / or a outside-right block region. */
+        .main-inner-outside-left-right,
+        .main-inner-outside-left,
+        .main-inner-outside-right {
+            /* Shrink the bottom margin under the main content area. */
+            .main-inner {
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Add some margin above the outside-left block region to avoid that it glues directly to the navbar. */
+        #theme-block-region-outside-left {
+            margin-top: 1.5rem;
         }
     }
 }
