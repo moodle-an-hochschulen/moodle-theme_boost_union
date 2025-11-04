@@ -43,6 +43,15 @@ $string['nochange'] = 'No change';
 $string['forguestsonly'] = 'Only for guests and non-logged-in users';
 $string['showastext'] = 'Show as text';
 $string['showasbadge'] = 'Show as badge';
+$string['imageposition_center_center'] = 'Center horizontally and vertically';
+$string['imageposition_center_top'] = 'Center horizontally, top vertically';
+$string['imageposition_center_bottom'] = 'Center horizontally, bottom vertically';
+$string['imageposition_left_top'] = 'Left horizontally, top vertically';
+$string['imageposition_left_center'] = 'Left horizontally, center vertically';
+$string['imageposition_left_bottom'] = 'Left horizontally, bottom vertically';
+$string['imageposition_right_top'] = 'Right horizontally, top vertically';
+$string['imageposition_right_center'] = 'Right horizontally, center vertically';
+$string['imageposition_right_bottom'] = 'Right horizontally, bottom vertically';
 
 // Settings: General strings.
 $string['dontchange'] = 'Do not change anything';

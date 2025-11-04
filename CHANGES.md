@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-11-03 - Improvement: Use human-understandable values in the background position settings, resolves #1086
 * 2025-11-03 - Improvement: Make the outside-left and outside-right block regions fully responsive, finally moving them out of their experimental state, resolves #266.
 * 2025-10-23 - Feature: Add a type for smart menu item to use mailto links, resolves #702
 
