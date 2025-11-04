@@ -62,7 +62,7 @@
     * Include theme_boost_union/slider template
     * Added additional block regions (including JS for offcanvas region)
     * Added smartmenu js to support third level submenus.
-    * Added blockregions JS to support vertical alignment of outside regions. Included placeholders for the outside left and right regions.
+    * Added blockregions JS to support vertical alignment of outside regions. Included alignmentspacers for the outside left and right regions.
 }}
 {{> theme_boost/head }}
 
@@ -151,7 +151,7 @@
         <div class="main-inner-wrapper {{{maininnerwrapperclass}}} {{{outsideregionsplacement}}}">
             {{#regions.outsideleft.hasblocks}}
                 <section id="theme-block-region-outside-left" class="theme-block-region {{#blockregionsdata.outsideregions.verticaloffset}}invisible{{/blockregionsdata.outsideregions.verticaloffset}}" aria-label="{{#str}}blocks{{/str}}">
-                    {{#blockregionsdata.outsideregions.verticaloffset}}<div class="outside-region-placeholder"></div>{{/blockregionsdata.outsideregions.verticaloffset}}
+                    {{#blockregionsdata.outsideregions.verticaloffset}}<div class="outside-region-alignmentspacer"></div>{{/blockregionsdata.outsideregions.verticaloffset}}
                     {{{ regions.outsideleft.addblockbutton }}}
                     {{{ regions.outsideleft.regionhtml }}}
                  </section>
@@ -266,7 +266,7 @@
 
         {{#regions.outsideright.hasblocks}}
             <section id="theme-block-region-outside-right" class="theme-block-region {{#blockregionsdata.outsideregions.verticaloffset}}invisible{{/blockregionsdata.outsideregions.verticaloffset}}" aria-label="{{#str}}blocks{{/str}}">
-                {{#blockregionsdata.outsideregions.verticaloffset}}<div class="outside-region-placeholder"></div>{{/blockregionsdata.outsideregions.verticaloffset}}
+                {{#blockregionsdata.outsideregions.verticaloffset}}<div class="outside-region-alignmentspacer"></div>{{/blockregionsdata.outsideregions.verticaloffset}}
                 {{{ regions.outsideright.addblockbutton }}}
                 {{{ regions.outsideright.regionhtml }}}
             </section>

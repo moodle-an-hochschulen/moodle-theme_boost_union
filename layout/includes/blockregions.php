@@ -178,12 +178,14 @@ class additionalregions {
     public function addblockregions_additionaldata() {
 
         $blockregionsdata = [];
-        // Find the block regions js need to be added.
-        $outsideregionsalignment = get_config('theme_boost_union', 'blockoutsideregionsverticaloffset');
+
+        // For outside-left and outside-right regions, add the vertical alignment additions if necessary.
+        $outsideregionsalignment = get_config('theme_boost_union', 'outsideregionsverticalalignment');
         if ($outsideregionsalignment == THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSVERTICALALIGN_PAGECONTENT) {
             $blockregionsdata['outsideregions'] = ['verticaloffset' => true];
             $blockregionsdata['includeblockregionsamd'] = true;
         }
+
         return $blockregionsdata;
     }
 
