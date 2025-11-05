@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-11-04 - Bugfix: When upgrading a Boost Union installation from the ancient pre-smart-menu-era to a recent version, Boost Union tried to access a table which does not exist yet, resolves #1085
 * 2025-11-03 - Glitch: upgrade.php did not match install.xml regarding the theme_boost_union_snippets table, resolves #1062
 * 2025-11-03 - Improvement: Use human-understandable values in the background position settings, resolves #1086
 * 2025-11-03 - Improvement: Make the outside-left and outside-right block regions fully responsive, finally moving them out of their experimental state, resolves #266.
