@@ -487,3 +487,54 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | setting | shouldcontain      |
       | yes     | should contain     |
       | no      | should not contain |
+
+  @javascript
+  Scenario Outline: Setting: Outside regions vertical alignment in course pages
+    Given the following config values are set as admin:
+      | config                          | value     | plugin            |
+      | outsideregionsverticalalignment | <setting> | theme_boost_union |
+      | blockregionsforcourse           | <regions> | theme_boost_union |
+    And the following "blocks" exist:
+      | blockname    | contextlevel | reference | pagetypepattern | defaultregion  |
+      | online_users | Course       | C1        | course-view-*   | <block1region> |
+      | myprofile    | Course       | C1        | course-view-*   | <block2region> |
+    And I log in as "admin"
+    And I change viewport size to "large"
+    And I am on "Course 1" course homepage with editing mode on
+    Then ".outside-region-alignmentspacer" "css_element" <alignmentspacer1shouldornot> exist in the "#theme-block-region-<block1region>" "css_element"
+    And ".outside-region-alignmentspacer" "css_element" <alignmentspacer2shouldornot> exist in the "#theme-block-region-<block2region>" "css_element"
+    Then DOM elements "<domelements>" should be vertically aligned
+    And I turn editing mode off
+    And DOM elements "<editoffdomelements>" should be vertically aligned
+
+    Examples:
+      | setting | regions                                  | block1region  | block2region  | alignmentspacer1shouldornot | alignmentspacer2shouldornot | domelements                                                                                                                                                | editoffdomelements                                                                   |
+      | 1       | outside-left,outside-right,content-upper | outside-left  | outside-right | should                      | should                      | #theme-block-region-outside-left .add_block_button,#theme-block-region-outside-right .add_block_button,#theme-block-region-content-upper .add_block_button | #block-region-outside-left,#block-region-outside-right,#page-content .course-content |
+      | 1       | outside-left,content-upper               | outside-left  | content-upper | should                      | should not                  | #theme-block-region-outside-left .add_block_button,#theme-block-region-content-upper .add_block_button                                                     | #block-region-outside-left,#theme-block-region-content-upper                         |
+      | 1       | outside-right,content-upper              | content-upper | outside-right | should not                  | should                      | #theme-block-region-outside-right .add_block_button,#theme-block-region-content-upper .add_block_button                                                    | #block-region-outside-right,#theme-block-region-content-upper                        |
+
+  @javascript
+  Scenario Outline: Setting: Outside regions vertical alignment in dashboard
+    Given the following config values are set as admin:
+      | config                          | value     | plugin            |
+      | outsideregionsverticalalignment | <setting> | theme_boost_union |
+      | blockregionsformydashboard      | <regions> | theme_boost_union |
+    And the following "blocks" exist:
+      | blockname    | contextlevel | reference | pagetypepattern | defaultregion  |
+      | online_users | System       | 1         | my-index        | <block1region> |
+      | myprofile    | System       | 1         | my-index        | <block2region> |
+    And I log in as "admin"
+    And I change viewport size to "large"
+    And I follow "Dashboard"
+    And I turn editing mode on
+    Then ".outside-region-alignmentspacer" "css_element" <alignmentspacer1shouldornot> exist in the "#theme-block-region-<block1region>" "css_element"
+    And ".outside-region-alignmentspacer" "css_element" <alignmentspacer2shouldornot> exist in the "#theme-block-region-<block2region>" "css_element"
+    Then DOM elements "<domelements>" should be vertically aligned
+    And I turn editing mode off
+    And DOM elements "<editoffdomelements>" should be vertically aligned
+
+    Examples:
+      | setting | regions                    | block1region | block2region  | alignmentspacer1shouldornot | alignmentspacer2shouldornot | domelements                                                                                                          | editoffdomelements                                                   |
+      | 1       | outside-left,outside-right | outside-left | outside-right | should                      | should                      | #theme-block-region-outside-left .add_block_button,#theme-block-region-outside-right .add_block_button,#page-content | #block-region-outside-left,#block-region-outside-right,#page-content |
+      | 1       | outside-left,outside-top   | outside-left | outside-top   | should                      | should not                  | #theme-block-region-outside-left .add_block_button,#page-content                                                     | #block-region-outside-left,#page-content                             |
+      | 1       | outside-top,outside-right  | outside-top  | outside-right | should not                  | should                      | #theme-block-region-outside-right .add_block_button,#page-content                                                    | #block-region-outside-right,#page-content                            |

@@ -480,4 +480,53 @@ class behat_theme_boost_union_base_general extends behat_base {
     public function i_am_on_login_page() {
         $this->execute('behat_general::i_visit', ['/login/index.php']);
     }
+
+    /**
+     * Check if the given elements are vertically aligned.
+     *
+     * This function verifies that multiple DOM elements have the same vertical position
+     * (same top coordinate) in the browser viewport. It's particularly useful for testing
+     * that block regions or other layout elements are properly aligned after JavaScript
+     * calculations have been applied.
+     *
+     * @Then /^DOM elements "(?P<s>(?:[^"]|\\")*)" should be vertically aligned$/
+     *
+     * @param string $elements List of CSS selectors separated by commas (e.g., "#element1,#element2,.class3")
+     * @throws ExpectationException If elements don't exist or are not vertically aligned
+     */
+    public function dom_elements_are_vertically_aligned($elements) {
+        // Split the comma-separated list of selectors into an array.
+        $elements = explode(',', $elements);
+
+        // Store the reference top position from the first element.
+        $top = null;
+
+        // Iterate through each selector to check alignment.
+        foreach ($elements as $selector) {
+            // First, verify that the element actually exists in the DOM.
+            $elementexists = "return document.querySelector('$selector')";
+            $elementexists = $this->evaluate_script($elementexists);
+            if ($elementexists === null) {
+                throw new ExpectationException('The element \'' . $selector . '\' does not exist', $this->getSession());
+            }
+
+            // Get the top position of the current element relative to the viewport.
+            $js = "return document.querySelector('$selector').getBoundingClientRect().top";
+            $newtop = $this->evaluate_script($js);
+
+            // Set the reference position from the first element.
+            if ($top === null) {
+                $top = $newtop;
+            } else {
+                // Compare subsequent elements' top positions with the reference.
+                // All elements must have exactly the same top position to be considered aligned.
+                if ($newtop !== $top) {
+                    throw new ExpectationException('The elements are not vertically aligned', $this->getSession());
+                }
+
+                // Update reference for next comparison (though it should be the same).
+                $top = $newtop;
+            }
+        }
+    }
 }

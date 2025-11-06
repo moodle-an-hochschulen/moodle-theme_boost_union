@@ -2479,6 +2479,24 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
         $tab->add($setting);
 
+        // Setting: Outside regions vertical alignment.
+        $outsideregionsalignmentoptions = [
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSVERTICALALIGN_DEFAULT =>
+                        get_string('outsideregionsverticalaligndefault', 'theme_boost_union', null, false),
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSVERTICALALIGN_PAGECONTENT =>
+                        get_string('outsideregionsverticalalignpagecontent', 'theme_boost_union', null, false), ];
+        $name = 'theme_boost_union/outsideregionsverticalalignment';
+        $title = get_string('outsideregionsverticalalignment', 'theme_boost_union', null, true);
+        $description = get_string('outsideregionsverticalalignment_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSVERTICALALIGN_DEFAULT,
+            $outsideregionsalignmentoptions
+        );
+        $tab->add($setting);
+
         // Create site home right-hand blocks drawer behaviour heading.
         $name = 'theme_boost_union/sitehomerighthandblockdrawerbehaviour';
         $title = get_string('sitehomerighthandblockdrawerbehaviour', 'theme_boost_union', null, true);

@@ -702,6 +702,11 @@ $string['outsideregionsplacement'] = 'Outside regions horizontal placement';
 $string['outsideregionsplacement_desc'] = 'With this setting, you can control if, on larger screens, the \'Outside (left)\' and \'Outside (right)\' block regions should be placed near the main content area or rather near the window edges.';
 $string['outsideregionsplacementnextmaincontent'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions next to the main content area';
 $string['outsideregionsplacementnearwindowedges'] = 'Display \'Outside (left)\' and \'Outside (right)\' regions near the window edges';
+// ... ... Setting: Outside regions vertical alignment.
+$string['outsideregionsverticalalignment'] = 'Outside regions vertical alignment';
+$string['outsideregionsverticalalignment_desc'] = 'With this setting, you can control if, on larger screens, the \'Outside (left)\' and \'Outside (right)\' block regions should be vertically aligned with the page content or not.';
+$string['outsideregionsverticalaligndefault'] = 'None';
+$string['outsideregionsverticalalignpagecontent'] = 'Align \'Outside (left)\' and \'Outside (right)\' regions vertically with the page content';
 // ... Section: Site home right-hand block drawer behaviour.
 $string['sitehomerighthandblockdrawerbehaviour'] = 'Site home right-hand block drawer';
 // ... ... Setting: Show right-hand block drawer of site home on visit.
