@@ -1553,18 +1553,6 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
             $defaultpurpose = MOD_PURPOSE_OTHER;
         }
 
-        // Compose selectors for blocks.
-        $blocksscss = [];
-        // If the admin wanted us to tint the timeline block as well.
-        if (get_config('theme_boost_union', 'timelinetintenabled') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-            $blocksscss[] = '.block_timeline .theme-boost-union-mod_' . $modname . '.activityiconcontainer img';
-        }
-        // If the admin wanted us to tint the upcoming events block as well.
-        if (get_config('theme_boost_union', 'upcomingeventstintenabled') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-            $blocksscss[] = '.block_calendar_upcoming .theme-boost-union-mod_' . $modname . '.activityiconcontainer img';
-        }
-        $blocksscss = implode(', ', $blocksscss);
-
         // If the activity purpose setting is set and differs from the activity's default purpose.
         $activitypurpose = get_config('theme_boost_union', 'activitypurpose' . $modname);
         if ($activitypurpose && $activitypurpose != $defaultpurpose) {
@@ -1573,11 +1561,7 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
             $scss .= '.modchoosercontainer .modicon_' . $modname . '.activityiconcontainer img,';
             $scss .= '#page-header .modicon_' . $modname . '.activityiconcontainer img,';
             $scss .= '#page-course-overview #' . $modname . '_overview_title .activityiconcontainer img';
-            // Add CSS for the configured blocks.
-            if (strlen($blocksscss) > 0) {
-                $scss .= ', ' . $blocksscss;
-            }
-            $scss .= ' {';
+            $scss .= '{';
             // If the purpose is now different than 'other', change the filter to the new color (and force it with important).
             if ($activitypurpose != MOD_PURPOSE_OTHER) {
                 $scss .= '@include recolor-icon-important(map-get($activity-icon-colors, "' . $activitypurpose . '"), 1);';
@@ -1587,20 +1571,6 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
                 $scss .= 'filter: none !important;';
             }
             $scss .= '}';
-
-            // Otherwise, if the purpose is unchanged.
-        } else {
-            // Add CSS for the configured blocks.
-            if (strlen($blocksscss) > 0) {
-                $scss .= $blocksscss . '{ ';
-
-                // If the purpose is now different than 'other', set the filter to tint the icon.
-                if ($activitypurpose != MOD_PURPOSE_OTHER) {
-                    $scss .= '@include recolor-icon-important(map-get($activity-icon-colors, "' . $defaultpurpose . '"), 1);';
-                }
-
-                $scss .= '}';
-            }
         }
     }
     return $scss;

@@ -428,19 +428,6 @@ $string['categorylistingpresentation_nochange'] = 'Designer\'s nightmare (unchan
 $string['categorylistingpresentation_boxlist'] = 'List of boxes';
 $string['categorylistingpresentation_note'] = 'Please note: If you enabled the \'Course listing presentation\' setting above, we recommend to enable this setting as well. Both were designed to work together.';
 
-// Settings: Blocks tab.
-// The string for this tab is the same as on the 'Feel' page.
-// ... Section: Timeline block.
-$string['timelineheading'] = 'Timeline block';
-// Setting: Tint activity icons in the timeline block.
-$string['timelinetintenabled'] = 'Tint timeline activity icons';
-$string['timelinetintenabled_desc'] = 'With this setting, you can tint the activity icons in the timeline block based on the activity purposes. By default, Moodle core displays them just as black icons.';
-// ... Section: Upcoming events block.
-$string['upcomingeventsheading'] = 'Upcoming events block';
-// Setting: Tint activity icons in the upcoming events block.
-$string['upcomingeventstintenabled'] = 'Tint upcoming events activity icons';
-$string['upcomingeventstintenabled_desc'] = 'With this setting, you can tint the activity icons in the upcoming events block based on the activity purposes. By default, Moodle core displays them just as black icons.';
-
 // Settings: Course tab.
 $string['coursetab'] = 'Course';
 // ... Section: Course header.
