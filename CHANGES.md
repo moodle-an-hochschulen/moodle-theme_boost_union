@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-10-26 - Upgrade: Adopt changes to settings.php from MDL-80556
 * 2025-10-26 - Prepare compatibility for Moodle 5.1.
 
 ### v5.0-r13
