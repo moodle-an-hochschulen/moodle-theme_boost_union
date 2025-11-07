@@ -249,26 +249,6 @@ In this section, you can modify the look & feel of the course listing on the cat
 
 With this setting, you can modify the look & feel of the category listing on the category index pages and on site home. As an alternative to the way how Moodle core presents them, you can present the category listing as a refreshed list of boxes.
 
-#### Tab "Blocks"
-
-##### Timeline block
-
-###### Tint timeline activity icons
-
-With this setting, you can tint the activity icons in the timeline block based on the activity purposes. By default, Moodle core displays them just as black icons.
-
-##### Upcoming events block
-
-###### Tint upcoming events activity icons
-
-With this setting, you can tint the activity icons in the upcoming events block based on the activity purposes. By default, Moodle core displays them just as black icons.
-
-##### Recently accessed items block
-
-###### Tint recently accessed items activity icons
-
-With this setting, you can tint the activity icons in the recently accessed items block based on the activity purposes. By default, Moodle core displays them just as black icons.
-
 ##### Activities block
 
 ###### Tint activities activity icons

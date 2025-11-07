@@ -716,6 +716,17 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025041429, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2025100600) {
+        // Remove the timelinetintenabled setting from Boost Union.
+        unset_config('timelinetintenabled', 'theme_boost_union');
+
+        // Remove the upcomingeventstintenabled setting from Boost Union.
+        unset_config('upcomingeventstintenabled', 'theme_boost_union');
+
+        // Boost_union savepoint reached.
+        upgrade_plugin_savepoint(true, 2025100600, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
