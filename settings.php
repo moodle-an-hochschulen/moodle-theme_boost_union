@@ -2475,19 +2475,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
         $tab->add($setting);
 
-        // Setting: Block region width for Footer region.
-        $name = 'theme_boost_union/blockregionfooterwidth';
-        $title = get_string('blockregionfooterwidth', 'theme_boost_union', null, true);
-        $description = get_string('blockregionfooterwidth_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect(
-            $name,
-            $title,
-            $description,
-            THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH,
-            $outsideregionswidthoptions
-        );
-        $tab->add($setting);
-
         // Setting: Outside regions horizontal placement.
         $outsideregionsplacementoptions = [
             // Don't use string lazy loading (= false) because the string will be directly used and would produce a
@@ -2505,6 +2492,26 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $description,
             THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT,
             $outsideregionsplacementoptions
+        );
+        $tab->add($setting);
+
+        // Create footer regions heading.
+        $name = 'theme_boost_union/footerregionsheading';
+        $title = get_string('footerregionsheading', 'theme_boost_union', null, true);
+        $description = get_string('footerregionsheading_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, $description);
+        $tab->add($setting);
+
+        // Setting: Block region width for Footer region.
+        $name = 'theme_boost_union/blockregionfooterwidth';
+        $title = get_string('blockregionfooterwidth', 'theme_boost_union', null, true);
+        $description = get_string('blockregionfooterwidth_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH,
+            $outsideregionswidthoptions
         );
         $tab->add($setting);
 
