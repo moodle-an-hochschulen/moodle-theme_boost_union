@@ -112,11 +112,11 @@ class additionalregions {
             $maininnerwrapperclass = 'main-inner-outside-none';
         }
 
-        // If outside-regions wrap below main content is enabled.
-        $outsideregionswrap = get_config('theme_boost_union', 'blockregionoutsidewrap');
-        if ($outsideregionswrap == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-            // Include class in main inner wrapper to wrap the outside regions below main content.
-            $maininnerwrapperclass .= ' left-region-nextmaincontent ';
+        // If outside-regions wrap both below main content is enabled.
+        $outsideregionswrap = get_config('theme_boost_union', 'outsideregionswrap');
+        if ($outsideregionswrap == THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWRAPPING_BOTHBELOW) {
+            // Include class in main inner wrapper to wrap both outside regions below main content.
+            $maininnerwrapperclass .= ' main-inner-outside-both-below-maincontent ';
         }
 
         return $maininnerwrapperclass;
