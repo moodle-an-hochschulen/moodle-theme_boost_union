@@ -2263,7 +2263,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/unaddableblocks';
         $title = get_string('unaddableblocks', 'theme_boost', null, true);
         $description = get_string('unaddableblocks_desc', 'theme_boost', null, true);
-        $default = 'navigation,settings,course_list,section_links';
+        $default = 'navigation,settings,course_list';
         $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_TEXT);
         $tab->add($setting);
 
