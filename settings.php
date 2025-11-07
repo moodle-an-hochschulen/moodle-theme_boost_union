@@ -2484,11 +2484,22 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
         $tab->add($setting);
 
-        // Setting: Wrap outside left and right regions below maincontent (on mobile).
-        $name = 'theme_boost_union/blockregionoutsidewrap';
+        // Setting: Outside regions wrapping.
+        $name = 'theme_boost_union/outsideregionswrap';
+        $outsideregionswrappingoptions = [
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWRAPPING_ABOVEBELOW =>
+                        get_string('outsideregionswrap_abovebelow', 'theme_boost_union', null, false),
+                THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWRAPPING_BOTHBELOW =>
+                        get_string('outsideregionswrap_bothbelow', 'theme_boost_union', null, false), ];
         $title = get_string('outsideregionswrap', 'theme_boost_union', null, true);
         $description = get_string('outsideregionswrap_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWRAPPING_ABOVEBELOW,
+            $outsideregionswrappingoptions
+        );
         $tab->add($setting);
 
         // Create footer regions heading.

@@ -1286,6 +1286,25 @@ body.theme-boost-union-commincourse {
     }
 }
 
+/* On larger screens downwards. */
+@include media-breakpoint-down(lg) {
+    body.limitedwidth #page.drawers {
+        /* If configured, wrap the left and right outside regions below the main content. */
+        .main-inner-outside-both-below-maincontent {
+            &.main-inner-outside-left-right,
+            &.main-inner-outside-left {
+                display: grid;
+                #theme-block-region-outside-left {
+                    order: 1;
+                }
+                #theme-block-region-outside-right {
+                    order: 2;
+                }
+            }
+        }
+    }
+}
+
 /* And on smaller screens. */
 @include media-breakpoint-down(md) {
     body.limitedwidth {
@@ -1319,24 +1338,6 @@ body.theme-boost-union-commincourse {
         #theme-block-region-outside-right {
             margin-left: .5rem;
             margin-right: .5rem;
-        }
-
-        /* Wrap the left and right outside regions below the main content. */
-        .left-region-nextmaincontent {
-            &.main-inner-outside-left-right.main-inner-outside-nextmaincontent,
-            &.main-inner-outside-left.main-inner-outside-nextmaincontent,
-            &.main-inner-outside-right.main-inner-outside-nextmaincontent,
-            &.main-inner-outside-left-right.main-inner-outside-nearwindowedges,
-            &.main-inner-outside-left.main-inner-outside-nearwindowedges,
-            &.main-inner-outside-right.main-inner-outside-nearwindowedges {
-                display: grid;
-                #theme-block-region-outside-left {
-                    order: 1;
-                }
-                #theme-block-region-outside-right {
-                    order: 2;
-                }
-            }
         }
     }
 }

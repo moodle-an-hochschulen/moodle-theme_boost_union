@@ -26,6 +26,7 @@ require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 
 use Behat\Mink\Exception\ExpectationException;
 use Behat\Mink\Exception\DriverException;
+use Behat\Mink\Exception\ElementNotFoundException;
 
 /**
  * Class behat_theme_boost_union_base_general
@@ -527,6 +528,52 @@ class behat_theme_boost_union_base_general extends behat_base {
                 // Update reference for next comparison (though it should be the same).
                 $top = $newtop;
             }
+        }
+    }
+
+    /**
+     * Checks the visual order of elements before or after.
+     *
+     * @Then the visual order of :arg1 :arg2 should be :arg3 :arg4 :arg5
+     *
+     * @param string $selector1 The first element selector.
+     * @param string $type1 The type of the first element selector.
+     * @param string $order The expected order (before or after).
+     * @param string $selector2 The second element selector.
+     * @param string $type2 The type of the second element selector.
+     */
+    public function element_should_display_order($selector1, $type1, $order, $selector2, $type2) {
+        $element1 = $this->find($type1, $selector1);
+        $element2 = $this->find($type2, $selector2);
+
+        if (!$element1) {
+            throw new ElementNotFoundException($this->getSession(), 'element', $type1, $selector1);
+        }
+
+        if (!$element2) {
+            throw new ElementNotFoundException($this->getSession(), 'element', $type2, $selector2);
+        }
+
+        $script = "
+            return (function() {
+                const el1 = document.querySelector('$selector1');
+                const el2 = document.querySelector('$selector2');
+                const order1 = parseInt(window.getComputedStyle(el1).order);
+                const order2 = parseInt(window.getComputedStyle(el2).order);
+                return order1 < order2 ? true : false;
+            })();";
+
+        $result = $this->evaluate_script($script);
+
+        if (($order === 'before' && $result == false) || ($order === 'after' && $result == true)) {
+            throw new Exception(sprintf(
+                'The element "%s" (%s) is not displayed %s the element "%s" (%s).',
+                $selector1,
+                $type1,
+                $order,
+                $selector2,
+                $type2
+            ));
         }
     }
 }

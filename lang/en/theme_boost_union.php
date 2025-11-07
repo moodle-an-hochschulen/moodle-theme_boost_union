@@ -710,9 +710,11 @@ $string['outsideregionsverticalalignment'] = 'Outside regions vertical alignment
 $string['outsideregionsverticalalignment_desc'] = 'With this setting, you can control if, on larger screens, the \'Outside (left)\' and \'Outside (right)\' block regions should be vertically aligned with the page content or not.';
 $string['outsideregionsverticalaligndefault'] = 'None';
 $string['outsideregionsverticalalignpagecontent'] = 'Align \'Outside (left)\' and \'Outside (right)\' regions vertically with the page content';
-// ... ... Setting: Wrap outside left and right regions below main content.
-$string['outsideregionswrap'] = 'Wrap outside left and right regions below main content';
-$string['outsideregionswrap_desc'] = 'With this setting, you can control if the \'Outside (left)\' and \'Outside (right)\' block regions should be wrapped below the main content area on smaller screens.';
+// ... ... Setting: Outside regions wrapping.
+$string['outsideregionswrap'] = 'Outside regions wrapping';
+$string['outsideregionswrap_desc'] = 'With this setting, you can control how, on smaller screens, the \'Outside (left)\' and \'Outside (right)\' block regions should be wrapped in relation to the main content area.';
+$string['outsideregionswrap_abovebelow'] = 'Wrap outside regions above and below main content';
+$string['outsideregionswrap_bothbelow'] = 'Wrap outside regions both below main content';
 // ... Section: Site home right-hand block drawer behaviour.
 $string['sitehomerighthandblockdrawerbehaviour'] = 'Site home right-hand block drawer';
 // ... ... Setting: Show right-hand block drawer of site home on visit.
