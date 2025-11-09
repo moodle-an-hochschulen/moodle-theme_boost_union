@@ -538,3 +538,23 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | 1       | outside-left,outside-right | outside-left | outside-right | should                      | should                      | #theme-block-region-outside-left .add_block_button,#theme-block-region-outside-right .add_block_button,#page-content | #block-region-outside-left,#block-region-outside-right,#page-content |
       | 1       | outside-left,outside-top   | outside-left | outside-top   | should                      | should not                  | #theme-block-region-outside-left .add_block_button,#page-content                                                     | #block-region-outside-left,#page-content                             |
       | 1       | outside-top,outside-right  | outside-top  | outside-right | should not                  | should                      | #theme-block-region-outside-right .add_block_button,#page-content                                                    | #block-region-outside-right,#page-content                            |
+
+  @javascript
+  Scenario Outline: Setting: Outside regions wrapping
+    Given the following config values are set as admin:
+      | config                | value                      | plugin            |
+      | outsideregionswrap    | <setting>                  | theme_boost_union |
+      | blockregionsforcourse | outside-left,outside-right | theme_boost_union |
+    And the following "blocks" exist:
+      | blockname    | contextlevel | reference | pagetypepattern | defaultregion |
+      | online_users | Course       | C1        | course-view-*   | outside-left  |
+      | myprofile    | Course       | C1        | course-view-*   | outside-right |
+    When I am on the "Course 1" "Course" page logged in as "student1"
+    Then the "class" attribute of ".main-inner-wrapper" "css_element" <shouldcontain> "main-inner-outside-both-below-maincontent"
+    And I change window size to "mobile"
+    Then the visual order of ".main-inner#topofscroll" "css_element" should be <beforeafter> "#theme-block-region-outside-left" "css_element"
+
+    Examples:
+      | setting | shouldcontain      | beforeafter |
+      | 1       | should contain     | before      |
+      | 0       | should not contain | after       |

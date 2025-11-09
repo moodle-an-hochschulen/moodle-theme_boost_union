@@ -1286,6 +1286,25 @@ body.theme-boost-union-commincourse {
     }
 }
 
+/* On larger screens downwards. */
+@include media-breakpoint-down(lg) {
+    body.limitedwidth #page.drawers {
+        /* If configured, wrap the left and right outside regions below the main content. */
+        .main-inner-outside-both-below-maincontent {
+            &.main-inner-outside-left-right,
+            &.main-inner-outside-left {
+                display: grid;
+                #theme-block-region-outside-left {
+                    order: 1;
+                }
+                #theme-block-region-outside-right {
+                    order: 2;
+                }
+            }
+        }
+    }
+}
+
 /* And on smaller screens. */
 @include media-breakpoint-down(md) {
     body.limitedwidth {
