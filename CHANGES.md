@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.0-r12
 
 * 2025-11-07 - Improvement: Improve wrapping of the outside-left and outside-right regions, resolves #255.
 * 2025-11-07 - Upstream change: Adopt changes from MDL-85774 into loginform.mustache, resolves #1093
