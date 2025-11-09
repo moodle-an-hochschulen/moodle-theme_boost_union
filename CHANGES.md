@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r28
 
 * 2025-11-07 - Upstream change: Adopt changes from MDL-85774 into loginform.mustache, resolves #1093
 * 2025-11-04 - Bugfix: When upgrading a Boost Union installation from the ancient pre-smart-menu-era to a recent version, Boost Union tried to access a table which does not exist yet, resolves #1085
