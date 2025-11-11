@@ -90,6 +90,8 @@ const registerEventListeners = (smartMenu) => {
         // smart menu. Therefore, we need to prevent the propagation of this event and then manually call the
         // carousel transition.
         e.stopPropagation();
+        e.preventDefault();
+
         // The id of the targeted carousel item.
         const targetedCarouselItemId = e.target.dataset.carouselTargetId;
         const targetedCarouselItem = smartMenu.querySelector('#' + targetedCarouselItemId);

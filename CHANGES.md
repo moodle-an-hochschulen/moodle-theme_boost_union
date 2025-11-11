@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-11-11 - Upstream change: Adopt changes from MDL-85418 to submenu.js, resolves #1095.
+
 ### v5.0-r12
 
 * 2025-11-07 - Improvement: Improve wrapping of the outside-left and outside-right regions, resolves #255.
