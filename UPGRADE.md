@@ -36,4 +36,4 @@ Visual checks
 -------------
 
 * As this is a theme, you should have a close look at all functionalities of the theme and all major Moodle GUI pages to make sure that everything is displayed nicely and correctly.
-* Within the SCSS snippets feature, several snippets are shipped as built-in snippets and are provided as well in the Boost Union SCSS repository. These snippets should be checked and updated if necessary.
+* Within the SCSS snippets feature, several snippets are shipped as built-in snippets and are provided as well in the Boost Union SCSS repository. These snippets should be checked and updated if necessary and, in any case, the tested version should be raised in each snippet.
