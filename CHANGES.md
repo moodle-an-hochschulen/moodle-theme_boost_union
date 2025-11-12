@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-10-26 - Upgrade: Fix Behat test which tests the activity icon branding feature after the activity chooser restructurings on 5.1.
 * 2025-10-26 - Upgrade: Verify the built-in SCSS snippets on 5.1.
 * 2025-10-26 - Upgrade: Remove the timelinetintenabled and upcomingeventstintenabled settings from Boost Union as the timeline block and the upcoming events blocks have colored icons from Moodle 5.1 on
 * 2025-10-26 - Upgrade: Adopt changes to settings.php from MDL-80556
