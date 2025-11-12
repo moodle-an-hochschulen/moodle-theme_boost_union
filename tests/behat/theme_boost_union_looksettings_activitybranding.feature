@@ -21,9 +21,9 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
     And I click on "Add content" "button" in the "New section" "section"
     And I click on "Activity or resource" "button" in the "New section" "section"
     # First, we test that the default filter is _not_ set anymore.
-    Then DOM element ".chooser-container .activityiconcontainer.modicon_<modname> img" should not have a CSS filter close to hex color "<originalhex>"
+    Then DOM element "[data-region=chooser-container] [data-internal=<modname>] .activityiconcontainer img" should not have a CSS filter close to hex color "<originalhex>"
     # And then we test if the applied filter is close enough to the hex color.
-    And DOM element ".chooser-container .activityiconcontainer.modicon_<modname> img" should have a CSS filter close enough to hex color "<colorhex>"
+    And DOM element "[data-region=chooser-container] [data-internal=<modname>] .activityiconcontainer img" should have a CSS filter close enough to hex color "<colorhex>"
 
     # Unfortunately, we can only test 5 out of 7 purpose types as Moodle does does not ship with any activity with the
     # administration and interface types. But this should be an acceptable test coverage anyway.
@@ -77,7 +77,7 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
     Then DOM element ".activity.modtype_<mod> .activityiconcontainer.courseicon img" should have a CSS filter close enough to hex color "<colorhex>"
     And I click on "Add content" "button" in the "New section" "section"
     And I click on "Activity or resource" "button" in the "New section" "section"
-    Then DOM element ".chooser-container .activityiconcontainer.modicon_<mod> img" should have a CSS filter close enough to hex color "<colorhex>"
+    Then DOM element "[data-region=chooser-container] [data-internal=<mod>] .activityiconcontainer img" should have a CSS filter close enough to hex color "<colorhex>"
     And I am on the "Test name" "<mod> activity" page
     Then DOM element "#page-header .modicon_<mod>.activityiconcontainer img" should have a CSS filter close enough to hex color "<colorhex>"
     And I am on the "Course 1" "course > activities" page
@@ -107,7 +107,7 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
     Then DOM element ".activity.modtype_assign .activityiconcontainer.courseicon img" should have computed style "filter" "none"
     And I click on "Add content" "button" in the "New section" "section"
     And I click on "Activity or resource" "button" in the "New section" "section"
-    Then DOM element ".chooser-container .activityiconcontainer.modicon_assign img" should have computed style "filter" "none"
+    Then DOM element "[data-region=chooser-container] [data-internal=assign] .activityiconcontainer img" should have computed style "filter" "none"
     And I am on the "Test name" "assign activity" page
     Then DOM element "#page-header .modicon_assign.activityiconcontainer img" should have computed style "filter" "none"
     And I am on the "Course 1" "course > activities" page
