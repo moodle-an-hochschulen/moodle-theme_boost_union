@@ -2572,9 +2572,6 @@ function theme_boost_union_manipulate_hooks() {
     // and Boost Union would have to compose the manipulated hooks again on the next "real" page load.
     // This would result in longer page load times for real end users.
 
-    // Get Moodle core's hookcallbacks cache.
-    $corecache = \cache::make('core', 'hookcallbacks');
-
     // Get Boost Union's hookoverrides cache.
     $bucache = \cache::make('theme_boost_union', 'hookoverrides');
 

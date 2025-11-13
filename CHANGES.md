@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-11-12 - Improvement: Lighten the hook manipulation on 5.0, resolves #1098.
 * 2025-11-11 - Upstream change: Adopt changes from MDL-85418 to submenu.js, resolves #1095.
 
 ### v5.0-r12
