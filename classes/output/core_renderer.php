@@ -653,37 +653,94 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        // Process the hooks as defined by Moodle core.
-        // If Boost Union is configured to suppress a particular footer element, the hook has been disabled by
-        // theme_boost_union_manipulate_books().
-        $hook = new before_standard_footer_html_generation($this);
-        di::get(hook_manager::class)->dispatch($hook);
+        // Require own locallib.php.
+        require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
-        // Give plugins an opportunity to add any footer elements (for legacy plugins).
-        // Originally, this is realized with $hook->process_legacy_callbacks();
-        // However, we duplicate the code here and use the logic from Boost Union which has been used there up to v4.3.
-        // Get the array of plugins with the standard_footer_html() function which can be suppressed by Boost Union.
-        $pluginswithfunction = get_plugins_with_function(function: 'standard_footer_html', migratedtohook: true);
-        // Iterate over all plugins.
-        foreach ($pluginswithfunction as $plugintype => $plugins) {
-            foreach ($plugins as $pluginname => $function) {
-                // If the given plugin's output is suppressed by Boost Union's settings.
-                $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_' . $plugintype . '_' .
-                        $pluginname);
-                if (isset($suppresssetting) && $suppresssetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                    // Skip the plugin.
-                    continue;
+        // Check if there are any footersuppressstandardfooter_ settings set to YES.
+        // If not, we can use the standard Moodle core hook dispatch mechanism for better performance.
+        // We cache this check in the application cache to avoid iterating over hundreds of Boost Union settings on every page load.
+        $cache = \cache::make('theme_boost_union', 'hooksuppress');
+        $cachedhashooksuppresssettings = $cache->get('hashooksuppresssettings');
 
-                    // Otherwise.
-                } else {
-                    // Add the output.
-                    $hook->add_html($function());
-                }
-            }
+        // If the cache is empty, call the helper function to check all settings and cache the result.
+        if ($cachedhashooksuppresssettings === false) {
+            $hashooksuppresssettings = theme_boost_union_reset_hooksuppress_cache();
+        } else {
+            // Convert cached integer back to boolean.
+            $hashooksuppresssettings = (bool)$cachedhashooksuppresssettings;
         }
 
-        // Gather the output.
-        $output = $hook->get_output();
+        // If there are no suppressed footer settings, use the standard Moodle core renderer mechanism.
+        if (!$hashooksuppresssettings) {
+            // Create the hook and dispatch it normally.
+            $hook = new before_standard_footer_html_generation($this);
+            $hook->process_legacy_callbacks();
+            di::get(hook_manager::class)->dispatch($hook);
+
+            // Gather the output.
+            $output = $hook->get_output();
+
+            // Otherwise, we need to suppress specific plugin outputs.
+        } else {
+            // Process the hooks as defined by Moodle core.
+            // But, instead of letting Moodle core dispatch the hook and call all callbacks,
+            // we create an empty hook and manually call only the callbacks which are not suppressed by Boost Union
+            // or by $CFG->hooks_callback_overrides. This is the only way to suppress specific plugin outputs in the footer
+            // without modifying the plugins themselves.
+            $hook = new before_standard_footer_html_generation($this);
+
+            // Get all callbacks for this hook.
+            $callbacks = di::get(hook_manager::class)->get_callbacks_for_hook(
+                'core\\hook\\output\\before_standard_footer_html_generation'
+            );
+
+            // Iterate over all callbacks and call only those which are not suppressed.
+            foreach ($callbacks as $callback) {
+                // Check if the callback is disabled via $CFG->hooks_callback_overrides.
+                if (theme_boost_union_is_callback_disabled_in_config($callback['callback'])) {
+                    // Skip this callback as it's disabled in config.php.
+                    continue;
+                }
+
+                // Extract the pluginname.
+                $pluginname = theme_boost_union_get_pluginname_from_callbackname($callback);
+
+                // Check if the given plugin's output is suppressed by Boost Union's settings.
+                $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_' . $pluginname);
+
+                // If the plugin's output is NOT suppressed by Boost Union.
+                if (!isset($suppresssetting) || $suppresssetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                    // Call the callback manually.
+                    call_user_func($callback['callback'], $hook);
+                }
+            }
+
+            // Give plugins an opportunity to add any footer elements (for legacy plugins).
+            // Originally, this is realized with $hook->process_legacy_callbacks();
+            // However, we duplicate the code here and use the logic from Boost Union which has been used there up to v4.3.
+            // Get the array of plugins with the standard_footer_html() function which can be suppressed by Boost Union.
+            $pluginswithfunction = get_plugins_with_function(function: 'standard_footer_html', migratedtohook: true);
+            // Iterate over all plugins.
+            foreach ($pluginswithfunction as $plugintype => $plugins) {
+                foreach ($plugins as $pluginname => $function) {
+                    // If the given plugin's output is suppressed by Boost Union's settings.
+                    $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_' . $plugintype . '_' .
+                            $pluginname);
+                    if (isset($suppresssetting) && $suppresssetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                        // Skip the plugin.
+                        continue;
+
+                        // Otherwise.
+                    } else {
+                        // Add the output.
+                        $hook->add_html($function());
+                    }
+                }
+            }
+
+            // Gather the output.
+            $output = $hook->get_output();
+        }
 
         // If the theme switcher links are not suppressed by Boost Union's settings.
         $suppressthemeswitchsetting = get_config('theme_boost_union', 'footersuppressthemeswitch');

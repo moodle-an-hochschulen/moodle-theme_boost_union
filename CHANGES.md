@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-10-26 - Upgrade: Replace Boost Union's hook manipulation which broke on 5.1 finally with a more downstream solution to suppress hook output.
 * 2025-10-26 - Upgrade: Adopt changes to 'Add a block' area CSS selectors from MDL-85281
 * 2025-10-26 - Upgrade: Fix Behat test which tests the activity icon branding feature after the activity chooser restructurings on 5.1.
 * 2025-10-26 - Upgrade: Verify the built-in SCSS snippets on 5.1.
