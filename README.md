@@ -741,6 +741,21 @@ Due to the way how some Boost Union features had to be built, you have to be awa
   Using the Boost Union settings and overriding hooks manually in config.php at the same time should work, but is not officially supported and tested by Boost Union.
 
 
+Expert settings for config.php
+------------------------------
+
+There are expert settings without GUI setting which can be defined in config.php to customize Boost Union in expert scenarios.
+
+* `$CFG->theme_boost_union_extscssgithubapiurl`:\
+  With this setting, you can override the default GitHub API URL which is used to fetch external SCSS code from private GitHub repositories.
+  This is necessary if you want to use a GitHub Enterprise server instead of the public GitHub server.
+  The setting must contain the base URL of the GitHub API without a trailing slash, for example 'https://github.example.com/api/v3'.
+  If this setting is not set, Boost Union will use the default GitHub API URL 'https://api.github.com'.
+
+Please note that these expert settings might not be covered by Boost Union's automated tests and upstrade tests.
+If you encounter any problem with one of these expert settings, please raise an issue on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues.
+
+
 Support for other companion plugins
 -----------------------------------
 
