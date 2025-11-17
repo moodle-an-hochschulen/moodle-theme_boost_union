@@ -2419,7 +2419,13 @@ function theme_boost_union_get_external_scss($type) {
         // Compose the request URL for the Github API.
         $ghuser = get_config('theme_boost_union', 'extscssgithubuser');
         $ghrepo = get_config('theme_boost_union', 'extscssgithubrepo');
-        $ghurl = 'https://api.github.com/repos/' . $ghuser . '/' . $ghrepo . '/contents/' . $ghfilepath;
+        // If a custom Github API URL is set in config.php, use it. Otherwise, use the default Github API URL.
+        if (isset($CFG->theme_boost_union_githubapiurl) && !empty($CFG->theme_boost_union_githubapiurl)) {
+            $ghapiurl = $CFG->theme_boost_union_githubapiurl;
+        } else {
+            $ghapiurl = 'https://api.github.com';
+        }
+        $ghurl = $ghapiurl . '/repos/' . $ghuser . '/' . $ghrepo . '/contents/' . $ghfilepath;
 
         // Get the download URL from the Github API.
         $curl2 = new curl();
