@@ -750,7 +750,7 @@ Expert settings for config.php
 
 There are expert settings without GUI setting which can be defined in config.php to customize Boost Union in expert scenarios.
 
-* `$CFG->theme_boost_union_extscssgithubapiurl`:\
+* `$CFG->theme_boost_union_githubapiurl`:\
   With this setting, you can override the default GitHub API URL which is used to fetch external SCSS code from private GitHub repositories.
   This is necessary if you want to use a GitHub Enterprise server instead of the public GitHub server.
   The setting must contain the base URL of the GitHub API without a trailing slash, for example 'https://github.example.com/api/v3'.
