@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-11-19 - Tests: Further Behat runtime optimisations, helps to resolve #839
+
 ### v5.0-r13
 
 * 2025-11-19 - Backport: Replace Boost Union's hook manipulation with a more downstream solution to suppress hook output, resolves #1101.

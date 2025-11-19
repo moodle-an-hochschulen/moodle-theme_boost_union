@@ -4,7 +4,6 @@ Feature: Configuring the theme_boost_union plugin for the "Page layouts" tab on 
   As admin
   I need to be able to configure the theme Boost Union plugin
 
-  @javascript
   Scenario Outline: Setting: Show navigation on policy overview page
     Given the following config values are set as admin:
       | config                   | value     | plugin            |
