@@ -68,7 +68,6 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | cards        | card      | should       | list      | should not   |
       | list         | list      | should       | card      | should not   |
 
-  @javascript
   Scenario Outline: Setting: Category listing presentation: Set the setting
     Given the following config values are set as admin:
       | config                      | value          | plugin            |
@@ -93,7 +92,6 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | nochange     | should not  |
       | boxlist      | should      |
 
-  @javascript
   Scenario Outline: Setting: Course listing presentation / Category listing presentation: Set both settings
     Given the following config values are set as admin:
       | config                      | value           | plugin            |
@@ -232,7 +230,6 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | list        | yes        | no            | .course-listitem .coursecontacts | should not  |
       | list        | yes        | yes           | .course-listitem .coursecontacts | should      |
 
-  @javascript
   Scenario Outline: Setting: Show course contacts in the course listing: Check the content
     Given the following config values are set as admin:
       | config                    | value | plugin            |
@@ -291,7 +288,6 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | list        | no           | .course-listitem .shortname | should not  |
       | list        | yes          | .course-listitem .shortname | should      |
 
-  @javascript
   Scenario Outline: Setting: Show course shortname in the course listing: Check the content
     Given the following config values are set as admin:
       | config                    | value         | plugin            |
@@ -340,7 +336,6 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | list        | no           | .course-listitem .categoryname | should not  |
       | list        | yes          | .course-listitem .categoryname | should      |
 
-  @javascript
   Scenario Outline: Setting: Show course category in the course listing: Check the content
     Given the following config values are set as admin:
       | config                    | value         | plugin            |
@@ -394,7 +389,6 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | list        | no           | .course-listitem .progress-text | should not  |
       | list        | yes          | .course-listitem .progress-text | should      |
 
-  @javascript
   Scenario Outline: Setting: Show course completion progress in the course listing: Check the content
     Given the following config values are set as admin:
       | config                    | value         | plugin            |
@@ -415,7 +409,6 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | cards       | .course-card .progress-text     |
       | list        | .course-listitem .progress-text |
 
-  @javascript
   Scenario Outline: Setting: Show course completion progress in the course listing: Check the style
     Given the following config values are set as admin:
       | config                     | value         | plugin            |
@@ -492,7 +485,6 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | list        | no           | .course-listitem .enrolmenticons | should not  |
       | list        | yes          | .course-listitem .enrolmenticons | should      |
 
-  @javascript
   Scenario Outline: Setting: Show course enrolment icons in the course listing: Check the content
     Given the following config values are set as admin:
       | config                     | value         | plugin            |
@@ -660,7 +652,6 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | list        | yes          | 1           | 0           | .course-listitem .customfields | should      | should            | should not        |
       | list        | yes          | 1           | 1           | .course-listitem .customfields | should      | should            | should            |
 
-  @javascript
   Scenario Outline: Setting: Show course fields in the course listing: Check the content and style
     Given the following config values are set as admin:
       | config                    | value         | plugin            |
@@ -1021,7 +1012,6 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
       | cards        | boxlist       | should not           | should             |
       | list         | boxlist       | should not           | should             |
 
-  @javascript
   Scenario: Setting: Course listing presentation / Category listing presentation: Verify multilang capability of the sticky category headers
     Given the following config values are set as admin:
       | config                      | value   | plugin            |
@@ -1040,7 +1030,6 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Then I should see "Category C"
     And I should not see "Kategorie C"
 
-  @javascript
   Scenario Outline: Setting: Course listing presentation: Set the setting (and check that the course search page as special page is styled as well)
     Given the following config values are set as admin:
       | config                    | value          | plugin            |

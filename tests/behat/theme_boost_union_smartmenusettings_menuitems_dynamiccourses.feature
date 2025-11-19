@@ -73,7 +73,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     And "Course 06" "theme_boost_union > Smart menu item" should exist in the "List menu" "theme_boost_union > Main menu smart menu"
     And I should see smart menu "List menu" item "Course 01" in location "Main, Menu, User, Bottom"
 
-  @javascript
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on a category condition
     Given the following "theme_boost_union > smart menu item" exists:
       | menu       | List menu       |
@@ -96,7 +95,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | CAT1     | should     | should     | should     | should not | should not | should not |
       | CAT2     | should not | should not | should not | should     | should     | should not |
 
-  @javascript
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on a category condition (with or without subcategories)
     Given the following "categories" exist:
       | name          | category | idnumber |
@@ -133,7 +131,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | 0      | should not  |
       | 1      | should      |
 
-  @javascript
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on a enrolment role condition
     # Empty menus are hidden from view. To prevent that the whole menu is missing and the test fails,
     # a sample item is created.
@@ -204,7 +201,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | Completed                        | should     | should not | should not | should not | should not |
       | In progress                      | should not | should     | should not | should not | should not |
 
-  @javascript
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on a date range condition
     Given the following "theme_boost_union > smart menu item" exists:
       | menu             | List menu       |
@@ -228,7 +224,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | Present               | should     | should not | should not | should     | should     |
       | Past                  | should not | should     | should not | should not | should not |
 
-  @javascript
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on a course field condition
     Given the following "custom field categories" exist:
       | name   | component   | area   | itemid |
@@ -288,7 +283,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | Course ID number ascending  | CCC Course      | BBB Course      | AAA Course      |
       | Course ID number descending | AAA Course      | BBB Course      | CCC Course      |
 
-  @javascript
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Hide empty menus
     And the following "theme_boost_union > smart menu" exists:
       | title    | Mode menu                                        |
@@ -395,7 +389,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | Course 11 | C11       | CAT1     | 1       |
       | Course 12 | C12       | CAT1     | 0       |
       | Course 13 | C13       | CAT1     | 1       |
-
     And the following "course enrolments" exist:
       | user     | course  | role           |
       | teacher  | C10     | editingteacher |
@@ -406,7 +399,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | student1 | C11     | student        |
       | student1 | C12     | student        |
       | student1 | C13     | student        |
-
     And the following "theme_boost_union > smart menu item" exists:
       | menu                  | List menu          |
       | title                 | Dynamic courses    |

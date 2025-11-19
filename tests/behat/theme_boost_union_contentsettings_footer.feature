@@ -112,15 +112,13 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | Custom link URL | #wwwroot#/communication/provider/customlink/tests/behat/fixtures/custom_link_test_page.php |
     And I press "Save changes"
     When I am on "Course 1" course homepage
-    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then I <shouldornot> see "Chat to course participants" in the ".popover-body" "css_element"
+    Then I <shouldornot> see "Chat to course participants" in the ".footer-content-popover" "css_element"
 
     Examples:
       | value | shouldornot |
       | no    | should      |
       | yes   | should not  |
 
-  @javascript
   Scenario Outline: Setting: Footer - Suppress 'Documentation for this page' link
     Given the following config values are set as admin:
       | docroot | https://docs.moodle.org |
@@ -129,16 +127,14 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | footersuppresshelp | <value> | theme_boost_union |
     And all caches are purged
     And I log in as "admin"
-    And I am on "Course 1" course homepage
-    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then I <shouldornot> see "Documentation for this page" in the ".popover-body" "css_element"
+    When I am on "Course 1" course homepage
+    Then I <shouldornot> see "Documentation for this page" in the ".footer-content-popover" "css_element"
 
     Examples:
       | value | shouldornot |
       | no    | should      |
       | yes   | should not  |
 
-  @javascript
   Scenario Outline: Setting: Footer - Suppress 'Services and support' link
     Given the following config values are set as admin:
       | servicespage | https://mymoodlesupport.com |
@@ -148,15 +144,13 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And all caches are purged
     And I log in as "admin"
     When I am on site homepage
-    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then I <shouldornot> see "Services and support" in the ".popover-body" "css_element"
+    Then I <shouldornot> see "Services and support" in the ".footer-content-popover" "css_element"
 
     Examples:
       | value | shouldornot |
       | no    | should      |
       | yes   | should not  |
 
-  @javascript
   Scenario Outline: Setting: Footer - Suppress 'Contact site support' link
     Given the following config values are set as admin:
       | supportemail        | admin@mymoodlesupport.com |
@@ -167,15 +161,13 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And all caches are purged
     And I log in as "admin"
     When I am on site homepage
-    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then I <shouldornot> see "Contact site support" in the ".popover-body" "css_element"
+    Then I <shouldornot> see "Contact site support" in the ".footer-content-popover" "css_element"
 
     Examples:
       | value | shouldornot |
       | no    | should      |
       | yes   | should not  |
 
-  @javascript
   Scenario Outline: Setting: Footer - Suppress Login info
     Given the following config values are set as admin:
       | config                  | value   | plugin            |
@@ -183,15 +175,13 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And all caches are purged
     And I log in as "admin"
     When I am on site homepage
-    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then I <shouldornot> see "You are logged in as" in the ".popover-body" "css_element"
+    Then I <shouldornot> see "You are logged in as" in the ".footer-content-popover" "css_element"
 
     Examples:
       | value | shouldornot |
       | no    | should      |
       | yes   | should not  |
 
-  @javascript
   Scenario Outline: Setting: Footer - Suppress Login info - Make sure that the failed login attempts counter in the navbar is still reset
     Given the following config values are set as admin:
       | config                  | value   | plugin            |
@@ -264,7 +254,6 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
   # Unfortunately, this can't be tested with Behat on Moodle 4.3 anymore
   # Scenario Outline: Setting: Footer - Suppress theme switcher links
 
-  @javascript
   Scenario Outline: Setting: Footer - Suppress 'Powered by Moodle' link
     Given the following config values are set as admin:
       | config                | value   | plugin            |
@@ -272,15 +261,13 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And all caches are purged
     And I log in as "admin"
     When I am on site homepage
-    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then I <shouldornot> see "Powered by Moodle" in the ".popover-body" "css_element"
+    Then I <shouldornot> see "Powered by Moodle" in the ".footer-content-popover" "css_element"
 
     Examples:
       | value | shouldornot |
       | no    | should      |
       | yes   | should not  |
 
-  @javascript
   Scenario Outline: Setting: Footer - Suppress footer output by plugin 'tool_dataprivacy'
     Given the following config values are set as admin:
       | config                   | value | plugin           |
@@ -291,15 +278,13 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And all caches are purged
     And I log in as "admin"
     When I am on site homepage
-    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then I <shouldornot> see "Data retention summary" in the ".popover-body" "css_element"
+    Then I <shouldornot> see "Data retention summary" in the ".footer-content-popover" "css_element"
 
     Examples:
       | value | shouldornot |
       | no    | should      |
       | yes   | should not  |
 
-  @javascript
   Scenario Outline: Setting: Footer - Suppress footer output by core component 'core_userfeedback'
     Given the following config values are set as admin:
       | enableuserfeedback | 1 |
@@ -309,15 +294,13 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And all caches are purged
     And I log in as "admin"
     When I am on site homepage
-    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then I <shouldornot> see "Give feedback about this software" in the ".popover-body" "css_element"
+    Then I <shouldornot> see "Give feedback about this software" in the ".footer-content-popover" "css_element"
 
     Examples:
       | value | shouldornot |
       | no    | should      |
       | yes   | should not  |
 
-  @javascript
   Scenario Outline: Setting: Footer - Suppress footer output by plugin 'tool_mobile'
     Given the following config values are set as admin:
       | config                 | value |
@@ -328,15 +311,13 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And all caches are purged
     And I log in as "admin"
     When I am on site homepage
-    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then I <shouldornot> see "Get the mobile app" in the ".popover-body" "css_element"
+    Then I <shouldornot> see "Get the mobile app" in the ".footer-content-popover" "css_element"
 
     Examples:
       | value | shouldornot |
       | no    | should      |
       | yes   | should not  |
 
-  @javascript
   Scenario Outline: Setting: Footer - Suppress footer output by plugin 'tool_policy'
     Given the following config values are set as admin:
       | sitepolicyhandler | tool_policy |
@@ -349,15 +330,13 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And all caches are purged
     And I log in as "admin"
     When I am on site homepage
-    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then I <shouldornot> see "Policies" in the ".popover-body" "css_element"
+    Then I <shouldornot> see "Policies" in the ".footer-content-popover" "css_element"
 
     Examples:
       | value | shouldornot |
       | no    | should      |
       | yes   | should not  |
 
-  @javascript
   Scenario Outline: Setting: Footer - Suppress icons in front of the footer links
     Given the following config values are set as admin:
       | config                   | value              | plugin            |
@@ -391,16 +370,15 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | page3linkposition        | footer             | theme_boost_union |
     When I log in as "admin"
     And I am on "Course 1" course homepage
-    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then ".footer-support-link a i.icon.fa-book" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
-    And ".footer-support-link a i.icon.fa-life-ring" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
-    And ".footer-support-link a i.icon.fa-envelope" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
-    And ".footer-support-link a i.icon.fa-circle-info" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
-    And ".footer-support-link a i.icon.fa-briefcase" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
-    And ".footer-support-link a i.icon.fa-building-o" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
-    And ".footer-support-link a i.icon.fa-address-card" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
-    And ".footer-support-link a i.icon.fa-question-circle-o" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
-    And ".footer-support-link a i.icon.fa-arrow-circle-o-right" "css_element" <shouldornot> exist in the ".footer .popover-body" "css_element"
+    Then ".footer-support-link a i.icon.fa-book" "css_element" <shouldornot> exist in the ".footer-content-popover" "css_element"
+    And ".footer-support-link a i.icon.fa-life-ring" "css_element" <shouldornot> exist in the ".footer-content-popover" "css_element"
+    And ".footer-support-link a i.icon.fa-envelope" "css_element" <shouldornot> exist in the ".footer-content-popover" "css_element"
+    And ".footer-support-link a i.icon.fa-circle-info" "css_element" <shouldornot> exist in the ".footer-content-popover" "css_element"
+    And ".footer-support-link a i.icon.fa-briefcase" "css_element" <shouldornot> exist in the ".footer-content-popover" "css_element"
+    And ".footer-support-link a i.icon.fa-building-o" "css_element" <shouldornot> exist in the ".footer-content-popover" "css_element"
+    And ".footer-support-link a i.icon.fa-address-card" "css_element" <shouldornot> exist in the ".footer-content-popover" "css_element"
+    And ".footer-support-link a i.icon.fa-question-circle-o" "css_element" <shouldornot> exist in the ".footer-content-popover" "css_element"
+    And ".footer-support-link a i.icon.fa-arrow-circle-o-right" "css_element" <shouldornot> exist in the ".footer-content-popover" "css_element"
 
     Examples:
       | value | shouldornot |
