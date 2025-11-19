@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-11-19 - Bugfix: additionalhtmlfooter is now rendered even if the footer is hidden entirely, resolves #1042
 * 2025-11-15 - Improvement: Add config.php parameter to support GitHub Enterprise servers for external SCSS, resolves #1041.
 * 2025-11-12 - Improvement: Lighten the hook manipulation on 5.0, resolves #1098.
 * 2025-11-11 - Upstream change: Adopt changes from MDL-85418 to submenu.js, resolves #1095.

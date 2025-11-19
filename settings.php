@@ -2736,7 +2736,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         ];
         $name = 'theme_boost_union/enablefooterbutton';
         $title = get_string('enablefooterbutton', 'theme_boost_union', null, true);
-        $description = get_string('enablefooterbutton_desc', 'theme_boost_union', null, true);
+        $url = new core\url('/admin/search.php', ['query' => 'additionalhtmlfooter']);
+        $description = get_string('enablefooterbutton_desc', 'theme_boost_union', null, true) . '<br>' .
+                get_string('enablefooterbutton_note', 'theme_boost_union', ['url' => $url], true);
         $setting = new admin_setting_configselect(
             $name,
             $title,
