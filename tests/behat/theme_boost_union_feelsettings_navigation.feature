@@ -68,7 +68,7 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | https://foo.bar | https://foo.bar |
 
   @javascript
-  Scenario Outline: Setting:  Show full name in the user menu.
+  Scenario Outline: Setting: Show full name in the user menu.
     Given the following config values are set as admin:
       | config                 | value     | plugin            |
       | showfullnameinusermenu | <setting> | theme_boost_union |
@@ -105,7 +105,6 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | yes     | should      |
       | no      | should not  |
 
-  @javascript
   Scenario Outline: Setting: Show login link as button.
     Given the following config values are set as admin:
       | config                 | value     | plugin            |
@@ -358,7 +357,6 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And page top is not at the top of the viewport
     Then "#back-to-top" "css_element" should be visible
 
-  @javascript
   Scenario: Setting: Activity navigation - Enable "Activity navigation"
     Given the following config values are set as admin:
       | config             | value | plugin            |
@@ -374,7 +372,6 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     Then I should see "Forum 1" in the "#prev-activity-link" "css_element"
     And I should see "Forum 3" in the "#next-activity-link" "css_element"
 
-  @javascript
   Scenario: Setting: Activity navigation - Disable "Activity navigation" (countercheck)
     Given the following config values are set as admin:
       | config             | value | plugin            |

@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-11-19 - Tests: Further Behat runtime optimisations, helps to resolve #839
+
 ### v5.1-r1
 
 * 2025-10-26 - Upgrade: Adopt changes to 'Add a block' area CSS selectors from MDL-85281

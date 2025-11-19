@@ -4,13 +4,11 @@ Feature: Configuring the theme_boost_union plugin on the "SCSS Snippets" page.
   As admin
   I need to be able to configure the theme Boost Union plugin
 
-  @javascript
   Scenario: SCSS snippets: Overview page - No snippet sources are enabled.
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > SCSS snippets" in site administration
     Then I should see "There aren't any SCSS snippets which can be used"
 
-  @javascript
   Scenario: SCSS snippets: Settings - Builtin-snippets are enabled.
     Given the following config values are set as admin:
       | config                | value | plugin            |
