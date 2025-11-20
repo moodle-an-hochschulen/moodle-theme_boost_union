@@ -781,6 +781,7 @@ $string['footerheading'] = 'Footer';
 // ... ... Setting: Enable footer.
 $string['enablefooterbutton'] = 'Enable footer';
 $string['enablefooterbutton_desc'] = 'With "footer", the circle containing the question mark at the bottom of the page is meant.<br />Upon click, the user is presented with an overlay. Depending on the site configuration Moodle shows several links (like "Documentation for this page" or "Data retention summary") are shown in this overlay.<br />With this setting, you can control whether to show or to suppress the footer button at the bottom of the page.';
+$string['enablefooterbutton_note'] = 'Please note: The content of the <a href="{$a->url}">Moodle core setting additionalhtmlfooter</a> is shown within the footer by default. But if you select "Hide on all devices" here to hide the footer entirely, the additionalhtmlfooter content would not be shown anywhere anymore. To overcome this limitation, Boost Union will move the additionalhtmlfooter content to be shown at the very bottom of the page in this case.';
 $string['enablefooterbuttonboth'] = 'Enable on desktop, tablet and mobile';
 $string['enablefooterbuttondesktop'] = 'Enable on desktop and tablet only, hide on mobile (unchanged as presented by Moodle core)';
 $string['enablefooterbuttonmobile'] = 'Enable on mobile only, hide on desktop and tablet';

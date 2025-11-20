@@ -77,6 +77,25 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | enablefooterbuttonnone    | should not         | should not        | exist          |
 
   @javascript
+  Scenario Outline: Setting: Footer - Enable and disable the footer button: Render additionalhtmlfooter content in all cases
+    Given the following config values are set as admin:
+      | config               | value                                                           | plugin            |
+      | enablefooterbutton   | <footervalue>                                                   | theme_boost_union |
+      | additionalhtmlfooter | <div id="custom-footer-html"><p>Custom Footer Content</p></div> |                   |
+    When I log in as "admin"
+    And I am on site homepage
+    Then "#custom-footer-html" "css_element" should exist
+    And ".footer-content-popover #custom-footer-html" "css_element" <shouldornotpopover> exist
+    And "[data-region='footer-container-popover'] + #custom-footer-html" "css_element" <shouldornotpagebottom> exist
+
+    Examples:
+      | footervalue               | shouldornotpopover | shouldornotpagebottom |
+      | enablefooterbuttonall     | should             | should not            |
+      | enablefooterbuttondesktop | should             | should not            |
+      | enablefooterbuttonmobile  | should             | should not            |
+      | enablefooterbuttonnone    | should not         | should                |
+
+  @javascript
   Scenario Outline: Setting: Footer - Suppress 'Chat to course participants' link
     Given the following config values are set as admin:
       | enablecommunicationsubsystem | 1 |
