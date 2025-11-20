@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-11-19 - Backport: Replace Boost Union's hook manipulation with a more downstream solution to suppress hook output, resolves #1101.
 * 2025-11-19 - Bugfix: additionalhtmlfooter is now rendered even if the footer is hidden entirely, resolves #1042
 * 2025-11-15 - Improvement: Add config.php parameter to support GitHub Enterprise servers for external SCSS, resolves #1041.
 * 2025-11-12 - Improvement: Lighten the hook manipulation on 5.0, resolves #1098.
