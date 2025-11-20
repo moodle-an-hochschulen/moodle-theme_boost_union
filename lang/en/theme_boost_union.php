@@ -823,6 +823,7 @@ $string['footersuppressstandardfootercore_desc'] = 'With this setting, you can e
 // ... ... Setting: Suppress footer output by plugins.
 $string['footersuppressstandardfooter'] = 'Suppress footer output by plugin \'{$a}\'';
 $string['footersuppressstandardfooter_desc'] = 'With this setting, you can entirely suppress the footer output by plugin \'{$a}\'. Plugins (even if they are shipped with Moodle core, but are still technically plugins) can add additional content to the footer by implementing a particular hook or function. This plugin has implemented this hook / function and might add content to the footer in certain circumstances.<br />Please note: Due to the way how the suppressing feature is implemented, the setting might not take effect before the second page load after saving the setting.';
+$string['footersuppressstandardfooter_configoverride_desc'] = 'The footer output by plugin \'{$a}\' is already suppressed via <code>$CFG->hooks_callback_overrides</code> in your <code>config.php</code> file. To make this setting configurable here, you need to remove your override in <code>config.php</code> file.';
 
 // Settings: Static pages tab.
 $string['staticpagestab'] = 'Static pages';
@@ -1679,7 +1680,7 @@ $string['cachedef_flavours'] = 'Flavours which apply to a given page\'s category
 $string['cachedef_smartmenus'] = 'Smart menus';
 $string['cachedef_smartmenu_items'] = 'Smart menu items';
 $string['cachedef_touchiconsios'] = 'Touch icon files for iOS';
-$string['cachedef_hookoverrides'] = 'Hook overrides';
+$string['cachedef_hooksuppress'] = 'Hook suppressions';
 $string['cachedef_fontawesomeicons'] = 'FontAwesome icon map';
 
 // Scheduled tasks.

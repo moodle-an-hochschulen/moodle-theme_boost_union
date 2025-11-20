@@ -873,26 +873,6 @@ function theme_boost_union_render_navbar_output() {
 }
 
 /**
- * Triggered as soon as practical on every moodle bootstrap before session is started.
- *
- * We use this callback function to manipulate / set settings which would normally be manipulated / set through
- * /config.php, but we do not want to urge the admin to add stuff to /config.php when installing Boost Union.
- */
-function theme_boost_union_before_session_start() {
-    global $CFG;
-
-    // Note: At this point, the $PAGE object does not exist yet. Thus, we cannot quickly and reliably detect if Boost Union
-    // (or a Boost Union child theme) is the active theme. Thus, the following code is executed for every theme.
-    // This fact is noted in the README.
-
-    // Require own local library.
-    require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
-
-    // Manipulate Moodle core hooks.
-    theme_boost_union_manipulate_hooks();
-}
-
-/**
  * Callback function which allows themes to alter the CSS URLs.
  * We use this function to change the CSS URL to the flavour CSS URL if a flavour applies to the current page.
  *
