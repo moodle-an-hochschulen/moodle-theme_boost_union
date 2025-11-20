@@ -2870,32 +2870,58 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         foreach ($pluginswithcallback as $callback) {
             // Extract the pluginname.
             $pluginname = theme_boost_union_get_pluginname_from_callbackname($callback);
-            // Compose the label.
-            if ($callback['component'] == 'core') {
-                $hooklabeltitle = get_string('footersuppressstandardfootercore', 'theme_boost_union', $pluginname, true);
-                $hooklabeldesc = get_string('footersuppressstandardfootercore_desc', 'theme_boost_union', $pluginname, true);
+
+            // Check if this callback is already disabled via $CFG->hooks_callback_overrides.
+            if (theme_boost_union_is_callback_disabled_in_config($callback['callback'])) {
+                // If yes, show a static information setting instead of a configurable select.
+                $name = 'theme_boost_union/footersuppressstandardfooter_' . $pluginname;
+                if ($callback['component'] == 'core') {
+                    $hooklabeltitle = get_string('footersuppressstandardfootercore', 'theme_boost_union', $pluginname, true);
+                } else {
+                    $hooklabeltitle = get_string('footersuppressstandardfooter', 'theme_boost_union', $pluginname, true);
+                }
+                $infodesc = get_string('footersuppressstandardfooter_configoverride_desc', 'theme_boost_union', $pluginname, true);
+                $setting = new admin_setting_configempty(
+                    $name,
+                    $hooklabeltitle,
+                    $infodesc
+                );
+                $tab->add($setting);
+                $page->hide_if(
+                    'theme_boost_union/footersuppressstandardfooter_' . $pluginname,
+                    'theme_boost_union/enablefooterbutton',
+                    'eq',
+                    THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE
+                );
+
+                // Otherwise, show the normal configselect setting.
             } else {
-                $hooklabeltitle = get_string('footersuppressstandardfooter', 'theme_boost_union', $pluginname, true);
-                $hooklabeldesc = get_string('footersuppressstandardfooter_desc', 'theme_boost_union', $pluginname, true);
+                // Compose the label.
+                if ($callback['component'] == 'core') {
+                    $hooklabeltitle = get_string('footersuppressstandardfootercore', 'theme_boost_union', $pluginname, true);
+                    $hooklabeldesc = get_string('footersuppressstandardfootercore_desc', 'theme_boost_union', $pluginname, true);
+                } else {
+                    $hooklabeltitle = get_string('footersuppressstandardfooter', 'theme_boost_union', $pluginname, true);
+                    $hooklabeldesc = get_string('footersuppressstandardfooter_desc', 'theme_boost_union', $pluginname, true);
+                }
+                // Create the setting.
+                $name = 'theme_boost_union/footersuppressstandardfooter_' . $pluginname;
+                $setting = new admin_setting_configselect(
+                    $name,
+                    $hooklabeltitle,
+                    $hooklabeldesc,
+                    THEME_BOOST_UNION_SETTING_SELECT_NO,
+                    $yesnooption
+                );
+                $setting->set_updatedcallback('theme_boost_union_reset_hooksuppress_cache');
+                $tab->add($setting);
+                $page->hide_if(
+                    'theme_boost_union/footersuppressstandardfooter_' . $pluginname,
+                    'theme_boost_union/enablefooterbutton',
+                    'eq',
+                    THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE
+                );
             }
-            // Get the plugin name from the language pack.
-            // Create the setting.
-            $name = 'theme_boost_union/footersuppressstandardfooter_' . $pluginname;
-            $setting = new admin_setting_configselect(
-                $name,
-                $hooklabeltitle,
-                $hooklabeldesc,
-                THEME_BOOST_UNION_SETTING_SELECT_NO,
-                $yesnooption
-            );
-            $setting->set_updatedcallback('theme_boost_union_remove_hookmanipulation');
-            $tab->add($setting);
-            $page->hide_if(
-                'theme_boost_union/footersuppressstandardfooter_' . $pluginname,
-                'theme_boost_union/enablefooterbutton',
-                'eq',
-                THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE
-            );
         }
 
         // Settings: Suppress footer output by plugins (for legacy plugins).
@@ -2925,6 +2951,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                     THEME_BOOST_UNION_SETTING_SELECT_NO,
                     $yesnooption
                 );
+                $setting->set_updatedcallback('theme_boost_union_reset_hooksuppress_cache');
                 $tab->add($setting);
                 $page->hide_if(
                     'theme_boost_union/footersuppressstandardfooter_' . $plugintype . '_' . $pluginname,

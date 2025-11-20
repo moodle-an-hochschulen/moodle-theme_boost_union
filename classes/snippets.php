@@ -434,6 +434,12 @@ class snippets {
      * @return array
      */
     public static function get_enabled_sources(): array {
+        global $CFG;
+
+        // Require lib.php (to ensure the THEME_BOOST_UNION_SETTING_SELECT_YES constant is available).
+        // Normally, lib.php is autoloaded by Moodle core, but in PHPUnit tests it may not be the case.
+        require_once($CFG->dirroot . '/theme/boost_union/lib.php');
+
         // Initialize sources array.
         $sources = [];
 
