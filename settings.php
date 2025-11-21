@@ -2042,7 +2042,10 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             0,
             ['maxfiles' => -1, 'subdirs' => 0, 'accepted_types' => ['.jpg', '.png']]
         );
-        $setting->set_updatedcallback('theme_boost_union_touchicons_for_ios_checkin');
+        // Do nothing during installation or upgrade.
+        if (!during_initial_install() && !isset($CFG->upgraderunning)) {
+            $setting->set_updatedcallback('theme_boost_union_touchicons_for_ios_checkin');
+        }
         $tab->add($setting);
 
         // Information: Touch icon files for iOS list.
