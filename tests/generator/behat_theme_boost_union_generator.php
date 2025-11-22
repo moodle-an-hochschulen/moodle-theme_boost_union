@@ -96,6 +96,12 @@ class behat_theme_boost_union_generator extends behat_generator_base {
                     'byadmin' => 'byadmin',
                 ],
             ],
+
+            'setting files' => [
+                'singular' => 'setting file',
+                'datagenerator' => 'setting_file',
+                'required' => ['filearea', 'filepath'],
+            ],
         ];
     }
 
@@ -488,5 +494,61 @@ class behat_theme_boost_union_generator extends behat_generator_base {
      */
     protected function get_textposition_id(string $textposition): int {
         return $this->option_id('textposition', $textposition, smartmenu_item::get_textposition_options());
+    }
+
+    /**
+     * Create a theme setting file.
+     *
+     * @param array $data Must contain 'filearea' and 'filepath'.
+     * @return void
+     * @throws Exception
+     */
+    protected function process_setting_file(array $data): void {
+        global $CFG;
+
+        require_once($CFG->libdir . '/filelib.php');
+
+        $filearea = $data['filearea'];
+        $filepath = $CFG->dirroot . '/' . $data['filepath'];
+
+        if (!file_exists($filepath)) {
+            throw new Exception('File not found: ' . $filepath);
+        }
+
+        // Get the system context.
+        $systemcontext = context_system::instance();
+
+        // Prepare file record.
+        $filerecord = [
+            'contextid' => $systemcontext->id,
+            'component' => 'theme_boost_union',
+            'filearea'  => $filearea,
+            'itemid'    => 0,
+            'filepath'  => '/',
+            'filename'  => basename($filepath),
+        ];
+
+        // Get file storage.
+        $fs = get_file_storage();
+
+        // Delete existing file if any.
+        $existingfile = $fs->get_file(
+            $filerecord['contextid'],
+            $filerecord['component'],
+            $filerecord['filearea'],
+            $filerecord['itemid'],
+            $filerecord['filepath'],
+            $filerecord['filename']
+        );
+        if ($existingfile) {
+            $existingfile->delete();
+        }
+
+        // Create file from path.
+        $fs->create_file_from_pathname($filerecord, $filepath);
+
+        // Set the config value to the filepath (as required by admin_setting_configstoredfile).
+        // The config name matches the filearea name (e.g., 'slide1backgroundimage').
+        set_config($filearea, $filerecord['filepath'] . $filerecord['filename'], 'theme_boost_union');
     }
 }
