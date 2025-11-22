@@ -676,8 +676,8 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         $filearea === 'loginbackgroundimage' || $filearea === 'additionalresources' ||
                 $filearea === 'customfonts' || $filearea === 'courseheaderimagefallback' ||
                 $filearea === 'touchiconsios' || $filearea === 'uploadedsnippets' ||
-                preg_match("/tilebackgroundimage[2-9]|1[0-2]?/", $filearea) ||
-                preg_match("/slidebackgroundimage[2-9]|1[0-2]?/", $filearea))
+                preg_match("/tile[2-9]|1[0-2]backgroundimage?/", $filearea) ||
+                preg_match("/slide[2-9]|1[0-2]?backgroundimage/", $filearea))
     ) {
         $theme = \core\output\theme_config::load('boost_union');
         // By default, theme files must be cache-able by both browsers and proxies.
