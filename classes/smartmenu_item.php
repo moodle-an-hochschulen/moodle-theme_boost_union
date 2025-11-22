@@ -1085,7 +1085,7 @@ class smartmenu_item {
                     $params += ['now_' . $key => time()];
                     break;
                 case self::RANGE_PRESENT:
-                    $sql[] = "(c.startdate < :startdate_$key AND ( c.enddate = 0 OR c.enddate > :enddate_$key) )";
+                    $sql[] = "(c.startdate <= :startdate_$key AND ( c.enddate = 0 OR c.enddate > :enddate_$key) )";
                     $params += ['enddate_' . $key => time(), 'startdate_' . $key => time()];
                     break;
                 case self::RANGE_FUTURE:

@@ -21,221 +21,156 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
   # Unfortunately, this can't be tested with Behat yet as the full logo is not displayed anywhere outside the login page
   # Scenario: Flavours: Logo - Do not upload a logo (with a global logo being served properly)
 
-  @javascript @_file_upload
   Scenario: Flavours: Compact logo - Upload a compact logo (with a global compact logo not having been uploaded before)
+    Given the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
+    And the following "theme_boost_union > flavour files" exist:
+      | flavour              | filearea                  | filepath                                         |
+      | My shiny new flavour | flavours_look_logocompact | theme/boost_union/tests/fixtures/flavourlogo.png |
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I set the field "Title" to "My shiny new flavour"
-    And I upload "theme/boost_union/tests/fixtures/flavourlogo.png" file to "Compact logo" filemanager
-    And I click on "Save changes" "button"
-    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
-    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
+    And I am on "Course 1" course homepage
     # We can't check the uploaded image file visually, but we can verify that the compact logo is shipped from the theme_boost_union flavour filearea.
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/flavours_look_logocompact')][contains(@src, 'flavourlogo.png')]" "xpath_element" should exist
 
-  @javascript @_file_upload
   Scenario: Flavours: Compact logo - Upload a compact logo (with a global compact logo being overridden)
+    Given the following "theme_boost_union > setting files" exist:
+      | filearea    | filepath                                        |
+      | logocompact | theme/boost_union/tests/fixtures/moodlelogo.png |
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
+    And the following "theme_boost_union > flavour files" exist:
+      | flavour              | filearea                  | filepath                                         |
+      | My shiny new flavour | flavours_look_logocompact | theme/boost_union/tests/fixtures/flavourlogo.png |
     When I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
-    And I click on "Save changes" "button"
-    And Behat debugging is enabled
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I set the field "Title" to "My shiny new flavour"
-    And I upload "theme/boost_union/tests/fixtures/flavourlogo.png" file to "Compact logo" filemanager
-    And I click on "Save changes" "button"
-    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
-    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
+    And I am on "Course 1" course homepage
     # We can't check the uploaded image file visually, but we can verify that the compact logo is shipped from the theme_boost_union flavour filearea.
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/flavours_look_logocompact')][contains(@src, 'flavourlogo.png')]" "xpath_element" should exist
 
-  @javascript @_file_upload
   Scenario: Flavours: Compact logo - Do not upload a compact logo (with a global compact logo being served properly)
+    Given the following "theme_boost_union > setting files" exist:
+      | filearea    | filepath                                        |
+      | logocompact | theme/boost_union/tests/fixtures/moodlelogo.png |
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
     When I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
-    And I click on "Save changes" "button"
-    And Behat debugging is enabled
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I set the field "Title" to "My shiny new flavour"
-    And I click on "Save changes" "button"
-    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
-    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
+    And I am on "Course 1" course homepage
     # We can't check the uploaded image file visually, but we can verify that the compact logo is shipped from the theme_boost_union global logo filearea.
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
 
-  @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a PNG compact logo and check that it is resized on the server-side
+    Given the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
+    And the following "theme_boost_union > flavour files" exist:
+      | flavour              | filearea                  | filepath                                         |
+      | My shiny new flavour | flavours_look_logocompact | theme/boost_union/tests/fixtures/flavourlogo.png |
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I set the field "Title" to "My shiny new flavour"
-    And I upload "theme/boost_union/tests/fixtures/flavourlogo.png" file to "Compact logo" filemanager
-    And I click on "Save changes" "button"
-    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
-    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
+    And I am on "Course 1" course homepage
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/flavours_look_logocompact/')][contains(@src, '/300x300/')][contains(@src, 'flavourlogo.png')]" "xpath_element" should exist
 
-  @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a SVG compact logo and check that it is not resized on the server-side
+    Given the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
+    And the following "theme_boost_union > flavour files" exist:
+      | flavour              | filearea                  | filepath                                         |
+      | My shiny new flavour | flavours_look_logocompact | theme/boost_union/tests/fixtures/flavourlogo.svg |
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I set the field "Title" to "My shiny new flavour"
-    And I upload "theme/boost_union/tests/fixtures/flavourlogo.svg" file to "Compact logo" filemanager
-    And I click on "Save changes" "button"
-    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
-    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
+    And I am on "Course 1" course homepage
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/flavours_look_logocompact/')][contains(@src, '/1/')][contains(@src, 'flavourlogo.svg')]" "xpath_element" should exist
 
-  @javascript @_file_upload
   Scenario: Flavours: Favicon - Upload a favicon (with a global favicon not having been uploaded before)
+    Given the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
+    And the following "theme_boost_union > flavour files" exist:
+      | flavour              | filearea              | filepath                                            |
+      | My shiny new flavour | flavours_look_favicon | theme/boost_union/tests/fixtures/flavourfavicon.ico |
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I set the field "Title" to "My shiny new flavour"
-    And I upload "theme/boost_union/tests/fixtures/flavourfavicon.ico" file to "Favicon" filemanager
-    And I click on "Save changes" "button"
-    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
-    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
+    And I am on "Course 1" course homepage
     # We can't check the uploaded image file visually, but we can verify that the favicon is shipped from the theme_boost_union flavour filearea.
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/flavours_look_favicon')][contains(@href, 'flavourfavicon.ico')]" "xpath_element" should exist
 
-  @javascript @_file_upload
   Scenario: Flavours: Favicon - Upload a favicon (with a global favicon being overridden)
+    Given the following "theme_boost_union > setting files" exist:
+      | filearea | filepath                                      |
+      | favicon  | theme/boost_union/tests/fixtures/favicon.ico |
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
+    And the following "theme_boost_union > flavour files" exist:
+      | flavour              | filearea              | filepath                                            |
+      | My shiny new flavour | flavours_look_favicon | theme/boost_union/tests/fixtures/flavourfavicon.ico |
     When I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/favicon.ico" file to "Favicon" filemanager
-    And I press "Save changes"
-    And Behat debugging is enabled
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I set the field "Title" to "My shiny new flavour"
-    And I upload "theme/boost_union/tests/fixtures/flavourfavicon.ico" file to "Favicon" filemanager
-    And I click on "Save changes" "button"
-    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
-    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
+    And I am on "Course 1" course homepage
     # We can't check the uploaded image file visually, but we can verify that the favicon is shipped from the theme_boost_union flavour filearea.
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/flavours_look_favicon')][contains(@href, 'flavourfavicon.ico')]" "xpath_element" should exist
 
-  @javascript @_file_upload
   Scenario: Flavours: Favicon - Do not upload a favicon (with a global favicon being served properly)
+    Given the following "theme_boost_union > setting files" exist:
+      | filearea | filepath                                     |
+      | favicon  | theme/boost_union/tests/fixtures/favicon.ico |
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
     When I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/favicon.ico" file to "Favicon" filemanager
-    And I click on "Save changes" "button"
-    And Behat debugging is enabled
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I set the field "Title" to "My shiny new flavour"
-    And I click on "Save changes" "button"
-    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
-    And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
+    And I am on "Course 1" course homepage
     # We can't check the uploaded image file visually, but we can verify that the favicon is shipped from the theme_boost_union global favicon filearea.
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/favicon')][contains(@href, 'favicon.ico')]" "xpath_element" should exist
 
-  @javascript @_file_upload
+  @javascript
   Scenario: Flavours: Background image - Upload a background image (with a global background image not having been uploaded before)
+    Given the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
+    And the following "theme_boost_union > flavour files" exist:
+      | flavour              | filearea                      | filepath                                       |
+      | My shiny new flavour | flavours_look_backgroundimage | theme/boost_union/tests/fixtures/login_bg2.png |
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I upload "theme/boost_union/tests/fixtures/login_bg2.png" file to "Background image" filemanager
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
-    And I log in as "admin"
     And I am on "Course 1" course homepage
     Then DOM element "body" should have computed style "background-size" "cover"
     And DOM element "body" should have background image with file name "login_bg2.png"
 
-  @javascript @_file_upload
+  @javascript
   Scenario: Flavours: Background image - Upload a background image (with a global background image being overridden)
-    Given I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Background image" filemanager
-    And I press "Save changes"
-    And Behat debugging is enabled
-    When I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I upload "theme/boost_union/tests/fixtures/login_bg2.png" file to "Background image" filemanager
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
-    And I log in as "admin"
+    Given the following "theme_boost_union > setting files" exist:
+      | filearea        | filepath                                       |
+      | backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
+    And the following "theme_boost_union > flavour files" exist:
+      | flavour              | filearea                      | filepath                                       |
+      | My shiny new flavour | flavours_look_backgroundimage | theme/boost_union/tests/fixtures/login_bg2.png |
+    When I log in as "admin"
     And I am on "Course 1" course homepage
     Then DOM element "body" should have computed style "background-size" "cover"
     And DOM element "body" should have background image with file name "login_bg2.png"
 
-  @javascript @_file_upload
+  @javascript
   Scenario: Flavours: Background image - Do not upload a background image (with a global background image being served properly)
-    Given I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Background image" filemanager
-    And I press "Save changes"
-    And Behat debugging is enabled
-    When I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
-    And I log in as "admin"
+    Given the following "theme_boost_union > setting files" exist:
+      | filearea        | filepath                                       |
+      | backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
+    When I log in as "admin"
     And I am on "Course 1" course homepage
     Then DOM element "body" should have computed style "background-size" "cover"
     And DOM element "body" should have background image with file name "login_bg1.png"
 
-  @javascript @_file_upload
-  Scenario Outline: Flavours: Background image - Define the background image position (with a global color not having been set before)
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Background image" filemanager
-    And I set the field "look_backgroundimagepos" to "<position>"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+  @javascript
+  Scenario Outline: Flavours: Background image - Define the background image position (with a global setting not having been set before)
+    Given the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_backgroundimagepos |
+      | My shiny new flavour | CAT1                  | <position>              |
+    And the following "theme_boost_union > flavour files" exist:
+      | flavour              | filearea                      | filepath                                       |
+      | My shiny new flavour | flavours_look_backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
     When I log in as "admin"
     And I am on "Course 1" course homepage
     Then DOM element "body" should have computed style "background-position" "<cssvalue>"
@@ -245,24 +180,17 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
       | position      | cssvalue |
       | center center | 50% 50%  |
 
-  @javascript @_file_upload
-  Scenario Outline: Flavours: Background image - Define the background image position(with the global setting being overridden)
+  @javascript
+  Scenario Outline: Flavours: Background image - Define the background image position (with the global setting being overridden)
     Given the following config values are set as admin:
       | config                  | value            | plugin            |
       | backgroundimageposition | <globalposition> | theme_boost_union |
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Background image" filemanager
-    And I set the field "look_backgroundimagepos" to "<position>"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_backgroundimagepos |
+      | My shiny new flavour | CAT1                  | <position>              |
+    And the following "theme_boost_union > flavour files" exist:
+      | flavour              | filearea                      | filepath                                       |
+      | My shiny new flavour | flavours_look_backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
     When I log in as "admin"
     And I am on "Course 1" course homepage
     Then DOM element "body" should have computed style "background-position" "<cssvalue>"
@@ -273,24 +201,17 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
       | globalposition | position      | cssvalue | shouldnotcssvalue |
       | bottom right   | center center | 50% 50%  | 100% 100%         |
 
-  @javascript @_file_upload
+  @javascript
   Scenario Outline: Flavours: Background image - Do not define the background image position (with a global setting being served properly)
     Given the following config values are set as admin:
       | config                  | value      | plugin            |
       | backgroundimageposition | <position> | theme_boost_union |
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Background image" filemanager
-    And I set the field "look_backgroundimagepos" to "No change"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_backgroundimagepos |
+      | My shiny new flavour | CAT1                  | nochange                |
+    And the following "theme_boost_union > flavour files" exist:
+      | flavour              | filearea                      | filepath                                       |
+      | My shiny new flavour | flavours_look_backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
     When I log in as "admin"
     And I am on "Course 1" course homepage
     Then DOM element "body" should have computed style "background-position" "<cssvalue>"
@@ -302,18 +223,9 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
 
   @javascript
   Scenario: Flavours: Brand color - Set the brand color (with a global color not having been set before)
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I set the field "look_brandcolor" to "#FF0000"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    Given the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_brandcolor |
+      | My shiny new flavour | CAT1                  | #FF0000         |
     And the following "activities" exist:
       | activity | name      | intro                                                     | course |
       | label    | Label one | <span class="mytesttext text-primary">My test text</span> | C1     |
@@ -327,18 +239,9 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     Given the following config values are set as admin:
       | config     | value   | plugin            |
       | brandcolor | #FFFFFF | theme_boost_union |
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I set the field "look_brandcolor" to "#FF0000"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_brandcolor |
+      | My shiny new flavour | CAT1                  | #FF0000         |
     And the following "activities" exist:
       | activity | name      | intro                                                     | course |
       | label    | Label one | <span class="mytesttext text-primary">My test text</span> | C1     |
@@ -352,17 +255,9 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     Given the following config values are set as admin:
       | config     | value   | plugin            |
       | brandcolor | #FF0000 | theme_boost_union |
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
     And the following "activities" exist:
       | activity | name      | intro                                                     | course |
       | label    | Label one | <span class="mytesttext text-primary">My test text</span> | C1     |
@@ -373,18 +268,9 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
 
   @javascript
   Scenario Outline: Flavours: Bootstrap colors - Set the Bootstrap colors (with a global color not having been set before)
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I set the field "look_bootstrapcolor<type>" to "<colorhex>"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    Given the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_bootstrapcolor<type> |
+      | My shiny new flavour | CAT1                  | <colorhex>                |
     And the following "activities" exist:
       | activity | name      | intro                                                    | course |
       | label    | Label one | <span class="mytesttext text-<type>">My test text</span> | C1     |
@@ -405,18 +291,9 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     Given the following config values are set as admin:
       | config               | value   | plugin            |
       | bootstrapcolor<type> | #FFFFFF | theme_boost_union |
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I set the field "look_bootstrapcolor<type>" to "<colorhex>"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_bootstrapcolor<type> |
+      | My shiny new flavour | CAT1                  | <colorhex>                |
     And the following "activities" exist:
       | activity | name      | intro                                                    | course |
       | label    | Label one | <span class="mytesttext text-<type>">My test text</span> | C1     |
@@ -435,17 +312,9 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     Given the following config values are set as admin:
       | config               | value      | plugin            |
       | bootstrapcolor<type> | <colorhex> | theme_boost_union |
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
     And the following "activities" exist:
       | activity | name      | intro                                                    | course |
       | label    | Label one | <span class="mytesttext text-<type>">My test text</span> | C1     |
@@ -461,18 +330,9 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
 
   @javascript
   Scenario Outline: Flavours: Activity icon colors - Setting the color (with a global color not having been set before)
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I set the field "look_aicol<purposename>" to "<colorhex>"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    Given the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_aicol<purposename> |
+      | My shiny new flavour | CAT1                  | <colorhex>              |
     When I log in as "admin"
     And I am on "Course 1" course homepage
     And I turn editing mode on
@@ -499,18 +359,9 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
       | config                         | value   | plugin            |
       | activityiconcolor<purposename> | #00FFFF | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I set the field "look_aicol<purposename>" to "<colorhex>"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_aicol<purposename> |
+      | My shiny new flavour | CAT1                  | <colorhex>              |
     When I log in as "admin"
     And I am on "Course 1" course homepage
     And I turn editing mode on
@@ -531,17 +382,9 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     Given the following config values are set as admin:
       | config                         | value      | plugin            |
       | activityiconcolor<purposename> | <colorhex> | theme_boost_union |
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
     When I log in as "admin"
     And I am on "Course 1" course homepage
     And I turn editing mode on
@@ -557,20 +400,10 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
       | purposename        | modname | colorhex | originalhex |
       | assessment         | assign  | #FFFF00  | #f90086     |
 
-  @javascript
   Scenario Outline: Setting: Navbar color - Set the navbar color (with a global color not having been set before)
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I set the field "Navbar color" to "<setting>"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    Given the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_navbarcolor |
+      | My shiny new flavour | CAT1                  | <setting>        |
     When I log in as "admin"
     And I am on "Course 1" course homepage
     Then the "class" attribute of ".navbar" "css_element" should contain "<classes>"
@@ -583,23 +416,13 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
       | primarylight | bg-primary | contain "light" |
       | primarydark  | bg-primary | contain "dark"  |
 
-  @javascript
   Scenario Outline: Setting: Navbar color - Set the navbar color (with the global setting being overridden)
     Given the following config values are set as admin:
       | config      | value           | plugin            |
       | navbarcolor | <globalsetting> | theme_boost_union |
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I set the field "Navbar color" to "<setting>"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_navbarcolor |
+      | My shiny new flavour | CAT1                  | <setting>        |
     When I log in as "admin"
     And I am on "Course 1" course homepage
     Then the "class" attribute of ".navbar" "css_element" should contain "<classes>"
@@ -611,23 +434,13 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
       | globalsetting | setting | classes | databstheme | shouldnotclasses |
       | dark          | light   | bg-body | not be set  | bg-dark          |
 
-  @javascript
   Scenario Outline: Setting: Navbar color - Do not set the navbar color (with a global setting being served properly)
     Given the following config values are set as admin:
       | config      | value     | plugin            |
       | navbarcolor | <setting> | theme_boost_union |
-    When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    And I set the field "Navbar color" to "No change"
-    And I select "Yes" from the "Apply to course categories" singleselect
-    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
-    And I click on "Cat 1" item in the autocomplete list
-    And I press the escape key
-    And I click on "Save changes" "button"
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_navbarcolor |
+      | My shiny new flavour | CAT1                  | nochange         |
     When I log in as "admin"
     And I am on "Course 1" course homepage
     Then the "class" attribute of ".navbar" "css_element" should contain "<classes>"
@@ -640,23 +453,10 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
 
   @javascript
   Scenario: Flavours: Raw (initial) SCSS - Add custom SCSS to the page
+    Given the following "theme_boost_union > flavours" exist:
+      | title                | look_rawscsspre    | look_rawscss                              |
+      | My shiny new flavour | $myvariable: none; | #page-header h1 { display: $myvariable; } |
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Flavours" in site administration
-    And I click on "Create flavour" "button"
-    And I should see "Create flavour" in the "#page-header h1" "css_element"
-    And I expand all fieldsets
-    And I set the field "Title" to "My shiny new flavour"
-    # We add a SCSS variable and a small SCSS snippet to the flavour which hides the heading in the page header.
-    # This is just to make it easy to detect the effect of this flavour and to verify that SCSS is compiled correctly.
-    And I set the field "Raw initial SCSS" to multiline:
-    """
-    $myvariable: none;
-    """
-    And I set the field "Raw SCSS" to multiline:
-    """
-    #page-header h1 { display: $myvariable; }
-    """
-    And I click on "Save changes" "button"
-    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     Then I should not see "Preview flavour" in the "#page-header .page-header-headings" "css_element"

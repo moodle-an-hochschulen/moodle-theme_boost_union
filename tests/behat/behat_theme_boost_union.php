@@ -299,6 +299,51 @@ class behat_theme_boost_union extends behat_base {
                         "//a[contains(@class, 'boost-union-smartmenuitem')][contains(text(), %locator%)]",
                 ],
             ),
+            new behat_component_named_selector(
+                'Main menu smart menu outside more menu',
+                [
+                    ".//div[contains(@class, 'primary-navigation')]//ul[not(contains(@class, 'dropdown-menu'))]" .
+                        "/li[contains(@class, 'boost-union-smartmenu')]/a[contains(text(), %locator%)]",
+                ],
+            ),
+            new behat_component_named_selector(
+                'Main menu smart menu inside more menu',
+                [
+                    ".//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'dropdownmoremenu')]" .
+                        "//ul[contains(@class, 'dropdown-menu')]//li[contains(@class, 'boost-union-smartmenu')]" .
+                        "/a[contains(text(), %locator%)]",
+                ],
+            ),
+            new behat_component_named_selector(
+                'Menu bar smart menu outside more menu',
+                [
+                    ".//nav[contains(@class, 'boost-union-menubar')]//ul[not(contains(@class, 'dropdown-menu'))]" .
+                        "/li[contains(@class, 'boost-union-smartmenu')]/a[contains(text(), %locator%)]",
+                ],
+            ),
+            new behat_component_named_selector(
+                'Menu bar smart menu inside more menu',
+                [
+                    ".//nav[contains(@class, 'boost-union-menubar')]//li[contains(@class, 'dropdownmoremenu')]" .
+                        "//ul[contains(@class, 'dropdown-menu')]//li[contains(@class, 'boost-union-smartmenu')]" .
+                        "/a[contains(text(), %locator%)]",
+                ],
+            ),
+            new behat_component_named_selector(
+                'Bottom bar smart menu outside more menu',
+                [
+                    ".//nav[contains(@class, 'boost-union-bottom-menu')]//ul[not(contains(@class, 'dropdown-menu'))]" .
+                        "/li[contains(@class, 'boost-union-smartmenu')]/a[contains(text(), %locator%)]",
+                ],
+            ),
+            new behat_component_named_selector(
+                'Bottom bar smart menu inside more menu',
+                [
+                    ".//nav[contains(@class, 'boost-union-bottom-menu')]//li[contains(@class, 'dropdownmoremenu')]" .
+                        "//ul[contains(@class, 'dropdown-menu')]//li[contains(@class, 'boost-union-smartmenu')]" .
+                        "/a[contains(text(), %locator%)]",
+                ],
+            ),
         ];
     }
 

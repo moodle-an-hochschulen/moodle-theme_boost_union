@@ -5,29 +5,22 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
   I need to be able to configure the theme Boost Union plugin
 
   Background:
-    Given I log in as "admin"
-    And I create smart menu with the following fields to these values:
-      | Title            | Quick links              |
-      | Menu location(s) | Main, Menu, User, Bottom |
+    Given the following "theme_boost_union > smart menu" exists:
+      | title    | Quick links                                      |
+      | location | Main navigation, Menu bar, User menu, Bottom bar |
 
-  @javascript
   Scenario: Smartmenus: Menu items: Management - When a smart menu is just created, no smart menu items exist
     When I log in as "admin"
-    And I navigate to smart menus
-    And I should see "Smart menus" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
-    And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
+    And I navigate to smart menu "Quick links" items
     And I should see "Quick links" in the "#region-main h4" "css_element"
     Then I should see "There aren't any items added to this smart menu yet. Please add an item to this menu."
     And "table" "css_element" should not exist in the "#region-main" "css_element"
     And "Add menu item" "button" should exist in the "#region-main" "css_element"
     And ".smartmenu-items-actions" "css_element" should not exist in the "#region-main" "css_element"
 
-  @javascript
   Scenario: Smart menus: Menu items: Management - Create a new smart menu item
     When I log in as "admin"
-    And I navigate to smart menus
-    And I should see "Smart menus" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
-    And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
+    And I navigate to smart menu "Quick links" items
     And I should see "Quick links" in the "#region-main h4" "css_element"
     And I click on "Add menu item" "button"
     And I set the following fields to these values:
@@ -44,17 +37,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And ".smartmenu-items-actions" "css_element" should exist in the "smartmenus_items" "table"
     And I should see smart menu "Quick links" item "Info" in location "Main, Menu, User, Bottom"
 
-  @javascript
   Scenario: Smartmenus: Menu items: Management - Edit an existing smart menu item
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links |
+      | title    | Info        |
+      | itemtype | Heading     |
     When I log in as "admin"
-    And I navigate to smart menus
-    And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
-    And I should see "Quick links" in the "#region-main h4" "css_element"
-    And I click on "Add menu item" "button"
-    And I set the following fields to these values:
-      | Title          | Info    |
-      | Menu item type | Heading |
-    And I click on "Save changes" "button"
+    And I navigate to smart menu "Quick links" items
     And I should see "Quick links" in the "#region-main h4" "css_element"
     And the following should exist in the "smartmenus_items" table:
       | Title |
@@ -71,15 +60,12 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
 
   @javascript
   Scenario: Smartmenus: Menu items: Management - Delete an existing smart menu item
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links |
+      | title    | Info        |
+      | itemtype | Heading     |
     When I log in as "admin"
-    And I navigate to smart menus
-    And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
-    And I should see "Quick links" in the "#region-main h4" "css_element"
-    And I click on "Add menu item" "button"
-    And I set the following fields to these values:
-      | Title          | Info    |
-      | Menu item type | Heading |
-    And I click on "Save changes" "button"
+    And I navigate to smart menu "Quick links" items
     And I should see "Quick links" in the "#region-main h4" "css_element"
     And the following should exist in the "smartmenus_items" table:
       | Title |
@@ -95,17 +81,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     Then "smartmenus_items" "table" should not exist
     And I should see "There aren't any items added to this smart menu yet. Please add an item to this menu."
 
-  @javascript
   Scenario: Smartmenus: Menu items: Management - Duplicate an existing smart menu item
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links |
+      | title    | Info        |
+      | itemtype | Heading     |
     When I log in as "admin"
-    And I navigate to smart menus
-    And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
-    And I should see "Quick links" in the "#region-main h4" "css_element"
-    And I click on "Add menu item" "button"
-    And I set the following fields to these values:
-      | Title          | Info    |
-      | Menu item type | Heading |
-    And I click on "Save changes" "button"
+    And I navigate to smart menu "Quick links" items
     And I should see "Quick links" in the "#region-main h4" "css_element"
     And the following should exist in the "smartmenus_items" table:
       | Title |
@@ -120,28 +102,23 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     Then I should see smart menu "Quick links" item "Info" in location "Main, Menu, User, Bottom"
     And I should see smart menu "Quick links" item "External Resources" in location "Main, Menu, User, Bottom"
 
-  @javascript
   Scenario: Smartmenus: Menu items: Management - Modify the visibility of an existing smart menu item
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links |
+      | title    | Info        |
+      | itemtype | Heading     |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links                               |
+      | title    | Item to avoid that the menu becomes empty |
+      | itemtype | Heading                                   |
     When I log in as "admin"
-    And I navigate to smart menus
-    And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
-    And I should see "Quick links" in the "#region-main h4" "css_element"
-    And I click on "Add menu item" "button"
-    And I set the following fields to these values:
-      | Title          | Info    |
-      | Menu item type | Heading |
-    And I click on "Save changes" "button"
+    And I navigate to smart menu "Quick links" items
     And I should see "Quick links" in the "#region-main h4" "css_element"
     And the following should exist in the "smartmenus_items" table:
       | Title |
       | Info  |
     And ".action-hide" "css_element" should exist in the "Info" "table_row"
     And ".action-show" "css_element" should not exist in the "Info" "table_row"
-    And I click on "Add menu item" "button"
-    And I set the following fields to these values:
-      | Title          | Demo item |
-      | Menu item type | Heading   |
-    And I click on "Save changes" "button"
     Then I should see smart menu "Quick links" item "Info" in location "Main, Menu, User, Bottom"
     And I click on ".action-hide" "css_element" in the "Info" "table_row"
     Then I should not see smart menu "Quick links" item "Info" in location "Main, Menu, User, Bottom"
@@ -150,27 +127,23 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I click on ".action-show" "css_element" in the "Info" "table_row"
     Then I should see smart menu "Quick links" item "Info" in location "Main, Menu, User, Bottom"
 
-  @javascript
   Scenario: Smartmenus: Menu items: Management - Move an existing smart menu item up and down
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu      | Quick links |
+      | title     | Info        |
+      | itemtype  | Heading     |
+      | sortorder | 1           |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu      | Quick links |
+      | title     | Courses     |
+      | itemtype  | Heading     |
+      | sortorder | 2           |
     When I log in as "admin"
-    And I navigate to smart menus
-    And I click on ".action-list-items" "css_element" in the "Quick links" "table_row"
-    And I should see "Quick links" in the "#region-main h4" "css_element"
-    And I click on "Add menu item" "button"
-    And I set the following fields to these values:
-      | Title          | Info    |
-      | Menu item type | Heading |
-    And I click on "Save changes" "button"
+    And I navigate to smart menu "Quick links" items
     And I should see "Quick links" in the "#region-main h4" "css_element"
     And the following should exist in the "smartmenus_items" table:
       | Title |
       | Info  |
-    And I click on "Add menu item" "button"
-    And I set the following fields to these values:
-      | Title          | Courses |
-      | Menu item type | Heading |
-    And I click on "Save changes" "button"
-    And I should see "Quick links" in the "#region-main h4" "css_element"
     And the following should exist in the "smartmenus_items" table:
       | Title   |
       | Courses |

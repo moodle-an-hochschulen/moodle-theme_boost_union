@@ -176,7 +176,6 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
       | 1        | 1          | 1        | 2          | 2        | 3          | 3        | 4          |
       | 5        | 2          | 6        | 3          | 3        | 1          | 8        | 4          |
 
-  @javascript @_file_upload
   Scenario: Setting: Advertisement tiles - Display the uploaded background image
     Given the following config values are set as admin:
       | config       | value                             | plugin            |
@@ -184,20 +183,12 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
       | tile1content | This is a test content for tile 1 | theme_boost_union |
       | tile2enabled | no                                | theme_boost_union |
       | tile2content | This is a test content for tile 2 | theme_boost_union |
-    When I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Content" in site administration
-    And I click on "Advertisement tiles" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Advertisement tile 1 background image" filemanager
-    And I press "Save changes"
+    And the following "theme_boost_union > setting files" exist:
+      | filearea             | filepath                                       |
+      | tile1backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
+    When I log in as "teacher1"
     And I am on site homepage
-    And Behat debugging is enabled
-    And I log out
-    And I am on site homepage
-    And I follow "Log in"
-    And I log in as "teacher1"
-    And I am on site homepage
-    Then "//div[@id='themeboostunionadvtile1']/*[1][contains(@style, 'pluginfile.php/1/theme_boost_union/tilebackgroundimage1/0/login_bg1.png')]" "xpath_element" should exist
+    Then "//div[@id='themeboostunionadvtile1']/*[1][contains(@style, 'pluginfile.php/1/theme_boost_union/tile1backgroundimage/0/login_bg1.png')]" "xpath_element" should exist
     And "//div[@id='themeboostunionadvtile2']/*[1][contains(@style, 'pluginfile.php')]" "xpath_element" should not exist
 
   Scenario Outline: Setting: Advertisement tiles - Define the tile (min-)height.
@@ -216,25 +207,16 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
       | 150px  |
       | 250px  |
 
-  @javascript @_file_upload
   Scenario Outline: Setting: Advertisement tiles - Define the background image position.
     Given the following config values are set as admin:
       | config                       | value                             | plugin            |
       | tile1enabled                 | yes                               | theme_boost_union |
       | tile1content                 | This is a test content for tile 1 | theme_boost_union |
       | tile1backgroundimageposition | <position>                        | theme_boost_union |
-    When I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Content" in site administration
-    And I click on "Advertisement tiles" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Advertisement tile 1 background image" filemanager
-    And I press "Save changes"
-    And I am on site homepage
-    And Behat debugging is enabled
-    And I log out
-    And I am on site homepage
-    And I follow "Log in"
-    And I log in as "teacher1"
+    And the following "theme_boost_union > setting files" exist:
+      | filearea             | filepath                                       |
+      | tile1backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
+    When I log in as "teacher1"
     And I am on site homepage
     Then "//div[@id='themeboostunionadvtile1']/*[1][contains(@class, 'card') and contains(@style, 'background-position: <position>')]" "xpath_element" should exist
 
@@ -265,7 +247,6 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
     Then "#admin-tile3title" "css_element" should not be visible
     Then "#admin-tile4title" "css_element" should be visible
 
-  @javascript
   Scenario Outline: Setting: Advertisement tiles - Display the configured content style
     Given the following config values are set as admin:
       | config            | value                             | plugin            |

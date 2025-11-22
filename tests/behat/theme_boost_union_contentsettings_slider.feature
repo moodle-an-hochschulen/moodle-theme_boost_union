@@ -1,4 +1,4 @@
-@theme @theme_boost_union @theme_boost_union_contentsettings @theme_boost_union_contentsettings_slider @javascript @_file_upload
+@theme @theme_boost_union @theme_boost_union_contentsettings @theme_boost_union_contentsettings_slider
 
 Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "Content" page
   In order to use the features
@@ -14,15 +14,9 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | slide1enabled | yes                                | theme_boost_union |
       | slide1caption | Slide 1                            | theme_boost_union |
       | slide1content | This is a test content for slide 1 | theme_boost_union |
-    When I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Content" in site administration
-    And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 1 background image" filemanager
-    And I press "Save changes"
-    And I am on site homepage
-    And Behat debugging is enabled
-    And I log out
+    And the following "theme_boost_union > setting files" exist:
+      | filearea              | filepath                                       |
+      | slide1backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
 
   Scenario: Setting: Slider - Display the slider on the frontpage only and nowhere else
     Given the following "courses" exist:
@@ -193,7 +187,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
     When I log in as "teacher1"
     And I am on site homepage
     Then "#themeboostunionslide1 > img" "css_element" should exist
-    And the "src" attribute of "#themeboostunionslide1 > img" "css_element" should contain "pluginfile.php/1/theme_boost_union/slidebackgroundimage1/0/login_bg1.png"
+    And the "src" attribute of "#themeboostunionslide1 > img" "css_element" should contain "pluginfile.php/1/theme_boost_union/slide1backgroundimage/0/login_bg1.png"
     And the "alt" attribute of "#themeboostunionslide1 > img" "css_element" should contain "This is the image description"
 
   Scenario: Setting: Slider - Display an individual slide only if an image is uploaded
@@ -257,24 +251,11 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | slide4linktitle  | Link to Google                     | theme_boost_union |
       | slide4linksource | 2                                  | theme_boost_union |
       | slide4linktarget | new                                | theme_boost_union |
-    And I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Content" in site administration
-    And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 2 background image" filemanager
-    # For a strange reason, Behat fails if we upload all images at once. So we simply save the form after each upload.
-    And I press "Save changes"
-    And I navigate to "Appearance > Boost Union > Content" in site administration
-    And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 3 background image" filemanager
-    And I press "Save changes"
-    And I navigate to "Appearance > Boost Union > Content" in site administration
-    And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 4 background image" filemanager
-    And I press "Save changes"
-    And I am on site homepage
-    And Behat debugging is enabled
-    And I log out
+    And the following "theme_boost_union > setting files" exist:
+      | filearea              | filepath                                       |
+      | slide2backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
+      | slide3backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
+      | slide4backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
     When I log in as "teacher1"
     And I am on site homepage
     Then "#themeboostunionslide1 > a" "css_element" should not exist
@@ -318,24 +299,11 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | slide6enabled | yes                               | theme_boost_union |
       | slide6content | This is a test content for tile 6 | theme_boost_union |
       | slide6order   | <orders6>                         | theme_boost_union |
-    And I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Content" in site administration
-    And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 2 background image" filemanager
-    # For a strange reason, Behat fails if we upload all images at once. So we simply save the form after each upload.
-    And I press "Save changes"
-    And I navigate to "Appearance > Boost Union > Content" in site administration
-    And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 4 background image" filemanager
-    And I press "Save changes"
-    And I navigate to "Appearance > Boost Union > Content" in site administration
-    And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Slide 6 background image" filemanager
-    And I press "Save changes"
-    And I am on site homepage
-    And Behat debugging is enabled
-    And I log out
+    And the following "theme_boost_union > setting files" exist:
+      | filearea              | filepath                                       |
+      | slide2backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
+      | slide4backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
+      | slide6backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
     When I log in as "teacher1"
     And I am on site homepage
     Then "//div[@id='themeboostunionslider']/div[contains(@class, 'carousel-inner')]/*[<positions1>][@id='themeboostunionslide1']" "xpath_element" should exist
@@ -351,6 +319,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | 1       | 1          | 1       | 2          | 2       | 3          | 3       | 4          |
       | 5       | 2          | 6       | 3          | 3       | 1          | 8       | 4          |
 
+  @javascript
   Scenario: Setting: Slider - Show and hide the admin settings based on the main "Enable slide x" setting
     Given the following config values are set as admin:
       | config        | value | plugin            |
