@@ -441,6 +441,31 @@ class behat_theme_boost_union_base_general extends behat_base {
     }
 
     /**
+     * Purges all Boost Union MUC caches
+     *
+     * @Given /^all Boost Union MUC caches are purged$/
+     */
+    public function purge_all_boost_union_muc_caches() {
+        // Purge the flavours cache.
+        \core_cache\helper::purge_by_definition('theme_boost_union', 'flavours');
+
+        // Purge the touch icons iOS cache.
+        \core_cache\helper::purge_by_definition('theme_boost_union', 'touchiconsios');
+
+        // Purge the smart menus cache.
+        \core_cache\helper::purge_by_definition('theme_boost_union', 'smartmenus');
+
+        // Purge the smart menu items cache.
+        \core_cache\helper::purge_by_definition('theme_boost_union', 'smartmenu_items');
+
+        // Purge the hook suppressions cache.
+        \core_cache\helper::purge_by_definition('theme_boost_union', 'hooksuppress');
+
+        // Purge the FontAwesome icons cache.
+        \core_cache\helper::purge_by_definition('theme_boost_union', 'fontawesomeicons');
+    }
+
+    /**
      * Purges all caches
      *
      * @Given /^all caches are purged$/

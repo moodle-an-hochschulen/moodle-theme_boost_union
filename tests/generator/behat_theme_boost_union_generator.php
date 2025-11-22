@@ -43,11 +43,37 @@ class behat_theme_boost_union_generator extends behat_generator_base {
      *   - "roles" are specified by shortname, "cohorts" are specified by idnumber and "languages" are specified by
      *     short code (for example, en, de).
      *   - "customfields" are specified in `name: value` format, where name is the name or shortname of the custom field.
+     * - "setting files" - Requires a filearea and filepath.
+     *   - "filearea" is the name of the filearea (e.g., 'logo', 'slide1backgroundimage', 'tile1backgroundimage').
+     *   - "filepath" is the path to the file relative to dirroot (e.g., 'theme/boost_union/tests/fixtures/moodlelogo.png').
+     *   - Automatically sets the corresponding config value.
+     * - "flavour files" - Requires a flavour title, filearea and filepath.
+     *   - "flavour" is the title of an existing flavour.
+     *   - "filearea" is the flavour filearea name (e.g., 'flavours_look_logocompact', 'flavours_look_favicon').
+     *   - "filepath" is the path to the file relative to dirroot (e.g., 'theme/boost_union/tests/fixtures/flavourlogo.png').
+     *   - Automatically sets the corresponding flavour config value.
+     * - "course overview files" - Requires a course shortname and filepath.
+     *   - "course" is the course shortname (e.g., 'C1').
+     *   - "filepath" is the path to the file relative to dirroot (e.g., 'theme/boost_union/tests/fixtures/login_bg1.png').
+     *   - Uploads the file as a course overview file (course image).
+     * - "core files" - Requires a filearea and filepath.
+     *   - "filearea" is the name of the Moodle core filearea (e.g., 'logo', 'logocompact', 'favicon').
+     *   - "filepath" is the path to the file relative to dirroot (e.g., 'theme/boost_union/tests/fixtures/moodlelogo.png').
+     *   - Uploads the file to Moodle core admin filecares and sets the corresponding config value.
+     * - "flavours" - Requires a title.
+     *   - "title" is the flavour title.
+     *   - All other flavour settings can be specified as they appear on the flavour editing form.
      *
      * @return array[]
      */
     protected function get_creatable_entities(): array {
         return [
+            'flavours' => [
+                'singular' => 'flavour',
+                'datagenerator' => 'flavour',
+                'required' => ['title'],
+            ],
+
             'smart menus' => [
                 'singular' => 'smart menu',
                 'datagenerator' => 'smartmenu',
@@ -57,7 +83,7 @@ class behat_theme_boost_union_generator extends behat_generator_base {
                     'showdescription' => 'showdescription',
                     'type' => 'type',
                     'mode' => 'mode',
-                    'moremenubehaviour' => 'moremenubehaviour',
+                    'moremenubehavior' => 'moremenubehavior',
                     'cardform' => 'cardform',
                     'cardsize' => 'cardsize',
                     'cardoverflowbehaviour' => 'cardoverflowbehaviour',
@@ -95,6 +121,30 @@ class behat_theme_boost_union_generator extends behat_generator_base {
                     'languages' => 'languages',
                     'byadmin' => 'byadmin',
                 ],
+            ],
+
+            'setting files' => [
+                'singular' => 'setting file',
+                'datagenerator' => 'setting_file',
+                'required' => ['filearea', 'filepath'],
+            ],
+
+            'flavour files' => [
+                'singular' => 'flavour file',
+                'datagenerator' => 'flavour_file',
+                'required' => ['flavour', 'filearea', 'filepath'],
+            ],
+
+            'course overview files' => [
+                'singular' => 'course overview file',
+                'datagenerator' => 'course_overview_file',
+                'required' => ['course', 'filepath'],
+            ],
+
+            'core files' => [
+                'singular' => 'core file',
+                'datagenerator' => 'core_file',
+                'required' => ['filearea', 'filepath'],
             ],
         ];
     }
@@ -181,7 +231,7 @@ class behat_theme_boost_union_generator extends behat_generator_base {
      * @return int
      * @throws Exception
      */
-    protected function get_moremenubehaviour_id(string $moremenu): int {
+    protected function get_moremenubehavior_id(string $moremenu): int {
         return $this->option_id('moremenu', $moremenu, smartmenu::get_moremenu_options());
     }
 
@@ -488,5 +538,222 @@ class behat_theme_boost_union_generator extends behat_generator_base {
      */
     protected function get_textposition_id(string $textposition): int {
         return $this->option_id('textposition', $textposition, smartmenu_item::get_textposition_options());
+    }
+
+    /**
+     * Helper function to create a file in the theme_boost_union component.
+     *
+     * @param string $filearea The filearea for the file.
+     * @param string $filepath The path to the source file (relative to dirroot).
+     * @param int $itemid The itemid for the file (default 0).
+     * @return stored_file The created file.
+     * @throws Exception
+     */
+    protected function create_theme_file(string $filearea, string $filepath, int $itemid = 0): \stored_file {
+        global $CFG;
+
+        // Require filelib.
+        require_once($CFG->libdir . '/filelib.php');
+
+        // Compose the full path to the source file.
+        $fullpath = $CFG->dirroot . '/' . $filepath;
+
+        // Check that the file exists.
+        if (!file_exists($fullpath)) {
+            throw new Exception('File not found: ' . $fullpath);
+        }
+
+        // Get the system context.
+        $systemcontext = context_system::instance();
+
+        // Prepare file record.
+        $filerecord = [
+            'contextid' => $systemcontext->id,
+            'component' => 'theme_boost_union',
+            'filearea'  => $filearea,
+            'itemid'    => $itemid,
+            'filepath'  => '/',
+            'filename'  => basename($fullpath),
+        ];
+
+        // Get file storage.
+        $fs = get_file_storage();
+
+        // Delete existing file if any.
+        $existingfile = $fs->get_file(
+            $filerecord['contextid'],
+            $filerecord['component'],
+            $filerecord['filearea'],
+            $filerecord['itemid'],
+            $filerecord['filepath'],
+            $filerecord['filename']
+        );
+        if ($existingfile) {
+            $existingfile->delete();
+        }
+
+        // Create and return file from path.
+        return $fs->create_file_from_pathname($filerecord, $fullpath);
+    }
+
+    /**
+     * Create a theme setting file.
+     *
+     * @param array $data Must contain 'filearea' and 'filepath'.
+     * @return void
+     * @throws Exception
+     */
+    protected function process_setting_file(array $data): void {
+        // Extract data.
+        $filearea = $data['filearea'];
+        $filepath = $data['filepath'];
+
+        // Create the file using the helper function.
+        $file = $this->create_theme_file($filearea, $filepath, 0);
+
+        // Set the config value to the filepath (as required by admin_setting_configstoredfile).
+        // The config name matches the filearea name (e.g., 'slide1backgroundimage').
+        set_config($filearea, $file->get_filepath() . $file->get_filename(), 'theme_boost_union');
+    }
+
+    /**
+     * Create a flavour file.
+     *
+     * @param array $data Must contain 'flavour', 'filearea' and 'filepath'.
+     * @return void
+     * @throws Exception
+     */
+    protected function process_flavour_file(array $data): void {
+        global $DB;
+
+        // Extract data.
+        $flavourtitle = $data['flavour'];
+        $filearea = $data['filearea'];
+        $filepath = $data['filepath'];
+
+        // Get the flavour ID by title.
+        $flavourid = $DB->get_field('theme_boost_union_flavours', 'id', ['title' => $flavourtitle]);
+        if (!$flavourid) {
+            throw new Exception('Flavour not found with title: ' . $flavourtitle);
+        }
+
+        // Create the file using the helper function with the flavour ID as itemid.
+        $file = $this->create_theme_file($filearea, $filepath, $flavourid);
+
+        // Set the flavour database field to the filepath (similar to set_config for global settings).
+        // Map the filearea to the corresponding database field name by removing the 'flavours_' prefix.
+        $fieldname = str_replace('flavours_', '', $filearea);
+        $DB->set_field(
+            'theme_boost_union_flavours',
+            $fieldname,
+            $file->get_filepath() . $file->get_filename(),
+            ['id' => $flavourid]
+        );
+    }
+
+    /**
+     * Create a course overview file (course image).
+     *
+     * @param array $data Must contain 'course' and 'filepath'.
+     * @return void
+     * @throws Exception
+     */
+    protected function process_course_overview_file(array $data): void {
+        global $CFG, $DB;
+
+        // Extract data.
+        $courseshortname = $data['course'];
+        $filepath = $data['filepath'];
+
+        // Get the course ID by shortname.
+        $courseid = $DB->get_field('course', 'id', ['shortname' => $courseshortname]);
+        if (!$courseid) {
+            throw new Exception('Course not found with shortname: ' . $courseshortname);
+        }
+
+        // Get the course context.
+        $coursecontext = context_course::instance($courseid);
+
+        // Get the file storage.
+        $fs = get_file_storage();
+
+        // Get the source file path.
+        $sourcepath = $CFG->dirroot . '/' . $filepath;
+        if (!file_exists($sourcepath)) {
+            throw new Exception('Source file not found: ' . $sourcepath);
+        }
+
+        // Get the filename from the path.
+        $filename = basename($sourcepath);
+
+        // Prepare file record for course overview files.
+        $filerecord = [
+            'contextid' => $coursecontext->id,
+            'component' => 'course',
+            'filearea'  => 'overviewfiles',
+            'itemid'    => 0,
+            'filepath'  => '/',
+            'filename'  => $filename,
+        ];
+
+        // Create the file from the source.
+        $fs->create_file_from_pathname($filerecord, $sourcepath);
+    }
+
+    /**
+     * Process a core file upload.
+     *
+     * @param array $data Must contain 'filearea' and 'filepath'.
+     * @return void
+     * @throws Exception
+     */
+    protected function process_core_file(array $data): void {
+        global $CFG;
+
+        // Require filelib.
+        require_once($CFG->libdir . '/filelib.php');
+
+        // Compose the full path to the source file.
+        $fullpath = $CFG->dirroot . '/' . ltrim($data['filepath'], '/');
+
+        // Check that the file exists.
+        if (!file_exists($fullpath)) {
+            throw new Exception('File not found: ' . $fullpath);
+        }
+
+        // Get the system context.
+        $systemcontext = context_system::instance();
+
+        // Prepare file record for core admin files.
+        $filerecord = [
+            'contextid' => $systemcontext->id,
+            'component' => 'core_admin',
+            'filearea'  => $data['filearea'],
+            'itemid'    => 0,
+            'filepath'  => '/',
+            'filename'  => basename($fullpath),
+        ];
+
+        // Get file storage.
+        $fs = get_file_storage();
+
+        // Delete existing file if any.
+        $existingfile = $fs->get_file(
+            $filerecord['contextid'],
+            $filerecord['component'],
+            $filerecord['filearea'],
+            $filerecord['itemid'],
+            $filerecord['filepath'],
+            $filerecord['filename']
+        );
+        if ($existingfile) {
+            $existingfile->delete();
+        }
+
+        // Create file from path.
+        $fs->create_file_from_pathname($filerecord, $fullpath);
+
+        // Set the corresponding config value to activate the file.
+        set_config($data['filearea'], basename($fullpath));
     }
 }

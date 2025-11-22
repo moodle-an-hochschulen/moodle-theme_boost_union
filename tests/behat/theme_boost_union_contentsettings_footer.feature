@@ -76,7 +76,6 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | enablefooterbuttonmobile  | should not         | should            | be visible     |
       | enablefooterbuttonnone    | should not         | should not        | exist          |
 
-  @javascript
   Scenario Outline: Setting: Footer - Enable and disable the footer button: Render additionalhtmlfooter content in all cases
     Given the following config values are set as admin:
       | config               | value                                                           | plugin            |
@@ -102,7 +101,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config             | value   | plugin            |
       | footersuppresschat | <value> | theme_boost_union |
-    And all caches are purged
+    And all Boost Union MUC caches are purged
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I navigate to "Communication" in current page administration
@@ -125,7 +124,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config             | value   | plugin            |
       | footersuppresshelp | <value> | theme_boost_union |
-    And all caches are purged
+    And all Boost Union MUC caches are purged
     And I log in as "admin"
     When I am on "Course 1" course homepage
     Then I <shouldornot> see "Documentation for this page" in the ".footer-content-popover" "css_element"
@@ -141,7 +140,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config                 | value   | plugin            |
       | footersuppressservices | <value> | theme_boost_union |
-    And all caches are purged
+    And all Boost Union MUC caches are purged
     And I log in as "admin"
     When I am on site homepage
     Then I <shouldornot> see "Services and support" in the ".footer-content-popover" "css_element"
@@ -158,7 +157,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config                | value   | plugin            |
       | footersuppresscontact | <value> | theme_boost_union |
-    And all caches are purged
+    And all Boost Union MUC caches are purged
     And I log in as "admin"
     When I am on site homepage
     Then I <shouldornot> see "Contact site support" in the ".footer-content-popover" "css_element"
@@ -172,7 +171,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     Given the following config values are set as admin:
       | config                  | value   | plugin            |
       | footersuppresslogininfo | <value> | theme_boost_union |
-    And all caches are purged
+    And all Boost Union MUC caches are purged
     And I log in as "admin"
     When I am on site homepage
     Then I <shouldornot> see "You are logged in as" in the ".footer-content-popover" "css_element"
@@ -189,7 +188,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config               | value |
       | displayloginfailures | 1     |
-    And all caches are purged
+    And all Boost Union MUC caches are purged
     When I am on login page
     And I set the field "Username" to "admin"
     And I set the field "Password" to "wrongpass"
@@ -213,7 +212,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     Given the following config values are set as admin:
       | config                 | value   | plugin            |
       | footersuppressusertour | <value> | theme_boost_union |
-    And all caches are purged
+    And all Boost Union MUC caches are purged
     And I log in as "admin"
     And I add a new user tour with:
       | Name                | First tour |
@@ -258,7 +257,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     Given the following config values are set as admin:
       | config                | value   | plugin            |
       | footersuppresspowered | <value> | theme_boost_union |
-    And all caches are purged
+    And all Boost Union MUC caches are purged
     And I log in as "admin"
     When I am on site homepage
     Then I <shouldornot> see "Powered by Moodle" in the ".footer-content-popover" "css_element"
@@ -275,7 +274,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config                                        | value   | plugin            |
       | footersuppressstandardfooter_tool_dataprivacy | <value> | theme_boost_union |
-    And all caches are purged
+    And all Boost Union MUC caches are purged
     And I log in as "admin"
     When I am on site homepage
     Then I <shouldornot> see "Data retention summary" in the ".footer-content-popover" "css_element"
@@ -291,7 +290,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config                                         | value   | plugin            |
       | footersuppressstandardfooter_core_userfeedback | <value> | theme_boost_union |
-    And all caches are purged
+    And all Boost Union MUC caches are purged
     And I log in as "admin"
     When I am on site homepage
     Then I <shouldornot> see "Give feedback about this software" in the ".footer-content-popover" "css_element"
@@ -308,7 +307,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config                                   | value   | plugin            |
       | footersuppressstandardfooter_tool_mobile | <value> | theme_boost_union |
-    And all caches are purged
+    And all Boost Union MUC caches are purged
     And I log in as "admin"
     When I am on site homepage
     Then I <shouldornot> see "Get the mobile app" in the ".footer-content-popover" "css_element"
@@ -327,7 +326,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And the following config values are set as admin:
       | config                                   | value   | plugin            |
       | footersuppressstandardfooter_tool_policy | <value> | theme_boost_union |
-    And all caches are purged
+    And all Boost Union MUC caches are purged
     And I log in as "admin"
     When I am on site homepage
     Then I <shouldornot> see "Policies" in the ".footer-content-popover" "css_element"

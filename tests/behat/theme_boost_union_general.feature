@@ -118,7 +118,7 @@ Feature: Configuring the theme_boost_union plugin as admin
     And I click on "Settings" "link" in the "#region-main .nav-tabs" "css_element"
     Then "Boost Union (or a child theme of Boost Union) is currently not the active theme" "text" should appear after ".admin_settingspage_tabs_with_tertiary" "css_element"
     # Smart menus
-    When I navigate to "Appearance > Boost Union > Smart menus" in site administration
+    And I navigate to smart menus
     Then "Boost Union (or a child theme of Boost Union) is currently not the active theme" "text" should appear after ".admin_settingspage_tabs_with_tertiary" "css_element"
 
   @javascript

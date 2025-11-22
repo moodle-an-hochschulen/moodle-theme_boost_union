@@ -61,14 +61,14 @@ class theme_boost_union_generator extends component_generator_base {
             throw new Exception('Invalid mode.');
         }
         $validbehaviours = array_keys(smartmenu::get_moremenu_options());
-        $moremenubehaviour = $data['moremenubehaviour'] ?? smartmenu::MOREMENU_DONOTCHANGE;
-        if (!in_array($moremenubehaviour, $validbehaviours)) {
-            throw new Exception('Invalid moremenubehaviour.');
+        $moremenubehavior = $data['moremenubehavior'] ?? smartmenu::MOREMENU_DONOTCHANGE;
+        if (!in_array($moremenubehavior, $validbehaviours)) {
+            throw new Exception('Invalid moremenubehavior.');
         }
 
         $cardsize = null;
         $cardform = null;
-        $cardoverflowbehaviour = null;
+        $cardoverflowbehavior = null;
         if ($type === smartmenu::TYPE_CARD) {
             $validcardsizes = array_keys(smartmenu::get_cardsize_options());
             $cardsize = $data['cardsize'] ?? smartmenu::CARDSIZE_SMALL;
@@ -80,10 +80,10 @@ class theme_boost_union_generator extends component_generator_base {
             if (!in_array($cardform, $validcardforms)) {
                 throw new Exception('Invalid cardform.');
             }
-            $validbehaviours = array_keys(smartmenu::get_cardoverflowbehaviour_options());
-            $cardoverflowbehaviour = strtolower($data['cardoverflowbehaviour'] ?? smartmenu::CARDOVERFLOWBEHAVIOUR_NOWRAP);
-            if (!in_array($cardoverflowbehaviour, $validbehaviours)) {
-                throw new Exception('Invalid cardoverflowbehaviour.');
+            $validbehaviors = array_keys(smartmenu::get_cardoverflowbehaviour_options());
+            $cardoverflowbehavior = $data['cardoverflowbehavior'] ?? smartmenu::CARDOVERFLOWBEHAVIOUR_NOWRAP;
+            if (!in_array($cardoverflowbehavior, $validbehaviors)) {
+                throw new Exception('Invalid cardoverflowbehavior.');
             }
         }
         [
@@ -102,16 +102,16 @@ class theme_boost_union_generator extends component_generator_base {
             'title' => $data['title'] ?? 'Smart menu ' . random_string(),
             'description' => $data['description'] ?? 'Smart menu description ' . random_string(),
             'description_format' => $data['description_format'] ?? FORMAT_HTML,
-            'showdescription' => $showdescription,
+            'showdesc' => $showdescription,
             'sortorder' => $sortorder,
             'location' => json_encode($location),
             'type' => $type,
             'mode' => $mode,
             'cssclass' => $data['cssclass'] ?? null,
-            'moremenubehaviour' => $moremenubehaviour,
+            'moremenubehavior' => $moremenubehavior,
             'cardsize' => $cardsize,
             'cardform' => $cardform,
-            'cardoverflowbehaviour' => $cardoverflowbehaviour,
+            'cardoverflowbehavior' => $cardoverflowbehavior,
             'roles' => $roles,
             'rolecontext' => $rolecontext,
             'cohorts' => $cohorts,
@@ -123,6 +123,12 @@ class theme_boost_union_generator extends component_generator_base {
             'visible' => $data['visible'] ?? 1,
         ];
         $record->id = $DB->insert_record('theme_boost_union_menus', $record);
+
+        // Purge the smart menus cache.
+        $cache = \cache::make('theme_boost_union', 'smartmenus');
+        $cache->delete($record->id);
+        $cache->delete(smartmenu::CACHE_MENUSLIST);
+
         return $record;
     }
 
@@ -268,6 +274,15 @@ class theme_boost_union_generator extends component_generator_base {
             'visible' => $data['visible'] ?? 1,
         ];
         $record->id = $DB->insert_record('theme_boost_union_menuitems', $record);
+
+        // Purge the smart menu items cache for this item.
+        $itemcache = \cache::make('theme_boost_union', 'smartmenu_items');
+        $itemcache->delete($record->id);
+
+        // Purge the smart menus cache for the parent menu.
+        $menucache = \cache::make('theme_boost_union', 'smartmenus');
+        $menucache->delete($data['menu']);
+
         return $record;
     }
 
@@ -315,5 +330,90 @@ class theme_boost_union_generator extends component_generator_base {
             $startdate,
             $enddate,
         ];
+    }
+
+    /**
+     * Generate a flavour.
+     *
+     * @param array $data Must contain 'title'. Can optionally contain 'applytocategories' (comma-separated category idnumbers).
+     * @return stdClass The created flavour record.
+     * @throws Exception
+     */
+    public function create_flavour(array $data): \stdClass {
+        global $DB;
+
+        // Validate required fields.
+        if (empty($data['title'])) {
+            throw new Exception('Flavour title must be specified.');
+        }
+
+        // Prepare the record.
+        $record = (object)[
+            'title' => $data['title'],
+            'description' => $data['description'] ?? '',
+            'description_format' => FORMAT_HTML,
+            'applytocohorts' => $data['applytocohorts'] ?? 0,
+            'applytocohorts_ids' => null,
+            'applytocategories' => $data['applytocategories'] ?? 0,
+            'applytocategories_ids' => null,
+            'look_backgroundimagepos' => $data['look_backgroundimagepos'] ?? null,
+            'look_brandcolor' => $data['look_brandcolor'] ?? null,
+            'look_bootstrapcolorsuccess' => $data['look_bootstrapcolorsuccess'] ?? null,
+            'look_bootstrapcolorinfo' => $data['look_bootstrapcolorinfo'] ?? null,
+            'look_bootstrapcolorwarning' => $data['look_bootstrapcolorwarning'] ?? null,
+            'look_bootstrapcolordanger' => $data['look_bootstrapcolordanger'] ?? null,
+            'look_aicoladministration' => $data['look_aicoladministration'] ?? null,
+            'look_aicolassessment' => $data['look_aicolassessment'] ?? null,
+            'look_aicolcollaboration' => $data['look_aicolcollaboration'] ?? null,
+            'look_aicolcommunication' => $data['look_aicolcommunication'] ?? null,
+            'look_aicolcontent' => $data['look_aicolcontent'] ?? null,
+            'look_aicolinteractivecontent' => $data['look_aicolinteractivecontent'] ?? null,
+            'look_aicolinterface' => $data['look_aicolinterface'] ?? null,
+            'look_navbarcolor' => $data['look_navbarcolor'] ?? null,
+            'look_rawscss' => $data['look_rawscss'] ?? null,
+            'look_rawscsspre' => $data['look_rawscsspre'] ?? null,
+        ];
+
+        // Handle category IDs if provided.
+        if (!empty($data['applytocategories_ids'])) {
+            $record->applytocategories = 1;
+            $categoryids = [];
+            foreach (explode(',', $data['applytocategories_ids']) as $idnumber) {
+                $idnumber = trim($idnumber);
+                if (empty($idnumber)) {
+                    continue;
+                }
+                $categoryid = $DB->get_field('course_categories', 'id', ['idnumber' => $idnumber]);
+                if (!$categoryid) {
+                    throw new Exception('Category not found with idnumber: ' . $idnumber);
+                }
+                $categoryids[] = $categoryid;
+            }
+            $record->applytocategories_ids = json_encode($categoryids);
+        }
+
+        // Handle cohort IDs if provided.
+        if (!empty($data['applytocohorts_ids'])) {
+            $record->applytocohorts = 1;
+            $cohortids = [];
+            foreach (explode(',', $data['applytocohorts_ids']) as $idnumber) {
+                $idnumber = trim($idnumber);
+                if (empty($idnumber)) {
+                    continue;
+                }
+                $cohortid = $DB->get_field('cohort', 'id', ['idnumber' => $idnumber]);
+                if (!$cohortid) {
+                    throw new Exception('Cohort not found with idnumber: ' . $idnumber);
+                }
+                $cohortids[] = $cohortid;
+            }
+            $record->applytocohorts_ids = json_encode($cohortids);
+        }
+
+        // Insert the record.
+        $record->id = $DB->insert_record('theme_boost_union_flavours', $record);
+
+        // Return the created record.
+        return $record;
     }
 }

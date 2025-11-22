@@ -725,7 +725,6 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
 
         // Boost_union savepoint reached.
         upgrade_plugin_savepoint(true, 2025100600, 'theme', 'boost_union');
-
     }
 
     if ($oldversion < 2025100601) {
