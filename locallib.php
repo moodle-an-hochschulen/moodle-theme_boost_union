@@ -714,7 +714,7 @@ function theme_boost_union_get_loginbackgroundimage_files() {
 
 /**
  *
- * Get the advertisement tile's background image URL from the filearea 'tilebackgroundimage'.tileno.
+ * Get the advertisement tile's background image URL from the filearea 'tile'.tileno.'backgroundimage'.
  *
  * Note:
  * Calling this function for each tile separately is maybe not performant. Originally it was planed to put
@@ -747,7 +747,7 @@ function theme_boost_union_get_urloftilebackgroundimage($tileno) {
         $files = $fs->get_area_files(
             $systemcontext->id,
             'theme_boost_union',
-            'tilebackgroundimage' . $tileno,
+            'tile' . $tileno . 'backgroundimage',
             false,
             'itemid',
             false
@@ -805,7 +805,7 @@ function theme_boost_union_get_urlofslidebackgroundimage($slideno) {
         $files = $fs->get_area_files(
             $systemcontext->id,
             'theme_boost_union',
-            'slidebackgroundimage' . $slideno,
+            'slide' . $slideno . 'backgroundimage',
             false,
             'itemid',
             false

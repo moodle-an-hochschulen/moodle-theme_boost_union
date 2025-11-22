@@ -6,6 +6,8 @@ Changes
 
 ### v5.0-r13
 
+* 2025-11-19 - Internal changes: Align internal filearea names for slide and tile backgrounds, helps to resolve #839
+               Please note: While an upgrade script should migrate existing files, please double-check if existing slides and advertisement tiles are still presented correctly on the frontpage.
 * 2025-11-19 - Tests: Further Behat runtime optimisations, helps to resolve #839
 * 2025-11-19 - Backport: Replace Boost Union's hook manipulation with a more downstream solution to suppress hook output, resolves #1101.
 * 2025-11-19 - Bugfix: additionalhtmlfooter is now rendered even if the footer is hidden entirely, resolves #1042

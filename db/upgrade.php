@@ -716,6 +716,75 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025041429, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2025041434) {
+        // Rename slide and tile background image fileareas to match config setting names.
+        // Config stays: slide1backgroundimage, slide2backgroundimage, etc.
+        // Old filearea: slidebackgroundimage1, slidebackgroundimage2, etc.
+        // New filearea: slide1backgroundimage, slide2backgroundimage, etc.
+        // Same applies for tile background images.
+        // This makes filearea names consistent with config names and simplifies the code.
+
+        // Get file storage.
+        $fs = get_file_storage();
+
+        // Define migration configurations: [type => [prefix, count]].
+        $migrations = [
+            'slide' => THEME_BOOST_UNION_SETTING_SLIDES_COUNT,
+            'tile' => THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT,
+        ];
+
+        // Migrate files for each type.
+        foreach ($migrations as $type => $count) {
+            for ($i = 1; $i <= $count; $i++) {
+                $oldfilearea = $type . 'backgroundimage' . $i;
+                $newfilearea = $type . $i . 'backgroundimage';
+
+                // Get all files in the old filearea (excluding directories).
+                $oldfiles = $fs->get_area_files(
+                    context_system::instance()->id,
+                    'theme_boost_union',
+                    $oldfilearea,
+                    false,
+                    'itemid, filepath, filename',
+                    false
+                );
+
+                // Move each file to the new filearea using File API.
+                foreach ($oldfiles as $oldfile) {
+                    // Create file record for new location.
+                    $filerecord = [
+                        'contextid' => $oldfile->get_contextid(),
+                        'component' => $oldfile->get_component(),
+                        'filearea' => $newfilearea,
+                        'itemid' => $oldfile->get_itemid(),
+                        'filepath' => $oldfile->get_filepath(),
+                        'filename' => $oldfile->get_filename(),
+                    ];
+
+                    // Create file in new filearea (File API handles pathnamehash automatically).
+                    if (
+                        !$fs->file_exists(
+                            $filerecord['contextid'],
+                            $filerecord['component'],
+                            $filerecord['filearea'],
+                            $filerecord['itemid'],
+                            $filerecord['filepath'],
+                            $filerecord['filename']
+                        )
+                    ) {
+                        $fs->create_file_from_storedfile($filerecord, $oldfile);
+                    }
+
+                    // Delete the old file.
+                    $oldfile->delete();
+                }
+            }
+        }
+
+        // Savepoint reached.
+        upgrade_plugin_savepoint(true, 2025041434, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
