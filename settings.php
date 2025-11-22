@@ -3387,7 +3387,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 $name,
                 $title,
                 $description,
-                'tilebackgroundimage' . $i,
+                'tile' . $i . 'backgroundimage',
                 0,
                 ['maxfiles' => 1, 'accepted_types' => 'web_image']
             );
@@ -3721,7 +3721,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 $name,
                 $title,
                 $description,
-                'slidebackgroundimage' . $i,
+                'slide' . $i . 'backgroundimage',
                 0,
                 ['maxfiles' => 1, 'accepted_types' => 'web_image']
             );
