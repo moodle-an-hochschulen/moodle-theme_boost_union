@@ -90,7 +90,7 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile" tab on the "L
     And "//head//link[contains(@rel, 'apple-touch-icon')][contains(@sizes, '60x60')][contains(@href, 'pluginfile.php/1/theme_boost_union/touchiconsios')][contains(@href, 'apple-icon-60x60.png')]" "xpath_element" should exist
     And Behat debugging is enabled
 
-  @javascript @_file_upload
+  @javascript
   Scenario: Setting: Touch icon files for iOS - Do not upload any file (countercheck)
     When I log in as "admin"
     And Behat debugging is disabled

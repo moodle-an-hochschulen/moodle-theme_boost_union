@@ -76,7 +76,6 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | enablefooterbuttonmobile  | should not         | should            | be visible     |
       | enablefooterbuttonnone    | should not         | should not        | exist          |
 
-  @javascript
   Scenario Outline: Setting: Footer - Enable and disable the footer button: Render additionalhtmlfooter content in all cases
     Given the following config values are set as admin:
       | config               | value                                                           | plugin            |

@@ -34,6 +34,9 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
       | user     | cohort |
       | teacher1 | CH1    |
 
+  # Note: This feature file could be realized without Javascript and with Behat generators instead as well to save some testing time.
+  # However, it is realized with Javascript here to test the UI processes as well.
+
   Scenario: Flavours: Application - Flavour ID is added as body class attribute
     When I log in as "admin"
     And I navigate to "Appearance > Boost Union > Flavours" in site administration

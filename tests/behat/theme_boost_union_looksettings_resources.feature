@@ -26,7 +26,7 @@ Feature: Configuring the theme_boost_union plugin for the "Resources" tab on the
     # Checking the revisioned URL is not possible currently with Behat without writing a custom step. We accept this for now.
     And Behat debugging is enabled
 
-  @javascript @_file_upload
+  @javascript
   Scenario: Setting: Additional resources - Do not upload any file (countercheck)
     When I log in as "admin"
     And Behat debugging is disabled
@@ -53,7 +53,7 @@ Feature: Configuring the theme_boost_union plugin for the "Resources" tab on the
     And I should see "/pluginfile.php/1/theme_boost_union/customfonts/0/roboto-v30-latin-regular.woff" in the ".settings-customfonts-filelist" "css_element"
     And Behat debugging is enabled
 
-  @javascript @_file_upload
+  @javascript
   Scenario: Setting: Custom fonts - Do not upload any file (countercheck)
     When I log in as "admin"
     And Behat debugging is disabled
