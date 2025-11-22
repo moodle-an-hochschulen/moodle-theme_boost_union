@@ -18,10 +18,9 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | itemtype | Static                          |
       | url      | /dummy                          |
 
-  @javascript
   Scenario: Smartmenus: Menu items: Moodle documenation - Add a smart menu documentation link item in a smart menu
     When I log in as "admin"
-    And I navigate to "Appearance > Boost Union > Smart menus" in site administration
+    And I navigate to smart menus
     Then I should see smart menu "Quick links" item "Documentation" in location "Main, Menu, User, Bottom"
     And the "href" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Documentation')]" "xpath_element" should contain "/en/admin/theme/boost_union/smartmenus/menus"
     And the "href" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Documentation')]" "xpath_element" should contain "https://docs.moodle.org/"
@@ -30,7 +29,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     And the "href" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Documentation')]" "xpath_element" should contain "/en/course/management"
     And the "href" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Documentation')]" "xpath_element" should contain "https://docs.moodle.org/"
 
-  @javascript
   Scenario Outline: Smartmenus: Menu items: Moodle documenation - Show the smart menu documentation link item only to users who have the necessary capability
     Given the following "users" exist:
       | username |

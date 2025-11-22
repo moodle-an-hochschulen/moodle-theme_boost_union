@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-11-19 - Improve the check for date-based smart menus from < to <= when checking for the starting date.
 * 2025-11-19 - Internal changes: Align internal filearea names for slide and tile backgrounds, helps to resolve #839
                Please note: While an upgrade script should migrate existing files, please double-check if existing slides and advertisement tiles are still presented correctly on the frontpage.
 * 2025-11-19 - Tests: Further Behat runtime optimisations, helps to resolve #839

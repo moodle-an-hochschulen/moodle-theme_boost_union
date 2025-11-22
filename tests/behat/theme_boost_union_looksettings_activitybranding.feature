@@ -170,7 +170,7 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
       | icon.svg     | Moodle 3 legacy icon | assign      | Assignment   |
       | icon.png     | Moodle 3 legacy icon | assign      | Assignment   |
 
-  @javascript @_file_upload
+  @javascript
   Scenario: Setting: Custom icons files - Do not upload any file (countercheck)
     When I log in as "admin"
     And Behat debugging is disabled

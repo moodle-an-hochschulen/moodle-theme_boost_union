@@ -5,9 +5,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   I need to be able to configure the theme Boost Union plugin
 
   Background:
-    Given I log in as "admin"
-    And I am on homepage
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname | shortname | category |
       | Test     | C1        | 0        |
     And the following "users" exist:
@@ -19,16 +17,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | user     | course | role           |
       | teacher  | C1     | editingteacher |
       | student1 | C1     | student        |
-    And the following "cohorts" exist:
-      | name     | idnumber |
-      | Cohort 1 | CH1      |
-      | Cohort 2 | CH2      |
-    And the following "cohort members" exist:
-      | user     | cohort |
-      | student1 | CH1    |
-      | student2 | CH1    |
-      | student2 | CH2    |
-      | teacher  | CH2    |
     And the following "theme_boost_union > smart menu" exists:
       | title    | Quick links                                      |
       | location | Main navigation, Menu bar, User menu, Bottom bar |
@@ -39,7 +27,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | title    | Info        |
       | itemtype | Heading     |
 
-  @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on the user roles
     Given the following "users" exist:
       | username      |
@@ -84,17 +71,16 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
 
     Examples:
       | byrole                           | context | student1shouldorshouldnot | teachershouldorshouldnot | managershouldorshouldnot | guestshouldorshouldnot | adminshouldorshouldnot | systemshouldorshouldnot | visitorshouldorshouldnot |
-      | Manager                          | Any     | should not                | should not               | should                   | should not             | should not             | should                  | should not               |
-      | Manager, Student                 | Any     | should                    | should not               | should                   | should not             | should not             | should                  | should not               |
-      | Manager, Student, editingteacher | Any     | should                    | should                   | should                   | should not             | should not             | should                  | should not               |
-      | Manager, Student, editingteacher | System  | should not                | should not               | should not               | should not             | should not             | should                  | should not               |
+      | manager                          | Any     | should not                | should not               | should                   | should not             | should not             | should                  | should not               |
+      | manager, student                 | Any     | should                    | should not               | should                   | should not             | should not             | should                  | should not               |
+      | manager, student, editingteacher | Any     | should                    | should                   | should                   | should not             | should not             | should                  | should not               |
+      | manager, student, editingteacher | System  | should not                | should not               | should not               | should not             | should not             | should                  | should not               |
       | user                             | Any     | should                    | should                   | should                   | should not             | should                 | should                  | should not               |
-      | Guest                            | Any     | should not                | should not               | should not               | should                 | should not             | should not              | should not               |
-      | Visitor                          | Any     | should not                | should not               | should not               | should not             | should not             | should not              | should                   |
+      | guest                            | Any     | should not                | should not               | should not               | should                 | should not             | should not              | should not               |
+      | visitor                          | Any     | should not                | should not               | should not               | should not             | should not             | should not              | should                   |
 
-  @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on being site admin
-    And the following "theme_boost_union > smart menu item" exists:
+    Given the following "theme_boost_union > smart menu item" exists:
       | menu        | Quick links        |
       | title       | Resources          |
       | itemtype    | Static             |
@@ -114,9 +100,18 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Site admins only | should                 | should not                |
       | Non-admins only  | should not             | should                    |
 
-  @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on the user assignment in single cohorts
-    Given the following "theme_boost_union > smart menu item" exists:
+    Given the following "cohorts" exist:
+      | name     | idnumber |
+      | Cohort 1 | CH1      |
+      | Cohort 2 | CH2      |
+    And the following "cohort members" exist:
+      | user     | cohort |
+      | student1 | CH1    |
+      | student2 | CH1    |
+      | student2 | CH2    |
+      | teacher  | CH2    |
+    And the following "theme_boost_union > smart menu item" exists:
       | menu        | Quick links        |
       | title       | Resources          |
       | itemtype    | Static             |
@@ -139,9 +134,18 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | CH1      | should                    | should                    | should not               |
       | CH2      | should not                | should                    | should                   |
 
-  @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on the user assignment in multiple cohorts
-    Given the following "theme_boost_union > smart menu item" exists:
+    Given the following "cohorts" exist:
+      | name     | idnumber |
+      | Cohort 1 | CH1      |
+      | Cohort 2 | CH2      |
+    And the following "cohort members" exist:
+      | user     | cohort |
+      | student1 | CH1    |
+      | student2 | CH1    |
+      | student2 | CH2    |
+      | teacher  | CH2    |
+    And the following "theme_boost_union > smart menu item" exists:
       | menu        | Quick links        |
       | title       | Resources          |
       | itemtype    | Static             |
@@ -165,7 +169,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | CH1, CH2  | Any      | should                    | should                    | should                   |
       | CH1, CH2  | All      | should not                | should                    | should not               |
 
-  @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on the user's prefered language
     Given the following "language packs" exist:
       | language |
@@ -196,7 +199,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | en         | should                    | should not                | should not               |
       | en, de     | should                    | should not                | should                   |
 
-  @javascript
   Scenario: Smartmenu: Menu items: Rules - Rules - Show smart menu item based on the user's prefered language - Handle the case of forced language courses
     Given the following "language packs" exist:
       | language |
@@ -218,6 +220,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype  | Static           |
       | url       | /bar             |
       | languages | fr               |
+    When I log in as "admin"
     And I am on "Forced Language fr" course homepage with editing mode on
     And I follow "Settings"
     And I set the following fields to these values:
@@ -240,7 +243,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then "Language menu de" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     And "Language menu fr" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
 
-  @javascript
   Scenario: Smartmenu: Menu items: Rules - Rules - Show smart menu item based on the user's prefered language - Handle the case of guests changing their language
     Given the following "language packs" exist:
       | language |
@@ -267,6 +269,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype  | Static           |
       | url       | /bar             |
       | languages | fr               |
+    When I log in as "admin"
     And I am on "Forced Language fr" course homepage with editing mode on
     And I follow "Settings"
     And I set the following fields to these values:
@@ -290,7 +293,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then "Language menu de" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     And "Language menu fr" "theme_boost_union > Smart menu item" should exist in the "Quick links" "theme_boost_union > Main menu smart menu"
 
-  @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on the custom date range
     Given the following "theme_boost_union > smart menu item" exists:
       | menu        | Quick links        |
@@ -319,9 +321,18 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       |                      | ## 1 December 2050 ## | should                |
       |                      | ## 1 December 2023 ## | should not            |
 
-  @javascript
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on multiple conditions
-    Given the following "language packs" exist:
+    Given the following "cohorts" exist:
+      | name     | idnumber |
+      | Cohort 1 | CH1      |
+      | Cohort 2 | CH2      |
+    And the following "cohort members" exist:
+      | user     | cohort |
+      | student1 | CH1    |
+      | student2 | CH1    |
+      | student2 | CH2    |
+      | teacher  | CH2    |
+    And the following "language packs" exist:
       | language |
       | de       |
       | fr       |
@@ -354,24 +365,31 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
 
   @javascript
   Scenario: Smartmenu: Menu items: Rules - Deleting a cohort used for a rule removes it from the rule
-    Given the following "theme_boost_union > smart menu item" exists:
+    Given the following "cohorts" exist:
+      | name     | idnumber |
+      | Cohort 1 | CH1      |
+      | Cohort 2 | CH2      |
+    And the following "theme_boost_union > smart menu" exists:
+      | title    | Quick links     |
+      | location | Main navigation |
+    And the following "theme_boost_union > smart menu item" exists:
       | menu        | Quick links        |
       | title       | Resources          |
       | itemtype    | Static             |
       | url         | https://moodle.org |
       | cohorts     | CH1, CH2           |
-    And I am on the "Quick links" "theme_boost_union > Smart menu > Items" page logged in as "admin"
+    When I log in as "admin"
+    And I navigate to smart menu "Quick links" items
     And I should see "Cohort 1" in the "Resources" "table_row"
     And I should see "Cohort 2" in the "Resources" "table_row"
-    When I navigate to "Users > Cohorts" in site administration
+    And I navigate to "Users > Cohorts" in site administration
     And I open the action menu in "Cohort 1" "table_row"
     And I choose "Delete" in the open action menu
     And I click on "Delete" "button" in the "Delete selected" "dialogue"
-    And I am on the "Quick links" "theme_boost_union > Smart menu > Items" page
+    And I navigate to smart menu "Quick links" items
     Then I should not see "Cohort 1" in the "Resources" "table_row"
     And I should see "Cohort 2" in the "Resources" "table_row"
 
-  @javascript
   Scenario: Smartmenu: Menu items: Rules - Deleting a role used for a rule removes it from the rule
     Given the following "roles" exist:
       | shortname | name        |
@@ -383,12 +401,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype    | Static             |
       | url         | https://moodle.org |
       | roles       | test1, test2       |
-    And I am on the "Quick links" "theme_boost_union > Smart menu > Items" page logged in as "admin"
+    When I log in as "admin"
+    And I navigate to smart menu "Quick links" items
     And I should see "Test role 1" in the "Resources" "table_row"
     And I should see "Test role 2" in the "Resources" "table_row"
-    When I navigate to "Users > Define roles" in site administration
+    And I navigate to "Users > Define roles" in site administration
     And I click on "Delete" "link" in the "Test role 1" "table_row"
     And I press "Yes"
-    And I am on the "Quick links" "theme_boost_union > Smart menu > Items" page
+    And I navigate to smart menu "Quick links" items
     Then I should not see "Test role 1" in the "Resources" "table_row"
     And I should see "Test role 2" in the "Resources" "table_row"
