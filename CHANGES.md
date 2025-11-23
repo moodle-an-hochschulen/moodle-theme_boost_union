@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r29
 
 * 2025-11-19 - Backport: Replace Boost Union's hook manipulation with a more downstream solution to suppress hook output, resolves #1101.
 * 2025-11-19 - Bugfix: additionalhtmlfooter is now rendered even if the footer is hidden entirely, resolves #1042
