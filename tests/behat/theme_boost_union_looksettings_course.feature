@@ -30,10 +30,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     And I click on "Settings" "link"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Course image" filemanager
     And I press "Save and display"
-    And I am on site homepage
     And I log out
-    And I am on site homepage
-    And I follow "Log in"
     And I log in as "<role>"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
@@ -44,7 +41,6 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | student1  |
       | teacher1  |
 
-  @javascript @_file_upload
   Scenario Outline: Setting: Course header image - Do not display the course header image if course header images are enabled but an image is not uploaded in the course.
     Given the following config values are set as admin:
       | config                   | value | plugin            |
@@ -68,10 +64,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     And I click on "Settings" "link"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Course image" filemanager
     And I press "Save and display"
-    And I am on site homepage
     And I log out
-    And I am on site homepage
-    And I follow "Log in"
     And I log in as "<role>"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should not exist
@@ -81,23 +74,14 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | student1  |
       | teacher1  |
 
-  @javascript @_file_upload
   Scenario Outline: Setting: Course header image - Display the course header image with the fallback image if course header images are enabled but an image is not uploaded in the course.
     Given the following config values are set as admin:
       | config                   | value | plugin            |
       | courseheaderimageenabled | yes   | theme_boost_union |
-    When I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Course" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg2.png" file to "Fallback course header image" filemanager
-    And I press "Save changes"
-    And Behat debugging is enabled
-    And I am on site homepage
-    And I log out
-    And I am on site homepage
-    And I follow "Log in"
-    And I log in as "<role>"
+    And the following "theme_boost_union > setting files" exist:
+      | filearea                  | filepath                                       |
+      | courseheaderimagefallback | theme/boost_union/tests/fixtures/login_bg2.png |
+    When I log in as "<role>"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
     And "//div[@id='courseheaderimage' and contains(@style, '1/theme_boost_union/courseheaderimagefallback/0/login_bg2.png')]" "xpath_element" should exist
@@ -112,28 +96,17 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     Given the following config values are set as admin:
       | config                   | value | plugin            |
       | courseheaderimageenabled | yes   | theme_boost_union |
-    When I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "Course" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I upload "theme/boost_union/tests/fixtures/login_bg2.png" file to "Fallback course header image" filemanager
-    And I press "Save changes"
-    And Behat debugging is enabled
-    And I am on site homepage
-    And I log out
-    And I am on site homepage
-    And I follow "Log in"
-    And I log in as "teacher1"
+    And the following "theme_boost_union > setting files" exist:
+      | filearea                  | filepath                                       |
+      | courseheaderimagefallback | theme/boost_union/tests/fixtures/login_bg2.png |
+    When I log in as "teacher1"
     And I am on "Course 1" course homepage
     And "//div[@id='courseheaderimage']" "xpath_element" should exist
     And "//div[@id='courseheaderimage' and contains(@style, '1/theme_boost_union/courseheaderimagefallback/0/login_bg2.png')]" "xpath_element" should exist
     And I click on "Settings" "link"
     And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Course image" filemanager
     And I press "Save and display"
-    And I am on site homepage
     And I log out
-    And I am on site homepage
-    And I follow "Log in"
     And I log in as "<role>"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
@@ -159,10 +132,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     And I click on "Settings" "link"
     And I upload "theme/boost_union/tests/fixtures/login_bg2.png" file to "Course image" filemanager
     And I press "Save and display"
-    And I am on site homepage
     And I log out
-    And I am on site homepage
-    And I follow "Log in"
     And I log in as "<role>"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
@@ -178,17 +148,15 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | student1  |
       | teacher1  |
 
-  @javascript @_file_upload
   Scenario Outline: Setting: Course header image - Define the course header image (min-)height.
     Given the following config values are set as admin:
       | config                   | value    | plugin            |
       | courseheaderimageenabled | yes      | theme_boost_union |
       | courseheaderimageheight  | <height> | theme_boost_union |
+    And the following "theme_boost_union > setting files" exist:
+      | filearea                  | filepath                                       |
+      | courseheaderimagefallback | theme/boost_union/tests/fixtures/login_bg2.png |
     When I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I click on "Settings" "link"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Course image" filemanager
-    And I press "Save and display"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
     And "//div[@id='courseheaderimage' and contains(@style, 'min-height: <height>')]" "xpath_element" should exist
@@ -199,17 +167,15 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | 150px  |
       | 250px  |
 
-  @javascript @_file_upload
   Scenario Outline: Setting: Course header image - Define the course header image position.
     Given the following config values are set as admin:
       | config                    | value      | plugin            |
       | courseheaderimageenabled  | yes        | theme_boost_union |
       | courseheaderimageposition | <position> | theme_boost_union |
+    And the following "theme_boost_union > setting files" exist:
+      | filearea                  | filepath                                       |
+      | courseheaderimagefallback | theme/boost_union/tests/fixtures/login_bg2.png |
     When I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I click on "Settings" "link"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Course image" filemanager
-    And I press "Save and display"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
     And "//div[@id='courseheaderimage' and contains(@style, 'background-position: <position>')]" "xpath_element" should exist
@@ -220,17 +186,15 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | center center |
       | left top      |
 
-  @javascript @_file_upload
   Scenario Outline: Setting: Course header image - Define the course header image layout.
     Given the following config values are set as admin:
       | config                   | value    | plugin            |
       | courseheaderimageenabled | yes      | theme_boost_union |
       | courseheaderimagelayout  | <layout> | theme_boost_union |
+    And the following "theme_boost_union > setting files" exist:
+      | filearea                  | filepath                                       |
+      | courseheaderimagefallback | theme/boost_union/tests/fixtures/login_bg2.png |
     When I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I click on "Settings" "link"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Course image" filemanager
-    And I press "Save and display"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
     And "<elementshouldexist>" "css_element" should exist in the "#page-header" "css_element"
