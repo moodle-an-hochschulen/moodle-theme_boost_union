@@ -201,6 +201,7 @@
                     {{> core/moremenu}}
                 </div>
             {{/secondarymoremenu}}
+            {{{ output.course_content_header_notifications }}}
             {{#regions.contentupper.hasblocks}}
                 <section id="theme-block-region-content-upper" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
                     {{{ regions.contentupper.addblockbutton }}}
@@ -219,7 +220,7 @@
                         {{#hasregionmainsettingsmenu}}
                             <div class="region_main_settings_menu_proxy"></div>
                         {{/hasregionmainsettingsmenu}}
-                        {{{ output.course_content_header }}}
+                        {{{ output.course_content_header_coursecontent }}}
                         {{#headercontent}}
                             {{> core/activity_header }}
                         {{/headercontent}}
