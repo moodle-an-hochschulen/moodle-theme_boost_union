@@ -20,18 +20,14 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | student1 | C1     | student        |
       | student1 | C2     | student        |
 
-  @javascript @_file_upload
   Scenario Outline: Setting: Course header image - Display the course header image with the course image if course header images are enabled and an image is uploaded in the course.
     Given the following config values are set as admin:
       | config                   | value | plugin            |
       | courseheaderimageenabled | yes   | theme_boost_union |
-    When I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I click on "Settings" "link"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Course image" filemanager
-    And I press "Save and display"
-    And I log out
-    And I log in as "<role>"
+    And the following "theme_boost_union > course overview files" exist:
+      | course | filepath                                       |
+      | C1     | theme/boost_union/tests/fixtures/login_bg1.png |
+    When I log in as "<role>"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
     And "//div[@id='courseheaderimage' and contains(@style, '/course/overviewfiles/login_bg1.png')]" "xpath_element" should exist
@@ -54,18 +50,14 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | student1  |
       | teacher1  |
 
-  @javascript @_file_upload
   Scenario Outline: Setting: Course header image - Do not display the course header image if course header images are disabled regardless if an image is uploaded in the course.
     Given the following config values are set as admin:
       | config                   | value | plugin            |
       | courseheaderimageenabled | no    | theme_boost_union |
-    When I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I click on "Settings" "link"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Course image" filemanager
-    And I press "Save and display"
-    And I log out
-    And I log in as "<role>"
+    And the following "theme_boost_union > course overview files" exist:
+      | course | filepath                                       |
+      | C1     | theme/boost_union/tests/fixtures/login_bg1.png |
+    When I log in as "<role>"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should not exist
 
@@ -91,7 +83,6 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | student1  |
       | teacher1  |
 
-  @javascript @_file_upload
   Scenario Outline: Setting: Course header image - Display the course header image with the fallback image until a course image is uploaded.
     Given the following config values are set as admin:
       | config                   | value | plugin            |
@@ -99,16 +90,15 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     And the following "theme_boost_union > setting files" exist:
       | filearea                  | filepath                                       |
       | courseheaderimagefallback | theme/boost_union/tests/fixtures/login_bg2.png |
-    When I log in as "teacher1"
+    When I log in as "<role>"
     And I am on "Course 1" course homepage
     And "//div[@id='courseheaderimage']" "xpath_element" should exist
     And "//div[@id='courseheaderimage' and contains(@style, '1/theme_boost_union/courseheaderimagefallback/0/login_bg2.png')]" "xpath_element" should exist
-    And I click on "Settings" "link"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Course image" filemanager
-    And I press "Save and display"
-    And I log out
-    And I log in as "<role>"
-    And I am on "Course 1" course homepage
+    And the following "theme_boost_union > course overview files" exist:
+      | course | filepath                                       |
+      | C1     | theme/boost_union/tests/fixtures/login_bg1.png |
+    And all caches are purged
+    And I reload the page
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
     And "//div[@id='courseheaderimage' and contains(@style, '1/theme_boost_union/courseheaderimagefallback/0/login_bg2.png')]" "xpath_element" should not exist
     And "//div[@id='courseheaderimage' and contains(@style, '/course/overviewfiles/login_bg1.png')]" "xpath_element" should exist
@@ -118,22 +108,15 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
       | student1  |
       | teacher1  |
 
-  @javascript @_file_upload
   Scenario Outline: Setting: Course header image - Display the course header image with the image of the current course.
     Given the following config values are set as admin:
       | config                   | value | plugin            |
       | courseheaderimageenabled | yes   | theme_boost_union |
-    When I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I click on "Settings" "link"
-    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Course image" filemanager
-    And I press "Save and display"
-    And I am on "Course 2" course homepage
-    And I click on "Settings" "link"
-    And I upload "theme/boost_union/tests/fixtures/login_bg2.png" file to "Course image" filemanager
-    And I press "Save and display"
-    And I log out
-    And I log in as "<role>"
+    And the following "theme_boost_union > course overview files" exist:
+      | course | filepath                                       |
+      | C1     | theme/boost_union/tests/fixtures/login_bg1.png |
+      | C2     | theme/boost_union/tests/fixtures/login_bg2.png |
+    When I log in as "<role>"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
     And "//div[@id='courseheaderimage' and contains(@style, '/course/overviewfiles/login_bg1.png')]" "xpath_element" should exist
