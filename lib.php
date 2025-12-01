@@ -102,6 +102,9 @@ define('THEME_BOOST_UNION_SETTING_LOGINFORMPOS_CENTER', 'center');
 define('THEME_BOOST_UNION_SETTING_LOGINFORMPOS_LEFT', 'left');
 define('THEME_BOOST_UNION_SETTING_LOGINFORMPOS_RIGHT', 'right');
 
+define('THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_DEFAULT', 'default');
+define('THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_SPLITSCREEN', 'splitscreen');
+
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT', 'light');
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK', 'dark');
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYLIGHT', 'primarylight');
@@ -335,6 +338,14 @@ function theme_boost_union_get_pre_scss($theme) {
     // Set variables which are influenced by the blockdrawerwidth setting.
     if (get_config('theme_boost_union', 'blockdrawerwidth')) {
         $scss .= '$drawer-right-width: ' . get_config('theme_boost_union', 'blockdrawerwidth') . ";\n";
+    }
+    // Set variables which are influenced by the logincontainerwidth setting.
+    $logincontainerwidth = get_config('theme_boost_union', 'logincontainerwidth');
+    if ($logincontainerwidth) {
+        $scss .= '$logincontainer-width: ' . $logincontainerwidth . ";\n";
+    } else {
+        // Use default value if setting is not configured.
+        $scss .= '$logincontainer-width: 500px;\n';
     }
 
     // Set variables which are influenced by the activityiconcolor* settings.
@@ -573,9 +584,6 @@ function theme_boost_union_get_extra_scss($theme) {
 
     // Setting: Course overview block.
     $content .= theme_boost_union_get_scss_courseoverview_block($theme);
-
-    // Setting: Login order.
-    $content .= theme_boost_union_get_scss_login_order($theme);
 
     return $content;
 }
