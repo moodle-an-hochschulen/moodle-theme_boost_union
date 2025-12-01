@@ -4,7 +4,21 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r29
+
+* 2025-11-19 - Backport: Replace Boost Union's hook manipulation with a more downstream solution to suppress hook output, resolves #1101.
+* 2025-11-19 - Bugfix: additionalhtmlfooter is now rendered even if the footer is hidden entirely, resolves #1042
+* 2025-11-15 - Improvement: Add config.php parameter to support GitHub Enterprise servers for external SCSS, resolves #1041.
+
+### v4.5-r28
+
+* 2025-11-07 - Upstream change: Adopt changes from MDL-85774 into loginform.mustache, resolves #1093
+* 2025-11-04 - Bugfix: When upgrading a Boost Union installation from the ancient pre-smart-menu-era to a recent version, Boost Union tried to access a table which does not exist yet, resolves #1085
+* 2025-11-03 - Glitch: upgrade.php did not match install.xml regarding the theme_boost_union_snippets table, resolves #1062
+* 2025-11-03 - Improvement: Use human-understandable values in the background position settings, resolves #1086
+* 2025-10-23 - Feature: Add a type for smart menu item to use mailto links, resolves #702
+
+### v4.5-r27
 
 * 2025-10-22 - Bugfix: Solve possible performance issues due to hook override cache being invalidated by CLI scripts, resolves #1076
 * 2025-10-15 - Make codechecker happy again

@@ -560,23 +560,24 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('backgroundimagepositionsetting_desc', 'theme_boost_union', null, true);
         $backgroundimagepositionoptions = [
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER,
+                        get_string('imageposition_center_center', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP,
+                        get_string('imageposition_center_top', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM,
+                        get_string('imageposition_center_bottom', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP,
+                        get_string('imageposition_left_top', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER,
+                        get_string('imageposition_left_center', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM,
+                        get_string('imageposition_left_bottom', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP,
+                        get_string('imageposition_right_top', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER,
+                        get_string('imageposition_right_center', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM, ];
+                        get_string('imageposition_right_bottom', 'theme_boost_union'),
+        ];
         $setting = new admin_setting_configselect(
             $name,
             $title,
@@ -950,23 +951,24 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('loginbackgroundimagepositionsetting_desc', 'theme_boost_union', null, true);
         $loginbackgroundimagepositionoptions = [
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER,
+                        get_string('imageposition_center_center', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP,
+                        get_string('imageposition_center_top', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM,
+                        get_string('imageposition_center_bottom', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP,
+                        get_string('imageposition_left_top', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER,
+                        get_string('imageposition_left_center', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM,
+                        get_string('imageposition_left_bottom', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP,
+                        get_string('imageposition_right_top', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER,
+                        get_string('imageposition_right_center', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
-                        THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM, ];
+                        get_string('imageposition_right_bottom', 'theme_boost_union'),
+        ];
         $setting = new admin_setting_configselect(
             $name,
             $title,
@@ -2473,19 +2475,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
         $tab->add($setting);
 
-        // Setting: Block region width for Footer region.
-        $name = 'theme_boost_union/blockregionfooterwidth';
-        $title = get_string('blockregionfooterwidth', 'theme_boost_union', null, true);
-        $description = get_string('blockregionfooterwidth_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect(
-            $name,
-            $title,
-            $description,
-            THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH,
-            $outsideregionswidthoptions
-        );
-        $tab->add($setting);
-
         // Setting: Outside regions horizontal placement.
         $outsideregionsplacementoptions = [
             // Don't use string lazy loading (= false) because the string will be directly used and would produce a
@@ -2503,6 +2492,26 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $description,
             THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT,
             $outsideregionsplacementoptions
+        );
+        $tab->add($setting);
+
+        // Create footer regions heading.
+        $name = 'theme_boost_union/footerregionsheading';
+        $title = get_string('footerregionsheading', 'theme_boost_union', null, true);
+        $description = get_string('footerregionsheading_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, $description);
+        $tab->add($setting);
+
+        // Setting: Block region width for Footer region.
+        $name = 'theme_boost_union/blockregionfooterwidth';
+        $title = get_string('blockregionfooterwidth', 'theme_boost_union', null, true);
+        $description = get_string('blockregionfooterwidth_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWITH_FULLWIDTH,
+            $outsideregionswidthoptions
         );
         $tab->add($setting);
 
@@ -2720,7 +2729,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         ];
         $name = 'theme_boost_union/enablefooterbutton';
         $title = get_string('enablefooterbutton', 'theme_boost_union', null, true);
-        $description = get_string('enablefooterbutton_desc', 'theme_boost_union', null, true);
+        $url = new core\url('/admin/search.php', ['query' => 'additionalhtmlfooter']);
+        $description = get_string('enablefooterbutton_desc', 'theme_boost_union', null, true) . '<br>' .
+                get_string('enablefooterbutton_note', 'theme_boost_union', ['url' => $url], true);
         $setting = new admin_setting_configselect(
             $name,
             $title,
@@ -2852,32 +2863,58 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         foreach ($pluginswithcallback as $callback) {
             // Extract the pluginname.
             $pluginname = theme_boost_union_get_pluginname_from_callbackname($callback);
-            // Compose the label.
-            if ($callback['component'] == 'core') {
-                $hooklabeltitle = get_string('footersuppressstandardfootercore', 'theme_boost_union', $pluginname, true);
-                $hooklabeldesc = get_string('footersuppressstandardfootercore_desc', 'theme_boost_union', $pluginname, true);
+
+            // Check if this callback is already disabled via $CFG->hooks_callback_overrides.
+            if (theme_boost_union_is_callback_disabled_in_config($callback['callback'])) {
+                // If yes, show a static information setting instead of a configurable select.
+                $name = 'theme_boost_union/footersuppressstandardfooter_' . $pluginname;
+                if ($callback['component'] == 'core') {
+                    $hooklabeltitle = get_string('footersuppressstandardfootercore', 'theme_boost_union', $pluginname, true);
+                } else {
+                    $hooklabeltitle = get_string('footersuppressstandardfooter', 'theme_boost_union', $pluginname, true);
+                }
+                $infodesc = get_string('footersuppressstandardfooter_configoverride_desc', 'theme_boost_union', $pluginname, true);
+                $setting = new admin_setting_configempty(
+                    $name,
+                    $hooklabeltitle,
+                    $infodesc
+                );
+                $tab->add($setting);
+                $page->hide_if(
+                    'theme_boost_union/footersuppressstandardfooter_' . $pluginname,
+                    'theme_boost_union/enablefooterbutton',
+                    'eq',
+                    THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE
+                );
+
+                // Otherwise, show the normal configselect setting.
             } else {
-                $hooklabeltitle = get_string('footersuppressstandardfooter', 'theme_boost_union', $pluginname, true);
-                $hooklabeldesc = get_string('footersuppressstandardfooter_desc', 'theme_boost_union', $pluginname, true);
+                // Compose the label.
+                if ($callback['component'] == 'core') {
+                    $hooklabeltitle = get_string('footersuppressstandardfootercore', 'theme_boost_union', $pluginname, true);
+                    $hooklabeldesc = get_string('footersuppressstandardfootercore_desc', 'theme_boost_union', $pluginname, true);
+                } else {
+                    $hooklabeltitle = get_string('footersuppressstandardfooter', 'theme_boost_union', $pluginname, true);
+                    $hooklabeldesc = get_string('footersuppressstandardfooter_desc', 'theme_boost_union', $pluginname, true);
+                }
+                // Create the setting.
+                $name = 'theme_boost_union/footersuppressstandardfooter_' . $pluginname;
+                $setting = new admin_setting_configselect(
+                    $name,
+                    $hooklabeltitle,
+                    $hooklabeldesc,
+                    THEME_BOOST_UNION_SETTING_SELECT_NO,
+                    $yesnooption
+                );
+                $setting->set_updatedcallback('theme_boost_union_reset_hooksuppress_cache');
+                $tab->add($setting);
+                $page->hide_if(
+                    'theme_boost_union/footersuppressstandardfooter_' . $pluginname,
+                    'theme_boost_union/enablefooterbutton',
+                    'eq',
+                    THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE
+                );
             }
-            // Get the plugin name from the language pack.
-            // Create the setting.
-            $name = 'theme_boost_union/footersuppressstandardfooter_' . $pluginname;
-            $setting = new admin_setting_configselect(
-                $name,
-                $hooklabeltitle,
-                $hooklabeldesc,
-                THEME_BOOST_UNION_SETTING_SELECT_NO,
-                $yesnooption
-            );
-            $setting->set_updatedcallback('theme_boost_union_remove_hookmanipulation');
-            $tab->add($setting);
-            $page->hide_if(
-                'theme_boost_union/footersuppressstandardfooter_' . $pluginname,
-                'theme_boost_union/enablefooterbutton',
-                'eq',
-                THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE
-            );
         }
 
         // Settings: Suppress footer output by plugins (for legacy plugins).
@@ -2907,6 +2944,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                     THEME_BOOST_UNION_SETTING_SELECT_NO,
                     $yesnooption
                 );
+                $setting->set_updatedcallback('theme_boost_union_reset_hooksuppress_cache');
                 $tab->add($setting);
                 $page->hide_if(
                     'theme_boost_union/footersuppressstandardfooter_' . $plugintype . '_' . $pluginname,
@@ -3399,23 +3437,24 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $description = get_string('tilebackgroundimagepositionsetting_desc', 'theme_boost_union', ['no' => $i], true);
             $tilebackgroundimagepositionoptions = [
                     THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER =>
-                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER,
+                            get_string('imageposition_center_center', 'theme_boost_union'),
                     THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP =>
-                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP,
+                            get_string('imageposition_center_top', 'theme_boost_union'),
                     THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM =>
-                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM,
+                            get_string('imageposition_center_bottom', 'theme_boost_union'),
                     THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP =>
-                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP,
+                            get_string('imageposition_left_top', 'theme_boost_union'),
                     THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER =>
-                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER,
+                            get_string('imageposition_left_center', 'theme_boost_union'),
                     THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM =>
-                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM,
+                            get_string('imageposition_left_bottom', 'theme_boost_union'),
                     THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP =>
-                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP,
+                            get_string('imageposition_right_top', 'theme_boost_union'),
                     THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER =>
-                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER,
+                            get_string('imageposition_right_center', 'theme_boost_union'),
                     THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
-                            THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM, ];
+                            get_string('imageposition_right_bottom', 'theme_boost_union'),
+            ];
             $setting = new admin_setting_configselect(
                 $name,
                 $title,

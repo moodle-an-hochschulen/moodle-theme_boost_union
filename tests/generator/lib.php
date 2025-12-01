@@ -157,6 +157,14 @@ class theme_boost_union_generator extends component_generator_base {
             $url = $data['url'];
         }
 
+        $email = null;
+        if ($type === smartmenu_item::TYPEMAILTO) {
+            if (empty($data['email'])) {
+                throw new Exception('Email is required when type is mailto.');
+            }
+            $email = $data['email'];
+        }
+
         $category = json_encode($data['category'] ?? []);
         $categorysubcats = $data['category_subcats'] ?? false;
         $enrolmentrole = json_encode($data['enrolmentrole'] ?? []);
@@ -224,6 +232,7 @@ class theme_boost_union_generator extends component_generator_base {
             'type' => $type,
             'sortorder' => $sortorder,
             'url' => $url,
+            'email' => $email,
             'category' => $category,
             'category_subcats' => $categorysubcats,
             'enrolmentrole' => $enrolmentrole,

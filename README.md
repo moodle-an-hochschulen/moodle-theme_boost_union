@@ -451,43 +451,9 @@ Please note:
 
 Outside regions can not only be enabled with the layout settings above, their appearance can also be customized.
 
-###### Block region width for 'Outside (left)' region
-
-With this setting, you can set the width of the 'Outside (left)' block region which is shown on the left hand side of the main content area.
-
-###### Block region width for 'Outside (right)' region
-
-With this setting, you can set the width of the 'Outside (right)' block region which is shown on the right hand side of the main content area.
-
-###### Block region width for 'Outside (top)' region
-
-With this setting, you can set the width of the 'Outside (top)' block region which is shown at the very top of the page.
-
-###### Block region width for 'Outside (bottom)' region
-
-With this setting, you can set the width of the 'Outside (bottom)' block region which is shown below the main content.
-
-###### Block region width for 'Footer' region
-
-With this setting, you can set the width of the 'Footer' block region.
-
-###### Outside regions horizontal placement
-
-With this setting, you can control if, on larger screens, the 'Outside (left)' and 'Outside (right)' block regions should be placed near the main content area or rather near the window edges.
-
 ##### Site home right-hand block drawer
 
-###### Show right-hand block drawer of site home on visit
-
-With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who are not logged in and does not overwrite the toggle state of each individual user.
-
-###### Show right-hand block drawer of site home on first login
-
-With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in for the very first time and does not overwrite the toggle state of each individual user.
-
-###### Show right-hand block drawer of site home on guest login
-
-With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in as a guest.
+With these settings, the right-hand block drawer of site home will be displayed in its expanded state by default.
 
 #### Tab "Links"
 
@@ -756,8 +722,6 @@ As you have read in the introduction, the main design principle of Boost Union i
 
 * Footer popover:
   As soon as you click the footer button (questionmark icon) in the bottom right corner of the screen, a popover with several links appears. However, the content of this link list is far from being well-structured and looks more like a garage sale. When implementing the settings to individually suppress each of these popover links, we had to make some code re-arrangements which result in the fact that the popover links are slightly more well-structured even if you do not enable any setting in Boost Union.
-* Suppress footer outputs by plugin / core component:
-  Due to the way how the settings `theme_boost_union | footersuppressstandardfooter_*` had to be built, it was not possible to quickly and reliably detect if Boost Union (or a Boost Union child theme) is the active theme. Thus, these settings are also applied if another theme than Boost Union is active. Please make sure to disable these settings if Boost Union is installed but should not be used.
 * Clickable header and transition time in the user's menu third level:
   Due to the way how the smart menu was integrated into the user menu, as soon as at least one smart menu exists on the page, the header of the language menu in the user menu is now fully clickable - compared to Boost core where only the 'back' arrow in the language menu is clickable - and the transition time to open the language menu is shortened. This should be a neglectible difference to Boost core.
 
@@ -768,15 +732,19 @@ Companion plugin local_navbarplus
 With the footersuppressusertour setting, you can disable the possibility to reset a user tour in the footer popover. If you have enabled this setting, you might want to have a look at our plugin local_navbarplus as a companion plugin which allows you, among other things, to add a "Reset user tour" link to the navigation bar instead. local_navbarplus is published on https://moodle.org/plugins/local_navbarplus and on https://github.com/moodle-an-hochschulen/moodle-local_navbarplus.
 
 
-Interference with forced settings in config.php
------------------------------------------------
+Expert settings for config.php
+------------------------------
 
-Due to the way how some Boost Union features had to be built, you have to be aware of the following interferences if you force settings in config.php:
+There are expert settings without GUI setting which can be defined in config.php to customize Boost Union in expert scenarios.
 
-* $CFG->hooks_callback_overrides:
-  With this setting, you can override hook definitions in config.php - see https://moodledev.io/docs/4.4/apis/core/hooks#hooks-overview-page.
-  However, if you use the `theme_boost_union | footersuppressstandardfooter_*` settings, this forced setting will be set as well during each page load.
-  Using the Boost Union settings and overriding hooks manually in config.php at the same time should work, but is not officially supported and tested by Boost Union.
+* `$CFG->theme_boost_union_githubapiurl`:\
+  With this setting, you can override the default GitHub API URL which is used to fetch external SCSS code from private GitHub repositories.
+  This is necessary if you want to use a GitHub Enterprise server instead of the public GitHub server.
+  The setting must contain the base URL of the GitHub API without a trailing slash, for example 'https://github.example.com/api/v3'.
+  If this setting is not set, Boost Union will use the default GitHub API URL 'https://api.github.com'.
+
+Please note that these expert settings might not be covered by Boost Union's automated tests and upstrade tests.
+If you encounter any problem with one of these expert settings, please raise an issue on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues.
 
 
 Support for other companion plugins

@@ -83,11 +83,10 @@ $definitions = [
                 'simpledata' => false,
                 'overrideclass' => '\theme_boost_union\cache\loader',
         ],
-        // This cache stores the hook overrides.
-        'hookoverrides' => [
+        // This cache stores the hook suppressions.
+        'hooksuppress' => [
                 'mode' => \core_cache\store::MODE_APPLICATION,
                 'simplekeys' => true,
-                'simpledata' => false,
                 'canuselocalstore' => true,
                 'staticacceleration' => false,
         ],

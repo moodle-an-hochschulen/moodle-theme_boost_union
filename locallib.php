@@ -22,9 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use core\di;
-use core\hook\manager as hook_manager;
-
 /**
  * Build the course related hints HTML code.
  * This function evaluates and composes all course related hints which may appear on a course page below the course header.
@@ -2419,7 +2416,13 @@ function theme_boost_union_get_external_scss($type) {
         // Compose the request URL for the Github API.
         $ghuser = get_config('theme_boost_union', 'extscssgithubuser');
         $ghrepo = get_config('theme_boost_union', 'extscssgithubrepo');
-        $ghurl = 'https://api.github.com/repos/' . $ghuser . '/' . $ghrepo . '/contents/' . $ghfilepath;
+        // If a custom Github API URL is set in config.php, use it. Otherwise, use the default Github API URL.
+        if (isset($CFG->theme_boost_union_githubapiurl) && !empty($CFG->theme_boost_union_githubapiurl)) {
+            $ghapiurl = $CFG->theme_boost_union_githubapiurl;
+        } else {
+            $ghapiurl = 'https://api.github.com';
+        }
+        $ghurl = $ghapiurl . '/repos/' . $ghuser . '/' . $ghrepo . '/contents/' . $ghfilepath;
 
         // Get the download URL from the Github API.
         $curl2 = new curl();
@@ -2543,11 +2546,11 @@ function theme_boost_union_get_accessibility_support_skip_link() {
 }
 
 /**
- * Helper function which wxtracts and returns the pluginname for the given callback name.
+ * Helper function which extracts and returns the pluginname for the given callback name.
  * This function simply differentiates between real plugins and core components.
  * The result is especially used in the footersuppressstandardfooter_* feature.
  *
- * @param stdClass $callback The callback.
+ * @param array $callback The callback.
  * @return string
  */
 function theme_boost_union_get_pluginname_from_callbackname($callback) {
@@ -2563,167 +2566,54 @@ function theme_boost_union_get_pluginname_from_callbackname($callback) {
 }
 
 /**
- * Helper function which is called from the before_session_start() callback which manipulates Moodle core's hooks.
+ * Helper function to check if a hook callback is disabled via $CFG->hooks_callback_overrides.
+ *
+ * @param string $callbackstring The callback string to check (e.g. 'tool_dataprivacy\\hook_callbacks::standard_footer_html')
+ * @return bool True if the callback is disabled in config.php, false otherwise.
  */
-function theme_boost_union_manipulate_hooks() {
+function theme_boost_union_is_callback_disabled_in_config($callbackstring) {
     global $CFG;
 
-    // If $CFG->hooks_callback_overrides is not set yet.
-    if (!isset($CFG->hooks_callback_overrides)) {
-        // Initialize it as empty array.
-        $CFG->hooks_callback_overrides = [];
+    // Check if the callback is disabled via $CFG->hooks_callback_overrides.
+    if (
+        isset($CFG->hooks_callback_overrides[\core\hook\output\before_standard_footer_html_generation::class]) &&
+        isset($CFG->hooks_callback_overrides[\core\hook\output\before_standard_footer_html_generation::class][$callbackstring]) &&
+        // phpcs:disable moodle.Files.LineLength.TooLong
+        isset($CFG->hooks_callback_overrides[\core\hook\output\before_standard_footer_html_generation::class][$callbackstring]['disabled']) &&
+        // phpcs:disable moodle.Files.LineLength.TooLong
+        $CFG->hooks_callback_overrides[\core\hook\output\before_standard_footer_html_generation::class][$callbackstring]['disabled'] === true
+    ) {
+        return true;
     }
 
-    // Note: You might think that this function does not need to be processed during AJAX requests and CLI commands as well.
-    // But in this case, due to the way how Moodle's setup works, AJAX requests would "rollback" the hook manipulations
-    // and Boost Union would have to compose the manipulated hooks again on the next "real" page load.
-    // This would result in longer page load times for real end users.
-
-    // Get Moodle core's hookcallbacks cache.
-    $corecache = \cache::make('core', 'hookcallbacks');
-
-    // Get Boost Union's hookoverrides cache.
-    $bucache = \cache::make('theme_boost_union', 'hookoverrides');
-
-    // Get the latest overrides from cache.
-    $overridesfromcache = $bucache->get('overrides');
-
-    // If a value for the latest overrides was found in the cache.
-    if ($overridesfromcache !== false) {
-        // Set it as the new $CFG->hooks_callback_overrides.
-        $CFG->hooks_callback_overrides = $overridesfromcache;
-
-        // Otherwise.
-    } else {
-        // Use a temporary marker in the hookoverrides cache as mutex (to avoid that this code is run in parallel and
-        // race conditions appear).
-        // This is a quite lightweight approach compared to a lock and especially helpful as the hookoverrides cache
-        // is a local cache store which means that this code should be run on each node.
-        $alreadystarted = $bucache->get('manipulationstarted');
-
-        // If the manipulation has already been started, return directly.
-        // In this case, the hooks will not be manipulated, but we can't do anything about it.
-        if ($alreadystarted == true) {
-            return;
-        }
-
-        // Set the mutex marker.
-        $bucache->set('manipulationstarted', true);
-
-        // Require the own library.
-        require_once($CFG->dirroot . '/theme/boost_union/lib.php');
-
-        // Get the array of plugins with the before_standard_footer_html_generation hook which can be suppressed by Boost Union.
-        //
-        // Ideally, this would be done with:
-        // $pluginswithhook =
-        // di::get(hook_manager::class)->get_callbacks_for_hook('core\\hook\\output\\before_standard_footer_html_generation');
-        // like it's done in settings.php, but it's not that easy.
-        // If we use get_callbacks_for_hook() to get the list of plugins, the hook manager will be instantiated,
-        // will create the list of callbacks and will be kept as static object for the rest of the script lifetime.
-        // We won't have a possibility to modify the list of callbacks with $CFG->hooks_callback_overrides after that point.
-        //
-        // Thus, we adopt the code from init_standard_callbacks(), load_callbacks() and add_component_callbacks()
-        // to here to search for existing hooks ourselves.
-        // In addition to that, it is important to know that this hook list is cached. We thus set a marker in
-        // the hookoverrides cache to store the fact that we have manipulated the hooks and do not need to do that
-        // again until the cache is cleared. On the other hand, if we already have manipulated the hooks, we have to
-        // "convince" Moodle to use it (see later).
-
-        // Get list of all files with callbacks, one per component.
-        $components = ['core' => "{$CFG->dirroot}/lib/db/hooks.php"];
-        $plugintypes = \core\component::get_plugin_types();
-        foreach ($plugintypes as $plugintype => $plugintypedir) {
-            $plugins = \core\component::get_plugin_list($plugintype);
-            foreach ($plugins as $pluginname => $plugindir) {
-                if (!$plugindir) {
-                    continue;
-                }
-                $components["{$plugintype}_{$pluginname}"] = "{$plugindir}/db/hooks.php";
-            }
-        }
-
-        // Iterate over the hooks files and collect all hooks.
-        // Doing this, we do not do the same cleanup and check operations as the hook manager does.
-        // If there would be a problem with a particular hook file, the hook manager itself would stumble upon it anyway.
-        $callbacks = [];
-        $parsecallbacks = function ($hookfile) {
-            $callbacks = [];
-            include($hookfile);
-            return $callbacks;
-        };
-        foreach ($components as $component => $hookfile) {
-            if (!file_exists($hookfile)) {
-                continue;
-            }
-            $newcallbacks = $parsecallbacks($hookfile);
-            if (!is_array($newcallbacks) || !$newcallbacks) {
-                continue;
-            }
-            foreach ($newcallbacks as &$ncb) {
-                $ncb['component'] = $component;
-            }
-            $callbacks = array_merge($callbacks, $newcallbacks);
-        }
-
-        // Pick the callbacks which implement the core\hook\output\before_standard_footer_html_generation hook.
-        $bsfhgcallbacks = [];
-        foreach ($callbacks as $callback) {
-            if ($callback['hook'] == 'core\\hook\\output\\before_standard_footer_html_generation') {
-                // If the callback is a string.
-                if (is_string($callback['callback'])) {
-                    // Use it directly.
-                    $bsfhgcallbacks[] = ['callback' => $callback['callback'], 'component' => $callback['component']];
-
-                    // Otherwise, if the callback is an array with two elements.
-                } else if (is_array($callback['callback']) && count($callback['callback']) == 2) {
-                    // Normalize and use it.
-                    $bsfhgcallbacks[] = ['callback' => implode('::', $callback['callback']), 'component' => $callback['component']];
-                }
-
-                // In all other cases, ignore the callback as it does not match our expectations.
-            }
-        }
-
-        // Iterate over all found callbacks.
-        foreach ($bsfhgcallbacks as $callback) {
-            // Extract the pluginname.
-            $pluginname = theme_boost_union_get_pluginname_from_callbackname($callback);
-            // If the given plugin's output is suppressed by Boost Union's settings.
-            $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_' . $pluginname);
-            if (isset($suppresssetting) && $suppresssetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                // Set the plugin's hook as disabled.
-                // phpcs:disable moodle.Files.LineLength.TooLong
-                $CFG->hooks_callback_overrides['core\\hook\\output\\before_standard_footer_html_generation'][$callback['callback']] =
-                        ['disabled' => true];
-                // phpcs:enable
-            }
-        }
-
-        // Remember the hook overrides in the cache.
-        $bucache->set('overrides', $CFG->hooks_callback_overrides);
-
-        // Remove the mutex marker.
-        $bucache->delete('manipulationstarted');
-    }
-
-    // Now, as this function is called via before_session_start(), we can (and have to) assume that the hook_manager
-    // has not been instantiated yet on this page load.
-    // But it will be instantiated soon at the end of /lib/setup.php and our modifications which we set in
-    // $CFG->hooks_callback_overrides will be taken into account then.
+    return false;
 }
 
 /**
- * Helper function which is called from settings.php as callback.
- * It simply removes the cached hook overrides for the Boost Union hook manipulations so that they are
- * processed again on the next page load.
+ * Helper function which is called from settings.php as callback if a footersuppressstandardfooter_ setting has changed.
+ * It checks all Boost Union settings to determine if any hook suppression settings are active and caches the result.
+ *
+ * @return bool True if there are hook suppression settings active, false otherwise.
  */
-function theme_boost_union_remove_hookmanipulation() {
+function theme_boost_union_reset_hooksuppress_cache() {
     // Get the cache.
-    $cache = \cache::make('theme_boost_union', 'hookoverrides');
+    $cache = \cache::make('theme_boost_union', 'hooksuppress');
 
-    // Remove the hook overrides.
-    $cache->delete('overrides');
+    // Check all Boost Union settings to determine if any hook suppression settings are active.
+    $boostunionconfig = get_config('theme_boost_union');
+    $hashooksuppresssettings = false;
+    foreach ($boostunionconfig as $key => $value) {
+        if (str_starts_with($key, 'footersuppressstandardfooter_') && $value == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            $hashooksuppresssettings = true;
+            break;
+        }
+    }
+
+    // Cache the result (as integer: 1 = true, 0 = false, because cache returns false for empty values).
+    $cache->set('hashooksuppresssettings', $hashooksuppresssettings ? 1 : 0);
+
+    // Return the result.
+    return $hashooksuppresssettings;
 }
 
 /**

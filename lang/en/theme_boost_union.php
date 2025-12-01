@@ -43,6 +43,15 @@ $string['nochange'] = 'No change';
 $string['forguestsonly'] = 'Only for guests and non-logged-in users';
 $string['showastext'] = 'Show as text';
 $string['showasbadge'] = 'Show as badge';
+$string['imageposition_center_center'] = 'Center horizontally and vertically';
+$string['imageposition_center_top'] = 'Center horizontally, top vertically';
+$string['imageposition_center_bottom'] = 'Center horizontally, bottom vertically';
+$string['imageposition_left_top'] = 'Left horizontally, top vertically';
+$string['imageposition_left_center'] = 'Left horizontally, center vertically';
+$string['imageposition_left_bottom'] = 'Left horizontally, bottom vertically';
+$string['imageposition_right_top'] = 'Right horizontally, top vertically';
+$string['imageposition_right_center'] = 'Right horizontally, center vertically';
+$string['imageposition_right_bottom'] = 'Right horizontally, bottom vertically';
 
 // Settings: General strings.
 $string['dontchange'] = 'Do not change anything';
@@ -701,6 +710,9 @@ $string['outsideregionswidthherowidth'] = 'Hero width';
 // ... ... Setting: Block region width for Outside (bottom) region.
 $string['blockregionoutsidebottomwidth'] = 'Block region width for \'Outside (bottom)\' region';
 $string['blockregionoutsidebottomwidth_desc'] = 'With this setting, you can set the width of the \'Outside (bottom)\' block region which is shown below the main content. You can choose between full width, course content width and hero width.';
+// ... Section: Footer regions.
+$string['footerregionsheading'] = 'Footer regions';
+$string['footerregionsheading_desc'] = 'Footer regions can not only be enabled with the layout settings above, their appearance can also be customized.';
 // ... ... Setting: Block region width for Footer region.
 $string['blockregionfooterwidth'] = 'Block region width for \'Footer\' region';
 $string['blockregionfooterwidth_desc'] = 'With this setting, you can set the width of the \'Footer\' block region. You can choose between full width, course content width and hero width.';
@@ -775,6 +787,7 @@ $string['footerheading'] = 'Footer';
 // ... ... Setting: Enable footer.
 $string['enablefooterbutton'] = 'Enable footer';
 $string['enablefooterbutton_desc'] = 'With "footer", the circle containing the question mark at the bottom of the page is meant.<br />Upon click, the user is presented with an overlay. Depending on the site configuration Moodle shows several links (like "Documentation for this page" or "Data retention summary") are shown in this overlay.<br />With this setting, you can control whether to show or to suppress the footer button at the bottom of the page.';
+$string['enablefooterbutton_note'] = 'Please note: The content of the <a href="{$a->url}">Moodle core setting additionalhtmlfooter</a> is shown within the footer by default. But if you select "Hide on all devices" here to hide the footer entirely, the additionalhtmlfooter content would not be shown anywhere anymore. To overcome this limitation, Boost Union will move the additionalhtmlfooter content to be shown at the very bottom of the page in this case.';
 $string['enablefooterbuttonboth'] = 'Enable on desktop, tablet and mobile';
 $string['enablefooterbuttondesktop'] = 'Enable on desktop and tablet only, hide on mobile (unchanged as presented by Moodle core)';
 $string['enablefooterbuttonmobile'] = 'Enable on mobile only, hide on desktop and tablet';
@@ -812,6 +825,7 @@ $string['footersuppressstandardfootercore_desc'] = 'With this setting, you can e
 // ... ... Setting: Suppress footer output by plugins.
 $string['footersuppressstandardfooter'] = 'Suppress footer output by plugin \'{$a}\'';
 $string['footersuppressstandardfooter_desc'] = 'With this setting, you can entirely suppress the footer output by plugin \'{$a}\'. Plugins (even if they are shipped with Moodle core, but are still technically plugins) can add additional content to the footer by implementing a particular hook or function. This plugin has implemented this hook / function and might add content to the footer in certain circumstances.<br />Please note: Due to the way how the suppressing feature is implemented, the setting might not take effect before the second page load after saving the setting.';
+$string['footersuppressstandardfooter_configoverride_desc'] = 'The footer output by plugin \'{$a}\' is already suppressed via <code>$CFG->hooks_callback_overrides</code> in your <code>config.php</code> file. To make this setting configurable here, you need to remove your override in <code>config.php</code> file.';
 
 // Settings: Static pages tab.
 $string['staticpagestab'] = 'Static pages';
@@ -1505,6 +1519,9 @@ $string['smartmenusmenuitemcssclass_help'] = 'Enter a CSS class for the menu ite
 $string['smartmenusmenuitemdeleteconfirm'] = 'Are you sure you want to delete this menu item from the smart menu?';
 $string['smartmenusmenuitemdeletesuccess'] = 'Smart menu item deleted successfully';
 $string['smartmenusmenuitemdisplayallcourses'] = 'Show hidden courses';
+$string['smartmenusmenuitememail'] = 'Recipient\'s email address';
+$string['smartmenusmenuitememail_help'] = 'The recipient\'s email address for the menu item. This will be used to build a mailto link that opens when the menu item is clicked.';
+$string['smartmenusmenuitememail_required'] = 'Required – Please enter a valid email address without the \'mailto:\' prefix.';
 $string['smartmenusmenuitemhidehiddencourses'] = 'Hide hidden courses';
 $string['smartmenusmenuitemhiddencoursessorting_help'] = 'Choose how hidden courses should be sorted in the course list of the dynamic courses menu items.';
 $string['smartmenusmenuitemhiddencoursessorting'] = 'Hidden courses sorting';
@@ -1574,11 +1591,12 @@ $string['smartmenusmenuitemtitle_help'] = 'The title of the menu. This will be u
 $string['smartmenusmenuitemtooltip'] = 'Tooltip';
 $string['smartmenusmenuitemtooltip_help'] = 'The tooltip which will be displayed when the user hovers over the menu item.';
 $string['smartmenusmenuitemtype'] = 'Menu item type';
-$string['smartmenusmenuitemtype_help'] = '<p>Select the type of menu item you want to create, choosing between static, heading, moodle documentation, dynamic courses, and divider.</p><ul><li>Static: A static menu item is simply a link to a fixed URL that does not change.</li><li>Heading: A heading menu item is used to group related menu items together under a common heading. It does not have a link and is not clickable.</li><li>Separator: A dividerenu item displays a horizontal line in the menu to visually separate groups of menu items.</li><li>Moodle documentation: A moodle documenation menu item is used to link to the corresponding MoodleDocs article, similar to the MoodleDocs link which is located in the Moodle footer (questionmark icon).</li><li>Dynamic courses: A dynamic courses menu item is used to display a list of courses based on certain criteria, such as course category, course enrolment role, course completion status or date range. The content displayed in a dynamic courses menu item will update automatically as the criteria changes.</li></ul>';
+$string['smartmenusmenuitemtype_help'] = '<p>Select the type of menu item you want to create, choosing between static, mailto, heading, moodle documentation, dynamic courses, and divider.</p><ul><li>Static: A static menu item is simply a link to a fixed URL that does not change.</li><li>Mailto: A mailto menu item opens the user\'s default email client to compose a message to the specified email address.</li><li>Heading: A heading menu item is used to group related menu items together under a common heading. It does not have a link and is not clickable.</li><li>Separator: A dividerenu item displays a horizontal line in the menu to visually separate groups of menu items.</li><li>Moodle documentation: A moodle documenation menu item is used to link to the corresponding MoodleDocs article, similar to the MoodleDocs link which is located in the Moodle footer (questionmark icon).</li><li>Dynamic courses: A dynamic courses menu item is used to display a list of courses based on certain criteria, such as course category, course enrolment role, course completion status or date range. The content displayed in a dynamic courses menu item will update automatically as the criteria changes.</li></ul>';
 $string['smartmenusmenuitemtypedocs'] = 'Moodle documentation';
 $string['smartmenusmenuitemtypedynamiccourses'] = 'Dynamic courses';
 $string['smartmenusmenuitemtypeheading'] = 'Heading';
 $string['smartmenusmenuitemtypedivider'] = 'Divider';
+$string['smartmenusmenuitemtypemailto'] = 'Mailto';
 $string['smartmenusmenuitemtypestatic'] = 'Static';
 $string['smartmenusmenuitemurl'] = 'Menu item URL';
 $string['smartmenusmenuitemurl_help'] = 'The static URL for the menu item. This is the link that will be followed when the menu item is clicked.';
@@ -1664,7 +1682,7 @@ $string['cachedef_flavours'] = 'Flavours which apply to a given page\'s category
 $string['cachedef_smartmenus'] = 'Smart menus';
 $string['cachedef_smartmenu_items'] = 'Smart menu items';
 $string['cachedef_touchiconsios'] = 'Touch icon files for iOS';
-$string['cachedef_hookoverrides'] = 'Hook overrides';
+$string['cachedef_hooksuppress'] = 'Hook suppressions';
 $string['cachedef_fontawesomeicons'] = 'FontAwesome icon map';
 
 // Scheduled tasks.

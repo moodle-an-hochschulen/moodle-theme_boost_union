@@ -651,6 +651,38 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2024100747, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2024100756) {
+        // Define table theme_boost_union_menuitems to be altered.
+        $table = new xmldb_table('theme_boost_union_menuitems');
+
+        // Define field to be added to theme_boost_union_menuitems.
+        $field = new xmldb_field('email', XMLDB_TYPE_TEXT, null, null, null, null, null, 'url');
+
+        // Conditionally launch adding field.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Savepoint reached.
+        upgrade_plugin_savepoint(true, 2024100756, 'theme', 'boost_union');
+    }
+
+    if ($oldversion < 2024100757) {
+        // Fix the sortorder field definition in theme_boost_union_snippets table.
+        // The field was incorrectly created as NOTNULL in version 2024100744,
+        // but should be nullable to match the install.xml definition.
+        $table = new xmldb_table('theme_boost_union_snippets');
+        $field = new xmldb_field('sortorder', XMLDB_TYPE_INTEGER, '18', null, null, null, null);
+
+        // Change the field to allow NULL values.
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_notnull($table, $field);
+        }
+
+        // Savepoint reached.
+        upgrade_plugin_savepoint(true, 2024100757, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
