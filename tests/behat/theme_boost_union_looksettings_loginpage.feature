@@ -191,7 +191,6 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | no      | should not  |
 
   @javascript
-  # JavaScript is necessary here to be able to evaluate the result of the flexbox orders.
   Scenario Outline: Setting: Login order
     Given the following config values are set as admin:
       | config                    | value                         | plugin            |
@@ -217,20 +216,152 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And I log out
     When I am on site homepage
     And I click on "Log in" "link" in the ".logininfo" "css_element"
-    # We would have loved to test the visual order with the 'x should appear after / before y' step, but this step
-    # does really only check the orders in the DOM and not on the screen.
-    # So we just check if the 'order' properties are set correctly
-    Then DOM element "#theme_boost_union-loginorder" should have computed style "display" "<display>"
-    And DOM element "#theme_boost_union-loginorder" should have computed style "flex-direction" "<flexdirection>"
-    And DOM element "#theme_boost_union-loginorder-local" should have computed style "order" "<localorderbrowser>"
-    And DOM element "#theme_boost_union-loginorder-idp" should have computed style "order" "<idporderbrowser>"
-    And DOM element "#theme_boost_union-loginorder-firsttimesignup" should have computed style "order" "<firsttimesignuporderbrowser>"
-    And DOM element "#theme_boost_union-loginorder-guest" should have computed style "order" "<guestorderbrowser>"
+    # Verify that login methods exist and appear in the correct DOM order.
+    Then "#theme_boost_union-loginorder-local" "css_element" should exist
+    And "#theme_boost_union-loginorder-idp" "css_element" should exist
+    And "#theme_boost_union-loginorder-firsttimesignup" "css_element" should exist
+    And "#theme_boost_union-loginorder-guest" "css_element" should exist
+    # Check DOM order: verify that elements appear in the expected sequence.
+    # We check the order by verifying that each element appears before the next one in the DOM.
+    And "#<firstelementid>" "css_element" should appear before "#<secondelementid>" "css_element" in the "#theme_boost_union-loginorder" "css_element"
+    And "#<secondelementid>" "css_element" should appear before "#<thirdelementid>" "css_element" in the "#theme_boost_union-loginorder" "css_element"
+    And "#<thirdelementid>" "css_element" should appear before "#<fourthelementid>" "css_element" in the "#theme_boost_union-loginorder" "css_element"
 
     Examples:
-      | localordersetting | localorderbrowser | idpordersetting | idporderbrowser | firsttimesignupordersetting | firsttimesignuporderbrowser | guestordersetting | guestorderbrowser | display | flexdirection |
-      | 1                 | 0                 | 2               | 0               | 3                           | 0                           | 4                 | 0                 | block   | row           |
-      | 2                 | 2                 | 1               | 1               | 4                           | 4                           | 3                 | 3                 | flex    | column        |
+      | localordersetting | idpordersetting | firsttimesignupordersetting | guestordersetting | firstelementid                          | secondelementid                      | thirdelementid                                | fourthelementid                       |
+      | 1                 | 2               | 3                           | 4                 | theme_boost_union-loginorder-local      | theme_boost_union-loginorder-idp     | theme_boost_union-loginorder-firsttimesignup  | theme_boost_union-loginorder-guest    |
+      | 2                 | 1               | 4                           | 3                 | theme_boost_union-loginorder-idp        | theme_boost_union-loginorder-local    | theme_boost_union-loginorder-guest            | theme_boost_union-loginorder-firsttimesignup |
+
+  @javascript
+  Scenario Outline: Setting: Login layout tabs - Switch between tabs
+    Given the following config values are set as admin:
+      | config            | value            | plugin            |
+      | loginlayout       | tabs             | theme_boost_union |
+      | primarylogin      | <primarylogin>   | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Testing service   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    # Verify that tabs navigation exists.
+    Then "#login-tabs" "css_element" should exist
+    And the "role" attribute of "#login-tabs" "css_element" should contain "tablist"
+    # Verify that tab links exist.
+    And "#login-tab-local-tab" "css_element" should exist
+    And "#login-tab-idp-tab" "css_element" should exist
+    And "#login-tab-signup-tab" "css_element" should exist
+    And "#login-tab-guest-tab" "css_element" should exist
+    # Verify that tab panes exist.
+    And "#login-tab-local" "css_element" should exist
+    And "#login-tab-idp" "css_element" should exist
+    And "#login-tab-signup" "css_element" should exist
+    And "#login-tab-guest" "css_element" should exist
+    # Verify initial state: the primary login tab is active.
+    Then the "class" attribute of "#login-tab-<activetab>-tab" "css_element" should contain "active"
+    And the "class" attribute of "#login-tab-<activetab>" "css_element" should contain "show"
+    And the "class" attribute of "#login-tab-<activetab>" "css_element" should contain "active"
+    # Click on a different tab to test switching.
+    When I click on "#login-tab-<switchtotab>-tab" "css_element"
+    # Verify that the clicked tab is now active and the previous tab is inactive.
+    Then the "class" attribute of "#login-tab-<switchtotab>-tab" "css_element" should contain "active"
+    And the "class" attribute of "#login-tab-<switchtotab>" "css_element" should contain "show"
+    And the "class" attribute of "#login-tab-<switchtotab>" "css_element" should contain "active"
+    And the "class" attribute of "#login-tab-<activetab>-tab" "css_element" should not contain "active"
+    And the "class" attribute of "#login-tab-<activetab>" "css_element" should not contain "show"
+    And the "class" attribute of "#login-tab-<activetab>" "css_element" should not contain "active"
+
+    Examples:
+      | primarylogin | activetab | switchtotab |
+      | none         | local     | idp         |
+      | idp          | idp       | local       |
+      | firsttimesignup | signup | guest       |
+
+  @javascript
+  Scenario: Setting: Login layout accordion - Verify accordion structure and functionality
+    Given the following config values are set as admin:
+      | config            | value     | plugin            |
+      | loginlayout       | accordion | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Testing service   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    # Verify that accordion container exists.
+    Then "#theme_boost_union-loginorder" "css_element" should exist
+    And the "class" attribute of "#theme_boost_union-loginorder" "css_element" should contain "accordion"
+    And the "class" attribute of "#theme_boost_union-loginorder" "css_element" should contain "login-layout-accordion"
+    # Verify that accordion items exist.
+    And "#accordion-local-header" "css_element" should exist
+    And "#accordion-idp-header" "css_element" should exist
+    And "#accordion-local-content" "css_element" should exist
+    And "#accordion-idp-content" "css_element" should exist
+    # Verify initial state: accordion items are collapsed by default.
+    Then the "class" attribute of "#accordion-local-content" "css_element" should contain "collapse"
+    And the "class" attribute of "#accordion-idp-content" "css_element" should contain "collapse"
+    # Click on local accordion button to open it.
+    When I click on "#accordion-local-header button" "css_element"
+    # Verify that local accordion is now open.
+    Then the "class" attribute of "#accordion-local-content" "css_element" should contain "show"
+    And the "class" attribute of "#accordion-local-header button" "css_element" should not contain "collapsed"
+    # Click on IDP accordion button to open it (should close local).
+    When I click on "#accordion-idp-header button" "css_element"
+    # Verify that IDP accordion is now open and local is closed.
+    Then the "class" attribute of "#accordion-idp-content" "css_element" should contain "show"
+    And the "class" attribute of "#accordion-idp-header button" "css_element" should not contain "collapsed"
+    And the "class" attribute of "#accordion-local-content" "css_element" should not contain "show"
+    And the "class" attribute of "#accordion-local-header button" "css_element" should contain "collapsed"
+
+  @javascript
+  Scenario: Setting: Login background layout - Default layout
+    Given the following config values are set as admin:
+      | config                | value    | plugin            |
+      | loginbackgroundlayout | default  | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    # Verify that the splitscreen class is not present anywhere in the DOM.
+    Then ".login-background-layout-splitscreen" "css_element" should not exist
+
+  @javascript
+  Scenario: Setting: Login background layout - Split screen layout
+    Given the following config values are set as admin:
+      | config                | value       | plugin            |
+      | loginbackgroundlayout | splitscreen | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    # Verify that the splitscreen class exists and is applied to the correct elements.
+    Then ".login-background-layout-splitscreen" "css_element" should exist
+    And the "class" attribute of "#page-login-index" "css_element" should contain "login-background-layout-splitscreen"
+    And the "class" attribute of "#page" "css_element" should contain "login-background-layout-splitscreen"
+    # Verify that #page with the splitscreen class has max-width of 50%.
+    And DOM element "#page.login-background-layout-splitscreen" should have computed style "max-width" "50%"
 
   Scenario Outline: Setting: Enable side entrance login - View the side entrance login page
     Given the following config values are set as admin:

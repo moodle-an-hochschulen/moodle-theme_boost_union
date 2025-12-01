@@ -47,13 +47,13 @@
 
     {{{ output.standard_top_of_body_html }}}
 
-    <div id="page" class="container-fluid pt-5 mt-0">
+    <div id="page" class="container-fluid pt-5 mt-0 {{loginbackgroundlayoutclass}}">
         {{> theme_boost_union/infobanners }}
         <div id="page-content" class="row">
             <div id="region-main-box" class="col-12">
                 <div id="region-main" class="col-12 h-100">
-                <div class="login-wrapper {{loginwrapperclass}}">
-                    <div class="login-container {{logincontainerclass}}">
+                <div class="login-wrapper {{loginwrapperclass}} {{#loginbackgroundlayoutclass}}w-100 overflow-hidden{{/loginbackgroundlayoutclass}}">
+                    <div class="login-container {{logincontainerclass}} {{#loginbackgroundlayoutclass}}w-100 mw-100{{/loginbackgroundlayoutclass}}">
                     {{{ output.main_content }}}
                     </div>
                 </div>
