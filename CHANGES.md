@@ -4,6 +4,9 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+* 2024-12-10 - Improvement: Make back-to-top button jQuery-free, resolves #119.
+
 ### v5.0-r13
 
 * 2025-11-19 - Backport: Replace Boost Union's hook manipulation with a more downstream solution to suppress hook output, resolves #1101.
