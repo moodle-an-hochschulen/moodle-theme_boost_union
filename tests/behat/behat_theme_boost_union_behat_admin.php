@@ -28,8 +28,8 @@
 
 require_once(__DIR__ . '/../../../../admin/tests/behat/behat_admin.php');
 
-use Behat\Gherkin\Node\TableNode as TableNode,
-    Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
+use Behat\Gherkin\Node\TableNode,
+    Behat\Mink\Exception\ElementNotFoundException;
 
 /**
  * Administration-related step definition overrides for the Boost Union theme.

@@ -1,0 +1,37 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/form_autocomplete_fontawesome_icon
+
+    Boost Union Template for displaying icons in the smartmenu items autocomplete dropdown.
+
+    Context variables required for this template:
+    * class - The Font Awesome icon class
+    * name - The name/description of the icon
+    * source - The source of the icon
+    * sourcecolor - The bootstrap color to be used for the source
+
+    Example context (json):
+    {
+        "class": "fa-user-lock",
+        "name": "core:i/permissions",
+        "source": "Moodle core",
+        "sourcecolor": "warning"
+    }
+}}
+
+<span class="d-inline-block align-top"><i class="fa fa-fw mx-1 {{class}} align-middle" aria-hidden="true"></i></span>&nbsp;<small class="d-inline-block text-break wrapiconwidth">{{name}}</small>{{#source}}<span class="badge {{{sourcecolor}}} float-end ms-2">{{{source}}}</span>{{/source}}

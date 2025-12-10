@@ -42,7 +42,6 @@ use core_block\output\block_contents;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class core_renderer extends \theme_boost\output\core_renderer {
-
     /**
      * Returns the moodle_url for the favicon.
      *
@@ -90,8 +89,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
                         'theme_boost_union',
                         'flavours_look_favicon',
                         $flavour->id,
-                        '/'.theme_get_revision(),
-                        '/'.$flavour->look_favicon
+                        '/64x64' .
+                        '/' . theme_get_revision(),
+                        '/' . $flavour->look_favicon
                     );
 
                     // Return the URL.
@@ -172,8 +172,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
                         'theme_boost_union',
                         'flavours_look_logo',
                         $flavour->id,
-                        '/'.theme_get_revision(),
-                        '/'.$flavour->look_logo
+                        '/' . theme_get_revision(),
+                        '/' . $flavour->look_logo
                     );
 
                     // Return the URL.
@@ -263,14 +263,29 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     // Remember this fact for subsequent runs of this function.
                     $hasflavourlogo = true;
 
+                    // If the flavour logo is a SVG image, do not add a size to the path.
+                    $flavourlogoextension = pathinfo($flavour->look_logocompact, PATHINFO_EXTENSION);
+                    if (in_array($flavourlogoextension, ['svg', 'svgz'])) {
+                        // The theme_boost_union_pluginfile() function will look for a filepath and will extract the size from that.
+                        // If we add a path without an 'x' in it, it will then be interpreted by theme_boost_union_pluginfile()
+                        // as "no resize requested".
+                        // This mechanism is used for the normal compact logo as well.
+                        $flavourfilepath = '1/';
+
+                        // Otherwise, add a size to the path.
+                    } else {
+                        // Hide the requested size in the file path.
+                        $flavourfilepath = ((int)$maxwidth . 'x' . (int)$maxheight) . '/';
+                    }
+
                     // Compose the URL to the flavour's compact logo.
                     $flavourlogourl = \core\url::make_pluginfile_url(
                         context_system::instance()->id,
                         'theme_boost_union',
                         'flavours_look_logocompact',
-                        $flavour->id,
-                        '/'.theme_get_revision(),
-                        '/'.$flavour->look_logocompact
+                        $flavour->id . '/' . $flavourfilepath,
+                        theme_get_revision(),
+                        '/' . $flavour->look_logocompact
                     );
 
                     // Return the URL.
@@ -362,7 +377,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // However, theme designers might want to use it.
         $flavour = theme_boost_union_get_flavour_which_applies();
         if ($flavour != null) {
-            $additionalclasses[] = 'flavour'.'-'.$flavour->id;
+            $additionalclasses[] = 'flavour' . '-' . $flavour->id;
         }
 
         // If the admin decided to change the breakpoints of the footer button,
@@ -384,6 +399,32 @@ class core_renderer extends \theme_boost\output\core_renderer {
             default:
                 $additionalclasses[] = 'theme_boost-union-footerbuttondesktop';
                 break;
+        }
+
+        // If this is the login page and the page has the accessibility button, add a class to the body attributes.
+        // This is currently just needed to make sure in SCSS that the footnote is not covered by the accessibility button.
+        if ($this->page->pagelayout == 'login') {
+            // If the accessibility button is enabled.
+            $enableaccessibilitysupportsetting = get_config('theme_boost_union', 'enableaccessibilitysupport');
+            $enableaccessibilitysupportfooterbuttonsetting =
+                    get_config('theme_boost_union', 'enableaccessibilitysupportfooterbutton');
+            if (
+                isset($enableaccessibilitysupportsetting) &&
+                    $enableaccessibilitysupportsetting == THEME_BOOST_UNION_SETTING_SELECT_YES &&
+                    isset($enableaccessibilitysupportfooterbuttonsetting) &&
+                    $enableaccessibilitysupportfooterbuttonsetting == THEME_BOOST_UNION_SETTING_SELECT_YES
+            ) {
+                // If user login is either not required or if the user is logged in.
+                $allowaccessibilitysupportwithoutloginsetting =
+                        get_config('theme_boost_union', 'allowaccessibilitysupportwithoutlogin');
+                if (
+                    !(isset($allowaccessibilitysupportwithoutloginsetting) &&
+                        $allowaccessibilitysupportwithoutloginsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) ||
+                        (isloggedin() && !isguestuser())
+                ) {
+                    $additionalclasses[] = 'theme_boost-union-accessibilitybutton';
+                }
+            }
         }
 
         return ' id="' . $this->body_id() . '" class="' . $this->body_css_classes($additionalclasses) . '"';
@@ -430,8 +471,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $header->headeractions = $this->page->get_header_actions();
 
         // Add the course header image for rendering.
-        if ($this->page->pagelayout == 'course' && (get_config('theme_boost_union', 'courseheaderimageenabled')
-                        == THEME_BOOST_UNION_SETTING_SELECT_YES)) {
+        if (
+            $this->page->pagelayout == 'course' && (get_config('theme_boost_union', 'courseheaderimageenabled')
+                        == THEME_BOOST_UNION_SETTING_SELECT_YES)
+        ) {
             // If course header images are activated, we get the course header image url
             // (which might be the fallback image depending on the course settings and theme settings).
             $header->courseheaderimageurl = theme_boost_union_get_course_header_image_url();
@@ -441,7 +484,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $header->courseheaderimageposition = get_config('theme_boost_union', 'courseheaderimageposition');
             // Additionally, get the template context attributes for the course header image layout.
             $courseheaderimagelayout = get_config('theme_boost_union', 'courseheaderimagelayout');
-            switch($courseheaderimagelayout) {
+            switch ($courseheaderimagelayout) {
                 case THEME_BOOST_UNION_SETTING_COURSEIMAGELAYOUT_HEADINGABOVE:
                     $header->courseheaderimagelayoutheadingabove = true;
                     $header->courseheaderimagelayoutstackedclass = '';
@@ -505,10 +548,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $context->skiptitle = strip_tags($bc->title);
         $context->showskiplink = !empty($context->skiptitle);
         $context->arialabel = $bc->arialabel;
-        $context->ariarole = !empty($bc->attributes['role']) ? $bc->attributes['role'] : 'complementary';
+        $context->ariarole = !empty($bc->attributes['role']) ? $bc->attributes['role'] : '';
         $context->class = $bc->attributes['class'];
         $context->type = $bc->attributes['data-block'];
-        $context->title = $bc->title;
+        $context->title = (string) $bc->title;
+        $context->showtitle = $context->title !== '';
         $context->content = $bc->content;
         $context->annotation = $bc->annotation;
         $context->footer = $bc->footer;
@@ -518,7 +562,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $regions = theme_boost_union_get_additional_regions();
         $regioncapname = array_search($region, $regions);
         if (!empty($regioncapname) && $context->hascontrols) {
-            $context->hascontrols = has_capability('theme/boost_union:editregion'.$regioncapname, $this->page->context);
+            $context->hascontrols = has_capability('theme/boost_union:editregion' . $regioncapname, $this->page->context);
         }
 
         if ($context->hascontrols) {
@@ -609,36 +653,94 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        // Process the hooks as defined by Moodle core.
-        // If Boost Union is configured to suppress a particular footer element, the hook has been disabled by
-        // theme_boost_union_manipulate_books().
-        $hook = new before_standard_footer_html_generation($this);
-        di::get(hook_manager::class)->dispatch($hook);
+        // Require own locallib.php.
+        require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
-        // Give plugins an opportunity to add any footer elements (for legacy plugins).
-        // Originally, this is realized with $hook->process_legacy_callbacks();
-        // However, we duplicate the code here and use the logic from Boost Union which has been used there up to v4.3.
-        // Get the array of plugins with the standard_footer_html() function which can be suppressed by Boost Union.
-        $pluginswithfunction = get_plugins_with_function(function: 'standard_footer_html', migratedtohook: true);
-        // Iterate over all plugins.
-        foreach ($pluginswithfunction as $plugintype => $plugins) {
-            foreach ($plugins as $pluginname => $function) {
-                // If the given plugin's output is suppressed by Boost Union's settings.
-                $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_'.$plugintype.'_'.$pluginname);
-                if (isset($suppresssetting) && $suppresssetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                    // Skip the plugin.
-                    continue;
+        // Check if there are any footersuppressstandardfooter_ settings set to YES.
+        // If not, we can use the standard Moodle core hook dispatch mechanism for better performance.
+        // We cache this check in the application cache to avoid iterating over hundreds of Boost Union settings on every page load.
+        $cache = \cache::make('theme_boost_union', 'hooksuppress');
+        $cachedhashooksuppresssettings = $cache->get('hashooksuppresssettings');
 
-                    // Otherwise.
-                } else {
-                    // Add the output.
-                    $hook->add_html($function());
-                }
-            }
+        // If the cache is empty, call the helper function to check all settings and cache the result.
+        if ($cachedhashooksuppresssettings === false) {
+            $hashooksuppresssettings = theme_boost_union_reset_hooksuppress_cache();
+        } else {
+            // Convert cached integer back to boolean.
+            $hashooksuppresssettings = (bool)$cachedhashooksuppresssettings;
         }
 
-        // Gather the output.
-        $output = $hook->get_output();
+        // If there are no suppressed footer settings, use the standard Moodle core renderer mechanism.
+        if (!$hashooksuppresssettings) {
+            // Create the hook and dispatch it normally.
+            $hook = new before_standard_footer_html_generation($this);
+            $hook->process_legacy_callbacks();
+            di::get(hook_manager::class)->dispatch($hook);
+
+            // Gather the output.
+            $output = $hook->get_output();
+
+            // Otherwise, we need to suppress specific plugin outputs.
+        } else {
+            // Process the hooks as defined by Moodle core.
+            // But, instead of letting Moodle core dispatch the hook and call all callbacks,
+            // we create an empty hook and manually call only the callbacks which are not suppressed by Boost Union
+            // or by $CFG->hooks_callback_overrides. This is the only way to suppress specific plugin outputs in the footer
+            // without modifying the plugins themselves.
+            $hook = new before_standard_footer_html_generation($this);
+
+            // Get all callbacks for this hook.
+            $callbacks = di::get(hook_manager::class)->get_callbacks_for_hook(
+                'core\\hook\\output\\before_standard_footer_html_generation'
+            );
+
+            // Iterate over all callbacks and call only those which are not suppressed.
+            foreach ($callbacks as $callback) {
+                // Check if the callback is disabled via $CFG->hooks_callback_overrides.
+                if (theme_boost_union_is_callback_disabled_in_config($callback['callback'])) {
+                    // Skip this callback as it's disabled in config.php.
+                    continue;
+                }
+
+                // Extract the pluginname.
+                $pluginname = theme_boost_union_get_pluginname_from_callbackname($callback);
+
+                // Check if the given plugin's output is suppressed by Boost Union's settings.
+                $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_' . $pluginname);
+
+                // If the plugin's output is NOT suppressed by Boost Union.
+                if (!isset($suppresssetting) || $suppresssetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                    // Call the callback manually.
+                    call_user_func($callback['callback'], $hook);
+                }
+            }
+
+            // Give plugins an opportunity to add any footer elements (for legacy plugins).
+            // Originally, this is realized with $hook->process_legacy_callbacks();
+            // However, we duplicate the code here and use the logic from Boost Union which has been used there up to v4.3.
+            // Get the array of plugins with the standard_footer_html() function which can be suppressed by Boost Union.
+            $pluginswithfunction = get_plugins_with_function(function: 'standard_footer_html', migratedtohook: true);
+            // Iterate over all plugins.
+            foreach ($pluginswithfunction as $plugintype => $plugins) {
+                foreach ($plugins as $pluginname => $function) {
+                    // If the given plugin's output is suppressed by Boost Union's settings.
+                    $suppresssetting = get_config('theme_boost_union', 'footersuppressstandardfooter_' . $plugintype . '_' .
+                            $pluginname);
+                    if (isset($suppresssetting) && $suppresssetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                        // Skip the plugin.
+                        continue;
+
+                        // Otherwise.
+                    } else {
+                        // Add the output.
+                        $hook->add_html($function());
+                    }
+                }
+            }
+
+            // Gather the output.
+            $output = $hook->get_output();
+        }
 
         // If the theme switcher links are not suppressed by Boost Union's settings.
         $suppressthemeswitchsetting = get_config('theme_boost_union', 'footersuppressthemeswitch');
@@ -704,6 +806,44 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if ($this->page->pagelayout !== 'embedded' && !empty($CFG->additionalhtmlfooter)) {
             $output .= "\n" . $CFG->additionalhtmlfooter;
         }
+        return $output;
+    }
+
+    /**
+     * Start output by sending the HTTP headers, and printing the HTML <head>
+     * and the start of the <body>.
+     *
+     * To control what is printed, you should set properties on $PAGE.
+     *
+     * @return string HTML that you must output this, preferably immediately.
+     */
+    public function header() {
+        global $CFG, $SESSION, $USER;
+
+        // Get the header output from the parent class.
+        $output = parent::header();
+
+        // If the admin decided to suppress the login info in the footer,
+        // the 'failed login attempts' counter in the navbar will not be reset as this is only done by the
+        // user_count_login_failures() function from the login_info() function which is not called anymore in this case.
+        //
+        // The header() function calls the user_count_login_failures() function as well, but does not set the parameter
+        // to reset the failed login attempts counter (see issue #658 for details).
+        // So we call the user_count_login_failures() function here with the reset parameter set to true here to ensure that the
+        // failed login attempts counter is reset anyway when the footer is suppressed.
+        //
+        // As an alternative to this approach, we could have overwritten the header() function completely here, just changing
+        // the line calling the user_count_login_failures(). This would have resulted in a mainantenance overhead
+        // and would not have had any performance benefits as the original Moodle calls user_count_login_failures() twice as well.
+        $footersuppresslogininfosetting = get_config('theme_boost_union', 'footersuppresslogininfo');
+        if (isset($footersuppresslogininfosetting) && $footersuppresslogininfosetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            if (isset($SESSION->justloggedin) && !empty($CFG->displayloginfailures)) {
+                require_once($CFG->dirroot . '/user/lib.php');
+                user_count_login_failures($USER, true);
+            }
+        }
+
+        // Return the parent header() output.
         return $output;
     }
 

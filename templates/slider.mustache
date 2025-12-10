@@ -113,16 +113,16 @@
 }}
 {{#showslider}}
 <div id="themeboostunionslider-wrapper" class="container-fluid pb-3">
-  <div id="themeboostunionslider" class="carousel {{slidergeneralsettings.animation}}" data-interval="{{slidergeneralsettings.interval}}"
-    data-keyboard="{{slidergeneralsettings.keyboard}}" data-pause="{{slidergeneralsettings.pause}}"
-    data-ride="{{slidergeneralsettings.ride}}" data-wrap="{{slidergeneralsettings.wrap}}">
+  <div id="themeboostunionslider" class="carousel {{slidergeneralsettings.animation}}" data-bs-interval="{{slidergeneralsettings.interval}}"
+    data-bs-keyboard="{{slidergeneralsettings.keyboard}}" data-bs-pause="{{slidergeneralsettings.pause}}"
+    data-bs-ride="{{slidergeneralsettings.ride}}" data-bs-wrap="{{slidergeneralsettings.wrap}}">
 
     {{#slidergeneralsettings.showindicatornav}}
-    <ol class="carousel-indicators">
+    <div class="carousel-indicators">
       {{#slides}}
-      <li data-target="#themeboostunionslider" data-slide-to="{{slideto}}" {{#isfirstslide}}class="active"{{/isfirstslide}}></li>
+      <button type="button" data-bs-target="#themeboostunionslider" data-bs-slide-to="{{slideto}}" {{#isfirstslide}}class="active"{{/isfirstslide}}></button>
       {{/slides}}
-    </ol>
+    </div>
     {{/slidergeneralsettings.showindicatornav}}
 
     <div class="carousel-inner rounded">
@@ -144,14 +144,14 @@
     </div>
 
     {{#slidergeneralsettings.showarrownav}}
-    <a class="carousel-control-prev" href="#themeboostunionslider" role="button" data-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#themeboostunionslider" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">prev</span>
-    </a>
-    <a class="carousel-control-next" href="#themeboostunionslider" role="button" data-slide="next">
+      <span class="visually-hidden">{{#str}}previous,core{{/str}}</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#themeboostunionslider" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">next</span>
-    </a>
+      <span class="visually-hidden">{{#str}}next,core{{/str}}</span>
+    </button>
     {{/slidergeneralsettings.showarrownav}}
   </div>
 </div>

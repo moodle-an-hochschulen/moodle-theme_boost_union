@@ -55,24 +55,24 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Title          | Resources         |
       | Menu item type | Static            |
       | Menu item URL  | http://moodle.org |
-    And the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links-menu"
-    And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Quick links')]" "xpath_element" should contain "quick-links-menu"
+    And the "class" attribute of "//div[contains(@class, 'primary-navigation')]//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links-menu"
+    And the "class" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Quick links')]" "xpath_element" should contain "quick-links-menu"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links-menu"
-    And I change the viewport size to "740x900"
+    And I change viewport size to "mobile"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links-menu"
-    And I change the viewport size to "large"
+    And I change viewport size to "large"
     And I navigate to smart menus
     And I click on ".action-edit" "css_element" in the "Quick links" "table_row"
     And I expand all fieldsets
     And I set the field "CSS class" to "quick-links"
     And I click on "Save and return" "button"
-    And the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should not contain "quick-links-menu"
-    And the "class" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links"
-    And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Quick links')]" "xpath_element" should not contain "quick-links-menu"
-    And the "class" attribute of "//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Quick links')]" "xpath_element" should contain "quick-links"
+    And the "class" attribute of "//div[contains(@class, 'primary-navigation')]//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should not contain "quick-links-menu"
+    And the "class" attribute of "//div[contains(@class, 'primary-navigation')]//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links"
+    And the "class" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Quick links')]" "xpath_element" should not contain "quick-links-menu"
+    And the "class" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Quick links')]" "xpath_element" should contain "quick-links"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should not contain "quick-links-menu"
     And the "class" attribute of "//nav[contains(@class, 'menubar')]//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links"
-    And I change the viewport size to "740x900"
+    And I change viewport size to "mobile"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should not contain "quick-links-menu"
     And the "class" attribute of "//div[@class='bottom-navigation']//a[contains(normalize-space(.), 'Quick links')]//.." "xpath_element" should contain "quick-links"
 
@@ -233,13 +233,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | hidenodesprimarynavigation | home,myhome,courses,siteadminnode | theme_boost_union |
     And I follow "Dashboard"
     # Make the screen really large to test the "More" behaviour without any screen real estate constraints
-    And I change the viewport size to "large"
+    And I change viewport size to "large"
     Then I <menu1shouldornotlarge> see smart menu "Quick links 01" in location "Main"
     And I <menu2shouldornotlarge> see smart menu "Quick links 02" in location "Main"
     And I <menu3shouldornotlarge> see smart menu "Quick links 03" in location "Main"
     And ".primary-navigation .dropdownmoremenu" "css_element" <moreshouldornotlarge> be visible
     # Make the screen smaller and test the "More" behaviour in the navbar
-    And I change the viewport size to "tablet"
+    # This screen size should be 'tablet', but due to MDL-81892, we have to test on a larger screen.
+    And I change viewport size to "820x1024"
     Then I <menu1shouldornottablet> see smart menu "Quick links 01" in location "Main"
     And I <menu2shouldornottablet> see smart menu "Quick links 02" in location "Main"
     And I <menu3shouldornottablet> see smart menu "Quick links 03" in location "Main"
@@ -293,8 +294,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | hidenodesprimarynavigation | home,myhome,courses,siteadminnode | theme_boost_union |
     And I follow "Dashboard"
     # Make the screen smaller and test the "More" behaviour in the navbar
-    # This pixel screen size is essentially the same than the 'tablet' size, but for some strange reason Behat on moodle-docker made the screen too small in this scenario
-    And I change the viewport size to "768x1024"
+    # This screen size should be 'tablet', but due to MDL-81892, we have to test on a larger screen.
+    And I change viewport size to "820x1024"
     And I click on "More" "link" in the ".primary-navigation" "css_element"
     Then I should see smart menu "Quick links 01" in location "Main"
     And I should see smart menu "Quick links 02" in location "Main"
@@ -346,13 +347,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | hidenodesprimarynavigation | home,myhome,courses,siteadminnode | theme_boost_union |
     And I follow "Dashboard"
     # Make the screen really large to test the "More" behaviour without any screen real estate constraints
-    And I change the viewport size to "large"
+    And I change viewport size to "large"
     Then I <menu1shouldornotlarge> see smart menu "Quick links reeeeeally overlong title 01" in location "Menu"
     And I <menu2shouldornotlarge> see smart menu "Quick links reeeeeally overlong title 02" in location "Menu"
     And I <menu3shouldornotlarge> see smart menu "Quick links reeeeeally overlong title 03" in location "Menu"
     And ".boost-union-menubar .dropdownmoremenu" "css_element" <moreshouldornotlarge> be visible
     # Make the screen smaller and test the "More" behaviour in the menu bar
-    And I change the viewport size to "tablet"
+    And I change viewport size to "tablet"
     Then I <menu1shouldornottablet> see smart menu "Quick links reeeeeally overlong title 01" in location "Menu"
     And I <menu2shouldornottablet> see smart menu "Quick links reeeeeally overlong title 02" in location "Menu"
     And I <menu3shouldornottablet> see smart menu "Quick links reeeeeally overlong title 03" in location "Menu"
@@ -407,8 +408,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | hidenodesprimarynavigation | home,myhome,courses,siteadminnode | theme_boost_union |
     And I follow "Dashboard"
     # Make the screen smaller and test the "More" behaviour in the navbar
-    # This pixel screen size is essentially the same than the 'tablet' size, but for some strange reason Behat on moodle-docker made the screen too small in this scenario
-    And I change the viewport size to "768x1024"
+    And I change viewport size to "tablet"
     And I click on "More" "link" in the ".boost-union-menubar" "css_element"
     Then I should see smart menu "Quick links reeeeeally overlong title 01" in location "Menu"
     And I should see smart menu "Quick links reeeeeally overlong title 02" in location "Menu"
@@ -424,3 +424,110 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | 1        | 0        | 0        | after     | before    | after     |
       | 0        | 0        | 2        | before    | after     | after     |
       | 0        | 1        | 2        | before    | after     | before    |
+
+  @javascript
+  Scenario: Smartmenu: Menus: Presentation - Verify that the correct menu item is displayed as active when viewing the main menu item's page.
+    Given I log in as "admin"
+    And I create smart menu with the following fields to these values:
+      | Title             | Quick links |
+      | Menu location(s)  | Main        |
+      | Menu mode         | Inline      |
+    And I set "Quick links" smart menu items with the following fields to these values:
+      | Title          | Test node                           |
+      | Menu item type | Static                              |
+      | URL            | /admin/tool/dataprivacy/summary.php |
+      | CSS class      | testnode01                          |
+    When I am on site homepage
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should contain "active"
+    And the "class" attribute of ".primary-navigation .testnode01 a" "css_element" should not contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation .testnode01" "css_element"
+    And I click on "Test node" "link" in the ".primary-navigation" "css_element"
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should not contain "active"
+    And the "class" attribute of ".primary-navigation .testnode01 a" "css_element" should contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation .testnode01" "css_element"
+
+  @javascript
+  Scenario: Smartmenu: Menus: Presentation - Verify that the correct menu item is displayed as active when viewing the submenu item's page.
+    Given I log in as "admin"
+    And I create smart menu with the following fields to these values:
+      | Title             | Quick links |
+      | Menu location(s)  | Main        |
+      | Menu mode         | Submenu     |
+      | CSS class         | testnode01  |
+    And I set "Quick links" smart menu items with the following fields to these values:
+      | Title          | Test node                           |
+      | Menu item type | Static                              |
+      | URL            | /admin/tool/dataprivacy/summary.php |
+    When I am on site homepage
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should contain "active"
+    And the "class" attribute of ".primary-navigation .testnode01 a" "css_element" should not contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation .testnode01" "css_element"
+    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
+    And I click on "Test node" "link" in the ".primary-navigation" "css_element"
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should not contain "active"
+    And the "class" attribute of ".primary-navigation .testnode01 a" "css_element" should contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation .testnode01" "css_element"
+
+  @javascript
+  Scenario: Smartmenu: Menus: Presentation - Verify that the correct _custom_ menu item is displayed as active when viewing the custom menu item's page (Moodle core behaviour which must not be broken by the smart menus)
+    Given I log in as "admin"
+    And I navigate to "Appearance > Advanced theme settings" in site administration
+    And I set the field "Custom menu items" to multiline:
+    """
+    Test node|/admin/tool/dataprivacy/summary.php
+    """
+    And I click on "Save changes" "button"
+    When I am on site homepage
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should contain "active"
+    And the "class" attribute of ".primary-navigation .nav-item:nth-child(5) a" "css_element" should not contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation .nav-item:nth-child(5)" "css_element"
+    And I click on "Test node" "link" in the ".primary-navigation" "css_element"
+    Then the "class" attribute of ".primary-navigation [data-key='home'] a" "css_element" should not contain "active"
+    And the "class" attribute of ".primary-navigation .nav-item:nth-child(5) a" "css_element" should contain "active"
+    And "//a[@aria-current = 'true']" "xpath" should not exist in the ".primary-navigation [data-key='home']" "css_element"
+    And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation .nav-item:nth-child(5)" "css_element"
+
+  @javascript
+  Scenario Outline: Smartmenu: Menus: Presentation - Ensure the menu bar is not displayed when no menus are present
+    Given the following "theme_boost_union > smart menu" exists:
+      | title    | Menu bar links |
+      | location | Menu bar       |
+      | mode     | Inline         |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Menu bar links    |
+      | title    | Moodle org        |
+      | itemtype | Static            |
+      | url      | http://moodle.org |
+      | itemmode | Inline            |
+      | desktop  | <item1desk>       |
+      | tablet   | <item1tab>        |
+      | mobile   | <item1mob>        |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Menu bar links              |
+      | title    | Moodle Plugins              |
+      | itemtype | Static                      |
+      | url      | https://moodle.org/plugins/ |
+      | itemmode | Inline                      |
+      | desktop  | <item2desk>                 |
+      | tablet   | <item2tab>                  |
+      | mobile   | <item2mob>                  |
+    When I am on site homepage
+    And I change the viewport size to "large"
+    And ".boost-union-menubar" "css_element" <menubarshouldornot> be visible
+    And I change the viewport size to "tablet"
+    And ".boost-union-menubar" "css_element" <menubartabshouldornot> be visible
+    And I change the viewport size to "mobile"
+    And ".boost-union-menubar" "css_element" <menubarmobshouldornot> be visible
+
+    Examples:
+      | item1desk | item1tab | item1mob | item2desk | item2tab | item2mob | menubarshouldornot | menubartabshouldornot | menubarmobshouldornot |
+      | 1         | 1        | 1        | 1         | 1        | 1        | should not         | should not            | should not            |
+      | 0         | 1        | 1        | 1         | 1        | 1        | should             | should not            | should not            |
+      | 1         | 0        | 1        | 1         | 1        | 1        | should not         | should                | should not            |
+      | 1         | 1        | 0        | 1         | 1        | 0        | should not         | should not            | should                |
+      | 0         | 0        | 1        | 0         | 0        | 1        | should             | should                | should not            |

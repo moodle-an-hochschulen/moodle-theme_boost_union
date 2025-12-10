@@ -1,0 +1,74 @@
+/**
+ * Snippet Title: Rainbow duplicate
+ * Scope:         global
+ * Goal:          eyecandy
+ * Description:   17 May is a special day for the queer community - the international day against homophobia, biphobia and transphobia. This snippet changes the background of the navbar to rainbow colors to commemorate and support this special day.
+ * Creator:       Nils Promer and Alexander Brehm
+ * Tested on:     Moodle 5.0, Firefox for Linux
+ *
+ * @copyright     2024 University of Applied Science Hamburg
+ * @author        Nils Promer <nils.promer@haw-hamburg.de>, Alexander Brehm <alexander.brehm@haw-hamburg.de>
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+.navbar {
+    @extend .navbar-dark;
+    @extend .bg-dark;
+}
+
+.navbar {
+    box-sizing: unset;
+}
+
+.navbar {
+    background:
+        linear-gradient(
+            90deg,
+            hsl(217, 100%, 31%) 0%,
+            hsl(240, 100%, 50%) 13%,
+            hsl(270, 100%, 63%) 23%,
+            hsl(300, 100%, 43%) 31%,
+            hsl(330, 100%, 59%) 37%,
+            hsl(360, 100%, 63%) 45%,
+            hsl(30, 100%, 48%) 51%,
+            hsl(60, 100%, 37%) 58%,
+            hsl(90, 100%, 34%) 68%,
+            hsl(120, 100%, 35%) 73%,
+            hsl(240, 100%, 63%) 88%,
+            hsl(240, 100%, 50%) 93%,
+            hsl(217, 100%, 31%) 100%
+        );
+    border-bottom: 1px solid #158d25;
+}
+
+.navbar .navbar-brand {
+    display: none;
+}
+
+.primary-navigation .navigation {
+    height: 61px;
+}
+
+.primary-navigation .nav-item .nav-link {
+    position: relative;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    height: 61px;
+}
+
+.primary-navigation .navigation .nav-link.active,
+.navbar.navbar-dark.bg-primary .nav-link.active {
+    border-bottom: none;
+}
+
+.primary-navigation li.nav-item a.nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: 14px;
+    height: 2px;
+    left: 0;
+    right: 0;
+    margin: 0 0.5em;
+    background-color: #fff;
+}

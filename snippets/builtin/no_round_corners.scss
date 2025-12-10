@@ -1,0 +1,41 @@
+/**
+ * Snippet Title: No round corners
+ * Scope:         global
+ * Goal:          eyecandy
+ * Description:   By default, Moodle uses round corners for buttons and other elements as they are provided by Bootstrap. This snippet removes the round corners and replaces them with square corners.
+ * Creator:       Stefan-Alexander Scholz
+ * Tested on:     Moodle 5.0, Firefox for Mac
+ *
+ * @copyright     2025 Stefan-Alexander Scholz, bdecent GmbH
+ * @author        Stefan-Alexander Scholz <info@bdecent.de>
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/* Remove rounded corners around all relevant elements. */
+.activity-item,
+.alert,
+.badge,
+.btn,
+.card,
+.card-header:first-child,
+.card-img,
+.card-img-bottom,
+.card-img-top,
+.course-section .section-item,
+.coursebox,
+.courseindex .courseindex-item,
+.custom-select,
+.description .course-description-item,
+.dropdown-menu,
+.form-select,
+.login-container,
+.modal-content,
+.nav-tabs .nav-link,
+.rounded,
+#courseheaderimage,
+#footnote,
+#page.drawers .main-inner,
+input,
+.tertiary-navigation-selector .dropdown-toggle::after {
+    border-radius: 0 !important; /* stylelint-disable-line declaration-no-important */
+}

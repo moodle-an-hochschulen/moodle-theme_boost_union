@@ -34,8 +34,23 @@ $THEME->name = 'boost_union';
 $THEME->sheets = [];
 $THEME->editor_sheets = [];
 // Note: $THEME->editor_scss is not needed. See #242 for the explanation.
-$THEME->usefallback = true;
-$THEME->scss = function($theme) {
+
+// If the referring page is an admin page or the snippets overview page, then we don't want to use the fallback CSS
+// as this would result in outdated CSS being delivered on the next page load after saving a setting
+// which would impede working with snippets and style settings.
+$pagewithoutthemefallback = false;
+$referrerurl = get_local_referer(false);
+if (!empty($referrerurl)) {
+    $referrerurl = new \core\url($referrerurl);
+    $settingsurl = new \core\url('/admin/settings.php');
+    $snippetsurl = new \core\url('/theme/boost_union/snippets/overview.php');
+    $pagewithoutthemefallback1 = $referrerurl->compare($settingsurl, URL_MATCH_BASE);
+    $pagewithoutthemefallback2 = $referrerurl->compare($snippetsurl, URL_MATCH_BASE);
+    $pagewithoutthemefallback = $pagewithoutthemefallback1 || $pagewithoutthemefallback2;
+}
+$THEME->usefallback = !$pagewithoutthemefallback;
+
+$THEME->scss = function ($theme) {
     return theme_boost_union_get_main_scss_content($theme);
 };
 
@@ -168,7 +183,12 @@ $THEME->layouts = [
     'secure' => [
         'file' => 'secure.php',
         'regions' => ['side-pre'],
-        'defaultregion' => 'side-pre'
+        'defaultregion' => 'side-pre',
+        'options' => [
+            'activityheader' => [
+                'notitle' => false,
+            ],
+        ],
     ]
 ];
 

@@ -1,0 +1,21 @@
+/**
+ * Snippet Title: Calendar height
+ * Scope:         dashboard
+ * Goal:          easeofuse
+ * Description:   The day cells within the month view of the calendar on the dashboard / site home have an unnecessarily large and fixed height. This is cumbersome especially if new users still have an empty calendar. This snippet reduces the height to a more reasonable value.
+ * Creator:       Alexander Bias
+ * Tested on:     Moodle 5.0, Firefox for Mac
+ *
+ * @copyright     2025 Alexander Bias, ssystems GmbH
+ * @author        Alexander Bias <abias@ssystems.de>
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+#page-my-index,
+#page-site-index {
+    #region-main .maincalendar .calendarwrapper td > div {
+        height: unset;
+        min-height: 3em;
+        max-height: 11.5em;
+    }
+}

@@ -58,12 +58,19 @@
     {{$drawerclasses}}drawer {{#bottombar.drawer}} drawer-bottom {{/bottombar.drawer}} {{^bottombar.drawer}} drawer-left {{/bottombar.drawer}} drawer-primary{{/drawerclasses}}
     {{$drawercloseonresize}}1{{/drawercloseonresize}}
     {{$drawerheading}}
-        {{# output.should_display_navbar_logo }}
-            <img src="{{output.get_compact_logo_url}}" class="logo py-1 h-100" alt="{{sitename}}">
-        {{/ output.should_display_navbar_logo }}
-        {{^ output.should_display_navbar_logo }}
-            {{{ sitename }}}
-        {{/ output.should_display_navbar_logo }}
+        <a
+            href="{{#alternativelogolinkurl}}{{{alternativelogolinkurl}}}{{/alternativelogolinkurl}}{{^alternativelogolinkurl}}{{{ config.homeurl }}}{{/alternativelogolinkurl}}"
+            title="{{{ sitename }}}"
+            data-region="site-home-link"
+            class="aabtn text-reset d-flex align-items-center py-1 h-100"
+        >
+            {{# output.should_display_navbar_logo }}
+                <img src="{{output.get_compact_logo_url}}" class="logo py-1 h-100" alt="{{sitename}}">
+            {{/ output.should_display_navbar_logo }}
+            {{^ output.should_display_navbar_logo }}
+                <span class="sitename" title="{{{ sitename }}}">{{{ sitename }}}</span>
+            {{/ output.should_display_navbar_logo }}
+        </a>
     {{/drawerheading}}
     {{$drawercontent}}
         {{#bottombar.drawer}}
@@ -75,7 +82,7 @@
                     {{> theme_boost_union/primary-drawer-mobile-child }}
                 {{/haschildren}}
                 {{^haschildren}}
-                <a href="{{{url}}}" {{#tooltip}}title="{{.}}" data-toggle="tooltip"{{/tooltip}} class="{{#menuclasses}} {{.}} {{/menuclasses}} list-group-item list-group-item-action {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}" {{#isactive}}aria-current="true"{{/isactive}} {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
+                <a href="{{{url}}}" {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}} class="{{#menuclasses}} {{.}} {{/menuclasses}} list-group-item list-group-item-action {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}" {{#isactive}}aria-current="true"{{/isactive}} {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
                     {{{text}}}
                 </a>
                 {{/haschildren}}

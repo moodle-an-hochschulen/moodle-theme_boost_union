@@ -32,7 +32,6 @@ namespace theme_boost_union;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class eventobservers {
-
     /**
      * Cohort deleted event observer.
      *
@@ -129,6 +128,8 @@ class eventobservers {
 
         // Purge the cached menus for the user with the assigned role.
         smartmenu_helper::purge_cache_session_roles($event->objectid, $event->relateduserid);
+        // Purge the related user cache.
+        smartmenu_helper::set_user_purgecache($event->relateduserid);
     }
 
     /**
@@ -144,6 +145,8 @@ class eventobservers {
 
         // Purge the cached menus for the user with the unassigned role.
         smartmenu_helper::purge_cache_session_roles($event->objectid, $event->relateduserid);
+        // Purge the related user cache.
+        smartmenu_helper::set_user_purgecache($event->relateduserid);
     }
 
     /**
@@ -159,6 +162,8 @@ class eventobservers {
 
         // Purge the cached menus for all users with the deleted role.
         smartmenu_helper::purge_cache_deleted_roles($event->objectid);
+        // Purge all the dynamic course items cache.
+        smartmenu_helper::purge_cache_dynamic_courseitems();
     }
 
     /**

@@ -27,7 +27,9 @@
                 "fullname": "My nice little course",
                 "visible": true
             }
-        ]
+        ],
+        "cogiconlinktargeturl": "/my/courses.php",
+        "cogiconlinktargettitle": "mycourses"
     }
 }}
 
@@ -44,9 +46,9 @@
 
     {{$headertext}}{{#str}} shownavbarstarredcourses_label, theme_boost_union {{/str}}{{/headertext}}
     {{$headeractions}}
-        <a href="{{config.wwwroot}}/my/courses.php"
-           title="{{#str}} shownavbarstarredcourses_config, theme_boost_union {{/str}}"
-           aria-label="{{#str}} shownavbarstarredcourses_config, theme_boost_union {{/str}}">
+        <a href="{{cogiconlinktargeturl}}"
+           title="{{cogiconlinktargettitle}}"
+           aria-label="{{cogiconlinktargettitle}}">
             {{#pix}} i/settings, core {{/pix}}</a>
     {{/headeractions}}
 
@@ -60,7 +62,6 @@
 require(['jquery', 'core/popover_region_controller'], function($, Controller) {
     var container = $('#nav-popover-favourites-container');
     var controller = new Controller(container);
-    controller.registerEventListeners();
     controller.registerListNavigationEventListeners();
 });
 {{/js}}

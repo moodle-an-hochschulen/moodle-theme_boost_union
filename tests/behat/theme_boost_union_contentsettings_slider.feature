@@ -116,7 +116,6 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
 
     Examples:
       | setting | slideshouldornot | carouselshouldornot |
-      | 0       | should not       | should not          |
       | 1       | should           | should not          |
       | 2       | should           | should              |
 
@@ -126,7 +125,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | sliderinterval | <setting> | theme_boost_union |
     When I log in as "teacher1"
     And I am on site homepage
-    Then the "data-interval" attribute of "#themeboostunionslider" "css_element" should contain "<speed>"
+    Then the "data-bs-interval" attribute of "#themeboostunionslider" "css_element" should contain "<speed>"
 
     Examples:
       | setting | speed |
@@ -140,7 +139,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | sliderkeyboard | <setting> | theme_boost_union |
     When I log in as "teacher1"
     And I am on site homepage
-    Then the "data-keyboard" attribute of "#themeboostunionslider" "css_element" should contain "<keyboard>"
+    Then the "data-bs-keyboard" attribute of "#themeboostunionslider" "css_element" should contain "<keyboard>"
 
     Examples:
       | setting | keyboard |
@@ -153,7 +152,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | sliderpause | <setting> | theme_boost_union |
     When I log in as "teacher1"
     And I am on site homepage
-    Then the "data-pause" attribute of "#themeboostunionslider" "css_element" should contain "<pause>"
+    Then the "data-bs-pause" attribute of "#themeboostunionslider" "css_element" should contain "<pause>"
 
     Examples:
       | setting | pause |
@@ -166,7 +165,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | sliderride | <setting> | theme_boost_union |
     When I log in as "teacher1"
     And I am on site homepage
-    Then the "data-ride" attribute of "#themeboostunionslider" "css_element" should contain "<ride>"
+    Then the "data-bs-ride" attribute of "#themeboostunionslider" "css_element" should contain "<ride>"
 
     Examples:
       | setting | ride     |
@@ -180,7 +179,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | sliderwrap | <setting> | theme_boost_union |
     When I log in as "teacher1"
     And I am on site homepage
-    Then the "data-wrap" attribute of "#themeboostunionslider" "css_element" should contain "<wrap>"
+    Then the "data-bs-wrap" attribute of "#themeboostunionslider" "css_element" should contain "<wrap>"
 
     Examples:
       | setting | wrap  |

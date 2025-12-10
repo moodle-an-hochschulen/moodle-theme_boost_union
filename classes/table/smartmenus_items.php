@@ -25,11 +25,12 @@
 namespace theme_boost_union\table;
 
 use core\output\html_writer;
+use theme_boost_union\smartmenu_item;
 
 defined('MOODLE_INTERNAL') || die();
 
 // Require table library.
-require_once($CFG->libdir.'/tablelib.php');
+require_once($CFG->libdir . '/tablelib.php');
 
 /**
  * List of smart menu items.
@@ -39,7 +40,6 @@ require_once($CFG->libdir.'/tablelib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class smartmenus_items extends \core_table\sql_table {
-
     /**
      * @var int $count Smart menu items count.
      */
@@ -103,7 +103,13 @@ class smartmenus_items extends \core_table\sql_table {
      * @return string Language formatted title of item.
      */
     public function col_title($row) {
-        // Return the title after filter.
+        // If the type is a divider, set a fixed title (as the title is most probably empty).
+        if ($row->type == smartmenu_item::TYPEDIVIDER) {
+            // Return the divider title.
+            return '&horbar;&horbar;&horbar;&horbar;';
+        }
+
+        // Otherwise, return the title after filter.
         return format_string($row->title);
     }
 
@@ -139,7 +145,7 @@ class smartmenus_items extends \core_table\sql_table {
             $roles = json_decode($data->roles);
             $rolelist = $DB->get_records_list('role', 'id', $roles);
             $rolenames = role_fix_names($rolelist);
-            array_walk($rolenames, function(&$value) {
+            array_walk($rolenames, function (&$value) {
                 $value = html_writer::tag('span', $value->localname, ['class' => 'badge bg-primary text-light']);
             });
 
@@ -155,7 +161,7 @@ class smartmenus_items extends \core_table\sql_table {
             // Compose the rule list.
             $cohorts = json_decode($data->cohorts);
             $cohortlist = $DB->get_records_list('cohort', 'id', $cohorts);
-            array_walk($cohortlist, function(&$value) {
+            array_walk($cohortlist, function (&$value) {
                 $value = html_writer::tag('span', $value->name, ['class' => 'badge bg-primary text-light']);
             });
 
@@ -189,17 +195,17 @@ class smartmenus_items extends \core_table\sql_table {
         if ($data->start_date || $data->end_date) {
             // If we have start date restrictions.
             if ($data->start_date) {
-                $datelist[] = get_string('smartmenusbydatefrom', 'theme_boost_union').': '.
+                $datelist[] = get_string('smartmenusbydatefrom', 'theme_boost_union') . ': ' .
                         userdate($data->start_date, get_string('strftimedate', 'core_langconfig'));
             }
 
             // If we have end date restrictions.
             if ($data->end_date) {
-                $datelist[] = get_string('smartmenusbydateuntil', 'theme_boost_union').': '.
+                $datelist[] = get_string('smartmenusbydateuntil', 'theme_boost_union') . ': ' .
                         userdate($data->end_date, get_string('strftimedate', 'core_langconfig'));
             }
 
-            array_walk($datelist, function(&$value) {
+            array_walk($datelist, function (&$value) {
                 $value = html_writer::tag('span', $value, ['class' => 'badge bg-primary text-light']);
             });
 
@@ -213,7 +219,7 @@ class smartmenus_items extends \core_table\sql_table {
         // Compose the restriction list.
         $html = '';
         foreach ($rules as $rule) {
-            $html .= $rule['name'].': ';
+            $html .= $rule['name'] . ': ';
             $html .= html_writer::empty_tag('br');
             $html .= $rule['value'];
             $html .= html_writer::empty_tag('br');
@@ -244,10 +250,19 @@ class smartmenus_items extends \core_table\sql_table {
         // If there is more than one smart menu item and we do not handle the first (number 0) smart menu item.
         if ($this->count > 0) {
             // Add the up icon.
-            $updown .= html_writer::link($actionurl->out(false,
-                    ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]),
-                    $OUTPUT->pix_icon('t/up', get_string('up'), 'moodle',
-                            ['class' => 'iconsmall']), ['class' => 'sort-smartmenuitems-up-action']);
+            $updown .= html_writer::link(
+                $actionurl->out(
+                    false,
+                    ['action' => 'up', 'id' => $data->id, 'sesskey' => sesskey()]
+                ),
+                $OUTPUT->pix_icon(
+                    't/up',
+                    get_string('up'),
+                    'moodle',
+                    ['class' => 'iconsmall']
+                ),
+                ['class' => 'sort-smartmenuitems-up-action']
+            );
 
             // Otherwise, just add a spacer.
         } else {
@@ -258,10 +273,19 @@ class smartmenus_items extends \core_table\sql_table {
         if ($this->count < ($this->totalmenuitems - 1)) {
             // Add the down icon.
             $updown .= '&nbsp;';
-            $updown .= html_writer::link($actionurl->out(false,
-                    ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]),
-                    $OUTPUT->pix_icon('t/down', get_string('down'), 'moodle',
-                            ['class' => 'iconsmall']), ['class' => 'sort-smartmenuitems-down-action']);
+            $updown .= html_writer::link(
+                $actionurl->out(
+                    false,
+                    ['action' => 'down', 'id' => $data->id, 'sesskey' => sesskey()]
+                ),
+                $OUTPUT->pix_icon(
+                    't/down',
+                    get_string('down'),
+                    'moodle',
+                    ['class' => 'iconsmall']
+                ),
+                ['class' => 'sort-smartmenuitems-down-action']
+            );
 
             // Otherwise, just add a spacer.
         } else {
@@ -307,8 +331,10 @@ class smartmenus_items extends \core_table\sql_table {
 
         // Edit.
         $actions[] = [
-            'url' => new \core\url('/theme/boost_union/smartmenus/edit_items.php',
-                    ['id' => $data->id, 'sesskey' => sesskey()]),
+            'url' => new \core\url(
+                '/theme/boost_union/smartmenus/edit_items.php',
+                ['id' => $data->id, 'sesskey' => sesskey()]
+            ),
             'icon' => new \core\output\pix_icon('t/edit', get_string('edit')),
             'attributes' => ['class' => 'action-edit'],
         ];
@@ -375,8 +401,9 @@ class smartmenus_items extends \core_table\sql_table {
 
         // Show notification as html element.
         $notification = new \core\output\notification(
-                get_string('smartmenusmenuitemnothingtodisplay', 'theme_boost_union'),
-                        \core\output\notification::NOTIFY_INFO);
+            get_string('smartmenusmenuitemnothingtodisplay', 'theme_boost_union'),
+            \core\output\notification::NOTIFY_INFO
+        );
         $notification->set_show_closebutton(false);
         echo $OUTPUT->render($notification);
     }

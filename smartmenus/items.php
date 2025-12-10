@@ -23,13 +23,13 @@
  */
 
 // Require config.
-require(__DIR__.'/../../../config.php');
+require(__DIR__ . '/../../../config.php');
 
 // Require plugin libraries.
-require_once($CFG->dirroot. '/theme/boost_union/smartmenus/menulib.php');
+require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
 // Require admin library.
-require_once($CFG->libdir.'/adminlib.php');
+require_once($CFG->libdir . '/adminlib.php');
 
 // Get parameters.
 $action = optional_param('action', null, PARAM_TEXT);
@@ -58,18 +58,21 @@ $pageurl = new core\url('/theme/boost_union/smartmenus/items.php', ['menu' => $m
 $context = context_system::instance();
 
 // Access checks.
-require_login();
-require_capability('theme/boost_union:configure', $context);
+admin_externalpage_setup('theme_boost_union_smartmenus', '', null, $pageurl);
 
 // Prepare the page (to make sure that all necessary information is already set even if we just handle the actions as a start).
 $PAGE->set_context($context);
 $PAGE->set_url($pageurl);
 $PAGE->set_cacheable(false);
-$PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new core\url('/admin/category.php',
-        ['category' => 'theme_boost_union']));
+$PAGE->navbar->add(get_string('pluginname', 'theme_boost_union'), new core\url(
+    '/admin/category.php',
+    ['category' => 'theme_boost_union']
+));
 $PAGE->navbar->add(get_string('smartmenus', 'theme_boost_union'), new core\url('/theme/boost_union/smartmenus/menus.php'));
-$PAGE->navbar->add(get_string('smartmenusmenuitems', 'theme_boost_union'), new core\url('/theme/boost_union/smartmenus/items.php',
-        ['menu' => $menu->id]));
+$PAGE->navbar->add(get_string('smartmenusmenuitems', 'theme_boost_union'), new core\url(
+    '/theme/boost_union/smartmenus/items.php',
+    ['menu' => $menu->id]
+));
 
 // Process actions.
 if ($action !== null && confirm_sesskey()) {
@@ -130,21 +133,29 @@ $table->define_baseurl($PAGE->url, ['menu' => $menu->id]);
 
 // Start page output.
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('smartmenus', 'theme_boost_union'));
+echo \theme_boost_union\admin_settingspage_tabs_with_tertiary::get_tertiary_navigation_for_externalpage(
+    new \core\url('/theme/boost_union/smartmenus/menus.php')
+);
+
+// Subheading.
 if (isset($menu->title)) {
     $menuheading = format_string($menu->title);
     $settingstitle = get_string('smartmenussettings', 'theme_boost_union');
     $settingsurl = new core\url('/theme/boost_union/smartmenus/edit.php', ['id' => $menuid, 'sesskey' => sesskey()]);
-    $menuheading .= \core\output\html_writer::link($settingsurl,
-            $OUTPUT->pix_icon('t/edit', $settingstitle, 'moodle', ['class' => 'ms-2']));
+    $menuheading .= \core\output\html_writer::link(
+        $settingsurl,
+        $OUTPUT->pix_icon('t/edit', $settingstitle, 'moodle', ['class' => 'ms-2'])
+    );
     echo $OUTPUT->heading($menuheading, 4);
 }
 
 // Prepare 'Create menu item' buttons.
 $createbutton = $OUTPUT->box_start();
 $createbutton .= $OUTPUT->single_button(
-        new \core\url('/theme/boost_union/smartmenus/edit_items.php', ['menu' => $menuid, 'sesskey' => sesskey()]),
-        get_string('smartmenusmenuaddnewitem', 'theme_boost_union'), 'get');
+    new \core\url('/theme/boost_union/smartmenus/edit_items.php', ['menu' => $menuid, 'sesskey' => sesskey()]),
+    get_string('smartmenusmenuaddnewitem', 'theme_boost_union'),
+    'get'
+);
 $createbutton .= $OUTPUT->box_end();
 
 // If there aren't any smart menu items yet.

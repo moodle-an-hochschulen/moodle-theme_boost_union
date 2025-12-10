@@ -1,0 +1,69 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/course-hint-guestenrol
+
+    Boost Union template for outputting the guestenrol course hint.
+
+    Context variables required for this template:
+    * courseid - The course ID
+    * guestauthenabled - The fact if guest authentication is enabled or not
+    * showenrolsettingslink - The fact if a link to the enrolment settings should be shown or not
+
+    Example context (json):
+    {
+        "courseid": "123",
+        "showenrolsettingslink": true
+    }
+}}
+<div class="course-hint-guestenrol alert alert-info">
+    <div class="d-flex">
+        <div class="flex-shrink-0 me-3 icon-size-5"><i class="fa fa-exclamation-circle fa-3x"></i></div>
+        <div class="flex-grow-1 align-self-center">
+            {{#guestpasswordset}}
+                {{#str}} showhintcourseguestenrolhintalways, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+            {{/guestpasswordset}}
+            {{^guestpasswordset}}
+                {{#str}} showhintcourseguestenrolhint, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+            {{/guestpasswordset}}
+            {{#guestauthenabled}}
+                {{#guestpasswordset}}
+                    {{#str}} showhintcourseguestenroleveryonealways, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+                {{/guestpasswordset}}
+                {{^guestpasswordset}}
+                    {{#str}} showhintcourseguestenroleveryone, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+                {{/guestpasswordset}}
+            {{/guestauthenabled}}
+            {{^guestauthenabled}}
+                {{#guestpasswordset}}
+                    {{#str}} showhintcourseguestenrolauthonlyalways, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+                {{/guestpasswordset}}
+                {{^guestpasswordset}}
+                    {{#str}} showhintcourseguestenrolauthonly, theme_boost_union, { "courseid": "{{courseid}}" } {{/str}}
+                {{/guestpasswordset}}
+            {{/guestauthenabled}}
+            {{#showenrolsettingslink}}
+                {{#guestpasswordset}}
+                    <br>{{#str}} showhintcourseguestenrolcallforactionalways, theme_boost_union, { "url": "{{config.wwwroot}}/enrol/instances.php?id={{courseid}}", "courseid": "{{courseid}}" } {{/str}}
+                {{/guestpasswordset}}
+                {{^guestpasswordset}}
+                    <br>{{#str}} showhintcourseguestenrolcallforaction, theme_boost_union, { "url": "{{config.wwwroot}}/enrol/instances.php?id={{courseid}}", "courseid": "{{courseid}}" } {{/str}}
+                {{/guestpasswordset}}
+            {{/showenrolsettingslink}}
+        </div>
+    </div>
+</div>

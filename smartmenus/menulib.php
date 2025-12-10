@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 use cache;
 use context_system;
 
-require_once($CFG->dirroot. '/theme/boost_union/locallib.php');
+require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
 /**
  * Smartmenu helper which contains the methods to verify the access rules for menu and its items.
@@ -41,7 +41,6 @@ require_once($CFG->dirroot. '/theme/boost_union/locallib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class smartmenu_helper {
-
     /**
      * Data record of the item or menu.
      *
@@ -96,6 +95,11 @@ class smartmenu_helper {
 
         // Restriction by roles.
         $this->restriction_byroles($query);
+
+        // Restricted by site admin status.
+        if (!$this->restriction_byadmin()) {
+            return false;
+        }
 
         // Restriction by cohorts.
         $this->restriction_bycohorts($query);
@@ -167,7 +171,7 @@ class smartmenu_helper {
             return true;
         }
 
-        list($insql, $inparam) = $DB->get_in_or_equal($roles, SQL_PARAMS_NAMED, 'rl');
+        [$insql, $inparam] = $DB->get_in_or_equal($roles, SQL_PARAMS_NAMED, 'rl');
 
         $contextsql = ($this->data->rolecontext == smartmenu::SYSTEMCONTEXT)
             ? ' AND contextid=:systemcontext ' : '';
@@ -178,6 +182,25 @@ class smartmenu_helper {
             'systemcontext' => context_system::instance()->id,
         ];
         $query->params += array_merge($params, $inparam);
+    }
+
+    /**
+     * Verify if the menu is restricted to site admins.
+     *
+     * @return bool True if the menu is available for this user, otherwise false.
+     */
+    public function restriction_byadmin() {
+        // If the item is restricted to site admins only.
+        if ($this->data->byadmin == smartmenu::BYADMIN_ADMINS) {
+            return is_siteadmin($this->userid);
+
+            // Otherwise, if the item is restricted to non-site admins only.
+        } else if ($this->data->byadmin == smartmenu::BYADMIN_NONADMINS) {
+            return !is_siteadmin($this->userid);
+        }
+
+        // Allow the item to be viewed by the user.
+        return true;
     }
 
     /**
@@ -196,7 +219,7 @@ class smartmenu_helper {
             return true;
         }
         // Build insql to confirm the user cohort is available in the configured cohort.
-        list($insql, $inparam) = $DB->get_in_or_equal($cohorts, SQL_PARAMS_NAMED, 'ch');
+        [$insql, $inparam] = $DB->get_in_or_equal($cohorts, SQL_PARAMS_NAMED, 'ch');
 
         // If operator is all then check the count of user assigned cohorts,
         // Confirm the count is same as configured menu/items cohorts count.
@@ -272,12 +295,12 @@ class smartmenu_helper {
      * @param string $method Field to find, Role or Cohort.
      * @return array
      */
-    public static function find_condition_used_menus($id, $method='cohorts') {
+    public static function find_condition_used_menus($id, $method = 'cohorts') {
         global $DB;
 
         $like = $DB->sql_like($method, ':value');
         $sql = "SELECT * FROM {theme_boost_union_menus} WHERE $like";
-        $params = ['value' => '%"'.$id.'"%'];
+        $params = ['value' => '%"' . $id . '"%'];
 
         $records = $DB->get_records_sql($sql, $params);
 
@@ -293,12 +316,12 @@ class smartmenu_helper {
      * @param string $method Field to find, Role or Cohort.
      * @return array
      */
-    public static function find_condition_used_menuitems($id, $method='cohorts') {
+    public static function find_condition_used_menuitems($id, $method = 'cohorts') {
         global $DB;
 
         $like = $DB->sql_like($method, ':value');
         $sql = "SELECT * FROM {theme_boost_union_menuitems} WHERE $like";
-        $params = ['value' => '%"'.$id.'"%'];
+        $params = ['value' => '%"' . $id . '"%'];
 
         $records = $DB->get_records_sql($sql, $params);
         return $records;
@@ -381,7 +404,6 @@ class smartmenu_helper {
             // Remove the deleted role from menu item restrictions.
             self::remove_deleted_condition_menuitems($records, $roleid, 'roles');
         }
-
     }
 
     /**
@@ -396,7 +418,7 @@ class smartmenu_helper {
      * @param string $method Role or cohort which is triggered the purge.
      * @return void
      */
-    public static function remove_deleted_condition_menu($menus, $id, $method='cohorts') {
+    public static function remove_deleted_condition_menu($menus, $id, $method = 'cohorts') {
         global $DB;
 
         if ($menus) {
@@ -428,7 +450,7 @@ class smartmenu_helper {
      * @param string $method Role or cohort which is triggered the purge.
      * @return void
      */
-    public static function remove_deleted_condition_menuitems($menuitems, $id, $method='cohorts') {
+    public static function remove_deleted_condition_menuitems($menuitems, $id, $method = 'cohorts') {
         global $DB;
 
         if ($menuitems) {
@@ -476,7 +498,6 @@ class smartmenu_helper {
             // Remove the menus and item cache for the user.
             array_walk($menus, [self::class, 'remove_user_cachemenu'], $userid);
             array_walk($items, [self::class, 'remove_user_cacheitem'], $userid);
-
         }
     }
 
@@ -628,8 +649,18 @@ class smartmenu_helper {
      * @return void
      */
     public static function set_user_purgecache($userid) {
-        // Clear all the menu and item caches for this user.
-        set_user_preference('theme_boost_union_menu_purgesessioncache', true, $userid);
+        global $SESSION;
+
+        // If the user is a guest.
+        if (!isloggedin() || isguestuser($userid)) {
+            // Store the flag to clear the menu cache for this user in the session as guests do not have user preferences.
+            $SESSION->theme_boost_union_menu_purgesessioncache = true;
+
+            // Otherwise.
+        } else {
+            // Store a user preference to clear all the menu and item caches for this user.
+            set_user_preference('theme_boost_union_menu_purgesessioncache', true, $userid);
+        }
     }
 
     /**
@@ -637,8 +668,18 @@ class smartmenu_helper {
      * @return void
      */
     public static function clear_user_cachepreferencemenu() {
-        global $USER;
-        set_user_preference('theme_boost_union_menu_purgesessioncache', false, $USER);
+        global $SESSION, $USER;
+
+        // If the user is a guest.
+        if (!isloggedin() || isguestuser($USER)) {
+            // Remove the flag to clear the menu cache.
+            unset($SESSION->theme_boost_union_menu_purgesessioncache);
+
+            // Otherwise.
+        } else {
+            // Remove the user preference to clear all the menu and item caches.
+            set_user_preference('theme_boost_union_menu_purgesessioncache', false, $USER);
+        }
     }
 
     /**
@@ -651,7 +692,7 @@ class smartmenu_helper {
      */
     public static function color_get_rgba($hexa, $opacity) {
         if (!empty($hexa)) {
-            list($r, $g, $b) = sscanf($hexa, "#%02x%02x%02x");
+            [$r, $g, $b] = sscanf($hexa, "#%02x%02x%02x");
             if ($opacity == '') {
                 $opacity = 0.0;
             } else {

@@ -38,7 +38,6 @@ require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class additionalregions {
-
     /**
      * @var array $regions List of page regions.
      */
@@ -68,14 +67,13 @@ class additionalregions {
 
         $regionsdata = [];
         foreach ($this->regions as $name => $region) {
-
-            if (!has_capability('theme/boost_union:viewregion'.$name, $PAGE->context)) {
+            if (!has_capability('theme/boost_union:viewregion' . $name, $PAGE->context)) {
                 $regionsdata[$name] = ['hasblocks' => false];
                 continue;
             }
 
             $regionhtml = $OUTPUT->blocks($region);
-            $blockbutton = (has_capability('theme/boost_union:editregion'.$name, $PAGE->context)) ?
+            $blockbutton = (has_capability('theme/boost_union:editregion' . $name, $PAGE->context)) ?
                              $OUTPUT->addblockbutton($region) : '';
             $regionsdata[$name] = [
                 'hasblocks' => (strpos($regionhtml, 'data-block=') !== false || !empty($blockbutton)),
@@ -95,8 +93,10 @@ class additionalregions {
     public function maininnerwrapperclass($regionsdata) {
 
         // If both outside-left and outside-right region is enabled.
-        if ((!empty($regionsdata['outsideleft']['hasblocks'])) &&
-                (!empty($regionsdata['outsideright']['hasblocks']))) {
+        if (
+            (!empty($regionsdata['outsideleft']['hasblocks'])) &&
+                (!empty($regionsdata['outsideright']['hasblocks']))
+        ) {
             $maininnerwrapperclass = 'main-inner-outside-left-right';
 
             // If only outside-left region is enabled.
@@ -110,6 +110,13 @@ class additionalregions {
             // If neither outside-left nor outside-right regions are enabled.
         } else {
             $maininnerwrapperclass = 'main-inner-outside-none';
+        }
+
+        // If outside-regions wrap both below main content is enabled.
+        $outsideregionswrap = get_config('theme_boost_union', 'outsideregionswrap');
+        if ($outsideregionswrap == THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSWRAPPING_BOTHBELOW) {
+            // Include class in main inner wrapper to wrap both outside regions below main content.
+            $maininnerwrapperclass .= ' main-inner-outside-both-below-maincontent ';
         }
 
         return $maininnerwrapperclass;
@@ -132,7 +139,7 @@ class additionalregions {
 
         return [
             'count' => $regioncount,
-            'class' => 'col-xl-'.(($regioncount > 0 ) ? round(12 / $regioncount) : '12' ),
+            'class' => 'col-xl-' . (($regioncount > 0 ) ? round(12 / $regioncount) : '12' ),
         ];
     }
 
@@ -171,6 +178,25 @@ class additionalregions {
     }
 
     /**
+     * Include the additional data for block regions.
+     *
+     * @return array $blockregionsdata
+     */
+    public function addblockregions_additionaldata() {
+
+        $blockregionsdata = [];
+
+        // For outside-left and outside-right regions, add the vertical alignment additions if necessary.
+        $outsideregionsalignment = get_config('theme_boost_union', 'outsideregionsverticalalignment');
+        if ($outsideregionsalignment == THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSVERTICALALIGN_PAGECONTENT) {
+            $blockregionsdata['outsideregions'] = ['verticaloffset' => true];
+            $blockregionsdata['includeblockregionsamd'] = true;
+        }
+
+        return $blockregionsdata;
+    }
+
+    /**
      * Generate data to export for layouts.
      *
      * @return array region data
@@ -184,14 +210,19 @@ class additionalregions {
 
         $maininnerwrapperclass = $this->maininnerwrapperclass($regionsdata);
 
+        // Include the block regions additional data.
+        $blockregionsdata = $this->addblockregions_additionaldata();
+
         return [
             'regions' => $regionsdata,
             'userisediting' => $PAGE->user_is_editing(),
             'maininnerwrapperclass' => $maininnerwrapperclass,
-            'outsideregionsplacement' => 'main-inner-outside-'.get_config('theme_boost_union', 'outsideregionsplacement'),
-            'outsidebottomwidth' => 'theme-block-region-outside-'.get_config('theme_boost_union', 'blockregionoutsidebottomwidth'),
-            'outsidetopwidth' => 'theme-block-region-outside-'.get_config('theme_boost_union', 'blockregionoutsidetopwidth'),
-            'footerwidth' => 'theme-block-region-footer-'.get_config('theme_boost_union', 'blockregionfooterwidth'),
+            'outsideregionsplacement' => 'main-inner-outside-' . get_config('theme_boost_union', 'outsideregionsplacement'),
+            'outsidebottomwidth' => 'theme-block-region-outside-' .
+                    get_config('theme_boost_union', 'blockregionoutsidebottomwidth'),
+            'outsidetopwidth' => 'theme-block-region-outside-' . get_config('theme_boost_union', 'blockregionoutsidetopwidth'),
+            'footerwidth' => 'theme-block-region-footer-' . get_config('theme_boost_union', 'blockregionfooterwidth'),
+            'blockregionsdata' => $blockregionsdata,
         ];
     }
 }

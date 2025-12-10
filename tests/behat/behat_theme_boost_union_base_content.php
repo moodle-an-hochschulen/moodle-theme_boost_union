@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__.'/../../../../lib/behat/behat_base.php');
+require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 
 /**
  * Class behat_theme_boost_union_base_content
@@ -84,6 +84,24 @@ class behat_theme_boost_union_base_content extends behat_base {
      */
     public function i_am_on_maintenance_page() {
         $this->execute('behat_general::i_visit', ['/theme/boost_union/pages/maintenance.php']);
+    }
+
+    /**
+     * Open the accessibility declaration page.
+     *
+     * @Given /^I am on accessibilitydeclaration page$/
+     */
+    public function i_am_on_accessibilitydeclaration_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/accessibility/declaration.php']);
+    }
+
+    /**
+     * Open the accessibility support page.
+     *
+     * @Given /^I am on accessibilitysupport page$/
+     */
+    public function i_am_on_accessibilitysupport_page() {
+        $this->execute('behat_general::i_visit', ['/theme/boost_union/accessibility/support.php']);
     }
 
     /**

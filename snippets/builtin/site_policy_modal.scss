@@ -1,0 +1,73 @@
+/**
+ * Snippet Title: Site policy modal dialogue
+ * Scope:         global
+ * Goal:          easeofuse
+ * Description:   Change the site policy banner which is shown at the bottom of the page when first visiting the site to a modal dialogue which is much more eye-catching and convenient for the user.
+ * Creator:       Heba Amer
+ * Tested on:     Moodle 5.0, Firefox for Mac
+ *
+ * @copyright     2024 The American University in Cairo, based on pre-existing work by lern.link
+ * @author        Heba Amer <heba.amer@aucegypt.edu>
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+.eupopup-container.eupopup-container-bottom {
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 4px 4px 12px 2000px rgba(0, 0, 0, .56);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 320px;
+    height: 300px;
+    margin: -150px 0 0 -160px;
+    padding: 50px 20px;
+}
+
+@media (min-width: 576px) {
+    .eupopup-container.eupopup-container-bottom {
+        width: 450px;
+        height: 275px;
+        margin: -138px 0 0 -225px;
+    }
+}
+
+@media (min-width: 768px) {
+    .eupopup-container.eupopup-container-bottom {
+        width: 650px;
+        height: 250px;
+        margin: -125px 0 0 -325px;
+    }
+}
+
+.eupopup-container.eupopup-container-bottom .eupopup-body {
+    color: #343a40;
+    font-size: $font-size-base;
+    line-height: initial;
+
+    a {
+        color: $primary;
+        text-decoration: none;
+        font-weight: 700;
+        line-height: 2.5rem;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+.eupopup-container.eupopup-container-bottom .eupopup-buttons {
+    margin-top: 1rem;
+
+    .eupopup-button_1 {
+        @extend .btn;
+        @extend .btn-primary;
+    }
+}
+
+.eupopup-container.eupopup-container-bottom .eupopup-closebutton {
+    display: none;
+}

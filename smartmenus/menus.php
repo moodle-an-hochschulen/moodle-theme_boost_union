@@ -23,13 +23,13 @@
  */
 
 // Require config.
-require(__DIR__.'/../../../config.php');
+require(__DIR__ . '/../../../config.php');
 
 // Require plugin libraries.
-require_once($CFG->dirroot. '/theme/boost_union/smartmenus/menulib.php');
+require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
 // Require admin library.
-require_once($CFG->libdir.'/adminlib.php');
+require_once($CFG->libdir . '/adminlib.php');
 
 // Get parameters.
 $action = optional_param('action', null, PARAM_TEXT);
@@ -105,22 +105,36 @@ $table->define_baseurl($PAGE->url);
 
 // Start page output.
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('smartmenus', 'theme_boost_union'));
+echo \theme_boost_union\admin_settingspage_tabs_with_tertiary::get_tertiary_navigation_for_externalpage();
 
-// Show smart menus description.
-echo get_string('smartmenus_desc', 'theme_boost_union');
+// Show alert if Boost Union is not the active theme.
+echo theme_boost_union_is_not_active_alert();
+
+// Show smart menus intro.
+$intro = new \core\output\notification(
+    get_string('smartmenus_desc', 'theme_boost_union'),
+    \core\output\notification::NOTIFY_INFO
+);
+$intro->set_show_closebutton(false);
+$intro->set_extra_classes(['alert-light']);
+echo $OUTPUT->render($intro);
 
 // Add experimental warning.
-$experimentalnotification = new \core\output\notification(get_string('smartmenusexperimental', 'theme_boost_union'),
-        \core\output\notification::NOTIFY_WARNING);
+$experimentalnotification = new \core\output\notification(
+    get_string('smartmenusexperimental', 'theme_boost_union'),
+    \core\output\notification::NOTIFY_WARNING
+);
 $experimentalnotification->set_show_closebutton(false);
+$experimentalnotification->set_extra_classes(['mb-5']);
 echo $OUTPUT->render($experimentalnotification);
 
 // Prepare 'Create menu' button.
 $createbutton = $OUTPUT->box_start();
 $createbutton .= $OUTPUT->single_button(
-        new \core\url('/theme/boost_union/smartmenus/edit.php', ['sesskey' => sesskey()]),
-        get_string('smartmenusmenucreate', 'theme_boost_union'), 'get');
+    new \core\url('/theme/boost_union/smartmenus/edit.php', ['sesskey' => sesskey()]),
+    get_string('smartmenusmenucreate', 'theme_boost_union'),
+    'get'
+);
 $createbutton .= $OUTPUT->box_end();
 
 // If there aren't any smart menus yet.

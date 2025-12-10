@@ -22,10 +22,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__.'/../../../../lib/behat/behat_base.php');
+require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 
 use Behat\Mink\Exception\ExpectationException;
 use Behat\Mink\Exception\DriverException;
+use Behat\Mink\Exception\ElementNotFoundException;
 
 /**
  * Class behat_theme_boost_union_base_general
@@ -53,8 +54,11 @@ class behat_theme_boost_union_base_general extends behat_base {
         ";
         $computedstyle = $this->evaluate_script($stylejs);
         if ($computedstyle != $value) {
-            throw new ExpectationException('The \''.$selector.'\' DOM element does not have the computed style \''.
-                    $style.'\'=\''.$value.'\', it has the computed style \''.$computedstyle.'\' instead.', $this->getSession());
+            throw new ExpectationException(
+                'The \'' . $selector . '\' DOM element does not have the computed style \'' .
+                    $style . '\'=\'' . $value . '\', it has the computed style \'' . $computedstyle . '\' instead.',
+                $this->getSession()
+            );
         }
     }
 
@@ -76,15 +80,44 @@ class behat_theme_boost_union_base_general extends behat_base {
         ";
         $computedstyle = $this->evaluate_script($stylejs);
         if ($computedstyle == $value) {
-            throw new ExpectationException('The \''.$selector.'\' DOM element does have the computed style \''.
-                $style.'\'=\''.$computedstyle.'\', but it should not have it.', $this->getSession());
+            throw new ExpectationException('The \'' . $selector . '\' DOM element does have the computed style \'' .
+                $style . '\'=\'' . $computedstyle . '\', but it should not have it.', $this->getSession());
+        }
+    }
+
+    /**
+     * Checks if the given DOM element has a background image with the given file name.
+     *
+     * @copyright 2024 Alexander Bias <bias@alexanderbias.de>
+     * @Then DOM element :arg1 should have background image with file name :arg2
+     * @param string $selector
+     * @param string $filename
+     * @throws ExpectationException
+     */
+    public function dom_element_should_have_background_image($selector, $filename) {
+        $stylejs = "
+            return (
+                window.getComputedStyle(document.querySelector('$selector')).getPropertyValue('background-image')
+            )
+        ";
+        $computedstyle = $this->evaluate_script($stylejs);
+        $urlmatches = [];
+        preg_match('/url\(["\']?(.*?)["\']?\)/', $computedstyle, $urlmatches);
+        $urlfromjs = $urlmatches[1];
+        $basenamefromjs = basename($urlfromjs);
+        if ($basenamefromjs != $filename) {
+            throw new ExpectationException(
+                'The \'' . $selector . '\' DOM element does not have a background image with the file ' .
+                    'name \'' . $filename . '\', it has the file name \'' . $basenamefromjs . '\' instead.',
+                $this->getSession()
+            );
         }
     }
 
     /**
      * Checks if the given DOM element has a CSS filter which is close enough to the given hex color.
      *
-     * @copyright 2024 Alexander Bias <bias@alexanderbias.de>
+     * @copyright 2025 Alexander Bias <abias@ssystems.de>
      * @Then DOM element :arg1 should have a CSS filter close enough to hex color :arg2
      * @param string $selector
      * @param string $color
@@ -98,14 +131,79 @@ class behat_theme_boost_union_base_general extends behat_base {
         ";
         $computedfilter = $this->evaluate_script($stylejs);
 
-        // Check if the computed filter is close enough to the given color.
-        $solver = new \theme_boost_union\lib\hextocssfilter\solver($color);
-        $closeenough = $solver->filter_is_close_enough($computedfilter, '2');
+        // Assess the filter.
+        $closeenough = $this->assess_icon_tinting_filter_against_hex($computedfilter, $color);
 
         if ($closeenough != true) {
-            throw new ExpectationException('The \''.$selector.'\' DOM element with the CSS filter \''.
-                $computedfilter.'\', is not close enough to the color \''.$color.'\'.', $this->getSession());
+            throw new ExpectationException('The \'' . $selector . '\' DOM element with the CSS filter \'' .
+                $computedfilter . '\', is not close enough to the color \'' . $color . '\'.', $this->getSession());
         }
+    }
+
+    /**
+     * Checks if the given DOM element does not have a CSS filter which is close to the given hex color.
+     *
+     * @copyright 2025 Alexander Bias <abias@ssystems.de>
+     * @Then DOM element :arg1 should not have a CSS filter close to hex color :arg2
+     * @param string $selector
+     * @param string $color
+     * @throws ExpectationException
+     */
+    public function dom_element_should_not_have_css_filter_close_to_hex($selector, $color) {
+        $stylejs = "
+            return (
+                window.getComputedStyle(document.querySelector('$selector')).getPropertyValue('filter')
+            )
+        ";
+        $computedfilter = $this->evaluate_script($stylejs);
+
+        // Assess the filter.
+        $closeenough = $this->assess_icon_tinting_filter_against_hex($computedfilter, $color);
+
+        if ($closeenough == true) {
+            throw new ExpectationException('The \'' . $selector . '\' DOM element with the CSS filter \'' .
+                $computedfilter . '\', is too close to the color \'' . $color . '\'.', $this->getSession());
+        }
+    }
+
+    /**
+     * Assesses if the given CSS filter is close to the given hex color or not.
+     *
+     * @copyright 2025 Alexander Bias <abias@ssystems.de>
+     * @param string $filter
+     * @param string $color
+     * @return bool
+     * @throws ExpectationException
+     */
+    private function assess_icon_tinting_filter_against_hex($filter, $color) {
+        // Extract the matrix values from the filter (and unescape the quotes in the filter before doing that).
+        $valuesmatches = [];
+        if (!preg_match('/values="([\d\.\s]+)"/', stripslashes($filter), $valuesmatches)) {
+            throw new ExpectationException('The given CSS filter does not have feColorMatrix values.', $this->getSession());
+        }
+        $matrixvaluesstring = $valuesmatches[1];
+        $matrixvalues = array_map('floatval', preg_split('/\s+/', trim($matrixvaluesstring)));
+
+        // The color components are at positions 4, 9, and 14 (zero-indexed).
+        $ractual = isset($matrixvalues[4]) ? $matrixvalues[4] : 0;
+        $gactual = isset($matrixvalues[9]) ? $matrixvalues[9] : 0;
+        $bactual = isset($matrixvalues[14]) ? $matrixvalues[14] : 0;
+
+        // Convert the hex color to RGB values.
+        $hex = ltrim($color, '#');
+        $rexpected = hexdec(substr($hex, 0, 2)) / 255;
+        $gexpected = hexdec(substr($hex, 2, 2)) / 255;
+        $bexpected = hexdec(substr($hex, 4, 2)) / 255;
+
+        // Compare with some tolerance (1%).
+        $tolerance = 0.01;
+        $closeenough =
+            abs($ractual - $rexpected) <= $tolerance &&
+            abs($gactual - $gexpected) <= $tolerance &&
+            abs($bactual - $bexpected) <= $tolerance;
+
+        // Return.
+        return $closeenough;
     }
 
     /**
@@ -144,7 +242,7 @@ class behat_theme_boost_union_base_general extends behat_base {
         try {
             $this->getSession()->executeScript($scrolljs);
         } catch (Exception $e) {
-            throw new \Exception('Scrolling the page to the \''.$selector.'\' DOM element failed');
+            throw new \Exception('Scrolling the page to the \'' . $selector . '\' DOM element failed');
         }
     }
 
@@ -238,9 +336,14 @@ class behat_theme_boost_union_base_general extends behat_base {
             )
         ";
         $positionviewport = $this->evaluate_script($posviewportjs);
-        if ($positionelement > $positionviewport + 50 ||
-                $positionelement < $positionviewport - 50) { // Allow some deviation of 50px of the scrolling position.
-            throw new ExpectationException('The DOM element \''.$selector.'\' is not a the top of the page', $this->getSession());
+        if (
+            $positionelement > $positionviewport + 50 ||
+                $positionelement < $positionviewport - 50
+        ) { // Allow some deviation of 50px of the scrolling position.
+            throw new ExpectationException(
+                'The DOM element \'' . $selector . '\' is not a the top of the page',
+                $this->getSession()
+            );
         }
     }
 
@@ -261,14 +364,17 @@ class behat_theme_boost_union_base_general extends behat_base {
         }
 
         $getvalueofpseudoelementjs = "return (
-            window.getComputedStyle(document.querySelector(\"". $s ."\"), ':".$ps."').getPropertyValue(\"".$pr."\")
+            window.getComputedStyle(document.querySelector(\"" . $s . "\"), ':" . $ps . "').getPropertyValue(\"" . $pr . "\")
         )";
 
         $result = Normalizer::normalize($this->evaluate_script($getvalueofpseudoelementjs), Normalizer::FORM_C);
-        $eq = Normalizer::normalize('"'.$v.'"', Normalizer::FORM_C);
+        $eq = Normalizer::normalize('"' . $v . '"', Normalizer::FORM_C);
 
         if (!($result == $eq)) {
-            throw new ExpectationException("Didn't find a match for '".$v."' with ".$s.":".$ps.".", $this->getSession());
+            throw new ExpectationException(
+                "Didn't find a match for '" . $v . "' with " . $s . ":" . $ps . ".",
+                $this->getSession()
+            );
         }
     }
 
@@ -289,13 +395,13 @@ class behat_theme_boost_union_base_general extends behat_base {
         }
 
         $getvalueofpseudoelementjs = "return (
-            window.getComputedStyle(document.querySelector(\"". $s ."\"), ':".$ps."').getPropertyValue(\"".$pr."\")
+            window.getComputedStyle(document.querySelector(\"" . $s . "\"), ':" . $ps . "').getPropertyValue(\"" . $pr . "\")
         )";
 
         $result = Normalizer::normalize($this->evaluate_script($getvalueofpseudoelementjs), Normalizer::FORM_C);
         $needle = Normalizer::normalize($v, Normalizer::FORM_C);
         if (strpos($result, $needle) === false) {
-            throw new ExpectationException("Didn't find '".$v."' in ".$s.":".$ps.".", $this->getSession());
+            throw new ExpectationException("Didn't find '" . $v . "' in " . $s . ":" . $ps . ".", $this->getSession());
         }
     }
 
@@ -315,13 +421,13 @@ class behat_theme_boost_union_base_general extends behat_base {
         }
 
         $pseudoelementcontent = "return (
-            window.getComputedStyle(document.querySelector(\"". $s ."\"), ':".$ps."').getPropertyValue(\"".$pr."\")
+            window.getComputedStyle(document.querySelector(\"" . $s . "\"), ':" . $ps . "').getPropertyValue(\"" . $pr . "\")
         )";
 
         $result = $this->evaluate_script($pseudoelementcontent);
 
         if ($result != "none") {
-            throw new ExpectationException($s.":".$ps.".content is: ".$result, $this->getSession());
+            throw new ExpectationException($s . ":" . $ps . ".content is: " . $result, $this->getSession());
         }
     }
 
@@ -365,5 +471,109 @@ class behat_theme_boost_union_base_general extends behat_base {
     public function enable_behat_debugging() {
         set_config('debug', 32767);
         set_config('debugdisplay', 1);
+    }
+
+    /**
+     * Open the login page.
+     *
+     * @Given /^I am on login page$/
+     */
+    public function i_am_on_login_page() {
+        $this->execute('behat_general::i_visit', ['/login/index.php']);
+    }
+
+    /**
+     * Check if the given elements are vertically aligned.
+     *
+     * This function verifies that multiple DOM elements have the same vertical position
+     * (same top coordinate) in the browser viewport. It's particularly useful for testing
+     * that block regions or other layout elements are properly aligned after JavaScript
+     * calculations have been applied.
+     *
+     * @Then /^DOM elements "(?P<s>(?:[^"]|\\")*)" should be vertically aligned$/
+     *
+     * @param string $elements List of CSS selectors separated by commas (e.g., "#element1,#element2,.class3")
+     * @throws ExpectationException If elements don't exist or are not vertically aligned
+     */
+    public function dom_elements_are_vertically_aligned($elements) {
+        // Split the comma-separated list of selectors into an array.
+        $elements = explode(',', $elements);
+
+        // Store the reference top position from the first element.
+        $top = null;
+
+        // Iterate through each selector to check alignment.
+        foreach ($elements as $selector) {
+            // First, verify that the element actually exists in the DOM.
+            $elementexists = "return document.querySelector('$selector')";
+            $elementexists = $this->evaluate_script($elementexists);
+            if ($elementexists === null) {
+                throw new ExpectationException('The element \'' . $selector . '\' does not exist', $this->getSession());
+            }
+
+            // Get the top position of the current element relative to the viewport.
+            $js = "return document.querySelector('$selector').getBoundingClientRect().top";
+            $newtop = $this->evaluate_script($js);
+
+            // Set the reference position from the first element.
+            if ($top === null) {
+                $top = $newtop;
+            } else {
+                // Compare subsequent elements' top positions with the reference.
+                // All elements must have exactly the same top position to be considered aligned.
+                if ($newtop !== $top) {
+                    throw new ExpectationException('The elements are not vertically aligned', $this->getSession());
+                }
+
+                // Update reference for next comparison (though it should be the same).
+                $top = $newtop;
+            }
+        }
+    }
+
+    /**
+     * Checks the visual order of elements before or after.
+     *
+     * @Then the visual order of :arg1 :arg2 should be :arg3 :arg4 :arg5
+     *
+     * @param string $selector1 The first element selector.
+     * @param string $type1 The type of the first element selector.
+     * @param string $order The expected order (before or after).
+     * @param string $selector2 The second element selector.
+     * @param string $type2 The type of the second element selector.
+     */
+    public function element_should_display_order($selector1, $type1, $order, $selector2, $type2) {
+        $element1 = $this->find($type1, $selector1);
+        $element2 = $this->find($type2, $selector2);
+
+        if (!$element1) {
+            throw new ElementNotFoundException($this->getSession(), 'element', $type1, $selector1);
+        }
+
+        if (!$element2) {
+            throw new ElementNotFoundException($this->getSession(), 'element', $type2, $selector2);
+        }
+
+        $script = "
+            return (function() {
+                const el1 = document.querySelector('$selector1');
+                const el2 = document.querySelector('$selector2');
+                const order1 = parseInt(window.getComputedStyle(el1).order);
+                const order2 = parseInt(window.getComputedStyle(el2).order);
+                return order1 < order2 ? true : false;
+            })();";
+
+        $result = $this->evaluate_script($script);
+
+        if (($order === 'before' && $result == false) || ($order === 'after' && $result == true)) {
+            throw new Exception(sprintf(
+                'The element "%s" (%s) is not displayed %s the element "%s" (%s).',
+                $selector1,
+                $type1,
+                $order,
+                $selector2,
+                $type2
+            ));
+        }
     }
 }

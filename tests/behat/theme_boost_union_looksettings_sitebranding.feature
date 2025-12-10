@@ -48,7 +48,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     Then "#loginlogo #logoimage" "css_element" should not exist
 
   @javascript @_file_upload
-  Scenario: Setting: Compact logo - Upload a PNG logo to the theme and check that it is resized
+  Scenario: Setting: Logo - Upload a PNG logo to the theme and check that it is resized on the server-side
     When I log in as "admin"
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
@@ -58,10 +58,10 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     And Behat debugging is enabled
     And I log out
     And I click on "Log in" "link" in the ".logininfo" "css_element"
-    Then "//div[@id='loginlogo']//img[@id='logoimage'][contains(@src, 'pluginfile.php/1/theme_boost_union/logo/0x200/')]" "xpath_element" should exist
+    Then "//div[@id='loginlogo']//img[@id='logoimage'][contains(@src, 'pluginfile.php/1/theme_boost_union/logo/0x200/')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
 
   @javascript @_file_upload
-  Scenario: Setting: Compact logo - Upload a SVG logo to the theme and check that it is not resized
+  Scenario: Setting: Logo - Upload a SVG logo to the theme and check that it is not resized on the server-side
     When I log in as "admin"
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
@@ -71,7 +71,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     And Behat debugging is enabled
     And I log out
     And I click on "Log in" "link" in the ".logininfo" "css_element"
-    Then "//div[@id='loginlogo']//img[@id='logoimage'][contains(@src, 'pluginfile.php/1/theme_boost_union/logo/1/')]" "xpath_element" should exist
+    Then "//div[@id='loginlogo']//img[@id='logoimage'][contains(@src, 'pluginfile.php/1/theme_boost_union/logo/1/')][contains(@src, 'moodlelogo.svg')]" "xpath_element" should exist
 
   @javascript @_file_upload
   Scenario: Setting: Compact logo - Upload a custom compact logo to the theme
@@ -101,7 +101,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     Then ".navbar .logo" "css_element" should not exist
 
   @javascript @_file_upload
-  Scenario: Setting: Compact logo - Upload a PNG compact logo to the theme and check that it is resized
+  Scenario: Setting: Compact logo - Upload a PNG compact logo to the theme and check that it is resized on the server-side
     When I log in as "admin"
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
@@ -110,10 +110,10 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     And I press "Save changes"
     And Behat debugging is enabled
     And I am on site homepage
-    Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact/300x300/')]" "xpath_element" should exist
+    Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact/300x300/')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
 
   @javascript @_file_upload
-  Scenario: Setting: Compact logo - Upload a SVG compact logo to the theme and check that it is not resized
+  Scenario: Setting: Compact logo - Upload a SVG compact logo to the theme and check that it is not resized on the server-side
     When I log in as "admin"
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
@@ -122,7 +122,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     And I press "Save changes"
     And Behat debugging is enabled
     And I am on site homepage
-    Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact/1/')]" "xpath_element" should exist
+    Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact/1/')][contains(@src, 'moodlelogo.svg')]" "xpath_element" should exist
 
   @javascript @_file_upload
   Scenario: Setting: Favicon - Upload a custom favicon to the theme
@@ -151,6 +151,25 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     And I am on site homepage
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'theme/image.php/boost_union')][contains(@href, 'favicon')]" "xpath_element" should exist
     And "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/favicon')][contains(@href, 'favicon.ico')]" "xpath_element" should not exist
+
+  @javascript @_file_upload
+  Scenario: Setting: Background image - Upload a background image.
+    When I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Background image" filemanager
+    And I press "Save changes"
+    And Behat debugging is enabled
+    And I am on site homepage
+    Then DOM element "body" should have computed style "background-size" "cover"
+    And DOM element "body" should have background image with file name "login_bg1.png"
+
+  @javascript
+  Scenario: Setting: Background image - Do not upload a background image (countercheck).
+    When I log in as "admin"
+    And I am on site homepage
+    Then DOM element "body" should have computed style "background-image" "none"
 
   @javascript @_file_upload
   Scenario Outline: Setting: Background image - Define the background image position.
@@ -208,16 +227,40 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
       | warning | #0000FF  | rgb(0, 0, 255)   |
       | danger  | #FFFF00  | rgb(255, 255, 0) |
 
+  @javascript @_file_upload
+  Scenario Outline: Setting: Maximal width of logo in navbar - Set the maximum width
+    Given the following config values are set as admin:
+      | config       | value     | plugin            |
+      | maxlogowidth | <setting> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Compact logo" filemanager
+    And I press "Save changes"
+    And Behat debugging is enabled
+    And I am on site homepage
+    Then DOM element ".navbar-brand" <shouldornot> have computed style "max-width" "<value>"
+    And DOM element ".navbar-brand .logo" <shouldornot> have computed style "max-width" "<value>"
+
+    Examples:
+      | setting | shouldornot | value |
+      |         | should not  | 50px  |
+      | 50px    | should      | 50px  |
+      | 13%     | should      | 13%   |
+
   Scenario Outline: Setting: Navbar color - Set the navbar color
     Given the following config values are set as admin:
       | config      | value     | plugin            |
       | navbarcolor | <setting> | theme_boost_union |
     When I log in as "admin"
     Then the "class" attribute of ".navbar" "css_element" should contain "<classes>"
+    And the "data-bs-theme" attribute of ".navbar" "css_element" should <databstheme>
 
     Examples:
-      | setting      | classes                 |
-      | light        | navbar-light bg-white   |
-      | dark         | navbar-dark bg-dark     |
-      | primarylight | navbar-light bg-primary |
-      | primarydark  | navbar-dark bg-primary  |
+      | setting      | classes    | databstheme     |
+      | light        | bg-body    | not be set      |
+      | dark         | bg-dark    | contain "dark"  |
+      | primarylight | bg-primary | contain "light" |
+      | primarydark  | bg-primary | contain "dark"  |

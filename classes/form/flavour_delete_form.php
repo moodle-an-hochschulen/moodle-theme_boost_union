@@ -29,7 +29,7 @@ namespace theme_boost_union\form;
 defined('MOODLE_INTERNAL') || die();
 
 // Require forms library.
-require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir . '/formslib.php');
 
 /**
  * Flavours delete form.
@@ -41,7 +41,6 @@ require_once($CFG->libdir.'/formslib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class flavour_delete_form extends \moodleform {
-
     /**
      * Define form elements.
      *
@@ -59,8 +58,9 @@ class flavour_delete_form extends \moodleform {
 
         // Add notification as html element.
         $notification = new \core\output\notification(
-                get_string('flavoursdeleteconfirmation', 'theme_boost_union', $this->_customdata['flavour']->title),
-                \core\output\notification::NOTIFY_WARNING);
+            get_string('flavoursdeleteconfirmation', 'theme_boost_union', $this->_customdata['flavour']->title),
+            \core\output\notification::NOTIFY_WARNING
+        );
         $notification->set_show_closebutton(false);
         $mform->addElement('html', $OUTPUT->render($notification));
 

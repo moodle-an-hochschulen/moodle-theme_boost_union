@@ -10,33 +10,20 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
       | Course 1 | C1        |
 
   @javascript
-  Scenario: Setting: Raw initial SCSS - Add custom SCSS to the theme
+  Scenario: Setting: Raw (initial) SCSS - Add custom SCSS to the theme
     When I log in as "admin"
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
-    # We add a small CSS snippet to the page which hides the heading in the page header.
-    # This is just to make it easy to detect the effect of this custom SCSS code.
+    # We add a SCSS variable and a small SCSS snippet to the page which hides the heading in the page header.
+    # This is just to make it easy to detect the effect of this custom SCSS code and to verify that SCSS is compiled correctly.
     And I set the field "Raw initial SCSS" to multiline:
     """
-    #page-header h1 { display: none; }
+    $myvariable: none;
     """
-    And I press "Save changes"
-    And Behat debugging is enabled
-    And I am on "Course 1" course homepage
-    Then I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
-
-  @javascript
-  Scenario: Setting: Raw SCSS - Add custom SCSS to the theme
-    When I log in as "admin"
-    And Behat debugging is disabled
-    And I navigate to "Appearance > Boost Union > Look" in site administration
-    And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
-    # We add a small CSS snippet to the page which hides the heading in the page header.
-    # This is just to make it easy to detect the effect of this custom SCSS code.
     And I set the field "Raw SCSS" to multiline:
     """
-    #page-header h1 { display: none; }
+    #page-header h1 { display: $myvariable; }
     """
     And I press "Save changes"
     And Behat debugging is enabled
@@ -91,8 +78,8 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
       # The Github key which is placed here is is a fine-grained access token which was especially created for this Behat scenario and which will expire on 2025-05-06 due to Github's token lifetime policy.
       # It is sliced into three pieces to avoid that Github's code scanning engine will find and invalidate it.
       | pathfield                           | filepath      | githubkey1                   | githubkey3                   | githubkey2                 |
-      | External Pre SCSS Github file path  | /extscss.scss | 11AAIKUFQ0r5mGRLvI53V1_spQkU | 7kSEWBd25CNtUJE7UBA6dPdya3zM | C5O4Xo453LqQgKoXVAsmuKuC1q |
-      | External Post SCSS Github file path | /extscss.scss | 11AAIKUFQ0r5mGRLvI53V1_spQkU | 7kSEWBd25CNtUJE7UBA6dPdya3zM | C5O4Xo453LqQgKoXVAsmuKuC1q |
+      | External Pre SCSS Github file path  | /extscss.scss | 11AAIKUFQ0qSd02UyssSAH_lZMPG | zhFKQ8BAXCIUTY42MEYHVUqNmxRV | uCMzlLtYlUefPWmY5xTAFhSvSn |
+      | External Post SCSS Github file path | /extscss.scss | 11AAIKUFQ0qSd02UyssSAH_lZMPG | zhFKQ8BAXCIUTY42MEYHVUqNmxRV | uCMzlLtYlUefPWmY5xTAFhSvSn |
 
   @javascript
   Scenario Outline: Setting: External SCSS - Add a broken SCSS download URL to the theme

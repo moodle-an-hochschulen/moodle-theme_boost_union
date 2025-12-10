@@ -1,4 +1,4 @@
-@theme @theme_boost_union @theme_boost_union_feelsettings @theme_boost_union_feelsettings_navigation
+@theme @theme_boost_union @theme_boost_union_feelsettings @theme_boost_union_feelsettings_navigation @theme_boost_union_footer
 Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on the "Feel" page
   In order to use the features
   As admin
@@ -46,6 +46,7 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | home,myhome           | Home           | Dashboard           |
       | courses,siteadminnode | My courses     | Site administration |
 
+  @javascript
   Scenario Outline: Setting: Alternative logo link URL.
     Given the following config values are set as admin:
       | config                 | value     | plugin            |
@@ -57,6 +58,9 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     When I log in as "admin"
     And I am on homepage
     Then the "href" attribute of ".navbar-brand" "css_element" should contain "<href>"
+    And I change viewport size to "mobile"
+    And I click on "Side panel" "button"
+    Then the "href" attribute of "#theme_boost-drawers-primary .drawerheader [data-region='site-home-link']" "css_element" should contain "<href>"
 
     Examples:
       | setting         | href            |
@@ -102,6 +106,19 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | no      | should not  |
 
   @javascript
+  Scenario Outline: Setting: Show login link as button.
+    Given the following config values are set as admin:
+      | config                 | value     | plugin            |
+      | loginlinkbuttonenabled | <setting> | theme_boost_union |
+    When I am on site homepage
+    Then ".btn.btn-primary" "css_element" <shouldornot> exist in the ".login.ps-2 > a" "css_element"
+
+    Examples:
+      | setting | shouldornot |
+      | yes     | should      |
+      | no      | should not  |
+
+  @javascript
   Scenario Outline: Setting: Show starred courses popover in the navbar.
     Given the following config values are set as admin:
       | config                   | value     | plugin            |
@@ -118,6 +135,22 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | setting | shouldornot |
       | yes     | should      |
       | no      | should not  |
+
+  @javascript
+  Scenario: Setting: Do not show starred courses popover in the navbar if Boost Union is not the active theme (cross-theme check).
+    Given the following config values are set as admin:
+      | config                   | value | plugin            |
+      | shownavbarstarredcourses | yes   | theme_boost_union |
+    And I log in as "admin"
+    And I navigate to "Appearance > Themes" in site administration
+    And I click on "Select theme" "button" in the "#theme-select-form-boost" "css_element"
+    And I log out
+    When I log in as "student1"
+    And I follow "My courses"
+    And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
+    And I click on "Star this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
+    And I reload the page
+    Then "nav.navbar #usernavigation .popover-region-favourites" "css_element" should not exist
 
   @javascript
   Scenario: Setting: Show starred courses popover in the navbar (and make sure that I see the right courses there).
@@ -154,6 +187,29 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And I should see "Course 2" in the ".popover-region-favourites .popover-region-content-container" "css_element"
     And I should not see "Course 3" in the ".popover-region-favourites .popover-region-content-container" "css_element"
     And I should not see "Course 4" in the ".popover-region-favourites .popover-region-content-container" "css_element"
+
+  @javascript
+  Scenario Outline: Setting: Starred courses popover cog icon link target
+    Given the following config values are set as admin:
+      | config                   | value     | plugin            |
+      | shownavbarstarredcourses | yes       | theme_boost_union |
+      | starredcourseslinktarget | <setting> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "student1"
+    And I follow "My courses"
+    And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
+    And I click on "Star this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
+    And I reload the page
+    And I click on "nav.navbar #usernavigation .popover-region-favourites .nav-link" "css_element"
+    Then the "href" attribute of ".popover-region-favourites .popover-region-header-actions a" "css_element" should contain "<href>"
+    And the "title" attribute of ".popover-region-favourites .popover-region-header-actions a" "css_element" should contain "Set starred courses on the '<page>' page"
+    And I click on ".popover-region-favourites .popover-region-header-actions a" "css_element"
+    Then I should see "<page>" in the ".page-header-headings h1" "css_element"
+
+    Examples:
+      | setting   | href            | page       |
+      | mycourses | /my/courses.php | My courses |
+      | dashboard | /my/            | Dashboard  |
 
   Scenario Outline: Setting: Course category breadcrumbs
     Given the following "categories" exist:

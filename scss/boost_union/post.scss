@@ -7,7 +7,8 @@
  --------------------------------------*/
 
 /* Add an explicit height to the logo in the navbar.
-   This is necessary to render SVG logos properly as their size is calculated different than pixel-based images. */
+   This is necessary to render SVG logos properly as their size is calculated different than pixel-based images.
+   Please note that these values might be overridden by the maxlogowidth setting. */
 .navbar-brand,
 .navbar-brand .logo {
     height: 100%;
@@ -18,23 +19,18 @@
  * Setting: Navbar color
  --------------------------------------*/
 
-/* Moodle core already presents the light navbar with dark font color (.navbar-light.bg-white) perfectly.
+/* Moodle core already presents the light navbar with dark font color (.bg-body) perfectly.
    There is nothing to change here. */
 
 /* Tweak the dark navbar with light font color
    and the primary color navbar with light font color. */
-.navbar.navbar-dark.bg-dark,
-.navbar.navbar-dark.bg-primary {
+.navbar.bg-dark[data-bs-theme="dark"],
+.navbar.bg-primary[data-bs-theme="dark"] {
     /* Remove the white border at the bottom of the navbar as it looks odd with a dark navbar. */
     border-bottom: none;
 
-    /* Change the color of the site name in the navbar to white. */
-    .navbar-brand {
-        color: $white;
-    }
-
     /* Change the color of the navigation items in the navbar to white
-       and to black when hovered (as Moodle core will then show a white background).
+       and to black on white when hovered (Bootstrap already makes the background white when hovered, but not when focused).
        This has to use !important as Moodle core already uses !important for some of its hover states. */
     .nav-link {
         color: $white;
@@ -45,13 +41,11 @@
     .nav-link:hover,
     .nav-link:focus {
         color: $black !important; /* stylelint-disable-line declaration-no-important */
-    }
+        background-color: $white;
 
-    /* Change the background color and colors of open custom menu parent navigation items in the navbar
-       as they are built differently from single navigation items. */
-    .nav-item.dropdown.show .nav-link.dropdown-toggle {
-        background-color: #f8f9fa;
-        color: $black;
+        .icon {
+            color: $black !important; /* stylelint-disable-line declaration-no-important */
+        }
     }
 
     /* Change the color of the icons in the navbar as well as the toggle icon in the usermenu
@@ -63,21 +57,6 @@
         color: $white !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    /* Change the color of the icons in the dropdown menu to a dark grey and to white when hovered.
-       This has to use !important as Moodle core already uses !important for the icon colors. */
-    .dropdown-menu .dropdown-item .icon {
-        color: #1d2125 !important; /* stylelint-disable-line declaration-no-important */
-    }
-    .dropdown-menu .dropdown-item:hover .icon {
-        color: $white !important; /* stylelint-disable-line declaration-no-important */
-    }
-
-    /* Revert color of the close icon in the search panel in the navbar as this icon is still dark on white
-       within the input form. */
-    #searchform-navbar .btn-close .icon {
-        color: #6a737b !important; /* stylelint-disable-line declaration-no-important */
-    }
-
     /* Change the color of the edit switch label in the navbar to white.
        This has to use !important as Moodle core would change the color to text-primary as soon as editing is on. */
     .editmode-switch-form,
@@ -85,20 +64,8 @@
         color: $white !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    /* Adapt the color of the edit switch widget to fit onto the dark background. */
-    .custom-control-input:checked ~ .custom-control-label::before {
-        background-color: $white;
-        border-color: #c8c8c8;
-    }
-    .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
-        background-color: #8f959e;
-    }
-
     /* Change the color of the offcanvas button to fit onto the dark background. */
     #theme_boost_union-offcanvas-btn {
-        color: #c8c8c8;
-    }
-    #theme_boost_union-offcanvas-btn:hover {
         color: #fff;
     }
 
@@ -108,55 +75,83 @@
         color: $white;
     }
 
+    /* Change the color of the language selector link (which appears for visitors in the navbar) to white.
+       as this would be presented in the primary color otherwise. */
+    #lang-menu-toggle {
+        color: $white;
+    }
+
     /* Change the color of the notification action buttons to dark grey.
        This has to use !important as Moodle core already uses !important for the icon colors. */
     .popover-region-container a .icon {
         color: #343a40 !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    /* Change the color of the language selector link in the navbar to white. */
-    .langmenu .dropdown .dropdown-toggle {
-        color: $white;
+    /* Change the color of the footer in the notification popover to normal.
+       This cannot be done with data-bs-theme as we did not overwrite the corresponding mustache template. */
+    .popover-region-footer-container {
+        background-color: $white;
+    }
+
+    /* Change the link colors in the notification popover to a more solid color. */
+    .popover-region-container {
+        .see-all-link,
+        .view-more {
+            color: $primary;
+        }
     }
 }
 
 /* Tweak the dark navbar with light font color a little bit more. */
-.navbar.navbar-dark.bg-dark {
+.navbar.bg-dark[data-bs-theme="dark"] {
+    /* If we are showing the search form, we need to show the border again as dark border
+       as otherwise the active node's bottom bar might peek through. */
+    &:has(#searchform-navbar.show) {
+        border-bottom: 1px solid #343a40;
+    }
+
     /* Change the background color of the custom child menu and user menu navigation items in the navbar
        to dark grey when hovered and focused (especially during keyboard navigation) */
-    .nav-item.dropdown.show,
+    .nav-item .dropdown-menu.show,
     #user-action-menu.show {
         a.dropdown-item {
             background-color: inherit;
         }
         a.dropdown-item:hover,
         a.dropdown-item:focus {
-            background-color: #343a40;
+            background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity));
+            color: $white;
         }
+    }
+
+    /* Adapt the color of the edit switch widget to fit onto the dark background. */
+    .editmode-switch-form input {
+        background-color: var(--bs-body-bg);
+        border-color: $white;
     }
 
     /* Change the background color of the search panel in the navbar. */
     #searchform-navbar {
-        background-color: #343a40;
+        @extend .bg-dark;
     }
-
-    /* Change the color of the language selector drop down items when hovered, focused and active to dark grey
-       as this would be presented in the primary color otherwise. */
-    .langmenu {
-        .dropdown-item:active,
-        .dropdown-item:hover,
-        .dropdown-item:focus,
-        .dropdown-item:focus-within {
-            background-color: $dark;
-        }
+    /* Make sure that the search form's submit button is black as well. */
+    .simplesearchform .btn-submit {
+        background-color: var(--bs-body-bg);
+        color: #6a737b;
     }
 }
 
 /* Tweak the primary color navbar with light font color a little bit more. */
-.navbar.navbar-dark.bg-primary {
+.navbar.bg-primary[data-bs-theme="dark"] {
+    /* If we are showing the search form, we need to show the border again as dark border
+       as otherwise the active node's bottom bar might peek through. */
+    &:has(#searchform-navbar.show) {
+        border-bottom: 1px solid $primary;
+    }
+
     /* Change the background color of the custom child menu and user menu navigation items in the navbar
        to dark grey when hovered and focused (especially during keyboard navigation) */
-    .nav-item.dropdown.show,
+    .nav-item .dropdown-menu.show,
     #user-action-menu.show {
         a.dropdown-item {
             background-color: inherit;
@@ -164,64 +159,97 @@
         a.dropdown-item:hover,
         a.dropdown-item:focus {
             background-color: $primary;
+            color: $white;
         }
+    }
+
+    /* Adapt the color of the edit switch widget to fit onto the primary color background. */
+    .editmode-switch-form input {
+        background-color: $primary;
+        border-color: $white;
     }
 
     /* Change the background color of the search panel in the navbar. */
     #searchform-navbar {
         background-color: $primary;
+
+        /* Make sure that the search form input elements are colorized as well. */
+        input,
+        button {
+            background-color: $primary;
+            border-color: $white;
+            color: $white;
+        }
+    }
+
+    /* Change the color of the divider to white.
+       This has to use !important as Moodle core already uses !important for the border-left color.*/
+    .divider {
+        background-color: $white;
+        border-left: none !important; /* stylelint-disable-line declaration-no-important */
     }
 
     /* Change the color of the active nav items's bottom border to white as this would be presented in the
-   primary color otherwise. */
+        primary color otherwise. */
     .nav-link.active {
         border-bottom-color: $white;
-    }
-
-    /* Change the color of the language selector icon to a light grey as well.
-        This has to use !important as Moodle core already uses !important for the icon colors. */
-    .langmenu .icon {
-        color: #c8c8c8 !important; /* stylelint-disable-line declaration-no-important */
     }
 }
 
 /* Tweak the primary color navbar with dark font color. */
-.navbar.navbar-light.bg-primary {
+.navbar.bg-primary[data-bs-theme="light"] {
     /* Change the color of the active nav items's bottom border to dark grey as this would be presented in the
        primary color as well otherwise. */
     .nav-link.active {
         border-bottom-color: rgba($black, .6);
     }
 
-    /* Change the background color and colors of open custom menu parent navigation items in the navbar
-   as they are built differently from single navigation items. */
-    .nav-item.dropdown.show .nav-link.dropdown-toggle {
-        background-color: #f8f9fa;
-        color: $black;
+    /* Change the color of the navigation items in the navbar
+       to black on white when hovered (Bootstrap already makes the background white when hovered, but not when focused).
+       This has to use !important as Moodle core already uses !important for some of its hover states. */
+    .nav-link:hover,
+    .nav-link:focus {
+        color: $black !important; /* stylelint-disable-line declaration-no-important */
+        background-color: $white;
+    }
+
+    /* Change the font color of the custom child menu and user menu navigation items in the navbar
+       to black when hovered and focused (especially during keyboard navigation).
+       This will then diverge from the way how Boost core shows these menu items in the unchanged navbar,
+       but we do have to expect in this particular case here that the primary color is rather light. */
+    .nav-item .dropdown-menu.show,
+    #user-action-menu.show {
+        a.dropdown-item:hover,
+        a.dropdown-item:focus {
+            color: var(--bs-dropdown-link-color);
+        }
     }
 
     /* Change the color of the edit switch label in the navbar to dark grey.
        This has to use !important as Moodle core wants to use the color text-primary as soon as editing is on. */
     .editmode-switch-form,
     .editmode-switch-form label {
-        color: rgba($black, .6) !important; /* stylelint-disable-line declaration-no-important */
+        color: var(--bs-nav-link-color) !important; /* stylelint-disable-line declaration-no-important */
     }
     .editmode-switch-form label:hover {
-        color: rgba($black, .9) !important; /* stylelint-disable-line declaration-no-important */
+        color: var(--bs-nav-link-color) !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    /* Adapt the color of the edit switch widget to fit onto the dark background. */
-    .custom-control-input:checked ~ .custom-control-label::before {
-        background-color: $white;
-        border-color: #c8c8c8;
-    }
-    .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
-        background-color: #8f959e;
+    /* Adapt the color of the edit switch widget to fit onto the primary color background. */
+    .editmode-switch-form input {
+        background-color: $primary;
+        background-image: #{escape-svg($form-switch-bg-image)};
+        border-color: var(--bs-nav-link-color);
     }
 
     /* Change the background color of the search panel in the navbar. */
     #searchform-navbar {
         background-color: $primary;
+
+        /* Make sure that the search form input element have a real border, even if focused. */
+        input:focus {
+            border-color: var(--bs-gray-500);
+        }
     }
 
     /* Change the color of the login link in the navbar to dark grey and to darker grey when hovered. */
@@ -238,6 +266,43 @@
     .divider {
         border-left: 1px solid rgba($black, .6) !important; /* stylelint-disable-line declaration-no-important */
     }
+}
+
+/*=======================================
+ * Settings: Look -> Activity branding
+ ======================================*/
+
+/*---------------------------------------
+ * Setting: Activity icon colors
+ --------------------------------------*/
+
+// This mixin change an icon color using filters.
+// This is just the "recolor-icon" mixin from Moodle core but with the "!imporant" suffix which is needed to override
+// activity icon purposes.An
+@mixin recolor-icon-important($color: #000, $opacity: 1) {
+    // Extracting the color component using / 255 is deprecated in Sass.
+    // However, the alternative of using math.div is not working in moodle yet.
+    // The workaround to extract the color component is multiply by 1/255 as float.
+    $r: red($color) * 0.00392156862745098;
+    $g: green($color) * 0.00392156862745098;
+    $b: blue($color) * 0.00392156862745098;
+    $a: $opacity;
+    $svg-filter-id: "recolor";
+
+    $svg-url: 'data:image/svg+xml;utf8,' +
+        '<svg xmlns="http://www.w3.org/2000/svg">' +
+        '<filter id="#{$svg-filter-id}" color-interpolation-filters="sRGB">' +
+        '<feColorMatrix type="matrix" values="' +
+        '0 0 0 0 #{$r} ' +
+        '0 0 0 0 #{$g} ' +
+        '0 0 0 0 #{$b} ' +
+        '0 0 0 #{$a} 0 ' +
+        '"/>' +
+        '</filter>' +
+        '</svg>' +
+        '##{$svg-filter-id}';
+
+    filter: url($svg-url) !important; /* stylelint-disable-line declaration-no-important */
 }
 
 /*=======================================
@@ -265,6 +330,296 @@
 /* Make background of login panel slightly transparent. */
 .login-container.login-container-80t {
     background-color: rgba(255, 255, 255, 0.8);
+}
+
+/*=======================================
+ * Settings: Look -> Category index / site home
+ ======================================*/
+
+/*---------------------------------------
+ * Setting:  Course listing presentation
+ --------------------------------------*/
+
+/* Only on site home and the category index pages - and on the course search page. */
+.pagelayout-frontpage,
+.pagelayout-coursecategory,
+#page-course-search {
+
+    /* In the Boost Union course listing. */
+    .theme_boost_union-courselisting {
+        /* For the card view only. */
+        &.theme_boost_union-courselisting-card {
+            /* Revert the gutter between the cards to align the card deck with the category summary. */
+            margin-left: -0.25rem;
+            margin-right: -0.25rem;
+        }
+
+        /* For the course list only. */
+        &.theme_boost_union-courselisting-list {
+            /* The course image. */
+            .list-image {
+                height: 5rem;
+                background-position: center;
+                background-size: cover;
+            }
+        }
+
+        /* The course contact section.
+           There are some things which can't be set with Bootstrap classes in Mustache. */
+        .coursecontacts {
+            /* Push the contacts over the course image. */
+            margin-top: -18px;
+
+            /* Make sure that the concact images are small enough even though the avatar file is bigger. */
+            .contact img {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        /* The custom fields section.
+           We can't use Bootstrap classes in Mustache here as these elements are output by a renderer which we do not influence. */
+        .customfields {
+            /* Use a smaller font and some space for each custom fields. */
+            .customfield {
+                font-size: 80%;
+                @extend small;
+                @extend .mb-2;
+            }
+            .customfield:last-of-type {
+                @extend .mb-0;
+            }
+
+            /* Highlight the field name. */
+            .customfieldname,
+            .customfieldseparator {
+                @extend strong;
+            }
+        }
+
+        /* The enrolment icons section. */
+        .enrolmenticons {
+            .enrolmenticon {
+                /* Make the icon grey instead of black. */
+                color: $gray-600;
+
+                /* Add some padding to the container. */
+                margin-right: 0.5rem;
+
+                /* But not to the last one. */
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                /* And not to the icon itself. */
+                .icon {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        /* The progress section. */
+        .progress {
+            height: 0.5rem;
+        }
+        .progress-text {
+            color: $gray-600;
+        }
+    }
+
+    /* For the course details modal. */
+    .theme_boost_union-courselisting-modal {
+        /* The contact card */
+        .contact {
+            /* Control the width on multiple screen sizes. */
+            width: 100%;
+            @include media-breakpoint-up(sm) {
+                width: 50%;
+            }
+            @include media-breakpoint-up(lg) {
+                width: 25%;
+            }
+        }
+    }
+
+    /* The Boost Union course category info. */
+    .theme_boost_union-coursecategoryinfo {
+        /* Put the category info into a box. */
+        @extend .border;
+        @extend .rounded;
+        @extend .p-3;
+        @extend .mb-3;
+        @extend .small;
+    }
+
+    /* The sticky category heading. */
+    .theme_boost_union-stickycategory {
+        top: $navbar-height;
+
+        /* Make sure that the sticky category header does not cover the more menu. */
+        z-index: 999;
+    }
+    &.theme_boost_union-courselisting-card .theme_boost_union-stickycategory {
+        width: calc(100% - 0.5rem);
+    }
+
+    /* The goto button. */
+    .dimmed_category .gotobutton {
+        /* Make sure that a dimmed category (and thus dimmed links in the course cards / course list) do not affect
+            the button label color. */
+        color: #fff;
+    }
+
+    /* The Boost Union course category listing.
+       We do not document each single rule here. It's just a fiddly attempt to improve the look of the tree. */
+    .theme_boost_union-catlisting {
+        > .collapsible-actions {
+            @extend .border;
+            @extend .border-bottom-0;
+            @extend .rounded-top;
+            @extend .px-3;
+            @extend .py-2;
+            @extend .pb-1;
+            @extend .mb-0;
+
+            a.collapseexpand {
+                @extend .btn;
+                @extend .btn-secondary;
+                @extend .btn-sm;
+            }
+        }
+
+        > .content > .subcategories {
+            @extend .border;
+            @extend .rounded-bottom;
+            @extend .bg-light;
+            @extend .mb-3;
+
+            > .category {
+                @extend .px-2;
+                @extend .border-bottom;
+
+                &:last-child {
+                    @extend .pb-2;
+                    @extend .rounded-bottom;
+                    @extend .border-bottom-0;
+                }
+
+                &:not(.collapsed) {
+                    @extend .border-bottom;
+                }
+                &:not(.collapsed):last-of-type {
+                    @extend .border-bottom-0;
+                }
+            }
+
+            .category {
+                .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem);
+                    margin-left: calc(-2rem - 8px);
+                    @extend .border;
+                    @extend .rounded;
+                    @extend .shadow;
+                    @extend .bg-white;
+                    @extend .my-2;
+
+                    &.theme_boost_union-courselisting-list {
+                        @extend .px-3;
+                    }
+                }
+
+                /* Support up to 8 subcategory levels,
+                   from level 9 on the course listing would not be indented correctly anymore. */
+                [data-depth="2"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 16px);
+                    margin-left: calc(-2rem - 8px - 16px);
+                }
+                [data-depth="3"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 32px);
+                    margin-left: calc(-2rem - 8px - 32px);
+                }
+                [data-depth="4"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 48px);
+                    margin-left: calc(-2rem - 8px - 48px);
+                }
+                [data-depth="5"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 64px);
+                    margin-left: calc(-2rem - 8px - 64px);
+                }
+                [data-depth="6"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 80px);
+                    margin-left: calc(-2rem - 8px - 80px);
+                }
+                [data-depth="7"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 96px);
+                    margin-left: calc(-2rem - 8px - 96px);
+                }
+                [data-depth="8"] .theme_boost_union-courselisting {
+                    width: calc(100% + 4rem + 112px);
+                    margin-left: calc(-2rem - 8px - 112px);
+                }
+
+                /* On small screens, we must not let the category listing exceed the container's width to avoid horizontal
+                   scroll bars. */
+                @include media-breakpoint-down(sm) {
+                    .theme_boost_union-courselisting-wrapper {
+                        width: calc(100% - 4rem);
+                        margin-left: 2rem;
+                    }
+                }
+
+                .categoryname .spinner {
+                    margin-left: 0.5rem;
+                }
+            }
+        }
+    }
+
+    /* The Boost Union course category listing with a course listing in it.
+       Some of the rules above are already only applied to category listings with course listings in it.
+       But some have to be checked explicitely. We do this here with .theme_boost_union-catlisting-cl as we do not want to use
+       a :has(.theme_boost_union-courselisting) selector.
+       We do not document each single rule here either. */
+    .theme_boost_union-catlisting.theme_boost_union-catlisting-cl {
+        > .content > .subcategories {
+            .category {
+                @extend .py-2;
+
+                &:last-child {
+                    @extend .pb-0;
+                }
+
+                &.with_children:not(.collapsed) {
+                    > .content > .courses {
+                        @extend .mt-4;
+                    }
+                }
+
+                .theme_boost_union-courselisting-card {
+                    @extend .px-2;
+                }
+            }
+
+            > .category[data-depth="1"]:last-child {
+                @extend .py-2;
+            }
+        }
+    }
+}
+
+/* The search page 'show all' button, if the search page has modified course listings. */
+#page-course-search {
+    .paging:has(+ .theme_boost_union-courselisting-wrapper),
+    .theme_boost_union-courselisting-wrapper ~ .paging {
+        @extend .text-end;
+
+        a {
+            @extend .btn;
+            @extend .btn-secondary;
+            @extend .btn-sm;
+            @extend .mb-3;
+        }
+    }
 }
 
 
@@ -516,69 +871,113 @@ body.hascourseindexcmicons {
 }
 
 /*---------------------------------------
- * Setting: Back to top button.
+ * Setting: Boost Union footer buttons (i.e. Back to top button and Accessibility button).
  --------------------------------------*/
 
-#back-to-top {
-    /* Hide the back to top icon initially. It will be unhidden by JS only. */
-    display: none;
-    /* Place the back to top button at a fixed place. */
+/* Boost Union footer buttons container */
+#boost-union-footer-buttons {
+    /* Place the Boost Union footer buttons at a fixed place. */
     position: fixed;
     right: 2rem;
-    /* As a start, the back to top button is shown in the bottom right corner. */
+    /* As a start, the Boost Union footer buttons are shown in the bottom right corner. */
     bottom: 2rem;
-    /* Make sure that the back to top button is not covered by anything else. */
+    /* Make sure that the Boost Union footer buttons are not covered by anything else. */
     z-index: $zindex-dropdown;
-    /* Animate position together with footer button. */
+    /* Animate position together with Moodle core footer button. */
     @include transition(0.2s);
+
+    /* Add margin between the individual buttons. */
+    .btn {
+        display: block;
+        margin-top: 1rem;
+    }
+
+    /* Style accessibility button. */
+    #btn-accessibility-support {
+        /* Use some clever CSS tricks to present the fa-universal-access icon without its border. */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        border: 6px solid $secondary;
+        transition: 0.2s;
+
+        .icon {
+            width: 1.75rem;
+            height: 1.75rem;
+            max-width: none;
+            max-height: none;
+            font-size: 1.75rem;
+            color: $secondary;
+            transition: 0.2s;
+        }
+
+        &,
+        &:hover,
+        &:focus {
+            background: #000 !important; /* stylelint-disable-line declaration-no-important */
+        }
+
+        &:hover,
+        &:focus {
+            border-color: #b1bbc4;
+
+            .icon {
+                color: #b1bbc4;
+            }
+        }
+    }
+
+    /* Style back to top button. */
+    #back-to-top {
+        /* Hide the back to top icon initially. It will be unhidden by JS only. */
+        display: none;
+    }
 }
-/* If the sticky footer is shown by Moodle core, the back to top button has to have a higher starting position. */
-body.hasstickyfooter #back-to-top {
+
+/* If the sticky footer is shown by Moodle core, the Boost Union footer buttons have to have a higher starting position. */
+body.hasstickyfooter #boost-union-footer-buttons {
     bottom: 7rem;
-}
-#back-to-top i::before {
-    /* Move the caret icon slightly up for a nicer look. */
-    vertical-align: 0.3rem;
 }
 
 /* If we are on a small screen and the footer button is shown in the bottom right corner,
-   the back to top button has to be shown above of the footer button. */
+   the Boost Union footer buttons have to be shown above of the footer button. */
 body.theme_boost-union-footerbuttonall.jsenabled,
 body.theme_boost-union-footerbuttonmobile.jsenabled {
-    @include media-breakpoint-down(xs) {
-        #back-to-top {
+    @include media-breakpoint-down(sm) {
+        #boost-union-footer-buttons {
             bottom: 5rem;
         }
     }
-    /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
+    /* And if the sticky footer is shown by Moodle core, move the Boost Union footer buttons more upwards. */
     &.hasstickyfooter {
-        @include media-breakpoint-down(xs) {
-            #back-to-top {
-                bottom: 10rem;
+        @include media-breakpoint-down(sm) {
+            #boost-union-footer-buttons {
+                bottom: calc(5rem + #{$stickyfooter-height} - 1rem);
             }
         }
     }
 }
 /* If we are on a larger screen and the footer button is shown in the bottom right corner,
-   the back to top button has to be shown above of the footer button. */
+   the Boost Union footer buttons have to be shown above of the footer button. */
 body.theme_boost-union-footerbuttonall.jsenabled,
 body.theme_boost-union-footerbuttondesktop.jsenabled {
     @include media-breakpoint-up(sm) {
-        #back-to-top {
+        #boost-union-footer-buttons {
             bottom: 5rem;
         }
     }
-    /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
+    /* And if the sticky footer is shown by Moodle core, move the Boost Union footer buttons more upwards. */
     &.hasstickyfooter {
         @include media-breakpoint-up(sm) {
-            #back-to-top {
-                bottom: 10rem;
+            #boost-union-footer-buttons {
+                bottom: calc(5rem + #{$stickyfooter-height} - 1rem);
             }
         }
     }
 }
-/* If the communications button is shown, the back to top button has to be moved more upwards.
-   To realize this, our back-to-top JS has added a class to the body tag. */
+/* If the communications button is shown, the Boost Union footer buttons have to be moved more upwards.
+   To realize this, our footerbuttons JS has added a class to the body tag. */
 body.theme-boost-union-commincourse {
     /* If we are on a small screen,
        we do not need to do anything (yet) as the communication button is not shown on small screens (yet). */
@@ -586,17 +985,17 @@ body.theme-boost-union-commincourse {
     /* If we are on a larger screen and the footer button is not shown in the bottom right corner. */
     &.theme_boost-union-footerbuttonnone.jsenabled,
     &.theme_boost-union-footerbuttonmobile.jsenabled {
-        /* We have to move the back to top button more upwards.*/
+        /* We have to move the Boost Union footer buttons more upwards.*/
         @include media-breakpoint-up(sm) {
-            #back-to-top {
+            #boost-union-footer-buttons {
                 bottom: 5rem;
             }
         }
-        /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
+        /* And if the sticky footer is shown by Moodle core, move the Boost Union footer buttons more upwards. */
         &.hasstickyfooter {
             @include media-breakpoint-up(sm) {
-                #back-to-top {
-                    bottom: 10rem;
+                #boost-union-footer-buttons {
+                    bottom: calc(5rem + #{$stickyfooter-height} - 1rem);
                 }
             }
         }
@@ -605,17 +1004,17 @@ body.theme-boost-union-commincourse {
     /* If we are on a larger screen and the footer button is shown in the bottom right corner. */
     &.theme_boost-union-footerbuttonall.jsenabled,
     &.theme_boost-union-footerbuttondesktop.jsenabled {
-        /* We have to move the back to top button even more upwards.*/
+        /* We have to move the Boost Union footer buttons even more upwards.*/
         @include media-breakpoint-up(sm) {
-            #back-to-top {
+            #boost-union-footer-buttons {
                 bottom: 8rem;
             }
         }
-        /* And if the sticky footer is shown by Moodle core, move the back to top button more upwards. */
+        /* And if the sticky footer is shown by Moodle core, move the Boost Union footer buttons more upwards. */
         &.hasstickyfooter {
             @include media-breakpoint-up(sm) {
-                #back-to-top {
-                    bottom: 13rem;
+                #boost-union-footer-buttons {
+                    bottom: calc(8rem + #{$stickyfooter-height} - 1rem);
                 }
             }
         }
@@ -623,18 +1022,12 @@ body.theme-boost-union-commincourse {
 }
 
 /* If the right-hand drawer is opened. */
-#page.drawers.show-drawer-right #back-to-top {
+#page.drawers.show-drawer-right #boost-union-footer-buttons {
     /* On larger screens, the drawer opens near the main content.
-       The back to top button can be moved nicely to the left. */
+       The Boost Union footer buttons can be moved nicely to the left. */
     @include media-breakpoint-up(lg) {
-        /* Move the back to top button when right drawer is shown. */
+        /* Move the Boost Union footer buttons when right drawer is shown. */
         right: calc(#{$drawer-right-width} + 2rem);
-    }
-    /* On smaller screens, the drawer opens as an overlay over the main content.
-       The back to top button looks misplaced then. */
-    @include media-breakpoint-down(lg) {
-        /* Hide the back to top button when right drawer is shown. */
-        display: none;
     }
 }
 
@@ -649,10 +1042,13 @@ body.theme-boost-union-commincourse {
 
 /* To support additional block regions around the main content area, Boost Union introduced
    the main-inner-wrapper HTML element. Unfortunately, this breaks the Flexbox flow of Moodle core.
-   To make it work again, we have to set the Flexbox flex attribute in the main-inner-wrapper element as well. */
-.main-inner-wrapper {
+   To make it work again, we have to set the Flexbox flex attribute in the main-inner-wrapper element as well.
+   In addition to that, we set the Flexbox attribute for the #page element as well as it turned out to be necessary. */
+.main-inner-wrapper,
+#page-wrapper #page {
     flex: 1 0 auto;
 }
+
 
 /*---------------------------------------
  * Settings: Additional block regions - The offcanvas region.
@@ -667,8 +1063,7 @@ body.theme-boost-union-commincourse {
     min-height: 300px;
     top: -100vh;
     width: 100vw;
-    z-index: 1050; /* This z-index is equal to $zindex-modal and puts the drawer on top of
-                      the whole page regardless what Moodle does for the .drawer class. */
+    z-index: $zindex-modal;
 
     /* And show it as soon as the drawer is set to be shown. */
     &.show {
@@ -681,7 +1076,7 @@ body.theme-boost-union-commincourse {
         /* Position the icon. */
         .btn {
             margin-left: auto;
-            margin-right: 10px;
+            margin-right: 17px;
         }
 
         /* Make the close icon more visible. */
@@ -733,7 +1128,7 @@ body.theme-boost-union-commincourse {
             }
             i {
                 font-size: 20px;
-                line-height: 30px;
+                line-height: 25px;
             }
         }
     }
@@ -743,6 +1138,13 @@ body.theme-boost-union-commincourse {
 /*---------------------------------------
  * Settings: Additional block regions - The outside-left and outside-right regions.
  --------------------------------------*/
+
+/* Note: In this section, some selectors are more specific than necessary at first sight.
+   However, we had to be over-precise sometimes to make sure that the selectors are really applied and not
+   overruled by Boost core selectors. */
+
+/* We start by placing the outside regions left and right of the main content area.
+   We do this in several steps for different screen sizes. */
 
 /* On larger screens. */
 @include media-breakpoint-up(md) {
@@ -754,100 +1156,210 @@ body.theme-boost-union-commincourse {
         .main-inner-outside-left-right,
         .main-inner-outside-left,
         .main-inner-outside-right {
-            /* Center the main region content to keep the page content in the middle of the page. */
-            text-align: center;
+            /* If the admin configured outside blocks to be shown next to the window edges. */
+            &.main-inner-outside-nearwindowedges {
+                /* Center the main region content to position the page content in the middle of the page,
+                and place the left and right block regions near the window edges. */
+                width: 100%;
+            }
+            /* If the admin configured outside blocks to be shown next to the main content. */
+            &.main-inner-outside-nextmaincontent {
+                /* Center the main region content to keep the left and right block regions near the main region,
+                positioning the page content in the middle of the page. */
+                display: flex;
+                align-self: center;
+            }
 
-            /* Change the block regions to show them properly as block columns. */
-            #theme-block-region-outside-left,
-            #theme-block-region-outside-right,
+            /* Set the width of the main inner region to auto.
+               Using a 100% width in the main inner area (which is the default) would push the side regions outside the page. */
             .main-inner {
-                /* Undo the text-align for the regions in each column to still show the content correctly. */
-                text-align: initial;
+                width: auto;
+            }
+        }
+    }
+}
 
-                /* Display them as inline-block. */
-                display: inline-block;
+/* On even larger screens. */
+@include media-breakpoint-up(lg) {
+    body.limitedwidth {
+        /* If any block region is enabled, handle the block region placement. */
+        #page.drawers .main-inner-wrapper {
+            &.main-inner-outside-left-right,
+            &.main-inner-outside-left,
+            &.main-inner-outside-right {
+                /* Compared to the Moodle default, prevent the main region to shrink if block regions are present. */
+                .main-inner {
+                    flex: auto;
+                }
 
-                /* And make sure that the columns are at the top of the page at all. */
-                vertical-align: top;
+                /* If the admin configured outside blocks to be shown next to the window edges. */
+                &.main-inner-outside-nearwindowedges {
+                    /* Center the main region content to position the page content in the middle of the page,
+                    and place the left and right block regions near the window edges. */
+                    display: flex;
+                }
+
+                /* If the admin configured outside blocks to be shown near the main content block. */
+                &.main-inner-outside-nextmaincontent {
+                    /* Center the main region content. */
+                    align-self: normal;
+                    justify-content: center;
+                    /* Remove the left and right margins from the main inner region to make it full-width. */
+                    .main-inner {
+                        margin-left: 0;
+                        margin-right: 0;
+                    }
+                }
             }
         }
 
-        /* On pages where only the outside-left region is enabled:
-           Reduce the size of the main column to make space for the outside-left column. */
-        .main-inner-outside-left .main-inner {
-            width: calc(98% - #{$blockregionoutsideleftwidth});
-        }
-
-        /* On pages where only the outside-right region is enabled:
-           Reduce the size of the main column to make space for the outside-right column. */
-        .main-inner-outside-right .main-inner {
-            width: calc(98% - #{$blockregionoutsiderightwidth});
-        }
-
-        /* On pages where the outside-left and the outside-right region are enabled:
-           Reduce the size of the main column to make space for the outside-left and outside-right columns. */
-        .main-inner-outside-left-right .main-inner {
-            width: calc(98% - #{$blockregionoutsiderightwidth} - #{$blockregionoutsideleftwidth});
-        }
-
-        /* Set the width and margin of the outside-left region. */
+        /* And set the width and margin of the outside-left and right regions. */
         #theme-block-region-outside-left {
             margin-right: 1rem;
             margin-top: 1.5rem;
             width: $blockregionoutsideleftwidth;
         }
-
-        /* Set the width of the outside-right region. */
         #theme-block-region-outside-right {
             margin-left: 1rem;
             margin-top: 1.5rem;
             width: $blockregionoutsiderightwidth;
         }
 
-        /* If the admin configured outside blocks to be shown next to the main content. */
-        .main-inner-outside-nextmaincontent {
+        /* Additionally, if we have a outside-left and / or a outside-right block region,
+           shrink the page's horizontal padding to make use of the available real estate. */
+        #page.drawers:has(.main-inner-outside-left-right),
+        #page.drawers:has(.main-inner-outside-left),
+        #page.drawers:has(.main-inner-outside-right) {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+    }
+}
+
+/* On even larger screens only. */
+@include media-breakpoint-only(lg) {
+    body.limitedwidth {
+        /* If both outside-left and outside-right block regions are present. */
+        #page .main-inner-outside-left-right {
+            /* Limit the maximum width of the left and right region blocks, so that enough space remains for the main content. */
             #theme-block-region-outside-left,
             #theme-block-region-outside-right {
-                /* Disable float (just to be sure). */
-                float: none;
+                max-width: 200px;
             }
         }
 
-        /* If the admin configured outside blocks to be shown next to the main content. */
-        .main-inner-outside-nearwindowedges {
-            /* Float the outside-left block region to the left. */
-            #theme-block-region-outside-left {
-                float: left;
+        /* And use the possible width for the main content if at least one block region is present. */
+        #page .main-inner-outside-left-right,
+        #page .main-inner-outside-left,
+        #page .main-inner-outside-right {
+            .main-inner {
+                width: 100%;
             }
+        }
+    }
+}
 
-            /* Float the outside-right block region to the right. */
-            #theme-block-region-outside-right {
-                float: right;
+/* From here on, the outside regions will collapse above and below the main content area.
+   We do this again in multiple steps for different screen sizes. */
+
+/* On larger screens only. */
+@include media-breakpoint-only(md) {
+    body.limitedwidth #page.drawers {
+        /* If we have a outside-left and / or a outside-right block region. */
+        .main-inner-outside-left-right,
+        .main-inner-outside-left,
+        .main-inner-outside-right {
+            /* And if the admin configured outside blocks to be shown next to the main content. */
+            &.main-inner-outside-nextmaincontent {
+                /* Center the main region content while maintaining full width for the left and right block regions,
+                   thereby positioning the page content in the middle of the page. */
+                display: block;
+                align-self: auto;
             }
+        }
 
-            /* Clear the outside-bottom + footer regions so that they are shown correctly after the floated regions. */
-            #theme-block-region-outside-bottom,
-            #theme-block-region-footer {
-                clear: both;
+        /* And change the outside-left and outside-right blocks to full width. */
+        #theme-block-region-outside-left,
+        #theme-block-region-outside-right {
+            width: 100%;
+        }
+    }
+}
+
+/* On larger screens downwards. */
+@include media-breakpoint-down(lg) {
+    body.limitedwidth #page.drawers {
+        /* If configured, wrap the left and right outside regions below the main content. */
+        .main-inner-outside-both-below-maincontent {
+            &.main-inner-outside-left-right,
+            &.main-inner-outside-left {
+                display: grid;
+                #theme-block-region-outside-left {
+                    order: 1;
+                }
+                #theme-block-region-outside-right {
+                    order: 2;
+                }
             }
         }
     }
 }
 
 /* And on smaller screens. */
-@include media-breakpoint-down(sm) {
-    /* Change the outside-left and outside-right blocks to full width (with some horizontal space). */
-    #theme-block-region-outside-left,
-    #theme-block-region-outside-right {
-        padding-left: 15px;
-        padding-right: 15px;
-        width: 100%;
-    }
-    /* And remove their floating. */
-    .main-inner-outside-nearwindowedges {
+@include media-breakpoint-down(md) {
+    body.limitedwidth {
+        /* If we have a outside-left and / or a outside-right block region. */
+        .main-inner-outside-left-right,
+        .main-inner-outside-left,
+        .main-inner-outside-right {
+            /* And if the admin configured outside blocks to be shown next to the window edges. */
+            &.main-inner-outside-nearwindowedges {
+                /* Set the width of the main region content, the left and right block regions to have a full width */
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* Remove the left and right padding from the main content region and its header so that the main content and the blocks
+               (which are now shown above and below the main content are nicer aligned. */
+            .main-inner {
+                padding-left: 0;
+                padding-right: 0;
+
+                .header-maxwidth,
+                div[role="main"] {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+            }
+        }
+
+        /* Add some margin to the outside blocks regions as they would stick to the viewport edge otherwise at this breakpoint. */
         #theme-block-region-outside-left,
         #theme-block-region-outside-right {
-            float: none;
+            margin-left: .5rem;
+            margin-right: .5rem;
+        }
+    }
+}
+
+/* Last but not least, we control the y-axis. */
+
+/* On smaller screens. */
+@include media-breakpoint-down(lg) {
+    body.limitedwidth #page.drawers {
+        /* If we have a outside-left and / or a outside-right block region. */
+        .main-inner-outside-left-right,
+        .main-inner-outside-left,
+        .main-inner-outside-right {
+            /* Shrink the bottom margin under the main content area. */
+            .main-inner {
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Add some margin above the outside-left block region to avoid that it glues directly to the navbar. */
+        #theme-block-region-outside-left {
+            margin-top: 1.5rem;
         }
     }
 }
@@ -880,7 +1392,7 @@ body.theme-boost-union-commincourse {
     }
 
     /* And on smaller screens. */
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         &.theme-block-region-outside-fullwidth,
         &.theme-block-region-outside-coursecontentwidth,
         &.theme-block-region-footer-fullwidth,
@@ -924,7 +1436,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
     }
 
     /* And on smaller screens. */
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         /* Just show the block full width with some horizontal space. */
         padding-left: 15px;
         padding-right: 15px;
@@ -953,7 +1465,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 }
 
 /* And on smaller screens. */
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
     /* Add some horizontal space on the small screen. */
     #theme-block-region-footer {
         padding-left: 15px;
@@ -986,7 +1498,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 /* Static pages links dividers. */
 #footnote {
     .theme_boost_union_footnote_link {
-        border-right: 2px solid $nav-divider-color;
+        border-right: 2px solid $breadcrumb-divider-color;
     }
     .theme_boost_union_footnote_link:last-of-type {
         border-right: none;
@@ -1034,8 +1546,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 
         /* Add horizontal margin and padding to align the footnote with the main page content.
            The numbers are adopted from the main content areas of the Moodle page.
-           Add another right padding as well to avoid that the content gets covered by the footer and back-to-top
-           buttons. */
+           Add another right padding as well to avoid that the content gets covered by the footer and Boost Union footer buttons. */
         margin-left: .5rem;
         padding-left: 15px;
         margin-right: .5rem;
@@ -1047,13 +1558,13 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 }
 
 /* And on really small screens. */
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
     #footnote {
         /* On really small screens, there isn't any background image, so there's no need for a white background. */
 
         /* Add horizontal margin and padding to align the footnote with the main page content.
            The numbers are adopted from the main content areas of the Moodle page.
-           Add another right padding as well to avoid that the content gets covered by the back-to-top button. */
+           Add another right padding as well to avoid that the content gets covered by the Boost Union footer buttons. */
         margin-left: 15px;
         padding-left: 1rem;
         margin-right: 15px;
@@ -1098,22 +1609,28 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 }
 
 /* And on really small screens. */
-@include media-breakpoint-down(xs) {
-    body.pagelayout-login.loginbackgroundimage #footnote {
-        /* Add white background color and a small bottom margin
-           to make the footnote work with background images.
-           This is necessary as this isn't covered by the normal background styles already
-           (which are only applied to pages > 768px. */
-        background-color: $white;
+@include media-breakpoint-down(sm) {
+    body.pagelayout-login.loginbackgroundimage {
+        #footnote {
+            /* Add white background color and a small bottom margin
+            to make the footnote work with background images.
+            This is necessary as this isn't covered by the normal background styles already
+            (which are only applied to pages > 768px. */
+            background-color: $white;
 
-        /* Change horizontal margin and padding to
-           make the footnote work with background images.
-           We do not need any additional right padding as there isn't a back-to-top button nor a footer button
+            /* Change horizontal margin and padding to
+            make the footnote work with background images. */
+            margin-left: 0;
+            padding-left: calc(15px + 1rem);
+            margin-right: 0;
+        }
+
+        /* If (and only if) the accessibility button is not shown on the login page,
+           we do not need any additional right padding as there isn't a Boost Union footer button nor a footer button
            on the login page on this screen size. */
-        margin-left: 0;
-        padding-left: calc(15px + 1rem);
-        margin-right: 0;
-        padding-right: calc(15px + 1rem);
+        &:not(.theme_boost-union-accessibilitybutton) #footnote {
+            padding-right: calc(15px + 1rem);
+        }
     }
 }
 
@@ -1167,7 +1684,7 @@ body.theme_boost-union-footerbuttonmobile.jsenabled {
         }
     }
     /* On smaller screens. */
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         /* Show the footer button.
            This uses !important to make really sure that the element is shown regardless of other CSS rules. */
         .btn-footer-popover {
@@ -1232,9 +1749,9 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 /* Style the advertisement tile cards. */
 #themeboostunionadvtiles [class*="col-"] .card {
     background-size: cover;
-    /* d-flex align-items-stretch align-self-stretch classes in mustache template require to set width to inherit
+    /* d-flex align-items-stretch align-self-stretch classes in mustache template require to set width explicitely
        (Otherwise width is flexible dependent on content). */
-    width: inherit;
+    width: 100%;
 }
 
 /* Classes for the content style of advertisement tiles. */
@@ -1332,7 +1849,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
  ======================================*/
 
 /* Remove horizontal paddings on the tile / slider container on smaller screens to align it with the main frontpage content. */
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
     #themeboostunionadvtiles,
     #themeboostunionslider-wrapper {
         padding-left: 0;
@@ -1351,6 +1868,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 
 .course-hint-hidden,
 .course-hint-guestaccess,
+.course-hint-guestenrol,
 .course-hint-selfenrol,
 .course-hint-switchedrole {
     margin-left: 15px;
@@ -1373,27 +1891,24 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             /* Added height and background color for the top header,
             z-index is added to show the top header dropdown menu above the header block */
             &.boost-union-menubar { /* boost-union-menubar class is added for the top header */
-                height: 42px;
+                height: calc(#{$bu-smartmenu-menubar-height} + 2px);
                 border-bottom: 0;
                 background-color: #f8f9fa;
                 z-index: 1031;
+                /* The position of the message drawer has been adjusted slightly top to accommodate the top header. */
+                ~ [data-region=right-hand-drawer].drawer {
+                    top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height});
+                }
                 /* The position of the side drawer has been adjusted slightly below to accommodate the top header. */
                 ~ .drawer.drawer-left {
-                    top: 101px;
+                    top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height} + 1px);
                 }
                 ~ .drawer.drawer-right {
-                    top: 101px;
-                }
-                /* The position of the main page has been adjusted slightly below to accommodate the top header. */
-                ~ #page.drawers {
-                    margin-top: 100px;
-                    /* The position of the drawer button to toggle has been adjusted slightly
-                    below to accommodate the top header.
-                    .drawer-toggles .drawer-toggler {
-                        top: 110px;
-                    }*/
+                    top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height} + 1px);
                 }
                 .moremenu {
+                    height: $bu-smartmenu-menubar-height;
+
                     .more-nav {
                         li {
                             /* The card dropdown menu link position is changed to static to show the card dropdown menu
@@ -1402,7 +1917,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                                 position: static;
                             }
                             &.nav-item {
-                                &:first-child {
+                                &:first-child,
+                                &:nth-child(2) {
                                     /* The position of the dropdown menu should not extend beyond the visible area of
                                        the screen */
                                     .dropdown-menu {
@@ -1414,10 +1930,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                             a {
                                 &:not(.active) {
                                     border-bottom: 0;
-                                    padding: 10px;
-                                }
-                                > * {
-                                    cursor: pointer;
                                 }
                                 /* Background color added in the menubar menu link on hover */
                                 &.nav-link:hover {
@@ -1426,6 +1938,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                             }
                             /* The positions of the dropdown menu added */
                             .dropdown-menu {
+                                float: none;
                                 left: auto;
                                 right: 0;
                                 li {
@@ -1438,12 +1951,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                                     padding: 0;
                                 }
                             }
-                            /* Added max-height and overflow auto for scollbar when the card item reach the dropdown
-                               height */
-                            &.dropdownmoremenu .dropdown-menu .dropdown-menu {
-                                max-height: 300px;
-                                overflow-y: auto;
-                            }
                         }
                     }
                 }
@@ -1451,17 +1958,17 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     /* Margin top has been added to the Header block to ensure that it does not conflict with the top
                        header. */
                     &.fixed-top {
-                        margin-top: 40px;
-                        /* The position of the card dropdown block has been set to static,
-                        so it will always appear under the card menu link. */
-                        .moremenu .dropdown.card-dropdown {
-                            position: static;
-                            .dropdown-menu {
-                                overflow-y: auto;
-                            }
-                            &:not(.card-overflow-no-wrap) .dropdown-menu {
-                                max-height: calc(100vh - 300px);
-                            }
+                        margin-top: $bu-smartmenu-menubar-height;
+                    }
+                    /* The position of the card dropdown block has been set to static,
+                    so it will always appear under the card menu link. */
+                    .moremenu .dropdown.card-dropdown {
+                        position: static;
+                        .dropdown-menu {
+                            overflow-y: auto;
+                        }
+                        &:not(.card-overflow-no-wrap) .dropdown-menu {
+                            max-height: calc(100vh - 300px);
                         }
                     }
                 }
@@ -1471,7 +1978,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             ~ .drawer-bottom.drawer {
                 width: 100%;
                 top: 0;
-                padding-bottom: 101px;
+                padding-bottom: calc(#{$bu-smartmenu-bottombar-height} + 1px);
                 visibility: hidden;
                 /* Visible on show when the drawer toggle "More" link is clicked */
                 &.show {
@@ -1480,7 +1987,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             }
             /* The position of the main page has been adjusted slightly below to accommodate the top header. */
             ~ #page.drawers {
-                margin-top: 60px;
+                margin-top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height});
             }
             .moremenu .more-nav li.card-dropdown {
                 /* The position of the card dropdown block has been set to static,
@@ -1577,15 +2084,23 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     }
                 }
             }
-            /* Minimum width is adde for the dropdown, overlay y axis is visible to show the sub dropdown menus*/
-            > div:not(.navbar-nav) .dropdown:not(.card-dropdown) .dropdown-menu {
-                min-width: 200px;
-                overflow-y: visible;
-            }
             /* The icon tag aligned top at the usermenu link */
             .usermenu .dropdown-menu {
-                .submenu .items a.dropdown-item {
-                    align-items: baseline;
+                .submenu {
+                    /* Remove the padding on the User submenu header */
+                    .header {
+                        padding: 0;
+                        /* Centered align the User submenu header, added padding and removed the underline for the link */
+                        .carousel-navigation-link {
+                            text-decoration: none;
+                            padding: .1rem .75rem;
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                    .items a.dropdown-item {
+                        align-items: baseline;
+                    }
                 }
                 /* Usermenu dropdown item position relative for it's submenu */
                 .dropdown-item {
@@ -1596,12 +2111,27 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     }
                 }
             }
+            /* Dropdown more menu back button arrow margin */
+            .boost-union-moremenu.dropdown-menu .carousel-navigation-link > * {
+                pointer-events: none;
+                img {
+                    margin: 0;
+                }
+            }
         }
         .moremenu {
             .more-nav li.nav-item {
                 /* Menu link icon aligned center */
                 a {
+                    display: flex;
                     align-items: center;
+                    &.dimmed {
+                        color: $text-muted;
+                        &.dropdown-item:hover {
+                            color: $white;
+                            opacity: .7;
+                        }
+                    }
                     label {
                         margin-bottom: 0;
                     }
@@ -1610,7 +2140,16 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 /* The full width style is added for the menu link inside the "More" menu */
                 &.dropdownmoremenu .dropdown-menu li.nav-item.dropdown {
                     width: 100%;
+                    &.card-dropdown .dropdown-toggle:after {
+                        content: '\f105';
+                    }
                     .dropdown-toggle {
+                        &:after {
+                            font-size: 10px;
+                            margin-top: 7px;
+                            position: absolute;
+                            right: 0.75rem;
+                        }
                         /* Header dropdown toggle menu link color added */
                         &:hover,
                         &:focus,
@@ -1621,24 +2160,24 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                     /* Header dropdown menu border added and position added not to conflict
                         with the screen in the responsive alignment */
                     .dropdown-menu {
-                        border: 1px solid rgba(0, 0, 0, 0.15);
-                        padding: 0.5rem 0;
-                        position: absolute;
-                        top: 0;
-                        left: auto;
-                        right: 100%;
-                        /* Removed the background color for the menu link of the submenu link*/
-                        .dropdown-item {
-                            &:not(:hover):not(:focus):not(:active) {
-                                background: none;
-                            }
-                        }
+                        max-height: none;
+                        border-radius: 0;
+                        overflow: visible;
                     }
                     &.card-dropdown {
+                        /* Minimum width, maximum width and height, aligned center, and position
+                        fixed of card dropdown menu below the nav header */
                         .dropdown-menu {
-                            min-width: 420px;
+                            min-width: 220px;
+                            max-width: 90%;
                             max-height: calc(100vh - 120px);
                             text-align: center;
+                            padding: 5px;
+                            overflow: auto;
+                            position: fixed;
+                            right: 0;
+                            top: 100px;
+                            left: 0;
                         }
                         &.card-form-fullwidth {
                             .dropdown-menu .card-block-wrapper {
@@ -1649,10 +2188,18 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 }
             }
             .dropdown {
-                /* Top margin removed and overlay y axis is visible to show the dropdowm menu without the scrollbar */
+                /* Minimum width , max-height added to display the dropdown menu items, Top margin removed
+                and overlay y axis is auto to show the dropdowm menu with the scrollbar */
                 .dropdown-menu {
-                    overflow-y: visible;
+                    min-width: 220px;
+                    max-width: 260px;
+                    max-height: calc(100vh - 200px);
+                    overflow: auto;
                     margin-top: 0;
+                    /* The more menu item with inline to display in full width */
+                    .nav-item {
+                        min-width: 100%;
+                    }
                     /* Menu description font size, padding, border-radius and background color added */
                     .menu-description {
                         font-size: 12px;
@@ -1664,21 +2211,33 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                             margin-bottom: 0;
                         }
                     }
-                    /* Padding and Position added for the "help icon" in menu */
+                    /* Text aligned center and margin bottom added for the "help icon" in menu help icon */
                     .menu-helpicon {
                         text-align: center;
-                        padding-right: 10px;
                         margin-bottom: 10px;
                         /* Margin removed in the menu description help icon in the menu */
                         i {
                             margin: 0;
+                            /* color white is added in the menu description help icon in the menu */
+                            &:before {
+                                color: var(--info);
+                            }
                         }
                     }
                     /* The font size and opacity reduced when the Menu link is selected as "Heading" option in the
                        settings */
                     .dropdown-item {
-                        /* Dropdown menu link alignment at top */
+                        /* Dropdown menu link alignment at top, white-space is used to arrange the large text in the
+                        next line*/
                         align-items: baseline;
+                        white-space: normal;
+                        /* The icon width, height and font size is changed to normal size when the
+                        large size icon (class="iconsize-big") is used in the "i" tag */
+                        i.icon {
+                            width: auto;
+                            height: auto;
+                            font-size: 16px;
+                        }
                         /* The "Tick" icon removed when the menu link is clicked */
                         &:before {
                             display: none;
@@ -1773,8 +2332,9 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 /* Card layout - The below styles are header dropdown Card style menus */
                 &.card-dropdown {
                     /* The header card dropdown menu width, padding, removed border radius and top margin, added
-                    white background color and it's position styles */
+                    white background color and it's position styles, max-width as none to show the card dropdown to full width */
                     .dropdown-menu {
+                        max-width: none;
                         width: 100%;
                         border-radius: 0;
                         background-color: #f0efef;
@@ -1784,136 +2344,152 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                         top: 100%;
                         left: 0;
                         /* The header card dropdown menu items styles */
-                        /* Margin added to the card block right & bottom and vertical align added to
-                        align the card block center to each other */
-                        .card-block {
-                            margin-right: 15px;
-                            margin-bottom: 15px;
-                            display: inline-block;
-                            vertical-align: top;
-                            flex-direction: column;
-                            /* The image parent div added for the card dropdown items */
-                            .img-block {
-                                width: 100%;
-                                height: 200px;
-                                /* The image size added for the card dropdown items */
-                                img {
+                        /* Aligned the card dropdown to center */
+                        .card-block-wrapper {
+                            text-align: center;
+                            /* Margin added to the card block right & bottom and vertical align added to
+                            align the card block center to each other */
+                            .card-block {
+                                margin-right: 15px;
+                                margin-bottom: 15px;
+                                display: inline-block;
+                                vertical-align: top;
+                                flex-direction: column;
+                                /* The image parent div added for the card dropdown items */
+                                .img-block {
                                     width: 100%;
-                                    height: 100%;
-                                    object-fit: cover;
+                                    height: 200px;
+                                    /* The image size added for the card dropdown items */
+                                    img {
+                                        width: 100%;
+                                        height: 100%;
+                                        object-fit: cover;
+                                    }
+                                    > a {
+                                        padding: 0;
+                                        display: initial;
+                                    }
                                 }
-                                > a {
-                                    padding: 0;
-                                }
-                            }
-                            /* The card dropdown items content block width, padding, background color
-                            and aligned center styles added */
-                            .content-block {
-                                width: 100%;
-                                padding: 10px;
-                                background-color: rgba(0, 0, 0, 0.5);
-                                display: flex;
-                                align-items: center;
-                                /* The margin added to the heading in the content block for the card dropdown items */
-                                h5 {
+                                /* The card dropdown items content block width, text aligned left padding, background color
+                                and aligned center styles added */
+                                .content-block {
                                     width: 100%;
-                                    margin-bottom: 0;
-                                    overflow: hidden;
-                                    /* The font style, color, paddign added to the link of the heading
+                                    text-align: left;
+                                    padding: 10px;
+                                    background-color: rgba(0, 0, 0, 0.5);
+                                    display: flex;
+                                    align-items: center;
+                                    /* The margin added to the heading in the content block for the card dropdown items */
+                                    h5 {
+                                        width: 100%;
+                                        margin-bottom: 0;
+                                        overflow: hidden;
+                                        /* The font style, color, paddign added to the link of the heading
+                                        in the content block for the card dropdown items. Background none is added when the
+                                        background is not given in the settings for the menu items */
+                                        a {
+                                            font-size: 14px;
+                                            color: $white;
+                                            font-weight: bold;
+                                            padding: 0;
+                                            background: none;
+                                            /* Background removed for the link of the heading on hover
+                                            in the content block for the card dropdown items */
+                                            &:hover,
+                                            &:focus,
+                                            &:active {
+                                                background: none;
+                                            }
+                                            /* The icon color is intended to correspond with the text color specified in the menu
+                                            item settings. However, the icon color in the card dropdown menu may be overridden by
+                                            the color defined in the theme style for the navigation, particularly when using the
+                                            "dark" and "bg primary" options in the header. To ensure the desired icon color is
+                                            maintained, the icon color is set to "inherit" with the use of "!important".
+                                            This ensures that the color specified in the text setting will be applied to the icon.
+                                            */
+                                            i {
+                                                color: inherit !important; /* stylelint-disable-line declaration-no-important */
+                                            }
+                                        }
+                                    }
+                                    /* The line height added and "Go" button block aligned right side
                                     in the content block for the card dropdown items */
-                                    a {
-                                        font-size: 14px;
-                                        color: $white;
-                                        font-weight: bold;
-                                        padding: 0;
-                                        /* Background removed for the link of the heading on hover
-                                        in the content block for the card dropdown items */
-                                        &:hover,
-                                        &:focus,
-                                        &:active {
+                                    .card-btn-block {
+                                        width: auto;
+                                        line-height: 10px;
+                                        text-align: right;
+                                        margin-left: 5px;
+                                        a {
+                                            /* The color and padding added for the "Go" button in
+                                            the content block of the card dropdown items. Background none is added when the
+                                            background is not given in the settings for the menu items */
+                                            color: #fff;
+                                            padding: 0;
                                             background: none;
+                                            &:hover,
+                                            &:focus,
+                                            &:active {
+                                                /* Background removed for the link of the button on
+                                                hover in the content block for the card dropdown items */
+                                                background: none;
+                                            }
                                         }
                                     }
                                 }
-                                /* The line height added and "Go" button block aligned right side
-                                in the content block for the card dropdown items */
-                                .btn-block {
-                                    width: auto;
-                                    line-height: 10px;
-                                    text-align: right;
-                                    margin-left: 5px;
-                                    a {
-                                        /* The color and padding added for the "Go" button in
-                                        the content block of the card dropdown items */
-                                        color: #fff;
-                                        padding: 0;
-                                        &:hover,
-                                        &:focus,
-                                        &:active {
-                                            /* Background removed for the link of the button on
-                                            hover in the content block for the card dropdown items */
-                                            background: none;
-                                        }
-                                    }
-                                }
-                            }
-                            /* The below style is added when the Menu link as "Heading" in "card layout" Menu
-                               settings */
-                            &.menu-item-heading {
-                                /* The Card menu as "Heading" option content block style */
-                                .content-block {
-                                    /* The Card menu content heading menu link font-size and opacity added */
-                                    h5 a {
-                                        font-size: 16px;
-                                        opacity: .6;
-                                        /* The Card menu content heading menu link icon font-size added */
-                                        i {
+                                /* The below style is added when the Menu link as "Heading" in "card layout" Menu
+                                settings */
+                                &.menu-item-heading {
+                                    /* The Card menu as "Heading" option content block style */
+                                    .content-block {
+                                        /* The Card menu content heading menu link font-size and opacity added */
+                                        h5 a {
                                             font-size: 16px;
+                                            opacity: .6;
+                                        }
+                                        /* The Card Menu as "Heading" option content block "Go" button link is hidden */
+                                        .card-btn-block {
+                                            display: none;
                                         }
                                     }
-                                    /* The Card Menu as "Heading" option content block "Go" button link is hidden */
-                                    .btn-block {
-                                        display: none;
+                                }
+                                /* The "Text position" of the menu link is selected as "Top overlay"
+                                or "Below overlay" in the "Card Appearance" settings */
+                                &.card-text-overlay-top,
+                                &.card-text-overlay-bottom {
+                                    /* The position relative to the card dropdown  */
+                                    position: relative;
+                                    /* The border, background, box-shadow, outline are removed for the card overlay link and
+                                    the width, height, position is added to redirect to course for the card top overlay &
+                                    card bottom overlay */
+                                    > a {
+                                        width: 100%;
+                                        height: 100%;
+                                        border: 0;
+                                        background: none;
+                                        box-shadow: none;
+                                        outline: none;
+                                        position: absolute;
+                                        top: 0;
+                                        left: 0;
+                                        z-index: 1;
+                                    }
+                                    /* The width and position of the menu link at the top of the card block in the card
+                                    dropdown menu */
+                                    .content-block {
+                                        width: 100%;
+                                        height: 100%;
+                                        align-items: flex-start;
+                                        position: absolute;
+                                        top: 0;
+                                        left: 0;
                                     }
                                 }
-                            }
-                            /* The "Text position" of the menu link is selected as "Top overlay"
-                            or "Below overlay" in the "Card Appearance" settings */
-                            &.card-text-overlay-top,
-                            &.card-text-overlay-bottom {
-                                /* The position relative to the card dropdown  */
-                                position: relative;
-                                /* The border, background, box-shadow, outline are removed for the card overlay link and
-                                   the width, height, position is added to redirect to course for the card top overlay &
-                                   card bottom overlay */
-                                > a {
-                                    width: 100%;
-                                    height: 100%;
-                                    border: 0;
-                                    background: none;
-                                    box-shadow: none;
-                                    outline: none;
-                                    position: absolute;
-                                    top: 0;
-                                    left: 0;
-                                    z-index: 1;
-                                }
-                                /* The width and position of the menu link at the top of the card block in the card
-                                   dropdown menu */
-                                .content-block {
-                                    width: 100%;
-                                    height: 100%;
-                                    align-items: flex-start;
-                                    position: absolute;
-                                    top: 0;
-                                    left: 0;
-                                }
-                            }
-                            /* The "Text position" of the menu link bottom
-                            of the card block in the "Below overlay" option */
-                            &.card-text-overlay-bottom {
-                                .content-block {
-                                    align-items: flex-end;
+                                /* The "Text position" of the menu link bottom
+                                of the card block in the "Below overlay" option */
+                                &.card-text-overlay-bottom {
+                                    .content-block {
+                                        align-items: flex-end;
+                                    }
                                 }
                             }
                         }
@@ -2028,16 +2604,159 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 }
             }
         }
+        .boost-union-moremenu.dropdown-menu {
+            /* Minimum width for the dropdown submenu */
+            .carousel .carousel-inner .carousel-item.submenu {
+                min-width: 235px;
+            }
+            /* Added the arrow icon styles for the dropdown menus */
+            .dropdown-item.carousel-navigation-link:after {
+                content: '\f0da';
+                font-family: '#{$fa-style-family}';
+                font-weight: 900;
+                font-size: 1rem;
+                position: absolute;
+                right: 0.7rem;
+            }
+            /* Added the arrow icon styles for the dropdown sub menu header */
+            .submenu .header {
+                font-size: .975rem;
+                display: flex;
+                align-items: center;
+            }
+        }
+        /* Removed the margin for the carousel back button arrow */
+        &.fixed-bottom .boost-union-moremenu.dropdown-menu .carousel-navigation-link > * {
+            pointer-events: none;
+            img {
+                margin: 0;
+            }
+        }
     }
+    /* Align the drawer content list group item in center*/
     .drawer-primary .drawercontent .list-group .list-group-item {
         align-items: center;
+        /* The icon width, height and font size is changed to normal size when
+        the large size icon (class="iconsize-big") is used in the "i" tag in the bottom menu */
+        i.icon {
+            width: auto;
+            height: auto;
+            font-size: 16px;
+        }
+    }
+    /* Drop down more menu carousel item */
+    .theme-boost-union-smartmenu-carousel {
+        /* Drop down more menu carousel item header */
+        .moremenu-carousel-item-header {
+            display: none;
+        }
+        .carousel-navigation-link > * {
+            pointer-events: none;
+            /* Drop down more menu carousel item header image */
+            img {
+                margin: 0;
+            }
+        }
+        /* Make the carousel navigation link to full width and cursor as pointor */
+        .carousel-navigation-link {
+            width: 100%;
+            cursor: pointer;
+            /* Removed the underline on hovering the link */
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+    /* Dropdown carousel more menu*/
+    .dropdownmoremenu {
+        /* Dropdown carousel more menu position */
+        .boost-union-moremenu-carousel {
+            position: absolute;
+            /* Dropdown carousel dropdown more menu position to static to
+            work on the carousel menu */
+            .dropdown-menu {
+                position: static;
+            }
+        }
+        .theme-boost-union-smartmenu-carousel {
+            /* Display dropdown carousel more menu header item*/
+            .moremenu-carousel-item-header {
+                display: block;
+                /* Dropdown carousel more menu header title and arrow style*/
+                .header {
+                    font-size: .975rem;
+                    padding: 0.25rem 0.75rem;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+            .items {
+                /* Added the arrow icon styles for the carousel dropdown menus */
+                .dropdown-item.carousel-navigation-link:after {
+                    content: '\f0da';
+                    font-family: '#{$fa-style-family}';
+                    font-weight: 900;
+                    font-size: 1rem;
+                    position: absolute;
+                    right: 0.7rem;
+                }
+            }
+            /* Added the arrow icon styles for the dropdown sub menu header */
+            .submenu {
+                padding-top: 10px;
+                .header {
+                    font-size: .975rem;
+                    padding: 0 0.75rem;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+    }
+    /* Hide the ul dropdown menu list */
+    .theme-boost-union-moremenu-carousel .dropdown-menu.hide-on-show {
+        display: none;
+    }
+    /* Changed the transition time to 0.3 seconds when smart menus are enabled */
+    .theme-boost-union-smartmenu-carousel,
+    #usermenu-carousel {
+        .carousel-inner .carousel-item {
+            transition: transform 0.3s ease-in-out;
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .theme-boost-union-smartmenu .navbar.fixed-top.boost-union-menubar.d-lg-none {
+        /* Margin top has been added to the Header block to ensure that it does not conflict with the top header. */
+        + .navbar.fixed-top {
+            margin-top: 0;
+        }
+        ~ #page.drawers {
+            /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
+            margin-top: $bu-smartmenu-menubar-height;
+        }
+    }
+}
+
+@include media-breakpoint-only(md) {
+    .theme-boost-union-smartmenu .navbar.fixed-top.boost-union-menubar.d-md-none {
+        /* Margin top has been added to the Header block to ensure that it does not conflict with the top header. */
+        + .navbar.fixed-top {
+            margin-top: 0;
+        }
+        ~ #page.drawers {
+            /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
+            margin-top: $bu-smartmenu-menubar-height;
+        }
     }
 }
 
 /* The nav drawer position to the top in the responsive alignment */
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(lg) {
     .navbar.fixed-top.boost-union-menubar ~ .drawer {
-        top: 40px;
+        /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
+        top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height});
         &.drawer-right {
             top: 0;
         }
@@ -2047,11 +2766,11 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 /* The nav drawer position to the top in the responsive alignment */
 @include media-breakpoint-up(md) {
     .navbar.fixed-top.boost-union-menubar ~ #page.drawers .drawer-toggles .drawer-toggler {
-        top: 110px;
+        top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height} + 10px);
     }
 }
 
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
     .navbar.fixed-top {
         /* The header z-index is increased to show at top when the footer bottom menu is added */
         &.smartmenu-bottom-navigation {
@@ -2068,7 +2787,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             /* When the menu in the footer bottom is clicked, its navigation drawer
             position appears below the header. */
             ~ .drawer-bottom.drawer {
-                top: 101px;
+                top: calc(#{$bu-smartmenu-bottombar-height} + 1px);
             }
         }
         /* When the menu in the footer bottom is clicked, its navigation drawer
@@ -2096,14 +2815,22 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
             padding-bottom: 0;
             top: 0;
         }
-        /*~ #page.drawers {
-            The position of the drawer button to toggle has been adjusted slightly
-            below on the course view page to accommodate the top header.
-            .drawer-toggles .drawer-left-toggle,
-            .drawer-toggles .drawer-right-toggle {
-                top: calc(60px + 0.7rem);
+    }
+    /* The card menu of the drodown item margin right is removed when the card dropdown menu is inside the "More" menu */
+    .theme-boost-union-smartmenu .navbar {
+        .moremenu .dropdown.card-dropdown .dropdown-menu .card-block-wrapper .card-block {
+            margin-right: 0;
+        }
+        &.fixed-top.boost-union-menubar.d-none {
+            /* Margin top has been added to the Header block to ensure that it does not conflict with the top header. */
+            + .navbar.fixed-top {
+                margin-top: 0;
             }
-        }*/
+            ~ #page.drawers {
+                /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
+                margin-top: $bu-smartmenu-menubar-height;
+            }
+        }
     }
 }
 
@@ -2124,239 +2851,250 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                 box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
                 z-index: 1050;
 
-                .bottom-navigation .more-nav {
-                    /* Spread the menu items over the whole screen. */
-                    justify-content: space-around;
-
-                    > li {
-                        /* The footer bottom dropdown menu icon and text are displayed in separate rows. */
-                        &.dropdown > a {
-                            flex-direction: column;
-                            /* The footer bottom dropdown menu icon margin is removed. */
-                            i {
-                                margin: 0 0 3px;
-                            }
-                        }
-                        /* The footer bottom menu item border bottom is removed when it's not active. */
-                        > a {
-                            &.dropdown-toggle {
-                                padding-right: 25px;
-                            }
-                            &:not(.active) {
-                                border-bottom: 0;
-                                flex-wrap: wrap;
-                                flex-direction: column;
-                                justify-content: center;
-                                position: relative;
-                                i {
-                                    margin: 0;
-                                }
-                                &:after {
-                                    margin-left: 5px;
-                                    position: absolute;
-                                    right: 0;
-                                }
-                            }
-                        }
+                .bottom-navigation {
+                    .moremenu {
+                        height: $bu-smartmenu-bottombar-height;
                     }
-                    li {
-                        &:first-child,
-                        &:nth-child(2),
-                        &:nth-child(3) {
-                            &.dropdown .dropdown-menu .dropdown-submenu ul {
-                                left: 100%;
+
+                    .more-nav {
+                        /* Spread the menu items over the whole screen. */
+                        justify-content: space-around;
+
+                        > li {
+                            /* The footer bottom dropdown menu icon and text are displayed in separate rows. */
+                            &.dropdown > a {
+                                flex-direction: column;
+                                /* The footer bottom dropdown menu icon margin is removed. */
+                                i {
+                                    margin: 0 0 3px;
+                                }
+                            }
+                            /* The footer bottom menu item border bottom is removed when it's not active. */
+                            > a {
+                                &.dropdown-toggle {
+                                    padding-right: 25px;
+                                    /* The footer bottom icon changes to an upward-facing angle
+                                    when the bottom dropdown menu is visible outside the More menu. */
+                                    &:not(.active):after {
+                                        content: '\f106';
+                                    }
+                                }
+                                &:not(.active) {
+                                    border-bottom: 0;
+                                    flex-wrap: wrap;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    position: relative;
+                                    i {
+                                        margin: 0;
+                                    }
+                                    &:after {
+                                        margin-left: 5px;
+                                        position: absolute;
+                                        right: 5px;
+                                    }
+                                }
+                            }
+                        }
+                        li {
+                            &:first-child,
+                            &:nth-child(2),
+                            &:nth-child(3) {
+                                &.dropdown .dropdown-menu .dropdown-submenu ul {
+                                    left: 100%;
+                                    right: auto;
+                                }
+                            }
+                            &.dropdown {
+                                /* Footer bottom dropdown menu width, height and removed margin, position to stay the
+                                dropup menu */
+                                .dropdown-menu {
+                                    width: auto;
+                                    margin-top: 0;
+                                    margin-bottom: 0;
+                                    top: auto;
+                                    bottom: 100%;
+                                    left: auto;
+                                    right: 0;
+                                    /* The footer bottom dropdown submenu min-width, max-height, overflow and position
+                                    to show the menus above the footer */
+                                    .dropdown-submenu ul {
+                                        min-width: 150px;
+                                        max-height: calc(100vh - 300px);
+                                        overflow: auto;
+                                        left: auto;
+                                        right: 100%;
+                                        bottom: 0;
+                                        top: auto;
+                                    }
+                                }
+                                /* Footer bottom dropdown style when the menus are in the "More" option in the responsive
+                                alignment */
+                                &.dropdownmoremenu {
+                                    display: flex;
+                                    align-items: center;
+                                    /* The footer bottom dropdown menu icon and text are displayed in separate rows. */
+                                    > a.dropdown-toggle {
+                                        flex-direction: column;
+                                        /* Added ellipsis fontawesome icon, and diplay block to  for the dropdown more
+                                        menu when the smart menus are not added in the Footer menu */
+                                        &:before {
+                                            content: '\f142';
+                                            font-family: '#{$fa-style-family}';
+                                            font-weight: 900;
+                                        }
+                                        /* The arrow icon after the More menu link text is hidden when the smart menus are
+                                        not added */
+                                        &:after {
+                                            display: none;
+                                        }
+                                    }
+                                    /* Footer bottom dropdown toggle button height, font-size, color, align center,
+                                    removed border radius, padding and added margin left & right style */
+                                    button.navbar-toggler {
+                                        height: 100%;
+                                        font-size: calc(0.90375rem + 0.045vw);
+                                        color: $primary;
+                                        text-align: center;
+                                        border-radius: 0;
+                                        padding-top: 0;
+                                        padding-bottom: 0;
+                                        margin: 0 10px;
+                                        /* Footer bottom dropdown toggle button baclground added on hover  */
+                                        &:hover {
+                                            font-size: calc(0.90375rem + 0.045vw);
+                                            background: #f8f9fa;
+                                        }
+                                        /* More menu toggle button icon margin remove in the mobile view */
+                                        i {
+                                            margin: -5px auto 5px;
+                                            display: block;
+                                        }
+                                    }
+                                }
+                            }
+                            /* Footer bottom menu card-dropdown */
+                            /* The card dropdown Position is changed to static, so the dropdown menu will be in
+                            fullscreen */
+                            &.card-dropdown {
+                                position: static;
+                                /* Card appearance - Card form style */
+                                /* Card form style - Square */
+                                &.card-form-square {
+                                    /* Minimun and maximum width is added when the Card size "Tiny" with card form
+                                    "Square" */
+                                    &.card-size-tiny .dropdown-menu .card-block {
+                                        min-width: 90px;
+                                        max-width: 90px;
+                                    }
+                                    /* Minimun and maximum width is added when the Card size "Small" with card form
+                                    "Square" */
+                                    &.card-size-small .dropdown-menu .card-block {
+                                        min-width: 140px;
+                                        max-width: 140px;
+                                    }
+                                    /* Minimun and maximum width is added when the Card size "Medium" with card form
+                                    "Square" */
+                                    &.card-size-medium .dropdown-menu .card-block {
+                                        min-width: 190px;
+                                        max-width: 190px;
+                                    }
+                                    /* Minimun and maximum width is added when the Card size "Large" with card form
+                                    "Square" */
+                                    &.card-size-large .dropdown-menu .card-block {
+                                        min-width: 240px;
+                                        max-width: 240px;
+                                    }
+                                }
+                                /* Card form style - Portrait */
+                                &.card-form-portrait {
+                                    /* Minimun and maximum width is added when the Card size "Tiny" with card form
+                                    "portrait" */
+                                    &.card-size-tiny .dropdown-menu .card-block {
+                                        min-width: 60px;
+                                        max-width: 60px;
+                                    }
+                                    /* Minimun and maximum width is added when the Card size "Small" with card form
+                                    "portrait" */
+                                    &.card-size-small .dropdown-menu .card-block {
+                                        min-width: 94px;
+                                        max-width: 94px;
+                                    }
+                                    /* Minimun and maximum width is added when the Card size "Medium" with card form
+                                    "portrait" */
+                                    &.card-size-medium .dropdown-menu .card-block {
+                                        min-width: 127px;
+                                        max-width: 127px;
+                                    }
+                                    /* Minimun and maximum width is added when the Card size "Large" with card form
+                                    "portrait" */
+                                    &.card-size-large .dropdown-menu .card-block {
+                                        min-width: 160px;
+                                        max-width: 160px;
+                                    }
+                                }
+                                /* Card form style - Landscape */
+                                &.card-form-landscape {
+                                    /* Minimun and maximum width is added when the Card size "Tiny" with card form
+                                    "Landscape" */
+                                    &.card-size-tiny .dropdown-menu .card-block {
+                                        min-width: 135px;
+                                        max-width: 135px;
+                                    }
+                                    /* Minimun and maximum width is added when the Card size "Small" with card form
+                                    "Landscape" */
+                                    &.card-size-small .dropdown-menu .card-block {
+                                        min-width: 210px;
+                                        max-width: 210px;
+                                    }
+                                    /* Minimun and maximum width is added when the Card size "Medium" with card form
+                                    "Landscape" */
+                                    &.card-size-medium .dropdown-menu .card-block {
+                                        min-width: 285px;
+                                        max-width: 285px;
+                                    }
+                                    /* Minimun and maximum width is added when the Card size "Large" with card form
+                                    "Landscape" */
+                                    &.card-size-large .dropdown-menu .card-block {
+                                        min-width: 360px;
+                                        max-width: 360px;
+                                    }
+                                }
+                                /* Card form style - Fullwidth */
+                                /* Full Width is added when the Card size "Tiny, Small, Medium and Large"
+                                with card form "Full width" */
+                                &.card-form-fullwidth {
+                                    &.card-size-tiny,
+                                    &.card-size-small,
+                                    &.card-size-medium,
+                                    &.card-size-large {
+                                        .dropdown-menu .card-block {
+                                            min-width: 100%;
+                                            width: 100%;
+                                        }
+                                    }
+                                    /* Card size "large" has margin right none because the size of the card is full
+                                    width of the screen */
+                                    &.card-overflow-wrap.card-size-large {
+                                        .dropdown-menu .card-block {
+                                            margin-right: 0;
+                                        }
+                                    }
+                                }
+                                /* The card dropdown menu width is 100%, so the dropdown menu will not overflow the
+                                screen */
+                                .dropdown-menu {
+                                    width: 100%;
+                                    max-height: calc(100vh - 300px);
+                                    overflow-y: auto;
+                                }
+                            }
+                            /* The position of the footer dropdown menu should not extend beyond the visible area of
+                            the screen */
+                            &:first-child.dropdown .dropdown-menu {
+                                left: 0;
                                 right: auto;
                             }
-                        }
-                        &.dropdown {
-                            /* Footer bottom dropdown menu width, height and removed margin, position to stay the
-                            dropup menu */
-                            .dropdown-menu {
-                                width: auto;
-                                margin-top: 0;
-                                margin-bottom: 0;
-                                top: auto;
-                                bottom: 100%;
-                                left: auto;
-                                right: 0;
-                                /* The footer bottom dropdown submenu min-width, max-height, overflow and position
-                                   to show the menus above the footer */
-                                .dropdown-submenu ul {
-                                    min-width: 150px;
-                                    max-height: calc(100vh - 300px);
-                                    overflow: auto;
-                                    left: auto;
-                                    right: 100%;
-                                    bottom: 0;
-                                    top: auto;
-                                }
-                            }
-                            /* Footer bottom dropdown style when the menus are in the "More" option in the responsive
-                               alignment */
-                            &.dropdownmoremenu {
-                                display: flex;
-                                align-items: center;
-                                /* The footer bottom dropdown menu icon and text are displayed in separate rows. */
-                                > a.dropdown-toggle {
-                                    flex-direction: column;
-                                    /* Added ellipsis fontawesome icon, and diplay block to  for the dropdown more
-                                       menu when the smart menus are not added in the Footer menu */
-                                    &:before {
-                                        content: '\f142';
-                                        font-family: '#{$fa-style-family}';
-                                        font-weight: 900;
-                                    }
-                                    /* The arrow icon after the More menu link text is hidden when the smart menus are
-                                       not added */
-                                    &:after {
-                                        display: none;
-                                    }
-                                }
-                                /* Footer bottom dropdown toggle button height, font-size, color, align center,
-                                removed border radius, padding and added margin left & right style */
-                                button.navbar-toggler {
-                                    height: 100%;
-                                    font-size: calc(0.90375rem + 0.045vw);
-                                    color: $primary;
-                                    text-align: center;
-                                    border-radius: 0;
-                                    padding-top: 0;
-                                    padding-bottom: 0;
-                                    margin: 0 10px;
-                                    /* Footer bottom dropdown toggle button baclground added on hover  */
-                                    &:hover {
-                                        font-size: calc(0.90375rem + 0.045vw);
-                                        background: #f8f9fa;
-                                    }
-                                    /* More menu toggle button icon margin remove in the mobile view */
-                                    i {
-                                        margin: -5px auto 5px;
-                                        display: block;
-                                    }
-                                }
-                            }
-                        }
-                        /* Footer bottom menu card-dropdown */
-                        /* The card dropdown Position is changed to static, so the dropdown menu will be in
-                           fullscreen */
-                        &.card-dropdown {
-                            position: static;
-                            /* Card appearance - Card form style */
-                            /* Card form style - Square */
-                            &.card-form-square {
-                                /* Minimun and maximum width is added when the Card size "Tiny" with card form
-                                   "Square" */
-                                &.card-size-tiny .dropdown-menu .card-block {
-                                    min-width: 90px;
-                                    max-width: 90px;
-                                }
-                                /* Minimun and maximum width is added when the Card size "Small" with card form
-                                   "Square" */
-                                &.card-size-small .dropdown-menu .card-block {
-                                    min-width: 140px;
-                                    max-width: 140px;
-                                }
-                                /* Minimun and maximum width is added when the Card size "Medium" with card form
-                                   "Square" */
-                                &.card-size-medium .dropdown-menu .card-block {
-                                    min-width: 190px;
-                                    max-width: 190px;
-                                }
-                                /* Minimun and maximum width is added when the Card size "Large" with card form
-                                   "Square" */
-                                &.card-size-large .dropdown-menu .card-block {
-                                    min-width: 240px;
-                                    max-width: 240px;
-                                }
-                            }
-                            /* Card form style - Portrait */
-                            &.card-form-portrait {
-                                /* Minimun and maximum width is added when the Card size "Tiny" with card form
-                                   "portrait" */
-                                &.card-size-tiny .dropdown-menu .card-block {
-                                    min-width: 60px;
-                                    max-width: 60px;
-                                }
-                                /* Minimun and maximum width is added when the Card size "Small" with card form
-                                   "portrait" */
-                                &.card-size-small .dropdown-menu .card-block {
-                                    min-width: 94px;
-                                    max-width: 94px;
-                                }
-                                /* Minimun and maximum width is added when the Card size "Medium" with card form
-                                   "portrait" */
-                                &.card-size-medium .dropdown-menu .card-block {
-                                    min-width: 127px;
-                                    max-width: 127px;
-                                }
-                                /* Minimun and maximum width is added when the Card size "Large" with card form
-                                   "portrait" */
-                                &.card-size-large .dropdown-menu .card-block {
-                                    min-width: 160px;
-                                    max-width: 160px;
-                                }
-                            }
-                            /* Card form style - Landscape */
-                            &.card-form-landscape {
-                                /* Minimun and maximum width is added when the Card size "Tiny" with card form
-                                   "Landscape" */
-                                &.card-size-tiny .dropdown-menu .card-block {
-                                    min-width: 135px;
-                                    max-width: 135px;
-                                }
-                                /* Minimun and maximum width is added when the Card size "Small" with card form
-                                   "Landscape" */
-                                &.card-size-small .dropdown-menu .card-block {
-                                    min-width: 210px;
-                                    max-width: 210px;
-                                }
-                                /* Minimun and maximum width is added when the Card size "Medium" with card form
-                                   "Landscape" */
-                                &.card-size-medium .dropdown-menu .card-block {
-                                    min-width: 285px;
-                                    max-width: 285px;
-                                }
-                                /* Minimun and maximum width is added when the Card size "Large" with card form
-                                   "Landscape" */
-                                &.card-size-large .dropdown-menu .card-block {
-                                    min-width: 360px;
-                                    max-width: 360px;
-                                }
-                            }
-                            /* Card form style - Fullwidth */
-                            /* Full Width is added when the Card size "Tiny, Small, Medium and Large"
-                            with card form "Full width" */
-                            &.card-form-fullwidth {
-                                &.card-size-tiny,
-                                &.card-size-small,
-                                &.card-size-medium,
-                                &.card-size-large {
-                                    .dropdown-menu .card-block {
-                                        min-width: 100%;
-                                        width: 100%;
-                                    }
-                                }
-                                /* Card size "large" has margin right none because the size of the card is full
-                                width of the screen */
-                                &.card-overflow-wrap.card-size-large {
-                                    .dropdown-menu .card-block {
-                                        margin-right: 0;
-                                    }
-                                }
-                            }
-                            /* The card dropdown menu width is 100%, so the dropdown menu will not overflow the
-                               screen */
-                            .dropdown-menu {
-                                width: 100%;
-                                max-height: calc(100vh - 300px);
-                                overflow-y: auto;
-                            }
-                        }
-                        /* The position of the footer dropdown menu should not extend beyond the visible area of
-                           the screen */
-                        &:first-child.dropdown .dropdown-menu {
-                            left: 0;
-                            right: auto;
                         }
                     }
                 }
@@ -2367,12 +3105,12 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 /* End of Footer Menu */
 
 /* On small screens (where the bottom bar could be visible). */
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
     /* If the bottom bar is shown. */
     body.theme-boost-union-bottombar {
-        /* The back to top button has to be moved more upwards. */
-        #back-to-top {
-            bottom: calc(60px + 1rem);
+        /* The Boost Union footer buttons have to be moved more upwards. */
+        #boost-union-footer-buttons {
+            bottom: calc(#{$bu-smartmenu-bottombar-height} + 1rem);
         }
 
         /* If the footer button is shown. */
@@ -2380,11 +3118,11 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         &.theme_boost-union-footerbuttonmobile.jsenabled {
             /* The footer button has to be moved more upwards. */
             .btn-footer-popover {
-                bottom: calc(60px + 1rem);
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 1rem);
             }
-            /* And the back to top button has to be moved even more upwards. */
-            #back-to-top {
-                bottom: calc(60px + 4rem);
+            /* And the Boost Union footer buttons have to be moved even more upwards. */
+            #boost-union-footer-buttons {
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 4rem);
             }
         }
     }
@@ -2393,9 +3131,9 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 @include media-breakpoint-only(sm) {
     /* If the bottom bar is shown. */
     body.theme-boost-union-bottombar {
-        /* The back to top button has to be moved more upwards. */
-        #back-to-top {
-            bottom: calc(60px + 1rem);
+        /* The Boost Union footer buttons have to be moved more upwards. */
+        #boost-union-footer-buttons {
+            bottom: calc(#{$bu-smartmenu-bottombar-height} + 1rem);
         }
 
         /* If the footer button is shown. */
@@ -2403,11 +3141,11 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         &.theme_boost-union-footerbuttondesktop.jsenabled {
             /* The footer button has to be moved more upwards. */
             .btn-footer-popover {
-                bottom: calc(60px + 1rem);
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 1rem);
             }
-            /* And the back to top button has to be moved even more upwards. */
-            #back-to-top {
-                bottom: calc(60px + 4rem);
+            /* And the Boost Union footer buttons have to be moved even more upwards. */
+            #boost-union-footer-buttons {
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 4rem);
             }
         }
     }
@@ -2416,12 +3154,12 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     body.theme-boost-union-bottombar.theme-boost-union-commincourse {
         /* The communication button has to be moved more upwards. */
         .btn-footer-communication {
-            bottom: calc(60px + 1rem);
+            bottom: calc(#{$bu-smartmenu-bottombar-height} + 1rem);
         }
-        /* The back to top button has to be moved even more upwards.
+        /* The Boost Union footer buttons have to be moved even more upwards.
            This has to use !important as the selector above would be more specific otherwise. */
-        #back-to-top {
-            bottom: calc(60px + 4rem) !important; /* stylelint-disable-line declaration-no-important */
+        #boost-union-footer-buttons {
+            bottom: calc(#{$bu-smartmenu-bottombar-height} + 4rem) !important; /* stylelint-disable-line declaration-no-important */
         }
 
         /* If the footer button is shown. */
@@ -2429,22 +3167,22 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         &.theme_boost-union-footerbuttondesktop.jsenabled {
             /* The footer button has to be moved more upwards. */
             .btn-footer-popover {
-                bottom: calc(60px + 1rem);
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 1rem);
             }
             /* The communication button has to be moved even more upwards. */
             .btn-footer-communication {
-                bottom: calc(60px + 4rem);
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 4rem);
             }
-            /* And the back to top button has to be moved even more upwards.
+            /* And the Boost Union footer buttons have to be moved even more upwards.
                This has to use !important as the selector above would be more specific otherwise. */
-            #back-to-top {
-                bottom: calc(60px + 7rem) !important; /* stylelint-disable-line declaration-no-important */
+            #boost-union-footer-buttons {
+                bottom: calc(#{$bu-smartmenu-bottombar-height} + 7rem) !important; /* stylelint-disable-line declaration-no-important,max-line-length */
             }
         }
     }
 }
 
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
     /* The padding for the footer to visible the footer bottom menu because it is in the position style */
     /* Boost union footer bottom menu style when the smart menu is enabled */
     body.theme-boost-union-bottombar #page-wrapper #page {
@@ -2475,63 +3213,31 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
  ======================================*/
 
 /*---------------------------------------
- * Form element: Fontawesome picker
- --------------------------------------*/
-
-.fontawesome-picker {
-    /* Padding removed in the fontawesome picker popover. */
-    .popover-body {
-        padding: 0;
-
-        /* Width, height, padding added, margin
-           removed and text aligned centered in the popover fontawesome icon picker. */
-        .fontawesome-icon-suggestions {
-            width: 250px;
-            height: 350px;
-            list-style: none;
-            text-align: center;
-            overflow: auto;
-            padding: 10px 2px 2px 10px;
-            margin: 0;
-
-            /* Width, height, line height, border, border radius and margin
-               added for the icon item in the popover fontawesome icon picker */
-            li {
-                width: 40px;
-                height: 40px;
-                line-height: 40px;
-                border-radius: 5px;
-                border: 1px solid #eee;
-                margin: 0 10px 10px 0;
-                display: inline-block;
-                cursor: pointer;
-
-                /* Background color added on hover and selected for the font icon item. */
-                &:hover,
-                &.selected {
-                    background-color: #f4f4f4;
-                }
-
-                /* Width, height, font size added and margin removed for the Font icon. */
-                .icon {
-                    width: 14px;
-                    height: 14px;
-                    font-size: 16px;
-                    margin: 0;
-                }
-            }
-        }
-    }
-}
-
-
-/*---------------------------------------
  * Form element: Color picker
  --------------------------------------*/
 
 /* Display the color picker box and the text field as column. */
 .theme_boost_union-form-colour-picker .felement {
     flex-direction: column;
+}
+
+/*---------------------------------------
+ * Form element: Icon autocomplete
+ --------------------------------------*/
+
+/* For now, this is only used on the smart menu items editing page. */
+#page-theme-boost_union-smartmenus-edit_items #fitem_id_menuicon {
+
+    /* Raise the min-width to make space for the badges. */
+    .form-autocomplete-suggestions {
+        min-width: 400px;
+    }
+
+    /* Wrap the icon names to avoid that they clash with the icon source badge. */
+    .wrapiconwidth {
+        hyphens: auto;
+        max-width: 200px;
+    }
 }
 
 
@@ -2598,7 +3304,6 @@ body.dir-rtl {
     }
 }
 
-
 /*=======================================
  * Supporting third-party plugins
  ======================================*/
@@ -2608,7 +3313,7 @@ body.dir-rtl {
  --------------------------------------*/
 
 /* On smaller screens. */
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
     /* Move the learning tools floating button up as soon as the bottom menu is shown. */
     body.theme-boost-union-bottombar .learningtools-action-info .floating-button {
         bottom: 4rem;
@@ -2671,7 +3376,7 @@ body.dir-rtl {
     }
 
     /* On not-so-large screens. */
-    @include media-breakpoint-down(lg) { /* This means less than 300px per outside block region. */
+    @include media-breakpoint-down(xl) { /* This means less than 300px per outside block region. */
         /* Stack content vertically. */
         .main-inner-outside-nextmaincontent {
             display: flex;

@@ -28,8 +28,8 @@
 require(__DIR__ . '/../../../config.php'); // phpcs:disable moodle.Files.RequireLogin.Missing
 
 // Require the necessary libraries.
-require_once($CFG->dirroot.'/theme/boost_union/lib.php');
-require_once($CFG->dirroot.'/theme/boost_union/locallib.php');
+require_once($CFG->dirroot . '/theme/boost_union/lib.php');
+require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
 // Set page URL.
 $PAGE->set_url('/theme/boost_union/pages/page2.php');
@@ -49,8 +49,10 @@ $config = get_config('theme_boost_union');
 // If the page2 is disabled, we just show a short friendly warning page and are done.
 if ($config->enablepage2 != THEME_BOOST_UNION_SETTING_SELECT_YES) {
     echo $OUTPUT->header();
-    $notification = new \core\output\notification(get_string('page2disabled', 'theme_boost_union'),
-        \core\output\notification::NOTIFY_INFO);
+    $notification = new \core\output\notification(
+        get_string('page2disabled', 'theme_boost_union'),
+        \core\output\notification::NOTIFY_INFO
+    );
     $notification->set_show_closebutton(false);
     echo $OUTPUT->render($notification);
     echo $OUTPUT->footer();

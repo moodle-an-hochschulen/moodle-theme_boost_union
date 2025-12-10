@@ -61,23 +61,23 @@
     Modifications compared to the original template:
     * Added the possibility to change navbar color.
     * Include button for off-canvas region.
-    * Removed the primary menu drawer hamburger menu, added bottom bar more section will help users to open the nav drawer.
-    * Display the logo on mobile viewport. (removed d-none, changed d-md-flex to d-flex)
+    * If a smart menu is configured as bottom bar, disable the hamburger menu on mobile viewport.
+    * If a smart menu is configured as bottom bar, display the logo on mobile viewport instead of the hamburger menu icon (removed d-none, changed d-md-flex to d-flex)
     * Added menu bar section.
     * Added the possibility to use an alternative logo link URL.
 }}
 
 {{#menubar}}
-<nav class="menubar fixed-top boost-union-menubar navbar navbar-expand {{#bottombar.drawer}} smartmenu-bottom-navigation {{/bottombar.drawer}}">
+<nav class="menubar fixed-top boost-union-menubar navbar navbar-expand {{#bottombar.drawer}} smartmenu-bottom-navigation {{/bottombar.drawer}} {{{menubar.classes}}}">
     {{> core/moremenu}}
 </nav>
 {{/menubar}}
-<nav class="navbar fixed-top {{navbarcolorclasses}} navbar-expand {{#bottombar.drawer}} smartmenu-bottom-navigation {{/bottombar.drawer}}" aria-label="{{#str}}sitemenubar, admin{{/str}}">
+<nav class="navbar fixed-top {{navbarcolorclasses}} navbar-expand {{#bottombar.drawer}} smartmenu-bottom-navigation {{/bottombar.drawer}}" {{#databstheme}}data-bs-theme="{{databstheme}}"{{/databstheme}} aria-label="{{#str}}sitemenubar, admin{{/str}}">
     <div class="container-fluid">
         {{^bottombar.drawer}}
         <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
             <span class="navbar-toggler-icon"></span>
-            <span class="sr-only">{{#str}}sidepanel, core{{/str}}</span>
+            <span class="visually-hidden">{{#str}}sidepanel, core{{/str}}</span>
         </button>
         {{/bottombar.drawer}}
 
@@ -101,7 +101,7 @@
             {{{ output.page_heading_menu }}}
         </ul>
 
-        <div id="usernavigation" class="navbar-nav ms-auto">
+        <div id="usernavigation" class="navbar-nav ms-auto h-100">
             {{# output.search_box }}
                 {{{ output.search_box }}}
                 <div class="divider border-start h-75 align-self-center mx-1"></div>
@@ -129,10 +129,10 @@
                             title="{{#str}}openoffcanvas, theme_boost_union{{/str}}"
                             data-action="toggle"
                             data-target="theme_boost_union-drawers-offcanvas"
-                            data-toggle="tooltip"
-                            data-placement="bottom"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="bottom"
                         >
-                            <span class="sr-only">{{#str}}openoffcanvas, theme_boost_union{{/str}}</span>
+                            <span class="visually-hidden">{{#str}}openoffcanvas, theme_boost_union{{/str}}</span>
                             <i class="fa fa-grip"></i>
                         </button>
                     </div>
@@ -145,13 +145,13 @@
                         <button
                             class="btn"
                             id="theme_boost_union-offcanvas-btn"
-                            data-toggle="collapse"
+                            data-bs-toggle="collapse"
                             title="{{#str}}openoffcanvas, theme_boost_union{{/str}}"
-                            data-target="#theme-block-region-offcanvas-editing"
+                            data-bs-target="#theme-block-region-offcanvas-editing"
                             aria-expanded="false"
                             aria-controls="theme-block-region-offcanvas-editing"
                         >
-                            <span class="sr-only">{{#str}}openoffcanvas, theme_boost_union{{/str}}</span>
+                            <span class="visually-hidden">{{#str}}openoffcanvas, theme_boost_union{{/str}}</span>
                             <i class="fa fa-grip"></i>
                         </button>
                     </div>

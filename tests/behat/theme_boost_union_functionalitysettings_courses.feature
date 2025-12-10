@@ -83,7 +83,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     Then I should not see "This course is currently hidden. This means that students will not be notified online or by email of any messages you post in this forum."
     And ".course-hint-hidden" "css_element" should not exist
 
-  Scenario: Setting: Show hint guest for access - Enable the setting
+  Scenario: Setting: Show hint guest for access (for students) - Enable the setting
     Given the following config values are set as admin:
       | config                    | value | plugin            |
       | showhintcourseguestaccess | yes   | theme_boost_union |
@@ -124,6 +124,101 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     And I am on "Course 1" course homepage
     Then I should not see "You are currently viewing this course as Guest."
     And ".course-hint-guestaccess" "css_element" should not exist
+
+  Scenario Outline: Setting: Show hint for guest access (for teachers) - Enable the setting
+    Given the following config values are set as admin:
+      | config                   | value    | plugin            |
+      | showhintcourseguestenrol | <config> | theme_boost_union |
+    When I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    Then I should not see "This course is currently visible to everyone and guest access without a guest password is possible"
+    And I should not see "This course is currently visible to everyone and guest access with a password is possible"
+    And ".course-hint-guestenrol" "css_element" should not exist
+    And I am on the "Course 1" "enrolment methods" page
+    When I click on "Enable" "link" in the "Guest access" "table_row"
+    And I am on "Course 1" course homepage
+    Then I should see "This course is currently visible to everyone and guest access without a guest password is possible"
+    And I should not see "This course is currently visible to everyone and guest access with a password is possible"
+    And ".course-hint-guestenrol" "css_element" should exist
+    And I log out
+    When I log in as "student1"
+    And I am on "Course 1" course homepage
+    Then I should not see "This course is currently visible to everyone and guest access without a guest password is possible"
+    And I should not see "This course is currently visible to everyone and guest access with a password is possible"
+    And ".course-hint-guestenrol" "css_element" should not exist
+
+    Examples:
+      | config          |
+      | withoutpassword |
+      | always          |
+
+  Scenario Outline: Setting: Show hint for guest access (for teachers) - Enable the setting and check that the call for action is shown
+    Given the following config values are set as admin:
+      | config                   | value    | plugin            |
+      | showhintcourseguestenrol | <config> | theme_boost_union |
+    And the following "users" exist:
+      | username |
+      | teacher2 |
+    And the following "course enrolments" exist:
+      | user     | course | role    |
+      | teacher2 | C1     | teacher |
+    When I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    Then I should not see "This course is currently visible to everyone and guest access without a guest password is possible"
+    And I should not see "If you don't want to grant free access to this course, please disable guest access or set a guest password in the course settings"
+    And ".course-hint-guestenrol" "css_element" should not exist
+    And I am on the "Course 1" "enrolment methods" page
+    When I click on "Enable" "link" in the "Guest access" "table_row"
+    And I am on "Course 1" course homepage
+    Then I should see "This course is currently visible to everyone and guest access without a guest password is possible"
+    And I should see "If you don't want to grant free access to this course, please disable guest access or set a guest password in the course settings"
+    And ".course-hint-guestenrol" "css_element" should exist
+    And I log out
+    When I log in as "teacher2"
+    And I am on "Course 1" course homepage
+    Then I should see "This course is currently visible to everyone and guest access without a guest password is possible"
+    And I should not see "If you don't want to grant free access to this course, please disable guest access or set a guest password in the course settings"
+    And ".course-hint-guestenrol" "css_element" should exist
+    And I log out
+    When I log in as "student1"
+    And I am on "Course 1" course homepage
+    Then I should not see "This course is currently visible to everyone and guest access without a guest password is possible"
+    And I should not see "If you don't want to grant free access to this course, please disable guest access or set a guest password in the course settings"
+    And ".course-hint-guestenrol" "css_element" should not exist
+
+    Examples:
+      | config          |
+      | withoutpassword |
+      | always          |
+
+  Scenario Outline: Setting: Show hint for guest access (for teachers) - Enable the setting and check the different views and strings when a password is set
+    Given the following config values are set as admin:
+      | config                   | value    | plugin            |
+      | showhintcourseguestenrol | <config> | theme_boost_union |
+    When I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    Then I should not see "This course is currently visible to everyone"
+    And ".course-hint-guestenrol" "css_element" should not exist
+    And I am on the "Course 1" "enrolment methods" page
+    When I click on "Enable" "link" in the "Guest access" "table_row"
+    And I am on "Course 1" course homepage
+    Then I should see "This course is currently visible to everyone and guest access without a guest password is possible"
+    And ".course-hint-guestenrol" "css_element" should exist
+    And I am on the "Course 1" "enrolment methods" page
+    And I click on "Edit" "link" in the "Guest access" "table_row"
+    And I set the following fields to these values:
+      | Password | <password> |
+    And I press "Save changes"
+    And I am on "Course 1" course homepage
+    Then I <shouldornot> see "This course is currently visible to everyone and guest access <snippet> is possible"
+    And ".course-hint-guestenrol" "css_element" <shouldornot> exist
+
+    Examples:
+      | config          | password | snippet                  | shouldornot |
+      | withoutpassword |          | without a guest password | should      |
+      | withoutpassword | 1234     | without a guest password | should not  |
+      | always          |          | without a guest password | should      |
+      | always          | 1234     | with a password          | should      |
 
   Scenario: Setting: Show hint for self enrolment without enrolment key - Enable the setting
     Given the following config values are set as admin:

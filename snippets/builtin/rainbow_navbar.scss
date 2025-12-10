@@ -1,0 +1,79 @@
+/**
+ * Snippet Title: Rainbow navbar
+ * Scope:         global
+ * Goal:          eyecandy
+ * Description:   17 May is a special day for the queer community - the international day against homophobia, biphobia and transphobia. This snippet changes the background of the navbar to rainbow colors to commemorate and support this special day.
+ * Creator:       Nils Promer and Alexander Brehm
+ * Tested on:     Moodle 5.0, Firefox for Mac
+ * Usage note:    To use this snippet, the 'theme_boost_union | navbarcolor' setting must be set to 'Light navbar with dark font color'. Otherwise, the snippet's SCSS would interfere with the configured navbar color.
+ *
+ * @copyright     2024 University of Applied Science Hamburg
+ * @author        Nils Promer <nils.promer@haw-hamburg.de>, Alexander Brehm <alexander.brehm@haw-hamburg.de>
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+.navbar {
+    @extend .navbar-dark;
+    @extend .bg-dark;
+}
+
+.navbar {
+    background:
+        linear-gradient(
+            90deg,
+            hsl(217, 100%, 31%) 0%,
+            hsl(240, 100%, 50%) 13%,
+            hsl(270, 100%, 63%) 23%,
+            hsl(300, 100%, 43%) 31%,
+            hsl(330, 100%, 59%) 37%,
+            hsl(360, 100%, 63%) 45%,
+            hsl(30, 100%, 48%) 51%,
+            hsl(60, 100%, 37%) 58%,
+            hsl(90, 100%, 34%) 68%,
+            hsl(120, 100%, 35%) 73%,
+            hsl(240, 100%, 63%) 88%,
+            hsl(240, 100%, 50%) 93%,
+            hsl(217, 100%, 31%) 100%
+        );
+}
+
+.primary-navigation .nav-item .nav-link {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+}
+
+.primary-navigation .navigation .nav-link.active,
+.navbar.navbar-dark.bg-primary .nav-link.active {
+    padding-bottom: calc(var(--bs-nav-link-padding-y) - 5px);
+    border-bottom-width: 5px;
+    border-bottom-color: #fff;
+}
+
+.primary-navigation {
+    .nav-link:hover,
+    .nav-link:active
+    .nav-link:focus,
+    .nav-link[aria-haspopup='true'][aria-expanded='true'] {
+        background-color: #fff;
+        color: $primary;
+    }
+}
+
+.nav-link .icon,
+.nav-link a .icon
+.navbar-dark a .icon,
+.navbar a .icon,
+.usermenu .dropdown-toggle,
+#usernavigation .login a {
+    color: $white !important; /* stylelint-disable-line declaration-no-important */
+}
+.popover-region-container a .icon {
+    color: #343a40 !important; /* stylelint-disable-line declaration-no-important */
+}
+
+
+.editmode-switch-form,
+.editmode-switch-form label {
+    color: $white !important; /* stylelint-disable-line declaration-no-important */
+}

@@ -17,7 +17,7 @@
 /**
  * Theme Boost Union - Local login page
  *
- * This file is copied, reduced and modified from /login/index.php.
+ * This file is copied and modified / reduced from /login/index.php.
  *
  * @package   theme_boost_union
  * @copyright 2023 Alexander Bias <bias@alexanderbias.de>
@@ -28,11 +28,11 @@
 // Include config.php.
 // Let codechecker ignore the next line because otherwise it would complain about a missing login check
 // after requiring config.php which is really not needed.
-require(__DIR__.'/../../config.php'); // phpcs:disable moodle.Files.RequireLogin.Missing
+require(__DIR__ . '/../../config.php'); // phpcs:disable moodle.Files.RequireLogin.Missing
 
 // Require the necessary libraries.
-require_once($CFG->dirroot.'/lib/authlib.php');
-require_once($CFG->dirroot.'/theme/boost_union/lib.php');
+require_once($CFG->dirroot . '/lib/authlib.php');
+require_once($CFG->dirroot . '/theme/boost_union/lib.php');
 
 // Set page URL.
 $PAGE->set_url('/theme/boost_union/locallogin.php');
@@ -43,26 +43,43 @@ $PAGE->set_pagelayout('login');
 // Set page context.
 $PAGE->set_context(context_system::instance());
 
+// Do not allow caching of this page.
+$PAGE->set_cacheable(false);
+
 // Get theme config.
 $config = get_config('theme_boost_union');
 
-// If the local login is not disabled, we just show a short friendly warning page and are done.
-if ($config->loginlocalloginenable != THEME_BOOST_UNION_SETTING_SELECT_NO) {
+// If
+// 1. the side entrance local login is not always enabled,
+// 2. the side entrance local login is not in auto mode and the local login is disabled,
+// 3. no alternateloginurl is set for which the side entrance local login would be needed as fallback,
+// we just show a short friendly warning page and are done.
+if (
+    $config->sideentranceloginenable != THEME_BOOST_UNION_SETTING_SELECT_ALWAYS &&
+        $config->loginlocalloginenable != THEME_BOOST_UNION_SETTING_SELECT_NO &&
+        empty($CFG->alternateloginurl)
+) {
     echo $OUTPUT->header();
     $loginurl = new core\url('/login/index.php');
     $notification = new \core\output\notification(
-            get_string('loginlocalloginlocalnotdisabled', 'theme_boost_union', ['url' => $loginurl]),
-            \core\output\notification::NOTIFY_INFO);
+        get_string('loginlocalloginlocalnotdisabled', 'theme_boost_union', ['url' => $loginurl]),
+        \core\output\notification::NOTIFY_INFO
+    );
     $notification->set_show_closebutton(false);
     echo $OUTPUT->render($notification);
     echo $OUTPUT->footer();
     die;
 }
 
-// If the user is already logged in or is a guest user.
-if (isloggedin() || isguestuser()) {
+// If the user is already logged in and is _not_ a guest user (as guest users should be able to use the side entrale local login).
+if (isloggedin() && !isguestuser()) {
     // We just redirect him to the standard login page to handle this case.
-    redirect('/login/index.php');
+    // And, if alternateloginurl is set, add the loginredirect parameter.
+    if (!empty($CFG->alternateloginurl)) {
+        redirect('/login/index.php?loginredirect=0');
+    } else {
+        redirect('/login/index.php');
+    }
 }
 
 // Set page title.

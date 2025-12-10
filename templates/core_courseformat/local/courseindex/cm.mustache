@@ -54,36 +54,36 @@
     role="treeitem"
 >
     {{^hasdelegatedsection}}
-    <span class="completioninfo courseindex-cmicon-cpl-sol" data-for="cm_completion" data-value="NaN"></span>
-    <span class="courseindex-cmicon-container">
-        <span class="courseindex-cmicon">
-            <span class="courseindex-cmicon-icon" id="courseindex-cmicon-observ-{{id}}">
-                {{#pix}} monologo, {{module}} {{/pix}}
-                <span class="completioninfo courseindex-cmicon-cpl-icon" data-for="_" data-value="NaN"></span>
+        <span class="completioninfo courseindex-cmicon-cpl-sol" data-for="cm_completion" data-value="NaN"></span>
+        <span class="courseindex-cmicon-container">
+            <span class="courseindex-cmicon">
+                <span class="courseindex-cmicon-icon" id="courseindex-cmicon-observ-{{id}}">
+                    {{#pix}} monologo, {{module}} {{/pix}}
+                    <span class="completioninfo courseindex-cmicon-cpl-icon" data-for="_" data-value="NaN"></span>
+                </span>
             </span>
         </span>
-    </span>
-    {{#uservisible}}
-    <a
-        class="courseindex-link text-truncate"
-        {{#url}} href="{{{url}}}" {{/url}}{{^url}} href="#{{{anchor}}}" data-anchor="true" {{/url}}
-        data-for="cm_name"
-        tabindex="-1"
-    >
-        {{{name}}}
-    </a>
-    {{/uservisible}}
-    {{^uservisible}}
-    <a class="courseindex-link text-truncate" href="#{{{anchor}}}" data-for="cm_name" tabindex="-1" data-anchor="true">
-        {{{name}}}
-    </a>
-    {{/uservisible}}
-    <span class="courseindex-locked ms-1" data-for="cm_name">
-        {{#pix}} t/locked, core {{/pix}}
-    </span>
-    <span class="ms-auto">
-        <span class="completioninfo courseindex-cmicon-cpl-eol" data-for="_" data-value="NaN"></span>
-    </span>
+        {{#uservisible}}
+            <a
+                    class="courseindex-link text-truncate"
+                {{#url}} href="{{{url}}}" {{/url}}{{^url}} href="#{{{anchor}}}" data-anchor="true" {{/url}}
+                    data-for="cm_name"
+                    tabindex="-1"
+            >
+                {{{name}}}
+            </a>
+        {{/uservisible}}
+        {{^uservisible}}
+            <a class="courseindex-link text-truncate" href="#{{{anchor}}}" data-for="cm_name" tabindex="-1" data-anchor="true">
+                {{{name}}}
+            </a>
+        {{/uservisible}}
+        <span class="courseindex-locked ms-1" data-for="cm_name">
+            {{#pix}} t/locked, core {{/pix}}
+        </span>
+        <span class="ms-auto">
+            <span class="completioninfo courseindex-cmicon-cpl-eol" data-for="_" data-value="NaN"></span>
+        </span>
     {{/hasdelegatedsection}}
     {{#hasdelegatedsection}}
         {{#sectioninfo}}
@@ -139,6 +139,6 @@ if (document.body.classList.contains('hascourseindexcmicons')) {
 
 // Unmodified Moodle core JS of this template:
 require(['core_courseformat/local/courseindex/cm'], function(component) {
-    component.init('course-index-cm-{{id}}');
+    component.init('#course-index-cm-{{id}}');
 });
 {{/js}}

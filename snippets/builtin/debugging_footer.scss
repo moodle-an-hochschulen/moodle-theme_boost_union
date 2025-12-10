@@ -1,0 +1,55 @@
+/**
+ * Snippet Title: Debugging footer
+ * Scope:         global
+ * Goal:          devsonly
+ * Description:   By default, the performance footer in Moodle aligns with the content width and integrates in the page layout in a suboptimal way. This snippet changes the performance footer to be full-width and 'below the fold'. Additionally, it slightly improves the content styling in the performance footer as well.
+ * Creator:       Alexander Bias
+ * Tested on:     Moodle 5.0, Firefox for Mac
+ *
+ * @copyright     2025 Alexander Bias, ssystems GmbH
+ * @author        Alexander Bias <abias@ssystems.de>
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/* Style the debugging footer, but only if the footer has child elements.
+    This is to avoid that the added padding of the footer created an empty black bar at the bottom of the page. */
+.footer-content-debugging:has(.footer-dark-inner > *) {
+    /* Take the footer out of the page flow which will place it below the whole page.
+       This results in the footer being placed 'below the fold'. */
+    position: absolute;
+    left: 0;
+
+    /* Add some more top margin to really keep it 'below the fold'. Better be safe than sorry. */
+    @extend .mt-5;
+
+    /* Stretch the debugging footer over the whole viewport width. */
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+
+    /* Add some horizontal padding. */
+    padding-left: 2rem;
+    padding-right: 2rem;
+
+    /* Add some vertical padding. */
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+
+    /* Make the font smaller and less obtrusive. */
+    font-size: .875em;
+
+    /* Align the contents in the center. */
+    .footer-dark-inner {
+        max-width: 900px;
+
+        .table-responsive {
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+            width: 100%;
+
+            table {
+                width: 100% !important; /* stylelint-disable-line declaration-no-important */
+            }
+        }
+    }
+}
