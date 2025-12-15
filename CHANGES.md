@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.1-r1
 
 * 2025-10-26 - Upgrade: Adopt changes to 'Add a block' area CSS selectors from MDL-85281
 * 2025-10-26 - Upgrade: Fix Behat test which tests the activity icon branding feature after the activity chooser restructurings on 5.1.
