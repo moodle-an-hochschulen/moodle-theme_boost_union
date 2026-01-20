@@ -184,7 +184,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme/boost_union:configure'
         );
 
-        // Create general settings tab.
+        // Tab: General settings.
         $tab = new admin_settingpage('theme_boost_union_look_general', get_string('generalsettings', 'theme_boost', null, true));
 
         // Heading: Theme presets.
@@ -206,7 +206,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create SCSS tab.
+        // Tab: SCSS.
         $tab = new admin_settingpage('theme_boost_union_look_scss', get_string('scsstab', 'theme_boost_union', null, true));
 
         // Heading: Raw SCSS.
@@ -400,7 +400,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create page tab.
+        // Tab: Page.
         $tab = new admin_settingpage('theme_boost_union_look_page', get_string('pagetab', 'theme_boost_union', null, true));
 
         // Heading: Page width.
@@ -455,7 +455,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create site branding tab.
+        // Tab: Site branding.
         $tab = new admin_settingpage(
             'theme_boost_union_look_sitebranding',
             get_string('sitebrandingtab', 'theme_boost_union', null, true)
@@ -681,7 +681,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create activity branding tab.
+        // Tab: Activity branding.
         $tab = new admin_settingpage(
             'theme_boost_union_look_activitybranding',
             get_string('activitybrandingtab', 'theme_boost_union', null, true)
@@ -842,7 +842,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create calendar branding tab.
+        // Tab: Calendar branding.
         $tab = new admin_settingpage(
             'theme_boost_union_look_calendarbranding',
             get_string('calendarbrandingtab', 'theme_boost_union', null, true)
@@ -918,7 +918,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create login page tab.
+        // Tab: Login page.
         $tab = new admin_settingpage(
             'theme_boost_union_look_loginpage',
             get_string('loginpagetab', 'theme_boost_union', null, true)
@@ -1126,7 +1126,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create Dashboard / My courses tab.
+        // Tab: Dashboard / My courses.
         $tab = new admin_settingpage(
             'theme_boost_union_look_dashboard',
             get_string('dashboardtab', 'theme_boost_union', null, true)
@@ -1170,7 +1170,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create Category index / site home tab.
+        // Tab: Category index / site home.
         $tab = new admin_settingpage(
             'theme_boost_union_look_categoryindex',
             get_string('categoryindextab', 'theme_boost_union', null, true)
@@ -1490,13 +1490,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create Blocks tab.
+        // Tab: Blocks.
         $tab = new admin_settingpage(
             'theme_boost_union_look_blocks',
             get_string('blockstab', 'theme_boost_union', null, true)
         );
 
-        // Create Timeline block heading.
+        // Heading: Timeline block.
         $name = 'theme_boost_union/timelineheading';
         $title = get_string('timelineheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1510,7 +1510,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create Upcoming events block heading.
+        // Heading: Upcoming events block.
         $name = 'theme_boost_union/upcomingeventsheading';
         $title = get_string('upcomingeventsheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1556,7 +1556,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create course tab.
+        // Tab: Course.
         $tab = new admin_settingpage(
             'theme_boost_union_look_course',
             get_string('coursetab', 'theme_boost_union', null, true)
@@ -1726,7 +1726,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create E_Mail branding tab.
+        // Tab: E-Mail branding.
         $tab = new admin_settingpage(
             'theme_boost_union_look_emailbranding',
             get_string('emailbrandingtab', 'theme_boost_union', null, true)
@@ -1854,7 +1854,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create resources tab.
+        // Tab: Resources.
         $tab = new admin_settingpage(
             'theme_boost_union_look_resources',
             get_string('resourcestab', 'theme_boost_union', null, true)
@@ -1958,7 +1958,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create H5P tab.
+        // Tab: H5P.
         $tab = new admin_settingpage(
             'theme_boost_union_look_h5p',
             get_string('h5ptab', 'theme_boost_union', null, true)
@@ -1998,7 +1998,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create mobile tab.
+        // Tab: Mobile.
         $tab = new admin_settingpage(
             'theme_boost_union_look_mobile',
             get_string('mobiletab', 'theme_boost_union', null, true)
@@ -2128,7 +2128,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
 
 
-        // Create navigation tab.
+        // Tab: Navigation.
         $tab = new admin_settingpage(
             'theme_boost_union_feel_navigation',
             get_string('navigationtab', 'theme_boost_union', null, true)
@@ -2300,7 +2300,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create blocks tab.
+        // Tab: Blocks.
         $tab = new admin_settingpage('theme_boost_union_feel_blocks', get_string('blockstab', 'theme_boost_union', null, true));
 
         // Heading: Blocks general.
@@ -2546,7 +2546,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create page layouts tab.
+        // Tab: Page layouts.
         $tab = new admin_settingpage(
             'theme_boost_union_feel_pagelayouts',
             get_string('pagelayoutstab', 'theme_boost_union', null, true)
@@ -2570,7 +2570,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create links tab.
+        // Tab: Links.
         $tab = new admin_settingpage('theme_boost_union_feel_links', get_string('linkstab', 'theme_boost_union', null, true));
 
         // Heading: Special Links Markup.
@@ -2663,7 +2663,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create misc tab.
+        // Tab: Misc.
         $tab = new admin_settingpage('theme_boost_union_feel_misc', get_string('misctab', 'theme_boost_union', null, true));
 
         // Heading: JavaScript.
@@ -2694,7 +2694,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme/boost_union:configure'
         );
 
-        // Create footer tab.
+        // Tab: Footer.
         $tab = new admin_settingpage('theme_boost_union_content_footer', get_string('footertab', 'theme_boost_union', null, true));
 
         // Heading: Footnote.
@@ -2959,7 +2959,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create static pages tab.
+        // Tab: Static pages.
         $tab = new admin_settingpage(
             'theme_boost_union_content_staticpages',
             get_string('staticpagestab', 'theme_boost_union', null, true)
@@ -3052,7 +3052,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create info banner tab.
+        // Tab: Info banner.
         $tab = new admin_settingpage(
             'theme_boost_union_infobanners_infobanner',
             get_string('infobannertab', 'theme_boost_union', null, true)
@@ -3297,7 +3297,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create advertisement tiles tab.
+        // Tab: Advertisement tiles.
         $tab = new admin_settingpage(
             'theme_boost_union_tiles',
             get_string('tilestab', 'theme_boost_union', null, true)
@@ -3569,7 +3569,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create slider tab.
+        // Tab: Slider.
         $tab = new admin_settingpage(
             'theme_boost_union_slider',
             get_string('slidertab', 'theme_boost_union', null, true)
@@ -3941,7 +3941,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme/boost_union:configure'
         );
 
-        // Create courses tab.
+        // Tab: Courses.
         $tab = new admin_settingpage(
             'theme_boost_union_functionality_courses',
             get_string('coursestab', 'theme_boost_union', null, true)
@@ -4027,7 +4027,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->add($tab);
 
 
-        // Create administration tab.
+        // Tab: Administration.
         $tab = new admin_settingpage(
             'theme_boost_union_functionality_administration',
             get_string('administrationtab', 'theme_boost_union', null, true)
@@ -4069,7 +4069,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme/boost_union:configure'
         );
 
-        // Create Declaration tab.
+        // Tab: Declaration.
         $tab = new admin_settingpage(
             'theme_boost_union_content_accessibilitydeclaration',
             get_string('accessibilitydeclarationtab', 'theme_boost_union', null, true)
@@ -4165,7 +4165,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Add tab to settings page.
         $page->add($tab);
 
-        // Create Support tab.
+        // Tab: Support.
         $tab = new admin_settingpage(
             'theme_boost_union_content_accessibilitysupport',
             get_string('accessibilitysupporttab', 'theme_boost_union', null, true)
@@ -4424,7 +4424,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Add tab to settings page.
         $page->add($tab);
 
-        // Create SCSS snippets settings tab.
+        // Tab: SCSS snippets settings.
         $tab = new admin_settingpage(
             'theme_boost_union_snippets_settings',
             get_string('snippetssettings', 'theme_boost_union', null, true)
