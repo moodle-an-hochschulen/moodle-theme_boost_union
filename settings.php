@@ -187,7 +187,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create general settings tab.
         $tab = new admin_settingpage('theme_boost_union_look_general', get_string('generalsettings', 'theme_boost', null, true));
 
-        // Create theme presets heading.
+        // Heading: Theme presets.
         $name = 'theme_boost_union/presetheading';
         $preseturl = new core\url('/admin/settings.php', ['section' => 'themesettingboost'], 'theme_boost_general');
         $title = get_string('presetheading', 'theme_boost_union', null, true);
@@ -209,7 +209,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create SCSS tab.
         $tab = new admin_settingpage('theme_boost_union_look_scss', get_string('scsstab', 'theme_boost_union', null, true));
 
-        // Create Raw SCSS heading.
+        // Heading: Raw SCSS.
         $name = 'theme_boost_union/scssheading';
         $title = get_string('scssheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -233,7 +233,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create external SCSS heading.
+        // Heading: External SCSS.
         $name = 'theme_boost_union/extscssheading';
         $title = get_string('extscssheading', 'theme_boost_union', null, true);
         $taskurl = new core\url(
@@ -403,7 +403,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create page tab.
         $tab = new admin_settingpage('theme_boost_union_look_page', get_string('pagetab', 'theme_boost_union', null, true));
 
-        // Create page width heading.
+        // Heading: Page width.
         $name = 'theme_boost_union/pagewidthheading';
         $title = get_string('pagewidthheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -418,7 +418,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create drawer width heading.
+        // Heading: Drawer width.
         $name = 'theme_boost_union/drawerwidthheading';
         $title = get_string('drawerwidthheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -452,7 +452,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('sitebrandingtab', 'theme_boost_union', null, true)
         );
 
-        // Create logos heading.
+        // Heading: Logos.
         $name = 'theme_boost_union/logosheading';
         $title = get_string('logosheading', 'theme_boost_union', null, true);
         $notificationurl = new core\url('/admin/settings.php', ['section' => 'logos']);
@@ -495,7 +495,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create favicon heading.
+        // Heading: Favicon.
         $name = 'theme_boost_union/faviconheading';
         $title = get_string('faviconheading', 'theme_boost_union', null, true);
         $notificationurl = new core\url('/admin/settings.php', ['section' => 'logos']);
@@ -524,7 +524,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create background images heading.
+        // Heading: Background images.
         $name = 'theme_boost_union/backgroundimagesheading';
         $title = get_string('backgroundimagesheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -579,7 +579,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create brand colors heading.
+        // Heading: Brand colors.
         $name = 'theme_boost_union/brandcolorsheading';
         $title = get_string('brandcolorsheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -593,7 +593,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create Bootstrap colors heading.
+        // Heading: Bootstrap colors.
         $name = 'theme_boost_union/bootstrapcolorsheading';
         $title = get_string('bootstrapcolorsheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -631,7 +631,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create navbar heading.
+        // Heading: Navbar.
         $name = 'theme_boost_union/navbarheading';
         $title = get_string('navbarheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -678,7 +678,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('activitybrandingtab', 'theme_boost_union', null, true)
         );
 
-        // Create activity icon colors heading.
+        // Heading: Activity icon colors.
         $name = 'theme_boost_union/activityiconcolorsheading';
         $title = get_string('activityiconcolorsheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -703,7 +703,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
         }
 
-        // Create activity icons purpose heading.
+        // Heading: Activity icons purpose.
         $name = 'theme_boost_union/activitypurposeheading';
         $title = get_string('activitypurposeheading', 'theme_boost_union', null, true);
         $description = get_string('activitypurposeheading_desc', 'theme_boost_union', null, true) . '<br /><br />' .
@@ -755,7 +755,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
         }
 
-        // Create activity icons heading.
+        // Heading: Activity icons.
         $name = 'theme_boost_union/modicons';
         $title = get_string('modiconsheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -830,7 +830,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $calendareventtypes = ['category', 'course', 'group', 'user', 'site', 'other'];
         // Iterate over all event types.
         foreach ($calendareventtypes as $type) {
-            // Create Calendar event type heading.
+            // Heading: Calendar event type.
             $name = 'theme_boost_union/calendareventcolorsheading' . $type;
             $title = get_string(
                 'calendareventcolorsheading',
@@ -878,7 +878,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
         }
 
-        // Create calendarbrandingheading heading.
+        // Heading: Calendar branding.
         $name = 'theme_boost_union/calendarbrandingheading';
         $title = get_string('calendarbrandingheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -902,7 +902,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('loginpagetab', 'theme_boost_union', null, true)
         );
 
-        // Create login page background images heading.
+        // Heading: Login page background images.
         $name = 'theme_boost_union/loginbackgroundimagesheading';
         $title = get_string('loginbackgroundimagesheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -964,7 +964,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configtextarea($name, $title, $description, null, PARAM_TEXT);
         $tab->add($setting);
 
-        // Create login form heading.
+        // Heading: Login form.
         $name = 'theme_boost_union/loginformheading';
         $title = get_string('loginformheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -995,7 +995,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
-        // Create login providers heading.
+        // Heading: Login providers.
         $name = 'theme_boost_union/loginprovidersheading';
         $title = get_string('loginprovidersheading', 'theme_boost_union', null, true);
         $notificationurl = new core\url('/admin/settings.php', ['section' => 'manageauths']);
@@ -1054,7 +1054,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
 
-        // Create login order heading.
+        // Heading: Login order.
         $name = 'theme_boost_union/loginorderheading';
         $title = get_string('loginorderheading', 'theme_boost_union', null, true);
         $description = get_string('loginorderheading_desc', 'theme_boost_union', null, true) . '<br /><br />' .
@@ -1076,7 +1076,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
         }
 
-        // Create side entrance login heading.
+        // Heading: Side entrance login.
         $name = 'theme_boost_union/sideentranceloginheading';
         $title = get_string('sideentranceloginheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1110,7 +1110,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('dashboardtab', 'theme_boost_union', null, true)
         );
 
-        // Create Course overview block heading.
+        // Heading: Course overview block.
         $name = 'theme_boost_union/courseoverviewheading';
         $title = get_string('courseoverviewheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1154,7 +1154,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('categoryindextab', 'theme_boost_union', null, true)
         );
 
-        // Create Course listing heading.
+        // Heading: Course listing.
         $name = 'theme_boost_union/courselistingheading';
         $title = get_string('courselistingheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1438,7 +1438,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE
         );
 
-        // Create Category listing heading.
+        // Heading: Category listing.
         $name = 'theme_boost_union/categorylistingheading';
         $title = get_string('categorylistingheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1474,7 +1474,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('coursetab', 'theme_boost_union', null, true)
         );
 
-        // Create course header heading.
+        // Heading: Course header.
         $name = 'theme_boost_union/courseheaderheading';
         $title = get_string('courseheaderheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1595,7 +1595,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
-        // Create course index heading.
+        // Heading: Course index.
         $name = 'theme_boost_union/courseindexheading';
         $title = get_string('courseindexheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1644,7 +1644,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('emailbrandingtab', 'theme_boost_union', null, true)
         );
 
-        // Create E_Mail branding introduction heading.
+        // Heading: E-Mail branding introduction.
         $name = 'theme_boost_union/emailbrandingintroheading';
         $title = get_string('emailbrandingintroheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1688,7 +1688,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_description($name, $title, $description);
         $tab->add($setting);
 
-        // Create HTML E-Mails heading.
+        // Heading: HTML E-Mails.
         $name = 'theme_boost_union/emailbrandinghtmlheading';
         $title = get_string('emailbrandinghtmlheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1725,7 +1725,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
         }
 
-        // Create Plaintext E-Mails heading.
+        // Heading: Plaintext E-Mails.
         $name = 'theme_boost_union/emailbrandingtextheading';
         $title = get_string('emailbrandingtextheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1772,7 +1772,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('resourcestab', 'theme_boost_union', null, true)
         );
 
-        // Create additional resources heading.
+        // Heading: Additional resources.
         $name = 'theme_boost_union/additionalresourcesheading';
         $title = get_string('additionalresourcesheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1813,7 +1813,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
         }
 
-        // Create custom fonts heading.
+        // Heading: Custom fonts.
         $name = 'theme_boost_union/customfontsheading';
         $title = get_string('customfontsheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1876,7 +1876,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('h5ptab', 'theme_boost_union', null, true)
         );
 
-        // Create Raw CSS for H5P heading.
+        // Heading: Raw CSS for H5P.
         $name = 'theme_boost_union/cssh5pheading';
         $title = get_string('cssh5pheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1891,7 +1891,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create content bank width heading.
+        // Heading: Content bank width.
         $name = 'theme_boost_union/contentwidthheading';
         $title = get_string('contentwidthheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1916,7 +1916,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('mobiletab', 'theme_boost_union', null, true)
         );
 
-        // Create Mobile app heading.
+        // Heading: Mobile app.
         $name = 'theme_boost_union/mobileappheading';
         $title = get_string('mobileappheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -1964,7 +1964,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_boost_union_set_mobilecss_url');
         $tab->add($setting);
 
-        // Create Mobile appearance heading.
+        // Heading: Mobile appearance.
         $name = 'theme_boost_union/mobileappearanceheading';
         $title = get_string('mobileappearanceheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -2046,7 +2046,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('navigationtab', 'theme_boost_union', null, true)
         );
 
-        // Create primary navigation heading.
+        // Heading: Primary navigation.
         $name = 'theme_boost_union/primarynavigationheading';
         $title = get_string('primarynavigationheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -2081,7 +2081,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
         $tab->add($setting);
 
-        // Create user menu heading.
+        // Heading: User menu.
         $name = 'theme_boost_union/usermenuheading';
         $title = get_string('usermenuheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -2109,7 +2109,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
-        // Create navbar heading.
+        // Heading: Navbar.
         $name = 'theme_boost_union/navbarheading';
         $title = get_string('navbarheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -2153,7 +2153,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
-        // Create breadcrumbs heading.
+        // Heading: Breadcrumbs.
         $name = 'theme_boost_union/breadcrumbsheading';
         $title = get_string('breadcrumbsheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -2178,7 +2178,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
         $tab->add($setting);
 
-        // Create navigation heading.
+        // Heading: Navigation.
         $name = 'theme_boost_union/navigationheading';
         $title = get_string('navigationheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -2215,7 +2215,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create blocks tab.
         $tab = new admin_settingpage('theme_boost_union_feel_blocks', get_string('blockstab', 'theme_boost_union', null, true));
 
-        // Create blocks general heading.
+        // Heading: Blocks general.
         $name = 'theme_boost_union/blocksgeneralheading';
         $title = get_string('blocksgeneralheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -2229,7 +2229,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_TEXT);
         $tab->add($setting);
 
-        // Create block regions heading.
+        // Heading: Block regions.
         $name = 'theme_boost_union/blockregionsheading';
         $title = get_string('blockregionsheading', 'theme_boost_union', null, true);
         $description = '';
@@ -2348,7 +2348,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
         }
 
-        // Create outside regions heading.
+        // Heading: Outside regions.
         $name = 'theme_boost_union/outsideregionsheading';
         $title = get_string('outsideregionsheading', 'theme_boost_union', null, true);
         $description = get_string('outsideregionsheading_desc', 'theme_boost_union', null, true);
@@ -2464,7 +2464,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
         $tab->add($setting);
 
-        // Create footer regions heading.
+        // Heading: Footer regions.
         $name = 'theme_boost_union/footerregionsheading';
         $title = get_string('footerregionsheading', 'theme_boost_union', null, true);
         $description = get_string('footerregionsheading_desc', 'theme_boost_union', null, true);
@@ -2484,7 +2484,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
         $tab->add($setting);
 
-        // Create site home right-hand blocks drawer behaviour heading.
+        // Heading: Site home right-hand blocks drawer behaviour.
         $name = 'theme_boost_union/sitehomerighthandblockdrawerbehaviour';
         $title = get_string('sitehomerighthandblockdrawerbehaviour', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -2521,7 +2521,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('pagelayoutstab', 'theme_boost_union', null, true)
         );
 
-        // Create tool_policy heading.
+        // Heading: Tool policy.
         $name = 'theme_boost_union/policyheading';
         $title = get_string('policyheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -2542,7 +2542,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create links tab.
         $tab = new admin_settingpage('theme_boost_union_feel_links', get_string('linkstab', 'theme_boost_union', null, true));
 
-        // Create Special Links Markup heading.
+        // Heading: Special Links Markup.
         $name = 'theme_boost_union/speciallinksmarkupheading';
         $title = get_string('speciallinksmarkupheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -2635,7 +2635,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create misc tab.
         $tab = new admin_settingpage('theme_boost_union_feel_misc', get_string('misctab', 'theme_boost_union', null, true));
 
-        // Create JavaScript heading.
+        // Heading: JavaScript.
         $name = 'theme_boost_union/javascriptheading';
         $title = get_string('javascriptheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -2666,7 +2666,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create footer tab.
         $tab = new admin_settingpage('theme_boost_union_content_footer', get_string('footertab', 'theme_boost_union', null, true));
 
-        // Create footnote heading.
+        // Heading: Footnote.
         $name = 'theme_boost_union/footnoteheading';
         $title = get_string('footnoteheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -2679,7 +2679,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_confightmleditor($name, $title, $description, '');
         $tab->add($setting);
 
-        // Create footer heading.
+        // Heading: Footer.
         $name = 'theme_boost_union/footerheading';
         $title = get_string('footerheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -2939,7 +2939,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Iterate over the pages.
         foreach ($staticpages as $staticpage) {
-            // Create page heading.
+            // Heading: Page.
             $name = 'theme_boost_union/' . $staticpage . 'heading';
             $title = get_string($staticpage . 'heading', 'theme_boost_union', null, true);
             $setting = new admin_setting_heading($name, $title, null);
@@ -3072,7 +3072,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Create the hardcoded amount of information banners without code duplication.
         for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_INFOBANNER_COUNT; $i++) {
-            // Create Infobanner heading.
+            // Heading: Infobanner.
             $name = 'theme_boost_union/infobanner' . $i . 'heading';
             $title = get_string('infobannerheading', 'theme_boost_union', ['no' => $i], true);
             $setting = new admin_setting_heading($name, $title, null);
@@ -3272,7 +3272,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('tilestab', 'theme_boost_union', null, true)
         );
 
-        // Create advertisement tiles general heading.
+        // Heading: Advertisement tiles general.
         $name = 'theme_boost_union/tilesgeneralheading';
         $title = get_string('tilesgeneralheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -3334,7 +3334,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Create the hardcoded amount of advertisement tiles without code duplication.
         for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
-            // Create advertisement tile heading.
+            // Heading: Advertisement tile.
             $name = 'theme_boost_union/tile' . $i . 'heading';
             $title = get_string('tileheading', 'theme_boost_union', ['no' => $i], true);
             $setting = new admin_setting_heading($name, $title, null);
@@ -3544,7 +3544,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('slidertab', 'theme_boost_union', null, true)
         );
 
-        // Create slider general heading.
+        // Heading: Slider general.
         $name = 'theme_boost_union/slidergeneralheading';
         $title = get_string('slidergeneralheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -3694,7 +3694,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Create a hardcoded amount of slides without code duplication.
         for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
-            // Create slide heading.
+            // Heading: Slide.
             $name = 'theme_boost_union/slide' . $i . 'heading';
             $title = get_string('slideheading', 'theme_boost_union', ['no' => $i], true);
             $setting = new admin_setting_heading($name, $title, null);
@@ -3914,7 +3914,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('coursestab', 'theme_boost_union', null, true)
         );
 
-        // Create course related hints for teachers heading.
+        // Heading: Course related hints for teachers.
         $name = 'theme_boost_union/courserelatedhintsforteachersheading';
         $title = get_string('courserelatedhintsforteachersheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -3977,7 +3977,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
         $tab->add($setting);
 
-        // Create course related hints for students heading.
+        // Heading: Course related hints for students.
         $name = 'theme_boost_union/courserelatedhintsforstudentsheading';
         $title = get_string('courserelatedhintsforstudentsheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -4000,7 +4000,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('administrationtab', 'theme_boost_union', null, true)
         );
 
-        // Create course management heading.
+        // Heading: Course management.
         $name = 'theme_boost_union/coursemanagementheading';
         $title = get_string('coursemanagementheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -4042,7 +4042,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('accessibilitydeclarationtab', 'theme_boost_union', null, true)
         );
 
-        // Create Declaration of accessibility page heading.
+        // Heading: Declaration of accessibility page.
         $name = 'theme_boost_union/accessibilityheading';
         $title = get_string('accessibilitydeclarationheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -4138,7 +4138,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('accessibilitysupporttab', 'theme_boost_union', null, true)
         );
 
-        // Create Accessibility support page heading.
+        // Heading: Accessibility support page.
         $name = 'theme_boost_union/accessibilitysupportheading';
         $title = get_string('accessibilitysupportheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -4397,7 +4397,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('snippetssettings', 'theme_boost_union', null, true)
         );
 
-        // Create built-in snippets heading.
+        // Heading: Built-in snippets.
         $name = 'theme_boost_union/builtinsnippetsheading';
         $title = get_string('snippetsbuiltinsnippetsheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
@@ -4411,7 +4411,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Create uploaded snippets heading.
+        // Heading: Uploaded snippets.
         $name = 'theme_boost_union/uploadedsnippetsheading';
         $title = get_string('snippetsuploadedsnippetsheading', 'theme_boost_union', null, true);
         $notificationurl = 'https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_snippets';
