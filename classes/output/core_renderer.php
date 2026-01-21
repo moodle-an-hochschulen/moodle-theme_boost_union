@@ -972,11 +972,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // Check login layout setting.
         $loginlayoutsetting = get_config('theme_boost_union', 'loginlayout');
-        $loginlayout = ($loginlayoutsetting != false) ? $loginlayoutsetting : 'vertical';
+        $loginlayout = ($loginlayoutsetting != false) ? $loginlayoutsetting : THEME_BOOST_UNION_SETTING_LOGINLAYOUT_VERTICAL;
         $context->loginlayout = $loginlayout;
 
         // If accordion layout is enabled, set marker.
-        if ($loginlayout == 'accordion') {
+        if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION) {
             $context->loginaccordion = true;
         }
 
@@ -993,7 +993,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // For vertical, accordion, and tabs layouts, create sorted login methods array.
         // This ensures the DOM order matches the visual order, so CSS :first-of-type and :last-of-type work correctly.
         // Note: The template uses the same loop structure for all layouts, with conditionals for tabs vs vertical/accordion.
-        if ($loginlayout == 'vertical' || $loginlayout == 'accordion' || $loginlayout == 'tabs') {
+        if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_VERTICAL ||
+                $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION ||
+                $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS) {
             $loginmethods = [];
 
             // Method: Local login.
@@ -1084,7 +1086,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
 
             // For accordion layout, determine which item should be open by default.
-            if ($loginlayout == 'accordion') {
+            if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION) {
                 $primarylogin = get_config('theme_boost_union', 'primarylogin');
                 if ($primarylogin === false) {
                     $primarylogin = 'none';
@@ -1113,7 +1115,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         // If tabs layout is enabled, prepare tab structure.
-        if ($loginlayout == 'tabs') {
+        if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS) {
             $tabs = [];
 
             // Tab: Local login.
@@ -1122,14 +1124,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 if ($order === false) {
                     $order = 1; // Default order.
                 }
-                $tabtext = get_config('theme_boost_union', 'loginlocallogintabtext');
-                if ($tabtext === false || empty($tabtext)) {
-                    $tabtext = 'Local login'; // Default.
+                $tablabel = get_config('theme_boost_union', 'loginlocallogintablabel');
+                if ($tablabel === false || empty($tablabel)) {
+                    $tablabel = 'Local login'; // Default.
                 }
                 $tabs[] = (object)[
                     'id' => 'login-tab-local',
                     'name' => 'local',
-                    'displayname' => $tabtext,
+                    'displayname' => $tablabel,
                     'order' => $order,
                     'content' => 'local',
                 ];
@@ -1141,14 +1143,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 if ($order === false) {
                     $order = 2; // Default order.
                 }
-                $tabtext = get_config('theme_boost_union', 'loginidplogintabtext');
-                if ($tabtext === false || empty($tabtext)) {
-                    $tabtext = 'IDP login'; // Default.
+                $tablabel = get_config('theme_boost_union', 'loginidplogintablabel');
+                if ($tablabel === false || empty($tablabel)) {
+                    $tablabel = 'IDP login'; // Default.
                 }
                 $tabs[] = (object)[
                     'id' => 'login-tab-idp',
                     'name' => 'idp',
-                    'displayname' => $tabtext,
+                    'displayname' => $tablabel,
                     'order' => $order,
                     'content' => 'idp',
                 ];
@@ -1165,14 +1167,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 if ($order === false) {
                     $order = 3; // Default order.
                 }
-                $tabtext = get_config('theme_boost_union', 'loginselfregistrationlogintabtext');
-                if ($tabtext === false || empty($tabtext)) {
-                    $tabtext = 'Self Registration'; // Default.
+                $tablabel = get_config('theme_boost_union', 'loginselfregistrationlogintablabel');
+                if ($tablabel === false || empty($tablabel)) {
+                    $tablabel = 'Self Registration'; // Default.
                 }
                 $tabs[] = (object)[
                     'id' => 'login-tab-signup',
                     'name' => 'signup',
-                    'displayname' => $tabtext,
+                    'displayname' => $tablabel,
                     'order' => $order,
                     'content' => 'signup',
                 ];
@@ -1184,14 +1186,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 if ($order === false) {
                     $order = 4; // Default order.
                 }
-                $tabtext = get_config('theme_boost_union', 'loginguestlogintabtext');
-                if ($tabtext === false || empty($tabtext)) {
-                    $tabtext = 'Guest Login'; // Default.
+                $tablabel = get_config('theme_boost_union', 'loginguestlogintablabel');
+                if ($tablabel === false || empty($tablabel)) {
+                    $tablabel = 'Guest Login'; // Default.
                 }
                 $tabs[] = (object)[
                     'id' => 'login-tab-guest',
                     'name' => 'guest',
-                    'displayname' => $tabtext,
+                    'displayname' => $tablabel,
                     'order' => $order,
                     'content' => 'guest',
                 ];

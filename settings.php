@@ -1030,9 +1030,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('loginlayoutsetting', 'theme_boost_union', null, true);
         $description = get_string('loginlayoutsetting_desc', 'theme_boost_union', null, true);
         $loginlayoutoptions = [
-            'vertical' => get_string('loginlayoutvertical', 'theme_boost_union'),
-            'tabs' => get_string('loginlayouttabs', 'theme_boost_union'),
-            'accordion' => get_string('loginlayoutaccordion', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_LOGINLAYOUT_VERTICAL => get_string('loginlayoutvertical', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS => get_string('loginlayouttabs', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION => get_string('loginlayoutaccordion', 'theme_boost_union'),
         ];
         $setting = new admin_setting_configselect($name, $title, $description, 'vertical', $loginlayoutoptions);
         $setting->set_updatedcallback('theme_reset_all_caches');
@@ -1090,7 +1090,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, 'none', $primaryloginoptions);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
-        // Only show this setting when tabs or accordion layout is enabled (hide for vertical layout).
         $page->hide_if(
             'theme_boost_union/primarylogin',
             'theme_boost_union/loginlayout',
@@ -1107,8 +1106,18 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Setting: Local login.
         $name = 'theme_boost_union/loginlocalloginenable';
         $title = get_string('loginlocalloginenablesetting', 'theme_boost_union', null, true);
-        $localloginurl = new core\url('/theme/boost_union/locallogin.php');
         $description = get_string('loginlocalloginenablesetting_desc', 'theme_boost_union', null, true);
+        $locallogincorenoteurl = new core\url('/admin/settings.php', ['section' => 'manageauths']);
+        $locallogincorenotesettingname = get_string('showloginform', 'core_auth');
+        $locallogincorenote = new \core\output\notification(get_string(
+            'loginlocalloginenablesetting_core',
+            'theme_boost_union',
+            ['settingname' => $locallogincorenotesettingname, 'url' => $locallogincorenoteurl->out()],
+            true
+        ), \core\output\notification::NOTIFY_INFO);
+        $locallogincorenote->set_show_closebutton(false);
+        $description .= $OUTPUT->render($locallogincorenote);
+        $localloginurl = new core\url('/theme/boost_union/locallogin.php');
         $localloginnotification = new \core\output\notification(get_string(
             'loginlocalloginenablesetting_note',
             'theme_boost_union',
@@ -1152,13 +1161,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
 
         // Setting: Local login tab text (only visible when tab layout is enabled).
-        $name = 'theme_boost_union/loginlocallogintabtext';
-        $title = get_string('loginlocallogintabtextsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginlocallogintabtextsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configtext($name, $title, $description, 'Local login', PARAM_TEXT);
+        $name = 'theme_boost_union/loginlocallogintablabel';
+        $title = get_string('loginlocallogintablabelsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginlocallogintablabelsetting_desc', 'theme_boost_union', null, true);
+        $default = get_string('loginlocallogintablabelsetting_default', 'theme_boost_union');
+        $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_TEXT);
         $tab->add($setting);
         $page->hide_if(
-            'theme_boost_union/loginlocallogintabtext',
+            'theme_boost_union/loginlocallogintablabel',
             'theme_boost_union/loginlayout',
             'neq',
             'tabs'
@@ -1174,14 +1184,28 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/loginidploginenable';
         $title = get_string('loginidploginenablesetting', 'theme_boost_union', null, true);
         $authurl = new core\url('/admin/settings.php', ['section' => 'manageauths']);
-        $description = get_string('loginidploginenablesetting_desc', 'theme_boost_union', ['url' => $authurl->out()], true);
+        $description = get_string('loginidploginenablesetting_desc', 'theme_boost_union', null, true);
+        $idplogincorenoteurl = new core\url('/admin/settings.php', ['section' => 'manageauths']);
+        $idplogincorenote = new \core\output\notification(get_string(
+            'loginidploginenablesetting_core',
+            'theme_boost_union',
+            ['url' => $idplogincorenoteurl->out()],
+            true
+        ), \core\output\notification::NOTIFY_INFO);
+        $idplogincorenote->set_show_closebutton(false);
+        $description .= $OUTPUT->render($idplogincorenote);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
 
         // Setting: IDP login intro.
         $name = 'theme_boost_union/loginidpshowintro';
         $title = get_string('loginidpshowintrosetting', 'theme_boost_union', null, true);
-        $description = get_string('loginidpshowintrosetting_desc', 'theme_boost_union', get_string('potentialidps', 'auth'), true);
+        $description = get_string(
+            'loginidpshowintrosetting_desc',
+            'theme_boost_union',
+            get_string('potentialidps', 'auth'),
+            true
+        );
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
         $page->hide_if(
@@ -1205,13 +1229,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
 
         // Setting: IDP login tab text (only visible when tab layout is enabled).
-        $name = 'theme_boost_union/loginidplogintabtext';
-        $title = get_string('loginidplogintabtextsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginidplogintabtextsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configtext($name, $title, $description, 'IDP login', PARAM_TEXT);
+        $name = 'theme_boost_union/loginidplogintablabel';
+        $title = get_string('loginidplogintablabelsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginidplogintablabelsetting_desc', 'theme_boost_union', null, true);
+        $default = get_string('loginidplogintablabelsetting_default', 'theme_boost_union');
+        $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_TEXT);
         $tab->add($setting);
         $page->hide_if(
-            'theme_boost_union/loginidplogintabtext',
+            'theme_boost_union/loginidplogintablabel',
             'theme_boost_union/loginlayout',
             'neq',
             'tabs'
@@ -1245,6 +1270,16 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('firsttime', 'core'),
             true
         );
+        $selfregistrationlogincorenoteurl = new core\url('/admin/settings.php', ['section' => 'manageauths']);
+        $selfregistrationlogincorenotesettingname = get_string('selfregistration', 'auth');
+        $selfregistrationlogincorenote = new \core\output\notification(get_string(
+            'loginselfregistrationenablesetting_core',
+            'theme_boost_union',
+            ['settingname' => $selfregistrationlogincorenotesettingname, 'url' => $selfregistrationlogincorenoteurl->out()],
+            true
+        ), \core\output\notification::NOTIFY_INFO);
+        $selfregistrationlogincorenote->set_show_closebutton(false);
+        $description .= $OUTPUT->render($selfregistrationlogincorenote);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
         $page->hide_if(
@@ -1268,13 +1303,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
 
         // Setting: Self registration tab text (only visible when tab layout is enabled).
-        $name = 'theme_boost_union/loginselfregistrationlogintabtext';
-        $title = get_string('loginselfregistrationlogintabtextsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginselfregistrationlogintabtextsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configtext($name, $title, $description, 'Self Registration', PARAM_TEXT);
+        $name = 'theme_boost_union/loginselfregistrationlogintablabel';
+        $title = get_string('loginselfregistrationlogintablabelsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginselfregistrationlogintablabelsetting_desc', 'theme_boost_union', null, true);
+        $default = get_string('loginselfregistrationlogintablabelsetting_default', 'theme_boost_union');
+        $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_TEXT);
         $tab->add($setting);
         $page->hide_if(
-            'theme_boost_union/loginselfregistrationlogintabtext',
+            'theme_boost_union/loginselfregistrationlogintablabel',
             'theme_boost_union/loginlayout',
             'neq',
             'tabs'
@@ -1289,8 +1325,17 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Setting: Guest login.
         $name = 'theme_boost_union/loginguestloginenable';
         $title = get_string('loginguestloginenablesetting', 'theme_boost_union', null, true);
-        $guestloginurl = new core\url('/admin/settings.php', ['section' => 'optionalsubsystems']);
-        $description = get_string('loginguestloginenablesetting_desc', 'theme_boost_union', ['url' => $guestloginurl->out()], true);
+        $description = get_string('loginguestloginenablesetting_desc', 'theme_boost_union', null, true);
+        $guestlogincorenoteurl = new core\url('/admin/settings.php', ['section' => 'manageauths']);
+        $guestlogincorenotesettingname = get_string('guestloginbutton', 'auth');
+        $guestlogincorenote = new \core\output\notification(get_string(
+            'loginguestloginenablesetting_core',
+            'theme_boost_union',
+            ['settingname' => $guestlogincorenotesettingname, 'url' => $guestlogincorenoteurl->out()],
+            true
+        ), \core\output\notification::NOTIFY_INFO);
+        $guestlogincorenote->set_show_closebutton(false);
+        $description .= $OUTPUT->render($guestlogincorenote);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
 
@@ -1326,13 +1371,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
 
         // Setting: Guest login tab text (only visible when tab layout is enabled).
-        $name = 'theme_boost_union/loginguestlogintabtext';
-        $title = get_string('loginguestlogintabtextsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginguestlogintabtextsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configtext($name, $title, $description, 'Guest Login', PARAM_TEXT);
+        $name = 'theme_boost_union/loginguestlogintablabel';
+        $title = get_string('loginguestlogintablabelsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginguestlogintablabelsetting_desc', 'theme_boost_union', null, true);
+        $default = get_string('loginguestlogintablabelsetting_default', 'theme_boost_union');
+        $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_TEXT);
         $tab->add($setting);
         $page->hide_if(
-            'theme_boost_union/loginguestlogintabtext',
+            'theme_boost_union/loginguestlogintablabel',
             'theme_boost_union/loginlayout',
             'neq',
             'tabs'
