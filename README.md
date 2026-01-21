@@ -938,6 +938,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * Bern University of Applied Sciences (BFH), Luca Bösch: Code, Peer Review, Ideating
 * Carinthia University of Applied Sciences, Mario Wehr: Code
 * Catalyst IT Australia, Brendan Heywood: Code
+* Catalyst IT Canada, Karl Michael Reyes: Code
 * Catalyst IT Europe, Mark Johnson: Code
 * Catalyst IT Europe, Simon Thornett: Code
 * ELAN e.V., Farbod Zamani: Code
