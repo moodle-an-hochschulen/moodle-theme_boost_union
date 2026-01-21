@@ -329,84 +329,99 @@ $string['loginformtransparencysetting_desc'] = 'With this setting, you can make 
 // ... ... Setting: Login container width.
 $string['logincontainerwidthsetting'] = 'Login container width';
 $string['logincontainerwidthsetting_desc'] = 'With this setting, you can override Moodle\'s fixed login container width of 500px. By default, Moodle uses a login container width of 500px on medium and larger screens. You can enter other pixel-based values like 600px, but you can also enter a percentage-based value like 90% or a viewport-width value like 50vw.';
-// ... Section: Login providers.
-$string['loginprovidersheading'] = 'Login providers';
-$string['loginprovidersheading_desc'] = 'Please note: Boost Union has its own login providers settings that work in addition to Moodle core\'s authentication settings. Some login providers also respect Moodle core settings. Please check the individual provider settings below for details.';
-$string['loginproviderlocalheading'] = 'Login provider: Local';
-$string['loginprovideridpheading'] = 'Login provider: IDP';
-$string['loginproviderguestheading'] = 'Login provider: Guest';
-$string['loginproviderselfregistrationheading'] = 'Login provider: Self registration';
-// ... ... Setting: Local login form.
-$string['loginlocalloginenablesetting'] = 'Local login';
-$string['loginlocalloginenablesetting_desc'] = 'With this setting, you control if the local login form is shown on the login page or not. By default, the local login form is shown and users can login into the site as normal. If you disable this setting, the local login form is hidden. This allows you to just provide login buttons for external identity providers like OAuth2 or OIDC.';
-$string['loginlocalloginenablesetting_note'] = 'Please note: As soon as you hide the local login form, you risk that admins cannot log in anymore with a local account if there is a problem with the external identity provider. The same goes if no other authentication methods than manual authentication are enabled at all.<br />To allow local logins anyway in such cases, the <a href="{$a->url}">side entrance local login page</a> (see below for details) is enabled automatically. Please bookmark this URL as your own safety net.';
-$string['loginlocalloginformhead'] = 'Local login';
-$string['loginlocalloginlocalnotdisabled'] = 'There is no need to log in on this side entrance login page here. Please use the <a href="{$a->url}">standard login page</a> for logging in.';
-// ... ... Setting: Local login intro.
-$string['loginlocalshowintrosetting'] = 'Local login intro';
-$string['loginlocalshowintrosetting_desc'] = 'With this setting, you control if a <em>\'{$a}\'</em> intro is shown above the local login form or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand which credentials to use in the local login form, especially if you provide more than one login method or if you have changed the order of the login methods.';
-$string['loginlocalintro'] = 'Login with your Moodle account';
-$string['loginlocalheading'] = 'Local login';
-$string['loginlocalintrotextsetting'] = 'Local login intro text';
-$string['loginlocalintrotextsetting_desc'] = 'With this setting, you can override the default intro text "Login with your Moodle account" with a custom text. Leave this field empty to use the default text.';
-$string['loginlocallogintabtextsetting'] = 'Local login tab text';
-$string['loginlocallogintabtextsetting_desc'] = 'With this setting, you can customize the text displayed in the tab for local login when using the tabs layout.';
-$string['loginidpheading'] = 'IDP login';
-$string['loginidplogintabtextsetting'] = 'IDP login tab text';
-$string['loginidplogintabtextsetting_desc'] = 'With this setting, you can customize the text displayed in the tab for IDP login when using the tabs layout.';
-$string['loginguestheading'] = 'Guest login';
-$string['loginguestlogintabtextsetting'] = 'Guest login tab text';
-$string['loginguestlogintabtextsetting_desc'] = 'With this setting, you can customize the text displayed in the tab for guest login when using the tabs layout.';
-$string['loginselfregistrationheading'] = 'Self registration';
-$string['loginselfregistrationlogintabtextsetting'] = 'Self registration tab text';
-$string['loginselfregistrationlogintabtextsetting_desc'] = 'With this setting, you can customize the text displayed in the tab for self registration when using the tabs layout.';
-// ... ... Setting: IDP login.
-$string['loginidploginenablesetting'] = 'IDP login';
-$string['loginidploginenablesetting_desc'] = 'With this setting, you control if the identity provider (IDP) login buttons are shown on the login page or not. By default, IDP login buttons are shown if identity providers are configured. If you disable this setting, all IDP login buttons are hidden regardless of the authentication plugins configuration.<br /><br /><strong>Core setting:</strong> Identity providers are provided by authentication plugins (e.g. OAuth2, CAS, Shibboleth). You can manage authentication plugins in <a href="{$a->url}">Site administration → Plugins → Authentication → Manage authentication</a>.';
-// ... ... Setting: IDP login intro.
-$string['loginidpshowintrosetting'] = 'IDP login intro';
-$string['loginidpshowintrosetting_desc'] = 'With this setting, you control if the <em>\'{$a}\'</em> intro is shown above the IDP login buttons or not. By default, the intro is shown and users will be quickly informed what the IDP buttons are about. If you disable this setting, the IDP intro is hidden. This allows you to provide a clean user login interface if you just use external identity providers like OAuth2 or OIDC.';
-$string['loginidpintrotextsetting'] = 'IDP login intro text';
-$string['loginidpintrotextsetting_desc'] = 'With this setting, you can override the default intro text "Log in using your account on:" with a custom text. Leave this field empty to use the default text.';
+$string['logincontainerwidthsetting_note'] = 'Please note: If you use the tabs login layout, the login container might become wider than the defined width if you have many login providers enabled or if you have long login tab texts. In this case, the login container will try to expand horizontally to fit all login provider tabs next to each other.';
 // ... Section: Login layout.
 $string['loginlayoutheading'] = 'Login layout';
+// ... ... Setting: Login layout.
 $string['loginlayoutsetting'] = 'Login layout';
-$string['loginlayoutsetting_desc'] = 'With this setting, you control how the login methods are displayed on the login page. You can choose between a vertical layout (all login methods displayed one below the other), a tabbed layout (login methods displayed in tabs next to each other), or an accordion layout (login methods displayed one below the other, but collapsed by default and expandable by clicking on the intro texts).';
+$string['loginlayoutsetting_desc'] = 'With this setting, you control how the login providers are displayed on the login page. You can choose between a vertical layout (all login providers displayed one below the other), a tabbed layout (login providers displayed in tabs next to each other), or an accordion layout (login providers displayed one below the other, but collapsed by default and expandable by clicking on the intro texts).';
 $string['loginlayoutvertical'] = 'Vertical (one below the other)';
 $string['loginlayouttabs'] = 'Tabs (next to each other)';
 $string['loginlayoutaccordion'] = 'Accordion (collapsed, expandable)';
-
+// ... ... Setting: Login background layout.
 $string['loginbackgroundlayoutsetting'] = 'Login background layout';
-$string['loginbackgroundlayoutsetting_desc'] = 'With this setting, you control how the login form and background image are arranged on the login page. The "Default" option displays the login form on top of the background image (current behavior). The "Split Screen" option displays the login form on the left half of the screen and the background image on the right half of the screen.';
-$string['loginbackgroundlayoutdefault'] = 'Default';
+$string['loginbackgroundlayoutsetting_desc'] = 'With this setting, you control how the login form and background image are arranged on the login page. The "Moodle core style" option displays the login form on top of the background image as presented by Moodle core by default. And the "Split screen" option displays the login form on the left half of the screen and the background image on the right half of the screen.';
+$string['loginbackgroundlayoutdefault'] = 'Moodle core style';
 $string['loginbackgroundlayoutsplitscreen'] = 'Split Screen';
 // ... Section: Login order.
 $string['loginorderheading'] = 'Login order';
-$string['loginorderheading_desc'] = 'With these settings, you control the order of the login methods in the login form. The presented order will be defined from lowest to highest ordinal number, skipping all login methods and login form elements which are disabled in Moodle.';
+$string['loginorderheading_desc'] = 'With these settings, you control the order of the login providers in the login form. The presented order will be defined from lowest to highest ordinal number, skipping all login providers and login form elements which are disabled in Boost Union.';
 // ... ... Settings: Login order.
 $string['loginorderlocalsetting'] = 'Local login';
 $string['loginorderidpsetting'] = 'IDP login';
 $string['loginorderfirsttimesignupsetting'] = 'Information for first time visitors & Self registration';
 $string['loginorderguestsetting'] = 'Guest login';
-// ... ... Setting: Primary login.
-$string['primaryloginsetting'] = 'Primary login method';
-$string['primaryloginsetting_desc'] = 'With this setting, you can specify which login method should be opened by default when the page loads. This setting only applies to the tabs layout and accordion layout. If set to "None", the first login method (based on the login order settings) will be opened by default.';
-// ... ... Setting: Guest login.
-$string['loginguestloginenablesetting'] = 'Guest login';
-$string['loginguestloginenablesetting_desc'] = 'With this setting, you control if the guest login button is shown on the login page or not. By default, the guest login button is shown if guest access is enabled in Moodle core. If you disable this setting, the guest login button is hidden regardless of the core guest access setting.<br /><br /><strong>Core setting:</strong> Guest access is controlled by the <em>Enable guest access</em> setting in <a href="{$a->url}">Site administration → Advanced features</a> (optionalsubsystems).<br /><br />Please note: The guest login button will be hidden if either this setting is disabled OR if the Moodle core setting "Guest login button" (in Site administration > Plugins > Authentication > Manage authentication) is disabled.';
-// ... ... Setting: Guest login intro.
-$string['loginguestshowintrosetting'] = 'Guest login intro';
-$string['loginguestshowintrosetting_desc'] = 'With this setting, you control if a <em>\'{$a}\'</em> intro is shown above the guest login button or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what guest access is about.';
-$string['loginguestintrotextsetting'] = 'Guest login intro text';
-$string['loginguestintrotextsetting_desc'] = 'With this setting, you can override the default intro text "Some courses may allow guest access" with a custom text. Leave this field empty to use the default text.';
+// ... ... Setting: Primary login provider.
+$string['primaryloginsetting'] = 'Primary login provider';
+$string['primaryloginsetting_desc'] = 'With this setting, you can specify which login provider should be opened by default when the page loads. This setting only applies to the tabs layout and accordion layout. If set to "None", for the tabs layout the first login provider (based on the login order settings) will be opened by default. And for the accordion layout, no login provider will be opened by default.';
+// ... Section: Login provider: Local.
+$string['loginproviderlocalheading'] = 'Login provider: Local';
+// ... ... Setting: Local login.
+$string['loginlocalloginenablesetting'] = 'Local login';
+$string['loginlocalloginenablesetting_desc'] = 'With this setting, you control if the local login provider is shown on the login page or not. By default, the local login provider is shown and users can login into the site as normal. If you disable this setting, the local login provider is hidden. This allows you to just provide login buttons for external identity providers like OAuth2 or OIDC.';
+$string['loginlocalloginenablesetting_core'] = 'Moodle core setting interplay: Boost Union does not process the \'{$a->settingname}\' setting from <a href="{$a->url}">Moodle core\'s authentication setting</a>. This setting here is the only place to disable or enable the local login provider in Boost Union.';
+$string['loginlocalloginenablesetting_note'] = 'Please note: As soon as you hide the local login provider, you risk that admins cannot log in anymore with a local account if there is a problem with the external identity provider. The same goes if no other authentication methods than manual authentication are enabled at all.<br />To allow local logins anyway in such cases, the <a href="{$a->url}">side entrance local login page</a> (see below for details) is enabled automatically. Please bookmark this URL as your own safety net.';
+$string['loginlocalloginformhead'] = 'Local login';
+$string['loginlocalloginlocalnotdisabled'] = 'There is no need to log in on this side entrance login page here. Please use the <a href="{$a->url}">standard login page</a> for logging in.';
+// ... ... Setting: Local login intro.
+$string['loginlocalshowintrosetting'] = 'Local login intro';
+$string['loginlocalshowintrosetting_desc'] = 'With this setting, you control if a <em>\'{$a}\'</em> intro is shown above the local login form or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand which credentials to use in the local login form, especially if you provide more than one login provider or if you have changed the order of the login providers.';
+$string['loginlocalintro'] = 'Login with your Moodle account';
+// ... ... Setting: Local login intro text.
+$string['loginlocalintrotextsetting'] = 'Local login intro text';
+$string['loginlocalintrotextsetting_desc'] = 'With this setting, you can override the default intro text "Login with your Moodle account" with a custom text. Leave this field empty to use the default text.';
+// ... ... Setting: Local login tab label.
+$string['loginlocallogintablabelsetting'] = 'Local login tab label';
+$string['loginlocallogintablabelsetting_desc'] = 'With this setting, you can customize the text displayed in the tab for local login when using the tabs layout.';
+$string['loginlocallogintablabelsetting_default'] = 'Moodle account';
+// ... Section: Login provider: IDP.
+$string['loginprovideridpheading'] = 'Login provider: IDP';
+// ... ... Setting: IDP login.
+$string['loginidploginenablesetting'] = 'IDP login';
+$string['loginidploginenablesetting_desc'] = 'With this setting, you control if the identity provider (IDP) login buttons are shown on the login page or not. By default, IDP login buttons are shown if identity providers are configured. If you disable this setting, all IDP login buttons are hidden regardless of the authentication plugins configuration.';
+$string['loginidploginenablesetting_core'] = 'Moodle core setting interplay: Identity provider login buttons are provided by authentication plugins like OAuth2, CAS or Shibboleth. You can manage authentication plugins on <a href="{$a->url}">Moodle core\'s authentication settings page</a>.';
+// ... ... Setting: IDP login intro.
+$string['loginidpshowintrosetting'] = 'IDP login intro';
+$string['loginidpshowintrosetting_desc'] = 'With this setting, you control if a <em>\'{$a}\'</em> intro is shown above the IDP login buttons or not. By default, the intro is shown and users will be quickly informed what the IDP buttons are about. If you disable this setting, the IDP intro is hidden. This allows you to provide a clean user login interface if you just use external identity providers like OAuth2 or OIDC.';
+// ... ... Setting: IDP login intro text.
+$string['loginidpintrotextsetting'] = 'IDP login intro text';
+$string['loginidpintrotextsetting_desc'] = 'With this setting, you can override the default intro text "Log in using your account on:" with a custom text. Leave this field empty to use the default text.';
+// ... ... Setting: IDP login tab label.
+$string['loginidplogintablabelsetting'] = 'IDP login tab label';
+$string['loginidplogintablabelsetting_desc'] = 'With this setting, you can customize the text displayed in the tab for IDP login when using the tabs layout.';
+$string['loginidplogintablabelsetting_default'] = 'IDP login';
+// ... Section: Login provider: Self registration.
+$string['loginproviderselfregistrationheading'] = 'Login provider: Self registration';
 // ... ... Setting: Self registration.
 $string['loginselfregistrationenablesetting'] = 'Self registration';
-$string['loginselfregistrationenablesetting_desc'] = 'With this setting, you control if the self registration button and signup link are shown on the login page or not. By default, self registration is shown if it is enabled in Moodle core. If you disable this setting, self registration is hidden regardless of the core registration setting.<br /><br /><strong>Core setting:</strong> Self registration is controlled by the <em>Self registration</em> setting in <a href="{$a->url}">Site administration → Plugins → Authentication → Manage authentication</a>. You need to enable an authentication plugin that supports self registration (e.g. Email-based self-registration).<br /><br />Please note: The self registration button and signup link will be hidden if either this setting is disabled OR if the Moodle core setting "Self registration" (in Site administration > Plugins > Authentication > Manage authentication) is not configured (empty).';
+$string['loginselfregistrationenablesetting_desc'] = 'With this setting, you control if the self registration button and signup link are shown on the login page or not. By default, self registration is shown if it is enabled in Moodle core. If you disable this setting, self registration is hidden regardless of the core registration setting.';
+$string['loginselfregistrationenablesetting_core'] = 'Moodle core setting interplay: Self registration is controlled by the \'{$a->settingname}\' setting which you can manage on <a href="{$a->url}">Moodle core\'s authentication settings page</a>.';
 // ... ... Setting: Self registration intro.
 $string['loginselfregistrationshowintrosetting'] = 'Self registration intro';
 $string['loginselfregistrationshowintrosetting_desc'] = 'With this setting, you control if a <em>\'{$a}\'</em> intro is shown above the self registration section or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what self registration is about.';
+// ... ... Setting: Self registration intro text.
 $string['loginselfregistrationintrotextsetting'] = 'Self registration intro text';
 $string['loginselfregistrationintrotextsetting_desc'] = 'With this setting, you can override the default intro text "First time?" with a custom text. Leave this field empty to use the default text.';
+// ... ... Setting: Self registration tab label.
+$string['loginselfregistrationlogintablabelsetting'] = 'Self registration tab label';
+$string['loginselfregistrationlogintablabelsetting_desc'] = 'With this setting, you can customize the text displayed in the tab for self registration when using the tabs layout.';
+$string['loginselfregistrationlogintablabelsetting_default'] = 'Self registration';
+// ... Section: Login provider: Guest.
+$string['loginproviderguestheading'] = 'Login provider: Guest';
+// ... ... Setting: Guest login.
+$string['loginguestloginenablesetting'] = 'Guest login';
+$string['loginguestloginenablesetting_desc'] = 'With this setting, you control if the guest login button is shown on the login page or not. By default, the guest login button is shown if guest access is enabled in Moodle core. If you disable this setting, the guest login button is hidden regardless of the core guest access setting.';
+$string['loginguestloginenablesetting_core'] = 'Moodle core setting interplay: Guest access is controlled by the \'{$a->settingname}\' setting which you can manage on <a href="{$a->url}">Moodle core\'s authentication settings page</a>.';
+// ... ... Setting: Guest login intro.
+$string['loginguestshowintrosetting'] = 'Guest login intro';
+$string['loginguestshowintrosetting_desc'] = 'With this setting, you control if a <em>\'{$a}\'</em> intro is shown above the guest login button or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what guest access is about.';
+// ... ... Setting: Guest login intro text.
+$string['loginguestintrotextsetting'] = 'Guest login intro text';
+$string['loginguestintrotextsetting_desc'] = 'With this setting, you can override the default intro text "Some courses may allow guest access" with a custom text. Leave this field empty to use the default text.';
+// ... ... Setting: Guest login tab label.
+$string['loginguestlogintablabelsetting'] = 'Guest login tab label';
+$string['loginguestlogintablabelsetting_desc'] = 'With this setting, you can customize the text displayed in the tab for guest login when using the tabs layout.';
+$string['loginguestlogintablabelsetting_default'] = 'Guest login';
 // ... Section: Side entrance login.
 $string['sideentranceloginheading'] = 'Side entrance login';
 // ... ... Setting: Endable side entrance login.

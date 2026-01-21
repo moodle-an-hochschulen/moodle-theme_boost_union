@@ -36,13 +36,6 @@ defined('MOODLE_INTERNAL') || die();
 $bodyattributes = $OUTPUT->body_attributes();
 [$loginbackgroundimagetext, $loginbackgroundimagetextcolor] = theme_boost_union_get_loginbackgroundimage_text();
 
-$loginbackgroundlayout = get_config('theme_boost_union', 'loginbackgroundlayout');
-if ($loginbackgroundlayout === false) {
-    $loginbackgroundlayout = THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_DEFAULT;
-}
-$loginbackgroundlayoutclass = ($loginbackgroundlayout == THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_SPLITSCREEN) ?
-        'login-background-layout-splitscreen' : '';
-
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
@@ -53,7 +46,11 @@ $templatecontext = [
     'logincontainerclass' =>
             (get_config('theme_boost_union', 'loginformtransparency') == THEME_BOOST_UNION_SETTING_SELECT_YES) ?
                     'login-container-80t' : '',
-    'loginbackgroundlayoutclass' => $loginbackgroundlayoutclass,
+    'loginbackgroundlayoutclass' =>
+            (get_config('theme_boost_union', 'loginbackgroundlayout') ==
+                    THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_SPLITSCREEN) ?
+                    'login-background-layout-splitscreen' : '',
+
 ];
 
 // Include the template content for the footnote.

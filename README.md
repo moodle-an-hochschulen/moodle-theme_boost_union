@@ -217,90 +217,19 @@ With this setting, you can control the width of the login container. By default,
 
 ###### Login layout
 
-With this setting, you can choose how the login methods are displayed on the login page. You can choose between three layout options:
-- **Vertical**: All login methods are displayed in a vertical list (default)
-- **Tabs**: Login methods are organized in tabs
-- **Accordion**: Login methods are organized in an accordion structure
+With this setting, you can choose how the login providers are displayed on the login page.
 
 ###### Login background layout
 
-With this setting, you can choose the background layout for the login page:
-- **Default**: The standard background layout where the login form overlays the background image
-- **Split screen**: The login page is split into two halves - one side shows the background image, the other side shows the login form
-
-##### Login providers
-
-###### Local login
-
-With this setting, you control if the local login form is shown on the login page or not. By default, the local login form is shown and users can login into the site as normal. If you disable this setting, the local login form is hidden. This allows you to just provide login buttons for external identity providers like OAuth2 or OIDC.
-
-###### Local login intro
-
-With this setting, you control if a 'Login with your Moodle account' intro is shown above the local login form or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand which credentials to use in the local login form, especially if you provide more than one login method or if you have changed the order of the login methods.
-
-###### Local login intro text
-
-With this setting, you can customize the intro text that is shown above the local login form. If left empty, the default intro text will be used. This setting is only available when "Local login intro" is enabled.
-
-###### Local login tab text
-
-With this setting, you can customize the text displayed on the local login tab when using the tabs layout. By default, it is set to "Local login". This setting is only visible when the tabs layout is enabled.
-
-###### IDP login
-
-With this setting, you control if the identity provider (IDP) login buttons are shown on the login page or not. By default, IDP login is enabled. If you disable this setting, the IDP login buttons are hidden. Note that IDP authentication must be configured in Moodle's authentication settings for this to work.
-
-###### IDP login intro
-
-With this setting, you control if the 'Log in using your account on' intro is shown above the IDP login buttons or not. By default, the intro is shown and users will be quickly informed what the IDP buttons are about. If you disable this setting, the IDP intro is hidden. This allows you to provide a clean user login interface if you just use external identity providers like OAuth2 or OIDC.
-
-###### IDP login intro text
-
-With this setting, you can customize the intro text that is shown above the IDP login buttons. If left empty, the default intro text will be used. This setting is only available when "IDP login intro" is enabled.
-
-###### IDP login tab text
-
-With this setting, you can customize the text displayed on the IDP login tab when using the tabs layout. By default, it is set to "IDP login". This setting is only visible when the tabs layout is enabled.
-
-###### Self registration
-
-With this setting, you control if the self registration option is shown on the login page or not. By default, self registration is enabled. If you disable this setting, the self registration option is hidden. Note that self registration must be enabled in Moodle's authentication settings for this to work.
-
-###### Self registration intro
-
-With this setting, you control if an intro text is shown above the self registration option or not. By default, the intro is not shown. If you enable it, this intro may help users understand the self registration process.
-
-###### Self registration intro text
-
-With this setting, you can customize the intro text that is shown above the self registration option. If left empty, the default intro text will be used. This setting is only available when "Self registration intro" is enabled.
-
-###### Self registration tab text
-
-With this setting, you can customize the text displayed on the self registration tab when using the tabs layout. By default, it is set to "Self Registration". This setting is only visible when the tabs layout is enabled.
-
-###### Guest login
-
-With this setting, you control if the guest login option is shown on the login page or not. By default, guest login is enabled. If you disable this setting, the guest login option is hidden. Note that guest access must be enabled in Moodle's site administration settings for this to work.
-
-###### Guest login intro
-
-With this setting, you control if an intro text is shown above the guest login option or not. By default, the intro is not shown. If you enable it, this intro may help users understand what guest access means.
-
-###### Guest login intro text
-
-With this setting, you can customize the intro text that is shown above the guest login option. If left empty, the default intro text will be used. This setting is only available when "Guest login intro" is enabled.
-
-###### Guest login tab text
-
-With this setting, you can customize the text displayed on the guest login tab when using the tabs layout. By default, it is set to "Guest Login". This setting is only visible when the tabs layout is enabled.
+With this setting, you can choose the background layout for the login page.
 
 ##### Login order
 
-With these settings, you control the order of the login methods in the login form. The presented order will be defined from lowest to highest ordinal number, skipping all login methods and login form elements which are disabled in Moodle.
+With these settings, you control the order of the login providers in the login form. The presented order will be defined from lowest to highest ordinal number, skipping all login providers and login form elements which are disabled in Boost Union.
 
-###### Primary login
+##### Login providers
 
-With this setting, you can specify which login method should be active by default when using the tabs or accordion layout. This allows you to highlight a specific login method that you want users to see first. You can choose from any of the enabled login methods, or select "None" to use the first login method in the order as the default. This setting is only available when tabs or accordion layout is enabled.
+In these section, you control if and how particilar login providers are presented on the login page.
 
 ##### Side entrance login
 

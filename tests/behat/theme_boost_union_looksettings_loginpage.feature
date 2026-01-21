@@ -190,7 +190,6 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | yes     | should      |
       | no      | should not  |
 
-  @javascript
   Scenario Outline: Setting: Login order
     Given the following config values are set as admin:
       | config                    | value                         | plugin            |
