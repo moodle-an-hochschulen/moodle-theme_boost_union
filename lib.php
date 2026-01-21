@@ -102,6 +102,10 @@ define('THEME_BOOST_UNION_SETTING_LOGINFORMPOS_CENTER', 'center');
 define('THEME_BOOST_UNION_SETTING_LOGINFORMPOS_LEFT', 'left');
 define('THEME_BOOST_UNION_SETTING_LOGINFORMPOS_RIGHT', 'right');
 
+define('THEME_BOOST_UNION_SETTING_LOGINLAYOUT_VERTICAL', 'vertical');
+define('THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS', 'tabs');
+define('THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION', 'accordion');
+
 define('THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_DEFAULT', 'default');
 define('THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_SPLITSCREEN', 'splitscreen');
 
@@ -339,14 +343,6 @@ function theme_boost_union_get_pre_scss($theme) {
     if (get_config('theme_boost_union', 'blockdrawerwidth')) {
         $scss .= '$drawer-right-width: ' . get_config('theme_boost_union', 'blockdrawerwidth') . ";\n";
     }
-    // Set variables which are influenced by the logincontainerwidth setting.
-    $logincontainerwidth = get_config('theme_boost_union', 'logincontainerwidth');
-    if ($logincontainerwidth) {
-        $scss .= '$logincontainer-width: ' . $logincontainerwidth . ";\n";
-    } else {
-        // Use default value if setting is not configured.
-        $scss .= '$logincontainer-width: 500px;\n';
-    }
 
     // Set variables which are influenced by the activityiconcolor* settings.
     $purposes = [MOD_PURPOSE_ADMINISTRATION,
@@ -382,6 +378,15 @@ function theme_boost_union_get_pre_scss($theme) {
             $scss .= '$activity-icon-' . $purpose . '-bg: ' . $activityiconcolor . ";\n";
         }
     }
+
+    // Set custom Boost Union SCSS variable: The login container width.
+    $logincontainerwidth = get_config('theme_boost_union', 'logincontainerwidth');
+    // If the setting is not set.
+    if (!$logincontainerwidth) {
+        // Set the variable to the default setting to make sure that the SCSS variable does not remain uninitialized.
+        $logincontainerwidth = '500px';
+    }
+    $scss .= '$logincontainer-width: ' . $logincontainerwidth . ";\n";
 
     // Set custom Boost Union SCSS variable: The block region outside left width.
     $blockregionoutsideleftwidth = get_config('theme_boost_union', 'blockregionoutsideleftwidth');
