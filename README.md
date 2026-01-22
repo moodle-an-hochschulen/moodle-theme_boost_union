@@ -942,6 +942,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * Catalyst IT Europe, Mark Johnson: Code
 * Catalyst IT Europe, Simon Thornett: Code
 * ELAN e.V., Farbod Zamani: Code
+* ETH Zürich, nexterday: Code
 * FernUniversität in Hagen, Daniel Poggenpohl: Code, Ideating
 * Hochschule Hannover - University of Applied Sciences and Arts: Code, Funding, Ideating
 * Käferfreie Software, Nina Herrmann: Code
