@@ -1930,6 +1930,13 @@ function theme_boost_union_get_touchicons_for_ios() {
  * @return void
  */
 function theme_boost_union_touchicons_for_ios_checkin() {
+
+    // Do not run this function during the initial installation.
+    // This would lead to errors as the file API is not available yet then.
+    if (during_initial_install()) {
+        return;
+    }
+
     // Create cache for touch icon files.
     $cache = cache::make('theme_boost_union', 'touchiconsios');
 
