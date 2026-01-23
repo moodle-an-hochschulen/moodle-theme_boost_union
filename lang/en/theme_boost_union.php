@@ -1108,7 +1108,7 @@ $string['infobannerpagessetting_desc'] = 'With this setting, you can select the 
 $string['infobannerbsclasssetting'] = 'Info banner {$a->no} Bootstrap class';
 $string['infobannerbsclasssetting_desc'] = 'With this setting, you can select the Bootstrap style with which info banner {$a->no} should be displayed. If you choose the \'No Bootstrap color\' option, the info banner will be output without any particular Bootstrap color which gives you the freedom to style the banner yourself within the rich-text editor.';
 $string['infobannerordersetting'] = 'Info banner {$a->no} order position';
-$string['infobannerordersetting_desc'] = 'With this setting, you define the order position of info banner {$a->no}. By default, the info banners are ordered from top to bottom like you see them on this settings page here. However, you can decide to assign another order position with this setting. If you assign the same order position to two or more information banners, they will be ordered again according to the order on this settings page.';
+$string['infobannerordersetting_desc'] = 'With this setting, you define the order position of info banner {$a->no}. By default, the info banners are ordered from top to bottom like you see them on this settings page here. However, you can decide to assign another order position with this setting. If you assign the same order position to two or more information banners, they will be ordered again according to the order on this settings page. If you place information banners above and below the page header on the same page, they will be ordered separately in these two areas according to the order position.';
 $string['infobannermodesetting'] = 'Info banner {$a->no} display mode';
 $string['infobannermodesetting_desc'] = 'With this setting, you can define if info banner {$a->no} should be a perpetual banner (which is always shown) or a time controlled banner (which is only shown within the configured time interval)';
 $string['infobannerdismissiblesetting'] = 'Info banner {$a->no} dismissible';
@@ -1117,6 +1117,10 @@ $string['infobannerstartsetting'] = 'Info banner {$a->no} start time';
 $string['infobannerstartsetting_desc'] = 'With this setting, you can define from when on info banner {$a->no} should be displayed. The configured time is interpreted as server time, not as user time.';
 $string['infobannerendsetting'] = 'Info banner {$a->no} end time';
 $string['infobannerendsetting_desc'] = 'With this setting, you can define until when info banner {$a->no} should be displayed. The configured time is interpreted as server time, not as user time.';
+$string['infobannerpositionsetting'] = 'Info banner {$a->no} position in relation to page header';
+$string['infobannerpositionsetting_desc'] = 'With this setting, you can define where info banner {$a->no} should be displayed in relation to the page header / heading. By default, the info banner is shown above the page header. However, you can choose to display it below the page header instead. On the login page, this setting has no effect as there is no page header.';
+$string['infobannerpositionabove'] = 'Above the page header';
+$string['infobannerpositionbelow'] = 'Below the page header';
 // Settings: Advertisement tiles tab.
 $string['tilestab'] = 'Advertisement tiles';
 // ... Section: Advertisement tiles general.
