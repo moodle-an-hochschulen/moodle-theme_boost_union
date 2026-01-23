@@ -1366,8 +1366,14 @@ function theme_boost_union_get_dedicated_course_header_image_url($courseid) {
 
     // If we have a file, build and return the image URL.
     if ($file) {
-        return core\url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
-            $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+        return core\url::make_pluginfile_url(
+            $file->get_contextid(),
+            $file->get_component(),
+            $file->get_filearea(),
+            $file->get_itemid(),
+            $file->get_filepath(),
+            $file->get_filename()
+        );
     }
 
     // As no picture was found, return null.

@@ -32,7 +32,6 @@ namespace theme_boost_union\local\hook\backup;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class after_restore_root_define_settings {
-
     /**
      * Hook callback to add theme-specific settings to the restore process.
      *

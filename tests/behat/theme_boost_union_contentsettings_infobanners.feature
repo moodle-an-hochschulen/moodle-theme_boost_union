@@ -267,7 +267,6 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And "This is the second content" "text" should appear before "This is the third content" "text"
     And "This is the third content" "text" should appear before "This is the fourth content" "text"
 
-
   Scenario: Setting: Information banners - Display info banner with position setting on different pages
     Given the following config values are set as admin:
       | config              | value                                        | plugin            |

@@ -30,7 +30,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_theme_boost_union_plugin extends restore_theme_plugin {
-
     /**
      * Define the course plugin structure for restore.
      *
@@ -63,8 +62,10 @@ class restore_theme_boost_union_plugin extends restore_theme_plugin {
         $coursesettings = \theme_boost_union\coursesettings::get_course_settings_config();
 
         // If the given setting is controlled by a restore setting.
-        if (array_key_exists($data->name, $coursesettings) &&
-                array_key_exists('restorecontrolledby', $coursesettings[$data->name])) {
+        if (
+            array_key_exists($data->name, $coursesettings) &&
+                array_key_exists('restorecontrolledby', $coursesettings[$data->name])
+        ) {
             // If the user does not want to restore this setting, return.
             $restorecontrolledby = $coursesettings[$data->name]['restorecontrolledby'] ?? null;
             $restoreconfig = $this->task->get_setting_value($restorecontrolledby);
@@ -94,7 +95,6 @@ class restore_theme_boost_union_plugin extends restore_theme_plugin {
 
         // Iterate through each file area and transfer files.
         foreach ($fileareas as $filearea => $config) {
-
             // If the given filearea is controlled by a restore setting.
             if (array_key_exists('restorecontrolledby', $config)) {
                 // If the user does not want to restore this filearea, return.
@@ -109,8 +109,14 @@ class restore_theme_boost_union_plugin extends restore_theme_plugin {
             $clearbeforewrite = $config['clearbeforewrite'] ?? false;
             if ($clearbeforewrite) {
                 // Get all existing files in the target file area.
-                $existingfiles = $fs->get_area_files($newcontext->id, 'theme_boost_union', $filearea, false, 'filepath, filename',
-                        false);
+                $existingfiles = $fs->get_area_files(
+                    $newcontext->id,
+                    'theme_boost_union',
+                    $filearea,
+                    false,
+                    'filepath, filename',
+                    false
+                );
 
                 // Delete all existing files in the file area.
                 foreach ($existingfiles as $existingfile) {

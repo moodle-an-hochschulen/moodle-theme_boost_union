@@ -32,7 +32,6 @@ namespace theme_boost_union\util;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class course_settings_transfer {
-
     /**
      * Transfer a single course setting from one course to another.
      *
@@ -92,7 +91,6 @@ class course_settings_transfer {
 
         // Iterate over each original setting and transfer it to the new course.
         foreach ($originalsettings as $setting) {
-
             // If the setting is not controlled for course import transfer, skip it.
             $importtransfercontrolledby = $coursesettings[$setting->name]['importtransfercontrolledby'] ?? null;
             if ($importtransfercontrolledby == null) {
@@ -103,8 +101,10 @@ class course_settings_transfer {
                 continue;
             }
             $importtransfercontrolcapa = $coursesettings[$setting->name]['importtransfercontrolcapa'] ?? null;
-            if ($importtransfercontrolledby == THEME_BOOST_UNION_SETTING_SELECT_BYCAPABILITY &&
-                    $importtransfercontrolcapa == null) {
+            if (
+                $importtransfercontrolledby == THEME_BOOST_UNION_SETTING_SELECT_BYCAPABILITY &&
+                    $importtransfercontrolcapa == null
+            ) {
                 continue;
             }
 
@@ -166,7 +166,6 @@ class course_settings_transfer {
 
         // Iterate through each file area and transfer files.
         foreach ($fileareas as $filearea => $config) {
-
             // If the file area is not controlled for course import transfer, skip it.
             $importtransfercontrolledby = $config['importtransfercontrolledby'] ?? null;
             if ($importtransfercontrolledby == null) {
@@ -177,8 +176,10 @@ class course_settings_transfer {
                 continue;
             }
             $importtransfercontrolcapa = $config['importtransfercontrolcapa'] ?? null;
-            if ($importtransfercontrolledby == THEME_BOOST_UNION_SETTING_SELECT_BYCAPABILITY &&
-                    $importtransfercontrolcapa == null) {
+            if (
+                $importtransfercontrolledby == THEME_BOOST_UNION_SETTING_SELECT_BYCAPABILITY &&
+                    $importtransfercontrolcapa == null
+            ) {
                 continue;
             }
 
@@ -207,8 +208,14 @@ class course_settings_transfer {
             $clearbeforewrite = $config['clearbeforewrite'] ?? false;
             if ($clearbeforewrite) {
                 // Get all existing files in the target file area.
-                $existingfiles = $fs->get_area_files($newcontext->id, 'theme_boost_union', $filearea, false, 'filepath, filename',
-                        false);
+                $existingfiles = $fs->get_area_files(
+                    $newcontext->id,
+                    'theme_boost_union',
+                    $filearea,
+                    false,
+                    'filepath, filename',
+                    false
+                );
 
                 // Delete all existing files in the file area.
                 foreach ($existingfiles as $existingfile) {

@@ -15,9 +15,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost_union/progress-bar
+    @template theme_boost_union/course-progress-with-bar
 
-    This template renders a simple progress bar.
+    This template renders the course progress with a simple progress bar.
     This is a modified version of block_myoverview/progress-bar.
 
     Example context (json):
@@ -28,7 +28,7 @@
 <div class="progress-text w-100">
     <span class="visually-hidden">{{#str}}aria:courseprogress, block_myoverview{{/str}}</span>
     <div class="progress">
-        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="{{progress}}" style="width: {{progress}}%" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="{{progress}}" style="width: {{progress}}%" title= "{{#str}}completepercent, theme_boost_union, {{progress}}{{/str}}" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <div class="small mt-1">
         {{#str}}completepercent, block_myoverview, <span>{{progress}}</span>{{/str}}

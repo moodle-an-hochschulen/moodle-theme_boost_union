@@ -82,21 +82,31 @@ class after_form_submission {
                     $formfieldname = 'theme_boost_union_' . $setting;
                     $value = $data->$formfieldname ?? null;
 
-                    // Use the helper function to set the course setting.
-                    coursesettings::set_course_setting($courseid, $setting, $value);
+                    // If "Use global default" is selected, delete the override record.
+                    if ($value == THEME_BOOST_UNION_SETTING_USEGLOBAL) {
+                        coursesettings::set_course_setting($courseid, $setting, null);
+                    } else {
+                        // Save the specific override value.
+                        coursesettings::set_course_setting($courseid, $setting, $value);
+                    }
                 }
             }
 
             // Handle course header image file manager if the feature is enabled.
             if (coursesettings::courseheaderimage_is_enabled()) {
-
                 // Handle the file manager for course header image.
                 if (isset($data->theme_boost_union_courseheaderimage_filemanager)) {
                     // Save the files from the draft area to the real file area.
                     $courseheaderimageoptions = coursesettings::get_courseheaderimage_options();
                     $context = \context_course::instance($courseid);
-                    file_save_draft_area_files($data->theme_boost_union_courseheaderimage_filemanager, $context->id,
-                            'theme_boost_union', 'courseheaderimage', 0, $courseheaderimageoptions);
+                    file_save_draft_area_files(
+                        $data->theme_boost_union_courseheaderimage_filemanager,
+                        $context->id,
+                        'theme_boost_union',
+                        'courseheaderimage',
+                        0,
+                        $courseheaderimageoptions
+                    );
                 }
             }
         }

@@ -87,8 +87,11 @@ class after_form_definition {
             }
 
             // Header: Course header.
-            $courseheaderheader = $mform->createElement('header', 'theme_boost_union_course_courseheaderhdr',
-                    get_string('courseheaderheading', 'theme_boost_union'));
+            $courseheaderheader = $mform->createElement(
+                'header',
+                'theme_boost_union_course_courseheaderhdr',
+                get_string('courseheaderheading', 'theme_boost_union')
+            );
             if ($courseheaderinsertbefore) {
                 $mform->insertElementBefore($courseheaderheader, $courseheaderinsertbefore);
             } else {
@@ -103,12 +106,16 @@ class after_form_definition {
                 $formfieldname = 'theme_boost_union_' . $setting;
                 // Create a new element variable for each setting to avoid issues in the loop as it is passed by reference
                 // to insertElementBefore().
-                ${'element'.$setting} = $mform->createElement('select', $formfieldname,
-                        get_string($setting, 'theme_boost_union'), $config['options']);
+                ${'element' . $setting} = $mform->createElement(
+                    'select',
+                    $formfieldname,
+                    get_string($setting, 'theme_boost_union'),
+                    $config['options']
+                );
                 if ($courseheaderinsertbefore) {
-                    $mform->insertElementBefore(${'element'.$setting}, $courseheaderinsertbefore);
+                    $mform->insertElementBefore(${'element' . $setting}, $courseheaderinsertbefore);
                 } else {
-                    $mform->addElement(${'element'.$setting});
+                    $mform->addElement(${'element' . $setting});
                 }
 
                 // Add help button if specified.
@@ -118,8 +125,12 @@ class after_form_definition {
 
                 // Add hide_if rule if specified.
                 if (isset($config['hide_if']) && is_array($config['hide_if'])) {
-                    $mform->hideIf($formfieldname, $config['hide_if']['element'],
-                            $config['hide_if']['condition'], $config['hide_if']['value']);
+                    $mform->hideIf(
+                        $formfieldname,
+                        $config['hide_if']['element'],
+                        $config['hide_if']['condition'],
+                        $config['hide_if']['value']
+                    );
                 }
             }
         }
@@ -143,8 +154,11 @@ class after_form_definition {
             }
 
             // Header: Course images.
-            $courseimagesheader = $mform->createElement('header', 'theme_boost_union_course_courseimageshdr',
-                    get_string('courseimagesheading', 'theme_boost_union'));
+            $courseimagesheader = $mform->createElement(
+                'header',
+                'theme_boost_union_course_courseimageshdr',
+                get_string('courseimagesheading', 'theme_boost_union')
+            );
             if ($courseheaderinsertbefore) {
                 $mform->insertElementBefore($courseimagesheader, $courseheaderinsertbefore);
             } else {
@@ -168,8 +182,13 @@ class after_form_definition {
             $courseheaderimageoptions = coursesettings::get_courseheaderimage_options();
 
             // Add course header image file manager.
-            $courseheaderimagefilemanager = $mform->createElement('filemanager', 'theme_boost_union_courseheaderimage_filemanager',
-                    get_string('courseheaderimage', 'theme_boost_union'), null, $courseheaderimageoptions);
+            $courseheaderimagefilemanager = $mform->createElement(
+                'filemanager',
+                'theme_boost_union_courseheaderimage_filemanager',
+                get_string('courseheaderimage', 'theme_boost_union'),
+                null,
+                $courseheaderimageoptions
+            );
             if ($courseheaderinsertbefore) {
                 $mform->insertElementBefore($courseheaderimagefilemanager, $courseheaderinsertbefore);
             } else {
@@ -178,16 +197,36 @@ class after_form_definition {
 
             // Add help button for course header image, based on the setting.
             if (coursesettings::courseheaderimage_uses_global_image()) {
-                $mform->addHelpButton('theme_boost_union_courseheaderimage_filemanager',
-                    'courseheaderimageplusfallback', 'theme_boost_union');
+                $mform->addHelpButton(
+                    'theme_boost_union_courseheaderimage_filemanager',
+                    'courseheaderimageplusfallback',
+                    'theme_boost_union'
+                );
+            } else if (
+                get_config('theme_boost_union', 'courseheaderimagerequirement') ==
+                    THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGEREQUIREMENT_ENHANCEDWITHOUTIMAGE
+            ) {
+                $mform->addHelpButton(
+                    'theme_boost_union_courseheaderimage_filemanager',
+                    'courseheaderimagenoimage',
+                    'theme_boost_union'
+                );
             } else {
-                $mform->addHelpButton('theme_boost_union_courseheaderimage_filemanager',
-                    'courseheaderimagenofallback', 'theme_boost_union');
+                $mform->addHelpButton(
+                    'theme_boost_union_courseheaderimage_filemanager',
+                    'courseheaderimagenofallback',
+                    'theme_boost_union'
+                );
             }
 
             // Add hide_if rule.
-            $mform->hideIf('theme_boost_union_courseheaderimage_filemanager', 'theme_boost_union_courseheaderenabled',
-                    'neq', THEME_BOOST_UNION_SETTING_SELECT_YES);
+            $hideifconfig = coursesettings::get_hide_if_with_global_default('courseheaderenabled');
+            $mform->hideIf(
+                'theme_boost_union_courseheaderimage_filemanager',
+                $hideifconfig['element'],
+                $hideifconfig['condition'],
+                $hideifconfig['value']
+            );
         }
     }
 }

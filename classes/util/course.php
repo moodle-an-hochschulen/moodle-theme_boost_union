@@ -159,7 +159,7 @@ class course {
             $handler = \core_course\customfield\course_handler::create();
 
             // Get the selected fields from the settings.
-            $selectedfields = get_config('theme_boost_union', 'course'.$datasource.'selectfields');
+            $selectedfields = get_config('theme_boost_union', 'course' . $datasource . 'selectfields');
 
             // If specific fields are selected, filter the fields.
             if (!empty($selectedfields)) {
@@ -177,7 +177,7 @@ class course {
                 // Get and return the filtered custom fields.
                 if (!empty($filteredfields)) {
                     // Get the field styling from the settings.
-                    $stylefields = get_config('theme_boost_union', 'course'.$datasource.'stylefields');
+                    $stylefields = get_config('theme_boost_union', 'course' . $datasource . 'stylefields');
 
                     // If the style is set to badge, render the fields as Bootstrap badges.
                     // We avoid the effort to create a custom renderer for this small change.
