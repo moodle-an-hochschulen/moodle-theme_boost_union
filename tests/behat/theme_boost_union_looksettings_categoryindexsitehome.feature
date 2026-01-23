@@ -586,8 +586,10 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Category index / Site home" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I set the field "Field 1" to "<field1value>"
-    And I set the field "Field 2" to "<field2value>"
+    # We must specify the container where to look for the fields as Behat would stumble otherwise as the same fields exist
+    # on the "Course" tab as well.
+    And I set the field "Field 1" in the "#admin-courselistingselectfields" "css_element" to "<field1value>"
+    And I set the field "Field 2" in the "#admin-courselistingselectfields" "css_element" to "<field2value>"
     And I press "Save changes"
     And Behat debugging is enabled
     And I am on "Course 1" course homepage
@@ -669,8 +671,10 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Category index / Site home" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I set the field "Field 1" to "1"
-    And I set the field "Field 2" to "1"
+    # We must specify the container where to look for the fields as Behat would stumble otherwise as the same fields exist
+    # on the "Course" tab as well.
+    And I set the field "Field 1" in the "#admin-courselistingselectfields" "css_element" to "1"
+    And I set the field "Field 2" in the "#admin-courselistingselectfields" "css_element" to "1"
     And I press "Save changes"
     And I am on "Course 1" course homepage
     And I navigate to "Settings" in current page administration
@@ -722,27 +726,27 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     When I log in as "student1"
     And I am on site homepage
     # Check the 'Combo list' view on site home as a whole
-    Then "<selector>" "css_element" <shouldornot> exist in the "#frontpage-category-combo" "css_element"
+    Then "<selector>" "css_element" should not exist in the "#frontpage-category-combo" "css_element"
     # Check a subcategory in the 'Combo list' view on site home
     And I click on ".info" "css_element" in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
-    And "<selector>" "css_element" <shouldornot> exist in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector>" "css_element" should not exist in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
     # Check the 'Enrolled courses' view on site home
-    And "<selector>" "css_element" <shouldornot> exist in the "#frontpage-course-list" "css_element"
+    And "<selector>" "css_element" should not exist in the "#frontpage-course-list" "css_element"
     # Check the 'List of courses' view on site home
-    And "<selector>" "css_element" <shouldornot> exist in the "#frontpage-available-course-list" "css_element"
+    And "<selector>" "css_element" should not exist in the "#frontpage-available-course-list" "css_element"
     # Check the categoriy overview page of a category without subcategories
     And I am on the "CATA" category page
-    Then "<selector>" "css_element" <shouldornot> exist in the ".course_category_tree" "css_element"
+    Then "<selector>" "css_element" should not exist in the ".course_category_tree" "css_element"
     # Check the categoriy overview page of a category with subcategories
     And I am on the "CATB" category page
-    Then "<selector>" "css_element" <shouldornot> exist in the ".course_category_tree" "css_element"
+    Then "<selector>" "css_element" should not exist in the ".course_category_tree" "css_element"
     And I click on ".info" "css_element" in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
-    And "<selector>" "css_element" <shouldornot> exist in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector>" "css_element" should not exist in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
 
     Examples:
-      | coursevalue | settingvalue | selector                       | shouldornot |
-      | cards       | yes          | .course-card .customfields     | should not  |
-      | list        | yes          | .course-listitem .customfields | should not  |
+      | coursevalue | settingvalue | selector                       |
+      | cards       | yes          | .course-card .customfields     |
+      | list        | yes          | .course-listitem .customfields |
 
   @javascript
   Scenario Outline: Setting: Show goto button in the course listing: Set the setting

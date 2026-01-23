@@ -82,8 +82,13 @@ class after_form_submission {
                     $formfieldname = 'theme_boost_union_' . $setting;
                     $value = $data->$formfieldname ?? null;
 
-                    // Use the helper function to set the course setting.
-                    coursesettings::set_course_setting($courseid, $setting, $value);
+                    // If "Use global default" is selected, delete the override record.
+                    if ($value == THEME_BOOST_UNION_SETTING_USEGLOBAL) {
+                        coursesettings::set_course_setting($courseid, $setting, null);
+                    } else {
+                        // Save the specific override value.
+                        coursesettings::set_course_setting($courseid, $setting, $value);
+                    }
                 }
             }
 
