@@ -32,7 +32,6 @@ namespace theme_boost_union;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class coursesettings {
-
     /**
      * Get a particular theme setting (just as it's done with get_config()),
      * but check as well if the setting is overridden for the current course.
@@ -50,7 +49,7 @@ class coursesettings {
         }
 
         // If the given setting may not be overridden for courses at all (anymore).
-        $settingoverride = get_config('theme_boost_union', $name.'_courseoverride');
+        $settingoverride = get_config('theme_boost_union', $name . '_courseoverride');
         if ($settingoverride == false) {
             // Return the theme setting as normal.
             return get_config('theme_boost_union', $name);
@@ -60,7 +59,7 @@ class coursesettings {
         $courseid = $PAGE->course->id;
 
         // Create cache key for this specific course and setting combination.
-        $cachekey = $courseid.'_'.$name;
+        $cachekey = $courseid . '_' . $name;
 
         // Try to get the result from cache first.
         $cache = \cache::make('theme_boost_union', 'courseoverrides');
@@ -73,13 +72,28 @@ class coursesettings {
         }
 
         // Cache miss - get the course-specific settings from database.
-        $courseconfig = $DB->get_record('theme_boost_union_course',
-            ['courseid' => $courseid, 'name' => $name], 'value', IGNORE_MISSING);
+        $courseconfig = $DB->get_record(
+            'theme_boost_union_course',
+            ['courseid' => $courseid, 'name' => $name],
+            'value',
+            IGNORE_MISSING
+        );
 
-        // If there is no course-specific setting for this setting.
-        if ($courseconfig === false || $courseconfig === null) {
-            // Get the theme setting as normal.
+        // If the course-specific setting is explicitly set to "use global default".
+        if (
+            $courseconfig !== false && $courseconfig !== null &&
+            $courseconfig->value == THEME_BOOST_UNION_SETTING_USEGLOBAL
+        ) {
+            // Get the global theme setting.
             $result = get_config('theme_boost_union', $name);
+
+            // Otherwise, if the setting is not configured to use the global default, but there is also
+            // no course-specific setting for this setting (which will happen if the course settings were not saved yet).
+        } else if ($courseconfig === false || $courseconfig === null) {
+            // Get the global theme setting.
+            $result = get_config('theme_boost_union', $name);
+
+            // Otherwise.
         } else {
             // Use the course-specific setting.
             $result = $courseconfig->value;
@@ -150,8 +164,10 @@ class coursesettings {
             // Otherwise, no value or empty value - delete existing record if it exists.
         } else {
             if ($existingrecord) {
-                $result = $DB->delete_records('theme_boost_union_course',
-                    ['courseid' => $courseid, 'name' => $name]);
+                $result = $DB->delete_records(
+                    'theme_boost_union_course',
+                    ['courseid' => $courseid, 'name' => $name]
+                );
             } else {
                 $result = true; // Nothing to delete, consider it successful.
             }
@@ -163,6 +179,55 @@ class coursesettings {
         $cache->delete($cachekey);
 
         return $result;
+    }
+
+    /**
+     * Get options array with global default as first option.
+     *
+     * @param string $setting The setting name.
+     * @param array $options The regular options array.
+     * @return array Options array with global default prepended.
+     */
+    private static function get_options_with_global_default($setting, $options) {
+        // Get the current global value.
+        $globalvalue = get_config('theme_boost_union', $setting);
+
+        // Find the label for the global value.
+        $globallabel = isset($options[$globalvalue]) ? $options[$globalvalue] : $globalvalue;
+
+        // Build the "Use global" option label.
+        $usegloballabel = get_string('useglobaldefault', 'theme_boost_union', $globallabel);
+
+        // Prepend the global default option.
+        return [THEME_BOOST_UNION_SETTING_USEGLOBAL => $usegloballabel] + $options;
+    }
+
+    /**
+     * Compose and return hide_if configuration based on the given setting's global setting value.
+     *
+     * @param string $settingname The name of the setting (without 'theme_boost_union_' prefix).
+     * @return array The hide_if configuration array.
+     */
+    public static function get_hide_if_with_global_default($settingname) {
+        // Get the global setting value.
+        $globalvalue = get_config('theme_boost_union', $settingname);
+
+        // Determine hide_if configuration based on global value.
+        if ($globalvalue == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            // If global is 'yes': Hide dependent fields only when explicitly set to 'no'.
+            return [
+                'element' => 'theme_boost_union_' . $settingname,
+                'condition' => 'eq',
+                'value' => THEME_BOOST_UNION_SETTING_SELECT_NO,
+            ];
+        } else {
+            // If global is 'no': Hide dependent fields when not explicitly set to 'yes' (includes 'no' and 'useglobal').
+            return [
+                'element' => 'theme_boost_union_' . $settingname,
+                'condition' => 'neq',
+                'value' => THEME_BOOST_UNION_SETTING_SELECT_YES,
+            ];
+        }
     }
 
     /**
@@ -181,44 +246,74 @@ class coursesettings {
         // Define the course override settings we handle with their configuration.
         return [
             'courseheaderenabled' => [
-                'options' => $yesnooption,
+                'options' => self::get_options_with_global_default('courseheaderenabled', $yesnooption),
                 'helpbutton' => true,
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
                 'restorecontrolledby' => 'theme_boost_union_restore_course_header_settings',
             ],
             'courseheaderlayout' => [
-                'options' => self::get_courseheaderlayout_options(true),
+                'options' => self::get_options_with_global_default(
+                    'courseheaderlayout',
+                    self::get_courseheaderlayout_options(true)
+                ),
                 'helpbutton' => true,
-                'hide_if' => [
-                    'element' => 'theme_boost_union_courseheaderenabled',
-                    'condition' => 'neq',
-                    'value' => THEME_BOOST_UNION_SETTING_SELECT_YES,
-                ],
+                'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
                 'restorecontrolledby' => 'theme_boost_union_restore_course_header_settings',
             ],
             'courseheaderheight' => [
-                'options' => self::get_courseheaderheight_options(),
+                'options' => self::get_options_with_global_default(
+                    'courseheaderheight',
+                    self::get_courseheaderheight_options()
+                ),
                 'helpbutton' => true,
-                'hide_if' => [
-                    'element' => 'theme_boost_union_courseheaderenabled',
-                    'condition' => 'neq',
-                    'value' => THEME_BOOST_UNION_SETTING_SELECT_YES,
-                ],
+                'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
+                'importtransfercontrolledby' => 'courseheaderimporttransfer',
+                'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
+                'restorecontrolledby' => 'theme_boost_union_restore_course_header_settings',
+            ],
+            'courseheadercanvasborder' => [
+                'options' => self::get_options_with_global_default(
+                    'courseheadercanvasborder',
+                    self::get_courseheadercanvasborder_options()
+                ),
+                'helpbutton' => true,
+                'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
+                'importtransfercontrolledby' => 'courseheaderimporttransfer',
+                'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
+                'restorecontrolledby' => 'theme_boost_union_restore_course_header_settings',
+            ],
+            'courseheadercanvasbackground' => [
+                'options' => self::get_options_with_global_default(
+                    'courseheadercanvasbackground',
+                    self::get_courseheadercanvasbackground_options()
+                ),
+                'helpbutton' => true,
+                'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
+                'importtransfercontrolledby' => 'courseheaderimporttransfer',
+                'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
+                'restorecontrolledby' => 'theme_boost_union_restore_course_header_settings',
+            ],
+            'courseheadertextonimagestyle' => [
+                'options' => self::get_options_with_global_default(
+                    'courseheadertextonimagestyle',
+                    self::get_courseheadertextonimagestyle_options()
+                ),
+                'helpbutton' => true,
+                'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
                 'restorecontrolledby' => 'theme_boost_union_restore_course_header_settings',
             ],
             'courseheaderimageposition' => [
-                'options' => self::get_courseheaderimageposition_options(),
+                'options' => self::get_options_with_global_default(
+                    'courseheaderimageposition',
+                    self::get_courseheaderimageposition_options()
+                ),
                 'helpbutton' => true,
-                'hide_if' => [
-                    'element' => 'theme_boost_union_courseheaderenabled',
-                    'condition' => 'neq',
-                    'value' => THEME_BOOST_UNION_SETTING_SELECT_YES,
-                ],
+                'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
                 'restorecontrolledby' => 'theme_boost_union_restore_course_header_settings',
@@ -268,23 +363,23 @@ class coursesettings {
     public static function get_courseheaderimageposition_options() {
         return [
             THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER =>
-                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER,
+                get_string('imageposition_center_center', 'theme_boost_union'),
             THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP =>
-                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP,
+                get_string('imageposition_center_top', 'theme_boost_union'),
             THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM =>
-                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM,
+                get_string('imageposition_center_bottom', 'theme_boost_union'),
             THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP =>
-                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_TOP,
+                get_string('imageposition_left_top', 'theme_boost_union'),
             THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER =>
-                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_CENTER,
+                get_string('imageposition_left_center', 'theme_boost_union'),
             THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM =>
-                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_LEFT_BOTTOM,
+                get_string('imageposition_left_bottom', 'theme_boost_union'),
             THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP =>
-                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP,
+                get_string('imageposition_right_top', 'theme_boost_union'),
             THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER =>
-                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER,
+                get_string('imageposition_right_center', 'theme_boost_union'),
             THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
-                    THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM,
+                get_string('imageposition_right_bottom', 'theme_boost_union'),
         ];
     }
 
@@ -303,6 +398,66 @@ class coursesettings {
     }
 
     /**
+     * Get the options array for course header canvas border setting.
+     *
+     * @return array The options array for course header canvas border.
+     */
+    public static function get_courseheadercanvasborder_options() {
+        return [
+            THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBORDER_NONE =>
+                    get_string('courseheadercanvasborder_none', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBORDER_GREY =>
+                    get_string('courseheadercanvasborder_grey', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBORDER_BRANDCOLOR =>
+                    get_string('courseheadercanvasborder_brandcolor', 'theme_boost_union'),
+        ];
+    }
+
+    /**
+     * Get the options array for course header canvas background setting.
+     *
+     * @return array The options array for course header canvas background.
+     */
+    public static function get_courseheadercanvasbackground_options() {
+        return [
+            THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_TRANSPARENT =>
+                    get_string('courseheadercanvasbackground_transparent', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_WHITE =>
+                    get_string('courseheadercanvasbackground_white', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_LIGHTGREY =>
+                    get_string('courseheadercanvasbackground_lightgrey', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_LIGHTBRANDCOLOR =>
+                    get_string('courseheadercanvasbackground_lightbrandcolor', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_BRANDCOLORGRADIENTLIGHT =>
+                    get_string('courseheadercanvasbackground_brandcolorgradientlight', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_BRANDCOLORGRADIENTFULL =>
+                    get_string('courseheadercanvasbackground_brandcolorgradientfull', 'theme_boost_union'),
+        ];
+    }
+
+    /**
+     * Get the options array for course header text on image color setting.
+     *
+     * @return array The options array for course header text on image color.
+     */
+    public static function get_courseheadertextonimagestyle_options() {
+        return [
+            THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_LIGHT =>
+                    get_string('courseheadertextonimagestyle_light', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_LIGHTSHADOW =>
+                    get_string('courseheadertextonimagestyle_lightshadow', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_LIGHTBG =>
+                    get_string('courseheadertextonimagestyle_lightbg', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_DARK =>
+                    get_string('courseheadertextonimagestyle_dark', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_DARKSHADOW =>
+                    get_string('courseheadertextonimagestyle_darkshadow', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_DARKBG =>
+                    get_string('courseheadertextonimagestyle_darkbg', 'theme_boost_union'),
+        ];
+    }
+
+    /**
      * Get the options array for course header layout setting.
      *
      * @param bool $forcourseform Whether to filter options for course form usage and do not return excluded layouts.
@@ -310,10 +465,8 @@ class coursesettings {
      */
     public static function get_courseheaderlayout_options($forcourseform = false) {
         $options = [
-            THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_STACKEDDARK =>
-                    get_string('courseheaderlayoutstackeddark', 'theme_boost_union'),
-            THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_STACKEDLIGHT =>
-                    get_string('courseheaderlayoutstackedlight', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_STACKED =>
+                    get_string('courseheaderlayoutstacked', 'theme_boost_union'),
             THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_HEADINGABOVE =>
                     get_string('courseheaderlayoutheadingabove', 'theme_boost_union'),
         ];
@@ -375,7 +528,7 @@ class coursesettings {
         global $CFG;
 
         // Use the same file types as core course overview files.
-        $acceptedtypes = (new \core_form\filetypes_util)->normalize_file_types($CFG->courseoverviewfilesext);
+        $acceptedtypes = (new \core_form\filetypes_util())->normalize_file_types($CFG->courseoverviewfilesext);
         if (in_array('*', $acceptedtypes) || empty($acceptedtypes)) {
             $acceptedtypes = '*';
         }

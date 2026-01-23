@@ -481,159 +481,260 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if ($this->page->pagelayout == 'course') {
             // If enabled, add the enhanced course header data for rendering.
             if (coursesettings::get_config_with_course_override('courseheaderenabled') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                // Set a marker that course header is enabled.
-                $header->courseheaderenabled = true;
                 // If course headers are activated, we get the course header image url
                 // (which might be the global image depending on the course settings and theme settings).
-                $header->courseheaderimageurl = theme_boost_union_get_course_header_image_url();
-                // Additionally, get the course header height.
-                $header->courseheaderheight = coursesettings::get_config_with_course_override('courseheaderheight');
-                // Additionally, get the course header image position.
-                $header->courseheaderimageposition = coursesettings::get_config_with_course_override('courseheaderimageposition');
-                // Additionally, determine the partial template for the course header layout.
-                $courseheaderlayout = coursesettings::get_config_with_course_override('courseheaderlayout');
-                switch($courseheaderlayout) {
-                    case THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_HEADINGABOVE:
-                        $courseheadertemplate = 'theme_boost_union/full_header-partial-headingabove';
-                        break;
-                    case THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_STACKEDDARK:
-                        $courseheadertemplate = 'theme_boost_union/full_header-partial-stackeddark';
-                        break;
-                    case THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_STACKEDLIGHT:
-                        $courseheadertemplate = 'theme_boost_union/full_header-partial-stackedlight';
-                        break;
-                }
+                $courseheaderimageurl = theme_boost_union_get_course_header_image_url();
 
-                // Note: The following code is more or less duplicated in course_renderer::coursecat_coursebox_content().
-                // This was done on purpose as it is not a 100% copy and creating another helper function would not have improved
-                // the code quality much.
+                // Get the course header background type setting.
+                $courseheaderimagerequirement = get_config('theme_boost_union', 'courseheaderimagerequirement');
 
-                // Get course util for the course.
-                $courselistelement = new core_course_list_element($this->page->course);
-                $courseutil = new course($courselistelement);
-                $chelper = new coursecat_helper();
-
-                // Enable course contacts, if configured.
-                if (get_config('theme_boost_union', 'courseheadershowcontacts') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                    $header->showcoursecontacts = true;
+                // If there is no course header image url and the background type is set to show standard header only in this case,
+                // we don't enable the enhanced course header.
+                if (
+                    empty($courseheaderimageurl) &&
+                        $courseheaderimagerequirement == THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGEREQUIREMENT_STANDARDONLY
+                ) {
+                    // Don't set course header as enabled, so the standard course header will be used.
+                    $header->courseheaderenabled = false;
                 } else {
-                    $header->showcoursecontacts = false;
-                }
-
-                // Enable course shortname, if configured.
-                if (get_config('theme_boost_union', 'courseheadershowshortname') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                    $header->showshortname = true;
-                } else {
-                    $header->showshortname = false;
-                }
-
-                // Enable course category, if configured.
-                if (get_config('theme_boost_union', 'courseheadershowcategory') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                    $header->showcoursecategory = true;
-                } else {
-                    $header->showcoursecategory = false;
-                }
-
-                // Enable course progress, if configured.
-                if (get_config('theme_boost_union', 'courseheadershowprogress') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                    $header->showcourseprogress = true;
-                } else {
-                    $header->showcourseprogress = false;
-                }
-
-                // Enable course fields, if configured.
-                if (get_config('theme_boost_union', 'courseheadershowfields') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                    $header->showcoursefields = true;
-                } else {
-                    $header->showcoursefields = false;
-                }
-
-                // Enable course details popup, if configured.
-                if (get_config('theme_boost_union', 'courseheadershowpopup') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                    $header->showcoursepopup = true;
-
-                    // Add the necessary JS.
-                    $this->page->requires->js_call_amd('theme_boost_union/coursedetailsmodal', 'init');
-                } else {
-                    $header->showcoursepopup = false;
-                }
-
-                // Enable iconsbar, if necessary.
-                if ($header->showcoursepopup || $header->showcoursecontacts) {
-                    $header->showiconsbar = true;
-                } else {
-                    $header->showiconsbar = false;
-                }
-
-                // Check if the user can view user details, if necessary.
-                if ($header->showcoursecontacts || $header->showcoursepopup) {
-                    $header->canviewuserdetails =
-                            has_capability('moodle/user:viewdetails', \context_course::instance($this->page->course->id));
-                }
-
-                // Amend course contacts, if enabled.
-                if ($header->showcoursecontacts || $header->showcoursepopup) {
-                    $header->contacts = $courseutil->get_course_contacts();
-                    $header->hascontacts = (count($header->contacts) > 0);
-                }
-
-                // Amend course shortname, if enabled.
-                if ($header->showshortname) {
-                    $header->shortname = $courselistelement->shortname;
-                }
-
-                // Amend course fullname, if enabled.
-                if ($header->showcoursepopup) {
-                    $header->fullname = $courselistelement->fullname;
-                }
-
-                // Amend course category, if enabled.
-                if ($header->showcoursecategory) {
-                    $header->coursecategory = $courseutil->get_category();
-                }
-
-                // Amend course summary, if enabled.
-                if ($header->showcoursepopup) {
-                    $header->summary = $courseutil->get_summary($chelper);
-                    $header->hassummary = ($header->summary != false);
-                }
-
-                // Amend custom fields, if enabled.
-                if ($header->showcoursefields || $header->showcoursepopup) {
-                    $header->customfields = $courseutil->get_custom_fields('header');
-                    $header->hascustomfields = ($header->customfields != false);
-
-                    // If custom fields should be shown as badges.
-                    $courseheaderstylefields = get_config('theme_boost_union', 'courseheaderstylefields');
-                    if ($courseheaderstylefields == THEME_BOOST_UNION_SETTING_SHOWAS_BADGE) {
-                        $header->customfieldsstyleasbadge = true;
-
-                        // Otherwise.
+                    // Set a marker that course header is enabled.
+                    $header->courseheaderenabled = true;
+                    // Set the course header image url (might be empty if background type allows it).
+                    $header->courseheaderimageurl = $courseheaderimageurl;
+                    // Additionally, get the course header height.
+                    $header->courseheaderheight = coursesettings::get_config_with_course_override('courseheaderheight');
+                    // Additionally, get the course header image position.
+                    $header->courseheaderimageposition =
+                            coursesettings::get_config_with_course_override('courseheaderimageposition');
+                    // Additionally, get the course header canvas border and background and determine the CSS classes.
+                    $courseheadercanvasborder = coursesettings::get_config_with_course_override('courseheadercanvasborder');
+                    $courseheadercanvasbackground = coursesettings::get_config_with_course_override('courseheadercanvasbackground');
+                    // Build the CSS header canvas class string including withimage/withoutimage and background classes.
+                    $canvasclasses = [];
+                    // Add withimage or withoutimage class.
+                    if (!empty($courseheaderimageurl)) {
+                        $canvasclasses[] = 'withimage';
                     } else {
-                        $header->customfieldsstyleasbadge = false;
+                        $canvasclasses[] = 'withoutimage';
                     }
-                }
+                    // Add background classes based on setting.
+                    switch ($courseheadercanvasbackground) {
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_WHITE:
+                            $canvasclasses[] = 'bg-white';
+                            break;
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_LIGHTGREY:
+                            $canvasclasses[] = 'bg-light';
+                            break;
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_LIGHTBRANDCOLOR:
+                            $canvasclasses[] = 'bg-primary-light';
+                            break;
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_BRANDCOLORGRADIENTLIGHT:
+                            $canvasclasses[] = 'bg-primary-gradient-light';
+                            break;
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_BRANDCOLORGRADIENTFULL:
+                            $canvasclasses[] = 'bg-primary-gradient-full';
+                            break;
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_TRANSPARENT:
+                        default:
+                            // No background class added.
+                            break;
+                    }
+                    $header->courseheadercanvasclasses = implode(' ', $canvasclasses);
+                    // Build the CSS header border class string based on setting.
+                    switch ($courseheadercanvasborder) {
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBORDER_GREY:
+                            $borderclasses = 'border-secondary border';
+                            break;
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBORDER_BRANDCOLOR:
+                            $borderclasses = 'border-primary border';
+                            break;
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBORDER_NONE:
+                        default:
+                            // No border class added.
+                            $borderclasses = '';
+                            break;
+                    }
+                    $header->courseheaderborderclasses = $borderclasses;
+                    // Additionally, set text on image style classes based on setting.
+                    $courseheadertextonimagestyle = coursesettings::get_config_with_course_override('courseheadertextonimagestyle');
+                    switch ($courseheadertextonimagestyle) {
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_LIGHT:
+                            $header->textonimagestyle = 'textonimage-light';
+                            break;
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_LIGHTSHADOW:
+                            $header->textonimagestyle = 'textonimage-lightshadow';
+                            break;
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_LIGHTBG:
+                            $header->textonimagestyle = 'textonimage-lightbg';
+                            break;
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_DARK:
+                            $header->textonimagestyle = 'textonimage-dark';
+                            break;
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_DARKSHADOW:
+                            $header->textonimagestyle = 'textonimage-darkshadow';
+                            break;
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_DARKBG:
+                            $header->textonimagestyle = 'textonimage-darkbg';
+                            break;
+                    }
+                    // Additionally, determine the partial template for the course header layout.
+                    $courseheaderlayout = coursesettings::get_config_with_course_override('courseheaderlayout');
+                    switch ($courseheaderlayout) {
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_HEADINGABOVE:
+                            $courseheadertemplate = 'theme_boost_union/full_header-partial-headingabove';
+                            break;
+                        case THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_STACKED:
+                            $courseheadertemplate = 'theme_boost_union/full_header-partial-stacked';
+                            break;
+                    }
 
-                // Amend course progress, if enabled.
-                if ($header->showcourseprogress) {
-                    $courseprogress = $courseutil->get_progress();
-                    $header->progress = (int) $courseprogress;
-                    $header->hasprogress = ($courseprogress !== null);
+                    // Note: The following code is more or less duplicated in course_renderer::coursecat_coursebox_content().
+                    // This was done on purpose as it is not a 100% copy and creating another helper function would not have
+                    // improved the code quality much.
 
-                    // If progress should be shown as progress bar.
-                    $courseprogressstyle = get_config('theme_boost_union', 'courseheaderprogressstyle');
-                    if ($courseprogressstyle == THEME_BOOST_UNION_SETTING_COURSEPROGRESSSTYLE_BAR) {
-                        $header->progressstyleasbar = true;
+                    // Get course util for the course.
+                    $courselistelement = new core_course_list_element($this->page->course);
+                    $courseutil = new course($courselistelement);
+                    $chelper = new coursecat_helper();
 
-                        // Otherwise.
+                    // Enable course contacts, if configured.
+                    if (get_config('theme_boost_union', 'courseheadershowcontacts') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                        $header->showcoursecontacts = true;
                     } else {
-                        $header->progressstyleasbar = false;
+                        $header->showcoursecontacts = false;
                     }
-                }
 
-                // Render the course header partial template for the course header and add it to the header data.
-                // This approach is taken as Mustache does not support dynamicly named partials.
-                $header->courseheaderhtml = $this->render_from_template($courseheadertemplate, $header);
+                    // Enable course shortname, if configured.
+                    if (get_config('theme_boost_union', 'courseheadershowshortname') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                        $header->showshortname = true;
+                    } else {
+                        $header->showshortname = false;
+                    }
+
+                    // Enable course category, if configured.
+                    if (get_config('theme_boost_union', 'courseheadershowcategory') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                        $header->showcoursecategory = true;
+                    } else {
+                        $header->showcoursecategory = false;
+                    }
+
+                    // Enable course progress, if configured.
+                    if (get_config('theme_boost_union', 'courseheadershowprogress') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                        $header->showcourseprogress = true;
+                    } else {
+                        $header->showcourseprogress = false;
+                    }
+
+                    // Enable course fields, if configured.
+                    if (get_config('theme_boost_union', 'courseheadershowfields') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                        $header->showcoursefields = true;
+                    } else {
+                        $header->showcoursefields = false;
+                    }
+
+                    // Enable course details popup, if configured.
+                    if (get_config('theme_boost_union', 'courseheadershowpopup') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                        $header->showcoursepopup = true;
+
+                        // Add the necessary JS.
+                        $this->page->requires->js_call_amd('theme_boost_union/coursedetailsmodal', 'init');
+                    } else {
+                        $header->showcoursepopup = false;
+                    }
+
+                    // Enable edit icon, if configured and if edit mode is on.
+                    if (
+                        get_config('theme_boost_union', 'courseheadershowediticon') == THEME_BOOST_UNION_SETTING_SELECT_YES &&
+                            $this->page->user_is_editing()
+                    ) {
+                        $header->showcourseediticon = true;
+                        // Get the course settings URL with the course header settings as anchor.
+                        $header->coursesettingsurl = new moodle_url(
+                            '/course/edit.php',
+                            ['id' => $this->page->course->id],
+                            'id_theme_boost_union_course_courseheaderhdr'
+                        );
+                    } else {
+                        $header->showcourseediticon = false;
+                    }
+
+                    // Enable iconsbar, if necessary.
+                    if ($header->showcoursepopup || $header->showcoursecontacts || $header->showcourseediticon) {
+                        $header->showiconsbar = true;
+                    } else {
+                        $header->showiconsbar = false;
+                    }
+
+                    // Check if the user can view user details, if necessary.
+                    if ($header->showcoursecontacts || $header->showcoursepopup) {
+                        $header->canviewuserdetails =
+                                has_capability('moodle/user:viewdetails', \context_course::instance($this->page->course->id));
+                    }
+
+                    // Amend course contacts, if enabled.
+                    if ($header->showcoursecontacts || $header->showcoursepopup) {
+                        $header->contacts = $courseutil->get_course_contacts();
+                        $header->hascontacts = (count($header->contacts) > 0);
+                    }
+
+                    // Amend course shortname, if enabled.
+                    if ($header->showshortname) {
+                        $header->shortname = $courselistelement->shortname;
+                    }
+
+                    // Amend course fullname, if enabled.
+                    if ($header->showcoursepopup) {
+                        $header->fullname = $courselistelement->fullname;
+                    }
+
+                    // Amend course category, if enabled.
+                    if ($header->showcoursecategory) {
+                        $header->coursecategory = $courseutil->get_category();
+                    }
+
+                    // Amend course summary, if enabled.
+                    if ($header->showcoursepopup) {
+                        $header->summary = $courseutil->get_summary($chelper);
+                        $header->hassummary = ($header->summary != false);
+                    }
+
+                    // Amend custom fields, if enabled.
+                    if ($header->showcoursefields || $header->showcoursepopup) {
+                        $header->customfields = $courseutil->get_custom_fields('header');
+                        $header->hascustomfields = ($header->customfields != false);
+
+                        // If custom fields should be shown as badges.
+                        $courseheaderstylefields = get_config('theme_boost_union', 'courseheaderstylefields');
+                        if ($courseheaderstylefields == THEME_BOOST_UNION_SETTING_SHOWAS_BADGE) {
+                            $header->customfieldsstyleasbadge = true;
+
+                            // Otherwise.
+                        } else {
+                            $header->customfieldsstyleasbadge = false;
+                        }
+                    }
+
+                    // Amend course progress, if enabled.
+                    if ($header->showcourseprogress) {
+                        $courseprogress = $courseutil->get_progress();
+                        $header->progress = (int) $courseprogress;
+                        $header->hasprogress = ($courseprogress !== null);
+
+                        // If progress should be shown as progress bar.
+                        $courseprogressstyle = get_config('theme_boost_union', 'courseheaderprogressstyle');
+                        if ($courseprogressstyle == THEME_BOOST_UNION_SETTING_COURSEPROGRESSSTYLE_BAR) {
+                            $header->progressstyleasbar = true;
+
+                            // Otherwise.
+                        } else {
+                            $header->progressstyleasbar = false;
+                        }
+                    }
+
+                    // Render the course header partial template for the course header and add it to the header data.
+                    // This approach is taken as Mustache does not support dynamicly named partials.
+                    $header->courseheaderhtml = $this->render_from_template($courseheadertemplate, $header);
+                }
             }
         }
 

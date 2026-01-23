@@ -28,6 +28,8 @@ define('THEME_BOOST_UNION_SETTING_SELECT_NO', 'no');
 
 define('THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE', 'nochange');
 
+define('THEME_BOOST_UNION_SETTING_USEGLOBAL', 'useglobal');
+
 define('THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_NONE', 'none');
 define('THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTNOTE', 'footnote');
 define('THEME_BOOST_UNION_SETTING_STATICPAGELINKPOSITION_FOOTER', 'footer');
@@ -88,8 +90,7 @@ define('THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_TOP', 'right top');
 define('THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_CENTER', 'right center');
 define('THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM', 'right bottom');
 
-define('THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_STACKEDDARK', 'stackeddark');
-define('THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_STACKEDLIGHT', 'stackedlight');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_STACKED', 'stacked');
 define('THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_HEADINGABOVE', 'headingabove');
 
 define('THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_COURSEPLUSGLOBAL', 'courseplusglobal');
@@ -99,6 +100,27 @@ define('THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_DEDICATEDNOGLOBAL', 'd
 define('THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_DEDICATEDPLUSCOURSEPLUSGLOBAL', 'dedicatedpluscourseplusfallback');
 define('THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_DEDICATEDPLUSCOURSENOGLOBAL', 'dedicatedpluscoursenofallback');
 define('THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_GLOBAL', 'global');
+
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGEREQUIREMENT_STANDARDONLY', 'standardonly');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGEREQUIREMENT_ENHANCEDWITHOUTIMAGE', 'enhancedwithoutimage');
+
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBORDER_NONE', 'none');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBORDER_GREY', 'grey');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBORDER_BRANDCOLOR', 'brandcolor');
+
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_TRANSPARENT', 'transparent');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_WHITE', 'white');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_LIGHTGREY', 'lightgrey');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_LIGHTBRANDCOLOR', 'lightbrandcolor');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_BRANDCOLORGRADIENTLIGHT', 'brandcolorgradientlight');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_BRANDCOLORGRADIENTFULL', 'brandcolorgradientfull');
+
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_LIGHT', 'light');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_LIGHTSHADOW', 'lightshadow');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_LIGHTBG', 'lightbg');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_DARK', 'dark');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_DARKSHADOW', 'darkshadow');
+define('THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTONIMAGESTYLE_DARKBG', 'darkbg');
 
 define('THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_STARTOFLINE', 'startofline');
 define('THEME_BOOST_UNION_SETTING_COMPLETIONINFOPOSITION_ENDOFLINE', 'endofline');
@@ -706,8 +728,10 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         $filename = clean_param(array_pop($args), PARAM_FILE);
         $itemid = clean_param(array_pop($args), PARAM_INT);
 
-        if ((!$file = $fs->get_file($context->id, 'theme_boost_union', $filearea, $itemid, '/', $filename)) ||
-                $file->is_directory()) {
+        if (
+            (!$file = $fs->get_file($context->id, 'theme_boost_union', $filearea, $itemid, '/', $filename)) ||
+                $file->is_directory()
+        ) {
             send_file_not_found();
         }
 
@@ -1001,6 +1025,24 @@ function theme_boost_union_reset_fontawesome_icon_map() {
     $cache->delete($mapkey);
     // And rebuild it brutally.
     $instance->get_icon_name_map();
+}
+
+/**
+ * Helper function to purge the course overrides cache.
+ * This function is used as callback when a global course header setting is changed.
+ *
+ * Please note: This function purges the whole cache, not only the cache entry for a single setting.
+ * Moodle passes the setting name on to the callback function, but we do not use it here as
+ * the course overrides cache is not separated by setting names.
+ * We would have to parse the whole cache and remove only the entries for the changed setting or we would have to bloat the
+ * cache keys with setting names.
+ * Purging the whole cache is simpler and not too performance critical as changing global course header settings
+ * is not a frequent operation.
+ */
+function theme_boost_union_purge_courseoverrides_cache() {
+    // Purge the course overrides cache.
+    $cache = \cache::make('theme_boost_union', 'courseoverrides');
+    $cache->purge();
 }
 
 /**

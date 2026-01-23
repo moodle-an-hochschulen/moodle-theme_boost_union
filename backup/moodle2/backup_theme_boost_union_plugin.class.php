@@ -30,7 +30,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_theme_boost_union_plugin extends backup_theme_plugin {
-
     /**
      * Define the course plugin structure for backup.
      *
@@ -47,9 +46,11 @@ class backup_theme_boost_union_plugin extends backup_theme_plugin {
         $plugin->add_child($pluginwrapper);
 
         // Define our elements.
-        $courseoverride = new backup_nested_element('courseoverride',
+        $courseoverride = new backup_nested_element(
+            'courseoverride',
             ['id'],
-            ['courseid', 'name', 'value']);
+            ['courseid', 'name', 'value']
+        );
 
         // Build elements hierarchy.
         $pluginwrapper->add_child($courseoverride);
