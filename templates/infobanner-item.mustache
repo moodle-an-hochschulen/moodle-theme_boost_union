@@ -1,0 +1,43 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/infobanner-item
+
+    Boost Union Info banner item template.
+
+    Context variables required for this template:
+    * content - The info banner content
+    * bsclass - The info banner bootstrap class
+    * no - The info banner number
+    * dismissible - The fact that the info banner is dismissible
+
+    Example context (json):
+    {
+        "content": "Lorem ipsum",
+        "bsclass": "primary",
+        "no": 1,
+        "dismissible": true
+    }
+}}
+<div id="themeboostunioninfobanner{{no}}" class="themeboostunioninfobanner alert {{#dismissible}}fade show{{/dismissible}} {{#bsclass}}alert-{{{ bsclass }}}{{/bsclass}}" role="alert">
+    {{#dismissible}}
+        <button type="button" id="themeboostunioninfobanner{{no}}close" class="close" data-bs-dismiss="alert" data-infobanner-no="{{no}}" aria-label="{{#str}}infobannerclose, theme_boost_union{{/str}}">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    {{/dismissible}}
+    {{{content}}}
+</div>

@@ -3262,6 +3262,16 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                         get_string('infobannermodetimebased', 'theme_boost_union', null, false),
         ];
 
+        // Prepare options for the position settings.
+        $infobannerpositions = [
+            // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+            // PHP warning otherwise.
+                THEME_BOOST_UNION_SETTING_INFOBANNERPOSITION_ABOVE =>
+                        get_string('infobannerpositionabove', 'theme_boost_union', null, false),
+                THEME_BOOST_UNION_SETTING_INFOBANNERPOSITION_BELOW =>
+                        get_string('infobannerpositionbelow', 'theme_boost_union', null, false),
+        ];
+
         // Create the hardcoded amount of information banners without code duplication.
         for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_INFOBANNER_COUNT; $i++) {
             // Heading: Infobanner.
@@ -3353,6 +3363,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
             $page->hide_if(
                 'theme_boost_union/infobanner' . $i . 'order',
+                'theme_boost_union/infobanner' . $i . 'enabled',
+                'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES
+            );
+
+            // Setting: Infobanner position in relation to page header.
+            $name = 'theme_boost_union/infobanner' . $i . 'position';
+            $title = get_string('infobannerpositionsetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('infobannerpositionsetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $setting = new admin_setting_configselect(
+                $name,
+                $title,
+                $description,
+                THEME_BOOST_UNION_SETTING_INFOBANNERPOSITION_ABOVE,
+                $infobannerpositions
+            );
+            $tab->add($setting);
+            $page->hide_if(
+                'theme_boost_union/infobanner' . $i . 'position',
                 'theme_boost_union/infobanner' . $i . 'enabled',
                 'neq',
                 THEME_BOOST_UNION_SETTING_SELECT_YES
