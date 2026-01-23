@@ -57,6 +57,7 @@ $string['bycapability'] = 'Controlled by capability';
 // Course overrides: General strings.
 $string['courseoverride'] = 'Add to course settings as well';
 $string['courseoverride_desc'] = 'The Boost Union settings in this section come with the possibility to override the global setting (which is set here) in each course. As soon as you tick the \'Add to course settings as well\' checkbox for a setting, the setting will be added to the course settings form where teachers, managers and admins (or any other role which you add the theme/boost_union:overridecourseheaderincourse capability to) can override the global setting for each course individually. If you do not tick the checkbox, the setting will not be added to the course settings form and the global setting will always apply.';
+$string['useglobaldefault'] = 'Use global default ({$a})';
 $string['nocourseoverride'] = 'This setting cannot be overridden in the course settings.';
 
 // Settings: General strings.
@@ -444,15 +445,10 @@ $string['courseheaderenabled_desc'] = 'When enabled, the course header (which is
 $string['courseheaderenabled_help'] = 'When enabled, the course header is enhanced by additional elements like the course image and other course metadata, depending how you configure the course header in detail.';
 // ... ... Setting: Course header layout.
 $string['courseheaderlayout'] = 'Course header layout';
-$string['courseheaderlayout_desc'] = 'With this setting, you control the layout of the course header and the course title.';
-$string['courseheaderlayout_help'] = 'The layout of the course header and the course title.';
-$string['courseheaderlayoutstackeddark'] = 'Course title stacked on course header image (white font color for dark background images)';
-$string['courseheaderlayoutstackedlight'] = 'Course title stacked on course header image (black font color for light background images)';
-$string['courseheaderlayoutheadingabove'] = 'Course title above of course header image';
-// ... ... Setting: Course header height.
-$string['courseheaderheight'] = 'Course header height';
-$string['courseheaderheight_desc'] = 'With this setting, you control the height of the presented course header.';
-$string['courseheaderheight_help'] = 'The height of the presented course header.';
+$string['courseheaderlayout_desc'] = 'With this setting, you control the layout of the course header which shows the course title and the course metadata. You can choose between several pre-defined layouts. Some layouts feature a full surface course header image und some feature a partially covering course header image.';
+$string['courseheaderlayout_help'] = 'The layout of the course header which shows the course title and the course metadata.';
+$string['courseheaderlayoutstacked'] = 'Course title stacked on full surface course header image';
+$string['courseheaderlayoutheadingabove'] = 'Course title above of full surface course header image';
 // ... ... Setting: Course header image source.
 $string['courseheaderimagesource'] = 'Course header image source';
 $string['courseheaderimagesource_desc'] = 'Several course header layouts contain the presentation of a course header image. With this setting, you control the source of that course header image.';
@@ -473,6 +469,38 @@ $string['courseheaderimagenofallback_help'] = 'The course header image is displa
 // ... ... Setting: Global course header image.
 $string['courseheaderimageglobal'] = 'Global course header image';
 $string['courseheaderimageglobal_desc'] = 'The image which you upload here is used as global course header image in the cascade which you configure in the \'Course header image source\' setting.';
+// ... ... Setting: Course header image requirement.
+$string['courseheaderimagerequirement'] = 'Course header image requirement';
+$string['courseheaderimagerequirement_desc'] = 'The course header layouts are primarily designed to show a course image and most enhanced course header layouts look inferior without the course header image. With this setting, you control if the enhanced course header is shown even if a course header image cannot be determined (because no image is uploaded in the course and no fallback image is configured) or if the standard Moodle course header should be shown. Please note that in the latter case, all additional course header elements like course contacts or course fields are not shown as well.';
+$string['courseheaderimagerequirement_standardonly'] = 'Show standard course header if no course image is determined';
+$string['courseheaderimagerequirement_enhancedwithoutimage'] = 'Show enhanced course header even if no course image is determined';
+// ... ... Setting: Course header height.
+$string['courseheaderheight'] = 'Course header height';
+$string['courseheaderheight_desc'] = 'With this setting, you control the height of the presented course header.';
+$string['courseheaderheight_help'] = 'The height of the presented course header.';
+// ... ... Setting: Course header canvas border.
+$string['courseheadercanvasborder'] = 'Course header canvas border';
+$string['courseheadercanvasborder_desc'] = 'With this setting, you control the border of the course header canvas.';
+$string['courseheadercanvasborder_none'] = 'No border';
+$string['courseheadercanvasborder_grey'] = 'Grey border';
+$string['courseheadercanvasborder_brandcolor'] = 'Brand-color border';
+$string['courseheadercanvasborder_help'] = 'The style of the course header canvas border.';
+// ... ... Setting: Course header canvas background.
+$string['courseheadercanvasbackground'] = 'Course header canvas background';
+$string['courseheadercanvasbackground_desc'] = 'With this setting, you control the background of the course header canvas.';
+$string['courseheadercanvasbackground_transparent'] = 'Transparent';
+$string['courseheadercanvasbackground_white'] = 'White';
+$string['courseheadercanvasbackground_lightgrey'] = 'Light grey';
+$string['courseheadercanvasbackground_lightbrandcolor'] = 'Light brand color';
+$string['courseheadercanvasbackground_brandcolorgradientlight'] = 'Light brand color gradient';
+$string['courseheadercanvasbackground_brandcolorgradientfull'] = 'Full brand color gradient';
+$string['courseheadercanvasbackground_help'] = 'The background color of the course header canvas.';
+// ... ... Setting: Course header text on image color.
+$string['courseheadertextonimagecolor'] = 'Course header text on image color';
+$string['courseheadertextonimagecolor_desc'] = 'With this setting, you control the text color of the elements which are located on top of the course header image.';
+$string['courseheadertextonimagecolor_help'] = 'The text color of the elements which are located on top of the course header image.';
+$string['courseheadertextcolor_white'] = 'White';
+$string['courseheadertextcolor_black'] = 'Black';
 // ... ... Setting: Course header image position.
 $string['courseheaderimageposition'] = 'Course header image position';
 $string['courseheaderimageposition_desc'] = 'With this setting, you control the positioning of the course header image within the course header image container. The first value is the horizontal position, the second value is the vertical position.';
@@ -492,6 +520,8 @@ $string['courseheadershowprogress_desc'] = 'With this setting, you can enable th
 // ... ... Setting: Course completion progress style in the course header.
 $string['courseheaderprogressstyle'] = 'Course completion progress style in the course header';
 $string['courseheaderprogressstyle_desc'] = 'With this setting, you control how the course completion progress is displayed in the course header. You can choose between a simple percentage text or a progress bar.';
+$string['aria:courseprogress'] = 'Course progress:';
+$string['completepercent'] = '{$a}% complete';
 // ... ... Setting: Show course fields in the course header.
 $string['courseheadershowfields'] = 'Show course fields in the course header';
 $string['courseheadershowfields_desc'] = 'With this setting, you can enable the display of course fields in the course header.';
@@ -506,6 +536,10 @@ $string['courseheaderstylefields_desc'] = 'With this setting, you can control ho
 $string['courseheadershowpopup'] = 'Show details popup in the course header';
 $string['courseheadershowpopup_desc'] = 'With this setting, you can enable the display of the course summary in the course header.';
 $string['courseheadershowpopup_label'] = 'Course details';
+// ... ... Setting: Show edit icon in the course header.
+$string['courseheadershowediticon'] = 'Show edit icon in the course header';
+$string['courseheadershowediticon_desc'] = 'With this setting, you can enable the display of an edit icon in the course header when edit mode is turned on. This icon helps teachers to easily find and access the course header settings. Please note that showing this edit icon only makes sense of you have enabled any course override at the same time or if your course header image source is set to use the course image. You have to decide yourself, Boost Union does not check this for you.';
+$string['courseheadershowediticon_label'] = 'Edit course header settings';
 // ... ... Setting: Course header layouts exclusion list.
 $string['courseheaderlayoutexclusionlist'] = 'Course header layouts exclusion list';
 $string['courseheaderlayoutexclusionlist_desc'] = 'With this setting, you can exclude particular course header layouts from being available for course-specific overrides. The selected layouts will not appear in the course settings for teachers to choose from, but the administrator can still use them globally. This allows you to restrict which layouts are available to course editors while maintaining administrative control over the global setting. Please note that the course header layout which is selected by the admin above will never be excluded from the course settings, even if you tick it here.';

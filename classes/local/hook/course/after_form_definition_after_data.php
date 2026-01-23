@@ -61,13 +61,13 @@ class after_form_definition_after_data {
         // Get the course override settings which we handle.
         $coursesettings = coursesettings::get_course_setting_names();
 
-        // Get the course override settings and defaults for the relevant Boost Union settings.
+        // Get the course override settings and set "Use global default" as the default for all settings.
         // To simplify the code logic, we always set the global default first and overwrite it later if there are course values.
         foreach ($coursesettings as $setting) {
             $overridesetting = get_config('theme_boost_union', $setting . '_courseoverride');
             if ($overridesetting) {
-                $defaultvalue = get_config('theme_boost_union', $setting);
-                $mform->setDefault('theme_boost_union_' . $setting, $defaultvalue);
+                // Set "Use global default" as the default value.
+                $mform->setDefault('theme_boost_union_' . $setting, THEME_BOOST_UNION_SETTING_USEGLOBAL);
             }
         }
 
@@ -80,7 +80,8 @@ class after_form_definition_after_data {
             if ($settings) {
                 foreach ($coursesettings as $setting) {
                     $overridesetting = get_config('theme_boost_union', $setting . '_courseoverride');
-                    if (isset($settings[$setting]) && $settings[$setting] && $overridesetting) {
+                    if (isset($settings[$setting]) && $overridesetting) {
+                        // Use the saved override value (which might be THEME_BOOST_UNION_SETTING_USEGLOBAL or a specific value).
                         $mform->setDefault('theme_boost_union_' . $setting, $settings[$setting]);
                     }
                 }

@@ -1503,6 +1503,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('courseheaderenabled_desc', 'theme_boost_union', null, true);
         $setting = new theme_boost_union\admin_setting_configselect_with_courseoverride($name, $title, $description,
                 THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption, false);
+        $setting->set_updatedcallback('theme_boost_union_purge_courseoverrides_cache');
         $tab->add($setting);
 
         // Setting: Course header layout.
@@ -1512,19 +1513,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $courseheaderlayoutoptions = coursesettings::get_courseheaderlayout_options();
         $setting = new theme_boost_union\admin_setting_configselect_with_courseoverride($name, $title, $description,
                 THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_HEADINGABOVE, $courseheaderlayoutoptions, false);
+        $setting->set_updatedcallback('theme_boost_union_purge_courseoverrides_cache');
         $tab->add($setting);
         $page->hide_if('theme_boost_union/courseheaderlayout', 'theme_boost_union/courseheaderenabled', 'neq',
-                THEME_BOOST_UNION_SETTING_SELECT_YES);
-
-        // Setting: Course header height.
-        $name = 'theme_boost_union/courseheaderheight';
-        $title = get_string('courseheaderheight', 'theme_boost_union', null, true);
-        $description = get_string('courseheaderheight_desc', 'theme_boost_union', null, true);
-        $courseheaderheightoptions = coursesettings::get_courseheaderheight_options();
-        $setting = new theme_boost_union\admin_setting_configselect_with_courseoverride($name, $title, $description,
-                THEME_BOOST_UNION_SETTING_HEIGHT_150PX, $courseheaderheightoptions, false);
-        $tab->add($setting);
-        $page->hide_if('theme_boost_union/courseheaderheight', 'theme_boost_union/courseheaderenabled', 'neq',
                 THEME_BOOST_UNION_SETTING_SELECT_YES);
 
         // Setting: Course header image source.
@@ -1572,6 +1563,70 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if('theme_boost_union/courseheaderimageglobal', 'theme_boost_union/courseheaderimagesource', 'eq',
                 THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_DEDICATEDPLUSCOURSENOGLOBAL);
 
+        // Setting: Course header image requirement.
+        $name = 'theme_boost_union/courseheaderimagerequirement';
+        $title = get_string('courseheaderimagerequirement', 'theme_boost_union', null, true);
+        $description = get_string('courseheaderimagerequirement_desc', 'theme_boost_union', null, true);
+        $courseheaderimagerequirementoptions = [
+            THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGEREQUIREMENT_STANDARDONLY =>
+                    get_string('courseheaderimagerequirement_standardonly', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGEREQUIREMENT_ENHANCEDWITHOUTIMAGE =>
+                    get_string('courseheaderimagerequirement_enhancedwithoutimage', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGEREQUIREMENT_STANDARDONLY, $courseheaderimagerequirementoptions);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/courseheaderimagerequirement', 'theme_boost_union/courseheaderenabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+        // Setting: Course header height.
+        $name = 'theme_boost_union/courseheaderheight';
+        $title = get_string('courseheaderheight', 'theme_boost_union', null, true);
+        $description = get_string('courseheaderheight_desc', 'theme_boost_union', null, true);
+        $courseheaderheightoptions = coursesettings::get_courseheaderheight_options();
+        $setting = new theme_boost_union\admin_setting_configselect_with_courseoverride($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_HEIGHT_150PX, $courseheaderheightoptions, false);
+        $setting->set_updatedcallback('theme_boost_union_purge_courseoverrides_cache');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/courseheaderheight', 'theme_boost_union/courseheaderenabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+        // Setting: Course header canvas border.
+        $name = 'theme_boost_union/courseheadercanvasborder';
+        $title = get_string('courseheadercanvasborder', 'theme_boost_union', null, true);
+        $description = get_string('courseheadercanvasborder_desc', 'theme_boost_union', null, true);
+        $courseheadercanvasborderoptions = coursesettings::get_courseheadercanvasborder_options();
+        $setting = new theme_boost_union\admin_setting_configselect_with_courseoverride($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBORDER_NONE, $courseheadercanvasborderoptions, false);
+        $setting->set_updatedcallback('theme_boost_union_purge_courseoverrides_cache');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/courseheadercanvasborder', 'theme_boost_union/courseheaderenabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+        // Setting: Course header canvas background.
+        $name = 'theme_boost_union/courseheadercanvasbackground';
+        $title = get_string('courseheadercanvasbackground', 'theme_boost_union', null, true);
+        $description = get_string('courseheadercanvasbackground_desc', 'theme_boost_union', null, true);
+        $courseheadercanvasbackgroundoptions = coursesettings::get_courseheadercanvasbackground_options();
+        $setting = new theme_boost_union\admin_setting_configselect_with_courseoverride($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_TRANSPARENT, $courseheadercanvasbackgroundoptions, false);
+        $setting->set_updatedcallback('theme_boost_union_purge_courseoverrides_cache');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/courseheadercanvasbackground', 'theme_boost_union/courseheaderenabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+        // Setting: Course header text on image color.
+        $name = 'theme_boost_union/courseheadertextonimagecolor';
+        $title = get_string('courseheadertextonimagecolor', 'theme_boost_union', null, true);
+        $description = get_string('courseheadertextonimagecolor_desc', 'theme_boost_union', null, true);
+        $courseheadertextonimagecoloroptions = coursesettings::get_courseheadertextonimagecolor_options();
+        $setting = new theme_boost_union\admin_setting_configselect_with_courseoverride($name, $title, $description,
+                THEME_BOOST_UNION_SETTING_COURSEHEADERTEXTCOLOR_WHITE, $courseheadertextonimagecoloroptions, false);
+        $setting->set_updatedcallback('theme_boost_union_purge_courseoverrides_cache');
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/courseheadertextonimagecolor', 'theme_boost_union/courseheaderenabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
         // Setting: Course header image position.
         $name = 'theme_boost_union/courseheaderimageposition';
         $title = get_string('courseheaderimageposition', 'theme_boost_union', null, true);
@@ -1579,6 +1634,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $courseheaderimagepositionoptions = coursesettings::get_courseheaderimageposition_options();
         $setting = new theme_boost_union\admin_setting_configselect_with_courseoverride($name, $title, $description,
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER, $courseheaderimagepositionoptions, false);
+        $setting->set_updatedcallback('theme_boost_union_purge_courseoverrides_cache');
         $tab->add($setting);
         $page->hide_if('theme_boost_union/courseheaderimageposition', 'theme_boost_union/courseheaderenabled', 'neq',
                 THEME_BOOST_UNION_SETTING_SELECT_YES);
@@ -1701,6 +1757,15 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
         $page->hide_if('theme_boost_union/courseheadershowpopup', 'theme_boost_union/courseheaderenabled', 'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES);
+
+        // Setting: Show edit icon in the course header.
+        $name = 'theme_boost_union/courseheadershowediticon';
+        $title = get_string('courseheadershowediticon', 'theme_boost_union', null, true);
+        $description = get_string('courseheadershowediticon_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if('theme_boost_union/courseheadershowediticon', 'theme_boost_union/courseheaderenabled', 'neq',
                 THEME_BOOST_UNION_SETTING_SELECT_YES);
 
         // Setting: Course header layouts exclusion list.

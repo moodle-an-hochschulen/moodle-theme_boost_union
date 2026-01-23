@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost_union/full_header-partial-headingabove
+    @template theme_boost_union/full_header-partial-stacked
 
     This template renders a Boost Union course header.
 
@@ -31,32 +31,34 @@
     This template is a partial version of core/full_header
 
     Modifications compared to the original template:
-    * Provide the layout for the "Heading above" course header layout option.
+    * Provide the layout for the "Stacked" course header layout option.
 }}
-<div id="bucourseheader" class="headingabove mb-3">
-    <div class="bucoursetitle">
-        {{#showshortname}}
-            {{< theme_boost_union/full_header-chunk-shortname}}{{$cssclass}}text-muted muted{{/cssclass}}{{/ theme_boost_union/full_header-chunk-shortname}}
-        {{/showshortname}}
-        <div class="d-flex align-items-center">
-            {{#contextheader}}
-                <div class="me-auto d-flex flex-column">
-                    {{{contextheader}}}
-                </div>
-            {{/contextheader}}
-            {{> theme_boost_union/full_header-chunk-headeractions }}
-        </div>
-        {{#showcoursecategory}}
-            {{< theme_boost_union/full_header-chunk-coursecategory}}{{$cssclass}}text-muted muted {{/cssclass}}{{/ theme_boost_union/full_header-chunk-coursecategory}}
-        {{/showcoursecategory}}
+<div id="bucourseheader" class="stacked mb-3">
+    <div class="d-flex align-items-center pb-2">
+        {{> theme_boost_union/full_header-chunk-headeractions }}
     </div>
     {{#showiconsbar}}
         {{> theme_boost_union/full_header-chunk-iconsbar }}
     {{/showiconsbar}}
-    <div id="courseheaderimage" class="d-flex flex-column p-3 rounded{{#showcourseprogress}}{{#hasprogress}}{{#progressstyleasbar}}-top{{/progressstyleasbar}}{{/hasprogress}}{{/showcourseprogress}} {{{courseheadercanvasclasses}}} {{{courseheaderborderclasses}}}"
+    <div id="courseheaderimage" class="d-flex flex-column p-3 {{#showiconsbar}}pt-5{{/showiconsbar}} rounded{{#showcourseprogress}}{{#hasprogress}}{{#progressstyleasbar}}-top{{/progressstyleasbar}}{{/hasprogress}}{{/showcourseprogress}} {{{courseheadercanvasclasses}}} {{{courseheaderborderclasses}}}"
             style="{{#courseheaderimageurl}}background-image: url('{{{courseheaderimageurl}}}');{{/courseheaderimageurl}}
                 {{#courseheaderheight}}min-height: {{{.}}};{{/courseheaderheight}}
                 {{#courseheaderimageposition}}background-position: {{{.}}};{{/courseheaderimageposition}}">
+        <div class="bucoursetitle {{#courseheaderimageurl}}{{textonimagecolor}}{{/courseheaderimageurl}}">
+            {{#showshortname}}
+                {{> theme_boost_union/full_header-chunk-shortname }}
+            {{/showshortname}}
+            <div class="d-flex align-items-center">
+                {{#contextheader}}
+                    <div class="me-auto d-flex flex-column">
+                        {{{contextheader}}}
+                    </div>
+                {{/contextheader}}
+            </div>
+            {{#showcoursecategory}}
+                {{> theme_boost_union/full_header-chunk-coursecategory }}
+            {{/showcoursecategory}}
+        </div>
         <div class="mt-auto d-flex justify-content-between w-100">
             {{#showcoursefields}}
                 {{> theme_boost_union/full_header-chunk-coursefields }}

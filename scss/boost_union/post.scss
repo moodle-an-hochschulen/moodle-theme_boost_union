@@ -1,4 +1,21 @@
 /*=======================================
+ * General styles
+ ======================================*/
+
+/* Light brand color gradient background class.
+   This creates a subtle diagonal gradient from a light brand color to an even lighter version. */
+.bg-primary-gradient-light {
+    background: linear-gradient(135deg, mix($primary, $white, 15%) 0%, mix($primary, $white, 5%) 100%);
+}
+
+/* Full brand color gradient background class.
+   This creates a subtle diagonal gradient from the full brand color to a slightly lighter version. */
+.bg-primary-gradient-full {
+    background: linear-gradient(135deg, $primary 0%, mix($primary, $white, 85%) 100%);
+}
+
+
+/*=======================================
  * Settings: Look -> Site branding
  ======================================*/
 
@@ -604,9 +621,10 @@
         margin-bottom: 0 !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    /* The popup button. */
-    .popupbutton {
-        /* Make sure that the popup icon matches the avatars */
+    /* The popup button and the course header edit button. */
+    .popupbutton,
+    .courseheaderediticon a {
+        /* Make sure that the button size matches the avatars */
         width: 35px;
         height: 35px;
 
@@ -614,10 +632,9 @@
         background-color: rgb(230,230,230) !important;
     }
 
-    /* The headingabove layout and the stacked* layouts only. */
+    /* The headingabove layout and the stacked layout only. */
     &.headingabove,
-    &.stackeddark,
-    &.stackedlight {
+    &.stacked {
         /* The course header icons bar. */
         .courseheadericonsbar {
             /* Push the iconsbar over the course image. */
@@ -634,39 +651,33 @@
                 @extend .me-0;
             }
         }
-    }
 
-    /* The stacked* layouts only. */
-    &.stackeddark,
-    &.stackedlight {
-        /* Add a tiny padding-left to the left-aligned texts to make sure that the shadow is not cropped by the container. */
-        .page-header-headings h1,
-        .shortname,
-        .categoryname {
-            padding-left: 2px;
+        /* Add border to the course metadata boxes if not image is shown below. */
+        .withoutimage .courseheadersticker {
+            @extend .border;
         }
     }
 
-    /* The stackeddark layout only. */
-    &.stackeddark {
-        /* Set the font color and the text shadow for better readability on the background. */
-        .page-header-headings h1,
-        .shortname,
-        .categoryname {
-            color: white;
-            text-shadow: 0 0 5px black;
-        }
-    }
+    /* The stacked layout only. */
+    &.stacked {
+        /* The BU course title (with shortname and category), but only if we have a background image. */
+        #courseheaderimage.withimage .bucoursetitle {
+            /* Add a text shadow for better readability on the background image. */
+            &.text-white {
+                text-shadow: 0 0 3px black;
+            }
+            &.text-dark {
+                text-shadow: 0 0 3px white;
+            }
 
-    /* The stackedlight layout only. */
-    &.stackedlight {
-        /* Set the font color and the text shadow for better readability on the background. */
-        .page-header-headings h1,
-        .shortname,
-        .categoryname {
-            color: black;
-            text-shadow: 0 0 5px white;
+            /* Add a tiny padding to the texts to make sure that the shadow is not cropped by the parent container. */
+            .page-header-headings h1,
+            .shortname,
+            .categoryname {
+                padding: 2px;
+            }
         }
+
     }
 }
 

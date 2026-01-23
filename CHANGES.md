@@ -7,7 +7,7 @@ Changes
 ### Unreleased
 
 * 2026-01-22 - Improvement: Add a setting to control if a particular info banner is shown above of below the page header.
-* 2026-01-22 - Improvement: Align minor aspects (course shortname, course fields) of the look of the course-card and course-list view of the course listings more with the new course headers in Boost Union and less with the My courses page of Moodle core.
+* 2026-01-22 - Improvement: Align minor aspects (course shortname, course fields, course progress) of the look of the course-card and course-list view of the course listings more with the new course headers in Boost Union and less with the My courses page of Moodle core.
 * 2026-01-22 - Feature: Enhance the adaptability of the course header including the possibility for teachers to configure it per course, resolves #138.
                Please note: If you have uploaded an image in the "Fallback course header image" filearea before, this image will be migrated to the new "Global course header image" filearea during this update.
 * 2026-01-21 - Bugfix: On brand-new Moodle installations, Boost Union tried to access the mdl_files table before it was created, resolves #1058
