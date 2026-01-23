@@ -888,6 +888,23 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025100605, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2025100606) {
+        // Change course header layout settings from stackeddark/stackedlight to unified stacked layout.
+        // The old layouts had the text style embedded in the layout choice.
+        // Now we have a separate text style setting, so we need to split the old setting values.
+        $oldlayout = get_config('theme_boost_union', 'courseheaderlayout');
+        if ($oldlayout === 'stackeddark') {
+            set_config('courseheaderlayout', 'stacked', 'theme_boost_union');
+            set_config('courseheadertextonimagestyle', 'light', 'theme_boost_union');
+        } else if ($oldlayout === 'stackedlight') {
+            set_config('courseheaderlayout', 'stacked', 'theme_boost_union');
+            set_config('courseheadertextonimagestyle', 'dark', 'theme_boost_union');
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2025100606, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();

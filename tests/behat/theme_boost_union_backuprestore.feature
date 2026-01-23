@@ -35,7 +35,7 @@ Feature: Backup and restore course-specific Boost Union settings
     And I expand all fieldsets
     And I set the following fields to these values:
       | Enable enhanced course header | yes          |
-      | Course header layout          | stackedlight |
+      | Course header layout          | stacked      |
       | Course header height          | 250px        |
       | Course header image position  | right center |
     And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Course header image" filemanager
@@ -53,16 +53,16 @@ Feature: Backup and restore course-specific Boost Union settings
     And I navigate to "Settings" in current page administration
     And I expand all fieldsets
     # We cannot cover the 'no' case here due to the hide_if rules in the form.
-    Then the field "Enable enhanced course header" matches value "yes"
-    And the field "Course header layout" <matchesornot> value "stackedlight"
-    And the field "Course header height" <matchesornot> value "250px"
-    And the field "Course header image position" <matchesornot> value "right center"
-    And I <shouldornot> see "login_bg1.png" in the "#id_theme_boost_union_courseheaderimage_filemanager_fieldset" "css_element"
+    Then the field "Enable enhanced course header" matches value "<enable>"
+    And the field "Course header layout" matches value "<layout>"
+    And the field "Course header height" matches value "<height>"
+    And the field "Course header image position" matches value "<position>"
+    And I <fileshouldornot> see "login_bg1.png" in the "#id_theme_boost_union_courseheaderimage_filemanager_fieldset" "css_element"
 
     Examples:
-      | include | matchesornot   | shouldornot |
-      | 1       | matches        | should      |
-      | 0       | does not match | should not  |
+      | include | enable    | layout    | height    | position     | fileshouldornot |
+      | 1       | yes       | stacked   | 250px     | right center | should          |
+      | 0       | useglobal | useglobal | useglobal | useglobal    | should not      |
 
   @javascript @_file_upload
   Scenario Outline: Course-specific settings are preserved in backup and restore (when restoring into the same course, performed by the teacher)
@@ -72,10 +72,10 @@ Feature: Backup and restore course-specific Boost Union settings
     And I am on the "Course 2" "course" page
     And I navigate to "Settings" in current page administration
     And I expand all fieldsets
-    Then the field "Enable enhanced course header" matches value "yes"
-    And the field "Course header layout" matches value "headingabove"
-    And the field "Course header height" matches value "150px"
-    And the field "Course header image position" matches value "left top"
+    Then the field "Enable enhanced course header" matches value "useglobal"
+    And the field "Course header layout" matches value "useglobal"
+    And the field "Course header height" matches value "useglobal"
+    And the field "Course header image position" matches value "useglobal"
     And I should not see "login_bg1.png" in the "#id_theme_boost_union_courseheaderimage_filemanager_fieldset" "css_element"
     And I am on the "Course 2" "restore" page
     And I merge "test_backup.mbz" backup into the current course <mergestrategy>:
@@ -84,22 +84,22 @@ Feature: Backup and restore course-specific Boost Union settings
     And I navigate to "Settings" in current page administration
     And I expand all fieldsets
     # We cannot cover the 'no' case here due to the hide_if rules in the form.
-    Then the field "Enable enhanced course header" matches value "yes"
-    And the field "Course header layout" <matchesornot> value "stackedlight"
-    And the field "Course header height" <matchesornot> value "250px"
-    And the field "Course header image position" <matchesornot> value "right center"
-    And I <shouldornot> see "login_bg1.png" in the "#id_theme_boost_union_courseheaderimage_filemanager_fieldset" "css_element"
+    Then the field "Enable enhanced course header" matches value "<enable>"
+    And the field "Course header layout" matches value "<layout>"
+    And the field "Course header height" matches value "<height>"
+    And the field "Course header image position" matches value "<position>"
+    And I <fileshouldornot> see "login_bg1.png" in the "#id_theme_boost_union_courseheaderimage_filemanager_fieldset" "css_element"
 
     Examples:
-      | mergestrategy                                   | include | overwrite | matchesornot   | shouldornot |
-      | after deleting it's contents using this options | 1       | Yes       | matches        | should      |
-      | after deleting it's contents using this options | 0       | Yes       | does not match | should not  |
-      | using this options                              | 1       | Yes       | matches        | should      |
-      | using this options                              | 0       | Yes       | does not match | should not  |
-      | after deleting it's contents using this options | 1       | No        | does not match | should not  |
-      | after deleting it's contents using this options | 0       | No        | does not match | should not  |
-      | using this options                              | 1       | No        | does not match | should not  |
-      | using this options                              | 0       | No        | does not match | should not  |
+      | mergestrategy                                   | include | overwrite | enable    | layout    | height    | position     | fileshouldornot |
+      | after deleting it's contents using this options | 1       | Yes       | yes       | stacked   | 250px     | right center | should          |
+      | after deleting it's contents using this options | 0       | Yes       | useglobal | useglobal | useglobal | useglobal    | should not      |
+      | using this options                              | 1       | Yes       | yes       | stacked   | 250px     | right center | should          |
+      | using this options                              | 0       | Yes       | useglobal | useglobal | useglobal | useglobal    | should not      |
+      | after deleting it's contents using this options | 1       | No        | useglobal | useglobal | useglobal | useglobal    | should not      |
+      | after deleting it's contents using this options | 0       | No        | useglobal | useglobal | useglobal | useglobal    | should not      |
+      | using this options                              | 1       | No        | useglobal | useglobal | useglobal | useglobal    | should not      |
+      | using this options                              | 0       | No        | useglobal | useglobal | useglobal | useglobal    | should not      |
 
   @javascript @_file_upload
   Scenario Outline: Course-specific settings are preserved in backup and restore (when restoring into the same course) and an existing coure header image is cleared
@@ -146,7 +146,7 @@ Feature: Backup and restore course-specific Boost Union settings
     And I navigate to "Settings" in current page administration
     And I expand all fieldsets
     Then the field "Enable enhanced course header" matches value "yes"
-    And the field "Course header layout" matches value "stackedlight"
+    And the field "Course header layout" matches value "stacked"
     And the field "Course header height" matches value "250px"
     And the field "Course header image position" matches value "right center"
     And I should see "login_bg1.png" in the "#id_theme_boost_union_courseheaderimage_filemanager_fieldset" "css_element"
@@ -163,10 +163,10 @@ Feature: Backup and restore course-specific Boost Union settings
     And I am on the "Course 2" "course" page
     And I navigate to "Settings" in current page administration
     And I expand all fieldsets
-    Then the field "Enable enhanced course header" matches value "yes"
-    And the field "Course header layout" matches value "headingabove"
-    And the field "Course header height" matches value "150px"
-    And the field "Course header image position" matches value "left top"
+    Then the field "Enable enhanced course header" matches value "useglobal"
+    And the field "Course header layout" matches value "useglobal"
+    And the field "Course header height" matches value "useglobal"
+    And the field "Course header image position" matches value "useglobal"
     And I should not see "login_bg1.png" in the "#id_theme_boost_union_courseheaderimage_filemanager_fieldset" "css_element"
     And I am on the "Course 2" "course" page
     And I navigate to "Course reuse" in current page administration
@@ -178,18 +178,18 @@ Feature: Backup and restore course-specific Boost Union settings
     And I navigate to "Settings" in current page administration
     And I expand all fieldsets
     # We cannot cover the 'no' case here due to the hide_if rules in the form.
-    Then the field "Enable enhanced course header" matches value "yes"
-    And the field "Course header layout" <matchesornot> value "stackedlight"
-    And the field "Course header height" <matchesornot> value "250px"
-    And the field "Course header image position" <matchesornot> value "right center"
-    And I <shouldornot> see "login_bg1.png" in the "#id_theme_boost_union_courseheaderimage_filemanager_fieldset" "css_element"
+    Then the field "Enable enhanced course header" matches value "<enable>"
+    And the field "Course header layout" matches value "<layout>"
+    And the field "Course header height" matches value "<height>"
+    And the field "Course header image position" matches value "<position>"
+    And I <fileshouldornot> see "login_bg1.png" in the "#id_theme_boost_union_courseheaderimage_filemanager_fieldset" "css_element"
 
     Examples:
-      | setting      | permission | matchesornot   | shouldornot |
-      | never        | Allow      | does not match | should not  |
-      | bycapability | Allow      | matches        | should      |
-      | bycapability | Prevent    | does not match | should not  |
-      | always       | Allow      | matches        | should      |
+      | setting      | permission | enable    | layout    | height    | position     | fileshouldornot |
+      | never        | Allow      | useglobal | useglobal | useglobal | useglobal    | should not      |
+      | bycapability | Allow      | yes       | stacked   | 250px     | right center | should          |
+      | bycapability | Prevent    | useglobal | useglobal | useglobal | useglobal    | should not      |
+      | always       | Allow      | yes       | stacked   | 250px     | right center | should          |
 
   @javascript @_file_upload
   Scenario Outline: Course-specific settings are transferred during course import and an existing coure header image is cleared
