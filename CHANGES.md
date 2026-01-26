@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r30
 
 * 2026-01-21 - Bugfix: On brand-new Moodle installations, Boost Union tried to access the mdl_files table before it was created, resolves #1058
 * 2026-01-21 - Bugfix: Moodle core unittest was failing due to a missing fallback svg icon, resolves #1113
