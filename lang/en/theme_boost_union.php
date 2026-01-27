@@ -338,11 +338,6 @@ $string['loginlayoutsetting_desc'] = 'With this setting, you control how the log
 $string['loginlayoutvertical'] = 'Vertical (one below the other)';
 $string['loginlayouttabs'] = 'Tabs (next to each other)';
 $string['loginlayoutaccordion'] = 'Accordion (collapsed, expandable)';
-// ... ... Setting: Login background layout.
-$string['loginbackgroundlayoutsetting'] = 'Login background layout';
-$string['loginbackgroundlayoutsetting_desc'] = 'With this setting, you control how the login form and background image are arranged on the login page. The "Moodle core style" option displays the login form on top of the background image as presented by Moodle core by default. And the "Split screen" option displays the login form on the left half of the screen and the background image on the right half of the screen.';
-$string['loginbackgroundlayoutdefault'] = 'Moodle core style';
-$string['loginbackgroundlayoutsplitscreen'] = 'Split Screen';
 // ... Section: Login order.
 $string['loginorderheading'] = 'Login order';
 $string['loginorderheading_desc'] = 'With these settings, you control the order of the login providers in the login form. The presented order will be defined from lowest to highest ordinal number, skipping all login providers and login form elements which are disabled in Boost Union.';

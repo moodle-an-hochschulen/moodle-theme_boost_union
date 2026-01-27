@@ -37,7 +37,6 @@
     * Include theme_boost_union/footer template instead of theme_boost/footer
     * Added the possibility to show info banners.
     * Added the login background image text.
-    * Include the loginbackgroundlayoutclass class, if configured.
 }}
 {{> theme_boost/head }}
 
@@ -48,13 +47,13 @@
 
     {{{ output.standard_top_of_body_html }}}
 
-    <div id="page" class="container-fluid pt-5 mt-0 {{loginbackgroundlayoutclass}}">
+    <div id="page" class="container-fluid pt-5 mt-0">
         {{> theme_boost_union/infobanners }}
         <div id="page-content" class="row">
             <div id="region-main-box" class="col-12">
                 <div id="region-main" class="col-12 h-100">
-                <div class="login-wrapper {{loginwrapperclass}} {{#loginbackgroundlayoutclass}}w-100 overflow-hidden{{/loginbackgroundlayoutclass}}">
-                    <div class="login-container {{logincontainerclass}} {{#loginbackgroundlayoutclass}}w-100 mw-100{{/loginbackgroundlayoutclass}}">
+                <div class="login-wrapper {{loginwrapperclass}}">
+                    <div class="login-container {{logincontainerclass}}">
                     {{{ output.main_content }}}
                     </div>
                 </div>
