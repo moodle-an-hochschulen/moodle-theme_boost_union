@@ -1069,8 +1069,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
 
             // For tabs and accordion layouts, add label information to each login method.
-            if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS ||
-                    $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION) {
+            if (
+                $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS ||
+                    $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION
+            ) {
                 foreach ($loginmethods as $method) {
                     $label = '';
                     switch ($method->name) {
