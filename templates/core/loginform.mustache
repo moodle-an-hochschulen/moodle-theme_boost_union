@@ -314,16 +314,14 @@
         {{#loginaccordion}}
         <h2 class="accordion-header" id="accordion-local-header">
             <button class="accordion-button {{^activeaccordionlocal}}collapsed{{/activeaccordionlocal}}" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-local-content" {{#activeaccordionlocal}}aria-expanded="true"{{/activeaccordionlocal}}{{^activeaccordionlocal}}aria-expanded="false"{{/activeaccordionlocal}} aria-controls="accordion-local-content">
-                {{#showlocalloginintro}}
-                <span class="login-heading text-break w-100">{{#localloginintrotext}}{{{localloginintrotext}}}{{/localloginintrotext}}{{^localloginintrotext}}{{#str}} loginlocalintro, theme_boost_union {{/str}}{{/localloginintrotext}}</span>
-                {{/showlocalloginintro}}
-                {{^showlocalloginintro}}
-                <span class="login-heading text-break w-100">{{#str}} loginlocalintro, theme_boost_union {{/str}}</span>
-                {{/showlocalloginintro}}
+                <span class="login-heading text-break w-100">{{label}}</span>
             </button>
         </h2>
         <div id="accordion-local-content" class="accordion-collapse collapse {{#activeaccordionlocal}}show{{/activeaccordionlocal}}" aria-labelledby="accordion-local-header" data-bs-parent="{{#loginaccordion}}#theme_boost_union-loginorder{{/loginaccordion}}">
         <div class="accordion-body">
+        {{#showlocalloginintro}}
+        <h2 class="login-heading text-break w-100">{{#localloginintrotext}}{{{localloginintrotext}}}{{/localloginintrotext}}{{^localloginintrotext}}{{#str}} loginlocalintro, theme_boost_union {{/str}}{{/localloginintrotext}}</h2>
+        {{/showlocalloginintro}}
         {{/loginaccordion}}
 
         {{! Intro heading for vertical layout only }}
@@ -403,16 +401,14 @@
         {{#loginaccordion}}
         <h2 class="accordion-header" id="accordion-idp-header">
             <button class="accordion-button {{^activeaccordionidp}}collapsed{{/activeaccordionidp}}" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-idp-content" {{#activeaccordionidp}}aria-expanded="true"{{/activeaccordionidp}}{{^activeaccordionidp}}aria-expanded="false"{{/activeaccordionidp}} aria-controls="accordion-idp-content">
-                {{#showidploginintro}}
-                <span class="login-heading text-break w-100">{{#idploginintrotext}}{{{idploginintrotext}}}{{/idploginintrotext}}{{^idploginintrotext}}{{#str}} potentialidps, auth {{/str}}{{/idploginintrotext}}</span>
-                {{/showidploginintro}}
-                {{^showidploginintro}}
-                <span class="login-heading text-break w-100">{{#str}} potentialidps, auth {{/str}}</span>
-                {{/showidploginintro}}
+                <span class="login-heading text-break w-100">{{label}}</span>
             </button>
         </h2>
         <div id="accordion-idp-content" class="accordion-collapse collapse {{#activeaccordionidp}}show{{/activeaccordionidp}}" aria-labelledby="accordion-idp-header" data-bs-parent="{{#loginaccordion}}#theme_boost_union-loginorder{{/loginaccordion}}">
         <div class="accordion-body">
+        {{#showidploginintro}}
+        <h2 class="login-heading text-break w-100">{{#idploginintrotext}}{{{idploginintrotext}}}{{/idploginintrotext}}{{^idploginintrotext}}{{#str}} potentialidps, auth {{/str}}{{/idploginintrotext}}</h2>
+        {{/showidploginintro}}
         {{/loginaccordion}}
 
         {{! Identity provider buttons }}
@@ -464,16 +460,14 @@
         {{#loginaccordion}}
         <h2 class="accordion-header" id="accordion-signup-header">
             <button class="accordion-button {{^activeaccordionsignup}}collapsed{{/activeaccordionsignup}}" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-signup-content" {{#activeaccordionsignup}}aria-expanded="true"{{/activeaccordionsignup}}{{^activeaccordionsignup}}aria-expanded="false"{{/activeaccordionsignup}} aria-controls="accordion-signup-content">
-                {{#showselfregistrationloginintro}}
-                <span class="login-heading text-break w-100">{{#selfregistrationloginintrotext}}{{{selfregistrationloginintrotext}}}{{/selfregistrationloginintrotext}}{{^selfregistrationloginintrotext}}{{#str}}firsttime{{/str}}{{/selfregistrationloginintrotext}}</span>
-                {{/showselfregistrationloginintro}}
-                {{^showselfregistrationloginintro}}
-                <span class="login-heading text-break w-100">{{#str}}firsttime{{/str}}</span>
-                {{/showselfregistrationloginintro}}
+                <span class="login-heading text-break w-100">{{label}}</span>
             </button>
         </h2>
         <div id="accordion-signup-content" class="accordion-collapse collapse {{#activeaccordionsignup}}show{{/activeaccordionsignup}}" aria-labelledby="accordion-signup-header" data-bs-parent="{{#loginaccordion}}#theme_boost_union-loginorder{{/loginaccordion}}">
         <div class="accordion-body">
+        {{#showselfregistrationloginintro}}
+        <h2 class="login-heading text-break w-100">{{#selfregistrationloginintrotext}}{{{selfregistrationloginintrotext}}}{{/selfregistrationloginintrotext}}{{^selfregistrationloginintrotext}}{{#str}}firsttime{{/str}}{{/selfregistrationloginintrotext}}</h2>
+        {{/showselfregistrationloginintro}}
         {{/loginaccordion}}
 
         {{! Instructions and intro for vertical layout only }}
@@ -531,16 +525,14 @@
         {{#loginaccordion}}
         <h2 class="accordion-header" id="accordion-guest-header">
             <button class="accordion-button {{^activeaccordionguest}}collapsed{{/activeaccordionguest}}" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-guest-content" {{#activeaccordionguest}}aria-expanded="true"{{/activeaccordionguest}}{{^activeaccordionguest}}aria-expanded="false"{{/activeaccordionguest}} aria-controls="accordion-guest-content">
-                {{#showguestloginintro}}
-                <span class="login-heading text-break w-100">{{#guestloginintrotext}}{{{guestloginintrotext}}}{{/guestloginintrotext}}{{^guestloginintrotext}}{{#str}}someallowguest{{/str}}{{/guestloginintrotext}}</span>
-                {{/showguestloginintro}}
-                {{^showguestloginintro}}
-                <span class="login-heading text-break w-100">{{#str}}someallowguest{{/str}}</span>
-                {{/showguestloginintro}}
+                <span class="login-heading text-break w-100">{{label}}</span>
             </button>
         </h2>
         <div id="accordion-guest-content" class="accordion-collapse collapse {{#activeaccordionguest}}show{{/activeaccordionguest}}" aria-labelledby="accordion-guest-header" data-bs-parent="{{#loginaccordion}}#theme_boost_union-loginorder{{/loginaccordion}}">
         <div class="accordion-body">
+        {{#showguestloginintro}}
+        <h2 class="login-heading text-break w-100">{{#guestloginintrotext}}{{{guestloginintrotext}}}{{/guestloginintrotext}}{{^guestloginintrotext}}{{#str}}someallowguest{{/str}}{{/guestloginintrotext}}</h2>
+        {{/showguestloginintro}}
         {{/loginaccordion}}
 
         {{! Intro heading for vertical layout only }}

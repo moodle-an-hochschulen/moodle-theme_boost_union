@@ -1140,7 +1140,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
-        // Setting: Local login tab text (only visible when tab layout is enabled).
+        // Setting: Local login tab/accordion label (visible when tab or accordion layout is enabled).
         $name = 'theme_boost_union/loginlocallogintablabel';
         $title = get_string('loginlocallogintablabelsetting', 'theme_boost_union', null, true);
         $description = get_string('loginlocallogintablabelsetting_desc', 'theme_boost_union', null, true);
@@ -1150,8 +1150,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if(
             'theme_boost_union/loginlocallogintablabel',
             'theme_boost_union/loginlayout',
-            'neq',
-            'tabs'
+            'eq',
+            'vertical'
         );
 
         // Heading: Login provider: IDP.
@@ -1208,7 +1208,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
-        // Setting: IDP login tab text (only visible when tab layout is enabled).
+        // Setting: IDP login tab/accordion label (visible when tab or accordion layout is enabled).
         $name = 'theme_boost_union/loginidplogintablabel';
         $title = get_string('loginidplogintablabelsetting', 'theme_boost_union', null, true);
         $description = get_string('loginidplogintablabelsetting_desc', 'theme_boost_union', null, true);
@@ -1218,8 +1218,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if(
             'theme_boost_union/loginidplogintablabel',
             'theme_boost_union/loginlayout',
-            'neq',
-            'tabs'
+            'eq',
+            'vertical'
         );
 
         // Heading: Login provider: Self registration.
@@ -1282,7 +1282,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
-        // Setting: Self registration tab text (only visible when tab layout is enabled).
+        // Setting: Self registration tab/accordion label (visible when tab or accordion layout is enabled).
         $name = 'theme_boost_union/loginselfregistrationlogintablabel';
         $title = get_string('loginselfregistrationlogintablabelsetting', 'theme_boost_union', null, true);
         $description = get_string('loginselfregistrationlogintablabelsetting_desc', 'theme_boost_union', null, true);
@@ -1292,8 +1292,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if(
             'theme_boost_union/loginselfregistrationlogintablabel',
             'theme_boost_union/loginlayout',
-            'neq',
-            'tabs'
+            'eq',
+            'vertical'
         );
 
         // Heading: Login provider: Guest.
@@ -1350,7 +1350,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
-        // Setting: Guest login tab text (only visible when tab layout is enabled).
+        // Setting: Guest login tab/accordion label (visible when tab or accordion layout is enabled).
         $name = 'theme_boost_union/loginguestlogintablabel';
         $title = get_string('loginguestlogintablabelsetting', 'theme_boost_union', null, true);
         $description = get_string('loginguestlogintablabelsetting_desc', 'theme_boost_union', null, true);
@@ -1360,8 +1360,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if(
             'theme_boost_union/loginguestlogintablabel',
             'theme_boost_union/loginlayout',
-            'neq',
-            'tabs'
+            'eq',
+            'vertical'
         );
 
         // Heading: Side entrance login.
