@@ -993,9 +993,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // For vertical, accordion, and tabs layouts, create sorted login methods array.
         // This ensures the DOM order matches the visual order, so CSS :first-of-type and :last-of-type work correctly.
         // Note: The template uses the same loop structure for all layouts, with conditionals for tabs vs vertical/accordion.
-        if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_VERTICAL ||
+        if (
+            $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_VERTICAL ||
                 $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION ||
-                $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS) {
+                $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS
+        ) {
             $loginmethods = [];
 
             // Method: Local login.
