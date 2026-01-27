@@ -1068,6 +1068,41 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $loginmethods[0]->isfirst = true;
             }
 
+            // For tabs and accordion layouts, add label information to each login method.
+            if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS ||
+                    $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION) {
+                foreach ($loginmethods as $method) {
+                    $label = '';
+                    switch ($method->name) {
+                        case 'local':
+                            $label = get_config('theme_boost_union', 'loginlocallogintablabel');
+                            if ($label === false || empty($label)) {
+                                $label = 'Local login'; // Default.
+                            }
+                            break;
+                        case 'idp':
+                            $label = get_config('theme_boost_union', 'loginidplogintablabel');
+                            if ($label === false || empty($label)) {
+                                $label = 'IDP login'; // Default.
+                            }
+                            break;
+                        case 'signup':
+                            $label = get_config('theme_boost_union', 'loginselfregistrationlogintablabel');
+                            if ($label === false || empty($label)) {
+                                $label = 'Self Registration'; // Default.
+                            }
+                            break;
+                        case 'guest':
+                            $label = get_config('theme_boost_union', 'loginguestlogintablabel');
+                            if ($label === false || empty($label)) {
+                                $label = 'Guest Login'; // Default.
+                            }
+                            break;
+                    }
+                    $method->label = $label;
+                }
+            }
+
             // For accordion layout, determine which item should be open by default.
             if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION) {
                 $primarylogin = get_config('theme_boost_union', 'primarylogin');
@@ -1101,84 +1136,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS) {
             $tabs = [];
 
-            // Tab: Local login.
-            if (!empty($context->showlocallogin)) {
-                $order = get_config('theme_boost_union', 'loginorderlocal');
-                if ($order === false) {
-                    $order = 1; // Default order.
-                }
-                $tablabel = get_config('theme_boost_union', 'loginlocallogintablabel');
-                if ($tablabel === false || empty($tablabel)) {
-                    $tablabel = 'Local login'; // Default.
-                }
+            // Build tabs from loginmethods array (which already has labels).
+            foreach ($loginmethods as $method) {
+                $tabid = 'login-tab-' . $method->name;
                 $tabs[] = (object)[
-                    'id' => 'login-tab-local',
-                    'name' => 'local',
-                    'displayname' => $tablabel,
-                    'order' => $order,
-                    'content' => 'local',
-                ];
-            }
-
-            // Tab: IDP login.
-            if (!empty($context->hasidentityproviders) && !empty($context->identityproviders)) {
-                $order = get_config('theme_boost_union', 'loginorderidp');
-                if ($order === false) {
-                    $order = 2; // Default order.
-                }
-                $tablabel = get_config('theme_boost_union', 'loginidplogintablabel');
-                if ($tablabel === false || empty($tablabel)) {
-                    $tablabel = 'IDP login'; // Default.
-                }
-                $tabs[] = (object)[
-                    'id' => 'login-tab-idp',
-                    'name' => 'idp',
-                    'displayname' => $tablabel,
-                    'order' => $order,
-                    'content' => 'idp',
-                ];
-            }
-
-            // Tab: Self registration.
-            // Only show if self registration is enabled in theme settings AND (signup is allowed OR instructions exist).
-            // Reuse $showselfregistration from earlier check (line 703).
-            if (
-                $showselfregistration == THEME_BOOST_UNION_SETTING_SELECT_YES &&
-                    (!empty($context->cansignup) || !empty($context->hasinstructions))
-            ) {
-                $order = get_config('theme_boost_union', 'loginorderfirsttimesignup');
-                if ($order === false) {
-                    $order = 3; // Default order.
-                }
-                $tablabel = get_config('theme_boost_union', 'loginselfregistrationlogintablabel');
-                if ($tablabel === false || empty($tablabel)) {
-                    $tablabel = 'Self Registration'; // Default.
-                }
-                $tabs[] = (object)[
-                    'id' => 'login-tab-signup',
-                    'name' => 'signup',
-                    'displayname' => $tablabel,
-                    'order' => $order,
-                    'content' => 'signup',
-                ];
-            }
-
-            // Tab: Guest login.
-            if (!empty($context->canloginasguest)) {
-                $order = get_config('theme_boost_union', 'loginorderguest');
-                if ($order === false) {
-                    $order = 4; // Default order.
-                }
-                $tablabel = get_config('theme_boost_union', 'loginguestlogintablabel');
-                if ($tablabel === false || empty($tablabel)) {
-                    $tablabel = 'Guest Login'; // Default.
-                }
-                $tabs[] = (object)[
-                    'id' => 'login-tab-guest',
-                    'name' => 'guest',
-                    'displayname' => $tablabel,
-                    'order' => $order,
-                    'content' => 'guest',
+                    'id' => $tabid,
+                    'name' => $method->name,
+                    'displayname' => $method->label,
+                    'order' => $method->order,
+                    'content' => $method->name,
                 ];
             }
 
