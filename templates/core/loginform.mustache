@@ -20,52 +20,56 @@
     Moodle template for the login page.
 
     Context variables required for this template:
-    * autofocusform - Auto focus on form?,
+    * autofocusform: Auto focus on form ?,
     * canloginasguest - Is guest login allowed?,
     * canloginbyemail - Is login by email allowed?,
     * cansignup - Signup allowed?,
-    * cookieshelpicon - Cookies help icon details,
+    * showloginform - Hide the standard login form if it not necessary (only OAuth2 for example)
+    * cookieshelpicon - cookies help icon details
     * error - Any errors in the form?,
-    * errorformatted - Formatted error,
-    * forgotpasswordurl - Forgot password url,
-    * hasidentityproviders - Flag, set to true to show identity providers,
-    * hasinstructions - Flag, set to true to show instructions,
-    * identityproviders - List of identity providers (each with iconurl, name, url),
     * info - Info notification to display,
+    * forgotpasswordurl - Forgot password url,
+    * hasidentityproviders - Flag, set to true to hide identity providers,
+    * hasinstructions - Flag, set to true to show instructions,
+    * identityproviders - List of identiy providers,
     * instructions - Instructions,
-    * languagemenu - Language menu content,
+    * instructionsformat - Format of instructions,
     * loginurl - Login url,
-    * logintoken - Random token to protect login request.,
-    * logourl - Logo url (false if no logo),
-    * maintenance - Maintenance message,
-    * recaptcha - reCAPTCHA HTML (optional),
     * signupurl - Signup url,
-    * sitename - Name of site,
-    * smallscreensonly - Toggle password visibility only on small screens?,
-    * togglepassword - Enable password visibility toggle?,
-    * username - Pre-filled username value (optional),
-    * showlocallogin - Should the local login form be shown?,
-    * showlocalloginintro - Should the local login intro be shown?,
-    * localloginintrotext - Custom local login intro text (optional),
-    * showidploginintro - Should the IDP login intro be shown?,
+    * errorformatted - Formatted error,
+    * logourl - Flag, logo url,
+    * sitename - Name of site.,
+    * logintoken - Random token to protect login request.,
+    * maintenance - Maintenance message
+    * activeaccordionguest - Flag, set to true when guest login accordion is open (accordion layout),
+    * activeaccordionidp - Flag, set to true when IDP login accordion is open (accordion layout),
+    * activeaccordionlocal - Flag, set to true when local login accordion is open (accordion layout),
+    * activeaccordionsignup - Flag, set to true when signup accordion is open (accordion layout),
+    * activetabguest - Flag, set to true when guest login tab is active (tabs layout),
+    * activetabidp - Flag, set to true when IDP login tab is active (tabs layout),
+    * activetablocal - Flag, set to true when local login tab is active (tabs layout),
+    * activetabsignup - Flag, set to true when signup tab is active (tabs layout),
+    * guestloginintrotext - Custom guest login intro text (optional),
     * idploginintrotext - Custom IDP login intro text (optional),
-    * showselfregistrationloginintro - Should the self registration intro be shown?,
+    * info - Info notification to display,
+    * languagemenu - Language menu content,
+    * localloginintrotext - Custom local login intro text (optional),
+    * loginaccordion - Flag used to check if elements should be displayed for the accordion layout type,
+    * loginmethods - Array used to iterate over the login methods, each with: id, name, order, type, islocal, isidp, issignup, isguest, isfirst,
+    * logintabs - Object used to check if elements should be displayed for the tabs layout type,
+    * logourl - Flag, logo url,
+    * recaptcha - reCAPTCHA HTML (optional),
     * selfregistrationloginintrotext - Custom self registration intro text (optional),
     * showguestloginintro - Should the guest login intro be shown?,
-    * guestloginintrotext - Custom guest login intro text (optional),
-    * loginlayout - Layout type: 'vertical', 'tabs', or 'accordion',
-    * loginaccordion - Flag used to check if elements should be displayed for the accordion layout type,
-    * logintabs - Object used to check if elements should be displayed for the tabs layout type,
+    * showidploginintro - Should the IDP login intro be shown?,
+    * showlocallogin - Should the local login form be shown?,
+    * showlocalloginintro - Should the local login intro be shown?,
+    * showselfregistrationloginintro - Should the self registration intro be shown?,
+    * smallscreensonly - Toggle password visibility only on small screens?,
     * tabs - Array used to iterate over the individual tabs, each with: id, name, displayname, order, content, active,
-    * loginmethods - Array used to iterate over the login methods, each with: id, name, order, type, islocal, isidp, issignup, isguest, isfirst,
-    * activetablocal - Flag, set to true when local login tab is active (tabs layout),
-    * activetabidp - Flag, set to true when IDP login tab is active (tabs layout),
-    * activetabsignup - Flag, set to true when signup tab is active (tabs layout),
-    * activetabguest - Flag, set to true when guest login tab is active (tabs layout),
-    * activeaccordionlocal - Flag, set to true when local login accordion is open (accordion layout),
-    * activeaccordionidp - Flag, set to true when IDP login accordion is open (accordion layout),
-    * activeaccordionsignup - Flag, set to true when signup accordion is open (accordion layout),
-    * activeaccordionguest - Flag, set to true when guest login accordion is open (accordion layout)
+    * togglepassword - Enable password visibility toggle?,
+    * username - Pre-filled username value (optional),
+
 
     Example context (json):
     {
@@ -119,55 +123,18 @@
         "languagemenu": "Choose language",
         "togglepassword": true,
         "smallscreensonly": true,
-        "username": "",
-        "recaptcha": "",
-        "showlocallogin": true,
-        "showlocalloginintro": true,
-        "localloginintrotext": "",
-        "showidploginintro": true,
-        "idploginintrotext": "",
-        "showselfregistrationloginintro": false,
-        "selfregistrationloginintrotext": "",
-        "showguestloginintro": false,
+        "activeaccordionguest": false,
+        "activeaccordionidp": false,
+        "activeaccordionlocal": false,
+        "activeaccordionsignup": false,
+        "activetabguest": false,
+        "activetabidp": false,
+        "activetablocal": true,
+        "activetabsignup": false,
         "guestloginintrotext": "",
-        "loginlayout": "tabs",
+        "idploginintrotext": "",
+        "localloginintrotext": "",
         "loginaccordion": false,
-        "logintabs": {
-            "tabs": [
-                {
-                    "id": "login-tab-local",
-                    "name": "local",
-                    "displayname": "Local Login",
-                    "order": 1,
-                    "content": "local",
-                    "active": true
-                },
-                {
-                    "id": "login-tab-idp",
-                    "name": "idp",
-                    "displayname": "Identity Providers",
-                    "order": 2,
-                    "content": "idp",
-                    "active": false
-                },
-                {
-                    "id": "login-tab-signup",
-                    "name": "signup",
-                    "displayname": "Self Registration",
-                    "order": 3,
-                    "content": "signup",
-                    "active": false
-                },
-                {
-                    "id": "login-tab-guest",
-                    "name": "guest",
-                    "displayname": "Guest Login",
-                    "order": 4,
-                    "content": "guest",
-                    "active": false
-                }
-            ]
-        },
         "loginmethods": [
             {
                 "id": "theme_boost_union-loginorder-local",
@@ -190,38 +157,36 @@
                 "issignup": false,
                 "isguest": false,
                 "isfirst": false
-            },
-            {
-                "id": "theme_boost_union-loginorder-firsttimesignup",
-                "name": "signup",
-                "order": 3,
-                "type": "signup",
-                "islocal": false,
-                "isidp": false,
-                "issignup": true,
-                "isguest": false,
-                "isfirst": false
-            },
-            {
-                "id": "theme_boost_union-loginorder-guest",
-                "name": "guest",
-                "order": 4,
-                "type": "guest",
-                "islocal": false,
-                "isidp": false,
-                "issignup": false,
-                "isguest": true,
-                "isfirst": false
             }
         ],
-        "activetablocal": true,
-        "activetabidp": false,
-        "activetabsignup": false,
-        "activetabguest": false,
-        "activeaccordionlocal": false,
-        "activeaccordionidp": false,
-        "activeaccordionsignup": false,
-        "activeaccordionguest": false
+        "logintabs": {
+            "tabs": [
+                {
+                    "id": "login-tab-local",
+                    "name": "local",
+                    "displayname": "Local Login",
+                    "order": 1,
+                    "content": "local",
+                    "active": true
+                },
+                {
+                    "id": "login-tab-idp",
+                    "name": "idp",
+                    "displayname": "Identity Providers",
+                    "order": 2,
+                    "content": "idp",
+                    "active": false
+                }
+            ]
+        },
+        "recaptcha": "",
+        "selfregistrationloginintrotext": "",
+        "showguestloginintro": false,
+        "showidploginintro": true,
+        "showlocallogin": true,
+        "showlocalloginintro": true,
+        "showselfregistrationloginintro": false,
+        "username": ""
     }
 }}
 {{!
@@ -235,13 +200,15 @@
     * Added the possibility to show or hide the login provider intros.
 }}
 
-{{! This template supports three layout options (vertical, tabs, accordion) and renders multiple }}
-{{! login methods (local, IDP, signup, guest) in a sorted order. The broad structure of this document }}
-{{! consists of: Header Section (logo/heading and messages), Container Section (either for tabs layout }}
-{{! where we iterate over the tabs array, or for vertical/accordion layout), Login Methods Section }}
-{{! (where we iterate over the loginmethods array to display the actual login forms), Container Close }}
-{{! Section (to close the container), Footer Section (language menu and cookies notice), and }}
-{{! JavaScript Section (for form handling and layout-specific functionality). }}
+{{!
+    This template supports three layout options (vertical, tabs, accordion) and renders multiple
+    login methods (local, IDP, signup, guest) in a sorted order. The broad structure of this document
+    consists of: Header Section (logo/heading and messages), Container Section (either for tabs layout
+    where we iterate over the tabs array, or for vertical/accordion layout), Login Methods Section
+    (where we iterate over the loginmethods array to display the actual login forms), Container Close
+    Section (to close the container), Footer Section (language menu and cookies notice), and
+    JavaScript Section (for form handling and layout-specific functionality).
+}}
 
 {{! =========================================================================== }}
 {{! HEADER SECTION }}
