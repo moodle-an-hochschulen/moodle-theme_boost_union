@@ -250,11 +250,11 @@
     {{#logourl}}
         <div id="loginlogo" class="login-logo">
             <img id="logoimage" src="{{logourl}}" class="img-fluid" alt="{{sitename}}"/>
-            <h1 class="login-heading text-break w-100 visually-hidden">{{#str}} loginto, core, {{sitename}} {{/str}}</h1>
+            <h1 class="login-heading visually-hidden">{{#str}} loginto, core, {{sitename}} {{/str}}</h1>
         </div>
     {{/logourl}}
     {{^logourl}}
-        <h1 class="login-heading text-break w-100 mb-4">{{#str}} loginto, core, {{sitename}} {{/str}}</h1>
+        <h1 class="login-heading mb-4">{{#str}} loginto, core, {{sitename}} {{/str}}</h1>
     {{/logourl}}
 
     {{! Messages: Maintenance, Error, Info }}
@@ -327,7 +327,7 @@
         {{! Intro heading for vertical layout only }}
         {{^loginaccordion}}
         {{#showlocalloginintro}}
-        <h2 class="login-heading text-break w-100">{{#localloginintrotext}}{{{localloginintrotext}}}{{/localloginintrotext}}{{^localloginintrotext}}{{#str}} loginlocalintro, theme_boost_union {{/str}}{{/localloginintrotext}}</h2>
+        <h2 class="login-heading">{{#localloginintrotext}}{{{localloginintrotext}}}{{/localloginintrotext}}{{^localloginintrotext}}{{#str}} loginlocalintro, theme_boost_union {{/str}}{{/localloginintrotext}}</h2>
         {{/showlocalloginintro}}
         {{/loginaccordion}}
 
@@ -417,7 +417,7 @@
             {{! Intro heading for vertical layout only }}
             {{^loginaccordion}}
             {{#showidploginintro}}
-            <h2 class="login-heading text-break w-100">{{#idploginintrotext}}{{{idploginintrotext}}}{{/idploginintrotext}}{{^idploginintrotext}}{{#str}} potentialidps, auth {{/str}}{{/idploginintrotext}}</h2>
+            <h2 class="login-heading">{{#idploginintrotext}}{{{idploginintrotext}}}{{/idploginintrotext}}{{^idploginintrotext}}{{#str}} potentialidps, auth {{/str}}{{/idploginintrotext}}</h2>
             {{/showidploginintro}}
             {{/loginaccordion}}
 
@@ -475,7 +475,7 @@
         <div class="login-instructions {{#cansignup}}mb-3{{/cansignup}}">
             {{^loginaccordion}}
             {{#showselfregistrationloginintro}}
-            <h2 class="login-heading text-break w-100">{{#selfregistrationloginintrotext}}{{{selfregistrationloginintrotext}}}{{/selfregistrationloginintrotext}}{{^selfregistrationloginintrotext}}{{#str}}firsttime{{/str}}{{/selfregistrationloginintrotext}}</h2>
+            <h2 class="login-heading">{{#selfregistrationloginintrotext}}{{{selfregistrationloginintrotext}}}{{/selfregistrationloginintrotext}}{{^selfregistrationloginintrotext}}{{#str}}firsttime{{/str}}{{/selfregistrationloginintrotext}}</h2>
             {{/showselfregistrationloginintro}}
             {{/loginaccordion}}
             {{{instructions}}}
@@ -485,7 +485,7 @@
     {{^loginaccordion}}
     {{#showselfregistrationloginintro}}
         <div class="login-instructions {{#cansignup}}mb-3{{/cansignup}}">
-            <h2 class="login-heading text-break w-100">{{#selfregistrationloginintrotext}}{{{selfregistrationloginintrotext}}}{{/selfregistrationloginintrotext}}{{^selfregistrationloginintrotext}}{{#str}}firsttime{{/str}}{{/selfregistrationloginintrotext}}</h2>
+            <h2 class="login-heading">{{#selfregistrationloginintrotext}}{{{selfregistrationloginintrotext}}}{{/selfregistrationloginintrotext}}{{^selfregistrationloginintrotext}}{{#str}}firsttime{{/str}}{{/selfregistrationloginintrotext}}</h2>
         </div>
     {{/showselfregistrationloginintro}}
     {{/loginaccordion}}
@@ -538,7 +538,7 @@
         {{! Intro heading for vertical layout only }}
         {{^loginaccordion}}
         {{#showguestloginintro}}
-        <h2 class="login-heading text-break w-100">{{#guestloginintrotext}}{{{guestloginintrotext}}}{{/guestloginintrotext}}{{^guestloginintrotext}}{{#str}}someallowguest{{/str}}{{/guestloginintrotext}}</h2>
+        <h2 class="login-heading">{{#guestloginintrotext}}{{{guestloginintrotext}}}{{/guestloginintrotext}}{{^guestloginintrotext}}{{#str}}someallowguest{{/str}}{{/guestloginintrotext}}</h2>
         {{/showguestloginintro}}
         {{/loginaccordion}}
 
