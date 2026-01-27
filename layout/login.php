@@ -46,10 +46,6 @@ $templatecontext = [
     'logincontainerclass' =>
             (get_config('theme_boost_union', 'loginformtransparency') == THEME_BOOST_UNION_SETTING_SELECT_YES) ?
                     'login-container-80t' : '',
-    'loginbackgroundlayoutclass' =>
-            (get_config('theme_boost_union', 'loginbackgroundlayout') ==
-                    THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_SPLITSCREEN) ?
-                    'login-background-layout-splitscreen' : '',
 
 ];
 

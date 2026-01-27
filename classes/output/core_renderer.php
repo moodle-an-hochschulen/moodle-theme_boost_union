@@ -374,15 +374,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $additionalclasses[] = 'loginbackgroundimage';
                 $additionalclasses[] = $loginimageclass;
             }
-
-            // Add login background layout class if split screen is enabled.
-            $loginbackgroundlayout = get_config('theme_boost_union', 'loginbackgroundlayout');
-            if ($loginbackgroundlayout === false) {
-                $loginbackgroundlayout = THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_DEFAULT;
-            }
-            if ($loginbackgroundlayout == THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_SPLITSCREEN) {
-                $additionalclasses[] = 'login-background-layout-splitscreen';
-            }
         }
 
         // If there is a flavour applied to this page, add the flavour ID as additional body class.
@@ -978,16 +969,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // If accordion layout is enabled, set marker.
         if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION) {
             $context->loginaccordion = true;
-        }
-
-        // Check login background layout setting.
-        $loginbackgroundlayout = get_config('theme_boost_union', 'loginbackgroundlayout');
-        if ($loginbackgroundlayout === false) {
-            $loginbackgroundlayout = THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_DEFAULT;
-        }
-        // Set marker if background layout is default (not split screen).
-        if ($loginbackgroundlayout == THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_DEFAULT) {
-            $context->loginbackgroundlayoutdefault = true;
         }
 
         // For vertical, accordion, and tabs layouts, create sorted login methods array.

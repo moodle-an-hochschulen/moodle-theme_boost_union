@@ -55,7 +55,6 @@
     * guestloginintrotext - Custom guest login intro text (optional),
     * loginlayout - Layout type: 'vertical', 'tabs', or 'accordion',
     * loginaccordion - Flag used to check if elements should be displayed for the accordion layout type,
-    * loginbackgroundlayoutdefault - Flag, set to true when background layout is 'default' (not split screen),
     * logintabs - Object used to check if elements should be displayed for the tabs layout type,
     * tabs - Array used to iterate over the individual tabs, each with: id, name, displayname, order, content, active,
     * loginmethods - Array used to iterate over the login methods, each with: id, name, order, type, islocal, isidp, issignup, isguest, isfirst,
@@ -133,7 +132,6 @@
         "guestloginintrotext": "",
         "loginlayout": "tabs",
         "loginaccordion": false,
-        "loginbackgroundlayoutdefault": true,
         "logintabs": {
             "tabs": [
                 {
@@ -575,10 +573,8 @@
     {{! =========================================================================== }}
     {{#logintabs}}
     </div>
-    {{! Divider after tabs content (only for tabs layout with default background) }}
-    {{#loginbackgroundlayoutdefault}}
+    {{! Divider after tabs content }}
     <div class="login-divider"></div>
-    {{/loginbackgroundlayoutdefault}}
     {{/logintabs}}
     {{^logintabs}}
     </div>

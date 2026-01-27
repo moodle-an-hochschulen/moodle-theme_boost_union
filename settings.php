@@ -1038,26 +1038,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
-        // Setting: Login background layout.
-        $name = 'theme_boost_union/loginbackgroundlayout';
-        $title = get_string('loginbackgroundlayoutsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginbackgroundlayoutsetting_desc', 'theme_boost_union', null, true);
-        $loginbackgroundlayoutoptions = [
-            THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_DEFAULT =>
-                    get_string('loginbackgroundlayoutdefault', 'theme_boost_union'),
-            THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_SPLITSCREEN =>
-                    get_string('loginbackgroundlayoutsplitscreen', 'theme_boost_union'),
-        ];
-        $setting = new admin_setting_configselect(
-            $name,
-            $title,
-            $description,
-            THEME_BOOST_UNION_SETTING_LOGINBACKGROUNDLAYOUT_DEFAULT,
-            $loginbackgroundlayoutoptions
-        );
-        $setting->set_updatedcallback('theme_reset_all_caches');
-        $tab->add($setting);
-
         // Heading: Login order.
         $name = 'theme_boost_union/loginorderheading';
         $title = get_string('loginorderheading', 'theme_boost_union', null, true);
