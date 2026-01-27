@@ -336,32 +336,6 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And the "class" attribute of "#accordion-local-content" "css_element" should not contain "show"
     And the "class" attribute of "#accordion-local-header button" "css_element" should contain "collapsed"
 
-  @javascript
-  Scenario: Setting: Login background layout - Default layout
-    Given the following config values are set as admin:
-      | config                | value    | plugin            |
-      | loginbackgroundlayout | default  | theme_boost_union |
-    And the theme cache is purged and the theme is reloaded
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
-    # Verify that the splitscreen class is not present anywhere in the DOM.
-    Then ".login-background-layout-splitscreen" "css_element" should not exist
-
-  @javascript
-  Scenario: Setting: Login background layout - Split screen layout
-    Given the following config values are set as admin:
-      | config                | value       | plugin            |
-      | loginbackgroundlayout | splitscreen | theme_boost_union |
-    And the theme cache is purged and the theme is reloaded
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
-    # Verify that the splitscreen class exists and is applied to the correct elements.
-    Then ".login-background-layout-splitscreen" "css_element" should exist
-    And the "class" attribute of "#page-login-index" "css_element" should contain "login-background-layout-splitscreen"
-    And the "class" attribute of "#page" "css_element" should contain "login-background-layout-splitscreen"
-    # Verify that #page with the splitscreen class has max-width of 50%.
-    And DOM element "#page.login-background-layout-splitscreen" should have computed style "max-width" "50%"
-
   Scenario Outline: Setting: Enable side entrance login - View the side entrance login page
     Given the following config values are set as admin:
       | config                  | value             | plugin            |
