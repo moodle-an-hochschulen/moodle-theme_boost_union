@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-01-27 - Tests: The "Allow admins to use the tertiary navigation to navigate between the individual Boost Union admin pages" scenario failed on 5.0 and 5.1, resolves #1123
+
 ### v5.0-r14
 
 * 2026-01-21 - Bugfix: On brand-new Moodle installations, Boost Union tried to access the mdl_files table before it was created, resolves #1058
