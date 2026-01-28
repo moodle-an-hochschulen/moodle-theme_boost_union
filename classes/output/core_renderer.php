@@ -1077,25 +1077,25 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     $label = '';
                     switch ($method->name) {
                         case 'local':
-                            $label = get_config('theme_boost_union', 'loginlocallogintablabel');
+                            $label = get_config('theme_boost_union', 'loginlocalloginlabel');
                             if ($label === false || empty($label)) {
                                 $label = 'Local login'; // Default.
                             }
                             break;
                         case 'idp':
-                            $label = get_config('theme_boost_union', 'loginidplogintablabel');
+                            $label = get_config('theme_boost_union', 'loginidploginlabel');
                             if ($label === false || empty($label)) {
                                 $label = 'IDP login'; // Default.
                             }
                             break;
                         case 'signup':
-                            $label = get_config('theme_boost_union', 'loginselfregistrationlogintablabel');
+                            $label = get_config('theme_boost_union', 'loginselfregistrationloginlabel');
                             if ($label === false || empty($label)) {
                                 $label = 'Self Registration'; // Default.
                             }
                             break;
                         case 'guest':
-                            $label = get_config('theme_boost_union', 'loginguestlogintablabel');
+                            $label = get_config('theme_boost_union', 'loginguestloginlabel');
                             if ($label === false || empty($label)) {
                                 $label = 'Guest Login'; // Default.
                             }

@@ -368,7 +368,7 @@
 }
 
 /*---------------------------------------
- * Login container positioning for tabs
+ * Setting: Login layout: Tabs
  --------------------------------------*/
 
 /* Keep login container vertically centered on page load, but allow it to grow downward only.
@@ -391,7 +391,7 @@
         align-items: flex-end;
     }
 
-    /* Create a fixed-height spacer above to center initially and lock top position */
+    /* Create a fixed-height spacer above to center initially and lock top position. */
     .login-wrapper:has(.loginform #login-tabs)::before {
         content: '';
         flex: 0 0 auto;
@@ -403,7 +403,7 @@
         order: -1;
     }
 
-    /* Spacer below can grow to accommodate container expansion */
+    /* Spacer below can grow to accommodate container expansion. */
     .login-wrapper:has(.loginform #login-tabs)::after {
         content: '';
         flex: 1 1 auto;
@@ -411,7 +411,7 @@
         order: 1;
     }
 
-    /* Container in the middle, doesn't shrink */
+    /* Container in the middle, doesn't shrink. */
     .login-wrapper:has(.loginform #login-tabs) .login-container {
         flex: 0 0 auto;
         order: 0;

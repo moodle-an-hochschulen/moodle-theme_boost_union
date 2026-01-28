@@ -1130,7 +1130,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Setting: Local login intro text.
         $name = 'theme_boost_union/loginlocalintrotext';
         $title = get_string('loginlocalintrotextsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginlocalintrotextsetting_desc', 'theme_boost_union', null, true);
+        $description = get_string(
+            'loginlocalintrotextsetting_desc',
+            'theme_boost_union',
+            get_string('loginlocalintro', 'theme_boost_union'),
+            true
+        );
         $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_TEXT);
         $tab->add($setting);
         $page->hide_if(
@@ -1140,15 +1145,15 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
-        // Setting: Local login tab/accordion label (visible when tab or accordion layout is enabled).
-        $name = 'theme_boost_union/loginlocallogintablabel';
-        $title = get_string('loginlocallogintablabelsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginlocallogintablabelsetting_desc', 'theme_boost_union', null, true);
-        $default = get_string('loginlocallogintablabelsetting_default', 'theme_boost_union');
+        // Setting: Local login label (visible when tab or accordion layout is enabled).
+        $name = 'theme_boost_union/loginlocalloginlabel';
+        $title = get_string('loginlocalloginlabelsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginlocalloginlabelsetting_desc', 'theme_boost_union', null, true);
+        $default = get_string('loginlocalloginlabelsetting_default', 'theme_boost_union');
         $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_TEXT);
         $tab->add($setting);
         $page->hide_if(
-            'theme_boost_union/loginlocallogintablabel',
+            'theme_boost_union/loginlocalloginlabel',
             'theme_boost_union/loginlayout',
             'eq',
             'vertical'
@@ -1198,7 +1203,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Setting: IDP login intro text.
         $name = 'theme_boost_union/loginidpintrotext';
         $title = get_string('loginidpintrotextsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginidpintrotextsetting_desc', 'theme_boost_union', null, true);
+        $description = get_string(
+            'loginidpintrotextsetting_desc',
+            'theme_boost_union',
+            get_string('potentialidps', 'auth'),
+            true
+        );
         $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_TEXT);
         $tab->add($setting);
         $page->hide_if(
@@ -1208,15 +1218,15 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
-        // Setting: IDP login tab/accordion label (visible when tab or accordion layout is enabled).
-        $name = 'theme_boost_union/loginidplogintablabel';
-        $title = get_string('loginidplogintablabelsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginidplogintablabelsetting_desc', 'theme_boost_union', null, true);
-        $default = get_string('loginidplogintablabelsetting_default', 'theme_boost_union');
+        // Setting: IDP login label (visible when tab or accordion layout is enabled).
+        $name = 'theme_boost_union/loginidploginlabel';
+        $title = get_string('loginidploginlabelsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginidploginlabelsetting_desc', 'theme_boost_union', null, true);
+        $default = get_string('loginidploginlabelsetting_default', 'theme_boost_union');
         $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_TEXT);
         $tab->add($setting);
         $page->hide_if(
-            'theme_boost_union/loginidplogintablabel',
+            'theme_boost_union/loginidploginlabel',
             'theme_boost_union/loginlayout',
             'eq',
             'vertical'
@@ -1272,7 +1282,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Setting: Self registration intro text.
         $name = 'theme_boost_union/loginselfregistrationintrotext';
         $title = get_string('loginselfregistrationintrotextsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginselfregistrationintrotextsetting_desc', 'theme_boost_union', null, true);
+        $description = get_string(
+            'loginselfregistrationintrotextsetting_desc',
+            'theme_boost_union',
+            get_string('firsttime', 'core'),
+            true
+        );
         $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_TEXT);
         $tab->add($setting);
         $page->hide_if(
@@ -1282,15 +1297,15 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
-        // Setting: Self registration tab/accordion label (visible when tab or accordion layout is enabled).
-        $name = 'theme_boost_union/loginselfregistrationlogintablabel';
-        $title = get_string('loginselfregistrationlogintablabelsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginselfregistrationlogintablabelsetting_desc', 'theme_boost_union', null, true);
-        $default = get_string('loginselfregistrationlogintablabelsetting_default', 'theme_boost_union');
+        // Setting: Self registration label (visible when tab or accordion layout is enabled).
+        $name = 'theme_boost_union/loginselfregistrationloginlabel';
+        $title = get_string('loginselfregistrationloginlabelsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginselfregistrationloginlabelsetting_desc', 'theme_boost_union', null, true);
+        $default = get_string('loginselfregistrationloginlabelsetting_default', 'theme_boost_union');
         $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_TEXT);
         $tab->add($setting);
         $page->hide_if(
-            'theme_boost_union/loginselfregistrationlogintablabel',
+            'theme_boost_union/loginselfregistrationloginlabel',
             'theme_boost_union/loginlayout',
             'eq',
             'vertical'
@@ -1340,7 +1355,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Setting: Guest login intro text.
         $name = 'theme_boost_union/loginguestintrotext';
         $title = get_string('loginguestintrotextsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginguestintrotextsetting_desc', 'theme_boost_union', null, true);
+        $description = get_string(
+            'loginguestintrotextsetting_desc',
+            'theme_boost_union',
+            get_string('someallowguest', 'core'),
+            true
+        );
         $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_TEXT);
         $tab->add($setting);
         $page->hide_if(
@@ -1350,15 +1370,15 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
-        // Setting: Guest login tab/accordion label (visible when tab or accordion layout is enabled).
-        $name = 'theme_boost_union/loginguestlogintablabel';
-        $title = get_string('loginguestlogintablabelsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginguestlogintablabelsetting_desc', 'theme_boost_union', null, true);
-        $default = get_string('loginguestlogintablabelsetting_default', 'theme_boost_union');
+        // Setting: Guest login label (visible when tab or accordion layout is enabled).
+        $name = 'theme_boost_union/loginguestloginlabel';
+        $title = get_string('loginguestloginlabelsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginguestloginlabelsetting_desc', 'theme_boost_union', null, true);
+        $default = get_string('loginguestloginlabelsetting_default', 'theme_boost_union');
         $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_TEXT);
         $tab->add($setting);
         $page->hide_if(
-            'theme_boost_union/loginguestlogintablabel',
+            'theme_boost_union/loginguestloginlabel',
             'theme_boost_union/loginlayout',
             'eq',
             'vertical'
