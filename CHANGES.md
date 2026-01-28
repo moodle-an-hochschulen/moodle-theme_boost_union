@@ -4,6 +4,8 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
 * 2025-01-27 - Feature: Add new login layouts and other login settings, resolves #1055
 
 ### v5.1-r2
