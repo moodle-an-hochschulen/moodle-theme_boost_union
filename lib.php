@@ -338,14 +338,8 @@ function theme_boost_union_get_pre_scss($theme) {
         $scss .= '$drawer-right-width: ' . get_config('theme_boost_union', 'blockdrawerwidth') . ";\n";
     }
 
-    // Set variables which are influenced by the activityiconcolor* settings.
-    $purposes = [MOD_PURPOSE_ADMINISTRATION,
-            MOD_PURPOSE_ASSESSMENT,
-            MOD_PURPOSE_COLLABORATION,
-            MOD_PURPOSE_COMMUNICATION,
-            MOD_PURPOSE_CONTENT,
-            MOD_PURPOSE_INTERACTIVECONTENT,
-            MOD_PURPOSE_INTERFACE];
+    // Set variables which are influenced by the activityiconcolor* settings (without the 'other' purpose as this is not branded).
+    $purposes = theme_boost_union_get_activity_purposes(false);
     // Iterate over all purposes.
     foreach ($purposes as $purpose) {
         // Get color setting from global settings.
