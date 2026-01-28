@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-01-28 - Bugfix: The installation of Boost Union crashed on latest moodle main after MOD_PURPOSE_INTERFACE was removed in Moodle 5.2dev, resolves #1126.
 * 2026-01-27 - Tests: The "Allow admins to use the tertiary navigation to navigate between the individual Boost Union admin pages" scenario failed on 5.0 and 5.1, resolves #1123
 
 ### v5.0-r14

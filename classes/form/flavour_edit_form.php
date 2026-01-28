@@ -302,13 +302,7 @@ class flavour_edit_form extends \moodleform {
         );
 
         // Define all activity icon purposes (without the 'other' purpose as this is not branded).
-        $purposes = [MOD_PURPOSE_ADMINISTRATION,
-                MOD_PURPOSE_ASSESSMENT,
-                MOD_PURPOSE_COLLABORATION,
-                MOD_PURPOSE_COMMUNICATION,
-                MOD_PURPOSE_CONTENT,
-                MOD_PURPOSE_INTERACTIVECONTENT,
-                MOD_PURPOSE_INTERFACE];
+        $purposes = theme_boost_union_get_activity_purposes(false);
         // Iterate over all purposes.
         foreach ($purposes as $purpose) {
             // Setting: Activity icon color.

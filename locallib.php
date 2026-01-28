@@ -23,6 +23,32 @@
  */
 
 /**
+ * Get all activity purposes which are available in the current Moodle version.
+ * This function returns all activity purposes, but excludes MOD_PURPOSE_INTERFACE for Moodle 5.2+
+ * where this constant has been removed.
+ *
+ * @param bool $includeother Whether to include MOD_PURPOSE_OTHER in the returned array.
+ * @return array Array of activity purpose constants.
+ */
+function theme_boost_union_get_activity_purposes($includeother = false) {
+    $purposes = [MOD_PURPOSE_ADMINISTRATION,
+            MOD_PURPOSE_ASSESSMENT,
+            MOD_PURPOSE_COLLABORATION,
+            MOD_PURPOSE_COMMUNICATION,
+            MOD_PURPOSE_CONTENT,
+            MOD_PURPOSE_INTERACTIVECONTENT];
+    // Add MOD_PURPOSE_INTERFACE only if it exists (removed in Moodle 5.2+).
+    if (defined('MOD_PURPOSE_INTERFACE')) {
+        $purposes[] = MOD_PURPOSE_INTERFACE;
+    }
+    // Add MOD_PURPOSE_OTHER if requested.
+    if ($includeother) {
+        $purposes[] = MOD_PURPOSE_OTHER;
+    }
+    return $purposes;
+}
+
+/**
  * Build the course related hints HTML code.
  * This function evaluates and composes all course related hints which may appear on a course page below the course header.
  *
