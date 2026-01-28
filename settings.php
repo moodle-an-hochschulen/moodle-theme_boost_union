@@ -685,13 +685,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $tab->add($setting);
 
         // Define all activity icon purposes (without the 'other' purpose as this is not branded).
-        $purposes = [MOD_PURPOSE_ADMINISTRATION,
-                MOD_PURPOSE_ASSESSMENT,
-                MOD_PURPOSE_COLLABORATION,
-                MOD_PURPOSE_COMMUNICATION,
-                MOD_PURPOSE_CONTENT,
-                MOD_PURPOSE_INTERACTIVECONTENT,
-                MOD_PURPOSE_INTERFACE];
+        $purposes = theme_boost_union_get_activity_purposes(false);
         // Iterate over all purposes.
         foreach ($purposes as $purpose) {
             // Setting: Activity icon color.
@@ -717,17 +711,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, $description);
         $tab->add($setting);
 
-        // Prepare activity purposes.
-        $purposesoptions = [
-                MOD_PURPOSE_ADMINISTRATION => get_string('activitypurposeadministration', 'theme_boost_union'),
-                MOD_PURPOSE_ASSESSMENT => get_string('activitypurposeassessment', 'theme_boost_union'),
-                MOD_PURPOSE_COLLABORATION => get_string('activitypurposecollaboration', 'theme_boost_union'),
-                MOD_PURPOSE_COMMUNICATION => get_string('activitypurposecommunication', 'theme_boost_union'),
-                MOD_PURPOSE_CONTENT => get_string('activitypurposecontent', 'theme_boost_union'),
-                MOD_PURPOSE_INTERACTIVECONTENT => get_string('activitypurposeinteractivecontent', 'theme_boost_union'),
-                MOD_PURPOSE_INTERFACE => get_string('activitypurposeinterface', 'theme_boost_union'),
-                MOD_PURPOSE_OTHER => get_string('activitypurposeother', 'theme_boost_union'),
-        ];
+        // Prepare activity purposes (including the 'other' purpose).
+        $purposes = theme_boost_union_get_activity_purposes(true);
+        $purposesoptions = [];
+        foreach ($purposes as $purpose) {
+            $purposesoptions[$purpose] = get_string('activitypurpose' . $purpose, 'theme_boost_union');
+        }
         // Get installed activity modules.
         $installedactivities = get_module_types_names();
         // Iterate over all existing activities.
