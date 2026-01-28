@@ -46,7 +46,6 @@ $templatecontext = [
     'logincontainerclass' =>
             (get_config('theme_boost_union', 'loginformtransparency') == THEME_BOOST_UNION_SETTING_SELECT_YES) ?
                     'login-container-80t' : '',
-
 ];
 
 // Include the template content for the footnote.

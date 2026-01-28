@@ -360,15 +360,15 @@ $string['loginlocalloginformhead'] = 'Local login';
 $string['loginlocalloginlocalnotdisabled'] = 'There is no need to log in on this side entrance login page here. Please use the <a href="{$a->url}">standard login page</a> for logging in.';
 // ... ... Setting: Local login intro.
 $string['loginlocalshowintrosetting'] = 'Local login intro';
-$string['loginlocalshowintrosetting_desc'] = 'With this setting, you control if a <em>\'{$a}\'</em> intro is shown above the local login form or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand which credentials to use in the local login form, especially if you provide more than one login provider or if you have changed the order of the login providers.';
+$string['loginlocalshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the local login form or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand which credentials to use in the local login form, especially if you provide more than one login provider or if you have changed the order of the login providers.';
 $string['loginlocalintro'] = 'Login with your Moodle account';
 // ... ... Setting: Local login intro text.
 $string['loginlocalintrotextsetting'] = 'Local login intro text';
-$string['loginlocalintrotextsetting_desc'] = 'With this setting, you can override the default intro text "Login with your Moodle account" with a custom text. Leave this field empty to use the default text.';
+$string['loginlocalintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> with a custom text. Leave this field empty to use the default text.';
 // ... ... Setting: Local login tab label.
-$string['loginlocallogintablabelsetting'] = 'Local login tab label';
-$string['loginlocallogintablabelsetting_desc'] = 'With this setting, you can customize the text displayed in the tab for local login when using the tabs layout.';
-$string['loginlocallogintablabelsetting_default'] = 'Moodle account';
+$string['loginlocalloginlabelsetting'] = 'Local login label';
+$string['loginlocalloginlabelsetting_desc'] = 'With this setting, you can customize the label for local login to be used in the tab and accordion layout.';
+$string['loginlocalloginlabelsetting_default'] = 'Moodle account';
 // ... Section: Login provider: IDP.
 $string['loginprovideridpheading'] = 'Login provider: IDP';
 // ... ... Setting: IDP login.
@@ -377,14 +377,14 @@ $string['loginidploginenablesetting_desc'] = 'With this setting, you control if 
 $string['loginidploginenablesetting_core'] = 'Moodle core setting interplay: Identity provider login buttons are provided by authentication plugins like OAuth2, CAS or Shibboleth. You can manage authentication plugins on <a href="{$a->url}">Moodle core\'s authentication settings page</a>.';
 // ... ... Setting: IDP login intro.
 $string['loginidpshowintrosetting'] = 'IDP login intro';
-$string['loginidpshowintrosetting_desc'] = 'With this setting, you control if a <em>\'{$a}\'</em> intro is shown above the IDP login buttons or not. By default, the intro is shown and users will be quickly informed what the IDP buttons are about. If you disable this setting, the IDP intro is hidden. This allows you to provide a clean user login interface if you just use external identity providers like OAuth2 or OIDC.';
+$string['loginidpshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the IDP login buttons or not. By default, the intro is shown and users will be quickly informed what the IDP buttons are about. If you disable this setting, the IDP intro is hidden. This allows you to provide a clean user login interface if you just use external identity providers like OAuth2 or OIDC.';
 // ... ... Setting: IDP login intro text.
 $string['loginidpintrotextsetting'] = 'IDP login intro text';
-$string['loginidpintrotextsetting_desc'] = 'With this setting, you can override the default intro text "Log in using your account on:" with a custom text. Leave this field empty to use the default text.';
+$string['loginidpintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> (which comes from the Moodle core language pack) with a custom text. Leave this field empty to use the default text.';
 // ... ... Setting: IDP login tab label.
-$string['loginidplogintablabelsetting'] = 'IDP login tab label';
-$string['loginidplogintablabelsetting_desc'] = 'With this setting, you can customize the text displayed in the tab for IDP login when using the tabs layout.';
-$string['loginidplogintablabelsetting_default'] = 'IDP login';
+$string['loginidploginlabelsetting'] = 'IDP login label';
+$string['loginidploginlabelsetting_desc'] = 'With this setting, you can customize the label for IDP login to be used in the tab and accordion layout.';
+$string['loginidploginlabelsetting_default'] = 'IDP login';
 // ... Section: Login provider: Self registration.
 $string['loginproviderselfregistrationheading'] = 'Login provider: Self registration';
 // ... ... Setting: Self registration.
@@ -393,14 +393,14 @@ $string['loginselfregistrationenablesetting_desc'] = 'With this setting, you con
 $string['loginselfregistrationenablesetting_core'] = 'Moodle core setting interplay: Self registration is controlled by the \'{$a->settingname}\' setting which you can manage on <a href="{$a->url}">Moodle core\'s authentication settings page</a>.';
 // ... ... Setting: Self registration intro.
 $string['loginselfregistrationshowintrosetting'] = 'Self registration intro';
-$string['loginselfregistrationshowintrosetting_desc'] = 'With this setting, you control if a <em>\'{$a}\'</em> intro is shown above the self registration section or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what self registration is about.';
+$string['loginselfregistrationshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the self registration section or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what self registration is about.';
 // ... ... Setting: Self registration intro text.
 $string['loginselfregistrationintrotextsetting'] = 'Self registration intro text';
-$string['loginselfregistrationintrotextsetting_desc'] = 'With this setting, you can override the default intro text "First time?" with a custom text. Leave this field empty to use the default text.';
+$string['loginselfregistrationintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> (which comes from the Moodle core language pack) with a custom text. Leave this field empty to use the default text.';
 // ... ... Setting: Self registration tab label.
-$string['loginselfregistrationlogintablabelsetting'] = 'Self registration tab label';
-$string['loginselfregistrationlogintablabelsetting_desc'] = 'With this setting, you can customize the text displayed in the tab for self registration when using the tabs layout.';
-$string['loginselfregistrationlogintablabelsetting_default'] = 'Self registration';
+$string['loginselfregistrationloginlabelsetting'] = 'Self registration label';
+$string['loginselfregistrationloginlabelsetting_desc'] = 'With this setting, you can customize the label for self registration to be used in the tab and accordion layout.';
+$string['loginselfregistrationloginlabelsetting_default'] = 'Self registration';
 // ... Section: Login provider: Guest.
 $string['loginproviderguestheading'] = 'Login provider: Guest';
 // ... ... Setting: Guest login.
@@ -409,14 +409,14 @@ $string['loginguestloginenablesetting_desc'] = 'With this setting, you control i
 $string['loginguestloginenablesetting_core'] = 'Moodle core setting interplay: Guest access is controlled by the \'{$a->settingname}\' setting which you can manage on <a href="{$a->url}">Moodle core\'s authentication settings page</a>.';
 // ... ... Setting: Guest login intro.
 $string['loginguestshowintrosetting'] = 'Guest login intro';
-$string['loginguestshowintrosetting_desc'] = 'With this setting, you control if a <em>\'{$a}\'</em> intro is shown above the guest login button or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what guest access is about.';
+$string['loginguestshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the guest login button or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what guest access is about.';
 // ... ... Setting: Guest login intro text.
 $string['loginguestintrotextsetting'] = 'Guest login intro text';
-$string['loginguestintrotextsetting_desc'] = 'With this setting, you can override the default intro text "Some courses may allow guest access" with a custom text. Leave this field empty to use the default text.';
+$string['loginguestintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> (which comes from the Moodle core language pack) with a custom text. Leave this field empty to use the default text.';
 // ... ... Setting: Guest login tab label.
-$string['loginguestlogintablabelsetting'] = 'Guest login tab label';
-$string['loginguestlogintablabelsetting_desc'] = 'With this setting, you can customize the text displayed in the tab for guest login when using the tabs layout.';
-$string['loginguestlogintablabelsetting_default'] = 'Guest login';
+$string['loginguestloginlabelsetting'] = 'Guest login label';
+$string['loginguestloginlabelsetting_desc'] = 'With this setting, you can customize the label for guest login to be used in the tab and accordion layout.';
+$string['loginguestloginlabelsetting_default'] = 'Guest login';
 // ... Section: Side entrance login.
 $string['sideentranceloginheading'] = 'Side entrance login';
 // ... ... Setting: Endable side entrance login.
