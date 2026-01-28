@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-01-27 - Feature: Add new login layouts and other login settings, resolves #1055
+
 ### v5.1-r2
 
 * 2026-01-21 - Bugfix: On brand-new Moodle installations, Boost Union tried to access the mdl_files table before it was created, resolves #1058
