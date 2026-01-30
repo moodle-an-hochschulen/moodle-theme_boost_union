@@ -56,6 +56,11 @@ class behat_theme_boost_union_generator extends behat_generator_base {
      *   - "course" is the course shortname (e.g., 'C1').
      *   - "filepath" is the path to the file relative to dirroot (e.g., 'theme/boost_union/tests/fixtures/login_bg1.png').
      *   - Uploads the file as a course overview file (course image).
+     *   - Automatically purges the course_image cache for the course.
+     * - "course header images" - Requires a course shortname and filepath.
+     *   - "course" is the course shortname (e.g., 'C1').
+     *   - "filepath" is the path to the file relative to dirroot (e.g., 'theme/boost_union/tests/fixtures/login_bg3.png').
+     *   - Uploads the file as a dedicated course header image.
      * - "core files" - Requires a filearea and filepath.
      *   - "filearea" is the name of the Moodle core filearea (e.g., 'logo', 'logocompact', 'favicon').
      *   - "filepath" is the path to the file relative to dirroot (e.g., 'theme/boost_union/tests/fixtures/moodlelogo.png').
@@ -138,6 +143,12 @@ class behat_theme_boost_union_generator extends behat_generator_base {
             'course overview files' => [
                 'singular' => 'course overview file',
                 'datagenerator' => 'course_overview_file',
+                'required' => ['course', 'filepath'],
+            ],
+
+            'course header images' => [
+                'singular' => 'course header image',
+                'datagenerator' => 'course_header_image',
                 'required' => ['course', 'filepath'],
             ],
 
@@ -691,6 +702,59 @@ class behat_theme_boost_union_generator extends behat_generator_base {
             'contextid' => $coursecontext->id,
             'component' => 'course',
             'filearea'  => 'overviewfiles',
+            'itemid'    => 0,
+            'filepath'  => '/',
+            'filename'  => $filename,
+        ];
+
+        // Create the file from the source.
+        $fs->create_file_from_pathname($filerecord, $sourcepath);
+
+        // Purge the course_image cache for this specific course.
+        // This is necessary because the course image is cached in core/course_image.
+        \cache::make('core', 'course_image')->delete($courseid);
+    }
+
+    /**
+     * Create a course header image.
+     *
+     * @param array $data Must contain 'course' and 'filepath'.
+     * @return void
+     * @throws Exception
+     */
+    protected function process_course_header_image(array $data): void {
+        global $CFG, $DB;
+
+        // Extract data.
+        $courseshortname = $data['course'];
+        $filepath = $data['filepath'];
+
+        // Get the course ID by shortname.
+        $courseid = $DB->get_field('course', 'id', ['shortname' => $courseshortname]);
+        if (!$courseid) {
+            throw new Exception('Course not found with shortname: ' . $courseshortname);
+        }
+
+        // Get the course context.
+        $coursecontext = context_course::instance($courseid);
+
+        // Get the file storage.
+        $fs = get_file_storage();
+
+        // Get the source file path.
+        $sourcepath = $CFG->dirroot . '/' . $filepath;
+        if (!file_exists($sourcepath)) {
+            throw new Exception('Source file not found: ' . $sourcepath);
+        }
+
+        // Get the filename from the path.
+        $filename = basename($sourcepath);
+
+        // Prepare file record for course header image.
+        $filerecord = [
+            'contextid' => $coursecontext->id,
+            'component' => 'theme_boost_union',
+            'filearea'  => 'courseheaderimage',
             'itemid'    => 0,
             'filepath'  => '/',
             'filename'  => $filename,

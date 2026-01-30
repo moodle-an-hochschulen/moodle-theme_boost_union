@@ -27,25 +27,15 @@
         "navbar": "navbar_if_available",
         "courseheader": "course_header_html",
         "welcomemessage": "welcomemessage",
-        "courseheaderimageurl": "http://localhost/boostunionmoodle/pluginfile.php/14/course/overviewfiles/ex.png"
+        "courseheaderenabled": false
     }
 }}
 {{!
     This template is a modified version of core/full_header
 
     Modifications compared to the original template:
-    * Include a course header image
-      For the sake of readability and as the course header image feature has multiple layout options,
-      the HTML snippets for the course header have been duplicated in this template to cover each layout separately.
-      The selection algorithmn goes like this:
-      -> Do we have a welcome message?
-         -> Yes: Show the course header just like Moodle core does.
-         -> No: Do we have a course header image URL?
-            -> No: Show the course header just like Moodle core does.
-            -> Yes: Do we have to show the course heading above the course header image?
-               -> Yes: Show the course header like Moodle core does and add the #courseheaderimage element below it.
-               -> No: Wrap the course header of Moodle core in a #courseheaderimage element and add the configured
-                      stacked layout class to it.
+    * Optionally output the enhanced course header.
+    * To achieve better readability, a dedicated case for when the welcome message is shown (on the dashboard, where we do not output the enhanced header) has been added.
 }}
 <header id="page-header" class="header-maxwidth d-print-none">
     <div class="w-100">
@@ -82,75 +72,12 @@
             </div>
         {{/welcomemessage}}
         {{^welcomemessage}}
-            {{^courseheaderimageurl}}
-                <div class="d-flex align-items-center">
-                    <div class="me-auto d-flex flex-column">
-                        {{#contextheader}}
-                        <div>
-                            {{{contextheader}}}
-                        </div>
-                        {{/contextheader}}
-                        <div>
-                            {{> core/welcome }}
-                        </div>
-                    </div>
-                    <div class="header-actions-container ms-auto" data-region="header-actions-container">
-                        {{#headeractions}}
-                        <div class="header-action ms-2">{{{.}}}</div>
-                        {{/headeractions}}
-                    </div>
-                </div>
-            {{/courseheaderimageurl}}
-            {{#courseheaderimageurl}}
-                {{#courseheaderimagelayoutheadingabove}}
-                    <div class="d-flex align-items-center">
-                        <div class="me-auto d-flex flex-column">
-                            {{#contextheader}}
-                            <div>
-                                {{{contextheader}}}
-                            </div>
-                            {{/contextheader}}
-                            <div>
-                                {{> core/welcome }}
-                            </div>
-                        </div>
-                        <div class="header-actions-container ms-auto" data-region="header-actions-container">
-                            {{#headeractions}}
-                            <div class="header-action ms-2">{{{.}}}</div>
-                            {{/headeractions}}
-                        </div>
-                    </div>
-                    <div id="courseheaderimage" class="p-3 mb-3"
-                         style="background-image: url('{{{courseheaderimageurl}}}');
-                             {{#courseheaderimageheight}}min-height: {{{.}}};{{/courseheaderimageheight}}
-                             {{#courseheaderimageposition}}background-position: {{{.}}};{{/courseheaderimageposition}}">
-                    </div>
-                {{/courseheaderimagelayoutheadingabove}}
-                {{^courseheaderimagelayoutheadingabove}}
-                    <div id="courseheaderimage" class="p-3 mb-3 {{#courseheaderimagelayoutstackedclass}}courseheaderimage-{{{.}}}{{/courseheaderimagelayoutstackedclass}}"
-                            style="background-image: url('{{{courseheaderimageurl}}}');
-                                    {{#courseheaderimageheight}}min-height: {{{.}}};{{/courseheaderimageheight}}
-                                    {{#courseheaderimageposition}}background-position: {{{.}}};{{/courseheaderimageposition}}">
-                        <div class="d-flex align-items-center">
-                            <div class="me-auto d-flex flex-column">
-                                {{#contextheader}}
-                                <div>
-                                    {{{contextheader}}}
-                                </div>
-                                {{/contextheader}}
-                                <div>
-                                    {{> core/welcome }}
-                                </div>
-                            </div>
-                            <div class="header-actions-container ms-auto" data-region="header-actions-container">
-                                {{#headeractions}}
-                                <div class="header-action ms-2">{{{.}}}</div>
-                                {{/headeractions}}
-                            </div>
-                        </div>
-                    </div>
-                {{/courseheaderimagelayoutheadingabove}}
-            {{/courseheaderimageurl}}
+            {{^courseheaderenabled}}
+                {{> theme_boost_union/full_header-partial-original }}
+            {{/courseheaderenabled}}
+            {{#courseheaderenabled}}
+                {{{courseheaderhtml}}}
+            {{/courseheaderenabled}}
         {{/welcomemessage}}
     </div>
 </header>

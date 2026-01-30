@@ -15,12 +15,12 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost_union/infobanners
+    @template theme_boost_union/infobannersbelow
 
-    Boost Union Info banners layout template.
+    Boost Union Info banners below layout template.
 
     Context variables required for this template:
-    * infobanners - The configured info banners list with:
+    * infobannersbelow - The configured info banners list with:
       * content - The info banner content
       * bsclass - The info banner bootstrap class
       * no - The info banner number
@@ -28,7 +28,7 @@
 
     Example context (json):
     {
-        "infobanners": [
+        "infobannersbelow": [
             {
                 "content": "Lorem ipsum",
                 "bsclass": "primary",
@@ -45,6 +45,6 @@
     }
 }}
 
-{{#infobanners}}
+{{#infobannersbelow}}
     {{> theme_boost_union/infobanner-item }}
-{{/infobanners}}
+{{/infobannersbelow}}

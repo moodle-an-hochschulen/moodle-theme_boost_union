@@ -6,6 +6,11 @@ Changes
 
 ### Unreleased
 
+* 2026-01-30 - Admin: Move the category breadcrumb from "Feel" to "Look" near the new course header settings.
+* 2026-01-22 - Improvement: Add a setting to control if a particular info banner is shown above of below the page header.
+* 2026-01-22 - Improvement: Align minor aspects (course shortname, course fields, course progress) of the look of the course-card and course-list view of the course listings more with the new course headers in Boost Union and less with the My courses page of Moodle core.
+* 2026-01-22 - Feature: Enhance the adaptability of the course header including the possibility for teachers to configure it per course, resolves #138.
+               Please note: If you have uploaded an image in the "Fallback course header image" filearea before, this image will be migrated to the new "Global course header image" filearea during this update.
 * 2026-01-28 - Bugfix: The installation of Boost Union crashed on latest moodle main after MOD_PURPOSE_INTERFACE was removed in Moodle 5.2dev, resolves #1126.
 * 2026-01-27 - Tests: The "Allow admins to use the tertiary navigation to navigate between the individual Boost Union admin pages" scenario failed on 5.0 and 5.1, resolves #1123
 

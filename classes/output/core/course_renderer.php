@@ -56,7 +56,7 @@ class course_renderer extends \core_course_renderer {
                     isset($courselistinghowpopup) &&
                     $courselistinghowpopup == THEME_BOOST_UNION_SETTING_SELECT_YES
             ) {
-                $page->requires->js_call_amd('theme_boost_union/courselistingdetailsmodal', 'init');
+                $page->requires->js_call_amd('theme_boost_union/coursedetailsmodal', 'init');
             }
             $detailsmodalchecked = true;
         }
@@ -418,6 +418,10 @@ class course_renderer extends \core_course_renderer {
         if ($skeleton == null) {
             $skeleton = [];
 
+            // Note: The following code is more or less duplicated in core_renderer::full_header().
+            // This was done on purpose as it is not a 100% copy and creating another helper function would not have improved
+            // the code quality much.
+
             // Enable course image, if configured.
             if (get_config('theme_boost_union', 'courselistinghowimage') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 $skeleton['showcourseimage'] = true;
@@ -520,6 +524,10 @@ class course_renderer extends \core_course_renderer {
             $templatedata['courseimage'] = $courseutil->get_courseimage();
         }
 
+        // Note: The following code is more or less duplicated in core_renderer::full_header().
+        // This was done on purpose as it is not a 100% copy and creating another helper function would not have improved
+        // the code quality much.
+
         // Amend course contacts, if enabled.
         if ($templatedata['showcoursecontacts'] || $templatedata['showcoursepopup']) {
             $templatedata['contacts'] = $courseutil->get_course_contacts();
@@ -544,7 +552,7 @@ class course_renderer extends \core_course_renderer {
 
         // Amend custom fields, if enabled.
         if ($templatedata['showcoursefields'] || $templatedata['showcoursepopup']) {
-            $templatedata['customfields'] = $courseutil->get_custom_fields();
+            $templatedata['customfields'] = $courseutil->get_custom_fields('listing');
             $templatedata['hascustomfields'] = ($templatedata['customfields'] != false);
         }
 
