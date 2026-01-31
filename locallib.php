@@ -1278,6 +1278,51 @@ function theme_boost_union_get_course_header_image_url() {
 }
 
 /**
+ * Helper function to get the course overview fallback image URL.
+ *
+ * @return core\url|null The URL to the course overview fallback image or null if none is configured.
+ */
+function theme_boost_union_get_course_overview_fallback_image_url() {
+    // If a fallback image is configured.
+    if (get_config('theme_boost_union', 'courseoverviewimagefallback')) {
+        // Get the system context.
+        $systemcontext = \context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get all files from filearea.
+        $files = $fs->get_area_files(
+            $systemcontext->id,
+            'theme_boost_union',
+            'courseoverviewimagefallback',
+            false,
+            'itemid',
+            false
+        );
+
+        // Just pick the first file - we are sure that there is just one file.
+        $file = reset($files);
+
+        // If a file was found.
+        if ($file) {
+            // Build and return the image URL.
+            return \core\url::make_pluginfile_url(
+                $file->get_contextid(),
+                $file->get_component(),
+                $file->get_filearea(),
+                $file->get_itemid(),
+                $file->get_filepath(),
+                $file->get_filename()
+            );
+        }
+    }
+
+    // As no picture was found, return null.
+    return null;
+}
+
+/**
  * Helper function which sets the URL to the CSS file as soon as the theme's mobilescss setting has any CSS code.
  * It's meant to be called as callback when changing the admin setting only.
  * *
