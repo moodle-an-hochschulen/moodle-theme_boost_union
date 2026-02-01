@@ -1304,6 +1304,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $tab->add($setting);
         $page->hide_if(
             'theme_boost_union/courselistingprogressstyle',
+            'theme_boost_union/courselistingpresentation',
+            'eq',
+            THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE
+        );
+        $page->hide_if(
+            'theme_boost_union/courselistingprogressstyle',
             'theme_boost_union/courselistinghowprogress',
             'neq',
             THEME_BOOST_UNION_SETTING_SELECT_YES
