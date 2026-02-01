@@ -37,6 +37,7 @@
       * caption - The slide's caption (might be empty)
       * content - The slide's content (might be empty)
       * contentstyleclass - The CSS class for the slide
+      * interval - The individual interval for this slide in milliseconds (might be empty)
       * isfirstslide - The flag if this is the first slide
       * linkimage - The flag if the slide's background image should be linked
       * linktext - The flag if the slide's text (caption + content) should be linked
@@ -127,7 +128,7 @@
 
     <div class="carousel-inner rounded">
       {{#slides}}
-        <div id="themeboostunionslide{{no}}" class="carousel-item {{#isfirstslide}}active{{/isfirstslide}}">
+        <div id="themeboostunionslide{{no}}" class="carousel-item {{#isfirstslide}}active{{/isfirstslide}}"{{#interval}} data-bs-interval="{{interval}}"{{/interval}}>
           {{#linkimage}}{{#link}}<a href="{{link}}" {{#linktitle}}title="{{linktitle}}"{{/linktitle}} {{#linktargetnewtab}}target="_blank" rel="noopener noreferrer"{{/linktargetnewtab}}>{{/link}}{{/linkimage}}
             {{#backgroundimageurl}}<img class="d-block w-100" src="{{backgroundimageurl}}" alt="{{backgroundimagealt}}">{{/backgroundimageurl}}
           {{#linkimage}}{{#link}}</a>{{/link}}{{/linkimage}}
