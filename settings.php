@@ -1133,6 +1133,52 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Heading: Course overview images.
+        $name = 'theme_boost_union/courseoverviewimageheading';
+        $title = get_string('courseoverviewimageheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Course overview image source.
+        $name = 'theme_boost_union/courseoverviewimagesource';
+        $title = get_string('courseoverviewimagesourcesetting', 'theme_boost_union', null, true);
+        $description = get_string('courseoverviewimagesourcesetting_desc', 'theme_boost_union', null, true);
+        $courseoverviewimagesourceoptions = [
+                THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSPATTERN =>
+                        get_string('courseoverviewimagesource_coursepluspattern', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSFALLBACK =>
+                        get_string('courseoverviewimagesource_courseplusfallback', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSPATTERN,
+            $courseoverviewimagesourceoptions
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Course overview fallback image.
+        $name = 'theme_boost_union/courseoverviewimagefallback';
+        $title = get_string('courseoverviewimagefallback', 'theme_boost_union', null, true);
+        $description = get_string('courseoverviewimagefallback_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configstoredfile(
+            $name,
+            $title,
+            $description,
+            'courseoverviewimagefallback',
+            0,
+            ['maxfiles' => 1, 'accepted_types' => ['web_image']]
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/courseoverviewimagefallback',
+            'theme_boost_union/courseoverviewimagesource',
+            'neq',
+            THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSFALLBACK
+        );
+
         // Add tab to settings page.
         $page->add($tab);
 

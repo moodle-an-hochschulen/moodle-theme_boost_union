@@ -358,6 +358,16 @@ $string['courseoverviewshowcourseimagessetting_desc'] = 'With this setting, you 
 // ... ... Setting: Show course completion progress.
 $string['courseoverviewshowprogresssetting'] = 'Show course completion progress';
 $string['courseoverviewshowprogresssetting_desc'] = 'With this setting, you can control whether the course completion progress is visible inside the course overview block or not.';
+// ... Section: Course overview images.
+$string['courseoverviewimageheading'] = 'Course overview images';
+// ... ... Setting: Course overview image source.
+$string['courseoverviewimagesourcesetting'] = 'Course overview image source';
+$string['courseoverviewimagesourcesetting_desc'] = 'With this setting, you control the source of the image which is shown in the course overview block, on the category index pages and on the course list on site home. The main source for this image is the course image which is uploaded in the particular course\'s settings. If this image is not available, you can choose if you want to show a generated geometric pattern or a fallback course overview image.<br />Please note: If you use the geometric pattern, you can customize the pattern colors on the <a href="/admin/settings.php?section=coursecolors">course colors settings page</a>.';
+$string['courseoverviewimagesource_coursepluspattern'] = 'Course image with a fallback to a geometric pattern (unchanged as presented by Moodle core)';
+$string['courseoverviewimagesource_courseplusfallback'] = 'Course image with a fallback to the course overview fallback image';
+// ... ... Setting: Course overview fallback image.
+$string['courseoverviewimagefallback'] = 'Course overview fallback image';
+$string['courseoverviewimagefallback_desc'] = 'The image which you upload here will be used as a fallback course overview image as soon as the \'Course overview image source\' setting is configured likewise.<br />Please note: If you configure the \'Course overview image source\' setting to use the course overview fallback image, but you do not upload any image here, the geometric pattern will be used as a fallback anyway.';
 
 // Settings: Category index / site home tab.
 $string['categoryindextab'] = 'Category index / Site home';
