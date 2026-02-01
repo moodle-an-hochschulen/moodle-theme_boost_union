@@ -1629,7 +1629,13 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
         if ($activitypurpose && $activitypurpose != $defaultpurpose) {
             // Add CSS to modify the activity purpose color in the activity chooser and the activity icon.
             $scss .= '.activity.modtype_' . $modname . ' .activityiconcontainer.courseicon img,';
-            $scss .= '.modchoosercontainer .modicon_' . $modname . '.activityiconcontainer img,';
+            // If the activity is mod_lti, we have to check the whole class name for the activity chooser as Moodle
+            // uses a class like modtype_mod_lti_type_1 there.
+            if ($modname == 'lti') {
+                $scss .= '.modchoosercontainer [class*="modicon_' . $modname . '"].activityiconcontainer img,';
+            } else {
+                $scss .= '.modchoosercontainer .modicon_' . $modname . '.activityiconcontainer img,';
+            }
             $scss .= '#page-header .modicon_' . $modname . '.activityiconcontainer img,';
             $scss .= '#page-course-overview #' . $modname . '_overview_title .activityiconcontainer img';
             $scss .= '{';
