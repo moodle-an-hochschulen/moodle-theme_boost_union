@@ -71,6 +71,9 @@ define('THEME_BOOST_UNION_SETTING_HEIGHT_150PX', '150px');
 define('THEME_BOOST_UNION_SETTING_HEIGHT_200PX', '200px');
 define('THEME_BOOST_UNION_SETTING_HEIGHT_250PX', '250px');
 
+define('THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSPATTERN', 'coursepluspattern');
+define('THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSFALLBACK', 'courseplusfallback');
+
 define('THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER', 'center center');
 define('THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP', 'center top');
 define('THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_BOTTOM', 'center bottom');
@@ -669,6 +672,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         $context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'backgroundimage' ||
         $filearea === 'loginbackgroundimage' || $filearea === 'additionalresources' ||
                 $filearea === 'customfonts' || $filearea === 'courseheaderimagefallback' ||
+                $filearea === 'courseoverviewimagefallback' ||
                 $filearea === 'touchiconsios' || $filearea === 'uploadedsnippets' ||
                 preg_match("/tile[2-9]|1[0-2]backgroundimage?/", $filearea) ||
                 preg_match("/slide[2-9]|1[0-2]?backgroundimage/", $filearea))
