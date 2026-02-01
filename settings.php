@@ -1609,6 +1609,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
+        // Setting: Use course short name in header.
+        $name = 'theme_boost_union/useshortnameinheader';
+        $title = get_string('useshortnameinheader', 'theme_boost_union', null, true);
+        $description = get_string('useshortnameinheader_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
         // Setting: Display the course image in the course header.
         $name = 'theme_boost_union/courseheaderimageenabled';
         $title = get_string('courseheaderimageenabled', 'theme_boost_union', null, true);
