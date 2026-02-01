@@ -318,8 +318,7 @@ M.util.js_pending('theme_boost/loader');
 require(['theme_boost/loader', 'theme_boost/drawer'{{#regions.offcanvas.hasblocks}},'theme_boost_union/offcanvas'{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, 'theme_boost_union/smartmenu'{{/includesmartmenu}}{{#blockregionsdata.includeblockregionsamd}}, 'theme_boost_union/blockregions'{{/blockregionsdata.includeblockregionsamd}}], function(Loader, Drawer{{#regions.offcanvas.hasblocks}},OffCanvas{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, SmartMenu{{/includesmartmenu}}{{#blockregionsdata.includeblockregionsamd}}, BlockRegions{{/blockregionsdata.includeblockregionsamd}}) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
-{{#regions.offcanvas.hasblocks}}OffCanvas.init();{{/regions.offcanvas.hasblocks}}
-{{#includesmartmenu}}SmartMenu.init();{{/includesmartmenu}}
-{{#blockregionsdata.outsideregions.verticaloffset}}BlockRegions.OutsideRegionsVerticalAlignment();{{/blockregionsdata.outsideregions.verticaloffset}}
+    {{! All init method calls are placed on one line to avoid a ESLint warning about too many empty lines, see Github issue #1107. }}
+    {{#regions.offcanvas.hasblocks}}OffCanvas.init();{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}SmartMenu.init();{{/includesmartmenu}}{{#blockregionsdata.outsideregions.verticaloffset}}BlockRegions.OutsideRegionsVerticalAlignment();{{/blockregionsdata.outsideregions.verticaloffset}}
 });
 {{/js}}
