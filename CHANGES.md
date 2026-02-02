@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-02-01 - Bug: Changing the activity icon purpose of LTI activities did not have an effect in the activity chooser, resolves #690
+
 ### v4.5-r31
 
 * 2026-01-31 - Feature: Allow the admin to upload a course overview fallback image to be used on the myoverview page instead of the geometric pattern, resolves #171
