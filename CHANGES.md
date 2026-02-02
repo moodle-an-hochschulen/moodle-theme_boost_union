@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-02-01 - Improvement: Get rid of ESLint warning in drawers.mustache, resolves #1107
+
 ### v5.0-r15
 
 * 2026-01-31 - Feature: Allow the admin to upload a course overview fallback image to be used on the myoverview page instead of the geometric pattern, resolves #171
