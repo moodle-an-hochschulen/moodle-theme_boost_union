@@ -89,6 +89,9 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
 
         // Get and set the slide's content style class.
         switch ($config->{'slide' . $i . 'contentstyle'}) {
+            case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_NOCHANGE:
+                $contentstyleclass = 'slide-nochange';
+                break;
             case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHT:
                 $contentstyleclass = 'slide-light';
                 break;
@@ -205,6 +208,17 @@ if ($templatecontext['showslider'] == true) {
             break;
         case THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_FADE:
             $generalslidersettings->animation = 'slide carousel-fade';
+            break;
+    }
+
+    // Getting and setting the slider's variant setting.
+    switch ($config->{'slidervariant'}) {
+        case THEME_BOOST_UNION_SETTING_SLIDER_VARIANT_DARK:
+            $generalslidersettings->dark = true;
+            break;
+        case THEME_BOOST_UNION_SETTING_SLIDER_VARIANT_LIGHT:
+        default:
+            $generalslidersettings->dark = false;
             break;
     }
 
