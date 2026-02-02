@@ -3932,6 +3932,20 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 'neq',
                 THEME_BOOST_UNION_SETTING_SELECT_YES
             );
+
+            // Setting: Slide interval.
+            $name = 'theme_boost_union/slide' . $i . 'interval';
+            $title = get_string('slideintervalsetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('slideintervalsetting_desc', 'theme_boost_union', ['no' => $i], true);
+            // Here, we us a regex instead of PARAM_INT to allow an empty value (which means using the default interval) as well.
+            $setting = new admin_setting_configtext($name, $title, $description, '', '/^\d*$/', 6);
+            $tab->add($setting);
+            $page->hide_if(
+                'theme_boost_union/slide' . $i . 'interval',
+                'theme_boost_union/slide' . $i . 'enabled',
+                'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES
+            );
         }
 
         // Add tab to settings page.

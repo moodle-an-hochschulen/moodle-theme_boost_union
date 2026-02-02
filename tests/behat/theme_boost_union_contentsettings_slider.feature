@@ -356,3 +356,30 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | style      | shouldclass      | shouldnotclass1   | shouldnotclass2   |
       | light      | slide-light      | slide-lightshadow | slide-dark        |
       | darkshadow | slide-darkshadow | slide-lightshadow | slide-light       |
+
+  Scenario Outline: Setting: Slider - Individual slide interval
+    Given the following config values are set as admin:
+      | config         | value | plugin            |
+      | sliderinterval | 5000  | theme_boost_union |
+    Given the following config values are set as admin:
+      | config          | value                              | plugin            |
+      | slide1interval  | <slide1interval>                   | theme_boost_union |
+      | slide2enabled   | yes                                | theme_boost_union |
+      | slide2caption   | Slide 2                            | theme_boost_union |
+      | slide2content   | This is a test content for slide 2 | theme_boost_union |
+      | slide2interval  | <slide2interval>                   | theme_boost_union |
+    And the following "theme_boost_union > setting files" exist:
+      | filearea              | filepath                                       |
+      | slide2backgroundimage | theme/boost_union/tests/fixtures/login_bg2.png |
+    When I log in as "teacher1"
+    And I am on site homepage
+    Then the "data-bs-interval" attribute of "#themeboostunionslider" "css_element" should contain "5000"
+    And the "data-bs-interval" attribute of "#themeboostunionslide1" "css_element" <slide1attribute>
+    And the "data-bs-interval" attribute of "#themeboostunionslide2" "css_element" <slide2attribute>
+
+    Examples:
+      | slide1interval | slide2interval | slide1attribute       | slide2attribute       |
+      | 3000           | 5000           | should contain "3000" | should contain "5000" |
+      | 2500           |                | should contain "2500" | should not be set     |
+      |                | 7000           | should not be set     | should contain "7000" |
+      |                |                | should not be set     | should not be set     |
