@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-02-01 - Feature: Add individual carousel item interval setting for each slide, resolves #915
 * 2026-02-01 - Bug: Changing the activity icon purpose of LTI activities did not have an effect in the activity chooser, resolves #690
 * 2026-02-01 - Improvement: Get rid of ESLint warning in drawers.mustache, resolves #1107
 

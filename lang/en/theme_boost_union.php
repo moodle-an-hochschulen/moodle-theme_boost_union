@@ -1153,6 +1153,8 @@ $string['slidelinktargetsetting_samewindow'] = 'Same window';
 $string['slidelinktargetsetting_newtab'] = 'New tab';
 $string['slideordersetting'] = 'Slide {$a->no} order position';
 $string['slideordersetting_desc'] = 'With this setting, you define the order position of the slide {$a->no}. By default, the slides are ordered as you see them on this settings page here. However, you can decide to assign another order position with this setting. If you assign the same order position to two or more slides, they will be ordered again according to the order on this settings page.';
+$string['slideintervalsetting'] = 'Slide {$a->no} individual interval';
+$string['slideintervalsetting_desc'] = 'With this setting, you can set an individual interval for slide {$a->no} in milliseconds. This will override the global slider interval setting for this particular slide. If you leave this empty, the slide will use the global interval setting.';
 
 // Settings: Functionality page.
 $string['configtitlefunctionality'] = 'Functionality';
