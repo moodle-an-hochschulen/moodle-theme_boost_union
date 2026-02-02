@@ -77,6 +77,16 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
         // The order is not needed for the mustache template, but the usort() method will need it later.
         $order = $config->{'slide' . $i . 'order'};
 
+        // Get and set the slide's individual interval.
+        $interval = '';
+        if (isset($config->{'slide' . $i . 'interval'}) && !empty($config->{'slide' . $i . 'interval'})) {
+            $intervalvalue = intval($config->{'slide' . $i . 'interval'});
+            // Validate that the interval is a positive number.
+            if ($intervalvalue > 0) {
+                $interval = $intervalvalue;
+            }
+        }
+
         // Get and set the slide's content style class.
         switch ($config->{'slide' . $i . 'contentstyle'}) {
             case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHT:
@@ -127,6 +137,7 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
         $slide->caption = $caption;
         $slide->no = $i;
         $slide->order = $order;
+        $slide->interval = $interval;
         $slide->contentstyleclass = $contentstyleclass;
         $slide->captionorcontent = $captionorcontent;
         $slide->linkimage = $linkimage;
