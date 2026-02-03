@@ -3660,6 +3660,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
         $tab->add($setting);
 
+        // Setting: Slider variant.
+        $name = 'theme_boost_union/slidervariant';
+        $title = get_string('slidervariantsetting', 'theme_boost_union', null, true);
+        $description = get_string('slidervariantsetting_desc', 'theme_boost_union', null, true);
+        $slidervariantoptions = [
+                THEME_BOOST_UNION_SETTING_SLIDER_VARIANT_LIGHT =>
+                        get_string('slidervariantsetting_light', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SLIDER_VARIANT_DARK =>
+                        get_string('slidervariantsetting_dark', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_SLIDER_VARIANT_LIGHT,
+            $slidervariantoptions
+        );
+        $tab->add($setting);
+
         // Setting: Slider interval speed.
         $name = 'theme_boost_union/sliderinterval';
         $title = get_string('sliderintervalsetting', 'theme_boost_union', null, true);
@@ -3819,6 +3838,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $title = get_string('slidecontentstylesetting', 'theme_boost_union', ['no' => $i], true);
             $description = get_string('slidecontentstylesetting_desc', 'theme_boost_union', ['no' => $i], true);
             $slidecontentstyleoptions = [
+                    THEME_BOOST_UNION_SETTING_CONTENTSTYLE_NOCHANGE =>
+                            get_string('slidecontentstylesetting_nochange', 'theme_boost_union'),
                     THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHT =>
                             get_string('slidecontentstylesetting_light', 'theme_boost_union'),
                     THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHTSHADOW =>
@@ -3832,7 +3853,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 $name,
                 $title,
                 $description,
-                THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHT,
+                THEME_BOOST_UNION_SETTING_CONTENTSTYLE_NOCHANGE,
                 $slidecontentstyleoptions
             );
             $tab->add($setting);
