@@ -1810,11 +1810,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         box-shadow: none;
     }
 
-    /* Remove the font color from the caption to allow styling based on the slider settings. */
-    .carousel-caption {
-        color: inherit;
-    }
-
     /* Add an unobtrusive shadow to the carousel controls to make them visible on all kinds of backgrounds. */
     .carousel-control-prev,
     .carousel-control-next {
