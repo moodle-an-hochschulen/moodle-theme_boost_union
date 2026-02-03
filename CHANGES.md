@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-02-03 - Bugfix: Site support form success message was shown below blocks or advert tiles on frontpage, resolves #488
 * 2026-02-01 - Feature: Add dark variant setting for the slider, resolves #914
 * 2026-02-01 - Feature: Add individual carousel item interval setting for each slide, resolves #915
 * 2026-02-01 - Improvement: Replace smartmenu_item_edit_form.js with Moodle core solution for hiding headers, resolves #1028
@@ -54,7 +55,6 @@ Changes
 * 2025-11-03 - Glitch: upgrade.php did not match install.xml regarding the theme_boost_union_snippets table, resolves #1062
 * 2025-11-03 - Improvement: Use human-understandable values in the background position settings, resolves #1086
 * 2025-11-03 - Improvement: Make the outside-left and outside-right block regions fully responsive, finally moving them out of their experimental state, resolves #266.
-* 2025-10-24 - Bugfix: Site support form success message was shown below blocks or advert tiles on frontpage, resolves #488
 * 2025-10-23 - Feature: Add a type for smart menu item to use mailto links, resolves #702
 
 ### v5.0-r11

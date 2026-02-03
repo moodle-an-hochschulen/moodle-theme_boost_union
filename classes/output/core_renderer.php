@@ -758,16 +758,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     /**
-     * Returns just the notifications part of course_content_header.
+     * Returns course-specific information to be output immediately above content on any course page
+     * (for the current course)
      *
      * This renderer function is copied and modified from /lib/classes/output/core_renderer.php
      *
-     * It is based on the course_content_header() function but was split into two parts
-     * (for the notifications and the course content) to be requested individually in drawers.mustache
+     * It is based on the standard_end_of_body_html() function but was split into two parts
+     * (for the additionalhtmlfooter and the unique endtoken) to be requested individually in footer.mustache
      * in Boost Union.
      *
      * @param bool $onlyifnotcalledbefore output content only if it has not been output before
-     * @return string HTML fragment containing notifications.
+     * @return string
      */
     public function course_content_header_notifications($onlyifnotcalledbefore = false) {
         static $functioncalled = false;
@@ -775,7 +776,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
             // We have already output the notifications.
             return '';
         }
-        $functioncalled = true;
 
         // Output any session notification.
         $notifications = \core\notification::fetch();
@@ -790,20 +790,23 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $output = html_writer::span($bodynotifications, 'notifications', ['id' => 'user-notifications']);
 
+        $functioncalled = true;
+
         return $output;
     }
 
     /**
-     * Returns just the course content header part of course_content_header.
+     * Returns course-specific information to be output immediately above content on any course page
+     * (for the current course)
      *
      * This renderer function is copied and modified from /lib/classes/output/core_renderer.php
      *
-     * It is based on the course_content_header() function but was split into two parts
-     * (for the notifications and the course content) to be requested individually in drawers.mustache
+     * It is based on the standard_end_of_body_html() function but was split into two parts
+     * (for the additionalhtmlfooter and the unique endtoken) to be requested individually in footer.mustache
      * in Boost Union.
      *
      * @param bool $onlyifnotcalledbefore output content only if it has not been output before
-     * @return string HTML fragment containing course content header.
+     * @return string
      */
     public function course_content_header_coursecontent($onlyifnotcalledbefore = false) {
         global $CFG;
@@ -813,20 +816,21 @@ class core_renderer extends \theme_boost\output\core_renderer {
             // We have already output the course content header.
             return '';
         }
-        $functioncalled = true;
 
-        // If we are on the site homepage, there is no course content header.
+        $output = '';
+
         if ($this->page->course->id == SITEID) {
-            return '';
+            // Return immediately and do not include /course/lib.php if not necessary.
+            return $output;
         }
 
         require_once($CFG->dirroot . '/course/lib.php');
+        $functioncalled = true;
         $courseformat = course_get_format($this->page->course);
         if (($obj = $courseformat->course_content_header()) !== null) {
-            return html_writer::div($courseformat->get_renderer($this->page)->render($obj), 'course-content-header');
+            $output .= html_writer::div($courseformat->get_renderer($this->page)->render($obj), 'course-content-header');
         }
-
-        return '';
+        return $output;
     }
 
     /**

@@ -560,7 +560,7 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | 0       | should not contain | after       |
 
   @javascript
-  Scenario: Support form success notification is shown before content-upper blocks on the homepage
+  Scenario: Notifications are shown before content-upper blocks on the homepage
     Given the following config values are set as admin:
       | config                     | value         | plugin            |
       | defaulthomepage            | Home          |                   |
@@ -577,4 +577,3 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     And I click on "Submit" "button"
     And I wait until the page is ready
     Then "Your accessibility support request was sent" "text" should appear before ".block_online_users" "css_element"
-
