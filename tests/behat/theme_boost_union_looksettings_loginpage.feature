@@ -229,7 +229,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     Examples:
       | localordersetting | idpordersetting | firsttimesignupordersetting | guestordersetting | firstelementid                          | secondelementid                      | thirdelementid                                | fourthelementid                       |
       | 1                 | 2               | 3                           | 4                 | theme_boost_union-loginorder-local      | theme_boost_union-loginorder-idp     | theme_boost_union-loginorder-firsttimesignup  | theme_boost_union-loginorder-guest    |
-      | 2                 | 1               | 4                           | 3                 | theme_boost_union-loginorder-idp        | theme_boost_union-loginorder-local    | theme_boost_union-loginorder-guest            | theme_boost_union-loginorder-firsttimesignup |
+      | 2                 | 1               | 4                           | 3                 | theme_boost_union-loginorder-idp        | theme_boost_union-loginorder-local   | theme_boost_union-loginorder-guest            | theme_boost_union-loginorder-firsttimesignup |
 
   @javascript
   Scenario Outline: Setting: Login layout tabs - Switch between tabs
@@ -261,12 +261,12 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     # Verify that tab links exist.
     And "#login-tab-local-tab" "css_element" should exist
     And "#login-tab-idp-tab" "css_element" should exist
-    And "#login-tab-signup-tab" "css_element" should exist
+    And "#login-tab-firsttimesignup-tab" "css_element" should exist
     And "#login-tab-guest-tab" "css_element" should exist
     # Verify that tab panes exist.
     And "#login-tab-local" "css_element" should exist
     And "#login-tab-idp" "css_element" should exist
-    And "#login-tab-signup" "css_element" should exist
+    And "#login-tab-firsttimesignup" "css_element" should exist
     And "#login-tab-guest" "css_element" should exist
     # Verify initial state: the primary login tab is active.
     Then the "class" attribute of "#login-tab-<activetab>-tab" "css_element" should contain "active"
@@ -286,7 +286,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | primarylogin | activetab | switchtotab |
       | none         | local     | idp         |
       | idp          | idp       | local       |
-      | firsttimesignup | signup | guest       |
+      | firsttimesignup | firsttimesignup | guest       |
 
   @javascript
   Scenario: Setting: Login layout accordion - Verify accordion structure and functionality
