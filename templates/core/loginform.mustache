@@ -44,26 +44,29 @@
     * activeaccordionguest - Flag, set to true when guest login accordion is open (accordion layout),
     * activeaccordionidp - Flag, set to true when IDP login accordion is open (accordion layout),
     * activeaccordionlocal - Flag, set to true when local login accordion is open (accordion layout),
-    * activeaccordionsignup - Flag, set to true when signup accordion is open (accordion layout),
+    * activeaccordionfirsttimesignup - Flag, set to true when firsttimesignup accordion is open (accordion layout),
     * activetabguest - Flag, set to true when guest login tab is active (tabs layout),
     * activetabidp - Flag, set to true when IDP login tab is active (tabs layout),
     * activetablocal - Flag, set to true when local login tab is active (tabs layout),
-    * activetabsignup - Flag, set to true when signup tab is active (tabs layout),
+    * activetabfirsttimesignup - Flag, set to true when firsttimesignup tab is active (tabs layout),
     * guestloginintrotext - Custom guest login intro text (optional),
     * idploginintrotext - Custom IDP login intro text (optional),
     * info - Info notification to display,
     * languagemenu - Language menu content,
     * localloginintrotext - Custom local login intro text (optional),
     * loginaccordion - Flag used to check if elements should be displayed for the accordion layout type,
-    * loginmethods - Array used to iterate over the login methods, each with: id, name, order, type, islocal, isidp, issignup, isguest, isfirst,
+    * loginmethods - Array used to iterate over the login methods, each with: id, name, order, type, islocal, isidp, isfirsttimesignup, isguest, isfirst,
     * logintabs - Object used to check if elements should be displayed for the tabs layout type,
     * logourl - Flag, logo url,
     * recaptcha - reCAPTCHA HTML (optional),
     * selfregistrationloginintrotext - Custom self registration intro text (optional),
+    * showguestlogin - Should guest login be shown? (theme + core),
     * showguestloginintro - Should the guest login intro be shown?,
+    * showidplogin - Should IDP login be shown? (theme + core),
     * showidploginintro - Should the IDP login intro be shown?,
     * showlocallogin - Should the local login form be shown?,
     * showlocalloginintro - Should the local login intro be shown?,
+    * showselfregistration - Should self registration be shown? (theme + core),
     * showselfregistrationloginintro - Should the self registration intro be shown?,
     * smallscreensonly - Toggle password visibility only on small screens?,
     * tabs - Array used to iterate over the individual tabs, each with: id, name, displayname, order, content, active,
@@ -128,11 +131,11 @@
         "activeaccordionguest": false,
         "activeaccordionidp": false,
         "activeaccordionlocal": false,
-        "activeaccordionsignup": false,
+        "activeaccordionfirsttimesignup": false,
         "activetabguest": false,
         "activetabidp": false,
         "activetablocal": true,
-        "activetabsignup": false,
+        "activetabfirsttimesignup": false,
         "guestloginintrotext": "",
         "idploginintrotext": "",
         "localloginintrotext": "",
@@ -145,7 +148,7 @@
                 "type": "local",
                 "islocal": true,
                 "isidp": false,
-                "issignup": false,
+                "isfirsttimesignup": false,
                 "isguest": false,
                 "isfirst": true
             },
@@ -156,7 +159,7 @@
                 "type": "idp",
                 "islocal": false,
                 "isidp": true,
-                "issignup": false,
+                "isfirsttimesignup": false,
                 "isguest": false,
                 "isfirst": false
             }
@@ -204,7 +207,7 @@
 
 {{!
     This template supports three layout options (vertical, tabs, accordion) and renders multiple
-    login methods (local, IDP, signup, guest) in a sorted order. The broad structure of this document
+    login methods (local, IDP, firsttimesignup, guest) in a sorted order. The broad structure of this document
     consists of: Header Section (logo/heading and messages), Container Section (either for tabs layout
     where we iterate over the tabs array, or for vertical/accordion layout), Login Methods Section
     (where we iterate over the loginmethods array to display the actual login forms), Container Close
@@ -354,7 +357,7 @@
     {{! METHOD: Identity Providers (OAuth2, SAML, etc.) }}
     {{! --------------------------------------------------------------------------- }}
     {{#isidp}}
-    {{#hasidentityproviders}}
+    {{#showidplogin}}
     <div {{#logintabs}}id="login-tab-idp"{{/logintabs}}{{^logintabs}}id="{{id}}"{{/logintabs}} class="theme_boost_union-loginmethod {{#logintabs}}tab-pane fade{{#activetabidp}} show active{{/activetabidp}}{{/logintabs}} {{#loginaccordion}}accordion-item{{/loginaccordion}}" {{#logintabs}}role="tabpanel" aria-labelledby="login-tab-idp-tab"{{/logintabs}}>
 
         {{! Divider for vertical layout only (skip first method) }}
@@ -406,15 +409,15 @@
         </div>
         {{/loginaccordion}}
     </div>
-    {{/hasidentityproviders}}
+    {{/showidplogin}}
     {{/isidp}}
 
     {{! --------------------------------------------------------------------------- }}
     {{! METHOD: Signup / First Time User }}
     {{! --------------------------------------------------------------------------- }}
-    {{#issignup}}
-    {{#cansignup}}
-    <div {{#logintabs}}id="login-tab-signup"{{/logintabs}}{{^logintabs}}id="{{id}}"{{/logintabs}} class="theme_boost_union-loginmethod {{#logintabs}}tab-pane fade{{#activetabsignup}} show active{{/activetabsignup}}{{/logintabs}} {{#loginaccordion}}accordion-item{{/loginaccordion}}" {{#logintabs}}role="tabpanel" aria-labelledby="login-tab-signup-tab"{{/logintabs}}>
+    {{#isfirsttimesignup}}
+    {{#showselfregistration}}
+    <div {{#logintabs}}id="login-tab-firsttimesignup"{{/logintabs}}{{^logintabs}}id="{{id}}"{{/logintabs}} class="theme_boost_union-loginmethod {{#logintabs}}tab-pane fade{{#activetabfirsttimesignup}} show active{{/activetabfirsttimesignup}}{{/logintabs}} {{#loginaccordion}}accordion-item{{/loginaccordion}}" {{#logintabs}}role="tabpanel" aria-labelledby="login-tab-firsttimesignup-tab"{{/logintabs}}>
 
         {{! Divider for vertical layout only (skip first method) }}
         {{^logintabs}}
@@ -427,12 +430,12 @@
 
         {{! Accordion header }}
         {{#loginaccordion}}
-        <h2 class="accordion-header" id="accordion-signup-header">
-            <button class="accordion-button {{^activeaccordionsignup}}collapsed{{/activeaccordionsignup}}" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-signup-content" {{#activeaccordionsignup}}aria-expanded="true"{{/activeaccordionsignup}}{{^activeaccordionsignup}}aria-expanded="false"{{/activeaccordionsignup}} aria-controls="accordion-signup-content">
+        <h2 class="accordion-header" id="accordion-firsttimesignup-header">
+            <button class="accordion-button {{^activeaccordionfirsttimesignup}}collapsed{{/activeaccordionfirsttimesignup}}" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-firsttimesignup-content" {{#activeaccordionfirsttimesignup}}aria-expanded="true"{{/activeaccordionfirsttimesignup}}{{^activeaccordionfirsttimesignup}}aria-expanded="false"{{/activeaccordionfirsttimesignup}} aria-controls="accordion-firsttimesignup-content">
                 <span class="login-heading text-break w-100">{{label}}</span>
             </button>
         </h2>
-        <div id="accordion-signup-content" class="accordion-collapse collapse {{#activeaccordionsignup}}show{{/activeaccordionsignup}}" aria-labelledby="accordion-signup-header" data-bs-parent="{{#loginaccordion}}#theme_boost_union-loginorder{{/loginaccordion}}">
+        <div id="accordion-firsttimesignup-content" class="accordion-collapse collapse {{#activeaccordionfirsttimesignup}}show{{/activeaccordionfirsttimesignup}}" aria-labelledby="accordion-firsttimesignup-header" data-bs-parent="{{#loginaccordion}}#theme_boost_union-loginorder{{/loginaccordion}}">
         <div class="accordion-body">
         {{#showselfregistrationloginintro}}
         <h2 class="login-heading text-break w-100">{{#selfregistrationloginintrotext}}{{{selfregistrationloginintrotext}}}{{/selfregistrationloginintrotext}}{{^selfregistrationloginintrotext}}{{#str}}firsttime{{/str}}{{/selfregistrationloginintrotext}}</h2>
@@ -471,14 +474,14 @@
         </div>
         {{/loginaccordion}}
     </div>
-    {{/cansignup}}
-    {{/issignup}}
+    {{/showselfregistration}}
+    {{/isfirsttimesignup}}
 
     {{! --------------------------------------------------------------------------- }}
     {{! METHOD: Guest Login }}
     {{! --------------------------------------------------------------------------- }}
     {{#isguest}}
-    {{#canloginasguest}}
+    {{#showguestlogin}}
     <div {{#logintabs}}id="login-tab-guest"{{/logintabs}}{{^logintabs}}id="{{id}}"{{/logintabs}} class="theme_boost_union-loginmethod {{#logintabs}}tab-pane fade{{#activetabguest}} show active{{/activetabguest}}{{/logintabs}} {{#loginaccordion}}accordion-item{{/loginaccordion}}" {{#logintabs}}role="tabpanel" aria-labelledby="login-tab-guest-tab"{{/logintabs}}>
 
         {{! Divider for vertical layout only (skip first method) }}
@@ -525,7 +528,7 @@
         </div>
         {{/loginaccordion}}
     </div>
-    {{/canloginasguest}}
+    {{/showguestlogin}}
     {{/isguest}}
     {{/loginmethods}}
 
@@ -618,9 +621,9 @@
     {{! Form submission handling }}
     require(['core_form/submit'], function(Submit) {
         Submit.init("loginbtn");
-        {{#canloginasguest}}
+        {{#showguestlogin}}
             Submit.init("loginguestbtn");
-        {{/canloginasguest}}
+        {{/showguestlogin}}
     });
 
     {{! Tabs layout: Clear URL hash }}
