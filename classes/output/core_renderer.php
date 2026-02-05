@@ -835,79 +835,74 @@ class core_renderer extends \theme_boost\output\core_renderer {
             ['context' => context_course::instance(SITEID), "escape" => false]
         );
 
-        // Check if the local login form is enabled.
+        // Compute show* flags for all four login types (theme setting + Moodle core).
+        // visibility is controlled in the template via these show* parameters.
+
+        // Local login: theme setting only.
         $loginlocalloginsetting = get_config('theme_boost_union', 'loginlocalloginenable');
-        $showlocallogin = ($loginlocalloginsetting != false) ? $loginlocalloginsetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
-        if ($showlocallogin == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-            // Add marker to show the local login form to template context.
-            $context->showlocallogin = true;
-        }
+        $showlocalloginenabled = ($loginlocalloginsetting != false) ? $loginlocalloginsetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
+        $context->showlocallogin = ($showlocalloginenabled == THEME_BOOST_UNION_SETTING_SELECT_YES);
 
-        // Check if the local login intro is enabled.
-        $loginlocalshowintrosetting = get_config('theme_boost_union', 'loginlocalshowintro');
-        $showlocalloginintro = ($loginlocalshowintrosetting != false) ?
-            $loginlocalshowintrosetting : THEME_BOOST_UNION_SETTING_SELECT_NO;
-        if ($showlocalloginintro == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-            // Add marker to show the local login intro to template context.
-            $context->showlocalloginintro = true;
-            // Check if custom intro text is set.
-            $loginlocalintrotext = get_config('theme_boost_union', 'loginlocalintrotext');
-            if (!empty($loginlocalintrotext)) {
-                $context->localloginintrotext = format_string(
-                    $loginlocalintrotext,
-                    true,
-                    ['context' => context_system::instance()]
-                );
-            }
-        }
-
-        // Check if the IDP login is enabled.
+        // IDP login: theme setting AND core has identity providers.
         $loginidploginenablesetting = get_config('theme_boost_union', 'loginidploginenable');
-        $showidplogin = ($loginidploginenablesetting != false) ? $loginidploginenablesetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
-        if ($showidplogin == THEME_BOOST_UNION_SETTING_SELECT_NO) {
-            // Hide identity providers if IDP login is disabled.
-            $context->hasidentityproviders = false;
-            $context->identityproviders = [];
-        }
+        $showidploginenabled = ($loginidploginenablesetting != false) ? $loginidploginenablesetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
+        $context->showidplogin = ($showidploginenabled == THEME_BOOST_UNION_SETTING_SELECT_YES) &&
+            !empty($context->hasidentityproviders) && !empty($context->identityproviders);
 
-        // Check if the IDP login intro is enabled.
-        $loginidpshowintrosetting = get_config('theme_boost_union', 'loginidpshowintro');
-        $showidploginintro = ($loginidpshowintrosetting != false) ?
-                $loginidpshowintrosetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
-        if ($showidploginintro == THEME_BOOST_UNION_SETTING_SELECT_YES && $showidplogin == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-            // Add marker to show the IDP login intro to template context.
-            $context->showidploginintro = true;
-            // Check if custom intro text is set.
-            $loginidpintrotext = get_config('theme_boost_union', 'loginidpintrotext');
-            if (!empty($loginidpintrotext)) {
-                $context->idploginintrotext = format_string($loginidpintrotext, true, ['context' => context_system::instance()]);
+        // Guest login: theme setting AND Moodle core guest login button enabled.
+        $loginguestloginenablesetting = get_config('theme_boost_union', 'loginguestloginenable');
+        $showguestloginenabled = ($loginguestloginenablesetting != false) ?
+            $loginguestloginenablesetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
+        $coreguestloginbutton = !empty(get_config('core', 'guestloginbutton'));
+        $context->showguestlogin = ($showguestloginenabled == THEME_BOOST_UNION_SETTING_SELECT_YES) && $coreguestloginbutton &&
+            !empty($context->canloginasguest);
+
+        // Self registration: theme setting AND Moodle core registerauth configured.
+        $loginselfregistrationenablesetting = get_config('theme_boost_union', 'loginselfregistrationenable');
+        $showselfregistrationenabled = ($loginselfregistrationenablesetting != false) ?
+            $loginselfregistrationenablesetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
+        $coreregisterauth = !empty(get_config('core', 'registerauth'));
+        $context->showselfregistration = ($showselfregistrationenabled == THEME_BOOST_UNION_SETTING_SELECT_YES) && $coreregisterauth &&
+            (!empty($context->cansignup) || !empty($context->hasinstructions));
+
+        // Process intro settings only when the corresponding login type is shown.
+
+        if ($context->showlocallogin) {
+            $loginlocalshowintrosetting = get_config('theme_boost_union', 'loginlocalshowintro');
+            $showlocalloginintro = ($loginlocalshowintrosetting != false) ?
+                $loginlocalshowintrosetting : THEME_BOOST_UNION_SETTING_SELECT_NO;
+            if ($showlocalloginintro == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $context->showlocalloginintro = true;
+                $loginlocalintrotext = get_config('theme_boost_union', 'loginlocalintrotext');
+                if (!empty($loginlocalintrotext)) {
+                    $context->localloginintrotext = format_string(
+                        $loginlocalintrotext,
+                        true,
+                        ['context' => context_system::instance()]
+                    );
+                }
             }
         }
 
-        // Check if guest login is enabled.
-        // The guest login should be shown only if BOTH conditions are met:
-        // 1. The theme setting 'loginguestloginenable' is enabled.
-        // 2. The Moodle core setting 'guestloginbutton' is enabled.
-        $loginguestloginenablesetting = get_config('theme_boost_union', 'loginguestloginenable');
-        $showguestlogin = ($loginguestloginenablesetting != false) ?
-                $loginguestloginenablesetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
+        if ($context->showidplogin) {
+            $loginidpshowintrosetting = get_config('theme_boost_union', 'loginidpshowintro');
+            $showidploginintro = ($loginidpshowintrosetting != false) ?
+                $loginidpshowintrosetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
+            if ($showidploginintro == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $context->showidploginintro = true;
+                $loginidpintrotext = get_config('theme_boost_union', 'loginidpintrotext');
+                if (!empty($loginidpintrotext)) {
+                    $context->idploginintrotext = format_string($loginidpintrotext, true, ['context' => context_system::instance()]);
+                }
+            }
+        }
 
-        // Check Moodle core's "Guest login button" setting.
-        $coreguestloginbutton = !empty(get_config('core', 'guestloginbutton'));
-
-        // Show guest login only if both theme setting AND core setting are enabled.
-        if ($showguestlogin == THEME_BOOST_UNION_SETTING_SELECT_YES && $coreguestloginbutton) {
-            // Add marker to show guest login to template context.
-            $context->canloginasguest = true;
-
-            // Check if the guest login intro is enabled.
+        if ($context->showguestlogin) {
             $loginguestshowintrosetting = get_config('theme_boost_union', 'loginguestshowintro');
             $showguestloginintro = ($loginguestshowintrosetting != false) ?
                 $loginguestshowintrosetting : THEME_BOOST_UNION_SETTING_SELECT_NO;
             if ($showguestloginintro == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                // Add marker to show the guest login intro to template context.
                 $context->showguestloginintro = true;
-                // Check if custom intro text is set.
                 $loginguestintrotext = get_config('theme_boost_union', 'loginguestintrotext');
                 if (!empty($loginguestintrotext)) {
                     $context->guestloginintrotext = format_string(
@@ -917,36 +912,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     );
                 }
             }
-        } else {
-            // Hide guest login if either setting is disabled.
-            $context->canloginasguest = false;
         }
 
-        // Check if self registration is enabled.
-        // The self registration should be shown only if BOTH conditions are met:
-        // 1. The theme setting 'loginselfregistrationenable' is enabled.
-        // 2. The Moodle core setting 'registerauth' is configured (not empty).
-        $loginselfregistrationenablesetting = get_config('theme_boost_union', 'loginselfregistrationenable');
-        $showselfregistration = ($loginselfregistrationenablesetting != false) ?
-                $loginselfregistrationenablesetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
-
-        // Check Moodle core's "Self registration" setting.
-        // This follows the same logic as Moodle core: checks if registerauth is set.
-        $coreregisterauth = !empty(get_config('core', 'registerauth'));
-
-        // Show self registration only if both theme setting AND core setting are enabled.
-        if ($showselfregistration == THEME_BOOST_UNION_SETTING_SELECT_YES && $coreregisterauth) {
-            // Note: cansignup is already set by the login form context from Moodle core.
-            // We preserve it here, but will hide it below if either setting is disabled.
-
-            // Check if the self registration intro is enabled.
+        if ($context->showselfregistration) {
             $loginselfregistrationshowintrosetting = get_config('theme_boost_union', 'loginselfregistrationshowintro');
             $showselfregistrationloginintro = ($loginselfregistrationshowintrosetting != false) ?
                 $loginselfregistrationshowintrosetting : THEME_BOOST_UNION_SETTING_SELECT_NO;
             if ($showselfregistrationloginintro == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                // Add marker to show the self registration intro to template context.
                 $context->showselfregistrationloginintro = true;
-                // Check if custom intro text is set.
                 $loginselfregistrationintrotext = get_config('theme_boost_union', 'loginselfregistrationintrotext');
                 if (!empty($loginselfregistrationintrotext)) {
                     $context->selfregistrationloginintrotext = format_string(
@@ -956,9 +929,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     );
                 }
             }
-        } else {
-            // Hide self registration if either setting is disabled.
-            $context->cansignup = false;
         }
 
         // Check login layout setting.
@@ -994,13 +964,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     'type' => 'local',
                     'islocal' => true,
                     'isidp' => false,
-                    'issignup' => false,
+                    'isfirsttimesignup' => false,
                     'isguest' => false,
+                    'isfirst' => false,
                 ];
             }
 
             // Method: IDP login.
-            if (!empty($context->hasidentityproviders) && !empty($context->identityproviders)) {
+            if (!empty($context->showidplogin)) {
                 $order = get_config('theme_boost_union', 'loginorderidp');
                 if ($order === false) {
                     $order = 2; // Default order.
@@ -1012,36 +983,33 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     'type' => 'idp',
                     'islocal' => false,
                     'isidp' => true,
-                    'issignup' => false,
+                    'isfirsttimesignup' => false,
                     'isguest' => false,
+                    'isfirst' => false,
                 ];
             }
 
             // Method: Self registration.
-            // Only show if self registration is enabled in theme settings AND (signup is allowed OR instructions exist).
-            // Reuse $showselfregistration from earlier check (line 703).
-            if (
-                $showselfregistration == THEME_BOOST_UNION_SETTING_SELECT_YES &&
-                    (!empty($context->cansignup) || !empty($context->hasinstructions))
-            ) {
+            if (!empty($context->showselfregistration)) {
                 $order = get_config('theme_boost_union', 'loginorderfirsttimesignup');
                 if ($order === false) {
                     $order = 3; // Default order.
                 }
                 $loginmethods[] = (object)[
                     'id' => 'theme_boost_union-loginorder-firsttimesignup',
-                    'name' => 'signup',
+                    'name' => 'firsttimesignup',
                     'order' => $order,
-                    'type' => 'signup',
+                    'type' => 'firsttimesignup',
                     'islocal' => false,
                     'isidp' => false,
-                    'issignup' => true,
+                    'isfirsttimesignup' => true,
                     'isguest' => false,
+                    'isfirst' => false,
                 ];
             }
 
             // Method: Guest login.
-            if (!empty($context->canloginasguest)) {
+            if (!empty($context->showguestlogin)) {
                 $order = get_config('theme_boost_union', 'loginorderguest');
                 if ($order === false) {
                     $order = 4; // Default order.
@@ -1053,8 +1021,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     'type' => 'guest',
                     'islocal' => false,
                     'isidp' => false,
-                    'issignup' => false,
+                    'isfirsttimesignup' => false,
                     'isguest' => true,
+                    'isfirst' => false,
                 ];
             }
 
@@ -1073,33 +1042,21 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS ||
                     $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION
             ) {
+                $logintablabelconfigs = [
+                    'local' => ['config' => 'loginlocallogintablabel', 'default' => 'loginlocallogintablabelsetting_default'],
+                    'idp' => ['config' => 'loginidplogintablabel', 'default' => 'loginidplogintablabelsetting_default'],
+                    'firsttimesignup' => ['config' => 'loginselfregistrationlogintablabel', 'default' => 'loginselfregistrationlogintablabelsetting_default'],
+                    'guest' => ['config' => 'loginguestlogintablabel', 'default' => 'loginguestlogintablabelsetting_default'],
+                ];
                 foreach ($loginmethods as $method) {
-                    $label = '';
-                    switch ($method->name) {
-                        case 'local':
-                            $label = get_config('theme_boost_union', 'loginlocalloginlabel');
-                            if ($label === false || empty($label)) {
-                                $label = 'Local login'; // Default.
-                            }
-                            break;
-                        case 'idp':
-                            $label = get_config('theme_boost_union', 'loginidploginlabel');
-                            if ($label === false || empty($label)) {
-                                $label = 'IDP login'; // Default.
-                            }
-                            break;
-                        case 'signup':
-                            $label = get_config('theme_boost_union', 'loginselfregistrationloginlabel');
-                            if ($label === false || empty($label)) {
-                                $label = 'Self Registration'; // Default.
-                            }
-                            break;
-                        case 'guest':
-                            $label = get_config('theme_boost_union', 'loginguestloginlabel');
-                            if ($label === false || empty($label)) {
-                                $label = 'Guest Login'; // Default.
-                            }
-                            break;
+                    $labelconfig = $logintablabelconfigs[$method->name] ?? null;
+                    if ($labelconfig !== null) {
+                        $label = get_config('theme_boost_union', $labelconfig['config']);
+                        if ($label === false || $label === '') {
+                            $label = get_string($labelconfig['default'], 'theme_boost_union');
+                        }
+                    } else {
+                        $label = '';
                     }
                     $method->label = $label;
                 }
@@ -1111,23 +1068,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 if ($primarylogin === false) {
                     $primarylogin = 'none';
                 }
-                // Set flags for which accordion item should be open.
+                // Set flag for which accordion item should be open.
                 if ($primarylogin != 'none') {
-                    switch ($primarylogin) {
-                        case 'local':
-                            $context->activeaccordionlocal = true;
-                            break;
-                        case 'idp':
-                            $context->activeaccordionidp = true;
-                            break;
-                        case 'firsttimesignup':
-                        case 'signup':
-                            $context->activeaccordionsignup = true;
-                            break;
-                        case 'guest':
-                            $context->activeaccordionguest = true;
-                            break;
-                    }
+                    $context->{'activeaccordion' . $primarylogin} = true;
                 }
             }
 
@@ -1160,12 +1103,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             if ($primarylogin === false) {
                 $primarylogin = 'none';
             }
-
-            // Map 'firsttimesignup' to 'signup' for tab matching.
             $activetabname = ($primarylogin != 'none') ? $primarylogin : null;
-            if ($activetabname === 'firsttimesignup') {
-                $activetabname = 'signup';
-            }
 
             // Set the active tab and update context flags.
             // First, find which tab should be active.
@@ -1184,26 +1122,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $activetab = $tabs[0];
             }
 
-            // Now set active flag only on the selected tab.
+            // Now set active flag only on the selected tab and the corresponding context flag.
             foreach ($tabs as $tab) {
                 $tab->active = ($tab === $activetab);
-
                 if ($tab->active) {
-                    // Set the active flag for the corresponding tab content.
-                    switch ($tab->name) {
-                        case 'local':
-                            $context->activetablocal = true;
-                            break;
-                        case 'idp':
-                            $context->activetabidp = true;
-                            break;
-                        case 'signup':
-                            $context->activetabsignup = true;
-                            break;
-                        case 'guest':
-                            $context->activetabguest = true;
-                            break;
-                    }
+                    $context->{'activetab' . $tab->name} = true;
                 }
             }
 

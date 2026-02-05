@@ -380,6 +380,10 @@
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
+        margin-left: 20px;
+        margin-right: 20px;
+        /* Prevent wrapper from extending beyond viewport when tabs are wide */
+        max-width: 100%;
     }
 
     /* Respect login form position setting when tabs are present. */
@@ -395,10 +399,9 @@
     .login-wrapper:has(.loginform #login-tabs)::before {
         content: '';
         flex: 0 0 auto;
-        /* Calculate height to center: (100vh - estimated container height) / 2 */
         /* Use a reasonable fixed height that centers most containers */
-        height: calc(50vh - 300px);
-        min-height: 2rem;
+        height: calc(50vh - 330px);
+        min-height: 0px;
         max-height: 50vh;
         order: -1;
     }
@@ -411,10 +414,11 @@
         order: 1;
     }
 
-    /* Container in the middle, doesn't shrink. */
+    /* Container in the middle; allow shrink so it stays inside wrapper on narrow widths. */
     .login-wrapper:has(.loginform #login-tabs) .login-container {
         flex: 0 0 auto;
         order: 0;
+        min-width: 0;
     }
 }
 
