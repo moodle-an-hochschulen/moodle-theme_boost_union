@@ -579,6 +579,11 @@ $string['courseheaderformatexclusionlist_desc'] = 'With this setting, you can ex
 $string['courseheaderimporttransfer'] = 'Transfer course-specific header settings during course import';
 $string['courseheaderimporttransfer_desc'] = 'With this setting, you can control whether course header settings and the course header image which have been set within a particular course\'s settings are transferred to another course within a course import. If set to "Always", all course header settings will be copied from the source course to the destination course, regardless if the teacher imports a whole course or just a fraction of a course. If set to "Never", course header settings will not be transferred. If set to "Controlled by capability", the transfer depends on whether the user performing the import has the capability "theme/boost_union:transfercourseheaderduringimport" in the destination course. However, allowing the teacher to decide this question on a per-case basis during the import process is not possible due to technical limitations of Moodle core.';
 $string['courseheaderrestoreoption'] = 'Include course header settings';
+// ... Section: Breadcrumbs.
+$string['breadcrumbsheading'] = 'Breadcrumbs';
+// ... ... Setting: Course category breadcrumb.
+$string['categorybreadcrumbs'] = 'Display the category breadcrumbs in the course header';
+$string['categorybreadcrumbs_desc'] = 'By default, the course category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the course category breadcrumbs in the course header above the course name.';
 // ... Section: Course index.
 $string['courseindexheading'] = 'Course Index';
 // ... ... Setting: Course index.
@@ -737,11 +742,6 @@ $string['shownavbarstarredcourses_label'] = 'Starred courses';
 // ... ... Setting: Starred courses popover cog icon link target.
 $string['starredcourseslinktargetsetting'] = 'Starred courses popover cog icon link target';
 $string['starredcourseslinktargetsetting_desc'] = 'With this setting, you can set the link target of the cog icon in the starred courses popover. By default, the cog icon links to the \'My courses\' page. However, you can also link to the \'Dashboard\' page, especially if you have disabled the \'My courses\' page in the primary navigation.';
-// ... Section: Breadcrumbs.
-$string['breadcrumbsheading'] = 'Breadcrumbs';
-// ... ... Setting: Course category breadcrumb.
-$string['categorybreadcrumbs'] = 'Display the category breadcrumbs in the course header';
-$string['categorybreadcrumbs_desc'] = 'By default, the course category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the course category breadcrumbs in the course header above the course name.';
 // ... Section: Navigation.
 $string['navigationheading'] = 'Navigation';
 // ... ... Setting: Back to top button.
