@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-02-03 - Bugfix: Site support form success message was shown below blocks or advert tiles on frontpage, resolves #488
 * 2026-02-01 - Feature: Add dark variant setting for the slider, resolves #914
 * 2026-02-01 - Feature: Add individual carousel item interval setting for each slide, resolves #915
 * 2026-02-01 - Bug: Changing the activity icon purpose of LTI activities did not have an effect in the activity chooser, resolves #690
