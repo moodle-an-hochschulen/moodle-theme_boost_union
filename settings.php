@@ -685,13 +685,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $tab->add($setting);
 
         // Define all activity icon purposes (without the 'other' purpose as this is not branded).
-        $purposes = [MOD_PURPOSE_ADMINISTRATION,
-                MOD_PURPOSE_ASSESSMENT,
-                MOD_PURPOSE_COLLABORATION,
-                MOD_PURPOSE_COMMUNICATION,
-                MOD_PURPOSE_CONTENT,
-                MOD_PURPOSE_INTERACTIVECONTENT,
-                MOD_PURPOSE_INTERFACE];
+        $purposes = theme_boost_union_get_activity_purposes(false);
         // Iterate over all purposes.
         foreach ($purposes as $purpose) {
             // Setting: Activity icon color.
@@ -717,17 +711,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, $description);
         $tab->add($setting);
 
-        // Prepare activity purposes.
-        $purposesoptions = [
-                MOD_PURPOSE_ADMINISTRATION => get_string('activitypurposeadministration', 'theme_boost_union'),
-                MOD_PURPOSE_ASSESSMENT => get_string('activitypurposeassessment', 'theme_boost_union'),
-                MOD_PURPOSE_COLLABORATION => get_string('activitypurposecollaboration', 'theme_boost_union'),
-                MOD_PURPOSE_COMMUNICATION => get_string('activitypurposecommunication', 'theme_boost_union'),
-                MOD_PURPOSE_CONTENT => get_string('activitypurposecontent', 'theme_boost_union'),
-                MOD_PURPOSE_INTERACTIVECONTENT => get_string('activitypurposeinteractivecontent', 'theme_boost_union'),
-                MOD_PURPOSE_INTERFACE => get_string('activitypurposeinterface', 'theme_boost_union'),
-                MOD_PURPOSE_OTHER => get_string('activitypurposeother', 'theme_boost_union'),
-        ];
+        // Prepare activity purposes (including the 'other' purpose).
+        $purposes = theme_boost_union_get_activity_purposes(true);
+        $purposesoptions = [];
+        foreach ($purposes as $purpose) {
+            $purposesoptions[$purpose] = get_string('activitypurpose' . $purpose, 'theme_boost_union');
+        }
         // Get installed activity modules.
         $installedactivities = get_module_types_names();
         // Iterate over all existing activities.
@@ -1437,6 +1426,52 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Heading: Course overview images.
+        $name = 'theme_boost_union/courseoverviewimageheading';
+        $title = get_string('courseoverviewimageheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Course overview image source.
+        $name = 'theme_boost_union/courseoverviewimagesource';
+        $title = get_string('courseoverviewimagesourcesetting', 'theme_boost_union', null, true);
+        $description = get_string('courseoverviewimagesourcesetting_desc', 'theme_boost_union', null, true);
+        $courseoverviewimagesourceoptions = [
+                THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSPATTERN =>
+                        get_string('courseoverviewimagesource_coursepluspattern', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSFALLBACK =>
+                        get_string('courseoverviewimagesource_courseplusfallback', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSPATTERN,
+            $courseoverviewimagesourceoptions
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Course overview fallback image.
+        $name = 'theme_boost_union/courseoverviewimagefallback';
+        $title = get_string('courseoverviewimagefallback', 'theme_boost_union', null, true);
+        $description = get_string('courseoverviewimagefallback_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configstoredfile(
+            $name,
+            $title,
+            $description,
+            'courseoverviewimagefallback',
+            0,
+            ['maxfiles' => 1, 'accepted_types' => ['web_image']]
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/courseoverviewimagefallback',
+            'theme_boost_union/courseoverviewimagesource',
+            'neq',
+            THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSFALLBACK
+        );
+
         // Add tab to settings page.
         $page->add($tab);
 
@@ -1584,6 +1619,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $courseprogressstyleoptions
         );
         $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/courselistingprogressstyle',
+            'theme_boost_union/courselistingpresentation',
+            'eq',
+            THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE
+        );
         $page->hide_if(
             'theme_boost_union/courselistingprogressstyle',
             'theme_boost_union/courselistinghowprogress',
@@ -3912,6 +3953,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
         $tab->add($setting);
 
+        // Setting: Slider variant.
+        $name = 'theme_boost_union/slidervariant';
+        $title = get_string('slidervariantsetting', 'theme_boost_union', null, true);
+        $description = get_string('slidervariantsetting_desc', 'theme_boost_union', null, true);
+        $slidervariantoptions = [
+                THEME_BOOST_UNION_SETTING_SLIDER_VARIANT_LIGHT =>
+                        get_string('slidervariantsetting_light', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_SLIDER_VARIANT_DARK =>
+                        get_string('slidervariantsetting_dark', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_SLIDER_VARIANT_LIGHT,
+            $slidervariantoptions
+        );
+        $tab->add($setting);
+
         // Setting: Slider interval speed.
         $name = 'theme_boost_union/sliderinterval';
         $title = get_string('sliderintervalsetting', 'theme_boost_union', null, true);
@@ -4071,6 +4131,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $title = get_string('slidecontentstylesetting', 'theme_boost_union', ['no' => $i], true);
             $description = get_string('slidecontentstylesetting_desc', 'theme_boost_union', ['no' => $i], true);
             $slidecontentstyleoptions = [
+                    THEME_BOOST_UNION_SETTING_CONTENTSTYLE_NOCHANGE =>
+                            get_string('slidecontentstylesetting_nochange', 'theme_boost_union'),
                     THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHT =>
                             get_string('slidecontentstylesetting_light', 'theme_boost_union'),
                     THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHTSHADOW =>
@@ -4084,7 +4146,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 $name,
                 $title,
                 $description,
-                THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHT,
+                THEME_BOOST_UNION_SETTING_CONTENTSTYLE_NOCHANGE,
                 $slidecontentstyleoptions
             );
             $tab->add($setting);
@@ -4180,6 +4242,20 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
             $page->hide_if(
                 'theme_boost_union/slide' . $i . 'order',
+                'theme_boost_union/slide' . $i . 'enabled',
+                'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES
+            );
+
+            // Setting: Slide interval.
+            $name = 'theme_boost_union/slide' . $i . 'interval';
+            $title = get_string('slideintervalsetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('slideintervalsetting_desc', 'theme_boost_union', ['no' => $i], true);
+            // Here, we us a regex instead of PARAM_INT to allow an empty value (which means using the default interval) as well.
+            $setting = new admin_setting_configtext($name, $title, $description, '', '/^\d*$/', 6);
+            $tab->add($setting);
+            $page->hide_if(
+                'theme_boost_union/slide' . $i . 'interval',
                 'theme_boost_union/slide' . $i . 'enabled',
                 'neq',
                 THEME_BOOST_UNION_SETTING_SELECT_YES

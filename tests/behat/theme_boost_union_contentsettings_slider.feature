@@ -113,6 +113,19 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | 1       | should           | should not          |
       | 2       | should           | should              |
 
+  Scenario Outline: Setting: Slider - Slider variant
+    Given the following config values are set as admin:
+      | config        | value     | plugin            |
+      | slidervariant | <setting> | theme_boost_union |
+    When I log in as "teacher1"
+    And I am on site homepage
+    Then "#themeboostunionslider.carousel-dark" "css_element" <shouldornot> exist
+
+    Examples:
+      | setting | shouldornot |
+      | dark    | should      |
+      | light   | should not  |
+
   Scenario Outline: Setting: Slider - Slider interval speed
     Given the following config values are set as admin:
       | config         | value     | plugin            |
@@ -343,6 +356,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
   Scenario Outline: Setting: Slider - Display the configured content style
     Given the following config values are set as admin:
       | config             | value                              | plugin            |
+      | slidervariant      | light                              | theme_boost_union |
       | slide1contentstyle | <style>                            | theme_boost_union |
       | slide1content      | This is a test content for slide 1 | theme_boost_union |
     When I log in as "teacher1"
@@ -351,8 +365,36 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
     And "//div[@id='themeboostunionslide1']//div[contains(@class, 'carousel-caption') and contains(@class, '<shouldnotclass1>')]" "xpath_element" should not exist
     And "//div[@id='themeboostunionslide1']//div[contains(@class, 'carousel-caption') and contains(@class, '<shouldnotclass2>')]" "xpath_element" should not exist
 
-    # We do not want to burn too much CPU time by testing all available options. We just test the default value and a non-default values.
+    # We do not want to burn too much CPU time by testing all available options. We just test the nochange default value and two non-default values.
     Examples:
-      | style      | shouldclass      | shouldnotclass1   | shouldnotclass2   |
-      | light      | slide-light      | slide-lightshadow | slide-dark        |
-      | darkshadow | slide-darkshadow | slide-lightshadow | slide-light       |
+      | style      | shouldclass      | shouldnotclass1 | shouldnotclass2  |
+      | nochange   | slide-nochange   | slide-light     | slide-darkshadow |
+      | light      | slide-light      | slide-nochange  | slide-darkshadow |
+      | darkshadow | slide-darkshadow | slide-nochange  | slide-light      |
+
+  Scenario Outline: Setting: Slider - Individual slide interval
+    Given the following config values are set as admin:
+      | config         | value | plugin            |
+      | sliderinterval | 5000  | theme_boost_union |
+    Given the following config values are set as admin:
+      | config          | value                              | plugin            |
+      | slide1interval  | <slide1interval>                   | theme_boost_union |
+      | slide2enabled   | yes                                | theme_boost_union |
+      | slide2caption   | Slide 2                            | theme_boost_union |
+      | slide2content   | This is a test content for slide 2 | theme_boost_union |
+      | slide2interval  | <slide2interval>                   | theme_boost_union |
+    And the following "theme_boost_union > setting files" exist:
+      | filearea              | filepath                                       |
+      | slide2backgroundimage | theme/boost_union/tests/fixtures/login_bg2.png |
+    When I log in as "teacher1"
+    And I am on site homepage
+    Then the "data-bs-interval" attribute of "#themeboostunionslider" "css_element" should contain "5000"
+    And the "data-bs-interval" attribute of "#themeboostunionslide1" "css_element" <slide1attribute>
+    And the "data-bs-interval" attribute of "#themeboostunionslide2" "css_element" <slide2attribute>
+
+    Examples:
+      | slide1interval | slide2interval | slide1attribute       | slide2attribute       |
+      | 3000           | 5000           | should contain "3000" | should contain "5000" |
+      | 2500           |                | should contain "2500" | should not be set     |
+      |                | 7000           | should not be set     | should contain "7000" |
+      |                |                | should not be set     | should not be set     |

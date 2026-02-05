@@ -65,11 +65,16 @@ define('THEME_BOOST_UNION_SETTING_SLIDER_RIDE_NEVER', 2);
 define('THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_BOTH', 0);
 define('THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_IMAGE', 1);
 define('THEME_BOOST_UNION_SETTING_SLIDER_LINKSOURCE_TEXT', 2);
+define('THEME_BOOST_UNION_SETTING_SLIDER_VARIANT_LIGHT', 'light');
+define('THEME_BOOST_UNION_SETTING_SLIDER_VARIANT_DARK', 'dark');
 
 define('THEME_BOOST_UNION_SETTING_HEIGHT_100PX', '100px');
 define('THEME_BOOST_UNION_SETTING_HEIGHT_150PX', '150px');
 define('THEME_BOOST_UNION_SETTING_HEIGHT_200PX', '200px');
 define('THEME_BOOST_UNION_SETTING_HEIGHT_250PX', '250px');
+
+define('THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSPATTERN', 'coursepluspattern');
+define('THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSFALLBACK', 'courseplusfallback');
 
 define('THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER', 'center center');
 define('THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_TOP', 'center top');
@@ -341,14 +346,8 @@ function theme_boost_union_get_pre_scss($theme) {
         $scss .= '$drawer-right-width: ' . get_config('theme_boost_union', 'blockdrawerwidth') . ";\n";
     }
 
-    // Set variables which are influenced by the activityiconcolor* settings.
-    $purposes = [MOD_PURPOSE_ADMINISTRATION,
-            MOD_PURPOSE_ASSESSMENT,
-            MOD_PURPOSE_COLLABORATION,
-            MOD_PURPOSE_COMMUNICATION,
-            MOD_PURPOSE_CONTENT,
-            MOD_PURPOSE_INTERACTIVECONTENT,
-            MOD_PURPOSE_INTERFACE];
+    // Set variables which are influenced by the activityiconcolor* settings (without the 'other' purpose as this is not branded).
+    $purposes = theme_boost_union_get_activity_purposes(false);
     // Iterate over all purposes.
     foreach ($purposes as $purpose) {
         // Get color setting from global settings.
@@ -685,6 +684,7 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         $context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'backgroundimage' ||
         $filearea === 'loginbackgroundimage' || $filearea === 'additionalresources' ||
                 $filearea === 'customfonts' || $filearea === 'courseheaderimagefallback' ||
+                $filearea === 'courseoverviewimagefallback' ||
                 $filearea === 'touchiconsios' || $filearea === 'uploadedsnippets' ||
                 preg_match("/tile[2-9]|1[0-2]backgroundimage?/", $filearea) ||
                 preg_match("/slide[2-9]|1[0-2]?backgroundimage/", $filearea))

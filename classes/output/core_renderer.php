@@ -1030,6 +1030,82 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     /**
+     * Returns course-specific information to be output immediately above content on any course page
+     * (for the current course)
+     *
+     * This renderer function is copied and modified from /lib/classes/output/core_renderer.php
+     *
+     * It is based on the standard_end_of_body_html() function but was split into two parts
+     * (for the additionalhtmlfooter and the unique endtoken) to be requested individually in footer.mustache
+     * in Boost Union.
+     *
+     * @param bool $onlyifnotcalledbefore output content only if it has not been output before
+     * @return string
+     */
+    public function course_content_header_notifications($onlyifnotcalledbefore = false) {
+        static $functioncalled = false;
+        if ($functioncalled && $onlyifnotcalledbefore) {
+            // We have already output the notifications.
+            return '';
+        }
+
+        // Output any session notification.
+        $notifications = \core\notification::fetch();
+
+        $bodynotifications = '';
+        foreach ($notifications as $notification) {
+            $bodynotifications .= $this->render_from_template(
+                $notification->get_template_name(),
+                $notification->export_for_template($this)
+            );
+        }
+
+        $output = html_writer::span($bodynotifications, 'notifications', ['id' => 'user-notifications']);
+
+        $functioncalled = true;
+
+        return $output;
+    }
+
+    /**
+     * Returns course-specific information to be output immediately above content on any course page
+     * (for the current course)
+     *
+     * This renderer function is copied and modified from /lib/classes/output/core_renderer.php
+     *
+     * It is based on the standard_end_of_body_html() function but was split into two parts
+     * (for the additionalhtmlfooter and the unique endtoken) to be requested individually in footer.mustache
+     * in Boost Union.
+     *
+     * @param bool $onlyifnotcalledbefore output content only if it has not been output before
+     * @return string
+     */
+    public function course_content_header_coursecontent($onlyifnotcalledbefore = false) {
+        global $CFG;
+
+        static $functioncalled = false;
+        if ($functioncalled && $onlyifnotcalledbefore) {
+            // We have already output the course content header.
+            return '';
+        }
+
+        $output = '';
+
+        if ($this->page->course->id == SITEID) {
+            // Return immediately and do not include /course/lib.php if not necessary.
+            return $output;
+        }
+
+        require_once($CFG->dirroot . '/course/lib.php');
+        $functioncalled = true;
+        $courseformat = course_get_format($this->page->course);
+        if (($obj = $courseformat->course_content_header()) !== null) {
+            $output .= html_writer::div($courseformat->get_renderer($this->page)->render($obj), 'course-content-header');
+        }
+        return $output;
+    }
+
+    /**
      * The standard tags (typically script tags that are not needed earlier) that
      * should be output after everything else. Designed to be called in theme layout.php files.
      *
@@ -1117,6 +1193,49 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // Return the parent header() output.
         return $output;
+    }
+
+    /**
+     * Get the course pattern datauri to show on a course card.
+     *
+     * This renderer function is copied and modified from /lib/classes/output/core_renderer.php
+     *
+     * @param int $id Id to use when generating the pattern
+     * @return string datauri or URL to fallback image
+     */
+    public function get_generated_image_for_id($id) {
+        // Get the course overview image source setting.
+        $imagesource = get_config('theme_boost_union', 'courseoverviewimagesource');
+
+        // If not set, use the default (course image with pattern fallback).
+        if (!$imagesource) {
+            $imagesource = THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSPATTERN;
+        }
+
+        // Handle the different image source options.
+        switch ($imagesource) {
+            // Option 1: Course image with pattern fallback (default Moodle behavior).
+            case THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSPATTERN:
+                return parent::get_generated_image_for_id($id);
+
+            // Option 2: Course image with fallback image.
+            case THEME_BOOST_UNION_SETTING_COURSEOVERVIEWIMAGESOURCE_COURSEPLUSFALLBACK:
+                // This function is called only if there is no course image and the caller is requesting
+                // the course pattern image as fallback. We do not need to check for the course image here,
+                // just return the fallback image instead of the pattern.
+
+                // Try to get and return the fallback image.
+                $fallbackimageurl = theme_boost_union_get_course_overview_fallback_image_url();
+                if ($fallbackimageurl !== null) {
+                    return $fallbackimageurl->out();
+                }
+                // If no fallback image is configured, use the pattern.
+                return parent::get_generated_image_for_id($id);
+
+            // Default fallback.
+            default:
+                return parent::get_generated_image_for_id($id);
+        }
     }
 
     /**

@@ -243,6 +243,12 @@ With this setting, you can control whether the course image is visible inside th
 
 With this setting, you can control whether the course completion progress is visible inside the course overview block or not.
 
+##### Course overview images
+
+###### Course overview image source
+
+With this setting, you control the source of the image which is shown in the course overview block, on the category index pages and on the course list on site home. The main source for this image is the course image which is uploaded in the particular course's settings. If this image is not available, you can choose if you want to show a generated geometric pattern or a fallback course overview image.
+
 #### Tab "Category index / Site home"
 
 ##### Course listing

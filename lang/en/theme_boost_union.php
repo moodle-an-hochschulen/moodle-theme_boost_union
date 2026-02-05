@@ -424,6 +424,16 @@ $string['courseoverviewshowcourseimagessetting_desc'] = 'With this setting, you 
 // ... ... Setting: Show course completion progress.
 $string['courseoverviewshowprogresssetting'] = 'Show course completion progress';
 $string['courseoverviewshowprogresssetting_desc'] = 'With this setting, you can control whether the course completion progress is visible inside the course overview block or not.';
+// ... Section: Course overview images.
+$string['courseoverviewimageheading'] = 'Course overview images';
+// ... ... Setting: Course overview image source.
+$string['courseoverviewimagesourcesetting'] = 'Course overview image source';
+$string['courseoverviewimagesourcesetting_desc'] = 'With this setting, you control the source of the image which is shown in the course overview block, on the category index pages and on the course list on site home. The main source for this image is the course image which is uploaded in the particular course\'s settings. If this image is not available, you can choose if you want to show a generated geometric pattern or a fallback course overview image.<br />Please note: If you use the geometric pattern, you can customize the pattern colors on the <a href="/admin/settings.php?section=coursecolors">course colors settings page</a>.';
+$string['courseoverviewimagesource_coursepluspattern'] = 'Course image with a fallback to a geometric pattern (unchanged as presented by Moodle core)';
+$string['courseoverviewimagesource_courseplusfallback'] = 'Course image with a fallback to the course overview fallback image';
+// ... ... Setting: Course overview fallback image.
+$string['courseoverviewimagefallback'] = 'Course overview fallback image';
+$string['courseoverviewimagefallback_desc'] = 'The image which you upload here will be used as a fallback course overview image as soon as the \'Course overview image source\' setting is configured likewise.<br />Please note: If you configure the \'Course overview image source\' setting to use the course overview fallback image, but you do not upload any image here, the geometric pattern will be used as a fallback anyway.';
 
 // Settings: Category index / site home tab.
 $string['categoryindextab'] = 'Category index / Site home';
@@ -1140,6 +1150,10 @@ $string['slideranimationsetting'] = 'Slider animation type';
 $string['slideranimationsetting_desc'] = 'With this setting, you control the slider animation. \'Slide\' applies a sliding animation and \'Fade\' applies a fading animation.';
 $string['slideranimationsetting_fade'] = 'Fade';
 $string['slideranimationsetting_slide'] = 'Slide';
+$string['slidervariantsetting'] = 'Slider variant';
+$string['slidervariantsetting_desc'] = 'With this setting, you can control the variant of the slider. The light variant uses light colors for the controls, indicators, and captions (for dark backgrounds), while the dark variant uses dark colors for these elements (for light backgrounds).';
+$string['slidervariantsetting_dark'] = 'Dark variant (for light backgrounds)';
+$string['slidervariantsetting_light'] = 'Light variant (for dark backgrounds)';
 $string['sliderarrownavsetting'] = 'Enable arrow navigation';
 $string['sliderarrownavsetting_desc'] = 'With this setting, you can add navigation arrows on both sides of the slider.';
 $string['sliderfrontpagepositionsetting'] = 'Position of the slider on site home';
@@ -1176,9 +1190,10 @@ $string['slidecontentsetting_desc'] = 'Here, you enter the content which should 
 $string['slidecontentstylesetting'] = 'Slide {$a->no} content style';
 $string['slidecontentstylesetting_dark'] = 'Dark (black font color for light background images)';
 $string['slidecontentstylesetting_darkshadow'] = 'Dark & Shadow (black font color with a light shadow for light background images)';
-$string['slidecontentstylesetting_desc'] = 'Here, you can modify the style of the content of slide {$a->no}. By default, the content style is a white font color for dark background images. However, to allow consistent and easy styling on all kinds of background images, you can override the style here. Please note that this setting will overrrule the font color which you set in the rich-text editor above in any case.';
+$string['slidecontentstylesetting_desc'] = 'Here, you can modify the style of the content of slide {$a->no}. By default, the content style is controlled by the configured slider variant and can just be overruled by setting a font color in the rich-text editor. However, to allow consistent and easy styling on particular background images, you can override the content style here as well.';
 $string['slidecontentstylesetting_light'] = 'Light (white font color for dark background images)';
 $string['slidecontentstylesetting_lightshadow'] = 'Light & Shadow (white font color with a dark shadow for dark background images)';
+$string['slidecontentstylesetting_nochange'] = 'Controlled by slider variant';
 $string['slideenabledsetting'] = 'Enable slide {$a->no}';
 $string['slideenabledsetting_desc'] = 'With this setting, you can enable slide {$a->no}.';
 $string['slidelinksetting'] = 'Slide {$a->no} link URL';
@@ -1196,6 +1211,8 @@ $string['slidelinktargetsetting_samewindow'] = 'Same window';
 $string['slidelinktargetsetting_newtab'] = 'New tab';
 $string['slideordersetting'] = 'Slide {$a->no} order position';
 $string['slideordersetting_desc'] = 'With this setting, you define the order position of the slide {$a->no}. By default, the slides are ordered as you see them on this settings page here. However, you can decide to assign another order position with this setting. If you assign the same order position to two or more slides, they will be ordered again according to the order on this settings page.';
+$string['slideintervalsetting'] = 'Slide {$a->no} individual interval';
+$string['slideintervalsetting_desc'] = 'With this setting, you can set an individual interval for slide {$a->no} in milliseconds. This will override the global slider interval setting for this particular slide. If you leave this empty, the slide will use the global interval setting.';
 
 // Settings: Functionality page.
 $string['configtitlefunctionality'] = 'Functionality';

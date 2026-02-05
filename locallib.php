@@ -23,6 +23,32 @@
  */
 
 /**
+ * Get all activity purposes which are available in the current Moodle version.
+ * This function returns all activity purposes, but excludes MOD_PURPOSE_INTERFACE for Moodle 5.2+
+ * where this constant has been removed.
+ *
+ * @param bool $includeother Whether to include MOD_PURPOSE_OTHER in the returned array.
+ * @return array Array of activity purpose constants.
+ */
+function theme_boost_union_get_activity_purposes($includeother = false) {
+    $purposes = [MOD_PURPOSE_ADMINISTRATION,
+            MOD_PURPOSE_ASSESSMENT,
+            MOD_PURPOSE_COLLABORATION,
+            MOD_PURPOSE_COMMUNICATION,
+            MOD_PURPOSE_CONTENT,
+            MOD_PURPOSE_INTERACTIVECONTENT];
+    // Add MOD_PURPOSE_INTERFACE only if it exists (removed in Moodle 5.2+).
+    if (defined('MOD_PURPOSE_INTERFACE')) {
+        $purposes[] = MOD_PURPOSE_INTERFACE;
+    }
+    // Add MOD_PURPOSE_OTHER if requested.
+    if ($includeother) {
+        $purposes[] = MOD_PURPOSE_OTHER;
+    }
+    return $purposes;
+}
+
+/**
  * Build the course related hints HTML code.
  * This function evaluates and composes all course related hints which may appear on a course page below the course header.
  *
@@ -1252,6 +1278,51 @@ function theme_boost_union_get_course_header_image_url() {
 }
 
 /**
+ * Helper function to get the course overview fallback image URL.
+ *
+ * @return core\url|null The URL to the course overview fallback image or null if none is configured.
+ */
+function theme_boost_union_get_course_overview_fallback_image_url() {
+    // If a fallback image is configured.
+    if (get_config('theme_boost_union', 'courseoverviewimagefallback')) {
+        // Get the system context.
+        $systemcontext = \context_system::instance();
+
+        // Get filearea.
+        $fs = get_file_storage();
+
+        // Get all files from filearea.
+        $files = $fs->get_area_files(
+            $systemcontext->id,
+            'theme_boost_union',
+            'courseoverviewimagefallback',
+            false,
+            'itemid',
+            false
+        );
+
+        // Just pick the first file - we are sure that there is just one file.
+        $file = reset($files);
+
+        // If a file was found.
+        if ($file) {
+            // Build and return the image URL.
+            return \core\url::make_pluginfile_url(
+                $file->get_contextid(),
+                $file->get_component(),
+                $file->get_filearea(),
+                $file->get_itemid(),
+                $file->get_filepath(),
+                $file->get_filename()
+            );
+        }
+    }
+
+    // As no picture was found, return null.
+    return null;
+}
+
+/**
  * Helper function which sets the URL to the CSS file as soon as the theme's mobilescss setting has any CSS code.
  * It's meant to be called as callback when changing the admin setting only.
  * *
@@ -1558,7 +1629,13 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
         if ($activitypurpose && $activitypurpose != $defaultpurpose) {
             // Add CSS to modify the activity purpose color in the activity chooser and the activity icon.
             $scss .= '.activity.modtype_' . $modname . ' .activityiconcontainer.courseicon img,';
-            $scss .= '.modchoosercontainer .modicon_' . $modname . '.activityiconcontainer img,';
+            // If the activity is mod_lti, we have to check the whole class name for the activity chooser as Moodle
+            // uses a class like modtype_mod_lti_type_1 there.
+            if ($modname == 'lti') {
+                $scss .= '.modchoosercontainer [class*="modicon_' . $modname . '"].activityiconcontainer img,';
+            } else {
+                $scss .= '.modchoosercontainer .modicon_' . $modname . '.activityiconcontainer img,';
+            }
             $scss .= '#page-header .modicon_' . $modname . '.activityiconcontainer img,';
             $scss .= '#page-course-overview #' . $modname . '_overview_title .activityiconcontainer img';
             $scss .= '{';

@@ -7,6 +7,19 @@ Changes
 ### Unreleased
 
 * 2025-01-27 - Feature: Add new login layouts and other login settings, resolves #1055
+* 2026-02-03 - Bugfix: Site support form success message was shown below blocks or advert tiles on frontpage, resolves #488
+* 2026-02-01 - Feature: Add dark variant setting for the slider, resolves #914
+* 2026-02-01 - Feature: Add individual carousel item interval setting for each slide, resolves #915
+* 2026-02-01 - Improvement: Replace smartmenu_item_edit_form.js with Moodle core solution for hiding headers, resolves #1028
+* 2026-02-01 - Bug: Changing the activity icon purpose of LTI activities did not have an effect in the activity chooser, resolves #690
+* 2026-02-01 - Improvement: Get rid of ESLint warning in drawers.mustache, resolves #1107
+
+### v5.1-r3
+
+* 2026-01-31 - Feature: Allow the admin to upload a course overview fallback image to be used on the myoverview page instead of the geometric pattern, resolves #171
+* 2026-01-31 - Admin: courselistingprogressstyle was not hidden again if courselistingpresentation was disabled after courselistinghowprogress was enabled, resolves #1135
+* 2026-01-28 - Bugfix: The installation of Boost Union crashed on latest moodle main after MOD_PURPOSE_INTERFACE was removed in Moodle 5.2dev, resolves #1126.
+* 2026-01-27 - Tests: The "Allow admins to use the tertiary navigation to navigate between the individual Boost Union admin pages" scenario failed on 5.0 and 5.1, resolves #1123
 
 ### v5.1-r2
 

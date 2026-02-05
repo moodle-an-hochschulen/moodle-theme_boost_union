@@ -102,6 +102,9 @@ class smartmenu_item_edit_form extends \moodleform {
             get_string('smartmenusmenuitemstructureheader', 'theme_boost_union')
         );
         $mform->setExpanded('structureheader');
+        $mform->hideIf('structureheader', 'type', 'eq', smartmenu_item::TYPEHEADING);
+        $mform->hideIf('structureheader', 'type', 'eq', smartmenu_item::TYPEDOCS);
+        $mform->hideIf('structureheader', 'type', 'eq', smartmenu_item::TYPEDIVIDER);
 
         // Add menu item URL (for the static menu item type) as input element.
         $mform->addElement('text', 'url', get_string('smartmenusmenuitemurl', 'theme_boost_union'));
@@ -642,20 +645,6 @@ class smartmenu_item_edit_form extends \moodleform {
 
         // Add the action buttons.
         $this->add_action_buttons();
-
-        // Load the JavaScript module to dynamically hide/show headers based on the type (which is not possible with pure mform).
-        $config = new \stdClass();
-        $config->headerVisibility = [
-            [
-                'headerId' => 'structureheader',
-                'hideForTypes' => [
-                    smartmenu_item::TYPEHEADING,
-                    smartmenu_item::TYPEDOCS,
-                    smartmenu_item::TYPEDIVIDER,
-                ],
-            ],
-        ];
-        $PAGE->requires->js_call_amd('theme_boost_union/smartmenu_item_edit_form', 'init', [$config]);
     }
 
     /**

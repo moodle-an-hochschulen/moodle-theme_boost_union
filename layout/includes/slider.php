@@ -77,8 +77,21 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
         // The order is not needed for the mustache template, but the usort() method will need it later.
         $order = $config->{'slide' . $i . 'order'};
 
+        // Get and set the slide's individual interval.
+        $interval = '';
+        if (isset($config->{'slide' . $i . 'interval'}) && !empty($config->{'slide' . $i . 'interval'})) {
+            $intervalvalue = intval($config->{'slide' . $i . 'interval'});
+            // Validate that the interval is a positive number.
+            if ($intervalvalue > 0) {
+                $interval = $intervalvalue;
+            }
+        }
+
         // Get and set the slide's content style class.
         switch ($config->{'slide' . $i . 'contentstyle'}) {
+            case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_NOCHANGE:
+                $contentstyleclass = 'slide-nochange';
+                break;
             case THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHT:
                 $contentstyleclass = 'slide-light';
                 break;
@@ -127,6 +140,7 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_SLIDES_COUNT; $i++) {
         $slide->caption = $caption;
         $slide->no = $i;
         $slide->order = $order;
+        $slide->interval = $interval;
         $slide->contentstyleclass = $contentstyleclass;
         $slide->captionorcontent = $captionorcontent;
         $slide->linkimage = $linkimage;
@@ -194,6 +208,17 @@ if ($templatecontext['showslider'] == true) {
             break;
         case THEME_BOOST_UNION_SETTING_SLIDER_ANIMATIONTYPE_FADE:
             $generalslidersettings->animation = 'slide carousel-fade';
+            break;
+    }
+
+    // Getting and setting the slider's variant setting.
+    switch ($config->{'slidervariant'}) {
+        case THEME_BOOST_UNION_SETTING_SLIDER_VARIANT_DARK:
+            $generalslidersettings->dark = true;
+            break;
+        case THEME_BOOST_UNION_SETTING_SLIDER_VARIANT_LIGHT:
+        default:
+            $generalslidersettings->dark = false;
             break;
     }
 
