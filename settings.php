@@ -2058,6 +2058,31 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
+        // Heading: Breadcrumbs.
+        $name = 'theme_boost_union/breadcrumbsheading';
+        $title = get_string('breadcrumbsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Display the category breadcrumb in the course header.
+        $categorybreadcrumbsoptions = [
+            // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+            // PHP warning otherwise.
+            THEME_BOOST_UNION_SETTING_SELECT_YES => get_string('yes'),
+            THEME_BOOST_UNION_SETTING_SELECT_NO => get_string('no'),
+        ];
+        $name = 'theme_boost_union/categorybreadcrumbs';
+        $title = get_string('categorybreadcrumbs', 'theme_boost_union', null, true);
+        $description = get_string('categorybreadcrumbs_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_SELECT_NO,
+            $categorybreadcrumbsoptions
+        );
+        $tab->add($setting);
+
         // Heading: Course index.
         $name = 'theme_boost_union/courseindexheading';
         $title = get_string('courseindexheading', 'theme_boost_union', null, true);
@@ -2615,31 +2640,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'neq',
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
-
-        // Heading: Breadcrumbs.
-        $name = 'theme_boost_union/breadcrumbsheading';
-        $title = get_string('breadcrumbsheading', 'theme_boost_union', null, true);
-        $setting = new admin_setting_heading($name, $title, null);
-        $tab->add($setting);
-
-        // Setting: Display the category breadcrumb in the course header.
-        $categorybreadcrumbsoptions = [
-            // Don't use string lazy loading (= false) because the string will be directly used and would produce a
-            // PHP warning otherwise.
-            THEME_BOOST_UNION_SETTING_SELECT_YES => get_string('yes'),
-            THEME_BOOST_UNION_SETTING_SELECT_NO => get_string('no'),
-        ];
-        $name = 'theme_boost_union/categorybreadcrumbs';
-        $title = get_string('categorybreadcrumbs', 'theme_boost_union', null, true);
-        $description = get_string('categorybreadcrumbs_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect(
-            $name,
-            $title,
-            $description,
-            THEME_BOOST_UNION_SETTING_SELECT_NO,
-            $categorybreadcrumbsoptions
-        );
-        $tab->add($setting);
 
         // Heading: Navigation.
         $name = 'theme_boost_union/navigationheading';

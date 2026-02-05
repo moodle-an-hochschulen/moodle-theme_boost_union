@@ -269,6 +269,12 @@ With this setting, you can tint the activity icons in the activities block based
 
 When enabled, the course header (which is just the course title in Moodle core) is enhanced by additional elements like the course image (which can be uploaded in a course's course settings) and other course metadata, depending how you configure the course header in detail.
 
+##### Breadcrumbs
+
+###### Display the category breadcrumbs in the course header
+
+By default, the course category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the course category breadcrumbs in the course header above the course name.
+
 ##### Course index
 
 ###### Display activity icon in course index
@@ -362,12 +368,6 @@ With this setting, you can show a popover menu with links to starred courses nex
 ###### Starred courses popover cog icon link target
 
 With this setting, you can set the link target of the cog icon in the starred courses popover. By default, the cog icon links to the 'My courses' page. However, you can also link to the 'Dashboard' page, especially if you have disabled the 'My courses' page in the primary navigation.
-
-##### Breadcrumbs
-
-###### Display the category breadcrumbs in the course header
-
-By default, the course category breadcrumbs are not shown on course pages in the course header. With this setting, you can show the course category breadcrumbs in the course header above the course name.
 
 ##### Navigation
 
