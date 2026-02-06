@@ -586,8 +586,10 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Category index / Site home" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I set the field "Field 1" to "<field1value>"
-    And I set the field "Field 2" to "<field2value>"
+    # We must specify the container where to look for the fields as Behat would stumble otherwise as the same fields exist
+    # on the "Course" tab as well.
+    And I set the field "Field 1" in the "#admin-courselistingselectfields" "css_element" to "<field1value>"
+    And I set the field "Field 2" in the "#admin-courselistingselectfields" "css_element" to "<field2value>"
     And I press "Save changes"
     And Behat debugging is enabled
     And I am on "Course 1" course homepage
@@ -669,8 +671,10 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Category index / Site home" "link" in the "#adminsettings .nav-tabs" "css_element"
-    And I set the field "Field 1" to "1"
-    And I set the field "Field 2" to "1"
+    # We must specify the container where to look for the fields as Behat would stumble otherwise as the same fields exist
+    # on the "Course" tab as well.
+    And I set the field "Field 1" in the "#admin-courselistingselectfields" "css_element" to "1"
+    And I set the field "Field 2" in the "#admin-courselistingselectfields" "css_element" to "1"
     And I press "Save changes"
     And I am on "Course 1" course homepage
     And I navigate to "Settings" in current page administration
@@ -722,27 +726,27 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     When I log in as "student1"
     And I am on site homepage
     # Check the 'Combo list' view on site home as a whole
-    Then "<selector>" "css_element" <shouldornot> exist in the "#frontpage-category-combo" "css_element"
+    Then "<selector>" "css_element" should not exist in the "#frontpage-category-combo" "css_element"
     # Check a subcategory in the 'Combo list' view on site home
     And I click on ".info" "css_element" in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
-    And "<selector>" "css_element" <shouldornot> exist in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector>" "css_element" should not exist in the "#frontpage-category-combo > .course_category_tree > .content > .subcategories > .category.with_children:nth-child(3) > .content > .subcategories > .category.with_children" "css_element"
     # Check the 'Enrolled courses' view on site home
-    And "<selector>" "css_element" <shouldornot> exist in the "#frontpage-course-list" "css_element"
+    And "<selector>" "css_element" should not exist in the "#frontpage-course-list" "css_element"
     # Check the 'List of courses' view on site home
-    And "<selector>" "css_element" <shouldornot> exist in the "#frontpage-available-course-list" "css_element"
+    And "<selector>" "css_element" should not exist in the "#frontpage-available-course-list" "css_element"
     # Check the categoriy overview page of a category without subcategories
     And I am on the "CATA" category page
-    Then "<selector>" "css_element" <shouldornot> exist in the ".course_category_tree" "css_element"
+    Then "<selector>" "css_element" should not exist in the ".course_category_tree" "css_element"
     # Check the categoriy overview page of a category with subcategories
     And I am on the "CATB" category page
-    Then "<selector>" "css_element" <shouldornot> exist in the ".course_category_tree" "css_element"
+    Then "<selector>" "css_element" should not exist in the ".course_category_tree" "css_element"
     And I click on ".info" "css_element" in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
-    And "<selector>" "css_element" <shouldornot> exist in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
+    And "<selector>" "css_element" should not exist in the ".course_category_tree > .content > .subcategories > .category.with_children" "css_element"
 
     Examples:
-      | coursevalue | settingvalue | selector                       | shouldornot |
-      | cards       | yes          | .course-card .customfields     | should not  |
-      | list        | yes          | .course-listitem .customfields | should not  |
+      | coursevalue | settingvalue | selector                       |
+      | cards       | yes          | .course-card .customfields     |
+      | list        | yes          | .course-listitem .customfields |
 
   @javascript
   Scenario Outline: Setting: Show goto button in the course listing: Set the setting
@@ -900,9 +904,9 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Then ".course-card .card-footer .popupbutton" "css_element" should exist in the ".course_category_tree" "css_element"
     And I click on ".course-card .card-footer .popupbutton" "css_element"
     And I should see "Course 1" in the ".modal-dialog .modal-header" "css_element"
-    And ".theme_boost_union-courselisting-modal .coursesummary" "css_element" should exist
-    And I should see "Course summary" in the ".theme_boost_union-courselisting-modal .coursesummary" "css_element"
-    And I should see "<summarydisplayed>" in the ".theme_boost_union-courselisting-modal .coursesummary" "css_element"
+    And ".theme_boost_union-coursedetails-modal .coursesummary" "css_element" should exist
+    And I should see "Course summary" in the ".theme_boost_union-coursedetails-modal .coursesummary" "css_element"
+    And I should see "<summarydisplayed>" in the ".theme_boost_union-coursedetails-modal .coursesummary" "css_element"
 
     Examples:
       | summarycontent      | summarydisplayed                    |
@@ -928,11 +932,11 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Then ".course-card .card-footer .popupbutton" "css_element" should exist in the ".course_category_tree" "css_element"
     And I click on ".course-card .card-footer .popupbutton" "css_element"
     And I should see "Course 1" in the ".modal-dialog .modal-header" "css_element"
-    And ".theme_boost_union-courselisting-modal .coursecontacts" "css_element" should exist
-    And I should see "Course contact" in the ".theme_boost_union-courselisting-modal .coursecontacts" "css_element"
-    And I should see "Jane Doe" in the ".theme_boost_union-courselisting-modal .coursecontacts .contact:nth-of-type(1)" "css_element"
-    And I should see "John Doe" in the ".theme_boost_union-courselisting-modal .coursecontacts .contact:nth-of-type(2)" "css_element"
-    And ".theme_boost_union-courselisting-modal .coursecontacts .contact .card-footer .btn" "css_element" <shouldornot> exist
+    And ".theme_boost_union-coursedetails-modal .coursecontacts" "css_element" should exist
+    And I should see "Course contact" in the ".theme_boost_union-coursedetails-modal .coursecontacts" "css_element"
+    And I should see "Jane Doe" in the ".theme_boost_union-coursedetails-modal .coursecontacts .contact:nth-of-type(1)" "css_element"
+    And I should see "John Doe" in the ".theme_boost_union-coursedetails-modal .coursecontacts .contact:nth-of-type(2)" "css_element"
+    And ".theme_boost_union-coursedetails-modal .coursecontacts .contact .card-footer .btn" "css_element" <shouldornot> exist
 
     Examples:
       | loginas  | shouldornot |
@@ -973,11 +977,11 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Then ".course-card .card-footer .popupbutton" "css_element" should exist in the ".course_category_tree" "css_element"
     And I click on ".course-card .card-footer .popupbutton" "css_element"
     And I should see "Course 1" in the ".modal-dialog .modal-header" "css_element"
-    And ".theme_boost_union-courselisting-modal .customfields" "css_element" should exist
-    And I should see "Field 1" in the ".theme_boost_union-courselisting-modal .customfields .customfield.customfield_text .customfieldname" "css_element"
-    And I should see "test" in the ".theme_boost_union-courselisting-modal .customfields .customfield.customfield_text .customfieldvalue" "css_element"
-    And I should see "Field 2" in the ".theme_boost_union-courselisting-modal .customfields .customfield.customfield_select .customfieldname" "css_element"
-    And I should see "a" in the ".theme_boost_union-courselisting-modal .customfields .customfield.customfield_select .customfieldvalue" "css_element"
+    And ".theme_boost_union-coursedetails-modal .customfields" "css_element" should exist
+    And I should see "Field 1" in the ".theme_boost_union-coursedetails-modal .customfields .customfield.customfield_text .customfieldname" "css_element"
+    And I should see "test" in the ".theme_boost_union-coursedetails-modal .customfields .customfield.customfield_text .customfieldvalue" "css_element"
+    And I should see "Field 2" in the ".theme_boost_union-coursedetails-modal .customfields .customfield.customfield_select .customfieldname" "css_element"
+    And I should see "a" in the ".theme_boost_union-coursedetails-modal .customfields .customfield.customfield_select .customfieldvalue" "css_element"
 
   @javascript
   Scenario Outline: Setting: Course listing presentation / Category listing presentation: Verify the appearance of the sticky category headers

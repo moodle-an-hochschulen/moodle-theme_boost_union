@@ -267,6 +267,97 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And "This is the second content" "text" should appear before "This is the third content" "text"
     And "This is the third content" "text" should appear before "This is the fourth content" "text"
 
+  Scenario: Setting: Information banners - Display info banner with position setting on different pages
+    Given the following config values are set as admin:
+      | config              | value                                        | plugin            |
+      | infobanner1enabled  | yes                                          | theme_boost_union |
+      | infobanner1content  | "Banner above"                               | theme_boost_union |
+      | infobanner1pages    | mydashboard,mycourses,frontpage,course,login | theme_boost_union |
+      | infobanner1mode     | perp                                         | theme_boost_union |
+      | infobanner1position | above                                        | theme_boost_union |
+      | infobanner2enabled  | yes                                          | theme_boost_union |
+      | infobanner2content  | "Banner below"                               | theme_boost_union |
+      | infobanner2pages    | mydashboard,mycourses,frontpage,course,login | theme_boost_union |
+      | infobanner2mode     | perp                                         | theme_boost_union |
+      | infobanner2position | below                                        | theme_boost_union |
+    When I log in as "teacher1"
+    # Check on Dashboard.
+    And I follow "Dashboard"
+    Then I should see "Banner above" in the "#themeboostunioninfobanner1" "css_element"
+    And I should see "Banner below" in the "#themeboostunioninfobanner2" "css_element"
+    And "Banner above" "text" should appear before "Banner below" "text"
+    And "#themeboostunioninfobanner1" "css_element" should appear before "#page-header" "css_element"
+    And "#themeboostunioninfobanner2" "css_element" should appear after "#page-header" "css_element"
+    # Check on My courses.
+    And I follow "My courses"
+    Then I should see "Banner above" in the "#themeboostunioninfobanner1" "css_element"
+    And I should see "Banner below" in the "#themeboostunioninfobanner2" "css_element"
+    And "Banner above" "text" should appear before "Banner below" "text"
+    And "#themeboostunioninfobanner1" "css_element" should appear before "#page-header" "css_element"
+    And "#themeboostunioninfobanner2" "css_element" should appear after "#page-header" "css_element"
+    # Check on Site home.
+    And I am on site homepage
+    Then I should see "Banner above" in the "#themeboostunioninfobanner1" "css_element"
+    And I should see "Banner below" in the "#themeboostunioninfobanner2" "css_element"
+    And "Banner above" "text" should appear before "Banner below" "text"
+    And "#themeboostunioninfobanner1" "css_element" should appear before "#page-header" "css_element"
+    And "#themeboostunioninfobanner2" "css_element" should appear after "#page-header" "css_element"
+    # Check on Course page.
+    And I am on "Course 1" course homepage
+    Then I should see "Banner above" in the "#themeboostunioninfobanner1" "css_element"
+    And I should see "Banner below" in the "#themeboostunioninfobanner2" "css_element"
+    And "Banner above" "text" should appear before "Banner below" "text"
+    And "#themeboostunioninfobanner1" "css_element" should appear before "#page-header" "css_element"
+    And "#themeboostunioninfobanner2" "css_element" should appear after "#page-header" "css_element"
+    # Check on Login page (where no page header exists but where the banners should still be shown).
+    When I log out
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then I should see "Banner above" in the "#themeboostunioninfobanner1" "css_element"
+    And I should see "Banner below" in the "#themeboostunioninfobanner2" "css_element"
+
+  Scenario: Setting: Information banners - Display multiple banners with position setting sorted correctly within above and below groups
+    Given the following config values are set as admin:
+      | config              | value            | plugin            |
+      | infobanner1enabled  | yes              | theme_boost_union |
+      | infobanner1content  | "Above banner 2" | theme_boost_union |
+      | infobanner1pages    | mydashboard      | theme_boost_union |
+      | infobanner1order    | 2                | theme_boost_union |
+      | infobanner1mode     | perp             | theme_boost_union |
+      | infobanner1position | above            | theme_boost_union |
+      | infobanner2enabled  | yes              | theme_boost_union |
+      | infobanner2content  | "Above banner 1" | theme_boost_union |
+      | infobanner2pages    | mydashboard      | theme_boost_union |
+      | infobanner2order    | 1                | theme_boost_union |
+      | infobanner2mode     | perp             | theme_boost_union |
+      | infobanner2position | above            | theme_boost_union |
+      | infobanner3enabled  | yes              | theme_boost_union |
+      | infobanner3content  | "Below banner 2" | theme_boost_union |
+      | infobanner3pages    | mydashboard      | theme_boost_union |
+      | infobanner3order    | 2                | theme_boost_union |
+      | infobanner3mode     | perp             | theme_boost_union |
+      | infobanner3position | below            | theme_boost_union |
+      | infobanner4enabled  | yes              | theme_boost_union |
+      | infobanner4content  | "Below banner 1" | theme_boost_union |
+      | infobanner4pages    | mydashboard      | theme_boost_union |
+      | infobanner4order    | 1                | theme_boost_union |
+      | infobanner4mode     | perp             | theme_boost_union |
+      | infobanner4position | below            | theme_boost_union |
+    When I log in as "teacher1"
+    And I follow "Dashboard"
+    Then I should see "Above banner 2" in the "#themeboostunioninfobanner1" "css_element"
+    And I should see "Above banner 1" in the "#themeboostunioninfobanner2" "css_element"
+    And I should see "Below banner 2" in the "#themeboostunioninfobanner3" "css_element"
+    And I should see "Below banner 1" in the "#themeboostunioninfobanner4" "css_element"
+    # Check order within above group.
+    And "Above banner 1" "text" should appear before "Above banner 2" "text"
+    # Check order within below group.
+    And "Below banner 1" "text" should appear before "Below banner 2" "text"
+    # Check that all above banners appear before all below banners.
+    And "Above banner 1" "text" should appear before "Below banner 1" "text"
+    And "Above banner 1" "text" should appear before "Below banner 2" "text"
+    And "Above banner 2" "text" should appear before "Below banner 1" "text"
+    And "Above banner 2" "text" should appear before "Below banner 2" "text"
+
   Scenario: Setting: Information banners - Display info banner 1 on a time based setting, don't show it yet as the display time is not reached yet.
     Given the following config values are set as admin:
       | config             | value                       | plugin            |
