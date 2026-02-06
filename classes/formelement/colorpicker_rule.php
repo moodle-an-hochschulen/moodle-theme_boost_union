@@ -88,13 +88,13 @@ class colorpicker_rule extends HTML_QuickForm_Rule {
             return $value;
         } else if (in_array(strtolower($value), $colornames)) {
             return $value;
-        } else if (preg_match('/rgb\(\d{0,3}%?, ?\d{0,3}%?, ?\d{0,3}%?\)/i', $value)) {
+        } else if (preg_match('/^rgb\(\d{0,3}%?\, ?\d{0,3}%?, ?\d{0,3}%?\)$/i', $value)) {
             return $value;
-        } else if (preg_match('/rgba\(\d{0,3}%?, ?\d{0,3}%?, ?\d{0,3}%?, ?\d(\.\d)?\)/i', $value)) {
+        } else if (preg_match('/^rgba\(\d{0,3}%?\, ?\d{0,3}%?, ?\d{0,3}%?\, ?\d(\.\d)?\)$/i', $value)) {
             return $value;
-        } else if (preg_match('/hsl\(\d{0,3}, ?\d{0,3}%, ?\d{0,3}%\)/i', $value)) {
+        } else if (preg_match('/^hsl\(\d{0,3}\, ?\d{0,3}%, ?\d{0,3}%\)$/i', $value)) {
             return $value;
-        } else if (preg_match('/hsla\(\d{0,3}, ?\d{0,3}%,\d{0,3}%, ?\d(\.\d)?\)/i', $value)) {
+        } else if (preg_match('/^hsla\(\d{0,3}\, ?\d{0,3}%, ?\d{0,3}%\, ?\d(\.\d)?\)$/i', $value)) {
             return $value;
         } else if (($value == 'transparent') || ($value == 'currentColor') || ($value == 'inherit')) {
             return $value;

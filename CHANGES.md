@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-02-06 - Update: Adopt changes to colorpicker_rule class from MDL-87870
 * 2026-02-06 - Update: Adopt changes to navbar.mustache from MDL-86436
 * 2026-01-30 - Admin: Move the category breadcrumb from "Feel" to "Look" near the new course header settings.
 * 2026-01-22 - Improvement: Add a setting to control if a particular info banner is shown above of below the page header.
