@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-02-06 - Improvement: Prevent that the loginbackgroundimagetext setting is shown in the Moodle upgrade wizard after the initial installation, resolves #1151
 * 2026-02-06 - Bugfix: The initial Moodle installation failed if Boost Union was set as theme in config.php, resolves #1143.
 * 2025-02-06 - Update: Adopt changes to doc_link() from MDL-82867
 * 2026-02-06 - Update: Adopt changes to colorpicker_rule class from MDL-87870
