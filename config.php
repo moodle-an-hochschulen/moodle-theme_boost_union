@@ -204,7 +204,10 @@ $THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
 $THEME->iconsystem = \core\output\icon_system::FONTAWESOME;
 $THEME->haseditswitch = true;
 $THEME->usescourseindex = true;
-$THEME->removedprimarynavitems = explode(',', get_config('theme_boost_union', 'hidenodesprimarynavigation'));
+// During the initial installation, we can't access the config table yet, so we set an empty array.
+// Otherwise, we get the hidden primary navigation items from the config.
+$THEME->removedprimarynavitems = during_initial_install() ?
+        [] : explode(',', get_config('theme_boost_union', 'hidenodesprimarynavigation'));
 // By default, all boost theme do not need their titles displayed.
 $THEME->activityheaderconfig = [
     'notitle' => true

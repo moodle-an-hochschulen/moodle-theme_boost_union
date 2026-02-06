@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-02-06 - Bugfix: The initial Moodle installation failed if Boost Union was set as theme in config.php, resolves #1143.
 * 2025-02-06 - Update: Adopt changes to doc_link() from MDL-82867
 * 2026-02-06 - Update: Adopt changes to colorpicker_rule class from MDL-87870
 * 2026-02-06 - Update: Adopt changes to navbar.mustache from MDL-86436
