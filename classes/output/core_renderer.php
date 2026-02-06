@@ -840,12 +840,16 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // Local login: theme setting only.
         $loginlocalloginsetting = get_config('theme_boost_union', 'loginlocalloginenable');
-        $showlocalloginenabled = ($loginlocalloginsetting != false) ? $loginlocalloginsetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
+        $showlocalloginenabled = ($loginlocalloginsetting != false)
+            ? $loginlocalloginsetting
+            : THEME_BOOST_UNION_SETTING_SELECT_YES;
         $context->showlocallogin = ($showlocalloginenabled == THEME_BOOST_UNION_SETTING_SELECT_YES);
 
         // IDP login: theme setting AND core has identity providers.
         $loginidploginenablesetting = get_config('theme_boost_union', 'loginidploginenable');
-        $showidploginenabled = ($loginidploginenablesetting != false) ? $loginidploginenablesetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
+        $showidploginenabled = ($loginidploginenablesetting != false)
+            ? $loginidploginenablesetting
+            : THEME_BOOST_UNION_SETTING_SELECT_YES;
         $context->showidplogin = ($showidploginenabled == THEME_BOOST_UNION_SETTING_SELECT_YES) &&
             !empty($context->hasidentityproviders) && !empty($context->identityproviders);
 
@@ -862,8 +866,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $showselfregistrationenabled = ($loginselfregistrationenablesetting != false) ?
             $loginselfregistrationenablesetting : THEME_BOOST_UNION_SETTING_SELECT_YES;
         $coreregisterauth = !empty(get_config('core', 'registerauth'));
-        $context->showselfregistration = ($showselfregistrationenabled == THEME_BOOST_UNION_SETTING_SELECT_YES) && $coreregisterauth &&
-            (!empty($context->cansignup) || !empty($context->hasinstructions));
+        $context->showselfregistration = ($showselfregistrationenabled == THEME_BOOST_UNION_SETTING_SELECT_YES)
+            && $coreregisterauth
+            && (!empty($context->cansignup) || !empty($context->hasinstructions));
 
         // Process intro settings only when the corresponding login type is shown.
 
@@ -892,7 +897,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $context->showidploginintro = true;
                 $loginidpintrotext = get_config('theme_boost_union', 'loginidpintrotext');
                 if (!empty($loginidpintrotext)) {
-                    $context->idploginintrotext = format_string($loginidpintrotext, true, ['context' => context_system::instance()]);
+                    $context->idploginintrotext = format_string(
+                        $loginidpintrotext,
+                        true,
+                        ['context' => context_system::instance()]
+                    );
                 }
             }
         }
@@ -1043,10 +1052,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION
             ) {
                 $logintablabelconfigs = [
-                    'local' => ['config' => 'loginlocallogintablabel', 'default' => 'loginlocallogintablabelsetting_default'],
-                    'idp' => ['config' => 'loginidplogintablabel', 'default' => 'loginidplogintablabelsetting_default'],
-                    'firsttimesignup' => ['config' => 'loginselfregistrationlogintablabel', 'default' => 'loginselfregistrationlogintablabelsetting_default'],
-                    'guest' => ['config' => 'loginguestlogintablabel', 'default' => 'loginguestlogintablabelsetting_default'],
+                    'local' => ['config' => 'loginlocalloginlabel', 'default' => 'loginlocalloginlabelsetting_default'],
+                    'idp' => ['config' => 'loginidploginlabel', 'default' => 'loginidploginlabelsetting_default'],
+                    'firsttimesignup' => [
+                        'config' => 'loginselfregistrationloginlabel',
+                        'default' => 'loginselfregistrationloginlabelsetting_default',
+                    ],
+                    'guest' => ['config' => 'loginguestloginlabel', 'default' => 'loginguestloginlabelsetting_default'],
                 ];
                 foreach ($loginmethods as $method) {
                     $labelconfig = $logintablabelconfigs[$method->name] ?? null;
