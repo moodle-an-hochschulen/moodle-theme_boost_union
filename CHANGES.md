@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-02-06 - Update: Adopt changes to navbar.mustache from MDL-86436
 * 2026-01-30 - Admin: Move the category breadcrumb from "Feel" to "Look" near the new course header settings.
 * 2026-01-22 - Improvement: Add a setting to control if a particular info banner is shown above of below the page header.
 * 2026-01-22 - Improvement: Align minor aspects (course shortname, course fields, course progress) of the look of the course-card and course-list view of the course listings more with the new course headers in Boost Union and less with the My courses page of Moodle core.
