@@ -349,6 +349,79 @@
     background-color: rgba(255, 255, 255, 0.8);
 }
 
+/*---------------------------------------
+ * Setting: Login container width
+ --------------------------------------*/
+
+/* Override the fixed 500px width from Boost core with the custom width setting. */
+@include media-breakpoint-up(md) {
+    .login-container {
+        width: $logincontainer-width !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    /* Allow login-container to expand when tabs need more space. */
+    body.pagelayout-login .login-container:has(#login-tabs) {
+        width: auto !important; /* stylelint-disable-line declaration-no-important */
+        min-width: $logincontainer-width;
+        max-width: 100%;
+    }
+}
+
+/*---------------------------------------
+ * Setting: Login layout: Tabs
+ --------------------------------------*/
+
+/* Keep login container vertically centered on page load, but allow it to grow downward only.
+   The container starts centered, but when content changes (tabs switch), it grows downward
+   from that position without shifting the top. */
+@include media-breakpoint-up(md) {
+    .login-wrapper:has(.loginform #login-tabs) {
+        /* Change to column to control vertical spacing */
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        margin-left: 20px;
+        margin-right: 20px;
+        /* Prevent wrapper from extending beyond viewport when tabs are wide */
+        max-width: 100%;
+    }
+
+    /* Respect login form position setting when tabs are present. */
+    /* When flex-direction is column, align-items controls horizontal alignment. */
+    .login-wrapper.login-wrapper-left:has(.loginform #login-tabs) {
+        align-items: flex-start;
+    }
+    .login-wrapper.login-wrapper-right:has(.loginform #login-tabs) {
+        align-items: flex-end;
+    }
+
+    /* Create a fixed-height spacer above to center initially and lock top position. */
+    .login-wrapper:has(.loginform #login-tabs)::before {
+        content: '';
+        flex: 0 0 auto;
+        /* Use a reasonable fixed height that centers most containers */
+        height: calc(50vh - 330px);
+        min-height: 0px;
+        max-height: 50vh;
+        order: -1;
+    }
+
+    /* Spacer below can grow to accommodate container expansion. */
+    .login-wrapper:has(.loginform #login-tabs)::after {
+        content: '';
+        flex: 1 1 auto;
+        min-height: 0;
+        order: 1;
+    }
+
+    /* Container in the middle; allow shrink so it stays inside wrapper on narrow widths. */
+    .login-wrapper:has(.loginform #login-tabs) .login-container {
+        flex: 0 0 auto;
+        order: 0;
+        min-width: 0;
+    }
+}
+
 /*=======================================
  * Settings: Look -> Category index / site home
  ======================================*/
