@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-02-06 - Update: Adopt changes to doc_link() from MDL-82867
 * 2026-02-06 - Update: Adopt changes to colorpicker_rule class from MDL-87870
 * 2026-02-06 - Update: Adopt changes to navbar.mustache from MDL-86436
 * 2026-01-30 - Admin: Move the category breadcrumb from "Feel" to "Look" near the new course header settings.
