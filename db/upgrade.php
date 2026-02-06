@@ -883,11 +883,11 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         // Now we have a separate text style setting, so we need to split the old setting values.
         $oldlayout = get_config('theme_boost_union', 'courseheaderlayout');
         if ($oldlayout === 'stackeddark') {
-            set_config('courseheaderlayout', 'stacked', 'theme_boost_union');
-            set_config('courseheadertextonimagestyle', 'light', 'theme_boost_union');
+            set_config('courseheaderlayout', THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_STACKED, 'theme_boost_union');
+            set_config('courseheadertextonimagestyle', THEME_BOOST_UNION_SETTING_CONTENTSTYLE_LIGHTSHADOW, 'theme_boost_union');
         } else if ($oldlayout === 'stackedlight') {
-            set_config('courseheaderlayout', 'stacked', 'theme_boost_union');
-            set_config('courseheadertextonimagestyle', 'dark', 'theme_boost_union');
+            set_config('courseheaderlayout', THEME_BOOST_UNION_SETTING_COURSEHEADERLAYOUT_STACKED, 'theme_boost_union');
+            set_config('courseheadertextonimagestyle', THEME_BOOST_UNION_SETTING_CONTENTSTYLE_DARKSHADOW, 'theme_boost_union');
         }
 
         // Boost Union savepoint reached.
