@@ -71,9 +71,11 @@
                     <span class="visually-hidden">
                         {{#str}}aria:courseshortname, core_course{{/str}}
                     </span>
-                    <span class="shortname">
-                        {{{shortname}}}
-                    </span>
+                    <div class="text-truncate small">
+                        <span class="shortname">
+                            {{{shortname}}}
+                        </span>
+                    </div>
                 </div>
             {{/showshortname}}
             <a href="{{viewurl}}" class="aalink coursename">
@@ -104,10 +106,10 @@
                         {{#hasprogress}}
                             <div class="text-muted muted d-flex flex-wrap mt-auto flex-fill">
                                 {{#progressstyleasbar}}
-                                    {{> theme_boost_union/progress-bar}}
+                                    {{> theme_boost_union/course-progress-with-bar}}
                                 {{/progressstyleasbar}}
                                 {{^progressstyleasbar}}
-                                    {{> block_myoverview/progress-bar}}
+                                    {{> theme_boost_union/course-progress-without-bar}}
                                 {{/progressstyleasbar}}
                             </div>
                         {{/hasprogress}}
@@ -142,10 +144,10 @@
                         <div class="col-sm-12 col-6 mb-2">
                             {{#showcoursepopup}}
                                 <button class="popupbutton btn btn-secondary w-100"
-                                        data-action="courselisting-details"
+                                        data-action="course-details"
                                         data-title="{{fullname}}"
                                         {{#hassummary}}data-summary="{{summary}}"{{/hassummary}}
-                                        {{#hascontacts}}data-coursecontacts="{{#contacts}}{{> theme_boost_union/courselistingdetailsmodal-contact-dataattrib}}{{/contacts}}"{{/hascontacts}}
+                                        {{#hascontacts}}data-coursecontacts="{{#contacts}}{{> theme_boost_union/coursedetailsmodal-contact-dataattrib}}{{/contacts}}"{{/hascontacts}}
                                         {{#hascustomfields}}data-customfields="{{customfields}}"{{/hascustomfields}}>
                                     {{#str}}courselistingpopup, theme_boost_union{{/str}}
                                 </button>

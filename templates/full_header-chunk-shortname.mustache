@@ -1,0 +1,35 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/full_header-chunk-shortname
+
+    This template renders the course shortname for enhanced course headers.
+
+    Example context (json):
+    {
+        "shortname": "CS101",
+        "cssclass": "text-muted muted"
+    }
+}}
+<div class="d-flex flex-wrap {{cssclass}}">
+    <span class="visually-hidden">{{#str}}aria:courseshortname, core_course{{/str}}</span>
+    <div class="text-truncate small">
+        <span class="shortname">
+            {{{shortname}}}
+        </span>
+    </div>
+</div>

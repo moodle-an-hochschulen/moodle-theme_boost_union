@@ -1,0 +1,68 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/full_header-chunk-iconsbar
+
+    This template renders the icons bar for enhanced course headers including course contacts,
+    course popup button, and course edit icon.
+
+    Example context (json):
+    {
+        "showcoursecontacts": true,
+        "hascontacts": true,
+        "contacts": [{"id": 1, "userpicture": "url", "contactname": "Name", "canviewuserdetails": true}],
+        "showcoursepopup": true,
+        "showcourseediticon": true,
+        "coursesettingsurl": "http://example.com/course/edit.php"
+    }
+}}
+<div class="courseheadericonsbar mx-3 d-flex justify-content-end flex-wrap">
+    {{#showcoursecontacts}}
+        {{#hascontacts}}
+            <div class="coursecontacts d-flex flex-wrap">
+                {{#contacts}}
+                    {{#canviewuserdetails}}<a href="{{config.wwwroot}}/user/profile.php?id={{{id}}}" tabindex="-1">{{/canviewuserdetails}}
+                        <div class="contact me-2">
+                            <img src="{{{userpicture}}}" class="rounded-circle shadow-sm" alt="{{{contactname}}}" data-bs-toggle="tooltip" title="{{{contactname}}}" />
+                        </div>
+                    {{#canviewuserdetails}}</a>{{/canviewuserdetails}}
+                {{/contacts}}
+            </div>
+        {{/hascontacts}}
+    {{/showcoursecontacts}}
+    {{#showcoursepopup}}
+        <div class="coursepopup {{#showcourseediticon}}me-2{{/showcourseediticon}} d-flex flex-wrap">
+            <button class="popupbutton btn btn-icon rounded-circle bg-secondary"
+                    data-action="course-details"
+                    data-title="{{fullname}}"
+                    data-bs-toggle="tooltip"
+                    title="{{#str}} courseheadershowpopup_label, theme_boost_union {{/str}}"
+                    {{#hassummary}}data-summary="{{summary}}"{{/hassummary}}
+                    {{#hascontacts}}data-coursecontacts="{{#contacts}}{{> theme_boost_union/coursedetailsmodal-contact-dataattrib}}{{/contacts}}"{{/hascontacts}}
+                    {{#hascustomfields}}data-customfields="{{customfields}}"{{/hascustomfields}}>
+                <i class="icon fa fa-info fa-fw" aria-hidden="true"></i>
+            </button>
+        </div>
+    {{/showcoursepopup}}
+    {{#showcourseediticon}}
+        <div class="courseheaderediticon d-flex flex-wrap">
+            <a href="{{{coursesettingsurl}}}" class="btn btn-icon rounded-circle bg-secondary" data-bs-toggle="tooltip" title="{{#str}} courseheadershowediticon_label, theme_boost_union {{/str}}">
+                <i class="icon fa fa-pencil fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+    {{/showcourseediticon}}
+</div>
