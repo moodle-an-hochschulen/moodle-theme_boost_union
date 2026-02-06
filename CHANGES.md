@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-02-06 - Improvement: Prevent that the loginbackgroundimagetext setting is shown in the Moodle upgrade wizard after the initial installation, resolves #1151
 * 2026-02-06 - Bugfix: The initial Moodle installation failed if Boost Union was set as theme in config.php, resolves #1143.
 * 2026-02-06 - Update: Adopt changes to navbar.mustache from MDL-86436
 * 2026-02-03 - Bugfix: Site support form success message was shown below blocks or advert tiles on frontpage, resolves #488

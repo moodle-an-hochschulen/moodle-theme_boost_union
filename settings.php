@@ -972,7 +972,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/loginbackgroundimagetext';
         $title = get_string('loginbackgroundimagetextsetting', 'theme_boost_union', null, true);
         $description = get_string('loginbackgroundimagetextsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configtextarea($name, $title, $description, null, PARAM_TEXT);
+        $setting = new admin_setting_configtextarea($name, $title, $description, '', PARAM_TEXT);
         $tab->add($setting);
 
         // Heading: Login form.
