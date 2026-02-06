@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-02-06 - Bugfix: The initial Moodle installation failed if Boost Union was set as theme in config.php, resolves #1143.
 * 2026-02-06 - Update: Adopt changes to navbar.mustache from MDL-86436
 * 2026-02-03 - Bugfix: Site support form success message was shown below blocks or advert tiles on frontpage, resolves #488
 * 2026-02-01 - Bug: Changing the activity icon purpose of LTI activities did not have an effect in the activity chooser, resolves #690

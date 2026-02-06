@@ -207,6 +207,11 @@ function theme_boost_union_get_main_scss_content($theme) {
 function theme_boost_union_get_pre_scss($theme) {
     global $CFG;
 
+    // During the initial installation, we can't access the config table yet, so we return an empty string.
+    if (during_initial_install()) {
+        return '';
+    }
+
     // Require local library.
     require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
@@ -421,6 +426,11 @@ function theme_boost_union_get_pre_scss($theme) {
  */
 function theme_boost_union_get_extra_scss($theme) {
     global $CFG;
+
+    // During the initial installation, we can't access the config table yet, so we return an empty string.
+    if (during_initial_install()) {
+        return '';
+    }
 
     // Require the necessary libraries.
     require_once($CFG->dirroot . '/course/lib.php');
