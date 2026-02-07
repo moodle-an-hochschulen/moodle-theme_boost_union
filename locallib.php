@@ -1487,6 +1487,11 @@ function theme_boost_union_get_additional_regions($pageregions = []) {
  */
 function theme_boost_union_get_block_regions($layout) {
 
+    // During the initial installation, we can't access the config table yet, so we return the default regions only.
+    if (during_initial_install()) {
+        return ['side-pre'];
+    }
+
     // Get the admin setting for the layout.
     $regionsettings = get_config('theme_boost_union', 'blockregionsfor' . $layout);
 
