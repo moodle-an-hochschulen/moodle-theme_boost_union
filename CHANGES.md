@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.0-r16
 
 * 2025-02-07 - Improvement: Allow the admin to restrict the maximum width of the sitename to avoid that the edit button widget breaks with really long site names, resolves #256.
 * 2026-02-06 - Improvement: Prevent that the loginbackgroundimagetext setting is shown in the Moodle upgrade wizard after the initial installation, resolves #1151
