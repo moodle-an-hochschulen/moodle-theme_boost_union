@@ -65,6 +65,7 @@
     * If a smart menu is configured as bottom bar, display the logo on mobile viewport instead of the hamburger menu icon (removed d-none, changed d-md-flex to d-flex)
     * Added menu bar section.
     * Added the possibility to use an alternative logo link URL.
+    * Added the possibility to set a maximal width for the sitename in the navbar to prevent layout breaking on medium-width screens.
 }}
 
 {{#menubar}}
@@ -87,7 +88,7 @@
                 <img src="{{output.get_compact_logo_url}}" class="logo me-1" alt="{{sitename}}">
             {{/ output.should_display_navbar_logo }}
             {{^ output.should_display_navbar_logo }}
-                {{{ sitename }}}
+                <span class="sitename">{{{ sitename }}}</span>
             {{/ output.should_display_navbar_logo }}
         </a>
         {{#primarymoremenu}}

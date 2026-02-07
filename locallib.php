@@ -1941,6 +1941,17 @@ function theme_boost_union_get_scss_navbar($theme) {
         }' . PHP_EOL;
     }
 
+    // Set styles based on the maxsitenamewidth setting.
+    // Apply only to medium-size screens where the layout issue occurs.
+    if (!empty(get_config('theme_boost_union', 'maxsitenamewidth'))) {
+        $scss .= '@include media-breakpoint-only(md) {
+            .navbar-brand .sitename {
+                @extend .text-truncate;
+                max-width: ' . get_config('theme_boost_union', 'maxsitenamewidth') . ';
+            }
+        }' . PHP_EOL;
+    }
+
     return $scss;
 }
 
