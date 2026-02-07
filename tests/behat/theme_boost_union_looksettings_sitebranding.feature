@@ -202,6 +202,25 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
       | 50px    | should      | 50px  |
       | 13%     | should      | 13%   |
 
+  @javascript
+  Scenario Outline: Setting: Maximal width of sitename in navbar - Set the maximum width
+    Given the following config values are set as admin:
+      | config            | value     | plugin            |
+      | maxsitenamewidth  | <setting> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "admin"
+    And I change viewport size to "<viewport>"
+    And I am on site homepage
+    Then DOM element ".navbar-brand .sitename" <widthshouldornot> have computed style "max-width" "<value>"
+    And DOM element ".navbar-brand .sitename" <truncshouldornot> have computed style "text-overflow" "ellipsis"
+
+    Examples:
+      | setting | viewport | widthshouldornot | truncshouldornot | value |
+      |         | 768x1024 | should not       | should not       | 200px |
+      | 200px   | 768x1024 | should           | should           | 200px |
+      | 200px   | 375x667  | should not       | should           | 200px |
+      | 200px   | 1024x768 | should not       | should           | 200px |
+
   Scenario Outline: Setting: Navbar color - Set the navbar color
     Given the following config values are set as admin:
       | config      | value     | plugin            |

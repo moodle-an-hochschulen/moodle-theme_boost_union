@@ -202,6 +202,8 @@ $string['navbarheading'] = 'Navbar';
 // ... Section: Maximal width of logo in navbar.
 $string['maxlogowidth'] = 'Maximal width of logo in navbar';
 $string['maxlogowidth_desc'] = 'In the navbar, the uploaded compact logo is normally displayed with 100% height and proportional width. However, if the logo is too broad or has another special aspect ratio, you can set the maximal width of the logo in the navbar here. You can enter pixel-based values like 120px, but you can also enter a percentage-based value like 10% or a viewport-width value like 5vw. If you do not enter any value, the logo will be displayed with the default presentation.';
+$string['maxsitenamewidth'] = 'Maximal width of sitename in navbar';
+$string['maxsitenamewidth_desc'] = 'If you have a very long sitename and want to prevent it from breaking the navbar layout (especially the edit button widget) on medium-width screens, you can set the maximal width of the sitename in the navbar here. If the sitename exceeds this width, it will be truncated with an ellipsis (...). You can enter pixel-based values like 200px, but you can also enter a percentage-based value like 20% or a viewport-width value like 15vw. If you do not enter any value, the sitename will be displayed with its full width.';
 // ... ... Setting: Navbar color.
 $string['navbarcolorsetting'] = 'Navbar color';
 $string['navbarcolorsetting_desc'] = 'With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one.';

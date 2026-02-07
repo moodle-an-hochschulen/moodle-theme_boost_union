@@ -138,6 +138,10 @@ With these settings, you can overwrite the Bootstrap colors which are used withi
 
 If the logo for the navbar on the top left is too wide or has a special aspect ratio, you can limit the logo's maximum width. Use css definition to limit the max-width.
 
+###### Maximal width of sitename in navbar
+
+If you have a very long sitename and want to prevent it from breaking the navbar layout (especially the edit button widget) on medium-width screens, you can set the maximal width of the sitename in the navbar here. If the sitename exceeds this width, it will be truncated with an ellipsis (...). Use css definition to limit the max-width.
+
 ###### Navbar color
 
 With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one.
