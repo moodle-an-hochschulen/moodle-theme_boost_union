@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.1-r5
 
 * 2025-02-10 - Bugfix: After introducing the course-specific settings in Boost Union in the latest release, entering course settings was not possible anymore if Boost Union was not the active theme, resolves #1155
 
