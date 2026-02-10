@@ -42,6 +42,15 @@ class after_form_definition {
     public static function callback(\core_course\hook\after_form_definition $hook): void {
         global $CFG;
 
+        // Require local library.
+        require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+
+        // If a theme other than Boost Union or a child theme of it is active, return directly.
+        // This is necessary as the callback is called regardless of the active theme.
+        if (theme_boost_union_is_active_theme() != true) {
+            return;
+        }
+
         // If the user does not have the capability to override the course header settings in this course, we do nothing.
         $context = $hook->formwrapper->get_context();
         if (!has_capability('theme/boost_union:overridecourseheaderincourse', $context)) {
