@@ -40,7 +40,16 @@ class after_form_submission {
      * @param \core_course\hook\after_form_submission $hook The hook data
      */
     public static function callback(\core_course\hook\after_form_submission $hook): void {
-        global $DB;
+        global $CFG, $DB;
+
+        // Require local library.
+        require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+
+        // If a theme other than Boost Union or a child theme of it is active, return directly.
+        // This is necessary as the callback is called regardless of the active theme.
+        if (theme_boost_union_is_active_theme() != true) {
+            return;
+        }
 
         // Get the submitted form data.
         $data = $hook->get_data();

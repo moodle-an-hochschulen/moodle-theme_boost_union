@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2025-02-10 - Bugfix: After introducing the course-specific settings in Boost Union in the latest release, entering course settings was not possible anymore if Boost Union was not the active theme, resolves #1155
+
 ### v5.1-r4
 
 * 2025-02-07 - Improvement: Allow the admin to restrict the maximum width of the sitename to avoid that the edit button widget breaks with really long site names, resolves #256.
