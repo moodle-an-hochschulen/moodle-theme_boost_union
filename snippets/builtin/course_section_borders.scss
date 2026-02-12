@@ -1,0 +1,38 @@
+/**
+ * Snippet Title: Aligned course section borders
+ * Scope:         course
+ * Goal:          easeofuse
+ * Description:   This snippet aligns the border-radius of the course section borders with the rest of Moodle. Additionally, it improves the border look if the section is highlighted.
+ * Creator:       Alexander Bias
+ * Tested on:     Moodle 5.1, Firefox for Mac
+ *
+ * @copyright     2026 Alexander Bias, ssystems GmbH
+ * @author        Alexander Bias <abias@ssystems.de>
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+.course-section {
+    // Reduce the border-radius of section-items to the standard radius.
+    .section-item {
+        @include border-radius();
+    }
+
+    // Reduce the border-radius of activity-items to the standard radius.
+    .activity-item  {
+        @include border-radius();
+    }
+
+    // For the current section only.
+    &.current  {
+
+        // Remove that ugly highlight bar from Moodle core.
+        > .section-item::before {
+            display: none;
+        }
+
+        // And show a nicer one which matched the rounded border.
+        > .section-item {
+            border-left: 5px solid $primary;
+        }
+    }
+}
