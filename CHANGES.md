@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-02-12 - Improvement: Solve Mustache glitches in the enhanced header templates, resolves #1161
 * 2026-02-12 - SCSS snippet: Aligned course section borders, resolves #1132
 
 ### v5.0-r17
