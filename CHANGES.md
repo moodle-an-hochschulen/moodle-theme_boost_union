@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-02-12 - SCSS snippet: Aligned course section borders, resolves #1132
+
 ### v4.5-r32
 
 * 2025-02-07 - Improvement: Allow the admin to restrict the maximum width of the sitename to avoid that the edit button widget breaks with really long site names, resolves #256.
