@@ -128,7 +128,11 @@ if ($PAGE->has_secondary_navigation()) {
 // It includes the smart menus and menu items, for multiple locations.
 $primary = new theme_boost_union\output\navigation\primary($PAGE);
 $renderer = $PAGE->get_renderer('core');
+if (!empty($oldmenu = $CFG->custommenuitems) && $CFG->branch < 500) {
+    $CFG->custommenuitems = format_string($CFG->custommenuitems);
+}
 $primarymenu = $primary->export_for_template($renderer);
+$CFG->custommenuitems = $oldmenu;
 
 // Add special class selectors to improve the Smart menus SCSS selectors.
 if (isset($primarymenu['includesmartmenu']) && $primarymenu['includesmartmenu'] == true) {
