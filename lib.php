@@ -139,6 +139,10 @@ define('THEME_BOOST_UNION_SETTING_LOGINFORMPOS_CENTER', 'center');
 define('THEME_BOOST_UNION_SETTING_LOGINFORMPOS_LEFT', 'left');
 define('THEME_BOOST_UNION_SETTING_LOGINFORMPOS_RIGHT', 'right');
 
+define('THEME_BOOST_UNION_SETTING_LOGINLAYOUT_VERTICAL', 'vertical');
+define('THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS', 'tabs');
+define('THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION', 'accordion');
+
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT', 'light');
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK', 'dark');
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYLIGHT', 'primarylight');
@@ -409,6 +413,15 @@ function theme_boost_union_get_pre_scss($theme) {
         }
     }
 
+    // Set custom Boost Union SCSS variable: The login container width.
+    $logincontainerwidth = get_config('theme_boost_union', 'logincontainerwidth');
+    // If the setting is not set.
+    if (!$logincontainerwidth) {
+        // Set the variable to the default setting to make sure that the SCSS variable does not remain uninitialized.
+        $logincontainerwidth = '500px';
+    }
+    $scss .= '$logincontainer-width: ' . $logincontainerwidth . ";\n";
+
     // Set custom Boost Union SCSS variable: The block region outside left width.
     $blockregionoutsideleftwidth = get_config('theme_boost_union', 'blockregionoutsideleftwidth');
     // If the setting is not set.
@@ -615,9 +628,6 @@ function theme_boost_union_get_extra_scss($theme) {
 
     // Setting: Course overview block.
     $content .= theme_boost_union_get_scss_courseoverview_block($theme);
-
-    // Setting: Login order.
-    $content .= theme_boost_union_get_scss_login_order($theme);
 
     return $content;
 }

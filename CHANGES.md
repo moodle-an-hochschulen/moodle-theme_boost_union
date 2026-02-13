@@ -8,6 +8,7 @@ Changes
 
 * 2026-02-12 - Improvement: Solve Mustache glitches in the enhanced header templates, resolves #1161
 * 2026-02-12 - SCSS snippet: Aligned course section borders, resolves #1132
+* 2025-01-27 - Feature: Add new login layouts and other login settings, resolves #1055
 
 ### v5.1-r5
 

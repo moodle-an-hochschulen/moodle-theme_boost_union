@@ -209,23 +209,27 @@ With this setting, you can optimize the login form to fit to a greater variety o
 
 With this setting, you can make the login form slightly transparent to let the background image shine through even more.
 
-##### Login providers
+###### Login container width
 
-###### Local login
+With this setting, you can control the width of the login container. By default, the login container width is set to 500px.
 
-With this setting, you control if the local login form is shown on the login page or not. By default, the local login form is shown and users can login into the site as normal. If you disable this setting, the local login form is hidden. This allows you to just provide login buttons for external identity providers like OAuth2 or OIDC.
+##### Login layout
 
-###### Local login intro
+###### Login layout
 
-With this setting, you control if a 'Login with your Moodle account' intro is shown above the local login form or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand which credentials to use in the local login form, especially if you provide more than one login method or if you have changed the order of the login methods.
+With this setting, you can choose how the login providers are displayed on the login page.
 
-###### IDP login intro
+###### Login background layout
 
-With this setting, you control if the 'Log in using your account on' intro is shown above the IDP login buttons or not. By default, the intro is shown and users will be quickly informed what the IDP buttons are about. If you disable this setting, the IDP intro is hidden. This allows you to provide a clean user login interface if you just use external identity providers like OAuth2 or OIDC.
+With this setting, you can choose the background layout for the login page.
 
 ##### Login order
 
-With these settings, you control the order of the login methods in the login form. The presented order will be defined from lowest to highest ordinal number, skipping all login methods and login form elements which are disabled in Moodle.
+With these settings, you control the order of the login providers in the login form. The presented order will be defined from lowest to highest ordinal number, skipping all login providers and login form elements which are disabled in Boost Union.
+
+##### Login providers
+
+In these section, you control if and how particilar login providers are presented on the login page.
 
 ##### Side entrance login
 
@@ -964,6 +968,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * Solent University, Mark Sharp: Code
 * ssystems GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
 * ssystems GmbH, Sangyul Cha: Code
+* ssystems GmbH, berthob98: Code
 * Technische Universität Berlin, Lars Bonczek: Code
 * University of Bayreuth, Nikolai Jahreis: Code
 * University of California, San Francisco, Stefan Topfstedt: Code
