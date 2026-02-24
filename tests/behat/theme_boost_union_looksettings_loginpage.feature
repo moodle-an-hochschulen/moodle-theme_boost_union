@@ -138,57 +138,36 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | yes     | should contain     |
       | no      | should not contain |
 
-  Scenario Outline: Setting: Local login
-    Given the following config values are set as admin:
-      | config                | value     | plugin            |
-      | loginlocalloginenable | <setting> | theme_boost_union |
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
-    Then "form#login" "css_element" <shouldornot> exist
-
-    Examples:
-      | setting | shouldornot |
-      | yes     | should      |
-      | no      | should not  |
-
-  Scenario Outline: Setting: Local login intro
+  @javascript
+  Scenario Outline: Setting: Login container width
     Given the following config values are set as admin:
       | config              | value     | plugin            |
-      | loginlocalshowintro | <setting> | theme_boost_union |
+      | logincontainerwidth | <setting> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
     When I am on site homepage
     And I click on "Log in" "link" in the ".logininfo" "css_element"
-    Then "#theme_boost_union-loginorder-local .login-heading" "css_element" <shouldornot> exist
+    Then DOM element ".login-container" should have computed style "width" "<cssvalue>"
 
     Examples:
-      | setting | shouldornot |
-      | yes     | should      |
-      | no      | should not  |
+      | setting | cssvalue |
+      | 600px   | 600px    |
+      |         | 500px    |
 
-  Scenario Outline: Setting: IDP login intro
+  Scenario Outline: Setting: Login layout
     Given the following config values are set as admin:
-      | config            | value     | plugin            |
-      | loginidpshowintro | <setting> | theme_boost_union |
-    And the following config values are set as admin:
-        | config | value         |
-        | auth   | manual,oauth2 |
-    And I log in as "admin"
-    And I navigate to "Server > OAuth 2 services" in site administration
-    And I press "Google"
-    And I should see "Create new service: Google"
-    And I set the following fields to these values:
-      | Name          | Testing service   |
-      | Client ID     | thisistheclientid |
-      | Client secret | supersecret       |
-    And I press "Save changes"
-    And I log out
+      | config      | value     | plugin            |
+      | loginlayout | <layout>  | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
     When I am on site homepage
     And I click on "Log in" "link" in the ".logininfo" "css_element"
-    Then ".login-identityproviders .login-heading" "css_element" <shouldornot> exist
+    Then "#login-layout-tabs" "css_element" <tabsshouldornot> exist
+    And "#login-layout-accordion" "css_element" <accordionshouldornot> exist
 
     Examples:
-      | setting | shouldornot |
-      | yes     | should      |
-      | no      | should not  |
+      | layout    | tabsshouldornot | accordionshouldornot |
+      | vertical  | should not      | should not           |
+      | tabs      | should          | should not           |
+      | accordion | should not      | should               |
 
   Scenario Outline: Setting: Login order
     Given the following config values are set as admin:
@@ -216,28 +195,143 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     When I am on site homepage
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     # Verify that login methods exist and appear in the correct DOM order.
-    Then "#theme_boost_union-loginorder-local" "css_element" should exist
-    And "#theme_boost_union-loginorder-idp" "css_element" should exist
-    And "#theme_boost_union-loginorder-firsttimesignup" "css_element" should exist
-    And "#theme_boost_union-loginorder-guest" "css_element" should exist
+    Then "#login-method-local" "css_element" should exist
+    And "#login-method-idp" "css_element" should exist
+    And "#login-method-firsttimesignup" "css_element" should exist
+    And "#login-method-guest" "css_element" should exist
     # Check DOM order: verify that elements appear in the expected sequence.
     # We check the order by verifying that each element appears before the next one in the DOM.
-    And "#<firstelementid>" "css_element" should appear before "#<secondelementid>" "css_element" in the "#theme_boost_union-loginorder" "css_element"
-    And "#<secondelementid>" "css_element" should appear before "#<thirdelementid>" "css_element" in the "#theme_boost_union-loginorder" "css_element"
-    And "#<thirdelementid>" "css_element" should appear before "#<fourthelementid>" "css_element" in the "#theme_boost_union-loginorder" "css_element"
+    And "#<firstelementid>" "css_element" should appear before "#<secondelementid>" "css_element" in the "#theme_boost_union-loginform" "css_element"
+    And "#<secondelementid>" "css_element" should appear before "#<thirdelementid>" "css_element" in the "#theme_boost_union-loginform" "css_element"
+    And "#<thirdelementid>" "css_element" should appear before "#<fourthelementid>" "css_element" in the "#theme_boost_union-loginform" "css_element"
 
     Examples:
-      | localordersetting | idpordersetting | firsttimesignupordersetting | guestordersetting | firstelementid                          | secondelementid                      | thirdelementid                                | fourthelementid                       |
-      | 1                 | 2               | 3                           | 4                 | theme_boost_union-loginorder-local      | theme_boost_union-loginorder-idp     | theme_boost_union-loginorder-firsttimesignup  | theme_boost_union-loginorder-guest    |
-      | 2                 | 1               | 4                           | 3                 | theme_boost_union-loginorder-idp        | theme_boost_union-loginorder-local   | theme_boost_union-loginorder-guest            | theme_boost_union-loginorder-firsttimesignup |
+      | localordersetting | idpordersetting | firsttimesignupordersetting | guestordersetting | firstelementid                    | secondelementid                   | thirdelementid                              | fourthelementid                             |
+      | 1                 | 2               | 3                           | 4                 | login-method-local | login-method-idp   | login-method-firsttimesignup | login-method-guest           |
+      | 2                 | 1               | 4                           | 3                 | login-method-idp   | login-method-local | login-method-guest           | login-method-firsttimesignup |
+
+  Scenario Outline: Setting: Login methods enabled
+    Given the following config values are set as admin:
+      | config                      | value     | plugin            |
+      | loginlocalloginenable       | <local>   | theme_boost_union |
+      | loginidploginenable         | <idp>     | theme_boost_union |
+      | loginselfregistrationenable | <selfreg> | theme_boost_union |
+      | loginguestloginenable       | <guest>   | theme_boost_union |
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Testing service   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then "#login-method-local" "css_element" <localshouldornot> exist
+    And "#login-method-idp" "css_element" <idpshouldornot> exist
+    And "#login-method-firsttimesignup" "css_element" <selfregshouldornot> exist
+    And "#login-method-guest" "css_element" <guestshouldornot> exist
+
+    Examples:
+      | local | idp | selfreg | guest | localshouldornot | idpshouldornot | selfregshouldornot | guestshouldornot |
+      | yes   | yes | yes     | yes   | should           | should         | should             | should           |
+      | no    | no  | no      | no    | should not       | should not     | should not         | should not       |
+      | yes   | no  | yes     | no    | should           | should not     | should             | should not       |
+
+  Scenario Outline: Setting: Login intro visibility
+    Given the following config values are set as admin:
+      | config                         | value     | plugin            |
+      | loginlocalloginenable          | yes       | theme_boost_union |
+      | loginidploginenable            | yes       | theme_boost_union |
+      | loginselfregistrationenable    | yes       | theme_boost_union |
+      | loginguestloginenable          | yes       | theme_boost_union |
+      | loginlocalshowintro            | <local>   | theme_boost_union |
+      | loginidpshowintro              | <idp>     | theme_boost_union |
+      | loginselfregistrationshowintro | <selfreg> | theme_boost_union |
+      | loginguestshowintro            | <guest>   | theme_boost_union |
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Testing service   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then "#login-method-local h2.login-heading" "css_element" <localshould> exist
+    And "#login-method-idp h2.login-heading" "css_element" <idpshould> exist
+    And "#login-method-firsttimesignup h2.login-heading" "css_element" <selfregshould> exist
+    And "#login-method-guest h2.login-heading" "css_element" <guestshould> exist
+
+    Examples:
+      | local | idp | selfreg | guest | localshould | idpshould | selfregshould | guestshould |
+      |       |     |         |       | should not  | should    | should        | should      |
+      | yes   | yes | yes     | yes   | should      | should    | should        | should      |
+      | no    | no  | no      | no    | should not  | should not| should not    | should not  |
+
+  Scenario Outline: Setting: Login intro text
+    Given the following config values are set as admin:
+      | config                         | value         | plugin            |
+      | loginlocalloginenable          | yes           | theme_boost_union |
+      | loginidploginenable            | yes           | theme_boost_union |
+      | loginselfregistrationenable    | yes           | theme_boost_union |
+      | loginguestloginenable          | yes           | theme_boost_union |
+      | loginlocalshowintro            | yes           | theme_boost_union |
+      | loginidpshowintro              | yes           | theme_boost_union |
+      | loginselfregistrationshowintro | yes           | theme_boost_union |
+      | loginguestshowintro            | yes           | theme_boost_union |
+      | loginlocalintrotext            | <localtext>   | theme_boost_union |
+      | loginidpintrotext              | <idptext>     | theme_boost_union |
+      | loginselfregistrationintrotext | <selfregtext> | theme_boost_union |
+      | loginguestintrotext            | <guesttext>   | theme_boost_union |
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Testing service   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then I should see "<localexpected>" in the "#login-method-local h2.login-heading" "css_element"
+    And I should see "<idpexpected>" in the "#login-method-idp h2.login-heading" "css_element"
+    And I should see "<selfregexpected>" in the "#login-method-firsttimesignup h2.login-heading" "css_element"
+    And I should see "<guestexpected>" in the "#login-method-guest h2.login-heading" "css_element"
+
+    Examples:
+      | localtext | idptext | selfregtext | guesttext | localexpected                  | idpexpected                   | selfregexpected               | guestexpected                       |
+      |           |         |             |           | Login with your Moodle account | Log in using your account on: | Is this your first time here? | Some courses may allow guest access |
+      | Local A   | IDP A   | Selfreg A   | Guest A   | Local A                        | IDP A                         | Selfreg A                     | Guest A                             |
 
   @javascript
-  Scenario Outline: Setting: Login layout tabs - Switch between tabs
+  Scenario Outline: Setting: Login layout tabs - Verify tabs structure and primarylogin functionality
     Given the following config values are set as admin:
-      | config            | value            | plugin            |
-      | loginlayout       | tabs             | theme_boost_union |
-      | primarylogin      | <primarylogin>   | theme_boost_union |
-    And the theme cache is purged and the theme is reloaded
+      | config       | value          | plugin            |
+      | loginlayout  | tabs           | theme_boost_union |
+      | primarylogin | <primarylogin> | theme_boost_union |
     And the following config values are set as admin:
       | config           | value               |
       | auth             | manual,email,oauth2 |
@@ -256,44 +350,46 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     When I am on site homepage
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     # Verify that tabs navigation exists.
-    Then "#login-tabs" "css_element" should exist
-    And the "role" attribute of "#login-tabs" "css_element" should contain "tablist"
+    Then "#login-layout-tabs" "css_element" should exist
+    And the "role" attribute of "#login-layout-tabs" "css_element" should contain "tablist"
     # Verify that tab links exist.
-    And "#login-tab-local-tab" "css_element" should exist
-    And "#login-tab-idp-tab" "css_element" should exist
-    And "#login-tab-firsttimesignup-tab" "css_element" should exist
-    And "#login-tab-guest-tab" "css_element" should exist
+    And "#login-method-local-tab" "css_element" should exist
+    And "#login-method-idp-tab" "css_element" should exist
+    And "#login-method-firsttimesignup-tab" "css_element" should exist
+    And "#login-method-guest-tab" "css_element" should exist
     # Verify that tab panes exist.
-    And "#login-tab-local" "css_element" should exist
-    And "#login-tab-idp" "css_element" should exist
-    And "#login-tab-firsttimesignup" "css_element" should exist
-    And "#login-tab-guest" "css_element" should exist
+    And "#login-method-local" "css_element" should exist
+    And "#login-method-idp" "css_element" should exist
+    And "#login-method-firsttimesignup" "css_element" should exist
+    And "#login-method-guest" "css_element" should exist
     # Verify initial state: the primary login tab is active.
-    Then the "class" attribute of "#login-tab-<activetab>-tab" "css_element" should contain "active"
-    And the "class" attribute of "#login-tab-<activetab>" "css_element" should contain "show"
-    And the "class" attribute of "#login-tab-<activetab>" "css_element" should contain "active"
+    Then the "class" attribute of "#login-method-<activetab>-tab" "css_element" should contain "active"
+    And the "class" attribute of "#login-method-<activetab>" "css_element" should contain "show"
+    And the "class" attribute of "#login-method-<activetab>" "css_element" should contain "active"
     # Click on a different tab to test switching.
-    When I click on "#login-tab-<switchtotab>-tab" "css_element"
+    When I click on "#login-method-<switchtotab>-tab" "css_element"
     # Verify that the clicked tab is now active and the previous tab is inactive.
-    Then the "class" attribute of "#login-tab-<switchtotab>-tab" "css_element" should contain "active"
-    And the "class" attribute of "#login-tab-<switchtotab>" "css_element" should contain "show"
-    And the "class" attribute of "#login-tab-<switchtotab>" "css_element" should contain "active"
-    And the "class" attribute of "#login-tab-<activetab>-tab" "css_element" should not contain "active"
-    And the "class" attribute of "#login-tab-<activetab>" "css_element" should not contain "show"
-    And the "class" attribute of "#login-tab-<activetab>" "css_element" should not contain "active"
+    Then the "class" attribute of "#login-method-<switchtotab>-tab" "css_element" should contain "active"
+    And the "class" attribute of "#login-method-<switchtotab>" "css_element" should contain "show"
+    And the "class" attribute of "#login-method-<switchtotab>" "css_element" should contain "active"
+    And the "class" attribute of "#login-method-<activetab>-tab" "css_element" should not contain "active"
+    And the "class" attribute of "#login-method-<activetab>" "css_element" should not contain "show"
+    And the "class" attribute of "#login-method-<activetab>" "css_element" should not contain "active"
 
     Examples:
-      | primarylogin | activetab | switchtotab |
-      | none         | local     | idp         |
-      | idp          | idp       | local       |
-      | firsttimesignup | firsttimesignup | guest       |
+      | primarylogin    | activetab       | switchtotab     |
+      | none            | local           | idp             |
+      | local           | local           | idp             |
+      | idp             | idp             | local           |
+      | firsttimesignup | firsttimesignup | guest           |
+      | guest           | guest           | firsttimesignup |
 
   @javascript
-  Scenario: Setting: Login layout accordion - Verify accordion structure and functionality
+  Scenario Outline: Setting: Login layout accordion - Verify accordion structure and primarylogin functionality
     Given the following config values are set as admin:
-      | config            | value     | plugin            |
-      | loginlayout       | accordion | theme_boost_union |
-    And the theme cache is purged and the theme is reloaded
+      | config       | value          | plugin            |
+      | loginlayout  | accordion      | theme_boost_union |
+      | primarylogin | <primarylogin> | theme_boost_union |
     And the following config values are set as admin:
       | config           | value               |
       | auth             | manual,email,oauth2 |
@@ -312,29 +408,77 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     When I am on site homepage
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     # Verify that accordion container exists.
-    Then "#theme_boost_union-loginorder" "css_element" should exist
-    And the "class" attribute of "#theme_boost_union-loginorder" "css_element" should contain "accordion"
-    And the "class" attribute of "#theme_boost_union-loginorder" "css_element" should contain "login-layout-accordion"
-    # Verify that accordion items exist.
-    And "#accordion-local-header" "css_element" should exist
-    And "#accordion-idp-header" "css_element" should exist
-    And "#accordion-local-content" "css_element" should exist
-    And "#accordion-idp-content" "css_element" should exist
-    # Verify initial state: accordion items are collapsed by default.
-    Then the "class" attribute of "#accordion-local-content" "css_element" should contain "collapse"
-    And the "class" attribute of "#accordion-idp-content" "css_element" should contain "collapse"
-    # Click on local accordion button to open it.
-    When I click on "#accordion-local-header button" "css_element"
-    # Verify that local accordion is now open.
-    Then the "class" attribute of "#accordion-local-content" "css_element" should contain "show"
-    And the "class" attribute of "#accordion-local-header button" "css_element" should not contain "collapsed"
-    # Click on IDP accordion button to open it (should close local).
-    When I click on "#accordion-idp-header button" "css_element"
-    # Verify that IDP accordion is now open and local is closed.
-    Then the "class" attribute of "#accordion-idp-content" "css_element" should contain "show"
-    And the "class" attribute of "#accordion-idp-header button" "css_element" should not contain "collapsed"
-    And the "class" attribute of "#accordion-local-content" "css_element" should not contain "show"
-    And the "class" attribute of "#accordion-local-header button" "css_element" should contain "collapsed"
+    Then "#login-layout-accordion" "css_element" should exist
+    And the "class" attribute of "#login-layout-accordion" "css_element" should contain "accordion"
+    # Verify that accordion links exist.
+    And "#login-method-local-accordion-header" "css_element" should exist
+    And "#login-method-idp-accordion-header" "css_element" should exist
+    And "#login-method-firsttimesignup-accordion-header" "css_element" should exist
+    And "#login-method-guest-accordion-header" "css_element" should exist
+    # Verify that accordion panes exist.
+    And "#login-method-local-accordion-content" "css_element" should exist
+    And "#login-method-idp-accordion-content" "css_element" should exist
+    And "#login-method-firsttimesignup-accordion-content" "css_element" should exist
+    And "#login-method-guest-accordion-content" "css_element" should exist
+    # Verify initial state: the primary login accordion is open (or all collapsed when none).
+    Then the "class" attribute of "#login-method-<activemethod>-accordion-content" "css_element" <activeshow> "show"
+    And the "class" attribute of "#login-method-<activemethod>-accordion-header button" "css_element" <activecollapsed> "collapsed"
+    # Click on a different accordion button to test switching.
+    When I click on "#login-method-<switchto>-accordion-header button" "css_element"
+    # Verify that the clicked accordion is now open and the previous one is closed.
+    Then the "class" attribute of "#login-method-<switchto>-accordion-content" "css_element" should contain "show"
+    And the "class" attribute of "#login-method-<switchto>-accordion-header button" "css_element" should not contain "collapsed"
+    And the "class" attribute of "#login-method-<activemethod>-accordion-content" "css_element" should not contain "show"
+    And the "class" attribute of "#login-method-<activemethod>-accordion-header button" "css_element" should contain "collapsed"
+
+    Examples:
+      | primarylogin    | activemethod    | switchto        | activeshow         | activecollapsed    |
+      | none            | local           | idp             | should not contain | should contain     |
+      | local           | local           | idp             | should contain     | should not contain |
+      | idp             | idp             | local           | should contain     | should not contain |
+      | firsttimesignup | firsttimesignup | guest           | should contain     | should not contain |
+      | guest           | guest           | firsttimesignup | should contain     | should not contain |
+
+  Scenario Outline: Setting: Login layout labels
+    Given the following config values are set as admin:
+      | config                          | value     | plugin            |
+      | loginlayout                     | <layout>  | theme_boost_union |
+      | loginlocalloginenable           | yes       | theme_boost_union |
+      | loginidploginenable             | yes       | theme_boost_union |
+      | loginselfregistrationenable     | yes       | theme_boost_union |
+      | loginguestloginenable           | yes       | theme_boost_union |
+      | loginlocalloginlabel            | <local>   | theme_boost_union |
+      | loginidploginlabel              | <idp>     | theme_boost_union |
+      | loginselfregistrationloginlabel | <selfreg> | theme_boost_union |
+      | loginguestloginlabel            | <guest>   | theme_boost_union |
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Testing service   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then I should see "<localexpected>" in the "<localselector>" "css_element"
+    And I should see "<idpexpected>" in the "<idpselector>" "css_element"
+    And I should see "<selfregexpected>" in the "<selfregselector>" "css_element"
+    And I should see "<guestexpected>" in the "<guestselector>" "css_element"
+
+    Examples:
+      | layout    | local   | idp   | selfreg   | guest   | localexpected  | idpexpected | selfregexpected   | guestexpected | localselector                                       | idpselector                                       | selfregselector                                               | guestselector                                       |
+      | tabs      |         |       |           |         | Moodle account | IDP login   | Self registration | Guest login   | #login-method-local-tab                             | #login-method-idp-tab                             | #login-method-firsttimesignup-tab                             | #login-method-guest-tab                             |
+      | tabs      | Local A | IDP A | Selfreg A | Guest A | Local A        | IDP A       | Selfreg A         | Guest A       | #login-method-local-tab                             | #login-method-idp-tab                             | #login-method-firsttimesignup-tab                             | #login-method-guest-tab                             |
+      | accordion |         |       |           |         | Moodle account | IDP login   | Self registration | Guest login   | #login-method-local-accordion-header .login-heading | #login-method-idp-accordion-header .login-heading | #login-method-firsttimesignup-accordion-header .login-heading | #login-method-guest-accordion-header .login-heading |
+      | accordion | Local A | IDP A | Selfreg A | Guest A | Local A        | IDP A       | Selfreg A         | Guest A       | #login-method-local-accordion-header .login-heading | #login-method-idp-accordion-header .login-heading | #login-method-firsttimesignup-accordion-header .login-heading | #login-method-guest-accordion-header .login-heading |
 
   Scenario Outline: Setting: Enable side entrance login - View the side entrance login page
     Given the following config values are set as admin:
