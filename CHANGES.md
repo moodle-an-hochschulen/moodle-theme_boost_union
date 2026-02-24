@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2206-02-24 - Improvement: Hide the "Calendar" navigation item for guests as well, resolves #1167
 * 2026-02-12 - Improvement: Solve Mustache glitches in the enhanced header templates, resolves #1161
 * 2026-02-12 - SCSS snippet: Aligned course section borders, resolves #1132
 

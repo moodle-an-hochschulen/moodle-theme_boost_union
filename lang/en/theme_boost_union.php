@@ -704,6 +704,7 @@ $string['primarynavigationheading'] = 'Primary navigation';
 $string['hidenodesprimarynavigationsetting'] = 'Hide nodes in primary navigation';
 $string['hidenodesprimarynavigationsetting_desc'] = 'With this setting, you can hide one or multiple nodes from the primary navigation.<br /><br />
 Please note: Here, you can just remove navigation nodes. But if you want to add custom navigation nodes, please consider using <a href="{$a->url}">Boost Union\'s smart menu functionality</a>.';
+$string['hidenodesprimarynavigationonlyguest'] = 'This node is shown to guests only';
 // ... ... Settings: Alternative logo link URL.
 $string['alternativelogolinkurlsetting'] = 'Alternative logo link URL';
 $string['alternativelogolinkurlsetting_desc'] = 'With this setting, you can set an alternative link URL which will be used as link on the logo in the navigation bar. You can use this setting to, for example, link to your organization\'s website instead of the Moodle frontpage to maintain a homogeneous navigation bar throughout all of your organization\'s systems.';

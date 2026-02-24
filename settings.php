@@ -2551,10 +2551,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Prepare hide nodes options.
         $hidenodesoptions = [
-                THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_HOME => get_string('home'),
-                THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_MYHOME => get_string('myhome'),
-                THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_MYCOURSES => get_string('mycourses'),
-                THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_SITEADMIN => get_string('administrationsite'),
+            THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_HOME => get_string('home'),
+            THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_MYHOME => get_string('myhome'),
+            THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_MYCOURSES => get_string('mycourses'),
+            THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_SITEADMIN => get_string('administrationsite'),
+            THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_CALENDAR => get_string('calendar', 'calendar') .
+                    ' (' . get_string('hidenodesprimarynavigationonlyguest', 'theme_boost_union') . ')',
         ];
 
         // Setting: Hide nodes in primary navigation.
