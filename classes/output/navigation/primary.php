@@ -56,6 +56,31 @@ class primary extends \core\navigation\output\primary {
     }
 
     /**
+     * Get the primary nav object and standardize the output.
+     *
+     * Moodle core adds the guest calendar node without checking
+     * the theme's removed primary navigation items. We handle that case here.
+     *
+     * @param \navigation_node|null $parent used for nested nodes, by default the primarynav node
+     * @return array
+     */
+    protected function get_primary_nav($parent = null): array {
+        // Fetch the configured list of node keys to hide.
+        $removed = $this->page->theme->removedprimarynavitems ?? [];
+
+        // Core adds the guest calendar node without checking the removed list, so remove it explicitly.
+        if (in_array(THEME_BOOST_UNION_SETTING_HIDENODESPRIMARYNAVIGATION_CALENDAR, $removed)) {
+            $calendarnode = $this->page->primarynav->find('calendar', \core\navigation\navigation_node::TYPE_ROOTNODE);
+            if ($calendarnode) {
+                $calendarnode->remove();
+            }
+        }
+
+        // Continue to handle the primary navigation tree with the parent function.
+        return parent::get_primary_nav($parent);
+    }
+
+    /**
      * Combine the various menus into a standardized output.
      *
      * Modifications compared to the original function:
