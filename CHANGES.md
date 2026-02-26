@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2025-02-24 - Feature: Add new login layouts and other login settings, resolves #1055
 * 2026-02-24 - Improvement: Hide the "Calendar" navigation item for guests as well, resolves #1167
 * 2026-02-12 - SCSS snippet: Aligned course section borders, resolves #1132
 
