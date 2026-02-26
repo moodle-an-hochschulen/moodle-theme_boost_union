@@ -41,9 +41,22 @@
     * sitename - Name of site.,
     * logintoken - Random token to protect login request.,
     * maintenance - Maintenance message
-    * showlocallogin - Should the local login form be shown?
-    * showlocalloginintro - Should the local login intro be shown?
-    * showidploginintro - Should the IDP login intro be shown?
+    * guestloginintrotext - Custom guest login intro text (optional),
+    * idploginintrotext - Custom IDP login intro text (optional),
+    * localloginintrotext - Custom local login intro text (optional),
+    * loginlayoutaccordion - Flag used to check if elements should be displayed for the accordion layout type,
+    * loginlayouttabs - Flag used to check if elements should be displayed for the tabs layout type,
+    * loginlayoutvertical - Flag used to check if elements should be displayed for the vertical layout type,
+    * loginmethods - Array used to iterate over the login methods, each with: id, name, order, type, islocal, isidp, isfirsttimesignup, isguest, isfirst, label, active,
+    * selfregistrationloginintrotext - Custom self registration intro text (optional),
+    * showguestlogin - Should guest login be shown? (theme + core),
+    * showguestloginintro - Should the guest login intro be shown?,
+    * showidplogin - Should IDP login be shown? (theme + core),
+    * showidploginintro - Should the IDP login intro be shown?,
+    * showlocallogin - Should the local login form be shown?,
+    * showlocalloginintro - Should the local login intro be shown?,
+    * showselfregistration - Should self registration be shown? (theme + core),
+    * showselfregistrationloginintro - Should the self registration intro be shown?
 
     Example context (json):
     {
@@ -99,9 +112,49 @@
         "languagemenu": "Choose language",
         "togglepassword": true,
         "smallscreensonly": true,
+        "guestloginintrotext": "",
+        "idploginintrotext": "",
+        "localloginintrotext": "",
+        "selfregistrationloginintrotext": "",
+        "loginlayoutaccordion": false,
+        "loginlayouttabs": true,
+        "loginlayoutvertical": false,
+        "loginmethods": [
+            {
+                "id": "login-method-local",
+                "name": "local",
+                "order": 1,
+                "type": "local",
+                "islocal": true,
+                "isidp": false,
+                "isfirsttimesignup": false,
+                "isguest": false,
+                "isfirst": true,
+                "label": "Moodle account",
+                "active": true
+            },
+            {
+                "id": "login-method-idp",
+                "name": "idp",
+                "order": 2,
+                "type": "idp",
+                "islocal": false,
+                "isidp": true,
+                "isfirsttimesignup": false,
+                "isguest": false,
+                "isfirst": false,
+                "label": "IDP login",
+                "active": false
+            }
+        ],
         "showlocallogin": true,
         "showlocalloginintro": true,
-        "showidploginintro": true
+        "showidplogin": true,
+        "showidploginintro": true,
+        "showguestlogin": true,
+        "showguestloginintro": true,
+        "showselfregistration": true,
+        "showselfregistrationloginintro": true
     }
 }}
 {{!
@@ -109,11 +162,19 @@
 
     Modifications compared to the original template:
     * Add btn-secondary class to identityprovider login buttons.
-    * Added the possibility to hide the local login form (with Boost Union).
+    * Added the possibility to change the login layout from a vertical to a tabbed layout or accordion layout.
+    * Added the possibility to hide each login provider (with Boost Union).
     * Removed the possibility to hide the local login form (with Moodle Core from Moodle 4.5 on).
-    * Added the possibility to hide the IDP login intro.
-    * Added the possibility to show a local login intro.
-    * Added the possibility to change the login method order by adding wrapper divs around each login method.
+    * Added the possibility to show or hide the login provider intros.
+    * Added the possibility to change the login method order.
+
+    This template supports three layout options (vertical, tabs, accordion) and renders multiple
+    login methods (local, IDP, firsttimesignup, guest) in a sorted order. The broad structure of this document
+    consists of: Header Section (logo/heading and messages), Container Section (either for tabs layout
+    where we iterate over the tabs array, or for vertical/accordion layout), Login Methods Section
+    (where we iterate over the loginmethods array to display the actual login forms), Container Close
+    Section (to close the container), Footer Section (language menu and cookies notice), and
+    JavaScript Section (for form handling and layout-specific functionality).
 }}
 
 <div class="loginform">
@@ -137,13 +198,46 @@
     {{#info}}
         <div class="alert alert-info" id="logininfomessage" role="status">{{info}}</div>
     {{/info}}
-    <div id="theme_boost_union-loginorder">
+
+    <div id="theme_boost_union-loginform">
+
+    {{! =========================================================================== }}
+    {{! LAYOUT CONTAINER: Tabs or Accordion }}
+    {{! =========================================================================== }}
+
+    {{! Tabs Layout: Navigation and start content section }}
+    {{#loginlayouttabs}}
+        <ul class="nav nav-tabs mb-4" id="login-layout-tabs" role="tablist">
+            {{#loginmethods}}
+            <li class="nav-item" role="presentation">
+                <a class="nav-link {{#active}}active{{/active}}" id="{{id}}-tab" data-bs-toggle="tab" href="#{{id}}" role="tab" aria-controls="{{id}}" {{#active}}aria-selected="true"{{/active}}{{^active}}aria-selected="false" tabindex="-1"{{/active}}>{{label}}</a>
+            </li>
+            {{/loginmethods}}
+        </ul>
+        <div class="tab-content mb-4" id="login-layout-tabs-content">
+    {{/loginlayouttabs}}
+    {{! Accordion Layout: Start container }}
+    {{#loginlayoutaccordion}}
+        <div id="login-layout-accordion" class="accordion">
+    {{/loginlayoutaccordion}}
+
+    {{! =========================================================================== }}
+    {{! LOGIN METHODS: Loop through sorted methods }}
+    {{! =========================================================================== }}
+    {{#loginmethods}}
+
+    {{! --------------------------------------------------------------------------- }}
+    {{! METHOD: Local Login }}
+    {{! --------------------------------------------------------------------------- }}
+    {{#islocal}}
     {{#showlocallogin}}
-    <div id="theme_boost_union-loginorder-local" class="theme_boost_union-loginmethod">
-    <div class="login-divider"></div>
-    {{#showlocalloginintro}}
-    <h2 class="login-heading">{{#str}} loginlocalintro, theme_boost_union {{/str}}</h2>
-    {{/showlocalloginintro}}
+    {{>theme_boost_union/loginform-partial-method-start}}
+
+        {{! Intro heading }}
+        {{#showlocalloginintro}}
+        <h2 class="login-heading {{#loginlayoutaccordion}}text-break w-100{{/loginlayoutaccordion}}">{{#localloginintrotext}}{{{localloginintrotext}}}{{/localloginintrotext}}{{^localloginintrotext}}{{#str}} loginlocalintro, theme_boost_union {{/str}}{{/localloginintrotext}}</h2>
+        {{/showlocalloginintro}}
+
         <form class="login-form" action="{{loginurl}}" method="post" id="login">
             <input id="anchor" type="hidden" name="anchor" value="">
             <script>document.getElementById('anchor').value = location.hash;</script>
@@ -183,15 +277,24 @@
                 <a href="{{forgotpasswordurl}}">{{#str}}forgotaccount{{/str}}</a>
             </div>
         </form>
-    </div>
+
+    {{>theme_boost_union/loginform-partial-method-end}}
     {{/showlocallogin}}
-    {{#hasidentityproviders}}
-    <div id="theme_boost_union-loginorder-idp" class="theme_boost_union-loginmethod">
-        <div class="login-divider"></div>
+    {{/islocal}}
+
+    {{! --------------------------------------------------------------------------- }}
+    {{! METHOD: Identity Providers (OAuth2, SAML, etc.) }}
+    {{! --------------------------------------------------------------------------- }}
+    {{#isidp}}
+    {{#showidplogin}}
+    {{>theme_boost_union/loginform-partial-method-start}}
+
         <div class="login-identityproviders">
+            {{! Intro heading }}
             {{#showidploginintro}}
-            <h2 class="login-heading">{{#str}} potentialidps, auth {{/str}}</h2>
+            <h2 class="login-heading {{#loginlayoutaccordion}}text-break w-100{{/loginlayoutaccordion}}">{{#idploginintrotext}}{{{idploginintrotext}}}{{/idploginintrotext}}{{^idploginintrotext}}{{#str}} potentialidps, auth {{/str}}{{/idploginintrotext}}</h2>
             {{/showidploginintro}}
+
             {{#identityproviders}}
                 <a class="btn login-identityprovider-btn w-100 btn-secondary" href="{{url}}">
                     {{#iconurl}}
@@ -201,36 +304,81 @@
                 </a>
             {{/identityproviders}}
         </div>
-    </div>
-    {{/hasidentityproviders}}
-    <div id="theme_boost_union-loginorder-firsttimesignup" class="theme_boost_union-loginmethod">
-    {{#hasinstructions}}
-        <div class="login-divider"></div>
+
+    {{>theme_boost_union/loginform-partial-method-end}}
+    {{/showidplogin}}
+    {{/isidp}}
+
+    {{! --------------------------------------------------------------------------- }}
+    {{! METHOD: Signup / First Time User }}
+    {{! --------------------------------------------------------------------------- }}
+    {{#isfirsttimesignup}}
+    {{#showselfregistration}}
+    {{>theme_boost_union/loginform-partial-method-start}}
+
         <div class="login-instructions {{#cansignup}}mb-3{{/cansignup}}">
-            <h2 class="login-heading">{{#str}}firsttime{{/str}}</h2>
+            {{! Intro heading }}
+            {{#showselfregistrationloginintro}}
+            <h2 class="login-heading {{#loginlayoutaccordion}}text-break w-100{{/loginlayoutaccordion}}">{{#selfregistrationloginintrotext}}{{{selfregistrationloginintrotext}}}{{/selfregistrationloginintrotext}}{{^selfregistrationloginintrotext}}{{#str}} firsttime {{/str}}{{/selfregistrationloginintrotext}}</h2>
+            {{/showselfregistrationloginintro}}
+
             {{{instructions}}}
         </div>
-    {{/hasinstructions}}
-    {{#cansignup}}
-        <div class="login-signup">
-            <a class="btn btn-secondary" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a>
-        </div>
-    {{/cansignup}}
-    </div>
-    {{#canloginasguest}}
-    <div id="theme_boost_union-loginorder-guest" class="theme_boost_union-loginmethod">
-        <div class="login-divider"></div>
-        <h2 class="login-heading">{{#str}}someallowguest{{/str}}</h2>
+        {{#cansignup}}
+            <div class="login-signup">
+                <a class="btn btn-secondary" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a>
+            </div>
+        {{/cansignup}}
+
+    {{>theme_boost_union/loginform-partial-method-end}}
+    {{/showselfregistration}}
+    {{/isfirsttimesignup}}
+
+    {{! --------------------------------------------------------------------------- }}
+    {{! METHOD: Guest Login }}
+    {{! --------------------------------------------------------------------------- }}
+    {{#isguest}}
+    {{#showguestlogin}}
+    {{>theme_boost_union/loginform-partial-method-start}}
+
+        {{! Intro heading }}
+        {{#showguestloginintro}}
+        <h2 class="login-heading {{#loginlayoutaccordion}}text-break w-100{{/loginlayoutaccordion}}">{{#guestloginintrotext}}{{{guestloginintrotext}}}{{/guestloginintrotext}}{{^guestloginintrotext}}{{#str}}someallowguest{{/str}}{{/guestloginintrotext}}</h2>
+        {{/showguestloginintro}}
+
         <form action="{{loginurl}}" method="post" id="guestlogin">
             <input type="hidden" name="logintoken" value="{{logintoken}}">
             <input type="hidden" name="username" value="guest" />
             <input type="hidden" name="password" value="guest" />
             <button class="btn btn-secondary" type="submit" id="loginguestbtn">{{#str}}loginguest{{/str}}</button>
         </form>
+
+    {{>theme_boost_union/loginform-partial-method-end}}
+    {{/showguestlogin}}
+    {{/isguest}}
+    {{/loginmethods}}
+
+    {{! =========================================================================== }}
+    {{! CLOSE LAYOUT CONTAINER }}
+    {{! =========================================================================== }}
+
     </div>
-    {{/canloginasguest}}
-    </div>
+
+    {{! Add final divider (except for the accordion layout which has its own borders) }}
+    {{^loginlayoutaccordion}}
     <div class="login-divider"></div>
+    {{/loginlayoutaccordion}}
+    {{! Add some spacing at the end of the accordion layout to prevent the last login method from being too close to the footer }}
+    {{#loginlayoutaccordion}}
+    <div class="mb-5"></div>
+    {{/loginlayoutaccordion}}
+
+    </div>
+
+    {{! =========================================================================== }}
+    {{! LOGIN FORM FOOTER }}
+    {{! =========================================================================== }}
+
     <div class="d-flex">
         {{#languagemenu}}
             <div class="login-languagemenu">
@@ -295,8 +443,17 @@
     {{/togglepassword}}
     require(['core_form/submit'], function(Submit) {
         Submit.init("loginbtn");
-        {{#canloginasguest}}
+        {{#showguestlogin}}
             Submit.init("loginguestbtn");
-        {{/canloginasguest}}
+        {{/showguestlogin}}
     });
+
+    {{! Tabs layout: Clear URL hash on page reload to prevent automatic tab switching by the browser based on the hash }}
+    {{#loginlayouttabs}}
+    (function() {
+        if (window.location.hash && (window.location.hash.indexOf('login-method-') !== -1)) {
+            history.replaceState(null, null, window.location.pathname + window.location.search);
+        }
+    })();
+    {{/loginlayouttabs}}
 {{/js}}
