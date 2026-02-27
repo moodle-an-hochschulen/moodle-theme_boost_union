@@ -1522,6 +1522,17 @@ class smartmenu_item {
             if (isset($data[$fieldid])) {
                 $data = $data[$fieldid];
                 $data->instance_form_definition($mform);
+
+                // Check if the element was actually added to the form.
+                // When a custom field is not visible in course settings, it won't be added.
+                // In this case, getElement() returns a PEAR_Error instead of a form element.
+                // This happened before with the customfield_semester | visibleincoursesettings setting
+                // of customfield_semester.
+                // See https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues/1164 for details.
+                if (!$mform->elementExists("customfield_" . $shortname)) {
+                    continue;
+                }
+
                 $elem = $mform->getElement("customfield_" . $shortname);
                 // If this field is a textarea, we'll remove the element and re-add
                 // it in a group as textareas can't be conditionally hidden due to a limitation in Moodle core.
