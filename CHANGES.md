@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.0-r18
 
 * 2026-02-26 - Bugfix: Smart menu creation was not possible if a custom field which hid itself from the course settings form was present, resolves #1164
 * 2026-02-24 - Feature: Add new login layouts and other login settings, resolves #1055
