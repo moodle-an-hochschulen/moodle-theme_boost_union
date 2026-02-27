@@ -239,8 +239,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I <menu3shouldornotlarge> see smart menu "Quick links 03" in location "Main"
     And ".primary-navigation .dropdownmoremenu" "css_element" <moreshouldornotlarge> be visible
     # Make the screen smaller and test the "More" behaviour in the navbar
-    # This screen size should be 'tablet', but due to MDL-81892, we have to test on a larger screen.
-    And I change viewport size to "820x1024"
+    And I change viewport size to "tablet"
     Then I <menu1shouldornottablet> see smart menu "Quick links 01" in location "Main"
     And I <menu2shouldornottablet> see smart menu "Quick links 02" in location "Main"
     And I <menu3shouldornottablet> see smart menu "Quick links 03" in location "Main"
@@ -294,8 +293,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | hidenodesprimarynavigation | home,myhome,courses,siteadminnode | theme_boost_union |
     And I follow "Dashboard"
     # Make the screen smaller and test the "More" behaviour in the navbar
-    # This screen size should be 'tablet', but due to MDL-81892, we have to test on a larger screen.
-    And I change viewport size to "820x1024"
+    And I change viewport size to "tablet"
     And I click on "More" "link" in the ".primary-navigation" "css_element"
     Then I should see smart menu "Quick links 01" in location "Main"
     And I should see smart menu "Quick links 02" in location "Main"
