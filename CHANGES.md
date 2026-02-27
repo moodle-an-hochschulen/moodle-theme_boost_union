@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-02-26 - Bugfix: Smart menu creation was not possible if a custom field which hid itself from the course settings form was present, resolves #1164
 * 2026-02-24 - Feature: Add new login layouts and other login settings, resolves #1055
 * 2026-02-24 - Improvement: Hide the "Calendar" navigation item for guests as well, resolves #1167
 * 2026-02-12 - Improvement: Solve Mustache glitches in the enhanced header templates, resolves #1161
