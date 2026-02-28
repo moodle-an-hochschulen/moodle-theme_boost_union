@@ -18,12 +18,12 @@
     }
 
     // Reduce the border-radius of activity-items to the standard radius.
-    .activity-item  {
+    .activity-item {
         @include border-radius();
     }
 
     // For the current section only.
-    &.current  {
+    &.current {
 
         // Remove that ugly highlight bar from Moodle core.
         > .section-item::before {
