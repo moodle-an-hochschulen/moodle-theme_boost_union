@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-02-28 - Bugfix: Smart Menu sometimes repeated menus, resolves #800
 * 2026-02-27 - Tests: Remove the temporary fixes for MDL-81892, resolves #1153
 * 2026-02-27 - Tests: theme_boost_union_is_active_theme() triggered "theme already set up" exception during PHPUnit tests, resolves #1165
 
