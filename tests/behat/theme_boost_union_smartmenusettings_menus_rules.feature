@@ -456,3 +456,70 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I expand all fieldsets
     And "Test role 1" "autocomplete_selection" should not exist
     And "Test role 2" "autocomplete_selection" should exist
+
+  @javascript
+  Scenario: Smartmenu: Menus: Rules - Smart menu is not repeated when user cache is reset on language change
+  # The steps of this scenario are based on the issue report in
+  # https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues/800
+  # The scenario mainly serves to check that the issue is fixed and doesn't regress.
+    Given the following "language packs" exist:
+      | language |
+      | de       |
+      | fr       |
+    And the following "theme_boost_union > smart menu" exists:
+      | title    | Classroom       |
+      | location | Main navigation |
+      | mode     | Inline          |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Classroom           |
+      | title    | Classroom menu node |
+      | itemtype | Static              |
+      | url      | /foo                |
+    And the following "theme_boost_union > smart menu" exists:
+      | title    | My courses       |
+      | location | Main navigation  |
+      | type     | Card             |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | My courses      |
+      | title    | My courses      |
+      | itemtype | Dynamic courses |
+    And the following "theme_boost_union > smart menu" exists:
+      | title    | Resources       |
+      | location | Main navigation |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Resources           |
+      | title    | Resources menu node |
+      | itemtype | Static              |
+      | url      | /foo                |
+    When I log in as "admin"
+    And I change the viewport size to "large"
+    And I navigate to "Development > Purge caches" in site administration
+    And I press "Purge all caches"
+    And "Resources menu node" "theme_boost_union > Smart menu item" should exist in the "Resources" "theme_boost_union > Main menu smart menu"
+    And "(//a[contains(@class, 'dropdown-toggle') and normalize-space()='Resources'])[2]" "xpath_element" should not exist in the ".primary-navigation" "css_element"
+    Then I navigate to "Appearance > Boost Union > Smart menus" in site administration
+    And I should see "My courses" in the "smartmenus" "table"
+    And I click on ".action-copy" "css_element" in the "My courses" "table_row"
+    And "(//th[contains(@id, 'smartmenus') and normalize-space()='My courses'])[2]" "xpath_element" should exist in the "smartmenus" "table"
+    And I click on ".action-edit" "css_element" in the "My courses" "table_row"
+    And I expand all fieldsets
+    And I set the field "By language" to "English ‎(en)‎"
+    And I set the field "Title" to "My courses - en"
+    And I click on "Save and return" "button"
+    Then I click on ".action-edit" "css_element" in the "//th[contains(@id, 'smartmenus') and normalize-space()='My courses']/parent::tr" "xpath_element"
+    And I expand all fieldsets
+    And I set the field "By language" to "Deutsch ‎(de)‎"
+    And I set the field "Title" to "Meine Kurse"
+    And I click on "Save and return" "button"
+    Then I click on ".sort-smartmenus-up-action" "css_element" in the "Meine Kurse" "table_row"
+    Then I should not see "Meine Kurse" in the ".primary-navigation" "css_element"
+    And I should see "My courses - en" in the ".primary-navigation" "css_element"
+    And I log out
+    Then I log in as "teacher"
+    And I should see "My courses - en" in the ".primary-navigation" "css_element"
+    And I should not see "Meine Kurse" in the ".primary-navigation" "css_element"
+    When I follow "Language" in the user menu
+    And I click on "Deutsch" "link"
+    Then I should see "Meine Kurse" in the ".primary-navigation" "css_element"
+    And I should not see "My courses - en" in the ".primary-navigation" "css_element"
+    And "(//a[contains(@class, 'dropdown-toggle') and normalize-space()='Resources'])[2]" "xpath_element" should not exist in the ".primary-navigation" "css_element"
