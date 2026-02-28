@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-02-27 - Tests: theme_boost_union_is_active_theme() triggered "theme already set up" exception during PHPUnit tests, resolves #1165
+
 ### v5.0-r18
 
 * 2026-02-26 - Bugfix: Smart menu creation was not possible if a custom field which hid itself from the course settings form was present, resolves #1164

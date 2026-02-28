@@ -985,6 +985,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * RWTH Aachen, Amrita Deb Dutta: Code
 * RWTH Aachen, Josha Bartsch: Code
 * RWTH Aachen, Tim Schröder: Code
+* Self-employed: Alberto Lara Hernández: Code
 * Solent University, Mark Sharp: Code
 * ssystems GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
 * ssystems GmbH, Sangyul Cha: Code

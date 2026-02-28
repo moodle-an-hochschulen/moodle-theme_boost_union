@@ -2762,13 +2762,20 @@ function theme_boost_union_reset_hooksuppress_cache() {
  * @return bool
  */
 function theme_boost_union_is_active_theme() {
-    global $PAGE;
+    global $CFG, $PAGE;
+
+    // During PHPUnit tests or when $PAGE theme is not yet initialised,
+    // fall back to check $CFG->theme to avoid triggering theme initialisation.
+    // This will not recognize Boost Union child themes as active, but this is acceptable in this case.
+    if ((defined('PHPUNIT_TEST') && PHPUNIT_TEST) || !$PAGE->has_set_url()) {
+        return ($CFG->theme === 'boost_union');
+    }
 
     if ($PAGE->theme->name == 'boost_union' || in_array('boost_union', $PAGE->theme->parents)) {
         return true;
-    } else {
-        return false;
     }
+
+    return false;
 }
 
 /**
