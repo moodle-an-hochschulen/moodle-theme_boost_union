@@ -661,8 +661,8 @@ class smartmenu {
                 // Need to purge the items for user, remove the cache before build.
                 if ($resetcache) {
                     // Purge the items cache for this user.
-                    $cachekey = "{$item->id}_u_{$USER->id}";
-                    $itemcache->delete($cachekey);
+                    $itemcachekey = "{$item->id}_u_{$USER->id}";
+                    $itemcache->delete($itemcachekey);
                 }
                 // Build the item based on restrict rules and its type like static, dynamic.
                 $item = \theme_boost_union\smartmenu_item::instance($item, $this->menu)->build();
