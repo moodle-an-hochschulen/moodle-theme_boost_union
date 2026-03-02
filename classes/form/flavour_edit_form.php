@@ -331,6 +331,7 @@ class flavour_edit_form extends \moodleform {
         );
 
         // Add navbar color select element.
+        $this->check_slasharguments_warning($mform);
         $navbarcoloroptions = [
                 THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE =>
                         get_string('nochange', 'theme_boost_union'),
@@ -361,11 +362,13 @@ class flavour_edit_form extends \moodleform {
         );
 
         // Add custom initial SCSS as textarea element.
+        $this->check_slasharguments_warning($mform);
         $mform->addElement('textarea', 'look_rawscsspre', get_string('flavourscustomscsspre', 'theme_boost_union'), ['rows' => 8]);
         $mform->setType('title', PARAM_TEXT);
         $mform->addHelpButton('look_rawscsspre', 'flavourscustomscsspre', 'theme_boost_union');
 
         // Add custom SCSS as textarea element.
+        $this->check_slasharguments_warning($mform);
         $mform->addElement('textarea', 'look_rawscss', get_string('flavourscustomscss', 'theme_boost_union'), ['rows' => 8]);
         $mform->setType('title', PARAM_TEXT);
         $mform->addHelpButton('look_rawscss', 'flavourscustomscss', 'theme_boost_union');
