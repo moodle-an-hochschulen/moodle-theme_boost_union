@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.1-r7
 
 * 2026-02-28 - Bugfix: SCSS changes in flavours were not reflected in theme designer mode, resolves #625
 * 2026-02-28 - Bugfix: Smart Menu sometimes repeated menus, resolves #800
