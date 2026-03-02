@@ -460,3 +460,27 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     Then I should not see "Preview flavour" in the "#page-header .page-header-headings" "css_element"
+
+  @javascript
+  Scenario Outline: Flavours: Flavour SCSS should be applied immediately in normal operation as well as if theme designer mode is on (with styles_debug.php).
+    Given the following config values are set as admin:
+      | config            | value    |
+      | themedesignermode | <config> |
+    And all caches are purged
+    And the following "theme_boost_union > flavours" exist:
+      | title        | applytocategories_ids | look_rawscss                         |
+      | Test Flavour | CAT1                  | .path-course-view #page-header h1 { display: none; } |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on ".action-edit" "css_element" in the "Test Flavour" "table_row"
+    And I set the field "Raw SCSS" to ""
+    And I click on "Save changes" "button"
+    And I am on "Course 1" course homepage
+    Then I should see "Course 1" in the "#page-header .page-header-headings" "css_element"
+
+    Examples:
+      | config |
+      | 0      |
+      | 1      |

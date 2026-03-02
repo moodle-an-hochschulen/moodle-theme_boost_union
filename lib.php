@@ -960,24 +960,54 @@ function theme_boost_union_alter_css_urls(&$urls) {
     // If any flavour applies to this page.
     $flavour = theme_boost_union_get_flavour_which_applies();
     if ($flavour != null) {
+        // If theme designer mode is on.
+        if (!empty($CFG->themedesignermode)) {
+            // Then styles_debug.php is used.
+            $stylesfilename = 'styles_debug.php';
+
+            // Currently, slasharguments are not supported in theme designer mode as the file styles_debug.php does not support
+            // slasharguments. We must respect that.
+            $noslashargumentsallowed = true;
+
+            // Otherwise, in normal mode.
+        } else {
+            // Then styles.php is used.
+            $stylesfilename = 'styles.php';
+
+            // Only slasharguments are supported in normal mode as this is Moodle core standard and as we do not want to maintain
+            // fallback code for non-slasharguments.
+            // A warning is shown on the flavour edit page if slasharguments is off.
+            $noslashargumentsallowed = false;
+        }
+
         // Iterate over the CSS URLs.
         foreach (array_keys($urls) as $i) {
             // If we have a moodle_url object.
             if ($urls[$i] instanceof \core\url) {
                 // Take the flavour CSS URL and escape it to be used in a regular expression.
-                $pathstyles = preg_quote($CFG->wwwroot . '/theme/styles.php', '|');
+                $pathstyles = preg_quote($CFG->wwwroot . '/theme/' . $stylesfilename, '|');
                 // Replace the CSS URL with the flavour CSS URL.
-                // As a result, the file /theme/boost_union/flavours/styles.php is called instead of /theme/styles.php and the
-                // flavour ID is injected into the URL parameters.
+                // As a result, the file /theme/boost_union/flavours/<stylesfilename>.php is called instead of
+                // /theme/<stylesfilename>.php and the flavour ID is injected into the URL parameters.
                 if (preg_match("|^$pathstyles(/_s)?(.*)$|", $urls[$i]->out(false), $matches)) {
-                    // Do the whole operation only if slasharguments are enabled.
-                    // A warning is shown on the flavour edit page if slasharguments is off.
-                    if (!empty($CFG->slasharguments)) {
+                    // If slasharguments are not allowed (i.e. in theme designer mode), use query parameters.
+                    if ($noslashargumentsallowed == true) {
+                        $params = $urls[$i]->params();
+                        $params['flavourid'] = $flavour->id;
+                        $urls[$i] = new moodle_url('/theme/boost_union/flavours/' . $stylesfilename);
+                        $urls[$i]->params($params);
+
+                        // Otherwise, if slasharguments are allowed, use them.
+                    } else if ($noslashargumentsallowed == false && !empty($CFG->slasharguments)) {
                         $parts = explode('/', $matches[2]);
                         $parts[3] = $flavour->id . '/' . $parts[3];
-                        $urls[$i] = new moodle_url('/theme/boost_union/flavours/styles.php');
+                        $urls[$i] = new moodle_url('/theme/boost_union/flavours/' . $stylesfilename);
                         $urls[$i]->set_slashargument($matches[1] . join('/', $parts));
                     }
+
+                    // The case that slasharguments are not allowed but the current URL has slasharguments is not handled
+                    // as this should not happen in normal operation.
+                    // In this case, we accept that the flavour CSS will not work.
                 }
             }
         }
