@@ -962,6 +962,7 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * ELAN e.V., Farbod Zamani: Code
 * ETH Zürich, nexterday: Code
 * FernUniversität in Hagen, Daniel Poggenpohl: Code, Ideating
+* Friedrich Schiller University Jena: Funding, Ideating
 * Hochschule Hannover - University of Applied Sciences and Arts: Code, Funding, Ideating
 * Käferfreie Software, Nina Herrmann: Code
 * lern.link GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
