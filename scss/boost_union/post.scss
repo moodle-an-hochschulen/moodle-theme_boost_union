@@ -458,6 +458,15 @@
     }
 }
 
+/* On very small screens, constrain the login-container to not exceed the viewport width. */
+@include media-breakpoint-down(xs) {
+
+    .login-wrapper:has(.loginform #login-layout-tabs) .login-container {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+}
+
 /*=======================================
  * Settings: Look -> Category index / site home
  ======================================*/
