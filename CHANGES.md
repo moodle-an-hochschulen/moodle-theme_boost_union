@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-03-05 - Bugfix: Require FooterPopover only if footer button present, resolves #1177
+
 ### v5.0-r19
 
 * 2026-02-28 - Bugfix: SCSS changes in flavours were not reflected in theme designer mode, resolves #625
