@@ -410,7 +410,7 @@
 /* Keep login container vertically centered on page load, but allow it to grow downward only.
    The container starts centered, but when content changes (tabs switch), it grows downward
    from that position without shifting the top. */
-@include media-breakpoint-up(md) {
+@include media-breakpoint-up(sm) {
     .login-wrapper:has(.loginform #login-layout-tabs) {
         /* Change to column to control vertical spacing. */
         flex-direction: column;
@@ -455,6 +455,15 @@
         flex: 0 0 auto;
         min-width: 0;
         order: 0;
+    }
+}
+
+/* On very small screens, constrain the login-container to not exceed the viewport width. */
+@include media-breakpoint-down(xs) {
+
+    .login-wrapper:has(.loginform #login-layout-tabs) .login-container {
+        max-width: 100vw;
+        overflow-x: hidden;
     }
 }
 
