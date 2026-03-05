@@ -288,7 +288,9 @@
     {{/bottombar.drawer}}
 </footer>
 {{#js}}
-require(['theme_boost/footer-popover'], function(FooterPopover) {
-    FooterPopover.init();
-});
+  {{#footerbutton}}
+  require(['theme_boost/footer-popover'], function(FooterPopover) {
+      FooterPopover.init();
+  });
+  {{/footerbutton}}
 {{/js}}
