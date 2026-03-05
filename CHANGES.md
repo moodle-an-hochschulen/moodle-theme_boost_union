@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-03-05 - Documentation: Add a note to README that the behaviour of logos and favicons deviates from Boost Union's main principle to not change anything at all after being activated.
 * 2026-03-05 - Bugfix: Fix edge cases of the new login form layouts on smaller screens, resolves #1169
 * 2026-03-05 - Bugfix: Require FooterPopover only if footer button present, resolves #1177
 
