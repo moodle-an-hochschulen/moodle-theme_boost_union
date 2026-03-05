@@ -740,6 +740,14 @@ Exceptions to our main design principle
 
 As you have read in the introduction, the main design principle of Boost Union is not to change anything in the GUI until Boost Union is set as active theme and a particular feature is enabled in the theme settings. However, due to the way how Moodle core and Boost in Moodle core is built, this main design principle sometimes could not be fully satisfied:
 
+* Logo:
+  Boost Union has its own logo upload and does not use the logo from Moodle core\'s logo setting.
+  Boost Union especially allows you to upload more image formats that Moodle core allows and allows you to override the uploaded logos within its flavours.
+  Against this background, if you switch from Boost to Boost Union and had a logo shown in Boost before, this logo won't be shown until you upload it again in Boost Union directly.
+* Favicon:
+  Boost Union has its own favison upload and does not use the favicon from Moodle core\'s logo setting.
+  Boost Union especially allows you to override the uploaded favicon within its flavours.
+  Against this background, if you switch from Boost to Boost Union and had a favicon shown in Boost before, this favicon won't be shown until you upload it again in Boost Union directly.
 * Footer popover:
   As soon as you click the footer button (questionmark icon) in the bottom right corner of the screen, a popover with several links appears. However, the content of this link list is far from being well-structured and looks more like a garage sale. When implementing the settings to individually suppress each of these popover links, we had to make some code re-arrangements which result in the fact that the popover links are slightly more well-structured even if you do not enable any setting in Boost Union.
 * Clickable header and transition time in the user's menu third level:
