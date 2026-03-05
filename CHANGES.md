@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-03-05 - Bugfix: Fix edge cases of the new login form layouts on smaller screens, resolves #1169
 * 2026-03-05 - Bugfix: Require FooterPopover only if footer button present, resolves #1177
 
 ### v4.5-r34
