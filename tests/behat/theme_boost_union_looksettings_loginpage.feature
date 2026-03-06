@@ -354,6 +354,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And the "role" attribute of "#login-layout-tabs" "css_element" should contain "tablist"
     # Verify that tab links exist.
     And "#login-method-local-tab" "css_element" should exist
+    And I should not see "multilang"
     And "#login-method-idp-tab" "css_element" should exist
     And "#login-method-firsttimesignup-tab" "css_element" should exist
     And "#login-method-guest-tab" "css_element" should exist
@@ -456,6 +457,8 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | auth             | manual,email,oauth2 |
       | registerauth     | email               |
       | guestloginbutton | 1                   |
+    And the "multilang" filter is "on"
+    And the "multilang" filter applies to "content and headings"
     And I log in as "admin"
     And I navigate to "Server > OAuth 2 services" in site administration
     And I press "Google"
@@ -474,11 +477,11 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And I should see "<guestexpected>" in the "<guestselector>" "css_element"
 
     Examples:
-      | layout    | local   | idp   | selfreg   | guest   | localexpected  | idpexpected | selfregexpected   | guestexpected | localselector                                       | idpselector                                       | selfregselector                                               | guestselector                                       |
-      | tabs      |         |       |           |         | Moodle account | IDP login   | Self registration | Guest login   | #login-method-local-tab                             | #login-method-idp-tab                             | #login-method-firsttimesignup-tab                             | #login-method-guest-tab                             |
-      | tabs      | Local A | IDP A | Selfreg A | Guest A | Local A        | IDP A       | Selfreg A         | Guest A       | #login-method-local-tab                             | #login-method-idp-tab                             | #login-method-firsttimesignup-tab                             | #login-method-guest-tab                             |
-      | accordion |         |       |           |         | Moodle account | IDP login   | Self registration | Guest login   | #login-method-local-accordion-header .login-heading | #login-method-idp-accordion-header .login-heading | #login-method-firsttimesignup-accordion-header .login-heading | #login-method-guest-accordion-header .login-heading |
-      | accordion | Local A | IDP A | Selfreg A | Guest A | Local A        | IDP A       | Selfreg A         | Guest A       | #login-method-local-accordion-header .login-heading | #login-method-idp-accordion-header .login-heading | #login-method-firsttimesignup-accordion-header .login-heading | #login-method-guest-accordion-header .login-heading |
+      | layout    | local                                                                                                 | idp   | selfreg   | guest   | localexpected  | idpexpected | selfregexpected   | guestexpected | localselector                                       | idpselector                                       | selfregselector                                               | guestselector                                       |
+      | tabs      | Moodle <span class="multilang" lang="en">account</span><span class="multilang" lang="de">Konto</span> |       |           |         | Moodle account | IDP login   | Self registration | Guest login   | #login-method-local-tab                             | #login-method-idp-tab                             | #login-method-firsttimesignup-tab                             | #login-method-guest-tab                             |
+      | tabs      | Local A                                                                                               | IDP A | Selfreg A | Guest A | Local A        | IDP A       | Selfreg A         | Guest A       | #login-method-local-tab                             | #login-method-idp-tab                             | #login-method-firsttimesignup-tab                             | #login-method-guest-tab                             |
+      | accordion | Moodle <span class="multilang" lang="en">account</span><span class="multilang" lang="de">Konto</span> |       |           |         | Moodle account | IDP login   | Self registration | Guest login   | #login-method-local-accordion-header .login-heading | #login-method-idp-accordion-header .login-heading | #login-method-firsttimesignup-accordion-header .login-heading | #login-method-guest-accordion-header .login-heading |
+      | accordion | Local A                                                                                               | IDP A | Selfreg A | Guest A | Local A        | IDP A       | Selfreg A         | Guest A       | #login-method-local-accordion-header .login-heading | #login-method-idp-accordion-header .login-heading | #login-method-firsttimesignup-accordion-header .login-heading | #login-method-guest-accordion-header .login-heading |
 
   Scenario Outline: Setting: Enable side entrance login - View the side entrance login page
     Given the following config values are set as admin:
