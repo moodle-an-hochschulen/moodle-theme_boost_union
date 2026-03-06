@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-03-05 - Bugfix: Page footer got distorted on small screens with the new login layout options, resolves #1175
 * 2026-03-05 - Bugfix: Filter login tab descriptions, resolves #1179
 * 2026-03-05 - Documentation: Add a note to README that the behaviour of logos and favicons deviates from Boost Union's main principle to not change anything at all after being activated.
 * 2026-03-05 - Bugfix: Fix edge cases of the new login form layouts on smaller screens, resolves #1169
