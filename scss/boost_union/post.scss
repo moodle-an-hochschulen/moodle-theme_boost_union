@@ -416,8 +416,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
-        margin-left: 20px;
-        margin-right: 20px;
         /* Prevent wrapper from extending beyond viewport when tabs are wide. */
         max-width: 100%;
     }
@@ -453,7 +451,6 @@
     /* Container in the middle; allow shrink so it stays inside wrapper on narrow widths. */
     .login-wrapper:has(.loginform #login-layout-tabs) .login-container {
         flex: 0 0 auto;
-        min-width: 0;
         order: 0;
     }
 }
@@ -463,7 +460,6 @@
 
     .login-wrapper:has(.loginform #login-layout-tabs) .login-container {
         max-width: 100vw;
-        overflow-x: hidden;
     }
 }
 
