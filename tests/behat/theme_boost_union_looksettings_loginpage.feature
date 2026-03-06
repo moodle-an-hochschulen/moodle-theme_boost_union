@@ -169,6 +169,18 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | tabs      | should          | should not           |
       | accordion | should not      | should               |
 
+  Scenario: Setting: Login instructions
+    Given the following config values are set as admin:
+      | config                 | value                   | plugin            |
+      | logininstructionsabove | Above instructions text | theme_boost_union |
+      | logininstructionsbelow | Below instructions text | theme_boost_union |
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then I should see "Above instructions text" in the ".login-instructions-above" "css_element"
+    And ".login-instructions-above" "css_element" should appear before ".theme_boost_union-loginmethod  " "css_element"
+    And I should see "Below instructions text" in the ".login-instructions-below" "css_element"
+    And ".login-instructions-below" "css_element" should appear after ".theme_boost_union-loginmethod  " "css_element"
+
   Scenario Outline: Setting: Login order
     Given the following config values are set as admin:
       | config                    | value                         | plugin            |
@@ -325,6 +337,80 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | localtext | idptext | selfregtext | guesttext | localexpected                  | idpexpected                   | selfregexpected               | guestexpected                       |
       |           |         |             |           | Login with your Moodle account | Log in using your account on: | Is this your first time here? | Some courses may allow guest access |
       | Local A   | IDP A   | Selfreg A   | Guest A   | Local A                        | IDP A                         | Selfreg A                     | Guest A                             |
+
+  Scenario Outline: Setting: Login instruction
+    Given the following config values are set as admin:
+      | config                  | value             | plugin            |
+      | login<provider>enable   | yes               | theme_boost_union |
+      | <showinstructionconfig> | yes               | theme_boost_union |
+      | <instructioncontent>    | <instructiontext> | theme_boost_union |
+      | <instructionposition>   | <position>        | theme_boost_union |
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Testing service   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then I should see "<instructiontext>" in the "<instructionselector>" "css_element"
+
+    Examples:
+      | provider         | showinstructionconfig                | instructioncontent                      | instructionposition                      | instructiontext        | position | instructionselector                                                    |
+      | locallogin       | loginlocalshowinstruction            | loginlocalinstructioncontent            | loginlocalinstructionposition            | Local instructions     | between  | #login-method-local .login-instructions-local.mb-3                     |
+      | locallogin       | loginlocalshowinstruction            | loginlocalinstructioncontent            | loginlocalinstructionposition            | Local instructions     | below    | #login-method-local .login-instructions-local.mt-3                     |
+      | idplogin         | loginidpshowinstruction              | loginidpinstructioncontent              | loginidpinstructionposition              | IDP instructions       | between  | #login-method-idp .login-instructions-idp.mb-3                         |
+      | idplogin         | loginidpshowinstruction              | loginidpinstructioncontent              | loginidpinstructionposition              | IDP instructions       | below    | #login-method-idp .login-instructions-idp.mt-3                         |
+      | selfregistration | loginselfregistrationshowinstruction | loginselfregistrationinstructioncontent | loginselfregistrationinstructionposition | Self registration text | between  | #login-method-firsttimesignup .login-instructions-firsttimesignup.mb-3 |
+      | selfregistration | loginselfregistrationshowinstruction | loginselfregistrationinstructioncontent | loginselfregistrationinstructionposition | Self registration text | below    | #login-method-firsttimesignup .login-instructions-firsttimesignup.mt-3 |
+      | guestlogin       | loginguestshowinstruction            | loginguestinstructioncontent            | loginguestinstructionposition            | Guest instructions     | between  | #login-method-guest .login-instructions-guest.mb-3                     |
+      | guestlogin       | loginguestshowinstruction            | loginguestinstructioncontent            | loginguestinstructionposition            | Guest instructions     | below    | #login-method-guest .login-instructions-guest.mt-3                     |
+
+  Scenario Outline: Setting: Login instruction (Countercheck)
+    Given the following config values are set as admin:
+      | config                  | value             | plugin            |
+      | login<provider>enable   | yes               | theme_boost_union |
+      | <showinstructionconfig> | <show>            | theme_boost_union |
+      | <instructioncontent>    | <instructiontext> | theme_boost_union |
+      | <instructionposition>   | between           | theme_boost_union |
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Testing service   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then "<instructionselector>" "css_element" should not exist
+
+    Examples:
+      | provider         | showinstructionconfig                | instructioncontent                      | show | instructiontext        | instructionselector                                                    |
+      | locallogin       | loginlocalshowinstruction            | loginlocalinstructioncontent            | no   | Local instructions     | #login-method-local .login-instructions-local.mb-3                     |
+      | locallogin       | loginlocalshowinstruction            | loginlocalinstructioncontent            | yes  |                        | #login-method-local .login-instructions-local.mb-3                     |
+      | idplogin         | loginidpshowinstruction              | loginidpinstructioncontent              | no   | IDP instructions       | #login-method-idp .login-instructions-idp.mb-3                         |
+      | idplogin         | loginidpshowinstruction              | loginidpinstructioncontent              | yes  |                        | #login-method-idp .login-instructions-idp.mb-3                         |
+      | selfregistration | loginselfregistrationshowinstruction | loginselfregistrationinstructioncontent | no   | Self registration text | #login-method-firsttimesignup .login-instructions-firsttimesignup.mb-3 |
+      | selfregistration | loginselfregistrationshowinstruction | loginselfregistrationinstructioncontent | yes  |                        | #login-method-firsttimesignup .login-instructions-firsttimesignup.mb-3 |
+      | guestlogin       | loginguestshowinstruction            | loginguestinstructioncontent            | no   | Guest instructions     | #login-method-guest .login-instructions-guest.mb-3                     |
+      | guestlogin       | loginguestshowinstruction            | loginguestinstructioncontent            | yes  |                        | #login-method-guest .login-instructions-guest.mb-3                     |
 
   @javascript
   Scenario Outline: Setting: Login layout tabs - Verify tabs structure and primarylogin functionality
