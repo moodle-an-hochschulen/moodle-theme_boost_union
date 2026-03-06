@@ -819,9 +819,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
             foreach ($loginmethods as $method) {
                 $labelconfig = $logintablabelconfigs[$method->name] ?? null;
                 if ($labelconfig !== null) {
-                    $label = get_config('theme_boost_union', $labelconfig['config']);
+                    $label = format_string(get_config('theme_boost_union', $labelconfig['config']));
                     if ($label === false || $label === '') {
-                        $label = get_string($labelconfig['default'], 'theme_boost_union');
+                        $label = format_string(get_string($labelconfig['default'], 'theme_boost_union'));
                     }
                 } else {
                     $label = '';
