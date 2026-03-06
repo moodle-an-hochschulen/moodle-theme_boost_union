@@ -199,10 +199,14 @@
         <div class="alert alert-info" id="logininfomessage" role="status">{{info}}</div>
     {{/info}}
 
+    {{! =========================================================================== }}
+    {{! OPEN BU LOGINFORM CONTAINER }}
+    {{! =========================================================================== }}
+
     <div id="theme_boost_union-loginform">
 
     {{! =========================================================================== }}
-    {{! LAYOUT CONTAINER: Tabs or Accordion }}
+    {{! OPEN LAYOUT CONTAINER: Tabs or Accordion }}
     {{! =========================================================================== }}
 
     {{! Tabs Layout: Navigation and start content section }}
@@ -359,10 +363,19 @@
     {{/loginmethods}}
 
     {{! =========================================================================== }}
-    {{! CLOSE LAYOUT CONTAINER }}
+    {{! CLOSE LAYOUT CONTAINER: Tabs or Accordion }}
     {{! =========================================================================== }}
 
+    {{#loginlayouttabs}}
     </div>
+    {{/loginlayouttabs}}
+    {{#loginlayoutaccordion}}
+    </div>
+    {{/loginlayoutaccordion}}
+
+    {{! =========================================================================== }}
+    {{! FINAL DIVIDER AND SPACING }}
+    {{! =========================================================================== }}
 
     {{! Add final divider (except for the accordion layout which has its own borders) }}
     {{^loginlayoutaccordion}}
@@ -372,6 +385,10 @@
     {{#loginlayoutaccordion}}
     <div class="mb-5"></div>
     {{/loginlayoutaccordion}}
+
+    {{! =========================================================================== }}
+    {{! CLOSE BU LOGINFORM CONTAINER }}
+    {{! =========================================================================== }}
 
     </div>
 
