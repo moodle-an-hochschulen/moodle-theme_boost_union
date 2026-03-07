@@ -6,6 +6,8 @@ Changes
 
 ### Unreleased
 
+* 2026-03-06 - Improvement: Add dedicated Boost Union login page instructions, resolves #1170
+               Please note: If you have used the auth_instructions setting in Moodle core before, you must copy that content to the new login page instructions as Boost Union does not display auth_instructions anymore.
 * 2026-03-05 - Bugfix: Page footer got distorted on small screens with the new login layout options, resolves #1175
 * 2026-03-05 - Bugfix: Filter login tab descriptions, resolves #1179
 * 2026-03-05 - Documentation: Add a note to README that the behaviour of logos and favicons deviates from Boost Union's main principle to not change anything at all after being activated.

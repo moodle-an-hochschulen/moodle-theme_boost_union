@@ -39,6 +39,7 @@ $string['warningboostunioninactive'] = 'Boost Union (or a child theme of Boost U
 $string['never'] = 'Never';
 $string['always'] = 'Always';
 $string['auto'] = 'Automatically';
+$string['bycapability'] = 'Controlled by capability';
 $string['nochange'] = 'No change';
 $string['forguestsonly'] = 'Only for guests and non-logged-in users';
 $string['showastext'] = 'Show as text';
@@ -52,6 +53,8 @@ $string['imageposition_left_bottom'] = 'Left horizontally, bottom vertically';
 $string['imageposition_right_top'] = 'Right horizontally, top vertically';
 $string['imageposition_right_center'] = 'Right horizontally, center vertically';
 $string['imageposition_right_bottom'] = 'Right horizontally, bottom vertically';
+$string['logininstructionposition_between'] = 'Between the intro and the login provider widget';
+$string['logininstructionposition_below'] = 'Below the login provider widget';
 
 // Settings: General strings.
 $string['dontchange'] = 'Do not change anything';
@@ -340,6 +343,13 @@ $string['loginlayoutsetting_desc'] = 'With this setting, you control how the log
 $string['loginlayoutvertical'] = 'Vertical (one below the other)';
 $string['loginlayouttabs'] = 'Tabs (next to each other)';
 $string['loginlayoutaccordion'] = 'Accordion (collapsed, expandable)';
+// ... Section: Login instructions.
+$string['logininstructionsheading'] = 'Login instructions';
+$string['logininstructionsheading_desc'] = 'Please note: Boost Union has its own login instructions settings and does not output the content from <a href="{$a}">Moodle core\'s authentication instruction setting</a>.';
+$string['logininstructionsabove'] = 'Instructions above login provider list';
+$string['logininstructionsabove_desc'] = 'With this setting, you can add instructions that will be shown above the list of login providers on the login page. This is a good place to add general information that applies to all login methods.';
+$string['logininstructionsbelow'] = 'Instructions below login provider list';
+$string['logininstructionsbelow_desc'] = 'With this setting, you can add instructions that will be shown below the list of login providers on the login page. This is a good place to add additional information or support contacts that apply to all login methods.';
 // ... Section: Login order.
 $string['loginorderheading'] = 'Login order';
 $string['loginorderheading_desc'] = 'With these settings, you control the order of the login providers in the login form. The presented order will be defined from lowest to highest ordinal number, skipping all login providers and login form elements which are disabled in Boost Union.';
@@ -371,6 +381,13 @@ $string['loginlocalintrotextsetting_desc'] = 'With this setting, you can overrid
 $string['loginlocalloginlabelsetting'] = 'Local login label';
 $string['loginlocalloginlabelsetting_desc'] = 'With this setting, you can customize the label for local login to be used in the tab and accordion layout.';
 $string['loginlocalloginlabelsetting_default'] = 'Moodle account';
+// ... ... Setting: Local login instruction.
+$string['loginlocalshowinstruction'] = 'Local login instruction';
+$string['loginlocalshowinstruction_desc'] = 'With this setting, you can enable instructions for the local login provider.';
+$string['loginlocalinstructioncontent'] = 'Local login instruction content';
+$string['loginlocalinstructioncontent_desc'] = 'With this setting, you can specify custom instructions for the local login provider. This allows you to provide users with additional information about how to log in locally.';
+$string['loginlocalinstructionposition'] = 'Local login instruction position';
+$string['loginlocalinstructionposition_desc'] = 'With this setting, you can specify where the local login instructions should be shown relative to the login form.';
 // ... Section: Login provider: IDP.
 $string['loginprovideridpheading'] = 'Login provider: IDP';
 // ... ... Setting: IDP login.
@@ -387,6 +404,13 @@ $string['loginidpintrotextsetting_desc'] = 'With this setting, you can override 
 $string['loginidploginlabelsetting'] = 'IDP login label';
 $string['loginidploginlabelsetting_desc'] = 'With this setting, you can customize the label for IDP login to be used in the tab and accordion layout.';
 $string['loginidploginlabelsetting_default'] = 'IDP login';
+// ... ... Setting: IDP login instruction.
+$string['loginidpshowinstruction'] = 'IDP login instruction';
+$string['loginidpshowinstruction_desc'] = 'With this setting, you can enable instructions for the IDP login provider.';
+$string['loginidpinstructioncontent'] = 'IDP login instruction content';
+$string['loginidpinstructioncontent_desc'] = 'With this setting, you can specify custom instructions for the IDP login provider. This allows you to provide users with additional information about how to log in via identity providers.';
+$string['loginidpinstructionposition'] = 'IDP login instruction position';
+$string['loginidpinstructionposition_desc'] = 'With this setting, you can specify where the IDP login instructions should be shown relative to the login buttons.';
 // ... Section: Login provider: Self registration.
 $string['loginproviderselfregistrationheading'] = 'Login provider: Self registration';
 // ... ... Setting: Self registration.
@@ -403,6 +427,13 @@ $string['loginselfregistrationintrotextsetting_desc'] = 'With this setting, you 
 $string['loginselfregistrationloginlabelsetting'] = 'Self registration label';
 $string['loginselfregistrationloginlabelsetting_desc'] = 'With this setting, you can customize the label for self registration to be used in the tab and accordion layout.';
 $string['loginselfregistrationloginlabelsetting_default'] = 'Self registration';
+// ... ... Setting: Self registration login instruction.
+$string['loginselfregistrationshowinstruction'] = 'Self registration instruction';
+$string['loginselfregistrationshowinstruction_desc'] = 'With this setting, you can enable instructions for the self registration provider.';
+$string['loginselfregistrationinstructioncontent'] = 'Self registration instruction content';
+$string['loginselfregistrationinstructioncontent_desc'] = 'With this setting, you can specify custom instructions for the self registration provider. This allows you to provide users with additional information about how to create a new account.';
+$string['loginselfregistrationinstructionposition'] = 'Self registration instruction position';
+$string['loginselfregistrationinstructionposition_desc'] = 'With this setting, you can specify where the self registration instruction should be shown relative to the signup button.';
 // ... Section: Login provider: Guest.
 $string['loginproviderguestheading'] = 'Login provider: Guest';
 // ... ... Setting: Guest login.
@@ -419,6 +450,13 @@ $string['loginguestintrotextsetting_desc'] = 'With this setting, you can overrid
 $string['loginguestloginlabelsetting'] = 'Guest login label';
 $string['loginguestloginlabelsetting_desc'] = 'With this setting, you can customize the label for guest login to be used in the tab and accordion layout.';
 $string['loginguestloginlabelsetting_default'] = 'Guest login';
+// ... ... Setting: Guest login instruction.
+$string['loginguestshowinstruction'] = 'Guest login instruction';
+$string['loginguestshowinstruction_desc'] = 'With this setting, you can enable instructions for the guest login provider.';
+$string['loginguestinstructioncontent'] = 'Guest login instruction content';
+$string['loginguestinstructioncontent_desc'] = 'With this setting, you can specify custom instructions for the guest login provider. This allows you to provide users with additional information about guest access.';
+$string['loginguestinstructionposition'] = 'Guest login instruction position';
+$string['loginguestinstructionposition_desc'] = 'With this setting, you can specify where the guest login instruction should be shown relative to the login button.';
 // ... Section: Side entrance login.
 $string['sideentranceloginheading'] = 'Side entrance login';
 // ... ... Setting: Endable side entrance login.
