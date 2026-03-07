@@ -728,6 +728,12 @@ As you have read in the introduction, the main design principle of Boost Union i
   Boost Union has its own favison upload and does not use the favicon from Moodle core\'s logo setting.
   Boost Union especially allows you to override the uploaded favicon within its flavours.
   Against this background, if you switch from Boost to Boost Union and had a favicon shown in Boost before, this favicon won't be shown until you upload it again in Boost Union directly.
+* Login page authentication instructions:
+  Boost Union does not output the Moodle core setting `auth_instructions` (authentication method instructions) on the login page anymore.
+  In Moodle core, this setting is shown in context of the user self-registration method.
+  However, in Boost Union with its enhanced login page layouts (tabs, accordion), the self-registration section might not be visible after page load, making the instructions hidden from view.
+  To improve the admin experience and provide a cleaner solution, Boost Union offers dedicated login instructions settings for each login method as well as generic instructions.
+  Against this background, if you switch from Boost to Boost Union and had a text configured in the Moodle core `auth_instructions` setting, this text won't be shown until you copy it to Boost Union's own login instructions.
 * Footer popover:
   As soon as you click the footer button (questionmark icon) in the bottom right corner of the screen, a popover with several links appears. However, the content of this link list is far from being well-structured and looks more like a garage sale. When implementing the settings to individually suppress each of these popover links, we had to make some code re-arrangements which result in the fact that the popover links are slightly more well-structured even if you do not enable any setting in Boost Union.
 * Clickable header and transition time in the user's menu third level:

@@ -41,22 +41,40 @@
     * sitename - Name of site.,
     * logintoken - Random token to protect login request.,
     * maintenance - Maintenance message
+    * guestlogininstructions - Custom guest login instructions (optional),
+    * guestlogininstructionsbetween - Flag, show guest instructions between heading and form,
+    * guestlogininstructionsbelow - Flag, show guest instructions below form,
     * guestloginintrotext - Custom guest login intro text (optional),
+    * idplogininstructions - Custom IDP login instructions (optional),
+    * idplogininstructionsbetween - Flag, show IDP instructions between heading and provider list,
+    * idplogininstructionsbelow - Flag, show IDP instructions below provider list,
     * idploginintrotext - Custom IDP login intro text (optional),
+    * locallogininstructions - Custom local login instructions (optional),
+    * locallogininstructionsbetween - Flag, show local instructions between heading and form,
+    * locallogininstructionsbelow - Flag, show local instructions below form,
     * localloginintrotext - Custom local login intro text (optional),
+    * logininstructionsabove - Instructions shown above the login provider list (optional),
+    * logininstructionsbelow - Instructions shown below the login provider list (optional),
     * loginlayoutaccordion - Flag used to check if elements should be displayed for the accordion layout type,
     * loginlayouttabs - Flag used to check if elements should be displayed for the tabs layout type,
     * loginlayoutvertical - Flag used to check if elements should be displayed for the vertical layout type,
     * loginmethods - Array used to iterate over the login methods, each with: id, name, order, type, islocal, isidp, isfirsttimesignup, isguest, isfirst, label, active,
+    * selfregistrationlogininstructions - Custom self registration instructions (optional),
+    * selfregistrationlogininstructionsbetween - Flag, show self registration instructions between heading and button,
+    * selfregistrationlogininstructionsbelow - Flag, show self registration instructions below button,
     * selfregistrationloginintrotext - Custom self registration intro text (optional),
     * showguestlogin - Should guest login be shown? (theme + core),
     * showguestloginintro - Should the guest login intro be shown?,
+    * showguestlogininstruction - Should the guest login instructions be shown?,
     * showidplogin - Should IDP login be shown? (theme + core),
     * showidploginintro - Should the IDP login intro be shown?,
+    * showidplogininstruction - Should the IDP login instructions be shown?,
     * showlocallogin - Should the local login form be shown?,
     * showlocalloginintro - Should the local login intro be shown?,
+    * showlocallogininstruction - Should the local login instructions be shown?,
     * showselfregistration - Should self registration be shown? (theme + core),
     * showselfregistrationloginintro - Should the self registration intro be shown?
+    * showselfregistrationlogininstruction - Should the self registration instructions be shown?,
 
     Example context (json):
     {
@@ -112,9 +130,21 @@
         "languagemenu": "Choose language",
         "togglepassword": true,
         "smallscreensonly": true,
+        "guestlogininstructions": "<p>Guest access provides limited features.</p>",
+        "guestlogininstructionsbetween": true,
+        "guestlogininstructionsbelow": false,
         "guestloginintrotext": "",
+        "idplogininstructions": "<p>You can also login with your institutional identity provider.</p>",
+        "idplogininstructionsbetween": false,
+        "idplogininstructionsbelow": true,
         "idploginintrotext": "",
+        "locallogininstructions": "<p>Please use your Moodle account credentials.</p>",
+        "locallogininstructionsbetween": true,
+        "locallogininstructionsbelow": false,
         "localloginintrotext": "",
+        "selfregistrationlogininstructions": "<p>Create a new account to access all site features.</p>",
+        "selfregistrationlogininstructionsbetween": true,
+        "selfregistrationlogininstructionsbelow": false,
         "selfregistrationloginintrotext": "",
         "loginlayoutaccordion": false,
         "loginlayouttabs": true,
@@ -149,12 +179,16 @@
         ],
         "showlocallogin": true,
         "showlocalloginintro": true,
+        "showlocallogininstruction": true,
         "showidplogin": true,
         "showidploginintro": true,
+        "showidplogininstruction": true,
         "showguestlogin": true,
         "showguestloginintro": true,
+        "showguestlogininstruction": false,
         "showselfregistration": true,
-        "showselfregistrationloginintro": true
+        "showselfregistrationloginintro": true,
+        "showselfregistrationlogininstruction": true
     }
 }}
 {{!
@@ -206,6 +240,16 @@
     <div id="theme_boost_union-loginform">
 
     {{! =========================================================================== }}
+    {{! GLOBAL INSTRUCTIONS ABOVE LOGIN PANELS }}
+    {{! =========================================================================== }}
+
+    {{#logininstructionsabove}}
+    <div class="login-instructions-above mb-4">
+        {{{logininstructionsabove}}}
+    </div>
+    {{/logininstructionsabove}}
+
+    {{! =========================================================================== }}
     {{! OPEN LAYOUT CONTAINER: Tabs or Accordion }}
     {{! =========================================================================== }}
 
@@ -241,6 +285,15 @@
         {{#showlocalloginintro}}
         <h2 class="login-heading {{#loginlayoutaccordion}}text-break w-100{{/loginlayoutaccordion}}">{{#localloginintrotext}}{{{localloginintrotext}}}{{/localloginintrotext}}{{^localloginintrotext}}{{#str}} loginlocalintro, theme_boost_union {{/str}}{{/localloginintrotext}}</h2>
         {{/showlocalloginintro}}
+
+        {{! Instructions (between heading and form) }}
+        {{#showlocallogininstruction}}
+        {{#locallogininstructionsbetween}}
+        <div class="login-instructions-local mb-3">
+            {{{locallogininstructions}}}
+        </div>
+        {{/locallogininstructionsbetween}}
+        {{/showlocallogininstruction}}
 
         <form class="login-form" action="{{loginurl}}" method="post" id="login">
             <input id="anchor" type="hidden" name="anchor" value="">
@@ -282,6 +335,15 @@
             </div>
         </form>
 
+        {{! Instructions (below form) }}
+        {{#showlocallogininstruction}}
+        {{#locallogininstructionsbelow}}
+        <div class="login-instructions-local mt-3">
+            {{{locallogininstructions}}}
+        </div>
+        {{/locallogininstructionsbelow}}
+        {{/showlocallogininstruction}}
+
     {{>theme_boost_union/loginform-partial-method-end}}
     {{/showlocallogin}}
     {{/islocal}}
@@ -299,6 +361,15 @@
             <h2 class="login-heading {{#loginlayoutaccordion}}text-break w-100{{/loginlayoutaccordion}}">{{#idploginintrotext}}{{{idploginintrotext}}}{{/idploginintrotext}}{{^idploginintrotext}}{{#str}} potentialidps, auth {{/str}}{{/idploginintrotext}}</h2>
             {{/showidploginintro}}
 
+            {{! Instructions (between heading and form) }}
+            {{#showidplogininstruction}}
+            {{#idplogininstructionsbetween}}
+            <div class="login-instructions-idp mb-3">
+                {{{idplogininstructions}}}
+            </div>
+            {{/idplogininstructionsbetween}}
+            {{/showidplogininstruction}}
+
             {{#identityproviders}}
                 <a class="btn login-identityprovider-btn w-100 btn-secondary" href="{{url}}">
                     {{#iconurl}}
@@ -308,6 +379,15 @@
                 </a>
             {{/identityproviders}}
         </div>
+
+        {{! Instructions (below form) }}
+        {{#showidplogininstruction}}
+        {{#idplogininstructionsbelow}}
+        <div class="login-instructions-idp mt-3">
+            {{{idplogininstructions}}}
+        </div>
+        {{/idplogininstructionsbelow}}
+        {{/showidplogininstruction}}
 
     {{>theme_boost_union/loginform-partial-method-end}}
     {{/showidplogin}}
@@ -320,19 +400,34 @@
     {{#showselfregistration}}
     {{>theme_boost_union/loginform-partial-method-start}}
 
-        <div class="login-instructions {{#cansignup}}mb-3{{/cansignup}}">
+        <div class="login-signup-content">
             {{! Intro heading }}
             {{#showselfregistrationloginintro}}
             <h2 class="login-heading {{#loginlayoutaccordion}}text-break w-100{{/loginlayoutaccordion}}">{{#selfregistrationloginintrotext}}{{{selfregistrationloginintrotext}}}{{/selfregistrationloginintrotext}}{{^selfregistrationloginintrotext}}{{#str}} firsttime {{/str}}{{/selfregistrationloginintrotext}}</h2>
             {{/showselfregistrationloginintro}}
 
-            {{{instructions}}}
-        </div>
-        {{#cansignup}}
-            <div class="login-signup">
-                <a class="btn btn-secondary" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a>
+            {{! Instructions (between heading and form) }}
+            {{#showselfregistrationlogininstruction}}
+            {{#selfregistrationlogininstructionsbetween}}
+            <div class="login-instructions-firsttimesignup mb-3">
+                {{{selfregistrationlogininstructions}}}
             </div>
-        {{/cansignup}}
+            {{/selfregistrationlogininstructionsbetween}}
+            {{/showselfregistrationlogininstruction}}
+        </div>
+
+        <div class="login-signup">
+            <a class="btn btn-secondary" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a>
+        </div>
+
+        {{! Instructions (below form) }}
+        {{#showselfregistrationlogininstruction}}
+        {{#selfregistrationlogininstructionsbelow}}
+        <div class="login-instructions-firsttimesignup mt-3">
+            {{{selfregistrationlogininstructions}}}
+        </div>
+        {{/selfregistrationlogininstructionsbelow}}
+        {{/showselfregistrationlogininstruction}}
 
     {{>theme_boost_union/loginform-partial-method-end}}
     {{/showselfregistration}}
@@ -350,12 +445,30 @@
         <h2 class="login-heading {{#loginlayoutaccordion}}text-break w-100{{/loginlayoutaccordion}}">{{#guestloginintrotext}}{{{guestloginintrotext}}}{{/guestloginintrotext}}{{^guestloginintrotext}}{{#str}}someallowguest{{/str}}{{/guestloginintrotext}}</h2>
         {{/showguestloginintro}}
 
+        {{! Instructions (between heading and form) }}
+        {{#showguestlogininstruction}}
+        {{#guestlogininstructionsbetween}}
+        <div class="login-instructions-guest mb-3">
+            {{{guestlogininstructions}}}
+        </div>
+        {{/guestlogininstructionsbetween}}
+        {{/showguestlogininstruction}}
+
         <form action="{{loginurl}}" method="post" id="guestlogin">
             <input type="hidden" name="logintoken" value="{{logintoken}}">
             <input type="hidden" name="username" value="guest" />
             <input type="hidden" name="password" value="guest" />
             <button class="btn btn-secondary" type="submit" id="loginguestbtn">{{#str}}loginguest{{/str}}</button>
         </form>
+
+        {{! Instructions (below form) }}
+        {{#showguestlogininstruction}}
+        {{#guestlogininstructionsbelow}}
+        <div class="login-instructions-guest mt-3">
+            {{{guestlogininstructions}}}
+        </div>
+        {{/guestlogininstructionsbelow}}
+        {{/showguestlogininstruction}}
 
     {{>theme_boost_union/loginform-partial-method-end}}
     {{/showguestlogin}}
@@ -385,6 +498,17 @@
     {{#loginlayoutaccordion}}
     <div class="mb-5"></div>
     {{/loginlayoutaccordion}}
+
+    {{! =========================================================================== }}
+    {{! GLOBAL INSTRUCTIONS BELOW LOGIN PANELS }}
+    {{! =========================================================================== }}
+
+    {{#logininstructionsbelow}}
+    <div class="login-instructions-below mt-4">
+        {{{logininstructionsbelow}}}
+    </div>
+    <div class="login-divider"></div>
+    {{/logininstructionsbelow}}
 
     {{! =========================================================================== }}
     {{! CLOSE BU LOGINFORM CONTAINER }}
