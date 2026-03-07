@@ -870,9 +870,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $coreregisterauth = !empty(get_config('core', 'registerauth'));
         $context->showselfregistration = ($showselfregistrationenabled == THEME_BOOST_UNION_SETTING_SELECT_YES)
             && $coreregisterauth
-            && (!empty($context->cansignup) || !empty($context->hasinstructions));
+            && !empty($context->cansignup);
 
-        // Compute intro settings, but only when the corresponding login type is shown.
+        // Compute intro and instruction settings, but only when the corresponding login type is shown.
 
         // Local login.
         if ($context->showlocallogin) {
@@ -884,6 +884,23 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $loginlocalintrotext = get_config('theme_boost_union', 'loginlocalintrotext');
                 if (!empty($loginlocalintrotext)) {
                     $context->localloginintrotext = format_string($loginlocalintrotext);
+                }
+            }
+            $loginlocalshowinstructionsetting = get_config('theme_boost_union', 'loginlocalshowinstruction');
+            $showlocallogininstruction = ($loginlocalshowinstructionsetting != false) ?
+                $loginlocalshowinstructionsetting : THEME_BOOST_UNION_SETTING_SELECT_NO;
+            if ($showlocallogininstruction == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $loginlocalinstructions = get_config('theme_boost_union', 'loginlocalinstructioncontent');
+                if (isset($loginlocalinstructions) && !empty($loginlocalinstructions)) {
+                    $context->showlocallogininstruction = true;
+                    $context->locallogininstructions = format_text($loginlocalinstructions, FORMAT_HTML);
+                    $loginlocalinstructionposition = get_config('theme_boost_union', 'loginlocalinstructionposition');
+                    $context->locallogininstructionposition = ($loginlocalinstructionposition === false) ?
+                        THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BETWEEN : $loginlocalinstructionposition;
+                    $context->locallogininstructionsbetween =
+                        ($context->locallogininstructionposition === THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BETWEEN);
+                    $context->locallogininstructionsbelow =
+                        ($context->locallogininstructionposition === THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BELOW);
                 }
             }
         }
@@ -900,6 +917,23 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     $context->idploginintrotext = format_string($loginidpintrotext);
                 }
             }
+            $loginidpshowinstructionsetting = get_config('theme_boost_union', 'loginidpshowinstruction');
+            $showidplogininstruction = ($loginidpshowinstructionsetting != false) ?
+                $loginidpshowinstructionsetting : THEME_BOOST_UNION_SETTING_SELECT_NO;
+            if ($showidplogininstruction == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $loginidpinstructions = get_config('theme_boost_union', 'loginidpinstructioncontent');
+                if (isset($loginidpinstructions) && !empty($loginidpinstructions)) {
+                    $context->showidplogininstruction = true;
+                    $context->idplogininstructions = format_text($loginidpinstructions, FORMAT_HTML);
+                    $loginidpinstructionposition = get_config('theme_boost_union', 'loginidpinstructionposition');
+                    $context->idplogininstructionposition = ($loginidpinstructionposition === false) ?
+                        THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BETWEEN : $loginidpinstructionposition;
+                    $context->idplogininstructionsbetween =
+                        ($context->idplogininstructionposition === THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BETWEEN);
+                    $context->idplogininstructionsbelow =
+                        ($context->idplogininstructionposition === THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BELOW);
+                }
+            }
         }
 
         // Guest login.
@@ -914,6 +948,23 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     $context->guestloginintrotext = format_string($loginguestintrotext);
                 }
             }
+            $loginguestshowinstructionsetting = get_config('theme_boost_union', 'loginguestshowinstruction');
+            $showguestlogininstruction = ($loginguestshowinstructionsetting != false) ?
+                $loginguestshowinstructionsetting : THEME_BOOST_UNION_SETTING_SELECT_NO;
+            if ($showguestlogininstruction == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $loginguestinstructions = get_config('theme_boost_union', 'loginguestinstructioncontent');
+                if (isset($loginguestinstructions) && !empty($loginguestinstructions)) {
+                    $context->showguestlogininstruction = true;
+                    $context->guestlogininstructions = format_text($loginguestinstructions, FORMAT_HTML);
+                    $loginguestinstructionposition = get_config('theme_boost_union', 'loginguestinstructionposition');
+                    $context->guestlogininstructionposition = ($loginguestinstructionposition === false) ?
+                        THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BETWEEN : $loginguestinstructionposition;
+                    $context->guestlogininstructionsbetween =
+                        ($context->guestlogininstructionposition === THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BETWEEN);
+                    $context->guestlogininstructionsbelow =
+                        ($context->guestlogininstructionposition === THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BELOW);
+                }
+            }
         }
 
         // Self registration.
@@ -926,6 +977,26 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $loginselfregistrationintrotext = get_config('theme_boost_union', 'loginselfregistrationintrotext');
                 if (!empty($loginselfregistrationintrotext)) {
                     $context->selfregistrationloginintrotext = format_string($loginselfregistrationintrotext);
+                }
+            }
+            $loginselfregistrationshowinstructionsetting = get_config('theme_boost_union', 'loginselfregistrationshowinstruction');
+            $showselfregistrationlogininstruction = ($loginselfregistrationshowinstructionsetting != false) ?
+                $loginselfregistrationshowinstructionsetting : THEME_BOOST_UNION_SETTING_SELECT_NO;
+            if ($showselfregistrationlogininstruction == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+                $loginselfregistrationinstructions = get_config('theme_boost_union', 'loginselfregistrationinstructioncontent');
+                if (isset($loginselfregistrationinstructions) && !empty($loginselfregistrationinstructions)) {
+                    $context->showselfregistrationlogininstruction = true;
+                    $context->selfregistrationlogininstructions = format_text($loginselfregistrationinstructions, FORMAT_HTML);
+                    $loginselfregistrationinstructionposition =
+                            get_config('theme_boost_union', 'loginselfregistrationinstructionposition');
+                    $context->selfregistrationlogininstructionposition = ($loginselfregistrationinstructionposition === false) ?
+                        THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BETWEEN : $loginselfregistrationinstructionposition;
+                    $context->selfregistrationlogininstructionsbetween =
+                        ($context->selfregistrationlogininstructionposition ===
+                            THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BETWEEN);
+                    $context->selfregistrationlogininstructionsbelow =
+                        ($context->selfregistrationlogininstructionposition ===
+                            THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BELOW);
                 }
             }
         }
@@ -1092,6 +1163,16 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // Add the loginmethods to the template context.
         $context->loginmethods = $loginmethods;
+
+        // Add global login instructions.
+        $logininstructionsabove = get_config('theme_boost_union', 'logininstructionsabove');
+        if (!empty($logininstructionsabove)) {
+            $context->logininstructionsabove = format_text($logininstructionsabove, FORMAT_HTML);
+        }
+        $logininstructionsbelow = get_config('theme_boost_union', 'logininstructionsbelow');
+        if (!empty($logininstructionsbelow)) {
+            $context->logininstructionsbelow = format_text($logininstructionsbelow, FORMAT_HTML);
+        }
 
         return $this->render_from_template('core/loginform', $context);
     }
