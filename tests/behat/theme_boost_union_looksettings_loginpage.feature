@@ -156,21 +156,6 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | yes     | should contain     |
       | no      | should not contain |
 
-  @javascript
-  Scenario Outline: Setting: Login container width
-    Given the following config values are set as admin:
-      | config              | value     | plugin            |
-      | logincontainerwidth | <setting> | theme_boost_union |
-    And the theme cache is purged and the theme is reloaded
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
-    Then DOM element ".login-container" should have computed style "width" "<cssvalue>"
-
-    Examples:
-      | setting | cssvalue |
-      | 600px   | 600px    |
-      |         | 500px    |
-
   Scenario Outline: Setting: Login layout
     Given the following config values are set as admin:
       | config      | value     | plugin            |
@@ -186,6 +171,45 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | vertical  | should not      | should not           |
       | tabs      | should          | should not           |
       | accordion | should not      | should               |
+
+  @javascript
+  Scenario Outline: Setting: Login container width
+    Given the following config values are set as admin:
+      | config              | value     | plugin            |
+      | logincontainerwidth | <setting> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then DOM element ".login-container" should have computed style "width" "<cssvalue>"
+
+    Examples:
+      | setting | cssvalue |
+      | 600px   | 600px    |
+      |         | 500px    |
+
+  @javascript
+  Scenario Outline: Setting: Enhanced tabs layout behaviour: Load the javascript module
+    Given the following config values are set as admin:
+      | config                  | value     | plugin            |
+      | loginlayout             | tabs      | theme_boost_union |
+      | loginenhancedtabslayout | <setting> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then "#login-layout-tabs" "css_element" should exist
+    And "[data-bu-login-spacer='top']" "css_element" <spacershouldornot> exist
+    And "[data-bu-login-spacer='bottom']" "css_element" <spacershouldornot> exist
+
+    Examples:
+      | setting | spacershouldornot |
+      | yes     | should            |
+      | no      | should not        |
+
+  # Unfortunately, this can't be reliably tested with Behat yet
+  # Scenario: Setting: Enhanced tabs layout behaviour: Adapt the width of the login-headings and login-instructions to the wider tab width
+
+  # Unfortunately, this can't be reliably tested with Behat yet
+  # Scenario: Setting: Enhanced tabs layout behaviour: Lock the vertical position of the tabs when switching tabs
 
   Scenario: Setting: Login instructions
     Given the following config values are set as admin:
