@@ -1174,6 +1174,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $context->logininstructionsbelow = format_text($logininstructionsbelow, FORMAT_HTML);
         }
 
+        // Add JS if the tabs layout is active and enhanced tabs layout behaviour is enabled.
+        $loginenhancedtabslayout = get_config('theme_boost_union', 'loginenhancedtabslayout');
+        if ($context->loginlayouttabs && $loginenhancedtabslayout == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            $this->page->requires->js_call_amd('theme_boost_union/logintabs', 'init');
+        }
+
+        // Render the login form template with the context.
         return $this->render_from_template('core/loginform', $context);
     }
 
