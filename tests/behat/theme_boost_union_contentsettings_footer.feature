@@ -383,3 +383,17 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | value | shouldornot |
       | no    | should      |
       | yes   | should not  |
+
+  @javascript
+  Scenario: Setting: Footer - Enable multilang additionalhtmlfooter content
+    Given the following config values are set as admin:
+      | config               | value                                                                                                                                                                                |
+      | additionalhtmlfooter | <div id="custom-footer-html"><p><span lang="en" class="multilang">Custom Footer Content</span><span lang="de" class="multilang">Benutzerdefinierter Fußzeileninhalt</span></p></div> |
+    And the "multilang" filter is "on"
+    And the "multilang" filter applies to "content and headings"
+    And all Boost Union MUC caches are purged
+    And I log in as "admin"
+    When I am on homepage
+    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
+    Then I should see "Custom Footer Content" in the ".popover-body" "css_element"
+    But I should not see "Benutzerdefinierter Fußzeileninhalt" in the ".popover-body" "css_element"
