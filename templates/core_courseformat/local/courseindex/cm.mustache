@@ -129,11 +129,18 @@ if (document.body.classList.contains('hascourseindexcmicons')) {
 
     // Or completion indication should be shown at the end of the line.
     } else if (document.body.classList.contains('hascourseindexcpleol')) {
-        // Completion indication not shown at start of line anymore.
-        document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[0].dataset.for = '_';
+        // Get completioninfo nodes for this courseindex item.
+        let completioninfonodes = document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo');
 
-        // The completion indication at the end of the line is now the active one.
-        document.querySelectorAll('.courseindex-item[data-id="{{id}}"] span.completioninfo')[2].dataset.for = 'cm_completion';
+        // Check if there are any completioninfo nodes.
+        // There are no ones for courseindex item if the courseindex item is a subsection.
+        if (completioninfonodes) {
+            // Completion indication not shown at start of line anymore.
+            completioninfonodes[0].dataset.for = '_';
+
+            // The completion indication at the end of the line is now the active one.
+            completioninfonodes[2].dataset.for = 'cm_completion';
+        }
     }
 }
 
