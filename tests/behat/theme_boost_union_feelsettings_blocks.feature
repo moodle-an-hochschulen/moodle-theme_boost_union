@@ -157,6 +157,32 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | footer-center  | footer-center  |
       | header         | header         |
 
+  Scenario Outline: Setting: Use additional block regions (on the My courses page, showing sticky blocks from frontpage)
+    Given the following config values are set as admin:
+      | config                   | value          | plugin            |
+      | blockregionsformycourses | <settingvalue> | theme_boost_union |
+    And the following "blocks" exist:
+      | blockname    | contextlevel | reference | pagetypepattern | defaultregion |
+      | online_users | System       | 1         | *               | <region>      |
+    When I am on the "My courses" page logged in as "admin"
+    Then I should see "Online users" in the "#theme-block-region-<region>" "css_element"
+
+    Examples:
+      | region           | settingvalue     |
+      | outside-top      | outside-top      |
+      | outside-left     | outside-left     |
+      | outside-right    | outside-right    |
+      | outside-bottom   | outside-bottom   |
+      | footer-left      | footer-left      |
+      | footer-right     | footer-right     |
+      | footer-center    | footer-center    |
+      | offcanvas-left   | offcanvas-left   |
+      | offcanvas-right  | offcanvas-right  |
+      | offcanvas-center | offcanvas-center |
+      | content-upper    | content-upper    |
+      | content-lower    | content-lower    |
+      | header           | header           |
+
   Scenario Outline: Setting: Use additional block regions (on the admin overview page where not all regions are offered)
     Given the following config values are set as admin:
       | config               | value          | plugin            |
