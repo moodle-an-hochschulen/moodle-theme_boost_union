@@ -3392,6 +3392,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'offcanvas-right' => $regionstr['region-offcanvas-right'],
             'offcanvas-center' => $regionstr['region-offcanvas-center'],
         ];
+        // Prepare list of layouts which only support sticky blocks.
+        $stickyonlylayouts = [];
         // Build list of page layouts and map the regions to each page layout.
         $pagelayouts = [
             'standard' => $partialregions,
@@ -3407,11 +3409,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $pagelayouts['mydashboard'] = array_filter($allavailableregions, function ($key) {
             return ($key != 'content-upper' && $key != 'content-lower') ? true : false;
         }, ARRAY_FILTER_USE_KEY);
+        // For the mycourses layout, use all available regions as well,
+        // but add it to the list of layouts which only support sticky blocks as well.
+        $pagelayouts['mycourses'] = $allavailableregions;
+        $stickyonlylayouts[] = 'mycourses';
         // Create admin setting for each page layout.
         foreach ($pagelayouts as $layout => $regions) {
             $name = 'theme_boost_union/blockregionsfor' . $layout;
             $title = get_string('blockregionsforlayout', 'theme_boost_union', $layout, true);
             $description = get_string('blockregionsforlayout_desc', 'theme_boost_union', $layout, true);
+            // If this layout only supports sticky blocks, add a notification to the description.
+            if (in_array($layout, $stickyonlylayouts)) {
+                $notificationurl = 'https://docs.moodle.org/en/Block_settings#Making_a_block_sticky_throughout_the_whole_site';
+                $notification = new \core\output\notification(
+                    get_string('blockregionsstickyonly', 'theme_boost_union', $notificationurl),
+                    \core\output\notification::NOTIFY_INFO
+                );
+                $notification->set_show_closebutton(false);
+                $description .= '<br />' . $OUTPUT->render($notification);
+            }
             $setting = new admin_setting_configmulticheckbox($name, $title, $description, [], $regions);
             $tab->add($setting);
         }
