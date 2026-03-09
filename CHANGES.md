@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-03-08 - Improvement: Add additional block regions on the 'mycourses' page layout to show sticky blocks at least, resolves #1141
 * 2026-03-08 - Improvement: Improve horizontal width and vertical alignment of the login page tabs layout with JS, resolves #1187
 * 2026-03-06 - Improvement: Add dedicated Boost Union login page instructions, resolves #1170
                Please note: If you have used the auth_instructions setting in Moodle core before, you must copy that content to the new login page instructions as Boost Union does not display auth_instructions anymore.

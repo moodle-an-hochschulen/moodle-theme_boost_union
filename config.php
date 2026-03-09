@@ -100,7 +100,7 @@ $THEME->layouts = [
     // My courses page.
     'mycourses' => [
         'file' => 'drawers.php',
-        'regions' => ['side-pre'],
+        'regions' => theme_boost_union_get_block_regions('mycourses'),
         'defaultregion' => 'side-pre',
         'options' => ['nonavbar' => true],
     ],
