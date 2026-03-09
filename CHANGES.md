@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-03-09 - Bugfix: after_form_* hooks should require the library as well, resolves #1191
+
 ### v5.1-r8
 
 * 2026-03-08 - Improvement: Add additional block regions on the 'mycourses' page layout to show sticky blocks at least, resolves #1141
