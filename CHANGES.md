@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r35
 
 * 2026-03-08 - Improvement: Add additional block regions on the 'mycourses' page layout to show sticky blocks at least, resolves #1141
 * 2026-03-08 - Improvement: Improve horizontal width and vertical alignment of the login page tabs layout with JS, resolves #1187
