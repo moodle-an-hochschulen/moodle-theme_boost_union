@@ -892,6 +892,7 @@ $string['openoffcanvas'] = 'Open Off-canvas drawer';
 // ... ... Setting: Block regions for 'x' layout.
 $string['blockregionsforlayout'] = 'Additional block regions for \'{$a}\' layout';
 $string['blockregionsforlayout_desc'] = 'With this setting, you can enable additional block regions for the \'{$a}\' layout.';
+$string['blockregionsstickyonly'] = 'Please note: This page layout is limited by Moodle core in such a way that blocks cannot be added directly on the page. However, as soon as you enable a block region here, <a href="{$a}" target="_blank">site-wide sticky blocks</a> will still be displayed on this page layout.';
 // ... Section: Outside regions.
 $string['outsideregionsheading'] = 'Outside regions';
 $string['outsideregionsheading_desc'] = 'Outside regions can not only be enabled with the layout settings above, their appearance can also be customized.';
