@@ -42,7 +42,8 @@ class after_form_submission {
     public static function callback(\core_course\hook\after_form_submission $hook): void {
         global $CFG, $DB;
 
-        // Require local library.
+        // Require libraries.
+        require_once($CFG->dirroot . '/theme/boost_union/lib.php');
         require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
         // If a theme other than Boost Union or a child theme of it is active, return directly.
