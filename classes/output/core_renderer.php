@@ -1438,7 +1438,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $output = '';
         if ($this->page->pagelayout !== 'embedded' && !empty($CFG->additionalhtmlfooter)) {
-            $output .= "\n" . $CFG->additionalhtmlfooter;
+            $output .= "\n" .
+                format_text($CFG->additionalhtmlfooter, FORMAT_HTML, [
+                    'filter' => true,
+                    'noclean' => true,
+                ]);
         }
         return $output;
     }

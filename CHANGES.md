@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-03-16 - Update: Adopt changes to filter additionalhtmlfooter from MDL-85498, resolves #847
 * 2026-03-09 - Bugfix: after_form_* hooks should require the library as well, resolves #1191
 
 ### v5.1-r8
