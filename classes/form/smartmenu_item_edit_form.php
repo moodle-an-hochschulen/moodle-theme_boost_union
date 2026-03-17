@@ -95,6 +95,38 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->hideIf('title', 'type', 'eq', smartmenu_item::TYPEDIVIDER);
         $mform->addHelpButton('title', 'smartmenusmenuitemtitle', 'theme_boost_union');
 
+        // Add a fieldset listing all available placeholders.
+        // This section is only shown when a "with placeholders" item type is selected.
+        $mform->addElement(
+            'header',
+            'placeholdersinfoheader',
+            get_string('smartmenusmenuitemplaceholdersinfoheader', 'theme_boost_union')
+        );
+        $mform->setExpanded('placeholdersinfoheader', true);
+        $mform->hideIf('placeholdersinfoheader', 'type', 'in', [
+            smartmenu_item::TYPEHEADING,
+            smartmenu_item::TYPESTATIC,
+            smartmenu_item::TYPEDYNAMIC,
+            smartmenu_item::TYPEDOCS,
+            smartmenu_item::TYPEDIVIDER,
+            smartmenu_item::TYPEMAILTO,
+        ]);
+
+        $mform->addElement(
+            'static',
+            'placeholdersinfo',
+            '',
+            get_string('smartmenusmenuitemplaceholdersinfo', 'theme_boost_union')
+        );
+        $mform->hideIf('placeholdersinfo', 'type', 'in', [
+            smartmenu_item::TYPEHEADING,
+            smartmenu_item::TYPESTATIC,
+            smartmenu_item::TYPEDYNAMIC,
+            smartmenu_item::TYPEDOCS,
+            smartmenu_item::TYPEDIVIDER,
+            smartmenu_item::TYPEMAILTO,
+        ]);
+
         // Add structure as header element.
         $mform->addElement(
             'header',
@@ -102,14 +134,28 @@ class smartmenu_item_edit_form extends \moodleform {
             get_string('smartmenusmenuitemstructureheader', 'theme_boost_union')
         );
         $mform->setExpanded('structureheader');
-        $mform->hideIf('structureheader', 'type', 'eq', smartmenu_item::TYPEHEADING);
-        $mform->hideIf('structureheader', 'type', 'eq', smartmenu_item::TYPEDOCS);
-        $mform->hideIf('structureheader', 'type', 'eq', smartmenu_item::TYPEDIVIDER);
+        $mform->hideIf('structureheader', 'type', 'in', [
+            smartmenu_item::TYPEHEADING,
+            smartmenu_item::TYPEHEADINGWITHPLACEHOLDERS,
+            smartmenu_item::TYPEDOCS,
+            smartmenu_item::TYPEDIVIDER,
+        ]);
 
-        // Add menu item URL (for the static menu item type) as input element.
+        // Add menu item URL (for the static and static-with-placeholders menu item types) as input element.
+        // Note: PARAM_TEXT is used (instead of PARAM_URL) because placeholder strings like {courseid} contain
+        // curly-brace characters which PARAM_URL would strip. PARAM_TEXT strips HTML tags while preserving the
+        // placeholder syntax. URLs from this field are always passed through \core\url before rendering, which
+        // provides final sanitization.
         $mform->addElement('text', 'url', get_string('smartmenusmenuitemurl', 'theme_boost_union'));
-        $mform->setType('url', PARAM_URL);
-        $mform->hideIf('url', 'type', 'neq', smartmenu_item::TYPESTATIC);
+        $mform->setType('url', PARAM_TEXT);
+        $mform->hideIf('url', 'type', 'in', [
+            smartmenu_item::TYPEHEADING,
+            smartmenu_item::TYPEDYNAMIC,
+            smartmenu_item::TYPEDOCS,
+            smartmenu_item::TYPEDIVIDER,
+            smartmenu_item::TYPEMAILTO,
+            smartmenu_item::TYPEHEADINGWITHPLACEHOLDERS,
+        ]);
         $mform->addHelpButton('url', 'smartmenusmenuitemurl', 'theme_boost_union');
 
         // Add menu item email (for the mailto menu item type) as input element.
@@ -691,8 +737,8 @@ class smartmenu_item_edit_form extends \moodleform {
             }
         }
 
-        // If the menu item type is static.
-        if ($data['type'] == smartmenu_item::TYPESTATIC) {
+        // If the menu item type is static or static with placeholders.
+        if ($data['type'] == smartmenu_item::TYPESTATIC || $data['type'] == smartmenu_item::TYPESTATICWITHPLACEHOLDERS) {
             // Verify that the URL field is not empty.
             if (empty($data['url'])) {
                 $errors['url'] = get_string('required');

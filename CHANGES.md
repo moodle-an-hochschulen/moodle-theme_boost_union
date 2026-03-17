@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-03-16 - Improvement: Add placeholders to static menu items' title and URLs, resolves #423
 * 2026-03-09 - Bugfix: after_form_* hooks should require the library as well, resolves #1191
 
 ### v5.1-r8
