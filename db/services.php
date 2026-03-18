@@ -33,4 +33,12 @@ $functions = [
         'ajax'          => true,
         'loginrequired' => false,
     ],
+    'theme_boost_union_smartmenus_clear_starredcourses_cache' => [
+        'classname'     => 'theme_boost_union\external\smartmenus_clear_starredcourses_cache',
+        'methodname'    => 'execute',
+        'description'   => 'Invalidate user smart menu caches after starring or unstarring courses',
+        'type'          => 'write',
+        'ajax'          => true,
+        'loginrequired' => true,
+    ],
 ];

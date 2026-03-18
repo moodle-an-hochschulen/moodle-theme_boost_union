@@ -136,6 +136,24 @@ class smartmenu_item {
     const RANGE_FUTURE = 3;
 
     /**
+     * Show all courses in the dynamic menu item list.
+     * @var int
+     */
+    const STARREDCOURSES_ALL = 0;
+
+    /**
+     * Show only starred courses in the dynamic menu item list (and use server-side cache invalidation).
+     * @var int
+     */
+    const STARREDCOURSES_ONLY_SERVER = 1;
+
+    /**
+     * Show only starred courses in the dynamic menu item list (and use client-side cache invalidation).
+     * @var int
+     */
+    const STARREDCOURSES_ONLY_CLIENT = 2;
+
+    /**
      * Hide the item title an all viewport.
      * @var int
      */
@@ -382,6 +400,8 @@ class smartmenu_item {
         $this->cache->delete_menu($this->item->id);
         // Delete the cached data of current items menu.
         $this->menucache->delete_menu($this->item->menu);
+        // Invalidate shared smartmenus cache keys.
+        smartmenu::invalidate_shared_cache($this->menucache);
     }
 
     /**
@@ -800,6 +820,9 @@ class smartmenu_item {
         // Daterange based courses filter.
         $this->get_daterange_sql($query);
 
+        // Starred courses based courses filter.
+        $this->get_starredcourses_sql($query);
+
         // Custom field based courses filter.
         $this->get_customfield_sql($query);
 
@@ -1169,7 +1192,7 @@ class smartmenu_item {
      * @return bool Returns false if the item's date range is empty.
      */
     protected function get_daterange_sql(&$query) {
-        global $DB, $USER;
+        global $DB;
 
         if (empty($this->item->daterange)) {
             return false;
@@ -1198,6 +1221,46 @@ class smartmenu_item {
 
         $query->where[] = $sql ? '(' . implode(' OR ', $sql) . ')' : '';
         $query->params += $params;
+    }
+
+    /**
+     * Generates the SQL statement to only show user-starred courses.
+     *
+     * @param stdclass $query The database query object.
+     * @return bool Returns false if the starred-courses filter is not enabled.
+     */
+    protected function get_starredcourses_sql(&$query) {
+        global $USER;
+
+        // Check if the filter for starred courses is enabled and valid.
+        if (
+            !property_exists($this->item, 'starredcourses') ||
+            !in_array((int) $this->item->starredcourses, [
+                self::STARREDCOURSES_ONLY_SERVER,
+                self::STARREDCOURSES_ONLY_CLIENT,
+            ])
+        ) {
+            return false;
+        }
+
+        // Add a condition to the query to fetch only those courses that the user has marked as favourite on the server side.
+        $query->where[] = "EXISTS (
+            SELECT 1
+              FROM {favourite} f
+              JOIN {context} favctx ON favctx.id = f.contextid
+             WHERE f.userid = :favuserid
+               AND f.component = :favcomponent
+               AND f.itemtype = :favitemtype
+               AND f.itemid = c.id
+               AND favctx.contextlevel = :favcontextlevel
+               AND favctx.instanceid = c.id
+        )";
+        $query->params += [
+            'favuserid' => $USER->id,
+            'favcomponent' => 'core_course',
+            'favitemtype' => 'courses',
+            'favcontextlevel' => CONTEXT_COURSE,
+        ];
     }
 
     /**
@@ -1402,7 +1465,12 @@ class smartmenu_item {
 
             case self::TYPEDYNAMIC:
                 $result = $this->generate_dynamic_item();
-                $cacheable = true;
+                // If the starred courses server-side cache invalidation mode is enabled, disable the cache for dynamic items.
+                // And keep the cache for all other modes.
+                $cacheable = !(
+                    isset($this->item->starredcourses) &&
+                    (int) $this->item->starredcourses === self::STARREDCOURSES_ONLY_SERVER
+                );
                 break;
 
             case self::TYPEDIVIDER:
@@ -1784,6 +1852,23 @@ class smartmenu_item {
     }
 
     /**
+     * Return the options for the starredcourses setting.
+     *
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function get_starredcourses_options(): array {
+        return [
+            self::STARREDCOURSES_ALL =>
+                get_string('smartmenusdynamiccoursesstarredcoursesall', 'theme_boost_union'),
+            self::STARREDCOURSES_ONLY_SERVER =>
+                get_string('smartmenusdynamiccoursesstarredcoursesonly', 'theme_boost_union'),
+            self::STARREDCOURSES_ONLY_CLIENT =>
+                get_string('smartmenusdynamiccoursesstarredcoursesonlyclient', 'theme_boost_union'),
+        ];
+    }
+
+    /**
      * Return the options for the listsort setting.
      *
      * @return array
@@ -1886,6 +1971,7 @@ class smartmenu_item {
         $record->enrolmentrole = json_encode($formdata->enrolmentrole);
         $record->completionstatus = json_encode($formdata->completionstatus);
         $record->daterange = json_encode($formdata->daterange);
+        $record->starredcourses = ($formdata->starredcourses) ?? self::STARREDCOURSES_ALL;
 
         $coursehandler = \core_course\customfield\course_handler::create();
         $customfields = [];
@@ -1940,6 +2026,7 @@ class smartmenu_item {
 
             // Delete the cached data of its menu. Menu will recreate with this item.
             $menucache->delete_menu($formdata->menu);
+            smartmenu::invalidate_shared_cache($menucache);
             // Purge the current item cache for all users.
             $cache->delete_menu($formdata->id);
 
@@ -1964,6 +2051,7 @@ class smartmenu_item {
 
             // Delete the cached data of its menu. Menu will recreate with this item.
             $menucache->delete_menu($formdata->menu);
+            smartmenu::invalidate_shared_cache($menucache);
         }
 
         // Save the item image files to the file directory.

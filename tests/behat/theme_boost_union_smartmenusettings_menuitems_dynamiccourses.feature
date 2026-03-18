@@ -48,6 +48,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     And I should see "Dynamic courses: Enrolment role"
     And I should see "Dynamic courses: Completion status"
     And I should see "Dynamic courses: Date range"
+    And I should see "Dynamic courses: Starred courses"
 
   Scenario: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on all existing courses (without any condition)
     Given the following "theme_boost_union > smart menu item" exists:
@@ -179,6 +180,42 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | Future                | should not | should not | should     | should not | should not |
       | Present               | should     | should not | should not | should     | should     |
       | Past                  | should not | should     | should not | should not | should not |
+
+  @javascript
+  Scenario Outline: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on the starred courses condition
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu     | List menu |
+      | title    | Info      |
+      | itemtype | Heading   |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu           | List menu        |
+      | title          | Dynamic courses  |
+      | itemtype       | Dynamic courses  |
+      | starredcourses | <starredcourses> |
+    When I log in as "student1"
+    And I follow "My courses"
+    And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 01')]" "xpath_element"
+    And I click on "Star this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 01')]" "xpath_element"
+    And I wait until the page is ready
+    And I reload the page
+    Then I <course01_afterstar> see smart menu "List menu" item "Course 01" in location "Main, Menu, User, Bottom"
+    And I <course02_afterstar> see smart menu "List menu" item "Course 02" in location "Main, Menu, User, Bottom"
+    And I <course03_afterstar> see smart menu "List menu" item "Course 03" in location "Main, Menu, User, Bottom"
+    And I <course04_afterstar> see smart menu "List menu" item "Course 04" in location "Main, Menu, User, Bottom"
+    And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 01')]" "xpath_element"
+    And I click on "Unstar this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 01')]" "xpath_element"
+    And I wait until the page is ready
+    And I reload the page
+    Then I <course01_afterunstar> see smart menu "List menu" item "Course 01" in location "Main, Menu, User, Bottom"
+    And I <course02_afterunstar> see smart menu "List menu" item "Course 02" in location "Main, Menu, User, Bottom"
+    And I <course03_afterunstar> see smart menu "List menu" item "Course 03" in location "Main, Menu, User, Bottom"
+    And I <course04_afterunstar> see smart menu "List menu" item "Course 04" in location "Main, Menu, User, Bottom"
+
+    Examples:
+      | starredcourses                                                                        | course01_afterstar | course02_afterstar | course03_afterstar | course04_afterstar | course01_afterunstar | course02_afterunstar | course03_afterunstar | course04_afterunstar |
+      | Show only starred courses (server-side course list refresh - safer but slower)        | should             | should not         | should not         | should not         | should not           | should not           | should not           | should not           |
+      | Show only starred courses (client-side course list refresh - faster but more fragile) | should             | should not         | should not         | should not         | should not           | should not           | should not           | should not           |
+      | Show all courses                                                                      | should             | should             | should             | should             | should               | should               | should               | should               |
 
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on a course field condition
     Given the following "custom field categories" exist:

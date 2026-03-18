@@ -223,6 +223,9 @@ class primary extends \core\navigation\output\primary {
         $includesmartmenu = (!empty($locationmainmenu) || !empty($locationmenubarmenu) ||
                 !empty($locationusermenus) || !empty($locationbottommenu));
 
+        // Check if any of the rendered smart menu items requires client-side starred-courses cache invalidation.
+        $includestarredcacheinvalidation = $this->smartmenus_require_starred_cacheinvalidation($cache);
+
         return [
             'mobileprimarynav' => $mobileprimarynav,
             'moremenu' => $moremenu->export_for_template($output),
@@ -231,6 +234,7 @@ class primary extends \core\navigation\output\primary {
             'user' => $usermenu ?? [],
             'bottombar' => $bottombardata ?? false,
             'includesmartmenu' => $includesmartmenu ? true : false,
+            'includestarredcacheinvalidation' => $includestarredcacheinvalidation ? true : false,
         ];
     }
 
@@ -549,5 +553,49 @@ class primary extends \core\navigation\output\primary {
             $node->isactive = true;
         }
         return $node->isactive;
+    }
+
+    /**
+     * Check whether any rendered smart menu item uses client-side starred-courses refresh.
+     * The result is cached in the smartmenus cache to avoid repeated checks.
+     *
+     * @param \core_cache\application_cache $cache Cache object to store the result.
+     * @return bool
+     */
+    protected function smartmenus_require_starred_cacheinvalidation($cache): bool {
+        global $DB;
+
+        // Try to get the result from the cache first.
+        $cachekey = smartmenu::CACHE_STARREDCACHEINVALIDATION;
+        $cached = $cache->get($cachekey);
+        if ($cached !== false) {
+            return (bool) $cached;
+        }
+
+        // If the smart menu feature is not installed at all, skip the check.
+        // This will help to avoid hickups during a theme upgrade.
+        $dbman = $DB->get_manager();
+        if (!$dbman->table_exists('theme_boost_union_menuitems')) {
+            $cache->set($cachekey, 0);
+            return false;
+        }
+
+        // Check if at least one dynamic courses smart menu item is configured for client-side starred-courses handling.
+        $result = $DB->record_exists_sql(
+            'SELECT 1
+               FROM {theme_boost_union_menuitems} mi
+              WHERE mi.type = :typedynamic
+                AND mi.starredcourses = :starredcourses',
+            [
+                'typedynamic' => \theme_boost_union\smartmenu_item::TYPEDYNAMIC,
+                'starredcourses' => \theme_boost_union\smartmenu_item::STARREDCOURSES_ONLY_CLIENT,
+            ]
+        );
+
+        // Store the result in the cache.
+        $cache->set($cachekey, $result ? 1 : 0);
+
+        // And return the result.
+        return $result;
     }
 }
