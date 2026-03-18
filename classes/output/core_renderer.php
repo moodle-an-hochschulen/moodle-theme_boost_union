@@ -768,8 +768,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function block(block_contents $bc, $region) {
         global $CFG;
 
-        // Require own locallib.php.
+        // Require own locallib.php and block manager.
         require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+        require_once($CFG->dirroot . '/theme/boost_union/classes/boostunion_block_manager.php');
 
         $bc = clone($bc); // Avoid messing up the object passed in.
         if (empty($bc->blockinstanceid) || !strip_tags($bc->title)) {
@@ -797,12 +798,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $context->hascontrols = !empty($bc->controls);
 
         // Hide edit control options for the regions based on the capabilities.
-        $regions = theme_boost_union_get_additional_regions();
-        $regioncapname = array_search($region, $regions);
-        if (!empty($regioncapname) && $context->hascontrols) {
-            $context->hascontrols = has_capability('theme/boost_union:editregion' . $regioncapname, $this->page->context);
-        }
-
+        $context->hascontrols =
+                \theme_boost_union\boostunion_block_manager::can_user_edit_region($region, $this->page->context);
         if ($context->hascontrols) {
             $context->controls = $this->block_controls($bc->controls, $id);
         }

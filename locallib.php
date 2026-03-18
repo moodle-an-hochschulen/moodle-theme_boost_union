@@ -1482,10 +1482,14 @@ function theme_boost_union_get_additional_regions($pageregions = []) {
 /**
  * Get the defined regions for the page layout.
  *
+ * If called from the block edit form and the harden block regions feature is enabled,
+ * this function filters regions to only return those the user has capability to edit.
+ *
  * @param string $layout Pagelayout name.
  * @return array $regions
  */
 function theme_boost_union_get_block_regions($layout) {
+    global $CFG;
 
     // During the initial installation, we can't access the config table yet, so we return the default regions only.
     if (during_initial_install()) {
@@ -1501,7 +1505,20 @@ function theme_boost_union_get_block_regions($layout) {
     // Add the configured regions to the side-pre region (which is always provided by Boost core).
     $regions = array_merge(['side-pre'], $settings);
 
-    // Return.
+    // If the harden block regions feature is enabled, delegate hardening to the custom block manager implementation.
+    // We intentionally use the literal 'yes' value here instead of the
+    // THEME_BOOST_UNION_SETTING_SELECT_YES constant, as the theme's lib.php
+    // is not loaded at this early stage of the bootstrap.
+    $hardenblockregions = get_config('theme_boost_union', 'hardenblockregions');
+    if (!empty($hardenblockregions) && $hardenblockregions == 'yes') {
+        // Require the custom block manager implementation.
+        require_once($CFG->dirroot . '/theme/boost_union/classes/boostunion_block_manager.php');
+
+        // Harden the regions.
+        $regions = \theme_boost_union\boostunion_block_manager::harden_block_regions($regions, $settings);
+    }
+
+    // Return regions.
     return $regions;
 }
 
