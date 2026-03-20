@@ -1011,6 +1011,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $context->loginlayouttabs = ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS) ? true : false;
         $context->loginlayoutvertical = ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_VERTICAL) ? true : false;
 
+        $loginidpsplitsetting = get_config('theme_boost_union', 'loginidpsplit');
+        $separateidppertab = (($loginidpsplitsetting !== false)
+            ? $loginidpsplitsetting : THEME_BOOST_UNION_SETTING_SELECT_NO) === THEME_BOOST_UNION_SETTING_SELECT_YES;
+        $layoutusestabpanels = in_array($loginlayout, [
+            THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS,
+            THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION,
+        ], true);
+
         // Create sorted login methods array.
         // This ensures the DOM order matches the visual order, so CSS :first-of-type and :last-of-type work correctly.
         // Note: The template uses the same loop structure for all layouts, with conditionals for tabs vs vertical/accordion.
@@ -1041,17 +1049,38 @@ class core_renderer extends \theme_boost\output\core_renderer {
             if ($order === false) {
                 $order = 2; // Default order.
             }
-            $loginmethods[] = (object)[
-                'id' => 'login-method-idp',
-                'name' => 'idp',
-                'order' => $order,
-                'type' => 'idp',
-                'islocal' => false,
-                'isidp' => true,
-                'isfirsttimesignup' => false,
-                'isguest' => false,
-                'isfirst' => false,
-            ];
+            if ($separateidppertab && $layoutusestabpanels && !empty($context->identityproviders)) {
+                $providers = array_values($context->identityproviders);
+                foreach ($providers as $idx => $idp) {
+                    $loginmethods[] = (object)[
+                        'id' => 'login-method-idp-' . $idx,
+                        'name' => 'idp',
+                        'order' => $order,
+                        'type' => 'idp',
+                        'islocal' => false,
+                        'isidp' => true,
+                        'isfirsttimesignup' => false,
+                        'isguest' => false,
+                        'isfirst' => false,
+                        'idpsplit' => true,
+                        'idpsplitfirst' => ($idx === 0),
+                        'identityproviders' => [$idp],
+                        'idpidx' => $idx,
+                    ];
+                }
+            } else {
+                $loginmethods[] = (object)[
+                    'id' => 'login-method-idp',
+                    'name' => 'idp',
+                    'order' => $order,
+                    'type' => 'idp',
+                    'islocal' => false,
+                    'isidp' => true,
+                    'isfirsttimesignup' => false,
+                    'isguest' => false,
+                    'isfirst' => false,
+                ];
+            }
         }
 
         // Self registration.
@@ -1094,7 +1123,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // Sort login methods by order setting.
         usort($loginmethods, function ($a, $b) {
-            return $a->order <=> $b->order;
+            $orderby = $a->order <=> $b->order;
+            if ($orderby !== 0) {
+                return $orderby;
+            }
+            // Preserve identity-provider order when several IDP methods share the same order value.
+            return ($a->idpidx ?? 0) <=> ($b->idpidx ?? 0);
         });
 
         // Mark the first method in the sorted array.
@@ -1126,6 +1160,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ],
             ];
             foreach ($loginmethods as $method) {
+                if (!empty($method->idpsplit)) {
+                    $idp = $method->identityproviders[0];
+                    $rawname = is_array($idp) ? ($idp['name'] ?? '') : ($idp->name ?? '');
+                    $method->label = format_string($rawname);
+                    continue;
+                }
                 $labelconfig = $logintablabelconfigs[$method->name] ?? null;
                 if ($labelconfig !== null) {
                     $label = format_string(get_config('theme_boost_union', $labelconfig['config']));
@@ -1151,10 +1191,19 @@ class core_renderer extends \theme_boost\output\core_renderer {
         foreach ($loginmethods as $method) {
             if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS) {
                 // Tabs: Default to first method when primarylogin is 'none'.
-                $method->active = ($primarylogin === $method->name) || ($primarylogin === 'none' && $method->isfirst);
+                if (!empty($method->idpsplit)) {
+                    $method->active = ($primarylogin === 'none' && $method->isfirst) ||
+                        ($primarylogin === 'idp' && !empty($method->idpsplitfirst));
+                } else {
+                    $method->active = ($primarylogin === $method->name) || ($primarylogin === 'none' && $method->isfirst);
+                }
             } else if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION) {
                 // Accordion: Only set active if matched, no default to first.
-                $method->active = ($primarylogin === $method->name);
+                if (!empty($method->idpsplit)) {
+                    $method->active = ($primarylogin === 'idp' && !empty($method->idpsplitfirst));
+                } else {
+                    $method->active = ($primarylogin === $method->name);
+                }
             } else {
                 // Vertical layout: no active flags.
                 $method->active = false;

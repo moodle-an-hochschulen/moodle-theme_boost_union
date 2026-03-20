@@ -404,6 +404,8 @@ $string['loginidpintrotextsetting_desc'] = 'With this setting, you can override 
 $string['loginidploginlabelsetting'] = 'IDP login label';
 $string['loginidploginlabelsetting_desc'] = 'With this setting, you can customize the label for IDP login to be used in the tab and accordion layout.';
 $string['loginidploginlabelsetting_default'] = 'IDP login';
+$string['loginidpsplitsetting'] = 'Split per identity provider';
+$string['loginidpsplitsetting_desc'] = 'If enabled, each identity provider login option appears in its own tab (tab layout) or accordion panel (accordion layout), using the provider name as the title. The IDP intro text and visibility settings still apply within each panel. If disabled, all identity providers stay in a single tab or panel.';
 // ... ... Setting: IDP login instruction.
 $string['loginidpshowinstruction'] = 'IDP login instruction';
 $string['loginidpshowinstruction_desc'] = 'With this setting, you can enable instructions for the IDP login provider.';
