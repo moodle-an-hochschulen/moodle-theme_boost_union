@@ -27,7 +27,22 @@ defined('MOODLE_INTERNAL') || die();
 // Require flavours library.
 require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
 
-// Get the flavour which applies to this page.
+// Pick the navbar color from the global setting.
+$navbarcolorsetting = get_config('theme_boost_union', 'navbarcolor');
+
+// If we are on MWP.
+if (\theme_boost_union\local\mwp::extension_present() == true) {
+    // Call the BU MWP class method only if the class and method exist.
+    if (
+        class_exists('\\local_boost_union_mwp\\local\\branding') &&
+            method_exists('\\local_boost_union_mwp\\local\\branding', 'get_overridden_navbarcolor')
+    ) {
+        // Get the potentially branding-overridden value for navbarcolor.
+        $navbarcolorsetting = \local_boost_union_mwp\local\branding::get_overridden_navbarcolor($navbarcolorsetting);
+    }
+}
+
+// If any flavour applies to this page and defines a non-empty navbar color.
 $flavour = theme_boost_union_get_flavour_which_applies();
 // If a flavour applies to this page and if a navbar color is set in the flavour.
 if (
@@ -36,12 +51,8 @@ if (
 ) {
     // Pick the navbar color from the flavour.
     $navbarcolorsetting = $flavour->look_navbarcolor;
-
-    // Otherwise.
-} else {
-    // Pick the navbar color from the global setting.
-    $navbarcolorsetting = get_config('theme_boost_union', 'navbarcolor');
 }
+
 // Compose the navbar color classes based on the navbarcolor setting.
 switch ($navbarcolorsetting) {
     case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK:

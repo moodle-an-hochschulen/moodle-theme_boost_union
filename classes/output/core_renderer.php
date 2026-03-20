@@ -34,6 +34,27 @@ use core\hook\output\before_standard_footer_html_generation;
 use core\output\html_writer;
 use core_block\output\block_contents;
 
+defined('MOODLE_INTERNAL') || die();
+
+// phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
+
+// Define an intermediate parent class depending on whether the MWP extension is present or not.
+// This is necessary because PHP does not allow a conditional expression in the 'extends' clause.
+//
+// If the MWP extension is present, the intermediate class is defined in local_boost_union_mwp
+// (so that all MWP-specific renderer logic lives there). Otherwise, a plain fallback class is defined here.
+if (\theme_boost_union\local\mwp::extension_present() == true) {
+    // Load the intermediate class from local_boost_union_mwp.
+    // The file declares the same namespace (theme_boost_union\output) so no aliasing is needed.
+    require_once($CFG->dirroot . '/local/boost_union_mwp/classes/output/core_renderer_intermediate.php');
+} else {
+    /**
+     * Intermediate core renderer class based on theme_boost.
+     */
+    class core_renderer_intermediate extends \theme_boost\output\core_renderer {
+    }
+}
+
 /**
  * Extending the core_renderer interface.
  *
@@ -41,7 +62,7 @@ use core_block\output\block_contents;
  * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class core_renderer extends \theme_boost\output\core_renderer {
+class core_renderer extends core_renderer_intermediate {
     /**
      * Returns the moodle_url for the favicon.
      *
@@ -57,18 +78,18 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function favicon() {
         global $CFG;
 
-        // Initialize static variable for the flavour favicon as this function might be called (for whatever reason) multiple times
-        // during a page output.
-        static $hasflavourfavicon, $flavourfaviconurl;
+        // Initialize static variable for the overridden favicon as this function might be called (for whatever reason)
+        // multiple times during a page output.
+        static $hasoverriddenfavicon, $overriddenfaviconurl;
 
-        // If the flavour favicon has already been checked.
-        if ($hasflavourfavicon != null) {
-            // If there is a flavour favicon.
-            if ($hasflavourfavicon == true) {
-                // Directly return the flavour favicon.
-                return $flavourfaviconurl;
+        // If the overridden favicon has already been checked.
+        if ($hasoverriddenfavicon != null) {
+            // If there is an overridden favicon.
+            if ($hasoverriddenfavicon == true) {
+                // Directly return the overridden favicon.
+                return $overriddenfaviconurl;
             }
-            // Otherwise, if there isn't a flavour favicon, this function will continue to run the logic from Moodle core later.
+            // Otherwise, if there isn't an overridden favicon, this function will continue to run the logic from Moodle core later.
 
             // Otherwise.
         } else {
@@ -81,10 +102,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 // If the flavour has a favicon set.
                 if ($flavour->look_favicon != null) {
                     // Remember this fact for subsequent runs of this function.
-                    $hasflavourfavicon = true;
+                    $hasoverriddenfavicon = true;
 
                     // Compose the URL to the flavour's favicon.
-                    $flavourfaviconurl = \core\url::make_pluginfile_url(
+                    $overriddenfaviconurl = \core\url::make_pluginfile_url(
                         context_system::instance()->id,
                         'theme_boost_union',
                         'flavours_look_favicon',
@@ -95,17 +116,34 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     );
 
                     // Return the URL.
-                    return $flavourfaviconurl;
+                    return $overriddenfaviconurl;
 
                     // Otherwise.
                 } else {
                     // Remember this fact for subsequent runs of this function.
-                    $hasflavourfavicon = false;
+                    $hasoverriddenfavicon = false;
                 }
             }
         }
 
-        // Apparently, there isn't any flavour favicon set. Let's continue with the logic to serve the general favicon.
+        // If we are on MWP.
+        if (\theme_boost_union\local\mwp::extension_present() == true) {
+            // Call the BU MWP class method only if the class and method exist.
+            if (
+                class_exists('\\local_boost_union_mwp\\local\\branding') &&
+                    method_exists('\\local_boost_union_mwp\\local\\branding', 'get_overridden_image')
+            ) {
+                // Check if there is a branding favicon set for the current tenant and, if yes,
+                // remember this fact and return it.
+                [$hasoverriddenfavicon, $overriddenfaviconurl] =
+                    \local_boost_union_mwp\local\branding::get_overridden_image('favicon');
+                if ($hasoverriddenfavicon == true) {
+                    return $overriddenfaviconurl;
+                }
+            }
+        }
+
+        // Apparently, there isn't any overridden favicon set. Let's continue with the logic to serve the general favicon.
         $logo = null;
         if (!during_initial_install()) {
             $logo = get_config('theme_boost_union', 'favicon');
@@ -140,18 +178,18 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function get_logo_url($maxwidth = null, $maxheight = 200) {
         global $CFG;
 
-        // Initialize static variable for the flavour logo as this function might be called (for whatever reason) multiple times
-        // during a page output.
-        static $hasflavourlogo, $flavourlogourl;
+        // Initialize static variable for the overridden logo as this function might be called (for whatever reason)
+        // multiple times during a page output.
+        static $hasoverriddenlogo, $overriddenlogourl;
 
-        // If the flavour logo has already been checked.
-        if ($hasflavourlogo != null) {
-            // If there is a flavour logo.
-            if ($hasflavourlogo == true) {
-                // Directly return the flavour logo.
-                return $flavourlogourl;
+        // If the overridden logo has already been checked.
+        if ($hasoverriddenlogo != null) {
+            // If there is an overridden logo.
+            if ($hasoverriddenlogo == true) {
+                // Directly return the overridden logo.
+                return $overriddenlogourl;
             }
-            // Otherwise, if there isn't a flavour logo, this function will continue to run the logic from Moodle core later.
+            // Otherwise, if there isn't an overridden logo, this function will continue to run the logic from Moodle core later.
 
             // Otherwise.
         } else {
@@ -164,10 +202,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 // If the flavour has a logo set.
                 if ($flavour->look_logo != null) {
                     // Remember this fact for subsequent runs of this function.
-                    $hasflavourlogo = true;
+                    $hasoverriddenlogo = true;
 
                     // Compose the URL to the flavour's logo.
-                    $flavourlogourl = \core\url::make_pluginfile_url(
+                    $overriddenlogourl = \core\url::make_pluginfile_url(
                         context_system::instance()->id,
                         'theme_boost_union',
                         'flavours_look_logo',
@@ -177,17 +215,34 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     );
 
                     // Return the URL.
-                    return $flavourlogourl;
+                    return $overriddenlogourl;
 
                     // Otherwise.
                 } else {
                     // Remember this fact for subsequent runs of this function.
-                    $hasflavourlogo = false;
+                    $hasoverriddenlogo = false;
                 }
             }
         }
 
-        // Apparently, there isn't any flavour logo set. Let's continue to serve the general logo.
+        // If we are on MWP.
+        if (\theme_boost_union\local\mwp::extension_present() == true) {
+            // Call the BU MWP class method only if the class and method exist.
+            if (
+                class_exists('\\local_boost_union_mwp\\local\\branding') &&
+                    method_exists('\\local_boost_union_mwp\\local\\branding', 'get_overridden_image')
+            ) {
+                // Check if there is a branding login logo set for the current tenant and, if yes,
+                // remember this fact and return it.
+                [$hasoverriddenlogo, $overriddenlogourl] =
+                    \local_boost_union_mwp\local\branding::get_overridden_image('loginlogo');
+                if ($hasoverriddenlogo == true) {
+                    return $overriddenlogourl;
+                }
+            }
+        }
+
+        // Apparently, there isn't any overridden logo set. Let's continue to serve the general logo.
         $logo = get_config('theme_boost_union', 'logo');
         if (empty($logo)) {
             return false;
@@ -237,18 +292,18 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function get_compact_logo_url($maxwidth = 300, $maxheight = 300) {
         global $CFG;
 
-        // Initialize static variable for the flavour logo as this function is called (for whatever reason) multiple times
-        // during a page output.
-        static $hasflavourlogo, $flavourlogourl;
+        // Initialize static variable for the overridden logo as this function is called (for whatever reason)
+        // multiple times during a page output.
+        static $hasoverriddenlogo, $overriddenlogourl;
 
-        // If the flavour logo has already been checked.
-        if ($hasflavourlogo != null) {
-            // If there is a flavour logo.
-            if ($hasflavourlogo == true) {
-                // Directly return the flavour logo.
-                return $flavourlogourl;
+        // If the overridden logo has already been checked.
+        if ($hasoverriddenlogo != null) {
+            // If there is an overridden logo.
+            if ($hasoverriddenlogo == true) {
+                // Directly return the overridden logo.
+                return $overriddenlogourl;
             }
-            // Otherwise, if there isn't a flavour logo, this function will continue to run the logic from Moodle core later.
+            // Otherwise, if there isn't an overridden logo, this function will continue to run the logic from Moodle core later.
 
             // Otherwise.
         } else {
@@ -261,7 +316,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 // If the flavour has a compact logo set.
                 if ($flavour->look_logocompact != null) {
                     // Remember this fact for subsequent runs of this function.
-                    $hasflavourlogo = true;
+                    $hasoverriddenlogo = true;
 
                     // If the flavour logo is a SVG image, do not add a size to the path.
                     $flavourlogoextension = pathinfo($flavour->look_logocompact, PATHINFO_EXTENSION);
@@ -279,7 +334,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     }
 
                     // Compose the URL to the flavour's compact logo.
-                    $flavourlogourl = \core\url::make_pluginfile_url(
+                    $overriddenlogourl = \core\url::make_pluginfile_url(
                         context_system::instance()->id,
                         'theme_boost_union',
                         'flavours_look_logocompact',
@@ -289,17 +344,34 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     );
 
                     // Return the URL.
-                    return $flavourlogourl;
+                    return $overriddenlogourl;
 
                     // Otherwise.
                 } else {
                     // Remember this fact for subsequent runs of this function.
-                    $hasflavourlogo = false;
+                    $hasoverriddenlogo = false;
                 }
             }
         }
 
-        // Apparently, there isn't any flavour logo set. Let's continue to service the general compact logo.
+        // If we are on MWP.
+        if (\theme_boost_union\local\mwp::extension_present() == true) {
+            // Call the BU MWP class method only if the class and method exist.
+            if (
+                class_exists('\\local_boost_union_mwp\\local\\branding') &&
+                    method_exists('\\local_boost_union_mwp\\local\\branding', 'get_overridden_image')
+            ) {
+                // Check if there is a branding header logo set for the current tenant and, if yes,
+                // remember this fact and return it.
+                [$hasoverriddenlogo, $overriddenlogourl] =
+                    \local_boost_union_mwp\local\branding::get_overridden_image('headerlogo');
+                if ($hasoverriddenlogo == true) {
+                    return $overriddenlogourl;
+                }
+            }
+        }
+
+        // Apparently, there isn't any overridden logo set. Let's continue to service the general compact logo.
         $logo = get_config('theme_boost_union', 'logocompact');
         if (empty($logo)) {
             return false;
@@ -1251,6 +1323,18 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 default:
                     $context->logintaglinetext = get_string('loginpagelabel_welcome', 'theme_boost_union');
                     break;
+            }
+        }
+
+        // If we are on MWP.
+        if (\theme_boost_union\local\mwp::extension_present() == true) {
+            // Call the BU MWP class method only if the class and method exist.
+            if (
+                class_exists('\\local_boost_union_mwp\\local\\layouts') &&
+                    method_exists('\\local_boost_union_mwp\\local\\layouts', 'postprocess_login_templatecontext')
+            ) {
+                // Post-process the templatecontext array.
+                $context = \local_boost_union_mwp\local\layouts::postprocess_login_templatecontext($context);
             }
         }
 

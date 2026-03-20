@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-05-31 - MWP: Add support for a Moodle Workplace™ extension for Boost Union, resolves #409
+
 ### v4.5-r41
 
 * 2026-05-26 - Bugfix: Additional login background images may be not have been recognized directly after upload, resolved #1290

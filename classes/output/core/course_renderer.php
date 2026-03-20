@@ -14,6 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Theme Boost Union - Course renderer
+ *
+ * @package    theme_boost_union
+ * @copyright  2024 Daniel Neis Araujo {@link https://www.adapta.online}
+ *             2025 Alexander Bias, ssystems GmbH <abias@ssystems.de>
+ *             based on code 2010 Sam Hemelryk
+ *             based on code 2022 Willian Mano {@link https://conecti.me}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 namespace theme_boost_union\output\core;
 
 use html_writer;
@@ -25,8 +36,29 @@ use core_course_category;
 use core_course_list_element;
 use theme_boost_union\util\course;
 
+defined('MOODLE_INTERNAL') || die();
+
+// phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
+
+// Define an intermediate parent class depending on whether the MWP extension is present or not.
+// This is necessary because PHP does not allow a conditional expression in the 'extends' clause.
+//
+// If the MWP extension is present, the intermediate class is defined in local_boost_union_mwp
+// (so that all MWP-specific renderer logic lives there). Otherwise, a plain fallback class is defined here.
+if (\theme_boost_union\local\mwp::extension_present() == true) {
+    // Load the intermediate class from local_boost_union_mwp.
+    // The file declares the same namespace (theme_boost_union\output\core) so no aliasing is needed.
+    require_once($CFG->dirroot . '/local/boost_union_mwp/classes/output/core/course_renderer_intermediate.php');
+} else {
+    /**
+     * Intermediate course renderer class based on core_course_renderer.
+     */
+    class course_renderer_intermediate extends \core_course_renderer {
+    }
+}
+
 /**
- * Theme Boost Union - Course renderer
+ * Extending the course_renderer interface.
  *
  * @package    theme_boost_union
  * @copyright  2024 Daniel Neis Araujo {@link https://www.adapta.online}
@@ -35,7 +67,7 @@ use theme_boost_union\util\course;
  *             based on code 2022 Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class course_renderer extends \core_course_renderer {
+class course_renderer extends course_renderer_intermediate {
     /**
      * Override the constructor so that we can inject the AMD modal.
      *

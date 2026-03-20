@@ -173,6 +173,7 @@ class manager {
             recommendation::CATEGORY_THIRDPARTY => get_string('recommendationcategory_thirdparty', 'theme_boost_union'),
             recommendation::CATEGORY_USABILITY => get_string('recommendationcategory_usability', 'theme_boost_union'),
             recommendation::CATEGORY_ACCESSIBILITY => get_string('recommendationcategory_accessibility', 'theme_boost_union'),
+            recommendation::CATEGORY_MWP => get_string('recommendationcategory_mwp', 'theme_boost_union'),
         ];
     }
 
