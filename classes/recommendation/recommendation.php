@@ -68,6 +68,9 @@ abstract class recommendation {
     /** @var string */
     public const CATEGORY_ACCESSIBILITY = 'accessibility';
 
+    /** @var string */
+    public const CATEGORY_MWP = 'mwp';
+
     /**
      * Return an unique recommendation identifier.
      *
