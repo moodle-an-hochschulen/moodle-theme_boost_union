@@ -1324,6 +1324,26 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
 
+        // Setting: Shibboleth internal WAYF on the login page.
+        $name = 'theme_boost_union/loginshibbolethinternalwayf';
+        $title = get_string('loginshibbolethinternalwayfsetting', 'theme_boost_union', null, true);
+        $shibsettingsurl = new core\url('/admin/settings.php', ['section' => 'authsettingshibboleth']);
+        $description = get_string(
+            'loginshibbolethinternalwayfsetting_desc',
+            'theme_boost_union',
+            ['url' => $shibsettingsurl->out()],
+            true
+        );
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginshibbolethinternalwayf',
+            'theme_boost_union/loginidploginenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
         // Setting: IDP login intro.
         $name = 'theme_boost_union/loginidpshowintro';
         $title = get_string('loginidpshowintrosetting', 'theme_boost_union', null, true);
@@ -1378,6 +1398,31 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme_boost_union/loginlayout',
             'eq',
             'vertical'
+        );
+        $page->hide_if(
+            'theme_boost_union/loginidploginlabel',
+            'theme_boost_union/loginidpsplit',
+            'eq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
+        // Setting: One tab, accordion panel, or vertical block per identity provider.
+        $name = 'theme_boost_union/loginidpsplit';
+        $title = get_string('loginidpsplitsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginidpsplitsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_SELECT_NO,
+            $yesnooption
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginidpsplit',
+            'theme_boost_union/loginidploginenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
         // Setting: IDP login instruction.
