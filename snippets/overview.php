@@ -42,7 +42,25 @@ $snippetid = optional_param('id', null, PARAM_INT);
 $context = context_system::instance();
 
 // Access checks.
-admin_externalpage_setup('theme_boost_union_snippets_overview');
+// If we are on MWP (regardless if the extension is present).
+if (\theme_boost_union\local\mwp::core_present() == true) {
+    // Do not make this page an external admin page as MWP would not recognize it in the external page tab
+    // and would throw a section error for an unknown reason.
+    // Instead, replicate the steps of admin_externalpage_setup().
+    require_login();
+    require_capability('theme/boost_union:configure', $context);
+    $PAGE->set_pagelayout('admin');
+    $PAGE->navbar->add(
+        get_string('pluginname', 'theme_boost_union'),
+        new \core\url('/admin/category.php', ['category' => 'theme_boost_union'])
+    );
+    $PAGE->navbar->add(get_string('configtitlesnippets', 'theme_boost_union'));
+
+    // Otherwise.
+} else {
+    // Make this page an external admin page.
+    admin_externalpage_setup('theme_boost_union_snippets_overview');
+}
 
 // Prepare the page (to make sure that all necessary information is already set even if we just handle the actions as a start).
 $PAGE->set_context($context);
