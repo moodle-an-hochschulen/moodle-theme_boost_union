@@ -97,9 +97,16 @@ $string['tertiarysettings'] = 'List of Boost Union settings pages';
 $string['settingoverridenotificationtitle'] = 'Possible setting overrides';
 $string['settingoverrideactioninfo'] = 'Explain setting possible overrides';
 $string['settingoverrideactionflavours'] = 'Manage flavours';
+$string['settingoverrideactionmwp'] = 'Manage tenant brandings';
 $string['settingoverridemodallms'] = '<strong>Flavours</strong><br />Boost Union\'s flavours offer a possibility to override particular Moodle look & feel settings in particular contexts. Here, the global default setting is defined. And with flavours, you can differentiate the setting for particular contexts or user groups. Click on the \'Manage flavours\' icon to go to the flavours management page and define a flavour.';
+$string['settingoverridemodalmwp'] = '<strong>Tenant brandings</strong><br />Boost Union\'s tenant brandings offer a possibility to override particular Moodle look & feel settings for particular tenants. Here, the global default setting is defined. And with tenant brandings, you can differentiate the setting for particular tenants. Click on the \'Manage tenant brandings\' icon to go to the tenant management page and define a tenant branding.';
+$string['settingoverridemodallmsmwp'] = '<strong>Order</strong><br />If you have defined both flavours and tenant overrides for a particular Boost Union setting, the flavour override will take precedence over the tenant branding override.';
 $string['settingoverridelms'] = 'This setting can be overridden within Boost Union flavours.';
+$string['settingoverridelmsmwp'] = 'This setting can be overridden within the tenant brandings and Boost Union flavours.';
+$string['settingoverridemwp'] = 'This setting can be overridden within the tenant brandings.';
 $string['settingsupplementlms'] = 'This setting can be supplemented within Boost Union flavours.';
+$string['settingsupplementlmsmwp'] = 'This setting can be supplemented within the tenant brandings and Boost Union flavours.';
+$string['settingsupplementmwp'] = 'This setting can be supplemented within the tenant brandings.';
 
 // Settings: General warnings.
 $string['warningslashargumentsdisabled'] = 'Warning: The <a href="{$a->url}">slasharguments setting</a> is disabled in your Moodle configuration currently. However, this setting is required for the correct operation of the following Boost Union setting. Please enable slasharguments, otherwise the following Boost Union setting will not have any effect.';
@@ -2066,6 +2073,7 @@ $string['recommendationcategory_boostunion'] = 'Boost Union';
 $string['recommendationcategory_thirdparty'] = 'Third-party plugins';
 $string['recommendationcategory_usability'] = 'Usability';
 $string['recommendationcategory_accessibility'] = 'Accessibility';
+$string['recommendationcategory_mwp'] = 'Moodle Workplace™';
 $string['recommendationstatus_ok'] = 'OK';
 $string['recommendationstatus_ok_description'] = 'With this recommendation, everything is perfectly fine. No action is required on your side.';
 $string['recommendationstatus_check'] = 'Check';
@@ -2115,6 +2123,11 @@ $string['recommendation_coreauthinstructions_description'] = 'Boost Union does n
 $string['recommendation_infobannerloginpagesidebyside_title'] = 'Info banner on login page';
 $string['recommendation_infobannerloginpagesidebyside_summary'] = 'Information banners on the login page with side-by-side login arrangement should be as concise as possible.';
 $string['recommendation_infobannerloginpagesidebyside_details'] = 'On the side-by-side login page arrangement, information banners are only shown in the right column over the login form. This means that the available width is reduced. Please keep the content of these information banners as short and concise as possible to avoid overloading of the login page.';
+
+// Recommendation: Boost Union MWP extension.
+$string['recommendation_mwpextension_title'] = 'Boost Union MWP extension';
+$string['recommendation_mwpextension_summary'] = 'The Boost Union MWP extension should be installed when running on Moodle Workplace™.';
+$string['recommendation_mwpextension_description'] = 'Boost Union has detected that this Moodle instance is running on Moodle Workplace™ as the tool_tenant plugin is installed. However, the Boost Union MWP extension is not installed. Without this extension, Boost Union but will lack essential Moodle Workplace™ widgets and won\'t have any support for tenants.<br /><br />But don\'t worry, there is the Boost Union MWP edition which provides full Moodle Workplace™ support and which is maintained by Boost Union co-maintainer bdecent. If you want to use Boost Union on Moodle Workplace™, you can find all details on the <a href="https://bdecent.de/union" target="_blank">bdecent product presentation page</a>.';
 
 // Privacy API.
 $string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';

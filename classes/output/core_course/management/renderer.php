@@ -24,24 +24,43 @@
 
 namespace theme_boost_union\output\core_course\management;
 
-defined('MOODLE_INTERNAL') || die();
-
-require_once($CFG->dirroot . '/course/classes/management_renderer.php');
-
 use core_course_category;
 use core_course_list_element;
 use moodle_url;
 use pix_icon;
 use core\output\html_writer;
 
+defined('MOODLE_INTERNAL') || die();
+
+require_once($CFG->dirroot . '/course/classes/management_renderer.php');
+
+// phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
+
+// Define an intermediate parent class depending on whether the MWP extension is present or not.
+// This is necessary because PHP does not allow a conditional expression in the 'extends' clause.
+//
+// If the MWP extension is present, the intermediate class is defined in local_boost_union_mwp
+// (so that all MWP-specific renderer logic lives there). Otherwise, a plain fallback class is defined here.
+if (\theme_boost_union\local\mwp::extension_present() == true) {
+    // Load the intermediate class from local_boost_union_mwp.
+    // The file declares the same namespace (theme_boost_union\output\core_course\management) so no aliasing is needed.
+    require_once($CFG->dirroot . '/local/boost_union_mwp/classes/output/core_course/management/renderer_intermediate.php');
+} else {
+    /**
+     * Intermediate course management renderer class based on core_course_management_renderer.
+     */
+    class course_management_renderer_intermediate extends \core_course_management_renderer {
+    }
+}
+
 /**
- * Extending the core_course_management_renderer.
+ * Extending the core_course_management_renderer interface.
  *
  * @package    theme_boost_union
  * @copyright  2023 Alexander Bias <bias@alexanderbias.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class renderer extends \core_course_management_renderer {
+class renderer extends course_management_renderer_intermediate {
     /**
      * Renderers actions for individual course actions.
      *

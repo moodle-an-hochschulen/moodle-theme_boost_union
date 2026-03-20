@@ -192,7 +192,20 @@ $THEME->layouts = [
     ]
 ];
 
-$THEME->parents = ['boost'];
+// If we are on MWP and the Workplace theme is present.
+if (
+    \theme_boost_union\local\mwp::extension_present() == true &&
+        \theme_boost_union\local\mwp::themeworkplace_present() == true
+) {
+    // Set the parent themes to workplace and boost afterwards.
+    $THEME->parents = ['workplace', 'boost'];
+
+    // Otherwise.
+} else {
+    // Set the parent theme to boost only.
+    $THEME->parents = ['boost'];
+}
+
 $THEME->enable_dock = false;
 $THEME->extrascsscallback = 'theme_boost_union_get_extra_scss';
 $THEME->prescsscallback = 'theme_boost_union_get_pre_scss';
@@ -204,10 +217,24 @@ $THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
 $THEME->iconsystem = \core\output\icon_system::FONTAWESOME;
 $THEME->haseditswitch = true;
 $THEME->usescourseindex = true;
+
 // During the initial installation, we can't access the config table yet, so we set an empty array.
 // Otherwise, we get the hidden primary navigation items from the config.
 $THEME->removedprimarynavitems = during_initial_install() ?
         [] : explode(',', get_config('theme_boost_union', 'hidenodesprimarynavigation'));
+// If we are on MWP.
+if (\theme_boost_union\local\mwp::extension_present() == true) {
+    // Call the BU MWP class method only if the class and method exist.
+    if (
+        class_exists('\\local_boost_union_mwp\\local\\mwp') &&
+            method_exists('\\local_boost_union_mwp\\local\\mwp', 'config_postprocess_removedprimarynavitems')
+    ) {
+        // Post-process the setting.
+        $THEME->removedprimarynavitems =
+                \local_boost_union_mwp\local\mwp::config_postprocess_removedprimarynavitems($THEME->removedprimarynavitems);
+    }
+}
+
 // By default, all boost theme do not need their titles displayed.
 $THEME->activityheaderconfig = [
     'notitle' => true
