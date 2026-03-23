@@ -819,7 +819,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     public function render_login(\core_auth\output\login $form) {
-        global $SITE;
+        global $CFG, $SITE;
 
         $context = $form->export_for_template($this);
 
@@ -834,6 +834,50 @@ class core_renderer extends \theme_boost\output\core_renderer {
             true,
             ['context' => context_course::instance(SITEID), "escape" => false]
         );
+
+        // Shibboleth internal WAYF: replace the Shibboleth IdP button with the IdP selector (auth/shibboleth/login.php).
+        $loginshibbolethinternalwayf = get_config('theme_boost_union', 'loginshibbolethinternalwayf');
+        if (($loginshibbolethinternalwayf === false ? THEME_BOOST_UNION_SETTING_SELECT_NO : $loginshibbolethinternalwayf) ===
+                THEME_BOOST_UNION_SETTING_SELECT_YES &&
+                strpos($CFG->auth, 'shibboleth') !== false &&
+                !empty($context->identityproviders)) {
+            require_once($CFG->dirroot . '/auth/shibboleth/auth.php');
+            get_auth_plugin('shibboleth');
+            $shibconfig = get_config('auth_shibboleth');
+            if (!empty($shibconfig->user_attribute) && !empty($shibconfig->organization_selection)) {
+                $idplist = get_idp_list($shibconfig->organization_selection);
+                if (!empty($idplist)) {
+                    $selectedidp = '-';
+                    if (isset($_COOKIE['_saml_idp'])) {
+                        $idpcookie = generate_cookie_array($_COOKIE['_saml_idp']);
+                        do {
+                            $selectedidp = array_pop($idpcookie);
+                        } while (!isset($idplist[$selectedidp]) && count($idpcookie) > 0);
+                    }
+                    $shibbidps = [];
+                    foreach ($idplist as $value => $data) {
+                        $name = reset($data);
+                        $shibbidps[] = [
+                            'name' => $name,
+                            'value' => $value,
+                            'selected' => $value === $selectedidp,
+                        ];
+                    }
+                    $shibbolethloginurl = (new moodle_url('/auth/shibboleth/login.php'))->out(false);
+                    $adminemail = get_admin()->email;
+                    foreach ($context->identityproviders as $idx => $idp) {
+                        $idpurl = $idp['url'] ?? '';
+                        if (strpos($idpurl, '/auth/shibboleth/index.php') !== false) {
+                            $context->identityproviders[$idx]['useinternalwayf'] = true;
+                            $context->identityproviders[$idx]['shibbidps'] = $shibbidps;
+                            $context->identityproviders[$idx]['shibbolethloginurl'] = $shibbolethloginurl;
+                            $context->identityproviders[$idx]['adminemail'] = $adminemail;
+                            $context->identityproviders[$idx]['wayfformid'] = 'login-shibboleth-wayf-' . $idx;
+                        }
+                    }
+                }
+            }
+        }
 
         // Compute show* flags for all four login types (theme setting + Moodle core).
         // Visibility is controlled in the template via these show* parameters.

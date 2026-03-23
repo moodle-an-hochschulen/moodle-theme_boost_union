@@ -23,7 +23,12 @@
 
 // Selectors for the relevant elements in the login page.
 const SELECTOR_TABS = '#login-layout-tabs';
-const SELECTOR_TARGETS = '.login-heading, .login-instructions';
+const SELECTOR_TARGETS = [
+    '.login-heading',
+    '.login-instructions',
+    '.login-shibboleth-wayf-form .form-text',
+    '.login-shibboleth-wayf-form .form-label',
+].join(', ');
 const SELECTOR_WRAPPER = '.login-wrapper';
 const SELECTOR_CONTAINER = '.login-container';
 const DATA_SPACER_ATTR = 'data-bu-login-spacer';
@@ -144,7 +149,7 @@ const initLoginTabs = () => {
 };
 
 /**
- * Apply the tabs width to login headings and instructions.
+ * Apply the tabs width to login headings, instructions, and Shibboleth WAYF label/help text.
  *
  * @param {MediaQueryList} mediaQueryList - The media query to check.
  */

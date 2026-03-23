@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-03-20 - Feature: Setting to show Shibboleth internal WAYF (IdP list) on the main login page instead of the default Shibboleth button
 * 2026-03-09 - Bugfix: after_form_* hooks should require the library as well, resolves #1191
 
 ### v5.1-r8
