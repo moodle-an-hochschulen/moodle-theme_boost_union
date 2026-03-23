@@ -282,6 +282,22 @@ class smartmenu {
     public const CACHE_MENUSLIST = 'menuslist';
 
     /**
+     * Cache key for whether starred-courses client-side cache invalidation JS is required.
+     */
+    public const CACHE_STARREDCACHEINVALIDATION = 'starredcacheinvalidation';
+
+    /**
+     * Invalidate shared smartmenus cache keys.
+     *
+     * @param \cache $cache
+     * @return void
+     */
+    public static function invalidate_shared_cache(cache $cache): void {
+        $cache->delete(self::CACHE_MENUSLIST);
+        $cache->delete(self::CACHE_STARREDCACHEINVALIDATION);
+    }
+
+    /**
      * Create an instance of the smartmenu class from the given menu ID or menu object/array.
      *
      * @param int|stdclass $menu
@@ -336,8 +352,8 @@ class smartmenu {
             $DB->delete_records('theme_boost_union_menuitems', ['menu' => $this->id]);
             // Purge the menus cache.
             $this->cache->delete_menu($this->id);
-            // Delete the cached menus list.
-            $this->cache->delete(self::CACHE_MENUSLIST);
+            // Delete shared smartmenus cache entries.
+            self::invalidate_shared_cache($this->cache);
 
             return true;
         }
@@ -365,7 +381,8 @@ class smartmenu {
             // Set the prevmenu position to down.
             $DB->set_field('theme_boost_union_menus', 'sortorder', $currentposition, ['id' => $prevmenu->id]);
             // Purge the menus list, need to recreate in new order.
-            $this->cache->delete(self::CACHE_MENUSLIST);
+            // Purge shared smartmenus cache entries, need to recreate in new order.
+            self::invalidate_shared_cache($this->cache);
 
             return true;
         }
@@ -392,7 +409,8 @@ class smartmenu {
             // Set the nextmenu position to up.
             $DB->set_field('theme_boost_union_menus', 'sortorder', $currentposition, ['id' => $nextmenu->id]);
             // Purge the menus list, need to recreate in new order.
-            $this->cache->delete(self::CACHE_MENUSLIST);
+            // Purge shared smartmenus cache entries, need to recreate in new order.
+            self::invalidate_shared_cache($this->cache);
 
             return true;
         }
@@ -431,8 +449,8 @@ class smartmenu {
         // Success message for duplicated menu.
         \core\notification::success(get_string('smartmenusmenuduplicatesuccess', 'theme_boost_union'));
 
-        // New menu added, Recreate the menuslist in cache.
-        $this->cache->delete(self::CACHE_MENUSLIST);
+        // New menu added, recreate shared smartmenus cache entries.
+        self::invalidate_shared_cache($this->cache);
 
         return true;
     }
@@ -447,7 +465,8 @@ class smartmenu {
         // Delete the current menu from cache.
         $this->cache->delete_menu($this->id);
         // Purge the menus list from cache, recreates it on next page load.
-        $this->cache->delete(self::CACHE_MENUSLIST);
+        // Purge shared smartmenus cache entries, recreates them on next page load.
+        self::invalidate_shared_cache($this->cache);
 
         return $this->update_field('visible', $visible, ['id' => $this->id]);
     }
@@ -1071,8 +1090,8 @@ class smartmenu {
             // Clear the current menu caches. Update may cause changes in the menus list.
             // Delete the menu cache for all users.
             $cache->delete_menu($menuid);
-            // Menu updated, recreate the menuslist.
-            $cache->delete(self::CACHE_MENUSLIST);
+            // Menu updated, recreate shared smartmenus cache entries.
+            self::invalidate_shared_cache($cache);
             // Show the edited success notification.
             \core\notification::success(get_string('smartmenusmenueditsuccess', 'theme_boost_union'));
         } else {
@@ -1080,8 +1099,8 @@ class smartmenu {
             $lastmenu = self::get_lastmenu();
             $record->sortorder = isset($lastmenu->sortorder) ? $lastmenu->sortorder + 1 : 1;
             $menuid = $DB->insert_record('theme_boost_union_menus', $record);
-            // New menu added, recreate the menuslist.
-            $cache->delete(self::CACHE_MENUSLIST);
+            // New menu added, recreate shared smartmenus cache entries.
+            self::invalidate_shared_cache($cache);
             // Show the menu inserted success notification.
             \core\notification::success(get_string('smartmenusmenucreatesuccess', 'theme_boost_union'));
         }
