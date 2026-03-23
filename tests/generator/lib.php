@@ -156,9 +156,9 @@ class theme_boost_union_generator extends component_generator_base {
         }
 
         $url = null;
-        if ($type === smartmenu_item::TYPESTATIC) {
+        if ($type === smartmenu_item::TYPESTATIC || $type === smartmenu_item::TYPESTATICWITHPLACEHOLDERS) {
             if (empty($data['url'])) {
-                throw new Exception('URL is required when type is static.');
+                throw new Exception('URL is required when type is static or static with placeholders.');
             }
             $url = $data['url'];
         }
