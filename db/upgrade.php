@@ -894,6 +894,22 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025041439, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2025041448) {
+        // Define table theme_boost_union_menuitems to be altered.
+        $table = new xmldb_table('theme_boost_union_menuitems');
+
+        // Define field starredcourses to be added.
+        $field = new xmldb_field('starredcourses', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'daterange');
+
+        // Conditionally launch add field starredcourses.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2025041448, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();

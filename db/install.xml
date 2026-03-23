@@ -85,6 +85,7 @@
         <FIELD NAME="enrolmentrole" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="completionstatus" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="daterange" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="starredcourses" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="customfields" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="listsort" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="displayhiddencourses" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>

@@ -227,6 +227,20 @@ class smartmenu_item_edit_form extends \moodleform {
         $daterangewidget->setMultiple(true);
         $mform->addHelpButton('daterange', 'smartmenusdynamiccoursesdaterange', 'theme_boost_union');
 
+        // Add starred courses filter (for the dynamic courses menu item type) as select element.
+        $starredcoursesoptions = smartmenu_item::get_starredcourses_options();
+        $mform->addElement(
+            'select',
+            'starredcourses',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusdynamiccoursesstarredcourses', 'theme_boost_union'),
+            $starredcoursesoptions
+        );
+        $mform->setType('starredcourses', PARAM_INT);
+        $mform->setDefault('starredcourses', smartmenu_item::STARREDCOURSES_ALL);
+        $mform->hideIf('starredcourses', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
+        $mform->addHelpButton('starredcourses', 'smartmenusdynamiccoursesstarredcourses', 'theme_boost_union');
+
         // Add additional form elements for custom course fields.
         smartmenu_item::load_custom_field_config($mform);
 

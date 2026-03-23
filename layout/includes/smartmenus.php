@@ -31,3 +31,10 @@ $templatecontext['bottombar'] = $primarymenu['bottombar'] ?? [];
 // Add smart menu flag if the smart menu contains any menus to show.
 $includesmartmenu = (isset($primarymenu['includesmartmenu']) && !empty($primarymenu['includesmartmenu']));
 $templatecontext['includesmartmenu'] = $includesmartmenu ? true : false;
+
+// Add smart menu flag if a rendered smart menu item requires client-side starred-courses cache invalidation.
+$includestarredcacheinvalidation = (
+    isset($primarymenu['includestarredcacheinvalidation']) &&
+    !empty($primarymenu['includestarredcacheinvalidation'])
+);
+$templatecontext['includestarredcacheinvalidation'] = $includestarredcacheinvalidation ? true : false;
