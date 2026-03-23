@@ -244,6 +244,7 @@ class theme_boost_union_generator extends component_generator_base {
             'enrolmentrole' => $enrolmentrole,
             'completionstatus' => $completionstatus,
             'daterange' => $daterange,
+            'starredcourses' => $data['starredcourses'] ?? smartmenu_item::STARREDCOURSES_ALL,
             'customfields' => $customfields,
             'listsort' => $listsort,
             'displayhiddencourses' => $data['displayhiddencourses'] ?? 0,

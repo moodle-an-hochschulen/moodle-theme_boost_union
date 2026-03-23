@@ -112,6 +112,7 @@ class behat_theme_boost_union_generator extends behat_generator_base {
                     'enrolmentrole' => 'enrolmentrole',
                     'completionstatus' => 'completionstatus',
                     'daterange' => 'daterange',
+                    'starredcourses' => 'starredcourses',
                     'customfields' => 'customfields',
                     'listsort' => 'listsort',
                     'displayfield' => 'displayfield',
@@ -450,6 +451,17 @@ class behat_theme_boost_union_generator extends behat_generator_base {
             $daterangeids[] = $this->option_id('daterange', $daterange, $ranges);
         }
         return $daterangeids;
+    }
+
+    /**
+     * Return the ID of the given starredcourses option.
+     *
+     * @param string $starredcourses
+     * @return int
+     * @throws Exception
+     */
+    protected function get_starredcourses_id(string $starredcourses): int {
+        return $this->option_id('starredcourses', $starredcourses, smartmenu_item::get_starredcourses_options());
     }
 
     /**
