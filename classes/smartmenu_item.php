@@ -768,13 +768,98 @@ class smartmenu_item {
     }
 
     /**
+     * Split a comma-separated list of email addresses (optional whitespace around commas).
+     *
+     * @param string|null $raw
+     * @return string[]
+     */
+    public static function parse_mailto_address_list(?string $raw): array {
+        if ($raw === null || trim($raw) === '') {
+            return [];
+        }
+        $parts = preg_split('/\s*,\s*/', $raw, -1, PREG_SPLIT_NO_EMPTY);
+        $addresses = [];
+        foreach ($parts as $part) {
+            $trimmed = trim($part);
+            if ($trimmed !== '') {
+                $addresses[] = $trimmed;
+            }
+        }
+        return $addresses;
+    }
+
+    /**
+     * Whether every address in the list is valid for Moodle.
+     *
+     * @param string[] $addresses
+     * @return bool
+     */
+    public static function validate_mailto_address_list(array $addresses): bool {
+        foreach ($addresses as $addr) {
+            if (!validate_email($addr)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Build a mailto: URL (RFC 6068) with percent-encoded subject, body, cc, and bcc header fields.
+     *
+     * @param string $to Comma-separated To addresses
+     * @param string|null $cc Comma-separated Cc addresses
+     * @param string|null $bcc Comma-separated Bcc addresses
+     * @param string|null $subject Plain subject (encoded when building the URL)
+     * @param string|null $body Plain body (encoded when building the URL)
+     * @return string
+     */
+    public static function build_mailto_href(
+        string $to,
+        ?string $cc = null,
+        ?string $bcc = null,
+        ?string $subject = null,
+        ?string $body = null
+    ): string {
+        $toaddrs = self::parse_mailto_address_list($to);
+        $topart = implode(',', $toaddrs);
+
+        $queryparts = [];
+        $ccaddrs = self::parse_mailto_address_list($cc);
+        if (!empty($ccaddrs)) {
+            $queryparts[] = 'cc=' . rawurlencode(implode(',', $ccaddrs));
+        }
+        $bccaddrs = self::parse_mailto_address_list($bcc);
+        if (!empty($bccaddrs)) {
+            $queryparts[] = 'bcc=' . rawurlencode(implode(',', $bccaddrs));
+        }
+        if ($subject !== null && $subject !== '') {
+            $queryparts[] = 'subject=' . rawurlencode($subject);
+        }
+        if ($body !== null && $body !== '') {
+            $queryparts[] = 'body=' . rawurlencode($body);
+        }
+
+        $mailto = 'mailto:' . $topart;
+        if (!empty($queryparts)) {
+            $mailto .= '?' . implode('&', $queryparts);
+        }
+        return $mailto;
+    }
+
+    /**
      * Generate the item as mailto menu item.
      *
      * @return string
      */
     protected function generate_mailto_item() {
 
-        $mailto = 'mailto:' . $this->item->email;
+        $mailto = self::build_mailto_href(
+            $this->item->email,
+            $this->item->email_cc ?? null,
+            $this->item->email_bcc ?? null,
+            $this->item->email_subject ?? null,
+            $this->item->email_body ?? null
+        );
 
         return $this->generate_node_data(
             $this->item->title, // Title.
@@ -1965,6 +2050,15 @@ class smartmenu_item {
         global $DB;
 
         $record = $formdata;
+
+        // Do not persist mailto-only fields for other menu item types.
+        if ($record->type != self::TYPEMAILTO) {
+            $record->email = null;
+            $record->email_cc = null;
+            $record->email_bcc = null;
+            $record->email_subject = null;
+            $record->email_body = null;
+        }
 
         // Convert the multiple valueable item types to JSON.
         $record->category = json_encode($formdata->category);
