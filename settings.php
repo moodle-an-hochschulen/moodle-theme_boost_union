@@ -1376,7 +1376,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
-        // Setting: One tab/accordion per identity provider.
+        // Setting: One tab, accordion panel, or vertical block per identity provider.
         $name = 'theme_boost_union/loginidpsplit';
         $title = get_string('loginidpsplitsetting', 'theme_boost_union', null, true);
         $description = get_string('loginidpsplitsetting_desc', 'theme_boost_union', null, true);
@@ -1393,12 +1393,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme_boost_union/loginidploginenable',
             'neq',
             THEME_BOOST_UNION_SETTING_SELECT_YES
-        );
-        $page->hide_if(
-            'theme_boost_union/loginidpsplit',
-            'theme_boost_union/loginlayout',
-            'eq',
-            'vertical'
         );
 
         // Setting: IDP login instruction.

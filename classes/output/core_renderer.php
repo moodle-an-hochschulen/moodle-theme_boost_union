@@ -1058,11 +1058,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $loginidpsplitsetting = get_config('theme_boost_union', 'loginidpsplit');
         $separateidppertab = (($loginidpsplitsetting !== false)
             ? $loginidpsplitsetting : THEME_BOOST_UNION_SETTING_SELECT_NO) === THEME_BOOST_UNION_SETTING_SELECT_YES;
-        $layoutusestabpanels = in_array($loginlayout, [
-            THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS,
-            THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION,
-        ], true);
-
         // Create sorted login methods array.
         // This ensures the DOM order matches the visual order, so CSS :first-of-type and :last-of-type work correctly.
         // Note: The template uses the same loop structure for all layouts, with conditionals for tabs vs vertical/accordion.
@@ -1093,7 +1088,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             if ($order === false) {
                 $order = 2; // Default order.
             }
-            if ($separateidppertab && $layoutusestabpanels && !empty($context->identityproviders)) {
+            if ($separateidppertab && !empty($context->identityproviders)) {
                 $providers = array_values($context->identityproviders);
                 foreach ($providers as $idx => $idp) {
                     $loginmethods[] = (object)[
