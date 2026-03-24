@@ -837,10 +837,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // Shibboleth internal WAYF: replace the Shibboleth IdP button with the IdP selector (auth/shibboleth/login.php).
         $loginshibbolethinternalwayf = get_config('theme_boost_union', 'loginshibbolethinternalwayf');
-        if (($loginshibbolethinternalwayf === false ? THEME_BOOST_UNION_SETTING_SELECT_NO : $loginshibbolethinternalwayf) ===
+        if (
+            ($loginshibbolethinternalwayf === false ? THEME_BOOST_UNION_SETTING_SELECT_NO : $loginshibbolethinternalwayf) ===
                 THEME_BOOST_UNION_SETTING_SELECT_YES &&
                 strpos($CFG->auth, 'shibboleth') !== false &&
-                !empty($context->identityproviders)) {
+                !empty($context->identityproviders)
+        ) {
             require_once($CFG->dirroot . '/auth/shibboleth/auth.php');
             get_auth_plugin('shibboleth');
             $shibconfig = get_config('auth_shibboleth');
