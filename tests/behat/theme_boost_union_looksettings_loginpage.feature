@@ -701,3 +701,165 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And I press "Log in"
     And I should see "Hi, Admin" in the "page-header" "region"
     And I should not see "You are currently using guest access"
+
+  Scenario: Setting: Split per identity provider - Tabs layout lists one tab per OAuth2 service
+    Given the following config values are set as admin:
+      | config            | value | plugin            |
+      | loginlayout       | tabs  | theme_boost_union |
+      | loginidpsplit     | yes   | theme_boost_union |
+      | loginidploginenable | yes | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Behat IdP Alpha   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Microsoft"
+    And I should see "Create new service: Microsoft"
+    And I set the following fields to these values:
+      | Name          | Behat IdP Beta    |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then "#login-method-idp-0-tab" "css_element" should exist
+    And "#login-method-idp-1-tab" "css_element" should exist
+    And "#login-method-idp-0" "css_element" should exist
+    And "#login-method-idp-1" "css_element" should exist
+    And "#login-method-idp-tab" "css_element" should not exist
+    And "#login-method-idp" "css_element" should not exist
+
+  @javascript
+  Scenario: Setting: Split per identity provider - Vertical layout shows one block per OAuth2 service with provider heading
+    Given the following config values are set as admin:
+      | config              | value    | plugin            |
+      | loginlayout         | vertical | theme_boost_union |
+      | loginidpsplit       | yes      | theme_boost_union |
+      | loginidploginenable | yes      | theme_boost_union |
+      | loginidpshowintro   | yes      | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Behat IdP Alpha   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Microsoft"
+    And I should see "Create new service: Microsoft"
+    And I set the following fields to these values:
+      | Name          | Behat IdP Beta    |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then "#login-method-idp-0" "css_element" should exist
+    And "#login-method-idp-1" "css_element" should exist
+    And "#login-method-idp" "css_element" should not exist
+    And "#login-method-idp-0" "css_element" should appear before "#login-method-idp-1" "css_element" in the "#theme_boost_union-loginform" "css_element"
+    And I should see "Behat IdP Alpha" in the "#login-method-idp-0 h2.login-heading" "css_element"
+    And I should see "Behat IdP Beta" in the "#login-method-idp-1 h2.login-heading" "css_element"
+
+  Scenario: Setting: Split per identity provider - Disabled keeps a single identity provider section
+    Given the following config values are set as admin:
+      | config            | value | plugin            |
+      | loginlayout       | tabs  | theme_boost_union |
+      | loginidpsplit     | no    | theme_boost_union |
+      | loginidploginenable | yes | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Behat IdP Alpha   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Microsoft"
+    And I should see "Create new service: Microsoft"
+    And I set the following fields to these values:
+      | Name          | Behat IdP Beta    |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then "#login-method-idp-tab" "css_element" should exist
+    And "#login-method-idp" "css_element" should exist
+    And "#login-method-idp-0-tab" "css_element" should not exist
+    And "#login-method-idp-0" "css_element" should not exist
+
+  # Requires auth_shibboleth: Shibboleth auth plugin and IdP list must be configured for the WAYF form to render.
+  Scenario: Setting: Shibboleth internal WAYF on login page - Shows organisation selector when enabled
+    Given the following config values are set as admin:
+      | config                      | value                                                                 | plugin            |
+      | loginshibbolethinternalwayf | yes                                                                   | theme_boost_union |
+      | loginidploginenable         | yes                                                                   | theme_boost_union |
+      | loginlayout                 | vertical                                                              | theme_boost_union |
+    And the following config values are set as admin:
+      | config                  | value                                                                 | plugin          |
+      | auth                    | manual,shibboleth                                                     |                 |
+      | registerauth            | email                                                                 |                 |
+      | guestloginbutton        | 1                                                                     |                 |
+      | user_attribute          | REMOTE_USER                                                           | auth_shibboleth |
+      | organization_selection  | https://idp.example.org/idp/shibboleth,Behat Shibboleth Organisation | auth_shibboleth |
+      | login_name              | Behat Shibboleth IdP                                                  | auth_shibboleth |
+    And the theme cache is purged and the theme is reloaded
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then ".login-shibboleth-wayf-form" "css_element" should exist
+    And "#login-shibboleth-wayf-0-idp" "css_element" should exist
+    And "#login-shibboleth-wayf-0" "css_element" should exist
+    And I should not see "Behat Shibboleth IdP" in the ".login-identityproviders" "css_element"
+
+  Scenario: Setting: Shibboleth internal WAYF on login page - Shows standard button when disabled
+    Given the following config values are set as admin:
+      | config                      | value                                                                 | plugin            |
+      | loginshibbolethinternalwayf | no                                                                    | theme_boost_union |
+      | loginidploginenable         | yes                                                                   | theme_boost_union |
+      | loginlayout                 | vertical                                                              | theme_boost_union |
+    And the following config values are set as admin:
+      | config                  | value                                                                 | plugin          |
+      | auth                    | manual,shibboleth                                                     |                 |
+      | registerauth            | email                                                                 |                 |
+      | guestloginbutton        | 1                                                                     |                 |
+      | user_attribute          | REMOTE_USER                                                           | auth_shibboleth |
+      | organization_selection  | https://idp.example.org/idp/shibboleth,Behat Shibboleth Organisation | auth_shibboleth |
+      | login_name              | Behat Shibboleth IdP                                                  | auth_shibboleth |
+    And the theme cache is purged and the theme is reloaded
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then ".login-shibboleth-wayf-form" "css_element" should not exist
+    And "#login-shibboleth-wayf-0-idp" "css_element" should not exist
+    And I should see "Behat Shibboleth IdP" in the ".login-identityproviders" "css_element"
+    And ".login-identityproviders a.login-identityprovider-btn" "css_element" should exist
