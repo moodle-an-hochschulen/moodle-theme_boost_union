@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-03-24 - Improvement: Remove the 25 images limit for login background images, resolves #815
+
 ### v4.5-r35
 
 * 2026-03-08 - Improvement: Add additional block regions on the 'mycourses' page layout to show sticky blocks at least, resolves #1141

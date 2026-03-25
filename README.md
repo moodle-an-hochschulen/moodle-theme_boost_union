@@ -185,7 +185,7 @@ With these settings, you can set additional colors for the calendar views.
 ###### Login page background images
 
 This setting is already available in the Moodle core theme Boost.
-However, in Boost Union you can not only add one but up to 25 files as a background image for the login page. One of these images will be picked randomly and shown when the user visits the login page.
+However, in Boost Union you can not only add one but an arbitrary number of files as a background image for the login page. One of these images will be picked randomly and shown when the user visits the login page.
 
 ###### Login page background image position
 
