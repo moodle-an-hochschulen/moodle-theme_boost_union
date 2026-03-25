@@ -3432,6 +3432,20 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $tab->add($setting);
         }
 
+        // Heading: Block Manager.
+        $name = 'theme_boost_union/blockmanagerheading';
+        $title = get_string('blockmanagerheading', 'theme_boost_union', null, true);
+        $description = get_string('blockmanagerheading_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, $description);
+        $tab->add($setting);
+
+        // Setting: Harden block regions.
+        $name = 'theme_boost_union/hardenblockregions';
+        $title = get_string('hardenblockregions', 'theme_boost_union', null, true);
+        $description = get_string('hardenblockregions_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
         // Heading: Outside regions.
         $name = 'theme_boost_union/outsideregionsheading';
         $title = get_string('outsideregionsheading', 'theme_boost_union', null, true);
