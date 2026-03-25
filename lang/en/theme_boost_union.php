@@ -893,6 +893,15 @@ $string['openoffcanvas'] = 'Open Off-canvas drawer';
 $string['blockregionsforlayout'] = 'Additional block regions for \'{$a}\' layout';
 $string['blockregionsforlayout_desc'] = 'With this setting, you can enable additional block regions for the \'{$a}\' layout.';
 $string['blockregionsstickyonly'] = 'Please note: This page layout is limited by Moodle core in such a way that blocks cannot be added directly on the page. However, as soon as you enable a block region here, <a href="{$a}" target="_blank">site-wide sticky blocks</a> will still be displayed on this page layout.';
+// ... Section: Block Manager.
+$string['blockmanagerheading'] = 'Block Manager';
+$string['blockmanagerheading_desc'] = 'Boost Union can use its own block manager class to realize advanced block management features. However, this comes with a tiny risk as the block manager is a central piece of Moodle. Thus, enable the following settings only if you really need them.';
+// ... ... Setting: Harden block regions.
+$string['hardenblockregions'] = 'Harden block regions';
+$string['hardenblockregions_desc'] = 'When disabled, Boost Union will simply hide block controls in particular regions for users who do not have the capability to edit that block region. However, this is just a partly protection: Users can still move existing blocks into non-editable block regions within the block editing interface or via drag-and-drop. As soon as this setting is enabled, Boost Union uses its own block manager class to protect block regions from being edited by users without the required edit capability. This might still not be a 100% protection, but compared to the way how loosely Moodle core protects block regions, it still prevents multiple known ways of editing restricted block regions without the required capability.';
+$string['blockactionnotallowed_add'] = 'Add block to block region {$a}';
+$string['blockactionnotallowed_configure'] = 'Configure block in block region {$a}';
+$string['blockactionnotallowed_move'] = 'Move block into block region {$a}';
 // ... Section: Outside regions.
 $string['outsideregionsheading'] = 'Outside regions';
 $string['outsideregionsheading_desc'] = 'Outside regions can not only be enabled with the layout settings above, their appearance can also be customized.';
