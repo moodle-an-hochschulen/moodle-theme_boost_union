@@ -921,7 +921,7 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025100615, 'theme', 'boost_union');
     }
 
-    if ($oldversion < 2025100619) {
+    if ($oldversion < 2025100617) {
         // Define field email_cc to be added to theme_boost_union_menuitems.
         $table = new xmldb_table('theme_boost_union_menuitems');
         $field = new xmldb_field('email_cc', XMLDB_TYPE_TEXT, null, null, null, null, null, 'email');
@@ -942,7 +942,7 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         }
 
         // Boost Union savepoint reached.
-        upgrade_plugin_savepoint(true, 2025100619, 'theme', 'boost_union');
+        upgrade_plugin_savepoint(true, 2025100617, 'theme', 'boost_union');
     }
 
     // Load the builtin SCSS snippets into the database.

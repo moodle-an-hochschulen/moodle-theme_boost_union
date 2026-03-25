@@ -19,7 +19,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     Then I should see smart menu "Quick links" item "Mail" in location "Main, Menu, User, Bottom"
     And the "href" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Mail')]" "xpath_element" should contain "mailto:test@test.com"
 
-@test5
   Scenario: Smartmenus: Menu items: Mailto - Cc, Bcc, subject and body are URL-encoded in the href
     Given the following "theme_boost_union > smart menu item" exists:
       | menu          | Quick links   |
