@@ -941,7 +941,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $description,
             'loginbackgroundimage',
             0,
-            ['maxfiles' => 25, 'accepted_types' => 'web_image']
+            ['maxfiles' => -1, 'accepted_types' => 'web_image']
         );
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
