@@ -1177,47 +1177,48 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $loginmethods[0]->isfirst = true;
         }
 
-        // For tabs and accordion layouts, add label information to each login method.
-        if (
-            $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS ||
-                $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION
-        ) {
-            $logintablabelconfigs = [
-                'local' => [
-                    'config' => 'loginlocalloginlabel',
-                    'default' => 'loginlocalloginlabelsetting_default',
-                ],
-                'idp' => [
-                    'config' => 'loginidploginlabel',
-                    'default' => 'loginidploginlabelsetting_default',
-                ],
-                'firsttimesignup' => [
-                    'config' => 'loginselfregistrationloginlabel',
-                    'default' => 'loginselfregistrationloginlabelsetting_default',
-                ],
-                'guest' => [
-                    'config' => 'loginguestloginlabel',
-                    'default' => 'loginguestloginlabelsetting_default',
-                ],
-            ];
-            foreach ($loginmethods as $method) {
-                if (!empty($method->idpsplit)) {
-                    $idp = $method->identityproviders[0];
-                    $rawname = is_array($idp) ? ($idp['name'] ?? '') : ($idp->name ?? '');
-                    $method->label = format_string($rawname);
-                    continue;
-                }
-                $labelconfig = $logintablabelconfigs[$method->name] ?? null;
-                if ($labelconfig !== null) {
-                    $label = format_string(get_config('theme_boost_union', $labelconfig['config']));
-                    if ($label === false || $label === '') {
-                        $label = format_string(get_string($labelconfig['default'], 'theme_boost_union'));
-                    }
-                } else {
-                    $label = '';
-                }
-                $method->label = $label;
+        // Set method labels: idp-split → provider name; tabs/accordion (non-split) → theme tab titles.
+        $usetablabels = $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS
+            || $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION;
+        $logintablabelconfigs = $usetablabels ? [
+            'local' => [
+                'config' => 'loginlocalloginlabel',
+                'default' => 'loginlocalloginlabelsetting_default',
+            ],
+            'idp' => [
+                'config' => 'loginidploginlabel',
+                'default' => 'loginidploginlabelsetting_default',
+            ],
+            'firsttimesignup' => [
+                'config' => 'loginselfregistrationloginlabel',
+                'default' => 'loginselfregistrationloginlabelsetting_default',
+            ],
+            'guest' => [
+                'config' => 'loginguestloginlabel',
+                'default' => 'loginguestloginlabelsetting_default',
+            ],
+        ] : [];
+
+        foreach ($loginmethods as $method) {
+            if (!empty($method->idpsplit)) {
+                $idp = $method->identityproviders[0];
+                $rawname = is_array($idp) ? ($idp['name'] ?? '') : ($idp->name ?? '');
+                $method->label = format_string($rawname);
+                continue;
             }
+            if (!$usetablabels) {
+                continue;
+            }
+            $labelconfig = $logintablabelconfigs[$method->name] ?? null;
+            if ($labelconfig !== null) {
+                $label = format_string(get_config('theme_boost_union', $labelconfig['config']));
+                if ($label === false || $label === '') {
+                    $label = format_string(get_string($labelconfig['default'], 'theme_boost_union'));
+                }
+            } else {
+                $label = '';
+            }
+            $method->label = $label;
         }
 
         // Determine the active/primary login method.

@@ -357,9 +357,21 @@
     {{>theme_boost_union/loginform-partial-method-start}}
 
         <div class="login-identityproviders">
-            {{! Intro heading }}
+            {{! Intro heading (vertical + split: provider name; else intro) }}
             {{#showidploginintro}}
-            <h2 class="login-heading {{#loginlayoutaccordion}}text-break w-100{{/loginlayoutaccordion}}">{{#idploginintrotext}}{{{idploginintrotext}}}{{/idploginintrotext}}{{^idploginintrotext}}{{#str}} potentialidps, auth {{/str}}{{/idploginintrotext}}</h2>
+            <h2 class="login-heading {{#loginlayoutaccordion}}text-break w-100{{/loginlayoutaccordion}}{{#loginlayoutvertical}}{{#idpsplit}} text-break w-100{{/idpsplit}}{{/loginlayoutvertical}}">
+                {{#loginlayoutvertical}}
+                    {{#idpsplit}}
+                        {{label}}
+                    {{/idpsplit}}
+                    {{^idpsplit}}
+                        {{#idploginintrotext}}{{{idploginintrotext}}}{{/idploginintrotext}}{{^idploginintrotext}}{{#str}} potentialidps, auth {{/str}}{{/idploginintrotext}}
+                    {{/idpsplit}}
+                {{/loginlayoutvertical}}
+                {{^loginlayoutvertical}}
+                    {{#idploginintrotext}}{{{idploginintrotext}}}{{/idploginintrotext}}{{^idploginintrotext}}{{#str}} potentialidps, auth {{/str}}{{/idploginintrotext}}
+                {{/loginlayoutvertical}}
+            </h2>
             {{/showidploginintro}}
 
             {{! Instructions (between heading and form) }}
