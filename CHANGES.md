@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.1-r9
 
 * 2026-03-24 - Improvement: Remove the 25 images limit for login background images, resolves #815
 * 2026-03-18 - Bugfix: Add an option to harden non-editable block regions by introducing a custom block manager, resolves #472
