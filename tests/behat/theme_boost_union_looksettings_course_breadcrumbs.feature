@@ -41,19 +41,19 @@ Feature: Configuring the theme_boost_union plugin for the "Breadcrumbs" section 
       | categorybreadcrumbs | <setting> | theme_boost_union |
     When I log in as "teacher1"
     And I am on "Course C1" course homepage
-    Then "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    Then "Category E" "link" <shouldornot> exist in the "#page-navbar" "css_element"
     And I am on "Course C2" course homepage
-    And "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
-    And "Category ED" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category E" "link" <shouldornot> exist in the "#page-navbar" "css_element"
+    And "Category ED" "link" <shouldornot> exist in the "#page-navbar" "css_element"
     And I am on "Course C3" course homepage
-    And "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
-    And "Category ED" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
-    And "Category EDC" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category E" "link" <shouldornot> exist in the "#page-navbar" "css_element"
+    And "Category ED" "link" <shouldornot> exist in the "#page-navbar" "css_element"
+    And "Category EDC" "link" <shouldornot> exist in the "#page-navbar" "css_element"
     And I am on "Course C4" course homepage
-    And "Category E" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
-    And "Category ED" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
-    And "Category EDC" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
-    And "Category EDCB" "link" <shouldornot> exist in the ".breadcrumb" "css_element"
+    And "Category E" "link" <shouldornot> exist in the "#page-navbar" "css_element"
+    And "Category ED" "link" <shouldornot> exist in the "#page-navbar" "css_element"
+    And "Category EDC" "link" <shouldornot> exist in the "#page-navbar" "css_element"
+    And "Category EDCB" "link" <shouldornot> exist in the "#page-navbar" "css_element"
 
     Examples:
       | setting | shouldornot |
