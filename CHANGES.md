@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-03-28 - Tests: Fix a broken test related to breadcrumbs, resolves #1207
 * 2026-03-24 - Improvement: Remove the 25 images limit for login background images, resolves #815
 
 ### v4.5-r35
