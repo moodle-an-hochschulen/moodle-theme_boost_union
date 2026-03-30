@@ -242,7 +242,7 @@ class theme_boost_union_generator extends component_generator_base {
             'email_cc' => $data['email_cc'] ?? null,
             'email_bcc' => $data['email_bcc'] ?? null,
             'email_subject' => $data['email_subject'] ?? null,
-            'email_body' => $data['email_body'] ?? null,
+            'email_body' => isset($data['email_body']) ? str_replace('\\n', "\n", $data['email_body']) : null,
             'category' => $category,
             'category_subcats' => $categorysubcats,
             'enrolmentrole' => $enrolmentrole,

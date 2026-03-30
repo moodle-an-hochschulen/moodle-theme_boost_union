@@ -922,7 +922,7 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     }
 
     if ($oldversion < 2025100617) {
-        // Define field email_cc to be added to theme_boost_union_menuitems.
+        // Define fields email* to be added to theme_boost_union_menuitems.
         $table = new xmldb_table('theme_boost_union_menuitems');
         $field = new xmldb_field('email_cc', XMLDB_TYPE_TEXT, null, null, null, null, null, 'email');
         if (!$dbman->field_exists($table, $field)) {

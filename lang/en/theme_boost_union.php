@@ -24,6 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+
 // Let codechecker ignore some sniffs for this file as it is perfectly well ordered, just not alphabetically.
 // phpcs:disable moodle.Files.LangFilesOrdering.UnexpectedComment
 // phpcs:disable moodle.Files.LangFilesOrdering.IncorrectOrder
@@ -1759,9 +1760,9 @@ $string['smartmenusmenuitememail_help'] = 'Primary recipient email address(es) f
 $string['smartmenusmenuitememail_required'] = 'Required – Enter at least one valid email address without the \'mailto:\' prefix.';
 $string['smartmenusmenuitememail_invalid'] = 'Please enter only valid email address(es), separated by commas if there are several.';
 $string['smartmenusmenuitememail_cc'] = 'Cc';
-$string['smartmenusmenuitememail_cc_help'] = 'Optional carbon-copy address(es), comma-separated. These are added to the mailto link as a Cc header.';
+$string['smartmenusmenuitememail_cc_help'] = 'Optional carbon-copy address(es), separate multiple addresses with commas. These are added to the mailto link as a Cc header.';
 $string['smartmenusmenuitememail_bcc'] = 'Bcc';
-$string['smartmenusmenuitememail_bcc_help'] = 'Optional blind carbon-copy address(es), comma-separated. These are added to the mailto link as a Bcc header.';
+$string['smartmenusmenuitememail_bcc_help'] = 'Optional blind carbon-copy address(es), separate multiple addresses with commas. These are added to the mailto link as a Bcc header.';
 $string['smartmenusmenuitememail_subject'] = 'Subject';
 $string['smartmenusmenuitememail_subject_help'] = 'Optional default subject line for the composed message. It is URL-encoded in the mailto link.';
 $string['smartmenusmenuitememail_body'] = 'Message body';

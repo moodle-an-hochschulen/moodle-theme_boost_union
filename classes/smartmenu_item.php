@@ -770,14 +770,19 @@ class smartmenu_item {
     /**
      * Split a comma-separated list of email addresses (optional whitespace around commas).
      *
-     * @param string|null $raw
-     * @return string[]
+     * @param string|null $raw The raw comma-separated string of email addresses.
+     * @return string[] An array of trimmed email addresses, or an empty array if the input is null or empty.
      */
     public static function parse_mailto_address_list(?string $raw): array {
+        // If the input is null or empty, return an empty array.
         if ($raw === null || trim($raw) === '') {
             return [];
         }
+
+        // Split the string by commas, allowing for optional whitespace around the commas.
         $parts = preg_split('/\s*,\s*/', $raw, -1, PREG_SPLIT_NO_EMPTY);
+
+        // Trim each part and filter out any empty strings that may result from consecutive commas or leading/trailing commas.
         $addresses = [];
         foreach ($parts as $part) {
             $trimmed = trim($part);
@@ -785,21 +790,27 @@ class smartmenu_item {
                 $addresses[] = $trimmed;
             }
         }
+
+        // Return the array of email addresses.
         return $addresses;
     }
 
     /**
-     * Whether every address in the list is valid for Moodle.
+     * Check whether every address in the list is valid for Moodle.
      *
-     * @param string[] $addresses
-     * @return bool
+     * @param string[] $addresses The list of email addresses to validate.
+     * @return bool True if all addresses are valid, false otherwise.
      */
     public static function validate_mailto_address_list(array $addresses): bool {
+        // Validate each address using Moodle's validate_email function.
         foreach ($addresses as $addr) {
+            // If any address is invalid, return false.
             if (!validate_email($addr)) {
                 return false;
             }
         }
+
+        // If we get here, all addresses are valid.
         return true;
     }
 
@@ -820,9 +831,11 @@ class smartmenu_item {
         ?string $subject = null,
         ?string $body = null
     ): string {
+        // Build the to part.
         $toaddrs = self::parse_mailto_address_list($to);
         $topart = implode(',', $toaddrs);
 
+        // Build the query part with cc, bcc, subject and body.
         $queryparts = [];
         $ccaddrs = self::parse_mailto_address_list($cc);
         if (!empty($ccaddrs)) {
@@ -839,10 +852,13 @@ class smartmenu_item {
             $queryparts[] = 'body=' . rawurlencode($body);
         }
 
+        // Combine the to part and query part to build the mailto URL.
         $mailto = 'mailto:' . $topart;
         if (!empty($queryparts)) {
             $mailto .= '?' . implode('&', $queryparts);
         }
+
+        // Return the built mailto URL.
         return $mailto;
     }
 
@@ -853,6 +869,7 @@ class smartmenu_item {
      */
     protected function generate_mailto_item() {
 
+        // Build the mailto link from the item data.
         $mailto = self::build_mailto_href(
             $this->item->email,
             $this->item->email_cc ?? null,
@@ -2052,6 +2069,8 @@ class smartmenu_item {
         $record = $formdata;
 
         // Do not persist mailto-only fields for other menu item types.
+        // While the values should be stored as null by default for other types as well,
+        // this is a measure to ensure that no mailto values are stored for other types in any case..
         if ($record->type != self::TYPEMAILTO) {
             $record->email = null;
             $record->email_cc = null;
