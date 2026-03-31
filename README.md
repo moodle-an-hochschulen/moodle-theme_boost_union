@@ -124,9 +124,19 @@ With this setting, you control the positioning of the background image within th
 
 ##### Brand colors
 
-###### Brand color
+###### Primary brand color
 
-This setting is already available in the Moodle core theme Boost. For more information how to use it, please have a look at the official Moodle documentation: http://docs.moodle.org/en/Boost_theme
+This color is used for accent and highlighting purposes across the site and is also used as basis for calculating gradated brand colors. Furthermore, it is used for links and buttons unless you set distinct colors for links and buttons.
+
+##### Link colors
+
+###### Link brand color
+
+With this setting, you can set a dedicated brand color for links. If this setting is empty, Boost Union's primary brand color is used.
+
+###### Button brand color
+
+With this setting, you can define a dedicated brand color for primary buttons. If this setting is empty, Boost Union's primary brand color is used.
 
 ##### Bootstrap colors
 

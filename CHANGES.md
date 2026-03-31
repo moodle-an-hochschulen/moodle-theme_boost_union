@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-03-30 - Feature: Add admin settings to tint links and buttons separate from the primary brand color, resolves #709
 * 2026-03-30 - Improvement: SmartMenus: Improve mailto menu items with predefined email content, resolves #1122
 * 2026-03-28 - Tests: Fix a broken test related to breadcrumbs, resolves #1207
 

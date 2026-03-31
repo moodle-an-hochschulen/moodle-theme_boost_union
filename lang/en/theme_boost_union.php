@@ -185,6 +185,17 @@ $string['backgroundimagepositionsetting'] = 'Background image position';
 $string['backgroundimagepositionsetting_desc'] = 'With this setting, you control the positioning of the background image within the browser window. The first value is the horizontal position, the second value is the vertical position.';
 // ... Section: Brand colors.
 $string['brandcolorsheading'] = 'Brand colors';
+// ... ... Setting: Primary brand color.
+$string['brandcolor'] = 'Primary brand color';
+$string['brandcolor_desc'] = 'The primary brand color. It is used for accent and highlighting purposes across the site and is also used as basis for calculating gradated brand colors. Furthermore, it is used for links and buttons unless you set distinct colors for links and buttons in the settings below.';
+// ... Section: Link colors.
+$string['linkcolorsheading'] = 'Link colors';
+// ... ... Setting: Link brand color.
+$string['linkcolorsetting'] = 'Link brand color';
+$string['linkcolorsetting_desc'] = 'With this setting, you can set a dedicated brand color for links. If this setting is empty, Boost Union\'s primary brand color is used.';
+// ... ... Setting: Button brand color.
+$string['buttonbrandcolorsetting'] = 'Button brand color';
+$string['buttonbrandcolorsetting_desc'] = 'With this setting, you can define a dedicated brand color for primary buttons. If this setting is empty, Boost Union\'s primary brand color is used.';
 // ... Section: Bootstrap colors.
 $string['bootstrapcolorsheading'] = 'Bootstrap colors';
 // ... ... Setting: Bootstrap color for 'Success'.
@@ -1570,8 +1581,12 @@ $string['flavoursbootstrapcolorsuccess'] = 'Bootstrap color for "Success"';
 $string['flavoursbootstrapcolorsuccess_help'] = 'With this setting, the flavour will override the Bootstrap "success" color which is configured in Boost Union\'s look settings.';
 $string['flavoursbootstrapcolorwarning'] = 'Bootstrap color for "Warning"';
 $string['flavoursbootstrapcolorwarning_help'] = 'With this setting, the flavour will override the Bootstrap "warning" color which is configured in Boost Union\'s look settings.';
-$string['flavoursbrandcolor'] = 'Brand color';
-$string['flavoursbrandcolor_help'] = 'With this setting, the flavour will override the brand color which is configured in Boost Union\'s look settings.';
+$string['flavoursbrandcolor'] = 'Primary brand color';
+$string['flavoursbrandcolor_help'] = 'With this setting, the flavour will override the primary brand color which is configured in Boost Union\'s look settings.';
+$string['flavourslinkcolor'] = 'Link brand color';
+$string['flavourslinkcolor_help'] = 'With this setting, the flavour will override the link color which is configured in Boost Union\'s look settings.';
+$string['flavoursbuttonbrandcolor'] = 'Button brand color';
+$string['flavoursbuttonbrandcolor_help'] = 'With this setting, the flavour will override the button brand color which is configured in Boost Union\'s look settings.';
 $string['flavourscreateflavour'] = 'Create flavour';
 $string['flavourscustomscss'] = 'Raw SCSS';
 $string['flavourscustomscss_help'] = 'With this setting, you can write custom SCSS for the flavour. It will be appended to the stack of CSS code which is shipped to the browser as soon as the flavour applies.';
