@@ -237,6 +237,38 @@ class flavour_edit_form extends \moodleform {
         $mform->addRule('look_brandcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_brandcolor', 'flavoursbrandcolor', 'theme_boost_union');
 
+        // Add link colors heading.
+        $context = new \stdClass();
+        $context->title = get_string('linkcolorsheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+            'html',
+            '<div id="adminsettings">' . $OUTPUT->render_from_template('core_admin/setting_heading', $context) . '</div>'
+        );
+
+        // Add link brand color as colorpicker element.
+        $this->check_slasharguments_warning($mform);
+        $mform->addElement(
+            'theme_boost_union_colorpicker',
+            'look_linkcolor',
+            get_string('flavourslinkcolor', 'theme_boost_union'),
+            ['id' => 'colourpicker_linkcolor']
+        );
+        $mform->setType('look_linkcolor', PARAM_TEXT);
+        $mform->addRule('look_linkcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
+        $mform->addHelpButton('look_linkcolor', 'flavourslinkcolor', 'theme_boost_union');
+
+        // Add button brand color as colorpicker element.
+        $this->check_slasharguments_warning($mform);
+        $mform->addElement(
+            'theme_boost_union_colorpicker',
+            'look_buttonbrandcolor',
+            get_string('flavoursbuttonbrandcolor', 'theme_boost_union'),
+            ['id' => 'colourpicker_buttonbrandcolor']
+        );
+        $mform->setType('look_buttonbrandcolor', PARAM_TEXT);
+        $mform->addRule('look_buttonbrandcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
+        $mform->addHelpButton('look_buttonbrandcolor', 'flavoursbuttonbrandcolor', 'theme_boost_union');
+
         // Add Bootstrap colors heading.
         $context = new \stdClass();
         $context->title = get_string('bootstrapcolorsheading', 'theme_boost_union', null, true);
