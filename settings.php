@@ -604,8 +604,30 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Replicate the brand color setting from theme_boost.
         $name = 'theme_boost_union/brandcolor';
-        $title = get_string('brandcolor', 'theme_boost', null, true);
-        $description = get_string('brandcolor_desc', 'theme_boost', null, true);
+        $title = get_string('brandcolor', 'theme_boost_union', null, true);
+        $description = get_string('brandcolor_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Heading: Link colors.
+        $name = 'theme_boost_union/linkcolorsheading';
+        $title = get_string('linkcolorsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Link brand color.
+        $name = 'theme_boost_union/linkcolor';
+        $title = get_string('linkcolorsetting', 'theme_boost_union', null, true);
+        $description = get_string('linkcolorsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Button brand color.
+        $name = 'theme_boost_union/buttonbrandcolor';
+        $title = get_string('buttonbrandcolorsetting', 'theme_boost_union', null, true);
+        $description = get_string('buttonbrandcolorsetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);

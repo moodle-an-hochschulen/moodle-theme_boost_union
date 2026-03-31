@@ -16,6 +16,20 @@
 }
 
 /*---------------------------------------
+ * Setting: Button brand color
+ --------------------------------------*/
+
+/* Apply a dedicated color for primary buttons, if the variable is set.
+   Reuse Bootstrap's own variant mixin so hover/active/focus/disabled states
+   are calculated exactly like core button variants, just with the configured color. */
+@if variable-exists(bu-button-brand-color) {
+    .btn-primary {
+        @include button-variant($bu-button-brand-color, $bu-button-brand-color);
+    }
+}
+
+
+/*---------------------------------------
  * Setting: Navbar color
  --------------------------------------*/
 
