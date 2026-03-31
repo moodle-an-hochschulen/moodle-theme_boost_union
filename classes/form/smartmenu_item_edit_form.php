@@ -144,11 +144,40 @@ class smartmenu_item_edit_form extends \moodleform {
         ]);
         $mform->addHelpButton('url', 'smartmenusmenuitemurl', 'theme_boost_union');
 
-        // Add menu item email (for the mailto menu item type) as input element.
+        // Add menu item email to (for the mailto menu item type) as input element.
         $mform->addElement('text', 'email', get_string('smartmenusmenuitememail', 'theme_boost_union'));
-        $mform->setType('email', PARAM_EMAIL);
+        $mform->setType('email', PARAM_TEXT);
         $mform->hideIf('email', 'type', 'neq', smartmenu_item::TYPEMAILTO);
         $mform->addHelpButton('email', 'smartmenusmenuitememail', 'theme_boost_union');
+
+        // Add menu item email cc (for the mailto menu item type) as input element.
+        $mform->addElement('text', 'email_cc', get_string('smartmenusmenuitememail_cc', 'theme_boost_union'));
+        $mform->setType('email_cc', PARAM_TEXT);
+        $mform->hideIf('email_cc', 'type', 'neq', smartmenu_item::TYPEMAILTO);
+        $mform->addHelpButton('email_cc', 'smartmenusmenuitememail_cc', 'theme_boost_union');
+
+        // Add menu item email bcc (for the mailto menu item type) as input element.
+        $mform->addElement('text', 'email_bcc', get_string('smartmenusmenuitememail_bcc', 'theme_boost_union'));
+        $mform->setType('email_bcc', PARAM_TEXT);
+        $mform->hideIf('email_bcc', 'type', 'neq', smartmenu_item::TYPEMAILTO);
+        $mform->addHelpButton('email_bcc', 'smartmenusmenuitememail_bcc', 'theme_boost_union');
+
+        // Add menu item email subject (for the mailto menu item type) as input element.
+        $mform->addElement('text', 'email_subject', get_string('smartmenusmenuitememail_subject', 'theme_boost_union'));
+        $mform->setType('email_subject', PARAM_TEXT);
+        $mform->hideIf('email_subject', 'type', 'neq', smartmenu_item::TYPEMAILTO);
+        $mform->addHelpButton('email_subject', 'smartmenusmenuitememail_subject', 'theme_boost_union');
+
+        // Add menu item email body (for the mailto menu item type) as textarea element.
+        $mform->addElement(
+            'textarea',
+            'email_body',
+            get_string('smartmenusmenuitememail_body', 'theme_boost_union'),
+            ['rows' => 5, 'cols' => 60]
+        );
+        $mform->setType('email_body', PARAM_TEXT);
+        $mform->hideIf('email_body', 'type', 'neq', smartmenu_item::TYPEMAILTO);
+        $mform->addHelpButton('email_body', 'smartmenusmenuitememail_body', 'theme_boost_union');
 
         // Add mode as select element.
         $modeoptions = smartmenu_item::get_mode_options();
@@ -771,10 +800,22 @@ class smartmenu_item_edit_form extends \moodleform {
             }
         }
 
+        // If the menu item type is mailto.
         if ($data['type'] == smartmenu_item::TYPEMAILTO) {
-            // Verify that the email field is not empty.
-            if (empty($data['email'])) {
+            // Verify that the email tp field is not empty and contains valid email addresses.
+            $toaddresses = smartmenu_item::parse_mailto_address_list($data['email'] ?? '');
+            if (empty($toaddresses)) {
                 $errors['email'] = get_string('smartmenusmenuitememail_required', 'theme_boost_union');
+            } else if (!smartmenu_item::validate_mailto_address_list($toaddresses)) {
+                $errors['email'] = get_string('smartmenusmenuitememail_invalid', 'theme_boost_union');
+            }
+
+            // Verify that the email cc and bcc fields, if not empty, contain valid email addresses.
+            foreach (['email_cc', 'email_bcc'] as $field) {
+                $list = smartmenu_item::parse_mailto_address_list($data[$field] ?? '');
+                if (!empty($list) && !smartmenu_item::validate_mailto_address_list($list)) {
+                    $errors[$field] = get_string('smartmenusmenuitememail_invalid', 'theme_boost_union');
+                }
             }
         }
 
