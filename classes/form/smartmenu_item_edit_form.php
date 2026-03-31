@@ -790,7 +790,7 @@ class smartmenu_item_edit_form extends \moodleform {
 
         // If the menu item type is mailto.
         if ($data['type'] == smartmenu_item::TYPEMAILTO) {
-            // Verify that the email tp field is not empty and contains valid email addresses.
+            // Verify that the email to field is not empty and contains valid email addresses.
             $toaddresses = smartmenu_item::parse_mailto_address_list($data['email'] ?? '');
             if (empty($toaddresses)) {
                 $errors['email'] = get_string('smartmenusmenuitememail_required', 'theme_boost_union');
