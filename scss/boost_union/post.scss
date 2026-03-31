@@ -307,22 +307,22 @@
 /* Override the fixed 500px width from Boost core with the custom width setting. */
 @include media-breakpoint-up(md) {
     .login-container {
-        width: $logincontainer-width !important; /* stylelint-disable-line declaration-no-important */
+        width: $bu-logincontainer-width !important; /* stylelint-disable-line declaration-no-important */
     }
 
     /* Allow login-container to expand when tabs need more space. */
     body.pagelayout-login .login-container:has(#login-layout-tabs) {
         width: auto !important; /* stylelint-disable-line declaration-no-important */
-        min-width: $logincontainer-width;
+        min-width: $bu-logincontainer-width;
         max-width: 100%;
 
         /* Prevent instructions from expanding the container to full width.
            (The max-width will be adapted by JS (if enabled by the admin)
-           if the tabs width is wider than the $logincontainer-width. */
+           if the tabs width is wider than the $bu-logincontainer-width. */
         .login-heading,
         .login-instructions {
             width: auto;
-            max-width: $logincontainer-width;
+            max-width: $bu-logincontainer-width;
             overflow-wrap: break-word;
         }
     }
@@ -1267,14 +1267,14 @@ body.theme-boost-union-commincourse {
         #theme-block-region-outside-left {
             margin-right: 1rem;
             margin-top: 1.5rem;
-            width: $blockregionoutsideleftwidth;
+            width: $bu-blockregionoutsideleftwidth;
         }
 
         /* Set the width of the outside-right region. */
         #theme-block-region-outside-right {
             margin-left: 1rem;
             margin-top: 1.5rem;
-            width: $blockregionoutsiderightwidth;
+            width: $bu-blockregionoutsiderightwidth;
         }
 
         /* If the admin configured outside blocks to be shown next to the main content. */

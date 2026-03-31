@@ -412,7 +412,7 @@ function theme_boost_union_get_pre_scss($theme) {
         // Set the variable to the default setting to make sure that the SCSS variable does not remain uninitialized.
         $logincontainerwidth = '500px';
     }
-    $scss .= '$logincontainer-width: ' . $logincontainerwidth . ";\n";
+    $scss .= '$bu-logincontainer-width: ' . $logincontainerwidth . ";\n";
 
     // Set custom Boost Union SCSS variable: The block region outside left width.
     $blockregionoutsideleftwidth = get_config('theme_boost_union', 'blockregionoutsideleftwidth');
@@ -421,16 +421,16 @@ function theme_boost_union_get_pre_scss($theme) {
         // Set the variable to the default setting to make sure that the SCSS variable does not remain uninitialized.
         $blockregionoutsideleftwidth = '300px';
     }
-    $scss .= '$blockregionoutsideleftwidth: ' . $blockregionoutsideleftwidth . ";\n";
+    $scss .= '$bu-blockregionoutsideleftwidth: ' . $blockregionoutsideleftwidth . ";\n";
 
-    // Set custom Boost Union SCSS variable: The block region outside left width.
+    // Set custom Boost Union SCSS variable: The block region outside right width.
     $blockregionoutsiderightwidth = get_config('theme_boost_union', 'blockregionoutsiderightwidth');
     // If the setting is not set.
     if (!$blockregionoutsiderightwidth) {
         // Set the variable to the default setting to make sure that the SCSS variable does not remain uninitialized.
         $blockregionoutsiderightwidth = '300px';
     }
-    $scss .= '$blockregionoutsiderightwidth: ' . $blockregionoutsiderightwidth . ";\n";
+    $scss .= '$bu-blockregionoutsiderightwidth: ' . $blockregionoutsiderightwidth . ";\n";
 
     // Add custom Boost Union SCSS variable as goody for designers: $themerev.
     $scss .= '$themerev: ' . $CFG->themerev . ";\n";
