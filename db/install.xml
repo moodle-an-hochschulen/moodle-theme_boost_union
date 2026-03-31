@@ -80,6 +80,10 @@
         <FIELD NAME="sortorder" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="url" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="email" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="email_cc" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="email_bcc" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="email_subject" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="email_body" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="category" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="category_subcats" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="enrolmentrole" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
