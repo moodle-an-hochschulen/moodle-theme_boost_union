@@ -405,6 +405,23 @@ class flavour_edit_form extends \moodleform {
         $mform->setType('title', PARAM_TEXT);
         $mform->addHelpButton('look_rawscss', 'flavourscustomscss', 'theme_boost_union');
 
+        // Add content as header element.
+        $mform->addElement('header', 'contentsettingsheader', get_string('configtitlecontent', 'theme_boost_union'));
+        $mform->setExpanded('contentsettingsheader');
+
+        // Add footnote heading.
+        $context = new \stdClass();
+        $context->title = get_string('footnoteheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+            'html',
+            '<div id="adminsettings">' . $OUTPUT->render_from_template('core_admin/setting_heading', $context) . '</div>'
+        );
+
+        // Add flavour footnote as editor element.
+        $mform->addElement('editor', 'content_footnote', get_string('flavoursfootnote', 'theme_boost_union'));
+        $mform->setType('content_footnote', PARAM_CLEANHTML);
+        $mform->addHelpButton('content_footnote', 'flavoursfootnote', 'theme_boost_union');
+
         // Add apply-to-cohort as header element.
         $mform->addElement('header', 'applytocohortheader', get_string('flavoursapplytocohorts', 'theme_boost_union'));
         // Set the header to expanded if apply-to-cohort is already enabled.

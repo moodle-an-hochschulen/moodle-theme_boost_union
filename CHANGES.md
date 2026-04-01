@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-03-31 - Improvement: Allow the footnote text to be set in flavours as well, resolves #1216
 * 2026-03-31 - Internal change: Prefix all custom Boost Union SCSS variables which are set by Boost Union settings with 'bu-' for the sake of consistency
 * 2026-03-30 - Feature: Add admin settings to tint links and buttons separate from the primary brand color, resolves #709
 * 2026-03-30 - Improvement: SmartMenus: Improve mailto menu items with predefined email content, resolves #1122
