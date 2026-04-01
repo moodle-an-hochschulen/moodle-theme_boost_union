@@ -945,6 +945,39 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025100617, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2025100618) {
+        // Define table theme_boost_union_flavours to be altered.
+        $table = new xmldb_table('theme_boost_union_flavours');
+
+        // Define field look_linkcolor to be added.
+        $field = new xmldb_field('look_linkcolor', XMLDB_TYPE_CHAR, '32', null, null, null, null, 'look_brandcolor');
+
+        // Conditionally launch add field look_linkcolor.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field look_buttonbrandcolor to be added.
+        $field = new xmldb_field(
+            'look_buttonbrandcolor',
+            XMLDB_TYPE_CHAR,
+            '32',
+            null,
+            null,
+            null,
+            null,
+            'look_linkcolor'
+        );
+
+        // Conditionally launch add field look_buttonbrandcolor.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2025100618, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
