@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-03 - Bugfix: SCSS could not be compiled on 4.5 after backporting the internal variable name change, resolves #1217
 * 2026-03-31 - Improvement: Allow the footnote text to be set in flavours as well, resolves #1216
 * 2026-03-31 - Internal change: Prefix all custom Boost Union SCSS variables which are set by Boost Union settings with 'bu-' for the sake of consistency
 * 2026-03-30 - Feature: Add admin settings to tint links and buttons separate from the primary brand color, resolves #709

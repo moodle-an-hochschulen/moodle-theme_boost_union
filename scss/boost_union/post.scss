@@ -1248,19 +1248,19 @@ body.theme-boost-union-commincourse {
         /* On pages where only the outside-left region is enabled:
            Reduce the size of the main column to make space for the outside-left column. */
         .main-inner-outside-left .main-inner {
-            width: calc(98% - #{$blockregionoutsideleftwidth});
+            width: calc(98% - #{$bu-blockregionoutsideleftwidth});
         }
 
         /* On pages where only the outside-right region is enabled:
            Reduce the size of the main column to make space for the outside-right column. */
         .main-inner-outside-right .main-inner {
-            width: calc(98% - #{$blockregionoutsiderightwidth});
+            width: calc(98% - #{$bu-blockregionoutsiderightwidth});
         }
 
         /* On pages where the outside-left and the outside-right region are enabled:
            Reduce the size of the main column to make space for the outside-left and outside-right columns. */
         .main-inner-outside-left-right .main-inner {
-            width: calc(98% - #{$blockregionoutsiderightwidth} - #{$blockregionoutsideleftwidth});
+            width: calc(98% - #{$bu-blockregionoutsiderightwidth} - #{$bu-blockregionoutsideleftwidth});
         }
 
         /* Set the width and margin of the outside-left region. */
