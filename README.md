@@ -706,6 +706,14 @@ To ease such admin tasks as well as the crafting of SCSS Snippet PRs,
 this CLI script can be run and will re-populate the list of built-in SCSS snippets based on the list of snippets
 which exist on disk in the theme/boost_union/snippets/builtin directory.
 
+### cli/validate_scss.php
+
+This script compiles the SCSS of the Boost Union theme exactly as it would happen during a theme cache purge, but without writing any CSS to disk or storing it in any cache.
+
+This is useful for catching SCSS syntax errors in custom SCSS settings, external SCSS files or enabled SCSS snippets before purging the cache on a production system. Any compilation error is reported with its exact error message (including line number) and the script exits with a non-zero exit code. On success, the size of the generated CSS output is reported.
+
+The script replicates the full SCSS stack as it is built during a real cache purge, including pre-SCSS variables and settings, the main SCSS content, external SCSS files and all enabled SCSS snippets.
+
 
 Backup & Restore
 ----------------
