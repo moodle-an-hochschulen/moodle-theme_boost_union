@@ -83,6 +83,8 @@ switch ($action) {
             // Note: title and look_rawscss are automagically saved by mform as they do not need any processing.
             $data->description_format = $data->description['format'];
             $data->description = $data->description['text'];
+            $data->content_footnote_format = $data->content_footnote['format'];
+            $data->content_footnote = $data->content_footnote['text'];
             if (isset($data->applytocohorts_ids)) {
                 $data->applytocohorts_ids = json_encode($data->applytocohorts_ids);
             }
@@ -191,6 +193,8 @@ switch ($action) {
             // Note: title and look_rawscss are automagically saved by mform as they do not need any processing.
             $data->description_format = $data->description['format'];
             $data->description = $data->description['text'];
+            $data->content_footnote_format = $data->content_footnote['format'];
+            $data->content_footnote = $data->content_footnote['text'];
             if (isset($data->applytocohorts_ids)) {
                 $data->applytocohorts_ids = json_encode($data->applytocohorts_ids);
             }
@@ -317,6 +321,10 @@ switch ($action) {
             $flavour->description = [
                     'text' => $flavour->description,
                     'format' => $flavour->description_format,
+            ];
+            $flavour->content_footnote = [
+                    'text' => $flavour->content_footnote,
+                    'format' => $flavour->content_footnote_format,
             ];
             if (isset($flavour->applytocohorts_ids)) {
                 $flavour->applytocohorts_ids = json_decode($flavour->applytocohorts_ids, true);

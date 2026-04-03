@@ -561,6 +561,40 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I click on ".action-preview" "css_element" in the "My shiny new flavour" "table_row"
     Then I should not see "Preview flavour" in the "#page-header .page-header-headings" "css_element"
 
+  Scenario: Flavours: Footnote - Set a flavour-specific footnote (with no global footnote set)
+    Given the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | content_footnote           |
+      | My shiny new flavour | CAT1                  | <p>My flavour footnote</p> |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then "#footnote" "css_element" should exist
+    And I should see "My flavour footnote" in the "#footnote" "css_element"
+
+  Scenario: Flavours: Footnote - Set a flavour-specific footnote (with global footnote being overridden)
+    Given the following config values are set as admin:
+      | config   | value                     | plugin            |
+      | footnote | <p>My global footnote</p> | theme_boost_union |
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | content_footnote           |
+      | My shiny new flavour | CAT1                  | <p>My flavour footnote</p> |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then "#footnote" "css_element" should exist
+    And I should see "My flavour footnote" in the "#footnote" "css_element"
+    And I should not see "My global footnote" in the "#footnote" "css_element"
+
+  Scenario: Flavours: Footnote - Do not set a flavour-specific footnote (with global footnote being served properly)
+    Given the following config values are set as admin:
+      | config   | value                     | plugin            |
+      | footnote | <p>My global footnote</p> | theme_boost_union |
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then "#footnote" "css_element" should exist
+    And I should see "My global footnote" in the "#footnote" "css_element"
+
   @javascript
   Scenario Outline: Flavours: Flavour SCSS should be applied immediately in normal operation as well as if theme designer mode is on (with styles_debug.php).
     Given the following config values are set as admin:
