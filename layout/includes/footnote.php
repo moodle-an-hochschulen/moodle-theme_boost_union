@@ -25,12 +25,25 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// Require flavours library.
+require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+
+// Get footnote setting.
 $footnotesetting = get_config('theme_boost_union', 'footnote');
+$format = FORMAT_HTML;
+
+// If any flavour applies to this page and defines a non-empty footnote.
+$flavour = theme_boost_union_get_flavour_which_applies();
+if ($flavour !== null && !html_is_blank($flavour->content_footnote)) {
+    // Override the footnote setting with the flavour specific footnote.
+    $footnotesetting = $flavour->content_footnote;
+    $format = $flavour->content_footnote_format;
+}
 
 // Only proceed if text area does not only contains empty tags.
 if (!html_is_blank($footnotesetting)) {
     // Use format_text function to enable multilanguage filtering.
-    $footnotesetting = format_text($footnotesetting, FORMAT_HTML, ['noclean' => true]);
+    $footnotesetting = format_text($footnotesetting, $format, ['noclean' => true]);
 
     // Add marker to show the footnote to templatecontext.
     $templatecontext['showfootnote'] = true;
