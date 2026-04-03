@@ -105,7 +105,7 @@ core_php_time_limit::raise(300);
 // 1. The method is declared protected and therefore cannot be called from outside the class.
 // 2. Even if it were accessible, it swallows SCSS exceptions and silently returns false on failure
 // (see the catch block in that method: $compiled = false; debugging(..., DEBUG_DEVELOPER)).
-//  That means a compilation error would never surface as a visible error in the CLI output.
+// That means a compilation error would never surface as a visible error in the CLI output.
 // By replicating the minimal compiler setup here using only the public API methods
 // (get_scss_property(), get_pre_scss_code(), get_extra_scss_code()) and wrapping to_css() in our
 // own try/catch, we can let the exception propagate and report the exact error message to the user.
