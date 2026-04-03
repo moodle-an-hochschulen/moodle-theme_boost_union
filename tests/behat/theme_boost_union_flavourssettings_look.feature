@@ -817,6 +817,69 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     Then I should not see "Preview flavour" in the "#page-header .page-header-headings" "css_element"
 
   @javascript
+  Scenario: Flavours: Footnote - Set a flavour-specific footnote (with no global footnote set)
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I set the field "Footnote" to "My flavour footnote"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then "#footnote" "css_element" should exist
+    And I should see "My flavour footnote" in the "#footnote" "css_element"
+
+  @javascript
+  Scenario: Flavours: Footnote - Set a flavour-specific footnote (with global footnote being overridden)
+    Given the following config values are set as admin:
+      | config   | value                     | plugin            |
+      | footnote | <p>My global footnote</p> | theme_boost_union |
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I set the field "Footnote" to "My flavour footnote"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then "#footnote" "css_element" should exist
+    And I should see "My flavour footnote" in the "#footnote" "css_element"
+    And I should not see "My global footnote" in the "#footnote" "css_element"
+
+  @javascript
+  Scenario: Flavours: Footnote - Do not set a flavour-specific footnote (with global footnote being served properly)
+    Given the following config values are set as admin:
+      | config   | value                     | plugin            |
+      | footnote | <p>My global footnote</p> | theme_boost_union |
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then "#footnote" "css_element" should exist
+    And I should see "My global footnote" in the "#footnote" "css_element"
+
+  @javascript
   Scenario Outline: Flavours: Flavour SCSS should be applied immediately in normal operation as well as if theme designer mode is on (with styles_debug.php).
     Given the following config values are set as admin:
       | config            | value    |
