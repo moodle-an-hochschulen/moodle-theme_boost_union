@@ -383,3 +383,14 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | value | shouldornot |
       | no    | should      |
       | yes   | should not  |
+
+  @javascript
+  Scenario: View a user tour under Boost Union
+    Given I log in as "admin"
+    And I navigate to "Appearance > User tours" in site administration
+    And I click on "Enable" "link" in the "Course editing" "table_row"
+    And I click on "//a[@title=\"Edit\"]" "xpath_element" in the "Course editing" "table_row"
+    And I set the field "id_filter_theme" to "Boost Union"
+    And I press "Save changes"
+    When I am on the "C1" "Course" page logged in as "teacher1"
+    Then I should see "Reset user tour on this page"
