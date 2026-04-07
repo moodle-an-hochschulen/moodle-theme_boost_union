@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-07 - Tests: Add a test to view a user tour
 * 2026-04-03 - Improvement: Add CLI script to validate the SCSS compilation and to see SCSS compilation errors, resolves #1217
 * 2026-04-03 - Bugfix: SCSS could not be compiled on 4.5 after backporting the internal variable name change, resolves #1217
 * 2026-03-31 - Improvement: Allow the footnote text to be set in flavours as well, resolves #1216
