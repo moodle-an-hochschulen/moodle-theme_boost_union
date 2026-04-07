@@ -408,8 +408,6 @@ $string['loginprovideridpheading'] = 'Login provider: IDP';
 $string['loginidploginenablesetting'] = 'IDP login';
 $string['loginidploginenablesetting_desc'] = 'With this setting, you control if the identity provider (IDP) login buttons are shown on the login page or not. By default, IDP login buttons are shown if identity providers are configured. If you disable this setting, all IDP login buttons are hidden regardless of the authentication plugins configuration.';
 $string['loginidploginenablesetting_core'] = 'Moodle core setting interplay: Identity provider login buttons are provided by authentication plugins like OAuth2, CAS or Shibboleth. You can manage authentication plugins on <a href="{$a->url}">Moodle core\'s authentication settings page</a>.';
-$string['loginshibbolethinternalwayfsetting'] = 'Shibboleth internal WAYF on login page';
-$string['loginshibbolethinternalwayfsetting_desc'] = 'If enabled, the Shibboleth login button on the main login page is replaced by the same organisation (IdP) selector used on the Shibboleth plugin\'s internal login page (POST to auth/shibboleth/login.php). The list of organisations comes from the Shibboleth authentication plugin\'s "Identity providers" configuration (<a href="{$a->url}">Shibboleth authentication settings</a>). If that list is empty or Shibboleth is not enabled, the normal Shibboleth button is shown.';
 // ... ... Setting: IDP login intro.
 $string['loginidpshowintrosetting'] = 'IDP login intro';
 $string['loginidpshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the IDP login buttons or not. By default, the intro is shown and users will be quickly informed what the IDP buttons are about. If you disable this setting, the IDP intro is hidden. This allows you to provide a clean user login interface if you just use external identity providers like OAuth2 or OIDC.';
@@ -420,8 +418,6 @@ $string['loginidpintrotextsetting_desc'] = 'With this setting, you can override 
 $string['loginidploginlabelsetting'] = 'IDP login label';
 $string['loginidploginlabelsetting_desc'] = 'With this setting, you can customize the label for IDP login to be used in the tab and accordion layout.';
 $string['loginidploginlabelsetting_default'] = 'IDP login';
-$string['loginidpsplitsetting'] = 'Split per identity provider';
-$string['loginidpsplitsetting_desc'] = 'If enabled, each identity provider login option appears in its own tab, accordion panel or section. In tab and accordion layouts, the provider name is used as the title. The IDP intro text and visibility settings still apply within each panel or block. If disabled, all identity providers stay in a single tab, panel, or vertical section.';
 // ... ... Setting: IDP login instruction.
 $string['loginidpshowinstruction'] = 'IDP login instruction';
 $string['loginidpshowinstruction_desc'] = 'With this setting, you can enable instructions for the IDP login provider.';
@@ -429,6 +425,14 @@ $string['loginidpinstructioncontent'] = 'IDP login instruction content';
 $string['loginidpinstructioncontent_desc'] = 'With this setting, you can specify custom instructions for the IDP login provider. This allows you to provide users with additional information about how to log in via identity providers.';
 $string['loginidpinstructionposition'] = 'IDP login instruction position';
 $string['loginidpinstructionposition_desc'] = 'With this setting, you can specify where the IDP login instructions should be shown relative to the login buttons.';
+// ... Section: Login provider: IDP (Expert settings).
+$string['loginprovideridpexpertheading'] = 'Login provider: IDP (Expert settings)';
+// ... ... Setting: Split per identity provider.
+$string['loginidpsplitsetting'] = 'Split per identity provider';
+$string['loginidpsplitsetting_desc'] = 'If enabled, each identity provider login option appears in its own tab, accordion panel or section. In tab and accordion layouts, the provider name is used as the label. The IDP intro text and visibility settings still apply within each panel or block. If disabled, all identity providers stay in a single tab, panel, or vertical section.';
+// ... ... Setting: Use internal Shibboleth WAYF.
+$string['loginshibbolethinternalwayfsetting'] = 'Use internal Shibboleth WAYF';
+$string['loginshibbolethinternalwayfsetting_desc'] = 'With this setting, you can replace a Shibboleth login button with an internal WAYF form. If enabled, the Shibboleth login button is replaced by the same organisation (IdP) selector used on the <a href="{$a->loginurl}">Shibboleth authentication plugin\'s internal login page</a>. The list of organisations comes from the <a href="{$a->settingsurl}">Shibboleth authentication plugin\'s \'Identity providers\' configuration</a>. If that list is empty or Shibboleth authentication is not enabled at all, this setting does not have any effect and IDP buttons are shown as normal.';
 // ... Section: Login provider: Self registration.
 $string['loginproviderselfregistrationheading'] = 'Login provider: Self registration';
 // ... ... Setting: Self registration.
