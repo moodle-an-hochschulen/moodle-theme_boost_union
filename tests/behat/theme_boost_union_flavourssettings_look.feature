@@ -885,16 +885,28 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
       | config            | value    |
       | themedesignermode | <config> |
     And all caches are purged
-    And the following "theme_boost_union > flavours" exist:
-      | title        | applytocategories_ids | look_rawscss                         |
-      | Test Flavour | CAT1                  | .path-course-view #page-header h1 { display: none; } |
-    When I log in as "admin"
-    And I am on "Course 1" course homepage
+    And I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "Test Flavour"
+    And I set the field "Raw SCSS" to ".path-course-view #page-header h1 { display: none; }"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    When I am on "Course 1" course homepage
     And I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
     And I navigate to "Appearance > Boost Union > Flavours" in site administration
     And I click on ".action-edit" "css_element" in the "Test Flavour" "table_row"
     And I set the field "Raw SCSS" to ""
     And I click on "Save changes" "button"
+    # We need to wait a bit here as styles_debug.php does not have a themerev parameter, just an expires HTTP header which
+    # makes the delivered file "outdated" immediately after delivery. However, as Behat clicks faster than a human,
+    # we need to make sure that the next request does not happen before the next realtime second.
+    And I wait "3" seconds
     And I am on "Course 1" course homepage
     Then I should see "Course 1" in the "#page-header .page-header-headings" "css_element"
 
