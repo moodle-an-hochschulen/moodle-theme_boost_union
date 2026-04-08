@@ -1473,10 +1473,11 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('loginshibbolethinternalwayfsetting', 'theme_boost_union', null, true);
         $shibloginurl = new core\url('/auth/shibboleth/login.php');
         $shibsettingsurl = new core\url('/admin/settings.php', ['section' => 'authsettingshibboleth']);
+        $shibwayfurl = new core\url('/admin/search.php', ['query' => 'alt_login']);
         $description = get_string(
             'loginshibbolethinternalwayfsetting_desc',
             'theme_boost_union',
-            ['settingsurl' => $shibsettingsurl->out(), 'loginurl' => $shibloginurl->out()],
+            ['settingsurl' => $shibsettingsurl->out(), 'loginurl' => $shibloginurl->out(), 'shibwayfurl' => $shibwayfurl->out()],
             true
         );
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
