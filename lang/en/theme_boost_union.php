@@ -225,8 +225,11 @@ $string['navbarcolorsetting'] = 'Navbar color';
 $string['navbarcolorsetting_desc'] = 'With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one.';
 $string['navbarcolorsetting_light'] = 'Light navbar with dark font color (unchanged as presented by Moodle core)';
 $string['navbarcolorsetting_dark'] = 'Dark navbar with light font color';
-$string['navbarcolorsetting_primarydark'] = 'Primary color navbar with light font color';
-$string['navbarcolorsetting_primarylight'] = 'Primary color navbar with dark font color';
+$string['navbarcolorsetting_coloreddark'] = 'Colored navbar with light font color';
+$string['navbarcolorsetting_coloredlight'] = 'Colored navbar with dark font color';
+// ... ... Setting: Navbar tint.
+$string['navbartintsetting'] = 'Navbar tint';
+$string['navbartintsetting_desc'] = 'With this setting, you can define the color of the colored navbar. This setting is only effective if the navbar color is set to one of the \'Colored navbar\' options above. If no color is defined here, the primary brand color will be used as a fallback.';
 
 // Settings: Activity branding tab.
 $string['activitybrandingtab'] = 'Activity branding';
@@ -1639,6 +1642,8 @@ $string['flavourslogocompact'] = 'Compact logo';
 $string['flavourslogocompact_help'] = 'With this setting, the flavour will override the logo which is configured in Boost Union\'s look settings.';
 $string['flavoursnavbarcolor'] = 'Navbar color';
 $string['flavoursnavbarcolor_help'] = 'With this setting, the flavour will override the navbar color which is configured in Boost Union\'s look settings.';
+$string['flavoursnavbartint'] = 'Navbar tint';
+$string['flavoursnavbartint_help'] = 'With this setting, the flavour will override the navbar tint color which is configured in Boost Union\'s look settings. This setting is only effective if the navbar color is set to one of the \'Colored navbar\' options.';
 $string['flavoursnotificationcreated'] = 'The flavour was created successfully';
 $string['flavoursnotificationdeleted'] = 'The flavour was deleted successfully';
 $string['flavoursnotificationedited'] = 'The flavour was edited successfully';
@@ -1991,3 +1996,4 @@ $string['upgradenotice_2022080922_notcopied'] = 'The <strong>{$a}</strong> setti
 $string['upgradenotice_2025041410'] = 'The setting "Show hint for guest access" has been updated to support more options. Your existing configuration (which was set to "Yes") has been migrated to the new option "Yes, but only if no guest access password is set".';
 $string['upgradenotice_2025041413'] = 'The setting "courselistinghowfields" has been renamed to "courselistingshowfields" to fix a typo. Your existing configuration has been migrated to the new setting name.';
 $string['upgradenotice_2025041416'] = 'Smart menu dividers are now available as a dedicated menu item type. Existing dividers (created using heading type with hash signs) have been automatically converted to the new divider type.';
+$string['upgradenotice_2025100623'] = 'The navbar color options "Primary color navbar with dark font color" and "Primary color navbar with light font color" have been renamed to "Colored navbar with dark font color" and "Colored navbar with light font color". Your existing configuration has been migrated automatically. Additionally, your primary brand color has been transferred to the new "Navbar tint" setting to maintain the previous visual appearance.';

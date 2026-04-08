@@ -1007,6 +1007,69 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025041454, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2025100623) {
+        // Define table theme_boost_union_flavours to be altered.
+        $table = new xmldb_table('theme_boost_union_flavours');
+
+        // Define field look_navbartint to be added.
+        $field = new xmldb_field('look_navbartint', XMLDB_TYPE_CHAR, '32', null, null, null, null, 'look_navbarcolor');
+
+        // Conditionally launch add field look_navbartint.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Track if any navbarcolor value was migrated from the old primary color options.
+        $tintmigrated = false;
+
+        // Migrate the global navbarcolor setting from old 'primarylight'/'primarydark' to new 'coloredlight'/'coloreddark'.
+        $navbarcolor = get_config('theme_boost_union', 'navbarcolor');
+        if ($navbarcolor === 'primarylight') {
+            set_config('navbarcolor', 'coloredlight', 'theme_boost_union');
+            $tintmigrated = true;
+        } else if ($navbarcolor === 'primarydark') {
+            set_config('navbarcolor', 'coloreddark', 'theme_boost_union');
+            $tintmigrated = true;
+        }
+
+        // If the global navbarcolor was migrated, copy the primary brand color to the navbar tint setting.
+        if ($tintmigrated) {
+            $brandcolor = get_config('theme_boost_union', 'brandcolor');
+            if (!empty($brandcolor)) {
+                set_config('navbartint', $brandcolor, 'theme_boost_union');
+            }
+        }
+
+        // Migrate all flavours where look_navbarcolor is 'primarylight' or 'primarydark'.
+        $flavours = $DB->get_records_select(
+            'theme_boost_union_flavours',
+            "look_navbarcolor IN ('primarylight', 'primarydark')"
+        );
+        foreach ($flavours as $flavour) {
+            if ($flavour->look_navbarcolor === 'primarylight') {
+                $flavour->look_navbarcolor = 'coloredlight';
+            } else if ($flavour->look_navbarcolor === 'primarydark') {
+                $flavour->look_navbarcolor = 'coloreddark';
+            }
+            // If the flavour has a brand color set and no navbar tint set yet, copy the brand color to the navbar tint.
+            if (!empty($flavour->look_brandcolor) && empty($flavour->look_navbartint)) {
+                $flavour->look_navbartint = $flavour->look_brandcolor;
+            }
+            $DB->update_record('theme_boost_union_flavours', $flavour);
+            $tintmigrated = true;
+        }
+
+        // If any navbarcolor value was migrated, show an upgrade notice.
+        if ($tintmigrated) {
+            // Show an upgrade notice about this change.
+            $message = get_string('upgradenotice_2025100623', 'theme_boost_union');
+            echo $OUTPUT->notification($message, 'info');
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2025100623, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();

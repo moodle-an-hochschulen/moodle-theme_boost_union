@@ -39,6 +39,7 @@
         <FIELD NAME="look_aicolinteractivecontent" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_aicolinterface" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_navbarcolor" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_navbartint" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="content_footnote" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="content_footnote_format" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
