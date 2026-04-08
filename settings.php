@@ -1248,6 +1248,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'eq',
             'vertical'
         );
+        $page->hide_if(
+            'theme_boost_union/loginlocalloginlabel',
+            'theme_boost_union/loginlocalloginenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
 
         // Setting: Local login instruction.
         $name = 'theme_boost_union/loginlocalshowinstruction';
@@ -1383,6 +1389,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme_boost_union/loginlayout',
             'eq',
             'vertical'
+        );
+        $page->hide_if(
+            'theme_boost_union/loginidploginlabel',
+            'theme_boost_union/loginidploginenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
         );
         $page->hide_if(
             'theme_boost_union/loginidploginlabel',
@@ -1579,6 +1591,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'eq',
             'vertical'
         );
+        $page->hide_if(
+            'theme_boost_union/loginselfregistrationloginlabel',
+            'theme_boost_union/loginselfregistrationenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
 
         // Setting: Self registration instruction.
         $name = 'theme_boost_union/loginselfregistrationshowinstruction';
@@ -1714,6 +1732,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme_boost_union/loginlayout',
             'eq',
             'vertical'
+        );
+        $page->hide_if(
+            'theme_boost_union/loginguestloginlabel',
+            'theme_boost_union/loginguestloginenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
         // Setting: Guest login instruction.
