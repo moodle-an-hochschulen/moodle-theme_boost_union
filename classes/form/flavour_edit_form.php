@@ -237,6 +237,21 @@ class flavour_edit_form extends \moodleform {
         $mform->addRule('look_brandcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_brandcolor', 'flavoursbrandcolor', 'theme_boost_union');
 
+        // Add branded gray tones select element.
+        $brandedgreyoption = [
+            THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE => get_string('nochange', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_SELECT_YES => get_string('yes'),
+            THEME_BOOST_UNION_SETTING_SELECT_NO => get_string('no'),
+        ];
+        $mform->addElement(
+            'select',
+            'look_brandedgraytones',
+            get_string('flavoursbrandedgraytones', 'theme_boost_union'),
+            $brandedgreyoption
+        );
+        $mform->setDefault('look_brandedgraytones', THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE);
+        $mform->addHelpButton('look_brandedgraytones', 'flavoursbrandedgraytones', 'theme_boost_union');
+
         // Add link colors heading.
         $context = new \stdClass();
         $context->title = get_string('linkcolorsheading', 'theme_boost_union', null, true);

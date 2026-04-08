@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-04-08 - Improvement: Add admin setting to tint grey colors, resolves #1220
+
 ### v5.1-r10
 
 * 2026-04-07 - Tests: Add a test to view a user tour

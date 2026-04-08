@@ -363,6 +363,7 @@ class theme_boost_union_generator extends component_generator_base {
             'applytocategories_ids' => null,
             'look_backgroundimagepos' => $data['look_backgroundimagepos'] ?? null,
             'look_brandcolor' => $data['look_brandcolor'] ?? null,
+            'look_brandedgraytones' => $data['look_brandedgraytones'] ?? null,
             'look_linkcolor' => $data['look_linkcolor'] ?? null,
             'look_buttonbrandcolor' => $data['look_buttonbrandcolor'] ?? null,
             'look_bootstrapcolorsuccess' => $data['look_bootstrapcolorsuccess'] ?? null,
