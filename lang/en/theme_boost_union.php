@@ -188,6 +188,9 @@ $string['brandcolorsheading'] = 'Brand colors';
 // ... ... Setting: Primary brand color.
 $string['brandcolor'] = 'Primary brand color';
 $string['brandcolor_desc'] = 'The primary brand color. It is used for accent and highlighting purposes across the site and is also used as basis for calculating gradated brand colors. Furthermore, it is used for links and buttons unless you set distinct colors for links and buttons in the settings below.';
+// ... ... Setting: Use branded gray tones.
+$string['brandedgraytones'] = 'Use branded gray tones';
+$string['brandedgraytones_desc'] = 'With this setting, the Bootstrap gray tones used throughout the theme are derived from the primary brand color instead of neutral grays. This creates a subtle color harmony across all gray elements on the page. Please note: This setting only takes effect if a primary brand color is configured above.';
 // ... Section: Link colors.
 $string['linkcolorsheading'] = 'Link colors';
 // ... ... Setting: Link brand color.
@@ -1600,6 +1603,8 @@ $string['flavourslinkcolor'] = 'Link brand color';
 $string['flavourslinkcolor_help'] = 'With this setting, the flavour will override the link color which is configured in Boost Union\'s look settings.';
 $string['flavoursbuttonbrandcolor'] = 'Button brand color';
 $string['flavoursbuttonbrandcolor_help'] = 'With this setting, the flavour will override the button brand color which is configured in Boost Union\'s look settings.';
+$string['flavoursbrandedgraytones'] = 'Use branded gray tones';
+$string['flavoursbrandedgraytones_help'] = 'With this setting, the flavour will override the branded gray tones setting which is configured in Boost Union\'s look settings.';
 $string['flavourscreateflavour'] = 'Create flavour';
 $string['flavourscustomscss'] = 'Raw SCSS';
 $string['flavourscustomscss_help'] = 'With this setting, you can write custom SCSS for the flavour. It will be appended to the stack of CSS code which is shipped to the browser as soon as the flavour applies.';

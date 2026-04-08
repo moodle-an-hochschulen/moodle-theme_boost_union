@@ -267,6 +267,71 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     Then DOM element ".mytesttext" should have computed style "color" "rgb(255, 0, 0)"
 
   @javascript
+  Scenario Outline: Flavours: Branded gray tones - Enable branded gray tones (with no global setting being set before)
+    Given the following config values are set as admin:
+      | config     | value   | plugin            |
+      | brandcolor | #FF0000 | theme_boost_union |
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_brandedgraytones |
+      | My shiny new flavour | CAT1                  | <brandedgraytones>    |
+    And the following "activities" exist:
+      | activity | name      | intro                                                       | course |
+      | label    | Label one | <span class="mytesttext text-secondary">My test text</span> | C1     |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I should see "My test text"
+    Then DOM element ".mytesttext" should have computed style "color" "<expectedcolor>"
+
+    Examples:
+      | brandedgraytones | expectedcolor      |
+      | yes              | rgb(195, 182, 182) |
+      | no               | rgb(206, 212, 218) |
+
+  @javascript
+  Scenario Outline: Flavours: Branded gray tones - Enable branded gray tones (with the global setting being overridden)
+    Given the following config values are set as admin:
+      | config           | value   | plugin            |
+      | brandcolor       | #FF0000 | theme_boost_union |
+      | brandedgraytones | no      | theme_boost_union |
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_brandedgraytones |
+      | My shiny new flavour | CAT1                  | <brandedgraytones>    |
+    And the following "activities" exist:
+      | activity | name      | intro                                                       | course |
+      | label    | Label one | <span class="mytesttext text-secondary">My test text</span> | C1     |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I should see "My test text"
+    Then DOM element ".mytesttext" should have computed style "color" "<expectedcolor>"
+
+    Examples:
+      | brandedgraytones | expectedcolor      |
+      | yes              | rgb(195, 182, 182) |
+      | no               | rgb(206, 212, 218) |
+
+  @javascript
+  Scenario Outline: Flavours: Branded gray tones - Do not change the branded gray tones setting (with a global setting being served properly)
+    Given the following config values are set as admin:
+      | config           | value              | plugin            |
+      | brandcolor       | #FF0000            | theme_boost_union |
+      | brandedgraytones | <brandedgraytones> | theme_boost_union |
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | look_brandedgraytones |
+      | My shiny new flavour | CAT1                  | nochange              |
+    And the following "activities" exist:
+      | activity | name      | intro                                                       | course |
+      | label    | Label one | <span class="mytesttext text-secondary">My test text</span> | C1     |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I should see "My test text"
+    Then DOM element ".mytesttext" should have computed style "color" "<expectedcolor>"
+
+    Examples:
+      | brandedgraytones | expectedcolor      |
+      | yes              | rgb(195, 182, 182) |
+      | no               | rgb(206, 212, 218) |
+
+  @javascript
   Scenario: Flavours: Link color - Set the link color (with a global color not having been set before)
     Given the following config values are set as admin:
       | config     | value       | plugin            |

@@ -128,6 +128,10 @@ With this setting, you control the positioning of the background image within th
 
 This color is used for accent and highlighting purposes across the site and is also used as basis for calculating gradated brand colors. Furthermore, it is used for links and buttons unless you set distinct colors for links and buttons.
 
+###### Use branded gray tones
+
+With this setting, the Bootstrap gray tones used throughout the theme are derived from the primary brand color instead of neutral grays. This creates a subtle color harmony across all gray elements on the page.
+
 ##### Link colors
 
 ###### Link brand color
