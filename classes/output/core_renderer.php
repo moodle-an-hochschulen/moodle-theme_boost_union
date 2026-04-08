@@ -832,20 +832,30 @@ class core_renderer extends \theme_boost\output\core_renderer {
             ['context' => context_course::instance(SITEID), "escape" => false]
         );
 
-        // Shibboleth internal WAYF: replace the Shibboleth IdP button with the IdP selector (auth/shibboleth/login.php).
+        // Shibboleth internal WAYF: If the Boost Union setting is enabled and if Shibboleth authentication is enabled,
+        // replace the Shibboleth IdP button with the IdP selector.
         $loginshibbolethinternalwayf = get_config('theme_boost_union', 'loginshibbolethinternalwayf');
         if (
-            ($loginshibbolethinternalwayf === false ? THEME_BOOST_UNION_SETTING_SELECT_NO : $loginshibbolethinternalwayf) ===
-                THEME_BOOST_UNION_SETTING_SELECT_YES &&
+            $loginshibbolethinternalwayf !== false &&
+                $loginshibbolethinternalwayf === THEME_BOOST_UNION_SETTING_SELECT_YES &&
                 strpos($CFG->auth, 'shibboleth') !== false &&
                 !empty($context->identityproviders)
         ) {
+            // Require Shibboleth library.
             require_once($CFG->dirroot . '/auth/shibboleth/auth.php');
+
+            // Get the Shibboleth authentication plugin config.
             get_auth_plugin('shibboleth');
             $shibconfig = get_config('auth_shibboleth');
+
+            // Only show the internal WAYF if the user attribute for IdP selection and the organization selection
+            // are configured in Shibboleth.
             if (!empty($shibconfig->user_attribute) && !empty($shibconfig->organization_selection)) {
+                // Get the list of IdPs from Shibboleth and check if there are any IdPs configured.
                 $idplist = get_idp_list($shibconfig->organization_selection);
                 if (!empty($idplist)) {
+                    // Compose the WAYF data.
+                    // This logic is copied and modified from /auth/shibboleth/login.php.
                     $selectedidp = '-';
                     if (isset($_COOKIE['_saml_idp'])) {
                         $idpcookie = generate_cookie_array($_COOKIE['_saml_idp']);
@@ -1087,7 +1097,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
             if ($order === false) {
                 $order = 2; // Default order.
             }
+            // If the setting to separate IDPs per tab is enabled and if there are identity providers.
             if ($separateidppertab && !empty($context->identityproviders)) {
+                // Create a separate login method for each IDP, so they can be rendered in separate tabs.
+                // Preserve the original order of the IDPs as provided by Moodle core.
                 $providers = array_values($context->identityproviders);
                 foreach ($providers as $idx => $idp) {
                     $loginmethods[] = (object)[
@@ -1106,6 +1119,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
                         'idpidx' => $idx,
                     ];
                 }
+
+                // Otherwise, create a single login method for all IDPs,
+                // so they can be rendered in a single tab or an accordion pane.
             } else {
                 $loginmethods[] = (object)[
                     'id' => 'login-method-idp',
@@ -1161,11 +1177,18 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // Sort login methods by order setting.
         usort($loginmethods, function ($a, $b) {
+            // Sort by order value first.
             $orderby = $a->order <=> $b->order;
+
+            // If order values are different, use that for sorting.
             if ($orderby !== 0) {
                 return $orderby;
             }
-            // Preserve identity-provider order when several IDP methods share the same order value.
+
+            // Otherwise, if order values are equal, sort by identity-provider order.
+            // This covers as well the case when the admin configured the same order value for multiple login methods
+            // as the spaceship operator also returns 0 when both operands are null/undefined
+            // (which is the case for non-IDP methods that don't have an idpidx).
             return ($a->idpidx ?? 0) <=> ($b->idpidx ?? 0);
         });
 
@@ -1174,9 +1197,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $loginmethods[0]->isfirst = true;
         }
 
-        // Set method labels: idp-split → provider name; tabs/accordion (non-split) → theme tab titles.
+        // Set login method labels:
+        // - For IDP login methods with IDP split enabled, use the name of the first (or only) IDP as the label.
+        // - For all other methods, use the corresponding tab label setting if tabs or accordion layout is enabled.
+        // Otherwise use no label.
+
+        // Determine if tab labels should be used based on the layout type.
         $usetablabels = $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS
             || $loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION;
+
+        // Prepare an array of login method keys and their corresponding tab label config names and default strings.
+        // If tab labels are not used for the current layout, this will be an empty array and the loop below will be skipped.
         $logintablabelconfigs = $usetablabels ? [
             'local' => [
                 'config' => 'loginlocalloginlabel',
@@ -1196,13 +1227,18 @@ class core_renderer extends \theme_boost\output\core_renderer {
             ],
         ] : [];
 
+        // Iterate over the login methods and set the label for each method based on the rules described above.
         foreach ($loginmethods as $method) {
+            // For IDP login methods with IDP split enabled, use the name of the first (or only) IDP as the label.
             if (!empty($method->idpsplit)) {
                 $idp = $method->identityproviders[0];
                 $rawname = is_array($idp) ? ($idp['name'] ?? '') : ($idp->name ?? '');
                 $method->label = format_string($rawname);
                 continue;
             }
+
+            // For all other methods, if tab labels are used for the current layout, use the corresponding tab label setting.
+            // Otherwise use no label.
             if (!$usetablabels) {
                 continue;
             }
@@ -1230,6 +1266,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         foreach ($loginmethods as $method) {
             if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS) {
                 // Tabs: Default to first method when primarylogin is 'none'.
+                // If IDP split is enabled, also consider the idpsplitfirst flag for IDP methods.
                 if (!empty($method->idpsplit)) {
                     $method->active = ($primarylogin === 'none' && $method->isfirst) ||
                         ($primarylogin === 'idp' && !empty($method->idpsplitfirst));
@@ -1238,6 +1275,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 }
             } else if ($loginlayout == THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION) {
                 // Accordion: Only set active if matched, no default to first.
+                // If IDP split is enabled, also consider the idpsplitfirst flag for IDP methods.
                 if (!empty($method->idpsplit)) {
                     $method->active = ($primarylogin === 'idp' && !empty($method->idpsplitfirst));
                 } else {
