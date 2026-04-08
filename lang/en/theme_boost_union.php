@@ -428,6 +428,14 @@ $string['loginidpinstructioncontent'] = 'IDP login instruction content';
 $string['loginidpinstructioncontent_desc'] = 'With this setting, you can specify custom instructions for the IDP login provider. This allows you to provide users with additional information about how to log in via identity providers.';
 $string['loginidpinstructionposition'] = 'IDP login instruction position';
 $string['loginidpinstructionposition_desc'] = 'With this setting, you can specify where the IDP login instructions should be shown relative to the login buttons.';
+// ... Section: Login provider: IDP (Expert settings).
+$string['loginprovideridpexpertheading'] = 'Login provider: IDP (Expert settings)';
+// ... ... Setting: Split per identity provider.
+$string['loginidpsplitsetting'] = 'Split per identity provider';
+$string['loginidpsplitsetting_desc'] = 'If enabled, each identity provider login option appears in its own tab, accordion panel or section. In tab and accordion layouts, the provider name is used as the label. The IDP intro text and visibility settings still apply within each panel or block. If disabled, all identity providers stay in a single tab, panel, or vertical section.';
+// ... ... Setting: Use internal Shibboleth WAYF.
+$string['loginshibbolethinternalwayfsetting'] = 'Use internal Shibboleth WAYF';
+$string['loginshibbolethinternalwayfsetting_desc'] = 'With this setting, you can replace the Shibboleth login button with an internal WAYF form. If enabled, the Shibboleth login button is replaced by the same organisation (IdP) selector used on the <a href="{$a->loginurl}">Shibboleth authentication plugin\'s internal login page</a>. The list of organisations comes from the <a href="{$a->settingsurl}">Shibboleth authentication plugin\'s \'Identity providers\' configuration</a>. If that list is empty or Shibboleth authentication is not enabled at all, this setting does not have any effect and all IDP buttons are shown as normal. Please note: This setting (and with it, the whole Boost Union login page) will not work if you enable the <a href="{$a->shibwayfurl}">Moodle WAYF service in the Shibboleth authentication plugin</a> at the same time.';
 // ... Section: Login provider: Self registration.
 $string['loginproviderselfregistrationheading'] = 'Login provider: Self registration';
 // ... ... Setting: Self registration.
