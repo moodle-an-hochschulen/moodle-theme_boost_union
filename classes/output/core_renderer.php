@@ -837,7 +837,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $loginshibbolethinternalwayf = get_config('theme_boost_union', 'loginshibbolethinternalwayf');
         if (
             $loginshibbolethinternalwayf !== false &&
-                $loginshibbolethinternalwayf === THEME_BOOST_UNION_SETTING_SELECT_YES &&
+                $loginshibbolethinternalwayf === THEME_BOOST_UNION_SETTING_SHIBBOLETH_INTERNAL &&
                 strpos($CFG->auth, 'shibboleth') !== false &&
                 !empty($context->identityproviders)
         ) {
@@ -885,6 +885,19 @@ class core_renderer extends \theme_boost\output\core_renderer {
                         }
                     }
                 }
+            }
+        }
+
+        // Shibboleth embedded WAYF: Display the configured JavaScript.
+        if (
+            $loginshibbolethinternalwayf !== false &&
+            $loginshibbolethinternalwayf === THEME_BOOST_UNION_SETTING_SHIBBOLETH_EXTERNAL &&
+            strpos($CFG->auth, 'shibboleth') !== false
+        ) {
+            $loginshibbolethembeddedwayfjs = get_config('theme_boost_union', 'embeddedshibbolethwayftext');
+            if (!empty($loginshibbolethembeddedwayfjs)) {
+                $context->showshibbolethembeddedwayf = true;
+                $context->shibbolethembeddedwayfjs = $loginshibbolethembeddedwayfjs;
             }
         }
 

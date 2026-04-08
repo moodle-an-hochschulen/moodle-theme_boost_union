@@ -1496,7 +1496,15 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
-        // Setting: Use internal Shibboleth WAYF.
+        // Setting: Internal Shibboleth WAYF.
+        $loginshibbolethinternaloptions = [
+            THEME_BOOST_UNION_SETTING_SELECT_NO =>
+                get_string('no'),
+            THEME_BOOST_UNION_SETTING_SHIBBOLETH_INTERNAL =>
+                get_string('loginshibbolethinternalwayfsettinginternal', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_SHIBBOLETH_EXTERNAL =>
+                get_string('loginshibbolethinternalwayfsettingexternal', 'theme_boost_union'),
+        ];
         $name = 'theme_boost_union/loginshibbolethinternalwayf';
         $title = get_string('loginshibbolethinternalwayfsetting', 'theme_boost_union', null, true);
         $shibloginurl = new core\url('/auth/shibboleth/login.php');
@@ -1508,7 +1516,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             ['settingsurl' => $shibsettingsurl->out(), 'loginurl' => $shibloginurl->out(), 'shibwayfurl' => $shibwayfurl->out()],
             true
         );
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_SELECT_NO,
+            $loginshibbolethinternaloptions
+        );
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
         $page->hide_if(
@@ -1517,6 +1531,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'neq',
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
+
+        // Setting: Embedded Shibboleth WAYF text.
+        $name = 'theme_boost_union/embeddedshibbolethwayftext';
+        $title = get_string('embeddedshibbolethwayftextsetting', 'theme_boost_union', null, true);
+        $description = get_string('embeddedshibbolethwayftextsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtextarea($name, $title, $description, '', PARAM_RAW);
+        $tab->add($setting);
 
         // Heading: Login provider: Self registration.
         $name = 'theme_boost_union/loginproviderselfregistrationheading';
