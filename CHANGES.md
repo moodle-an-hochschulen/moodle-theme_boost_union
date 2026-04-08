@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.0-r22
 
 * 2026-04-07 - Tests: Add a test to view a user tour
 * 2026-04-03 - Improvement: Add CLI script to validate the SCSS compilation and to see SCSS compilation errors, resolves #1217
