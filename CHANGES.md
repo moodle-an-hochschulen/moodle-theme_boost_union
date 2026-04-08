@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r36
 
 * 2026-04-07 - Tests: Fix pending steps on Moodle 4.5, resolves #1222
 * 2026-04-07 - Tests: Add a test to view a user tour
