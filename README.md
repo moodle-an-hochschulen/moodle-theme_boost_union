@@ -160,6 +160,10 @@ If you have a very long sitename and want to prevent it from breaking the navbar
 
 With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one.
 
+###### Navbar tint
+
+With this setting, you can define the color of the colored navbar. This setting is only effective if the navbar color is set to one of the 'Colored navbar' options above.
+
 #### Tab "Activity Branding"
 
 In this tab there are the following settings:

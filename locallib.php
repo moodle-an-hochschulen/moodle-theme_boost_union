@@ -2068,9 +2068,10 @@ function theme_boost_union_get_scss_courseoverview_block($theme) {
  * Returns the SCSS code to be used in the navbar.
  *
  * @param theme_config $theme The theme config object.
+ * @param int|null $flavourid The ID of the flavour to apply, or null for global settings.
  * @return string
  */
-function theme_boost_union_get_scss_navbar($theme) {
+function theme_boost_union_get_scss_navbar($theme, $flavourid = null) {
     // Initialize SCSS snippet.
     $scss = '';
 
@@ -2091,6 +2092,40 @@ function theme_boost_union_get_scss_navbar($theme) {
                 max-width: ' . get_config('theme_boost_union', 'maxsitenamewidth') . ';
             }
         }' . PHP_EOL;
+    }
+
+    // Set styles based on the navbartint setting (only effective for colored navbar variants).
+    $navbarcolorsetting = get_config('theme_boost_union', 'navbarcolor');
+    // If a flavour applies.
+    if ($flavourid != null) {
+        $navbarcolorflavour = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, 'look_navbarcolor');
+        if (!empty($navbarcolorflavour) && $navbarcolorflavour != THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE) {
+            $navbarcolorsetting = $navbarcolorflavour;
+        }
+    }
+    if (
+        $navbarcolorsetting == THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDLIGHT ||
+        $navbarcolorsetting == THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDDARK
+    ) {
+        // Resolve the effective tint: flavour overrides global setting.
+        $navbartintsetting = get_config('theme_boost_union', 'navbartint');
+        // If a flavour applies.
+        if ($flavourid != null) {
+            $navbartintflavour = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, 'look_navbartint');
+            if (!empty($navbartintflavour)) {
+                $navbartintsetting = $navbartintflavour;
+            }
+        }
+        // Fall back to the primary brand color if no tint is set.
+        if (empty($navbartintsetting)) {
+            $navbartintsetting = get_config('theme_boost_union', 'brandcolor');
+        }
+        // If a color is now available (either tint or brand color), override the navbar background.
+        if (!empty($navbartintsetting)) {
+            $scss .= '.navbar.bg-primary {
+                background-color: ' . $navbartintsetting . ' !important;
+            }' . PHP_EOL;
+        }
     }
 
     return $scss;
