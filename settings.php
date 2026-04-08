@@ -711,10 +711,10 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                         get_string('navbarcolorsetting_light', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK =>
                         get_string('navbarcolorsetting_dark', 'theme_boost_union'),
-                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYLIGHT =>
-                        get_string('navbarcolorsetting_primarylight', 'theme_boost_union'),
-                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYDARK =>
-                        get_string('navbarcolorsetting_primarydark', 'theme_boost_union'), ];
+                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDLIGHT =>
+                        get_string('navbarcolorsetting_coloredlight', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDDARK =>
+                        get_string('navbarcolorsetting_coloreddark', 'theme_boost_union'), ];
         $setting = new admin_setting_configselect(
             $name,
             $title,
@@ -722,7 +722,23 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT,
             $navbarcoloroptions
         );
+        $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
+
+        // Setting: Navbar tint.
+        $name = 'theme_boost_union/navbartint';
+        $title = get_string('navbartintsetting', 'theme_boost_union', null, true);
+        $description = get_string('navbartintsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/navbartint',
+            'theme_boost_union/navbarcolor',
+            'in',
+            THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT . '|' .
+            THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK
+        );
 
         // Add tab to settings page.
         $page->add($tab);

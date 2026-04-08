@@ -47,10 +47,10 @@ switch ($navbarcolorsetting) {
     case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK:
         $templatecontext['navbarcolorclasses'] = 'navbar-dark bg-dark';
         break;
-    case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYLIGHT:
+    case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDLIGHT:
         $templatecontext['navbarcolorclasses'] = 'navbar-light bg-primary';
         break;
-    case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYDARK:
+    case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDDARK:
         $templatecontext['navbarcolorclasses'] = 'navbar-dark bg-primary';
         break;
     case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT:

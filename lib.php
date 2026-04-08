@@ -116,8 +116,8 @@ define('THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BELOW', 'below');
 
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT', 'light');
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK', 'dark');
-define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYLIGHT', 'primarylight');
-define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYDARK', 'primarydark');
+define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDLIGHT', 'coloredlight');
+define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDDARK', 'coloreddark');
 
 define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT', 'nextmaincontent');
 define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEARWINDOW', 'nearwindowedges');
@@ -651,7 +651,7 @@ function theme_boost_union_get_extra_scss($theme) {
     $content .= theme_boost_union_get_scss_for_activity_icon_purpose($theme);
 
     // Setting: Navbar styles.
-    $content .= theme_boost_union_get_scss_navbar($theme);
+    $content .= theme_boost_union_get_scss_navbar($theme, $flavourid);
 
     // Setting: Mark external links.
     $content .= theme_boost_union_get_scss_to_mark_external_links($theme);
