@@ -24,6 +24,7 @@
         <FIELD NAME="look_rawscss" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_rawscsspre" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_brandcolor" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_brandedgraytones" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_linkcolor" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_buttonbrandcolor" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_bootstrapcolorsuccess" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>

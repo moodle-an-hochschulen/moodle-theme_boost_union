@@ -207,6 +207,26 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     Then DOM element ".mytesttext" should have computed style "color" "rgb(255, 0, 0)"
 
   @javascript
+  Scenario Outline: Setting: Branded gray tones - Set the branded gray tones setting
+    Given the following config values are set as admin:
+      | config           | value              | plugin            |
+      | brandcolor       | #FF0000            | theme_boost_union |
+      | brandedgraytones | <brandedgraytones> | theme_boost_union |
+    And the following "activities" exist:
+      | activity | name      | intro                                                       | course |
+      | label    | Label one | <span class="mytesttext text-secondary">My test text</span> | C1     |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I should see "My test text"
+    Then DOM element ".mytesttext" should have computed style "color" "<expectedcolor>"
+
+    Examples:
+      | brandedgraytones | expectedcolor      |
+      | yes              | rgb(195, 182, 182) |
+      |                  | rgb(206, 212, 218) |
+
+  @javascript
   Scenario Outline: Setting: Link color - Set the link color
     Given the following config values are set as admin:
       | config     | value       | plugin            |

@@ -610,6 +610,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Setting: Use branded gray tones.
+        $name = 'theme_boost_union/brandedgraytones';
+        $title = get_string('brandedgraytones', 'theme_boost_union', null, true);
+        $description = get_string('brandedgraytones_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Heading: Link colors.
         $name = 'theme_boost_union/linkcolorsheading';
         $title = get_string('linkcolorsheading', 'theme_boost_union', null, true);

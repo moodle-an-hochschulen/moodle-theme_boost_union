@@ -405,6 +405,50 @@ function theme_boost_union_get_pre_scss($theme) {
         $scss .= '$bu-button-brand-color: ' . $buttonbrandcolor . ";\n";
     }
 
+    // Set custom Boost Union SCSS variables: Branded gray tones.
+    // When enabled, Bootstrap's $gray-100 to $gray-900 are derived from the primary brand color
+    // instead of neutral grays, creating a subtle brand-color harmony across gray elements.
+    $brandedgraytones = get_config('theme_boost_union', 'brandedgraytones');
+    if ($flavourid != null) {
+        $brandedgraytonesflavour = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, 'look_brandedgraytones');
+        if (!empty($brandedgraytonesflavour) && $brandedgraytonesflavour !== THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE) {
+            $brandedgraytones = $brandedgraytonesflavour;
+        }
+    }
+    if ($brandedgraytones == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        // Resolve the effective brand color (may be overridden by a flavour).
+        $effectivebrandcolor = get_config('theme_boost_union', 'brandcolor');
+        if ($flavourid != null) {
+            $flavourbrandcolor = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, 'look_brandcolor');
+            if (!empty($flavourbrandcolor)) {
+                $effectivebrandcolor = $flavourbrandcolor;
+            }
+        }
+        // Only add the branded gray tones SCSS if a brand color is actually configured,
+        // because the SCSS functions below require $primary to be defined in the pre-SCSS stack.
+        if (!empty($effectivebrandcolor)) {
+            $scss .= <<<'SCSS'
+// Extract the hue from the primary brand color and use it to tint all
+// Bootstrap gray steps, giving them a subtle brand-color harmony.
+$bu-brand-hue: hue($primary);
+
+@function bu-brand-gray($lightness) {
+    @return hsl($bu-brand-hue, 10%, $lightness);
+}
+
+$gray-100: bu-brand-gray(92%);
+$gray-200: bu-brand-gray(86%);
+$gray-300: bu-brand-gray(80%);
+$gray-400: bu-brand-gray(74%);
+$gray-500: bu-brand-gray(64%);
+$gray-600: bu-brand-gray(42%);
+$gray-700: bu-brand-gray(31%);
+$gray-800: bu-brand-gray(23%);
+$gray-900: bu-brand-gray(15%);
+SCSS;
+        }
+    }
+
     // Set custom Boost Union SCSS variable: The login container width.
     $logincontainerwidth = get_config('theme_boost_union', 'logincontainerwidth');
     // If the setting is not set.

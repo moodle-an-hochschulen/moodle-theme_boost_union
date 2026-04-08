@@ -372,6 +372,98 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     Then DOM element ".mytesttext" should have computed style "color" "rgb(255, 0, 0)"
 
   @javascript
+  Scenario Outline: Flavours: Branded gray tones - Enable branded gray tones (with no global setting being set before)
+    Given the following config values are set as admin:
+      | config     | value   | plugin            |
+      | brandcolor | #FF0000 | theme_boost_union |
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I set the field "look_brandedgraytones" to "<brandedgraytones>"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    And the following "activities" exist:
+      | activity | name      | intro                                                       | course |
+      | label    | Label one | <span class="mytesttext text-secondary">My test text</span> | C1     |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I should see "My test text"
+    Then DOM element ".mytesttext" should have computed style "color" "<expectedcolor>"
+
+    Examples:
+      | brandedgraytones | expectedcolor      |
+      | yes              | rgb(195, 182, 182) |
+      | no               | rgb(206, 212, 218) |
+
+  @javascript
+  Scenario Outline: Flavours: Branded gray tones - Enable branded gray tones (with the global setting being overridden)
+    Given the following config values are set as admin:
+      | config           | value   | plugin            |
+      | brandcolor       | #FF0000 | theme_boost_union |
+      | brandedgraytones | no      | theme_boost_union |
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I set the field "look_brandedgraytones" to "<brandedgraytones>"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    And the following "activities" exist:
+      | activity | name      | intro                                                       | course |
+      | label    | Label one | <span class="mytesttext text-secondary">My test text</span> | C1     |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I should see "My test text"
+    Then DOM element ".mytesttext" should have computed style "color" "<expectedcolor>"
+
+    Examples:
+      | brandedgraytones | expectedcolor      |
+      | yes              | rgb(195, 182, 182) |
+      | no               | rgb(206, 212, 218) |
+
+  @javascript
+  Scenario Outline: Flavours: Branded gray tones - Do not change the branded gray tones setting (with a global setting being served properly)
+    Given the following config values are set as admin:
+      | config           | value              | plugin            |
+      | brandcolor       | #FF0000            | theme_boost_union |
+      | brandedgraytones | <brandedgraytones> | theme_boost_union |
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I set the field "look_brandedgraytones" to "No change"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    And the following "activities" exist:
+      | activity | name      | intro                                                       | course |
+      | label    | Label one | <span class="mytesttext text-secondary">My test text</span> | C1     |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I should see "My test text"
+    Then DOM element ".mytesttext" should have computed style "color" "<expectedcolor>"
+
+    Examples:
+      | brandedgraytones | expectedcolor      |
+      | yes              | rgb(195, 182, 182) |
+      | no               | rgb(206, 212, 218) |
+
+  @javascript
   Scenario: Flavours: Link color - Set the link color (with a global color not having been set before)
     Given the following config values are set as admin:
       | config     | value       | plugin            |

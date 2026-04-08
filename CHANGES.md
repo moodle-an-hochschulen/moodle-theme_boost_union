@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-04-08 - Improvement: Add admin setting to tint grey colors, resolves #1220
+
 ### v4.5-r36
 
 * 2026-04-07 - Tests: Fix pending steps on Moodle 4.5, resolves #1222
