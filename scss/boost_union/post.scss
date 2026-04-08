@@ -383,7 +383,9 @@
            (The max-width will be adapted by JS (if enabled by the admin)
            if the tabs width is wider than the $bu-logincontainer-width. */
         .login-heading,
-        .login-instructions {
+        .login-instructions,
+        .login-shibboleth-wayf-form .form-text,
+        .login-shibboleth-wayf-form .form-label {
             width: auto;
             max-width: $bu-logincontainer-width;
             overflow-wrap: break-word;

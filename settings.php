@@ -1379,6 +1379,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'eq',
             'vertical'
         );
+        $page->hide_if(
+            'theme_boost_union/loginidploginlabel',
+            'theme_boost_union/loginidpsplit',
+            'eq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
 
         // Setting: IDP login instruction.
         $name = 'theme_boost_union/loginidpshowinstruction';
@@ -1433,6 +1439,53 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if(
             'theme_boost_union/loginidpinstructionposition',
             'theme_boost_union/loginidpshowinstruction',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
+        // Heading: Login provider: IDP (Expert settings).
+        $name = 'theme_boost_union/loginprovideridpexpertheading';
+        $title = get_string('loginprovideridpexpertheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Split per identity provider.
+        $name = 'theme_boost_union/loginidpsplit';
+        $title = get_string('loginidpsplitsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginidpsplitsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_SELECT_NO,
+            $yesnooption
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginidpsplit',
+            'theme_boost_union/loginidploginenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
+        // Setting: Use internal Shibboleth WAYF.
+        $name = 'theme_boost_union/loginshibbolethinternalwayf';
+        $title = get_string('loginshibbolethinternalwayfsetting', 'theme_boost_union', null, true);
+        $shibloginurl = new core\url('/auth/shibboleth/login.php');
+        $shibsettingsurl = new core\url('/admin/settings.php', ['section' => 'authsettingshibboleth']);
+        $shibwayfurl = new core\url('/admin/search.php', ['query' => 'alt_login']);
+        $description = get_string(
+            'loginshibbolethinternalwayfsetting_desc',
+            'theme_boost_union',
+            ['settingsurl' => $shibsettingsurl->out(), 'loginurl' => $shibloginurl->out(), 'shibwayfurl' => $shibwayfurl->out()],
+            true
+        );
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginshibbolethinternalwayf',
+            'theme_boost_union/loginidploginenable',
             'neq',
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
