@@ -378,6 +378,7 @@ class theme_boost_union_generator extends component_generator_base {
             'look_aicolinteractivecontent' => $data['look_aicolinteractivecontent'] ?? null,
             'look_aicolinterface' => $data['look_aicolinterface'] ?? null,
             'look_navbarcolor' => $data['look_navbarcolor'] ?? null,
+            'look_navbartint' => $data['look_navbartint'] ?? null,
             'look_rawscss' => $data['look_rawscss'] ?? null,
             'look_rawscsspre' => $data['look_rawscsspre'] ?? null,
             'content_footnote' => $data['content_footnote'] ?? null,

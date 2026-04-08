@@ -48,11 +48,11 @@ switch ($navbarcolorsetting) {
         $templatecontext['navbarcolorclasses'] = 'bg-dark';
         $templatecontext['databstheme'] = 'dark';
         break;
-    case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYLIGHT:
+    case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDLIGHT:
         $templatecontext['navbarcolorclasses'] = 'bg-primary';
         $templatecontext['databstheme'] = 'light';
         break;
-    case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYDARK:
+    case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDDARK:
         $templatecontext['navbarcolorclasses'] = 'bg-primary';
         $templatecontext['databstheme'] = 'dark';
         break;
