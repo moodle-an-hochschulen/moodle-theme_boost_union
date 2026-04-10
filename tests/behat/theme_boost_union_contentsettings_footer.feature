@@ -417,3 +417,17 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And I press "Save changes"
     When I am on the "C1" "Course" page logged in as "teacher1"
     Then I should see "Reset user tour on this page"
+
+  @javascript
+  Scenario: Support multilang additionalhtmlfooter content (backport of MDL-88210 / MDL-85498)
+    Given the following config values are set as admin:
+      | config               | value                                                                                                                                                                                |
+      | additionalhtmlfooter | <div id="custom-footer-html"><p><span lang="en" class="multilang">Custom Footer Content</span><span lang="de" class="multilang">Benutzerdefinierter Fußzeileninhalt</span></p></div> |
+    And the "multilang" filter is "on"
+    And the "multilang" filter applies to "content and headings"
+    And all Boost Union MUC caches are purged
+    And I log in as "admin"
+    When I am on homepage
+    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
+    Then I should see "Custom Footer Content" in the ".popover-body" "css_element"
+    But I should not see "Benutzerdefinierter Fußzeileninhalt" in the ".popover-body" "css_element"

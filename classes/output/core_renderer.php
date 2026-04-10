@@ -1329,7 +1329,20 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $output = '';
         if ($this->page->pagelayout !== 'embedded' && !empty($CFG->additionalhtmlfooter)) {
-            $output .= "\n" . $CFG->additionalhtmlfooter;
+            // The following code is part of Moodle core from Moodle 5.2 on (MDL-88210 / MDL-85498).
+            // It was backported to Boost Union to allow admins to use that feature already on legacy versions.
+
+            // The additional HTML footer content needs to also support JS so it supports things like analytics or other tooling.
+            // It is controlled via config so is considered trusted for this.
+            // We use format_text rather than injecting directly, to support features like multi-lang.
+            $formatoptions = [
+                'trusted' => true,
+                'clean' => false,
+                'context' => $this->page->context,
+                'para' => false,
+                'allowid' => true,
+            ];
+            $output .= "\n" . format_text($CFG->additionalhtmlfooter, FORMAT_HTML, $formatoptions);
         }
         return $output;
     }
