@@ -396,7 +396,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     Then I should see "Reset user tour on this page"
 
   @javascript
-  Scenario: Setting: Footer - Enable multilang additionalhtmlfooter content
+  Scenario: Support multilang additionalhtmlfooter content (backport of MDL-88210 / MDL-85498)
     Given the following config values are set as admin:
       | config               | value                                                                                                                                                                                |
       | additionalhtmlfooter | <div id="custom-footer-html"><p><span lang="en" class="multilang">Custom Footer Content</span><span lang="de" class="multilang">Benutzerdefinierter Fußzeileninhalt</span></p></div> |
