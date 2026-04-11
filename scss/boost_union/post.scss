@@ -157,8 +157,11 @@
 
     /* Adapt the color of the edit switch widget to fit onto the dark background. */
     .editmode-switch-form input {
-        background-color: var(--bs-body-bg);
-        border-color: $white;
+        border-color: var(--bs-gray-500);
+    }
+    .editmode-switch-form input:not(:checked) {
+        background-image: #{escape-svg($form-switch-bg-image)};
+        background-color: white;
     }
 
     /* Change the background color of the search panel in the navbar. */
@@ -196,8 +199,11 @@
 
     /* Adapt the color of the edit switch widget to fit onto the primary color background. */
     .editmode-switch-form input {
-        background-color: $primary;
-        border-color: $white;
+        border-color: var(--bs-gray-500);
+    }
+    .editmode-switch-form input:not(:checked) {
+        background-image: #{escape-svg($form-switch-bg-image)};
+        background-color: white;
     }
 
     /* Change the background color of the search panel in the navbar. */
@@ -268,9 +274,7 @@
 
     /* Adapt the color of the edit switch widget to fit onto the primary color background. */
     .editmode-switch-form input {
-        background-color: $primary;
-        background-image: #{escape-svg($form-switch-bg-image)};
-        border-color: var(--bs-nav-link-color);
+        border-color: var(--bs-gray-500);
     }
 
     /* Change the background color of the search panel in the navbar. */
