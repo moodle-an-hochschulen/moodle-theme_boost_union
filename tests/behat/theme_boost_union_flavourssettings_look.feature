@@ -1082,9 +1082,10 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I set the field "Raw SCSS" to ""
     And I click on "Save changes" "button"
     # We need to wait a bit here as styles_debug.php does not have a themerev parameter, just an expires HTTP header which
-    # makes the delivered file "outdated" immediately after delivery. However, as Behat clicks faster than a human,
-    # we need to make sure that the next request does not happen before the next realtime second.
-    And I wait "3" seconds
+    # makes the delivered file "outdated" after delivery. This is based on THEME_DESIGNER_CACHE_LIFETIME which is 10 seconds
+    # by default. However, as Behat clicks faster than a human, we need to make sure that the next request does not happen
+    # before that time.
+    And I wait "12" seconds
     And I am on "Course 1" course homepage
     Then I should see "Course 1" in the "#page-header .page-header-headings" "css_element"
 
