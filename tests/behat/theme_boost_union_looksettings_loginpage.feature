@@ -731,7 +731,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
   Scenario: Setting: Shibboleth internal WAYF on login page - Show organisation selector when enabled
     Given the following config values are set as admin:
       | config                      | value    | plugin            |
-      | loginshibbolethinternalwayf | yes      | theme_boost_union |
+      | loginshibbolethinternalwayf | internal | theme_boost_union |
       | loginidploginenable         | yes      | theme_boost_union |
       | loginlayout                 | vertical | theme_boost_union |
     And the following config values are set as admin:
@@ -751,6 +751,27 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And "#login-shibboleth-wayf-0" "css_element" should exist
     And I should see "Behat Shibboleth Organisation" in the ".login-identityproviders #login-shibboleth-wayf-0-idp" "css_element"
     And I should not see "Behat Shibboleth IdP" in the ".login-identityproviders" "css_element"
+
+  Scenario: Setting: Shibboleth external WAYF on login page - Show code from configuration field
+    Given the following config values are set as admin:
+      | config                      | value               | plugin            |
+      | loginshibbolethinternalwayf | external            | theme_boost_union |
+      | loginidploginenable         | yes                 | theme_boost_union |
+      | loginlayout                 | vertical            | theme_boost_union |
+      | embeddedshibbolethwayftext  | EMBEDDED-WAYF-START | theme_boost_union |
+      | alt_login                   | off                 | auth_shibboleth   |
+      | user_attribute              | HTTP_UNIQUEID       | auth_shibboleth   |
+    And the following config values are set as admin:
+      | config           | value             |
+      | auth             | manual,shibboleth |
+      | guestloginbutton | 1                 |
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then I should see "EMBEDDED-WAYF-START"
+    And ".login-shibboleth-wayf-form" "css_element" should not exist
+    And "#login-shibboleth-wayf-0-idp" "css_element" should not exist
+    And "#login-shibboleth-wayf-0" "css_element" should not exist
+    And ".btn.btn-primary.login-identityprovider-btn.w-100" "css_element" should not exist
 
   Scenario: Setting: Shibboleth internal WAYF on login page - Show standard buttons when disabled (Countercheck)
     Given the following config values are set as admin:
