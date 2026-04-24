@@ -2373,7 +2373,10 @@ function theme_boost_union_yesno_to_boolstring($var) {
  * @return string HTML to display in the navbar.
  */
 function theme_boost_union_get_navbar_starredcoursespopover() {
-    global $USER, $OUTPUT;
+    global $CFG, $USER, $OUTPUT;
+
+    // Require library.
+    require_once($CFG->dirroot . '/theme/boost_union/lib.php');
 
     // If a theme other than Boost Union or a child theme of it is active, return directly.
     // This is necessary as the callback is called regardless of the active theme.
@@ -2513,8 +2516,8 @@ function theme_boost_union_get_navbar_starredcoursespopover() {
 function theme_boost_union_callbackimpl_before_standard_html(&$hook = null) {
     global $CFG;
 
-    // Require local library.
-    require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+    // Require library.
+    require_once($CFG->dirroot . '/theme/boost_union/lib.php');
 
     // Initialize HTML.
     $html = '';
@@ -2535,6 +2538,9 @@ function theme_boost_union_callbackimpl_before_standard_html(&$hook = null) {
             return $html;
         }
     }
+
+    // Require local library.
+    require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
     // Add the touch icons to the page.
     $html .= theme_boost_union_get_touchicons_html_for_page();
@@ -2566,8 +2572,8 @@ function theme_boost_union_callbackimpl_before_standard_html(&$hook = null) {
 function theme_boost_union_callbackimpl_before_standard_top_of_body_html(&$hook = null) {
     global $CFG, $PAGE;
 
-    // Require local library.
-    require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+    // Require library.
+    require_once($CFG->dirroot . '/theme/boost_union/lib.php');
 
     // Initialize HTML.
     $html = '';
@@ -2862,36 +2868,16 @@ function theme_boost_union_reset_hooksuppress_cache() {
 }
 
 /**
- * Helper function to check if Boost Union or a child theme of Boost Union is active.
- * This is needed at multiple locations to avoid that callbacks in Boost Union affect other active themes.
- *
- * @return bool
- */
-function theme_boost_union_is_active_theme() {
-    global $CFG, $PAGE;
-
-    // During PHPUnit tests or when $PAGE theme is not yet initialised,
-    // fall back to check $CFG->theme to avoid triggering theme initialisation.
-    // This will not recognize Boost Union child themes as active, but this is acceptable in this case.
-    if ((defined('PHPUNIT_TEST') && PHPUNIT_TEST) || !$PAGE->has_set_url()) {
-        return ($CFG->theme === 'boost_union');
-    }
-
-    if ($PAGE->theme->name == 'boost_union' || in_array('boost_union', $PAGE->theme->parents)) {
-        return true;
-    }
-
-    return false;
-}
-
-/**
  * Helper function to generate HTML for an alert when Boost Union is not the active theme,
  * but someone tries to access Boost Union's settings.
  *
  * @return string HTML for the alert.
  */
 function theme_boost_union_is_not_active_alert() {
-    global $OUTPUT;
+    global $CFG, $OUTPUT;
+
+    // Require library.
+    require_once($CFG->dirroot . '/theme/boost_union/lib.php');
 
     // Check if Boost Union or a child theme of it is active.
     if (theme_boost_union_is_active_theme()) {
@@ -2952,22 +2938,6 @@ function theme_boost_union_recommendations_alert() {
 
     // Return the HTML for the alert.
     return $OUTPUT->render($notification);
-}
-
-/**
- * Helper function to check if a child theme of Boost Union (and _not_ Boost Union itself) is active.
- * This is needed at multiple locations to improve child theme support in Boost Union already.
- *
- * @return bool
- */
-function theme_boost_union_is_active_childtheme() {
-    global $PAGE;
-
-    if ($PAGE->theme->name != 'boost_union') {
-        return true;
-    } else {
-        return false;
-    }
 }
 
 /**

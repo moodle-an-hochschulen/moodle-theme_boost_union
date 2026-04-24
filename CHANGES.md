@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-11 - Internal change: Move theme_boost_union_is_active_theme() and theme_boost_union_is_active_childtheme() from locallib.php to lib.php
 * 2026-04-11 - Internal change: In the flavours edit form, use setDefault instead of setSelected.
 * 2026-05-11 - Settings: Re-arrange the login page settings as preparation for Boost Union 5.2
 * 2026-05-09 - Feature: Add a Boost Union recommendation page for admins and replace some notification boxes in the settings pages with it, resolves #1254

@@ -42,7 +42,8 @@ class before_standard_top_of_body_html_generation {
     public static function callback(\core\hook\output\before_standard_top_of_body_html_generation $hook): void {
         global $CFG;
 
-        // Require local library.
+        // Require libraries.
+        require_once($CFG->dirroot . '/theme/boost_union/lib.php');
         require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
         // Call callback implementation.
