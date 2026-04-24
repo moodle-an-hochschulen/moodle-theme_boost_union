@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-11 - Internal change: In the flavours edit form, use setDefault instead of setSelected.
 * 2026-05-11 - Settings: Re-arrange the login page settings as preparation for Boost Union 5.2
 * 2026-05-09 - Feature: Add a Boost Union recommendation page for admins and replace some notification boxes in the settings pages with it, resolves #1254
 * 2026-05-09 - Feature: Add a Checks API check to add the results of the Boost Union recommendations to the system status.
