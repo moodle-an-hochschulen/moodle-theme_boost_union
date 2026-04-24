@@ -206,14 +206,14 @@ class flavour_edit_form extends \moodleform {
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_RIGHT_BOTTOM =>
                         get_string('imageposition_right_bottom', 'theme_boost_union'),
         ];
-        $backgroundimagepositionselect = $mform->addElement(
+        $mform->addElement(
             'select',
             'look_backgroundimagepos',
             get_string('flavoursbackgroundimageposition', 'theme_boost_union'),
             $backgroundimagepositionoptions,
         );
         $mform->setType('look_backgroundimagepos', PARAM_TEXT);
-        $backgroundimagepositionselect->setSelected([THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE]);
+        $mform->setDefault('look_backgroundimagepos', THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE);
         $mform->addHelpButton('look_backgroundimagepos', 'flavoursbackgroundimageposition', 'theme_boost_union');
         $mform->addElement(
             'static',
@@ -440,14 +440,14 @@ class flavour_edit_form extends \moodleform {
                         get_string('navbarcolorsetting_coloredlight', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDDARK =>
                         get_string('navbarcolorsetting_coloreddark', 'theme_boost_union'), ];
-        $navbarcolorselect = $mform->addElement(
+        $mform->addElement(
             'select',
             'look_navbarcolor',
             get_string('flavoursnavbarcolor', 'theme_boost_union'),
             $navbarcoloroptions,
         );
         $mform->setType('look_navbarcolor', PARAM_TEXT);
-        $navbarcolorselect->setSelected([THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE]);
+        $mform->setDefault('look_navbarcolor', THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE);
         $mform->addHelpButton('look_navbarcolor', 'flavoursnavbarcolor', 'theme_boost_union');
         $mform->addElement(
             'static',
