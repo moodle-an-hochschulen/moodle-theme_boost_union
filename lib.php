@@ -177,6 +177,45 @@ define('THEME_BOOST_UNION_SETTING_SHOWAS_TEXT', 'text');
 use theme_boost_union\snippets;
 
 /**
+ * Helper function to check if Boost Union or a child theme of Boost Union is active.
+ * This is needed at multiple locations to avoid that callbacks in Boost Union affect other active themes.
+ *
+ * @return bool
+ */
+function theme_boost_union_is_active_theme(): bool {
+    global $CFG, $PAGE;
+
+    // During PHPUnit tests or when $PAGE theme is not yet initialised,
+    // fall back to check $CFG->theme to avoid triggering theme initialisation.
+    // This will not recognize Boost Union child themes as active, but this is acceptable in this case.
+    if ((defined('PHPUNIT_TEST') && PHPUNIT_TEST) || !$PAGE->has_set_url()) {
+        return ($CFG->theme === 'boost_union');
+    }
+
+    if ($PAGE->theme->name == 'boost_union' || in_array('boost_union', $PAGE->theme->parents)) {
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Helper function to check if a child theme of Boost Union (and _not_ Boost Union itself) is active.
+ * This is needed at multiple locations to improve child theme support in Boost Union already.
+ *
+ * @return bool
+ */
+function theme_boost_union_is_active_childtheme(): bool {
+    global $PAGE;
+
+    if ($PAGE->theme->name != 'boost_union') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
  * Returns the main SCSS content.
  *
  * @param \core\output\theme_config $theme The theme config object.
