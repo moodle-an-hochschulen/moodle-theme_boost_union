@@ -728,10 +728,10 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And "#login-method-idp-0-tab" "css_element" should not exist
     And "#login-method-idp-0" "css_element" should not exist
 
-  Scenario: Setting: Shibboleth internal WAYF on login page - Show organisation selector when enabled
+  Scenario: Setting: Shibboleth internal WAYF on login page - Show organisation selector (based on the 'auth_shibboleth' configuration)
     Given the following config values are set as admin:
       | config                      | value    | plugin            |
-      | loginshibbolethinternalwayf | internal | theme_boost_union |
+      | loginshibbolethinternalwayf | config   | theme_boost_union |
       | loginidploginenable         | yes      | theme_boost_union |
       | loginlayout                 | vertical | theme_boost_union |
     And the following config values are set as admin:
@@ -752,13 +752,13 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And I should see "Behat Shibboleth Organisation" in the ".login-identityproviders #login-shibboleth-wayf-0-idp" "css_element"
     And I should not see "Behat Shibboleth IdP" in the ".login-identityproviders" "css_element"
 
-  Scenario: Setting: Shibboleth external WAYF on login page - Show code from configuration field
+  Scenario: Setting: Shibboleth external WAYF on login page - Show organizsation selector (based on embedded JavaScript code) - Simple check with a placeholder text
     Given the following config values are set as admin:
       | config                      | value               | plugin            |
-      | loginshibbolethinternalwayf | external            | theme_boost_union |
+      | loginshibbolethinternalwayf | code                | theme_boost_union |
       | loginidploginenable         | yes                 | theme_boost_union |
       | loginlayout                 | vertical            | theme_boost_union |
-      | embeddedshibbolethwayftext  | EMBEDDED-WAYF-START | theme_boost_union |
+      | internalshibbolethwayfcode  | EMBEDDED-WAYF-START | theme_boost_union |
       | alt_login                   | off                 | auth_shibboleth   |
       | user_attribute              | HTTP_UNIQUEID       | auth_shibboleth   |
     And the following config values are set as admin:
@@ -768,6 +768,44 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     When I am on site homepage
     And I click on "Log in" "link" in the ".logininfo" "css_element"
     Then I should see "EMBEDDED-WAYF-START"
+    And ".login-shibboleth-wayf-form" "css_element" should not exist
+    And "#login-shibboleth-wayf-0-idp" "css_element" should not exist
+    And "#login-shibboleth-wayf-0" "css_element" should not exist
+    And ".btn.btn-primary.login-identityprovider-btn.w-100" "css_element" should not exist
+
+  @javascript
+  Scenario: Setting: Shibboleth external WAYF on login page - Show organizsation selector (based on embedded JavaScript code) - Advances check with SWITCH AAI JS Code
+    Given the following config values are set as admin:
+      | config                      | value               | plugin            |
+      | loginshibbolethinternalwayf | code                | theme_boost_union |
+      | loginidploginenable         | yes                 | theme_boost_union |
+      | loginlayout                 | vertical            | theme_boost_union |
+      | alt_login                   | off                 | auth_shibboleth   |
+      | user_attribute              | HTTP_UNIQUEID       | auth_shibboleth   |
+      | internalshibbolethwayfcode  | EMBEDDED-WAYF-START | theme_boost_union |
+    And the following config values are set as admin:
+      | config           | value             |
+      | auth             | manual,shibboleth |
+      | guestloginbutton | 1                 |
+    And I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I set the field "Internal WAYF JavaScript code" to multiline:
+"""
+<script type="text/javascript">
+var wayf_URL = "https://wayf.switch.ch/SWITCHaai/WAYF";
+var wayf_sp_entityID = "https://moodle.example.com/shibboleth";
+var wayf_sp_handlerURL = "https://moodle.example.com/Shibboleth.sso";
+var wayf_return_url = "https://moodle.example.com/";
+</script>
+<script type="text/javascript" src="https://wayf.switch.ch/SWITCHaai/WAYF/embedded-wayf.js"></script>
+"""
+    And I press "Save changes"
+    And I log out
+    When I am on site homepage
+    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    Then "#wayf_div" "css_element" should exist in the ".login-identityproviders" "css_element"
+    And "#user_idp" "css_element" should exist in the ".login-identityproviders" "css_element"
     And ".login-shibboleth-wayf-form" "css_element" should not exist
     And "#login-shibboleth-wayf-0-idp" "css_element" should not exist
     And "#login-shibboleth-wayf-0" "css_element" should not exist
