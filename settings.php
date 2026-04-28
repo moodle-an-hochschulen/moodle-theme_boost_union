@@ -1502,6 +1502,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
 
         // Setting: Use internal Shibboleth WAYF.
+        $loginshibbolethinternaloptions = [
+            THEME_BOOST_UNION_SETTING_SELECT_NO =>
+                get_string('no'),
+            THEME_BOOST_UNION_SETTING_SHIBBOLETH_CONFIG =>
+                get_string('loginshibbolethinternalwayfsettingconfig', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_SHIBBOLETH_CODE =>
+                get_string('loginshibbolethinternalwayfsettingcode', 'theme_boost_union'),
+        ];
         $name = 'theme_boost_union/loginshibbolethinternalwayf';
         $title = get_string('loginshibbolethinternalwayfsetting', 'theme_boost_union', null, true);
         $shibloginurl = new core\url('/auth/shibboleth/login.php');
@@ -1513,7 +1521,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             ['settingsurl' => $shibsettingsurl->out(), 'loginurl' => $shibloginurl->out(), 'shibwayfurl' => $shibwayfurl->out()],
             true
         );
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_SELECT_NO,
+            $loginshibbolethinternaloptions
+        );
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
         $page->hide_if(
@@ -1522,6 +1536,21 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'neq',
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
+
+        // Setting: Internal WAYF JavaScript code.
+        $name = 'theme_boost_union/internalshibbolethwayfcode';
+        $title = get_string('internalshibbolethwayfcodesetting', 'theme_boost_union', null, true);
+        $description = get_string('internalshibbolethwayfcodesetting_desc', 'theme_boost_union', null, true);
+        $description .= ' ' . get_string('internalshibbolethwayfcodesetting_providers', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtextarea($name, $title, $description, '', PARAM_RAW);
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/internalshibbolethwayfcode',
+            'theme_boost_union/loginshibbolethinternalwayf',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SHIBBOLETH_CODE
+        );
+
 
         // Heading: Login provider: Self registration.
         $name = 'theme_boost_union/loginproviderselfregistrationheading';

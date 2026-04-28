@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-26 - Feature: Allow not only internal WAYF services based on the Shibboleth config, but also based on JavaScript code, resolves #1230
 * 2026-04-08 - Improvement: Add dedicated color picker for setting the navbar color, resolves #1224
 * 2026-04-08 - Improvement: Filter additionalhtmlfooter as does Moodle core from Moodle 5.2 on (MDL-88210 / MDL-85498), resolves #847
 * 2026-04-08 - Bugfix: The login page label settings lacked a hide_if, resolves #1229

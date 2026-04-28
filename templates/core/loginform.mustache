@@ -63,6 +63,7 @@
     * selfregistrationlogininstructionsbetween - Flag, show self registration instructions between heading and button,
     * selfregistrationlogininstructionsbelow - Flag, show self registration instructions below button,
     * selfregistrationloginintrotext - Custom self registration intro text (optional),
+    * shibbolethembeddedwayfcode - Custom Shibboleth embedded WAYF JavaScript code (optional),
     * showguestlogin - Should guest login be shown? (theme + core),
     * showguestloginintro - Should the guest login intro be shown?,
     * showguestlogininstruction - Should the guest login instructions be shown?,
@@ -75,6 +76,7 @@
     * showselfregistration - Should self registration be shown? (theme + core),
     * showselfregistrationloginintro - Should the self registration intro be shown?
     * showselfregistrationlogininstruction - Should the self registration instructions be shown?,
+    * showshibbolethembeddedwayfcode - Should the Shibboleth embedded WAYF code be shown?
 
     Example context (json):
     {
@@ -188,7 +190,8 @@
         "showguestlogininstruction": false,
         "showselfregistration": true,
         "showselfregistrationloginintro": true,
-        "showselfregistrationlogininstruction": true
+        "showselfregistrationlogininstruction": true,
+        "showshibbolethembeddedwayfcode": false
     }
 }}
 {{!
@@ -202,6 +205,7 @@
     * Removed the possibility to hide the local login form (with Moodle Core from Moodle 4.5 on).
     * Added the possibility to show or hide the login provider intros.
     * Added the possibility to change the login method order.
+    * Added the possibility to show an embedded WAYF (based on configuration or based on custom JS code)
 
     This template supports three layout options (vertical, tabs, accordion) and renders multiple
     login methods (local, IDP, firsttimesignup, guest) in a sorted order. The broad structure of this document
@@ -383,37 +387,44 @@
             {{/idplogininstructionsbetween}}
             {{/showidplogininstruction}}
 
-            {{#identityproviders}}
-                {{! Use internal WAYF for Shibboleth }}
-                {{#useinternalwayf}}
-                <form class="login-shibboleth-wayf-form mb-2" action="{{shibbolethloginurl}}" method="post" id="{{wayfformid}}">
-                    <div class="mb-3">
-                        <label for="{{wayfformid}}-idp" class="form-label">{{#str}}auth_shibboleth_select_organization, auth_shibboleth{{/str}}</label>
-                        <select id="{{wayfformid}}-idp" name="idp" class="form-control w-100">
-                            <option value="-">{{#str}}auth_shibboleth_select_member, auth_shibboleth{{/str}}</option>
-                            {{#shibbidps}}
-                            <option value="{{value}}" {{#selected}}selected{{/selected}}>{{name}}</option>
-                            {{/shibbidps}}
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary login-identityprovider-btn w-100" accesskey="s">
-                        {{#str}}login{{/str}}
-                    </button>
-                    <p class="form-text text-muted mt-2 mb-0 text-break">
-                        {{#str}}auth_shib_contact_administrator, auth_shibboleth, {{adminemail}}{{/str}}
-                    </p>
-                </form>
-                {{/useinternalwayf}}
-                {{! Use standard IDP button }}
-                {{^useinternalwayf}}
-                <a class="btn login-identityprovider-btn btn-block btn-secondary" href="{{url}}">
-                    {{#iconurl}}
-                        <img src="{{iconurl}}" alt="" width="24" height="24"/>
-                    {{/iconurl}}
-                    {{name}}
-                </a>
-                {{/useinternalwayf}}
-            {{/identityproviders}}
+            {{! If not using embedded WAYF code. }}
+            {{^showshibbolethembeddedwayfcode}}
+                {{#identityproviders}}
+                    {{! Use internal WAYF for Shibboleth }}
+                    {{#useinternalwayf}}
+                    <form class="login-shibboleth-wayf-form mb-2" action="{{shibbolethloginurl}}" method="post" id="{{wayfformid}}">
+                        <div class="mb-3">
+                            <label for="{{wayfformid}}-idp" class="form-label">{{#str}}auth_shibboleth_select_organization, auth_shibboleth{{/str}}</label>
+                            <select id="{{wayfformid}}-idp" name="idp" class="form-control w-100">
+                                <option value="-">{{#str}}auth_shibboleth_select_member, auth_shibboleth{{/str}}</option>
+                                {{#shibbidps}}
+                                <option value="{{value}}" {{#selected}}selected{{/selected}}>{{name}}</option>
+                                {{/shibbidps}}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary login-identityprovider-btn w-100" accesskey="s">
+                            {{#str}}login{{/str}}
+                        </button>
+                        <p class="form-text text-muted mt-2 mb-0 text-break">
+                            {{#str}}auth_shib_contact_administrator, auth_shibboleth, {{adminemail}}{{/str}}
+                        </p>
+                    </form>
+                    {{/useinternalwayf}}
+                    {{! Use standard IDP button }}
+                    {{^useinternalwayf}}
+                    <a class="btn login-identityprovider-btn btn-block btn-secondary" href="{{url}}">
+                        {{#iconurl}}
+                            <img src="{{iconurl}}" alt="" width="24" height="24"/>
+                        {{/iconurl}}
+                        {{name}}
+                    </a>
+                    {{/useinternalwayf}}
+                {{/identityproviders}}
+            {{/showshibbolethembeddedwayfcode}}
+            {{! Otherwise, if using embedded WAYF code, display the configured JavaScript code. }}
+            {{#showshibbolethembeddedwayfcode}}
+                {{{shibbolethembeddedwayfcode}}}
+            {{/showshibbolethembeddedwayfcode}}
         </div>
 
         {{! Instructions (below form) }}
