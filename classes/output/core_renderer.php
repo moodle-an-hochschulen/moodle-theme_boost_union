@@ -832,58 +832,74 @@ class core_renderer extends \theme_boost\output\core_renderer {
             ['context' => context_course::instance(SITEID), "escape" => false]
         );
 
-        // Shibboleth internal WAYF: If the Boost Union setting is enabled and if Shibboleth authentication is enabled,
-        // replace the Shibboleth IdP button with the IdP selector.
+        // Shibboleth internal WAYF: If the Boost Union setting is enabled and if Shibboleth authentication is enabled.
+        $context->showshibbolethembeddedwayfcode = false;
         $loginshibbolethinternalwayf = get_config('theme_boost_union', 'loginshibbolethinternalwayf');
         if (
             $loginshibbolethinternalwayf !== false &&
-                $loginshibbolethinternalwayf === THEME_BOOST_UNION_SETTING_SELECT_YES &&
+                $loginshibbolethinternalwayf !== THEME_BOOST_UNION_SETTING_SELECT_NO &&
                 strpos($CFG->auth, 'shibboleth') !== false &&
                 !empty($context->identityproviders)
         ) {
-            // Require Shibboleth library.
-            require_once($CFG->dirroot . '/auth/shibboleth/auth.php');
+            // If we should replace the Shibboleth IdP button with the IdP selector from auth_shibboleth.
+            if ($loginshibbolethinternalwayf === THEME_BOOST_UNION_SETTING_SHIBBOLETH_CONFIG) {
+                // Require Shibboleth library.
+                require_once($CFG->dirroot . '/auth/shibboleth/auth.php');
 
-            // Get the Shibboleth authentication plugin config.
-            get_auth_plugin('shibboleth');
-            $shibconfig = get_config('auth_shibboleth');
+                // Get the Shibboleth authentication plugin config.
+                get_auth_plugin('shibboleth');
+                $shibconfig = get_config('auth_shibboleth');
 
-            // Only show the internal WAYF if the user attribute for IdP selection and the organization selection
-            // are configured in Shibboleth.
-            if (!empty($shibconfig->user_attribute) && !empty($shibconfig->organization_selection)) {
-                // Get the list of IdPs from Shibboleth and check if there are any IdPs configured.
-                $idplist = get_idp_list($shibconfig->organization_selection);
-                if (!empty($idplist)) {
-                    // Compose the WAYF data.
-                    // This logic is copied and modified from /auth/shibboleth/login.php.
-                    $selectedidp = '-';
-                    if (isset($_COOKIE['_saml_idp'])) {
-                        $idpcookie = generate_cookie_array($_COOKIE['_saml_idp']);
-                        do {
-                            $selectedidp = array_pop($idpcookie);
-                        } while (!isset($idplist[$selectedidp]) && count($idpcookie) > 0);
-                    }
-                    $shibbidps = [];
-                    foreach ($idplist as $value => $data) {
-                        $name = reset($data);
-                        $shibbidps[] = [
-                            'name' => $name,
-                            'value' => $value,
-                            'selected' => $value === $selectedidp,
-                        ];
-                    }
-                    $shibbolethloginurl = (new moodle_url('/auth/shibboleth/login.php'))->out(false);
-                    $adminemail = get_admin()->email;
-                    foreach ($context->identityproviders as $idx => $idp) {
-                        $idpurl = $idp['url'] ?? '';
-                        if (strpos($idpurl, '/auth/shibboleth/index.php') !== false) {
-                            $context->identityproviders[$idx]['useinternalwayf'] = true;
-                            $context->identityproviders[$idx]['shibbidps'] = $shibbidps;
-                            $context->identityproviders[$idx]['shibbolethloginurl'] = $shibbolethloginurl;
-                            $context->identityproviders[$idx]['adminemail'] = $adminemail;
-                            $context->identityproviders[$idx]['wayfformid'] = 'login-shibboleth-wayf-' . $idx;
+                // Only show the internal WAYF if the user attribute for IdP selection and the organization selection
+                // are configured in Shibboleth.
+                if (!empty($shibconfig->user_attribute) && !empty($shibconfig->organization_selection)) {
+                    // Get the list of IdPs from Shibboleth and check if there are any IdPs configured.
+                    $idplist = get_idp_list($shibconfig->organization_selection);
+                    if (!empty($idplist)) {
+                        // Compose the WAYF data.
+                        // This logic is copied and modified from /auth/shibboleth/login.php.
+                        $selectedidp = '-';
+                        if (isset($_COOKIE['_saml_idp'])) {
+                            $idpcookie = generate_cookie_array($_COOKIE['_saml_idp']);
+                            do {
+                                $selectedidp = array_pop($idpcookie);
+                            } while (!isset($idplist[$selectedidp]) && count($idpcookie) > 0);
+                        }
+                        $shibbidps = [];
+                        foreach ($idplist as $value => $data) {
+                            $name = reset($data);
+                            $shibbidps[] = [
+                                'name' => $name,
+                                'value' => $value,
+                                'selected' => $value === $selectedidp,
+                            ];
+                        }
+                        $shibbolethloginurl = (new moodle_url('/auth/shibboleth/login.php'))->out(false);
+                        $adminemail = get_admin()->email;
+                        foreach ($context->identityproviders as $idx => $idp) {
+                            $idpurl = $idp['url'] ?? '';
+                            if (strpos($idpurl, '/auth/shibboleth/index.php') !== false) {
+                                $context->identityproviders[$idx]['useinternalwayf'] = true;
+                                $context->identityproviders[$idx]['shibbidps'] = $shibbidps;
+                                $context->identityproviders[$idx]['shibbolethloginurl'] = $shibbolethloginurl;
+                                $context->identityproviders[$idx]['adminemail'] = $adminemail;
+                                $context->identityproviders[$idx]['wayfformid'] = 'login-shibboleth-wayf-' . $idx;
+                            }
                         }
                     }
+                }
+
+                // Otherwise, if we should replace the Shibboleth IdP button with the configured JavaScript code.
+            } else if ($loginshibbolethinternalwayf === THEME_BOOST_UNION_SETTING_SHIBBOLETH_CODE) {
+                // Simply use the configured code.
+                $loginshibbolethembeddedwayfcode = get_config('theme_boost_union', 'internalshibbolethwayfcode');
+                if (!empty($loginshibbolethembeddedwayfcode)) {
+                    $context->showshibbolethembeddedwayfcode = true;
+                    $context->shibbolethembeddedwayfcode = format_text(
+                        $loginshibbolethembeddedwayfcode,
+                        FORMAT_HTML,
+                        ['trusted' => true, 'noclean' => true, 'filter' => false]
+                    );
                 }
             }
         }
