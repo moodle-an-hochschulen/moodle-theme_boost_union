@@ -1081,6 +1081,17 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025100623, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2025100624) {
+        // Migrate old yes/no value to the new Shibboleth source selector values.
+        $oldsetting = get_config('theme_boost_union', 'loginshibbolethinternalwayf');
+        if ($oldsetting === THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            set_config('loginshibbolethinternalwayf', THEME_BOOST_UNION_SETTING_SHIBBOLETH_CONFIG, 'theme_boost_union');
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2025100624, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
