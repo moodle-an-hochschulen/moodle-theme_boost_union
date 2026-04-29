@@ -806,6 +806,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | auth             | manual,shibboleth |
       | guestloginbutton | 1                 |
     And I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Login page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Internal WAYF JavaScript code" to multiline:
@@ -819,6 +820,7 @@ var wayf_return_url = "https://moodle.example.com/";
 <script type="text/javascript" src="https://wayf.switch.ch/SWITCHaai/WAYF/embedded-wayf.js"></script>
 """
     And I press "Save changes"
+    And Behat debugging is enabled
     And I log out
     When I am on site homepage
     And I click on "Log in" "link" in the ".logininfo" "css_element"
