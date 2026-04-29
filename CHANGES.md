@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.0-r23
 
 * 2026-04-26 - Feature: Allow not only internal WAYF services based on the Shibboleth config, but also based on JavaScript code, resolves #1230
 * 2026-04-08 - Improvement: Tweak the edit button colors so that it better fits onto tinted navbars.
