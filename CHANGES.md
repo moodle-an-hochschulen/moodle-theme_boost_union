@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-04-20 - Prepare compatibility for Moodle 5.2.
+
 ### v5.1-r15
 
 * 2026-05-21 - Improvement: Add detail information about the current recommendation status and possible actions to the recommendation info modal, helps to resolve #1277
