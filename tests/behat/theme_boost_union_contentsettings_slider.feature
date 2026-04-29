@@ -338,7 +338,6 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | config        | value | plugin            |
       | slide1enabled | yes   | theme_boost_union |
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Slider" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then "#admin-slide1backgroundimage" "css_element" should be visible
