@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-20 - Prepare compatibility for Moodle 5.2.
 * 2026-05-05 - Glitch: Make sure that the bottom border under the Reset user tours link in the footer is shown, resolves #1253
 * 2026-05-01 - Tests: Rephrase some smart menu scenarios as preparation for Boost Union 5.2
 * 2026-05-01 - Tests: Fix a glitch in the mobile scss branding scenario as preparation for Boost Union 5.2
