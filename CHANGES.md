@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-20 - Upgrade: Adopt changes to core_renderer.php functions.
 * 2026-04-20 - Upgrade: Adopt new login page layout on Moodle 5.2, resolves #1202 (work in progress)
 * 2026-04-20 - Prepare compatibility for Moodle 5.2.
 * 2026-05-05 - Glitch: Make sure that the bottom border under the Reset user tours link in the footer is shown, resolves #1253
