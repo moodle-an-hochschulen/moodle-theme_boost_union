@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-20 - Upgrade: Adopt changes to login.mustache.
 * 2026-04-20 - Upgrade: Adopt changes to drawers.mustache.
 * 2026-04-20 - Upgrade: Adopt changes to navbar.mustache.
 * 2026-04-20 - Upgrade: Adopt changes to full_header.mustache.

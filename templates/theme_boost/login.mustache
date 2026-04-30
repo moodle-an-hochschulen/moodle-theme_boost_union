@@ -46,19 +46,9 @@
 
     {{{ output.standard_top_of_body_html }}}
 
-    <div id="page" class="container-fluid pt-5 mt-0">
+    <div id="page" class="mt-0">
         {{> theme_boost_union/infobanners }}
-        <div id="page-content" class="row">
-            <div id="region-main-box" class="col-12">
-                <div id="region-main" class="col-12 h-100">
-                <div class="login-wrapper {{loginwrapperclass}}">
-                    <div class="login-container {{logincontainerclass}}">
-                    {{{ output.main_content }}}
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
+        {{> core/login_layout }}
     </div>
     {{# loginbackgroundimagetext }}
         <div class="container-fluid">
