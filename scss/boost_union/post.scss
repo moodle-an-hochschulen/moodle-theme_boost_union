@@ -1788,9 +1788,6 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 @include media-breakpoint-up(sm) {
     /* If there is a loginbackground image configured. */
     body.pagelayout-login.loginbackgroundimage #footnote {
-        /* Add a box shadow to the footnote to match the look of the login box. */
-        box-shadow: $logincontainer-shadow;
-
         /* Add horizontal margin as the page does not have a margin itself. */
         margin-left: 15px;
         margin-right: 15px;
