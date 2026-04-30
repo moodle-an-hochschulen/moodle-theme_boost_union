@@ -243,6 +243,17 @@
             {{/footershowlogininfo}}
             <div class="tool_usertours-resettourcontainer"></div>
             {{^footershowusertour}}<style>.tool_usertours-resettourcontainer{display:none;}</style>{{/footershowusertour}}
+            {{# output.telemetry_traceid }}
+                <div>
+                    <span id="telemetry_traceid" class="d-none">
+                        {{{ output.telemetry_traceid }}}
+                    </span>
+                    <a href="#" data-action="copytoclipboard" data-clipboard-target="#telemetry_traceid"
+                            data-clipboard-success-message="{{#str}}telemetrytraceidfooterlinkcopied, core{{/str}}">
+                        {{#str}}telemetrytraceidfooterlink, core{{/str}}
+                    </a>
+                </div>
+            {{/ output.telemetry_traceid }}
             {{# output.standard_footer_html }}
                 <div class="footer-section p-3 border-bottom">
                     {{{ output.standard_footer_html }}}
@@ -289,7 +300,10 @@
 </footer>
 {{#js}}
   {{#footerbutton}}
-  require(['theme_boost/footer-popover'], function(FooterPopover) {
+  require([
+      'theme_boost/footer-popover',
+      'core/copy_to_clipboard',
+  ], function(FooterPopover) {
       FooterPopover.init();
   });
   {{/footerbutton}}
