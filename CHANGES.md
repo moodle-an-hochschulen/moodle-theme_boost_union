@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-20 - Upgrade: Adopt changes to full_header.mustache.
 * 2026-04-20 - Upgrade: Adopt changes to columns2.mustache.
 * 2026-04-20 - Upgrade: Adopt changes to footer.mustache.
 * 2026-04-20 - Upgrade: Adopt changes to cm.mustache.
