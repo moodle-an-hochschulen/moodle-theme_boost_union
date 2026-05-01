@@ -477,9 +477,7 @@ class behat_theme_boost_union_base_general extends behat_base {
     /**
      * Disables debugging in Behat.
      *
-     * We sometimes need to deactivate debugging for a while as Behat steps would otherwise fail due to the
-     * stupid 'Too much data passed as arguments to js_call_amd' debugging message which can't be avoided
-     * on Boost Union settings pages as we simply use too much hide_if() there.
+     * We might need to deactivate debugging for a while when Behat steps fail due debugging message which can't be avoided.
      *
      * @Given /^Behat debugging is disabled$/
      */

@@ -193,7 +193,6 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And I should not see "This is a test content"
     And I log out
     When I log in as "admin"
-    And Behat debugging is disabled
     # Navigating to the content settings may fail with an initialization error of the core_sms\manager for unknown reasons.
     # Purging the caches before navigating to the content area fixed the Behat failure for the same unknown reasons.
     # We accept this fix as the error seems not to happen in production.
@@ -204,7 +203,6 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And I click on "Reset visibility of info banner 1" "link"
     And I click on "Confirm" "link"
     Then I should see "The visibility of info banner 1 has been reset"
-    And Behat debugging is enabled
     And I log out
     When I log in as "teacher1"
     And I follow "Dashboard"

@@ -64,12 +64,10 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
   @javascript
   Scenario Outline: Setting: Activity icon purposes - Setting the purpose
     Given I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Activity branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I select "<purpose>" from the "<modname>" singleselect
     And I press "Save changes"
-    And Behat debugging is enabled
     When I am on "Course 1" course homepage
     And I turn editing mode on
     And I add a <mod> activity to course "Course 1" section "0" and I fill the form with:
@@ -94,12 +92,10 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
   @javascript
   Scenario: Setting: Activity icon purposes - Removing the purpose
     Given I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Activity branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I select "Other" from the "Assignment" singleselect
     And I press "Save changes"
-    And Behat debugging is enabled
     When I am on "Course 1" course homepage
     And I turn editing mode on
     And I add a assign activity to course "Course 1" section "0" and I fill the form with:
@@ -124,12 +120,10 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
       | subsection | Subsection1      	     | SC1    | sub      | 1       |
       | <mod>      | Activity in Subsection1 | SC1    | subact   | 4       |
     And I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Activity branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I select "<purpose>" from the "<modname>" singleselect
     And I press "Save changes"
-    And Behat debugging is enabled
     When I am on "Subsectioncourse 1" course homepage
     Then DOM element ".modtype_subsection .modtype_<mod> .activityicon" should have a CSS filter close enough to hex color "<colorhex>"
 
@@ -144,7 +138,6 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
       | config         | value | plugin            |
       | modiconsenable | yes   | theme_boost_union |
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Activity branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I click on ".fa-folder-plus" "css_element" in the "#admin-modiconsfiles .fp-btn-mkdir" "css_element"
@@ -161,7 +154,6 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
     And I should see "Activity: <modclearname>" in the ".settings-modicons-filelist" "css_element"
     And I should see "Icon version: <iconversion>" in the ".settings-modicons-filelist" "css_element"
     # Unfortunately we can only test the result in the custom icons files list. We cannot distinguish the icons in the activity chooser visually
-    And Behat debugging is enabled
 
     Examples:
       | iconfile     | iconversion          | modtechname | modclearname |
@@ -173,9 +165,7 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
   @javascript
   Scenario: Setting: Custom icons files - Do not upload any file (countercheck)
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Activity branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then I should not see "Custom icons files list"
     And ".settings-modicons-filelist" "css_element" should not exist
-    And Behat debugging is enabled
