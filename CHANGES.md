@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-05-01 - Improvement: Add setting for background-size to advertisement tiles, resolves #1195
 * 2026-04-30 - Cleanup: Drop overwritten templates/theme_boost/drawer.mustache, resolves #1246
 
 ### v4.5-r37
