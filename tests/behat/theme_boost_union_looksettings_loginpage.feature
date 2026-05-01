@@ -6,8 +6,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
 
   @javascript
   Scenario: Setting: Login page background images - Do not upload any login background image
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then the "class" attribute of "body" "css_element" should contain "path-login"
     And the "class" attribute of "body" "css_element" should not contain "loginbackgroundimage"
     And the "class" attribute of "body" "css_element" should not contain "loginbackgroundimage1"
@@ -23,7 +22,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And I press "Save changes"
     And Behat debugging is enabled
     And I log out
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    And I am on login page
     Then the "class" attribute of "body" "css_element" should contain "path-login"
     And the "class" attribute of "body" "css_element" should contain "loginbackgroundimage"
     And the "class" attribute of "body" "css_element" should contain "loginbackgroundimage1"
@@ -42,7 +41,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And I press "Save changes"
     And Behat debugging is enabled
     And I log out
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    And I am on login page
     Then the "class" attribute of "body" "css_element" should contain "path-login"
     And the "class" attribute of "body" "css_element" should contain "loginbackgroundimage"
     # There isn't a real possibility to test the randomness of the login background picking.
@@ -65,7 +64,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And I press "Save changes"
     And Behat debugging is enabled
     And I log out
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    And I am on login page
     Then DOM element "body.pagelayout-login" should have computed style "background-position" "<cssvalue>"
 
     # We do not want to burn too much CPU time by testing all available options. We just test the default value and one non-default value.
@@ -85,7 +84,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And I press "Save changes"
     And Behat debugging is enabled
     And I log out
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    And I am on login page
     Then I should see "Copyright by SplitShire on pexels.com" in the "#loginbackgroundimagetext" "css_element"
 
   @javascript @_file_upload
@@ -99,7 +98,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And I press "Save changes"
     And Behat debugging is enabled
     And I log out
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    And I am on login page
     Then "#loginbackgroundimagetext" "css_element" <shouldexistornot>
 
     Examples:
@@ -118,7 +117,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And I press "Save changes"
     And Behat debugging is enabled
     And I log out
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    And I am on login page
     Then the "class" attribute of "#loginbackgroundimagetext span" "css_element" should contain "text-<csscolor>"
 
     Examples:
@@ -131,8 +130,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     Given the following config values are set as admin:
       | config            | value     | plugin            |
       | loginformposition | <setting> | theme_boost_union |
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then the "class" attribute of ".login-wrapper" "css_element" should contain "<class>"
     And the "class" attribute of ".login-wrapper" "css_element" should not contain "<notclass1>"
     And the "class" attribute of ".login-wrapper" "css_element" should not contain "<notclass2>"
@@ -147,8 +145,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     Given the following config values are set as admin:
       | config                | value     | plugin            |
       | loginformtransparency | <setting> | theme_boost_union |
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then the "class" attribute of ".login-container" "css_element" <shouldcontain> "login-container-80t"
 
     Examples:
@@ -161,8 +158,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | config      | value     | plugin            |
       | loginlayout | <layout>  | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then "#login-layout-tabs" "css_element" <tabsshouldornot> exist
     And "#login-layout-accordion" "css_element" <accordionshouldornot> exist
 
@@ -178,8 +174,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | config              | value     | plugin            |
       | logincontainerwidth | <setting> | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then DOM element ".login-container" should have computed style "width" "<cssvalue>"
 
     Examples:
@@ -194,8 +189,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | loginlayout             | tabs      | theme_boost_union |
       | loginenhancedtabslayout | <setting> | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then "#login-layout-tabs" "css_element" should exist
     And "[data-bu-login-spacer='top']" "css_element" <spacershouldornot> exist
     And "[data-bu-login-spacer='bottom']" "css_element" <spacershouldornot> exist
@@ -216,8 +210,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | config                 | value                   | plugin            |
       | logininstructionsabove | Above instructions text | theme_boost_union |
       | logininstructionsbelow | Below instructions text | theme_boost_union |
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then I should see "Above instructions text" in the ".login-instructions-above" "css_element"
     And ".login-instructions-above" "css_element" should appear before ".theme_boost_union-loginmethod  " "css_element"
     And I should see "Below instructions text" in the ".login-instructions-below" "css_element"
@@ -246,8 +239,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | Client secret | supersecret       |
     And I press "Save changes"
     And I log out
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     # Verify that login methods exist and appear in the correct DOM order.
     Then "#login-method-local" "css_element" should exist
     And "#login-method-idp" "css_element" should exist
@@ -286,8 +278,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | Client secret | supersecret       |
     And I press "Save changes"
     And I log out
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then "#login-method-local" "css_element" <localshouldornot> exist
     And "#login-method-idp" "css_element" <idpshouldornot> exist
     And "#login-method-firsttimesignup" "css_element" <selfregshouldornot> exist
@@ -325,8 +316,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | Client secret | supersecret       |
     And I press "Save changes"
     And I log out
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then "#login-method-local h2.login-heading" "css_element" <localshould> exist
     And "#login-method-idp h2.login-heading" "css_element" <idpshould> exist
     And "#login-method-firsttimesignup h2.login-heading" "css_element" <selfregshould> exist
@@ -370,8 +360,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | Client secret | supersecret       |
     And I press "Save changes"
     And I log out
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then I should see "<localexpected>" in the "#login-method-local h2.login-heading" "css_element"
     And I should see "<idpexpected>" in the "#login-method-idp h2.login-heading" "css_element"
     And I should see "<selfregexpected>" in the "#login-method-firsttimesignup h2.login-heading" "css_element"
@@ -411,8 +400,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | Client secret | supersecret       |
     And I press "Save changes"
     And I log out
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then I should see "<instructionrender>" in the "<instructionselector>" "css_element"
     And I should not see "multilang"
 
@@ -453,8 +441,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | Client secret | supersecret       |
     And I press "Save changes"
     And I log out
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then "<instructionselector>" "css_element" should not exist
 
     Examples:
@@ -489,8 +476,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | Client secret | supersecret       |
     And I press "Save changes"
     And I log out
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     # Verify that tabs navigation exists.
     Then "#login-layout-tabs" "css_element" should exist
     And the "role" attribute of "#login-layout-tabs" "css_element" should contain "tablist"
@@ -548,8 +534,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | Client secret | supersecret       |
     And I press "Save changes"
     And I log out
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     # Verify that accordion container exists.
     Then "#login-layout-accordion" "css_element" should exist
     And the "class" attribute of "#login-layout-accordion" "css_element" should contain "accordion"
@@ -611,8 +596,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | Client secret | supersecret       |
     And I press "Save changes"
     And I log out
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then I should see "<localexpected>" in the "<localselector>" "css_element"
     And I should see "<idpexpected>" in the "<idpselector>" "css_element"
     And I should see "<selfregexpected>" in the "<selfregselector>" "css_element"
@@ -655,8 +639,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | Client secret | supersecret       |
     And I press "Save changes"
     And I log out
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then "<idp0nav>" "css_element" should exist
     And "<idp1nav>" "css_element" should exist
     And "<idp0content>" "css_element" should exist
@@ -701,8 +684,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | Client secret | supersecret       |
     And I press "Save changes"
     And I log out
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then "#login-method-idp-0" "css_element" should exist
     And "#login-method-idp-1" "css_element" should exist
     And "#login-method-idp" "css_element" should not exist
@@ -739,8 +721,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | Client secret | supersecret       |
     And I press "Save changes"
     And I log out
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then "#login-method-idp-tab" "css_element" should exist
     And "#login-method-idp" "css_element" should exist
     And "#login-method-idp-0-tab" "css_element" should not exist
@@ -762,8 +743,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | user_attribute         | REMOTE_USER                                                           | auth_shibboleth |
       | organization_selection | https://idp.example.org/idp/shibboleth, Behat Shibboleth Organisation | auth_shibboleth |
       | login_name             | Behat Shibboleth IdP                                                  | auth_shibboleth |
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then ".login-shibboleth-wayf-form" "css_element" should exist
     And "#login-shibboleth-wayf-0-idp" "css_element" should exist
     And "#login-shibboleth-wayf-0" "css_element" should exist
@@ -783,8 +763,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | config           | value             |
       | auth             | manual,shibboleth |
       | guestloginbutton | 1                 |
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then I should see "EMBEDDED-WAYF-START"
     And ".login-shibboleth-wayf-form" "css_element" should not exist
     And "#login-shibboleth-wayf-0-idp" "css_element" should not exist
@@ -822,8 +801,7 @@ var wayf_return_url = "https://moodle.example.com/";
     And I press "Save changes"
     And Behat debugging is enabled
     And I log out
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then "#wayf_div" "css_element" should exist in the ".login-identityproviders" "css_element"
     And "#user_idp" "css_element" should exist in the ".login-identityproviders" "css_element"
     And ".login-shibboleth-wayf-form" "css_element" should not exist
@@ -847,8 +825,7 @@ var wayf_return_url = "https://moodle.example.com/";
       | user_attribute         | REMOTE_USER                                                           | auth_shibboleth |
       | organization_selection | https://idp.example.org/idp/shibboleth, Behat Shibboleth Organisation | auth_shibboleth |
       | login_name             | Behat Shibboleth IdP                                                  | auth_shibboleth |
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then ".login-shibboleth-wayf-form" "css_element" should not exist
     And "#login-shibboleth-wayf-0-idp" "css_element" should not exist
     And I should see "Behat Shibboleth IdP" in the ".login-identityproviders .login-identityprovider-btn" "css_element"

@@ -39,7 +39,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And I should not see "<span lang=\"en\" class=\"multilang\">Footnote</span>" in the "#footnote" "css_element"
     And I should not see "FootnoteFussnote" in the "#footnote" "css_element"
     And I log out
-    And I follow "Log in"
+    And I am on login page
     Then "#footnote" "css_element" should exist
     And ".text_to_html" "css_element" should not exist in the "#footnote" "css_element"
     And I should see "Footnote" in the "#footnote" "css_element"
@@ -63,7 +63,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And I change viewport size to "mobile"
     Then ".btn-footer-popover" "css_element" <mobileshouldornot> <visibleorexist>
     And I log out
-    And I follow "Log in"
+    And I am on login page
     And I change viewport size to "large"
     Then ".btn-footer-popover" "css_element" <desktopshouldornot> <visibleorexist>
     And I change viewport size to "mobile"

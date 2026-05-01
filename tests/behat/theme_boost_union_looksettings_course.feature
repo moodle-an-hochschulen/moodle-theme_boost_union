@@ -32,8 +32,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     And I press "Save and display"
     And I am on site homepage
     And I log out
-    And I am on site homepage
-    And I follow "Log in"
+    And I am on login page
     And I log in as "<role>"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
@@ -70,8 +69,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     And I press "Save and display"
     And I am on site homepage
     And I log out
-    And I am on site homepage
-    And I follow "Log in"
+    And I am on login page
     And I log in as "<role>"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should not exist
@@ -95,8 +93,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     And Behat debugging is enabled
     And I am on site homepage
     And I log out
-    And I am on site homepage
-    And I follow "Log in"
+    And I am on login page
     And I log in as "<role>"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
@@ -121,8 +118,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     And Behat debugging is enabled
     And I am on site homepage
     And I log out
-    And I am on site homepage
-    And I follow "Log in"
+    And I am on login page
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And "//div[@id='courseheaderimage']" "xpath_element" should exist
@@ -132,8 +128,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     And I press "Save and display"
     And I am on site homepage
     And I log out
-    And I am on site homepage
-    And I follow "Log in"
+    And I am on login page
     And I log in as "<role>"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist
@@ -161,8 +156,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "L
     And I press "Save and display"
     And I am on site homepage
     And I log out
-    And I am on site homepage
-    And I follow "Log in"
+    And I am on login page
     And I log in as "<role>"
     And I am on "Course 1" course homepage
     Then "//div[@id='courseheaderimage']" "xpath_element" should exist

@@ -34,7 +34,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     When I am on "Course 1" course homepage
     Then I should see "This is a test content" in the "#themeboostunioninfobanner1" "css_element"
     When I log out
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    And I am on login page
     Then I should see "This is a test content" in the "#themeboostunioninfobanner1" "css_element"
 
   Scenario: Setting: Information banners - Display info banner 1 only on one available page
@@ -52,7 +52,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     When I am on "Course 1" course homepage
     Then I should not see "This is a test content"
     When I log out
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    And I am on login page
     Then I should not see "This is a test content"
 
   Scenario: Setting: Information banners - Display info banner 1 with the different bootstrap color classes

@@ -41,7 +41,7 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
     When I am on "Course 1" course homepage
     Then "#themeboostunionslide1" "css_element" should not exist
     When I log out
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    And I am on login page
     Then "#themeboostunionslide1" "css_element" should not exist
 
   Scenario Outline: Setting: Slider - Display the slider wrapper and the individual slide only if it is enabled
