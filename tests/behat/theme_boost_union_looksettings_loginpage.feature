@@ -19,6 +19,8 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | loginbackgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
     And the theme cache is purged and the theme is reloaded
     When I am on login page
+    # Reloading the page is necessary to ensure that the background image CSS is applied, as it might not appear on the first load due to caching.
+    And I reload the page
     Then the "class" attribute of "body" "css_element" should contain "path-login"
     And the "class" attribute of "body" "css_element" should contain "loginbackgroundimage"
     And the "class" attribute of "body" "css_element" should contain "loginbackgroundimage1"
@@ -34,6 +36,8 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | loginbackgroundimage | theme/boost_union/tests/fixtures/login_bg3.png |
     And the theme cache is purged and the theme is reloaded
     When I am on login page
+    # Reloading the page is necessary to ensure that the background image CSS is applied, as it might not appear on the first load due to caching.
+    And I reload the page
     Then the "class" attribute of "body" "css_element" should contain "path-login"
     And the "class" attribute of "body" "css_element" should contain "loginbackgroundimage"
     # There isn't a real possibility to test the randomness of the login background picking.
@@ -53,6 +57,8 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | loginbackgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
     And the theme cache is purged and the theme is reloaded
     When I am on login page
+    # Reloading the page is necessary to ensure that the background image CSS is applied, as it might not appear on the first load due to caching.
+    And I reload the page
     Then DOM element "body.pagelayout-login" should have computed style "background-position" "<cssvalue>"
 
     # We do not want to burn too much CPU time by testing all available options. We just test the default value and one non-default value.
@@ -151,6 +157,8 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | logincontainerwidth | <setting> | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
     When I am on login page
+    # Reloading the page is necessary to ensure that the CSS is applied, as it might not appear on the first load due to caching.
+    And I reload the page
     Then DOM element ".login-container" should have computed style "width" "<cssvalue>"
 
     Examples:
