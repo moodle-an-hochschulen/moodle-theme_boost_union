@@ -144,16 +144,13 @@ define('THEME_BOOST_UNION_SETTING_LOGINLAYOUT_VERTICAL', 'vertical');
 define('THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS', 'tabs');
 define('THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION', 'accordion');
 
-define('THEME_BOOST_UNION_SETTING_SHIBBOLETH_CONFIG', 'config');
-define('THEME_BOOST_UNION_SETTING_SHIBBOLETH_CODE', 'code');
-
 define('THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BETWEEN', 'between');
 define('THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BELOW', 'below');
 
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT', 'light');
 define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK', 'dark');
-define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDLIGHT', 'coloredlight');
-define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDDARK', 'coloreddark');
+define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYLIGHT', 'primarylight');
+define('THEME_BOOST_UNION_SETTING_NAVBARCOLOR_PRIMARYDARK', 'primarydark');
 
 define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEXTMAINCONTENT', 'nextmaincontent');
 define('THEME_BOOST_UNION_SETTING_OUTSIDEREGIONSPLACEMENT_NEARWINDOW', 'nearwindowedges');
@@ -678,11 +675,30 @@ function theme_boost_union_get_extra_scss($theme) {
     // This is done here as it is quite easy to do. As an alternative, it could also been done in post.scss by using
     // SCSS variables with @if conditions and SCSS variables. However, we preferred to do it here in a single place.
 
+    // Setting: IDP login button color.
+    // By default (setting enabled), the IDP login buttons are styled with the theme's primary color.
+    // This is a deviation from Boost core which leaves IDP login buttons unstyled (white/neutral),
+    // introduced in issue #473. When the setting is disabled, no override is injected and Boost core
+    // behavior is restored.
+    $loginidpbuttoncolorenable = get_config('theme_boost_union', 'loginidpbuttoncolorenable');
+    if ($loginidpbuttoncolorenable === false) {
+        $loginidpbuttoncolorenable = THEME_BOOST_UNION_SETTING_SELECT_YES;
+    }
+    if ($loginidpbuttoncolorenable == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        $content .= '.login-identityproviders .btn {';
+        $content .= 'background-color: $primary;';
+        $content .= 'border-color: $primary;';
+        $content .= 'color: $white;';
+        $content .= '}';        $content .= '.login-identityproviders .btn:hover,';        $content .= '.login-identityproviders .btn:focus,';        $content .= '.login-identityproviders .btn:active {';        $content .= 'background-color: darken($primary, 7.5%);';
+        $content .= 'border-color: darken($primary, 10%);';
+        $content .= 'color: $white;';
+        $content .= '}';    }
+
     // Setting: Activity icon purpose.
     $content .= theme_boost_union_get_scss_for_activity_icon_purpose($theme);
 
     // Setting: Navbar styles.
-    $content .= theme_boost_union_get_scss_navbar($theme, $flavourid);
+    $content .= theme_boost_union_get_scss_navbar($theme);
 
     // Setting: Mark external links.
     $content .= theme_boost_union_get_scss_to_mark_external_links($theme);

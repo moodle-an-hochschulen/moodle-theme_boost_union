@@ -160,10 +160,6 @@ If you have a very long sitename and want to prevent it from breaking the navbar
 
 With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one.
 
-###### Navbar tint
-
-With this setting, you can define the color of the colored navbar. This setting is only effective if the navbar color is set to one of the 'Colored navbar' options above.
-
 #### Tab "Activity Branding"
 
 In this tab there are the following settings:
@@ -763,7 +759,12 @@ As you have read in the introduction, the main design principle of Boost Union i
 * Footer popover:
   As soon as you click the footer button (questionmark icon) in the bottom right corner of the screen, a popover with several links appears. However, the content of this link list is far from being well-structured and looks more like a garage sale. When implementing the settings to individually suppress each of these popover links, we had to make some code re-arrangements which result in the fact that the popover links are slightly more well-structured even if you do not enable any setting in Boost Union.
 * Clickable header and transition time in the user's menu third level:
-  Due to the way how the smart menu was integrated into the user menu, as soon as at least one smart menu exists on the page, the header of the language menu in the user menu is now fully clickable - compared to Boost core where only the 'back' arrow in the language menu is clickable - and the transition time to open the language menu is shortened. This should be a neglectible difference to Boost core.
+  Due to the way how the smart menu was integrated into the user menu, as soon as at least one smart menu exists on the page, the header of the language menu in the user menu is now fully clickable - compared to Boost core where only the 'back' arrow in the language menu is clickable - and the transition time to open the language menu is shortened. This should be a neglectible difference to Boost Core.
+* OAuth2 / IDP login button color:
+  Boost Union overrides the background color of OAuth2 / IDP login buttons to use the theme's primary color.
+  In Boost core, these buttons are left unstyled (white/neutral background).
+  This deviation was introduced in issue #473 to improve visual consistency with the rest of the login page.
+  However, if you prefer the Boost core default appearance for IDP buttons, you can disable this color override via the *IDP login button color* setting on the Login settings page.
 
 
 Companion plugin local_navbarplus
