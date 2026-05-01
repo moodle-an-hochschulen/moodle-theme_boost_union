@@ -11,7 +11,6 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile" tab on the "L
 
   Scenario: Setting: Additional CSS for Mobile app - Insert CSS code and test that the mobilecssurl URL is set correctly.
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Mobile" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Additional CSS for Mobile app" to multiline:
@@ -19,7 +18,6 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile" tab on the "L
     a.test { font-size: 16px; }
     """
     And I press "Save changes"
-    And Behat debugging is enabled
     And I navigate to "General > Mobile app > Mobile appearance" in site administration
     Then "//div[@id='admin-mobilecssurl']//input[contains(@value, 'theme/boost_union/mobile/styles.php')]" "xpath_element" should exist
 
@@ -28,7 +26,6 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile" tab on the "L
       | config       | value                      |
       | mobilecssurl | https://mymoodle/mycss.css |
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Mobile" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Additional CSS for Mobile app" to multiline:
@@ -36,7 +33,6 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile" tab on the "L
     a.test { font-size: 16px; }
     """
     And I press "Save changes"
-    And Behat debugging is enabled
     And I navigate to "General > Mobile app > Mobile appearance" in site administration
     Then "//div[@id='admin-mobilecssurl']//input[contains(@value, 'theme/boost_union/mobile/styles.php')]" "xpath_element" should exist
     And I should not see "mycss.css" in the "#id_s__mobilecssurl" "css_element"
@@ -49,14 +45,12 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile" tab on the "L
       | config     | value                       | plugin            |
       | mobilescss | a.test { font-size: 16px; } | theme_boost_union |
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Mobile" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Additional CSS for Mobile app" to multiline:
     """
     """
     And I press "Save changes"
-    And Behat debugging is enabled
     And I navigate to "General > Mobile app > Mobile appearance" in site administration
     Then "//div[@id='admin-mobilecssurl']//input[contains(@value, 'theme/boost_union/mobile/styles.php')]" "xpath_element" should not exist
 
@@ -66,7 +60,6 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile" tab on the "L
   @javascript @_file_upload
   Scenario: Setting: Touch icon files for iOS - Upload touch icon files
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Mobile" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/apple-icon-180x180.png" file to "Touch icon files for iOS" filemanager
@@ -88,28 +81,23 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile" tab on the "L
     And "//head//link[contains(@rel, 'apple-touch-icon')][contains(@sizes, '180x180')][contains(@href, 'pluginfile.php/1/theme_boost_union/touchiconsios')][contains(@href, 'apple-icon-180x180.png')]" "xpath_element" should exist
     And "//head//link[contains(@rel, 'apple-touch-icon')][contains(@sizes, '152x152')][contains(@href, 'pluginfile.php/1/theme_boost_union/touchiconsios')][contains(@href, 'apple-icon-152x152.png')]" "xpath_element" should not exist
     And "//head//link[contains(@rel, 'apple-touch-icon')][contains(@sizes, '60x60')][contains(@href, 'pluginfile.php/1/theme_boost_union/touchiconsios')][contains(@href, 'apple-icon-60x60.png')]" "xpath_element" should exist
-    And Behat debugging is enabled
 
   @javascript
   Scenario: Setting: Touch icon files for iOS - Do not upload any file (countercheck)
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Mobile" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then I should not see "Touch icon files for iOS list"
     And ".settings-touchiconsios-filelist" "css_element" should not exist
-    And Behat debugging is enabled
 
   @javascript @_file_upload
   Scenario: Setting: Touch icon files for iOS - Do not ship touch icon files if Boost Union is not the active theme (cross-theme check).
     Given I log in as "admin"
     And I navigate to "Appearance > Themes" in site administration
     And I click on "Select theme" "button" in the "#theme-select-form-boost" "css_element"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Mobile" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/apple-icon-180x180.png" file to "Touch icon files for iOS" filemanager
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on site homepage
     Then "//head//link[contains(@rel, 'apple-touch-icon')][contains(@sizes, '180x180')][contains(@href, 'pluginfile.php/1/theme_boost_union/touchiconsios')][contains(@href, 'apple-icon-180x180.png')]" "xpath_element" should not exist
