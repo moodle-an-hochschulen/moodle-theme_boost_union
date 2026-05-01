@@ -475,6 +475,28 @@ class behat_theme_boost_union_base_general extends behat_base {
     }
 
     /**
+     * Disables debugging in Behat.
+     *
+     * We might need to deactivate debugging for a while when Behat steps fail due debugging message which can't be avoided.
+     *
+     * @Given /^Behat debugging is disabled$/
+     */
+    public function disable_behat_debugging() {
+        set_config('debug', 0);
+        set_config('debugdisplay', 0);
+    }
+
+    /**
+     * Re-enables debugging in Behat.
+     *
+     * @Given /^Behat debugging is enabled$/
+     */
+    public function enable_behat_debugging() {
+        set_config('debug', 32767);
+        set_config('debugdisplay', 1);
+    }
+
+    /**
      * Open the login page.
      *
      * @Given /^I am on login page$/
