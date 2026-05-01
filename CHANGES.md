@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-04-30 - Cleanup: Drop overwritten templates/theme_boost/drawer.mustache, resolves #1246
+
 ### v4.5-r37
 
 * 2026-04-26 - Feature: Allow not only internal WAYF services based on the Shibboleth config, but also based on JavaScript code, resolves #1230
