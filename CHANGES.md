@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-05-01 - Tests: Use the 'I navigate to site home settings' step throughout the whole code base as preparation for Boost Union 5.2
 * 2026-05-01 - Tests: Use the 'I am on login page' step throughout the whole code base as preparation for Boost Union 5.2
 * 2026-05-01 - Improvement: Add setting for background-size to advertisement tiles, resolves #1195
 * 2026-04-30 - Cleanup: Drop overwritten templates/theme_boost/drawer.mustache, resolves #1246
