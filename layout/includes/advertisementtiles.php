@@ -69,6 +69,11 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
         // Get and set the tile's background image position.
         $bgimageposition = $config->{'tile' . $i . 'backgroundimageposition'};
 
+        // Get and set the tile's background image size
+        // (and fall back to the default value if not set as this option was added in a later version).
+        $bgimagesize = $config->{'tile' . $i . 'backgroundimagesize'} ??
+            THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_BACKGROUNDSIZE_AUTO;
+
         // Get and set the tile's order.
         // The order is not needed for the mustache template, but the usort() method will need it later.
         $order = $config->{'tile' . $i . 'order'};
@@ -101,6 +106,7 @@ for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_COUNT; $i++) {
         $advtile->linktargetnewtab = $linktargetnewtab;
         $advtile->backgroundimageurl = $bgimage;
         $advtile->backgroundimageposition = $bgimageposition;
+        $advtile->backgroundimagesize = $bgimagesize;
         $advtile->no = $i;
         $advtile->order = $order;
         $advtile->contentstyleclass = $contentstyleclass;
