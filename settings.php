@@ -4718,6 +4718,41 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 THEME_BOOST_UNION_SETTING_SELECT_YES
             );
 
+            // Setting: Advertisement tile background image size.
+            $name = 'theme_boost_union/tile' . $i . 'backgroundimagesize';
+            $title = get_string('tilebackgroundimagesizesetting', 'theme_boost_union', ['no' => $i], true);
+            $description = get_string('tilebackgroundimagesizesetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $tilebackgroundimagesizeoptions = [
+                    THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_BACKGROUNDSIZE_AUTO =>
+                            get_string('tilebackgroundimagesizesetting_auto', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_BACKGROUNDSIZE_COVER =>
+                            get_string('tilebackgroundimagesizesetting_cover', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_BACKGROUNDSIZE_CONTAIN =>
+                            get_string('tilebackgroundimagesizesetting_contain', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_BACKGROUNDSIZE_90PERCENT =>
+                        get_string('tilebackgroundimagesizesetting_90percent', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_BACKGROUNDSIZE_75PERCENT =>
+                        get_string('tilebackgroundimagesizesetting_75percent', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_BACKGROUNDSIZE_50PERCENT =>
+                        get_string('tilebackgroundimagesizesetting_50percent', 'theme_boost_union'),
+                    THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_BACKGROUNDSIZE_25PERCENT =>
+                        get_string('tilebackgroundimagesizesetting_25percent', 'theme_boost_union'),
+            ];
+            $setting = new admin_setting_configselect(
+                $name,
+                $title,
+                $description,
+                THEME_BOOST_UNION_SETTING_ADVERTISEMENTTILES_BACKGROUNDSIZE_AUTO,
+                $tilebackgroundimagesizeoptions
+            );
+            $tab->add($setting);
+            $page->hide_if(
+                'theme_boost_union/tile' . $i . 'backgroundimagesize',
+                'theme_boost_union/tile' . $i . 'enabled',
+                'neq',
+                THEME_BOOST_UNION_SETTING_SELECT_YES
+            );
+
             // Setting: Advertisement tile content style.
             $name = 'theme_boost_union/tile' . $i . 'contentstyle';
             $title = get_string('tilecontentstylesetting', 'theme_boost_union', ['no' => $i], true);
