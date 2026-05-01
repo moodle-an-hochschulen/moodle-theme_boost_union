@@ -31,7 +31,7 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
     When I am on "Course 1" course homepage
     Then "#themeboostunionadvtile1" "css_element" should not exist
     When I log out
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    And I am on login page
     Then "#themeboostunionadvtile1" "css_element" should not exist
 
   Scenario Outline: Setting: Advertisement tiles - Display the advertisement tile wrapper and the individual advertisement tile only if it is enabled

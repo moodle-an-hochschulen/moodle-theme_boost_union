@@ -21,38 +21,33 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     Given the following "theme_boost_union > setting files" exist:
       | filearea | filepath                                        |
       | logo     | theme/boost_union/tests/fixtures/moodlelogo.png |
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     # We can't check the uploaded image file visually, but we can verify that the compact logo is shipped from the theme_boost_union global logo filearea.
     Then "//div[@id='loginlogo']//img[@id='logoimage'][contains(@src, 'pluginfile.php/1/theme_boost_union/logo')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
 
   Scenario: Setting: Logo - Do not upload a custom logo to the theme (countercheck)
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then "#loginlogo #logoimage" "css_element" should not exist
 
   Scenario: Setting: Logo - Upload a custom logo to Moodle core (countercheck)
     Given the following "theme_boost_union > core files" exist:
       | filearea | filepath                                        |
       | logo     | theme/boost_union/tests/fixtures/moodlelogo.png |
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then "#loginlogo #logoimage" "css_element" should not exist
 
   Scenario: Setting: Logo - Upload a PNG logo to the theme and check that it is resized on the server-side
     Given the following "theme_boost_union > setting files" exist:
       | filearea | filepath                                        |
       | logo     | theme/boost_union/tests/fixtures/moodlelogo.png |
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then "//div[@id='loginlogo']//img[@id='logoimage'][contains(@src, 'pluginfile.php/1/theme_boost_union/logo/0x200/')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
 
   Scenario: Setting: Logo - Upload a SVG logo to the theme and check that it is not resized on the server-side
     Given the following "theme_boost_union > setting files" exist:
       | filearea | filepath                                        |
       | logo     | theme/boost_union/tests/fixtures/moodlelogo.svg |
-    When I am on site homepage
-    And I click on "Log in" "link" in the ".logininfo" "css_element"
+    When I am on login page
     Then "//div[@id='loginlogo']//img[@id='logoimage'][contains(@src, 'pluginfile.php/1/theme_boost_union/logo/1/')][contains(@src, 'moodlelogo.svg')]" "xpath_element" should exist
 
   Scenario: Setting: Compact logo - Upload a custom compact logo to the theme
