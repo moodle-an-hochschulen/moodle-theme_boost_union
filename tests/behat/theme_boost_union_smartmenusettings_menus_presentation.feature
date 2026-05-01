@@ -204,8 +204,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Heading        |
     When I log in as "admin"
     # Set the frontpage title to better control the available space in the navbar
-    And I am on site homepage
-    And I click on "Settings" "link" in the ".secondary-navigation" "css_element"
+    And I navigate to "Site home > Site home settings" in site administration
     And I set the field "id_s__shortname" to "Boost Union Test"
     And I press "Save changes"
     # Hide the standard navigation items to better reproduce the "More" behaviour in the navbar
@@ -283,8 +282,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Heading        |
     When I log in as "admin"
     # Set the frontpage title to better control the available space in the navbar
-    And I am on site homepage
-    And I click on "Settings" "link" in the ".secondary-navigation" "css_element"
+    And I navigate to "Site home > Site home settings" in site administration
     And I set the field "id_s__shortname" to "Boost Union Test"
     And I press "Save changes"
     # Hide the standard navigation items to better reproduce the "More" behaviour in the navbar
@@ -344,8 +342,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Heading                                  |
     When I log in as "admin"
     # Set the frontpage title to better control the available space in the navbar
-    And I am on site homepage
-    And I click on "Settings" "link" in the ".secondary-navigation" "css_element"
+    And I navigate to "Site home > Site home settings" in site administration
     And I set the field "id_s__shortname" to "Boost Union Test"
     And I press "Save changes"
     # Hide the standard navigation items to better reproduce the "More" behaviour in the navbar
@@ -422,8 +419,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Heading                                  |
     When I log in as "admin"
     # Set the frontpage title to better control the available space in the navbar
-    And I am on site homepage
-    And I click on "Settings" "link" in the ".secondary-navigation" "css_element"
+    And I navigate to "Site home > Site home settings" in site administration
     And I set the field "id_s__shortname" to "Boost Union Test"
     And I press "Save changes"
     # Hide the standard navigation items to better reproduce the "More" behaviour in the navbar
