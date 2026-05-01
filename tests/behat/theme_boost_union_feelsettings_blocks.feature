@@ -5,7 +5,11 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
   I need to be able to configure the theme Boost Union plugin
 
   Background:
-    Given the following "users" exist:
+    Given the following config values are set as admin:
+      | config          | value |
+      | enablemyhome    | 1     |
+      | enablemycourses | 1     |
+    And the following "users" exist:
       | username |
       | student1 |
       | teacher1 |
@@ -478,6 +482,9 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
 
   Scenario Outline: Setting: Show right-hand block drawer of site home on first login
     Given the following config values are set as admin:
+      | config       | value |
+      | enablemyhome | 1     |
+    And the following config values are set as admin:
       | config                                       | value     | plugin            |
       | showsitehomerighthandblockdraweronfirstlogin | <setting> | theme_boost_union |
     And the following "blocks" exist:
@@ -494,6 +501,9 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
 
   Scenario Outline: Setting: Show right-hand block drawer of site home on visit
     Given the following config values are set as admin:
+      | config       | value |
+      | enablemyhome | 1     |
+    And  the following config values are set as admin:
       | config                                  | value     | plugin            |
       | showsitehomerighthandblockdraweronvisit | <setting> | theme_boost_union |
     And the following "blocks" exist:
@@ -509,6 +519,9 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
 
   Scenario Outline: Setting: Show right-hand block drawer of site home on guest login
     Given the following config values are set as admin:
+      | config       | value |
+      | enablemyhome | 1     |
+    And the following config values are set as admin:
       | config                                       | value     | plugin            |
       | showsitehomerighthandblockdraweronguestlogin | <setting> | theme_boost_union |
     And the following "blocks" exist:

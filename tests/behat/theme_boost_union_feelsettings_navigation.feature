@@ -122,6 +122,10 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
 
   Scenario Outline: Setting: Show login link as button.
     Given the following config values are set as admin:
+      | config       | value |
+      | enablemyhome | 1     |
+      | forcelogin   | 0     |
+    And the following config values are set as admin:
       | config                 | value     | plugin            |
       | loginlinkbuttonenabled | <setting> | theme_boost_union |
     When I am on site homepage
@@ -135,6 +139,9 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
   @javascript
   Scenario Outline: Setting: Show starred courses popover in the navbar.
     Given the following config values are set as admin:
+      | config          | value |
+      | enablemycourses | 1     |
+    And the following config values are set as admin:
       | config                   | value     | plugin            |
       | shownavbarstarredcourses | <setting> | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
@@ -153,6 +160,9 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
   @javascript
   Scenario: Setting: Do not show starred courses popover in the navbar if Boost Union is not the active theme (cross-theme check).
     Given the following config values are set as admin:
+      | config          | value |
+      | enablemycourses | 1     |
+    And the following config values are set as admin:
       | config                   | value | plugin            |
       | shownavbarstarredcourses | yes   | theme_boost_union |
     And I log in as "admin"
@@ -169,6 +179,9 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
   @javascript
   Scenario: Setting: Show starred courses popover in the navbar (and make sure that I see the right courses there).
     Given the following config values are set as admin:
+      | config          | value |
+      | enablemycourses | 1     |
+    And the following config values are set as admin:
       | config                   | value | plugin            |
       | shownavbarstarredcourses | yes   | theme_boost_union |
     And the following "courses" exist:
@@ -205,6 +218,9 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
   @javascript
   Scenario Outline: Setting: Starred courses popover cog icon link target
     Given the following config values are set as admin:
+      | config          | value |
+      | enablemycourses | 1     |
+    And the following config values are set as admin:
       | config                   | value     | plugin            |
       | shownavbarstarredcourses | yes       | theme_boost_union |
       | starredcourseslinktarget | <setting> | theme_boost_union |

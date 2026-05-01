@@ -19,6 +19,10 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
 
   Scenario: Setting: Information banners - Display info banner 1 on all available pages
     Given the following config values are set as admin:
+      | config          | value |
+      | enablemyhome    | 1     |
+      | enablemycourses | 1     |
+    And the following config values are set as admin:
       | config             | value                                        | plugin            |
       | infobanner1enabled | yes                                          | theme_boost_union |
       | infobanner1content | "This is a test content"                     | theme_boost_union |
@@ -39,6 +43,9 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
 
   Scenario: Setting: Information banners - Display info banner 1 only on one available page
     Given the following config values are set as admin:
+      | config          | value |
+      | enablemyhome    | 1     |
+    And the following config values are set as admin:
       | config             | value                    | plugin            |
       | infobanner1enabled | yes                      | theme_boost_union |
       | infobanner1content | "This is a test content" | theme_boost_union |
@@ -267,6 +274,10 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
 
   Scenario: Setting: Information banners - Display info banner with position setting on different pages
     Given the following config values are set as admin:
+      | config          | value |
+      | enablemyhome    | 1     |
+      | enablemycourses | 1     |
+    And the following config values are set as admin:
       | config              | value                                        | plugin            |
       | infobanner1enabled  | yes                                          | theme_boost_union |
       | infobanner1content  | "Banner above"                               | theme_boost_union |

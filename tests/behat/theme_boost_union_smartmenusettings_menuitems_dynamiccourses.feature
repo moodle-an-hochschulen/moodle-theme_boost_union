@@ -183,7 +183,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
 
   @javascript
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on the starred courses condition
-    Given the following "theme_boost_union > smart menu item" exists:
+    Given the following config values are set as admin:
+      | config          | value |
+      | enablemycourses | 1     |
+    And the following "theme_boost_union > smart menu item" exists:
       | menu     | List menu |
       | title    | Info      |
       | itemtype | Heading   |

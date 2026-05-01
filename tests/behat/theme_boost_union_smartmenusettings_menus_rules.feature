@@ -19,7 +19,11 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | student1 | C1     | student        |
 
   Scenario Outline: Smartmenu: Menus: Rules - Show smart menu based on the user roles
-    Given the following "users" exist:
+    Given the following config values are set as admin:
+      | config       | value |
+      | enablemyhome | 1     |
+      | forcelogin   | 0     |
+    And the following "users" exist:
       | username      |
       | coursemanager |
       | systemmanager |
@@ -64,6 +68,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I log in as "guest"
     Then I <guestshouldorshouldnot> see smart menu "Role links" in location "Main, Menu, Bottom"
     And I log out
+    And I am on site homepage
     And I <visitorshouldorshouldnot> see smart menu "Role links" in location "Main, Menu, Bottom"
 
     Examples:
@@ -284,7 +289,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | title    | Language menu node 2 |
       | itemtype | Static               |
       | url      | /bar                 |
-    When I am on site homepage
+    When I am on homepage
     And I should see "You are currently using guest access"
     Then I should not see smart menu "Language de" in location "Main"
     And I should not see smart menu "Language fr" in location "Main"
@@ -415,7 +420,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I open the action menu in "Cohort 1" "table_row"
     And I choose "Delete" in the open action menu
     And I click on "Delete" "button" in the "Delete selected" "dialogue"
-    And I am on site homepage
     And I navigate to smart menus
     And I click on ".action-edit" "css_element" in the "Quick links" "table_row"
     And I expand all fieldsets

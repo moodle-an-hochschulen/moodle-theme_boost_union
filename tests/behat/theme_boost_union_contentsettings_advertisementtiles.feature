@@ -5,12 +5,18 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
   I need to be able to configure the theme Boost Union plugin
 
   Background:
-    Given the following "users" exist:
+    Given the following config values are set as admin:
+      | config       | value |
+      | enablemyhome | 1     |
+    And the following "users" exist:
       | username |
       | teacher1 |
 
   Scenario: Setting: Advertisement tiles - Display the advertisement tiles on the frontpage only and nowhere else
     Given the following config values are set as admin:
+      | config          | value |
+      | enablemycourses | 1     |
+    And the following config values are set as admin:
       | config       | value                             | plugin            |
       | tile1enabled | yes                               | theme_boost_union |
       | tile1title   | Tile 1                            | theme_boost_union |

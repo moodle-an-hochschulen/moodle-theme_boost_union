@@ -28,7 +28,11 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Heading     |
 
   Scenario Outline: Smartmenu: Menu items: Rules - Show smart menu item based on the user roles
-    Given the following "users" exist:
+    Given the following config values are set as admin:
+      | config       | value |
+      | enablemyhome | 1     |
+      | forcelogin   | 0     |
+    And the following "users" exist:
       | username      |
       | coursemanager |
       | systemmanager |
@@ -67,6 +71,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     When I am logged in as "guest"
     Then "Resources" "theme_boost_union > Smart menu item" <guestshouldorshouldnot> exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     When I log out
+    And I am on site homepage
     Then "Resources" "theme_boost_union > Smart menu item" <visitorshouldorshouldnot> exist in the "Quick links" "theme_boost_union > Main menu smart menu"
 
     Examples:

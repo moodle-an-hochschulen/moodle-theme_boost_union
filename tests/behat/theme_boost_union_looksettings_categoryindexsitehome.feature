@@ -6,6 +6,9 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
 
   Background:
     Given the following config values are set as admin:
+      | config       | value |
+      | enablemyhome | 1     |
+    And the following config values are set as admin:
       | config                    | value   |
       | frontpageloggedin         | 2,4,5,6 |
       # We set courseswithsummarieslimit to a really small value as we have just some test courses and want to especially test

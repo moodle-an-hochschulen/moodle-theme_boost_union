@@ -41,7 +41,7 @@ Feature: Configuring the theme_boost_union plugin for the "Support page" tab on 
       | config                     | value     | plugin            |
       | enableaccessibilitysupport | <setting> | theme_boost_union |
     When I log in as "student1"
-    And I am on site homepage
+    And I am on homepage
     Then "#access-support-form-sr-link" "css_element" <shouldornot> exist
 
     Examples:
@@ -58,7 +58,7 @@ Feature: Configuring the theme_boost_union plugin for the "Support page" tab on 
     And I click on "Select theme" "button" in the "#theme-select-form-boost" "css_element"
     And I log out
     When I log in as "student1"
-    And I am on site homepage
+    And I am on homepage
     Then "#access-support-form-sr-link" "css_element" should not exist
 
   Scenario Outline: Setting: Allow accessibility support page without login - Check real user and guest
@@ -186,7 +186,7 @@ Feature: Configuring the theme_boost_union plugin for the "Support page" tab on 
       | enableaccessibilitysupport          | yes       | theme_boost_union |
       | accessibilitysupportpagesrlinktitle | <setting> | theme_boost_union |
     When I log in as "student1"
-    And I am on site homepage
+    And I am on homepage
     And "#access-support-form-sr-link" "css_element" should exist
     Then I should see "<title>" in the "#access-support-form-sr-link" "css_element"
 
