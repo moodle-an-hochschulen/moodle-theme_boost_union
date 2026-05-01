@@ -5,7 +5,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   I need to be able to configure the theme Boost Union plugin
 
   Background:
-    Given the following "courses" exist:
+    # For this feature, we would not really need the home and my courses nodes. However, we still enable them to keep the feature
+    # and the steps with the 'More' menu in particular consistent with previous Boost Union releases.
+    Given the following config values are set as admin:
+      | config          | value |
+      | enablemyhome    | 1     |
+      | enablemycourses | 1     |
+    And the following "courses" exist:
       | fullname               | shortname | category |
       | Test course1           | C1        | 0        |
       | Test course2           | C2        | 0        |
@@ -350,7 +356,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | url          | https://moodle.org/3 |
       | textposition | Bottom overlay       |
     And all Boost Union MUC caches are purged
-    And I am on site homepage
+    And I am on homepage
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
     Then I should see "Resources below" in the ".primary-navigation .dropdown-menu.show" "css_element"
     And "//div[contains(@class, 'card-text-below')]//a[contains(., 'Resources below')]" "xpath_element" should exist
@@ -378,7 +384,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | url             | https://example.com |
       | backgroundcolor | #031FC3             |
     And all Boost Union MUC caches are purged
-    And I am on site homepage
+    And I am on homepage
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
     Then DOM element ".dropdown-menu .menu-item-static .content-block" should have computed style "background-color" "rgb(3, 31, 195)"
     And I click on "Quick links" "link" in the ".boost-union-menubar" "css_element"
@@ -390,7 +396,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I upload "theme/boost_union/tests/fixtures/backimg.png" file to "Card image" filemanager
     And I click on "Save changes" "button"
     And all Boost Union MUC caches are purged
-    And I am on site homepage
+    And I am on homepage
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
     Then the image at "//div[contains(@class, 'primary-navigation')]//img[contains(@src, 'pluginfile.php') and contains(@src, '/theme_boost_union/smartmenus_itemimage/')]" "xpath_element" should be identical to "theme/boost_union/tests/fixtures/backimg.png"
 
@@ -410,14 +416,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I click on "Preferred language" "link"
     And I set the field "Preferred language" to "English ‎(en)‎"
     And I press "Save changes"
-    And I am on site homepage
+    And I am on homepage
     Then I should see smart menu "Quick links" item "Lorem ipsum" in location "Main, Menu, User, Bottom"
     And I should not see smart menu "Quick links" item "Dolor sit amet" in location "Main, Menu, User, Bottom"
     And I follow "Preferences" in the user menu
     And I click on "Preferred language" "link"
     And I set the field "Preferred language" to "Deutsch ‎(de)‎"
     And I press "Save changes"
-    And I am on site homepage
+    And I am on homepage
     Then I should see smart menu "Quick links" item "Dolor sit amet" in location "Main, Menu, User, Bottom"
     And I should not see smart menu "Quick links" item "Lorem ipsum" in location "Main, Menu, User, Bottom"
 
@@ -441,7 +447,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Static             |
       | url      | http://moodle.org  |
     And all Boost Union MUC caches are purged
-    And I am on site homepage
+    And I am on homepage
     Then "Links" "theme_boost_union > Main menu smart menu" should exist
     And "Links" "theme_boost_union > Menu bar smart menu" should exist
     And "Links" "theme_boost_union > User menu smart menu" should exist
@@ -467,7 +473,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Static             |
       | url      | http://moodle.org  |
     And all Boost Union MUC caches are purged
-    And I am on site homepage
+    And I am on homepage
     Then "Smartmenu Resource" "theme_boost_union > Main menu smart menu item" should exist
     And "Smartmenu Resource" "theme_boost_union > Menu bar smart menu item" should exist
     And "Smartmenu Resource" "theme_boost_union > User menu smart menu item" should exist

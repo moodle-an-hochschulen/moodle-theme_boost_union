@@ -82,7 +82,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | enablefooterbutton   | <footervalue>                                                   | theme_boost_union |
       | additionalhtmlfooter | <div id="custom-footer-html"><p>Custom Footer Content</p></div> |                   |
     When I log in as "admin"
-    And I am on site homepage
+    And I am on homepage
     Then "#custom-footer-html" "css_element" should exist
     And ".footer-content-popover #custom-footer-html" "css_element" <shouldornotpopover> exist
     And "[data-region='footer-container-popover'] + #custom-footer-html" "css_element" <shouldornotpagebottom> exist
@@ -142,7 +142,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | footersuppressservices | <value> | theme_boost_union |
     And all Boost Union MUC caches are purged
     And I log in as "admin"
-    When I am on site homepage
+    When I am on homepage
     Then I <shouldornot> see "Services and support" in the ".footer-content-popover" "css_element"
 
     Examples:
@@ -159,7 +159,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | footersuppresscontact | <value> | theme_boost_union |
     And all Boost Union MUC caches are purged
     And I log in as "admin"
-    When I am on site homepage
+    When I am on homepage
     Then I <shouldornot> see "Contact site support" in the ".footer-content-popover" "css_element"
 
     Examples:
@@ -173,7 +173,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | footersuppresslogininfo | <value> | theme_boost_union |
     And all Boost Union MUC caches are purged
     And I log in as "admin"
-    When I am on site homepage
+    When I am on homepage
     Then I <shouldornot> see "You are logged in as" in the ".footer-content-popover" "css_element"
 
     Examples:
@@ -259,7 +259,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | footersuppresspowered | <value> | theme_boost_union |
     And all Boost Union MUC caches are purged
     And I log in as "admin"
-    When I am on site homepage
+    When I am on homepage
     Then I <shouldornot> see "Powered by Moodle" in the ".footer-content-popover" "css_element"
 
     Examples:
@@ -276,7 +276,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | footersuppressstandardfooter_tool_dataprivacy | <value> | theme_boost_union |
     And all Boost Union MUC caches are purged
     And I log in as "admin"
-    When I am on site homepage
+    When I am on homepage
     Then I <shouldornot> see "Data retention summary" in the ".footer-content-popover" "css_element"
 
     Examples:
@@ -292,7 +292,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | footersuppressstandardfooter_core_userfeedback | <value> | theme_boost_union |
     And all Boost Union MUC caches are purged
     And I log in as "admin"
-    When I am on site homepage
+    When I am on homepage
     Then I <shouldornot> see "Give feedback about this software" in the ".footer-content-popover" "css_element"
 
     Examples:
@@ -309,7 +309,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | footersuppressstandardfooter_tool_mobile | <value> | theme_boost_union |
     And all Boost Union MUC caches are purged
     And I log in as "admin"
-    When I am on site homepage
+    When I am on homepage
     Then I <shouldornot> see "Get the mobile app" in the ".footer-content-popover" "css_element"
 
     Examples:
@@ -328,7 +328,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | footersuppressstandardfooter_tool_policy | <value> | theme_boost_union |
     And all Boost Union MUC caches are purged
     And I log in as "admin"
-    When I am on site homepage
+    When I am on homepage
     Then I <shouldornot> see "Policies" in the ".footer-content-popover" "css_element"
 
     Examples:

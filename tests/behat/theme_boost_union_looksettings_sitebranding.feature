@@ -54,46 +54,46 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     Given the following "theme_boost_union > setting files" exist:
       | filearea    | filepath                                        |
       | logocompact | theme/boost_union/tests/fixtures/moodlelogo.png |
-    When I am on site homepage
+    When I log in as "admin"
     # We can't check the uploaded image file visually, but we can verify that the compact logo is shipped from the theme_boost_union global logo filearea.
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
 
   Scenario: Setting: Compact logo - Do not upload a custom compact logo to the theme (countercheck)
-    When I am on site homepage
+    When I log in as "admin"
     Then ".navbar .logo" "css_element" should not exist
 
   Scenario: Setting: Compact logo - Upload a custom compact logo to Moodle core (countercheck)
     Given the following "theme_boost_union > core files" exist:
       | filearea    | filepath                                        |
       | logocompact | theme/boost_union/tests/fixtures/moodlelogo.png |
-    When I am on site homepage
+    When I log in as "admin"
     Then ".navbar .logo" "css_element" should not exist
 
   Scenario: Setting: Compact logo - Upload a PNG compact logo to the theme and check that it is resized on the server-side
     Given the following "theme_boost_union > setting files" exist:
       | filearea    | filepath                                        |
       | logocompact | theme/boost_union/tests/fixtures/moodlelogo.png |
-    When I am on site homepage
+    When I log in as "admin"
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact/300x300/')][contains(@src, 'moodlelogo.png')]" "xpath_element" should exist
 
   Scenario: Setting: Compact logo - Upload a SVG compact logo to the theme and check that it is not resized on the server-side
     Given the following "theme_boost_union > setting files" exist:
       | filearea    | filepath                                        |
       | logocompact | theme/boost_union/tests/fixtures/moodlelogo.svg |
-    When I am on site homepage
+    When I log in as "admin"
     Then "//nav[contains(@class, 'navbar')]//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/logocompact/1/')][contains(@src, 'moodlelogo.svg')]" "xpath_element" should exist
 
   Scenario: Setting: Favicon - Upload a custom favicon to the theme
     Given the following "theme_boost_union > setting files" exist:
       | filearea | filepath                                     |
       | favicon  | theme/boost_union/tests/fixtures/favicon.ico |
-    When I am on site homepage
+    When I am on homepage
     # We can't check the uploaded favicon visually, but we can verify that the site's favicon is not shipped by pluginfile.php (for uploaded files) and not by theme/image.php (for image files from disk) anymore.
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/favicon')][contains(@href, 'favicon.ico')]" "xpath_element" should exist
     And "//head//link[contains(@rel, 'shortcut')][contains(@href, 'theme/image.php/boost_union')][contains(@href, 'favicon')]" "xpath_element" should not exist
 
   Scenario: Setting: Favicon - Do not upload a custom favicon to the theme (countercheck)
-    When I am on site homepage
+    When I am on homepage
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'theme/image.php/boost_union')][contains(@href, 'favicon')]" "xpath_element" should exist
     And "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/favicon')][contains(@href, 'favicon.ico')]" "xpath_element" should not exist
 
@@ -101,7 +101,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     Given the following "theme_boost_union > core files" exist:
       | filearea | filepath                                     |
       | favicon  | theme/boost_union/tests/fixtures/favicon.ico |
-    When I am on site homepage
+    When I am on homepage
     Then "//head//link[contains(@rel, 'shortcut')][contains(@href, 'theme/image.php/boost_union')][contains(@href, 'favicon')]" "xpath_element" should exist
     And "//head//link[contains(@rel, 'shortcut')][contains(@href, 'pluginfile.php/1/theme_boost_union/favicon')][contains(@href, 'favicon.ico')]" "xpath_element" should not exist
 
@@ -111,7 +111,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
       | filearea        | filepath                                       |
       | backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
     And the theme cache is purged and the theme is reloaded
-    When I am on site homepage
+    When I log in as "admin"
     # Reloading the page is necessary to ensure that the background image is applied, as sometimes it might not appear on the first load due to caching.
     And I reload the page
     Then DOM element "body" should have computed style "background-size" "cover"
@@ -119,7 +119,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
 
   @javascript
   Scenario: Setting: Background image - Do not upload a background image (countercheck).
-    When I am on site homepage
+    When I log in as "admin"
     Then DOM element "body" should have computed style "background-image" "none"
 
   @javascript
@@ -131,7 +131,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
       | filearea        | filepath                                       |
       | backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
     And the theme cache is purged and the theme is reloaded
-    When I am on site homepage
+    When I log in as "admin"
     # Reloading the page is necessary to ensure that the background image is applied, as sometimes it might not appear on the first load due to caching.
     And I reload the page
     Then DOM element "body" should have computed style "background-position" "<cssvalue>"
@@ -251,7 +251,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
       | logocompact | theme/boost_union/tests/fixtures/moodlelogo.png |
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I am on site homepage
+    And I log in as "admin"
     Then DOM element ".navbar-brand" <shouldornot> have computed style "max-width" "<value>"
     And DOM element ".navbar-brand .logo" <shouldornot> have computed style "max-width" "<value>"
 
@@ -269,7 +269,7 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
     And I change viewport size to "<viewport>"
-    And I am on site homepage
+    And I log in as "admin"
     Then DOM element ".navbar-brand .sitename" <widthshouldornot> have computed style "max-width" "<value>"
     And DOM element ".navbar-brand .sitename" <truncshouldornot> have computed style "text-overflow" "ellipsis"
 

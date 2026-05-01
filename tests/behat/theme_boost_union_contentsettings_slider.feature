@@ -6,7 +6,10 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
   I need to be able to configure the theme Boost Union plugin
 
   Background:
-    Given the following "users" exist:
+    Given the following config values are set as admin:
+      | config       | value |
+      | enablemyhome | 1     |
+    And the following "users" exist:
       | username |
       | teacher1 |
     And the following config values are set as admin:
@@ -19,7 +22,10 @@ Feature: Configuring the theme_boost_union plugin for the "Slider" tab on the "C
       | slide1backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
 
   Scenario: Setting: Slider - Display the slider on the frontpage only and nowhere else
-    Given the following "courses" exist:
+    Given the following config values are set as admin:
+      | config          | value |
+      | enablemycourses | 1     |
+    And the following "courses" exist:
       | fullname | shortname |
       | Course 1 | C1        |
     And the following "course enrolments" exist:

@@ -5,7 +5,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   I need to be able to configure the theme Boost Union plugin
 
   Background:
-    Given the following "users" exist:
+    # For this feature, we would not really need the home and my courses nodes. However, we still enable them to keep the feature
+    # and the steps with the 'More' menu in particular consistent with previous Boost Union releases.
+    Given the following config values are set as admin:
+      | config          | value |
+      | enablemyhome    | 1     |
+      | enablemycourses | 1     |
+    And the following "users" exist:
       | username |
       | user1    |
 
@@ -162,14 +168,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I click on "Preferred language" "link"
     And I set the field "Preferred language" to "English ‎(en)‎"
     And I press "Save changes"
-    And I am on site homepage
+    And I am on homepage
     Then I should see smart menu "Lorem ipsum" in location "Main, Menu, User, Bottom"
     And I should not see smart menu "Dolor sit amet" in location "Main, Menu, User, Bottom"
     And I follow "Preferences" in the user menu
     And I click on "Preferred language" "link"
     And I set the field "Preferred language" to "Deutsch ‎(de)‎"
     And I press "Save changes"
-    And I am on site homepage
+    And I am on homepage
     Then I should see smart menu "Dolor sit amet" in location "Main, Menu, User, Bottom"
     And I should not see smart menu "Lorem ipsum" in location "Main, Menu, User, Bottom"
 
@@ -442,7 +448,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Do not change anything | Force into more menu   | Keep outside of more menu | before             | after              | before             |
 
   Scenario: Smartmenu: Menus: Presentation - Verify that the correct menu item is displayed as active when viewing the main menu item's page.
-    Given the following "theme_boost_union > smart menu" exists:
+    Given the following config values are set as admin:
+      | config       | value |
+      | enablemyhome | 1     |
+    And the following "theme_boost_union > smart menu" exists:
       | title    | Quick links     |
       | location | Main navigation |
       | mode     | Inline          |
@@ -465,7 +474,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation .testnode01" "css_element"
 
   Scenario: Smartmenu: Menus: Presentation - Verify that the correct menu item is displayed as active when viewing the submenu item's page.
-    Given the following "theme_boost_union > smart menu" exists:
+    Given the following config values are set as admin:
+      | config       | value |
+      | enablemyhome | 1     |
+    And the following "theme_boost_union > smart menu" exists:
       | title    | Quick links     |
       | location | Main navigation |
       | mode     | Submenu         |
@@ -489,7 +501,11 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation .testnode01" "css_element"
 
   Scenario: Smartmenu: Menus: Presentation - Verify that the correct _custom_ menu item is displayed as active when viewing the custom menu item's page (Moodle core behaviour which must not be broken by the smart menus)
-    Given I log in as "admin"
+    Given the following config values are set as admin:
+      | config          | value |
+      | enablemyhome    | 1     |
+      | enablemycourses | 1     |
+    And I log in as "admin"
     And I navigate to "Appearance > Advanced theme settings" in site administration
     And I set the field "Custom menu items" to multiline:
     """
@@ -531,7 +547,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | desktop  | <item2desk>                 |
       | tablet   | <item2tab>                  |
       | mobile   | <item2mob>                  |
-    When I am on site homepage
+    When I log in as "admin"
     And I change the viewport size to "large"
     And ".boost-union-menubar" "css_element" <menubarshouldornot> be visible
     And I change the viewport size to "tablet"

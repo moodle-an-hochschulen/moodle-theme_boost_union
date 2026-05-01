@@ -99,5 +99,5 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile" tab on the "L
     And I click on "Mobile" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I upload "theme/boost_union/tests/fixtures/apple-icon-180x180.png" file to "Touch icon files for iOS" filemanager
     And I press "Save changes"
-    And I am on site homepage
+    And I am on homepage
     Then "//head//link[contains(@rel, 'apple-touch-icon')][contains(@sizes, '180x180')][contains(@href, 'pluginfile.php/1/theme_boost_union/touchiconsios')][contains(@href, 'apple-icon-180x180.png')]" "xpath_element" should not exist

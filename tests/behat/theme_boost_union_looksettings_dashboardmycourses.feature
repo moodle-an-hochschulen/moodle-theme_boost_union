@@ -5,7 +5,10 @@ Feature: Configuring the theme_boost_union plugin for the "Dashboard/My courses"
   I need to be able to configure the theme Boost Union plugin
 
   Background:
-    Given the following "users" exist:
+    Given the following config values are set as admin:
+      | config          | value |
+      | enablemycourses | 1     |
+    And the following "users" exist:
       | username |
       | student1 |
     And the following "courses" exist:
