@@ -232,7 +232,6 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
       | config       | value | plugin            |
       | tile1enabled | yes   | theme_boost_union |
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Advertisement tiles" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then "#admin-tile1title" "css_element" should be visible

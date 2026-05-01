@@ -695,7 +695,6 @@ Feature: Configuring the theme_boost_union plugin for the "Course header" sectio
       | Field 1 | Fieldcategory | text     | f1        | d1          |                       |
       | Field 2 | Fieldcategory | select   | f2        | d2          | {"options":"a\nb\nc"} |
     And I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Course" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We must specify the container where to look for the fields as Behat would stumble otherwise as the same fields exist
@@ -703,7 +702,6 @@ Feature: Configuring the theme_boost_union plugin for the "Course header" sectio
     And I set the field "Field 1" in the "#admin-courseheaderselectfields" "css_element" to "<field1value>"
     And I set the field "Field 2" in the "#admin-courseheaderselectfields" "css_element" to "<field2value>"
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on "Course 1" course homepage
     And I navigate to "Settings" in current page administration
     And I set the following fields to these values:
@@ -741,7 +739,6 @@ Feature: Configuring the theme_boost_union plugin for the "Course header" sectio
       | Field 1 | Fieldcategory | text     | f1        | d1          |                       |
       | Field 2 | Fieldcategory | select   | f2        | d2          | {"options":"a\nb\nc"} |
     And I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Course" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We must specify the container where to look for the fields as Behat would stumble otherwise as the same fields exist
@@ -749,7 +746,6 @@ Feature: Configuring the theme_boost_union plugin for the "Course header" sectio
     And I set the field "Field 1" in the "#admin-courseheaderselectfields" "css_element" to "1"
     And I set the field "Field 2" in the "#admin-courseheaderselectfields" "css_element" to "1"
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on "Course 1" course homepage
     And I navigate to "Settings" in current page administration
     And I set the following fields to these values:
@@ -780,11 +776,9 @@ Feature: Configuring the theme_boost_union plugin for the "Course header" sectio
       | filearea | courseheaderimageglobal                        |
       | filepath | theme/boost_union/tests/fixtures/login_bg1.png |
     And I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Course" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I should see "There isn't any usable custom course field yet."
-    And Behat debugging is enabled
     And I log out
     When I log in as "student1"
     And I am on "Course 1" course homepage
@@ -1183,12 +1177,10 @@ Feature: Configuring the theme_boost_union plugin for the "Course header" sectio
     And I am on "Course 1" course homepage
     And "#bucourseheader.headingabove" "css_element" should exist
     # Now change the global default (and change it within the GUI to trigger the updatecallback method).
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Course" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Course header layout" to "Course title stacked on full surface course header image"
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on "Course 1" course homepage
     Then "#bucourseheader.stacked" "css_element" should exist
     And "#bucourseheader.headingabove" "css_element" should not exist
@@ -1210,12 +1202,10 @@ Feature: Configuring the theme_boost_union plugin for the "Course header" sectio
     And I press "Save and display"
     And I am on "Course 1" course homepage
     And "#bucourseheader.headingabove" "css_element" should exist
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Course" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Course header layout" to "Course title stacked on full surface course header image"
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on "Course 1" course homepage
     And I navigate to "Settings" in current page administration
     Then the field "Course header layout" matches value "Course title above of full surface course header image"

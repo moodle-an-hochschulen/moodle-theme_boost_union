@@ -25,7 +25,6 @@ Feature: Configuring the theme_boost_union plugin as admin
       | itemtype    | Static             |
       | url         | https://moodle.org |
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     Then "body#page-admin-setting-theme_boost_union_look" "css_element" should exist
     And ".admin_settingspage_tabs_with_tertiary" "css_element" should exist
@@ -39,7 +38,6 @@ Feature: Configuring the theme_boost_union plugin as admin
     And ".admin_settingspage_tabs_with_tertiary" "css_element" should be visible
     And I should see "Feel" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And "h2:has(+ .admin_settingspage_tabs_with_tertiary)" "css_element" should not be visible
-    And Behat debugging is enabled
     # However, we have to test the 'flavours' page as well as this is an external admin page.
     And I set the field "List of Boost Union settings pages" to "Flavours"
     Then "body#page-admin-theme-boost_union-flavours-overview" "css_element" should exist
@@ -69,7 +67,6 @@ Feature: Configuring the theme_boost_union plugin as admin
     And I should see "Smart menus" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
     And "h2:has(+ .admin_settingspage_tabs_with_tertiary)" "css_element" should not be visible
     # And we have to test the 'all settings on one page' page as well as this is an individual page.
-    And Behat debugging is disabled
     # The remaining steps cannot be executed on Github actions due to a timeout error due to the massive amount of Tiny editors
     # which load on this page. Increasing $CFG->behat_increasetimeout did not help anymore in the end.
     # So we commented these steps which should be okay as they just test jumping to a Moodle core page.
@@ -91,17 +88,13 @@ Feature: Configuring the theme_boost_union plugin as admin
     When I navigate to "Appearance > Boost Union > Settings overview" in site administration
     Then "Boost Union (or a child theme of Boost Union) is currently not the active theme" "text" should appear after "Boost Union settings overview" "text"
     # Look
-    When Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
-    And Behat debugging is enabled
     Then "Boost Union (or a child theme of Boost Union) is currently not the active theme" "text" should appear after ".admin_settingspage_tabs_with_tertiary" "css_element"
     # Feel
     When I navigate to "Appearance > Boost Union > Feel" in site administration
     Then "Boost Union (or a child theme of Boost Union) is currently not the active theme" "text" should appear after ".admin_settingspage_tabs_with_tertiary" "css_element"
     # Content
-    When Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
-    And Behat debugging is enabled
     Then "Boost Union (or a child theme of Boost Union) is currently not the active theme" "text" should appear after ".admin_settingspage_tabs_with_tertiary" "css_element"
     # Functionality
     When I navigate to "Appearance > Boost Union > Functionality" in site administration
@@ -126,12 +119,10 @@ Feature: Configuring the theme_boost_union plugin as admin
   Scenario: Switch to the active Boost Union admin sub-tab after saving a setting and the following page reload
     When I log in as "admin"
     And I follow "Site administration"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Page" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Course content max width" to "600px"
     And I click on "Save changes" "button"
-    And Behat debugging is enabled
     Then I should see "Course content max width" in the ".tab-content" "css_element"
     And "#theme_boost_union_look_page.tab-pane.active" "css_element" should exist
     And "#theme_boost_union_look_page.tab-pane:not(.active)" "css_element" should not exist

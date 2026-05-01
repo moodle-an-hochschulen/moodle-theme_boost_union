@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-05-01 - Tests: Drop 'And Behat debugging is (en|dis)abled' steps, resolves #1242
 * 2026-04-30 - Cleanup: Drop overwritten templates/theme_boost/drawer.mustache, resolves #1246
 
 ### v5.0-r23

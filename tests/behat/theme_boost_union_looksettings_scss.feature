@@ -12,7 +12,6 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
   @javascript
   Scenario: Setting: Raw (initial) SCSS - Add custom SCSS to the theme
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We add a SCSS variable and a small SCSS snippet to the page which hides the heading in the page header.
@@ -26,7 +25,6 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
     #page-header h1 { display: $myvariable; }
     """
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on "Course 1" course homepage
     Then I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
 
@@ -36,7 +34,6 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
       | config        | value | plugin            |
       | extscsssource | 1     | theme_boost_union |
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We add a small CSS snippet to the page which hides the heading in the page header.
@@ -44,7 +41,6 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
     And I set the following fields to these values:
       | <urlfield> | <url> |
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on "Course 1" course homepage
     Then I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
 
@@ -59,7 +55,6 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
       | config        | value | plugin            |
       | extscsssource | 2     | theme_boost_union |
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We add a small CSS snippet to the page which hides the heading in the page header.
@@ -70,7 +65,6 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
       | External SCSS Github API repository | moodle-theme_boost_union-extscsstest            |
       | <pathfield>                         | <filepath>                                      |
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on "Course 1" course homepage
     Then I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
 
@@ -87,7 +81,6 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
       | config        | value | plugin            |
       | extscsssource | 1     | theme_boost_union |
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We first add a valid CSS snippet to the page which is just there to detect later that SCSS has been compiled correctly.
@@ -101,7 +94,6 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
     # And then we add a broken SCSS URL to the theme.
     And I set the field "External Post SCSS download URL" to "<url>"
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on "Course 1" course homepage
     # Regardless of the fact that the broken URL was configured as external source, the SCSS
     # should be compiled correctly.
@@ -118,7 +110,6 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
       | extscsssource     | 1     | theme_boost_union |
       | extscssvalidation | yes   | theme_boost_union |
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
     # We first add a valid CSS snippet to the page which is just there to detect later that SCSS has been compiled correctly.
@@ -131,7 +122,6 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "External Post SCSS download URL" to "<url>"
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on "Course 1" course homepage
     # Regardless of the fact that invalid SCSS code has been fetched from the external source, the SCSS
     # should be compiled correctly.
@@ -149,13 +139,11 @@ Feature: Configuring the theme_boost_union plugin for the "SCSS" tab on the "Loo
       | extscsssource     | 1          | theme_boost_union |
       | extscssvalidation | <validate> | theme_boost_union |
     When I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "SCSS" "link" in the "#adminsettings .nav-tabs" "css_element"
     # And then we add external SCSS code with Bootstrap variables to the theme.
     And I set the field "External Post SCSS download URL" to "<url>"
     And I press "Save changes"
-    And Behat debugging is enabled
     And I am on "Course 1" course homepage
     # Regardless of the fact that broken / invalid SCSS code has been fetched from the external source, the SCSS
     # should be compiled correctly.

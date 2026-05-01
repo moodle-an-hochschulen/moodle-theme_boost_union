@@ -24,12 +24,10 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "L
       | timeline              | System       | 1         | my-index        | content       |
       | calendar_upcoming     | System       | 1         | my-index        | content       |
     And I log in as "admin"
-    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Activity branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I select "Collaboration" from the "Assignment" singleselect
     And I press "Save changes"
-    And Behat debugging is enabled
     And I follow "Dashboard"
     Then DOM element ".block_timeline .theme-boost-union-mod_assign.activityiconcontainer img" <shouldornottl>
     And DOM element ".block_calendar_upcoming .theme-boost-union-mod_assign.activityiconcontainer img" <shouldornotue>
