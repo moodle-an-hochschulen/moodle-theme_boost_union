@@ -971,9 +971,11 @@ This theme is a successor of and heavily inspired by the former theme theme_boos
 Contributors
 ------------
 
-This theme is a collaboration result of multiple organisations.
+This theme is a collaboration result of numerous organisations and individuals.
 
-Moodle an Hochschulen e.V. would like to thank these main contributors (in alphabetical order of the institutions) for their work:
+Moodle an Hochschulen e.V. would like to thank these contributors for their contributions to the codebase:
+
+#### Institutional contributors (in alphabetical order)
 
 * Academic Moodle Cooperation (AMC): Ideating, Code
 * Adapta, Daniel Neis Araujo: Code
@@ -1000,13 +1002,13 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * Moodle.NRW / Ruhr University Bochum, Matthias Buttgereit: Code, Ideating
 * Moodle.NRW / Ruhr University Bochum, Tim Trappen: Code, Ideating
 * moodleSCHULE e.V., Ralf Krause: German translation and curation, Ideating
+* Open Source Development Network Lower Saxony: Funding, Ideating
 * Plakos GmbH, Waldemar Erdmann: Funding, Ideating
 * Ruhr University Bochum, Thorsten Bartel: Code
 * Ruhr University Bochum, Melanie Treitinger: Code, Ideating
 * RWTH Aachen, Amrita Deb Dutta: Code
 * RWTH Aachen, Josha Bartsch: Code
 * RWTH Aachen, Tim Schröder: Code
-* Self-employed: Alberto Lara Hernández: Code
 * Solent University, Mark Sharp: Code
 * ssystems GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
 * ssystems GmbH, Sangyul Cha: Code
@@ -1018,4 +1020,15 @@ Moodle an Hochschulen e.V. would like to thank these main contributors (in alpha
 * University of Lübeck, Christian Wolters: Code, Peer Review, Ideating
 * Zurich University of Applied Sciences (ZHAW): Code, Funding, Ideating
 
-Additionally, we thank all other contributors who contributed ideas, feedback and code snippets within the Github issues and pull requests as well as all contributors who contributed additional translations in AMOS, the Moodle translation tool.
+#### Individual contributors (in alphabetical order)
+
+* Alberto Lara Hernández: Code
+* Sai Asish Yamani: Code
+
+#### Furthermore
+
+Additionally, we thank all the countless contributors who
+
+* contributed ideas, feedback and code snippets within the Github issues and pull requests,
+* participated in the Boost Union discussions in the moodle.org forums,
+* contributed additional translations in AMOS, the Moodle translation tool.
