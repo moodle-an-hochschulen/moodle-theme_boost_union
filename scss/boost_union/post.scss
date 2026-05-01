@@ -1985,6 +1985,9 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
        with a background image. */
     border: none;
 
+    /* Do not repeat the background image in any case. */
+    background-repeat: no-repeat;
+
     /* Add a more solid background color so that the title remains readable. */
     .card-header {
         background-color: rgba(255, 255, 255, .8);

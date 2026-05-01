@@ -74,6 +74,7 @@
         <div id="themeboostunionadvtile{{no}}" class="themeboostunionadvtile {{advtileslayoutclass}} d-flex align-items-stretch align-self-stretch py-3">
             <div class="transparent-bg card {{#backgroundimageurl}}themeboostunionadvtilebg{{/backgroundimageurl}}"
                 style="{{#backgroundimageurl}}background-image: url('{{{backgroundimageurl}}}');{{/backgroundimageurl}}
+                        {{#backgroundimagesize}}background-size: {{{.}}};{{/backgroundimagesize}}
                         {{#backgroundimageposition}}background-position: {{{.}}};{{/backgroundimageposition}}
                         {{#tileheight}}min-height: {{{.}}};{{/tileheight}}">
                 {{#title}}<h5 class="card-header">{{{title}}}</h5>{{/title}}
