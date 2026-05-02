@@ -21,7 +21,8 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | student1 | C1     | student        |
 
   Scenario Outline: Setting: Enable additional block regions (on a course page and the frontpage where all regions are offered)
-    When I am on the "Acceptance test site" "Course" page logged in as "admin"
+    When I log in as "admin"
+    And I am on site homepage
     And I turn editing mode on
     Then "#theme-block-region-<region>" "css_element" should not exist
     And the following config values are set as admin:
@@ -55,7 +56,8 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | outside-top      | footer-left,footer-right                                                                                                                                                        | should not |
 
   Scenario Outline: Setting: Enable additional block regions (on the Dashboard page where all but the content-* regions are offered)
-    When I am on the "Homepage" page logged in as "admin"
+    When I log in as "admin"
+    And I am on homepage
     And I turn editing mode on
     Then "#theme-block-region-<region>" "css_element" should not exist
     And the following config values are set as admin:
@@ -118,7 +120,8 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | blockname      | contextlevel | reference            | pagetypepattern | defaultregion |
       | online_users   | Course       | Acceptance test site | site-index      | <region>      |
       | calendar_month | Course       | C1                   | course-view-*   | <region>      |
-    When I am on the "Acceptance test site" "Course" page logged in as "admin"
+    When I log in as "admin"
+    And I am on site homepage
     Then I should see "Online users" in the "#theme-block-region-<region>" "css_element"
     When I am on "Course 1" course homepage
     Then I should see "Calendar" in the "#theme-block-region-<region>" "css_element"
@@ -143,7 +146,8 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     And the following "blocks" exist:
       | blockname      | contextlevel | reference | pagetypepattern | defaultregion |
       | online_users   | System       | 1         | my-index        | <region>      |
-    When I am on the "Homepage" page logged in as "admin"
+    When I log in as "admin"
+    And I am on homepage
     Then I should see "Online users" in the "#theme-block-region-<region>" "css_element"
 
     Examples:
@@ -164,7 +168,8 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     And the following "blocks" exist:
       | blockname    | contextlevel | reference | pagetypepattern | defaultregion |
       | online_users | System       | 1         | *               | <region>      |
-    When I am on the "My courses" page logged in as "admin"
+    When I log in as "admin"
+    And I follow "My courses"
     Then I should see "Online users" in the "#theme-block-region-<region>" "css_element"
 
     Examples:
@@ -204,7 +209,8 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
 
   @javascript
   Scenario Outline: Setting: Enable and use the off-canvas block regions (Compared to the other regions, these regions are slightly different and thus they are not covered in the Scenario outlines above).
-    When I am on the "Acceptance test site" "Course" page logged in as "admin"
+    When I log in as "admin"
+    And I am on site homepage
     Then "#theme_boost_union-offcanvas-btn" "css_element" should not exist
     And "#theme_boost_union-drawers-offcanvas" "css_element" should not exist
     And "#theme-block-region-offcanvas-editing" "css_element" should not be visible
@@ -432,7 +438,8 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     Given the following config values are set as admin:
       | config                  | value          | plugin            |
       | outsideregionsplacement | <settingvalue> | theme_boost_union |
-    When I am on the "Acceptance test site" "Course" page logged in as "admin"
+    When I log in as "admin"
+    And I am on site homepage
     And I turn editing mode on
     Then the "class" attribute of ".main-inner-wrapper" "css_element" should contain "<classcontain>"
     And the "class" attribute of ".main-inner-wrapper" "css_element" should not contain "<classnotcontain>"
@@ -446,7 +453,8 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     Given the following config values are set as admin:
       | config                   | value                                                                                                                                                                           | plugin            |
       | blockregionsforfrontpage | outside-top,outside-left,outside-right,outside-bottom,footer-left,footer-right,footer-center,offcanvas-left,offcanvas-right,offcanvas-center,content-upper,content-lower,header | theme_boost_union |
-    When I am on the "Acceptance test site" "Course" page logged in as "admin"
+    When I log in as "admin"
+    And I am on site homepage
     And I turn editing mode on
     Then "#theme-block-region-offcanvas-editing" "css_element" should appear before "#theme-block-region-outside-top" "css_element"
     And "#theme-block-region-outside-top" "css_element" should appear before "#theme-block-region-header" "css_element"
@@ -475,7 +483,8 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     And the following "blocks" exist:
       | blockname    | contextlevel | reference            | pagetypepattern | defaultregion |
       | online_users | Course       | Acceptance test site | site-index      | side-pre      |
-    When I am on the "Acceptance test site" "Course" page logged in as "student1"
+    When I log in as "student1"
+    And I am on site homepage
     Then the "class" attribute of ".drawer-right" "css_element" <shouldcontain> "show"
 
     Examples:
