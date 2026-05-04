@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-05-01 - Tests: Rephrase the calendar branding scenarios as preparation for Boost Union 5.2
 * 2026-05-01 - Internal change: Compose self enrolment instance for the showhintcourseselfenrol setting differently as preparation for Boost Union 5.2
 * 2026-05-01 - Tests: Do not use the 'I am on the "Acceptance test site" "Course" page' steps anymore as preparation for Boost Union 5.2
 * 2026-05-01 - Tests: Use the 'I navigate to site home settings' step throughout the whole code base as preparation for Boost Union 5.2
