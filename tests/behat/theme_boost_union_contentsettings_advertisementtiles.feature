@@ -242,16 +242,24 @@ Feature: Configuring the theme_boost_union plugin for the "Advertisement tiles" 
       | center center |
       | left top      |
 
+  @javascript @_file_upload
   Scenario Outline: Setting: Advertisement tiles - Define the background image size.
     Given the following config values are set as admin:
       | config                   | value                             | plugin            |
       | tile1enabled             | yes                               | theme_boost_union |
       | tile1content             | This is a test content for tile 1 | theme_boost_union |
       | tile1backgroundimagesize | <size>                            | theme_boost_union |
-    And the following "theme_boost_union > setting files" exist:
-      | filearea             | filepath                                       |
-      | tile1backgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
-    When I log in as "teacher1"
+    When I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Content" in site administration
+    And I click on "Advertisement tiles" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Advertisement tile 1 background image" filemanager
+    And I press "Save changes"
+    And I am on site homepage
+    And Behat debugging is enabled
+    And I log out
+    And I am on login page
+    And I log in as "teacher1"
     And I am on site homepage
     Then "//div[@id='themeboostunionadvtile1']/*[1][contains(@class, 'card') and contains(@style, 'background-size: <size>')]" "xpath_element" should exist
 
