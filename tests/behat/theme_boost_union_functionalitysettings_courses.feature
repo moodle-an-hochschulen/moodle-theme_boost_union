@@ -103,7 +103,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     And I log out
     And I log in as "teacher1"
     And I am on the "Course 1" "enrolment methods" page
-    And I click on "Enable" "link" in the "Self enrolment (Student)" "table_row"
+    And I click on "Enable" "link" in the "Self enrolment as 'Student'" "table_row"
     And I log out
     When I log in as "student2"
     And I am on "Course 1" course homepage
@@ -229,7 +229,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
     And I am on the "Course 1" "enrolment methods" page
-    When I click on "Enable" "link" in the "Self enrolment (Student)" "table_row"
+    When I click on "Enable" "link" in the "Self enrolment as 'Student'" "table_row"
     And I am on "Course 1" course homepage
     Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should exist
@@ -255,7 +255,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     And I should not see "If you don't want any Moodle user to have access to this course freely, please restrict the self enrolment settings."
     And ".course-hint-selfenrol" "css_element" should not exist
     And I am on the "Course 1" "enrolment methods" page
-    When I click on "Enable" "link" in the "Self enrolment (Student)" "table_row"
+    When I click on "Enable" "link" in the "Self enrolment as 'Student'" "table_row"
     And I am on "Course 1" course homepage
     Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And I should see "If you don't want any Moodle user to have access to this course freely, please restrict the self enrolment settings."
@@ -282,11 +282,11 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
     And I am on the "Course 1" "enrolment methods" page
-    When I click on "Enable" "link" in the "Self enrolment (Student)" "table_row"
+    When I click on "Enable" "link" in the "Self enrolment as 'Student'" "table_row"
     And I am on "Course 1" course homepage
     Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should exist
-    When I click on "Self enrolment (Student)" "link" in the ".course-hint-selfenrol" "css_element"
+    When I click on "Self enrolment as 'Student'" "link" in the ".course-hint-selfenrol" "css_element"
     And I set the following fields to these values:
       | Allow new self enrolments | 0 |
     And I press "Save changes"
@@ -303,11 +303,11 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
     And I am on the "Course 1" "enrolment methods" page
-    When I click on "Enable" "link" in the "Self enrolment (Student)" "table_row"
+    When I click on "Enable" "link" in the "Self enrolment as 'Student'" "table_row"
     And I am on "Course 1" course homepage
     Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should exist
-    When I click on "Self enrolment (Student)" "link" in the ".course-hint-selfenrol" "css_element"
+    When I click on "Self enrolment as 'Student'" "link" in the ".course-hint-selfenrol" "css_element"
     And I set the following fields to these values:
       | Enrolment key | 1234 |
     And I press "Save changes"
@@ -324,12 +324,12 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
     And I am on the "Course 1" "enrolment methods" page
-    When I click on "Enable" "link" in the "Self enrolment (Student)" "table_row"
+    When I click on "Enable" "link" in the "Self enrolment as 'Student'" "table_row"
     And I am on "Course 1" course homepage
     Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is possible."
-    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment indefinitely."
+    And I should see "The Self enrolment as 'Student' enrolment instance allows unrestricted self enrolment indefinitely."
     And ".course-hint-selfenrol" "css_element" should exist
-    When I click on "Self enrolment (Student)" "link" in the ".course-hint-selfenrol" "css_element"
+    When I click on "Self enrolment as 'Student'" "link" in the ".course-hint-selfenrol" "css_element"
     And I set the following fields to these values:
       | id_enrolstartdate_enabled | 0       |
       | id_enrolenddate_enabled   | 1       |
@@ -344,7 +344,7 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
     When I am on the "Course 1" "enrolment methods" page
-    And I click on "Edit" "link" in the "Self enrolment (Student)" "table_row"
+    And I click on "Edit" "link" in the "Self enrolment as 'Student'" "table_row"
     And I set the following fields to these values:
       | id_enrolstartdate_enabled | 0       |
       | id_enrolenddate_enabled   | 1       |
@@ -357,10 +357,10 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     And I press "Save changes"
     And I am on "Course 1" course homepage
     Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is possible."
-    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment until Saturday, 1 January 2050, 12:00 AM."
+    And I should see "The Self enrolment as 'Student' enrolment instance allows unrestricted self enrolment until Saturday, 1 January 2050, 12:00 AM."
     And ".course-hint-selfenrol" "css_element" should exist
     When I am on the "Course 1" "enrolment methods" page
-    And I click on "Edit" "link" in the "Self enrolment (Student)" "table_row"
+    And I click on "Edit" "link" in the "Self enrolment as 'Student'" "table_row"
     And I set the following fields to these values:
       | id_enrolstartdate_enabled | 1       |
     # We can't use the ##yesterday## notation here.
@@ -373,10 +373,10 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     And I press "Save changes"
     And I am on "Course 1" course homepage
     Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is possible."
-    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment currently."
+    And I should see "The Self enrolment as 'Student' enrolment instance allows unrestricted self enrolment currently."
     And ".course-hint-selfenrol" "css_element" should exist
     When I am on the "Course 1" "enrolment methods" page
-    And I click on "Edit" "link" in the "Self enrolment (Student)" "table_row"
+    And I click on "Edit" "link" in the "Self enrolment as 'Student'" "table_row"
     And I set the following fields to these values:
       | id_enrolstartdate_enabled | 1       |
     # We can't use the ##tomorrow## notation here. This test will break in the year 2050.
@@ -389,10 +389,10 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     And I press "Save changes"
     And I am on "Course 1" course homepage
     Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is planned to become possible."
-    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment from Saturday, 1 January 2050, 12:00 AM on."
+    And I should see "The Self enrolment as 'Student' enrolment instance allows unrestricted self enrolment from Saturday, 1 January 2050, 12:00 AM on."
     And ".course-hint-selfenrol" "css_element" should exist
     When I am on the "Course 1" "enrolment methods" page
-    And I click on "Edit" "link" in the "Self enrolment (Student)" "table_row"
+    And I click on "Edit" "link" in the "Self enrolment as 'Student'" "table_row"
     And I set the following fields to these values:
       | id_enrolstartdate_enabled | 1       |
     # We can't use the ##Monday next week## notation here. This test will break in the year 2050.
@@ -411,10 +411,10 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     And I press "Save changes"
     And I am on "Course 1" course homepage
     Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is planned to become possible."
-    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment from Saturday, 1 January 2050, 12:00 AM until Sunday, 2 January 2050, 12:00 AM."
+    And I should see "The Self enrolment as 'Student' enrolment instance allows unrestricted self enrolment from Saturday, 1 January 2050, 12:00 AM until Sunday, 2 January 2050, 12:00 AM."
     And ".course-hint-selfenrol" "css_element" should exist
     When I am on the "Course 1" "enrolment methods" page
-    And I click on "Edit" "link" in the "Self enrolment (Student)" "table_row"
+    And I click on "Edit" "link" in the "Self enrolment as 'Student'" "table_row"
     And I set the following fields to these values:
       | id_enrolstartdate_enabled | 1       |
     # We can't use the ##yesterday## notation here.
@@ -433,10 +433,10 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     And I press "Save changes"
     And I am on "Course 1" course homepage
     Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is possible."
-    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment until Saturday, 1 January 2050, 12:00 AM."
+    And I should see "The Self enrolment as 'Student' enrolment instance allows unrestricted self enrolment until Saturday, 1 January 2050, 12:00 AM."
     And ".course-hint-selfenrol" "css_element" should exist
     When I am on the "Course 1" "enrolment methods" page
-    And I click on "Edit" "link" in the "Self enrolment (Student)" "table_row"
+    And I click on "Edit" "link" in the "Self enrolment as 'Student'" "table_row"
     And I set the following fields to these values:
       | id_enrolstartdate_enabled | 1       |
     # We can't use the ##3 days ago## notation here.
@@ -466,10 +466,10 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     Then I should not see "This course is currently visible to everyone and self enrolment without an enrolment key is"
     And ".course-hint-selfenrol" "css_element" should not exist
     And I am on the "Course 1" "enrolment methods" page
-    When I click on "Enable" "link" in the "Self enrolment (Student)" "table_row"
+    When I click on "Enable" "link" in the "Self enrolment as 'Student'" "table_row"
     And I am on "Course 1" course homepage
     Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is"
-    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment indefinitely."
+    And I should see "The Self enrolment as 'Student' enrolment instance allows unrestricted self enrolment indefinitely."
     And ".course-hint-selfenrol" "css_element" should exist
     When I add "Self enrolment" enrolment method in "Course 1" with:
       | Custom instance name | Custom self enrolment |
@@ -487,16 +487,16 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     And I press "Save changes"
     And I am on "Course 1" course homepage
     Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is possible."
-    And I should see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment indefinitely."
+    And I should see "The Self enrolment as 'Student' enrolment instance allows unrestricted self enrolment indefinitely."
     And I should see "The Custom self enrolment enrolment instance allows unrestricted self enrolment until Saturday, 1 January 2050, 12:00 AM."
     And ".course-hint-selfenrol" "css_element" should exist
     When I am on the "Course 1" "enrolment methods" page
-    And I click on "Edit" "link" in the "Self enrolment (Student)" "table_row"
+    And I click on "Edit" "link" in the "Self enrolment as 'Student'" "table_row"
     And I set the following fields to these values:
       | Enrolment key | 1234 |
     And I press "Save changes"
     And I am on "Course 1" course homepage
     Then I should see "This course is currently visible to everyone and self enrolment without an enrolment key is possible."
-    And I should not see "The Self enrolment (Student) enrolment instance allows unrestricted self enrolment indefinitely."
+    And I should not see "The Self enrolment as 'Student' enrolment instance allows unrestricted self enrolment indefinitely."
     And I should see "The Custom self enrolment enrolment instance allows unrestricted self enrolment until Saturday, 1 January 2050, 12:00 AM."
     And ".course-hint-selfenrol" "css_element" should exist
