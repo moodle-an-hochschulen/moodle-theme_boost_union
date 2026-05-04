@@ -193,7 +193,7 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And I set the field "Username" to "admin"
     And I set the field "Password" to "wrongpass"
     And I press "Log in"
-    And I should see "Invalid login, please try again"
+    And I should see "Your login info may be incorrect. Please try again."
     And I set the field "Username" to "admin"
     And I set the field "Password" to "admin"
     And I press "Log in"

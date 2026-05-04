@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-20 - Upgrade: Fix Behat tests which broke due to language pack changes.
 * 2026-04-20 - Upgrade: Fix Behat tests which broke due that site home and my courses are now disabled as well as forcelogin is enabled on new installs.
 * 2026-04-20 - Upgrade: Adopt changes to login.mustache.
 * 2026-04-20 - Upgrade: Adopt changes to drawers.mustache.
