@@ -26,7 +26,8 @@ Feature: Configuring the theme_boost_union plugin for the "Calendar branding" ta
       | calendareventcolorbordercategory | #ff00ff | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I create a calendar event with form data:
+    And I am viewing site calendar
+    And I create a calendar event:
       | Type of event | Category         |
       | Category      | My category 1    |
       | Event title   | Category 1 Event |
@@ -45,7 +46,8 @@ Feature: Configuring the theme_boost_union plugin for the "Calendar branding" ta
       | calendareventcolorbordercourse | #ff00ff | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I create a calendar event with form data:
+    And I am viewing site calendar
+    And I create a calendar event:
       | Type of event | Course         |
       | Course        | Course 1       |
       | Event title   | Course 1 Event |
@@ -70,7 +72,8 @@ Feature: Configuring the theme_boost_union plugin for the "Calendar branding" ta
       | user  | group |
       | admin | G1    |
     When I log in as "admin"
-    And I set the field "course" in the ".block_calendar_month" "css_element" to "Course 1"
+    And I am viewing site calendar
+    And I set the field "course" in the ".maincalendar" "css_element" to "Course 1"
     And I create a calendar event:
       | Type of event | Group         |
       | Group         | Group 1       |
@@ -90,7 +93,8 @@ Feature: Configuring the theme_boost_union plugin for the "Calendar branding" ta
       | calendareventcolorborderuser | #ff00ff | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I create a calendar event with form data:
+    And I am viewing site calendar
+    And I create a calendar event:
       | Type of event | User       |
       | Event title   | User Event |
     And I follow "Dashboard"
@@ -108,7 +112,8 @@ Feature: Configuring the theme_boost_union plugin for the "Calendar branding" ta
       | calendareventcolorbordersite | #ff00ff | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I create a calendar event with form data:
+    And I am viewing site calendar
+    And I create a calendar event:
       | Type of event | Site       |
       | Event title   | Site Event |
     And I follow "Dashboard"
@@ -128,9 +133,9 @@ Feature: Configuring the theme_boost_union plugin for the "Calendar branding" ta
       | calendariconscolor | #022973 | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
-    And I create a calendar event with form data:
+    And I am viewing site calendar
+    And I create a calendar event:
       | Type of event | User       |
       | Event title   | User Event |
-    And I follow "Dashboard"
-    And I click on "Full calendar" "link"
+    And I am viewing site calendar
     Then DOM element ".block .calendar_filters li span i" should have computed style "color" "rgb(2, 41, 115)"
