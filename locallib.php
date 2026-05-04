@@ -226,6 +226,7 @@ function theme_boost_union_get_course_related_hints() {
     ) {
         // Get the active enrol instances for this course.
         $enrolinstances = enrol_get_instances($COURSE->id, true);
+        $selfenrolplugin = enrol_get_plugin('self');
 
         // Prepare to remember when self enrolment is / will be possible.
         $selfenrolmentpossiblecurrently = false;
@@ -241,12 +242,7 @@ function theme_boost_union_get_course_related_hints() {
                 $instanceobject = new stdClass();
 
                 // Remember instance name.
-                if (empty($instance->name)) {
-                    $instanceobject->name = get_string('pluginname', 'enrol_self') .
-                            " (" . get_string('defaultcoursestudent', 'core') . ")";
-                } else {
-                    $instanceobject->name = $instance->name;
-                }
+                $instanceobject->name = $selfenrolplugin->get_instance_name($instance);
 
                 // Remember type of unrestrictedness.
                 if (empty($instance->enrolenddate) && empty($instance->enrolstartdate)) {
