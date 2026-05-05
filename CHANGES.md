@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-05-01 - Tests: Rephrase some smart menu scenarios as preparation for Boost Union 5.2
 * 2026-05-01 - Tests: Fix a glitch in the mobile scss branding scenario as preparation for Boost Union 5.2
 * 2026-05-01 - Tests: Rephrase the calendar branding scenarios as preparation for Boost Union 5.2
 * 2026-05-01 - Internal change: Compose self enrolment instance for the showhintcourseselfenrol setting differently as preparation for Boost Union 5.2
