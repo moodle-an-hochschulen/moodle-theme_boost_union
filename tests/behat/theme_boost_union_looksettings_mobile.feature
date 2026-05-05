@@ -7,7 +7,7 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile" tab on the "L
   Background:
     Given the following config values are set as admin:
       | config                 | value |
-      | enablemobilewebservice | yes   |
+      | enablemobilewebservice | 1     |
 
   Scenario: Setting: Additional CSS for Mobile app - Insert CSS code and test that the mobilecssurl URL is set correctly.
     When I log in as "admin"
