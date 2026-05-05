@@ -120,7 +120,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I should see "Custom node 1" in the "nav" "css_element"
     And I should see "Custom node 2" in the "nav" "css_element"
     And "Custom menu" "link" should appear before "Smart menu" "link" in the "nav" "css_element"
-    And "My courses" "link" should appear before "Custom menu" "link" in the "nav" "css_element"
+    And "Dashboard" "link" should appear before "Custom menu" "link" in the "nav" "css_element"
 
   @javascript
   Scenario Outline: Smartmenu: Menus: Application - Verify the bottom bar existence
