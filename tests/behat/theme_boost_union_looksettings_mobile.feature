@@ -18,7 +18,7 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile" tab on the "L
     a.test { font-size: 16px; }
     """
     And I press "Save changes"
-    And I navigate to "General > Mobile app > Mobile appearance" in site administration
+    And I navigate to "General > Mobile app > Premium features" in site administration
     Then the field "CSS" matches expression "/theme\/boost_union\/mobile\/styles\.php/"
 
   Scenario: Setting: Additional CSS for Mobile app - Insert CSS code and test that the mobilecssurl URL is overwritten correctly.
@@ -33,7 +33,7 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile" tab on the "L
     a.test { font-size: 16px; }
     """
     And I press "Save changes"
-    And I navigate to "General > Mobile app > Mobile appearance" in site administration
+    And I navigate to "General > Mobile app > Premium features" in site administration
     Then the field "CSS" matches expression "/theme\/boost_union\/mobile\/styles\.php/"
     And I should not see "mycss.css" in the "#id_s__mobilecssurl" "css_element"
 
@@ -51,7 +51,7 @@ Feature: Configuring the theme_boost_union plugin for the "Mobile" tab on the "L
     """
     """
     And I press "Save changes"
-    And I navigate to "General > Mobile app > Mobile appearance" in site administration
+    And I navigate to "General > Mobile app > Premium features" in site administration
     Then the field "CSS" does not match expression "/theme\/boost_union\/mobile\/styles\.php/"
 
   # Unfortunately, this can't be tested with Behat yet as Mobile App testing is not added to this plugin yet.
