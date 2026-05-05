@@ -4048,6 +4048,19 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE
         );
 
+        // Setting: Suppress telemetry trace ID link.
+        $name = 'theme_boost_union/footersuppresstelemetrytraceid';
+        $title = get_string('footersuppresstelemetrytraceidsetting', 'theme_boost_union', null, true);
+        $description = get_string('footersuppresstelemetrytraceidsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/footersuppresstelemetrytraceid',
+            'theme_boost_union/enablefooterbutton',
+            'eq',
+            THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE
+        );
+
         // Setting: Suppress theme switcher links.
         $name = 'theme_boost_union/footersuppressthemeswitch';
         $title = get_string('footersuppressthemeswitchsetting', 'theme_boost_union', null, true);

@@ -250,6 +250,20 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | no    | should      |
       | yes   | should not  |
 
+  Scenario Outline: Setting: Footer - Suppress telemetry trace ID link
+    Given the following config values are set as admin:
+      | config                         | value   | plugin            |
+      | footersuppresstelemetrytraceid | <value> | theme_boost_union |
+    And all Boost Union MUC caches are purged
+    And I log in as "admin"
+    When I am on homepage
+    Then I <shouldornot> see "Telemetry trace" in the ".footer-content-popover" "css_element"
+
+    Examples:
+      | value | shouldornot |
+      | no    | should      |
+      | yes   | should not  |
+
   # Unfortunately, this can't be tested with Behat on Moodle 4.3 anymore
   # Scenario Outline: Setting: Footer - Suppress theme switcher links
 

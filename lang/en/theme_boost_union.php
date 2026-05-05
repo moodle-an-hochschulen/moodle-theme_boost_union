@@ -1064,6 +1064,9 @@ $string['footersuppresslogininfosetting_desc'] = 'With this setting, you can ent
 // ... ... Setting: Suppress 'Reset user tour on this page' link.
 $string['footersuppressusertoursetting'] = 'Suppress \'Reset user tour on this page\' link';
 $string['footersuppressusertoursetting_desc'] = 'With this setting, you can entirely suppress the \'Reset user tour on this page\' link in the footer. This link would otherwise provide the possibility to reset a user tour on a particular page.';
+// ... ... Setting: Suppress telemetry trace ID link.
+$string['footersuppresstelemetrytraceidsetting'] = 'Suppress telemetry trace ID link';
+$string['footersuppresstelemetrytraceidsetting_desc'] = 'With this setting, you can entirely suppress the telemetry trace ID link in the footer. This will just suppress the output and will not prevent the telemetry trace ID from being generated.';
 // ... ... Setting: Suppress theme switcher links.
 $string['footersuppressthemeswitchsetting'] = 'Suppress theme switcher links';
 $string['footersuppressthemeswitchsetting_desc'] = 'With this setting, you can entirely suppress the theme switcher links in the footer. The underlying system for device-specific themes was removed in Moodle 4.3, but the output routines are still there, so better be save than sorry.';

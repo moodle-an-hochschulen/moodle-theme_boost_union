@@ -119,6 +119,21 @@ if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
         $templatecontext['footershowusertour'] = false;
     }
 
+    // If the "Suppress telemetry trace ID link" setting is not enabled.
+    $footersuppresstelemetrytraceidsetting = get_config('theme_boost_union', 'footersuppresstelemetrytraceid');
+    if (
+        !isset($footersuppresstelemetrytraceidsetting)
+        || $footersuppresstelemetrytraceidsetting != THEME_BOOST_UNION_SETTING_SELECT_YES
+    ) {
+        // Add marker to show this link.
+        $templatecontext['footershowtelemetrytraceid'] = true;
+
+        // Otherwise.
+    } else {
+        // Add marker to hide this link.
+        $templatecontext['footershowtelemetrytraceid'] = false;
+    }
+
     // If the "Suppress 'Powered by Moodle' link" setting is not enabled.
     $footersuppresspoweredsetting = get_config('theme_boost_union', 'footersuppresspowered');
     if (!isset($footersuppresspoweredsetting) || $footersuppresspoweredsetting != THEME_BOOST_UNION_SETTING_SELECT_YES) {

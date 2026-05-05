@@ -1810,4 +1810,25 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         return html_writer::tag('a', $content, $attributes);
     }
+
+    /**
+     * Returns the telemetry trace id for the current page.
+     *
+     * In Behat runs, this method can return a fake trace id configured in theme settings
+     * if no real OpenTelemetry trace id is available.
+     *
+     * This renderer function is copied and modified from /lib/classes/output/core_renderer.php
+     *
+     * @return string|null
+     */
+    public function telemetry_traceid(): ?string {
+        /* If we are running Behat. */
+        if (defined('BEHAT_SITE_RUNNING')) {
+            /* Fake a trace ID so that we can be sure that an ID exists. */
+            return random_bytes(16);
+        }
+
+        // Otherwise, return the parent function.
+        return parent::telemetry_traceid();
+    }
 }
