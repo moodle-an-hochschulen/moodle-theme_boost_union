@@ -229,7 +229,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And ".primary-navigation .dropdownmoremenu" "css_element" <moreshouldornotlarge> be visible
     # Make the screen smaller and test the "More" behaviour in the navbar
     # This screen size should be 'tablet', but due to MDL-81892, we have to test on a larger screen.
-    And I change viewport size to "820x1024"
+    And I change viewport size to "840x1024"
     Then I <menu1outsideshouldornottablet> see smart menu "Quick links 01" outside more menu in location "Main"
     And I <menu1insideshouldornottablet> see smart menu "Quick links 01" inside more menu in location "Main"
     And I <menu2outsideshouldornottablet> see smart menu "Quick links 02" outside more menu in location "Main"
@@ -298,7 +298,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I follow "Dashboard"
     # Make the screen smaller to test the "More" behaviour in the navbar
     # This screen size should be 'tablet', but due to MDL-81892, we have to test on a larger screen.
-    And I change viewport size to "820x1024"
+    And I change viewport size to "840x1024"
     # Verify the order of the menu items (as they may have been re-ordered due to their settings).
     And I click on "More" "link" in the ".primary-navigation" "css_element"
     And "Quick links 01" "text" should appear <orderrelation1and2> "Quick links 02" "text"

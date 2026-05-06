@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-20 - Upgrade: Fix Behat tests which broke due to UI design changes.
 * 2026-04-20 - Upgrade: Let the admin deactivate the Telemetry Trace ID entry in the footer as well.
 * 2026-04-20 - Upgrade: Fix Behat tests which broke due to site administration changes.
 * 2026-04-20 - Upgrade: Fix Behat tests which broke due to language pack changes.
