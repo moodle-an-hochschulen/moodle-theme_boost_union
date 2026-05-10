@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.1-r12
 
 * 2026-05-05 - Glitch: Make sure that the bottom border under the Reset user tours link in the footer is shown, resolves #1253
 * 2026-05-01 - Tests: Rephrase some smart menu scenarios as preparation for Boost Union 5.2
