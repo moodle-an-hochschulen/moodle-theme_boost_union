@@ -80,6 +80,7 @@ $string['settingsoverview_accessibility_desc'] = 'Settings for accessibility-rel
 $string['settingsoverview_flavours_desc'] = 'With flavours, you can diversify the look of your Moodle site between cohorts and / or course categories.';
 $string['settingsoverview_snippets_desc'] = 'With SCSS snippets, you can enable additional eye candy or visual fixes on your Moodle site.';
 $string['settingsoverview_smartmenus_desc'] = 'With smart menus, you can extend the navigation items of your Moodle site in the main menu and the user menus well as introduce a bottom menu or a top menu.';
+$string['settingsoverview_recommendations_desc'] = 'Recommendations highlight relevant Moodle core, Boost Union and third-party plugin settings to allow a more robust Boost Union setup.';
 $string['settingsoverview_all'] = 'All settings on one page';
 $string['settingsoverview_all_desc'] = 'Here, you can open the standard Moodle category settings page for Boost Union that shows all settings on one page. But beware, it is really packed.';
 
@@ -162,7 +163,6 @@ $string['blockdrawerwidthsetting_desc'] = 'With this setting, you can override M
 $string['sitebrandingtab'] = 'Site branding';
 // ... Section: Logos.
 $string['logosheading'] = 'Logos';
-$string['logosheading_desc'] = 'Please note: Boost Union has its own logo upload and does not use the logo from <a href="{$a}">Moodle core\'s logo setting</a>.<br />Boost Union especially allows you to upload more image formats that Moodle core allows and allows you to override the uploaded logos within its flavours.';
 // ... ... Setting: Logo.
 $string['logosetting'] = 'Logo';
 $string['logosetting_desc'] = 'Here, you can upload a full logo to be used as decoration. This image is especially used on the login page. This image can be quite high resolution because it will be scaled down for use.';
@@ -171,7 +171,6 @@ $string['logocompactsetting'] = 'Compact logo';
 $string['logocompactsetting_desc'] = 'Here, you can upload a compact version of the same logo as above, such as an emblem, shield or icon. This image is especially used in the navigation bar at the top of each Moodle page. The image should be clear even at small sizes.';
 // ... Section: Favicon.
 $string['faviconheading'] = 'Favicon';
-$string['faviconheading_desc'] = 'Please note: Boost Union has its own favicon upload and does not use the favicon from <a href="{$a}">Moodle core\'s favicon setting</a>.<br />Boost Union especially allows you to override the uploaded favicon within its flavours.';
 // ... ... Setting: Favicon
 $string['faviconsetting'] = 'Favicon';
 $string['faviconsetting_desc'] = 'Here, you can upload a custom image (.ico or .png format) that the browser will show as the favicon of your Moodle website. If no custom favicon is uploaded, a standard Moodle favicon will be used.';
@@ -1940,6 +1939,54 @@ $string['smartmenusrolecontext_help'] = 'Select the context for which the user\'
 $string['smartmenussavechangesandconfigure'] = 'Save and configure items';
 $string['smartmenussettings'] = 'Smart menu settings';
 
+// Settings: Recommendations page.
+$string['recommendations'] = 'Recommendations';
+$string['recommendations_desc'] = 'Boost Union performs just as good as how the whole Moodle instance is configured. On this page, you find recommendations and checks for the optimal Boost Union operation. If you think a particular recommendation does not apply to your instance, you can mute it.';
+$string['recommendationopensetting'] = 'Open setting';
+$string['recommendationmoreinfo'] = 'More info';
+$string['recommendationviewall'] = 'View all recommendations';
+$string['recommendationautofix'] = 'Auto-fix the recommendation';
+$string['recommendationautofixsuccess'] = 'The recommendation has been fixed automatically.';
+$string['recommendationstatusheader'] = 'Status';
+$string['recommendationrecommendationheader'] = 'Recommendation';
+$string['recommendationsummaryheader'] = 'Summary';
+$string['recommendationactionsheader'] = 'Actions';
+$string['recommendationcategory_moodlecore'] = 'Moodle Core';
+$string['recommendationcategory_boostunion'] = 'Boost Union';
+$string['recommendationcategory_thirdparty'] = 'Third-party plugins';
+$string['recommendationcategory_accessibility'] = 'Accessibility';
+$string['recommendationstatus_ok'] = 'OK';
+$string['recommendationstatus_notice'] = 'Notice';
+$string['recommendationstatus_warning'] = 'Warning';
+$string['recommendationstatus_na'] = 'N/A';
+$string['recommendationstatus_muted'] = 'Muted';
+$string['recommendationmute'] = 'Mute recommendation';
+$string['recommendationunmute'] = 'Unmute recommendation';
+$string['recommendationmutesuccess'] = 'The recommendation has been muted.<br />You will not be bothered by it from now on, but you can always unmute it again.';
+$string['recommendationunmutesuccess'] = 'The recommendation has been unmuted.';
+$string['recommendationsattentionalert'] = 'Some Boost Union recommendations need your attention. Please review the <a href="{$a->url}">Recommendations</a> page.';
+$string['recommendationsnotificationtitle'] = 'Boost Union recommendation';
+
+// Recommendation: Slash arguments support.
+$string['recommendation_slasharguments_title'] = 'Slash arguments support';
+$string['recommendation_slasharguments_summary'] = 'Slash arguments should be enabled to allow all Boost Union features to work correctly.';
+$string['recommendation_slasharguments_description'] = 'Some Boost Union features rely on the Moodle core function slasharguments to work correctly. If slash arguments are disabled, some features of Boost Union will not work as expected, for example several flavours branding options. Please enable slash arguments in your Moodle instance to ensure the full experience of Boost Union.';
+
+// Recommendation: Theme Boost preset.
+$string['recommendation_themeboostpreset_title'] = 'Theme Boost preset';
+$string['recommendation_themeboostpreset_summary'] = 'The Boost preset should be set to default.scss for optimal Boost Union presentation.';
+$string['recommendation_themeboostpreset_description'] = 'Boost Union is implemented and tested on top of the Boost preset default.scss which is the default in Moodle installations. You are free to configure a different built-in or custom Boost preset, but you should be aware that the Boost Union presentation may suffer.';
+
+// Recommendation: Moodle core brand assets.
+$string['recommendation_corebrandasset_title'] = '{$a} upload';
+$string['recommendation_corebrandasset_summary'] = 'A {$a} should not be uploaded in Moodle core settings as Boost Union uses its own {$a} setting.';
+$string['recommendation_corebrandasset_description'] = 'Boost Union uses its own {$a} setting and does not use the Moodle core {$a} setting. Unless another theme is also used on this site where this {$a} will be presented, a {$a} uploaded in Moodle core is most likely never used and should be deleted.';
+
+// Recommendation: Moodle core auth instructions.
+$string['recommendation_coreauthinstructions_title'] = 'Auth instructions';
+$string['recommendation_coreauthinstructions_summary'] = 'The Moodle core authentication instructions should be empty as Boost Union uses its own login instructions.';
+$string['recommendation_coreauthinstructions_description'] = 'Boost Union does not render Moodle core auth_instructions setting on the login page. If Boost Union is used as the theme for non-logged in users, these users will not see these instructions and thus they should be cleaned.';
+
 // Privacy API.
 $string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
 
@@ -1988,6 +2035,12 @@ $string['cachedef_courseoverrides'] = 'Course-specific setting overrides';
 
 // Scheduled tasks.
 $string['task_purgecache'] = 'Purge theme cache';
+
+// Checks API: Recommendations.
+$string['checkrecommendations'] = 'Boost Union recommendations';
+$string['checkrecommendationsok'] = 'No Boost Union recommendations currently need attention.';
+$string['checkrecommendationswarning'] = 'At least one Boost Union recommendation needs attention.';
+$string['checkrecommendationsdetails'] = 'Review recommendations on the <a href="{$a->url}">Recommendations</a> page.';
 
 // Upgrade notices.
 $string['upgradenotice_2022080922'] = 'From this release on, Boost Union has its own logo and compact logo settings and does not use these files from the Moodle core settings anymore.';

@@ -159,6 +159,11 @@ class admin_settingspage_tabs_with_tertiary extends \theme_boost_admin_settingsp
             get_string('smartmenus', 'theme_boost_union', null, true)
         );
 
+        $this->add_tertiary_item(
+            new \core\url('/theme/boost_union/recommendations/overview.php'),
+            get_string('recommendations', 'theme_boost_union', null, true)
+        );
+
         // Then, add navigation items for all Boost Union Child themes.
         // Use a static variable here as we do not want to search for such plugins more than once, even if the function
         // is called multiple times.
@@ -200,8 +205,9 @@ class admin_settingspage_tabs_with_tertiary extends \theme_boost_admin_settingsp
         // Add tertiary navigation as a select menu.
         $output .= $this->render_tertiary_navigation();
 
-        // Show alert if Boost Union is not the active theme.
+        // Boost Union page alerts.
         $output .= theme_boost_union_is_not_active_alert();
+        $output .= theme_boost_union_recommendations_alert();
 
         // Append parent output.
         $output .= parent::output_html();
