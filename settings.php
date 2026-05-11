@@ -967,6 +967,47 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('loginpagetab', 'theme_boost_union', null, true)
         );
 
+        // Heading: Login page arrangement.
+        $name = 'theme_boost_union/loginarrangementheading';
+        $title = get_string('loginarrangementheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Login container position.
+        $name = 'theme_boost_union/loginformposition';
+        $title = get_string('loginformpositionsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginformpositionsetting_desc', 'theme_boost_union', null, true);
+        $loginformoptions = [
+                THEME_BOOST_UNION_SETTING_LOGINFORMPOS_CENTER => get_string('loginformpositionsetting_center', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_LOGINFORMPOS_LEFT => get_string('loginformpositionsetting_left', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_LOGINFORMPOS_RIGHT => get_string('loginformpositionsetting_right', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_LOGINFORMPOS_CENTER,
+            $loginformoptions
+        );
+        $tab->add($setting);
+
+        // Setting: Login container transparency.
+        $name = 'theme_boost_union/loginformtransparency';
+        $title = get_string('loginformtransparencysetting', 'theme_boost_union', null, true);
+        $description = get_string('loginformtransparencysetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Setting: Login container width.
+        $name = 'theme_boost_union/logincontainerwidth';
+        $title = get_string('logincontainerwidthsetting', 'theme_boost_union', null, true);
+        $description = get_string('logincontainerwidthsetting_desc', 'theme_boost_union', null, true) . '<br />' .
+                 get_string('logincontainerwidthsetting_note', 'theme_boost_union', null, true);
+        $default = '500px';
+        $setting = new admin_setting_configtext($name, $title, $description, $default, $widthregex, 6);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Heading: Login page background images.
         $name = 'theme_boost_union/loginbackgroundimagesheading';
         $title = get_string('loginbackgroundimagesheading', 'theme_boost_union', null, true);
@@ -1029,44 +1070,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configtextarea($name, $title, $description, '', PARAM_TEXT);
         $tab->add($setting);
 
-        // Heading: Login form.
-        $name = 'theme_boost_union/loginformheading';
-        $title = get_string('loginformheading', 'theme_boost_union', null, true);
-        $setting = new admin_setting_heading($name, $title, null);
-        $tab->add($setting);
-
-        // Setting: Login form position.
-        $name = 'theme_boost_union/loginformposition';
-        $title = get_string('loginformpositionsetting', 'theme_boost_union', null, true);
-        $description = get_string('loginformpositionsetting_desc', 'theme_boost_union', null, true);
-        $loginformoptions = [
-                THEME_BOOST_UNION_SETTING_LOGINFORMPOS_CENTER => get_string('loginformpositionsetting_center', 'theme_boost_union'),
-                THEME_BOOST_UNION_SETTING_LOGINFORMPOS_LEFT => get_string('loginformpositionsetting_left', 'theme_boost_union'),
-                THEME_BOOST_UNION_SETTING_LOGINFORMPOS_RIGHT =>
-                        get_string('loginformpositionsetting_right', 'theme_boost_union'), ];
-        $setting = new admin_setting_configselect(
-            $name,
-            $title,
-            $description,
-            THEME_BOOST_UNION_SETTING_LOGINFORMPOS_CENTER,
-            $loginformoptions
-        );
-        $tab->add($setting);
-
-        // Setting: Login form transparency.
-        $name = 'theme_boost_union/loginformtransparency';
-        $title = get_string('loginformtransparencysetting', 'theme_boost_union', null, true);
-        $description = get_string('loginformtransparencysetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
-        $tab->add($setting);
-
-        // Heading: Login layout.
+        // Heading: Login form layout.
         $name = 'theme_boost_union/loginlayoutheading';
         $title = get_string('loginlayoutheading', 'theme_boost_union', null, true);
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
-        // Setting: Login layout.
+        // Setting: Login form layout.
         $name = 'theme_boost_union/loginlayout';
         $title = get_string('loginlayoutsetting', 'theme_boost_union', null, true);
         $description = get_string('loginlayoutsetting_desc', 'theme_boost_union', null, true);
@@ -1076,16 +1086,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_LOGINLAYOUT_ACCORDION => get_string('loginlayoutaccordion', 'theme_boost_union'),
         ];
         $setting = new admin_setting_configselect($name, $title, $description, 'vertical', $loginlayoutoptions);
-        $setting->set_updatedcallback('theme_reset_all_caches');
-        $tab->add($setting);
-
-        // Setting: Login container width.
-        $name = 'theme_boost_union/logincontainerwidth';
-        $title = get_string('logincontainerwidthsetting', 'theme_boost_union', null, true);
-        $description = get_string('logincontainerwidthsetting_desc', 'theme_boost_union', null, true) . '<br />' .
-                 get_string('logincontainerwidthsetting_note', 'theme_boost_union', null, true);
-        $default = '500px';
-        $setting = new admin_setting_configtext($name, $title, $description, $default, $widthregex, 6);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
