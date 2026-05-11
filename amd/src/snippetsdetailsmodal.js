@@ -50,6 +50,7 @@ const registerListenerEvents = () => {
     document.addEventListener('click', (e) => {
         const details = e.target.closest(SELECTORS.DETAILS);
         if (details) {
+            e.preventDefault();
             buildModal(details).catch(Notification.exception);
         }
     });

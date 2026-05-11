@@ -673,6 +673,10 @@ Boost Union's CSS snippets offer a possibility to add small (or slightly larger)
 
 Smart menus allow site administrators to create customizable menus that can be placed in different locations on the site, such as the site main menu, bottom mobile menu, and user menu. The menus can be configured to display different types of content, including links to other pages or resources, category links, or user profile links. On this page, you can create and manage smart menus.
 
+### Settings page "Recommendations"
+
+Boost Union performs just as good as how the whole Moodle instance is configured. On this page, you find recommendations and checks for the optimal Boost Union operation. If you think a particular recommendation does not apply to your instance, you can mute it.
+
 
 Capabilities
 ------------
@@ -799,6 +803,16 @@ There are expert settings without GUI setting which can be defined in config.php
 
 Please note that these expert settings might not be covered by Boost Union's automated tests and upstrade tests.
 If you encounter any problem with one of these expert settings, please raise an issue on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues.
+
+
+Checks API
+----------
+
+This plugin also introduces these additional checks to the System status page:
+
+### \theme_boost_union\check\recommendations
+
+This check fails as soon as at least one recommendations on Boost Union's recommendation page has a status different from OK, MUTED or N/A.
 
 
 Support for other companion plugins

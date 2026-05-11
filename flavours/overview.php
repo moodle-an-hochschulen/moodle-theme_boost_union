@@ -129,8 +129,9 @@ $table->define_baseurl($PAGE->url);
 echo $OUTPUT->header();
 echo \theme_boost_union\admin_settingspage_tabs_with_tertiary::get_tertiary_navigation_for_externalpage();
 
-// Show alert if Boost Union is not the active theme.
+// Boost Union page alerts.
 echo theme_boost_union_is_not_active_alert();
+echo theme_boost_union_recommendations_alert();
 
 // Show flavours intro.
 $intro = new \core\output\notification(

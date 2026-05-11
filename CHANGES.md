@@ -4,6 +4,11 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-05-09 - Feature: Add a Boost Union recommendation page for admins and replace some notification boxes in the settings pages with it, resolves #1254
+* 2026-05-09 - Feature: Add a Checks API check to add the results of the Boost Union recommendations to the system status.
+
 ### v4.5-r38
 
 * 2026-05-05 - Glitch: Make sure that the bottom border under the Reset user tours link in the footer is shown, resolves #1253

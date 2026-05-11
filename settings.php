@@ -37,11 +37,11 @@ use theme_boost_union\admin_setting_configtext_url;
 use theme_boost_union\admin_settingspage_tabs_with_tertiary;
 use theme_boost_union\admin_settingspage_tabs_with_external_and_tertiary;
 use theme_boost_union\admin_externalpage_in_tab;
+use theme_boost_union\coursesettings;
+use theme_boost_union\recommendation\manager as recommendation_manager;
 use theme_boost_union\snippets;
 use core\di;
 use core\hook\manager as hook_manager;
-
-defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig || has_capability('theme/boost_union:configure', context_system::instance())) {
     global $PAGE;
@@ -155,6 +155,16 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme/boost_union:configure'
         );
         $ADMIN->add('theme_boost_union', $smartmenuspage);
+
+        // Create Recommendations settings page as external page.
+        // (and allow users with the theme/boost_union:configure capability to access it).
+        $recommendationspage = new admin_externalpage(
+            'theme_boost_union_recommendations',
+            get_string('recommendations', 'theme_boost_union', null, true),
+            new core\url('/theme/boost_union/recommendations/overview.php'),
+            'theme/boost_union:configure'
+        );
+        $ADMIN->add('theme_boost_union', $recommendationspage);
 
         // Create full settings page structure.
     } else if ($ADMIN->fulltree) {
@@ -472,20 +482,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Heading: Logos.
         $name = 'theme_boost_union/logosheading';
         $title = get_string('logosheading', 'theme_boost_union', null, true);
-        $notificationurl = new core\url('/admin/settings.php', ['section' => 'logos']);
-        $notification = new \core\output\notification(
-            get_string('logosheading_desc', 'theme_boost_union', $notificationurl->out()),
-            \core\output\notification::NOTIFY_INFO
-        );
-        $notification->set_show_closebutton(false);
-        $description = $OUTPUT->render($notification);
-        $setting = new admin_setting_heading($name, $title, $description);
+        $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
         // Replicate the logo setting from core_admin.
         $name = 'theme_boost_union/logo';
         $title = get_string('logosetting', 'theme_boost_union', null, true);
         $description = get_string('logosetting_desc', 'theme_boost_union', null, true);
+        $description .= recommendation_manager::render_recommendation_notification('corelogo');
         $setting = new admin_setting_configstoredfile(
             $name,
             $title,
@@ -501,6 +505,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/logocompact';
         $title = get_string('logocompactsetting', 'theme_boost_union', null, true);
         $description = get_string('logocompactsetting_desc', 'theme_boost_union', null, true);
+        $description .= recommendation_manager::render_recommendation_notification('corecompactlogo');
         $setting = new admin_setting_configstoredfile(
             $name,
             $title,
@@ -515,21 +520,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Heading: Favicon.
         $name = 'theme_boost_union/faviconheading';
         $title = get_string('faviconheading', 'theme_boost_union', null, true);
-        $notificationurl = new core\url('/admin/settings.php', ['section' => 'logos']);
-        $notification = new \core\output\notification(get_string(
-            'faviconheading_desc',
-            'theme_boost_union',
-            $notificationurl->out()
-        ), \core\output\notification::NOTIFY_INFO);
-        $notification->set_show_closebutton(false);
-        $description = $OUTPUT->render($notification);
-        $setting = new admin_setting_heading($name, $title, $description);
+        $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
         // Replicate the favicon setting from core_admin.
         $name = 'theme_boost_union/favicon';
         $title = get_string('faviconsetting', 'theme_boost_union', null, true);
         $description = get_string('faviconsetting_desc', 'theme_boost_union', null, true);
+        $description .= recommendation_manager::render_recommendation_notification('corefavicon');
         $setting = new admin_setting_configstoredfile(
             $name,
             $title,
@@ -1114,20 +1112,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Heading: Login instructions.
         $name = 'theme_boost_union/logininstructionsheading';
         $title = get_string('logininstructionsheading', 'theme_boost_union', null, true);
-        $notificationurl = new core\url('/admin/search.php', ['query' => 'auth_instructions']);
-        $notification = new \core\output\notification(
-            get_string('logininstructionsheading_desc', 'theme_boost_union', $notificationurl->out()),
-            \core\output\notification::NOTIFY_INFO
-        );
-        $notification->set_show_closebutton(false);
-        $description = $OUTPUT->render($notification);
-        $setting = new admin_setting_heading($name, $title, $description);
+        $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
         // Setting: Instructions above login provider list.
         $name = 'theme_boost_union/logininstructionsabove';
         $title = get_string('logininstructionsabove', 'theme_boost_union', null, true);
         $description = get_string('logininstructionsabove_desc', 'theme_boost_union', null, true);
+        $description .= recommendation_manager::render_recommendation_notification('coreauthinstructions');
         $setting = new admin_setting_confightmleditor($name, $title, $description, '');
         $tab->add($setting);
 
@@ -1135,6 +1127,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/logininstructionsbelow';
         $title = get_string('logininstructionsbelow', 'theme_boost_union', null, true);
         $description = get_string('logininstructionsbelow_desc', 'theme_boost_union', null, true);
+        $description .= recommendation_manager::render_recommendation_notification('coreauthinstructions');
         $setting = new admin_setting_confightmleditor($name, $title, $description, '');
         $tab->add($setting);
 
