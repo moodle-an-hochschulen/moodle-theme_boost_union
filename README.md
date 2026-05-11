@@ -194,52 +194,19 @@ With these settings, you can set additional colors for the calendar views.
 
 #### Tab "Login page"
 
+##### Login page arrangement
+
+With these settings, you can control the way how the login container is presented and positioned within the login page.
+
 ##### Login page background images
 
-###### Login page background images
+With these settings, you can set a background image like you can already in the Moodle core theme Boost.
+But in addition to that, you can set an arbitrary number of files as a background image for the login page. One of these images will be picked randomly and shown when the user visits the login page.
+Furthermore, you can set the login page background image position and a text which is displayed alongside the login background images.
 
-This setting is already available in the Moodle core theme Boost.
-However, in Boost Union you can not only add one but an arbitrary number of files as a background image for the login page. One of these images will be picked randomly and shown when the user visits the login page.
+##### Login form layout
 
-###### Login page background image position
-
-With this setting, you control the positioning of the login page background image within the browser window. The first value is the horizontal position, the second value is the vertical position.
-
-###### Display text for login background images
-
-With this optional setting you can add text, e.g. a copyright notice to your uploaded login background images.
-Each line consists of the file identifier (the file name) and the text that should be displayed, separated by a pipe character. Each declaration needs to be written in a new line.
-
-For example:
-``background-image-1.jpg|Copyright: CC0|dark``
-
-As text color, you can use the values "dark" or "light".
-
-You can declare texts for an arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.
-
-##### Login form
-
-###### Login form position
-
-With this setting, you can optimize the login form to fit to a greater variety of background images. By default, the login form is displayed centered on the login page. Alternatively, you can move it to the left or to the right of the login page to let other parts of the background image shine through. Of course, you can also change this setting if no background images are uploaded at all.
-
-###### Login form transparency
-
-With this setting, you can make the login form slightly transparent to let the background image shine through even more.
-
-###### Login container width
-
-With this setting, you can control the width of the login container. By default, the login container width is set to 500px.
-
-##### Login layout
-
-###### Login layout
-
-With this setting, you can choose how the login providers are displayed on the login page.
-
-###### Login background layout
-
-With this setting, you can choose the background layout for the login page.
+With these settings, you can choose how the login providers are displayed in the login form.
 
 ##### Login order
 
