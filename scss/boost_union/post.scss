@@ -1686,9 +1686,10 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     border-bottom: none !important; /* stylelint-disable-line declaration-no-important */
 }
 
-/* This rule is necessary to make sure that the user tourse section really has a bottom border as the previous rule removes it unfortunately due to the way how SASS @extend works. */
+/* This rule is necessary to make sure that the user tourse section really has a bottom border as the previous rule removes
+   it unfortunately due to the way how SASS @extend works. */
 #page-footer .popover-body .tool_usertours-resettourcontainer .usertour:last-child {
-    border-bottom: var(--bs-border-width) solid var(--bs-border-color) !important; /* stylelint-disable-line declaration-no-important */
+    border-bottom: var(--bs-border-width) solid var(--bs-border-color) !important; /* stylelint-disable-line declaration-no-important,max-line-length */
 }
 
 
