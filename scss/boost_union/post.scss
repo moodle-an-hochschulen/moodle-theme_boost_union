@@ -3459,6 +3459,16 @@ img.theme_boost_union-sortorderspacer {
     width: 1.25em;
 }
 
+/*---------------------------------------
+ * Settings: Recommendation notifications.
+ --------------------------------------*/
+
+/* Make notifications in mform static form elements fully wide and set a smaller font size. */
+.form-control-static[data-name$="_recommendation"] {
+    font-size: .875em;
+    width: 100%;
+}
+
 
 /*=======================================
  * Goodies for designers
