@@ -51,8 +51,9 @@ echo $OUTPUT->header();
 // Show page heading.
 echo $OUTPUT->heading(get_string('settingsoverview_title', 'theme_boost_union'));
 
-// Show alert if Boost Union is not the active theme.
+// Boost Union page alerts.
 echo theme_boost_union_is_not_active_alert();
+echo theme_boost_union_recommendations_alert();
 
 // First, compose template context for Boost Union setting pages.
 $templatecontext['cards'][] = [
@@ -102,6 +103,12 @@ $templatecontext['cards'][] = [
     'desc' => get_string('settingsoverview_smartmenus_desc', 'theme_boost_union'),
     'btn' => 'primary',
     'url' => new \core\url('/theme/boost_union/smartmenus/menus.php'),
+];
+$templatecontext['cards'][] = [
+    'label' => get_string('recommendations', 'theme_boost_union'),
+    'desc' => get_string('settingsoverview_recommendations_desc', 'theme_boost_union'),
+    'btn' => 'primary',
+    'url' => new \core\url('/theme/boost_union/recommendations/overview.php'),
 ];
 
 // Then, add additional cards from Boost Union Child themes.

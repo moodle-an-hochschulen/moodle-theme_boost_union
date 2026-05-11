@@ -184,7 +184,6 @@ class flavour_edit_form extends \moodleform {
         $mform->addHelpButton('flavours_look_backgroundimage', 'flavoursbackgroundimage', 'theme_boost_union');
 
         // Add background image position select element.
-        $this->check_slasharguments_warning($mform);
         $backgroundimagepositionoptions = [
                 THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE =>
                         get_string('nochange', 'theme_boost_union'),
@@ -216,6 +215,12 @@ class flavour_edit_form extends \moodleform {
         $mform->setType('look_backgroundimagepos', PARAM_TEXT);
         $backgroundimagepositionselect->setSelected([THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE]);
         $mform->addHelpButton('look_backgroundimagepos', 'flavoursbackgroundimageposition', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_backgroundimagepos_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
 
         // Add brand colors heading.
         $context = new \stdClass();
@@ -226,7 +231,6 @@ class flavour_edit_form extends \moodleform {
         );
 
         // Add brandcolor as colorpicker element.
-        $this->check_slasharguments_warning($mform);
         $mform->addElement(
             'theme_boost_union_colorpicker',
             'look_brandcolor',
@@ -236,6 +240,12 @@ class flavour_edit_form extends \moodleform {
         $mform->setType('look_brandcolor', PARAM_TEXT);
         $mform->addRule('look_brandcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_brandcolor', 'flavoursbrandcolor', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_brandcolor_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
 
         // Add branded gray tones select element.
         $brandedgreyoption = [
@@ -251,6 +261,12 @@ class flavour_edit_form extends \moodleform {
         );
         $mform->setDefault('look_brandedgraytones', THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE);
         $mform->addHelpButton('look_brandedgraytones', 'flavoursbrandedgraytones', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_brandedgraytones_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
 
         // Add link colors heading.
         $context = new \stdClass();
@@ -261,7 +277,6 @@ class flavour_edit_form extends \moodleform {
         );
 
         // Add link brand color as colorpicker element.
-        $this->check_slasharguments_warning($mform);
         $mform->addElement(
             'theme_boost_union_colorpicker',
             'look_linkcolor',
@@ -271,9 +286,14 @@ class flavour_edit_form extends \moodleform {
         $mform->setType('look_linkcolor', PARAM_TEXT);
         $mform->addRule('look_linkcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_linkcolor', 'flavourslinkcolor', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_linkcolor_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
 
         // Add button brand color as colorpicker element.
-        $this->check_slasharguments_warning($mform);
         $mform->addElement(
             'theme_boost_union_colorpicker',
             'look_buttonbrandcolor',
@@ -283,6 +303,12 @@ class flavour_edit_form extends \moodleform {
         $mform->setType('look_buttonbrandcolor', PARAM_TEXT);
         $mform->addRule('look_buttonbrandcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_buttonbrandcolor', 'flavoursbuttonbrandcolor', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_buttonbrandcolor_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
 
         // Add Bootstrap colors heading.
         $context = new \stdClass();
@@ -293,7 +319,6 @@ class flavour_edit_form extends \moodleform {
         );
 
         // Add Bootstrap color for 'success' as colorpicker element.
-        $this->check_slasharguments_warning($mform);
         $mform->addElement(
             'theme_boost_union_colorpicker',
             'look_bootstrapcolorsuccess',
@@ -303,9 +328,14 @@ class flavour_edit_form extends \moodleform {
         $mform->setType('look_bootstrapcolorsuccess', PARAM_TEXT);
         $mform->addRule('look_bootstrapcolorsuccess', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_bootstrapcolorsuccess', 'flavoursbootstrapcolorsuccess', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_bootstrapcolorsuccess_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
 
         // Add Bootstrap color for 'info' as colorpicker element.
-        $this->check_slasharguments_warning($mform);
         $mform->addElement(
             'theme_boost_union_colorpicker',
             'look_bootstrapcolorinfo',
@@ -315,9 +345,14 @@ class flavour_edit_form extends \moodleform {
         $mform->setType('look_bootstrapcolorinfo', PARAM_TEXT);
         $mform->addRule('look_bootstrapcolorinfo', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_bootstrapcolorinfo', 'flavoursbootstrapcolorinfo', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_bootstrapcolorinfo_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
 
         // Add Bootstrap color for 'warning' as colorpicker element.
-        $this->check_slasharguments_warning($mform);
         $mform->addElement(
             'theme_boost_union_colorpicker',
             'look_bootstrapcolorwarning',
@@ -327,9 +362,14 @@ class flavour_edit_form extends \moodleform {
         $mform->setType('look_bootstrapcolorwarning', PARAM_TEXT);
         $mform->addRule('look_bootstrapcolorwarning', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_bootstrapcolorwarning', 'flavoursbootstrapcolorwarning', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_bootstrapcolorwarning_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
 
         // Add Bootstrap color for 'danger' as colorpicker element.
-        $this->check_slasharguments_warning($mform);
         $mform->addElement(
             'theme_boost_union_colorpicker',
             'look_bootstrapcolordanger',
@@ -339,6 +379,12 @@ class flavour_edit_form extends \moodleform {
         $mform->setType('look_bootstrapcolordanger', PARAM_TEXT);
         $mform->addRule('look_bootstrapcolordanger', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_bootstrapcolordanger', 'flavoursbootstrapcolordanger', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_bootstrapcolordanger_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
 
         // Add activity icon colors heading.
         $context = new \stdClass();
@@ -353,7 +399,6 @@ class flavour_edit_form extends \moodleform {
         // Iterate over all purposes.
         foreach ($purposes as $purpose) {
             // Setting: Activity icon color.
-            $this->check_slasharguments_warning($mform);
             $mform->addElement(
                 'theme_boost_union_colorpicker',
                 'look_aicol' . $purpose,
@@ -367,6 +412,12 @@ class flavour_edit_form extends \moodleform {
                 'theme_boost_union_colorpicker_rule'
             );
             $mform->addHelpButton('look_aicol' . $purpose, 'flavoursactivityiconcolor' . $purpose, 'theme_boost_union');
+            $mform->addElement(
+                'static',
+                'look_aicol' . $purpose . '_recommendation',
+                null,
+                \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+            );
         }
 
         // Add navbar heading.
@@ -378,7 +429,6 @@ class flavour_edit_form extends \moodleform {
         );
 
         // Add navbar color select element.
-        $this->check_slasharguments_warning($mform);
         $navbarcoloroptions = [
                 THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE =>
                         get_string('nochange', 'theme_boost_union'),
@@ -399,9 +449,14 @@ class flavour_edit_form extends \moodleform {
         $mform->setType('look_navbarcolor', PARAM_TEXT);
         $navbarcolorselect->setSelected([THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE]);
         $mform->addHelpButton('look_navbarcolor', 'flavoursnavbarcolor', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_navbarcolor_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
 
         // Add navbar tint as colorpicker element.
-        $this->check_slasharguments_warning($mform);
         $mform->addElement(
             'theme_boost_union_colorpicker',
             'look_navbartint',
@@ -411,6 +466,12 @@ class flavour_edit_form extends \moodleform {
         $mform->setType('look_navbartint', PARAM_TEXT);
         $mform->addRule('look_navbartint', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
         $mform->addHelpButton('look_navbartint', 'flavoursnavbartint', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_navbartint_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
 
         // Add SCSS heading.
         $context = new \stdClass();
@@ -421,16 +482,26 @@ class flavour_edit_form extends \moodleform {
         );
 
         // Add custom initial SCSS as textarea element.
-        $this->check_slasharguments_warning($mform);
         $mform->addElement('textarea', 'look_rawscsspre', get_string('flavourscustomscsspre', 'theme_boost_union'), ['rows' => 8]);
         $mform->setType('title', PARAM_TEXT);
         $mform->addHelpButton('look_rawscsspre', 'flavourscustomscsspre', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_rawscsspre_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
 
         // Add custom SCSS as textarea element.
-        $this->check_slasharguments_warning($mform);
         $mform->addElement('textarea', 'look_rawscss', get_string('flavourscustomscss', 'theme_boost_union'), ['rows' => 8]);
         $mform->setType('title', PARAM_TEXT);
         $mform->addHelpButton('look_rawscss', 'flavourscustomscss', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_rawscss_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
 
         // Add content as header element.
         $mform->addElement('header', 'contentsettingsheader', get_string('configtitlecontent', 'theme_boost_union'));
@@ -561,27 +632,5 @@ class flavour_edit_form extends \moodleform {
         }
 
         return $errors;
-    }
-
-    /**
-     * Helper function which adds a warning notification to the form if slasharguments is disabled.
-     *
-     * @param \MoodleQuickForm $mform The form object.
-     * @return void
-     */
-    private function check_slasharguments_warning($mform) {
-        global $CFG, $OUTPUT;
-
-        // If slasharguments is disabled.
-        if (empty($CFG->slasharguments)) {
-            // Add a warning notification to the form.
-            $slashargumentsurl = new \core\url('/admin/search.php', ['query' => 'slasharguments']);
-            $notification = new \core\output\notification(
-                get_string('warningslashargumentsdisabled', 'theme_boost_union', ['url' => $slashargumentsurl]),
-                \core\output\notification::NOTIFY_WARNING
-            );
-            $notification->set_show_closebutton(false);
-            $mform->addElement('html', $OUTPUT->render($notification));
-        }
     }
 }

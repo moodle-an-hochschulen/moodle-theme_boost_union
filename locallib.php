@@ -2887,6 +2887,44 @@ function theme_boost_union_is_not_active_alert() {
 }
 
 /**
+ * Helper function to generate HTML for an alert when recommendations need attention.
+ *
+ * @return string HTML for the alert.
+ */
+function theme_boost_union_recommendations_alert() {
+    global $OUTPUT;
+
+    // If Boost Union or a child theme of it is not active, return directly (as the alert would not be relevant then).
+    if (theme_boost_union_is_active_theme() == false) {
+        return '';
+    }
+
+    // Check if a recommendation needs attention. If not, return directly.
+    if (!\theme_boost_union\recommendation\manager::has_recommendations_needing_attention()) {
+        return '';
+    }
+
+    // Get the URL of the recommendations overview page for use in the alert.
+    $notificationurl = new core\url('/theme/boost_union/recommendations/overview.php');
+
+    // Create the notification object.
+    $notification = new core\output\notification(
+        get_string(
+            'recommendationsattentionalert',
+            'theme_boost_union',
+            ['url' => $notificationurl->out()]
+        ),
+        core\output\notification::NOTIFY_INFO
+    );
+
+    // Do not show a close button.
+    $notification->set_show_closebutton(false);
+
+    // Return the HTML for the alert.
+    return $OUTPUT->render($notification);
+}
+
+/**
  * Helper function to check if a child theme of Boost Union (and _not_ Boost Union itself) is active.
  * This is needed at multiple locations to improve child theme support in Boost Union already.
  *

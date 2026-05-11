@@ -39,6 +39,10 @@ Feature: Configuring the theme_boost_union plugin as manager
     And "body#page-admin-theme-boost_union-smartmenus-menus" "css_element" should exist
     And I should see "Smart menus" in the "#region-main" "css_element"
     And I should see "Create menu" in the "#region-main" "css_element"
+    # And we have to test the 'recommendations' page as well as this is an external admin page.
+    And I navigate to "Appearance > Boost Union > Recommendations" in site administration
+    And "body#page-admin-theme-boost_union-recommendations-overview" "css_element" should exist
+    And I should see "Recommendations" in the "#region-main" "css_element"
     # And we have to test the 'settings overview' page as well as this is an individual page.
     And I navigate to "Appearance > Boost Union > Settings overview" in site administration
     And "body#page-theme-boost_union-settings_overview" "css_element" should exist

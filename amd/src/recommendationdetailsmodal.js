@@ -14,11 +14,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - JS code for snippets details modal.
+ * Theme Boost Union - JS code for recommendation details modal.
  *
- * @module     theme_boost_union/snippetsdetailsmodal
- * @copyright  2024 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
- *             based on core_admin/themeselector/preview_modal by David Woloszyn <david.woloszyn@moodle.com>
+ * @module     theme_boost_union/recommendationdetailsmodal
+ * @copyright  2026 Alexander Bias <bias@alexanderbias.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,8 +27,7 @@ import Templates from 'core/templates';
 import {getString} from 'core/str';
 
 const SELECTORS = {
-    SNIPPETS_CONTAINER: 'theme_boost_union_snippets',
-    DETAILS: '[data-action="details"]',
+    DETAILS: '[data-action="recommendation-details"]',
 };
 
 /**
@@ -42,7 +40,7 @@ export const init = () => {
 };
 
 /**
- * Register snippet related event listeners.
+ * Register recommendation related event listeners.
  *
  * @method registerListenerEvents
  */
@@ -63,27 +61,16 @@ const registerListenerEvents = () => {
  * @param {object} element
  */
 const buildModal = async(element) => {
-
     // Prepare data for modal.
     const data = {
         title: element.getAttribute('data-title'),
+        summary: element.getAttribute('data-summary'),
         description: element.getAttribute('data-description'),
-        image: element.getAttribute('data-image'),
-        sourcebadge: element.getAttribute('data-source-badge'),
-        goalbadge: element.getAttribute('data-goal-badge'),
-        scopebadge: element.getAttribute('data-scope-badge'),
-        creator: element.getAttribute('data-creator'),
-        testedon: element.getAttribute('data-testedon'),
-        trackerissue: element.getAttribute('data-trackerissue'),
-        usagenote: element.getAttribute('data-usagenote'),
-        id: element.getAttribute('data-id'),
-        code: element.getAttribute('data-code'),
     };
 
     await ModalCancel.create({
         title: data.title,
-        body: Templates.render('theme_boost_union/snippetsdetailsmodal', data),
-        large: true,
+        body: Templates.render('theme_boost_union/recommendationsdetailsmodal', data),
         buttons: {
             'cancel': getString('closebuttontitle', 'moodle'),
         },
