@@ -320,6 +320,23 @@ $string['calendariconscolorsetting_desc'] = 'The color of some icons which are u
 
 // Settings: Login page tab.
 $string['loginpagetab'] = 'Login page';
+// ... Section: Login page arrangement.
+$string['loginarrangementheading'] = 'Login page arrangement';
+// ... ... Setting: Login container position.
+// These strings do not fully match the setting name as the setting was renamend during its lifetime, but the string IDs were keps to ease the life of the translators.
+$string['loginformpositionsetting'] = 'Login container position';
+$string['loginformpositionsetting_desc'] = 'With this setting, you can optimize the login container to fit to a greater variety of background images. By default, the login container is displayed centered on the login page. Alternatively, you can move it to the left or to the right of the login page to let other parts of the background image shine through. Of course, you can also change this setting if no background images are uploaded at all.';
+$string['loginformpositionsetting_center'] = 'Centered';
+$string['loginformpositionsetting_left'] = 'Left-aligned';
+$string['loginformpositionsetting_right'] = 'Right-aligned';
+// ... ... Setting: Login container transparency.
+// These strings do not fully match the setting name as the setting was renamend during its lifetime, but the string IDs were keps to ease the life of the translators.
+$string['loginformtransparencysetting'] = 'Login container transparency';
+$string['loginformtransparencysetting_desc'] = 'With this setting, you can make the login container slightly transparent to let the background image shine through even more.';
+// ... ... Setting: Login container width.
+$string['logincontainerwidthsetting'] = 'Login container width';
+$string['logincontainerwidthsetting_desc'] = 'With this setting, you can override Moodle\'s fixed login container width of 500px. By default, Moodle uses a login container width of 500px on medium and larger screens. You can enter other pixel-based values like 600px, but you can also enter a percentage-based value like 90% or a viewport-width value like 50vw.';
+$string['logincontainerwidthsetting_note'] = 'Please note: If you use the tabs login form layout, the login container might become wider than the defined width if you have many login providers enabled or if you have long login tab texts. In this case, the login container will try to expand horizontally to fit all login provider tabs next to each other.';
 // ... Section: Login page background images.
 $string['loginbackgroundimagesheading'] = 'Login page background images';
 // ... ... Setting: Login page background image.
@@ -336,32 +353,17 @@ For example:<br/>
 background-image-1.jpg|Copyright: CC0|dark<br/>
 As text color, you can use the values "dark" or "light".<br />
 You can declare texts for an arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.';
-// ... Section: Login form.
-$string['loginformheading'] = 'Login form';
-// ... ... Setting: login form position.
-$string['loginformpositionsetting'] = 'Login form position';
-$string['loginformpositionsetting_desc'] = 'With this setting, you can optimize the login form to fit to a greater variety of background images. By default, the login form is displayed centered on the login page. Alternatively, you can move it to the left or to the right of the login page to let other parts of the background image shine through. Of course, you can also change this setting if no background images are uploaded at all.';
-$string['loginformpositionsetting_center'] = 'Centered';
-$string['loginformpositionsetting_left'] = 'Left-aligned';
-$string['loginformpositionsetting_right'] = 'Right-aligned';
-// ... ... Setting: login form transparency.
-$string['loginformtransparencysetting'] = 'Login form transparency';
-$string['loginformtransparencysetting_desc'] = 'With this setting, you can make the login form slightly transparent to let the background image shine through even more.';
-// ... Section: Login layout.
-$string['loginlayoutheading'] = 'Login layout';
-// ... ... Setting: Login layout.
-$string['loginlayoutsetting'] = 'Login layout';
+// ... Section: Login form layout.
+$string['loginlayoutheading'] = 'Login form layout';
+// ... ... Setting: Login form layout.
+$string['loginlayoutsetting'] = 'Login form layout';
 $string['loginlayoutsetting_desc'] = 'With this setting, you control how the login providers are displayed on the login page. You can choose between a vertical layout (all login providers displayed one below the other), a tabbed layout (login providers displayed in tabs next to each other), or an accordion layout (login providers displayed one below the other, but collapsed by default and expandable by clicking on the intro texts).';
 $string['loginlayoutvertical'] = 'Vertical (one below the other)';
 $string['loginlayouttabs'] = 'Tabs (next to each other)';
 $string['loginlayoutaccordion'] = 'Accordion (collapsed, expandable)';
-// ... ... Setting: Login container width.
-$string['logincontainerwidthsetting'] = 'Login container width';
-$string['logincontainerwidthsetting_desc'] = 'With this setting, you can override Moodle\'s fixed login container width of 500px. By default, Moodle uses a login container width of 500px on medium and larger screens. You can enter other pixel-based values like 600px, but you can also enter a percentage-based value like 90% or a viewport-width value like 50vw.';
-$string['logincontainerwidthsetting_note'] = 'Please note: If you use the tabs login layout, the login container might become wider than the defined width if you have many login providers enabled or if you have long login tab texts. In this case, the login container will try to expand horizontally to fit all login provider tabs next to each other.';
 // ... ... Setting: Enhanced tabs layout behaviour.
 $string['loginenhancedtabslayoutsetting'] = 'Enhanced tabs layout behaviour';
-$string['loginenhancedtabslayoutsetting_desc'] = 'The tabs layout generally respects the configured login container width, as described in the login container width setting. And the login container of the tabs layout is displayed vertically centered just like the other login layouts. However, there might be configurations when this is not enough. Maybe the height of the particular tab panes differ too much so that the tabs jump vertically when the active tab is changed. Or maybe really long tab labels widen the login container width, but multiline login instruction texts do not adapt accordingly. These are edge cases which cannot be solved cleanly with CSS and for such cases, you can add a JavaScript module which, after the login page has loaded, tries to ensure that all the login content is still presented and positioned as appropriately as possible.';
+$string['loginenhancedtabslayoutsetting_desc'] = 'The tabs layout generally respects the configured login container width, as described in the login container width setting. And the login container of the tabs layout is displayed vertically centered just like the other login form layouts. However, there might be configurations when this is not enough. Maybe the height of the particular tab panes differ too much so that the tabs jump vertically when the active tab is changed. Or maybe really long tab labels widen the login container width, but multiline login instruction texts do not adapt accordingly. These are edge cases which cannot be solved cleanly with CSS and for such cases, you can add a JavaScript module which, after the login page has loaded, tries to ensure that all the login content is still presented and positioned as appropriately as possible.';
 // ... Section: Login instructions.
 $string['logininstructionsheading'] = 'Login instructions';
 $string['logininstructionsheading_desc'] = 'Please note: Boost Union has its own login instructions settings and does not output the content from <a href="{$a}">Moodle core\'s authentication instruction setting</a>.';

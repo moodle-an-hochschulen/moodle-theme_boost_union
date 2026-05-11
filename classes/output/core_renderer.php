@@ -835,7 +835,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
         }
 
-        // Get and use login layout setting.
+        // Get and use login form layout setting.
         $loginlayoutsetting = get_config('theme_boost_union', 'loginlayout');
         $loginlayout = ($loginlayoutsetting != false) ? $loginlayoutsetting : THEME_BOOST_UNION_SETTING_LOGINLAYOUT_VERTICAL;
         $context->loginlayout = $loginlayout;

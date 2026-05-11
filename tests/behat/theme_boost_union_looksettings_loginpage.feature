@@ -4,6 +4,49 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
   As admin
   I need to be able to configure the theme Boost Union plugin
 
+  Scenario Outline: Setting: Login container position
+    Given the following config values are set as admin:
+      | config            | value     | plugin            |
+      | loginformposition | <setting> | theme_boost_union |
+    When I am on login page
+    Then the "class" attribute of ".login-wrapper" "css_element" should contain "<class>"
+    And the "class" attribute of ".login-wrapper" "css_element" should not contain "<notclass1>"
+    And the "class" attribute of ".login-wrapper" "css_element" should not contain "<notclass2>"
+
+    Examples:
+      | setting | class                | notclass1            | notclass2           |
+      | center  | login-wrapper-center | login-wrapper-left   | login-wrapper-right |
+      | left    | login-wrapper-left   | login-wrapper-center | login-wrapper-right |
+      | right   | login-wrapper-right  | login-wrapper-center | login-wrapper-left  |
+
+  Scenario Outline: Setting: Login form transparency
+    Given the following config values are set as admin:
+      | config                | value     | plugin            |
+      | loginformtransparency | <setting> | theme_boost_union |
+    When I am on login page
+    Then the "class" attribute of ".login-container" "css_element" <shouldcontain> "login-container-80t"
+
+    Examples:
+      | setting | shouldcontain      |
+      | yes     | should contain     |
+      | no      | should not contain |
+
+  @javascript
+  Scenario Outline: Setting: Login container width
+    Given the following config values are set as admin:
+      | config              | value     | plugin            |
+      | logincontainerwidth | <setting> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I am on login page
+    # Reloading the page is necessary to ensure that the CSS is applied, as it might not appear on the first load due to caching.
+    And I reload the page
+    Then DOM element ".login-container" should have computed style "width" "<cssvalue>"
+
+    Examples:
+      | setting | cssvalue |
+      | 600px   | 600px    |
+      |         | 500px    |
+
   @javascript
   Scenario: Setting: Login page background images - Do not upload any login background image
     When I am on login page
@@ -132,34 +175,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | light      | light    |
       | wrongcolor | dark     |
 
-  Scenario Outline: Setting: Login form position
-    Given the following config values are set as admin:
-      | config            | value     | plugin            |
-      | loginformposition | <setting> | theme_boost_union |
-    When I am on login page
-    Then the "class" attribute of ".login-wrapper" "css_element" should contain "<class>"
-    And the "class" attribute of ".login-wrapper" "css_element" should not contain "<notclass1>"
-    And the "class" attribute of ".login-wrapper" "css_element" should not contain "<notclass2>"
-
-    Examples:
-      | setting | class                | notclass1            | notclass2           |
-      | center  | login-wrapper-center | login-wrapper-left   | login-wrapper-right |
-      | left    | login-wrapper-left   | login-wrapper-center | login-wrapper-right |
-      | right   | login-wrapper-right  | login-wrapper-center | login-wrapper-left  |
-
-  Scenario Outline: Setting: Login form transparency
-    Given the following config values are set as admin:
-      | config                | value     | plugin            |
-      | loginformtransparency | <setting> | theme_boost_union |
-    When I am on login page
-    Then the "class" attribute of ".login-container" "css_element" <shouldcontain> "login-container-80t"
-
-    Examples:
-      | setting | shouldcontain      |
-      | yes     | should contain     |
-      | no      | should not contain |
-
-  Scenario Outline: Setting: Login layout
+  Scenario Outline: Setting: Login form layout
     Given the following config values are set as admin:
       | config      | value     | plugin            |
       | loginlayout | <layout>  | theme_boost_union |
@@ -173,22 +189,6 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | vertical  | should not      | should not           |
       | tabs      | should          | should not           |
       | accordion | should not      | should               |
-
-  @javascript
-  Scenario Outline: Setting: Login container width
-    Given the following config values are set as admin:
-      | config              | value     | plugin            |
-      | logincontainerwidth | <setting> | theme_boost_union |
-    And the theme cache is purged and the theme is reloaded
-    When I am on login page
-    # Reloading the page is necessary to ensure that the background image CSS is applied, as it might not appear on the first load due to caching.
-    And I reload the page
-    Then DOM element ".login-container" should have computed style "width" "<cssvalue>"
-
-    Examples:
-      | setting | cssvalue |
-      | 600px   | 600px    |
-      |         | 500px    |
 
   @javascript
   Scenario Outline: Setting: Enhanced tabs layout behaviour: Load the javascript module
@@ -464,7 +464,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | guestlogin       | loginguestshowinstruction            | loginguestinstructioncontent            | yes  |                        | #login-method-guest .login-instructions-guest.mb-3                     |
 
   @javascript
-  Scenario Outline: Setting: Login layout tabs - Verify tabs structure and primarylogin functionality
+  Scenario Outline: Setting: Login form layout tabs - Verify tabs structure and primarylogin functionality
     Given the following config values are set as admin:
       | config       | value          | plugin            |
       | loginlayout  | tabs           | theme_boost_union |
@@ -522,7 +522,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | guest           | guest           | firsttimesignup |
 
   @javascript
-  Scenario Outline: Setting: Login layout accordion - Verify accordion structure and primarylogin functionality
+  Scenario Outline: Setting: Login form layout accordion - Verify accordion structure and primarylogin functionality
     Given the following config values are set as admin:
       | config       | value          | plugin            |
       | loginlayout  | accordion      | theme_boost_union |
@@ -575,7 +575,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | firsttimesignup | firsttimesignup | guest           | should contain     | should not contain |
       | guest           | guest           | firsttimesignup | should contain     | should not contain |
 
-  Scenario Outline: Setting: Login layout labels
+  Scenario Outline: Setting: Login form layout labels
     Given the following config values are set as admin:
       | config                          | value     | plugin            |
       | loginlayout                     | <layout>  | theme_boost_union |
