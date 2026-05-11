@@ -1108,6 +1108,10 @@ function theme_boost_union_get_fontawesome_icon_map() {
     // Init icon mapping with icons which are included in any case.
     $iconmapping = [
         'theme_boost_union:info' => 'fa-info-circle',
+        'theme_boost_union:viewall' => 'fa-list-check',
+        'theme_boost_union:autofix' => 'fa-wand-magic-sparkles',
+        'theme_boost_union:muted' => 'fa-bell-slash',
+        'theme_boost_union:unmuted' => 'fa-bell',
     ];
 
     // Get the FontAwesome icons which are used by smart menus currently.
@@ -1180,4 +1184,15 @@ function theme_boost_union_pre_course_delete($course) {
 
     // Delete the course-specific settings for this course.
     $DB->delete_records('theme_boost_union_course', ['courseid' => $course->id]);
+}
+
+/**
+ * Add Boost Union status checks to Moodle Checks API.
+ *
+ * @return \core\check\check[]
+ */
+function theme_boost_union_status_checks(): array {
+    return [
+        new \theme_boost_union\check\recommendations(),
+    ];
 }
