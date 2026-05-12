@@ -209,6 +209,18 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             }
         }
 
+        // Prepare button color options.
+        $buttoncoloroptions = [
+            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_PRIMARYFILLED =>
+                    get_string('buttoncolorprimaryfilled', 'theme_boost_union', null, true),
+            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYFILLED =>
+                    get_string('buttoncolorsecondaryfilled', 'theme_boost_union', null, true),
+            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_PRIMARYOUTLINE =>
+                    get_string('buttoncolorprimaryoutline', 'theme_boost_union', null, true),
+            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYOUTLINE =>
+                    get_string('buttoncolorsecondaryoutline', 'theme_boost_union', null, true),
+        ];
+
         // Create Look settings page with tabs and tertiary navigation
         // (and allow users with the theme/boost_union:configure capability to access it).
         $page = new admin_settingspage_tabs_with_tertiary(
@@ -1314,6 +1326,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
+        // Setting: Local login button color.
+        $name = 'theme_boost_union/loginlocalbuttoncolor';
+        $title = get_string('loginlocalbuttoncolorsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginlocalbuttoncolorsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_PRIMARYFILLED,
+            $buttoncoloroptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginlocalbuttoncolor',
+            'theme_boost_union/loginlocalloginenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
         // Heading: Login provider: IDP.
         $name = 'theme_boost_union/loginprovideridpheading';
         $title = get_string('loginprovideridpheading', 'theme_boost_union', null, true);
@@ -1458,6 +1489,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if(
             'theme_boost_union/loginidpinstructionposition',
             'theme_boost_union/loginidpshowinstruction',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
+        // Setting: IDP login button color.
+        $name = 'theme_boost_union/loginidpbuttoncolor';
+        $title = get_string('loginidpbuttoncolorsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginidpbuttoncolorsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYOUTLINE,
+            $buttoncoloroptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginidpbuttoncolor',
+            'theme_boost_union/loginidploginenable',
             'neq',
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
@@ -1686,6 +1736,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
+        // Setting: Self registration button color.
+        $name = 'theme_boost_union/loginselfregistrationbuttoncolor';
+        $title = get_string('loginselfregistrationbuttoncolorsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginselfregistrationbuttoncolorsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYFILLED,
+            $buttoncoloroptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginselfregistrationbuttoncolor',
+            'theme_boost_union/loginselfregistrationenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
         // Heading: Login provider: Guest.
         $name = 'theme_boost_union/loginproviderguestheading';
         $title = get_string('loginproviderguestheading', 'theme_boost_union', null, true);
@@ -1824,6 +1893,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $page->hide_if(
             'theme_boost_union/loginguestinstructionposition',
             'theme_boost_union/loginguestshowinstruction',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
+        // Setting: Guest login button color.
+        $name = 'theme_boost_union/loginguestbuttoncolor';
+        $title = get_string('loginguestbuttoncolorsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginguestbuttoncolorsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYFILLED,
+            $buttoncoloroptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginguestbuttoncolor',
+            'theme_boost_union/loginguestloginenable',
             'neq',
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
