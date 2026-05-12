@@ -1004,6 +1004,7 @@ Moodle an Hochschulen e.V. would like to thank these contributors for their cont
 #### Individual contributors (in alphabetical order)
 
 * Alberto Lara Hernández: Code
+* Krishna Sai Rohith Vadla: Code
 * Sai Asish Yamani: Code
 
 #### Furthermore
