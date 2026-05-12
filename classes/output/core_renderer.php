@@ -972,6 +972,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
                         ($context->locallogininstructionposition === THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BELOW);
                 }
             }
+            // Button color.
+            $loginlocalbuttoncolorsetting = get_config('theme_boost_union', 'loginlocalbuttoncolor');
+            if ($loginlocalbuttoncolorsetting !== false) {
+                $context->localloginbtnclass = 'btn-' . $loginlocalbuttoncolorsetting;
+            } else {
+                $context->localloginbtnclass = 'btn-' . THEME_BOOST_UNION_SETTING_BUTTONCOLOR_PRIMARYFILLED;
+            }
         }
 
         // IDP login.
@@ -1003,6 +1010,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
                         ($context->idplogininstructionposition === THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BELOW);
                 }
             }
+            // Button color.
+            $loginidpbuttoncolorsetting = get_config('theme_boost_union', 'loginidpbuttoncolor');
+            if ($loginidpbuttoncolorsetting !== false) {
+                $context->idploginbtnclass = 'btn-' . $loginidpbuttoncolorsetting;
+            } else {
+                $context->idploginbtnclass = 'btn-' . THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYOUTLINE;
+            }
         }
 
         // Guest login.
@@ -1033,6 +1047,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     $context->guestlogininstructionsbelow =
                         ($context->guestlogininstructionposition === THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BELOW);
                 }
+            }
+            // Button color.
+            $loginguestbuttoncolorsetting = get_config('theme_boost_union', 'loginguestbuttoncolor');
+            if ($loginguestbuttoncolorsetting !== false) {
+                $context->guestloginbtnclass = 'btn-' . $loginguestbuttoncolorsetting;
+            } else {
+                $context->guestloginbtnclass = 'btn-' . THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYFILLED;
             }
         }
 
@@ -1067,6 +1088,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
                         ($context->selfregistrationlogininstructionposition ===
                             THEME_BOOST_UNION_SETTING_LOGININSTRUCTIONPOSITION_BELOW);
                 }
+            }
+            // Button color.
+            $loginselfregistrationbuttoncolorsetting = get_config('theme_boost_union', 'loginselfregistrationbuttoncolor');
+            if ($loginselfregistrationbuttoncolorsetting !== false) {
+                $context->selfregistrationloginbtnclass = 'btn-' . $loginselfregistrationbuttoncolorsetting;
+            } else {
+                $context->selfregistrationloginbtnclass = 'btn-' . THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYFILLED;
             }
         }
 

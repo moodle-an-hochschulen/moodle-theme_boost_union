@@ -41,14 +41,17 @@
     * sitename - Name of site.,
     * logintoken - Random token to protect login request.,
     * maintenance - Maintenance message
+    * guestloginbtnclass - Bootstrap btn class for the guest login button,
     * guestlogininstructions - Custom guest login instructions (optional),
     * guestlogininstructionsbetween - Flag, show guest instructions between heading and form,
     * guestlogininstructionsbelow - Flag, show guest instructions below form,
     * guestloginintrotext - Custom guest login intro text (optional),
+    * idploginbtnclass - Bootstrap btn class for IDP login buttons (e.g. btn-secondary),
     * idplogininstructions - Custom IDP login instructions (optional),
     * idplogininstructionsbetween - Flag, show IDP instructions between heading and provider list,
     * idplogininstructionsbelow - Flag, show IDP instructions below provider list,
     * idploginintrotext - Custom IDP login intro text (optional),
+    * localloginbtnclass - Bootstrap btn class for the local login button (e.g. btn-primary),
     * locallogininstructions - Custom local login instructions (optional),
     * locallogininstructionsbetween - Flag, show local instructions between heading and form,
     * locallogininstructionsbelow - Flag, show local instructions below form,
@@ -59,6 +62,7 @@
     * loginlayouttabs - Flag used to check if elements should be displayed for the tabs layout type,
     * loginlayoutvertical - Flag used to check if elements should be displayed for the vertical layout type,
     * loginmethods - Array used to iterate over the login methods, each with: id, name, order, type, islocal, isidp, isfirsttimesignup, isguest, isfirst, label, active,
+    * selfregistrationloginbtnclass - Bootstrap btn class for the self registration button,
     * selfregistrationlogininstructions - Custom self registration instructions (optional),
     * selfregistrationlogininstructionsbetween - Flag, show self registration instructions between heading and button,
     * selfregistrationlogininstructionsbelow - Flag, show self registration instructions below button,
@@ -191,7 +195,11 @@
         "showselfregistration": true,
         "showselfregistrationloginintro": true,
         "showselfregistrationlogininstruction": true,
-        "showshibbolethembeddedwayfcode": false
+        "showshibbolethembeddedwayfcode": false,
+        "localloginbtnclass": "btn-primary",
+        "idploginbtnclass": "btn-secondary",
+        "selfregistrationloginbtnclass": "btn-secondary",
+        "guestloginbtnclass": "btn-secondary"
     }
 }}
 {{!
@@ -333,7 +341,7 @@
                 </div>
             {{/recaptcha}}
             <div class="login-form-submit mb-3">
-                <button class="btn btn-primary btn-lg" type="submit" id="loginbtn">{{#str}}login{{/str}}</button>
+                <button class="btn {{localloginbtnclass}} btn-lg" type="submit" id="loginbtn">{{#str}}login{{/str}}</button>
             </div>
             <div class="login-form-forgotpassword mb-3">
                 <a href="{{forgotpasswordurl}}">{{#str}}forgotaccount{{/str}}</a>
@@ -402,7 +410,7 @@
                                 {{/shibbidps}}
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary login-identityprovider-btn w-100" accesskey="s">
+                        <button type="submit" class="btn {{idploginbtnclass}} w-100" accesskey="s">
                             {{#str}}login{{/str}}
                         </button>
                         <p class="form-text text-muted mt-2 mb-0 text-break">
@@ -412,7 +420,7 @@
                     {{/useinternalwayf}}
                     {{! Use standard IDP button }}
                     {{^useinternalwayf}}
-                    <a class="btn login-identityprovider-btn w-100 btn-secondary" href="{{url}}">
+                    <a class="btn {{idploginbtnclass}} w-100" href="{{url}}">
                         {{#iconurl}}
                             <img src="{{iconurl}}" alt="" width="24" height="24"/>
                         {{/iconurl}}
@@ -464,7 +472,7 @@
         </div>
 
         <div class="login-signup">
-            <a class="btn btn-secondary" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a>
+            <a class="btn {{selfregistrationloginbtnclass}}" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a>
         </div>
 
         {{! Instructions (below form) }}
@@ -505,7 +513,7 @@
             <input type="hidden" name="logintoken" value="{{logintoken}}">
             <input type="hidden" name="username" value="guest" />
             <input type="hidden" name="password" value="guest" />
-            <button class="btn btn-secondary" type="submit" id="loginguestbtn">{{#str}}loginguest{{/str}}</button>
+            <button class="btn {{guestloginbtnclass}}" type="submit" id="loginguestbtn">{{#str}}loginguest{{/str}}</button>
         </form>
 
         {{! Instructions (below form) }}
