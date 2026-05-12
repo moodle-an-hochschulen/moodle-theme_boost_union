@@ -55,6 +55,10 @@ $string['imageposition_right_center'] = 'Right horizontally, center vertically';
 $string['imageposition_right_bottom'] = 'Right horizontally, bottom vertically';
 $string['logininstructionposition_between'] = 'Between the intro and the login provider widget';
 $string['logininstructionposition_below'] = 'Below the login provider widget';
+$string['buttoncolorprimaryfilled'] = 'Primary (Filled)';
+$string['buttoncolorsecondaryfilled'] = 'Secondary (Filled)';
+$string['buttoncolorprimaryoutline'] = 'Primary (Outline)';
+$string['buttoncolorsecondaryoutline'] = 'Secondary (Outline)';
 
 // Settings: General strings.
 $string['dontchange'] = 'Do not change anything';
@@ -409,6 +413,9 @@ $string['loginlocalinstructioncontent'] = 'Local login instruction content';
 $string['loginlocalinstructioncontent_desc'] = 'With this setting, you can specify custom instructions for the local login provider. This allows you to provide users with additional information about how to log in locally.';
 $string['loginlocalinstructionposition'] = 'Local login instruction position';
 $string['loginlocalinstructionposition_desc'] = 'With this setting, you can specify where the local login instructions should be shown relative to the login form.';
+// ... ... Setting: Local login button color.
+$string['loginlocalbuttoncolorsetting'] = 'Local login button color';
+$string['loginlocalbuttoncolorsetting_desc'] = 'With this setting, you can control the Bootstrap color style of the local login button.';
 // ... Section: Login provider: IDP.
 $string['loginprovideridpheading'] = 'Login provider: IDP';
 // ... ... Setting: IDP login.
@@ -432,6 +439,9 @@ $string['loginidpinstructioncontent'] = 'IDP login instruction content';
 $string['loginidpinstructioncontent_desc'] = 'With this setting, you can specify custom instructions for the IDP login provider. This allows you to provide users with additional information about how to log in via identity providers.';
 $string['loginidpinstructionposition'] = 'IDP login instruction position';
 $string['loginidpinstructionposition_desc'] = 'With this setting, you can specify where the IDP login instructions should be shown relative to the login buttons.';
+// ... ... Setting: IDP login button color.
+$string['loginidpbuttoncolorsetting'] = 'IDP login button color';
+$string['loginidpbuttoncolorsetting_desc'] = 'With this setting, you can control the Bootstrap color style of the IDP login buttons.';
 // ... Section: Login provider: IDP (Expert settings).
 $string['loginprovideridpexpertheading'] = 'Login provider: IDP (Expert settings)';
 // ... ... Setting: Split per identity provider.
@@ -469,6 +479,9 @@ $string['loginselfregistrationinstructioncontent'] = 'Self registration instruct
 $string['loginselfregistrationinstructioncontent_desc'] = 'With this setting, you can specify custom instructions for the self registration provider. This allows you to provide users with additional information about how to create a new account.';
 $string['loginselfregistrationinstructionposition'] = 'Self registration instruction position';
 $string['loginselfregistrationinstructionposition_desc'] = 'With this setting, you can specify where the self registration instruction should be shown relative to the signup button.';
+// ... ... Setting: Self registration button color.
+$string['loginselfregistrationbuttoncolorsetting'] = 'Self registration button color';
+$string['loginselfregistrationbuttoncolorsetting_desc'] = 'With this setting, you can control the Bootstrap color style of the self registration button.';
 // ... Section: Login provider: Guest.
 $string['loginproviderguestheading'] = 'Login provider: Guest';
 // ... ... Setting: Guest login.
@@ -492,6 +505,9 @@ $string['loginguestinstructioncontent'] = 'Guest login instruction content';
 $string['loginguestinstructioncontent_desc'] = 'With this setting, you can specify custom instructions for the guest login provider. This allows you to provide users with additional information about guest access.';
 $string['loginguestinstructionposition'] = 'Guest login instruction position';
 $string['loginguestinstructionposition_desc'] = 'With this setting, you can specify where the guest login instruction should be shown relative to the login button.';
+// ... ... Setting: Guest login button color.
+$string['loginguestbuttoncolorsetting'] = 'Guest login button color';
+$string['loginguestbuttoncolorsetting_desc'] = 'With this setting, you can control the Bootstrap color style of the guest login button.';
 // ... Section: Side entrance login.
 $string['sideentranceloginheading'] = 'Side entrance login';
 // ... ... Setting: Endable side entrance login.

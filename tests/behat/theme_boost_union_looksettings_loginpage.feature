@@ -463,6 +463,41 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | guestlogin       | loginguestshowinstruction            | loginguestinstructioncontent            | no   | Guest instructions     | #login-method-guest .login-instructions-guest.mb-3                     |
       | guestlogin       | loginguestshowinstruction            | loginguestinstructioncontent            | yes  |                        | #login-method-guest .login-instructions-guest.mb-3                     |
 
+  Scenario Outline: Setting: Login provider button color
+    Given the following config values are set as admin:
+      | config                | value         | plugin            |
+      | login<provider>enable | yes           | theme_boost_union |
+      | <buttoncolorconfig>   | <buttoncolor> | theme_boost_union |
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Testing service   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on login page
+    Then the "class" attribute of "<buttonselector>" "css_element" should contain "<expectedclass>"
+
+    # We do not want to burn too much CPU time by testing all available options. We just test the default value and one non-default value.
+    Examples:
+      | provider         | buttoncolorconfig                | buttoncolor       | buttonselector                     | expectedclass         |
+      | locallogin       | loginlocalbuttoncolor            | primary           | #login-method-local .btn           | btn-primary           |
+      | locallogin       | loginlocalbuttoncolor            | outline-secondary | #login-method-local .btn           | btn-outline-secondary |
+      | idplogin         | loginidpbuttoncolor              | outline-secondary | #login-method-idp .btn             | btn-outline-secondary |
+      | idplogin         | loginidpbuttoncolor              | outline-primary   | #login-method-idp .btn             | btn-outline-primary   |
+      | selfregistration | loginselfregistrationbuttoncolor | secondary         | #login-method-firsttimesignup .btn | btn-secondary         |
+      | selfregistration | loginselfregistrationbuttoncolor | primary           | #login-method-firsttimesignup .btn | btn-primary           |
+      | guestlogin       | loginguestbuttoncolor            | secondary         | #login-method-guest .btn           | btn-secondary         |
+      | guestlogin       | loginguestbuttoncolor            | outline-primary   | #login-method-guest .btn           | btn-outline-primary   |
+
   @javascript
   Scenario Outline: Setting: Login form layout tabs - Verify tabs structure and primarylogin functionality
     Given the following config values are set as admin:
@@ -776,7 +811,7 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And ".login-shibboleth-wayf-form" "css_element" should not exist
     And "#login-shibboleth-wayf-0-idp" "css_element" should not exist
     And "#login-shibboleth-wayf-0" "css_element" should not exist
-    And ".btn.btn-primary.login-identityprovider-btn.w-100" "css_element" should not exist
+    And "#login-method-idp .btn" "css_element" should not exist
 
   @javascript
   Scenario: Setting: Shibboleth external WAYF on login page - Show organizsation selector (based on embedded JavaScript code) - Advances check with SWITCH AAI JS Code
@@ -815,7 +850,7 @@ var wayf_return_url = "https://moodle.example.com/";
     And ".login-shibboleth-wayf-form" "css_element" should not exist
     And "#login-shibboleth-wayf-0-idp" "css_element" should not exist
     And "#login-shibboleth-wayf-0" "css_element" should not exist
-    And ".btn.btn-primary.login-identityprovider-btn.w-100" "css_element" should not exist
+    And "#login-method-idp .btn" "css_element" should not exist
 
   Scenario: Setting: Shibboleth internal WAYF on login page - Show standard buttons when disabled (Countercheck)
     Given the following config values are set as admin:
@@ -836,7 +871,7 @@ var wayf_return_url = "https://moodle.example.com/";
     When I am on login page
     Then ".login-shibboleth-wayf-form" "css_element" should not exist
     And "#login-shibboleth-wayf-0-idp" "css_element" should not exist
-    And I should see "Behat Shibboleth IdP" in the ".login-identityproviders .login-identityprovider-btn" "css_element"
+    And I should see "Behat Shibboleth IdP" in the "#login-method-idp .btn" "css_element"
 
   Scenario Outline: Setting: Enable side entrance login - View the side entrance login page
     Given the following config values are set as admin:

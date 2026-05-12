@@ -6,6 +6,8 @@ Changes
 
 ### Unreleased
 
+* 2026-05-12 - Improvement: Add admin settings to set the button colors on the login page, resolves #1225.
+               Please note: Boost Union used to present the IDP login button with a secondary color button instead of an outline button as Moodle core does. This behaviour was hardcoded and undocumented. With the introduction of this setting, we set the default back to an outline button. Please set the IDP login button color to the presentation type of your choice during the plugin update.
 * 2026-04-11 - Internal change: Move theme_boost_union_is_active_theme() and theme_boost_union_is_active_childtheme() from locallib.php to lib.php
 * 2026-04-11 - Internal change: In the flavours edit form, use setDefault instead of setSelected.
 * 2026-05-11 - Settings: Re-arrange the login page settings as preparation for Boost Union 5.2
