@@ -6,7 +6,7 @@ This is an internal documentation for plugin developers with some notes what has
 General
 -------
 
-* Generally, this is a theme which adds additional a larger set of functionality and configurability to Boost from Moodle core.
+* Generally, this is a theme which adds a larger set of additional functionality and configurability to Boost from Moodle core.
 * Due to the nature of themes and due to the amount of settings, the upgrading effort is high.
 
 
@@ -36,4 +36,4 @@ Visual checks
 -------------
 
 * As this is a theme, you should have a close look at all functionalities of the theme and all major Moodle GUI pages to make sure that everything is displayed nicely and correctly.
-* Within the SCSS snippets feature, several snippets are shipped as built-in snippets and are provided as well in the Boost Union SCSS repository. These snippets should be checked and updated if necessary.
+* Within the SCSS snippets feature, several snippets are shipped as built-in snippets and are provided as well in the Boost Union SCSS repository. These snippets should be checked and updated if necessary and, in any case, the tested version should be raised in each snippet.
