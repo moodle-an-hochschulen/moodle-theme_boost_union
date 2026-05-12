@@ -6,7 +6,7 @@ This is an internal documentation for plugin developers with some notes what has
 General
 -------
 
-* Generally, this is a theme which adds additional a larger set of functionality and configurability to Boost from Moodle core.
+* Generally, this is a theme which adds a larger set of additional functionality and configurability to Boost from Moodle core.
 * Due to the nature of themes and due to the amount of settings, the upgrading effort is high.
 
 
