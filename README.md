@@ -642,7 +642,7 @@ Smart menus allow site administrators to create customizable menus that can be p
 
 ### Settings page "Recommendations"
 
-Boost Union performs just as good as how the whole Moodle instance is configured. On this page, you find recommendations and checks for the optimal Boost Union operation. If you think a particular recommendation does not apply to your instance, you can mute it.
+Boost Union performs just as well as the entire Moodle instance is configured. On this page, you find recommendations and checks for the optimal Boost Union operation. If you think a particular recommendation does not apply to your instance, you can mute it.
 
 
 Capabilities
