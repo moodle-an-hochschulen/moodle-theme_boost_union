@@ -48,6 +48,61 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       |         | 500px    |
 
   @javascript
+  Scenario Outline: Setting: Login logo max width and height - Set the maximum width and height
+    Given the following config values are set as admin:
+      | config             | value     | plugin            |
+      | loginlogomaxwidth  | <width> | theme_boost_union |
+      | loginlogomaxheight | <height> | theme_boost_union |
+    And the following "theme_boost_union > setting files" exist:
+      | filearea | filepath                                        |
+      | logo     | theme/boost_union/tests/fixtures/moodlelogo.png |
+    And the theme cache is purged and the theme is reloaded
+    When I am on login page
+    # Reloading the page is necessary to ensure that the CSS is applied, as it might not appear on the first load due to caching.
+    And I reload the page
+    Then DOM element "#logoimage" <shouldornotwidth> have computed style "max-width" "<width>"
+    And DOM element "#logoimage" <shouldornotheight> have computed style "max-height" "<height>"
+
+    Examples:
+      | width | height | shouldornotwidth | shouldornotheight |
+      |       |        | should not       | should not        |
+      | 50px  | 50px   | should           | should            |
+      | 50px  |        | should           | should not        |
+
+  Scenario Outline: Setting: Login logo alignment - Set the alignment
+    Given the following config values are set as admin:
+      | config             | value     | plugin            |
+      | loginlogoalignment | <setting> | theme_boost_union |
+    And the following "theme_boost_union > setting files" exist:
+      | filearea | filepath                                        |
+      | logo     | theme/boost_union/tests/fixtures/moodlelogo.png |
+    When I am on login page
+    Then the "class" attribute of "#loginlogo" "css_element" should contain "<class>"
+
+    Examples:
+      | setting | class                  |
+      | left    | justify-content-start  |
+      | center  | justify-content-center |
+      | right   | justify-content-end    |
+
+  @javascript
+  Scenario Outline: Setting: Login logo margin bottom - Set the margin bottom
+    Given the following config values are set as admin:
+      | config                | value     | plugin            |
+      | loginlogomarginbottom | <setting> | theme_boost_union |
+    And the following "theme_boost_union > setting files" exist:
+      | filearea | filepath                                        |
+      | logo     | theme/boost_union/tests/fixtures/moodlelogo.png |
+    When I am on login page
+    Then the "class" attribute of "#loginlogo" "css_element" <shouldcontain> "<class>"
+
+    # We do not want to burn too much CPU time by testing all available options. We just test the none value and one set value.
+    Examples:
+      | setting | shouldcontain  | class |
+      | 0       | should contain | mb-0  |
+      | 3       | should contain | mb-3  |
+
+  @javascript
   Scenario: Setting: Login page background images - Do not upload any login background image
     When I am on login page
     Then the "class" attribute of "body" "css_element" should contain "path-login"

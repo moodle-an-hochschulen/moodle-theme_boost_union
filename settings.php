@@ -194,6 +194,23 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                     get_string('logininstructionposition_below', 'theme_boost_union'),
         ];
 
+        // Prepare Bootstrap spacing options (0–5).
+        $bootstrap0to5options = [
+            '0' => get_string('bootstrap0to5_0', 'theme_boost_union'),
+            '1' => get_string('bootstrap0to5_1', 'theme_boost_union'),
+            '2' => get_string('bootstrap0to5_2', 'theme_boost_union'),
+            '3' => get_string('bootstrap0to5_3', 'theme_boost_union'),
+            '4' => get_string('bootstrap0to5_4', 'theme_boost_union'),
+            '5' => get_string('bootstrap0to5_5', 'theme_boost_union'),
+        ];
+
+        // Prepare horizontal alignment options.
+        $horizontalalignmentoptions = [
+            THEME_BOOST_UNION_SETTING_HORIZONTALALIGNMENT_LEFT => get_string('horizontalalignment_left', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_HORIZONTALALIGNMENT_CENTER => get_string('horizontalalignment_center', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_HORIZONTALALIGNMENT_RIGHT => get_string('horizontalalignment_right', 'theme_boost_union'),
+        ];
+
         // Prepare custom course fields options.
         $coursehandler = \core_course\customfield\course_handler::create();
         $coursefields = $coursehandler->get_fields();
@@ -1080,6 +1097,50 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('loginbackgroundimagetextsetting', 'theme_boost_union', null, true);
         $description = get_string('loginbackgroundimagetextsetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configtextarea($name, $title, $description, '', PARAM_TEXT);
+        $tab->add($setting);
+
+        // Heading: Login page branding.
+        $name = 'theme_boost_union/loginbrandingheading';
+        $title = get_string('loginbrandingheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Login logo max width.
+        $name = 'theme_boost_union/loginlogomaxwidth';
+        $title = get_string('loginlogomaxwidthsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginlogomaxwidthsetting_desc', 'theme_boost_union', null, true);
+        $default = '';
+        $setting = new admin_setting_configtext($name, $title, $description, $default, $smallwidthoremptyregex, 6);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Login logo max height.
+        $name = 'theme_boost_union/loginlogomaxheight';
+        $title = get_string('loginlogomaxheightsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginlogomaxheightsetting_desc', 'theme_boost_union', null, true);
+        $default = '';
+        $setting = new admin_setting_configtext($name, $title, $description, $default, $smallwidthoremptyregex, 6);
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Login logo alignment.
+        $name = 'theme_boost_union/loginlogoalignment';
+        $title = get_string('loginlogoalignmentsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginlogoalignmentsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_HORIZONTALALIGNMENT_CENTER,
+            $horizontalalignmentoptions
+        );
+        $tab->add($setting);
+
+        // Setting: Login logo margin bottom.
+        $name = 'theme_boost_union/loginlogomarginbottom';
+        $title = get_string('loginlogomarginbottomsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginlogomarginbottomsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, 3, $bootstrap0to5options);
         $tab->add($setting);
 
         // Heading: Login form layout.

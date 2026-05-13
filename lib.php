@@ -217,6 +217,10 @@ define('THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYFILLED', 'secondary');
 define('THEME_BOOST_UNION_SETTING_BUTTONCOLOR_PRIMARYOUTLINE', 'outline-primary');
 define('THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYOUTLINE', 'outline-secondary');
 
+define('THEME_BOOST_UNION_SETTING_HORIZONTALALIGNMENT_LEFT', 'left');
+define('THEME_BOOST_UNION_SETTING_HORIZONTALALIGNMENT_CENTER', 'center');
+define('THEME_BOOST_UNION_SETTING_HORIZONTALALIGNMENT_RIGHT', 'right');
+
 use theme_boost_union\snippets;
 
 /**
@@ -734,6 +738,9 @@ function theme_boost_union_get_extra_scss($theme) {
 
     // Setting: Navbar styles.
     $content .= theme_boost_union_get_scss_navbar($theme, $flavourid);
+
+    // Setting: Login page.
+    $content .= theme_boost_union_get_scss_loginpage();
 
     // Setting: Mark external links.
     $content .= theme_boost_union_get_scss_to_mark_external_links($theme);
