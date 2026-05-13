@@ -59,6 +59,15 @@ $string['buttoncolorprimaryfilled'] = 'Primary (Filled)';
 $string['buttoncolorsecondaryfilled'] = 'Secondary (Filled)';
 $string['buttoncolorprimaryoutline'] = 'Primary (Outline)';
 $string['buttoncolorsecondaryoutline'] = 'Secondary (Outline)';
+$string['bootstrap0to5_0'] = '0 (None)';
+$string['bootstrap0to5_1'] = '1 (Extra small)';
+$string['bootstrap0to5_2'] = '2 (Small)';
+$string['bootstrap0to5_3'] = '3 (Medium)';
+$string['bootstrap0to5_4'] = '4 (Large)';
+$string['bootstrap0to5_5'] = '5 (Extra large)';
+$string['horizontalalignment_left'] = 'Left';
+$string['horizontalalignment_center'] = 'Centered';
+$string['horizontalalignment_right'] = 'Right';
 
 // Course overrides: General strings.
 $string['courseoverride'] = 'Add to course settings as well';
@@ -354,6 +363,20 @@ For example:<br/>
 background-image-1.jpg|Copyright: CC0|dark<br/>
 As text color, you can use the values "dark" or "light".<br />
 You can declare texts for an arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.';
+// ... Section: Login page branding.
+$string['loginbrandingheading'] = 'Login page branding';
+// ... ... Setting: Login logo max width.
+$string['loginlogomaxwidthsetting'] = 'Login logo max width';
+$string['loginlogomaxwidthsetting_desc'] = 'With this setting, you can restrict the maximum width of the logo on the login page. You can enter pixel-based values like 120px, but you can also enter a percentage-based value like 10%. If you do not enter any value, the logo will be scaled proportionally.';
+// ... ... Setting: Login logo max height.
+$string['loginlogomaxheightsetting'] = 'Login logo max height';
+$string['loginlogomaxheightsetting_desc'] = 'With this setting, you can restrict the maximum height of the logo on the login page. You can enter pixel-based values like 120px, but you can also enter a percentage-based value like 10%. If you do not enter any value, the logo will be scaled proportionally.';
+// ... ... Setting: Login logo alignment.
+$string['loginlogoalignmentsetting'] = 'Login logo alignment';
+$string['loginlogoalignmentsetting_desc'] = 'With this setting, you can control the horizontal alignment of the logo on the login page.';
+// ... ... Setting: Login logo margin bottom.
+$string['loginlogomarginbottomsetting'] = 'Login logo margin bottom';
+$string['loginlogomarginbottomsetting_desc'] = 'With this setting, you can control the bottom margin of the logo on the login page by adding a Bootstrap spacing class (mb-0 to mb-5) to the logo container. This will help you to optimize the vertical whitespace around your logo.';
 // ... Section: Login form layout.
 $string['loginlayoutheading'] = 'Login form layout';
 // ... ... Setting: Login form layout.

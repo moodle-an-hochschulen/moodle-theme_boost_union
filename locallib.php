@@ -2128,6 +2128,37 @@ function theme_boost_union_get_scss_navbar($theme, $flavourid = null) {
 }
 
 /**
+ * Returns the SCSS code to be used on the login page.
+ *
+ * @return string
+ */
+function theme_boost_union_get_scss_loginpage() {
+    // Initialize SCSS snippet.
+    $scss = '';
+
+    // Get the login branding settings.
+    $loginlogomaxwidth = get_config('theme_boost_union', 'loginlogomaxwidth');
+    $loginlogomaxheight = get_config('theme_boost_union', 'loginlogomaxheight');
+
+    // If at least one of the width and height settings is set.
+    if (!empty($loginlogomaxwidth) || !empty($loginlogomaxheight)) {
+        // Set styles for the login logo to limit the max width and height and keep the aspect ratio.
+        $scss .= '#page-login-index #logoimage {' . PHP_EOL;
+        if (!empty($loginlogomaxwidth)) {
+            $scss .= '    max-width: ' . $loginlogomaxwidth . ';' . PHP_EOL;
+        }
+        if (!empty($loginlogomaxheight)) {
+            $scss .= '    max-height: ' . $loginlogomaxheight . ';' . PHP_EOL;
+        }
+        $scss .= 'width: auto;
+            height: auto;
+        }' . PHP_EOL;
+    }
+
+    return $scss;
+}
+
+/**
  * Helper function which returns an array of login methods on the login page.
  *
  * @return array
