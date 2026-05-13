@@ -831,6 +831,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
             true,
             ['context' => context_course::instance(SITEID), "escape" => false]
         );
+        $context->siteshortname = format_string(
+            $SITE->shortname,
+            true,
+            ['context' => context_course::instance(SITEID), 'escape' => false]
+        );
 
         // Shibboleth internal WAYF: If the Boost Union setting is enabled and if Shibboleth authentication is enabled.
         $context->showshibbolethembeddedwayfcode = false;
@@ -1371,6 +1376,91 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // Compose all classes into a single string and add to context.
         if (!empty($loginlogoclasses)) {
             $context->loginlogoclasses = implode(' ', $loginlogoclasses);
+        }
+
+        // Add login page brand context variables.
+        $loginpagebrandsetting = get_config('theme_boost_union', 'loginpagebrand');
+        $loginpagebrand = ($loginpagebrandsetting !== false)
+            ? $loginpagebrandsetting : THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOOTHERWISEHEADING;
+        // Special case: logo if uploaded, heading otherwise.
+        if ($loginpagebrand === THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOOTHERWISEHEADING) {
+            if (!empty($url)) {
+                $context->loginbrandshowlogo = true;
+                $context->loginbrandshowheading = false;
+            } else {
+                $context->loginbrandshowlogo = false;
+                $context->loginbrandshowheading = true;
+            }
+            $context->loginbrandshowtagline = false;
+
+            // Handle all other cases based on the setting value and the corresponding show* flags.
+        } else {
+            $loginbrandlogooptionvalues = [
+                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADINGTAGLINE,
+                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADING,
+                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOTAGLINE,
+            ];
+            $loginbrandheadingoptionvalues = [
+                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADINGTAGLINE,
+                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADING,
+                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADINGTAGLINE,
+                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADING,
+            ];
+            $loginbrandtaglineoptionvalues = [
+                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADINGTAGLINE,
+                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOTAGLINE,
+                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADINGTAGLINE,
+                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_TAGLINE,
+            ];
+            $context->loginbrandshowlogo = in_array($loginpagebrand, $loginbrandlogooptionvalues);
+            $context->loginbrandshowheading = in_array($loginpagebrand, $loginbrandheadingoptionvalues);
+            $context->loginbrandshowtagline = in_array($loginpagebrand, $loginbrandtaglineoptionvalues);
+        }
+        // Compute heading and tagline label texts.
+        $loginpageheadingsetting = get_config('theme_boost_union', 'loginpageheading');
+        $loginpageheading = ($loginpageheadingsetting !== false)
+            ? $loginpageheadingsetting : THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOFULLNAME;
+        switch ($loginpageheading) {
+            case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOSHORTNAME:
+                $context->loginheadingtext = get_string('loginto', 'core', $context->siteshortname);
+                break;
+            case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_FULLNAME:
+                $context->loginheadingtext = $context->sitename;
+                break;
+            case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_SHORTNAME:
+                $context->loginheadingtext = $context->siteshortname;
+                break;
+            case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOME:
+                $context->loginheadingtext = get_string('loginpagelabel_welcome', 'theme_boost_union');
+                break;
+            case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOFULLNAME:
+            default:
+                $context->loginheadingtext = get_string('loginto', 'core', $context->sitename);
+                break;
+        }
+        // Compute tagline text (only when tagline is shown).
+        if ($context->loginbrandshowtagline) {
+            $loginpagetaglinesetting = get_config('theme_boost_union', 'loginpagetagline');
+            $loginpagetagline = ($loginpagetaglinesetting !== false)
+                ? $loginpagetaglinesetting : THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOME;
+            switch ($loginpagetagline) {
+                case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOSHORTNAME:
+                    $context->logintaglinetext = get_string('loginto', 'core', $context->siteshortname);
+                    break;
+                case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_FULLNAME:
+                    $context->logintaglinetext = $context->sitename;
+                    break;
+                case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_SHORTNAME:
+                    $context->logintaglinetext = $context->siteshortname;
+                    break;
+                case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOFULLNAME:
+                    $context->logintaglinetext = get_string('loginto', 'core', $context->sitename);
+                    break;
+                case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOME:
+                default:
+                    $context->logintaglinetext = get_string('loginpagelabel_welcome', 'theme_boost_union');
+                    break;
+            }
         }
 
         // Add JS if the tabs layout is active and enhanced tabs layout behaviour is enabled.
