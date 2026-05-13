@@ -204,6 +204,10 @@ With these settings, you can set a background image like you can already in the 
 But in addition to that, you can set an arbitrary number of files as a background image for the login page. One of these images will be picked randomly and shown when the user visits the login page.
 Furthermore, you can set the login page background image position and a text which is displayed alongside the login background images.
 
+##### Login page branding
+
+With these settings, you can influence the visual branding of the login page.
+
 ##### Login form layout
 
 With these settings, you can choose how the login providers are displayed in the login form.
