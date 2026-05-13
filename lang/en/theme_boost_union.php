@@ -1972,7 +1972,7 @@ $string['smartmenussettings'] = 'Smart menu settings';
 
 // Settings: Recommendations page.
 $string['recommendations'] = 'Recommendations';
-$string['recommendations_desc'] = 'Boost Union performs just as good as how the whole Moodle instance is configured. On this page, you find recommendations and checks for the optimal Boost Union operation. If you think a particular recommendation does not apply to your instance, you can mute it.';
+$string['recommendations_desc'] = 'Boost Union performs just as well as the entire Moodle instance is configured. On this page, you find recommendations and checks for the optimal Boost Union operation. If you think a particular recommendation does not apply to your instance, you can mute it.';
 $string['recommendationopensetting'] = 'Open setting';
 $string['recommendationmoreinfo'] = 'More info';
 $string['recommendationviewall'] = 'View all recommendations';
