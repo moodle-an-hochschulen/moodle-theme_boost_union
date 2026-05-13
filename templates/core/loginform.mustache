@@ -214,6 +214,7 @@
     * Added the possibility to show or hide the login provider intros.
     * Added the possibility to change the login method order.
     * Added the possibility to show an embedded WAYF (based on configuration or based on custom JS code)
+    * Added the possibility to align the login logo.
 
     This template supports three layout options (vertical, tabs, accordion) and renders multiple
     login methods (local, IDP, firsttimesignup, guest) in a sorted order. The broad structure of this document
@@ -226,7 +227,7 @@
 
 <div class="loginform">
     {{#logourl}}
-        <div id="loginlogo" class="login-logo">
+        <div id="loginlogo" class="login-logo{{#loginlogoclasses}} {{loginlogoclasses}}{{/loginlogoclasses}}">
             <img id="logoimage" src="{{logourl}}" class="img-fluid" alt="{{sitename}}"/>
             <h1 class="login-heading sr-only">{{#str}} loginto, core, {{sitename}} {{/str}}</h1>
         </div>

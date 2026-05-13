@@ -1109,6 +1109,35 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $context->logininstructionsbelow = format_text($logininstructionsbelow, FORMAT_HTML);
         }
 
+        // Add login logo extra classes for alignment and margin bottom.
+        $loginlogoclasses = [];
+        // Alignment: map setting value to Bootstrap text-alignment class.
+        $loginlogoalignment = get_config('theme_boost_union', 'loginlogoalignment');
+        if (!empty($loginlogoalignment)) {
+            switch ($loginlogoalignment) {
+                case THEME_BOOST_UNION_SETTING_HORIZONTALALIGNMENT_LEFT:
+                    $loginlogoalignment = '-start';
+                    break;
+                case THEME_BOOST_UNION_SETTING_HORIZONTALALIGNMENT_RIGHT:
+                    $loginlogoalignment = '-end';
+                    break;
+                case THEME_BOOST_UNION_SETTING_HORIZONTALALIGNMENT_CENTER:
+                default:
+                    $loginlogoalignment = '-center';
+                    break;
+            }
+            $loginlogoclasses[] = 'justify-content' . $loginlogoalignment;
+        }
+        // Margin bottom: map setting value (0-5) to Bootstrap mb-* class.
+        $loginlogomarginbottom = get_config('theme_boost_union', 'loginlogomarginbottom');
+        if (isset($loginlogomarginbottom)) {
+            $loginlogoclasses[] = 'mb-' . $loginlogomarginbottom;
+        }
+        // Compose all classes into a single string and add to context.
+        if (!empty($loginlogoclasses)) {
+            $context->loginlogoclasses = implode(' ', $loginlogoclasses);
+        }
+
         // Add JS if the tabs layout is active and enhanced tabs layout behaviour is enabled.
         $loginenhancedtabslayout = get_config('theme_boost_union', 'loginenhancedtabslayout');
         if ($context->loginlayouttabs && $loginenhancedtabslayout == THEME_BOOST_UNION_SETTING_SELECT_YES) {
