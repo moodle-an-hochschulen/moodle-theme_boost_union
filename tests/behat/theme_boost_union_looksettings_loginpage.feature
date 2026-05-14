@@ -47,6 +47,84 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | 600px   | 600px    |
       |         | 500px    |
 
+  Scenario Outline: Setting: Login page brand - Show and hide branding elements with logo uploaded
+    Given the following config values are set as admin:
+      | config         | value     | plugin            |
+      | loginpagebrand | <setting> | theme_boost_union |
+    And the following "theme_boost_union > setting files" exist:
+      | filearea | filepath                                        |
+      | logo     | theme/boost_union/tests/fixtures/moodlelogo.png |
+    When I am on login page
+    Then "#loginlogo" "css_element" <logoshouldornot> exist
+    And "h1.login-heading:not(.visually-hidden)" "css_element" <headingshouldornot> exist
+    And "h1.login-heading.visually-hidden" "css_element" <headinghiddenshouldornot> exist
+    And ".login-tagline" "css_element" <taglineshouldornot> exist
+
+    Examples:
+      | setting              | logoshouldornot | headingshouldornot | headinghiddenshouldornot | taglineshouldornot |
+      | logootherwiseheading | should          | should not         | should                   | should not         |
+      | logoheadingtagline   | should          | should             | should not               | should             |
+      | logoheading          | should          | should             | should not               | should not         |
+      | logotagline          | should          | should not         | should                   | should             |
+      | headingtagline       | should not      | should             | should not               | should             |
+      | heading              | should not      | should             | should not               | should not         |
+      | tagline              | should not      | should not         | should                   | should             |
+
+  Scenario Outline: Setting: Login page brand - Show and hide branding elements without logo uploaded
+    Given the following config values are set as admin:
+      | config         | value     | plugin            |
+      | loginpagebrand | <setting> | theme_boost_union |
+    When I am on login page
+    Then "#loginlogo" "css_element" should not exist
+    And "h1.login-heading:not(.visually-hidden)" "css_element" <headingshouldornot> exist
+    And "h1.login-heading.visually-hidden" "css_element" <headinghiddenshouldornot> exist
+    And ".login-tagline" "css_element" <taglineshouldornot> exist
+
+    # Note: logootherwiseheading shows the heading as fallback when no logo is uploaded.
+    Examples:
+      | setting              | headingshouldornot | headinghiddenshouldornot | taglineshouldornot |
+      | logootherwiseheading | should             | should not               | should not         |
+      | logoheadingtagline   | should             | should not               | should             |
+      | logoheading          | should             | should not               | should not         |
+      | logotagline          | should not         | should                   | should             |
+      | headingtagline       | should             | should not               | should             |
+      | heading              | should             | should not               | should not         |
+      | tagline              | should not         | should                   | should             |
+
+  Scenario Outline: Setting: Login page heading - Show the correct heading text
+    Given the following config values are set as admin:
+      | config           | value     | plugin            |
+      | loginpageheading | <setting> | theme_boost_union |
+    And I log in as "admin"
+    And I navigate to "Site home > Site home settings" in site administration
+    And I set the field "id_s__shortname" to "Boost Union Test"
+    And I press "Save changes"
+    And I log out
+    When I am on login page
+    Then I should see "<text>" in the ".login-heading" "css_element"
+
+    Examples:
+      | setting          | text                           |
+      | logintofullname  | Log in to Acceptance test site |
+      | logintoshortname | Log in to Boost Union Test     |
+      | fullname         | Acceptance test site           |
+      | shortname        | Boost Union Test               |
+      | welcome          | Welcome!                       |
+
+  Scenario Outline: Setting: Login page tagline - Show the correct tagline text
+    Given the following config values are set as admin:
+      | config           | value          | plugin            |
+      | loginpagebrand   | headingtagline | theme_boost_union |
+      | loginpagetagline | <setting>      | theme_boost_union |
+    When I am on login page
+    Then I should see "<text>" in the ".login-tagline" "css_element"
+
+    # We do not want to burn too much CPU time by testing all available options. We just test the default value and one non-default value.
+    Examples:
+      | setting         | text                           |
+      | welcome         | Welcome!                       |
+      | logintofullname | Log in to Acceptance test site |
+
   @javascript
   Scenario Outline: Setting: Login logo max width and height - Set the maximum width and height
     Given the following config values are set as admin:
