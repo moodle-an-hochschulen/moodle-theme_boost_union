@@ -80,7 +80,12 @@
     * showselfregistration - Should self registration be shown? (theme + core),
     * showselfregistrationloginintro - Should the self registration intro be shown?
     * showselfregistrationlogininstruction - Should the self registration instructions be shown?,
-    * showshibbolethembeddedwayfcode - Should the Shibboleth embedded WAYF code be shown?
+    * showshibbolethembeddedwayfcode - Should the Shibboleth embedded WAYF code be shown?,
+    * loginbrandshowlogo - Flag, whether to show the logo on the login page (controlled by loginpagebrand setting),
+    * loginbrandshowheading - Flag, whether to show the heading on the login page (controlled by loginpagebrand setting),
+    * loginbrandshowtagline - Flag, whether to show the tagline on the login page (controlled by loginpagebrand setting),
+    * loginheadingtext - Heading text for the login page (controlled by loginpageheading setting),
+    * logintaglinetext - Tagline text for the login page (controlled by loginpagetagline setting)
 
     Example context (json):
     {
@@ -215,6 +220,7 @@
     * Added the possibility to change the login method order.
     * Added the possibility to show an embedded WAYF (based on configuration or based on custom JS code)
     * Added the possibility to align the login logo.
+    * Added the possibility to control login page branding (logo, heading, tagline) via the loginpagebrand setting.
 
     This template supports three layout options (vertical, tabs, accordion) and renders multiple
     login methods (local, IDP, firsttimesignup, guest) in a sorted order. The broad structure of this document
@@ -226,15 +232,24 @@
 }}
 
 <div class="loginform">
-    {{#logourl}}
-        <div id="loginlogo" class="login-logo{{#loginlogoclasses}} {{loginlogoclasses}}{{/loginlogoclasses}}">
-            <img id="logoimage" src="{{logourl}}" class="img-fluid" alt="{{sitename}}"/>
-            <h1 class="login-heading sr-only">{{#str}} loginto, core, {{sitename}} {{/str}}</h1>
-        </div>
-    {{/logourl}}
-    {{^logourl}}
-        <h1 class="login-heading mb-4">{{#str}} loginto, core, {{sitename}} {{/str}}</h1>
-    {{/logourl}}
+    {{#loginbrandshowlogo}}
+        {{#logourl}}
+            <div id="loginlogo" class="login-logo{{#loginlogoclasses}} {{loginlogoclasses}}{{/loginlogoclasses}}">
+                <img id="logoimage" src="{{logourl}}" class="img-fluid" alt="{{sitename}}"/>
+            </div>
+        {{/logourl}}
+    {{/loginbrandshowlogo}}
+    {{#loginbrandshowheading}}
+        <h1 class="login-heading mb-{{#loginbrandshowtagline}}2{{/loginbrandshowtagline}}{{^loginbrandshowtagline}}4{{/loginbrandshowtagline}}">{{loginheadingtext}}</h1>
+    {{/loginbrandshowheading}}
+    {{^loginbrandshowheading}}
+        <h1 class="login-heading sr-only">{{loginheadingtext}}</h1>
+    {{/loginbrandshowheading}}
+    {{#loginbrandshowtagline}}
+        {{#logintaglinetext}}
+            <p class="login-tagline text-muted mb-4">{{logintaglinetext}}</p>
+        {{/logintaglinetext}}
+    {{/loginbrandshowtagline}}
     {{#maintenance}}
         <div class="alert alert-danger login-maintenance">
             {{{maintenance}}}

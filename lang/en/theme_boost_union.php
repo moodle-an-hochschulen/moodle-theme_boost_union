@@ -368,6 +368,24 @@ As text color, you can use the values "dark" or "light".<br />
 You can declare texts for an arbitrary amount of your uploaded login background images. The texts will be added only to those images that match their filename with the identifier declared in this setting.';
 // ... Section: Login page branding.
 $string['loginbrandingheading'] = 'Login page branding';
+// ... ... Setting: Login page brand.
+$string['loginpagebranding'] = 'Login page brand';
+$string['loginpagebranding_desc'] = 'With this setting, you can control which branding elements are shown on the login page. Depending on your choice, the logo (if uploaded), the site heading, and/or a site tagline will be displayed.';
+$string['loginpagebrand_logoheadingtagline'] = 'Logo (if uploaded) + heading + tagline';
+$string['loginpagebrand_logootherwiseheading'] = 'Logo (if uploaded), heading otherwise (Unchanged as handled by Moodle core)';
+$string['loginpagebrand_logoheading'] = 'Logo (if uploaded) + heading';
+$string['loginpagebrand_logotagline'] = 'Logo (if uploaded) + tagline';
+$string['loginpagebrand_headingtagline'] = 'Heading + tagline';
+$string['loginpagebrand_heading'] = 'Heading';
+$string['loginpagebrand_tagline'] = 'Tagline';
+// ... ... Setting: Login page heading.
+$string['loginpageheadingsetting'] = 'Login page heading';
+$string['loginpageheadingsetting_desc'] = 'With this setting, you can control what text is displayed as the heading on the login page.';
+// ... ... Setting: Login page tagline text.
+$string['loginpagetaglinesetting'] = 'Login page tagline';
+$string['loginpagetaglinesetting_desc'] = 'With this setting, you can control what text is displayed as the tagline on the login page.';
+// ... ... Options for login page heading and tagline settings.
+$string['loginpagelabel_welcome'] = 'Welcome!';
 // ... ... Setting: Login logo max width.
 $string['loginlogomaxwidthsetting'] = 'Login logo max width';
 $string['loginlogomaxwidthsetting_desc'] = 'With this setting, you can restrict the maximum width of the logo on the login page. You can enter pixel-based values like 120px, but you can also enter a percentage-based value like 10%. If you do not enter any value, the logo will be scaled proportionally.';

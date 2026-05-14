@@ -44,7 +44,7 @@ use core\di;
 use core\hook\manager as hook_manager;
 
 if ($hassiteconfig || has_capability('theme/boost_union:configure', context_system::instance())) {
-    global $PAGE;
+    global $PAGE, $SITE;
 
     // How this file works:
     // This theme's settings are divided into multiple settings pages.
@@ -1112,6 +1112,89 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
+        // Setting: Login page brand.
+        $name = 'theme_boost_union/loginpagebrand';
+        $title = get_string('loginpagebranding', 'theme_boost_union', null, true);
+        $description = get_string('loginpagebranding_desc', 'theme_boost_union', null, true);
+        $loginpagebrandoptions = [
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOOTHERWISEHEADING =>
+                get_string('loginpagebrand_logootherwiseheading', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADINGTAGLINE =>
+                get_string('loginpagebrand_logoheadingtagline', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADING =>
+                get_string('loginpagebrand_logoheading', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOTAGLINE =>
+                get_string('loginpagebrand_logotagline', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADINGTAGLINE =>
+                get_string('loginpagebrand_headingtagline', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADING =>
+                get_string('loginpagebrand_heading', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_TAGLINE =>
+                get_string('loginpagebrand_tagline', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOOTHERWISEHEADING,
+            $loginpagebrandoptions
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Login page heading.
+        $name = 'theme_boost_union/loginpageheading';
+        $title = get_string('loginpageheadingsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginpageheadingsetting_desc', 'theme_boost_union', null, true);
+        $loginpagelabeloptions = [
+            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOFULLNAME =>
+                get_string('loginto', 'core', format_string($SITE->fullname)),
+            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOSHORTNAME =>
+                get_string('loginto', 'core', format_string($SITE->shortname)),
+            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_FULLNAME =>
+                format_string($SITE->fullname),
+            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_SHORTNAME =>
+                format_string($SITE->shortname),
+            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOME =>
+                get_string('loginpagelabel_welcome', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOFULLNAME,
+            $loginpagelabeloptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginpageheading',
+            'theme_boost_union/loginpagebrand',
+            'in',
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOTAGLINE . '|' .
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_TAGLINE
+        );
+
+        // Setting: Login page tagline text.
+        $name = 'theme_boost_union/loginpagetagline';
+        $title = get_string('loginpagetaglinesetting', 'theme_boost_union', null, true);
+        $description = get_string('loginpagetaglinesetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOME,
+            $loginpagelabeloptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginpagetagline',
+            'theme_boost_union/loginpagebrand',
+            'in',
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOOTHERWISEHEADING . '|' .
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADING . '|' .
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADING
+        );
+
         // Setting: Login logo max width.
         $name = 'theme_boost_union/loginlogomaxwidth';
         $title = get_string('loginlogomaxwidthsetting', 'theme_boost_union', null, true);
@@ -1120,6 +1203,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configtext($name, $title, $description, $default, $smallwidthoremptyregex, 6);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginlogomaxwidth',
+            'theme_boost_union/loginpagebrand',
+            'in',
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADINGTAGLINE . '|' .
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADING . '|' .
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_TAGLINE
+        );
 
         // Setting: Login logo max height.
         $name = 'theme_boost_union/loginlogomaxheight';
@@ -1129,6 +1220,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configtext($name, $title, $description, $default, $smallwidthoremptyregex, 6);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginlogomaxheight',
+            'theme_boost_union/loginpagebrand',
+            'in',
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADINGTAGLINE . '|' .
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADING . '|' .
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_TAGLINE
+        );
 
         // Setting: Login logo alignment.
         $name = 'theme_boost_union/loginlogoalignment';
@@ -1142,6 +1241,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $horizontalalignmentoptions
         );
         $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginlogoalignment',
+            'theme_boost_union/loginpagebrand',
+            'in',
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADINGTAGLINE . '|' .
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADING . '|' .
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_TAGLINE
+        );
 
         // Setting: Login logo margin bottom.
         $name = 'theme_boost_union/loginlogomarginbottom';
@@ -1149,6 +1256,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('loginlogomarginbottomsetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, 3, $bootstrap0to5options);
         $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginlogomarginbottom',
+            'theme_boost_union/loginpagebrand',
+            'in',
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADINGTAGLINE . '|' .
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADING . '|' .
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_TAGLINE
+        );
 
         // Heading: Login form layout.
         $name = 'theme_boost_union/loginlayoutheading';
