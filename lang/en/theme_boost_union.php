@@ -588,28 +588,28 @@ $string['courselistingpresentation_note'] = 'Please note: If you enable course c
 $string['coursecardscolumncount'] = 'Course card column count';
 $string['coursecardscolumncount_desc'] = 'The course card grid will be presented in a responsive way and its columns will wrap on smaller screens. With this setting, you just control the maximum number of columns in the course card grid on larger screens. Setting the maximum number of columns to 2 instead of 3 might make the course cards look more spacious and less crowded. Setting the maximum number of columns to 1 is possible as well and will effectively turn the course listing in a vertical list of cards.';
 // ... ... Setting: Show course image in the course listing.
-$string['courselistinghowimage'] = 'Show course image in the course listing';
-$string['courselistinghowimage_desc'] = 'With this setting, you control if the course image is shown in the course listing or not.';
+$string['courselistingshowimage'] = 'Show course image in the course listing';
+$string['courselistingshowimage_desc'] = 'With this setting, you control if the course image is shown in the course listing or not.';
 // ... ... Setting: Show course contacts in the course listing.
 $string['courselistingshowcontacts'] = 'Show course contacts in the course listing';
 $string['courselistingshowcontacts_desc'] = 'With this setting, you control if the course contact\'s pictures are shown in the course listing or not. Please note: The contact pictures are shown together with the course image, thus presenting course contacts without presenting the course image is not possible.';
 // ... ... Setting: Show course shortname in the course listing.
-$string['courselistinghowshortname'] = 'Show course shortname in the course listing';
-$string['courselistinghowshortname_desc'] = 'With this setting, you control if the course shortname is shown in the course listing or not.';
+$string['courselistingshowshortname'] = 'Show course shortname in the course listing';
+$string['courselistingshowshortname_desc'] = 'With this setting, you control if the course shortname is shown in the course listing or not.';
 // ... ... Setting: Show course category in the course listing.
-$string['courselistinghowcategory'] = 'Show course category in the course listing';
-$string['courselistinghowcategory_desc'] = 'With this setting, you control if the course category is shown in the course listing or not.';
+$string['courselistingshowcategory'] = 'Show course category in the course listing';
+$string['courselistingshowcategory_desc'] = 'With this setting, you control if the course category is shown in the course listing or not.';
 // ... ... Setting: Show course completion progress in the course listing.
-$string['courselistinghowprogress'] = 'Show course completion progress in the course listing';
-$string['courselistinghowprogress_desc'] = 'With this setting, you control if the course completion progress are shown in the course listing or not.';
+$string['courselistingshowprogress'] = 'Show course completion progress in the course listing';
+$string['courselistingshowprogress_desc'] = 'With this setting, you control if the course completion progress are shown in the course listing or not.';
 // ... ... Setting: Course completion progress style in the course listing.
 $string['courseistingprogressstyle'] = 'Course completion progress style in the course listing';
 $string['courseistingprogressstyle_desc'] = 'With this setting, you control how the course completion progress is displayed in the course listing. You can choose between a simple percentage text or a progress bar.';
 $string['courseistingprogressstyle_percentage'] = 'Percentage text';
 $string['courseistingprogressstyle_bar'] = 'Progress bar';
 // ... ... Setting: Show course enrolment icons in the course listing.
-$string['courselistinghowenrolicons'] = 'Show course enrolment icons in the course listing';
-$string['courselistinghowenrolicons_desc'] = 'With this setting, you control if the course enrolment icons are shown in the course listing or not.';
+$string['courselistingshowenrolicons'] = 'Show course enrolment icons in the course listing';
+$string['courselistingshowenrolicons_desc'] = 'With this setting, you control if the course enrolment icons are shown in the course listing or not.';
 // ... ... Setting: Show course fields in the course listing.
 $string['courselistingshowfields'] = 'Show course fields in the course listing';
 $string['courselistingshowfields_desc'] = 'With this setting, you control if the custom course fields are shown in the course listing or not.';
@@ -621,12 +621,12 @@ $string['courselistingselectfields_nofield'] = 'With this setting, you can selec
 $string['courselistingstylefields'] = 'Style course fields in the course listing';
 $string['courselistingstylefields_desc'] = 'With this setting, you can control how the custom course fields are displayed in the course listing. You can choose between showing them as text (showing the field value together with the field name as label) or as badge (showing just the field value).';
 // ... ... Setting: Show goto button in the course listing.
-$string['courselistinghowgoto'] = 'Show goto button in the course listing';
-$string['courselistinghowgoto_desc'] = 'With this setting, you control if a \'Go to course\' button is shown in the course listing or not. If this setting is disabled, the user is still able to go to the course by clicking on the course title or course image.';
+$string['courselistingshowgoto'] = 'Show goto button in the course listing';
+$string['courselistingshowgoto_desc'] = 'With this setting, you control if a \'Go to course\' button is shown in the course listing or not. If this setting is disabled, the user is still able to go to the course by clicking on the course title or course image.';
 $string['courselistinggoto'] = 'Go to course';
 // ... ... Setting: Show details popup in the course listing.
-$string['courselistinghowpopup'] = 'Show details popup in the course listing';
-$string['courselistinghowpopup_desc'] = 'With this setting, you control if a \'Course details\' button is shown in the course listing or not. With this button, the user can open a details popup which contains the course summary, the course contacts and the course fields. The popup will contain this information regardless if you enabled it on the course card / row itself or not.';
+$string['courselistingshowpopup'] = 'Show details popup in the course listing';
+$string['courselistingshowpopup_desc'] = 'With this setting, you control if a \'Course details\' button is shown in the course listing or not. With this button, the user can open a details popup which contains the course summary, the course contacts and the course fields. The popup will contain this information regardless if you enabled it on the course card / row itself or not.';
 $string['courselistingpopup'] = 'Details';
 $string['courselistingummary'] = 'Course summary';
 $string['courselistingnosummary'] = 'This course does not have a summary';
@@ -2111,3 +2111,4 @@ $string['upgradenotice_2025041410'] = 'The setting "Show hint for guest access" 
 $string['upgradenotice_2025041413'] = 'The setting "courselistinghowfields" has been renamed to "courselistingshowfields" to fix a typo. Your existing configuration has been migrated to the new setting name.';
 $string['upgradenotice_2025041416'] = 'Smart menu dividers are now available as a dedicated menu item type. Existing dividers (created using heading type with hash signs) have been automatically converted to the new divider type.';
 $string['upgradenotice_2025100623'] = 'The navbar color options "Primary color navbar with dark font color" and "Primary color navbar with light font color" have been renamed to "Colored navbar with dark font color" and "Colored navbar with light font color". Your existing configuration has been migrated automatically. Additionally, your primary brand color has been transferred to the new "Navbar tint" setting to maintain the previous visual appearance.';
+$string['upgradenotice_2026051500'] = 'Seven settings have been renamed to fix a typo: "courselistinghowimage", "courselistinghowshortname", "courselistinghowcategory", "courselistinghowprogress", "courselistinghowenrolicons", "courselistinghowgoto" and "courselistinghowpopup" are now called "courselistingshowimage", "courselistingshowshortname", "courselistingshowcategory", "courselistingshowprogress", "courselistingshowenrolicons", "courselistingshowgoto" and "courselistingshowpopup" respectively. Your existing configurations have been migrated to the new setting names.';

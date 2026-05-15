@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-05-15 - Chore: Rename the settings 'courselistinghow*' to 'courselistingshow*' to fix a typo, resolves #1063
 * 2026-05-12 - Improvement: Allow the admin to further control the logo, heading, and tagline presentation on the login page, resolves #1262
 * 2026-05-12 - Improvement: Allow the admin to set the login page logo max-width and max-height as well as a margin-bottom and the horizontal alignment for the logo, resolves #1260
 * 2026-05-12 - Improvement: Add admin settings to set the button colors on the login page, resolves #1225.

@@ -1092,6 +1092,38 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025100624, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2026051500) {
+        // Rename the remaining 'courselistinghow*' settings to 'courselistingshow*' to fix a typo (see #1063).
+        // The 'courselistinghowfields' variant was already handled in the 2025041413 upgrade step above.
+        $renames = [
+            'courselistinghowimage' => 'courselistingshowimage',
+            'courselistinghowshortname' => 'courselistingshowshortname',
+            'courselistinghowcategory' => 'courselistingshowcategory',
+            'courselistinghowprogress' => 'courselistingshowprogress',
+            'courselistinghowenrolicons' => 'courselistingshowenrolicons',
+            'courselistinghowgoto' => 'courselistingshowgoto',
+            'courselistinghowpopup' => 'courselistingshowpopup',
+        ];
+
+        $migrated = false;
+        foreach ($renames as $oldname => $newname) {
+            $oldsetting = get_config('theme_boost_union', $oldname);
+            if ($oldsetting !== false) {
+                set_config($newname, $oldsetting, 'theme_boost_union');
+                unset_config($oldname, 'theme_boost_union');
+                $migrated = true;
+            }
+        }
+
+        if ($migrated) {
+            $message = get_string('upgradenotice_2026051500', 'theme_boost_union');
+            echo $OUTPUT->notification($message, 'info');
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2026051500, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
