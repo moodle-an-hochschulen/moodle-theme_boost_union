@@ -49,12 +49,12 @@ class course_renderer extends \core_course_renderer {
         static $detailsmodalchecked = null;
         if ($detailsmodalchecked == null) {
             $courselistingpresentation = get_config('theme_boost_union', 'courselistingpresentation');
-            $courselistinghowpopup = get_config('theme_boost_union', 'courselistinghowpopup');
+            $courselistingshowpopup = get_config('theme_boost_union', 'courselistingshowpopup');
             if (
                 isset($courselistingpresentation) &&
                     $courselistingpresentation != THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE &&
-                    isset($courselistinghowpopup) &&
-                    $courselistinghowpopup == THEME_BOOST_UNION_SETTING_SELECT_YES
+                    isset($courselistingshowpopup) &&
+                    $courselistingshowpopup == THEME_BOOST_UNION_SETTING_SELECT_YES
             ) {
                 $page->requires->js_call_amd('theme_boost_union/coursedetailsmodal', 'init');
             }
@@ -423,7 +423,7 @@ class course_renderer extends \core_course_renderer {
             // the code quality much.
 
             // Enable course image, if configured.
-            if (get_config('theme_boost_union', 'courselistinghowimage') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            if (get_config('theme_boost_union', 'courselistingshowimage') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 $skeleton['showcourseimage'] = true;
             } else {
                 $skeleton['showcourseimage'] = false;
@@ -437,28 +437,28 @@ class course_renderer extends \core_course_renderer {
             }
 
             // Enable course shortname, if configured.
-            if (get_config('theme_boost_union', 'courselistinghowshortname') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            if (get_config('theme_boost_union', 'courselistingshowshortname') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 $skeleton['showshortname'] = true;
             } else {
                 $skeleton['showshortname'] = false;
             }
 
             // Enable course category, if configured.
-            if (get_config('theme_boost_union', 'courselistinghowcategory') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            if (get_config('theme_boost_union', 'courselistingshowcategory') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 $skeleton['showcoursecategory'] = true;
             } else {
                 $skeleton['showcoursecategory'] = false;
             }
 
             // Enable course goto button, if configured.
-            if (get_config('theme_boost_union', 'courselistinghowgoto') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            if (get_config('theme_boost_union', 'courselistingshowgoto') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 $skeleton['showcoursegoto'] = true;
             } else {
                 $skeleton['showcoursegoto'] = false;
             }
 
             // Enable course details popup, if configured.
-            if (get_config('theme_boost_union', 'courselistinghowpopup') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            if (get_config('theme_boost_union', 'courselistingshowpopup') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 $skeleton['showcoursepopup'] = true;
             } else {
                 $skeleton['showcoursepopup'] = false;
@@ -479,14 +479,14 @@ class course_renderer extends \core_course_renderer {
             }
 
             // Enable course enrol icons, if configured.
-            if (get_config('theme_boost_union', 'courselistinghowenrolicons') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            if (get_config('theme_boost_union', 'courselistingshowenrolicons') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 $skeleton['showcourseenrolicons'] = true;
             } else {
                 $skeleton['showcourseenrolicons'] = false;
             }
 
             // Enable course progress, if configured.
-            if (get_config('theme_boost_union', 'courselistinghowprogress') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+            if (get_config('theme_boost_union', 'courselistingshowprogress') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
                 $skeleton['showcourseprogress'] = true;
             } else {
                 $skeleton['showcourseprogress'] = false;
