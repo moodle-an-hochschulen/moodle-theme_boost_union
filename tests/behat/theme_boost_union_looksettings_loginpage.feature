@@ -56,8 +56,8 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | logo     | theme/boost_union/tests/fixtures/moodlelogo.png |
     When I am on login page
     Then "#loginlogo" "css_element" <logoshouldornot> exist
-    And "h1.login-heading:not(.visually-hidden)" "css_element" <headingshouldornot> exist
-    And "h1.login-heading.visually-hidden" "css_element" <headinghiddenshouldornot> exist
+    And "h1.login-heading:not(.sr-only)" "css_element" <headingshouldornot> exist
+    And "h1.login-heading.sr-only" "css_element" <headinghiddenshouldornot> exist
     And ".login-tagline" "css_element" <taglineshouldornot> exist
 
     Examples:
@@ -76,8 +76,8 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | loginpagebrand | <setting> | theme_boost_union |
     When I am on login page
     Then "#loginlogo" "css_element" should not exist
-    And "h1.login-heading:not(.visually-hidden)" "css_element" <headingshouldornot> exist
-    And "h1.login-heading.visually-hidden" "css_element" <headinghiddenshouldornot> exist
+    And "h1.login-heading:not(.sr-only)" "css_element" <headingshouldornot> exist
+    And "h1.login-heading.sr-only" "css_element" <headinghiddenshouldornot> exist
     And ".login-tagline" "css_element" <taglineshouldornot> exist
 
     # Note: logootherwiseheading shows the heading as fallback when no logo is uploaded.
