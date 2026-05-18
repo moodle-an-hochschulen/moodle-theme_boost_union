@@ -163,7 +163,7 @@ if ($type === 'editor' || $type === 'editor-rtl') {
     }
 }
 
-if (($fallbacksheet = theme_styles_fallback_content($theme)) && !$theme->has_css_cached_content()) {
+if (($fallbacksheet = theme_boost_union_flavour_styles_fallback_content($theme, $flavourid)) && !$theme->has_css_cached_content()) {
     // The theme is not yet available and a fallback is available.
     // Return the fallback immediately, specifying the Content-Length, then generate in the background.
     $css = file_get_contents($fallbacksheet);
@@ -253,7 +253,7 @@ function theme_boost_union_flavour_styles_generate_and_store($theme, $rev, $them
     // This file is used as a fallback when waiting for a theme to compile and is not versioned in any way.
     $fallbacksheet = make_temp_directory("theme/{$theme->name}")
         . "/"
-        . theme_boost_union_flavour_styles_get_filename($type, $themesubrev, $flavourid, $theme->use_svg_icons());
+        . theme_boost_union_flavour_styles_get_filename($type, 0, $flavourid, $theme->use_svg_icons());
     css_store_css($theme, $fallbacksheet, $csscontent);
 
     // Delete older revisions from localcache.
@@ -285,9 +285,10 @@ function theme_boost_union_flavour_styles_generate_and_store($theme, $rev, $them
  * Fetch the preferred fallback content location if available.
  *
  * @param   theme_config    $theme The theme to be generated
+ * @param   int             $flavourid The flavour ID
  * @return  string          The path to the fallback sheet on disk
  */
-function theme_styles_fallback_content($theme) {
+function theme_boost_union_flavour_styles_fallback_content($theme, $flavourid) {
     global $CFG;
 
     if (!$theme->usefallback) {
@@ -296,7 +297,7 @@ function theme_styles_fallback_content($theme) {
     }
 
     $type = $theme->get_rtl_mode() ? 'all-rtl' : 'all';
-    $filename = theme_boost_union_flavour_styles_get_filename($type);
+    $filename = theme_boost_union_flavour_styles_get_filename($type, 0, $flavourid);
 
     $fallbacksheet = "{$CFG->tempdir}/theme/{$theme->name}/{$filename}";
     if (file_exists($fallbacksheet)) {
