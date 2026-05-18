@@ -47,13 +47,19 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | 600px   | 600px    |
       |         | 500px    |
 
+  @javascript @_file_upload
   Scenario Outline: Setting: Login page brand - Show and hide branding elements with logo uploaded
     Given the following config values are set as admin:
       | config         | value     | plugin            |
       | loginpagebrand | <setting> | theme_boost_union |
-    And the following "theme_boost_union > setting files" exist:
-      | filearea | filepath                                        |
-      | logo     | theme/boost_union/tests/fixtures/moodlelogo.png |
+    And I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Logo" filemanager
+    And I press "Save changes"
+    And Behat debugging is enabled
+    And I log out
     When I am on login page
     Then "#loginlogo" "css_element" <logoshouldornot> exist
     And "h1.login-heading:not(.sr-only)" "css_element" <headingshouldornot> exist
@@ -176,15 +182,20 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And I should see "Welcome back!" in the ".login-tagline" "css_element"
     And I should not see "Welcome!" in the ".login-tagline" "css_element"
 
-  @javascript
+  @javascript @_file_upload
   Scenario Outline: Setting: Login logo max width and height - Set the maximum width and height
     Given the following config values are set as admin:
       | config             | value     | plugin            |
       | loginlogomaxwidth  | <width> | theme_boost_union |
       | loginlogomaxheight | <height> | theme_boost_union |
-    And the following "theme_boost_union > setting files" exist:
-      | filearea | filepath                                        |
-      | logo     | theme/boost_union/tests/fixtures/moodlelogo.png |
+    And I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Logo" filemanager
+    And I press "Save changes"
+    And Behat debugging is enabled
+    And I log out
     And the theme cache is purged and the theme is reloaded
     When I am on login page
     # Reloading the page is necessary to ensure that the CSS is applied, as it might not appear on the first load due to caching.
@@ -198,13 +209,19 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | 50px  | 50px   | should           | should            |
       | 50px  |        | should           | should not        |
 
+  @javascript @_file_upload
   Scenario Outline: Setting: Login logo alignment - Set the alignment
     Given the following config values are set as admin:
       | config             | value     | plugin            |
       | loginlogoalignment | <setting> | theme_boost_union |
-    And the following "theme_boost_union > setting files" exist:
-      | filearea | filepath                                        |
-      | logo     | theme/boost_union/tests/fixtures/moodlelogo.png |
+    And I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Logo" filemanager
+    And I press "Save changes"
+    And Behat debugging is enabled
+    And I log out
     When I am on login page
     Then the "class" attribute of "#loginlogo" "css_element" should contain "<class>"
 
@@ -214,14 +231,19 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | center  | justify-content-center |
       | right   | justify-content-end    |
 
-  @javascript
+  @javascript @_file_upload
   Scenario Outline: Setting: Login logo margin bottom - Set the margin bottom
     Given the following config values are set as admin:
       | config                | value     | plugin            |
       | loginlogomarginbottom | <setting> | theme_boost_union |
-    And the following "theme_boost_union > setting files" exist:
-      | filearea | filepath                                        |
-      | logo     | theme/boost_union/tests/fixtures/moodlelogo.png |
+    And I log in as "admin"
+    And Behat debugging is disabled
+    And I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/moodlelogo.png" file to "Logo" filemanager
+    And I press "Save changes"
+    And Behat debugging is enabled
+    And I log out
     When I am on login page
     Then the "class" attribute of "#loginlogo" "css_element" <shouldcontain> "<class>"
 

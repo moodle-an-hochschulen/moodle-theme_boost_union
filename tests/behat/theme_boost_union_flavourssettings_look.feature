@@ -961,9 +961,17 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
       | config      | value        | plugin            |
       | navbarcolor | coloredlight | theme_boost_union |
       | brandcolor  | #FF0000      | theme_boost_union |
-    And the following "theme_boost_union > flavours" exist:
-      | title                | applytocategories_ids |
-      | My shiny new flavour | CAT1                  |
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
     And I am on "Course 1" course homepage
