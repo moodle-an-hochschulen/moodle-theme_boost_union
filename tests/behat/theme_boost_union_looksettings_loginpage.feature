@@ -104,12 +104,15 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     Then I should see "<text>" in the ".login-heading" "css_element"
 
     Examples:
-      | setting          | text                           |
-      | logintofullname  | Log in to Acceptance test site |
-      | logintoshortname | Log in to Boost Union Test     |
-      | fullname         | Acceptance test site           |
-      | shortname        | Boost Union Test               |
-      | welcome          | Welcome!                       |
+      | setting            | text                            |
+      | logintofullname    | Log in to Acceptance test site  |
+      | logintoshortname   | Log in to Boost Union Test      |
+      | welcometofullname  | Welcome to Acceptance test site |
+      | welcometoshortname | Welcome to Boost Union Test     |
+      | fullname           | Acceptance test site            |
+      | shortname          | Boost Union Test                |
+      | welcome            | Welcome!                        |
+      | welcomeback        | Welcome!                        |
 
   Scenario Outline: Setting: Login page tagline - Show the correct tagline text
     Given the following config values are set as admin:
@@ -121,9 +124,57 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
 
     # We do not want to burn too much CPU time by testing all available options. We just test the default value and one non-default value.
     Examples:
-      | setting         | text                           |
-      | welcome         | Welcome!                       |
-      | logintofullname | Log in to Acceptance test site |
+      | setting           | text                            |
+      | welcome           | Welcome!                        |
+      | welcometofullname | Welcome to Acceptance test site |
+
+  Scenario: Setting: Login page heading - Show the heading and tagline texts: Show 'Welcome back!' for returning visitors
+    Given the following config values are set as admin:
+      | config           | value          | plugin            |
+      | loginpagebrand   | headingtagline | theme_boost_union |
+      | loginpageheading | welcomeback    | theme_boost_union |
+      | loginpagetagline | welcomeback    | theme_boost_union |
+    And the following config values are set as admin:
+      | config           | value |
+      | rememberusername | 1     |
+    When I am on login page
+    And I should see "Welcome!" in the "h1.login-heading" "css_element"
+    And I should not see "Welcome back!" in the "h1.login-heading" "css_element"
+    And I should see "Welcome!" in the ".login-tagline" "css_element"
+    And I should not see "Welcome back!" in the ".login-tagline" "css_element"
+    And I set the field "Username" to "admin"
+    And I set the field "Password" to "admin"
+    And I press "Log in"
+    And I log out
+    And I am on login page
+    Then I should see "Welcome back!" in the "h1.login-heading" "css_element"
+    And I should not see "Welcome!" in the "h1.login-heading" "css_element"
+    And I should see "Welcome back!" in the ".login-tagline" "css_element"
+    And I should not see "Welcome!" in the ".login-tagline" "css_element"
+
+  Scenario: Setting: Login page heading - Show the heading and tagline texts: Show 'Welcome back!' after session timeout
+    Given the following config values are set as admin:
+      | config           | value          | plugin            |
+      | loginpagebrand   | headingtagline | theme_boost_union |
+      | loginpageheading | welcomeback    | theme_boost_union |
+      | loginpagetagline | welcomeback    | theme_boost_union |
+    And the following config values are set as admin:
+      | config                | value |
+      | sessiontimeout        | 1     |
+      | sessiontimeoutwarning | 0     |
+    When I am on login page
+    And I should see "Welcome!" in the "h1.login-heading" "css_element"
+    And I should not see "Welcome back!" in the "h1.login-heading" "css_element"
+    And I should see "Welcome!" in the ".login-tagline" "css_element"
+    And I should not see "Welcome back!" in the ".login-tagline" "css_element"
+    And I log in as "admin"
+    And I wait "3" seconds
+    And I am on login page
+    Then I should see "Your session has timed out. Please log in again."
+    And I should see "Welcome back!" in the "h1.login-heading" "css_element"
+    And I should not see "Welcome!" in the "h1.login-heading" "css_element"
+    And I should see "Welcome back!" in the ".login-tagline" "css_element"
+    And I should not see "Welcome!" in the ".login-tagline" "css_element"
 
   @javascript
   Scenario Outline: Setting: Login logo max width and height - Set the maximum width and height

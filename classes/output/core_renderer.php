@@ -1416,13 +1416,22 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $context->loginbrandshowheading = in_array($loginpagebrand, $loginbrandheadingoptionvalues);
             $context->loginbrandshowtagline = in_array($loginpagebrand, $loginbrandtaglineoptionvalues);
         }
-        // Compute heading and tagline label texts.
+        // Compute common heading and tagline label assets.
+        $showwelcomeback = !empty(get_moodle_cookie()) ||
+            (!empty($context->error) && $context->error === get_string('sessionerroruser', 'error'));
+        // Compute heading text.
         $loginpageheadingsetting = get_config('theme_boost_union', 'loginpageheading');
         $loginpageheading = ($loginpageheadingsetting !== false)
             ? $loginpageheadingsetting : THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOFULLNAME;
         switch ($loginpageheading) {
             case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOSHORTNAME:
                 $context->loginheadingtext = get_string('loginto', 'core', $context->siteshortname);
+                break;
+            case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOMETOFULLNAME:
+                $context->loginheadingtext = get_string('loginpagelabel_welcometo', 'theme_boost_union', $context->sitename);
+                break;
+            case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOMETOSHORTNAME:
+                $context->loginheadingtext = get_string('loginpagelabel_welcometo', 'theme_boost_union', $context->siteshortname);
                 break;
             case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_FULLNAME:
                 $context->loginheadingtext = $context->sitename;
@@ -1432,6 +1441,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 break;
             case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOME:
                 $context->loginheadingtext = get_string('loginpagelabel_welcome', 'theme_boost_union');
+                break;
+            case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOMEBACK:
+                $context->loginheadingtext = $showwelcomeback
+                    ? get_string('loginpagelabel_welcomeback', 'theme_boost_union')
+                    : get_string('loginpagelabel_welcome', 'theme_boost_union');
                 break;
             case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOFULLNAME:
             default:
@@ -1447,6 +1461,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOSHORTNAME:
                     $context->logintaglinetext = get_string('loginto', 'core', $context->siteshortname);
                     break;
+                case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOMETOFULLNAME:
+                    $context->logintaglinetext = get_string('loginpagelabel_welcometo', 'theme_boost_union', $context->sitename);
+                    break;
+                case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOMETOSHORTNAME:
+                    $context->logintaglinetext =
+                            get_string('loginpagelabel_welcometo', 'theme_boost_union', $context->siteshortname);
+                    break;
                 case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_FULLNAME:
                     $context->logintaglinetext = $context->sitename;
                     break;
@@ -1455,6 +1476,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     break;
                 case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOFULLNAME:
                     $context->logintaglinetext = get_string('loginto', 'core', $context->sitename);
+                    break;
+                case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOMEBACK:
+                    $context->logintaglinetext = $showwelcomeback
+                        ? get_string('loginpagelabel_welcomeback', 'theme_boost_union')
+                        : get_string('loginpagelabel_welcome', 'theme_boost_union');
                     break;
                 case THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOME:
                 default:
