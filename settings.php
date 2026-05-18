@@ -1151,12 +1151,18 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 get_string('loginto', 'core', format_string($SITE->fullname)),
             THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOSHORTNAME =>
                 get_string('loginto', 'core', format_string($SITE->shortname)),
+            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOMETOFULLNAME =>
+                get_string('loginpagelabel_welcometo', 'theme_boost_union', format_string($SITE->fullname)),
+            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOMETOSHORTNAME =>
+                get_string('loginpagelabel_welcometo', 'theme_boost_union', format_string($SITE->shortname)),
             THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_FULLNAME =>
                 format_string($SITE->fullname),
             THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_SHORTNAME =>
                 format_string($SITE->shortname),
             THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOME =>
                 get_string('loginpagelabel_welcome', 'theme_boost_union'),
+            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOMEBACK =>
+                get_string('loginpagelabel_welcomeback', 'theme_boost_union'),
         ];
         $setting = new admin_setting_configselect(
             $name,
