@@ -78,6 +78,12 @@ $string['nocourseoverride'] = 'This setting cannot be overridden in the course s
 // Settings: General strings.
 $string['dontchange'] = 'Do not change anything';
 $string['tertiarysettings'] = 'List of Boost Union settings pages';
+$string['settingoverridenotificationtitle'] = 'Possible setting overrides';
+$string['settingoverrideactioninfo'] = 'Explain setting possible overrides';
+$string['settingoverrideactionflavours'] = 'Manage flavours';
+$string['settingoverridemodallms'] = '<strong>Flavours</strong><br />Boost Union\'s flavours offer a possibility to override particular Moodle look & feel settings in particular contexts. Here, the global default setting is defined. And with flavours, you can differentiate the setting for particular contexts or user groups. Click on the \'Manage flavours\' icon to go to the flavours management page and define a flavour.';
+$string['settingoverridelms'] = 'This setting can be overridden within Boost Union flavours.';
+$string['settingsupplementlms'] = 'This setting can be supplemented within Boost Union flavours.';
 
 // Settings: General warnings.
 $string['warningslashargumentsdisabled'] = 'Warning: The <a href="{$a->url}">slasharguments setting</a> is disabled in your Moodle configuration currently. However, this setting is required for the correct operation of the following Boost Union setting. Please enable slasharguments, otherwise the following Boost Union setting will not have any effect.';
