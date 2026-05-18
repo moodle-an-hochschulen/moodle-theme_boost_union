@@ -3095,3 +3095,121 @@ function theme_boost_union_build_fa_icon_map() {
     // Return icon map.
     return $iconmap;
 }
+
+/**
+ * Helper function to build a notification about possible setting overrides.
+ *
+ * @param int $mwp If 0, the notification will make clear that the setting override is relevant for Moodle LMS only.
+ * @param bool $supplement If yes, the 'supplement' version of the string is used instead of the 'override' version.
+ * @return string The HTML for the notification.
+ */
+function theme_boost_union_render_setting_override_notification(int $mwp = 0, bool $supplement = false): string {
+    global $OUTPUT, $PAGE;
+
+    // Determine language string and URL placeholders based on mwp mode.
+    switch ($mwp) {
+        case 0:
+        default:
+            // Pick the notification details for Moodle LMS.
+            if ($supplement) {
+                $langstring = get_string('settingsupplementlms', 'theme_boost_union');
+            } else {
+                $langstring = get_string('settingoverridelms', 'theme_boost_union');
+            }
+
+            // Pick the modal details for Moodle LMS.
+            $modaltitle = get_string('settingoverridenotificationtitle', 'theme_boost_union');
+            $modalbody = get_string('settingoverridemodallms', 'theme_boost_union');
+
+            // Flag the possible actions.
+            $flavoursaction = true;
+
+            break;
+    }
+
+    // Initialize actions.
+    $actions = [];
+
+    // Info.
+    $actions[] = [
+        'url' => '#',
+        'icon' => new \core\output\pix_icon(
+            'info',
+            get_string('settingoverrideactioninfo', 'theme_boost_union'),
+            'theme_boost_union'
+        ),
+        'attributes' => [
+            'class' => 'action-info py-0 ps-0 ms-0 me-0',
+            'data-action' => 'bumodal',
+            'data-title' => $modaltitle,
+            'data-body' => $modalbody,
+        ],
+    ];
+
+    // Action for flavours.
+    if ($flavoursaction == true) {
+        $actions[] = [
+            'url' => new \core\url('/theme/boost_union/flavours/overview.php'),
+            'icon' => new \core\output\pix_icon(
+                'flavours',
+                get_string('settingoverrideactionflavours', 'theme_boost_union'),
+                'theme_boost_union'
+            ),
+            'attributes' => [
+                'class' => 'action-flavours py-0 ms-0 me-0 pe-0',
+                'title' => get_string('settingoverrideactionflavours', 'theme_boost_union'),
+                'aria-label' => get_string('settingoverrideactionflavours', 'theme_boost_union'),
+            ],
+        ];
+    }
+
+    // Compose action icons for all actions.
+    $actionshtml = [];
+    foreach ($actions as $action) {
+        $action['attributes']['role'] = 'button';
+        $actionshtml[] = $OUTPUT->action_icon(
+            $action['url'],
+            $action['icon'],
+            null,
+            $action['attributes']
+        );
+    }
+    $actionshtml = html_writer::span(join('', $actionshtml), 'settings-actions');
+
+    // Render notification body with mustache template.
+    $content = $OUTPUT->render_from_template('theme_boost_union/settingoverridenotification', [
+        'message' => $langstring,
+        'actionshtml' => $actionshtml,
+    ]);
+
+    // Ensure the modal JS is included.
+    theme_boost_union_ensure_modal_js();
+
+    // Render as info notification while preserving action link data-* attributes.
+    // If we would use $OUTPUT->notification(), the action link data-* attributes would be stripped.
+    return $OUTPUT->render_from_template('core/notification_info', [
+        'message' => $content,
+        'closebutton' => false,
+    ]);
+}
+
+/**
+ * Ensure the modal JS is added to the page, but only once per request.
+ */
+function theme_boost_union_ensure_modal_js(): void {
+    global $PAGE;
+
+    // Initialize static variable to track if the JS has already been included.
+    static $initialized = false;
+
+    // If the JS is already included or if $PAGE is not available, do nothing.
+    if ($initialized || empty($PAGE)) {
+        return;
+    }
+
+    // Include the JS module for the modal.
+    $PAGE->requires->js_call_amd('theme_boost_union/modal', 'init');
+
+    // And remember that fact.
+    $initialized = true;
+}
