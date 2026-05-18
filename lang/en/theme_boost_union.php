@@ -383,6 +383,8 @@ $string['loginpagetaglinesetting'] = 'Login page tagline';
 $string['loginpagetaglinesetting_desc'] = 'With this setting, you can control what text is displayed as the tagline on the login page.';
 // ... ... Options for login page heading and tagline settings.
 $string['loginpagelabel_welcome'] = 'Welcome!';
+$string['loginpagelabel_welcomeback'] = 'Welcome back!';
+$string['loginpagelabel_welcometo'] = 'Welcome to {$a}';
 // ... ... Setting: Login logo max width.
 $string['loginlogomaxwidthsetting'] = 'Login logo max width';
 $string['loginlogomaxwidthsetting_desc'] = 'With this setting, you can restrict the maximum width of the logo on the login page. You can enter pixel-based values like 120px, but you can also enter a percentage-based value like 10%. If you do not enter any value, the logo will be scaled proportionally.';
