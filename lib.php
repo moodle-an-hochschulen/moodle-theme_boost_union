@@ -238,6 +238,8 @@ define('THEME_BOOST_UNION_SETTING_HORIZONTALALIGNMENT_LEFT', 'left');
 define('THEME_BOOST_UNION_SETTING_HORIZONTALALIGNMENT_CENTER', 'center');
 define('THEME_BOOST_UNION_SETTING_HORIZONTALALIGNMENT_RIGHT', 'right');
 
+define('THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS', 0);
+
 use theme_boost_union\snippets;
 
 /**
@@ -1180,6 +1182,7 @@ function theme_boost_union_get_fontawesome_icon_map() {
         'theme_boost_union:autofix' => 'fa-wand-magic-sparkles',
         'theme_boost_union:muted' => 'fa-bell-slash',
         'theme_boost_union:unmuted' => 'fa-bell',
+        'theme_boost_union:flavours' => 'fa-pepper-hot',
     ];
 
     // Get the FontAwesome icons which are used by smart menus currently.

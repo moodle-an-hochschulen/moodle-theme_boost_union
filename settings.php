@@ -281,6 +281,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/scsspre';
         $title = get_string('rawscsspre', 'theme_boost', null, true);
         $description = get_string('rawscsspre_desc', 'theme_boost', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, true);
         $default = '';
         $setting = new admin_setting_scsscode($name, $title, $description, $default, PARAM_RAW);
         $setting->set_updatedcallback('theme_reset_all_caches');
@@ -290,6 +291,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/scss';
         $title = get_string('rawscss', 'theme_boost', null, true);
         $description = get_string('rawscss_desc', 'theme_boost', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, true);
         $default = '';
         $setting = new admin_setting_scsscode($name, $title, $description, $default, PARAM_RAW);
         $setting->set_updatedcallback('theme_reset_all_caches');
@@ -524,6 +526,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/logo';
         $title = get_string('logosetting', 'theme_boost_union', null, true);
         $description = get_string('logosetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $description .= recommendation_manager::render_recommendation_notification('corelogo');
         $setting = new admin_setting_configstoredfile(
             $name,
@@ -540,6 +543,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/logocompact';
         $title = get_string('logocompactsetting', 'theme_boost_union', null, true);
         $description = get_string('logocompactsetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $description .= recommendation_manager::render_recommendation_notification('corecompactlogo');
         $setting = new admin_setting_configstoredfile(
             $name,
@@ -562,6 +566,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/favicon';
         $title = get_string('faviconsetting', 'theme_boost_union', null, true);
         $description = get_string('faviconsetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $description .= recommendation_manager::render_recommendation_notification('corefavicon');
         $setting = new admin_setting_configstoredfile(
             $name,
@@ -584,6 +589,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/backgroundimage';
         $title = get_string('backgroundimagesetting', 'theme_boost_union', null, true);
         $description = get_string('backgroundimagesetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $setting = new admin_setting_configstoredfile(
             $name,
             $title,
@@ -599,6 +605,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/backgroundimageposition';
         $title = get_string('backgroundimagepositionsetting', 'theme_boost_union', null, true);
         $description = get_string('backgroundimagepositionsetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $backgroundimagepositionoptions = [
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER =>
                         get_string('imageposition_center_center', 'theme_boost_union'),
@@ -639,6 +646,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/brandcolor';
         $title = get_string('brandcolor', 'theme_boost_union', null, true);
         $description = get_string('brandcolor_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -647,6 +655,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/brandedgraytones';
         $title = get_string('brandedgraytones', 'theme_boost_union', null, true);
         $description = get_string('brandedgraytones_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -661,6 +670,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/linkcolor';
         $title = get_string('linkcolorsetting', 'theme_boost_union', null, true);
         $description = get_string('linkcolorsetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -669,6 +679,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/buttonbrandcolor';
         $title = get_string('buttonbrandcolorsetting', 'theme_boost_union', null, true);
         $description = get_string('buttonbrandcolorsetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -683,6 +694,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/bootstrapcolorsuccess';
         $title = get_string('bootstrapcolorsuccesssetting', 'theme_boost_union', null, true);
         $description = get_string('bootstrapcolorsuccesssetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -691,6 +703,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/bootstrapcolorinfo';
         $title = get_string('bootstrapcolorinfosetting', 'theme_boost_union', null, true);
         $description = get_string('bootstrapcolorinfosetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -699,6 +712,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/bootstrapcolorwarning';
         $title = get_string('bootstrapcolorwarningsetting', 'theme_boost_union', null, true);
         $description = get_string('bootstrapcolorwarningsetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -707,6 +721,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/bootstrapcolordanger';
         $title = get_string('bootstrapcolordangersetting', 'theme_boost_union', null, true);
         $description = get_string('bootstrapcolordangersetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -739,6 +754,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/navbarcolor';
         $title = get_string('navbarcolorsetting', 'theme_boost_union', null, true);
         $description = get_string('navbarcolorsetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $navbarcoloroptions = [
                 THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT =>
                         get_string('navbarcolorsetting_light', 'theme_boost_union'),
@@ -762,6 +778,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/navbartint';
         $title = get_string('navbartintsetting', 'theme_boost_union', null, true);
         $description = get_string('navbartintsetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -797,6 +814,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name = 'theme_boost_union/activityiconcolor' . $purpose;
             $title = get_string('activityiconcolor' . $purpose . 'setting', 'theme_boost_union', null, true);
             $description = get_string('activityiconcolor' . $purpose . 'setting_desc', 'theme_boost_union', null, true);
+            $description .=
+                    theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
             $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
             $setting->set_updatedcallback('theme_reset_all_caches');
             $tab->add($setting);
@@ -1062,6 +1081,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/loginbackgroundimageposition';
         $title = get_string('loginbackgroundimagepositionsetting', 'theme_boost_union', null, true);
         $description = get_string('loginbackgroundimagepositionsetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $loginbackgroundimagepositionoptions = [
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER =>
                         get_string('imageposition_center_center', 'theme_boost_union'),
@@ -4187,6 +4207,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/footnote';
         $title = get_string('footnotesetting', 'theme_boost_union', null, true);
         $description = get_string('footnotesetting_desc', 'theme_boost_union', null, true);
+        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $setting = new admin_setting_confightmleditor($name, $title, $description, '');
         $tab->add($setting);
 
