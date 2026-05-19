@@ -1989,7 +1989,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name,
             $title,
             $description,
-            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYFILLED,
+            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYOUTLINE,
             $buttoncoloroptions
         );
         $tab->add($setting);
@@ -2150,7 +2150,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name,
             $title,
             $description,
-            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYFILLED,
+            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYOUTLINE,
             $buttoncoloroptions
         );
         $tab->add($setting);

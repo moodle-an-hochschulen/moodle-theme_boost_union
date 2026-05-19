@@ -730,13 +730,15 @@ As you have read in the introduction, the main design principle of Boost Union i
   Boost Union especially allows you to override the uploaded favicon within its flavours.
   Against this background, if you switch from Boost to Boost Union and had a favicon shown in Boost before, this favicon won't be shown until you upload it again in Boost Union directly.
 * Login page authentication instructions:
-  Boost Union does not output the Moodle core setting `auth_instructions` (authentication method instructions) on the login page anymore.
+  Boost Union does not output the Moodle core setting `auth_instructions` (authentication method instructions) on the login page.
   In Moodle core, this setting is shown in context of the user self-registration method.
   However, in Boost Union with its enhanced login page layouts (tabs, accordion), the self-registration section might not be visible after page load, making the instructions hidden from view.
   To improve the admin experience and provide a cleaner solution, Boost Union offers dedicated login instructions settings for each login method as well as generic instructions.
   Against this background, if you switch from Boost to Boost Union and had a text configured in the Moodle core `auth_instructions` setting, this text won't be shown until you copy it to Boost Union's own login instructions.
-* Login page heading:
-  Boost Union has extensive options to control the look of the login page, including the login page header where Moodle core just outputs fixed strings. When implementing the settings to individually configure the login page header, we added several strings to Boost Union itself and did not use the login page header strings from Moodle core. Against this background, you should be aware that at least the "Welcome back!" string in the login page header is coming from Boost Union and not from Moodle core and might require separate translation into your language.
+* Login page texts:
+  Boost Union has extensive options to control the look of the login page. When implementing the settings to individually configure the login page elements, we sometimes added strings to Boost Union itself instead of using the login page strings from Moodle core. This was done to improve future-proofness of the login page settings. Against this background, you should be aware that several strings on the login page coming from Boost Union might be the same as the strings in Moodle core, but might require separate translation into your language.
+* Login page widgets:
+  In addition to the previous item, to implement the various login page options, we sometimes had to diverge from the Moodle Core login page behaviour as it would have been too complicated to keep up the same look for all setting permutations. This was done to improve future-proofness of the login page settings. Against this background, you should be aware that you might not be able to always replicate 100% the same login page as you get with Moodle Core, but on the other hand with the Boost Union login page you are much more flexible.
 * Footer popover:
   As soon as you click the footer button (questionmark icon) in the bottom right corner of the screen, a popover with several links appears. However, the content of this link list is far from being well-structured and looks more like a garage sale. When implementing the settings to individually suppress each of these popover links, we had to make some code re-arrangements which result in the fact that the popover links are slightly more well-structured even if you do not enable any setting in Boost Union.
 * Clickable header and transition time in the user's menu third level:

@@ -407,7 +407,7 @@
                     {{/useinternalwayf}}
                     {{! Use standard IDP button }}
                     {{^useinternalwayf}}
-                    <a class="btn {{idploginbtnclass}} mb-3" href="{{url}}">
+                    <a class="btn {{idploginbtnclass}} w-100 mb-3" href="{{url}}">
                         {{#iconurl}}
                             <img src="{{iconurl}}" alt="" width="24" height="24"/>
                         {{/iconurl}}
@@ -459,7 +459,7 @@
         </div>
 
         <div class="login-signup">
-            <a class="btn {{selfregistrationloginbtnclass}}" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a>
+            <a class="btn {{selfregistrationloginbtnclass}} w-100" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a>
         </div>
 
         {{! Instructions (below form) }}
@@ -500,7 +500,7 @@
             <input type="hidden" name="logintoken" value="{{logintoken}}">
             <input type="hidden" name="username" value="guest" />
             <input type="hidden" name="password" value="guest" />
-            <button class="btn {{guestloginbtnclass}}" type="submit" id="loginguestbtn"><i class="fa fa-user me-2" aria-hidden="true"></i>{{#str}}loginasguest{{/str}}</button>
+            <button class="btn {{guestloginbtnclass}} w-100" type="submit" id="loginguestbtn"><i class="fa fa-user me-2" aria-hidden="true"></i>{{#str}}loginasguest{{/str}}</button>
         </form>
 
         {{! Instructions (below form) }}
