@@ -839,6 +839,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
         );
         $context->hasauthinstructions = !empty($CFG->auth_instructions);
 
+        // Get the login page arrangement setting to differentiate based on this setting if needed.
+        $loginpagearrangement = get_config('theme_boost_union', 'loginpagearrangement');
+
         // Shibboleth internal WAYF: If the Boost Union setting is enabled and if Shibboleth authentication is enabled.
         $context->showshibbolethembeddedwayfcode = false;
         $loginshibbolethinternalwayf = get_config('theme_boost_union', 'loginshibbolethinternalwayf');
@@ -1491,9 +1494,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
         }
 
-        // Add JS if the tabs layout is active and enhanced tabs layout behaviour is enabled.
+        // Add JS if the side-by-site arrangement is not active, if the tabs layout is active
+        // and enhanced tabs layout behaviour is enabled.
         $loginenhancedtabslayout = get_config('theme_boost_union', 'loginenhancedtabslayout');
-        if ($context->loginlayouttabs && $loginenhancedtabslayout == THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        if (
+            $loginpagearrangement != THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_SIDEBYSIDE &&
+            $context->loginlayouttabs && $loginenhancedtabslayout == THEME_BOOST_UNION_SETTING_SELECT_YES
+        ) {
             $this->page->requires->js_call_amd('theme_boost_union/logintabs', 'init');
         }
 

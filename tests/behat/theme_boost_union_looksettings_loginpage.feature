@@ -4,9 +4,25 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
   As admin
   I need to be able to configure the theme Boost Union plugin
 
-  Scenario Outline: Setting: Login container position
+  Scenario Outline: Setting: Login page arrangement
+    Given the following config values are set as admin:
+      | config           | value     | plugin            |
+      | loginarrangement | <setting> | theme_boost_union |
+    When I am on login page
+    Then the "class" attribute of "body" "css_element" should contain "theme_boost_union-loginarrangement-<bodyclass>"
+    And the "class" attribute of "body" "css_element" should not contain "theme_boost_union-loginarrangement-<notbodyclass>"
+    And the "class" attribute of "#page" "css_element" <pagefluidshouldornot> contain "container-fluid"
+    And "aside.login-layout-left" "css_element" <sidepanelshouldornot> exist
+
+    Examples:
+      | setting    | bodyclass  | notbodyclass | pagefluidshouldornot | sidepanelshouldornot |
+      | sidebyside | sidebyside | legacy       | should not           | should               |
+      | legacy     | legacy     | sidebyside   | should               | should not           |
+
+  Scenario Outline: Setting: Login container position (only applies when using the legacy login page layout)
     Given the following config values are set as admin:
       | config            | value     | plugin            |
+      | loginarrangement  | legacy    | theme_boost_union |
       | loginformposition | <setting> | theme_boost_union |
     When I am on login page
     Then the "class" attribute of ".login-wrapper" "css_element" should contain "<class>"
@@ -19,9 +35,10 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | left    | login-wrapper-left   | login-wrapper-center | login-wrapper-right |
       | right   | login-wrapper-right  | login-wrapper-center | login-wrapper-left  |
 
-  Scenario Outline: Setting: Login form transparency
+  Scenario Outline: Setting: Login form transparency (only applies when using the legacy login page layout)
     Given the following config values are set as admin:
       | config                | value     | plugin            |
+      | loginarrangement      | legacy    | theme_boost_union |
       | loginformtransparency | <setting> | theme_boost_union |
     When I am on login page
     Then the "class" attribute of ".login-container" "css_element" <shouldcontain> "login-container-80t"
@@ -32,9 +49,10 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | no      | should not contain |
 
   @javascript
-  Scenario Outline: Setting: Login container width
+  Scenario Outline: Setting: Login container width (only applies when using the legacy login page layout)
     Given the following config values are set as admin:
       | config              | value     | plugin            |
+      | loginarrangement    | legacy    | theme_boost_union |
       | logincontainerwidth | <setting> | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
     When I am on login page
@@ -351,9 +369,10 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | accordion | should not      | should               |
 
   @javascript
-  Scenario Outline: Setting: Enhanced tabs layout behaviour: Load the javascript module
+  Scenario Outline: Setting: Enhanced tabs layout behaviour: Load the javascript module (only applies when using the legacy login page layout)
     Given the following config values are set as admin:
       | config                  | value     | plugin            |
+      | loginarrangement        | legacy    | theme_boost_union |
       | loginlayout             | tabs      | theme_boost_union |
       | loginenhancedtabslayout | <setting> | theme_boost_union |
     And the theme cache is purged and the theme is reloaded

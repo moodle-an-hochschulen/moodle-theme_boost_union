@@ -6,6 +6,8 @@ Changes
 
 ### Unreleased
 
+* 2026-04-20 - Upgrade: Allow the admin to use the legacy login page layouts (from before Moodle 5.2) as well.
+               Please note: For upgraded intallations, the login page layout is set to legacy during the upgrade to keep the look as consistent as possible to as it was before. If you want to try the new side-by-side layout from Moodle core, you can change the layout afterwards in the Boost Union settings.
 * 2026-04-20 - Upgrade: Fix Behat tests which broke due to UI design changes.
 * 2026-04-20 - Upgrade: Let the admin deactivate the Telemetry Trace ID entry in the footer as well.
 * 2026-04-20 - Upgrade: Fix Behat tests which broke due to site administration changes.

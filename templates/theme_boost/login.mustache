@@ -35,6 +35,7 @@
     Modifications compared to the original template:
     * Include theme_boost_union/footnote template
     * Added the possibility to show info banners.
+    * Added the possibility to use legacy login page arrangement.
     * Added the login background image text.
 }}
 {{> theme_boost/head }}
@@ -46,9 +47,24 @@
 
     {{{ output.standard_top_of_body_html }}}
 
-    <div id="page" class="mt-0">
+    <div id="page" class="{{^usesidebysideloginarrangement}}container-fluid pt-5{{/usesidebysideloginarrangement}} mt-0">
         {{> theme_boost_union/infobanners }}
-        {{> core/login_layout }}
+        {{#usesidebysideloginarrangement}}
+            {{> core/login_layout }}
+        {{/usesidebysideloginarrangement}}
+        {{^usesidebysideloginarrangement}}
+            <div id="page-content" class="row">
+                <div id="region-main-box" class="col-12">
+                    <div id="region-main" class="col-12 h-100">
+                    <div class="login-wrapper {{loginwrapperclass}}">
+                        <div class="login-container {{logincontainerclass}}">
+                        {{{ output.main_content }}}
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        {{/usesidebysideloginarrangement}}
     </div>
     {{# loginbackgroundimagetext }}
         <div class="container-fluid">

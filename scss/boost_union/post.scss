@@ -345,40 +345,84 @@
  ======================================*/
 
 /*---------------------------------------
- * Setting: Login container position
+ * Setting: Login page arrangement: Legacy
+ --------------------------------------*/
+
+/* Replicate the most important login page styles from before Moodle 5.2. */
+body.theme_boost_union-loginarrangement-legacy {
+    &.pagelayout-login #page {
+        background: $gray-100;
+        @include gradient-x($gray-100, $gray-300, 0%, 100%);
+        div[role="main"] {
+            height: 100%;
+        }
+    }
+
+    .login-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .login-container {
+        background-color: $white;
+        padding: 3rem;
+        box-shadow: $box-shadow;
+        margin-bottom: 2rem;
+        @include border-radius();
+
+        .login-divider {
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: $border-width solid $border-color;
+        }
+
+        h1.login-heading {
+            font-size: $h2-font-size;
+        }
+        h2.login-heading {
+            font-size: $h4-font-size;
+        }
+    }
+}
+
+
+/*---------------------------------------
+ * Setting: Login container position (for the legacy login page arrangement only)
  --------------------------------------*/
 
 /* Move the login window to the side based on the theme settings.
    While the classes login-wrapper-left and login-wrapper-right are set here,
    the class login-wrapper-center is not set here as the login form is already centered by Moodle core. */
-.login-wrapper.login-wrapper-left {
+body.theme_boost_union-loginarrangement-legacy .login-wrapper.login-wrapper-left {
     justify-content: left;
 }
-.login-wrapper.login-wrapper-right {
+body.theme_boost_union-loginarrangement-legacy .login-wrapper.login-wrapper-right {
     justify-content: right;
 }
 
 /*---------------------------------------
- * Setting: Login container transparency
+ * Setting: Login container transparency (for the legacy login page arrangement only)
  --------------------------------------*/
 
 /* Make background of login panel slightly transparent. */
-.login-container.login-container-80t {
+body.theme_boost_union-loginarrangement-legacy .login-container.login-container-80t {
     background-color: rgba(255, 255, 255, 0.8);
 }
 
 /*---------------------------------------
- * Setting: Login container width
+ * Setting: Login container width (for the legacy login page arrangement only)
  --------------------------------------*/
 
 /* Override the fixed 500px width from Boost core with the custom width setting. */
 @include media-breakpoint-up(md) {
-    .login-container {
+    body.theme_boost_union-loginarrangement-legacy .login-container {
         width: $bu-logincontainer-width !important; /* stylelint-disable-line declaration-no-important */
     }
 
     /* Allow login-container to expand when tabs need more space. */
-    body.pagelayout-login .login-container:has(#login-layout-tabs) {
+    body.pagelayout-login.theme_boost_union-loginarrangement-legacy .login-container:has(#login-layout-tabs) {
         width: auto !important; /* stylelint-disable-line declaration-no-important */
         min-width: $bu-logincontainer-width;
         max-width: 100%;

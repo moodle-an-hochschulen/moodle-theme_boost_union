@@ -33,7 +33,37 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// Get the body attributes.
 $bodyattributes = $OUTPUT->body_attributes();
+
+// Get the login page arrangement.
+$loginarrangement = get_config('theme_boost_union', 'loginarrangement');
+
+// If the login page arrangement is legacy.
+if ($loginarrangement == THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_LEGACY) {
+    // Set the flag for mustache.
+    $usesidebysideloginarrangement = false;
+
+    // We cannot use $PAGE->add_body_class here anymore as the output is already being generated,
+    // so we need to add the class directly to the body attributes.
+    $bodyattributes = preg_replace('/\bclass="([^"]*)"/', 'class="$1 theme_boost_union-loginarrangement-legacy"', $bodyattributes);
+
+    // Compose the login wrapper class.
+    $loginformposition = get_config('theme_boost_union', 'loginformposition');
+    $loginwrapperclass = 'login-wrapper-' . $loginformposition;
+
+    // Otherwise, it should be side by side.
+} else {
+    // Set the flag.
+    $usesidebysideloginarrangement = true;
+
+    // We cannot use $PAGE->add_body_class here anymore as the output is already being generated,
+    // so we need to add the class directly to the body attributes.
+    $bodyattributes =
+            preg_replace('/\bclass="([^"]*)"/', 'class="$1 theme_boost_union-loginarrangement-sidebyside"', $bodyattributes);
+}
+
+// Get the login background image text and color.
 [$loginbackgroundimagetext, $loginbackgroundimagetextcolor] = theme_boost_union_get_loginbackgroundimage_text();
 
 $templatecontext = [
@@ -42,7 +72,8 @@ $templatecontext = [
     'bodyattributes' => $bodyattributes,
     'loginbackgroundimagetext' => $loginbackgroundimagetext,
     'loginbackgroundimagetextcolor' => $loginbackgroundimagetextcolor,
-    'loginwrapperclass' => 'login-wrapper-' . get_config('theme_boost_union', 'loginformposition'),
+    'usesidebysideloginarrangement' => $usesidebysideloginarrangement,
+    'loginwrapperclass' => (!empty($loginwrapperclass)) ? $loginwrapperclass : '',
     'logincontainerclass' =>
             (get_config('theme_boost_union', 'loginformtransparency') == THEME_BOOST_UNION_SETTING_SELECT_YES) ?
                     'login-container-80t' : '',

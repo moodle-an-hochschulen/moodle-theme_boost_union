@@ -338,6 +338,11 @@ $string['calendariconscolorsetting_desc'] = 'The color of some icons which are u
 $string['loginpagetab'] = 'Login page';
 // ... Section: Login page arrangement.
 $string['loginarrangementheading'] = 'Login page arrangement';
+// ... ... Setting: Login page arrangement.
+$string['loginarrangementsetting'] = 'Login page arrangement';
+$string['loginarrangementsetting_desc'] = 'With this setting, you control how the login page is arranged as a whole. By default, the login page is arranged in a split screen where the login container is located on one side and the background image on the other side as Moodle presents it since Moodle 5.2. As an alternative, you can also choose the legacy arrangement where the login container is displayed on top of the background image as Moodle presented it up to Moodle 5.1 and which is continued as an option in Boost Union. Please note that the legacy arrangement is just replicated in Boost Union and does not re-use the 100% identical code as Moodle 5.1 did.';
+$string['loginarrangementsetting_sidebyside'] = 'Side by side (Split screen)';
+$string['loginarrangementsetting_legacy'] = 'Legacy (Login container on top of background image)';
 // ... ... Setting: Login container position.
 // These strings do not fully match the setting name as the setting was renamend during its lifetime, but the string IDs were keps to ease the life of the translators.
 $string['loginformpositionsetting'] = 'Login container position';

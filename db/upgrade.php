@@ -1092,6 +1092,16 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025100624, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2026042000) {
+        // Set the login arrangement to legacy for existing installations if no value exists yet.
+        if (get_config('theme_boost_union', 'loginarrangement') === false) {
+            set_config('loginarrangement', 'legacy', 'theme_boost_union');
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2026042000, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();

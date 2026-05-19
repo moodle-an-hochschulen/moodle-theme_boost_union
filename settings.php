@@ -1021,6 +1021,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_heading($name, $title, null);
         $tab->add($setting);
 
+        // Setting: Login page arrangement.
+        $name = 'theme_boost_union/loginarrangement';
+        $title = get_string('loginarrangementsetting', 'theme_boost_union', null, true);
+        $description = get_string('loginarrangementsetting_desc', 'theme_boost_union', null, true);
+        $loginformoptions = [
+                THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_SIDEBYSIDE =>
+                        get_string('loginarrangementsetting_sidebyside', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_LEGACY =>
+                        get_string('loginarrangementsetting_legacy', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_SIDEBYSIDE,
+            $loginformoptions
+        );
+        $tab->add($setting);
+
         // Setting: Login container position.
         $name = 'theme_boost_union/loginformposition';
         $title = get_string('loginformpositionsetting', 'theme_boost_union', null, true);
@@ -1038,6 +1057,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $loginformoptions
         );
         $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginformposition',
+            'theme_boost_union/loginarrangement',
+            'eq',
+            THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_SIDEBYSIDE
+        );
 
         // Setting: Login container transparency.
         $name = 'theme_boost_union/loginformtransparency';
@@ -1045,6 +1070,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('loginformtransparencysetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginformtransparency',
+            'theme_boost_union/loginarrangement',
+            'eq',
+            THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_SIDEBYSIDE
+        );
 
         // Setting: Login container width.
         $name = 'theme_boost_union/logincontainerwidth';
@@ -1055,6 +1086,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configtext($name, $title, $description, $default, $widthregex, 6);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/logincontainerwidth',
+            'theme_boost_union/loginarrangement',
+            'eq',
+            THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_SIDEBYSIDE
+        );
 
         // Heading: Login page background images.
         $name = 'theme_boost_union/loginbackgroundimagesheading';
@@ -1317,6 +1354,12 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme_boost_union/loginlayout',
             'neq',
             THEME_BOOST_UNION_SETTING_LOGINLAYOUT_TABS
+        );
+        $page->hide_if(
+            'theme_boost_union/loginenhancedtabslayout',
+            'theme_boost_union/loginarrangement',
+            'eq',
+            THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_SIDEBYSIDE
         );
 
         // Heading: Login instructions.
