@@ -511,7 +511,7 @@ $string['loginselfregistrationenablesetting_desc'] = 'With this setting, you con
 $string['loginselfregistrationenablesetting_core'] = 'Moodle core setting interplay: Self registration is controlled by the \'{$a->settingname}\' setting which you can manage on <a href="{$a->url}">Moodle core\'s authentication settings page</a>.';
 // ... ... Setting: Self registration intro.
 $string['loginselfregistrationshowintrosetting'] = 'Self registration intro';
-$string['loginselfregistrationshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the self registration section or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what self registration is about.';
+$string['loginselfregistrationshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the self registration section or not. By default, the intro is shown and helps users to understand what self registration is about. If you disable this setting, the self registration intro is hidden.';
 // ... ... Setting: Self registration intro text.
 $string['loginselfregistrationintrotextsetting'] = 'Self registration intro text';
 $string['loginselfregistrationintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> (which comes from the Moodle core language pack) with a custom text. Leave this field empty to use the default text.';
@@ -537,7 +537,7 @@ $string['loginguestloginenablesetting_desc'] = 'With this setting, you control i
 $string['loginguestloginenablesetting_core'] = 'Moodle core setting interplay: Guest access is controlled by the \'{$a->settingname}\' setting which you can manage on <a href="{$a->url}">Moodle core\'s authentication settings page</a>.';
 // ... ... Setting: Guest login intro.
 $string['loginguestshowintrosetting'] = 'Guest login intro';
-$string['loginguestshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the guest login button or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what guest access is about.';
+$string['loginguestshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the guest login button or not. By default, the intro is shown and helps users to understand what guest access is about. If you disable this setting, the guest login intro is hidden.';
 // ... ... Setting: Guest login intro text.
 $string['loginguestintrotextsetting'] = 'Guest login intro text';
 $string['loginguestintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> (which comes from the Moodle core language pack) with a custom text. Leave this field empty to use the default text.';
