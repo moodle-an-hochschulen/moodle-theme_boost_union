@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-05-19 - Bugfix: The loginselfregistrationshowintrosetting_desc and the loginguestshowintrosetting_desc strings described their default setting in the wrong way, resolves #1276
 * 2026-05-19 - Improvement: Add some explanation to the "Welcome back!" login brand option, resolves #1275
 
 ### v4.5-r39
