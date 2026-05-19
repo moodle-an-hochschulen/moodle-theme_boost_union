@@ -151,6 +151,7 @@ Feature: Configuring the theme_boost_union plugin as admin
   @javascript
   Scenario: Show and use possible setting overrides notification actions
     Given I log in as "admin"
+    And Behat debugging is disabled
     When I navigate to "Appearance > Boost Union > Look" in site administration
     And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then I should see "Possible setting overrides" in the "#admin-logo .theme-boost-union-settingoverridenotification" "css_element"
@@ -161,6 +162,7 @@ Feature: Configuring the theme_boost_union plugin as admin
     And I should see "Manage flavours" in the ".modal-dialog" "css_element"
     When I click on ".modal-dialog .btn-close" "css_element"
     Then ".modal-dialog" "css_element" should not be visible
+    And Behat debugging is enabled
     When I click on ".action-flavours" "css_element" in the "#admin-logo .theme-boost-union-settingoverridenotification" "css_element"
     Then "body#page-admin-theme-boost_union-flavours-overview" "css_element" should exist
     And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
