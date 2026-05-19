@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r39
 
 * 2026-05-18 - Improvement: Add notifications to each of the global settings which can be overridden by flavours, resolves #1269
 * 2026-05-18 - Improvement: The flavours/styles.php file should use a per-flavour fallback stylesheet, resolves #1267
