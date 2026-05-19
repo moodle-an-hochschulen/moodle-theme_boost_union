@@ -475,7 +475,7 @@ $string['loginidploginenablesetting_desc'] = 'With this setting, you control if 
 $string['loginidploginenablesetting_core'] = 'Moodle core setting interplay: Identity provider login buttons are provided by authentication plugins like OAuth2, CAS or Shibboleth. You can manage authentication plugins on <a href="{$a->url}">Moodle core\'s authentication settings page</a>.';
 // ... ... Setting: IDP login intro.
 $string['loginidpshowintrosetting'] = 'IDP login intro';
-$string['loginidpshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the IDP login buttons or not. By default, the intro is shown and users will be quickly informed what the IDP buttons are about. If you disable this setting, the IDP intro is hidden. This allows you to provide a clean user login interface if you just use external identity providers like OAuth2 or OIDC.';
+$string['loginidpshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the IDP login buttons or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what the IDP buttons are about.';
 // ... ... Setting: IDP login intro text.
 $string['loginidpintrotextsetting'] = 'IDP login intro text';
 $string['loginidpintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> (which comes from the Moodle core language pack) with a custom text. Leave this field empty to use the default text.';
@@ -515,7 +515,7 @@ $string['loginselfregistrationenablesetting_desc'] = 'With this setting, you con
 $string['loginselfregistrationenablesetting_core'] = 'Moodle core setting interplay: Self registration is controlled by the \'{$a->settingname}\' setting which you can manage on <a href="{$a->url}">Moodle core\'s authentication settings page</a>.';
 // ... ... Setting: Self registration intro.
 $string['loginselfregistrationshowintrosetting'] = 'Self registration intro';
-$string['loginselfregistrationshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the self registration section or not. By default, the intro is shown and helps users to understand what self registration is about. If you disable this setting, the self registration intro is hidden.';
+$string['loginselfregistrationshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the self registration section or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what self registration is about.';
 // ... ... Setting: Self registration intro text.
 $string['loginselfregistrationintrotextsetting'] = 'Self registration intro text';
 $string['loginselfregistrationintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> (which comes from the Moodle core language pack) with a custom text. Leave this field empty to use the default text.';
@@ -541,7 +541,7 @@ $string['loginguestloginenablesetting_desc'] = 'With this setting, you control i
 $string['loginguestloginenablesetting_core'] = 'Moodle core setting interplay: Guest access is controlled by the \'{$a->settingname}\' setting which you can manage on <a href="{$a->url}">Moodle core\'s authentication settings page</a>.';
 // ... ... Setting: Guest login intro.
 $string['loginguestshowintrosetting'] = 'Guest login intro';
-$string['loginguestshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the guest login button or not. By default, the intro is shown and helps users to understand what guest access is about. If you disable this setting, the guest login intro is hidden.';
+$string['loginguestshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the guest login button or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what guest access is about.';
 // ... ... Setting: Guest login intro text.
 $string['loginguestintrotextsetting'] = 'Guest login intro text';
 $string['loginguestintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> (which comes from the Moodle core language pack) with a custom text. Leave this field empty to use the default text.';

@@ -1622,7 +1622,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('potentialidps', 'auth'),
             true
         );
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
         $page->hide_if(
             'theme_boost_union/loginidpshowintro',
@@ -1871,7 +1871,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         ), \core\output\notification::NOTIFY_INFO);
         $selfregistrationlogincorenote->set_show_closebutton(false);
         $description .= $OUTPUT->render($selfregistrationlogincorenote);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
         $page->hide_if(
             'theme_boost_union/loginselfregistrationshowintro',
@@ -2032,7 +2032,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             get_string('someallowguest', 'core'),
             true
         );
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
         $page->hide_if(
             'theme_boost_union/loginguestshowintro',

@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-20 - Upgrade: Make the login form intros smaller and disabled by default from now on, resolves #1249
 * 2026-04-20 - Upgrade: Remove the 'Logo (if uploaded), heading otherwise (Unchanged as handled by Moodle core)' option from the 'Login page brand' setting as this behaviour is not present anymore in Moodle core and it does not really make sense to keep it in Boost Union.
                Please note: For upgraded installations which used this option, the login page brand will be set to 'Logo (if uploaded) + heading' during the upgrade. You can change the setting afterwards in the Boost Union settings.
 * 2026-04-20 - Upgrade: Allow the admin to use the legacy login page layouts (from before Moodle 5.2) as well.
