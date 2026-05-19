@@ -1167,8 +1167,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('loginpagebranding', 'theme_boost_union', null, true);
         $description = get_string('loginpagebranding_desc', 'theme_boost_union', null, true);
         $loginpagebrandoptions = [
-            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOOTHERWISEHEADING =>
-                get_string('loginpagebrand_logootherwiseheading', 'theme_boost_union'),
             THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADINGTAGLINE =>
                 get_string('loginpagebrand_logoheadingtagline', 'theme_boost_union'),
             THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADING =>
@@ -1186,7 +1184,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name,
             $title,
             $description,
-            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOOTHERWISEHEADING,
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADINGTAGLINE,
             $loginpagebrandoptions
         );
         $setting->set_updatedcallback('theme_reset_all_caches');
@@ -1220,7 +1218,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name,
             $title,
             $description,
-            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOFULLNAME,
+            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOMEBACK,
             $loginpagelabeloptions
         );
         $tab->add($setting);
@@ -1241,7 +1239,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name,
             $title,
             $description,
-            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOME,
+            THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOFULLNAME,
             $loginpagelabeloptions
         );
         $tab->add($setting);
@@ -1249,7 +1247,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme_boost_union/loginpagetagline',
             'theme_boost_union/loginpagebrand',
             'in',
-            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOOTHERWISEHEADING . '|' .
             THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADING . '|' .
             THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADING
         );

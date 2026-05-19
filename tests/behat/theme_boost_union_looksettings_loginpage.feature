@@ -80,7 +80,6 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
 
     Examples:
       | setting              | logoshouldornot | headingshouldornot | headinghiddenshouldornot | taglineshouldornot |
-      | logootherwiseheading | should          | should not         | should                   | should not         |
       | logoheadingtagline   | should          | should             | should not               | should             |
       | logoheading          | should          | should             | should not               | should not         |
       | logotagline          | should          | should not         | should                   | should             |
@@ -98,10 +97,8 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And "h1.login-heading.visually-hidden" "css_element" <headinghiddenshouldornot> exist
     And ".login-tagline" "css_element" <taglineshouldornot> exist
 
-    # Note: logootherwiseheading shows the heading as fallback when no logo is uploaded.
     Examples:
       | setting              | headingshouldornot | headinghiddenshouldornot | taglineshouldornot |
-      | logootherwiseheading | should             | should not               | should not         |
       | logoheadingtagline   | should             | should not               | should             |
       | logoheading          | should             | should not               | should not         |
       | logotagline          | should not         | should                   | should             |

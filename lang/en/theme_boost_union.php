@@ -380,7 +380,6 @@ $string['loginbrandingheading'] = 'Login page branding';
 $string['loginpagebranding'] = 'Login page brand';
 $string['loginpagebranding_desc'] = 'With this setting, you can control which branding elements are shown on the login page. Depending on your choice, the logo (if uploaded), the site heading, and/or a site tagline will be displayed.';
 $string['loginpagebrand_logoheadingtagline'] = 'Logo (if uploaded) + heading + tagline';
-$string['loginpagebrand_logootherwiseheading'] = 'Logo (if uploaded), heading otherwise (Unchanged as handled by Moodle core)';
 $string['loginpagebrand_logoheading'] = 'Logo (if uploaded) + heading';
 $string['loginpagebrand_logotagline'] = 'Logo (if uploaded) + tagline';
 $string['loginpagebrand_headingtagline'] = 'Heading + tagline';

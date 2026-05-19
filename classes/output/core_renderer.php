@@ -1386,41 +1386,27 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // Add login page brand context variables.
         $loginpagebrandsetting = get_config('theme_boost_union', 'loginpagebrand');
         $loginpagebrand = ($loginpagebrandsetting !== false)
-            ? $loginpagebrandsetting : THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOOTHERWISEHEADING;
-        // Special case: logo if uploaded, heading otherwise.
-        if ($loginpagebrand === THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOOTHERWISEHEADING) {
-            if (!empty($url)) {
-                $context->loginbrandshowlogo = true;
-                $context->loginbrandshowheading = false;
-            } else {
-                $context->loginbrandshowlogo = false;
-                $context->loginbrandshowheading = true;
-            }
-            $context->loginbrandshowtagline = false;
-
-            // Handle all other cases based on the setting value and the corresponding show* flags.
-        } else {
-            $loginbrandlogooptionvalues = [
-                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADINGTAGLINE,
-                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADING,
-                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOTAGLINE,
-            ];
-            $loginbrandheadingoptionvalues = [
-                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADINGTAGLINE,
-                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADING,
-                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADINGTAGLINE,
-                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADING,
-            ];
-            $loginbrandtaglineoptionvalues = [
-                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADINGTAGLINE,
-                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOTAGLINE,
-                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADINGTAGLINE,
-                THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_TAGLINE,
-            ];
-            $context->loginbrandshowlogo = in_array($loginpagebrand, $loginbrandlogooptionvalues);
-            $context->loginbrandshowheading = in_array($loginpagebrand, $loginbrandheadingoptionvalues);
-            $context->loginbrandshowtagline = in_array($loginpagebrand, $loginbrandtaglineoptionvalues);
-        }
+            ? $loginpagebrandsetting : THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADINGTAGLINE;
+        $loginbrandlogooptionvalues = [
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADINGTAGLINE,
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADING,
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOTAGLINE,
+        ];
+        $loginbrandheadingoptionvalues = [
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADINGTAGLINE,
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADING,
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADINGTAGLINE,
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADING,
+        ];
+        $loginbrandtaglineoptionvalues = [
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADINGTAGLINE,
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOTAGLINE,
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_HEADINGTAGLINE,
+            THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_TAGLINE,
+        ];
+        $context->loginbrandshowlogo = in_array($loginpagebrand, $loginbrandlogooptionvalues);
+        $context->loginbrandshowheading = in_array($loginpagebrand, $loginbrandheadingoptionvalues);
+        $context->loginbrandshowtagline = in_array($loginpagebrand, $loginbrandtaglineoptionvalues);
         // Compute common heading and tagline label assets.
         $showwelcomeback = !empty(get_moodle_cookie()) ||
             (!empty($context->error) && $context->error === get_string('sessionerroruser', 'error'));

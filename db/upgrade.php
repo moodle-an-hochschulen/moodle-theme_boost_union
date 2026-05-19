@@ -1098,6 +1098,12 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
             set_config('loginarrangement', THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_LEGACY, 'theme_boost_union');
         }
 
+        // Set the login page brand to loginheading for existing installations if the setting was set to logootherwiseheading
+        // previously.
+        if (get_config('theme_boost_union', 'loginpagebrand') == 'logootherwiseheading') {
+            set_config('loginpagebrand', THEME_BOOST_UNION_SETTING_LOGINPAGEBRAND_LOGOHEADING, 'theme_boost_union');
+        }
+
         // Boost Union savepoint reached.
         upgrade_plugin_savepoint(true, 2026042000, 'theme', 'boost_union');
     }

@@ -6,6 +6,8 @@ Changes
 
 ### Unreleased
 
+* 2026-04-20 - Upgrade: Remove the 'Logo (if uploaded), heading otherwise (Unchanged as handled by Moodle core)' option from the 'Login page brand' setting as this behaviour is not present anymore in Moodle core and it does not really make sense to keep it in Boost Union.
+               Please note: For upgraded installations which used this option, the login page brand will be set to 'Logo (if uploaded) + heading' during the upgrade. You can change the setting afterwards in the Boost Union settings.
 * 2026-04-20 - Upgrade: Allow the admin to use the legacy login page layouts (from before Moodle 5.2) as well.
                Please note: For upgraded installations, the login page layout is set to legacy during the upgrade to keep the look as consistent as possible to as it was before. If you want to try the new side-by-side layout from Moodle core, you can change the layout afterwards in the Boost Union settings.
 * 2026-04-20 - Upgrade: Fix Behat tests which broke due to UI design changes.
