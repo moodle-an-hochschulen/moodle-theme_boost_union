@@ -1159,6 +1159,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/loginpageheading';
         $title = get_string('loginpageheadingsetting', 'theme_boost_union', null, true);
         $description = get_string('loginpageheadingsetting_desc', 'theme_boost_union', null, true);
+        $description .= '<br />' . get_string('loginpageheadingsetting_options', 'theme_boost_union', null, true);
         $loginpagelabeloptions = [
             THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_LOGINTOFULLNAME =>
                 get_string('loginto', 'core', format_string($SITE->fullname)),
@@ -1175,7 +1176,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOME =>
                 get_string('loginpagelabel_welcome', 'theme_boost_union'),
             THEME_BOOST_UNION_SETTING_LOGINPAGELABEL_WELCOMEBACK =>
-                get_string('loginpagelabel_welcomeback', 'theme_boost_union'),
+                get_string('loginpagelabel_welcome', 'theme_boost_union') .
+                        ' / ' . get_string('loginpagelabel_welcomeback', 'theme_boost_union'),
         ];
         $setting = new admin_setting_configselect(
             $name,
@@ -1197,6 +1199,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/loginpagetagline';
         $title = get_string('loginpagetaglinesetting', 'theme_boost_union', null, true);
         $description = get_string('loginpagetaglinesetting_desc', 'theme_boost_union', null, true);
+        $description .= '<br />' . get_string('loginpageheadingsetting_options', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect(
             $name,
             $title,
