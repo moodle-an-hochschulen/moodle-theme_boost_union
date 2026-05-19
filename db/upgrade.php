@@ -1095,7 +1095,7 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
     if ($oldversion < 2026042000) {
         // Set the login arrangement to legacy for existing installations if no value exists yet.
         if (get_config('theme_boost_union', 'loginarrangement') === false) {
-            set_config('loginarrangement', 'legacy', 'theme_boost_union');
+            set_config('loginarrangement', THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_LEGACY, 'theme_boost_union');
         }
 
         // Boost Union savepoint reached.
