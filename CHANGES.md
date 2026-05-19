@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### v5.1-r13
+### v5.1-r14
 
 * 2026-05-18 - Improvement: Add notifications to each of the global settings which can be overridden by flavours, resolves #1269
 * 2026-05-18 - Improvement: The flavours/styles.php file should use a per-flavour fallback stylesheet, resolves #1267
@@ -17,6 +17,10 @@ Changes
 * 2026-05-11 - Settings: Re-arrange the login page settings as preparation for Boost Union 5.2
 * 2026-05-09 - Feature: Add a Boost Union recommendation page for admins and replace some notification boxes in the settings pages with it, resolves #1254
 * 2026-05-09 - Feature: Add a Checks API check to add the results of the Boost Union recommendations to the system status.
+
+### v5.1-r13
+
+The v5.1-r13 release was withdrawn and untagged directly after release as it was incomplete due to a glitch in our release script.
 
 ### v5.1-r12
 
