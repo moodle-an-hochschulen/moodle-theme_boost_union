@@ -371,13 +371,25 @@ body.theme_boost_union-loginarrangement-legacy {
         box-shadow: $box-shadow;
         margin-bottom: 2rem;
         @include border-radius();
-
-        .login-divider {
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-top: $border-width solid $border-color;
-        }
     }
+}
+
+
+/*---------------------------------------
+ * Setting: Login page divider
+ --------------------------------------*/
+
+/* From Moodle 5.2 on, just the .login-separator is contained in Moodle core, so we have to ship the login-divider ourselves. */
+.login-container .login-divider {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-top: $border-width solid $border-color;
+}
+
+/* Spacer-only divider variant. Equivalent to Bootstrap's my-3 spacing. */
+.login-container .login-margin {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 

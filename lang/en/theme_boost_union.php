@@ -55,6 +55,10 @@ $string['imageposition_right_center'] = 'Right horizontally, center vertically';
 $string['imageposition_right_bottom'] = 'Right horizontally, bottom vertically';
 $string['logininstructionposition_between'] = 'Between the intro and the login provider widget';
 $string['logininstructionposition_below'] = 'Below the login provider widget';
+$string['logindividertypeoption_none'] = 'None';
+$string['logindividertypeoption_margin'] = 'Just some more space';
+$string['logindividertypeoption_line'] = 'Solid line';
+$string['logindividertypeoption_linewithor'] = 'Line with OR';
 $string['buttoncolorprimaryfilled'] = 'Primary (Filled)';
 $string['buttoncolorsecondaryfilled'] = 'Secondary (Filled)';
 $string['buttoncolorprimaryoutline'] = 'Primary (Outline)';
@@ -467,6 +471,10 @@ $string['loginlocalinstructionposition_desc'] = 'With this setting, you can spec
 // ... ... Setting: Local login button color.
 $string['loginlocalbuttoncolorsetting'] = 'Local login button color';
 $string['loginlocalbuttoncolorsetting_desc'] = 'With this setting, you can control the Bootstrap color style of the local login button.';
+// ... ... Setting: Local login divider type.
+$string['loginlocaldividertypesetting'] = 'Local login divider type';
+$string['loginlocaldividertypesetting_desc'] = 'With this setting, you can control which divider is shown before the local login method in the vertical layout.';
+$string['logindividertypefirstmethodnote'] = 'Please note: Dividers are only shown in the vertical layout and no divider is ever shown for the first login method in the configured login order, regardless of this setting.';
 // ... Section: Login provider: IDP.
 $string['loginprovideridpheading'] = 'Login provider: IDP';
 // ... ... Setting: IDP login.
@@ -494,6 +502,9 @@ $string['loginidpinstructionposition_desc'] = 'With this setting, you can specif
 // ... ... Setting: IDP login button color.
 $string['loginidpbuttoncolorsetting'] = 'IDP login button color';
 $string['loginidpbuttoncolorsetting_desc'] = 'With this setting, you can control the Bootstrap color style of the IDP login buttons.';
+// ... ... Setting: IDP login divider type.
+$string['loginidpdividertypesetting'] = 'IDP login divider type';
+$string['loginidpdividertypesetting_desc'] = 'With this setting, you can control which divider is shown before the IDP login method in the vertical layout.';
 // ... Section: Login provider: IDP (Expert settings).
 $string['loginprovideridpexpertheading'] = 'Login provider: IDP (Expert settings)';
 // ... ... Setting: Split per identity provider.
@@ -535,6 +546,9 @@ $string['loginselfregistrationinstructionposition_desc'] = 'With this setting, y
 // ... ... Setting: Self registration button color.
 $string['loginselfregistrationbuttoncolorsetting'] = 'Self registration button color';
 $string['loginselfregistrationbuttoncolorsetting_desc'] = 'With this setting, you can control the Bootstrap color style of the self registration button.';
+// ... ... Setting: Self registration divider type.
+$string['loginfirsttimesignupdividertypesetting'] = 'Self registration divider type';
+$string['loginfirsttimesignupdividertypesetting_desc'] = 'With this setting, you can control which divider is shown before the self registration method in the vertical layout.';
 // ... Section: Login provider: Guest.
 $string['loginproviderguestheading'] = 'Login provider: Guest';
 // ... ... Setting: Guest login.
@@ -562,6 +576,9 @@ $string['loginguestinstructionposition_desc'] = 'With this setting, you can spec
 // ... ... Setting: Guest login button color.
 $string['loginguestbuttoncolorsetting'] = 'Guest login button color';
 $string['loginguestbuttoncolorsetting_desc'] = 'With this setting, you can control the Bootstrap color style of the guest login button.';
+// ... ... Setting: Guest login divider type.
+$string['loginguestdividertypesetting'] = 'Guest login divider type';
+$string['loginguestdividertypesetting_desc'] = 'With this setting, you can control which divider is shown before the guest login method in the vertical layout.';
 // ... Section: Side entrance login.
 $string['sideentranceloginheading'] = 'Side entrance login';
 // ... ... Setting: Endable side entrance login.

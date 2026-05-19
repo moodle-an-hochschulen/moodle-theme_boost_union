@@ -674,6 +674,89 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | guestlogin       | loginguestbuttoncolor            | secondary         | #login-method-guest .btn           | btn-secondary         |
       | guestlogin       | loginguestbuttoncolor            | outline-primary   | #login-method-guest .btn           | btn-outline-primary   |
 
+  Scenario Outline: Setting: Login provider divider type - Verify the divider type
+    Given the following config values are set as admin:
+      | config                      | value     | plugin            |
+      | loginlayout                 | vertical  | theme_boost_union |
+      | loginlocalloginenable       | yes       | theme_boost_union |
+      | loginidploginenable         | yes       | theme_boost_union |
+      | loginselfregistrationenable | yes       | theme_boost_union |
+      | loginguestloginenable       | yes       | theme_boost_union |
+      | login<provider>dividertype  | <setting> | theme_boost_union |
+      # Move the login method to the end so that the divider is not dropped as first method
+      | loginorder<provider>        | 4         | theme_boost_union |
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Testing service   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on login page
+    Then "<selector> .login-margin" "css_element" <marginshouldornot> exist
+    And "<selector> .login-divider" "css_element" <lineshouldornot> exist
+    And "<selector> .login-separator" "css_element" <separatorshouldornot> exist
+
+    # We do not want to burn too much CPU time by testing all available permutations. We just test the default value and one non-default value per login provider.
+    Examples:
+      | provider        | selector                      | setting    | marginshouldornot | lineshouldornot | separatorshouldornot |
+      | local           | #login-method-local           | linewithor | should not        | should not      | should               |
+      | local           | #login-method-local           | none       | should not        | should not      | should not           |
+      | idp             | #login-method-idp             | linewithor | should not        | should not      | should               |
+      | idp             | #login-method-idp             | margin     | should            | should not      | should not           |
+      | firsttimesignup | #login-method-firsttimesignup | linewithor | should not        | should not      | should               |
+      | firsttimesignup | #login-method-firsttimesignup | line       | should not        | should          | should not           |
+      | guest           | #login-method-guest           | linewithor | should not        | should not      | should               |
+      | guest           | #login-method-guest           | line       | should not        | should          | should not           |
+
+  Scenario Outline: Setting: Login provider divider type - First provider never has a divider
+    Given the following config values are set as admin:
+      | config                      | value     | plugin            |
+      | loginlayout                 | vertical  | theme_boost_union |
+      | loginlocalloginenable       | yes       | theme_boost_union |
+      | loginidploginenable         | yes       | theme_boost_union |
+      | loginselfregistrationenable | yes       | theme_boost_union |
+      | loginguestloginenable       | yes       | theme_boost_union |
+      | login<provider>dividertype  | <setting> | theme_boost_union |
+      | loginorderlocal             | <localorder>           | theme_boost_union |
+      | loginorderidp               | <idporder>             | theme_boost_union |
+      | loginorderfirsttimesignup   | <firsttimesignuporder> | theme_boost_union |
+      | loginorderguest             | <guestorder>           | theme_boost_union |
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Testing service   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on login page
+    Then "<selector> .login-margin" "css_element" should not exist
+    And "<selector> .login-divider" "css_element" should not exist
+    And "<selector> .login-separator" "css_element" should not exist
+
+    Examples:
+      | provider        | selector                      | setting    | localorder | idporder | firsttimesignuporder | guestorder |
+      | local           | #login-method-local           | line       | 1          | 2        | 3                    | 4          |
+      | idp             | #login-method-idp             | linewithor | 2          | 1        | 3                    | 4          |
+      | firsttimesignup | #login-method-firsttimesignup | margin     | 2          | 3        | 1                    | 4          |
+      | guest           | #login-method-guest           | line       | 2          | 3        | 4                    | 1          |
+
   @javascript
   Scenario Outline: Setting: Login form layout tabs - Verify tabs structure and primarylogin functionality
     Given the following config values are set as admin:

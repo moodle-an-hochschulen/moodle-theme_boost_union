@@ -238,6 +238,18 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                     get_string('buttoncolorsecondaryoutline', 'theme_boost_union', null, true),
         ];
 
+        // Prepare login method divider type options.
+        $logindivideroptions = [
+            THEME_BOOST_UNION_SETTING_LOGINDIVIDERTYPE_NONE =>
+                    get_string('logindividertypeoption_none', 'theme_boost_union', null, true),
+            THEME_BOOST_UNION_SETTING_LOGINDIVIDERTYPE_MARGIN =>
+                get_string('logindividertypeoption_margin', 'theme_boost_union', null, true),
+            THEME_BOOST_UNION_SETTING_LOGINDIVIDERTYPE_LINE =>
+                    get_string('logindividertypeoption_line', 'theme_boost_union', null, true),
+            THEME_BOOST_UNION_SETTING_LOGINDIVIDERTYPE_LINEWITHOR =>
+                    get_string('logindividertypeoption_linewithor', 'theme_boost_union', null, true),
+        ];
+
         // Create Look settings page with tabs and tertiary navigation
         // (and allow users with the theme/boost_union:configure capability to access it).
         $page = new admin_settingspage_tabs_with_tertiary(
@@ -1590,6 +1602,32 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
+        // Setting: Local login divider type.
+        $name = 'theme_boost_union/loginlocaldividertype';
+        $title = get_string('loginlocaldividertypesetting', 'theme_boost_union', null, true);
+        $description = get_string('loginlocaldividertypesetting_desc', 'theme_boost_union', null, true);
+        $description .= '<br>' . get_string('logindividertypefirstmethodnote', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_LOGINDIVIDERTYPE_LINEWITHOR,
+            $logindivideroptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginlocaldividertype',
+            'theme_boost_union/loginlocalloginenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+        $page->hide_if(
+            'theme_boost_union/loginlocaldividertype',
+            'theme_boost_union/loginlayout',
+            'neq',
+            'vertical'
+        );
+
         // Heading: Login provider: IDP.
         $name = 'theme_boost_union/loginprovideridpheading';
         $title = get_string('loginprovideridpheading', 'theme_boost_union', null, true);
@@ -1755,6 +1793,32 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme_boost_union/loginidploginenable',
             'neq',
             THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
+        // Setting: IDP login divider type.
+        $name = 'theme_boost_union/loginidpdividertype';
+        $title = get_string('loginidpdividertypesetting', 'theme_boost_union', null, true);
+        $description = get_string('loginidpdividertypesetting_desc', 'theme_boost_union', null, true);
+        $description .= '<br>' . get_string('logindividertypefirstmethodnote', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_LOGINDIVIDERTYPE_LINEWITHOR,
+            $logindivideroptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginidpdividertype',
+            'theme_boost_union/loginidploginenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+        $page->hide_if(
+            'theme_boost_union/loginidpdividertype',
+            'theme_boost_union/loginlayout',
+            'neq',
+            'vertical'
         );
 
         // Heading: Login provider: IDP (Expert settings).
@@ -2000,6 +2064,32 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
+        // Setting: Self registration divider type.
+        $name = 'theme_boost_union/loginfirsttimesignupdividertype';
+        $title = get_string('loginfirsttimesignupdividertypesetting', 'theme_boost_union', null, true);
+        $description = get_string('loginfirsttimesignupdividertypesetting_desc', 'theme_boost_union', null, true);
+        $description .= '<br>' . get_string('logindividertypefirstmethodnote', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_LOGINDIVIDERTYPE_LINEWITHOR,
+            $logindivideroptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginfirsttimesignupdividertype',
+            'theme_boost_union/loginselfregistrationenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+        $page->hide_if(
+            'theme_boost_union/loginfirsttimesignupdividertype',
+            'theme_boost_union/loginlayout',
+            'neq',
+            'vertical'
+        );
+
         // Heading: Login provider: Guest.
         $name = 'theme_boost_union/loginproviderguestheading';
         $title = get_string('loginproviderguestheading', 'theme_boost_union', null, true);
@@ -2159,6 +2249,32 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme_boost_union/loginguestloginenable',
             'neq',
             THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
+        // Setting: Guest login divider type.
+        $name = 'theme_boost_union/loginguestdividertype';
+        $title = get_string('loginguestdividertypesetting', 'theme_boost_union', null, true);
+        $description = get_string('loginguestdividertypesetting_desc', 'theme_boost_union', null, true);
+        $description .= '<br>' . get_string('logindividertypefirstmethodnote', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_LOGINDIVIDERTYPE_LINEWITHOR,
+            $logindivideroptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginguestdividertype',
+            'theme_boost_union/loginguestloginenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+        $page->hide_if(
+            'theme_boost_union/loginguestdividertype',
+            'theme_boost_union/loginlayout',
+            'neq',
+            'vertical'
         );
 
         // Heading: Side entrance login.

@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-20 - Upgrade: Add admin settings to control the dividers between the login providers.
 * 2026-04-20 - Upgrade: Replace the default texts for the login form intros with dedicated Boost Union strings instead of Moodle core strings
 * 2026-04-20 - Upgrade: Make the login form intros smaller and disabled by default from now on, resolves #1249
 * 2026-04-20 - Upgrade: Remove the 'Logo (if uploaded), heading otherwise (Unchanged as handled by Moodle core)' option from the 'Login page brand' setting as this behaviour is not present anymore in Moodle core and it does not really make sense to keep it in Boost Union.

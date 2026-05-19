@@ -26,6 +26,9 @@
     * loginlayoutaccordion - Flag for accordion layout,
     * active - Flag indicating if this method is currently active (for tabs and accordion),
     * isfirst - Flag indicating if this is the first method (for vertical layout divider),
+    * showdividermargin - Flag indicating if a margin-only spacer should be shown,
+    * showdividerline - Flag indicating if a line divider should be shown,
+    * showdividerlinewithor - Flag indicating if a "line with OR" separator should be shown,
     * label - Display label for the method,
 
     Example context (json):
@@ -44,7 +47,11 @@
 <div id="{{id}}" class="theme_boost_union-loginmethod {{#loginlayouttabs}}tab-pane fade{{#active}} show active{{/active}}{{/loginlayouttabs}} {{#loginlayoutaccordion}}accordion-item{{/loginlayoutaccordion}}" {{#loginlayouttabs}}role="tabpanel" aria-labelledby="{{id}}-tab"{{/loginlayouttabs}}>
 
     {{! Divider for vertical layout only (skip first method) }}
-    {{#loginlayoutvertical}}{{^isfirst}}<div class="login-divider"></div>{{/isfirst}}{{/loginlayoutvertical}}
+    {{#loginlayoutvertical}}
+        {{#showdividermargin}}<div class="login-margin"></div>{{/showdividermargin}}
+        {{#showdividerline}}<div class="login-divider"></div>{{/showdividerline}}
+        {{#showdividerlinewithor}}<div class="login-separator my-5">{{#str}}loginseparatoror{{/str}}</div>{{/showdividerlinewithor}}
+    {{/loginlayoutvertical}}
 
     {{! Accordion layout: Show header and start container }}
     {{#loginlayoutaccordion}}

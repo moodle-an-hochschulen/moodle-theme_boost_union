@@ -385,35 +385,37 @@
             {{! If not using embedded WAYF code. }}
             {{^showshibbolethembeddedwayfcode}}
                 {{#identityproviders}}
-                    {{! Use internal WAYF for Shibboleth }}
-                    {{#useinternalwayf}}
-                    <form class="login-shibboleth-wayf-form mb-2" action="{{shibbolethloginurl}}" method="post" id="{{wayfformid}}">
-                        <div class="mb-3">
-                            <label for="{{wayfformid}}-idp" class="form-label">{{#str}}auth_shibboleth_select_organization, auth_shibboleth{{/str}}</label>
-                            <select id="{{wayfformid}}-idp" name="idp" class="form-select w-100">
-                                <option value="-">{{#str}}auth_shibboleth_select_member, auth_shibboleth{{/str}}</option>
-                                {{#shibbidps}}
-                                <option value="{{value}}" {{#selected}}selected{{/selected}}>{{name}}</option>
-                                {{/shibbidps}}
-                            </select>
-                        </div>
-                        <button type="submit" class="btn {{idploginbtnclass}} w-100" accesskey="s">
-                            {{#str}}login{{/str}}
-                        </button>
-                        <p class="form-text text-muted mt-2 mb-0 text-break">
-                            {{#str}}auth_shib_contact_administrator, auth_shibboleth, {{adminemail}}{{/str}}
-                        </p>
-                    </form>
-                    {{/useinternalwayf}}
-                    {{! Use standard IDP button }}
-                    {{^useinternalwayf}}
-                    <a class="btn {{idploginbtnclass}} w-100 mb-3" href="{{url}}">
-                        {{#iconurl}}
-                            <img src="{{iconurl}}" alt="" width="24" height="24"/>
-                        {{/iconurl}}
-                        {{name}}
-                    </a>
-                    {{/useinternalwayf}}
+                    <div class="login-identityprovider mb-3">
+                        {{! Use internal WAYF for Shibboleth }}
+                        {{#useinternalwayf}}
+                        <form class="login-shibboleth-wayf-form mb-3" action="{{shibbolethloginurl}}" method="post" id="{{wayfformid}}">
+                            <div class="mb-3">
+                                <label for="{{wayfformid}}-idp" class="form-label">{{#str}}auth_shibboleth_select_organization, auth_shibboleth{{/str}}</label>
+                                <select id="{{wayfformid}}-idp" name="idp" class="form-select w-100">
+                                    <option value="-">{{#str}}auth_shibboleth_select_member, auth_shibboleth{{/str}}</option>
+                                    {{#shibbidps}}
+                                    <option value="{{value}}" {{#selected}}selected{{/selected}}>{{name}}</option>
+                                    {{/shibbidps}}
+                                </select>
+                            </div>
+                            <button type="submit" class="btn {{idploginbtnclass}} w-100" accesskey="s">
+                                {{#str}}login{{/str}}
+                            </button>
+                            <p class="form-text text-muted mt-2 mb-0 text-break">
+                                {{#str}}auth_shib_contact_administrator, auth_shibboleth, {{adminemail}}{{/str}}
+                            </p>
+                        </form>
+                        {{/useinternalwayf}}
+                        {{! Use standard IDP button }}
+                        {{^useinternalwayf}}
+                        <a class="btn {{idploginbtnclass}} w-100" href="{{url}}">
+                            {{#iconurl}}
+                                <img src="{{iconurl}}" alt="" width="24" height="24"/>
+                            {{/iconurl}}
+                            {{name}}
+                        </a>
+                        {{/useinternalwayf}}
+                    </div>
                 {{/identityproviders}}
             {{/showshibbolethembeddedwayfcode}}
             {{! Otherwise, if using embedded WAYF code, display the configured JavaScript code. }}
@@ -458,7 +460,7 @@
             {{/showselfregistrationlogininstruction}}
         </div>
 
-        <div class="login-signup">
+        <div class="login-signup mb-3">
             <a class="btn {{selfregistrationloginbtnclass}} w-100" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a>
         </div>
 
@@ -496,7 +498,7 @@
         {{/guestlogininstructionsbetween}}
         {{/showguestlogininstruction}}
 
-        <form action="{{loginurl}}" method="post" id="guestlogin" class="mb-4">
+        <form action="{{loginurl}}" method="post" id="guestlogin" class="mb-3">
             <input type="hidden" name="logintoken" value="{{logintoken}}">
             <input type="hidden" name="username" value="guest" />
             <input type="hidden" name="password" value="guest" />

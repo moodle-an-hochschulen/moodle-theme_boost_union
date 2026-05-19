@@ -1341,6 +1341,20 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
         }
 
+        // Determine divider output for each login method in vertical layout.
+        foreach ($loginmethods as $method) {
+            $dividertypesetting = get_config('theme_boost_union', 'login' . $method->name . 'dividertype');
+            $dividertype = ($dividertypesetting !== false)
+                ? $dividertypesetting
+                : THEME_BOOST_UNION_SETTING_LOGINDIVIDERTYPE_LINE;
+            $method->showdividermargin = (!$method->isfirst &&
+                $dividertype === THEME_BOOST_UNION_SETTING_LOGINDIVIDERTYPE_MARGIN);
+            $method->showdividerline = (!$method->isfirst &&
+                $dividertype === THEME_BOOST_UNION_SETTING_LOGINDIVIDERTYPE_LINE);
+            $method->showdividerlinewithor = (!$method->isfirst &&
+                $dividertype === THEME_BOOST_UNION_SETTING_LOGINDIVIDERTYPE_LINEWITHOR);
+        }
+
         // Add the loginmethods to the template context.
         $context->loginmethods = $loginmethods;
 
