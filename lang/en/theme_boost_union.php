@@ -387,6 +387,7 @@ $string['loginpagebrand_tagline'] = 'Tagline';
 // ... ... Setting: Login page heading.
 $string['loginpageheadingsetting'] = 'Login page heading';
 $string['loginpageheadingsetting_desc'] = 'With this setting, you can control what text is displayed as the heading on the login page.';
+$string['loginpageheadingsetting_options'] = 'On the one hand, you can choose between multiple variations of the presentation of the site name. On the other hand, you can choose a simple greeting message. The \'Welcome! / Welcome back!\' option tries to detect if the user is a returning visitor and will present the matching greeting accordingly.';
 // ... ... Setting: Login page tagline text.
 $string['loginpagetaglinesetting'] = 'Login page tagline';
 $string['loginpagetaglinesetting_desc'] = 'With this setting, you can control what text is displayed as the tagline on the login page.';
