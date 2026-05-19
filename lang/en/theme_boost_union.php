@@ -476,9 +476,10 @@ $string['loginidploginenablesetting_core'] = 'Moodle core setting interplay: Ide
 // ... ... Setting: IDP login intro.
 $string['loginidpshowintrosetting'] = 'IDP login intro';
 $string['loginidpshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the IDP login buttons or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what the IDP buttons are about.';
+$string['loginidpintro'] = 'Login with your IDP account';
 // ... ... Setting: IDP login intro text.
 $string['loginidpintrotextsetting'] = 'IDP login intro text';
-$string['loginidpintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> (which comes from the Moodle core language pack) with a custom text. Leave this field empty to use the default text.';
+$string['loginidpintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> with a custom text. Leave this field empty to use the default text.';
 // ... ... Setting: IDP login tab label.
 $string['loginidploginlabelsetting'] = 'IDP login label';
 $string['loginidploginlabelsetting_desc'] = 'With this setting, you can customize the label for IDP login to be used in the tab and accordion layout.';
@@ -516,9 +517,10 @@ $string['loginselfregistrationenablesetting_core'] = 'Moodle core setting interp
 // ... ... Setting: Self registration intro.
 $string['loginselfregistrationshowintrosetting'] = 'Self registration intro';
 $string['loginselfregistrationshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the self registration section or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what self registration is about.';
+$string['loginselfregistrationintro'] = 'Don\'t have an account yet?';
 // ... ... Setting: Self registration intro text.
 $string['loginselfregistrationintrotextsetting'] = 'Self registration intro text';
-$string['loginselfregistrationintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> (which comes from the Moodle core language pack) with a custom text. Leave this field empty to use the default text.';
+$string['loginselfregistrationintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> with a custom text. Leave this field empty to use the default text.';
 // ... ... Setting: Self registration tab label.
 $string['loginselfregistrationloginlabelsetting'] = 'Self registration label';
 $string['loginselfregistrationloginlabelsetting_desc'] = 'With this setting, you can customize the label for self registration to be used in the tab and accordion layout.';
@@ -542,9 +544,10 @@ $string['loginguestloginenablesetting_core'] = 'Moodle core setting interplay: G
 // ... ... Setting: Guest login intro.
 $string['loginguestshowintrosetting'] = 'Guest login intro';
 $string['loginguestshowintrosetting_desc'] = 'With this setting, you control if an intro is shown above the guest login button or not. By default, the intro is not shown. But if you enable it, this intro may help users to understand what guest access is about.';
+$string['loginguestintro'] = 'Looking for a quick peek?';
 // ... ... Setting: Guest login intro text.
 $string['loginguestintrotextsetting'] = 'Guest login intro text';
-$string['loginguestintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> (which comes from the Moodle core language pack) with a custom text. Leave this field empty to use the default text.';
+$string['loginguestintrotextsetting_desc'] = 'With this setting, you can override the default intro text <em>\'{$a}\'</em> with a custom text. Leave this field empty to use the default text.';
 // ... ... Setting: Guest login tab label.
 $string['loginguestloginlabelsetting'] = 'Guest login label';
 $string['loginguestloginlabelsetting_desc'] = 'With this setting, you can customize the label for guest login to be used in the tab and accordion layout.';

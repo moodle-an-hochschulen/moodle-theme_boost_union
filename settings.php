@@ -1619,7 +1619,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string(
             'loginidpshowintrosetting_desc',
             'theme_boost_union',
-            get_string('potentialidps', 'auth'),
+            get_string('loginidpintro', 'theme_boost_union'),
             true
         );
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
@@ -1637,7 +1637,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string(
             'loginidpintrotextsetting_desc',
             'theme_boost_union',
-            get_string('potentialidps', 'auth'),
+            get_string('loginidpintro', 'theme_boost_union'),
             true
         );
         $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_TEXT);
@@ -1858,7 +1858,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string(
             'loginselfregistrationshowintrosetting_desc',
             'theme_boost_union',
-            get_string('firsttime', 'core'),
+            get_string('loginselfregistrationintro', 'theme_boost_union'),
             true
         );
         $selfregistrationlogincorenoteurl = new core\url('/admin/settings.php', ['section' => 'manageauths']);
@@ -1886,7 +1886,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string(
             'loginselfregistrationintrotextsetting_desc',
             'theme_boost_union',
-            get_string('firsttime', 'core'),
+            get_string('loginselfregistrationintro', 'theme_boost_union'),
             true
         );
         $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_TEXT);
@@ -2029,7 +2029,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string(
             'loginguestshowintrosetting_desc',
             'theme_boost_union',
-            get_string('someallowguest', 'core'),
+            get_string('loginguestintro', 'theme_boost_union'),
             true
         );
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
@@ -2047,7 +2047,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string(
             'loginguestintrotextsetting_desc',
             'theme_boost_union',
-            get_string('someallowguest', 'core'),
+            get_string('loginguestintro', 'theme_boost_union'),
             true
         );
         $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_TEXT);
