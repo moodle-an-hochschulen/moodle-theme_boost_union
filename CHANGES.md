@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-05-19 - Improvement: Add some explanation to the "Welcome back!" login brand option, resolves #1275
+
 ### v5.1-r14
 
 * 2026-05-18 - Improvement: Add notifications to each of the global settings which can be overridden by flavours, resolves #1269
