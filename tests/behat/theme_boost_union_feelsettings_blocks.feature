@@ -502,6 +502,7 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
   Scenario Outline: Setting: Show right-hand block drawer of site home on visit
     Given the following config values are set as admin:
       | config       | value |
+      | forcelogin   | 0     |
       | enablemyhome | 1     |
     And  the following config values are set as admin:
       | config                                  | value     | plugin            |

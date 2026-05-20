@@ -50,9 +50,12 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     Given the following config values are set as admin:
       | config                     | value     | plugin            |
       | hidenodesprimarynavigation | <setting> | theme_boost_union |
-    And I am on login page
-    And I press "Access as a guest"
-    When I am on site homepage
+    And the following config values are set as admin:
+      | config           | value |
+      | enablemyhome     | 1     |
+      | guestloginbutton | 1     |
+    When I log in as "guest"
+    And I am on site homepage
     Then I <shouldornot> see "Calendar" in the ".primary-navigation" "css_element"
 
     Examples:
