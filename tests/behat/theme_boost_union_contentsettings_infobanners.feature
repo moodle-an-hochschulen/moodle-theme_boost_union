@@ -367,6 +367,24 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And "Above banner 2" "text" should appear before "Below banner 1" "text"
     And "Above banner 2" "text" should appear before "Below banner 2" "text"
 
+  Scenario Outline: Setting: Information banners - Place info banner on login page depending on login arrangement
+    Given the following config values are set as admin:
+      | config             | value              | plugin            |
+      | loginarrangement   | <loginarrangement> | theme_boost_union |
+      | infobanner1enabled | yes                | theme_boost_union |
+      | infobanner1content | "Arrangement test" | theme_boost_union |
+      | infobanner1pages   | login              | theme_boost_union |
+      | infobanner1mode    | perp               | theme_boost_union |
+    When I am on login page
+    Then I should see "Arrangement test" in the "#themeboostunioninfobanner1" "css_element"
+    And the "class" attribute of "body" "css_element" should contain "theme_boost_union-loginarrangement-<loginarrangement>"
+    And "#themeboostunioninfobanner1" "css_element" should appear before "<anchorelementid>" "css_element" in the "<contextselector>" "css_element"
+
+    Examples:
+      | loginarrangement | anchorelementid  | contextselector  |
+      | sidebyside       | div[role='main'] | .login-container |
+      | legacy           | #page-content    | #page            |
+
   Scenario: Setting: Information banners - Display info banner 1 on a time based setting, don't show it yet as the display time is not reached yet.
     Given the following config values are set as admin:
       | config             | value                       | plugin            |

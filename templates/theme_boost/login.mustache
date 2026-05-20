@@ -48,11 +48,11 @@
     {{{ output.standard_top_of_body_html }}}
 
     <div id="page" class="{{^usesidebysideloginarrangement}}container-fluid pt-5{{/usesidebysideloginarrangement}} mt-0">
-        {{> theme_boost_union/infobanners }}
         {{#usesidebysideloginarrangement}}
             {{> core/login_layout }}
         {{/usesidebysideloginarrangement}}
         {{^usesidebysideloginarrangement}}
+            {{> theme_boost_union/infobanners }}
             <div id="page-content" class="row">
                 <div id="region-main-box" class="col-12">
                     <div id="region-main" class="col-12 h-100">
