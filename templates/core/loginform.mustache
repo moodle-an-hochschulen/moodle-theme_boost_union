@@ -531,19 +531,6 @@
     {{/loginlayoutaccordion}}
 
     {{! =========================================================================== }}
-    {{! FINAL DIVIDER AND SPACING }}
-    {{! =========================================================================== }}
-
-    {{! Add final divider (except for the accordion layout which has its own borders) }}
-    {{^loginlayoutaccordion}}
-    <div class="login-divider"></div>
-    {{/loginlayoutaccordion}}
-    {{! Add some spacing at the end of the accordion layout to prevent the last login method from being too close to the footer }}
-    {{#loginlayoutaccordion}}
-    <div class="mb-5"></div>
-    {{/loginlayoutaccordion}}
-
-    {{! =========================================================================== }}
     {{! GLOBAL INSTRUCTIONS BELOW LOGIN PANELS }}
     {{! =========================================================================== }}
 
@@ -551,7 +538,6 @@
     <div class="login-instructions login-instructions-below mt-4">
         {{{logininstructionsbelow}}}
     </div>
-    <div class="login-divider"></div>
     {{/logininstructionsbelow}}
 
     {{! =========================================================================== }}
