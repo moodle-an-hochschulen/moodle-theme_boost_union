@@ -184,6 +184,21 @@ Feature: Recommendations in theme_boost_union
     And I should see "The recommendation has been fixed automatically."
     And ".action-autofix" "css_element" should not exist in the "Auth instructions" "table_row"
 
+  Scenario Outline: Verify Recommendation infobannerloginpagesidebyside (Status check)
+    Given the following config values are set as admin:
+      | config           | value                   | plugin            |
+      | loginarrangement | <loginarrangementvalue> | theme_boost_union |
+      | infobanner1pages | <infobanner1pagesvalue> | theme_boost_union |
+    When I navigate to "Appearance > Boost Union > Recommendations" in site administration
+    Then I should see "Info banner on login page" in the "table#recommendations-usability" "css_element"
+    And I should see "<statustext>" in the "Info banner on login page" "table_row"
+
+    Examples:
+      | loginarrangementvalue | infobanner1pagesvalue | statustext |
+      | sidebyside            | login                 | Check      |
+      | sidebyside            |                       | OK         |
+      |                       | login                 | OK         |
+
   Scenario: Verify recommendation notification and view-all action on settings page (with the core logo recommendation as an example)
     Given the following "theme_boost_union > core files" exist:
       | filearea | filepath                                       |
@@ -194,3 +209,17 @@ Feature: Recommendations in theme_boost_union
     And "div.theme-boost-union-recommendationnotification .recommendations-actions .action-viewall" "css_element" should exist
     And I click on "View all recommendations" "link"
     Then "body#page-admin-theme-boost_union-recommendations-overview" "css_element" should exist
+
+  Scenario: Verify recommendation notification using arguments (with the infobannerloginpagesidebyside recommendation as an example)
+    Given the following config values are set as admin:
+      | loginarrangement   | sidebyside  | theme_boost_union |
+      | infobanner1enabled | yes         | theme_boost_union |
+      | infobanner1pages   | login       | theme_boost_union |
+      | infobanner2enabled | yes         | theme_boost_union |
+      | infobanner2pages   | mydashboard | theme_boost_union |
+      | infobanner3enabled | No         | theme_boost_union |
+    When I navigate to "Appearance > Boost Union > Content" in site administration
+    And I click on "Info banner" "link" in the "#adminsettings .nav-tabs" "css_element"
+    Then ".theme-boost-union-recommendationnotification" "css_element" should exist in the "#admin-infobanner1pages" "css_element"
+    And ".theme-boost-union-recommendationnotification" "css_element" should not exist in the "#admin-infobanner2pages" "css_element"
+    And ".theme-boost-union-recommendationnotification" "css_element" should not exist in the "#admin-infobanner3pages" "css_element"

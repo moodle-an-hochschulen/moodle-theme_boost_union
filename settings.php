@@ -4822,6 +4822,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name = 'theme_boost_union/infobanner' . $i . 'pages';
             $title = get_string('infobannerpagessetting', 'theme_boost_union', ['no' => $i], true);
             $description = get_string('infobannerpagessetting_desc', 'theme_boost_union', ['no' => $i], true);
+            $description .= recommendation_manager::render_recommendation_notification('infobannerloginpagesidebyside/' . $i);
             $setting = new admin_setting_configmultiselect(
                 $name,
                 $title,

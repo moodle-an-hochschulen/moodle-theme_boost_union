@@ -2096,6 +2096,11 @@ $string['recommendation_coreauthinstructions_title'] = 'Auth instructions';
 $string['recommendation_coreauthinstructions_summary'] = 'The Moodle core authentication instructions should be empty as Boost Union uses its own login instructions.';
 $string['recommendation_coreauthinstructions_description'] = 'Boost Union does not render Moodle core auth_instructions setting on the login page. If Boost Union is used as the theme for non-logged in users, these users will not see these instructions and thus they should be cleaned.';
 
+// Recommendation: Infobanner on Login page with side-by-side login arrangement.
+$string['recommendation_infobannerloginpagesidebyside_title'] = 'Info banner on login page';
+$string['recommendation_infobannerloginpagesidebyside_summary'] = 'Information banners on the login page with side-by-side login arrangement should be as concise as possible.';
+$string['recommendation_infobannerloginpagesidebyside_details'] = 'On the side-by-side login page arrangement, information banners are only shown in the right column over the login form. This means that the available width is reduced. Please keep the content of these information banners as short and concise as possible to avoid overloading of the login page.';
+
 // Privacy API.
 $string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
 
