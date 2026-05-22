@@ -78,6 +78,7 @@ class recommendations_overview extends \core_table\sql_table {
         $this->define_header_column('title');
         $this->column_class('actions', 'text-nowrap');
         $this->set_attribute('id', 'recommendations-' . $category);
+        $this->set_attribute('class', 'mb-5');
 
         // Render category title as table caption.
         // We fetch the string from the supported categories to ensure that only valid categories are used
@@ -151,6 +152,10 @@ class recommendations_overview extends \core_table\sql_table {
                 'data-title' => $data->title,
                 'data-summary' => $data->summary,
                 'data-description' => $data->description,
+                'data-statuslabel' => $data->statuslabel ?? '',
+                'data-statusbadgeclass' => $data->statusbadgeclass ?? '',
+                'data-statusdescription' => $data->statusdescription ?? '',
+                'data-possiblesolution' => $data->possiblesolution ?? '',
                 'data-id' => $data->id,
             ],
         ];
@@ -289,11 +294,13 @@ class recommendations_overview extends \core_table\sql_table {
             $row->id = $recommendation->get_id();
             $row->statuslabel = manager::get_status_label($recommendation);
             $row->statusbadgeclass = manager::get_status_badge_class(manager::get_effective_status($recommendation));
+            $row->statusdescription = manager::get_status_description($recommendation);
             $row->title = $recommendation->get_title();
             $row->summary = $recommendation->get_summary();
             $row->description = $recommendation->get_description();
             $row->actionurl = $recommendation->get_action_url();
-            $row->autofixable = $recommendation->is_autofixable() && manager::recommendation_needs_attention($recommendation);
+            $row->autofixable = $recommendation->supports_autofix() && manager::recommendation_needs_attention($recommendation);
+            $row->possiblesolution = manager::get_possible_solution($recommendation);
 
             // Add the row to the table data.
             $this->rawdata[] = $row;

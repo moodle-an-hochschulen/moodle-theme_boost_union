@@ -67,7 +67,7 @@ if ($action !== null && confirm_sesskey()) {
             break;
         case 'autofix':
                 $recommendation = \theme_boost_union\recommendation\manager::get_recommendation_by_id($id);
-            if ($recommendation !== null && $recommendation->is_autofixable()) {
+            if ($recommendation !== null && $recommendation->supports_autofix()) {
                 $recommendation->autofix();
                 \core\notification::success(get_string('recommendationautofixsuccess', 'theme_boost_union'));
             }
