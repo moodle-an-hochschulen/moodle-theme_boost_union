@@ -6,6 +6,8 @@ Changes
 
 ### Unreleased
 
+* 2026-05-22 - Status of the Boost Union 5.2 release:
+               Please note: The Boost Union 5.2 release is generally working and usable in a way that we did not want to hold the release back any longer. However, there are some things on the side-by-side login page and some other adaptions to Moodle 5.2 in general which remain to be improved / done in the next minor release. Against this background, test the 5.2 release on your particular instance as usual and if you encounter any issues with Boost Union on 5.2, please report them as usual on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues.
 * 2026-04-20 - Upgrade: Raise the verified version for the built-in SCSS snippets.
 * 2026-05-21 - Improvement: Add recommendation for information banners on the side-by-side login page, resolves #1277
 * 2026-04-20 - Upgrade: Fix the info banner position on the new side-by-side login page layout.
