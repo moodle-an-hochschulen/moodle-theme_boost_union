@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-04-20 - Upgrade: Raise the verified version for the built-in SCSS snippets.
 * 2026-05-21 - Improvement: Add recommendation for information banners on the side-by-side login page, resolves #1277
 * 2026-04-20 - Upgrade: Fix the info banner position on the new side-by-side login page layout.
 * 2026-04-20 - Upgrade: Add admin settings to control the dividers between the login providers.
