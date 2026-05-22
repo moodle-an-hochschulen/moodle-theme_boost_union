@@ -89,13 +89,34 @@ class manager {
     /**
      * Return a recommendation instance by id.
      *
-     * @param string $recommendationid Recommendation id.
+     * The $recommendationid may contain slash-separated arguments (e.g. "myrecommendation/3").
+     * In that case only the part before the first slash is used to look up the recommendation
+     * and the arguments are stored in the recommendation instance.
+     *
+     * @param string $recommendationid Recommendation id, optionally with slash-separated args.
      * @return recommendation|null
      */
     public static function get_recommendation_by_id(string $recommendationid): ?recommendation {
+        // Parse the recommendation id and optional args.
+        ['id' => $baseid, 'args' => $args] = self::parse_recommendation_id($recommendationid);
+
         // Iterate over all recommendations and return the one with the matching id.
         foreach (self::get_recommendations() as $recommendation) {
-            if ($recommendation->get_id() === $recommendationid) {
+            if ($recommendation->get_id() === $baseid) {
+                // If arguments are provider.
+                if (!empty($args)) {
+                    // If the recommendation supports arguments, pass them via set_args().
+                    if ($recommendation->supports_args()) {
+                        $recommendation->set_args($args);
+
+                        // Otherwise log a debug message.
+                    } else {
+                        debugging(
+                            'Recommendation instance "' . $baseid . '" received arguments but does not support them.',
+                            DEBUG_DEVELOPER
+                        );
+                    }
+                }
                 return $recommendation;
             }
         }
@@ -105,17 +126,38 @@ class manager {
     }
 
     /**
-     * Return supported status values and labels in order.
+     * Return supported status values with their labels and descriptions in order.
      *
-     * @return string[] Array of status labels keyed by status value.
+     * Each entry is an array with keys 'label' and 'description'.
+     *
+     * @return array[] Array of status data keyed by status value.
      */
     public static function get_supported_statuses(): array {
         return [
-            recommendation::WARNING => get_string('recommendationstatus_warning', 'theme_boost_union'),
-            recommendation::NOTICE => get_string('recommendationstatus_notice', 'theme_boost_union'),
-            recommendation::OK => get_string('recommendationstatus_ok', 'theme_boost_union'),
-            recommendation::NA => get_string('recommendationstatus_na', 'theme_boost_union'),
-            recommendation::MUTED => get_string('recommendationstatus_muted', 'theme_boost_union'),
+            recommendation::WARNING => [
+                'label' => get_string('recommendationstatus_warning', 'theme_boost_union'),
+                'description' => get_string('recommendationstatus_warning_description', 'theme_boost_union'),
+            ],
+            recommendation::NOTICE => [
+                'label' => get_string('recommendationstatus_notice', 'theme_boost_union'),
+                'description' => get_string('recommendationstatus_notice_description', 'theme_boost_union'),
+            ],
+            recommendation::CHECK => [
+                'label' => get_string('recommendationstatus_check', 'theme_boost_union'),
+                'description' => get_string('recommendationstatus_check_description', 'theme_boost_union'),
+            ],
+            recommendation::OK => [
+                'label' => get_string('recommendationstatus_ok', 'theme_boost_union'),
+                'description' => get_string('recommendationstatus_ok_description', 'theme_boost_union'),
+            ],
+            recommendation::NA => [
+                'label' => get_string('recommendationstatus_na', 'theme_boost_union'),
+                'description' => get_string('recommendationstatus_na_description', 'theme_boost_union'),
+            ],
+            recommendation::MUTED => [
+                'label' => get_string('recommendationstatus_muted', 'theme_boost_union'),
+                'description' => get_string('recommendationstatus_muted_description', 'theme_boost_union'),
+            ],
         ];
     }
 
@@ -129,6 +171,7 @@ class manager {
             recommendation::CATEGORY_MOODLECORE => get_string('recommendationcategory_moodlecore', 'theme_boost_union'),
             recommendation::CATEGORY_BOOSTUNION => get_string('recommendationcategory_boostunion', 'theme_boost_union'),
             recommendation::CATEGORY_THIRDPARTY => get_string('recommendationcategory_thirdparty', 'theme_boost_union'),
+            recommendation::CATEGORY_USABILITY => get_string('recommendationcategory_usability', 'theme_boost_union'),
             recommendation::CATEGORY_ACCESSIBILITY => get_string('recommendationcategory_accessibility', 'theme_boost_union'),
         ];
     }
@@ -158,14 +201,16 @@ class manager {
      *
      * The notification is rendered only if the recommendation exists and its effective status needs attention.
      *
-     * @param string $recommendationid Recommendation id.
+     * @param string $recommendationid Recommendation id, optionally with slash-separated args.
      * @return string Rendered HTML or empty string.
      */
     public static function render_recommendation_notification(string $recommendationid): string {
         global $OUTPUT;
 
-        // Get recommendation by id and stop if it does not exist.
+        // Get recommendation by id (args are parsed and passed inside get_recommendation_by_id).
         $recommendation = self::get_recommendation_by_id($recommendationid);
+
+        // Stop if it does not exist.
         if ($recommendation === null) {
             return '';
         }
@@ -185,7 +230,11 @@ class manager {
         $data->summary = $recommendation->get_summary();
         $data->description = $recommendation->get_description();
         $data->actionurl = $recommendation->get_action_url();
-        $data->autofixable = $recommendation->is_autofixable();
+        $data->autofixable = $recommendation->supports_autofix();
+        $data->statuslabel = self::get_status_label($recommendation);
+        $data->statusbadgeclass = self::get_status_badge_class($status);
+        $data->statusdescription = self::get_status_description($recommendation);
+        $data->possiblesolution = self::get_possible_solution($recommendation);
 
         // Render notification body with mustache template.
         $content = $OUTPUT->render_from_template('theme_boost_union/recommendationsnotification', [
@@ -217,6 +266,9 @@ class manager {
 
             case recommendation::NOTICE:
                 return 'badge-info';
+
+            case recommendation::CHECK:
+                return 'text-bg-info';
 
             case recommendation::WARNING:
                 return 'badge-warning';
@@ -276,7 +328,7 @@ class manager {
 
         // If the status is supported, return the corresponding label.
         if (array_key_exists($result, $supported)) {
-            return $supported[$result];
+            return $supported[$result]['label'];
         }
 
         // If status is not supported, log debug message.
@@ -287,7 +339,71 @@ class manager {
         );
 
         // Return fallback label for unsupported status.
-        return $supported[recommendation::NA];
+        return $supported[recommendation::NA]['label'];
+    }
+
+    /**
+     * Return the validated status description for a recommendation.
+     *
+     * @param recommendation $recommendation The recommendation to get the status description for.
+     * @return string
+     */
+    public static function get_status_description(recommendation $recommendation): string {
+        // Get supported statuses and the recommendation status.
+        $supported = self::get_supported_statuses();
+        $result = self::get_effective_status($recommendation);
+
+        // If the status is supported, return the corresponding description.
+        if (array_key_exists($result, $supported)) {
+            return $supported[$result]['description'];
+        }
+
+        // If status is not supported, log debug message.
+        debugging(
+            'Recommendation "' . $recommendation->get_id() .
+                '" returned unsupported status "' . $result . '".',
+            DEBUG_DEVELOPER
+        );
+
+        // Return fallback description for unsupported status.
+        return $supported[recommendation::NA]['description'];
+    }
+
+    /**
+     * Return a "Possible solutions" hint text for a recommendation that needs attention.
+     *
+     * Returns an empty string when the recommendation does not need attention or when
+     * neither an action URL nor autofix support is available.
+     *
+     * @param recommendation $recommendation The recommendation to get the solution text for.
+     * @return string
+     */
+    public static function get_possible_solution(recommendation $recommendation): string {
+        // Only show a solution hint when the recommendation needs attention.
+        if (!self::recommendation_needs_attention($recommendation)) {
+            return '';
+        }
+
+        // The CHECK status requires manual review regardless of available actions.
+        if (self::get_effective_status($recommendation) === recommendation::CHECK) {
+            return get_string('recommendationsolution_check', 'theme_boost_union');
+        }
+
+        // Determine which solution options are available for this recommendation.
+        $autofixable = $recommendation->supports_autofix();
+        $hasactionurl = $recommendation->get_action_url() !== null;
+
+        // Return appropriate hint text based on available solution options.
+        if ($autofixable && $hasactionurl) {
+            return get_string('recommendationsolution_both', 'theme_boost_union');
+        } else if ($autofixable) {
+            return get_string('recommendationsolution_autofixonly', 'theme_boost_union');
+        } else if ($hasactionurl) {
+            return get_string('recommendationsolution_actionurlonly', 'theme_boost_union');
+        }
+
+        // No solution hint available.
+        return '';
     }
 
     /**
@@ -334,6 +450,28 @@ class manager {
      */
     protected static function get_recommendation_muted_config_key(string $recommendationid): string {
         return 'recommendation-muted-' . $recommendationid;
+    }
+
+    /**
+     * Parse a (possibly parameterised) recommendation id into its base id and optional args.
+     *
+     * Examples:
+     *   "myrecommendation"         → ['id' => 'myrecommendation', 'args' => []]
+     *   "myrecommendation/3"       → ['id' => 'myrecommendation', 'args' => ['3']]
+     *   "myrecommendation/foo/bar" → ['id' => 'myrecommendation', 'args' => ['foo', 'bar']]
+     *
+     * @param string $recommendationid Full recommendation id, optionally with slash-separated args.
+     * @return array{id: string, args: string[]}
+     */
+    protected static function parse_recommendation_id(string $recommendationid): array {
+        // Split the full id by slashes. The first part is the base id, the rest are args.
+        $parts = explode('/', $recommendationid);
+
+        // Return the base id and args.
+        return [
+            'id'   => array_shift($parts),
+            'args' => $parts,
+        ];
     }
 
     /**

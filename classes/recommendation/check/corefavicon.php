@@ -34,7 +34,7 @@ use theme_boost_union\recommendation\recommendation;
  * @copyright  2026 Alexander Bias <bias@alexanderbias.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class corefavicon implements recommendation {
+class corefavicon extends recommendation {
     /** @var string|null */
     protected static $status = null;
 
@@ -140,7 +140,7 @@ class corefavicon implements recommendation {
      *
      * @return bool
      */
-    public function is_autofixable(): bool {
+    public function supports_autofix(): bool {
         return true;
     }
 
