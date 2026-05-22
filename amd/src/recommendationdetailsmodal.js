@@ -66,11 +66,16 @@ const buildModal = async(element) => {
         title: element.getAttribute('data-title'),
         summary: element.getAttribute('data-summary'),
         description: element.getAttribute('data-description'),
+        statuslabel: element.getAttribute('data-statuslabel'),
+        statusbadgeclass: element.getAttribute('data-statusbadgeclass'),
+        statusdescription: element.getAttribute('data-statusdescription'),
+        possiblesolution: element.getAttribute('data-possiblesolution'),
     };
 
     await ModalCancel.create({
         title: data.title,
         body: Templates.render('theme_boost_union/recommendationsdetailsmodal', data),
+        large: true,
         buttons: {
             'cancel': getString('closebuttontitle', 'moodle'),
         },

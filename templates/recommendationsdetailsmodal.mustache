@@ -23,7 +23,10 @@
     {
         "title": "Enable slash arguments",
         "summary": "Short summary",
-        "description": "Long description"
+        "description": "Long description",
+        "statuslabel": "Warning",
+        "statusbadgeclass": "text-bg-warning",
+        "statusdescription": "This recommendation needs your attention."
     }
 }}
 <div class="theme_boost_union-recommendationdetails-modal">
@@ -33,4 +36,12 @@
     {{#description}}
         <p>{{description}}</p>
     {{/description}}
+    {{#statusdescription}}
+        <p><strong>{{#str}}recommendationcurrentstatus, theme_boost_union{{/str}}</strong><br />
+        <span class="badge {{statusbadgeclass}}">{{statuslabel}}</span> {{statusdescription}}</p>
+    {{/statusdescription}}
+    {{#possiblesolution}}
+        <p><strong>{{#str}}recommendationpossiblesolutions, theme_boost_union{{/str}}</strong><br />
+        {{possiblesolution}}</p>
+    {{/possiblesolution}}
 </div>

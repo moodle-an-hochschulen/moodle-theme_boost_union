@@ -6,6 +6,10 @@ Changes
 
 ### Unreleased
 
+* 2026-05-21 - Improvement: Add detail information about the current recommendation status and possible actions to the recommendation info modal, helps to resolve #1277
+* 2026-05-21 - Improvement: Add type class 'usability' and status class 'check' to the recommendations subsystem, helps to resolve #1277
+* 2026-05-21 - Improvement: Allow recommendation notifications to use arguments, helps to resolve #1277
+* 2026-05-21 - Internal change: Transform recommendation interface to a base class, helps to resolve #1277
 * 2026-05-19 - Bugfix: The loginselfregistrationshowintrosetting_desc and the loginguestshowintrosetting_desc strings described their default setting in the wrong way, resolves #1276
 * 2026-05-19 - Improvement: Add some explanation to the "Welcome back!" login brand option, resolves #1275
 

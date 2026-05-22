@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Recommendation interface and status constants.
+ * Recommendation base class and status constants.
  *
  * @package    theme_boost_union
  * @copyright  2026 Alexander Bias <bias@alexanderbias.de>
@@ -25,15 +25,21 @@
 namespace theme_boost_union\recommendation;
 
 /**
- * Contract for a Boost Union recommendation.
+ * Base class for a Boost Union recommendation.
  *
  * @package    theme_boost_union
  * @copyright  2026 Alexander Bias <bias@alexanderbias.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-interface recommendation {
+abstract class recommendation {
+    /** @var array Arguments parsed from a parameterised recommendation id (only relevant when supports_args() returns true). */
+    protected array $args = [];
+
     /** @var string */
     public const OK = 'ok';
+
+    /** @var string */
+    public const CHECK = 'check';
 
     /** @var string */
     public const NOTICE = 'notice';
@@ -57,6 +63,9 @@ interface recommendation {
     public const CATEGORY_THIRDPARTY = 'thirdparty';
 
     /** @var string */
+    public const CATEGORY_USABILITY = 'usability';
+
+    /** @var string */
     public const CATEGORY_ACCESSIBILITY = 'accessibility';
 
     /**
@@ -64,64 +73,92 @@ interface recommendation {
      *
      * @return string
      */
-    public function get_id(): string;
+    abstract public function get_id(): string;
 
     /**
      * Return the recommendation title.
      *
      * @return string
      */
-    public function get_title(): string;
+    abstract public function get_title(): string;
 
     /**
      * Return the recommendation summary.
      *
      * @return string
      */
-    public function get_summary(): string;
+    abstract public function get_summary(): string;
 
     /**
      * Return the recommendation description.
      *
      * @return string
      */
-    public function get_description(): string;
+    abstract public function get_description(): string;
 
     /**
      * Return the recommendation status.
      *
      * @return string One status value supported by the manager.
      */
-    public function get_status(): string;
+    abstract public function get_status(): string;
 
     /**
      * Return the action URL for this recommendation.
      *
      * @return \moodle_url|null
      */
-    public function get_action_url(): ?\moodle_url;
+    abstract public function get_action_url(): ?\moodle_url;
 
     /**
      * Return the recommendation category.
      *
      * @return string One of the CATEGORY_* constants.
      */
-    public function get_category(): string;
+    abstract public function get_category(): string;
 
     /**
      * Return whether this recommendation can be fixed automatically.
      *
      * @return bool
      */
-    public function is_autofixable(): bool;
+    public function supports_autofix(): bool {
+        return false;
+    }
 
     /**
      * Apply the automatic fix for this recommendation.
      *
-     * This method is only called if is_autofixable() returns true.
+     * This method is only called if supports_autofix() returns true.
      * It must perform the necessary changes to resolve the recommendation.
      *
      * @return void
      */
-    public function autofix(): void;
+    public function autofix(): void {
+        // No automatic fix available by default.
+    }
+
+    /**
+     * Return whether this recommendation accepts slash-separated arguments via a parameterised id.
+     *
+     * If this returns true, the manager will call set_args() to pass the parsed arguments before get_status() is invoked.
+     *
+     * @return bool
+     */
+    public function supports_args(): bool {
+        return false;
+    }
+
+    /**
+     * Set the arguments parsed from a parameterised recommendation id (e.g. 'infobannerloginpagesidebyside/3').
+     *
+     * This method is only called if supports_args() returns true.
+     * It will remember the arguments internally so that they can be used in get_status() and other methods as needed.
+     *
+     * @param array $args
+     * @return void
+     */
+    public function set_args(array $args): void {
+        $this->args = $args;
+    }
 }

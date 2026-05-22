@@ -20,6 +20,9 @@ Feature: Recommendations in theme_boost_union
 
   @javascript
   Scenario: Admin can open and close recommendation info modal
+    Given the following config values are set as admin:
+      | config         | value |
+      | slasharguments | 0     |
     When I navigate to "Appearance > Boost Union > Recommendations" in site administration
     And I should see "Slash arguments support" in the "table#recommendations-moodlecore" "css_element"
     When I click on ".action-details" "css_element" in the "Slash arguments support" "table_row"
@@ -27,6 +30,11 @@ Feature: Recommendations in theme_boost_union
     And I should see "Slash arguments support" in the ".modal-title" "css_element"
     And I should see "Slash arguments should be enabled" in the ".modal-body" "css_element"
     And I should see "Some Boost Union features rely on the Moodle core function slasharguments" in the ".modal-body" "css_element"
+    And I should see "Current status" in the ".modal-body" "css_element"
+    And I should see "Warning" in the ".modal-body" "css_element"
+    And I should see "configured improperly and may not work as you would expect it" in the ".modal-body" "css_element"
+    And I should see "Possible solutions" in the ".modal-body" "css_element"
+    And I should see "click the wand icon to let Boost Union auto-fix this recommendation" in the ".modal-body" "css_element"
     When I click on ".modal-dialog .btn-close" "css_element"
     Then ".modal-dialog" "css_element" should not be visible
 
