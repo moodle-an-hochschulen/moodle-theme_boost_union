@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.1-r15
 
 * 2026-05-21 - Improvement: Add detail information about the current recommendation status and possible actions to the recommendation info modal, helps to resolve #1277
 * 2026-05-21 - Improvement: Add type class 'usability' and status class 'check' to the recommendations subsystem, helps to resolve #1277
