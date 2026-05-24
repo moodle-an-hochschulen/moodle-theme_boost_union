@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-05-24 - Improvement: Transform settings_overview.php into an admin_externalpage, resolves #1281
+
 ### v5.2-r1
 
 * 2026-05-22 - Status of the Boost Union 5.2 release:
