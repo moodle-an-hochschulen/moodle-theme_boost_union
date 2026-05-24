@@ -47,7 +47,7 @@ Feature: Configuring the theme_boost_union plugin as manager
     And I should see "Recommendations" in the "#region-main" "css_element"
     # And we have to test the 'settings overview' page as well as this is an individual page.
     And I navigate to "Appearance > Boost Union > Settings overview" in site administration
-    And "body#page-theme-boost_union-settings_overview" "css_element" should exist
+    And "body#page-admin-theme-boost_union-settings_overview" "css_element" should exist
     And I should see "Boost Union settings overview" in the "#region-main" "css_element"
 
   Scenario: Capabilities - Do not allow managers to configure Boost Union (countercheck)

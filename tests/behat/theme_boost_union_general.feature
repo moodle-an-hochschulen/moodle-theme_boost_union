@@ -10,8 +10,8 @@ Feature: Configuring the theme_boost_union plugin as admin
     And I follow "Site administration"
     And I navigate to "Appearance > Themes" in site administration
     And I click on "#theme-settings-boost_union" "css_element" in the "#theme-card-boost_union" "css_element"
-    And I should see "Look" in the ".card-body" "css_element"
-    And I should see "Settings for branding your Moodle site"
+    And I should see "Look" in the "#region-main" "css_element"
+    And I should see "Settings for branding your Moodle site" in the "#region-main" "css_element"
     And I should see "Settings overview" in the ".breadcrumb" "css_element"
 
   @javascript
