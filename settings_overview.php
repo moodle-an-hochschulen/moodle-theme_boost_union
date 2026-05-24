@@ -22,22 +22,20 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__ . '/../../config.php');
+// Require config.
+require(__DIR__ . '/../../config.php');
 
-// Require login.
-require_login();
+// Require admin library.
+require_once($CFG->libdir . '/adminlib.php');
 
 // Get system context.
 $context = context_system::instance();
 
-// Require the necessary capability to configure the theme (or an admin account which has this capability automatically).
-require_capability('theme/boost_union:configure', $context);
+// Access checks.
+admin_externalpage_setup('theme_boost_union_overview');
 
 // Set page URL.
 $PAGE->set_url('/theme/boost_union/settings_overview.php');
-
-// Set page layout.
-$PAGE->set_pagelayout('admin');
 
 // Set page context.
 $PAGE->set_context($context);

@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-05-24 - Improvement: Transform settings_overview.php into an admin_externalpage, resolves #1281
+
 ### v5.0-r26
 
 * 2026-05-21 - Improvement: Add detail information about the current recommendation status and possible actions to the recommendation info modal, helps to resolve #1277
