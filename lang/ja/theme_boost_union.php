@@ -15,11 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme Boost Union - Language pack
+ * Japanese language pack for theme_boost_union
  *
  * @package    theme_boost_union
- * @copyright  2022 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
+ * @category   string
+ * @copyright  2026
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ * NOTE:
+ * This file was translated by Toshimi Hatanaka (RubliX) using AI-assisted translation,
+ * following Moodle core Japanese terminology and Boost Union context.
  */
 
 defined('MOODLE_INTERNAL') || die();
