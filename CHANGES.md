@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-05-25 - Improvement: Use the real page layout names in the 'Additional block regions for xxx layout' setting labels as well.
 * 2026-05-25 - Improvement: Allow the admin to set the page layouts where the footnote is shown, helps to resolve #1279
 * 2026-05-24 - Improvement: Enhance recommendations to only show in the list if an action is needed, resolves #1285
 * 2026-05-24 - Improvement: Transform settings_overview.php into an admin_externalpage, resolves #1281
