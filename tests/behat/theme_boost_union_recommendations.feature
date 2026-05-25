@@ -184,7 +184,7 @@ Feature: Recommendations in theme_boost_union
     And I should see "The recommendation has been fixed automatically."
     And ".action-autofix" "css_element" should not exist in the "Auth instructions" "table_row"
 
-  Scenario Outline: Verify Recommendation infobannerloginpagesidebyside (Status check)
+  Scenario Outline: Verify Recommendation infobannerloginpagesidebyside (Status check - Negative case)
     Given the following config values are set as admin:
       | config           | value                   | plugin            |
       | loginarrangement | <loginarrangementvalue> | theme_boost_union |
@@ -196,8 +196,19 @@ Feature: Recommendations in theme_boost_union
     Examples:
       | loginarrangementvalue | infobanner1pagesvalue | statustext |
       | sidebyside            | login                 | Check      |
-      | sidebyside            |                       | OK         |
-      |                       | login                 | OK         |
+
+  Scenario Outline: Verify Recommendation infobannerloginpagesidebyside (Status check - Positive case)
+    Given the following config values are set as admin:
+      | config           | value                   | plugin            |
+      | loginarrangement | <loginarrangementvalue> | theme_boost_union |
+      | infobanner1pages | <infobanner1pagesvalue> | theme_boost_union |
+    When I navigate to "Appearance > Boost Union > Recommendations" in site administration
+    Then I should not see "Info banner on login page"
+
+    Examples:
+      | loginarrangementvalue | infobanner1pagesvalue |
+      | sidebyside            |                       |
+      |                       | login                 |
 
   Scenario: Verify recommendation notification and view-all action on settings page (with the core logo recommendation as an example)
     Given the following "theme_boost_union > core files" exist:

@@ -287,6 +287,11 @@ class recommendations_overview extends \core_table\sql_table {
 
         // Iterate over recommendations and prepare data for the table.
         foreach ($recommendations as $recommendation) {
+            // Skip recommendations that should not be shown.
+            if (!manager::recommendation_should_be_shown($recommendation)) {
+                continue;
+            }
+
             // Initialize a row of data for the table.
             $row = new \stdClass();
 

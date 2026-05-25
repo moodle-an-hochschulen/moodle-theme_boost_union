@@ -129,6 +129,15 @@ class infobannerloginpagesidebyside extends recommendation {
     }
 
     /**
+     * Return whether this recommendation should be hidden from the list when its status is OK.
+     *
+     * @return bool
+     */
+    public function hide_if_ok(): bool {
+        return true;
+    }
+
+    /**
      * Return whether this recommendation supports arguments (i.e. parameterised recommendation id).
      *
      * @return bool
