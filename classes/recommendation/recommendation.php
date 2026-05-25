@@ -139,6 +139,18 @@ abstract class recommendation {
     }
 
     /**
+     * Return whether this recommendation should be hidden from the list when its status is OK or N/A.
+     *
+     * Override this in a subclass and return true for recommendations that only need to be shown
+     * when an action is actually required (i.e. status is not OK or N/A).
+     *
+     * @return bool
+     */
+    public function hide_if_ok(): bool {
+        return false;
+    }
+
+    /**
      * Return whether this recommendation accepts slash-separated arguments via a parameterised id.
      *
      * If this returns true, the manager will call set_args() to pass the parsed arguments before get_status() is invoked.
