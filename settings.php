@@ -4214,6 +4214,35 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_confightmleditor($name, $title, $description, '');
         $tab->add($setting);
 
+        // Setting: Page layouts for footnote.
+        // The list contains all page layouts defined in the theme that include footnote.php
+        // (i.e. all layouts using drawers.php or login.php).
+        $footnotelayoutsoptions = [
+            'base' => get_string('pagelayout_base', 'theme_boost_union', null, true),
+            'standard' => get_string('pagelayout_standard', 'theme_boost_union', null, true),
+            'course' => get_string('pagelayout_course', 'theme_boost_union', null, true),
+            'coursecategory' => get_string('pagelayout_coursecategory', 'theme_boost_union', null, true),
+            'incourse' => get_string('pagelayout_incourse', 'theme_boost_union', null, true),
+            'frontpage' => get_string('pagelayout_frontpage', 'theme_boost_union', null, true),
+            'admin' => get_string('pagelayout_admin', 'theme_boost_union', null, true),
+            'mycourses' => get_string('pagelayout_mycourses', 'theme_boost_union', null, true),
+            'mydashboard' => get_string('pagelayout_mydashboard', 'theme_boost_union', null, true),
+            'mypublic' => get_string('pagelayout_mypublic', 'theme_boost_union', null, true),
+            'login' => get_string('pagelayout_login', 'theme_boost_union', null, true),
+            'report' => get_string('pagelayout_report', 'theme_boost_union', null, true),
+        ];
+        $name = 'theme_boost_union/footnotelayouts';
+        $title = get_string('footnotelayouts', 'theme_boost_union', null, true);
+        $description = get_string('footnotelayouts_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configmulticheckbox(
+            $name,
+            $title,
+            $description,
+            array_fill_keys(array_keys($footnotelayoutsoptions), 1),
+            $footnotelayoutsoptions
+        );
+        $tab->add($setting);
+
         // Heading: Footer.
         $name = 'theme_boost_union/footerheading';
         $title = get_string('footerheading', 'theme_boost_union', null, true);

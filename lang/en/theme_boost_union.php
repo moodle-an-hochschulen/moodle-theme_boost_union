@@ -68,6 +68,18 @@ $string['bootstrap0to5_5'] = '5 (Extra large)';
 $string['horizontalalignment_left'] = 'Left';
 $string['horizontalalignment_center'] = 'Centered';
 $string['horizontalalignment_right'] = 'Right';
+$string['pagelayout_admin'] = 'Administration pages';
+$string['pagelayout_base'] = 'Base layout';
+$string['pagelayout_course'] = 'Course main pages';
+$string['pagelayout_coursecategory'] = 'Course category pages';
+$string['pagelayout_frontpage'] = 'Site home page';
+$string['pagelayout_incourse'] = 'Course sub pages / Activity pages';
+$string['pagelayout_login'] = 'Login page';
+$string['pagelayout_mycourses'] = 'My courses';
+$string['pagelayout_mydashboard'] = 'Dashboard';
+$string['pagelayout_mypublic'] = 'User profiles';
+$string['pagelayout_report'] = 'Report pages';
+$string['pagelayout_standard'] = 'Standard layout';
 
 // Course overrides: General strings.
 $string['courseoverride'] = 'Add to course settings as well';
@@ -1100,6 +1112,9 @@ $string['footnoteheading'] = 'Footnote';
 // ... ... Setting: Footnote.
 $string['footnotesetting'] = 'Footnote';
 $string['footnotesetting_desc'] = 'Whatever you add to this textarea will be displayed at the end of a page, in the footer (not the floating footer) on every page which uses the layouts "drawers", "columns2" or "login". Content in this area could be for example the copyright, the terms of use or the name of your organisation. <br/> If you want to remove the footnote again, just empty the text area.';
+// ... ... Setting: Page layouts for footnote.
+$string['footnotelayouts'] = 'Page layouts for footnote';
+$string['footnotelayouts_desc'] = 'With this setting, you can control on which page layouts the footnote is shown. If no layout is selected, the footnote will not be shown on any layout.';
 // ... Section: Footer.
 $string['footerheading'] = 'Footer';
 // ... ... Setting: Enable footer.
