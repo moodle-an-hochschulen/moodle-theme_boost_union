@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-05-24 - Improvement: Enhance recommendations to only show in the list if an action is needed, resolves #1285
 * 2026-05-24 - Improvement: Transform settings_overview.php into an admin_externalpage, resolves #1281
 
 ### v4.5-r40
