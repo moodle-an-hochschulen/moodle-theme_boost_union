@@ -301,6 +301,24 @@ class manager {
     }
 
     /**
+     * Check if a recommendation should be shown in the recommendations list.
+     *
+     * A recommendation is hidden from the list when hide_if_ok() returns true and
+     * its effective status is OK or N/A.
+     *
+     * @param recommendation $recommendation The recommendation to check.
+     * @return bool
+     */
+    public static function recommendation_should_be_shown(recommendation $recommendation): bool {
+        if ($recommendation->hide_if_ok() &&
+                (self::get_effective_status($recommendation) === recommendation::OK ||
+                 self::get_effective_status($recommendation) === recommendation::NA)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Check if a recommendation needs attention.
      *
      * A recommendation needs attention if its effective status is neither OK, N/A nor MUTED.
