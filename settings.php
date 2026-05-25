@@ -2331,7 +2331,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name,
             $title,
             $description,
-            $showcourseimagesoptions,
+            array_fill_keys(array_keys($showcourseimagesoptions), 1),
             $showcourseimagesoptions
         );
         $setting->set_updatedcallback('theme_reset_all_caches');
