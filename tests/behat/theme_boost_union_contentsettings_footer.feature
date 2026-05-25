@@ -46,6 +46,27 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And I should not see "<span lang=\"en\" class=\"multilang\">Footnote</span>" in the "#footnote" "css_element"
     And I should not see "FootnoteFussnote" in the "#footnote" "css_element"
 
+  Scenario Outline: Setting: Page layouts for footnote - Set the layouts
+    Given the following config values are set as admin:
+      | config          | value         | plugin            |
+      | footnote        | Footnote text | theme_boost_union |
+      | footnotelayouts | <layouts>     | theme_boost_union |
+    When I log in as "admin"
+    And I follow "Dashboard"
+    Then "#footnote" "css_element" <dashboardshouldornot> exist
+    And I am on "Course 1" course homepage
+    Then "#footnote" "css_element" <courseshouldornot> exist
+    And I log out
+    And I am on login page
+    Then "#footnote" "css_element" <loginshouldornot> exist
+
+    # We do not want to burn too much CPU time by testing all available layouts. We just test three important layouts.
+    Examples:
+      | layouts                  | dashboardshouldornot | courseshouldornot | loginshouldornot |
+      | mydashboard              | should               | should not        | should not       |
+      | login                    | should not           | should not        | should           |
+      | mydashboard,login,course | should               | should            | should           |
+
   @javascript
   Scenario Outline: Setting: Footer - Enable and disable the footer button
     Given the following config values are set as admin:
