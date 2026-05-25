@@ -310,9 +310,11 @@ class manager {
      * @return bool
      */
     public static function recommendation_should_be_shown(recommendation $recommendation): bool {
-        if ($recommendation->hide_if_ok() &&
+        if (
+            $recommendation->hide_if_ok() &&
                 (self::get_effective_status($recommendation) === recommendation::OK ||
-                 self::get_effective_status($recommendation) === recommendation::NA)) {
+                 self::get_effective_status($recommendation) === recommendation::NA)
+        ) {
             return false;
         }
         return true;
