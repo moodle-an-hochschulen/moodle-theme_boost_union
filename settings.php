@@ -4008,8 +4008,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create admin setting for each page layout.
         foreach ($pagelayouts as $layout => $regions) {
             $name = 'theme_boost_union/blockregionsfor' . $layout;
-            $title = get_string('blockregionsforlayout', 'theme_boost_union', $layout, true);
-            $description = get_string('blockregionsforlayout_desc', 'theme_boost_union', $layout, true);
+            $layoutname = get_string('pagelayout_' . $layout, 'theme_boost_union', null, true);
+            $title = get_string('blockregionsforlayout', 'theme_boost_union', $layoutname, true);
+            $description = get_string('blockregionsforlayout_desc', 'theme_boost_union', $layoutname, true);
             // If this layout only supports sticky blocks, add a notification to the description.
             if (in_array($layout, $stickyonlylayouts)) {
                 $notificationurl = 'https://docs.moodle.org/en/Block_settings#Making_a_block_sticky_throughout_the_whole_site';
