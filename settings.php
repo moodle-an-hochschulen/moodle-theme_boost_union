@@ -2331,7 +2331,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name,
             $title,
             $description,
-            $showcourseimagesoptions,
+            array_fill_keys(array_keys($showcourseimagesoptions), 1),
             $showcourseimagesoptions
         );
         $setting->set_updatedcallback('theme_reset_all_caches');
@@ -4008,8 +4008,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Create admin setting for each page layout.
         foreach ($pagelayouts as $layout => $regions) {
             $name = 'theme_boost_union/blockregionsfor' . $layout;
-            $title = get_string('blockregionsforlayout', 'theme_boost_union', $layout, true);
-            $description = get_string('blockregionsforlayout_desc', 'theme_boost_union', $layout, true);
+            $layoutname = get_string('pagelayout_' . $layout, 'theme_boost_union', null, true);
+            $title = get_string('blockregionsforlayout', 'theme_boost_union', $layoutname, true);
+            $description = get_string('blockregionsforlayout_desc', 'theme_boost_union', $layoutname, true);
             // If this layout only supports sticky blocks, add a notification to the description.
             if (in_array($layout, $stickyonlylayouts)) {
                 $notificationurl = 'https://docs.moodle.org/en/Block_settings#Making_a_block_sticky_throughout_the_whole_site';
@@ -4368,6 +4369,35 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('footnotesetting_desc', 'theme_boost_union', null, true);
         $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $setting = new admin_setting_confightmleditor($name, $title, $description, '');
+        $tab->add($setting);
+
+        // Setting: Page layouts for footnote.
+        // The list contains all page layouts defined in the theme that include footnote.php
+        // (i.e. all layouts using drawers.php or login.php).
+        $footnotelayoutsoptions = [
+            'base' => get_string('pagelayout_base', 'theme_boost_union', null, true),
+            'standard' => get_string('pagelayout_standard', 'theme_boost_union', null, true),
+            'course' => get_string('pagelayout_course', 'theme_boost_union', null, true),
+            'coursecategory' => get_string('pagelayout_coursecategory', 'theme_boost_union', null, true),
+            'incourse' => get_string('pagelayout_incourse', 'theme_boost_union', null, true),
+            'frontpage' => get_string('pagelayout_frontpage', 'theme_boost_union', null, true),
+            'admin' => get_string('pagelayout_admin', 'theme_boost_union', null, true),
+            'mycourses' => get_string('pagelayout_mycourses', 'theme_boost_union', null, true),
+            'mydashboard' => get_string('pagelayout_mydashboard', 'theme_boost_union', null, true),
+            'mypublic' => get_string('pagelayout_mypublic', 'theme_boost_union', null, true),
+            'login' => get_string('pagelayout_login', 'theme_boost_union', null, true),
+            'report' => get_string('pagelayout_report', 'theme_boost_union', null, true),
+        ];
+        $name = 'theme_boost_union/footnotelayouts';
+        $title = get_string('footnotelayouts', 'theme_boost_union', null, true);
+        $description = get_string('footnotelayouts_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configmulticheckbox(
+            $name,
+            $title,
+            $description,
+            array_fill_keys(array_keys($footnotelayoutsoptions), 1),
+            $footnotelayoutsoptions
+        );
         $tab->add($setting);
 
         // Heading: Footer.
