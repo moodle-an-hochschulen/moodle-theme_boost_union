@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-05-26 - Bugfix: Additional login background images may be not have been recognized directly after upload, resolved #1290
 * 2026-05-25 - Bugfix: Fix the default value of the courseoverviewshowcourseimages setting, resolves #1288
 * 2026-05-25 - Improvement: Use the real page layout names in the 'Additional block regions for xxx layout' setting labels as well.
 * 2026-05-25 - Improvement: Allow the admin to set the page layouts where the footnote is shown, helps to resolve #1279
