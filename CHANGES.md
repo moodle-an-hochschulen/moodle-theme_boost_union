@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.2-r2
 
 * 2026-05-26 - Bugfix: Additional login background images may be not have been recognized directly after upload, resolved #1290
 * 2026-05-25 - Bugfix: Fix the default value of the courseoverviewshowcourseimages setting, resolves #1288
