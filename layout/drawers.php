@@ -223,5 +223,22 @@ if ($PAGE->pagelayout == 'frontpage') {
 // Include the template content for the smart menus.
 require_once(__DIR__ . '/includes/smartmenus.php');
 
-// Render drawers.mustache from theme_boost (which is overridden in theme_boost_union).
-echo $OUTPUT->render_from_template('theme_boost/drawers', $templatecontext);
+// If we are on MWP.
+if (\theme_boost_union\local\mwp::extension_present() == true) {
+    // Call the BU MWP class method only if the class and method exist.
+    if (
+        class_exists('\\local_boost_union_mwp\\local\\layouts') &&
+            method_exists('\\local_boost_union_mwp\\local\\layouts', 'postprocess_drawers_templatecontext')
+    ) {
+        // Post-process the templatecontext array.
+        $templatecontext = \local_boost_union_mwp\local\layouts::postprocess_drawers_templatecontext($templatecontext);
+    }
+
+    // Render drawers.mustache from local_boost_union_mwp.
+    echo $OUTPUT->render_from_template('local_boost_union_mwp/drawers', $templatecontext);
+
+    // Otherwise.
+} else {
+    // Render drawers.mustache from theme_boost (which is overridden in theme_boost_union).
+    echo $OUTPUT->render_from_template('theme_boost/drawers', $templatecontext);
+}
