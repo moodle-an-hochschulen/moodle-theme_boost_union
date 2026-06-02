@@ -5,6 +5,6 @@
     "type": "moodle-theme",
     "homepage": "https://moodle-an-hochschulen.de",
     "require": {
-        "moodle/lms": "~5.1.0"
+        "moodle/lms": "~5.2.0"
     }
 }
