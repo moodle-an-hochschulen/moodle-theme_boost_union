@@ -364,6 +364,8 @@ $string['loginformpositionsetting_desc'] = 'With this setting, you can optimize 
 $string['loginformpositionsetting_center'] = 'Centered';
 $string['loginformpositionsetting_left'] = 'Left-aligned';
 $string['loginformpositionsetting_right'] = 'Right-aligned';
+$string['loginformpositionsetting_semileft'] = 'Semi-left-aligned';
+$string['loginformpositionsetting_semiright'] = 'Semi-right-aligned';
 // ... ... Setting: Login container transparency.
 // These strings do not fully match the setting name as the setting was renamend during its lifetime, but the string IDs were keps to ease the life of the translators.
 $string['loginformtransparencysetting'] = 'Login container transparency';
