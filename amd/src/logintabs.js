@@ -351,11 +351,14 @@ const applyWrapperLayout = (wrapper) => {
     wrapper.style.justifyContent = 'flex-start';
 
     // Determine horizontal alignment based on wrapper classes.
+    // Only apply non-center alignment on md+ screens (matching CSS media-breakpoint-up(md)).
     let alignment = 'center';
-    if (wrapper.classList.contains('login-wrapper-left')) {
-        alignment = 'flex-start';
-    } else if (wrapper.classList.contains('login-wrapper-right')) {
-        alignment = 'flex-end';
+    if (window.matchMedia(getMediaQueryByVar('--bs-breakpoint-md')).matches) {
+        if (wrapper.classList.contains('login-wrapper-left') || wrapper.classList.contains('login-wrapper-semileft')) {
+            alignment = 'flex-start';
+        } else if (wrapper.classList.contains('login-wrapper-right') || wrapper.classList.contains('login-wrapper-semiright')) {
+            alignment = 'flex-end';
+        }
     }
     wrapper.style.alignItems = alignment;
 

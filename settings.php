@@ -1057,6 +1057,10 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 THEME_BOOST_UNION_SETTING_LOGINFORMPOS_CENTER => get_string('loginformpositionsetting_center', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_LOGINFORMPOS_LEFT => get_string('loginformpositionsetting_left', 'theme_boost_union'),
                 THEME_BOOST_UNION_SETTING_LOGINFORMPOS_RIGHT => get_string('loginformpositionsetting_right', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_LOGINFORMPOS_SEMILEFT =>
+                        get_string('loginformpositionsetting_semileft', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_LOGINFORMPOS_SEMIRIGHT =>
+                        get_string('loginformpositionsetting_semiright', 'theme_boost_union'),
         ];
         $setting = new admin_setting_configselect(
             $name,
