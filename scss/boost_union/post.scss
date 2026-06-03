@@ -281,15 +281,28 @@
  * Setting: Login container position
  --------------------------------------*/
 
-/* Move the login window to the side based on the theme settings.
-   While the classes login-wrapper-left and login-wrapper-right are set here,
+/* On larger screens, move the login window to the side based on the theme settings.
+   While the classes login-wrapper-left, -right, -semileft, -semiright are set here,
    the class login-wrapper-center is not set here as the login form is already centered by Moodle core. */
-.login-wrapper.login-wrapper-left {
-    justify-content: left;
+@include media-breakpoint-up(md) {
+    .login-wrapper.login-wrapper-left {
+        justify-content: left;
+        padding-left: 1rem;
+    }
+    .login-wrapper.login-wrapper-right {
+        justify-content: right;
+        padding-right: 1rem;
+    }
+    .login-wrapper.login-wrapper-semileft {
+        justify-content: left;
+        padding-left: 10rem;
+    }
+    .login-wrapper.login-wrapper-semiright {
+        justify-content: right;
+        padding-right: 10rem;
+    }
 }
-.login-wrapper.login-wrapper-right {
-    justify-content: right;
-}
+
 
 /*---------------------------------------
  * Setting: Login container transparency

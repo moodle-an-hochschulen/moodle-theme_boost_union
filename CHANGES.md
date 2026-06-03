@@ -6,6 +6,8 @@ Changes
 
 ### Unreleased
 
+* 2026-06-01 - Improvement: Improve the outer margins of the left-aligned and right-aligned login forms on smaller and of larger screens
+* 2026-06-01 - Improvement: Add a semi-left and semi-right option to the loginformposition setting, resolves #1296
 * 2026-05-31 - MWP: Add support for a Moodle Workplace™ extension for Boost Union, resolves #409
 
 ### v4.5-r41

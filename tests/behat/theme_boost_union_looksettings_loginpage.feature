@@ -14,10 +14,12 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And the "class" attribute of ".login-wrapper" "css_element" should not contain "<notclass2>"
 
     Examples:
-      | setting | class                | notclass1            | notclass2           |
-      | center  | login-wrapper-center | login-wrapper-left   | login-wrapper-right |
-      | left    | login-wrapper-left   | login-wrapper-center | login-wrapper-right |
-      | right   | login-wrapper-right  | login-wrapper-center | login-wrapper-left  |
+      | setting   | class                   | notclass1            | notclass2               |
+      | center    | login-wrapper-center    | login-wrapper-left   | login-wrapper-right     |
+      | left      | login-wrapper-left      | login-wrapper-center | login-wrapper-right     |
+      | right     | login-wrapper-right     | login-wrapper-center | login-wrapper-left      |
+      | semileft  | login-wrapper-semileft  | login-wrapper-center | login-wrapper-semiright |
+      | semiright | login-wrapper-semiright | login-wrapper-center | login-wrapper-semileft  |
 
   Scenario Outline: Setting: Login form transparency
     Given the following config values are set as admin:
