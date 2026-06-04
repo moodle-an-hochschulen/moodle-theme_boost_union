@@ -220,6 +220,12 @@ class smartmenu_item {
     const BACKGROUND_OPACITY = 5;
 
     /**
+     * Display the course fullname as title in menu for dynamic menu item.
+     * @var int
+     */
+    const FIELD_FULLNAME = 0;
+
+    /**
      * Display the course shortname as title in menu for dynamic menu item.
      *
      * @var int
@@ -227,10 +233,40 @@ class smartmenu_item {
     const FIELD_SHORTNAME = 1;
 
     /**
-     * Display the course fullname as title in menu for dynamic menu item.
+     * Display the course fullname with shortname in brackets as title in menu for dynamic menu item.
      * @var int
      */
-    const FIELD_FULLNAME = 0;
+    const FIELD_FULLNAME_SHORTNAME = 2;
+
+    /**
+     * Display the course shortname with fullname in brackets as title in menu for dynamic menu item.
+     * @var int
+     */
+    const FIELD_SHORTNAME_FULLNAME = 3;
+
+    /**
+     * Display a custom course field as title in menu for dynamic menu item.
+     * @var int
+     */
+    const FIELD_CUSTOMFIELD = 4;
+
+    /**
+     * Display the course full name with a custom course field value in brackets as title in menu for dynamic menu item.
+     * @var int
+     */
+    const FIELD_FULLNAME_CUSTOMFIELD = 5;
+
+    /**
+     * Display the course short name with a custom course field value in brackets as title in menu for dynamic menu item.
+     * @var int
+     */
+    const FIELD_SHORTNAME_CUSTOMFIELD = 6;
+
+    /**
+     * Do not display any title in menu for dynamic menu item.
+     * @var int
+     */
+    const FIELD_NONE = -1;
 
     /**
      * Sort the course list alphabetically by fullname ascending for dynamic menu item.
@@ -668,6 +704,97 @@ class smartmenu_item {
     }
 
     /**
+     * Get the course display name based on the configured display field.
+     *
+     * @param \stdClass $record The course record.
+     * @return string The course name to display.
+     */
+    protected function get_course_displayname($record): string {
+        // Get the text count for shortening the course name if configured.
+        $textcount = (int) ($this->item->textcount ?? 0);
+
+        // Determine the display name based on the configured display field.
+        switch ($this->item->displayfield) {
+            case self::FIELD_SHORTNAME:
+                return $record->shortname;
+            case self::FIELD_FULLNAME_SHORTNAME:
+                $fullname = $textcount ? $this->shorten_words($record->fullname, $textcount) : $record->fullname;
+                return $fullname . ' (' . $record->shortname . ')';
+            case self::FIELD_SHORTNAME_FULLNAME:
+                $fullname = $textcount ? $this->shorten_words($record->fullname, $textcount) : $record->fullname;
+                return $record->shortname . ' (' . $fullname . ')';
+            case self::FIELD_CUSTOMFIELD:
+                return $this->get_course_customfield_value($record, (int) ($this->item->displayfieldcustomfield ?? 0));
+            case self::FIELD_FULLNAME_CUSTOMFIELD:
+                $customvalue = $this->get_course_customfield_value($record, (int) ($this->item->displayfieldcustomfield ?? 0));
+                $fullname = $textcount ? $this->shorten_words($record->fullname, $textcount) : $record->fullname;
+                return $customvalue !== '' ? $fullname . ' (' . $customvalue . ')' : $fullname;
+            case self::FIELD_SHORTNAME_CUSTOMFIELD:
+                $customvalue = $this->get_course_customfield_value($record, (int) ($this->item->displayfieldcustomfield ?? 0));
+                return $customvalue !== '' ? $record->shortname . ' (' . $customvalue . ')' : $record->shortname;
+            case self::FIELD_FULLNAME:
+            default:
+                return $textcount ? $this->shorten_words($record->fullname, $textcount) : $record->fullname;
+        }
+    }
+
+    /**
+     * Get the second line text for a course in the dynamic menu item.
+     *
+     * @param \stdClass $record The course record.
+     * @return string The second line text, or empty string if not configured.
+     */
+    protected function get_course_displaynamesecond($record): string {
+        // If the second display field is not configured, return an empty string.
+        if (
+            !isset($this->item->displayfieldsecond) || $this->item->displayfieldsecond === null
+                || $this->item->displayfieldsecond == self::FIELD_NONE
+        ) {
+            return '';
+        }
+
+        // Get the text count for shortening the second line text if configured.
+        $textcountsecond = (int) ($this->item->textcountsecond ?? 0);
+
+        // Determine the second line text based on the configured second display field.
+        switch ($this->item->displayfieldsecond) {
+            case self::FIELD_FULLNAME:
+                return $textcountsecond ? $this->shorten_words($record->fullname, $textcountsecond) : $record->fullname;
+            case self::FIELD_SHORTNAME:
+                return $record->shortname;
+            case self::FIELD_CUSTOMFIELD:
+                return $this->get_course_customfield_value($record, (int) ($this->item->displayfieldsecondcustomfield ?? 0));
+            default:
+                return '';
+        }
+    }
+
+    /**
+     * Get the custom field value for a course menu item.
+     *
+     * @param \stdClass $record The course record.
+     * @param int $fieldid The ID of the custom field to retrieve.
+     * @return string The custom field value, or empty string if not found.
+     */
+    protected function get_course_customfield_value($record, int $fieldid): string {
+        // If the custom field ID is not configured, return an empty string.
+        if (empty($fieldid)) {
+            return '';
+        }
+
+        // Fetch the custom field value for the course.
+        $handler = \core_customfield\handler::get_handler('core_course', 'course');
+        $customfields = $handler->get_instance_data($record->id);
+        foreach ($customfields as $data) {
+            if ($data->get_field()->get('id') == $fieldid) {
+                $value = $data->export_value();
+                return $value !== null ? (string) $value : '';
+            }
+        }
+        return '';
+    }
+
+    /**
      * Returns the URL of the image associated with the given course ID,
      * or a placeholder image URL if no image is associated with the course.
      *
@@ -966,9 +1093,8 @@ class smartmenu_item {
             // Get the course image from overview files.
             $itemimage = $this->get_course_image($record);
             // Generate the navigation node for this course and add the node to items list.
-            $coursename = ($this->item->displayfield == self::FIELD_SHORTNAME) ? $record->shortname : $record->fullname;
-            // Short the course text name. used custom end (2) dots instead of three dots to display more words from coursenames.
-            $coursename = ($this->item->textcount) ? $this->shorten_words($coursename, $this->item->textcount) : $coursename;
+            $coursename = $this->get_course_displayname($record);
+            $coursenamesecond = $this->get_course_displaynamesecond($record);
             // Store the string which should be used for sorting within the item.
             switch ($this->item->listsort) {
                 case self::LISTSORT_FULLNAME_ASC:
@@ -1011,7 +1137,8 @@ class smartmenu_item {
                 [],
                 $itemimage,
                 $sortdata,
-                $itemclasses
+                $itemclasses,
+                $coursenamesecond
             );
         }
 
@@ -1626,6 +1753,7 @@ class smartmenu_item {
      * @param string $itemimage Card image url for item.
      * @param array $sortdata The string to be used for sorting the items.
      * @param array $itemclasses List of additional css classes for the menu item node.
+     * @param string|null $secondline The second line text for the item, used for dynamic course menu items.
      *
      * @return array An associative array of node data for the item.
      */
@@ -1639,12 +1767,35 @@ class smartmenu_item {
         $children = [],
         $itemimage = '',
         $sortdata = [],
-        $itemclasses = []
+        $itemclasses = [],
+        $secondline = null
     ) {
 
         global $OUTPUT;
 
-        $title = format_string($title);
+        // Format the title string.
+        $title = \html_writer::tag(
+            'span',
+            format_string($title),
+            ['class' => 'boost-union-smartmenu-firstline']
+        );
+
+        // Append the second line to the title if configured.
+        if (!empty($secondline)) {
+            $title .= \html_writer::tag(
+                'span',
+                format_string($secondline),
+                ['class' => 'boost-union-smartmenu-secondline small text-muted']
+            );
+        }
+
+        // Wrap the title in a wrapper (to allow it to be positioned in one piece near the icon).
+        $title = \html_writer::tag(
+            'div',
+            $title,
+            ['class' => 'd-flex flex-column']
+        );
+
         // Icon not shown in moodle 4.x, added the icon with text.
         if ($this->item->menuicon) {
             $icon = explode(':', $this->item->menuicon);
@@ -2007,7 +2158,43 @@ class smartmenu_item {
         return [
             self::FIELD_FULLNAME => get_string('smartmenusmenuitemdisplayfieldcoursefullname', 'theme_boost_union'),
             self::FIELD_SHORTNAME => get_string('smartmenusmenuitemdisplayfieldcourseshortname', 'theme_boost_union'),
+            self::FIELD_CUSTOMFIELD => get_string('smartmenusmenuitemdisplayfieldcustomfield', 'theme_boost_union'),
+            self::FIELD_FULLNAME_SHORTNAME => get_string('smartmenusmenuitemdisplayfieldfullnameshortname', 'theme_boost_union'),
+            self::FIELD_SHORTNAME_FULLNAME => get_string('smartmenusmenuitemdisplayfieldshortnamefullname', 'theme_boost_union'),
+            self::FIELD_FULLNAME_CUSTOMFIELD =>
+                    get_string('smartmenusmenuitemdisplayfieldfullnamecustomfield', 'theme_boost_union'),
+            self::FIELD_SHORTNAME_CUSTOMFIELD =>
+                    get_string('smartmenusmenuitemdisplayfieldshortnamecustomfield', 'theme_boost_union'),
         ];
+    }
+
+    /**
+     * Return the options for the second line setting.
+     *
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function get_displayfieldsecond_options(): array {
+        return [
+            self::FIELD_NONE => get_string('smartmenusmenuitemdisplayfieldsecondnone', 'theme_boost_union'),
+            self::FIELD_FULLNAME => get_string('smartmenusmenuitemdisplayfieldcoursefullname', 'theme_boost_union'),
+            self::FIELD_SHORTNAME => get_string('smartmenusmenuitemdisplayfieldcourseshortname', 'theme_boost_union'),
+            self::FIELD_CUSTOMFIELD => get_string('smartmenusmenuitemdisplayfieldcustomfield', 'theme_boost_union'),
+        ];
+    }
+
+    /**
+     * Get the available course custom fields as options for the second line selector.
+     *
+     * @return array The options array with id => name.
+     */
+    public static function get_customfield_options(): array {
+        $options = [0 => get_string('choosedots')];
+        $handler = \core_customfield\handler::get_handler('core_course', 'course');
+        foreach ($handler->get_fields() as $field) {
+            $options[$field->get('id')] = $field->get('name');
+        }
+        return $options;
     }
 
     /**
