@@ -84,6 +84,7 @@ class behat_theme_boost_union_generator extends behat_generator_base {
                     'customfields' => 'customfields',
                     'listsort' => 'listsort',
                     'displayfield' => 'displayfield',
+                    'displayfieldsecond' => 'displayfieldsecond',
                     'itemmode' => 'mode',
                     'display' => 'display',
                     'target' => 'target',
@@ -444,6 +445,17 @@ class behat_theme_boost_union_generator extends behat_generator_base {
      */
     protected function get_displayfield_id(string $displayfield): int {
         return $this->option_id('displayfield', $displayfield, smartmenu_item::get_displayfield_options());
+    }
+
+    /**
+     * Return the ID of the given displayfieldsecond option.
+     *
+     * @param string $displayfieldsecond
+     * @return int
+     * @throws Exception
+     */
+    protected function get_displayfieldsecond_id(string $displayfieldsecond): int {
+        return $this->option_id('displayfieldsecond', $displayfieldsecond, smartmenu_item::get_displayfieldsecond_options());
     }
 
     /**

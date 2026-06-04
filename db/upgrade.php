@@ -854,6 +854,47 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2024100777, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2024100789) {
+        // Define field displayfieldcustomfield to be added to theme_boost_union_menuitems.
+        $table = new xmldb_table('theme_boost_union_menuitems');
+        $field = new xmldb_field('displayfieldcustomfield', XMLDB_TYPE_INTEGER, '18', null, null, null, null, 'displayfield');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field displayfieldsecond to be added to theme_boost_union_menuitems.
+        $table = new xmldb_table('theme_boost_union_menuitems');
+        $field = new xmldb_field('displayfieldsecond', XMLDB_TYPE_INTEGER, '9', null, null, null, null, 'displayfield');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field displayfieldsecondcustomfield to be added to theme_boost_union_menuitems.
+        $field = new xmldb_field(
+            'displayfieldsecondcustomfield',
+            XMLDB_TYPE_INTEGER,
+            '18',
+            null,
+            null,
+            null,
+            null,
+            'displayfieldsecond'
+        );
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field textcountsecond to be added to theme_boost_union_menuitems.
+        $table = new xmldb_table('theme_boost_union_menuitems');
+        $field = new xmldb_field('textcountsecond', XMLDB_TYPE_INTEGER, '9', null, null, null, null, 'textcount');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2024100789, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
