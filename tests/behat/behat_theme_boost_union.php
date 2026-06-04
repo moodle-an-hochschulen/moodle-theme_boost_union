@@ -243,7 +243,7 @@ class behat_theme_boost_union extends behat_base {
             ),
             new behat_component_named_selector(
                 'Smart menu item',
-                [".//a[contains(@class, 'boost-union-smartmenuitem')][contains(text(), %locator%)]"],
+                [".//a[contains(@class, 'boost-union-smartmenuitem')][contains(., %locator%)]"],
             ),
             new behat_component_named_selector(
                 'Main menu smart menu',
@@ -256,7 +256,7 @@ class behat_theme_boost_union extends behat_base {
                 'Main menu smart menu item',
                 [
                     ".//div[contains(@class, 'primary-navigation')]" .
-                        "//a[contains(@class, 'boost-union-smartmenuitem')][contains(text(), %locator%)]",
+                        "//a[contains(@class, 'boost-union-smartmenuitem')][contains(., %locator%)]",
                 ],
             ),
             new behat_component_named_selector(
@@ -270,7 +270,7 @@ class behat_theme_boost_union extends behat_base {
                 'Menu bar smart menu item',
                 [
                     ".//nav[contains(@class, 'boost-union-menubar')]" .
-                        "//a[contains(@class, 'boost-union-smartmenuitem')][contains(text(), %locator%)]",
+                        "//a[contains(@class, 'boost-union-smartmenuitem')][contains(., %locator%)]",
                 ],
             ),
             new behat_component_named_selector(
@@ -283,7 +283,7 @@ class behat_theme_boost_union extends behat_base {
                 'User menu smart menu item',
                 [
                     ".//div[@id = 'usermenu-carousel']//div[contains(@class, 'carousel-item')]" .
-                        "//a[contains(@class, 'boost-union-smartmenuitem')][contains(text(), %locator%)]",
+                        "//a[contains(@class, 'boost-union-smartmenuitem')][contains(., %locator%)]",
                 ],
             ),
             new behat_component_named_selector(
@@ -296,7 +296,7 @@ class behat_theme_boost_union extends behat_base {
                 'Bottom bar smart menu item',
                 [
                     ".//nav[contains(@class, 'boost-union-bottom-menu')]" .
-                        "//a[contains(@class, 'boost-union-smartmenuitem')][contains(text(), %locator%)]",
+                        "//a[contains(@class, 'boost-union-smartmenuitem')][contains(., %locator%)]",
                 ],
             ),
             new behat_component_named_selector(

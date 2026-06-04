@@ -179,19 +179,83 @@ class theme_boost_union_generator extends component_generator_base {
         $customfields = json_encode($data['customfields'] ?? new stdClass());
         $listsort = null;
         $displayfield = null;
+        $displayfieldcustomfield = null;
         $textcount = null;
+        $textcountsecond = null;
+        $displayfieldsecond = null;
+        $displayfieldsecondcustomfield = null;
         if ($type == smartmenu_item::TYPEDYNAMIC) {
+            // Sorting option.
             $validsorts = array_keys(smartmenu_item::get_listsort_options());
             $listsort = $data['listsort'] ?? smartmenu_item::LISTSORT_FULLNAME_ASC;
             if (!in_array($listsort, $validsorts)) {
                 throw new Exception('Invalid listsort.');
             }
+
+            // Display field options.
             $validdisplayfields = array_keys(smartmenu_item::get_displayfield_options());
             $displayfield = $data['displayfield'] ?? smartmenu_item::FIELD_FULLNAME;
             if (!in_array($displayfield, $validdisplayfields)) {
                 throw new Exception('Invalid displayfield.');
             }
+
+            // Display field custom field ID (if applicable).
+            $displayfieldcustomfield = $data['displayfieldcustomfield'] ?? 0;
+            // Accept field shortname (string) as well as integer field ID.
+            if (!empty($displayfieldcustomfield) && !is_numeric($displayfieldcustomfield)) {
+                $displayfieldcustomfield = $DB->get_field(
+                    'customfield_field',
+                    'id',
+                    ['shortname' => $displayfieldcustomfield]
+                ) ?: 0;
+            }
+            $displayfieldcustomfield = (int) $displayfieldcustomfield;
+            $customfieldvariants = [
+                smartmenu_item::FIELD_CUSTOMFIELD,
+                smartmenu_item::FIELD_FULLNAME_CUSTOMFIELD,
+                smartmenu_item::FIELD_SHORTNAME_CUSTOMFIELD,
+            ];
+            if (in_array($displayfield, $customfieldvariants)) {
+                if (empty($displayfieldcustomfield)) {
+                    throw new Exception('displayfieldcustomfield is required when displayfield is set to a custom field variant.');
+                }
+                $validcustomfields = array_keys(smartmenu_item::get_customfield_options());
+                if (!in_array($displayfieldcustomfield, $validcustomfields)) {
+                    throw new Exception('Invalid displayfieldcustomfield.');
+                }
+            }
+
+            // Number of words option.
             $textcount = $data['textcount'] ?? null;
+            $textcountsecond = $data['textcountsecond'] ?? null;
+
+            // Second display field options.
+            $validdisplayfieldseconds = array_keys(smartmenu_item::get_displayfieldsecond_options());
+            $displayfieldsecond = $data['displayfieldsecond'] ?? smartmenu_item::FIELD_NONE;
+            if (!in_array($displayfieldsecond, $validdisplayfieldseconds)) {
+                throw new Exception('Invalid displayfieldsecond.');
+            }
+
+            // Display field second custom field ID (if applicable).
+            $displayfieldsecondcustomfield = $data['displayfieldsecondcustomfield'] ?? 0;
+            // Accept field shortname (string) as well as integer field ID.
+            if (!empty($displayfieldsecondcustomfield) && !is_numeric($displayfieldsecondcustomfield)) {
+                $displayfieldsecondcustomfield = $DB->get_field(
+                    'customfield_field',
+                    'id',
+                    ['shortname' => $displayfieldsecondcustomfield]
+                ) ?: 0;
+            }
+            $displayfieldsecondcustomfield = (int) $displayfieldsecondcustomfield;
+            if ($displayfieldsecond === smartmenu_item::FIELD_CUSTOMFIELD) {
+                if (empty($displayfieldsecondcustomfield)) {
+                    throw new Exception('displayfieldsecondcustomfield is required when displayfieldsecond is set to customfield.');
+                }
+                $validcustomfields = array_keys(smartmenu_item::get_customfield_options());
+                if (!in_array($displayfieldsecondcustomfield, $validcustomfields)) {
+                    throw new Exception('Invalid displayfieldsecondcustomfield.');
+                }
+            }
         }
 
         $validmodes = [
@@ -254,7 +318,11 @@ class theme_boost_union_generator extends component_generator_base {
             'displayhiddencourses' => $data['displayhiddencourses'] ?? 0,
             'hiddencoursesort' => $data['hiddencoursesort'] ?? 0,
             'displayfield' => $displayfield,
+            'displayfieldcustomfield' => $displayfieldcustomfield,
+            'displayfieldsecond' => $displayfieldsecond,
+            'displayfieldsecondcustomfield' => $displayfieldsecondcustomfield,
             'textcount' => $textcount,
+            'textcountsecond' => $textcountsecond,
             'mode' => $mode,
             'menuicon' => $data['menuicon'] ?? null,
             'display' => $display,
