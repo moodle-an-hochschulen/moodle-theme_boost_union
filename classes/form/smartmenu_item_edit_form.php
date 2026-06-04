@@ -493,7 +493,26 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->hideIf('displayfield', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
         $mform->addHelpButton('displayfield', 'smartmenusmenuitemdisplayfield', 'theme_boost_union');
 
-        // Add number of words (for the dynamic courses menu item type) as input element.
+        // Add custom field selector for first line (for the dynamic courses menu item type).
+        $customfieldoptionsfirst = smartmenu_item::get_customfield_options();
+        $mform->addElement(
+            'select',
+            'displayfieldcustomfield',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusmenuitemdisplayfieldcustomfieldfirst', 'theme_boost_union'),
+            $customfieldoptionsfirst
+        );
+        $mform->setType('displayfieldcustomfield', PARAM_INT);
+        $mform->hideIf('displayfieldcustomfield', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
+        $mform->hideIf('displayfieldcustomfield', 'displayfield', 'in', [
+            smartmenu_item::FIELD_FULLNAME,
+            smartmenu_item::FIELD_SHORTNAME,
+            smartmenu_item::FIELD_FULLNAME_SHORTNAME,
+            smartmenu_item::FIELD_SHORTNAME_FULLNAME,
+        ]);
+        $mform->addHelpButton('displayfieldcustomfield', 'smartmenusmenuitemdisplayfieldcustomfieldfirst', 'theme_boost_union');
+
+        // Add number of words for first line (for the dynamic courses menu item type) as input element.
         $mform->addElement(
             'text',
             'textcount',
@@ -503,7 +522,61 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->setType('textcount', PARAM_INT);
         $mform->addRule('textcount', get_string('err_numeric', 'form'), 'numeric', null, 'client');
         $mform->hideIf('textcount', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
+        $mform->hideIf('textcount', 'displayfield', 'in', [
+            smartmenu_item::FIELD_SHORTNAME,
+            smartmenu_item::FIELD_CUSTOMFIELD,
+            smartmenu_item::FIELD_SHORTNAME_CUSTOMFIELD,
+        ]);
         $mform->addHelpButton('textcount', 'smartmenusmenuitemtextcount', 'theme_boost_union');
+
+        // Add second line presentation (for the dynamic courses menu item type) as select element.
+        $displayfieldsecondoptions = smartmenu_item::get_displayfieldsecond_options();
+        $mform->addElement(
+            'select',
+            'displayfieldsecond',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusmenuitemdisplayfieldsecond', 'theme_boost_union'),
+            $displayfieldsecondoptions
+        );
+        $mform->setDefault('displayfieldsecond', smartmenu_item::FIELD_NONE);
+        $mform->setType('displayfieldsecond', PARAM_INT);
+        $mform->hideIf('displayfieldsecond', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
+        $mform->addHelpButton('displayfieldsecond', 'smartmenusmenuitemdisplayfieldsecond', 'theme_boost_union');
+
+        // Add custom field selector for second line (for the dynamic courses menu item type).
+        $customfieldoptions = smartmenu_item::get_customfield_options();
+        $mform->addElement(
+            'select',
+            'displayfieldsecondcustomfield',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusmenuitemdisplayfieldcustomfieldsecond', 'theme_boost_union'),
+            $customfieldoptions
+        );
+        $mform->setType('displayfieldsecondcustomfield', PARAM_INT);
+        $mform->hideIf('displayfieldsecondcustomfield', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
+        $mform->hideIf('displayfieldsecondcustomfield', 'displayfieldsecond', 'neq', smartmenu_item::FIELD_CUSTOMFIELD);
+        $mform->addHelpButton(
+            'displayfieldsecondcustomfield',
+            'smartmenusmenuitemdisplayfieldcustomfieldsecond',
+            'theme_boost_union'
+        );
+
+        // Add number of words for second line (for the dynamic courses menu item type) as input element.
+        $mform->addElement(
+            'text',
+            'textcountsecond',
+            get_string('smartmenusmenuitemtypedynamiccourses', 'theme_boost_union') . ': ' .
+            get_string('smartmenusmenuitemtextcountsecond', 'theme_boost_union')
+        );
+        $mform->setType('textcountsecond', PARAM_INT);
+        $mform->addRule('textcountsecond', get_string('err_numeric', 'form'), 'numeric', null, 'client');
+        $mform->hideIf('textcountsecond', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
+        $mform->hideIf('textcountsecond', 'displayfieldsecond', 'in', [
+            smartmenu_item::FIELD_NONE,
+            smartmenu_item::FIELD_SHORTNAME,
+            smartmenu_item::FIELD_CUSTOMFIELD,
+        ]);
+        $mform->addHelpButton('textcountsecond', 'smartmenusmenuitemtextcount', 'theme_boost_union');
 
         // If the menu is configured to be presented as cards.
         if (isset($this->_customdata['menutype']) && $this->_customdata['menutype'] == smartmenu::TYPE_CARD) {
