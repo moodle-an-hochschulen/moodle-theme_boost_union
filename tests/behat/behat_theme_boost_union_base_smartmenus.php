@@ -193,10 +193,10 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
         }
         if (in_array('User', $locations)) {
             $this->execute('behat_general::i_click_on', ['#user-menu-toggle', 'css_element']);
-            $this->execute('behat_general::i_click_on_in_the', [$menu, 'link', '#usermenu-carousel', 'css_element']);
+            // Look for the menu item anywhere in the user action menu without clicking into the user menu.
             $this->execute(
                 'behat_general::assert_element_contains_text',
-                [$item, '#usermenu-carousel .carousel-item.active', 'css_element']
+                [$item, '#user-action-menu', 'css_element']
             );
             $this->execute('behat_general::i_click_on', ['#user-menu-toggle', 'css_element']);
         }
