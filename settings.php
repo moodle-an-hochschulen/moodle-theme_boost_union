@@ -1069,11 +1069,27 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 THEME_BOOST_UNION_SETTING_LOGINFORMPOS_SEMIRIGHT =>
                         get_string('loginformpositionsetting_semiright', 'theme_boost_union'),
         ];
+        $loginformpositiondefault = THEME_BOOST_UNION_SETTING_LOGINFORMPOS_CENTER;
+
+        // If we are on MWP.
+        if (\theme_boost_union\local\mwp::extension_present() == true) {
+            // Call the BU MWP class method only if the class and method exist.
+            if (
+                class_exists('\\local_boost_union_mwp\\local\\settings') &&
+                    method_exists('\\local_boost_union_mwp\\local\\settings', 'postprocess_loginformpositiondefault')
+            ) {
+                // Post-process the default.
+                $loginformpositiondefault = \local_boost_union_mwp\local\settings::postprocess_loginformpositiondefault(
+                    $loginformpositiondefault
+                );
+            }
+        }
+
         $setting = new admin_setting_configselect(
             $name,
             $title,
             $description,
-            THEME_BOOST_UNION_SETTING_LOGINFORMPOS_CENTER,
+            $loginformpositiondefault,
             $loginformoptions
         );
         $tab->add($setting);
