@@ -1362,6 +1362,10 @@ function theme_boost_union_get_fontawesome_icon_map() {
         'theme_boost_union:unmuted' => 'fa-bell',
         'theme_boost_union:flavours' => 'fa-pepper-hot',
         'theme_boost_union:tenants' => 'fa-shapes',
+        // DEVELOPER NOTE:
+        // If you add any new icons to this mapping,
+        // do not forget to add a SVG fallback as well to avoid that the
+        // test_get_fontawesome_icon_map unit test in Moodle core breaks.
     ];
 
     // Get the FontAwesome icons which are used by smart menus currently.
