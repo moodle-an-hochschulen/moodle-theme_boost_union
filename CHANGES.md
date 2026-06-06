@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-06-04 - Settings: Corrent the 'Possible setting overrides' banners regarding the logo and the loginbackground settings
 * 2026-06-04 - MWP: Postprocess the default for the loginformposition setting, resolves #1302
 * 2026-06-03 - Improvement: Smart menus: Refine the "Number of words" option to only process the course full name, but neither the course short name nor the custom course fields.
 * 2026-06-03 - Improvement: Smart menus: Add more versatile course name presentation options to the dynamic courses, resolves #448

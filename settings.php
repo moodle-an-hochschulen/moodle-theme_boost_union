@@ -558,7 +558,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/logo';
         $title = get_string('logosetting', 'theme_boost_union', null, true);
         $description = get_string('logosetting_desc', 'theme_boost_union', null, true);
-        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
+        $description .=
+                theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
         $description .= recommendation_manager::render_recommendation_notification('corelogo');
         $setting = new admin_setting_configstoredfile(
             $name,
@@ -1164,7 +1165,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('loginbackgroundimage', 'theme_boost_union', null, true);
         $description = get_string('loginbackgroundimage_desc', 'theme_boost_union', null, true);
         $description .=
-                theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
+                theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_MWP, false);
         $setting = new admin_setting_configstoredfilealwayscallback(
             $name,
             $title,
@@ -1180,7 +1181,6 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/loginbackgroundimageposition';
         $title = get_string('loginbackgroundimagepositionsetting', 'theme_boost_union', null, true);
         $description = get_string('loginbackgroundimagepositionsetting_desc', 'theme_boost_union', null, true);
-        $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
         $loginbackgroundimagepositionoptions = [
                 THEME_BOOST_UNION_SETTING_IMAGEPOSITION_CENTER_CENTER =>
                         get_string('imageposition_center_center', 'theme_boost_union'),
