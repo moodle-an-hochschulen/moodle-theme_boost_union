@@ -66,10 +66,17 @@ if ($loginarrangement == THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_LEGACY) {
 // Get the login background image text and color.
 [$loginbackgroundimagetext, $loginbackgroundimagetextcolor] = theme_boost_union_get_loginbackgroundimage_text();
 
+// Left-panel instructions. Only set when the admin has defined custom instructions;
+// the template falls back to the default welcome content when this is empty/null.
+$leftinstructions = !empty($CFG->auth_instructions)
+    ? format_text($CFG->auth_instructions, FORMAT_MOODLE, ['context' => context_system::instance()])
+    : null;
+
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
     'bodyattributes' => $bodyattributes,
+    'leftinstructions' => $leftinstructions,
     'loginbackgroundimagetext' => $loginbackgroundimagetext,
     'loginbackgroundimagetextcolor' => $loginbackgroundimagetextcolor,
     'usesidebysideloginarrangement' => $usesidebysideloginarrangement,
