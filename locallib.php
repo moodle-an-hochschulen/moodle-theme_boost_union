@@ -900,6 +900,9 @@ function theme_boost_union_get_loginbackgroundimage_scss() {
     // Get all files from filearea.
     $files = theme_boost_union_get_loginbackgroundimage_files();
 
+    // Get the login page arrangement setting to generate only the necessary CSS.
+    $loginarrangement = get_config('theme_boost_union', 'loginarrangement');
+
     // Add URL of uploaded images to equivalent class.
     foreach ($files as $file) {
         $count++;
@@ -912,10 +915,24 @@ function theme_boost_union_get_loginbackgroundimage_scss() {
             $file->get_filepath(),
             $file->get_filename()
         );
-        // Add this url to the body class loginbackgroundimage[n] as a background image.
-        $scss .= 'body.pagelayout-login.loginbackgroundimage' . $count . ' {';
-        $scss .= 'background-image: url("' . $url . '");';
-        $scss .= '}';
+        // Differentiate between side-by-side and legacy layout.
+        switch ($loginarrangement) {
+            case THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_LEGACY:
+                // Legacy arrangement:
+                // Set the background image on the body element.
+                $scss .= 'body.pagelayout-login.loginbackgroundimage' . $count . ' {';
+                $scss .= 'background-image: url("' . $url . '");';
+                $scss .= '}';
+                break;
+
+            default:
+                // Side-by-side arrangement:
+                // Set the background image on the left (decorative) panel.
+                $scss .= 'body.pagelayout-login.loginbackgroundimage' . $count . ' #page .login-layout-left {';
+                $scss .= 'background-image: url("' . $url . '");';
+                $scss .= '}';
+                break;
+        }
     }
 
     return $scss;

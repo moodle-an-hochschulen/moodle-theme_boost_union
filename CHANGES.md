@@ -4,6 +4,11 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-06-07 - Improvement: Harden the login background image position setting on the side-by-side login arrangement
+* 2026-06-07 - Bugfix: On the side-by-side login arrangement, the uploaded background image showed on both sides, resolves #1299
+
 ### v5.2-r3
 
 * 2026-06-06 - Bugfix: Adopt upstream changes in theme_boost layout files which were missed during the Boost Union 5.2 upgrade. This resulted in the fact that, for example, tertiary menu dropdowns were broken on mod/quiz/report page. Resolves #1295

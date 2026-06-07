@@ -249,7 +249,10 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | 3       | should contain | mb-3  |
 
   @javascript
-  Scenario: Setting: Login page background images - Do not upload any login background image
+  Scenario: Setting: Login page background images - Do not upload any login background image (legacy arrangement)
+    Given the following config values are set as admin:
+      | config           | value  | plugin            |
+      | loginarrangement | legacy | theme_boost_union |
     When I am on login page
     Then the "class" attribute of "body" "css_element" should contain "path-login"
     And the "class" attribute of "body" "css_element" should not contain "loginbackgroundimage"
@@ -257,8 +260,24 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And DOM element "body" should have computed style "background-image" "none"
 
   @javascript
-  Scenario: Setting: Login page background images - Upload one custom login background image
-    Given the following "theme_boost_union > setting files" exist:
+  Scenario: Setting: Login page background images - Do not upload any login background image (side-by-side arrangement)
+    Given the following config values are set as admin:
+      | config           | value      | plugin            |
+      | loginarrangement | sidebyside | theme_boost_union |
+    When I am on login page
+    Then the "class" attribute of "body" "css_element" should contain "path-login"
+    And the "class" attribute of "body" "css_element" should not contain "loginbackgroundimage"
+    And the "class" attribute of "body" "css_element" should not contain "loginbackgroundimage1"
+    # When no Boost Union login background image is uploaded in the side-by-side arrangement,
+    # Boost core's default login_background image is shown on the left (decorative) panel.
+    And DOM element ".login-layout-left" should have background image with file name "login_background"
+
+  @javascript
+  Scenario Outline: Setting: Login page background images - Upload one custom login background image
+    Given the following config values are set as admin:
+      | config           | value              | plugin            |
+      | loginarrangement | <loginarrangement> | theme_boost_union |
+    And the following "theme_boost_union > setting files" exist:
       | filearea             | filepath                                       |
       | loginbackgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
     And the theme cache is purged and the theme is reloaded
@@ -268,12 +287,20 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     Then the "class" attribute of "body" "css_element" should contain "path-login"
     And the "class" attribute of "body" "css_element" should contain "loginbackgroundimage"
     And the "class" attribute of "body" "css_element" should contain "loginbackgroundimage1"
-    And DOM element "body" should have computed style "background-size" "cover"
-    And DOM element "body" should have background image with file name "login_bg1.png"
+    And DOM element "<bgelement>" should have computed style "background-size" "cover"
+    And DOM element "<bgelement>" should have background image with file name "login_bg1.png"
+
+    Examples:
+      | loginarrangement | bgelement          |
+      | sidebyside       | .login-layout-left |
+      | legacy           | body               |
 
   @javascript
-  Scenario: Setting: Login page background images - Upload multiple custom login background image (and have one picked randomly)
-    Given the following "theme_boost_union > setting files" exist:
+  Scenario Outline: Setting: Login page background images - Upload multiple custom login background images (and have one picked randomly)
+    Given the following config values are set as admin:
+      | config           | value              | plugin            |
+      | loginarrangement | <loginarrangement> | theme_boost_union |
+    And the following "theme_boost_union > setting files" exist:
       | filearea             | filepath                                       |
       | loginbackgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
       | loginbackgroundimage | theme/boost_union/tests/fixtures/login_bg2.png |
@@ -288,14 +315,20 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     # However, the random image picking function is designed to detect Behat runs and will then always ship the
     # image matching the number of uploaded images (i.e. if you upload 3 images, you will get the third).
     And the "class" attribute of "body" "css_element" should contain "loginbackgroundimage3"
-    And DOM element "body" should have computed style "background-size" "cover"
-    And DOM element "body" should have background image with file name "login_bg3.png"
+    And DOM element "<bgelement>" should have computed style "background-size" "cover"
+    And DOM element "<bgelement>" should have background image with file name "login_bg3.png"
+
+    Examples:
+      | loginarrangement | bgelement          |
+      | sidebyside       | .login-layout-left |
+      | legacy           | body               |
 
   @javascript
   Scenario Outline: Setting: Login page background images - Define the background image position.
     Given the following config values are set as admin:
-      | config                       | value      | plugin            |
-      | loginbackgroundimageposition | <position> | theme_boost_union |
+      | config                       | value              | plugin            |
+      | loginarrangement             | <loginarrangement> | theme_boost_union |
+      | loginbackgroundimageposition | <position>         | theme_boost_union |
     And the following "theme_boost_union > setting files" exist:
       | filearea             | filepath                                       |
       | loginbackgroundimage | theme/boost_union/tests/fixtures/login_bg1.png |
@@ -303,13 +336,15 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     When I am on login page
     # Reloading the page is necessary to ensure that the background image CSS is applied, as it might not appear on the first load due to caching.
     And I reload the page
-    Then DOM element "body.pagelayout-login" should have computed style "background-position" "<cssvalue>"
+    Then DOM element "<bgelement>" should have computed style "background-position" "<cssvalue>"
 
     # We do not want to burn too much CPU time by testing all available options. We just test the default value and one non-default value.
     Examples:
-      | position      | cssvalue |
-      | center center | 50% 50%  |
-      | left top      | 0% 0%    |
+      | loginarrangement | bgelement          | position      | cssvalue |
+      | sidebyside       | .login-layout-left | center center | 50% 50%  |
+      | sidebyside       | .login-layout-left | left top      | 0% 0%    |
+      | legacy           | body               | center center | 50% 50%  |
+      | legacy           | body               | left top      | 0% 0%    |
 
   Scenario: Setting: Display text for login background images - Add a text to the login background image
     Given the following config values are set as admin:

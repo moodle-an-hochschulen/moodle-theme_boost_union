@@ -388,6 +388,7 @@ $string['loginbackgroundimagesheading'] = 'Login page background images';
 // ... ... Setting: Login page background image.
 $string['loginbackgroundimage'] = 'Login page background images';
 $string['loginbackgroundimage_desc'] = 'The images to display as a background of the login page. One of these images will be picked randomly and shown when the user visits the login page. Please make sure not to use non-ASCII-characters in the filename if you want to display text for login background images.';
+$string['loginbackgroundimage_note'] = 'If no image is uploaded here, the default image from Moodle core will be used.';
 // ... ... Setting: Login page background image position.
 $string['loginbackgroundimagepositionsetting'] = 'Login page background image position';
 $string['loginbackgroundimagepositionsetting_desc'] = 'With this setting, you control the positioning of the login page background image within the browser window. The first value is the horizontal position, the second value is the vertical position.';
