@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.1-r17
 
 * 2026-06-06 - Tests: Fix PHPUnit Failure about missing SVGs for newly added FontAwesome mappings, resolves #1301
 * 2026-06-04 - Settings: Correct the 'Possible setting overrides' banners regarding the logo and the loginbackground settings
