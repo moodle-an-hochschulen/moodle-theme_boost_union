@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.2-r3
 
 * 2026-06-06 - Bugfix: Adopt upstream changes in theme_boost layout files which were missed during the Boost Union 5.2 upgrade. This resulted in the fact that, for example, tertiary menu dropdowns were broken on mod/quiz/report page. Resolves #1295
 * 2026-06-06 - Tests: Fix PHPUnit Failure about missing SVGs for newly added FontAwesome mappings, resolves #1301
