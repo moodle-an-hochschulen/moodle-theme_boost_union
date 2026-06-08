@@ -769,6 +769,7 @@ function theme_boost_union_get_extra_scss($theme) {
     // Now, in contrast to Boost core, Boost Union should add the login page background to the body element as well.
     // Thus, check if a login background image is set.
     $loginbackgroundimagepresent = get_config('theme_boost_union', 'loginbackgroundimage');
+    $loginarrangement = get_config('theme_boost_union', 'loginarrangement');
 
     // If we are on MWP.
     if (\theme_boost_union\local\mwp::extension_present() == true) {
@@ -784,17 +785,29 @@ function theme_boost_union_get_extra_scss($theme) {
     }
 
     if (!empty($loginbackgroundimagepresent)) {
-        // We first have to revert the background which is set to #page on the login page by Boost core already.
-        // Doing this, we also have to make the background of the #page element transparent on the login page.
-        $content .= 'body.pagelayout-login #page { ';
-        $content .= "background-image: none !important;";
-        $content .= "background-color: transparent !important;";
-        $content .= '}';
+        if ($loginarrangement == THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_LEGACY) {
+            // Legacy arrangement: same behaviour as before Moodle 5.2.
+            // We first have to revert the background which is set to #page on the login page by Boost core already.
+            // Doing this, we also have to make the background of the #page element transparent on the login page.
+            $content .= 'body.pagelayout-login #page { ';
+            $content .= "background-image: none !important;";
+            $content .= "background-color: transparent !important;";
+            $content .= '}';
 
-        // Afterwards, we set the background-size attribute for the body element again.
-        $content .= 'body.pagelayout-login { ';
-        $content .= "background-size: cover;";
-        $content .= '}';
+            // Afterwards, we set the background-size attribute for the body element again.
+            $content .= 'body.pagelayout-login { ';
+            $content .= "background-size: cover;";
+            $content .= '}';
+        } else {
+            // Side-by-side arrangement: the background image must appear on the left (decorative) panel only.
+            // Boost core generates 'body.pagelayout-login #page .login-layout-left { background-image: ...; }' with
+            // specificity (1,2,1). We suppress it here with specificity (1,3,1) so that only Boost Union's
+            // class-based image selection (loginbackgroundimageN) takes effect.
+            $content .= 'body.pagelayout-login.loginbackgroundimage #page .login-layout-left { ';
+            $content .= "background-image: none;";
+            $content .= "background-size: cover;";
+            $content .= '}';
+        }
 
         // Finally, get all possible background image urls which will be picked based on the (random) loginpageimage class.
         $loginbackgroundimagescss = theme_boost_union_get_loginbackgroundimage_scss();
@@ -832,9 +845,27 @@ function theme_boost_union_get_extra_scss($theme) {
 
     // If a login background image is present, we set its background image position.
     if (!empty($loginbackgroundimagepresent)) {
-        $content .= 'body.pagelayout-login { ';
-        $content .= "background-position: " . get_config('theme_boost_union', 'loginbackgroundimageposition') . ";";
-        $content .= '}';
+        $loginbackgroundimageposition = get_config('theme_boost_union', 'loginbackgroundimageposition');
+        // Differentiate between side-by-side and legacy layout.
+        switch ($loginarrangement) {
+            case THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_LEGACY:
+                // Legacy arrangement:
+                // Apply background-position to the body element.
+                $content .= 'body.pagelayout-login { ';
+                $content .= "background-position: " . $loginbackgroundimageposition . ";";
+                $content .= '}';
+                break;
+
+            default:
+                // Side-by-side arrangement:
+                // Apply background-position to the left panel only.
+                // Use .loginbackgroundimage and #page in the selector to reach specificity (1,3,1),
+                // which beats Boost core's 'body.pagelayout-login #page .login-layout-left' at (1,2,1).
+                $content .= 'body.pagelayout-login.loginbackgroundimage #page .login-layout-left { ';
+                $content .= "background-position: " . $loginbackgroundimageposition . ";";
+                $content .= '}';
+                break;
+        }
     }
     // And we set the normal background image position in any case.
     $content .= 'body { ';
