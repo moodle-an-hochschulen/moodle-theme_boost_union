@@ -52,9 +52,9 @@ if ($config->enableaccessibilitydeclaration != THEME_BOOST_UNION_SETTING_SELECT_
     echo $OUTPUT->header();
     $notification = new \core\output\notification(
         get_string('accessibilitydeclarationdisabled', 'theme_boost_union'),
-        \core\output\notification::NOTIFY_INFO
+        \core\output\notification::NOTIFY_INFO,
+        false
     );
-    $notification->set_show_closebutton(false);
     echo $OUTPUT->render($notification);
     echo $OUTPUT->footer();
     die;

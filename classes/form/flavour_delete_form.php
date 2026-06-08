@@ -59,9 +59,9 @@ class flavour_delete_form extends \moodleform {
         // Add notification as html element.
         $notification = new \core\output\notification(
             get_string('flavoursdeleteconfirmation', 'theme_boost_union', $this->_customdata['flavour']->title),
-            \core\output\notification::NOTIFY_WARNING
+            \core\output\notification::NOTIFY_WARNING,
+            false
         );
-        $notification->set_show_closebutton(false);
         $mform->addElement('html', $OUTPUT->render($notification));
 
         // Add the action buttons.

@@ -275,9 +275,9 @@ class flavours_overview extends \core_table\sql_table {
         // Show notification as html element.
         $notification = new \core\output\notification(
             get_string('flavoursnothingtodisplay', 'theme_boost_union'),
-            \core\output\notification::NOTIFY_INFO
+            \core\output\notification::NOTIFY_INFO,
+            false
         );
-        $notification->set_show_closebutton(false);
         echo $OUTPUT->render($notification);
     }
 }

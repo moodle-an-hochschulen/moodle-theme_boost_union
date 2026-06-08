@@ -51,9 +51,9 @@ if ($config->enablepage3 != THEME_BOOST_UNION_SETTING_SELECT_YES) {
     echo $OUTPUT->header();
     $notification = new \core\output\notification(
         get_string('page3disabled', 'theme_boost_union'),
-        \core\output\notification::NOTIFY_INFO
+        \core\output\notification::NOTIFY_INFO,
+        false
     );
-    $notification->set_show_closebutton(false);
     echo $OUTPUT->render($notification);
     echo $OUTPUT->footer();
     die;
