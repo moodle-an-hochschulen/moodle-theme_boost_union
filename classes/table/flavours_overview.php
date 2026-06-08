@@ -81,6 +81,7 @@ class flavours_overview extends \core_table\sql_table {
         $this->define_columns($columns);
         $this->define_headers($headers);
         $this->define_header_column('title');
+        $this->column_class('actions', 'text-nowrap');
 
         // Initialize values for the updown feature.
         $this->count = 0;
@@ -103,7 +104,7 @@ class flavours_overview extends \core_table\sql_table {
         $updown = '';
 
         // Get spacer icon.
-        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', ['class' => 'iconsmall theme_boost_union-sortorderspacer']);
+        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', ['class' => 'iconsmall mr-0 theme_boost_union-sortorderspacer']);
 
         // If there is more than one flavour and we do not handle the first (number 0) flavour.
         if ($this->count > 0) {
@@ -117,7 +118,7 @@ class flavours_overview extends \core_table\sql_table {
                     't/up',
                     get_string('up'),
                     'moodle',
-                    ['class' => 'iconsmall']
+                    ['class' => 'iconsmall mr-0']
                 ),
                 ['class' => 'sort-flavour-up-action']
             );
@@ -140,7 +141,7 @@ class flavours_overview extends \core_table\sql_table {
                     't/down',
                     get_string('down'),
                     'moodle',
-                    ['class' => 'iconsmall']
+                    ['class' => 'iconsmall mr-0']
                 ),
                 ['class' => 'sort-flavour-down-action']
             );
@@ -207,7 +208,7 @@ class flavours_overview extends \core_table\sql_table {
         $actions[] = [
                 'url' => new \core\url('/theme/boost_union/flavours/preview.php', ['id' => $data->id]),
                 'icon' => new \core\output\pix_icon('i/search', get_string('flavourspreview', 'theme_boost_union')),
-                'attributes' => ['class' => 'action-preview'],
+                'attributes' => ['class' => 'action-preview py-0 pl-0 ml-0 mr-0'],
         ];
 
         // Edit.
@@ -217,7 +218,7 @@ class flavours_overview extends \core_table\sql_table {
                     ['action' => 'edit', 'id' => $data->id, 'sesskey' => sesskey()]
                 ),
                 'icon' => new \core\output\pix_icon('t/edit', get_string('flavoursedit', 'theme_boost_union')),
-                'attributes' => ['class' => 'action-edit'],
+                'attributes' => ['class' => 'action-edit py-0 ml-0 mr-0'],
         ];
 
         // Delete.
@@ -227,7 +228,7 @@ class flavours_overview extends \core_table\sql_table {
                     ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]
                 ),
                 'icon' => new \core\output\pix_icon('t/delete', get_string('flavoursdelete', 'theme_boost_union')),
-                'attributes' => ['class' => 'action-delete'],
+                'attributes' => ['class' => 'action-delete py-0 pe-0 ml-0 mr-0'],
         ];
 
         // Compose action icons for all actions.
