@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-06-08 - Improvement: Align the flavours, smart menus and snippets table with the recommendations table, resolves #1309
 * 2026-06-08 - Glitch: Flavours actions tooltips were wrong, resolves #1307
 
 ### v5.1-r17

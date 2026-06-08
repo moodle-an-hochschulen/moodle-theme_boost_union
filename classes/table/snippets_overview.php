@@ -83,6 +83,7 @@ class snippets_overview extends \table_sql {
         $this->define_columns($columns);
         $this->define_headers($headers);
         $this->define_header_column('title');
+        $this->column_class('actions', 'text-nowrap');
 
         // Add CSS class which will help the preview modal JS later.
         $this->set_attribute('id', 'theme_boost_union_snippets');
@@ -119,7 +120,7 @@ class snippets_overview extends \table_sql {
         $updown = '';
 
         // Get spacer icon.
-        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', ['class' => 'iconsmall theme_boost_union-sortorderspacer']);
+        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', ['class' => 'iconsmall me-0 theme_boost_union-sortorderspacer']);
 
         // If there is more than one snippet and we do not handle the first (number 0) snippet.
         if ($this->count > 0) {
@@ -133,7 +134,7 @@ class snippets_overview extends \table_sql {
                     't/up',
                     get_string('up'),
                     'moodle',
-                    ['class' => 'iconsmall']
+                    ['class' => 'iconsmall me-0']
                 ),
                 ['class' => 'sort-snippet-up-action']
             );
@@ -156,7 +157,7 @@ class snippets_overview extends \table_sql {
                     't/down',
                     get_string('down'),
                     'moodle',
-                    ['class' => 'iconsmall']
+                    ['class' => 'iconsmall me-0']
                 ),
                 ['class' => 'sort-snippet-down-action']
             );
@@ -246,7 +247,7 @@ class snippets_overview extends \table_sql {
                     ['action' => 'enable', 'id' => $data->id, 'sesskey' => sesskey()]
                 ),
                 'icon' => new \pix_icon('t/show', get_string('snippetsenable', 'theme_boost_union')),
-                'attributes' => ['class' => 'action-enable'],
+                'attributes' => ['class' => 'action-enable py-0 ps-0 ms-0 me-0'],
             ];
         } else {
             $actions[] = [
@@ -255,7 +256,7 @@ class snippets_overview extends \table_sql {
                     ['action' => 'disable', 'id' => $data->id, 'sesskey' => sesskey()]
                 ),
                 'icon' => new \pix_icon('t/hide', get_string('snippetsdisable', 'theme_boost_union')),
-                'attributes' => ['class' => 'action-disable'],
+                'attributes' => ['class' => 'action-disable py-0 ps-0 ms-0 me-0'],
             ];
         }
 
@@ -263,7 +264,7 @@ class snippets_overview extends \table_sql {
         $actions[] = [
             'url' => '#',
             'icon' => new \pix_icon('info', get_string('snippetsshowdetails', 'theme_boost_union'), 'theme_boost_union'),
-            'attributes' => ['class' => 'action-details',
+            'attributes' => ['class' => 'action-details py-0 pe-0 ms-0 me-0',
                     'data-action' => 'details',
                     'data-title' => $data->title,
                     'data-source-badge' => $this->pick_and_build_badge('snippetssource' . $data->source),
