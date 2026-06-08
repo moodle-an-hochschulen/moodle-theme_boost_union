@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-06-08 - Glitch: Flavours actions tooltips were wrong, resolves #1307
+
 ### v5.0-r28
 
 * 2026-06-06 - Tests: Fix PHPUnit Failure about missing SVGs for newly added FontAwesome mappings, resolves #1301
