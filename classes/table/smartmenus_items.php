@@ -84,6 +84,7 @@ class smartmenus_items extends \core_table\sql_table {
         $this->define_columns($columns);
         $this->define_headers($headers);
         $this->define_header_column('title');
+        $this->column_class('actions', 'text-nowrap');
 
         // Remember the menu id for further usage.
         $this->menuid = $menuid;
@@ -245,7 +246,7 @@ class smartmenus_items extends \core_table\sql_table {
         $updown = '';
 
         // Get spacer icon.
-        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', ['class' => 'iconsmall theme_boost_union-sortorderspacer']);
+        $spacer = $OUTPUT->pix_icon('spacer', '', 'moodle', ['class' => 'iconsmall me-0 theme_boost_union-sortorderspacer']);
 
         // If there is more than one smart menu item and we do not handle the first (number 0) smart menu item.
         if ($this->count > 0) {
@@ -259,7 +260,7 @@ class smartmenus_items extends \core_table\sql_table {
                     't/up',
                     get_string('up'),
                     'moodle',
-                    ['class' => 'iconsmall']
+                    ['class' => 'iconsmall me-0']
                 ),
                 ['class' => 'sort-smartmenuitems-up-action']
             );
@@ -282,7 +283,7 @@ class smartmenus_items extends \core_table\sql_table {
                     't/down',
                     get_string('down'),
                     'moodle',
-                    ['class' => 'iconsmall']
+                    ['class' => 'iconsmall me-0']
                 ),
                 ['class' => 'sort-smartmenuitems-down-action']
             );
@@ -319,13 +320,13 @@ class smartmenus_items extends \core_table\sql_table {
             $actions[] = [
                 'url' => new \core\url($actionurl, ['action' => 'hide', 'id' => $data->id, 'sesskey' => sesskey()]),
                 'icon' => new \core\output\pix_icon('t/hide', get_string('hide')),
-                'attributes' => ['class' => 'action-hide'],
+                'attributes' => ['class' => 'action-hide py-0 ps-0 ms-0 me-0'],
             ];
         } else {
             $actions[] = [
                 'url' => new \core\url($actionurl, ['action' => 'show', 'id' => $data->id, 'sesskey' => sesskey()]),
                 'icon' => new \core\output\pix_icon('t/show', get_string('show')),
-                'attributes' => ['class' => 'action-show'],
+                'attributes' => ['class' => 'action-show py-0 ps-0 ms-0 me-0'],
             ];
         }
 
@@ -336,21 +337,21 @@ class smartmenus_items extends \core_table\sql_table {
                 ['id' => $data->id, 'sesskey' => sesskey()]
             ),
             'icon' => new \core\output\pix_icon('t/edit', get_string('edit')),
-            'attributes' => ['class' => 'action-edit'],
+            'attributes' => ['class' => 'action-edit py-0 ms-0 me-0'],
         ];
 
         // Duplicate.
         $actions[] = [
             'url' => new \core\url($actionurl, ['action' => 'copy', 'id' => $data->id, 'sesskey' => sesskey()]),
             'icon' => new \core\output\pix_icon('t/copy', get_string('smartmenusmenuitemduplicate', 'theme_boost_union')),
-            'attributes' => ['class' => 'action-copy'],
+            'attributes' => ['class' => 'action-copy py-0 ms-0 me-0'],
         ];
 
         // Delete.
         $actions[] = [
             'url' => new \core\url($actionurl, ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]),
             'icon' => new \core\output\pix_icon('t/delete', get_string('delete')),
-            'attributes' => ['class' => 'action-delete'],
+            'attributes' => ['class' => 'action-delete py-0 pe-0 ms-0 me-0'],
             'confirm' => new \core\output\actions\confirm_action(
                 get_string('smartmenusmenuitemdeleteconfirm', 'theme_boost_union')
             ),
