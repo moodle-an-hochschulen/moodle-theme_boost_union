@@ -24,6 +24,7 @@
  * * Include static pages
  * * Include accessibility pages
  * * Include info banners
+ * * Modify the behaviour of the login instructions in the side panel
  *
  * @package   theme_boost_union
  * @copyright 2022 Luca Bösch, BFH Bern University of Applied Sciences luca.boesch@bfh.ch
@@ -66,17 +67,26 @@ if ($loginarrangement == THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_LEGACY) {
 // Get the login background image text and color.
 [$loginbackgroundimagetext, $loginbackgroundimagetextcolor] = theme_boost_union_get_loginbackgroundimage_text();
 
-// Left-panel instructions. Only set when the admin has defined custom instructions;
-// the template falls back to the default welcome content when this is empty/null.
-$leftinstructions = !empty($CFG->auth_instructions)
-    ? format_text($CFG->auth_instructions, FORMAT_MOODLE, ['context' => context_system::instance()])
+// Left-panel instructions. Use the Boost Union side instructions settings if configured;
+// if empty, nothing is shown in the left panel (no fallback to the Moodle default welcome content).
+// Note: both settings are also read in core_renderer.php::login() to render the same content
+// above/below the login form on small screens (where the left panel is hidden).
+$logininstructionssideupper = get_config('theme_boost_union', 'logininstructionssideupper');
+$leftinstructionsupper = !empty($logininstructionssideupper)
+    ? format_text($logininstructionssideupper, FORMAT_HTML)
+    : null;
+$logininstructionssidelower = get_config('theme_boost_union', 'logininstructionssidelower');
+$leftinstructionslower = !empty($logininstructionssidelower)
+    ? format_text($logininstructionssidelower, FORMAT_HTML)
     : null;
 
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
     'bodyattributes' => $bodyattributes,
-    'leftinstructions' => $leftinstructions,
+    'hasleftinstructions' => !empty($leftinstructionsupper) || !empty($leftinstructionslower),
+    'leftinstructionsupper' => $leftinstructionsupper,
+    'leftinstructionslower' => $leftinstructionslower,
     'loginbackgroundimagetext' => $loginbackgroundimagetext,
     'loginbackgroundimagetextcolor' => $loginbackgroundimagetextcolor,
     'usesidebysideloginarrangement' => $usesidebysideloginarrangement,

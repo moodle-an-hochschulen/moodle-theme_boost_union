@@ -452,6 +452,10 @@ $string['logininstructionsabove'] = 'Instructions above login provider list';
 $string['logininstructionsabove_desc'] = 'With this setting, you can add instructions that will be shown above the list of login providers on the login page. This is a good place to add general information that applies to all login methods.';
 $string['logininstructionsbelow'] = 'Instructions below login provider list';
 $string['logininstructionsbelow_desc'] = 'With this setting, you can add instructions that will be shown below the list of login providers on the login page. This is a good place to add additional information or support contacts that apply to all login methods.';
+$string['logininstructionssideupper'] = 'Instructions in side panel (upper part)';
+$string['logininstructionssideupper_desc'] = 'With this setting, you can add instructions that will be shown in the left side panel of the login page. On small screens, where the side panel is hidden, the instructions are shown above the login form instead. There, they will be presented below and in a in a smaller font than the \'Instructions above login provider list\' content.';
+$string['logininstructionssidelower'] = 'Instructions in side panel (lower part)';
+$string['logininstructionssidelower_desc'] = 'With this setting, you can add instructions that will be shown in the left side panel of the login page. On small screens, where the side panel is hidden, the instructions are shown below the login form instead. There, they will be presented below and in a in a smaller font than the \'Instructions below login provider list\' content.';
 // ... Section: Login order.
 $string['loginorderheading'] = 'Login order';
 $string['loginorderheading_desc'] = 'With these settings, you control the order of the login providers in the login form. The presented order will be defined from lowest to highest ordinal number, skipping all login providers and login form elements which are disabled in Boost Union.';
