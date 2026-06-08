@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.2-r4
 
 * 2026-06-07 - Improvement: Allow the admin to customize the left-hand login instructions on the side-by-side login arrangement. If no authentication instructions are set, then the Moodle core fallback text in the left-hand login instructions is _not_ shown. Resolves #1298
 * 2026-06-07 - Improvement: Harden the login background image position setting on the side-by-side login arrangement
