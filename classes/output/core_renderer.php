@@ -1439,6 +1439,16 @@ class core_renderer extends core_renderer_intermediate {
         if (!empty($logininstructionsbelow)) {
             $context->logininstructionsbelow = format_text($logininstructionsbelow, FORMAT_HTML);
         }
+        // Note: both settings are also read in layout/login.php to render the same content
+        // in the left side panel on large screens (upper and lower part respectively).
+        $logininstructionssideupper = get_config('theme_boost_union', 'logininstructionssideupper');
+        if (!empty($logininstructionssideupper)) {
+            $context->logininstructionssideupper = format_text($logininstructionssideupper, FORMAT_HTML);
+        }
+        $logininstructionssidelower = get_config('theme_boost_union', 'logininstructionssidelower');
+        if (!empty($logininstructionssidelower)) {
+            $context->logininstructionssidelower = format_text($logininstructionssidelower, FORMAT_HTML);
+        }
 
         // Add login logo extra classes for alignment and margin bottom.
         $loginlogoclasses = [];

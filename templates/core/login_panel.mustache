@@ -1,0 +1,50 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template core/login_panel
+
+    Default content for the left panel of the split-screen login layout.
+
+    When leftinstructions is provided (i.e. the site has custom auth instructions configured),
+    it fully replaces the entire default welcome section (title, tagline, and stats).
+
+    Example context (json):
+    {
+        "leftinstructions": "<p>Welcome to our learning platform. Please log in to continue.</p>"
+    }
+}}
+{{!
+    This template is a modified version of core/login_panel
+
+    Modifications compared to the original template:
+    * Removed the default fallback content (title, tagline, stats).
+    * Split leftinstructions into leftinstructionsupper (upper) and leftinstructionslower (lower).
+}}
+{{#hasleftinstructions}}
+<div class="login-layout-left-content">
+    {{#leftinstructionsupper}}
+    <div class="login-layout-left-instructions-upper mx-auto text-start">
+        {{{leftinstructionsupper}}}
+    </div>
+    {{/leftinstructionsupper}}
+    {{#leftinstructionslower}}
+    <div class="login-layout-left-instructions-lower mx-auto text-start {{#leftinstructionsupper}}{{#leftinstructionslower}}border-top border-white pt-3 mt-3{{/leftinstructionslower}}{{/leftinstructionsupper}}">
+        {{{leftinstructionslower}}}
+    </div>
+    {{/leftinstructionslower}}
+</div>
+{{/hasleftinstructions}}

@@ -426,9 +426,10 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
   # Unfortunately, this can't be reliably tested with Behat yet
   # Scenario: Setting: Enhanced tabs layout behaviour: Lock the vertical position of the tabs when switching tabs
 
-  Scenario: Setting: Login instructions
+  Scenario: Setting: Login instructions (legacy arrangement)
     Given the following config values are set as admin:
       | config                 | value                   | plugin            |
+      | loginarrangement       | legacy                  | theme_boost_union |
       | logininstructionsabove | Above instructions text | theme_boost_union |
       | logininstructionsbelow | Below instructions text | theme_boost_union |
     When I am on login page
@@ -436,6 +437,38 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And ".login-instructions-above" "css_element" should appear before ".theme_boost_union-loginmethod  " "css_element"
     And I should see "Below instructions text" in the ".login-instructions-below" "css_element"
     And ".login-instructions-below" "css_element" should appear after ".theme_boost_union-loginmethod  " "css_element"
+
+  @javascript
+  Scenario: Setting: Login instructions (side-by-side arrangement)
+    Given the following config values are set as admin:
+      | config                     | value                        | plugin            |
+      | loginarrangement           | sidebyside                   | theme_boost_union |
+      | logininstructionssideupper | Side upper instructions text | theme_boost_union |
+      | logininstructionssidelower | Side lower instructions text | theme_boost_union |
+    # On large screens the side panel is visible and shows both instruction blocks.
+    When I change viewport size to "large"
+    And I am on login page
+    Then I should see "Side upper instructions text" in the ".login-layout-left .login-layout-left-instructions-upper" "css_element"
+    And I should see "Side lower instructions text" in the ".login-layout-left .login-layout-left-instructions-lower" "css_element"
+    And ".login-layout-left-instructions-upper" "css_element" should appear before ".login-layout-left-instructions-lower" "css_element" in the "aside.login-layout-left" "css_element"
+    # On small screens the side panel is hidden, the instructions appear above/below the login form.
+    When I change viewport size to "mobile"
+    And I am on login page
+    And I should see "Side upper instructions text" in the ".login-instructions.login-instructions-sideupper" "css_element"
+    And I should see "Side lower instructions text" in the ".login-instructions.login-instructions-sidelower" "css_element"
+    And ".login-instructions-sideupper" "css_element" should appear before ".theme_boost_union-loginmethod" "css_element"
+    And ".login-instructions-sidelower" "css_element" should appear after ".theme_boost_union-loginmethod" "css_element"
+
+  Scenario: Setting: Login instructions (side-by-side arrangement, no instructions case)
+    Given the following config values are set as admin:
+      | config                     | value      | plugin            |
+      | loginarrangement           | sidebyside | theme_boost_union |
+      | logininstructionssideupper |            | theme_boost_union |
+      | logininstructionssidelower |            | theme_boost_union |
+    When I am on login page
+    Then ".login-layout-left-content" "css_element" should not exist
+    And ".login-instructions-sideupper" "css_element" should not exist
+    And ".login-instructions-sidelower" "css_element" should not exist
 
   Scenario Outline: Setting: Login order
     Given the following config values are set as admin:
