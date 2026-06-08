@@ -56,6 +56,8 @@
     * localloginintrotext - Custom local login intro text (optional),
     * logininstructionsabove - Instructions shown above the login provider list (optional),
     * logininstructionsbelow - Instructions shown below the login provider list (optional),
+    * logininstructionssideupper - Instructions shown in the upper side panel (optional),
+    * logininstructionssidelower - Instructions shown in the lower side panel (optional),
     * loginlayoutaccordion - Flag used to check if elements should be displayed for the accordion layout type,
     * loginlayouttabs - Flag used to check if elements should be displayed for the tabs layout type,
     * loginlayoutvertical - Flag used to check if elements should be displayed for the vertical layout type,
@@ -248,6 +250,16 @@
         {{{logininstructionsabove}}}
     </div>
     {{/logininstructionsabove}}
+
+    {{! =========================================================================== }}
+    {{! SIDE PANEL INSTRUCTIONS ABOVE (small screens only) }}
+    {{! =========================================================================== }}
+
+    {{#logininstructionssideupper}}
+    <div class="login-instructions login-instructions-sideupper d-lg-none small mb-4">
+        {{{logininstructionssideupper}}}
+    </div>
+    {{/logininstructionssideupper}}
 
     {{! =========================================================================== }}
     {{! OPEN LAYOUT CONTAINER: Tabs or Accordion }}
@@ -539,6 +551,16 @@
         {{{logininstructionsbelow}}}
     </div>
     {{/logininstructionsbelow}}
+
+    {{! =========================================================================== }}
+    {{! SIDE PANEL INSTRUCTIONS BELOW (small screens only) }}
+    {{! =========================================================================== }}
+
+    {{#logininstructionssidelower}}
+    <div class="login-instructions login-instructions-sidelower d-lg-none small mt-4">
+        {{{logininstructionssidelower}}}
+    </div>
+    {{/logininstructionssidelower}}
 
     {{! =========================================================================== }}
     {{! CLOSE BU LOGINFORM CONTAINER }}

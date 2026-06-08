@@ -731,8 +731,9 @@ As you have read in the introduction, the main design principle of Boost Union i
   Against this background, if you switch from Boost to Boost Union and had a favicon shown in Boost before, this favicon won't be shown until you upload it again in Boost Union directly.
 * Login page authentication instructions:
   Boost Union does not output the Moodle core setting `auth_instructions` (authentication method instructions) on the login page.
-  In Moodle core, this setting is shown in context of the user self-registration method.
-  However, in Boost Union with its enhanced login page layouts (tabs, accordion), the self-registration section might not be visible after page load, making the instructions hidden from view.
+  In Moodle core, this setting is shown in the left hand layout on the login page (on larger screens) and below the login form (on smaller screens).
+  Additionally, if the Moodle core setting `auth_instructions` is empty, Moodle core shows some advertisement text at this place instead.
+  However, in Boost Union with its login page arrangements (side-by-side, legacy) and its enhanced login page layouts (tabs, accordion), these implicit behavious would have been problematic.
   To improve the admin experience and provide a cleaner solution, Boost Union offers dedicated login instructions settings for each login method as well as generic instructions.
   Against this background, if you switch from Boost to Boost Union and had a text configured in the Moodle core `auth_instructions` setting, this text won't be shown until you copy it to Boost Union's own login instructions.
 * Login page texts:

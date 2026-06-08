@@ -1444,6 +1444,34 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_confightmleditor($name, $title, $description, '');
         $tab->add($setting);
 
+        // Setting: Instructions in side panel (upper part).
+        $name = 'theme_boost_union/logininstructionssideupper';
+        $title = get_string('logininstructionssideupper', 'theme_boost_union', null, true);
+        $description = get_string('logininstructionssideupper_desc', 'theme_boost_union', null, true);
+        $description .= recommendation_manager::render_recommendation_notification('coreauthinstructions');
+        $setting = new admin_setting_confightmleditor($name, $title, $description, '');
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/logininstructionssideupper',
+            'theme_boost_union/loginarrangement',
+            'neq',
+            THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_SIDEBYSIDE
+        );
+
+        // Setting: Instructions in side panel (lower part).
+        $name = 'theme_boost_union/logininstructionssidelower';
+        $title = get_string('logininstructionssidelower', 'theme_boost_union', null, true);
+        $description = get_string('logininstructionssidelower_desc', 'theme_boost_union', null, true);
+        $description .= recommendation_manager::render_recommendation_notification('coreauthinstructions');
+        $setting = new admin_setting_confightmleditor($name, $title, $description, '');
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/logininstructionssidelower',
+            'theme_boost_union/loginarrangement',
+            'neq',
+            THEME_BOOST_UNION_SETTING_LOGINARRANGEMENT_SIDEBYSIDE
+        );
+
         // Heading: Login order.
         $name = 'theme_boost_union/loginorderheading';
         $title = get_string('loginorderheading', 'theme_boost_union', null, true);
