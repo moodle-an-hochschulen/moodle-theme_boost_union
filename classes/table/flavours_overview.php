@@ -206,7 +206,7 @@ class flavours_overview extends \core_table\sql_table {
         // Preview.
         $actions[] = [
                 'url' => new \core\url('/theme/boost_union/flavours/preview.php', ['id' => $data->id]),
-                'icon' => new \core\output\pix_icon('i/search', get_string('flavoursedit', 'theme_boost_union')),
+                'icon' => new \core\output\pix_icon('i/search', get_string('flavourspreview', 'theme_boost_union')),
                 'attributes' => ['class' => 'action-preview'],
         ];
 
@@ -226,7 +226,7 @@ class flavours_overview extends \core_table\sql_table {
                     '/theme/boost_union/flavours/edit.php',
                     ['action' => 'delete', 'id' => $data->id, 'sesskey' => sesskey()]
                 ),
-                'icon' => new \core\output\pix_icon('t/delete', get_string('flavourspreview', 'theme_boost_union')),
+                'icon' => new \core\output\pix_icon('t/delete', get_string('flavoursdelete', 'theme_boost_union')),
                 'attributes' => ['class' => 'action-delete'],
         ];
 
