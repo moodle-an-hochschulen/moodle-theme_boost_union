@@ -2919,11 +2919,9 @@ function theme_boost_union_is_not_active_alert() {
         get_string('warningboostunioninactive', 'theme_boost_union', [
             'url' => $notificationurl->out(),
         ]),
-        core\output\notification::NOTIFY_WARNING
+        core\output\notification::NOTIFY_WARNING,
+        false
     );
-
-    // Do not show a close button.
-    $notification->set_show_closebutton(false);
 
     // Return the HTML for the alert.
     return $OUTPUT->render($notification);
@@ -2957,11 +2955,9 @@ function theme_boost_union_recommendations_alert() {
             'theme_boost_union',
             ['url' => $notificationurl->out()]
         ),
-        core\output\notification::NOTIFY_INFO
+        core\output\notification::NOTIFY_INFO,
+        false
     );
-
-    // Do not show a close button.
-    $notification->set_show_closebutton(false);
 
     // Return the HTML for the alert.
     return $OUTPUT->render($notification);
