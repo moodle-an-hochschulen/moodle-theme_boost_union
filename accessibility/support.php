@@ -52,9 +52,9 @@ if ($config->enableaccessibilitysupport != THEME_BOOST_UNION_SETTING_SELECT_YES)
     echo $OUTPUT->header();
     $notification = new \core\output\notification(
         get_string('accessibilitysupportdisabled', 'theme_boost_union'),
-        \core\output\notification::NOTIFY_INFO
+        \core\output\notification::NOTIFY_INFO,
+        false
     );
-    $notification->set_show_closebutton(false);
     echo $OUTPUT->render($notification);
     echo $OUTPUT->footer();
     die;
@@ -162,8 +162,7 @@ if ($form->is_cancelled()) {
             $notificationtext .= get_string('accessibilitysupportmessagetryagain', 'theme_boost_union');
         }
 
-        $notification = new \core\output\notification($notificationtext, \core\output\notification::NOTIFY_ERROR);
-        $notification->set_show_closebutton(false);
+        $notification = new \core\output\notification($notificationtext, \core\output\notification::NOTIFY_ERROR, false);
         $formoutput = $OUTPUT->render($notification);
 
         // Set the form data with the subitted data.
