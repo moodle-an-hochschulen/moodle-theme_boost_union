@@ -188,8 +188,7 @@ $introtext .= \html_writer::tag('li', get_string('snippetsoverview_notes1', 'the
 $introtext .= \html_writer::tag('li', get_string('snippetsoverview_notes2', 'theme_boost_union'));
 $introtext .= \html_writer::tag('li', get_string('snippetsoverview_notes3', 'theme_boost_union'));
 $introtext .= \html_writer::end_tag('ul');
-$intro = new \core\output\notification($introtext, \core\output\notification::NOTIFY_INFO);
-$intro->set_show_closebutton(false);
+$intro = new \core\output\notification($introtext, \core\output\notification::NOTIFY_INFO, false);
 $intro->set_extra_classes(['mb-5', 'alert-light']);
 echo $OUTPUT->render($intro);
 

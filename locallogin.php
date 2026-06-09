@@ -63,9 +63,9 @@ if (
     $loginurl = new core\url('/login/index.php');
     $notification = new \core\output\notification(
         get_string('loginlocalloginlocalnotdisabled', 'theme_boost_union', ['url' => $loginurl]),
-        \core\output\notification::NOTIFY_INFO
+        \core\output\notification::NOTIFY_INFO,
+        false
     );
-    $notification->set_show_closebutton(false);
     echo $OUTPUT->render($notification);
     echo $OUTPUT->footer();
     die;
