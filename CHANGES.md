@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-06-09 - MWP: Avoid the 'class theme_boost_union\local\mwp not found' exception when upgrading the plugin, resolves #1314
 * 2026-06-08 - Cleanup: Remove unused strings from the language pack, resolves #1311
 * 2026-06-08 - Internal change: Replace $notification->set_show_closebutton(false) with the third parameter of new \core\output\notification(), resolves #1310
 * 2026-06-08 - Improvement: Align the flavours, smart menus and snippets table with the recommendations table, resolves #1309

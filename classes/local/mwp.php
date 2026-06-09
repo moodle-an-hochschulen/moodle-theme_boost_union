@@ -47,7 +47,7 @@ class mwp {
             return $result;
         }
 
-        // If tool_tenant not present, we are on MWP.
+        // If tool_tenant is present, we are on MWP.
         if (file_exists($CFG->dirroot . '/admin/tool/tenant/version.php')) {
             // Inform the caller.
             $result = true;
