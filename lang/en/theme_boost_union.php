@@ -104,9 +104,6 @@ $string['settingsupplementlms'] = 'This setting can be supplemented within Boost
 $string['settingsupplementlmsmwp'] = 'This setting can be supplemented within the tenant brandings and Boost Union flavours.';
 $string['settingsupplementmwp'] = 'This setting can be supplemented within the tenant brandings.';
 
-// Settings: General warnings.
-$string['warningslashargumentsdisabled'] = 'Warning: The <a href="{$a->url}">slasharguments setting</a> is disabled in your Moodle configuration currently. However, this setting is required for the correct operation of the following Boost Union setting. Please enable slasharguments, otherwise the following Boost Union setting will not have any effect.';
-
 // Settings: Overview page.
 $string['settingsoverview'] = 'Settings overview';
 $string['settingsoverview_title'] = 'Boost Union settings overview';
@@ -316,7 +313,6 @@ $string['modiconsfiles'] = 'Custom icons files';
 $string['modiconsfiles_desc'] = 'Here, you can upload custom icons for all or only some activity modules installed in this Moodle instance.';
 $string['modiconsfileshowto'] = 'To upload a particular custom activity icon, start by creating a folder with the internal name of the activity, e.g. <em>assign</em> for the assigment activity. In this folder, you upload the icon as SVG file called monologo.svg and, if possible, as fallback PNG file called monologo.png. If you want to customize the colored icons which have been in use up to Moodle 3 and which may still be used by older plugins, you can also upload them as icon.svg and icon.png files. However, please stick to monochromatic SVG icons if possible for best results. Then, please save the settings page. As soon as you have save the setting with at least one file, a file list will appear below which helps you to check if the custom icons have been uploaded correctly.';
 $string['modiconsfilestech'] = 'Technical note: After saving the setting, the uploaded folder structure and icon files will be copied to the pix_plugins/mod folder in your Moodledata directory. This is where Moodle core searches for custom activity icons. All icon files which may already exist in this place will be overwritten when you save this setting.';
-$string['modiconserrorcreatingpath'] = 'The pix_plugins/mod folder could not be created in your Moodledata directory.<br />The exception message was:{$a}.';
 // ... ... Information: Custom icons files list.
 $string['modiconlistsetting'] = 'Custom icons files list';
 $string['modiconlistsetting_desc'] = 'This is the list of custom icon files which you have uploaded to the custom icon files filearea above. All valid icon files are listed here. In addition to that, other files you may have uploaded as well but which are not valid icon files are also shown as broken files.';
@@ -438,7 +434,6 @@ $string['loginenhancedtabslayoutsetting'] = 'Enhanced tabs layout behaviour';
 $string['loginenhancedtabslayoutsetting_desc'] = 'The tabs layout generally respects the configured login container width, as described in the login container width setting. And the login container of the tabs layout is displayed vertically centered just like the other login form layouts. However, there might be configurations when this is not enough. Maybe the height of the particular tab panes differ too much so that the tabs jump vertically when the active tab is changed. Or maybe really long tab labels widen the login container width, but multiline login instruction texts do not adapt accordingly. These are edge cases which cannot be solved cleanly with CSS and for such cases, you can add a JavaScript module which, after the login page has loaded, tries to ensure that all the login content is still presented and positioned as appropriately as possible.';
 // ... Section: Login instructions.
 $string['logininstructionsheading'] = 'Login instructions';
-$string['logininstructionsheading_desc'] = 'Please note: Boost Union has its own login instructions settings and does not output the content from <a href="{$a}">Moodle core\'s authentication instruction setting</a>.';
 $string['logininstructionsabove'] = 'Instructions above login provider list';
 $string['logininstructionsabove_desc'] = 'With this setting, you can add instructions that will be shown above the list of login providers on the login page. This is a good place to add general information that applies to all login methods.';
 $string['logininstructionsbelow'] = 'Instructions below login provider list';
@@ -876,8 +871,6 @@ $string['customfontssetting_desc'] = 'With this setting you can upload custom fo
 // ... ... Information: Custom fonts list.
 $string['customfontslistsetting'] = 'Custom fonts list';
 $string['customfontslistsetting_desc'] = 'This is the list of fonts which you have uploaded to the custom fonts filearea. The given CSS snippets can be used to add these fonts to your custom SCSS. Please note that you will have to take care of the font format value as well as the font-family, font-style and font-weight CSS properties yourself for now as Boost Union is not able yet to parse the font files.';
-$string['customfontsfileurlpersistent'] = 'URL (persistent)';
-$string['customfontsfileurlrevisioned'] = 'URL (revisioned)';
 
 // Settings: H5P tab.
 $string['h5ptab'] = 'H5P';
@@ -992,7 +985,6 @@ $string['blockregionsheading_guestrole_fixed'] = 'The guest role uses the new de
 $string['blockregionsheading_guestrole_keep'] = 'Keep the guest role as it is';
 $string['blockregionsheading_guestrole_kept'] = 'The guest role will be kept as it is and the notification on the settings page will be removed now.';
 $string['error:infobannerdismissnonotvalidnotset'] = 'This Boost Union instance was either not upgraded from a release earlier than Boost Union v5.0 or the new guest role defaults were already handled. There is nothing to do here.';
-$string['region-none'] = 'None';
 $string['region-outside-left'] = 'Outside (left)';
 $string['region-outside-top'] = 'Outside (top)';
 $string['region-outside-bottom'] = 'Outside (bottom)';
@@ -1803,7 +1795,6 @@ $string['enableuploadedsnippets_desc'] = 'With this setting, you can enable or d
 // ... ... Setting: Upload snippets.
 $string['uploadedsnippets'] = 'Upload snippets';
 $string['uploadedsnippets_desc'] = 'You can either upload individual SCSS snippet files or a ZIP archive containing multiple SCSS snippet files – the ZIP file will be automatically extracted and the contained SCSS snippets will then be avaiable in this file area as individual files.';
-$string['uploadedsnippets_note'] = 'You can find the structure and syntax of Boost Union SCSS snippets in our <a href="{$a->url}" target="_blank">SCSS snippets repository</a>. There, you also find instructions how to use existing community snippets and contribute snippets to the community.';
 
 // Settings: Smart menus page.
 $string['smartmenus'] = 'Smart menus';
@@ -1813,7 +1804,6 @@ $string['smartmenus_desc'] = '<p>Smart menus allow site administrators to create
 $string['smartmenusbycohort'] = 'By cohort';
 $string['smartmenusbycohort_help'] = 'Restrict the visibility based on the user\'s cohorts.';
 $string['smartmenusbydate'] = 'By date';
-$string['smartmenusbydate_help'] = 'Restrict the visibility based on the date';
 $string['smartmenusbydatefrom'] = 'From';
 $string['smartmenusbydatefrom_help'] = 'Restrict the visibility before the given date is reached';
 $string['smartmenusbydateuntil'] = 'Until';
