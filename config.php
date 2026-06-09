@@ -192,9 +192,19 @@ $THEME->layouts = [
     ]
 ];
 
+// Actively require the mwp class file.
+// We use require_once() to load the class actively, bypassing Moodle's autoloader and MUC class cache.
+// This avoids a fatal error if the plugin files were updated from a release without MWP support to a release with MWP support,
+// but without purging caches.
+$mwpclassfile = $CFG->dirroot . '/theme/boost_union/classes/local/mwp.php';
+if (file_exists($mwpclassfile)) {
+    require_once($mwpclassfile);
+}
+
 // If we are on MWP and the Workplace theme is present.
 if (
-    \theme_boost_union\local\mwp::extension_present() == true &&
+    class_exists('\theme_boost_union\local\mwp') &&
+        \theme_boost_union\local\mwp::extension_present() == true &&
         \theme_boost_union\local\mwp::themeworkplace_present() == true
 ) {
     // Set the parent themes to workplace and boost afterwards.
@@ -223,7 +233,10 @@ $THEME->usescourseindex = true;
 $THEME->removedprimarynavitems = during_initial_install() ?
         [] : explode(',', get_config('theme_boost_union', 'hidenodesprimarynavigation'));
 // If we are on MWP.
-if (\theme_boost_union\local\mwp::extension_present() == true) {
+if (
+    class_exists('\theme_boost_union\local\mwp') &&
+        \theme_boost_union\local\mwp::extension_present() == true
+) {
     // Call the BU MWP class method only if the class and method exist.
     if (
         class_exists('\\local_boost_union_mwp\\local\\mwp') &&
