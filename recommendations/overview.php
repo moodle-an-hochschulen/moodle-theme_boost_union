@@ -95,9 +95,9 @@ echo theme_boost_union_is_not_active_alert();
 // Show recommendations intro.
 $intro = new \core\output\notification(
     get_string('recommendations_desc', 'theme_boost_union'),
-    \core\output\notification::NOTIFY_INFO
+    \core\output\notification::NOTIFY_INFO,
+    false
 );
-$intro->set_show_closebutton(false);
 $intro->set_extra_classes(['alert-light']);
 echo $OUTPUT->render($intro);
 

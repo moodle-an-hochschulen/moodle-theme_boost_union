@@ -136,9 +136,9 @@ echo theme_boost_union_recommendations_alert();
 // Show flavours intro.
 $intro = new \core\output\notification(
     get_string('flavoursoverview_desc', 'theme_boost_union'),
-    \core\output\notification::NOTIFY_INFO
+    \core\output\notification::NOTIFY_INFO,
+    false
 );
-$intro->set_show_closebutton(false);
 $intro->set_extra_classes(['mb-5', 'alert-light']);
 echo $OUTPUT->render($intro);
 
