@@ -134,8 +134,7 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         // Show the notification.
         // (If this notification is shown during a CLI upgrade, the p and strong HTML tags are shown as well.
         // We accept this glitch as it's just a one-time glitch and the admin can still read the notification.
-        $notification = new \core\output\notification($message, \core\output\notification::NOTIFY_SUCCESS);
-        $notification->set_show_closebutton(false);
+        $notification = new \core\output\notification($message, \core\output\notification::NOTIFY_SUCCESS, false);
         echo $OUTPUT->render($notification);
 
         // Boost_union savepoint reached.

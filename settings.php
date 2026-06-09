@@ -1447,8 +1447,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme_boost_union',
             ['settingname' => $locallogincorenotesettingname, 'url' => $locallogincorenoteurl->out()],
             true
-        ), \core\output\notification::NOTIFY_INFO);
-        $locallogincorenote->set_show_closebutton(false);
+        ), \core\output\notification::NOTIFY_INFO, false);
         $description .= $OUTPUT->render($locallogincorenote);
         $localloginurl = new core\url('/theme/boost_union/locallogin.php');
         $localloginnotification = new \core\output\notification(get_string(
@@ -1456,8 +1455,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme_boost_union',
             ['url' => $localloginurl],
             true
-        ), \core\output\notification::NOTIFY_WARNING);
-        $localloginnotification->set_show_closebutton(false);
+        ), \core\output\notification::NOTIFY_WARNING, false);
         $description .= $OUTPUT->render($localloginnotification);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
@@ -1617,8 +1615,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme_boost_union',
             ['url' => $idplogincorenoteurl->out()],
             true
-        ), \core\output\notification::NOTIFY_INFO);
-        $idplogincorenote->set_show_closebutton(false);
+        ), \core\output\notification::NOTIFY_INFO, false);
         $description .= $OUTPUT->render($idplogincorenote);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
@@ -1878,8 +1875,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme_boost_union',
             ['settingname' => $selfregistrationlogincorenotesettingname, 'url' => $selfregistrationlogincorenoteurl->out()],
             true
-        ), \core\output\notification::NOTIFY_INFO);
-        $selfregistrationlogincorenote->set_show_closebutton(false);
+        ), \core\output\notification::NOTIFY_INFO, false);
         $description .= $OUTPUT->render($selfregistrationlogincorenote);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
@@ -2027,8 +2023,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             'theme_boost_union',
             ['settingname' => $guestlogincorenotesettingname, 'url' => $guestlogincorenoteurl->out()],
             true
-        ), \core\output\notification::NOTIFY_INFO);
-        $guestlogincorenote->set_show_closebutton(false);
+        ), \core\output\notification::NOTIFY_INFO, false);
         $description .= $OUTPUT->render($guestlogincorenote);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
@@ -2682,9 +2677,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/courseheaderoverride';
         $courseheaderoverride = new \core\output\notification(
             get_string('courseoverride_desc', 'theme_boost_union'),
-            \core\output\notification::NOTIFY_INFO
+            \core\output\notification::NOTIFY_INFO,
+            false
         );
-        $courseheaderoverride->set_show_closebutton(false);
         $courseheaderoverride->set_extra_classes(['alert-light']);
         $description = $OUTPUT->render($courseheaderoverride);
         $setting = new admin_setting_heading($name, '', $description);
@@ -3572,9 +3567,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                     ['url' => $mobilecssurl->out(), 'value' => $CFG->mobilecssurl]
                 ) . ' ' .
                     get_string('mobilecss_donotchange', 'theme_boost_union'),
-                \core\output\notification::NOTIFY_WARNING
+                \core\output\notification::NOTIFY_WARNING,
+                false
             );
-            $mobilescssnotification->set_show_closebutton(false);
             $description .= $OUTPUT->render($mobilescssnotification);
 
             // Otherwise, we just add a note to the description.
@@ -3586,9 +3581,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                     ['url' => $mobilecssurl->out()]
                 ) . ' ' .
                     get_string('mobilecss_donotchange', 'theme_boost_union'),
-                \core\output\notification::NOTIFY_INFO
+                \core\output\notification::NOTIFY_INFO,
+                false
             );
-            $mobilescssnotification->set_show_closebutton(false);
             $description .= $OUTPUT->render($mobilescssnotification);
         }
         // Using admin_setting_scsscode is not 100% right here as this setting does not support SCSS.
@@ -3864,9 +3859,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/blockregionsintro';
         $blockregionsintro = new \core\output\notification(
             get_string('blockregionsheading_desc', 'theme_boost_union'),
-            \core\output\notification::NOTIFY_INFO
+            \core\output\notification::NOTIFY_INFO,
+            false
         );
-        $blockregionsintro->set_show_closebutton(false);
         $blockregionsintro->set_extra_classes(['alert-light']);
         $description = $OUTPUT->render($blockregionsintro);
         $setting = new admin_setting_heading($name, '', $description);
@@ -3897,8 +3892,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 get_string('blockregionsheading_guestrole_keep', 'theme_boost_union', null, true),
                 ['class' => 'btn btn-secondary mt-1', 'role' => 'button']
             );
-            $notification = new \core\output\notification($guestrolenote, \core\output\notification::NOTIFY_ERROR);
-            $notification->set_show_closebutton(false);
+            $notification = new \core\output\notification($guestrolenote, \core\output\notification::NOTIFY_ERROR, false);
             $description = $OUTPUT->render($notification);
             $setting = new admin_setting_heading($name, '', $description);
             $tab->add($setting);
@@ -3980,9 +3974,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 $notificationurl = 'https://docs.moodle.org/en/Block_settings#Making_a_block_sticky_throughout_the_whole_site';
                 $notification = new \core\output\notification(
                     get_string('blockregionsstickyonly', 'theme_boost_union', $notificationurl),
-                    \core\output\notification::NOTIFY_INFO
+                    \core\output\notification::NOTIFY_INFO,
+                    false
                 );
-                $notification->set_show_closebutton(false);
                 $description .= '<br />' . $OUTPUT->render($notification);
             }
             $setting = new admin_setting_configmulticheckbox($name, $title, $description, [], $regions);
@@ -6215,9 +6209,9 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $notificationurl = 'https://github.com/moodle-an-hochschulen/moodle-theme_boost_union_snippets';
         $notification = new \core\output\notification(
             get_string('snippetsuploadedsnippetsheading_desc', 'theme_boost_union', $notificationurl),
-            \core\output\notification::NOTIFY_INFO
+            \core\output\notification::NOTIFY_INFO,
+            false
         );
-        $notification->set_show_closebutton(false);
         $description = $OUTPUT->render($notification);
         $setting = new admin_setting_heading($name, $title, $description);
         $tab->add($setting);
