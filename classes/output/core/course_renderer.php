@@ -933,17 +933,25 @@ class course_renderer extends course_renderer_intermediate {
      * @return bool true if the modifications should be used.
      */
     private function page_has_boostunion_modification(): bool {
+        global $CFG;
 
         // First, check if this function is called from /course/category.ajax.php.
         // This is the case when the course listing is loaded via AJAX on the category overview pages and on the frontpage
-        // were we want to allow the modification.
-        // It is slightly fragile as we rely just on the URL of the script and do not know if it will be called
+        // where we want to allow the modification.
+        // We use SCRIPT_FILENAME instead of $this->page->url here because category.ajax.php does not call
+        // $PAGE->set_url(), which would trigger a debugging message when accessing $this->page->url.
+        // It is slightly fragile as we rely just on the filename of the script and do not know if it will be called
         // by some other code which must not be modified in the future.
-        // But it should hopyfully be ok for now.
-        if ($this->page->url->compare(new \core\url('/course/category.ajax.php'), URL_MATCH_BASE)) {
-            // Allow modification.
-            return true;
+        // But it should hopefully be ok for now.
+        if (isset($_SERVER['SCRIPT_FILENAME'])) {
+            $scriptpath = str_replace($CFG->dirroot, '', realpath($_SERVER['SCRIPT_FILENAME']));
+            if ($scriptpath === '/course/category.ajax.php') {
+                // Allow modification.
+                return true;
+            }
         }
+
+        // For all further checks, we rely on the page URL and expect that it is set.
 
         // Then, check if user is on site home.
         $context = $this->page->context;
