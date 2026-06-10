@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-06-10 - Bugfix: Solve a debugging message when expanding a course category (when the Boost Union course/category listing presentation is activated), resolves #1317
+
 ### v5.1-r18
 
 * 2026-06-09 - MWP: Avoid the 'class theme_boost_union\local\mwp not found' exception when upgrading the plugin, resolves #1314
