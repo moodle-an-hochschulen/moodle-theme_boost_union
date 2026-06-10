@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-06-10 - Bugfix: Move the footnote in the side-by-side login arrangement to the right panel, resolves #1279
 * 2026-06-10 - Bugfix: Solve a debugging message when expanding a course category (when the Boost Union course/category listing presentation is activated), resolves #1317
 
 ### v5.2-r5

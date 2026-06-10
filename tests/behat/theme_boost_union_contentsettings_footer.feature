@@ -46,11 +46,28 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And I should not see "<span lang=\"en\" class=\"multilang\">Footnote</span>" in the "#footnote" "css_element"
     And I should not see "FootnoteFussnote" in the "#footnote" "css_element"
 
+  Scenario Outline: Setting: Footnote - Place footnote on login page depending on login arrangement
+    Given the following config values are set as admin:
+      | config           | value              | plugin            |
+      | footnote         | Footnote text      | theme_boost_union |
+      | footnotelayouts  | login              | theme_boost_union |
+      | loginarrangement | <loginarrangement> | theme_boost_union |
+    When I am on login page
+    Then "#footnote" "css_element" should exist
+    And the "class" attribute of "body" "css_element" should contain "theme_boost_union-loginarrangement-<loginarrangement>"
+    And "<anchorelementid>" "css_element" should appear before "#footnote" "css_element" in the "<contextselector>" "css_element"
+
+    Examples:
+      | loginarrangement | anchorelementid  | contextselector  |
+      | sidebyside       | div[role='main'] | .login-container |
+      | legacy           | #page            | #page-wrapper    |
+
   Scenario Outline: Setting: Page layouts for footnote - Set the layouts
     Given the following config values are set as admin:
-      | config          | value         | plugin            |
-      | footnote        | Footnote text | theme_boost_union |
-      | footnotelayouts | <layouts>     | theme_boost_union |
+      | config           | value              | plugin            |
+      | footnote         | Footnote text      | theme_boost_union |
+      | footnotelayouts  | <layouts>          | theme_boost_union |
+      | loginarrangement | <loginarrangement> | theme_boost_union |
     When I log in as "admin"
     And I follow "Dashboard"
     Then "#footnote" "css_element" <dashboardshouldornot> exist
@@ -62,10 +79,13 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
 
     # We do not want to burn too much CPU time by testing all available layouts. We just test three important layouts.
     Examples:
-      | layouts                  | dashboardshouldornot | courseshouldornot | loginshouldornot |
-      | mydashboard              | should               | should not        | should not       |
-      | login                    | should not           | should not        | should           |
-      | mydashboard,login,course | should               | should            | should           |
+      | layouts                  | loginarrangement | dashboardshouldornot | courseshouldornot | loginshouldornot |
+      | mydashboard              | sidebyside       | should               | should not        | should not       |
+      | mydashboard              | legacy           | should               | should not        | should not       |
+      | login                    | sidebyside       | should not           | should not        | should           |
+      | login                    | legacy           | should not           | should not        | should           |
+      | mydashboard,login,course | sidebyside       | should               | should            | should           |
+      | mydashboard,login,course | legacy           | should               | should            | should           |
 
   @javascript
   Scenario Outline: Setting: Footer - Enable and disable the footer button
