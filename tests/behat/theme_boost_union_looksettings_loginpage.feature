@@ -734,15 +734,17 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
 
     # We do not want to burn too much CPU time by testing all available options. We just test the default value and one non-default value.
     Examples:
-      | provider         | buttoncolorconfig                | buttoncolor       | buttonselector                     | expectedclass         |
-      | locallogin       | loginlocalbuttoncolor            | primary           | #login-method-local .btn           | btn-primary           |
-      | locallogin       | loginlocalbuttoncolor            | outline-secondary | #login-method-local .btn           | btn-outline-secondary |
-      | idplogin         | loginidpbuttoncolor              | outline-secondary | #login-method-idp .btn             | btn-outline-secondary |
-      | idplogin         | loginidpbuttoncolor              | outline-primary   | #login-method-idp .btn             | btn-outline-primary   |
-      | selfregistration | loginselfregistrationbuttoncolor | secondary         | #login-method-firsttimesignup .btn | btn-secondary         |
-      | selfregistration | loginselfregistrationbuttoncolor | primary           | #login-method-firsttimesignup .btn | btn-primary           |
-      | guestlogin       | loginguestbuttoncolor            | secondary         | #login-method-guest .btn           | btn-secondary         |
-      | guestlogin       | loginguestbuttoncolor            | outline-primary   | #login-method-guest .btn           | btn-outline-primary   |
+      | provider         | buttoncolorconfig                | buttoncolor         | buttonselector                     | expectedclass           |
+      | locallogin       | loginlocalbuttoncolor            | primary             | #login-method-local .btn           | btn-primary             |
+      | locallogin       | loginlocalbuttoncolor            | outline-secondary   | #login-method-local .btn           | btn-outline-secondary   |
+      | idplogin         | loginidpbuttoncolor              | outline-secondary   | #login-method-idp .btn             | btn-outline-secondary   |
+      | idplogin         | loginidpbuttoncolor              | outline-primary     | #login-method-idp .btn             | btn-outline-primary     |
+      | idplogin         | loginidpbuttoncolor              | outline-lightmoodle | #login-method-idp .btn             | btn-outline-lightmoodle |
+      | selfregistration | loginselfregistrationbuttoncolor | secondary           | #login-method-firsttimesignup .btn | btn-secondary           |
+      | selfregistration | loginselfregistrationbuttoncolor | primary             | #login-method-firsttimesignup .btn | btn-primary             |
+      | guestlogin       | loginguestbuttoncolor            | secondary           | #login-method-guest .btn           | btn-secondary           |
+      | guestlogin       | loginguestbuttoncolor            | outline-primary     | #login-method-guest .btn           | btn-outline-primary     |
+      | guestlogin       | loginguestbuttoncolor            | outline-lightmoodle | #login-method-guest .btn           | btn-outline-lightmoodle |
 
   Scenario Outline: Setting: Login provider divider type - Verify the divider type
     Given the following config values are set as admin:
