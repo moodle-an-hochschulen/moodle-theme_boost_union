@@ -821,6 +821,14 @@ class core_renderer extends core_renderer_intermediate {
             } else {
                 $context->localloginbtnclass = 'btn-' . THEME_BOOST_UNION_SETTING_BUTTONCOLOR_PRIMARYFILLED;
             }
+            // Button size (Bootstrap's medium size does not have an own class and does not need to be added).
+            $loginlocalbuttonsizesetting = get_config('theme_boost_union', 'loginlocalbuttonsize');
+            if (
+                $loginlocalbuttonsizesetting !== false &&
+                    $loginlocalbuttonsizesetting !== THEME_BOOST_UNION_SETTING_BUTTONSIZE_MEDIUM
+            ) {
+                $context->localloginbtnclass .= ' btn-' . $loginlocalbuttonsizesetting;
+            }
         }
 
         // IDP login.
@@ -859,6 +867,14 @@ class core_renderer extends core_renderer_intermediate {
             } else {
                 $context->idploginbtnclass = 'btn-' . THEME_BOOST_UNION_SETTING_BUTTONCOLOR_MOODLELIGHTOUTLINE;
             }
+            // Button size (Bootstrap's medium size does not have an own class and does not need to be added).
+            $loginidpbuttonsizesetting = get_config('theme_boost_union', 'loginidpbuttonsize');
+            if (
+                $loginidpbuttonsizesetting !== false &&
+                    $loginidpbuttonsizesetting !== THEME_BOOST_UNION_SETTING_BUTTONSIZE_MEDIUM
+            ) {
+                $context->idploginbtnclass .= ' btn-' . $loginidpbuttonsizesetting;
+            }
         }
 
         // Guest login.
@@ -896,6 +912,14 @@ class core_renderer extends core_renderer_intermediate {
                 $context->guestloginbtnclass = 'btn-' . $loginguestbuttoncolorsetting;
             } else {
                 $context->guestloginbtnclass = 'btn-' . THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYFILLED;
+            }
+            // Button size (Bootstrap's medium size does not have an own class and does not need to be added).
+            $loginguestbuttonsizesetting = get_config('theme_boost_union', 'loginguestbuttonsize');
+            if (
+                $loginguestbuttonsizesetting !== false &&
+                    $loginguestbuttonsizesetting !== THEME_BOOST_UNION_SETTING_BUTTONSIZE_MEDIUM
+            ) {
+                $context->guestloginbtnclass .= ' btn-' . $loginguestbuttonsizesetting;
             }
         }
 
@@ -937,6 +961,14 @@ class core_renderer extends core_renderer_intermediate {
                 $context->selfregistrationloginbtnclass = 'btn-' . $loginselfregistrationbuttoncolorsetting;
             } else {
                 $context->selfregistrationloginbtnclass = 'btn-' . THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYFILLED;
+            }
+            // Button size (Bootstrap's medium size does not have an own class and does not need to be added).
+            $loginselfregistrationbuttonsizesetting = get_config('theme_boost_union', 'loginselfregistrationbuttonsize');
+            if (
+                $loginselfregistrationbuttonsizesetting !== false &&
+                    $loginselfregistrationbuttonsizesetting !== THEME_BOOST_UNION_SETTING_BUTTONSIZE_MEDIUM
+            ) {
+                $context->selfregistrationloginbtnclass .= ' btn-' . $loginselfregistrationbuttonsizesetting;
             }
         }
 

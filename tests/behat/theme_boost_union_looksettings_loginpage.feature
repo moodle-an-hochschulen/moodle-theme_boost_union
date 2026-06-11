@@ -708,6 +708,46 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
       | guestlogin       | loginguestbuttoncolor            | outline-primary     | #login-method-guest .btn           | btn-outline-primary     |
       | guestlogin       | loginguestbuttoncolor            | outline-lightmoodle | #login-method-guest .btn           | btn-outline-lightmoodle |
 
+  Scenario Outline: Setting: Login provider button size
+    Given the following config values are set as admin:
+      | config                | value        | plugin            |
+      | login<provider>enable | yes          | theme_boost_union |
+      | <buttonsizeconfig>    | <buttonsize> | theme_boost_union |
+    And the following config values are set as admin:
+      | config           | value               |
+      | auth             | manual,email,oauth2 |
+      | registerauth     | email               |
+      | guestloginbutton | 1                   |
+    And I log in as "admin"
+    And I navigate to "Server > OAuth 2 services" in site administration
+    And I press "Google"
+    And I should see "Create new service: Google"
+    And I set the following fields to these values:
+      | Name          | Testing service   |
+      | Client ID     | thisistheclientid |
+      | Client secret | supersecret       |
+    And I press "Save changes"
+    And I log out
+    When I am on login page
+    Then the "class" attribute of "<buttonselector>" "css_element" should contain "<expectedclass>"
+    And the "class" attribute of "<buttonselector>" "css_element" should not contain "<notexpectedclass>"
+
+    # We do not want to burn too much CPU time by testing all available options on all login methods.
+    # We just test the small and the large size on the login methods and verify with the local login button that the medium size
+    # (which is the default) does not add any size class at all.
+    Examples:
+      | provider         | buttonsizeconfig                | buttonsize | buttonselector                     | expectedclass | notexpectedclass |
+      | locallogin       | loginlocalbuttonsize            | sm         | #login-method-local .btn           | btn-sm        | btn-lg           |
+      | locallogin       | loginlocalbuttonsize            | lg         | #login-method-local .btn           | btn-lg        | btn-sm           |
+      | locallogin       | loginlocalbuttonsize            | md         | #login-method-local .btn           | btn-primary   | btn-sm           |
+      | locallogin       | loginlocalbuttonsize            | md         | #login-method-local .btn           | btn-primary   | btn-lg           |
+      | idplogin         | loginidpbuttonsize              | sm         | #login-method-idp .btn             | btn-sm        | btn-lg           |
+      | idplogin         | loginidpbuttonsize              | lg         | #login-method-idp .btn             | btn-lg        | btn-sm           |
+      | selfregistration | loginselfregistrationbuttonsize | sm         | #login-method-firsttimesignup .btn | btn-sm        | btn-lg           |
+      | selfregistration | loginselfregistrationbuttonsize | lg         | #login-method-firsttimesignup .btn | btn-lg        | btn-sm           |
+      | guestlogin       | loginguestbuttonsize            | sm         | #login-method-guest .btn           | btn-sm        | btn-lg           |
+      | guestlogin       | loginguestbuttonsize            | lg         | #login-method-guest .btn           | btn-lg        | btn-sm           |
+
   @javascript
   Scenario Outline: Setting: Login form layout tabs - Verify tabs structure and primarylogin functionality
     Given the following config values are set as admin:

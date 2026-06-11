@@ -60,6 +60,9 @@ $string['buttoncolorsecondaryfilled'] = 'Secondary (Filled)';
 $string['buttoncolorprimaryoutline'] = 'Primary (Outline)';
 $string['buttoncolorsecondaryoutline'] = 'Secondary (Outline)';
 $string['buttoncolorlightmoodleoutline'] = 'Moodle Light Secondary (Outline)';
+$string['buttonsizesmall'] = 'Small';
+$string['buttonsizemedium'] = 'Medium';
+$string['buttonsizelarge'] = 'Large';
 $string['bootstrap0to5_0'] = '0 (None)';
 $string['bootstrap0to5_1'] = '1 (Extra small)';
 $string['bootstrap0to5_2'] = '2 (Small)';
@@ -483,6 +486,9 @@ $string['loginlocalinstructionposition_desc'] = 'With this setting, you can spec
 // ... ... Setting: Local login button color.
 $string['loginlocalbuttoncolorsetting'] = 'Local login button color';
 $string['loginlocalbuttoncolorsetting_desc'] = 'With this setting, you can control the Bootstrap color style of the local login button.';
+// ... ... Setting: Local login button size.
+$string['loginlocalbuttonsizesetting'] = 'Local login button size';
+$string['loginlocalbuttonsizesetting_desc'] = 'With this setting, you can control the Bootstrap size of the local login button.';
 // ... Section: Login provider: IDP.
 $string['loginprovideridpheading'] = 'Login provider: IDP';
 // ... ... Setting: IDP login.
@@ -509,6 +515,9 @@ $string['loginidpinstructionposition_desc'] = 'With this setting, you can specif
 // ... ... Setting: IDP login button color.
 $string['loginidpbuttoncolorsetting'] = 'IDP login button color';
 $string['loginidpbuttoncolorsetting_desc'] = 'With this setting, you can control the Bootstrap color style of the IDP login buttons.';
+// ... ... Setting: IDP login button size.
+$string['loginidpbuttonsizesetting'] = 'IDP login button size';
+$string['loginidpbuttonsizesetting_desc'] = 'With this setting, you can control the Bootstrap size of the IDP login buttons.';
 // ... Section: Login provider: IDP (Expert settings).
 $string['loginprovideridpexpertheading'] = 'Login provider: IDP (Expert settings)';
 // ... ... Setting: Split per identity provider.
@@ -549,6 +558,9 @@ $string['loginselfregistrationinstructionposition_desc'] = 'With this setting, y
 // ... ... Setting: Self registration button color.
 $string['loginselfregistrationbuttoncolorsetting'] = 'Self registration button color';
 $string['loginselfregistrationbuttoncolorsetting_desc'] = 'With this setting, you can control the Bootstrap color style of the self registration button.';
+// ... ... Setting: Self registration button size.
+$string['loginselfregistrationbuttonsizesetting'] = 'Self registration button size';
+$string['loginselfregistrationbuttonsizesetting_desc'] = 'With this setting, you can control the Bootstrap size of the self registration button.';
 // ... Section: Login provider: Guest.
 $string['loginproviderguestheading'] = 'Login provider: Guest';
 // ... ... Setting: Guest login.
@@ -575,6 +587,9 @@ $string['loginguestinstructionposition_desc'] = 'With this setting, you can spec
 // ... ... Setting: Guest login button color.
 $string['loginguestbuttoncolorsetting'] = 'Guest login button color';
 $string['loginguestbuttoncolorsetting_desc'] = 'With this setting, you can control the Bootstrap color style of the guest login button.';
+// ... ... Setting: Guest login button size.
+$string['loginguestbuttonsizesetting'] = 'Guest login button size';
+$string['loginguestbuttonsizesetting_desc'] = 'With this setting, you can control the Bootstrap size of the guest login button.';
 // ... Section: Side entrance login.
 $string['sideentranceloginheading'] = 'Side entrance login';
 // ... ... Setting: Endable side entrance login.
