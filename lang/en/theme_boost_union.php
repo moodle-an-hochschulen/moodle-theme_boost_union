@@ -2134,6 +2134,11 @@ $string['recommendation_infobannerloginpagesidebyside_title'] = 'Info banner on 
 $string['recommendation_infobannerloginpagesidebyside_summary'] = 'Information banners on the login page with side-by-side login arrangement should be as concise as possible.';
 $string['recommendation_infobannerloginpagesidebyside_details'] = 'On the side-by-side login page arrangement, information banners are only shown in the right column over the login form. This means that the available width is reduced. Please keep the content of these information banners as short and concise as possible to avoid overloading of the login page.';
 
+// Recommendation: Footnote on Login page with side-by-side login arrangement.
+$string['recommendation_footnoteloginpagesidebyside_title'] = 'Footnote on login page';
+$string['recommendation_footnoteloginpagesidebyside_summary'] = 'The footnote on the login page with side-by-side login arrangement should work in the right panel as well.';
+$string['recommendation_footnoteloginpagesidebyside_details'] = 'On the side-by-side login page arrangement, the footnote is shown in the right column within the login form, not below the whole page content. Please take note of this different appearance and make sure the footnote content looks as intended on the login page as well. If your footnote content is too large for the login form, you can disable the footnote on the login page layout and set shorter login instructions instead.';
+
 // Recommendation: Boost Union MWP extension.
 $string['recommendation_mwpextension_title'] = 'Boost Union MWP extension';
 $string['recommendation_mwpextension_summary'] = 'The Boost Union MWP extension should be installed when running on Moodle Workplace™.';
