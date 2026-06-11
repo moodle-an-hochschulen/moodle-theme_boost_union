@@ -240,6 +240,16 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                     get_string('buttoncolorlightmoodleoutline', 'theme_boost_union', null, true),
         ];
 
+        // Prepare button size options.
+        $buttonsizeoptions = [
+            THEME_BOOST_UNION_SETTING_BUTTONSIZE_SMALL =>
+                    get_string('buttonsizesmall', 'theme_boost_union', null, true),
+            THEME_BOOST_UNION_SETTING_BUTTONSIZE_MEDIUM =>
+                    get_string('buttonsizemedium', 'theme_boost_union', null, true),
+            THEME_BOOST_UNION_SETTING_BUTTONSIZE_LARGE =>
+                    get_string('buttonsizelarge', 'theme_boost_union', null, true),
+        ];
+
         // If we are on MWP (regardless if the extension is present).
         if (\theme_boost_union\local\mwp::core_present() == true) {
             // Create external pages again to make it show in the MWP settings tree as well as
@@ -1600,6 +1610,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
+        // Setting: Local login button size.
+        $name = 'theme_boost_union/loginlocalbuttonsize';
+        $title = get_string('loginlocalbuttonsizesetting', 'theme_boost_union', null, true);
+        $description = get_string('loginlocalbuttonsizesetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_BUTTONSIZE_MEDIUM,
+            $buttonsizeoptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginlocalbuttonsize',
+            'theme_boost_union/loginlocalloginenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
         // Heading: Login provider: IDP.
         $name = 'theme_boost_union/loginprovideridpheading';
         $title = get_string('loginprovideridpheading', 'theme_boost_union', null, true);
@@ -1761,6 +1790,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $tab->add($setting);
         $page->hide_if(
             'theme_boost_union/loginidpbuttoncolor',
+            'theme_boost_union/loginidploginenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
+        // Setting: IDP login button size.
+        $name = 'theme_boost_union/loginidpbuttonsize';
+        $title = get_string('loginidpbuttonsizesetting', 'theme_boost_union', null, true);
+        $description = get_string('loginidpbuttonsizesetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_BUTTONSIZE_MEDIUM,
+            $buttonsizeoptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginidpbuttonsize',
             'theme_boost_union/loginidploginenable',
             'neq',
             THEME_BOOST_UNION_SETTING_SELECT_YES
@@ -2008,6 +2056,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
+        // Setting: Self registration button size.
+        $name = 'theme_boost_union/loginselfregistrationbuttonsize';
+        $title = get_string('loginselfregistrationbuttonsizesetting', 'theme_boost_union', null, true);
+        $description = get_string('loginselfregistrationbuttonsizesetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_BUTTONSIZE_MEDIUM,
+            $buttonsizeoptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginselfregistrationbuttonsize',
+            'theme_boost_union/loginselfregistrationenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
         // Heading: Login provider: Guest.
         $name = 'theme_boost_union/loginproviderguestheading';
         $title = get_string('loginproviderguestheading', 'theme_boost_union', null, true);
@@ -2163,6 +2230,25 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $tab->add($setting);
         $page->hide_if(
             'theme_boost_union/loginguestbuttoncolor',
+            'theme_boost_union/loginguestloginenable',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
+        // Setting: Guest login button size.
+        $name = 'theme_boost_union/loginguestbuttonsize';
+        $title = get_string('loginguestbuttonsizesetting', 'theme_boost_union', null, true);
+        $description = get_string('loginguestbuttonsizesetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_BUTTONSIZE_MEDIUM,
+            $buttonsizeoptions
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/loginguestbuttonsize',
             'theme_boost_union/loginguestloginenable',
             'neq',
             THEME_BOOST_UNION_SETTING_SELECT_YES
