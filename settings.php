@@ -221,6 +221,8 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                     get_string('buttoncolorprimaryoutline', 'theme_boost_union', null, true),
             THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYOUTLINE =>
                     get_string('buttoncolorsecondaryoutline', 'theme_boost_union', null, true),
+            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_MOODLELIGHTOUTLINE =>
+                    get_string('buttoncolorlightmoodleoutline', 'theme_boost_union', null, true),
         ];
 
         // If we are on MWP (regardless if the extension is present).
@@ -1760,7 +1762,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name,
             $title,
             $description,
-            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYOUTLINE,
+            THEME_BOOST_UNION_SETTING_BUTTONCOLOR_MOODLELIGHTOUTLINE,
             $buttoncoloroptions
         );
         $tab->add($setting);

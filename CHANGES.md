@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-06-10 - Improvement: Support Moodle's color for the secondary outline buttons on the login page, resolves #1319
 * 2026-06-10 - Bugfix: Solve a debugging message when expanding a course category (when the Boost Union course/category listing presentation is activated), resolves #1317
 
 ### v4.5-r43

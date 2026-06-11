@@ -59,6 +59,7 @@ $string['buttoncolorprimaryfilled'] = 'Primary (Filled)';
 $string['buttoncolorsecondaryfilled'] = 'Secondary (Filled)';
 $string['buttoncolorprimaryoutline'] = 'Primary (Outline)';
 $string['buttoncolorsecondaryoutline'] = 'Secondary (Outline)';
+$string['buttoncolorlightmoodleoutline'] = 'Moodle Light Secondary (Outline)';
 $string['bootstrap0to5_0'] = '0 (None)';
 $string['bootstrap0to5_1'] = '1 (Extra small)';
 $string['bootstrap0to5_2'] = '2 (Small)';
