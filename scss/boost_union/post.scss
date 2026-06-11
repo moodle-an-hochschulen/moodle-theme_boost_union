@@ -1909,6 +1909,25 @@ body.pagelayout-login:not(.loginbackgroundimage) #footnote {
     border-top: none;
 }
 
+/* Finally, handle the footnote on the login page with the side-by-side arrangement.
+   We could have solved this with enhanced selectors above already.
+   However, as the selectors above are already complicated enough and as this is a special
+   case here, we just re-set some remaining aspects of the footnote here.*/
+
+body.theme_boost_union-loginarrangement-sidebyside #footnote {
+    /* Fix whitespace. */
+    margin-left: 0 !important;  /* stylelint-disable-line declaration-no-important */
+    margin-right: 0 !important;  /* stylelint-disable-line declaration-no-important */
+    margin-bottom: 1rem !important;  /* stylelint-disable-line declaration-no-important */
+    margin-top: 2rem !important;  /* stylelint-disable-line declaration-no-important */
+    padding-left: 0 !important;  /* stylelint-disable-line declaration-no-important */
+    padding-right: 0 !important;  /* stylelint-disable-line declaration-no-important */
+
+    /* Add top border. */
+    border-top: $border-width solid $border-color !important;  /* stylelint-disable-line declaration-no-important */
+}
+
+
 /*---------------------------------------
  * Settings: Footer.
  --------------------------------------*/

@@ -210,6 +210,32 @@ Feature: Recommendations in theme_boost_union
       | sidebyside            |                       |
       |                       | login                 |
 
+  Scenario Outline: Verify Recommendation footnoteloginpagesidebyside (Status check - Negative case)
+    Given the following config values are set as admin:
+      | config           | value                   | plugin            |
+      | loginarrangement | <loginarrangementvalue> | theme_boost_union |
+      | footnotelayouts  | <footnotelayoutsvalue>  | theme_boost_union |
+    When I navigate to "Appearance > Boost Union > Recommendations" in site administration
+    Then I should see "Footnote on login page" in the "table#recommendations-usability" "css_element"
+    And I should see "<statustext>" in the "Footnote on login page" "table_row"
+
+    Examples:
+      | loginarrangementvalue | footnotelayoutsvalue | statustext |
+      | sidebyside            | login                | Check      |
+
+  Scenario Outline: Verify Recommendation footnoteloginpagesidebyside (Status check - Positive case)
+    Given the following config values are set as admin:
+      | config           | value                   | plugin            |
+      | loginarrangement | <loginarrangementvalue> | theme_boost_union |
+      | footnotelayouts  | <footnotelayoutsvalue>  | theme_boost_union |
+    When I navigate to "Appearance > Boost Union > Recommendations" in site administration
+    Then I should not see "Footnote on login page"
+
+    Examples:
+      | loginarrangementvalue | footnotelayoutsvalue |
+      | sidebyside            |                      |
+      |                       | login                |
+
   Scenario: Verify recommendation notification and view-all action on settings page (with the core logo recommendation as an example)
     Given the following "theme_boost_union > core files" exist:
       | filearea | filepath                                       |

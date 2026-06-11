@@ -4474,6 +4474,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('footnotesetting_desc', 'theme_boost_union', null, true);
         $description .=
                 theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $description .= recommendation_manager::render_recommendation_notification('footnoteloginpagesidebyside');
         $setting = new admin_setting_confightmleditor($name, $title, $description, '');
         $tab->add($setting);
 

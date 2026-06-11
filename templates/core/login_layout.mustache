@@ -37,8 +37,11 @@
 {{!
     This template is a modified version of core/login_layout
 
+    It is only used when the side-by-side login arrangement is configured.
+
     Modifications compared to the original template:
-    * Added the possibility to show info banners (in the side-by-side login arrangement).
+    * Added the possibility to show info banners (in the right panel).
+    * Added the footnote into the login form column (in the right panel).
 }}
 <div id="page-content" class="min-vh-100 row g-0">
     <aside class="login-layout-left col-lg-6 d-none d-lg-flex">
@@ -49,6 +52,7 @@
             <div class="login-container">
                 {{> theme_boost_union/infobanners }}
                 {{{ output.main_content }}}
+                {{> theme_boost_union/footnote }}
             </div>
         </div>
     </div>

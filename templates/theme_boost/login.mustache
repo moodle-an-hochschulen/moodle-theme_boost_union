@@ -33,7 +33,7 @@
     This template is a modified version of theme_boost/login
 
     Modifications compared to the original template:
-    * Include theme_boost_union/footnote template
+    * Include theme_boost_union/footnote template (for legacy login page arrangement only)
     * Added the possibility to show info banners.
     * Added the possibility to use legacy login page arrangement.
     * Added the login background image text.
@@ -76,7 +76,9 @@
         </div>
     {{/ loginbackgroundimagetext }}
     {{> theme_boost/footer }}
+    {{^usesidebysideloginarrangement}}
     {{> theme_boost_union/footnote }}
+    {{/usesidebysideloginarrangement}}
 </div>
 
 </body>
