@@ -14,6 +14,22 @@
     background: linear-gradient(135deg, $primary 0%, mix($primary, $white, 85%) 100%);
 }
 
+/* Replicate the Moodle Boost default login button style (from .login-identityprovider-btn)
+   for the btn-outline-lightmoodle variant: white background with a light gray border.
+   Replicating the styles is necessary as we cannot re-use the existing class without side-effects here. */
+.btn-outline-lightmoodle {
+    background-color: $white;
+    border-color: $gray-400;
+    color: $gray-600;
+
+    &:hover,
+    &:focus {
+        background-color: $gray-100;
+        border-color: $gray-500;
+        color: $gray-700;
+    }
+}
+
 
 /*=======================================
  * Settings: Look -> Site branding
