@@ -1097,7 +1097,7 @@ class core_renderer extends core_renderer_intermediate {
             if ($loginidpbuttoncolorsetting !== false) {
                 $context->idploginbtnclass = 'btn-' . $loginidpbuttoncolorsetting;
             } else {
-                $context->idploginbtnclass = 'btn-' . THEME_BOOST_UNION_SETTING_BUTTONCOLOR_SECONDARYOUTLINE;
+                $context->idploginbtnclass = 'btn-' . THEME_BOOST_UNION_SETTING_BUTTONCOLOR_MOODLELIGHTOUTLINE;
             }
         }
 
