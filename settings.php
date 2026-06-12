@@ -1625,7 +1625,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name,
             $title,
             $description,
-            THEME_BOOST_UNION_SETTING_BUTTONSIZE_MEDIUM,
+            THEME_BOOST_UNION_SETTING_BUTTONSIZE_LARGE,
             $buttonsizeoptions
         );
         $tab->add($setting);
