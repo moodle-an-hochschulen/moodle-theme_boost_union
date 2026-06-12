@@ -582,6 +582,32 @@ With this setting a hint will appear in the course header if the course is visib
 
 With this setting a hint will appear in the course header when a user is accessing it with the guest access feature.
 
+##### External course link
+
+###### Enable external course link
+
+With this setting a configurable link to an external system, for example a campus management system, will appear below the course header on course pages.
+
+###### Course field
+
+The field from the course table which is used as the course identifier for composing the external course link.
+
+###### Course identifier pattern
+
+A regular expression which the course identifier has to match for the external course link to be shown. Capture groups can be referenced in the external course link URL.
+
+###### External course link URL
+
+The URL which the external course link points to. Capture groups from the course identifier pattern can be referenced with $1, $2 and so on.
+
+###### External course link text
+
+The text which is displayed as the external course link. It supports the Moodle multi-language filter.
+
+###### Open external course link in new window
+
+With this setting the external course link will be opened in a new browser window.
+
 #### Tab "Administration"
 
 In this tab there are the following settings:

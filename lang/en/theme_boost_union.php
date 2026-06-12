@@ -1605,6 +1605,26 @@ $string['showhintcoursguestaccesssetting'] = 'Show hint for guest access';
 $string['showhintcourseguestaccesssetting_desc'] = 'With this setting a hint will appear in the course header when a user is accessing it with the guest access feature. If the course provides an active self enrolment, a link to that page is also presented to the user.';
 $string['showhintcourseguestaccessgeneral'] = 'You are currently viewing this course as <strong>{$a->role}</strong>.';
 $string['showhintcourseguestaccesslink'] = 'To have full access to the course, you can <a href="{$a->url}">self enrol into this course</a>.';
+// ... Section: External course link.
+$string['externalcourselinkheading'] = 'External course link';
+// ... ... Setting: Enable external course link.
+$string['enableexternalcourselinksetting'] = 'Enable external course link';
+$string['enableexternalcourselinksetting_desc'] = 'With this setting a configurable link to an external system, for example a campus management system, will appear below the course header on course pages.';
+// ... ... Setting: External course link course field.
+$string['externalcourselinkcoursefieldsetting'] = 'Course field';
+$string['externalcourselinkcoursefieldsetting_desc'] = 'The field from the course table which is used as the course identifier for composing the external course link.';
+// ... ... Setting: External course link pattern.
+$string['externalcourselinkpatternsetting'] = 'Course identifier pattern';
+$string['externalcourselinkpatternsetting_desc'] = 'A regular expression which the course identifier has to match for the external course link to be shown. Capture groups can be referenced in the external course link URL. Please note that the course field value is URL-encoded before it is matched, so special characters like & or = have to be matched in their encoded form. Example: <pre>^([0-9]{6})-(20[0-9]{2}[WS])$</pre>';
+// ... ... Setting: External course link URL.
+$string['externalcourselinkurlsetting'] = 'External course link URL';
+$string['externalcourselinkurlsetting_desc'] = 'The URL which the external course link points to. Capture groups from the course identifier pattern can be referenced with $1, $2 and so on. Example: <pre>https://tiss.tuwien.ac.at/course/courseDetails.xhtml?courseNr=$1&semester=$2</pre>';
+// ... ... Setting: External course link text.
+$string['externalcourselinktextsetting'] = 'External course link text';
+$string['externalcourselinktextsetting_desc'] = 'The text which is displayed as the external course link. It supports the Moodle multi-language filter.';
+// ... ... Setting: Open external course link in new window.
+$string['externalcourselinknewwindowsetting'] = 'Open external course link in new window';
+$string['externalcourselinknewwindowsetting_desc'] = 'With this setting the external course link will be opened in a new browser window.';
 
 // Settings: Accessibility page.
 $string['configtitleaccessibility'] = 'Accessibility';

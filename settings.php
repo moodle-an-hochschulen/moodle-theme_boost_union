@@ -6019,6 +6019,91 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
+        // Heading: External course link.
+        $name = 'theme_boost_union/externalcourselinkheading';
+        $title = get_string('externalcourselinkheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Enable external course link.
+        $name = 'theme_boost_union/enableexternalcourselink';
+        $title = get_string('enableexternalcourselinksetting', 'theme_boost_union', null, true);
+        $description = get_string('enableexternalcourselinksetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Setting: External course link course field.
+        $name = 'theme_boost_union/externalcourselinkcoursefield';
+        $title = get_string('externalcourselinkcoursefieldsetting', 'theme_boost_union', null, true);
+        $description = get_string('externalcourselinkcoursefieldsetting_desc', 'theme_boost_union', null, true);
+        $coursefieldoptions = [
+                'id' => 'id',
+                'fullname' => 'fullname',
+                'shortname' => 'shortname',
+                'idnumber' => 'idnumber',
+                'category' => 'category',
+        ];
+        $setting = new admin_setting_configselect($name, $title, $description, 'idnumber', $coursefieldoptions);
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/externalcourselinkcoursefield',
+            'theme_boost_union/enableexternalcourselink',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
+        // Setting: External course link pattern.
+        $name = 'theme_boost_union/externalcourselinkpattern';
+        $title = get_string('externalcourselinkpatternsetting', 'theme_boost_union', null, true);
+        $description = get_string('externalcourselinkpatternsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_RAW);
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/externalcourselinkpattern',
+            'theme_boost_union/enableexternalcourselink',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
+        // Setting: External course link URL.
+        $name = 'theme_boost_union/externalcourselinkurl';
+        $title = get_string('externalcourselinkurlsetting', 'theme_boost_union', null, true);
+        $description = get_string('externalcourselinkurlsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/externalcourselinkurl',
+            'theme_boost_union/enableexternalcourselink',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
+        // Setting: External course link text.
+        $name = 'theme_boost_union/externalcourselinktext';
+        $title = get_string('externalcourselinktextsetting', 'theme_boost_union', null, true);
+        $description = get_string('externalcourselinktextsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_RAW);
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/externalcourselinktext',
+            'theme_boost_union/enableexternalcourselink',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
+        // Setting: Open external course link in new window.
+        $name = 'theme_boost_union/externalcourselinknewwindow';
+        $title = get_string('externalcourselinknewwindowsetting', 'theme_boost_union', null, true);
+        $description = get_string('externalcourselinknewwindowsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/externalcourselinknewwindow',
+            'theme_boost_union/enableexternalcourselink',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+
         // Add tab to settings page.
         $page->add($tab);
 
