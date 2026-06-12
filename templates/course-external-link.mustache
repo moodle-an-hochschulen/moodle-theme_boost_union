@@ -1,0 +1,36 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/course-external-link
+
+    Boost Union template for outputting the external course link.
+
+    Context variables required for this template:
+    * externalcourselinkurl - The composed URL which the link points to
+    * externalcourselinktext - The text which is displayed as the link
+    * externalcourselinknewwindow - The fact if the link should be opened in a new window or not
+
+    Example context (json):
+    {
+        "externalcourselinkurl": "https://tiss.tuwien.ac.at/course/courseDetails.xhtml?courseNr=136039&semester=2026S",
+        "externalcourselinktext": "View this course in TISS",
+        "externalcourselinknewwindow": true
+    }
+}}
+<div class="course-external-link mb-2">
+    <a href="{{externalcourselinkurl}}"{{#externalcourselinknewwindow}} target="_blank" rel="noopener"{{/externalcourselinknewwindow}}>{{{externalcourselinktext}}}</a>
+</div>

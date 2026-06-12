@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-06-12 - Feature: Show a configurable link to an external system (e.g. a campus management system) below the course header, resolves #1326
 * 2026-06-10 - Improvement: Support Bootstrap large and small buttons on the login page, resolves #1321
 * 2026-06-10 - Improvement: Support Moodle's color for the secondary outline buttons on the login page, resolves #1319
 * 2026-06-10 - Bugfix: Move the footnote in the side-by-side login arrangement to the right panel, resolves #1279
