@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-06-13 - Tests: Use Behat slicing to bring Behat runtime down and reduce GHA container outages, resolves #1016
 * 2026-06-10 - Improvement: Support Bootstrap large and small buttons on the login page, resolves #1321
 * 2026-06-10 - Improvement: Support Moodle's color for the secondary outline buttons on the login page, resolves #1319
 * 2026-06-10 - Bugfix: Move the footnote in the side-by-side login arrangement to the right panel, resolves #1279
