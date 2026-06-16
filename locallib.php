@@ -2496,7 +2496,7 @@ function theme_boost_union_get_navbar_starredcoursespopover() {
         if ($course->visible || $canviewhiddencourses) {
             $coursesfortemplate[] = [
                 'url' => new \core\url('/course/view.php', ['id' => $course->id]),
-                'fullname' => $course->fullname,
+                'fullname' => format_string($course->fullname, true, ['context' => $context]),
                 'visible' => $course->visible == 1,
             ];
         }

@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-06-16 - Bugfix: Apply the configured string filters (e.g. the multilang filter) to the course names in the starred courses navbar popover, resolves #1332
+
 ### v5.2-r6
 
 * 2026-06-13 - Tests: Use Behat slicing to bring Behat runtime down and reduce GHA container outages, resolves #1016

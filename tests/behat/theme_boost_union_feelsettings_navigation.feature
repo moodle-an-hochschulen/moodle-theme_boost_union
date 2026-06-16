@@ -219,6 +219,32 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And I should not see "Course 4" in the ".popover-region-favourites .popover-region-content-container" "css_element"
 
   @javascript
+  Scenario: Setting: Show starred courses popover in the navbar (and make sure that the course names are filtered).
+    Given the following config values are set as admin:
+      | config          | value |
+      | enablemycourses | 1     |
+    And the following config values are set as admin:
+      | config                   | value | plugin            |
+      | shownavbarstarredcourses | yes   | theme_boost_union |
+    And the "multilang" filter is "on"
+    And the "multilang" filter applies to "content and headings"
+    And the following "courses" exist:
+      | fullname                                                                                                     | shortname |
+      | <span lang="en" class="multilang">English name</span><span lang="de" class="multilang">Deutscher Name</span> | MLC       |
+    And the following "course enrolments" exist:
+      | user     | course | role    |
+      | student1 | MLC    | student |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "student1"
+    And I follow "My courses"
+    And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'English name')]" "xpath_element"
+    And I click on "Star this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'English name')]" "xpath_element"
+    And I reload the page
+    And I click on "nav.navbar #usernavigation .popover-region-favourites .nav-link" "css_element"
+    Then I should see "English name" in the ".popover-region-favourites .popover-region-content-container" "css_element"
+    And I should not see "Deutscher Name" in the ".popover-region-favourites .popover-region-content-container" "css_element"
+
+  @javascript
   Scenario Outline: Setting: Starred courses popover cog icon link target
     Given the following config values are set as admin:
       | config          | value |
