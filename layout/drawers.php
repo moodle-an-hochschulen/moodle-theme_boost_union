@@ -22,6 +22,7 @@
  * Modifications compared to this layout file:
  * * Include activity navigation
  * * Include course related hints
+ * * Include external course link
  * * Include back to top button
  * * Include scroll spy
  * * Include footnote
@@ -191,6 +192,9 @@ $templatecontext = [
 
 // Include the template content for the course related hints.
 require_once(__DIR__ . '/includes/courserelatedhints.php');
+
+// Include the template content for the external course link.
+require_once(__DIR__ . '/includes/externalcourselink.php');
 
 // Include the template content for the block regions.
 require_once(__DIR__ . '/includes/blockregions.php');

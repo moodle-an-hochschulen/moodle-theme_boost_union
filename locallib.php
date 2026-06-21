@@ -425,6 +425,61 @@ function theme_boost_union_get_course_related_hints() {
 }
 
 /**
+ * Build the external course link HTML code.
+ * This function composes a configurable link to an external system (e.g. a campus management system)
+ * which may appear on a course page below the course header.
+ *
+ * The link is only shown if the configured course field matches the configured regular expression.
+ * Capture groups from the regular expression are substituted into the configured URL.
+ *
+ * @copyright  2026 Simeon Naydenov <moninaydenov@gmail.com>
+ *
+ * @return string.
+ */
+function theme_boost_union_get_external_course_link() {
+    global $COURSE, $OUTPUT, $PAGE;
+
+    // If the external course link feature is not enabled, return directly.
+    if (get_config('theme_boost_union', 'enableexternalcourselink') != THEME_BOOST_UNION_SETTING_SELECT_YES) {
+        return '';
+    }
+
+    // The link is only shown on course pages and not on the site home page.
+    if ($COURSE->id == SITEID || $PAGE->context->contextlevel != CONTEXT_COURSE) {
+        return '';
+    }
+
+    // Get the remaining settings; if any required setting is not configured, return directly.
+    $coursefield = get_config('theme_boost_union', 'externalcourselinkcoursefield');
+    $pattern = get_config('theme_boost_union', 'externalcourselinkpattern');
+    $url = get_config('theme_boost_union', 'externalcourselinkurl');
+    $text = get_config('theme_boost_union', 'externalcourselinktext');
+    if (empty($pattern) || empty($url) || empty($text) || empty($COURSE->{$coursefield})) {
+        return '';
+    }
+
+    // URL-encode the course field value before matching, this allows the safe composition of the link URL.
+    $fieldvalue = rawurlencode($COURSE->{$coursefield});
+    $regex = '/' . str_replace('/', '\/', $pattern) . '/';
+
+    // Match the pattern, gracefully ignoring an invalid regular expression which the admin might have configured.
+    if (@preg_match($regex, $fieldvalue) !== 1) {
+        return '';
+    }
+
+    // Compose the link URL by substituting the capture groups into the configured URL.
+    $templatecontext = [
+            'externalcourselinkurl' => preg_replace($regex, $url, $fieldvalue),
+            'externalcourselinktext' => format_text($text, FORMAT_HTML, ['context' => $PAGE->context]),
+            'externalcourselinknewwindow' =>
+                    get_config('theme_boost_union', 'externalcourselinknewwindow') == THEME_BOOST_UNION_SETTING_SELECT_YES,
+    ];
+
+    // Render template and return HTML code.
+    return $OUTPUT->render_from_template('theme_boost_union/course-external-link', $templatecontext);
+}
+
+/**
  * Build the link to a static page.
  *
  * @param string $page The static page's identifier.

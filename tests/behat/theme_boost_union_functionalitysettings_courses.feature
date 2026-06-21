@@ -500,3 +500,80 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     And I should not see "The Self enrolment as 'Student' enrolment instance allows unrestricted self enrolment indefinitely."
     And I should see "The Custom self enrolment enrolment instance allows unrestricted self enrolment until Saturday, 1 January 2050, 12:00 AM."
     And ".course-hint-selfenrol" "css_element" should exist
+
+  Scenario: Setting: External course link - Show the link if the course identifier matches the pattern
+    Given the following "courses" exist:
+      | fullname | shortname | idnumber     |
+      | Course 2 | C2        | 136039-2026S |
+    And the following "course enrolments" exist:
+      | user     | course | role    |
+      | student1 | C2     | student |
+    And the following config values are set as admin:
+      | config                        | value                                                                        | plugin            |
+      | enableexternalcourselink      | yes                                                                          | theme_boost_union |
+      | externalcourselinkcoursefield | idnumber                                                                     | theme_boost_union |
+      | externalcourselinkpattern     | ^([0-9]{6})-(20[0-9]{2}[WS])$                                                | theme_boost_union |
+      | externalcourselinkurl         | https://tiss.tuwien.ac.at/course/courseDetails.xhtml?courseNr=$1&semester=$2 | theme_boost_union |
+      | externalcourselinktext        | View this course in TISS                                                     | theme_boost_union |
+    When I log in as "student1"
+    And I am on "Course 2" course homepage
+    Then I should see "View this course in TISS" in the ".course-external-link" "css_element"
+    And the "href" attribute of ".course-external-link a" "css_element" should contain "courseNr=136039"
+    And the "href" attribute of ".course-external-link a" "css_element" should contain "semester=2026S"
+
+  Scenario: Setting: External course link - Do not show the link if the course identifier does not match the pattern
+    Given the following config values are set as admin:
+      | config                        | value                                                                        | plugin            |
+      | enableexternalcourselink      | yes                                                                          | theme_boost_union |
+      | externalcourselinkcoursefield | idnumber                                                                     | theme_boost_union |
+      | externalcourselinkpattern     | ^([0-9]{6})-(20[0-9]{2}[WS])$                                                | theme_boost_union |
+      | externalcourselinkurl         | https://tiss.tuwien.ac.at/course/courseDetails.xhtml?courseNr=$1&semester=$2 | theme_boost_union |
+      | externalcourselinktext        | View this course in TISS                                                     | theme_boost_union |
+    When I log in as "student1"
+    And I am on "Course 1" course homepage
+    Then I should not see "View this course in TISS"
+    And ".course-external-link" "css_element" should not exist
+
+  Scenario: Setting: External course link - Do not show the link if the setting is disabled
+    Given the following "courses" exist:
+      | fullname | shortname | idnumber     |
+      | Course 2 | C2        | 136039-2026S |
+    And the following "course enrolments" exist:
+      | user     | course | role    |
+      | student1 | C2     | student |
+    And the following config values are set as admin:
+      | config                        | value                                                                        | plugin            |
+      | enableexternalcourselink      | no                                                                           | theme_boost_union |
+      | externalcourselinkcoursefield | idnumber                                                                     | theme_boost_union |
+      | externalcourselinkpattern     | ^([0-9]{6})-(20[0-9]{2}[WS])$                                                | theme_boost_union |
+      | externalcourselinkurl         | https://tiss.tuwien.ac.at/course/courseDetails.xhtml?courseNr=$1&semester=$2 | theme_boost_union |
+      | externalcourselinktext        | View this course in TISS                                                     | theme_boost_union |
+    When I log in as "student1"
+    And I am on "Course 2" course homepage
+    Then I should not see "View this course in TISS"
+    And ".course-external-link" "css_element" should not exist
+
+  Scenario Outline: Setting: External course link - Open the link in a new window or in the same window
+    Given the following "courses" exist:
+      | fullname | shortname | idnumber     |
+      | Course 2 | C2        | 136039-2026S |
+    And the following "course enrolments" exist:
+      | user     | course | role    |
+      | student1 | C2     | student |
+    And the following config values are set as admin:
+      | config                        | value                                                                        | plugin            |
+      | enableexternalcourselink      | yes                                                                          | theme_boost_union |
+      | externalcourselinkcoursefield | idnumber                                                                     | theme_boost_union |
+      | externalcourselinkpattern     | ^([0-9]{6})-(20[0-9]{2}[WS])$                                                | theme_boost_union |
+      | externalcourselinkurl         | https://tiss.tuwien.ac.at/course/courseDetails.xhtml?courseNr=$1&semester=$2 | theme_boost_union |
+      | externalcourselinktext        | View this course in TISS                                                     | theme_boost_union |
+      | externalcourselinknewwindow   | <newwindowsetting>                                                           | theme_boost_union |
+    When I log in as "student1"
+    And I am on "Course 2" course homepage
+    Then I should see "View this course in TISS" in the ".course-external-link" "css_element"
+    And "<shouldorshouldnot>" "css_element" should exist
+
+    Examples:
+      | newwindowsetting | shouldorshouldnot                              |
+      | yes              | .course-external-link a[target='_blank']       |
+      | no               | .course-external-link a:not([target='_blank']) |
