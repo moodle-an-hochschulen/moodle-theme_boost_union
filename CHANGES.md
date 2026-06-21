@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### unreleased
+
+* 2026-06-22 - Bugfix: Filter courses correctly in starred courses popover, resolves #1332
+
 ### v5.2-r6
 
 * 2026-06-13 - Tests: Use Behat slicing to bring Behat runtime down and reduce GHA container outages, resolves #1016
