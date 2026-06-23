@@ -52,24 +52,43 @@ class after_form_definition_after_data {
             return;
         }
 
-        // If the user does not have the capability to override the course header settings in this course, we do nothing.
+        // Get the context and the (effective) course format.
         $context = $hook->formwrapper->get_context();
-        if (!has_capability('theme/boost_union:overridecourseheaderincourse', $context)) {
-            return;
-        }
-
-        // If this course format is excluded from the course header feature, we do nothing.
         $course = $hook->formwrapper->get_course();
         $courseformat = coursesettings::get_effective_course_format($course);
-        if (coursesettings::is_courseformat_excluded_from_courseheaderfeature($courseformat)) {
+
+        // Check which course settings form sections the user is allowed to use:
+        // The course header settings require a dedicated capability and
+        // must not be excluded for the given course format.
+        $showcourseheadersettings = has_capability('theme/boost_union:overridecourseheaderincourse', $context) &&
+                !coursesettings::is_courseformat_excluded_from_courseheaderfeature($courseformat);
+        // The section settings require a dedicated capability and
+        // are only supported by particular course formats.
+        $showsectionssettings = has_capability('theme/boost_union:overridesectionincourse', $context) &&
+                coursesettings::is_courseformat_supported_by_sectionfeature($courseformat);
+
+        // If the user is not allowed to use any of the sections, we do nothing.
+        if (!$showcourseheadersettings && !$showsectionssettings) {
             return;
         }
 
         // Get the form.
         $mform = $hook->mform;
 
-        // Get the course override settings which we handle.
-        $coursesettings = coursesettings::get_course_setting_names();
+        // Get the course override settings which we handle, depending on the sections which the user is allowed to use.
+        $coursesettings = [];
+        if ($showcourseheadersettings) {
+            $coursesettings = array_merge(
+                $coursesettings,
+                coursesettings::get_course_setting_names_by_formsection('courseheader')
+            );
+        }
+        if ($showsectionssettings) {
+            $coursesettings = array_merge(
+                $coursesettings,
+                coursesettings::get_course_setting_names_by_formsection('sections')
+            );
+        }
 
         // Get the course override settings and set "Use global default" as the default for all settings.
         // To simplify the code logic, we always set the global default first and overwrite it later if there are course values.
@@ -98,7 +117,7 @@ class after_form_definition_after_data {
             }
 
             // Handle course header image file manager if the feature is enabled.
-            if (coursesettings::courseheaderimage_is_enabled()) {
+            if ($showcourseheadersettings && coursesettings::courseheaderimage_is_enabled()) {
                 // Create a draft area and copy existing files to it.
                 $context = \context_course::instance($course->id);
                 $courseheaderimageoptions = coursesettings::get_courseheaderimage_options();
@@ -119,7 +138,7 @@ class after_form_definition_after_data {
             // If not.
         } else {
             // Handle course header image file manager if the feature is enabled.
-            if (coursesettings::courseheaderimage_is_enabled()) {
+            if ($showcourseheadersettings && coursesettings::courseheaderimage_is_enabled()) {
                 // For new courses, just prepare an empty draft area.
                 $draftitemid = file_get_submitted_draft_itemid('theme_boost_union_courseheaderimage_filemanager');
                 $mform->setDefault('theme_boost_union_courseheaderimage_filemanager', $draftitemid);
