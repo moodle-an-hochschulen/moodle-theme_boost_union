@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-06-23 - Feature: Allow the admin and the teacher to control the appearance of the sections (section 0 as well as sections 1+) on the course main page, resolves #889
+
 ### v5.2-r6
 
 * 2026-06-13 - Tests: Use Behat slicing to bring Behat runtime down and reduce GHA container outages, resolves #1016

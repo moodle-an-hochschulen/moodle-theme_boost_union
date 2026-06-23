@@ -365,4 +365,13 @@ $capabilities = [
             'manager' => CAP_ALLOW,
         ],
     ],
+    // Ability to override the section settings in a course.
+    'theme/boost_union:overridesectionincourse' => [
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => [
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+        ],
+    ],
 ];

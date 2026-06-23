@@ -9,9 +9,9 @@ Feature: Backup and restore course-specific Boost Union settings
       | username |
       | teacher1 |
     And the following "courses" exist:
-      | fullname | shortname |
-      | Course 1 | C1        |
-      | Course 2 | C2        |
+      | fullname | shortname | format |
+      | Course 1 | C1        | topics |
+      | Course 2 | C2        | topics |
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
@@ -27,6 +27,8 @@ Feature: Backup and restore course-specific Boost Union settings
       | courseheaderimageposition                | left top            | theme_boost_union |
       | courseheaderimageposition_courseoverride | 1                   | theme_boost_union |
       | courseheaderimagesource                  | dedicatedplusglobal | theme_boost_union |
+      | sectionzeroappearance_courseoverride     | 1                   | theme_boost_union |
+      | sectiononeplusappearance_courseoverride  | 1                   | theme_boost_union |
     And the following config values are set as admin:
       | enableasyncbackup | 0 |
     And I log in as "teacher1"
@@ -34,10 +36,12 @@ Feature: Backup and restore course-specific Boost Union settings
     And I navigate to "Settings" in current page administration
     And I expand all fieldsets
     And I set the following fields to these values:
-      | Enable enhanced course header | yes          |
-      | Course header layout          | stacked      |
-      | Course header height          | 250px        |
-      | Course header image position  | right center |
+      | Enable enhanced course header | yes                                 |
+      | Course header layout          | stacked                             |
+      | Course header height          | 250px                               |
+      | Course header image position  | right center                        |
+      | Appearance of section 0       | Show section 0 without collapsing   |
+      | Appearance of sections 1+     | Show sections 1+ without collapsing |
     And I upload "theme/boost_union/tests/fixtures/login_bg1.png" file to "Course header image" filemanager
     And I press "Save and display"
     And I log out
@@ -218,3 +222,26 @@ Feature: Backup and restore course-specific Boost Union settings
       | setting | shouldornot | shouldornotinverse |
       | never   | should not  | should             |
       | always  | should      | should not         |
+
+  @javascript @_file_upload
+  Scenario Outline: Remaining course-specific settings (which do not have a restore control) are backupped and restored regardless of the restore options
+    When I log in as "admin"
+    And I backup "Course 1" course using this options:
+      | Confirmation | Filename | test_backup.mbz |
+    And I restore "test_backup.mbz" backup into a new course using this options:
+      | Settings | Include course header settings | <includeheader> |
+    And I am on the "Course 1 copy 1" "course" page
+    And I navigate to "Settings" in current page administration
+    And I expand all fieldsets
+    # Course settings which are registered without a 'restorecontrolledby' in
+    # \theme_boost_union\coursesettings::get_course_settings_config() are not
+    # gated by any restore checkbox. They are therefore always restored.
+    # When adding a new course setting without a 'restorecontrolledby', add it to the Background and to these examples.
+    Then the field "<settingfield>" matches value "<settingvalue>"
+
+    Examples:
+      | includeheader | settingfield              | settingvalue                        |
+      | 1             | Appearance of section 0   | Show section 0 without collapsing   |
+      | 0             | Appearance of section 0   | Show section 0 without collapsing   |
+      | 1             | Appearance of sections 1+ | Show sections 1+ without collapsing |
+      | 0             | Appearance of sections 1+ | Show sections 1+ without collapsing |

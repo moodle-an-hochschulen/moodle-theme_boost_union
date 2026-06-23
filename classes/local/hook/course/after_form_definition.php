@@ -52,16 +52,23 @@ class after_form_definition {
             return;
         }
 
-        // If the user does not have the capability to override the course header settings in this course, we do nothing.
+        // Get the context and the (effective) course format.
         $context = $hook->formwrapper->get_context();
-        if (!has_capability('theme/boost_union:overridecourseheaderincourse', $context)) {
-            return;
-        }
-
-        // If this course format is excluded from the course header feature, we do nothing.
         $course = $hook->formwrapper->get_course();
         $courseformat = coursesettings::get_effective_course_format($course);
-        if (coursesettings::is_courseformat_excluded_from_courseheaderfeature($courseformat)) {
+
+        // Check which course settings form sections the user is allowed to use:
+        // The course header settings require a dedicated capability and
+        // must not be excluded for the given course format.
+        $showcourseheadersettings = has_capability('theme/boost_union:overridecourseheaderincourse', $context) &&
+                !coursesettings::is_courseformat_excluded_from_courseheaderfeature($courseformat);
+        // The section settings require a dedicated capability and
+        // are only supported by particular course formats.
+        $showsectionssettings = has_capability('theme/boost_union:overridesectionincourse', $context) &&
+                coursesettings::is_courseformat_supported_by_sectionfeature($courseformat);
+
+        // If the user is not allowed to use any of the sections, we do nothing.
+        if (!$showcourseheadersettings && !$showsectionssettings) {
             return;
         }
 
@@ -72,19 +79,23 @@ class after_form_definition {
         define('THEME_BOOST_UNION_COURSESETTINGS_COURSEHEADER_INSERTBEFORE', 'courseformathdr');
         define('THEME_BOOST_UNION_COURSESETTINGS_COURSEIMAGES_INSERTBEFORE1', 'theme_boost_union_course_courseheaderhdr');
         define('THEME_BOOST_UNION_COURSESETTINGS_COURSEIMAGES_INSERTBEFORE2', 'courseformathdr');
+        define('THEME_BOOST_UNION_COURSESETTINGS_SECTIONS_INSERTBEFORE', 'filehdr');
 
-        // Get the course override settings which we handle.
-        $coursesettings = coursesettings::get_course_settings_config();
+        // Get the course override settings which we handle, split by the form section they belong to.
+        $courseheadersettings = coursesettings::get_course_settings_config_by_formsection('courseheader');
+        $sectionssettings = coursesettings::get_course_settings_config_by_formsection('sections');
 
         // Part 1: 'Course header' section.
 
         // Check if we should show this section at all.
         $showcourseheader = false;
-        foreach ($coursesettings as $setting => $config) {
-            $overridesetting = get_config('theme_boost_union', $setting . '_courseoverride');
-            if ($overridesetting) {
-                $showcourseheader = true;
-                break; // We only need to know if at least one is enabled.
+        if ($showcourseheadersettings) {
+            foreach ($courseheadersettings as $setting => $config) {
+                $overridesetting = get_config('theme_boost_union', $setting . '_courseoverride');
+                if ($overridesetting) {
+                    $showcourseheader = true;
+                    break; // We only need to know if at least one is enabled.
+                }
             }
         }
 
@@ -107,40 +118,40 @@ class after_form_definition {
             } else {
                 $mform->addElement($courseheaderheader);
             }
-        }
 
-        // Iterate over the settings and add form elements.
-        foreach ($coursesettings as $setting => $config) {
-            $overridesetting = get_config('theme_boost_union', $setting . '_courseoverride');
-            if ($overridesetting && isset($config['options']) && is_array($config['options'])) {
-                $formfieldname = 'theme_boost_union_' . $setting;
-                // Create a new element variable for each setting to avoid issues in the loop as it is passed by reference
-                // to insertElementBefore().
-                ${'element' . $setting} = $mform->createElement(
-                    'select',
-                    $formfieldname,
-                    get_string($setting, 'theme_boost_union'),
-                    $config['options']
-                );
-                if ($courseheaderinsertbefore) {
-                    $mform->insertElementBefore(${'element' . $setting}, $courseheaderinsertbefore);
-                } else {
-                    $mform->addElement(${'element' . $setting});
-                }
-
-                // Add help button if specified.
-                if (isset($config['helpbutton']) && $config['helpbutton']) {
-                    $mform->addHelpButton($formfieldname, $setting, 'theme_boost_union');
-                }
-
-                // Add hide_if rule if specified.
-                if (isset($config['hide_if']) && is_array($config['hide_if'])) {
-                    $mform->hideIf(
+            // Iterate over the settings and add form elements.
+            foreach ($courseheadersettings as $setting => $config) {
+                $overridesetting = get_config('theme_boost_union', $setting . '_courseoverride');
+                if ($overridesetting && isset($config['options']) && is_array($config['options'])) {
+                    $formfieldname = 'theme_boost_union_' . $setting;
+                    // Create a new element variable for each setting to avoid issues in the loop as it is passed by reference
+                    // to insertElementBefore().
+                    ${'element' . $setting} = $mform->createElement(
+                        'select',
                         $formfieldname,
-                        $config['hide_if']['element'],
-                        $config['hide_if']['condition'],
-                        $config['hide_if']['value']
+                        get_string($setting, 'theme_boost_union'),
+                        $config['options']
                     );
+                    if ($courseheaderinsertbefore) {
+                        $mform->insertElementBefore(${'element' . $setting}, $courseheaderinsertbefore);
+                    } else {
+                        $mform->addElement(${'element' . $setting});
+                    }
+
+                    // Add help button if specified.
+                    if (isset($config['helpbutton']) && $config['helpbutton']) {
+                        $mform->addHelpButton($formfieldname, $setting, 'theme_boost_union');
+                    }
+
+                    // Add hide_if rule if specified.
+                    if (isset($config['hide_if']) && is_array($config['hide_if'])) {
+                        $mform->hideIf(
+                            $formfieldname,
+                            $config['hide_if']['element'],
+                            $config['hide_if']['condition'],
+                            $config['hide_if']['value']
+                        );
+                    }
                 }
             }
         }
@@ -149,7 +160,7 @@ class after_form_definition {
 
         // Check if we should show this section at all.
         $showcourseimages = false;
-        if (coursesettings::courseheaderimage_is_enabled()) {
+        if ($showcourseheadersettings && coursesettings::courseheaderimage_is_enabled()) {
             $showcourseimages = true;
         }
 
@@ -237,6 +248,77 @@ class after_form_definition {
                 $hideifconfig['condition'],
                 $hideifconfig['value']
             );
+        }
+
+        // Part 3: 'Sections' section.
+
+        // Check if we should show this section at all.
+        $showsections = false;
+        if ($showsectionssettings) {
+            foreach ($sectionssettings as $setting => $config) {
+                $overridesetting = get_config('theme_boost_union', $setting . '_courseoverride');
+                if ($overridesetting) {
+                    $showsections = true;
+                    break; // We only need to know if at least one is enabled.
+                }
+            }
+        }
+
+        // Add sections section, if any setting of it can be overridden.
+        if ($showsections) {
+            // If insert-before header exists for the sections section, insert our elements before it.
+            $sectionsinsertbefore = null;
+            if ($mform->elementExists(THEME_BOOST_UNION_COURSESETTINGS_SECTIONS_INSERTBEFORE)) {
+                $sectionsinsertbefore = THEME_BOOST_UNION_COURSESETTINGS_SECTIONS_INSERTBEFORE;
+            }
+
+            // Header: Sections.
+            $sectionsheader = $mform->createElement(
+                'header',
+                'theme_boost_union_course_sectionshdr',
+                get_string('sectionsheading', 'theme_boost_union')
+            );
+            if ($sectionsinsertbefore) {
+                $mform->insertElementBefore($sectionsheader, $sectionsinsertbefore);
+            } else {
+                $mform->addElement($sectionsheader);
+            }
+
+            // Iterate over the settings and add form elements.
+            foreach ($sectionssettings as $setting => $config) {
+                $overridesetting = get_config('theme_boost_union', $setting . '_courseoverride');
+                if ($overridesetting && isset($config['options']) && is_array($config['options'])) {
+                    $formfieldname = 'theme_boost_union_' . $setting;
+                    // Create a new element variable for each setting to avoid issues in the loop as it is passed by reference
+                    // to insertElementBefore().
+                    ${'element' . $setting} = $mform->createElement(
+                        'select',
+                        $formfieldname,
+                        get_string($setting, 'theme_boost_union'),
+                        $config['options']
+                    );
+                    if ($sectionsinsertbefore) {
+                        $mform->insertElementBefore(${'element' . $setting}, $sectionsinsertbefore);
+                    } else {
+                        $mform->addElement(${'element' . $setting});
+                    }
+
+                    // Add help button if specified.
+                    if (isset($config['helpbutton']) && $config['helpbutton']) {
+                        $mform->addHelpButton($formfieldname, $setting, 'theme_boost_union');
+                    }
+
+                    // Add hide_if rule if specified.
+                    if (isset($config['hide_if']) && is_array($config['hide_if'])) {
+                        $mform->hideIf(
+                            $formfieldname,
+                            $config['hide_if']['element'],
+                            $config['hide_if']['condition'],
+                            $config['hide_if']['value']
+                        );
+                    }
+                }
+            }
         }
     }
 }
