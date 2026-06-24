@@ -4465,7 +4465,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/sectiononeplusappearance';
         $title = get_string('sectiononeplusappearance', 'theme_boost_union', null, true);
         $description = get_string('sectiononeplusappearance_desc', 'theme_boost_union') . '<br /><br />' .
-            get_string('sectionappearance_descnote', 'theme_boost_union', null, true);
+            get_string('sectionappearance_descnote', 'theme_boost_union', '', true);
         $sectiononeplusappearanceoptions = coursesettings::get_sectiononeplusappearance_options();
         $setting = new theme_boost_union\admin_setting_configselect_with_courseoverride(
             $name,
