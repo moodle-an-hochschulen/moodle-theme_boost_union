@@ -1128,10 +1128,10 @@ $string['sectionzeroappearance_deschiddennote'] = '<li>If section 0 is configure
 $string['sectionzeroappearanceexclusionlist'] = 'Appearance of section 0 exclusion list';
 $string['sectionzeroappearanceexclusionlist_desc'] = 'With this setting, you can exclude particular section 0 appearances from being available for course-specific overrides. The selected appearances will not appear in the course settings for teachers to choose from, but the administrator can still use them globally. This allows you to restrict which appearances are available to course editors while maintaining administrative control over the global setting. Please note that the section 0 appearance which is selected by the admin above will never be excluded from the course settings, even if you tick it here.';
 // ... ... Setting: Appearance of sections 1+.
-$string['sectiononeplusappearance'] = 'Appearance of sections 1+';
+$string['sectiononeplusappearance'] = 'Appearance of sections ≥ 1';
 $string['sectiononeplusappearance_desc'] = 'With this setting, you control the appearance of all sections except section 0 (i.e. sections 1 and following) on the course main page. By default, Moodle shows these sections as collapsible sections which are expanded initially. With this setting, you can decide to show them collapsed by default or to show them without any collapsing functionality.';
-$string['sectiononeplusappearance_help'] = 'The appearance of sections 1+ (all sections except the general section) on the course main page.';
-$string['sectiononeplussubject'] = 'sections 1+';
+$string['sectiononeplusappearance_help'] = 'The appearance of sections ≥ 1 (all sections except the general section) on the course main page.';
+$string['sectiononeplussubject'] = 'sections ≥ 1';
 
 // Settings: Page layouts tab.
 $string['pagelayoutstab'] = 'Page layouts';
