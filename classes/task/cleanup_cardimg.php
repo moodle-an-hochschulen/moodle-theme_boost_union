@@ -37,12 +37,11 @@ namespace theme_boost_union\task;
  *    filename, or
  *  - the course overview image it was generated from no longer exists.
  *
- * @package   theme_boost_union
+ * @package    theme_boost_union
  * @copyright  2024 Alexander Bias, lern.link GmbH <alexander.bias@lernlink.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class cleanup_cardimg extends \core\task\scheduled_task {
-
     /**
      * Return the name of the task shown in the admin UI.
      *
@@ -85,13 +84,17 @@ class cleanup_cardimg extends \core\task\scheduled_task {
             // Stale if the width setting changed since this thumbnail was generated.
             if ($width !== $currentwidth) {
                 $stale = true;
-
                 // Stale if the course overview image it was based on no longer exists.
-            } else if (!$DB->record_exists('files', [
-                'contenthash' => $sourcehash,
-                'component'   => 'course',
-                'filearea'    => 'overviewfiles',
-            ])) {
+            } else if (
+                !$DB->record_exists(
+                    'files',
+                    [
+                        'contenthash' => $sourcehash,
+                        'component'   => 'course',
+                        'filearea'    => 'overviewfiles',
+                    ]
+                )
+            ) {
                 $stale = true;
             }
 

@@ -329,10 +329,16 @@ class course {
         imagesavealpha($sourceimage, true);
 
         imagecopyresampled(
-            $finalimage, $sourceimage,
-            0, 0, 0, 0,
-            $targetwidth, $targetheight,
-            $sourcewidth, $sourceheight
+            $finalimage,
+            $sourceimage,
+            0,
+            0,
+            0,
+            0,
+            $targetwidth,
+            $targetheight,
+            $sourcewidth,
+            $sourceheight
         );
         imagedestroy($sourceimage);
 
