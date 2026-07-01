@@ -52,15 +52,27 @@ class course {
         foreach ($this->course->get_course_overviewfiles() as $file) {
             // If this is a valid image.
             if ($file->is_valid_image()) {
-                // Compose the URL.
-                $url = \core\url::make_file_url(
-                    '/pluginfile.php',
-                    '/' . $file->get_contextid() . '/' . $file->get_component() . '/' .
-                    $file->get_filearea() . $file->get_filepath() . $file->get_filename(),
-                    !$file->is_valid_image()
-                );
+                $itemid = null;
 
-                // And return it.
+                // Generate optimized image file.
+                $cardimgsize = get_config('theme_boost_union', 'reducecoursecardimagesize');
+                if ($cardimgsize > 0) {
+                    $cardimg = $this->fetch_optimg($file, $cardimgsize);
+                    if ($cardimg) {
+                        $file = $cardimg;
+                        $itemid = 0;
+                    }
+                }
+
+                // Return the URL to the image.
+                $url = \moodle_url::make_pluginfile_url(
+                    $file->get_contextid(),
+                    $file->get_component(),
+                    $file->get_filearea(),
+                    $itemid,
+                    $file->get_filepath(),
+                    $file->get_filename()
+                );
                 return $url->out();
             }
         }
@@ -241,5 +253,100 @@ class course {
     public function get_progress($userid = 0) {
         // Get and return the user progress.
         return \core_completion\progress::get_course_progress_percentage(get_course($this->course->id), $userid);
+    }
+
+    /**
+     * Generate an optimized .webp image from a stored_file and store it in the theme's file area.
+     *
+     * @param \stored_file $file The original image file.
+     * @param int $width The target width for the optimized image.
+     * @return \stored_file|false The optimized image file, or false on failure.
+     */
+    private function fetch_optimg(\stored_file $file, int $width) {
+        $cardimg = false;
+        $fs = get_file_storage();
+        $contextid = \context_system::instance()->id;
+        $contenthash = $file->get_contenthash();
+        $filename = $contenthash . '_' . $width . 'x' . '.webp';
+        $cardimg = $fs->get_file($contextid, 'theme_boost_union', 'cardimg', 0, '/', $filename);
+        if (!$cardimg) {
+            $data = $this->generate_optimg($file, $width);
+            if ($data !== false) {
+                $filerecord = [
+                    'contextid' => $contextid,
+                    'component' => 'theme_boost_union',
+                    'filearea'  => 'cardimg',
+                    'itemid'    => 0,
+                    'filepath'  => '/',
+                    'filename'  => $filename,
+                ];
+                $cardimg = $fs->create_file_from_string($filerecord, $data);
+            }
+        }
+
+        return $cardimg;
+    }
+
+    /**
+     * Generate a rescaled .webp thumbnail from a stored_file, preserving aspect ratio.
+     * The image is scaled to the target width; height is derived automatically.
+     *
+     * @param stored_file $file
+     * @param int $targetwidth
+     * @return string|false Raw image data, or false on failure.
+     */
+    private function generate_optimg(\stored_file $file, int $targetwidth) {
+        $content = $file->get_content();
+        $sourceimage = @imagecreatefromstring($content);
+        if ($sourceimage === false) {
+            return false;
+        }
+
+        $sourcewidth = imagesx($sourceimage);
+        $sourceheight = imagesy($sourceimage);
+        if ($sourcewidth < 1 || $sourceheight < 1) {
+            imagedestroy($sourceimage);
+            return false;
+        }
+
+        // Don't upscale small images past their native size.
+        if ($sourcewidth <= $targetwidth) {
+            $targetwidth = $sourcewidth;
+            $targetheight = $sourceheight;
+        } else {
+            $targetheight = (int) round($sourceheight * ($targetwidth / $sourcewidth));
+        }
+
+        $finalimage = imagecreatetruecolor($targetwidth, $targetheight);
+
+        // Preserve transparency (WebP supports alpha, unlike JPEG).
+        imagealphablending($finalimage, false);
+        imagesavealpha($finalimage, true);
+        $transparent = imagecolorallocatealpha($finalimage, 0, 0, 0, 127);
+        imagefill($finalimage, 0, 0, $transparent);
+
+        imagealphablending($sourceimage, true);
+        imagesavealpha($sourceimage, true);
+
+        imagecopyresampled(
+            $finalimage,
+            $sourceimage,
+            0,
+            0,
+            0,
+            0,
+            $targetwidth,
+            $targetheight,
+            $sourcewidth,
+            $sourceheight
+        );
+        imagedestroy($sourceimage);
+
+        ob_start();
+        imagewebp($finalimage, null, 85);
+        $data = ob_get_clean();
+        imagedestroy($finalimage);
+
+        return $data;
     }
 }

@@ -660,6 +660,9 @@ $string['coursecardscolumncount_desc'] = 'The course card grid will be presented
 // ... ... Setting: Show course image in the course listing.
 $string['courselistinghowimage'] = 'Show course image in the course listing';
 $string['courselistinghowimage_desc'] = 'With this setting, you control if the course image is shown in the course listing or not.';
+// ... ... Setting: Reduce size of course card images.
+$string['reducecoursecardimagesize'] = 'Reduce size of course card images';
+$string['reducecoursecardimagesize_desc'] = 'If greater than 0, the displayed course card images will be optimized to webp format with the specified width as pixels.';
 // ... ... Setting: Show course contacts in the course listing.
 $string['courselistingshowcontacts'] = 'Show course contacts in the course listing';
 $string['courselistingshowcontacts_desc'] = 'With this setting, you control if the course contact\'s pictures are shown in the course listing or not. Please note: The contact pictures are shown together with the course image, thus presenting course contacts without presenting the course image is not possible.';
