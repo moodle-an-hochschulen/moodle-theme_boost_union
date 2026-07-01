@@ -1225,6 +1225,22 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
 
         // Send stored file (and cache it for 90 days, similar to other static assets within Moodle).
         send_stored_file($file, DAYSECS * 90, 0, $forcedownload, $options);
+
+        // Serve the files for optimized course card images.
+    } else if ($filearea === 'cardimg') {
+        $fs = get_file_storage();
+        $itemid = clean_param(array_shift($args), PARAM_INT);
+        $filename = clean_param(array_shift($args), PARAM_FILE);
+
+        $file = $fs->get_file($context->id, 'theme_boost_union', 'cardimg', $itemid, '/', $filename);
+        if (!$file) {
+            send_file_not_found();
+        }
+
+        // Filenames are content-hash-based (they encode the source contenthash + width),
+        // so a given URL's content can never change — safe to cache hard and indefinitely.
+        $options['cacheability'] = 'public';
+        send_stored_file($file, DAYSECS * 60, 0, $forcedownload, $options);
     } else {
         send_file_not_found();
     }

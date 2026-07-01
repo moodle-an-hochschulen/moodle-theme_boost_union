@@ -35,4 +35,14 @@ $tasks = [
         'month' => '*',
         'disabled' => 1,
     ],
+    [
+        'classname' => 'theme_boost_union\task\cleanup_cardimg',
+        'blocking'  => 0,
+        'minute'    => '0',
+        'hour'      => '4',
+        'day'       => '*',
+        'dayofweek' => '0',
+        'month'     => '*',
+    ],
 ];
+

@@ -2633,6 +2633,20 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_COURSELISTPRES_NOCHANGE
         );
 
+        // Setting: Reduce size of course card images.
+        $name = 'theme_boost_union/reducecoursecardimagesize';
+        $title = get_string('reducecoursecardimagesize', 'theme_boost_union');
+        $description = get_string('reducecoursecardimagesize_desc', 'theme_boost_union');
+        $default = 0;
+        $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_INT, 6);
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/reducecoursecardimagesize',
+            'theme_boost_union/courselistinghowimage',
+            'eq',
+            THEME_BOOST_UNION_SETTING_SELECT_NO
+        );
+
         // Setting: Show course contacts in the course listing.
         $name = 'theme_boost_union/courselistingshowcontacts';
         $title = get_string('courselistingshowcontacts', 'theme_boost_union');
