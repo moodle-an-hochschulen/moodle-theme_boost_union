@@ -978,6 +978,9 @@ $string['usermenuheading'] = 'User menu';
 $string['showfullnameinusermenussetting'] = 'Show full name in the user menu';
 $string['showfullnameinusermenussetting_desc'] = 'With this setting, you can show the logged-in user\'s full name at the top of the user menu. This can be especially helpful for exam situations where teachers have to confirm that the user is logged in with his own account, but it might also be helpful for the user himself. In contrast to the Classic theme which shows the user\'s full name in the navbar near the avatar, this approach here does not claim any additional rare space in the navbar.';
 $string['showfullnameinusermenussetting_loggedinas'] = 'You are logged in as:';
+// ... ... Settings: Show full name in the navbar.
+$string['showfullnameinnavbarsetting'] = 'Show full name in the navbar';
+$string['showfullnameinnavbarsetting_desc'] = 'With this setting, you can show the logged-in user\'s full name in the navbar, next to the user menu button. This is how the Classic theme presents the user\'s full name and it can be helpful, for example, in exam situations where teachers have to verify quickly that a user is logged in with his own account. However, in contrast to the \'Show full name in the user menu\' setting, this approach claims additional rare space in the navbar. On small screens, the full name is automatically hidden to preserve the available space.';
 // ... ... Settings: Add preferred language link to language menu.
 $string['addpreferredlangsetting'] = 'Add preferred language link to language menu';
 $string['addpreferredlangsetting_desc'] = 'With this setting, you can add a \'Set preferred language\' setting to the language menu within the user menu. Understandably, this setting is only processed if the setting <a href="{$a->url1}">Display language menu</a> is enabled, and if at least <a href="{$a->url2}">a second language pack is installed</a> and <a href="{$a->url3}">offered for selection</a>.';

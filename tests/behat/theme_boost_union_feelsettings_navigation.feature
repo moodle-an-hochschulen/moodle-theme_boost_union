@@ -104,6 +104,22 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | yes     | should      |
       | no      | should not  |
 
+  Scenario Outline: Setting: Show full name in the navbar.
+    Given the following config values are set as admin:
+      | config               | value     | plugin            |
+      | showfullnameinnavbar | <setting> | theme_boost_union |
+    And the following "users" exist:
+      | username       | firstname  | lastname |
+      | navbartestuser | Navbartest | User     |
+    When I log in as "navbartestuser"
+    Then ".usermenu #user-menu-toggle .usertext" "css_element" <shouldornot> exist
+    And I <shouldornot> see "Navbartest User" in the ".usermenu #user-menu-toggle" "css_element"
+
+    Examples:
+      | setting | shouldornot |
+      | yes     | should      |
+      | no      | should not  |
+
   @javascript
   Scenario Outline: Setting: Add preferred language link to language menu.
     Given the following "language packs" exist:
