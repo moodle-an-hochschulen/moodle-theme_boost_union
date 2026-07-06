@@ -322,6 +322,30 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | no    | should      |
       | yes   | should not  |
 
+  Scenario Outline: Setting: Footer - Add a privacy notice link to the footer
+    Given the following config values are set as admin:
+      | config                 | value   | plugin            |
+      | footerprivacynoticeurl | <value> | theme_boost_union |
+    And all Boost Union MUC caches are purged
+    And I log in as "admin"
+    When I am on homepage
+    Then ".theme_boost_union_footer_privacynoticelink" "css_element" <shouldornot> exist in the ".footer-content-popover" "css_element"
+
+    Examples:
+      | value                       | shouldornot |
+      |                             | should not  |
+      | https://example.com/privacy | should      |
+
+  Scenario: Setting: Footer - Privacy notice link points to the configured URL
+    Given the following config values are set as admin:
+      | config                 | value                       | plugin            |
+      | footerprivacynoticeurl | https://example.com/privacy | theme_boost_union |
+    And all Boost Union MUC caches are purged
+    And I log in as "admin"
+    When I am on homepage
+    Then I should see "Privacy notice" in the ".theme_boost_union_footer_privacynoticelink" "css_element"
+    And the "href" attribute of ".theme_boost_union_footer_privacynoticelink a" "css_element" should contain "https://example.com/privacy"
+
   Scenario Outline: Setting: Footer - Suppress footer output by plugin 'tool_dataprivacy'
     Given the following config values are set as admin:
       | config                   | value | plugin           |

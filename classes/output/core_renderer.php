@@ -2061,6 +2061,22 @@ class core_renderer extends core_renderer_intermediate {
     }
 
     /**
+     * Returns true if the current page should show the popover links in the footer.
+     *
+     * In addition to the Moodle core links which are evaluated by the parent function,
+     * this function respects the Boost Union privacy notice link as well.
+     *
+     * @return bool
+     */
+    public function has_popover_links(): bool {
+        // Get the privacy notice URL setting.
+        $privacynoticeurlsetting = get_config('theme_boost_union', 'footerprivacynoticeurl');
+
+        // Show the popover links if a privacy notice URL is configured or if any Moodle core link is present.
+        return !empty($privacynoticeurlsetting) || parent::has_popover_links();
+    }
+
+    /**
      * Returns the HTML for the site support email link
      *
      * This renderer function is copied and modified from /lib/classes/output/core_renderer.php

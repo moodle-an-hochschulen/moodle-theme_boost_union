@@ -480,6 +480,10 @@ With this setting, you can entirely suppress the icons in front of the footer li
 
 With these settings, you can entirely suppress particular links in the footer.
 
+###### Privacy notice URL
+
+With this setting, you can add a 'Privacy notice' link to the footer. As soon as a URL is entered, the link will be shown in the footer, pointing to the given URL. This is especially useful if your organisation publishes its privacy notice on an external website. If the field is left empty, no link will be shown.
+
 ###### Suppress footer output by plugin ...
 
 With this setting, you can entirely suppress the footer output by particular plugins.
