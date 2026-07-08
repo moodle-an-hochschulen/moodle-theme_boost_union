@@ -51,7 +51,8 @@
             }
         ],
         "showfullnameinusermenu": true,
-        "loginlinkbuttonenabled": true
+        "loginlinkbuttonenabled": true,
+        "showfullnameinnavbar": true
     }
 }}
 {{!
@@ -64,6 +65,7 @@
     * Support submenus with more than one level (for adding smart menus into the user menu).
     * Make submenu headers fully clickable as soon as at least one smart menu exists on the page.
     * Set the submenus' data-bs-theme attribute to light even if the navbar is dark
+    * Add the user's full name to the navbar, next to the user menu button.
 }}
 <div class="usermenu">
     {{#unauthenticateduser}}
@@ -81,6 +83,9 @@
         <div class="dropdown show">
             <a href="#" role="button" id="user-menu-toggle" data-bs-toggle="dropdown" aria-label="{{#str}}usermenu{{/str}}"
                aria-haspopup="true" aria-controls="user-action-menu" class="btn dropdown-toggle">
+                {{#showfullnameinnavbar}}
+                    <span class="usertext me-1 d-none d-md-inline-block">{{userfullname}}</span>
+                {{/showfullnameinnavbar}}
                 <span class="userbutton">
                     {{> core/user_menu_metadata }}
                 </span>

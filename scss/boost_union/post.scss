@@ -1114,6 +1114,19 @@ body.hascourseindexcmicons {
 }
 
 /*---------------------------------------
+ * Setting: Show full name in the navbar.
+ --------------------------------------*/
+
+/* Avoid that very long user names break the navbar layout. */
+.usermenu .dropdown-toggle .usertext {
+    max-width: 12rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/*---------------------------------------
  * Setting: Show starred courses popover in the navbar.
  --------------------------------------*/
 .navbar #nav-popover-favourites-container {
