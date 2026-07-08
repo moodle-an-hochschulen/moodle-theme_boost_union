@@ -248,6 +248,7 @@ class coursesettings {
             'courseheaderenabled' => [
                 'options' => self::get_options_with_global_default('courseheaderenabled', $yesnooption),
                 'helpbutton' => true,
+                'formsection' => 'courseheader',
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
                 'restorecontrolledby' => 'theme_boost_union_restore_course_header_settings',
@@ -258,6 +259,7 @@ class coursesettings {
                     self::get_courseheaderlayout_options(true)
                 ),
                 'helpbutton' => true,
+                'formsection' => 'courseheader',
                 'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
@@ -269,6 +271,7 @@ class coursesettings {
                     self::get_courseheaderheight_options()
                 ),
                 'helpbutton' => true,
+                'formsection' => 'courseheader',
                 'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
@@ -280,6 +283,7 @@ class coursesettings {
                     self::get_courseheadercanvasborder_options()
                 ),
                 'helpbutton' => true,
+                'formsection' => 'courseheader',
                 'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
@@ -291,6 +295,7 @@ class coursesettings {
                     self::get_courseheadercanvasbackground_options()
                 ),
                 'helpbutton' => true,
+                'formsection' => 'courseheader',
                 'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
@@ -302,6 +307,7 @@ class coursesettings {
                     self::get_courseheadertextonimagestyle_options()
                 ),
                 'helpbutton' => true,
+                'formsection' => 'courseheader',
                 'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
@@ -313,12 +319,64 @@ class coursesettings {
                     self::get_courseheaderimageposition_options()
                 ),
                 'helpbutton' => true,
+                'formsection' => 'courseheader',
                 'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
                 'restorecontrolledby' => 'theme_boost_union_restore_course_header_settings',
             ],
+            'sectionzeroappearance' => [
+                'options' => self::get_options_with_global_default(
+                    'sectionzeroappearance',
+                    self::get_sectionzeroappearance_options(true)
+                ),
+                'helpbutton' => true,
+                'formsection' => 'sections',
+            ],
+            'sectiononeplusappearance' => [
+                'options' => self::get_options_with_global_default(
+                    'sectiononeplusappearance',
+                    self::get_sectiononeplusappearance_options()
+                ),
+                'helpbutton' => true,
+                'formsection' => 'sections',
+            ],
         ];
+    }
+
+    /**
+     * Get the course override settings configuration which belongs to the given course settings form section.
+     *
+     * @param string $formsection The form section identifier ('courseheader' or 'sections').
+     * @return array The course settings configuration array (name => config), filtered by the given form section.
+     */
+    public static function get_course_settings_config_by_formsection($formsection) {
+        // Initialize the return array.
+        $config = [];
+
+        // Iterate over all course settings.
+        foreach (self::get_course_settings_config() as $name => $settingconfig) {
+            // Fallback: Settings without an explicit form section belong to the course header section.
+            $settingformsection = $settingconfig['formsection'] ?? 'courseheader';
+
+            // If the form section at hand matches the requested section, remember the setting.
+            if ($settingformsection === $formsection) {
+                $config[$name] = $settingconfig;
+            }
+        }
+
+        // Return.
+        return $config;
+    }
+
+    /**
+     * Get the names of the course override settings which belong to the given course settings form section.
+     *
+     * @param string $formsection The form section identifier ('courseheader' or 'sections').
+     * @return array Array of course setting names.
+     */
+    public static function get_course_setting_names_by_formsection($formsection) {
+        return array_keys(self::get_course_settings_config_by_formsection($formsection));
     }
 
     /**
@@ -620,7 +678,92 @@ class coursesettings {
             }
         }
 
+        // Special handling for sectionzeroappearance setting: Check if the appearance was excluded in the meantime.
+        if ($name === 'sectionzeroappearance') {
+            // Get the available appearance options for course forms (which excludes appearances from the exclusion list).
+            $availableappearances = self::get_sectionzeroappearance_options(true);
+
+            // If the value is not in the available appearances, fall back to global setting.
+            if (!array_key_exists($value, $availableappearances)) {
+                return get_config('theme_boost_union', $name);
+            }
+        }
+
         // For all other settings or if validation passes, return the original value.
         return $value;
+    }
+
+    /**
+     * Get the options array for the section 0 appearance setting.
+     *
+     * @param bool $forcourseform Whether to filter options for course form usage and do not return excluded appearances.
+     * @return array The options array for the section 0 appearance.
+     */
+    public static function get_sectionzeroappearance_options($forcourseform = false) {
+        $subject = get_string('sectionzerosubject', 'theme_boost_union');
+        $options = [
+            THEME_BOOST_UNION_SETTING_SECTIONAPPEARANCE_COLLAPSIBLEEXPANDED =>
+                    get_string('sectionappearancecollapsibleexpanded', 'theme_boost_union', $subject),
+            THEME_BOOST_UNION_SETTING_SECTIONAPPEARANCE_COLLAPSIBLECOLLAPSED =>
+                    get_string('sectionappearancecollapsiblecollapsed', 'theme_boost_union', $subject),
+            THEME_BOOST_UNION_SETTING_SECTIONAPPEARANCE_NOTCOLLAPSIBLE =>
+                    get_string('sectionappearancenotcollapsible', 'theme_boost_union', $subject),
+            THEME_BOOST_UNION_SETTING_SECTIONAPPEARANCE_HIDDEN =>
+                    get_string('sectionappearancehidden', 'theme_boost_union', $subject),
+        ];
+
+        // If this is for a course form, filter out appearances that are excluded for course-level selection.
+        if ($forcourseform) {
+            $excludedappearances = get_config('theme_boost_union', 'sectionzeroappearanceexclusionlist');
+            if (!empty($excludedappearances)) {
+                $excludedappearances = explode(',', $excludedappearances);
+
+                // Get the currently configured global appearance to ensure it's always available.
+                $currentglobalappearance = get_config('theme_boost_union', 'sectionzeroappearance');
+
+                // Iterate over the excluded appearances.
+                foreach ($excludedappearances as $excludedappearance) {
+                    // Exclude the appearance, but only if it's not the currently configured global appearance.
+                    if ($excludedappearance != $currentglobalappearance) {
+                        unset($options[$excludedappearance]);
+                    }
+                }
+            }
+        }
+
+        return $options;
+    }
+
+    /**
+     * Get the options array for the sections ≥ 1 appearance setting.
+     *
+     * These are the same options as for the section 0 appearance setting, but without the
+     * 'Hide section entirely' option (as hiding all sections ≥ 1 would not make sense).
+     *
+     * @return array The options array for the sections ≥ 1 appearance.
+     */
+    public static function get_sectiononeplusappearance_options() {
+        $subject = get_string('sectiononeplussubject', 'theme_boost_union');
+        return [
+            THEME_BOOST_UNION_SETTING_SECTIONAPPEARANCE_COLLAPSIBLEEXPANDED =>
+                    get_string('sectionappearancecollapsibleexpanded', 'theme_boost_union', $subject),
+            THEME_BOOST_UNION_SETTING_SECTIONAPPEARANCE_COLLAPSIBLECOLLAPSED =>
+                    get_string('sectionappearancecollapsiblecollapsed', 'theme_boost_union', $subject),
+            THEME_BOOST_UNION_SETTING_SECTIONAPPEARANCE_NOTCOLLAPSIBLE =>
+                    get_string('sectionappearancenotcollapsible', 'theme_boost_union', $subject),
+        ];
+    }
+
+    /**
+     * Check if a course format is supported by the section appearance feature.
+     *
+     * The feature is realized with course format renderer overrides which exist for the
+     * 'Custom sections' ("Topics") and 'Weekly sections' course formats only.
+     *
+     * @param string $courseformat The course format.
+     * @return bool True if the course format is supported, false otherwise.
+     */
+    public static function is_courseformat_supported_by_sectionfeature($courseformat) {
+        return in_array($courseformat, ['topics', 'weeks']);
     }
 }

@@ -148,6 +148,9 @@ if (!empty($primarymenu['bottombar']) && !empty($primarymenu['bottombar']['drawe
 // Include the extra classes for the course index modification.
 require_once(__DIR__ . '/includes/courseindex.php');
 
+// Include the extra classes for the section appearance modification.
+require_once(__DIR__ . '/includes/sectionappearance.php');
+
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
 // If the settings menu will be included in the header then don't add it here.
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
