@@ -133,22 +133,45 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
       | no      | should not  |
 
   @javascript
-  Scenario Outline: Setting: Show starred courses popover in the navbar.
+  Scenario: Setting: Show starred courses popover in the navbar.
+    Given the following "courses" exist:
+      | fullname                                                                                                 | shortname |
+      | <span lang="en" class="multilang">Course</span><span lang="de" class="multilang">Kurs</span> 2 & < ' " > | C2        |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | student1 | C2     | student        |
+    And the following config values are set as admin:
+      | config          | value |
+      | enablemycourses | 1     |
+    And the following config values are set as admin:
+      | config                   | value | plugin            |
+      | shownavbarstarredcourses | yes   | theme_boost_union |
+    And the "multilang" filter is "on"
+    And the "multilang" filter applies to "content and headings"
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "student1"
+    And I follow "My courses"
+    And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 2')]" "xpath_element"
+    And I click on "Star this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 2')]" "xpath_element"
+    And I reload the page
+    Then "nav.navbar #usernavigation .popover-region-favourites" "css_element" should be visible
+    And I click on "nav.navbar #usernavigation .popover-region-favourites" "css_element"
+    And I should see "Course 2 & < ' \" >" in the "nav.navbar #usernavigation .popover-region-favourites" "css_element"
+    And I hover over the "Course 2" "text" in the "nav.navbar #usernavigation .popover-region-favourites" "css_element"
+    And "Course 2 & < ' \" >" "text" should be visible
+
+  @javascript
+  Scenario: Setting: Do not show starred courses popover in the navbar.
     Given the following config values are set as admin:
-      | config                   | value     | plugin            |
-      | shownavbarstarredcourses | <setting> | theme_boost_union |
+      | config                   | value | plugin            |
+      | shownavbarstarredcourses | no    | theme_boost_union |
     And the theme cache is purged and the theme is reloaded
     When I log in as "student1"
     And I follow "My courses"
     And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
     And I click on "Star this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 1')]" "xpath_element"
     And I reload the page
-    Then "nav.navbar #usernavigation .popover-region-favourites" "css_element" <shouldornot> be visible
-
-    Examples:
-      | setting | shouldornot |
-      | yes     | should      |
-      | no      | should not  |
+    Then "nav.navbar #usernavigation .popover-region-favourites" "css_element" should not be visible
 
   @javascript
   Scenario: Setting: Do not show starred courses popover in the navbar if Boost Union is not the active theme (cross-theme check).
