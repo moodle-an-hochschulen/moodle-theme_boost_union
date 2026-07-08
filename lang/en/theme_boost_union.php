@@ -91,7 +91,7 @@ $string['pagelayout_standard'] = 'Standard layout';
 
 // Course overrides: General strings.
 $string['courseoverride'] = 'Add to course settings as well';
-$string['courseoverride_desc'] = 'The Boost Union settings in this section come with the possibility to override the global setting (which is set here) in each course. As soon as you tick the \'Add to course settings as well\' checkbox for a setting, the setting will be added to the course settings form where teachers, managers and admins (or any other role which you add the theme/boost_union:overridecourseheaderincourse capability to) can override the global setting for each course individually. If you do not tick the checkbox, the setting will not be added to the course settings form and the global setting will always apply.';
+$string['courseoverride_desc'] = 'The Boost Union settings in this section come with the possibility to override the global setting (which is set here) in each course. As soon as you tick the \'Add to course settings as well\' checkbox for a setting, the setting will be added to the course settings form where teachers, managers and admins (or any other role which you add the {$a->capability} capability to) can override the global setting for each course individually. If you do not tick the checkbox, the setting will not be added to the course settings form and the global setting will always apply.';
 $string['useglobaldefault'] = 'Use global default ({$a})';
 $string['nocourseoverride'] = 'This setting cannot be overridden in the course settings.';
 
@@ -1108,6 +1108,31 @@ $string['showsitehomerighthandblockdraweronfirstloginsetting_desc'] = 'With this
 // ... ... Setting: Show right-hand block drawer of site home on guest login.
 $string['showsitehomerighthandblockdraweronguestloginsetting'] = 'Show right-hand block drawer of site home on guest login';
 $string['showsitehomerighthandblockdraweronguestloginsetting_desc'] = 'With this setting, the right-hand block drawer of site home will be displayed in its expanded state by default. This only applies to users who log in as a guest.';
+
+// Settings: Course tab.
+// The tab label string already exists above.
+// ... Section: Sections.
+$string['sectionsheading'] = 'Sections';
+$string['sectionsnosettingsnotice'] = 'This course is configured with the "Show one section per page" course layout. The section appearance settings only affect courses which use the "Show all sections on one page" course layout, so there is nothing to configure here.';
+$string['sectionappearance_descnote'] = 'Please note:<ul><li>This setting only affects courses which use the "Custom sections" or "Weekly sections" course format which are part of Moodle core. All other third-party course formats keep their standard behaviour.</li><li>This setting only affects courses which are run in the "Show all sections on one page" mode. Courses which are run in the "Show one section per page" mode as well as the section pages in all courses keep their standard behaviour.</li><li>If a section is configured to be shown collapsed by default, it will be presented collapsed on every page load due to technical limitations in Moodle core, regardless if the user has expanded it during a previous visit of the page.</li>{$a}<li>The collapse widgets of the affected sections are hidden with pure CSS. This is necessary as otherwise, if the widgets would be fully removed from the page by Boost Union, there would be the risk that existing Moodle functionality could break sooner or later.</li></ul>';
+$string['sectionappearancecollapsibleexpanded'] = 'Show {$a} with collapsing, expanded by default';
+$string['sectionappearancecollapsiblecollapsed'] = 'Show {$a} with collapsing, collapsed by default';
+$string['sectionappearancenotcollapsible'] = 'Show {$a} without collapsing';
+$string['sectionappearancehidden'] = 'Hide {$a} entirely';
+// ... ... Setting: Appearance of section 0.
+$string['sectionzeroappearance'] = 'Appearance of section 0';
+$string['sectionzeroappearance_desc'] = 'With this setting, you control the appearance of section 0 (the general section) on the course main page. By default, Moodle shows section 0 as a collapsible section which is expanded initially. With this setting, you can decide to show section 0 collapsed by default, show it without any collapsing functionality or hide it entirely.';
+$string['sectionzeroappearance_help'] = 'The appearance of section 0 (the general section) on the course main page.';
+$string['sectionzerosubject'] = 'section 0';
+$string['sectionzeroappearance_deschiddennote'] = '<li>If section 0 is configured to be hidden entirely, the entire section is hidden with pure CSS as well and it will re-appear as soon as the teacher switches to edit mode (as otherwise its content would not be editable anymore).</li>';
+// ... ... Setting: Appearance of section 0 exclusion list.
+$string['sectionzeroappearanceexclusionlist'] = 'Appearance of section 0 exclusion list';
+$string['sectionzeroappearanceexclusionlist_desc'] = 'With this setting, you can exclude particular section 0 appearances from being available for course-specific overrides. The selected appearances will not appear in the course settings for teachers to choose from, but the administrator can still use them globally. This allows you to restrict which appearances are available to course editors while maintaining administrative control over the global setting. Please note that the section 0 appearance which is selected by the admin above will never be excluded from the course settings, even if you tick it here.';
+// ... ... Setting: Appearance of sections ≥ 1.
+$string['sectiononeplusappearance'] = 'Appearance of sections ≥ 1';
+$string['sectiononeplusappearance_desc'] = 'With this setting, you control the appearance of all sections except section 0 (i.e. sections 1 and following) on the course main page. By default, Moodle shows these sections as collapsible sections which are expanded initially. With this setting, you can decide to show them collapsed by default or to show them without any collapsing functionality.';
+$string['sectiononeplusappearance_help'] = 'The appearance of sections ≥ 1 (all sections except the general section) on the course main page.';
+$string['sectiononeplussubject'] = 'sections ≥ 1';
 
 // Settings: Page layouts tab.
 $string['pagelayoutstab'] = 'Page layouts';
@@ -2196,6 +2221,7 @@ $string['boost_union:viewregionoffcanvascenter'] = 'To be able to see the Off-ca
 $string['boost_union:editregionoffcanvascenter'] = 'To be able to edit the Off-canvas (center) block region';
 $string['boost_union:overridecourseheaderincourse'] = 'To be able to override the course header settings in a course';
 $string['boost_union:transfercourseheaderduringimport'] = 'Transfer course header settings during course import';
+$string['boost_union:overridesectionincourse'] = 'To be able to override the section settings in a course';
 
 // Caches.
 $string['cachedef_flavours'] = 'Flavours which apply to a given page\'s category ID for the current user';

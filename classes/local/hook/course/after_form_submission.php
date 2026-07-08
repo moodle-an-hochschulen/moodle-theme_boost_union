@@ -57,16 +57,23 @@ class after_form_submission {
 
         // Only proceed if we have a course ID.
         if (!empty($data->id)) {
-            // Get the context from the course ID in the submitted data.
+            // Get the context and the (effective) course format from the course ID in the submitted data.
             $context = \context_course::instance($data->id);
+            $course = get_course($data->id);
+            $courseformat = coursesettings::get_effective_course_format($course);
 
-            // If the user does not have the capability to override the course header settings in this course, we do nothing.
-            if (!has_capability('theme/boost_union:overridecourseheaderincourse', $context)) {
-                return;
-            }
+            // Check which course settings form sections the user is allowed to use:
+            // The course header settings require a dedicated capability and
+            // must not be excluded for the given course format.
+            $showcourseheadersettings = has_capability('theme/boost_union:overridecourseheaderincourse', $context) &&
+                    !coursesettings::is_courseformat_excluded_from_courseheaderfeature($courseformat);
+            // The section settings require a dedicated capability and
+            // are only supported by particular course formats.
+            $showsectionssettings = has_capability('theme/boost_union:overridesectionincourse', $context) &&
+                    coursesettings::is_courseformat_supported_by_sectionfeature($courseformat);
 
-            // If this course format is excluded from the course header feature, we do nothing.
-            if (!empty($data->format) && coursesettings::is_courseformat_excluded_from_courseheaderfeature($data->format)) {
+            // If the user is not allowed to use any of the sections, we do nothing.
+            if (!$showcourseheadersettings && !$showsectionssettings) {
                 return;
             }
 
@@ -82,8 +89,20 @@ class after_form_submission {
                 $record->courseid = $courseid;
             }
 
-            // Get the course override settings which we handle.
-            $coursesettings = coursesettings::get_course_setting_names();
+            // Get the course override settings which we handle, depending on the sections which the user is allowed to use.
+            $coursesettings = [];
+            if ($showcourseheadersettings) {
+                $coursesettings = array_merge(
+                    $coursesettings,
+                    coursesettings::get_course_setting_names_by_formsection('courseheader')
+                );
+            }
+            if ($showsectionssettings) {
+                $coursesettings = array_merge(
+                    $coursesettings,
+                    coursesettings::get_course_setting_names_by_formsection('sections')
+                );
+            }
 
             // Process each setting individually.
             foreach ($coursesettings as $setting) {
@@ -103,7 +122,7 @@ class after_form_submission {
             }
 
             // Handle course header image file manager if the feature is enabled.
-            if (coursesettings::courseheaderimage_is_enabled()) {
+            if ($showcourseheadersettings && coursesettings::courseheaderimage_is_enabled()) {
                 // Handle the file manager for course header image.
                 if (isset($data->theme_boost_union_courseheaderimage_filemanager)) {
                     // Save the files from the draft area to the real file area.
