@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-07-08 - Bugfix: Filter courses correctly in starred courses popover, resolves #1332
 * 2026-07-08 - Upstream change: Adopt changes from Moodle core in MDL-55528
 
 ### v4.5-r44
