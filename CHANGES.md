@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-07-08 - Upstream change: Adopt changes from Moodle core in MDL-55528
 * 2026-07-08 - Improvement: Make the Activity & section navigation elements look nicer, resolves #825
 * 2026-06-23 - Feature: Allow the admin and the teacher to control the appearance of the sections (section 0 as well as sections ≥ 1) on the course main page, resolves #889
 
