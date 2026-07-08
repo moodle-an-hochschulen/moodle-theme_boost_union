@@ -30,6 +30,20 @@
     }
 }
 
+/* Utility class to let an mform element span the full width of the form by removing its (empty) label column.
+   This is useful for elements which are not associated to a particular form field, e.g. a standalone notification.
+   Add this class to the element in PHP with $element->updateAttributes(['parentclass' => 'theme-boost-union-fullwidth-formelement']). */
+.fitem.theme-boost-union-fullwidth-formelement {
+    > .col-md-3 {
+        display: none;
+    }
+
+    > .col-md-9 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
 
 /*=======================================
  * Settings: Look -> Site branding
@@ -1720,6 +1734,44 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
     /* Position and size. */
     margin-left: 15px;
     margin-right: 15px;
+}
+
+
+/*=======================================
+ * Settings: Feel -> Course.
+ ======================================*/
+
+/*---------------------------------------
+ * Settings: Appearance of section 0 and sections ≥ 1.
+ --------------------------------------*/
+
+/* If section 0 is configured to be hidden entirely on the course main page
+   (and the corresponding body class was added by the theme's layout file),
+   hide it in the course index as well. */
+body.theme-boost-union-hidesectionzero {
+    #courseindex {
+        .courseindex-section[data-number="0"] {
+            display: none;
+        }
+    }
+}
+
+/* If section 0 or sections ≥ 1 are configured to be shown without collapsing on the course main page
+   (and the corresponding body class was added by the theme's layout file). */
+body.theme-boost-union-sectionzeronotcollapsible li#section-0,
+body.theme-boost-union-sectiononeplusnotcollapsible li[id^="section-"]:not(#section-0) {
+    /* Hide the collapse / expand toggle of the affected section.
+       (It is kept in the DOM on purpose so that the course format JS does not break, but visually hidden.) */
+    [data-for="sectiontoggler"] {
+        display: none;
+    }
+
+    /* Keep the content of the affected section always expanded, even if the 'Collapse all' control is used
+       (which would otherwise collapse it via the course format JS). */
+    .course-content-item-content {
+        display: block !important;  /* stylelint-disable-line declaration-no-important */
+        height: auto !important; /* stylelint-disable-line declaration-no-important */
+    }
 }
 
 

@@ -2726,7 +2726,11 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         // Show course specific overrides intro.
         $name = 'theme_boost_union/courseheaderoverride';
         $courseheaderoverride = new \core\output\notification(
-            get_string('courseoverride_desc', 'theme_boost_union'),
+            get_string(
+                'courseoverride_desc',
+                'theme_boost_union',
+                ['capability' => 'theme/boost_union:overridecourseheaderincourse']
+            ),
             \core\output\notification::NOTIFY_INFO,
             false
         );
@@ -4208,6 +4212,85 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('showsitehomerighthandblockdraweronguestloginsetting', 'theme_boost_union', null, true);
         $description = get_string('showsitehomerighthandblockdraweronguestloginsetting_desc', 'theme_boost_union', null, true);
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
+        // Add tab to settings page.
+        $page->add($tab);
+
+
+        // Tab: Course.
+        $tab = new admin_settingpage(
+            'theme_boost_union_feel_course',
+            get_string('coursetab', 'theme_boost_union', null, true)
+        );
+
+        // Heading: Sections.
+        $name = 'theme_boost_union/sectionsheading';
+        $title = get_string('sectionsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Show course specific overrides intro.
+        $name = 'theme_boost_union/sectionsoverride';
+        $sectionsoverride = new \core\output\notification(
+            get_string(
+                'courseoverride_desc',
+                'theme_boost_union',
+                ['capability' => 'theme/boost_union:overridesectionincourse']
+            ),
+            \core\output\notification::NOTIFY_INFO,
+            false
+        );
+        $sectionsoverride->set_extra_classes(['alert-light']);
+        $description = $OUTPUT->render($sectionsoverride);
+        $setting = new admin_setting_heading($name, '', $description);
+        $tab->add($setting);
+
+        // Setting: Appearance of section 0.
+        $name = 'theme_boost_union/sectionzeroappearance';
+        $title = get_string('sectionzeroappearance', 'theme_boost_union', null, true);
+        $description = get_string('sectionzeroappearance_desc', 'theme_boost_union') . '<br /><br />' .
+            get_string(
+                'sectionappearance_descnote',
+                'theme_boost_union',
+                get_string('sectionzeroappearance_deschiddennote', 'theme_boost_union'),
+                true
+            );
+        $sectionzeroappearanceoptions = coursesettings::get_sectionzeroappearance_options();
+        $setting = new theme_boost_union\admin_setting_configselect_with_courseoverride(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_SECTIONAPPEARANCE_COLLAPSIBLEEXPANDED,
+            $sectionzeroappearanceoptions,
+            false
+        );
+        $setting->set_updatedcallback('theme_boost_union_purge_courseoverrides_cache');
+        $tab->add($setting);
+
+        // Setting: Appearance of section 0 exclusion list.
+        $name = 'theme_boost_union/sectionzeroappearanceexclusionlist';
+        $title = get_string('sectionzeroappearanceexclusionlist', 'theme_boost_union', null, true);
+        $description = get_string('sectionzeroappearanceexclusionlist_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configmulticheckbox($name, $title, $description, [], $sectionzeroappearanceoptions);
+        $setting->set_updatedcallback('theme_boost_union_purge_courseoverrides_cache');
+        $tab->add($setting);
+
+        // Setting: Appearance of sections ≥ 1.
+        $name = 'theme_boost_union/sectiononeplusappearance';
+        $title = get_string('sectiononeplusappearance', 'theme_boost_union', null, true);
+        $description = get_string('sectiononeplusappearance_desc', 'theme_boost_union') . '<br /><br />' .
+            get_string('sectionappearance_descnote', 'theme_boost_union', '', true);
+        $sectiononeplusappearanceoptions = coursesettings::get_sectiononeplusappearance_options();
+        $setting = new theme_boost_union\admin_setting_configselect_with_courseoverride(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_SECTIONAPPEARANCE_COLLAPSIBLEEXPANDED,
+            $sectiononeplusappearanceoptions,
+            false
+        );
+        $setting->set_updatedcallback('theme_boost_union_purge_courseoverrides_cache');
         $tab->add($setting);
 
         // Add tab to settings page.
