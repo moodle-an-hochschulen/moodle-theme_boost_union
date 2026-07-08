@@ -438,6 +438,14 @@ Outside regions can not only be enabled with the layout settings above, their ap
 
 With these settings, the right-hand block drawer of site home will be displayed in its expanded state by default.
 
+#### Tab "Course"
+
+In this tab there are the following settings:
+
+##### Sections
+
+Here, you control the appearance of section 0 (the general section) as well as the appearance of all other sections on the course main page. You can control the collapsing behaviour of these sections. Please note that there are some technical limitations which are explained in the settings' descriptions.
+
 #### Tab "Links"
 
 In this tab there are the following settings:
@@ -661,6 +669,10 @@ These capabilities are used to control who is allowed to edit a particular block
 ### theme/boost_union:overridecourseheaderincourse
 
 This capability is used to control who is able to override the course header settings in a course (if this feature was enabled in the theme settings). By default, it is assigned to teachers and managers.
+
+### theme/boost_union:overridesectionincourse
+
+This capability is used to control who is able to override the section settings (appearance of section 0 and appearance of sections ≥ 1) in a course (if this feature was enabled in the theme settings). By default, it is assigned to teachers and managers.
 
 ### theme/boost_union:transfercourseheaderduringimport
 
