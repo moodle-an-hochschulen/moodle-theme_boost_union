@@ -1019,6 +1019,7 @@ Moodle an Hochschulen e.V. would like to thank these contributors for their cont
 * FernUniversität in Hagen, Daniel Poggenpohl: Code, Ideating
 * Friedrich Schiller University Jena: Funding, Ideating
 * Hochschule Hannover - University of Applied Sciences and Arts: Code, Funding, Ideating
+* Hochschule München - University of Applied Sciences: Funding
 * Käferfreie Software, Nina Herrmann: Code
 * lern.link GmbH, Alexander Bias: Code, Peer Review, Ideating, Funding
 * lern.link GmbH, Beata Waloszczyk: Code
