@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-07-08 - Upstream change: Adopt changes from Moodle core in MDL-55528
+
 ### v4.5-r44
 
 * 2026-06-13 - Tests: Use Behat slicing to bring Behat runtime down and reduce GHA container outages, resolves #1016
