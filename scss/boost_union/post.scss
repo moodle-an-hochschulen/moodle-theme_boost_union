@@ -1332,6 +1332,66 @@ body.theme-boost-union-commincourse {
     }
 }
 
+/*---------------------------------------
+ * Setting: Activity & section navigation elements
+ --------------------------------------*/
+
+/* Give the core activity and section navigation a modern look by
+   styling their links like Bootstrap small secondary buttons. Additionally,
+   fix the position of the "next section" arrow which core renders in front of
+   the section name instead of behind it. */
+
+/* Activity navigation (previous / next activity links). */
+.activity-navigation {
+    /* Style the navigation links to look like Bootstrap small buttons. */
+    #prev-activity-link,
+    #next-activity-link {
+        @extend .btn;
+        @extend .btn-secondary;
+        @extend .btn-sm;
+    }
+
+    /* Match the size of the jump-to-activity selector to the small buttons. */
+    #jump-to-activity {
+        @extend .form-select-sm;
+    }
+
+    /* Add a top border to separate the navigation from the activity. */
+    @extend .border-top;
+    @extend .pt-5;
+}
+
+/* Section navigation (previous / next section links). This covers both the
+   navigation shown above the section (.navigationtitle) and the one shown below
+   the section on /course/section.php which also carries a jump-to selector
+   (.mdl-bottom). */
+.section-navigation {
+    /* Style the navigation links to look like Bootstrap small buttons. */
+    .prevsection a,
+    .nextsection a {
+        @extend .btn;
+        @extend .btn-secondary;
+        @extend .btn-sm;
+        display: inline-flex;
+        gap: .25rem;
+    }
+
+    /* Move the "next section" arrow behind the section name (core renders it in front of the text for unknown reasons). */
+    .nextsection .rarrow {
+        order: 1;
+    }
+
+    /* Match the size of the jump-to-section selector to the small buttons. */
+    .jumpmenu {
+        @extend .form-select-sm;
+    }
+
+    /* Add a top padding to the lower section navigation to separate the navigation from the activities. */
+    &:nth-of-type(2) {
+        @extend .pt-5;
+    }
+}
+
 
 /*=======================================
  * Settings: Feel -> Blocks.
