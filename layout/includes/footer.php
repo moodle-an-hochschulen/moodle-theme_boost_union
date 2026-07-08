@@ -80,11 +80,26 @@ if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
         $templatecontext['footershowcontact'] = false;
     }
 
-    // If any of the 'Documentation for this page', 'Services and support' or 'Contact site support' links are enabled.
+    // If a privacy notice URL is configured.
+    $footerprivacynoticeurlsetting = get_config('theme_boost_union', 'footerprivacynoticeurl');
+    if (!empty($footerprivacynoticeurlsetting)) {
+        // Add marker to show this link to the templatecontext as well as the link itself.
+        $templatecontext['footershowprivacynotice'] = true;
+        $templatecontext['footerprivacynoticeurl'] = $footerprivacynoticeurlsetting;
+
+        // Otherwise.
+    } else {
+        // Add marker to hide this link.
+        $templatecontext['footershowprivacynotice'] = false;
+    }
+
+    // If any of the 'Documentation for this page', 'Services and support', 'Contact site support' or privacy notice
+    // links are enabled.
     if (
         isset($templatecontext['footershowhelp']) && $templatecontext['footershowhelp'] == true ||
             isset($templatecontext['footershowservices']) && $templatecontext['footershowservices'] == true ||
-            isset($templatecontext['footershowcontact']) && $templatecontext['footershowcontact'] == true
+            isset($templatecontext['footershowcontact']) && $templatecontext['footershowcontact'] == true ||
+            isset($templatecontext['footershowprivacynotice']) && $templatecontext['footershowprivacynotice'] == true
     ) {
         // Add marker to show popover links.
         $templatecontext['footershowpopoverlinks'] = true;

@@ -47,6 +47,8 @@
         "footershowlogininfo": true,
         "footershowpopoverlinks": true,
         "footershowpowered": true,
+        "footershowprivacynotice": true,
+        "footerprivacynoticeurl": "https://yourorganisation.example.com/privacy",
         "footershowservices": true,
         "footershowtelemetrytraceid": true,
         "footershowusertour": true,
@@ -109,6 +111,7 @@
         code. If this JS code does not find the placeholder div, it will add the link at another location on the page.
         That's why we keep the placeholder here and hide it with CSS if the link should be suppressed.
     * Added the possibility to suppress the icons in front of the footer links.
+    * Added the possibility to show a privacy notice link.
 }}
 
 <footer id="page-footer" class="footer-popover bg-white">
@@ -160,6 +163,12 @@
                                 <div class="footer-support-link">{{{ output.supportemail }}}</div>
                             {{/ output.supportemail }}
                         {{/footershowcontact}}
+
+                        {{#footershowprivacynotice}}
+                            <div class="footer-support-link theme_boost_union_footer_privacynoticelink">
+                                <a href="{{ footerprivacynoticeurl }}">{{^ suppressfooterlinkicons }}<i class="icon fa fa-user-shield fa-fw " aria-hidden="true"></i>{{/ suppressfooterlinkicons }}{{#str}}footerprivacynoticeurlsetting_linktext, theme_boost_union{{/str}}</a>
+                            </div>
+                        {{/footershowprivacynotice}}
                     </div>
                 {{/ output.has_popover_links }}
             {{/footershowpopoverlinks}}

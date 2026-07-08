@@ -4753,6 +4753,19 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE
         );
 
+        // Setting: Privacy notice URL.
+        $name = 'theme_boost_union/footerprivacynoticeurl';
+        $title = get_string('footerprivacynoticeurlsetting', 'theme_boost_union', null, true);
+        $description = get_string('footerprivacynoticeurlsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/footerprivacynoticeurl',
+            'theme_boost_union/enablefooterbutton',
+            'eq',
+            THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE
+        );
+
         // Settings: Suppress footer output by plugins (for updated plugins with the hook).
         // Get the array of plugins with the before_standard_footer_html_generation hook which can be suppressed by Boost Union.
         $pluginswithcallback =

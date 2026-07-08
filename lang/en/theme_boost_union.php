@@ -1201,6 +1201,10 @@ $string['footersuppressthemeswitchsetting_desc'] = 'With this setting, you can e
 // ... ... Setting: Suppress 'Powered by Moodle' link.
 $string['footersuppresspoweredsetting'] = 'Suppress \'Powered by Moodle\' link';
 $string['footersuppresspoweredsetting_desc'] = 'With this setting, you can entirely suppress the \'Powered by Moodle\' link in the footer. This link would otherwise show an information that this site is running Moodle and provide a link to Moodle HQ.';
+// ... ... Setting: Privacy notice URL.
+$string['footerprivacynoticeurlsetting'] = 'Privacy notice URL';
+$string['footerprivacynoticeurlsetting_desc'] = 'With this setting, you can add a \'Privacy notice\' link to the footer. As soon as a URL is entered, the link will be shown in the footer, pointing to the given URL. This is especially useful if your organisation publishes its privacy notice on an external website. If the field is left empty, no link will be shown.';
+$string['footerprivacynoticeurlsetting_linktext'] = 'Privacy notice';
 // ... ... Setting: Suppress footer output by core components.
 $string['footersuppressstandardfootercore'] = 'Suppress footer output by core component \'{$a}\'';
 $string['footersuppressstandardfootercore_desc'] = 'With this setting, you can entirely suppress the footer output by the core component \'{$a}\'. Core components can add additional content to the footer by implementing a particular hook or function. This core component has implemented this hook / function and might add content to the footer in certain circumstances.';
