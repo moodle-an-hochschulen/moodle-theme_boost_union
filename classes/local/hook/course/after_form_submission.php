@@ -80,15 +80,6 @@ class after_form_submission {
             // Remember the course ID in a more useable variable.
             $courseid = $data->id;
 
-            // Get the course override record from the database.
-            $record = $DB->get_record('theme_boost_union_course', ['courseid' => $courseid]);
-
-            // If no record exists, create a new one.
-            if (!$record) {
-                $record = new \stdClass();
-                $record->courseid = $courseid;
-            }
-
             // Get the course override settings which we handle, depending on the sections which the user is allowed to use.
             $coursesettings = [];
             if ($showcourseheadersettings) {
