@@ -1806,7 +1806,10 @@ class smartmenu_item {
 
             switch ($this->item->display) {
                 case self::DISPLAY_SHOWTITLEICON:
-                    $title = $icon . $title;
+                    // Place the icon next to the (possibly multi-line) title on the same line.
+                    // As the title is wrapped in a block-level element (to stack the first and second line),
+                    // simply prepending the inline icon would push the title onto its own line.
+                    $title = html_writer::tag('div', $icon . $title, ['class' => 'd-flex align-items-center']);
                     break;
                 case self::DISPLAY_HIDETITLE:
                     $title = $icon;
