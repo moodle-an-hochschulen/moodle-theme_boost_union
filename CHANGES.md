@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-07-08 - Bugfix: Show the icon inline with the title in dynamic courses submenus instead of on its own line, regression of #1300, resolves #1347
 * 2026-07-08 - Bugfix: Filter courses correctly in starred courses popover, resolves #1332
 * 2026-07-08 - Upstream change: Adopt changes from Moodle core in MDL-55528
 
