@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-07-10 - Bugfix: Do not purge theme_boost_union_touchiconsios cache before refilling it to avoid race conditions with asynchronous cache purging configurations, resolves #1361
+
 ### v5.0-r31
 
 * 2026-07-08 - Bugfix: Show the icon inline with the title in dynamic courses submenus instead of on its own line, regression of #1300, resolves #1347
