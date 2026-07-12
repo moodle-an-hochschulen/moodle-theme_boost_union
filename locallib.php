@@ -2159,8 +2159,14 @@ function theme_boost_union_touchicons_for_ios_checkin() {
     // Create cache for touch icon files.
     $cache = cache::make('theme_boost_union', 'touchiconsios');
 
-    // Purge the existing cache values as we will refill the cache now.
-    $cache->purge();
+    // Note:
+    // We deliberately do not purge the cache here before refilling it.
+    // This function always rewrites the complete set of cache values ('filelist' and 'checkedin') with $cache->set()
+    // further down, and these are the only keys which this cache ever holds. A purge is therefore redundant.
+    // What's more, purging here is actively harmful when the cache is backed by a file store with asynchronous
+    // deletion enabled: purge() would only queue a deletion task for cron which, when it eventually runs, wipes the
+    // whole store - including the values which were set() right after the purge. This leaves the cache empty again,
+    // triggers the on-the-fly refill on the next page load and thus creates an endless purge / refill loop.
 
     // Get list of possible touch icons for iOS.
     $touchiconsios = theme_boost_union_get_touchicons_for_ios();
