@@ -40,7 +40,7 @@ class after_form_submission {
      * @param \core_course\hook\after_form_submission $hook The hook data
      */
     public static function callback(\core_course\hook\after_form_submission $hook): void {
-        global $CFG, $DB;
+        global $CFG;
 
         // Require libraries.
         require_once($CFG->dirroot . '/theme/boost_union/lib.php');
@@ -118,7 +118,6 @@ class after_form_submission {
                 if (isset($data->theme_boost_union_courseheaderimage_filemanager)) {
                     // Save the files from the draft area to the real file area.
                     $courseheaderimageoptions = coursesettings::get_courseheaderimage_options();
-                    $context = \context_course::instance($courseid);
                     file_save_draft_area_files(
                         $data->theme_boost_union_courseheaderimage_filemanager,
                         $context->id,
