@@ -1211,3 +1211,37 @@ Feature: Configuring the theme_boost_union plugin for the "Course header" sectio
     Then the field "Course header layout" matches value "Course title above of full surface course header image"
     And I am on "Course 1" course homepage
     And "#bucourseheader.headingabove" "css_element" should exist
+
+  Scenario: Setting: Course header - Multiple course override settings can be saved in a row
+    Given the following config values are set as admin:
+      | config                                  | value        | plugin            |
+      | courseheaderenabled                     | yes          | theme_boost_union |
+      | courseheaderimagesource                 | global       | theme_boost_union |
+      | courseheaderlayout                      | headingabove | theme_boost_union |
+      | courseheaderheight                      | 150px        | theme_boost_union |
+      | courseheadercanvasborder                | none         | theme_boost_union |
+      | courseheaderlayout_courseoverride       | 1            | theme_boost_union |
+      | courseheaderheight_courseoverride       | 1            | theme_boost_union |
+      | courseheadercanvasborder_courseoverride | 1            | theme_boost_union |
+    And the following "theme_boost_union > setting file" exists:
+      | filearea | courseheaderimageglobal                        |
+      | filepath | theme/boost_union/tests/fixtures/login_bg1.png |
+    # First, override two settings at once. This results in two course override records being stored for this course.
+    When I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I navigate to "Settings" in current page administration
+    And I set the field "Course header layout" to "Course title stacked on full surface course header image"
+    And I set the field "Course header height" to "250px"
+    And I press "Save and display"
+    # Then, override a third setting.
+    And I navigate to "Settings" in current page administration
+    And I set the field "Course header canvas border" to "Grey border"
+    And I press "Save and display"
+    # Finally, verify that all three course overrides have been stored and are applied.
+    Then "#bucourseheader.stacked" "css_element" should exist in the "#page-header" "css_element"
+    And "//div[@id='courseheaderimage' and contains(@style, 'min-height: 250px')]" "xpath_element" should exist
+    And "#courseheaderimage.border-secondary" "css_element" should exist
+    And I navigate to "Settings" in current page administration
+    And the field "Course header layout" matches value "Course title stacked on full surface course header image"
+    And the field "Course header height" matches value "250px"
+    And the field "Course header canvas border" matches value "Grey border"
