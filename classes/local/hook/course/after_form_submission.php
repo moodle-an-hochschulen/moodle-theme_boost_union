@@ -40,7 +40,7 @@ class after_form_submission {
      * @param \core_course\hook\after_form_submission $hook The hook data
      */
     public static function callback(\core_course\hook\after_form_submission $hook): void {
-        global $CFG, $DB;
+        global $CFG;
 
         // Require libraries.
         require_once($CFG->dirroot . '/theme/boost_union/lib.php');
@@ -80,15 +80,6 @@ class after_form_submission {
             // Remember the course ID in a more useable variable.
             $courseid = $data->id;
 
-            // Get the course override record from the database.
-            $record = $DB->get_record('theme_boost_union_course', ['courseid' => $courseid]);
-
-            // If no record exists, create a new one.
-            if (!$record) {
-                $record = new \stdClass();
-                $record->courseid = $courseid;
-            }
-
             // Get the course override settings which we handle, depending on the sections which the user is allowed to use.
             $coursesettings = [];
             if ($showcourseheadersettings) {
@@ -127,7 +118,6 @@ class after_form_submission {
                 if (isset($data->theme_boost_union_courseheaderimage_filemanager)) {
                     // Save the files from the draft area to the real file area.
                     $courseheaderimageoptions = coursesettings::get_courseheaderimage_options();
-                    $context = \context_course::instance($courseid);
                     file_save_draft_area_files(
                         $data->theme_boost_union_courseheaderimage_filemanager,
                         $context->id,
