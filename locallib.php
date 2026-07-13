@@ -25,9 +25,9 @@
 use theme_boost_union\coursesettings;
 
 /**
- * Get all activity purposes which are available in the current Moodle version.
- * This function returns all activity purposes, but excludes MOD_PURPOSE_INTERFACE for Moodle 5.2+
- * where this constant has been removed.
+ * Get all activity purposes which are supported by Boost Union.
+ * This function is the single source of truth for the activity purposes which Boost Union offers in its settings and for which
+ * it composes SCSS code.
  *
  * @param bool $includeother Whether to include MOD_PURPOSE_OTHER in the returned array.
  * @return array Array of activity purpose constants.
@@ -39,10 +39,6 @@ function theme_boost_union_get_activity_purposes($includeother = false) {
             MOD_PURPOSE_COMMUNICATION,
             MOD_PURPOSE_CONTENT,
             MOD_PURPOSE_INTERACTIVECONTENT];
-    // Add MOD_PURPOSE_INTERFACE only if it exists (removed in Moodle 5.2+).
-    if (defined('MOD_PURPOSE_INTERFACE')) {
-        $purposes[] = MOD_PURPOSE_INTERFACE;
-    }
     // Add MOD_PURPOSE_OTHER if requested.
     if ($includeother) {
         $purposes[] = MOD_PURPOSE_OTHER;
@@ -1792,6 +1788,10 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
     // Get installed activity modules.
     $installedactivities = get_module_types_names();
 
+    // Get the activity purposes which are supported by Boost Union (including the 'other' purpose as an activity can be
+    // configured to be not branded at all).
+    $supportedpurposes = theme_boost_union_get_activity_purposes(true);
+
     // Iterate over all existing activities.
     foreach ($installedactivities as $modname => $modinfo) {
         // Get default purpose of activity module.
@@ -1806,6 +1806,14 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
         // If the activity purpose setting is set and differs from the activity's default purpose.
         $activitypurpose = get_config('theme_boost_union', 'activitypurpose' . $modname);
         if ($activitypurpose && $activitypurpose != $defaultpurpose) {
+            // If the configured purpose is not supported (anymore) by Boost Union, we must not compose any SCSS code for it.
+            // Otherwise, the $activity-icon-colors SCSS map would not hold a color for this purpose and the recolor-icon-important
+            // mixin would be called with a null color which would break the whole SCSS compilation.
+            if (!in_array($activitypurpose, $supportedpurposes)) {
+                // Skip this activity.
+                continue;
+            }
+
             // Add CSS to modify the activity purpose color in the activity chooser and the activity icon.
             $scss .= '.activity.modtype_' . $modname . ' .activityiconcontainer.courseicon img,';
             // If the activity is mod_lti, we have to check the whole class name for the activity chooser as Moodle

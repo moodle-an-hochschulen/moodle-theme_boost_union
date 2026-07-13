@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'theme_boost_union';
-$plugin->version = 2025100643;
+$plugin->version = 2025100644;
 $plugin->release = 'v5.1-r20';
 $plugin->requires = 2025100600;
 $plugin->supported = [501, 501];
