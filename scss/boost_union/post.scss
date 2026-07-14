@@ -21,10 +21,11 @@
 /* Replicate the BS5 opacity classes which do not exist in BS4 yet.
    This helps us with backporting. */
 $opacities: (0, 25, 50, 75, 100);
+
 @each $value in $opacities {
-  .opacity-#{$value} {
-    opacity: $value / 100 !important;
-  }
+    .opacity-#{$value} {
+        opacity: $value / 100 !important; /* stylelint-disable-line declaration-no-important */
+    }
 }
 
 
