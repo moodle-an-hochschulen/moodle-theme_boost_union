@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-07-14 - Bugfix: The 'completed' and 'failed' completion icons in the course index were shifted to the right, resolves #1340
 * 2026-07-14 - Bugfix: Setting more than one course header override in a course resulted in a debug message, resolves #1363
 * 2026-07-13 - Bugfix: Do not break the SCSS compilation if an activity icon purpose is still set to the deprecated 'interface' purpose, resolves #1331.
                Please note: This change will reset any activity icon purpose which is still set to 'interface' to its original purpose.
