@@ -913,6 +913,30 @@ body.hascourseindexcmicons {
         span.courseindex-cmicon-container {
             display: block;
         }
+
+        /* Align the completion icons with each other.
+           Moodle core shrinks the icons in the course index with a font-relative rule
+           (.courseindex .icon {font-size: 10px}). This affects the 'complete' and 'fail' completion icons which are
+           rendered as FontAwesome glyphs and which are sized in em (fa-fw is 1.25em, i.e. 12.5px), but it does not
+           affect the 'incomplete' completion icon which is rendered as SVG image and which keeps the absolute size
+           from img.icon (i.e. 20px).
+           On top of that, the FontAwesome glyphs are centered within their box while the SVG image is aligned to the
+           left edge of its box (as the SVG file carries preserveAspectRatio="xMinYMid").
+           The completion icons therefore do not share the same center and the completion icon appears to jump
+           horizontally as soon as an activity is completed. This is especially obvious if the completion info is shown
+           at the end of the line where the icons are right-aligned and both differences add up.
+           We therefore pin all completion icons to the same box and center their content within this box.
+           We deliberately do not rely on the .courseindex-cmicon-cpl-* classes here as Moodle core replaces the whole
+           completion element (and thus these classes) as soon as the completion state changes. */
+        .completioninfo .icon {
+            /* Resize the icons to a common size. */
+            width: $icon-width;
+            max-width: $icon-width;
+            /* Center the FontAwesome glyphs within the box. */
+            text-align: center;
+            /* Center the SVG images within the box. */
+            object-fit: contain;
+        }
     }
 
     /* If the admin configured the completion info to be shown as icon color. */
