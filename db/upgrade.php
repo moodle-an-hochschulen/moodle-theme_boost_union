@@ -1121,7 +1121,7 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025041469, 'theme', 'boost_union');
     }
 
-    if ($oldversion < 2026042011) {
+    if ($oldversion < 2025041476) {
         // Remove all activitypurpose* settings from Boost Union which are still set to the deprecated 'interface' purpose.
         // This purpose has been deprecated in Moodle 4.4 and has been removed in Moodle 5.2. As Moodle core does not hold a color
         // for this purpose in the $activity-icon-colors SCSS map since Moodle 4.4, these settings would break the SCSS
@@ -1135,7 +1135,7 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         }
 
         // Boost Union savepoint reached.
-        upgrade_plugin_savepoint(true, 2026042011, 'theme', 'boost_union');
+        upgrade_plugin_savepoint(true, 2025041476, 'theme', 'boost_union');
     }
 
     // Load the builtin SCSS snippets into the database.
