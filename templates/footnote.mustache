@@ -70,59 +70,62 @@
             {{{ footnotesetting }}}
         </div>
         {{#anystaticpagelinkedfromfootnote}}
-            <div class="container-fluid px-0{{# footnotesetting }} mt-1{{/ footnotesetting }}">
+            {{! This container must be a flex container. Otherwise, the whitespace between the link spans in this template
+                would collapse into an additional space character next to the divider and the divider would not be
+                surrounded by equal spacing anymore. }}
+            <div class="container-fluid px-0 d-flex flex-wrap{{# footnotesetting }} mt-1{{/ footnotesetting }}">
                 {{# aboutuslinkpositionfootnote }}
-                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_aboutuslink pe-2 me-2">
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_aboutuslink">
                         <a href="{{ aboutuslink }}">{{ aboutuspagetitle }}</a>
                     </span>
                 {{/ aboutuslinkpositionfootnote }}
                 {{# offerslinkpositionfootnote }}
-                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_offerslink pe-2 me-2">
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_offerslink">
                         <a href="{{ offerslink }}">{{ offerspagetitle }}</a>
                     </span>
                 {{/ offerslinkpositionfootnote }}
                 {{# imprintlinkpositionfootnote }}
-                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_imprintlink pe-2 me-2">
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_imprintlink">
                         <a href="{{ imprintlink }}">{{ imprintpagetitle }}</a>
                     </span>
                 {{/ imprintlinkpositionfootnote }}
                 {{# contactlinkpositionfootnote }}
-                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_contactlink pe-2 me-2">
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_contactlink">
                         <a href="{{ contactlink }}">{{ contactpagetitle }}</a>
                     </span>
                 {{/ contactlinkpositionfootnote }}
                 {{# helplinkpositionfootnote }}
-                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_helplink pe-2 me-2">
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_helplink">
                         <a href="{{ helplink }}">{{ helppagetitle }}</a>
                     </span>
                 {{/ helplinkpositionfootnote }}
                 {{# maintenancelinkpositionfootnote }}
-                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_maintenancelink pe-2 me-2">
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_maintenancelink">
                         <a href="{{ maintenancelink }}">{{ maintenancepagetitle }}</a>
                     </span>
                 {{/ maintenancelinkpositionfootnote }}
                 {{# accessibilitydeclarationlinkpositionfootnote }}
-                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_accessibilitydeclarationlink pe-2 me-2">
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_accessibilitydeclarationlink">
                         <a href="{{ accessibilitydeclarationlink }}">{{ accessibilitydeclarationpagetitle }}</a>
                     </span>
                 {{/ accessibilitydeclarationlinkpositionfootnote }}
                 {{# accessibilitysupportlinkpositionfootnote }}
-                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_accessibilitysupportlink pe-2 me-2">
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_accessibilitysupportlink">
                         <a href="{{ accessibilitysupportlink }}">{{ accessibilitysupportpagetitle }}</a>
                     </span>
                 {{/ accessibilitysupportlinkpositionfootnote }}
                 {{# page1linkpositionfootnote }}
-                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page1link pe-2 me-2">
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page1link">
                         <a href="{{ page1link }}">{{ page1pagetitle }}</a>
                     </span>
                 {{/ page1linkpositionfootnote }}
                 {{# page2linkpositionfootnote }}
-                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page2link pe-2 me-2">
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page2link">
                         <a href="{{ page2link }}">{{ page2pagetitle }}</a>
                     </span>
                 {{/ page2linkpositionfootnote }}
                 {{# page3linkpositionfootnote }}
-                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page3link pe-2 me-2">
+                    <span class="theme_boost_union_footnote_link theme_boost_union_footnote_page3link">
                         <a href="{{ page3link }}">{{ page3pagetitle }}</a>
                     </span>
                 {{/ page3linkpositionfootnote }}
