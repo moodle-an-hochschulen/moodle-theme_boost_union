@@ -374,7 +374,7 @@ class primary extends \core\navigation\output\primary {
                             'id' => $uniqueid,
                             'returnid' => $menu->submenuid, // Return the third level submenus back to its parent section.
                             'title' => $value['title'],
-                            'text' => strip_tags($value['text']), // Remove the item icon from the submenus title.
+                            'text' => $value['text'],
                             'items' => $value['children'],
                         ];
 

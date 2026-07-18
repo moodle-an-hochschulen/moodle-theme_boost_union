@@ -394,6 +394,71 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Hide title text and show only icon (on mobile devices) | core:i/circleinfo | core:i/circleinfo                | Moodle core       | fa-circle-info | should           | should not      |
 
   @javascript
+  Scenario: Smartmenus: Menu items: Presentation - Normalize the size of oversized (big) icons in all locations
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links          |
+      | title    | Static big icon      |
+      | itemtype | Static               |
+      | url      | https://moodle.org   |
+      | menuicon | core:b/document-edit |
+      | cssclass | bigiconstatic        |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links         |
+      | title    | Submenu big icon    |
+      | itemtype | Dynamic courses     |
+      | category | 0                   |
+      | itemmode | Submenu             |
+      | menuicon | core:b/document-new |
+      | cssclass | bigiconsubmenu      |
+    When I log in as "admin"
+    # Main navigation: menu item icon.
+    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
+    Then DOM element ".primary-navigation .bigiconstatic i.icon.iconsize-big" should have computed style "font-size" "16px"
+    # Main navigation: submenu header icon (the item title incl. its icon shown in the submenu header).
+    And I click on "Submenu big icon" "link" in the ".primary-navigation" "css_element"
+    And DOM element ".primary-navigation .carousel-item.submenu .header .carousel-navigation-link i.icon.iconsize-big" should have computed style "font-size" "16px"
+    # Menu bar: menu item icon.
+    And I click on "Quick links" "link" in the ".boost-union-menubar" "css_element"
+    And DOM element ".boost-union-menubar .bigiconstatic i.icon.iconsize-big" should have computed style "font-size" "16px"
+    # User menu: menu item icon and submenu header icon.
+    And I click on "#user-menu-toggle" "css_element"
+    And I click on "Quick links" "link" in the "#usermenu-carousel" "css_element"
+    And DOM element "#usermenu-carousel .bigiconstatic i.icon.iconsize-big" should have computed style "font-size" "16px"
+    And I click on "Submenu big icon" "link" in the "#usermenu-carousel" "css_element"
+    # In the user menu, Moodle core already sizes all submenu header icons to 20px (the same size as the
+    # "go back" arrow icon next to it), so the big icon is shown at 20px here rather than being oversized.
+    And DOM element "#usermenu-carousel .carousel-item.active .header .carousel-navigation-link i.icon.iconsize-big" should have computed style "font-size" "20px"
+    # Bottom bar (mobile): menu item icon.
+    And I change viewport size to "mobile"
+    And I click on "More" "button" in the ".bottom-navigation" "css_element"
+    And I click on "Quick links" "link" in the "#theme_boost-drawers-primary" "css_element"
+    And DOM element "#theme_boost-drawers-primary .bigiconstatic i.icon.iconsize-big" should have computed style "font-size" "16px"
+
+  @javascript
+  Scenario: Smartmenus: Menu items: Presentation - Normalize the size of oversized (big) icons for inline menus
+    # In addition to the dropdown/submenu case, smart menus can be shown inline, i.e. their menu items are
+    # rendered directly as navigation links (not within a dropdown). The big icon normalization must apply
+    # there as well. See https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues/938.
+    Given the following "theme_boost_union > smart menu" exists:
+      | title    | Inline links              |
+      | location | Main navigation, Menu bar |
+      | mode     | Inline                    |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Inline links         |
+      | title    | Inline big icon      |
+      | itemtype | Static               |
+      | url      | https://moodle.org   |
+      | menuicon | core:b/document-edit |
+      | cssclass | bigiconinline        |
+    When I log in as "admin"
+    # Use a wide viewport so that the inline menu item is not moved into the "More" menu.
+    And I change viewport size to "large"
+    # Main navigation: inline menu item icon (rendered directly as a navigation link).
+    Then DOM element ".primary-navigation .bigiconinline i.icon.iconsize-big" should have computed style "font-size" "16px"
+    # Menu bar: inline menu item icon.
+    And DOM element ".boost-union-menubar .bigiconinline i.icon.iconsize-big" should have computed style "font-size" "16px"
+
+  @javascript
   Scenario Outline: Smartmenus: Menu items: Presentation - Display the tooltip on hover over the menu items
     Given the following "theme_boost_union > smart menu item" exists:
       | menu     | Quick links        |

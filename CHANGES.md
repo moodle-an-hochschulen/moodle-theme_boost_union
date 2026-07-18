@@ -6,6 +6,8 @@ Changes
 
 ### Unreleased
 
+* 2026-07-17 - Bugfix: A smart menu submenu shown in the user menu did not show the configured icon in the submenu heading, resolves #1374
+* 2026-07-17 - Bugfix: Some smart menu item icons were shown way too big, resolves #938
 * 2026-07-14 - Bugfix: In dynamic courses smart menus, fix second line font color on mouse over, resolves #1342
 * 2026-07-14 - Bugfix: The 'completed' and 'failed' completion icons in the course index were shifted to the right, resolves #1340
 * 2026-07-14 - Bugfix: Setting more than one course header override in a course resulted in a debug message, resolves #1363

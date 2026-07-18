@@ -2330,6 +2330,18 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 
 /* Boost union header menu style when the smart menu is enabled */
 .theme-boost-union-smartmenu {
+    /* Some core icons carry the "iconsize-big" class (for example the "b/..." pix icons) and are
+       rendered oversized by core. Whenever such an icon is used in a smart menu, normalize it to the
+       regular menu icon size. This rule lives at the smart menu root so that it applies in every
+       location where a smart menu is shown (main navigation and its dropdowns, menu bar, user menu,
+       bottom menu). The "carousel-navigation-link" selector additionally covers the smart menu submenu
+       header, which is not a ".boost-union-smartmenuitem". */
+    .boost-union-smartmenuitem i.icon,
+    .carousel-navigation-link i.icon {
+        width: auto;
+        height: auto;
+        font-size: 16px;
+    }
     .navbar {
         &.fixed-top {
             /* Added height and background color for the top header,
@@ -2540,6 +2552,14 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                             padding: .1rem .75rem;
                             display: flex;
                             align-items: center;
+                            /* Moodle core squeezes the icons in the user menu submenu header into a fixed 20px box and
+                               removes their margin. A fixed width Font Awesome icon (class="fa-fw") needs 1.25em
+                               though, so its glyph would overflow this box and overlap the header title. Give the icon
+                               the width which it needs and re-add the gap between the icon and the title. */
+                            i.icon {
+                                width: 1.25em;
+                                margin-right: .5rem;
+                            }
                         }
                     }
                     .items a.dropdown-item {
@@ -2675,13 +2695,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                         next line*/
                         align-items: baseline;
                         white-space: normal;
-                        /* The icon width, height and font size is changed to normal size when the
-                        large size icon (class="iconsize-big") is used in the "i" tag */
-                        i.icon {
-                            width: auto;
-                            height: auto;
-                            font-size: 16px;
-                        }
                         /* The "Tick" icon removed when the menu link is clicked */
                         &:before {
                             display: none;
