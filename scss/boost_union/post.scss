@@ -1918,12 +1918,20 @@ body.theme-boost-union-sectiononeplusnotcollapsible li[id^="section-"]:not(#sect
  * Settings: Footnote.
  --------------------------------------*/
 
-/* Static pages links dividers. */
+/* Static pages links dividers.
+   The links live in a flex container (see footnote.mustache), so we draw the divider on the inner,
+   inline <a> element rather than on the flex item itself. Otherwise the border would be stretched to
+   the full height of the flex line (the line-height, i.e. 24px) instead of just the text height.
+   The spacing around the divider is added here as well (instead of as pe-2 / me-2 utility classes in
+   the template): the padding puts a gap between the link text and the divider, the margin puts a gap
+   between the divider and the next link. */
 #footnote {
-    .theme_boost_union_footnote_link {
+    .theme_boost_union_footnote_link a {
+        padding-right: 0.5rem;
         border-right: 2px solid $breadcrumb-divider-color;
+        margin-right: 0.5rem;
     }
-    .theme_boost_union_footnote_link:last-of-type {
+    .theme_boost_union_footnote_link:last-of-type a {
         border-right: none;
     }
 }
