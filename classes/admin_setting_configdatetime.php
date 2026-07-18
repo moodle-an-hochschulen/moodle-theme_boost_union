@@ -47,7 +47,11 @@ class admin_setting_configdatetime extends \admin_setting {
     public function get_setting() {
         $result = $this->config_read($this->name);
 
-        $datearr = getdate($result);
+        // The setting is stored as a Unix timestamp, but the stored value might also be an empty string
+        // (i.e. if the setting has never been set properly).
+        // As getdate() only accepts int or null since PHP 8.0, we have to normalize the value before.
+        // Any non-numeric value is treated just like an unset setting.
+        $datearr = getdate(is_numeric($result) ? (int) $result : null);
 
         $data = ['h' => $datearr['hours'],
                 'm' => $datearr['minutes'],
