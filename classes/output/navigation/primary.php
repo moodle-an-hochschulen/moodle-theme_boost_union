@@ -81,6 +81,39 @@ class primary extends \core\navigation\output\primary {
     }
 
     /**
+     * Normalize a menu node tree for the mobile primary navigation.
+     *
+     * The theme_boost_union/primary-drawer-mobile-child template renders itself recursively to support third level
+     * menu items. Mustache resolves a key which is missing in the current context by walking up the context stack.
+     * A node which carries neither 'haschildren' nor 'children' would therefore inherit both from its parent node,
+     * render the parent's child list again and recurse until the PHP memory limit is exhausted.
+     *
+     * To prevent this, every node is given both keys explicitly. The nodes are copied instead of being modified in
+     * place as the very same node objects are also used to build the more menu and the bottom bar.
+     *
+     * @param array $nodes The menu nodes, given as arrays and/or objects.
+     * @return array The normalized menu nodes.
+     */
+    protected function normalize_menu_nodes(array $nodes): array {
+        $normalized = [];
+
+        foreach ($nodes as $key => $node) {
+            if (is_object($node)) {
+                $node = clone $node;
+                $node->children = $this->normalize_menu_nodes((array) ($node->children ?? []));
+                $node->haschildren = !empty($node->children) ? 1 : 0;
+            } else if (is_array($node)) {
+                $node['children'] = $this->normalize_menu_nodes((array) ($node['children'] ?? []));
+                $node['haschildren'] = !empty($node['children']) ? 1 : 0;
+            }
+
+            $normalized[$key] = $node;
+        }
+
+        return $normalized;
+    }
+
+    /**
      * Combine the various menus into a standardized output.
      *
      * Modifications compared to the original function:
@@ -193,6 +226,10 @@ class primary extends \core\navigation\output\primary {
                 $locationmainmenucustommerged,
                 true
             );
+
+        // Make sure that every node carries its own 'haschildren' and 'children' key.
+        // This is required as the mobile drawer template renders itself recursively, see normalize_menu_nodes().
+        $mobileprimarynav = $this->normalize_menu_nodes($mobileprimarynav);
 
         if (!empty($mobileprimarynav)) {
             // Merge the bottom menu with main menu if there is any bottom menu available. otherwise use the main menu.
