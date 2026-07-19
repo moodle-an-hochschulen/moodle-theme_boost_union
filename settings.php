@@ -2915,6 +2915,37 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             THEME_BOOST_UNION_SETTING_SELECT_YES
         );
 
+        // Setting: Adopt course image as course header image.
+        $name = 'theme_boost_union/courseheaderimageadoptcourseimage';
+        $title = get_string('courseheaderimageadoptcourseimage', 'theme_boost_union', null, true);
+        $description = get_string('courseheaderimageadoptcourseimage_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_SELECT_NO,
+            $yesnooption
+        );
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/courseheaderimageadoptcourseimage',
+            'theme_boost_union/courseheaderenabled',
+            'neq',
+            THEME_BOOST_UNION_SETTING_SELECT_YES
+        );
+        // This setting only makes sense if the course header image source shows a dedicated course header image, which is the
+        // case for all source options except those which do not offer a dedicated course header image field in the course.
+        $page->hide_if(
+            'theme_boost_union/courseheaderimageadoptcourseimage',
+            'theme_boost_union/courseheaderimagesource',
+            'in',
+            implode('|', [
+                THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_COURSEPLUSGLOBAL,
+                THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_COURSENOGLOBAL,
+                THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_GLOBAL,
+            ])
+        );
+
         // Setting: Course header height.
         $name = 'theme_boost_union/courseheaderheight';
         $title = get_string('courseheaderheight', 'theme_boost_union', null, true);
