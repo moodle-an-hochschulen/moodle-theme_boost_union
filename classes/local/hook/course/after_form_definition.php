@@ -248,6 +248,65 @@ class after_form_definition {
                 $hideifconfig['condition'],
                 $hideifconfig['value']
             );
+
+            // If the 'Adopt course image as course header image' feature is enabled and the core course image
+            // (overview files) field is present in the form, add an 'Adopt course image' button to the course header
+            // image field.
+            if (
+                get_config('theme_boost_union', 'courseheaderimageadoptcourseimage') == THEME_BOOST_UNION_SETTING_SELECT_YES
+                && $mform->elementExists('overviewfiles_filemanager')
+            ) {
+                // Add a static element which holds the button. The button is rendered hidden by default (via the 'd-none'
+                // class) and is shown / hidden dynamically by the JS module, depending on the fill state of the course
+                // image and course header image fields. We use a 'static' element (and not a 'button' element) as we do
+                // not want the button to submit the form and as we want to keep the empty label column to align the button
+                // below the course header image field.
+                $adoptbutton = $mform->createElement(
+                    'static',
+                    'theme_boost_union_courseheaderimage_adoptcourseimage',
+                    '',
+                    \html_writer::tag(
+                        'button',
+                        get_string('courseheaderimageadoptbutton', 'theme_boost_union'),
+                        [
+                            'type' => 'button',
+                            'class' => 'btn btn-secondary d-none',
+                            // The button is handled by the generic 'filemanagercopybutton' JS module which copies a file
+                            // from a source file manager to a target file manager. It configures itself completely from
+                            // the button's data attributes and can handle any number of such buttons on the page.
+                            // Here, the course image (overview files) is the source and the course header image is the
+                            // target.
+                            'data-action' => 'theme_boost_union/filemanagercopybutton',
+                            'data-source-elementid' => 'id_overviewfiles_filemanager',
+                            'data-target-elementid' => 'id_theme_boost_union_courseheaderimage_filemanager',
+                            'data-confirm-title' =>
+                                get_string('courseheaderimageadoptconfirmtitle', 'theme_boost_union'),
+                            'data-confirm-question' =>
+                                get_string('courseheaderimageadoptconfirmquestion', 'theme_boost_union'),
+                        ]
+                    )
+                );
+                if ($courseheaderinsertbefore) {
+                    $mform->insertElementBefore($adoptbutton, $courseheaderinsertbefore);
+                } else {
+                    $mform->addElement($adoptbutton);
+                }
+
+                // Hide the button element with the same rule as the course header image field.
+                $mform->hideIf(
+                    'theme_boost_union_courseheaderimage_adoptcourseimage',
+                    $hideifconfig['element'],
+                    $hideifconfig['condition'],
+                    $hideifconfig['value']
+                );
+
+                // Load the JS module which handles the button visibility and the copy operation.
+                global $PAGE;
+                $PAGE->requires->js_call_amd(
+                    'theme_boost_union/filemanagercopybutton',
+                    'init'
+                );
+            }
         }
 
         // Part 3: 'Sections' section.
