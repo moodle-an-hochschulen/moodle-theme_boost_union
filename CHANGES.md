@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-11-18 - Bugfix: Prevent that rendering the primary-drawer-mobile-child mustache template exceeds the allowed memory size, resolves #874
+
 ### v5.2-r15
 
 * 2026-11-13 - Upstream change: Adopt changes from MDL-90110 to cache the editor content CSS in MUC when it is served by the flavours stylesheet script.\
