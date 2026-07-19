@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-11-18 - Bugfix: Prevent that rendering the primary-drawer-mobile-child mustache template exceeds the allowed memory size, resolves #874
+
 ### v5.0-r38
 
 * 2026-11-12 - Bugfix: Declare and export the user preferences which are stored by the theme (dismissed info banners and the flags to purge the flavours and smart menus caches) in the privacy provider, as the privacy provider was declared as null provider and these preferences were neither listed in the privacy registry nor contained in user data exports, resolves #1475
