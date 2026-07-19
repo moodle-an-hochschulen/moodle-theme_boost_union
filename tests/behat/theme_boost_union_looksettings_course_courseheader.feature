@@ -1013,6 +1013,147 @@ Feature: Configuring the theme_boost_union plugin for the "Course header" sectio
       | dedicatednoglobal   | should              | should                  | #id_theme_boost_union_course_courseimageshdr |
       | global              | should not          | should not              | #id_descriptionhdr                           |
 
+  Scenario Outline: Setting: Course header - Adopt course image as course header image - Add the "Adopt course image" button to the course settings only when the setting is enabled and a dedicated course header image is used
+    Given the following config values are set as admin:
+      | config                            | value    | plugin            |
+      | courseheaderenabled               | yes      | theme_boost_union |
+      | courseheaderimagesource           | <source> | theme_boost_union |
+      | courseheaderimageadoptcourseimage | <adopt>  | theme_boost_union |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I click on "Settings" "link"
+    Then "[data-action='theme_boost_union/filemanagercopybutton']" "css_element" <shouldornot> exist
+
+    Examples:
+      | source              | adopt | shouldornot |
+      | dedicatednoglobal   | yes   | should      |
+      | dedicatednoglobal   | no    | should not  |
+      | dedicatedplusglobal | yes   | should      |
+      | global              | yes   | should not  |
+      | courseplusglobal    | yes   | should not  |
+
+  @javascript
+  Scenario Outline: Setting: Course header - Adopt course image as course header image - Show the "Adopt course image" button only when a course image is present but no course header image
+    Given the following config values are set as admin:
+      | config                            | value             | plugin            |
+      | courseheaderenabled               | yes               | theme_boost_union |
+      | courseheaderimagesource           | dedicatednoglobal | theme_boost_union |
+      | courseheaderimageadoptcourseimage | yes               | theme_boost_union |
+    And the following "user preferences" exist:
+      | user     | preference                 | value      |
+      | teacher1 | filemanager_recentviewmode | <viewmode> |
+    And the following "courses" exist:
+      | fullname | shortname |
+      | Course 3 | C3        |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | teacher1 | C3     | editingteacher |
+    # Course 1 has a course image but no course header image, so the button should be shown.
+    And the following "theme_boost_union > course overview file" exists:
+      | course   | C1                                             |
+      | filepath | theme/boost_union/tests/fixtures/login_bg2.png |
+    # Course 2 has a course image and a course header image, so the button should be hidden.
+    And the following "theme_boost_union > course overview file" exists:
+      | course   | C2                                             |
+      | filepath | theme/boost_union/tests/fixtures/login_bg2.png |
+    And the following "theme_boost_union > course header image" exists:
+      | course   | C2                                             |
+      | filepath | theme/boost_union/tests/fixtures/login_bg3.png |
+    # Course 3 has no images at all, so the button should be hidden.
+    When I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I click on "Settings" "link"
+    And I expand all fieldsets
+    Then "Adopt course image as course header image" "button" should be visible
+    And I am on "Course 2" course homepage
+    And I click on "Settings" "link"
+    And I expand all fieldsets
+    And "Adopt course image as course header image" "button" should not be visible
+    And I am on "Course 3" course homepage
+    And I click on "Settings" "link"
+    And I expand all fieldsets
+    And "Adopt course image as course header image" "button" should not be visible
+
+    # The file manager view modes are: 1 = file icons, 2 = file tree, 3 = file details.
+    Examples:
+      | viewmode |
+      | 1        |
+      | 2        |
+      | 3        |
+
+  @javascript
+  Scenario Outline: Setting: Course header - Adopt course image as course header image - Test the copying process
+    Given the following config values are set as admin:
+      | config                            | value             | plugin            |
+      | courseheaderenabled               | yes               | theme_boost_union |
+      | courseheaderimagesource           | dedicatednoglobal | theme_boost_union |
+      | courseheaderimageadoptcourseimage | yes               | theme_boost_union |
+    And the following "user preferences" exist:
+      | user     | preference                 | value      |
+      | teacher1 | filemanager_recentviewmode | <viewmode> |
+    And the following "theme_boost_union > course overview file" exists:
+      | course   | C1                                             |
+      | filepath | theme/boost_union/tests/fixtures/login_bg2.png |
+    When I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    # There is no course header image uploaded yet, so the course header is not shown at all with the dedicatednoglobal source.
+    And "#courseheaderimage" "css_element" should not exist
+    And I click on "Settings" "link"
+    And I expand all fieldsets
+    # The button is shown as a course image is uploaded but no course header image is uploaded yet.
+    Then "Adopt course image as course header image" "button" should be visible
+    # First, cancel the confirmation dialog and check that the course image is not adopted.
+    And I click on "Adopt course image as course header image" "button"
+    And I should see "Do you want to copy the existing course image as course header image?"
+    And I click on "Cancel" "button" in the ".modal-dialog" "css_element"
+    And "Adopt course image as course header image" "button" should be visible
+    # Then, confirm the confirmation dialog and check that the course image is adopted.
+    And I click on "Adopt course image as course header image" "button"
+    And I should see "Do you want to copy the existing course image as course header image?"
+    And I click on "Adopt course image" "button" in the ".modal-dialog" "css_element"
+    # After the adoption, the course header image field is filled, so the button is hidden again.
+    And "Adopt course image as course header image" "button" should not be visible
+    # The adoption only takes effect after the form is saved.
+    And I press "Save and display"
+    And I am on "Course 1" course homepage
+    Then "#courseheaderimage" "css_element" should exist
+    And "//div[@id='courseheaderimage' and contains(@style, '/theme_boost_union/courseheaderimage/0/login_bg2.png')]" "xpath_element" should exist
+
+    # The file manager view modes are: 1 = file icons, 2 = file tree, 3 = file details.
+    Examples:
+      | viewmode |
+      | 1        |
+      | 2        |
+      | 3        |
+
+  @javascript @_file_upload
+  Scenario: Setting: Course header - Adopt course image as course header image - Update the "Adopt course image" button when the course image is removed or added while editing
+    Given the following config values are set as admin:
+      | config                            | value             | plugin            |
+      | courseheaderenabled               | yes               | theme_boost_union |
+      | courseheaderimagesource           | dedicatednoglobal | theme_boost_union |
+      | courseheaderimageadoptcourseimage | yes               | theme_boost_union |
+    And the following "theme_boost_union > course overview file" exists:
+      | course   | C1                                             |
+      | filepath | theme/boost_union/tests/fixtures/login_bg2.png |
+    When I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I click on "Settings" "link"
+    And I expand all fieldsets
+    # As the course image is present but no course header image is present yet, the button is shown.
+    Then "Adopt course image as course header image" "button" should be visible
+    # When the course image is removed within the form, the button has to disappear immediately, i.e. without the need
+    # to save the form first (as there wouldn't be anything left to adopt anymore).
+    And I delete "login_bg2.png" from "Course image" filemanager
+    And "Adopt course image as course header image" "button" should not be visible
+    # And when a course image is added again within the form, the button has to reappear immediately as well.
+    And I upload "theme/boost_union/tests/fixtures/login_bg3.png" file to "Course image" filemanager
+    And "Adopt course image as course header image" "button" should be visible
+    # We do not run this scenario in all three file manager view modes as the Behat steps for deleting and uploading a
+    # file within a file manager only support the file icons view mode. This is acceptable as the button visibility is
+    # based on the file managers' own fill state indicator which does not depend on the view mode at all. The fact that
+    # the button behaves identically in all view modes is covered by the two scenario outlines above.
+
   Scenario: Setting: Course header - Enable, disable and re-enable course overrides
     Given the following config values are set as admin:
       | config                            | value  | plugin            |
