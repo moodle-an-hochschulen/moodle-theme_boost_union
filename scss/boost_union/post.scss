@@ -1928,7 +1928,7 @@ body.theme-boost-union-sectiononeplusnotcollapsible li[id^="section-"]:not(#sect
 #footnote {
     .theme_boost_union_footnote_link a {
         padding-right: 0.5rem;
-        border-right: 2px solid $breadcrumb-divider-color;
+        border-right: 2px solid $border-color;
         margin-right: 0.5rem;
     }
     .theme_boost_union_footnote_link:last-of-type a {
