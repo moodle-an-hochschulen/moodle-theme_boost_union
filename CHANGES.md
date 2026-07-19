@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-07-18 - Bugfix: Do not throw a TypeError if an info banner start or end date is stored as an empty string, resolves #1370
 * 2026-07-14 - Bugfix: Surround the dividers between the static page links in the footnote with equal spacing, resolves #1237
 * 2026-07-14 - Bugfix: In dynamic courses smart menus, fix second line font color on mouse over, resolves #1342
 * 2026-07-13 - Bugfix: Do not break the SCSS compilation if an activity icon purpose is still set to the deprecated 'interface' purpose, resolves #1331.
