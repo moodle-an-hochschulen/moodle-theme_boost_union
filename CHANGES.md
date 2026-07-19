@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-07-18 - Improvement: Lighten the footnote link dividers again, resolves #1375
 * 2026-07-18 - Bugfix: Do not throw a TypeError if an info banner start or end date is stored as an empty string, resolves #1370
 * 2026-07-17 - Improvement: For course header images, allow the teacher to adopt the existing course image as course header image, resolves #1371
 * 2026-07-14 - Bugfix: Surround the dividers between the static page links in the footnote with equal spacing, resolves #1237
