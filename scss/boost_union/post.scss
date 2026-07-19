@@ -1258,6 +1258,17 @@ body.theme-boost-union-commincourse {
     }
 }
 
+/* Add a right padding to the login link in the navbar if the offcanvas region is enabled.
+   Moodle core adds a left padding to the login link only (with .ps-2 in the core/user_menu template).
+   As long as the login link is the last element in the navbar, this is fine. But as soon as the offcanvas
+   region is enabled, the offcanvas divider and toggle icon follow directly after the login link and the
+   login link would stick to the divider without this padding.
+   A logged-in user's usermenu does not need this treatment as it is rendered as a .btn element which
+   already brings its own horizontal padding. */
+#usernavigation:has(.drawer-offcanvas-toggle) .login {
+    padding-right: map-get($spacers, 2);
+}
+
 
 /*---------------------------------------
  * Settings: Additional block regions - The outside-left and outside-right regions.
