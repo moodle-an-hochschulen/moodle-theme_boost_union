@@ -6,6 +6,19 @@ moodle-theme_boost_union
 Theme Boost Union is an enhanced child theme of Boost which is intended, on the one hand, to make Boost simply more configurable and, on the other hand, to provide helpful additional features for the daily Moodle operation of admins, teachers and students.
 
 
+
+Try in Moodle Playground
+------------------------
+
+Click the badge below to open this theme instantly in
+[Moodle Playground](https://moodle-playground.com) — a full Moodle site
+running in the browser, with no local install. The demo installs Boost Union,
+sets it as the site theme, and opens a demo course so you can preview the
+theme on real Moodle content.
+
+<a href="https://moodle-playground.com/?blueprint-url=https://raw.githubusercontent.com/moodle-an-hochschulen/moodle-theme_boost_union/refs/heads/main/blueprint.json" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/ateeducacion/action-moodle-playground-pr-preview/refs/heads/main/assets/playground-preview-button.svg" alt="Preview in Moodle Playground" width="200"></a>
+
+
 Requirements
 ------------
 
