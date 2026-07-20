@@ -1012,17 +1012,8 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         // Serve the background files from the theme flavours.
         // This code is copied and modified from the best practices in lib/filelib.php.
     } else if ($filearea === 'flavours_look_backgroundimage') {
-        // Flavour files should not be top secret.
-        // Even if they apply to particular contexts or cohorts, we do not do any hard checks if a user should be
-        // allowed to request a file.
-        // We just make sure that the forcelogin setting is respected. This is ok as there isn't any possibility
-        // to apply a flavour to the login page / for non-logged-in users at the moment.
-        if ($CFG->forcelogin) {
-            require_login();
-            $serveoptions = ['cacheability' => 'private'];
-        } else {
-            $serveoptions = ['cacheability' => 'public'];
-        }
+        // Check if the user is allowed to request the file and get the file serving options.
+        $serveoptions = theme_boost_union_flavours_require_login_for_file();
 
         // Get file storage.
         $fs = get_file_storage();
@@ -1050,17 +1041,8 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         $filearea === 'flavours_look_favicon' ||
             $filearea === 'flavours_look_logocompact' || $filearea === 'flavours_look_logo'
     ) {
-        // Flavour files should not be top secret.
-        // Even if they apply to particular contexts or cohorts, we do not do any hard checks if a user should be
-        // allowed to request a file.
-        // We just make sure that the forcelogin setting is respected. This is ok as there isn't any possibility
-        // to apply a flavour to the login page / for non-logged-in users at the moment.
-        if ($CFG->forcelogin) {
-            require_login();
-            $serveoptions = ['cacheability' => 'private'];
-        } else {
-            $serveoptions = ['cacheability' => 'public'];
-        }
+        // Check if the user is allowed to request the file and get the file serving options.
+        $serveoptions = theme_boost_union_flavours_require_login_for_file();
 
         // Get the parameters from the request.
         $filename = clean_param(array_pop($args), PARAM_FILE);
@@ -1143,6 +1125,40 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
     } else {
         send_file_not_found();
     }
+}
+
+/**
+ * Helper function to check if the user is allowed to request a flavour file and to compose the file serving options.
+ *
+ * Please note: This function may redirect the user (and thus end the request) if he is not logged in yet.
+ *
+ * @return array The options which should be used to serve the flavour file.
+ */
+function theme_boost_union_flavours_require_login_for_file(): array {
+    global $CFG;
+
+    // Flavour files should not be top secret.
+    // Even if they apply to particular contexts or cohorts, we do not do any hard checks if a user should be
+    // allowed to request a file.
+    // We just make sure that the forcelogin setting is respected. This is ok as there isn't any possibility
+    // to apply a flavour to the login page / for non-logged-in users at the moment.
+    if ($CFG->forcelogin) {
+        // Do not enforce the site policy for this file request.
+        // Otherwise, a user who has not accepted the site policy yet would not be able to see the flavour images
+        // on the site policy page itself.
+        if (!defined('NO_SITEPOLICY_CHECK')) {
+            define('NO_SITEPOLICY_CHECK', true);
+        }
+
+        // Do not set the wantsurl session variable for this file request.
+        // Otherwise, if require_login() decided to redirect the user (to the login page, for example), the user would
+        // be redirected to this image file afterwards instead of the page which he wanted to visit initially.
+        require_login(setwantsurltome: false);
+
+        return ['cacheability' => 'private'];
+    }
+
+    return ['cacheability' => 'public'];
 }
 
 /**
