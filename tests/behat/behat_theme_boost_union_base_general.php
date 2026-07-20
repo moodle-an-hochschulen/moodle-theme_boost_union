@@ -115,6 +115,122 @@ class behat_theme_boost_union_base_general extends behat_base {
     }
 
     /**
+     * Checks if the background image of the given DOM element has been loaded successfully by the browser.
+     *
+     * In contrast to a real image element, a CSS background image does not offer any DOM property which would tell us
+     * if the browser was able to load the referenced file. That's why we pick the URL from the computed style and let
+     * the browser load it once again into a detached image object where we can observe the result.
+     *
+     * @copyright 2026 Alexander Bias <bias@alexanderbias.de>
+     * @Then DOM element :arg1 should have a successfully loaded background image
+     * @param string $selector
+     * @throws ExpectationException
+     */
+    public function dom_element_should_have_a_successfully_loaded_background_image($selector) {
+        // Start loading the background image. As this happens asynchronously, we just store the outcome in a global
+        // variable which we poll afterwards.
+        $startjs = "
+            (function() {
+                window.M_theme_boost_union_bgimage = 'pending';
+                var element = document.querySelector('$selector');
+                if (element === null) {
+                    window.M_theme_boost_union_bgimage = 'notfound';
+                    return;
+                }
+                var style = window.getComputedStyle(element).getPropertyValue('background-image');
+                var matches = style.match(/url\([\"']?(.*?)[\"']?\)/);
+                if (matches === null) {
+                    window.M_theme_boost_union_bgimage = 'nobackgroundimage';
+                    return;
+                }
+                var image = new Image();
+                image.onload = function() {
+                    window.M_theme_boost_union_bgimage = 'loaded';
+                };
+                image.onerror = function() {
+                    window.M_theme_boost_union_bgimage = 'broken|' + matches[1];
+                };
+                image.src = matches[1];
+            })();
+        ";
+        $this->execute_script($startjs);
+
+        // Wait until the browser has finished loading the image.
+        $result = $this->spin(function ($context) {
+            $status = $context->evaluate_script("return window.M_theme_boost_union_bgimage;");
+            return ($status !== 'pending') ? $status : false;
+        });
+
+        if ($result !== 'loaded') {
+            switch ($result) {
+                case 'notfound':
+                    $message = 'The \'' . $selector . '\' DOM element does not exist.';
+                    break;
+                case 'nobackgroundimage':
+                    $message = 'The \'' . $selector . '\' DOM element does not have a background image at all.';
+                    break;
+                default:
+                    $message = 'The \'' . $selector . '\' DOM element has a broken background image, the referenced ' .
+                        'file was not served properly. The background image URL is \'' . substr($result, 7) . '\'.';
+                    break;
+            }
+            throw new ExpectationException($message, $this->getSession());
+        }
+    }
+
+    /**
+     * Checks if the given DOM element is an image which has been loaded successfully by the browser.
+     *
+     * This is especially useful to verify that an image file is not only referenced with a correct URL in the HTML
+     * source, but that the referenced file is really served by the webserver as well.
+     *
+     * @copyright 2026 Alexander Bias <bias@alexanderbias.de>
+     * @Then DOM element :arg1 should be a successfully loaded image
+     * @param string $selector
+     * @throws ExpectationException
+     */
+    public function dom_element_should_be_a_successfully_loaded_image($selector) {
+        // The script is wrapped into an immediately invoked function as Mink only accepts a single expression
+        // and would break on a script which is composed of multiple statements.
+        $imagejs = "
+            return (function() {
+                var element = document.querySelector('$selector');
+                if (element === null) {
+                    return 'notfound';
+                }
+                if (element.complete !== true) {
+                    return 'incomplete';
+                }
+                if (element.naturalWidth === 0) {
+                    return 'broken|' + element.currentSrc;
+                }
+                return 'loaded';
+            })();
+        ";
+        $result = $this->evaluate_script($imagejs);
+        if ($result !== 'loaded') {
+            switch ($result) {
+                case 'notfound':
+                    $message = 'The \'' . $selector . '\' DOM element does not exist.';
+                    break;
+                case 'incomplete':
+                    $message = 'The \'' . $selector . '\' DOM element has not finished loading.';
+                    break;
+                default:
+                    if (is_string($result) && str_starts_with($result, 'broken|')) {
+                        $message = 'The \'' . $selector . '\' DOM element is a broken image, the referenced file ' .
+                            'was not served properly. The image source URL is \'' . substr($result, 7) . '\'.';
+                    } else {
+                        $message = 'The \'' . $selector . '\' DOM element could not be checked, the browser did not ' .
+                            'return a valid result.';
+                    }
+                    break;
+            }
+            throw new ExpectationException($message, $this->getSession());
+        }
+    }
+
+    /**
      * Checks if the given DOM element has a CSS filter which is close enough to the given hex color.
      *
      * @copyright 2025 Alexander Bias <abias@ssystems.de>
