@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-07 - Bugfix: Correctly escape special characters in static page titles, resolves #1382
 * 2026-10-07 - Improvement: Add "Course URL" and "Page URL" as placeholder for smart menu items, resolves #1346
 * 2026-10-07 - Improvement: Allow placeholders in mailto links within the smart menu items, resolves #1346
 * 2026-10-07 - Improvement: Add a setting to hide the footnote when a page is printed, resolves #1381
