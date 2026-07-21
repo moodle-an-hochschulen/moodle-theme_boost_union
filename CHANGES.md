@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-07-20 - Bugfix: Correctly escape special characters in static page titles, resolves #1382
 * 2026-07-19 - Bugfix: Prevent a redirect for flavour files when users have not accepted the policy yet, resolves #684
 * 2026-07-19 - Glitch: The login link in the navbar was missing a right padding before the off-canvar button, resolves #1193
 * 2026-07-18 - Improvement: Lighten the footnote link dividers again, resolves #1375
