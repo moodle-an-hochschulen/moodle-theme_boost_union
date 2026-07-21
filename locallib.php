@@ -442,10 +442,12 @@ function theme_boost_union_get_staticpage_link($page) {
  */
 function theme_boost_union_get_staticpage_pagetitle($page) {
     // Get the configured page title.
-    $pagetitleconfig = format_string(
-        get_config('theme_boost_union', $page . 'pagetitle'),
-        true,
-        ['context' => \context_system::instance()]
+    $pagetitleconfig = clean_string(
+        format_string(
+            get_config('theme_boost_union', $page . 'pagetitle'),
+            true,
+            ['context' => \context_system::instance()]
+        )
     );
 
     // If there is a string configured.
