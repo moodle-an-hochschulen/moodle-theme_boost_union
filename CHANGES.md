@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.2-r8
 
 * 2026-07-19 - Bugfix: Prevent a redirect for flavour files when users have not accepted the policy yet, resolves #684
 * 2026-07-19 - Glitch: The login link in the navbar was missing a right padding before the off-canvar button, resolves #1193
