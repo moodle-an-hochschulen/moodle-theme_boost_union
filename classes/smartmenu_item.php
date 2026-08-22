@@ -1782,10 +1782,12 @@ class smartmenu_item {
 
         // Append the second line to the title if configured.
         if (!empty($secondline)) {
+            // The second line is dimmed with an opacity instead of a muted text color as the latter would set a fixed
+            // color which would not invert together with the menu item's color when the item is hovered.
             $title .= \html_writer::tag(
                 'span',
                 format_string($secondline),
-                ['class' => 'boost-union-smartmenu-secondline small text-muted']
+                ['class' => 'boost-union-smartmenu-secondline small opacity-75']
             );
         }
 

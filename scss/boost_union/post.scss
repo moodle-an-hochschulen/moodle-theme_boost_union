@@ -913,6 +913,30 @@ body.hascourseindexcmicons {
         span.courseindex-cmicon-container {
             display: block;
         }
+
+        /* Align the completion icons with each other.
+           Moodle core shrinks the icons in the course index with a font-relative rule
+           (.courseindex .icon {font-size: 10px}). This affects the 'complete' and 'fail' completion icons which are
+           rendered as FontAwesome glyphs and which are sized in em (fa-fw is 1.25em, i.e. 12.5px), but it does not
+           affect the 'incomplete' completion icon which is rendered as SVG image and which keeps the absolute size
+           from img.icon (i.e. 20px).
+           On top of that, the FontAwesome glyphs are centered within their box while the SVG image is aligned to the
+           left edge of its box (as the SVG file carries preserveAspectRatio="xMinYMid").
+           The completion icons therefore do not share the same center and the completion icon appears to jump
+           horizontally as soon as an activity is completed. This is especially obvious if the completion info is shown
+           at the end of the line where the icons are right-aligned and both differences add up.
+           We therefore pin all completion icons to the same box and center their content within this box.
+           We deliberately do not rely on the .courseindex-cmicon-cpl-* classes here as Moodle core replaces the whole
+           completion element (and thus these classes) as soon as the completion state changes. */
+        .completioninfo .icon {
+            /* Resize the icons to a common size. */
+            width: $icon-width;
+            max-width: $icon-width;
+            /* Center the FontAwesome glyphs within the box. */
+            text-align: center;
+            /* Center the SVG images within the box. */
+            object-fit: contain;
+        }
     }
 
     /* If the admin configured the completion info to be shown as icon color. */
@@ -1495,6 +1519,17 @@ body.theme-boost-union-commincourse {
     }
 }
 
+/* Add a right padding to the login link in the navbar if the offcanvas region is enabled.
+   Moodle core adds a left padding to the login link only (with .ps-2 in the core/user_menu template).
+   As long as the login link is the last element in the navbar, this is fine. But as soon as the offcanvas
+   region is enabled, the offcanvas divider and toggle icon follow directly after the login link and the
+   login link would stick to the divider without this padding.
+   A logged-in user's usermenu does not need this treatment as it is rendered as a .btn element which
+   already brings its own horizontal padding. */
+#usernavigation:has(.drawer-offcanvas-toggle) .login {
+    padding-right: map-get($spacers, 2);
+}
+
 
 /*---------------------------------------
  * Settings: Additional block regions - The outside-left and outside-right regions.
@@ -1894,12 +1929,20 @@ body.theme-boost-union-sectiononeplusnotcollapsible li[id^="section-"]:not(#sect
  * Settings: Footnote.
  --------------------------------------*/
 
-/* Static pages links dividers. */
+/* Static pages links dividers.
+   The links live in a flex container (see footnote.mustache), so we draw the divider on the inner,
+   inline <a> element rather than on the flex item itself. Otherwise the border would be stretched to
+   the full height of the flex line (the line-height, i.e. 24px) instead of just the text height.
+   The spacing around the divider is added here as well (instead of as pe-2 / me-2 utility classes in
+   the template): the padding puts a gap between the link text and the divider, the margin puts a gap
+   between the divider and the next link. */
 #footnote {
-    .theme_boost_union_footnote_link {
-        border-right: 2px solid $breadcrumb-divider-color;
+    .theme_boost_union_footnote_link a {
+        padding-right: 0.5rem;
+        border-right: 2px solid $border-color;
+        margin-right: 0.5rem;
     }
-    .theme_boost_union_footnote_link:last-of-type {
+    .theme_boost_union_footnote_link:last-of-type a {
         border-right: none;
     }
 }

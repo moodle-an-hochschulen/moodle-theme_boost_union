@@ -4,11 +4,26 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.2-r8
+
+* 2026-07-19 - Bugfix: Prevent a redirect for flavour files when users have not accepted the policy yet, resolves #684
+* 2026-07-19 - Glitch: The login link in the navbar was missing a right padding before the off-canvar button, resolves #1193
+* 2026-07-18 - Improvement: Lighten the footnote link dividers again, resolves #1375
+* 2026-07-18 - Bugfix: Do not throw a TypeError if an info banner start or end date is stored as an empty string, resolves #1370
+* 2026-07-17 - Improvement: For course header images, allow the teacher to adopt the existing course image as course header image, resolves #1371
+* 2026-07-14 - Bugfix: Surround the dividers between the static page links in the footnote with equal spacing, resolves #1237
+* 2026-07-14 - Bugfix: In dynamic courses smart menus, fix second line font color on mouse over, resolves #1342
+* 2026-07-14 - Bugfix: The 'completed' and 'failed' completion icons in the course index were shifted to the right, resolves #1340
+* 2026-07-14 - Bugfix: Setting more than one course header override in a course resulted in a debug message, resolves #1363
+* 2026-07-13 - Bugfix: Do not break the SCSS compilation if an activity icon purpose is still set to the deprecated 'interface' purpose, resolves #1331.
+               Please note: This change will reset any activity icon purpose which is still set to 'interface' to its original purpose.
+* 2026-07-10 - Bugfix: Do not purge theme_boost_union_touchiconsios cache before refilling it to avoid race conditions with asynchronous cache purging configurations, resolves #1361
+
+### v5.2-r7
 
 * 2026-07-08 - Bugfix: Show the icon inline with the title in dynamic courses submenus instead of on its own line, regression of #1300, resolves #1347
 * 2026-07-08 - Bugfix: Filter courses correctly in starred courses popover, resolves #1332
-* 2026-07-08 - Upstream change: Adopt changes from Moodle core in MDL-55528
+* 2026-07-08 - Upstream change: Adopt changes from Moodle core in MDL-88528
 * 2026-07-08 - Improvement: Make the Activity & section navigation elements look nicer, resolves #825
 * 2026-06-23 - Feature: Allow the admin and the teacher to control the appearance of the sections (section 0 as well as sections ≥ 1) on the course main page, resolves #889
 
