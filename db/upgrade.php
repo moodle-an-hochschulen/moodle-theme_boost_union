@@ -31,7 +31,7 @@ use theme_boost_union\snippets;
  * @return bool result
  */
 function xmldb_theme_boost_union_upgrade($oldversion) {
-    global $DB, $OUTPUT;
+    global $CFG, $DB, $OUTPUT;
 
     $dbman = $DB->get_manager();
 
@@ -722,6 +722,11 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         // New filearea: slide1backgroundimage, slide2backgroundimage, etc.
         // Same applies for tile background images.
         // This makes filearea names consistent with config names and simplifies the code.
+
+        // Require the theme's lib.php.
+        // Note: We can't rely on the fact that it has been loaded already as this is only the case if Boost Union (or a child
+        // theme of it) is the currently active theme. However, we need the constants which are defined in it.
+        require_once($CFG->dirroot . '/theme/boost_union/lib.php');
 
         // Get file storage.
         $fs = get_file_storage();
