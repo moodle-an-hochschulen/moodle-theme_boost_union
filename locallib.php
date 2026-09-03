@@ -810,15 +810,18 @@ function theme_boost_union_get_urloftilebackgroundimage($tileno) {
         // Just pick the first file - we are sure that there is just one file.
         $file = reset($files);
 
-        // Build and return the image URL.
-        return core\url::make_pluginfile_url(
-            $file->get_contextid(),
-            $file->get_component(),
-            $file->get_filearea(),
-            $file->get_itemid(),
-            $file->get_filepath(),
-            $file->get_filename()
-        );
+        // If a file was found.
+        if ($file) {
+            // Build and return the image URL.
+            return core\url::make_pluginfile_url(
+                $file->get_contextid(),
+                $file->get_component(),
+                $file->get_filearea(),
+                $file->get_itemid(),
+                $file->get_filepath(),
+                $file->get_filename()
+            );
+        }
     }
 
     // As no image was found, return null.
@@ -868,15 +871,18 @@ function theme_boost_union_get_urlofslidebackgroundimage($slideno) {
         // Just pick the first file - we are sure that there is just one file.
         $file = reset($files);
 
-        // Build and return the image URL.
-        return core\url::make_pluginfile_url(
-            $file->get_contextid(),
-            $file->get_component(),
-            $file->get_filearea(),
-            $file->get_itemid(),
-            $file->get_filepath(),
-            $file->get_filename()
-        );
+        // If a file was found.
+        if ($file) {
+            // Build and return the image URL.
+            return core\url::make_pluginfile_url(
+                $file->get_contextid(),
+                $file->get_component(),
+                $file->get_filearea(),
+                $file->get_itemid(),
+                $file->get_filepath(),
+                $file->get_filename()
+            );
+        }
     }
 
     // As no image was found, return null.
