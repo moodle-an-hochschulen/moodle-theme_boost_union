@@ -4,6 +4,11 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-08-31 - Bugfix: An advertisement tile or slide background image which was configured but whose file was not present resulted in a fatal error, for example while a pending plugin upgrade from Boost Union 4.5 had not been completed yet, resolves #1391
+* 2026-08-31 - Bugfix: The background image of the first advertisement tile might not have been served anymore after the filearea names had been aligned in the upgrade from Boost Union 4.5 to Boost Union 5.x, resolves #1391
+
 ### v5.1-r21
 
 * 2026-07-19 - Bugfix: Prevent a redirect for flavour files when users have not accepted the policy yet, resolves #684
