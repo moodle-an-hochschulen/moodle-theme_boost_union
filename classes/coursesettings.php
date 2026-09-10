@@ -593,10 +593,24 @@ class coursesettings {
 
         // Compose options.
         $options = [
+            // Just use one file.
+            // This option is just relevant for the plain core file manager element.
+            // If the tool_imagepicker element is used, then this option is enforced by it anyway.
             'maxfiles' => 1,
-            'maxbytes' => $CFG->maxbytes,
+            // Do not use subdirectories.
+            // This option is just relevant for the plain core file manager element.
+            // If the tool_imagepicker element is used, then this option is enforced by it anyway.
             'subdirs' => 0,
+            // Allow really big images if the user wants to.
+            'maxbytes' => $CFG->maxbytes,
+            // Use the determined accepted file types.
+            // This option is just relevant as-is for the plain core file manager element.
+            // If the tool_imagepicker element is used, then this option is postprocessed by it.
             'accepted_types' => $acceptedtypes,
+            // Allow cropping.
+            // This option is only understood by the tool_imagepicker element and is ignored by the plain core file manager element
+            // which is used as a fallback (as well as by the file API functions which these options are handed to as well).
+            'enablecrop' => true,
         ];
 
         return $options;

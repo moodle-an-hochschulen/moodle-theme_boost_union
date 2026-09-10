@@ -260,3 +260,16 @@ Feature: Recommendations in theme_boost_union
     Then ".theme-boost-union-recommendationnotification" "css_element" should exist in the "#admin-infobanner1pages" "css_element"
     And ".theme-boost-union-recommendationnotification" "css_element" should not exist in the "#admin-infobanner2pages" "css_element"
     And ".theme-boost-union-recommendationnotification" "css_element" should not exist in the "#admin-infobanner3pages" "css_element"
+
+  Scenario Outline: Verify Recommendation toolimagepicker (Status check)
+    # The presence of the companion plugin is simulated as a Behat run cannot install or uninstall it on the fly.
+    # The 'installed' example, however, is skipped if tool_imagepicker is not really installed.
+    Given tool_imagepicker is simulated to be "<state>"
+    When I navigate to "Appearance > Boost Union > Recommendations" in site administration
+    Then I should see "Companion plugin tool_imagepicker" in the "table#recommendations-thirdparty" "css_element"
+    And I should see "<statustext>" in the "Companion plugin tool_imagepicker" "table_row"
+
+    Examples:
+      | state         | statustext |
+      | installed     | OK         |
+      | not installed | Notice     |

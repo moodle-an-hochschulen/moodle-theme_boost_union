@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-09-10 - Feature: Use the image picker element of the companion plugin tool_imagepicker (if it is installed) for the course header image in the course settings to allow teachers to crop the image, add a recommendation to install tool_imagepicker, resolves #1395
+
 ### v5.2-r9
 
 * 2026-09-17 - Bugfix: An empty icons bar was rendered in the course header and pulled the course header image into the course title if course contacts were enabled but the course did not have any course contacts, resolves #1398
