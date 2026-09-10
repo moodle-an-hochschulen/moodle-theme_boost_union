@@ -1013,6 +1013,29 @@ Feature: Configuring the theme_boost_union plugin for the "Course header" sectio
       | dedicatednoglobal   | should              | should                  | #id_theme_boost_union_course_courseimageshdr |
       | global              | should not          | should not              | #id_descriptionhdr                           |
 
+  @javascript
+  Scenario Outline: Setting: Course header - Use the image picker element of the companion plugin tool_imagepicker for the "course header image" filemanager if the plugin is installed
+    # The presence of the companion plugin is simulated as a Behat run cannot install or uninstall it on the fly. That way,
+    # the fallback to the plain core file manager is covered no matter if tool_imagepicker is really present in this
+    # installation or not. The 'installed' example, however, is skipped if tool_imagepicker is not really installed.
+    Given tool_imagepicker is simulated to be "<state>"
+    And the following config values are set as admin:
+      | config                  | value               | plugin            |
+      | courseheaderenabled     | yes                 | theme_boost_union |
+      | courseheaderimagesource | dedicatedplusglobal | theme_boost_union |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I click on "Settings" "link"
+    And I expand all fieldsets
+    Then "#fitem_id_theme_boost_union_courseheaderimage_filemanager .filemanager" "css_element" should exist
+    # The image picker element adds a crop button to the file manager toolbar, the plain core file manager does not have one.
+    And "#fitem_id_theme_boost_union_courseheaderimage_filemanager .fp-toolbar .tool-imagepicker-btn-crop" "css_element" <cropbutton> exist
+
+    Examples:
+      | state         | cropbutton |
+      | installed     | should     |
+      | not installed | should not |
+
   Scenario Outline: Setting: Course header - Adopt course image as course header image - Add the "Adopt course image" button to the course settings only when the setting is enabled and a dedicated course header image is used
     Given the following config values are set as admin:
       | config                            | value    | plugin            |

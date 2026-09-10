@@ -766,6 +766,14 @@ Companion plugin local_navbarplus
 With the footersuppressusertour setting, you can disable the possibility to reset a user tour in the footer popover. If you have enabled this setting, you might want to have a look at our plugin local_navbarplus as a companion plugin which allows you, among other things, to add a "Reset user tour" link to the navigation bar instead. local_navbarplus is published on https://moodle.org/plugins/local_navbarplus and on https://github.com/moodle-an-hochschulen/moodle-local_navbarplus.
 
 
+Companion plugin tool_imagepicker
+---------------------------------
+
+Boost Union offers the course header image feature where an image can be uploaded in a course. By default, this field is realized with the plain Moodle core file manager element which does not offer any possibility to adjust the uploaded image.
+
+If you want to give your users the possibility to crop the uploaded image directly in Moodle before they are used, you might want to have a look at our plugin tool_imagepicker as a companion plugin. tool_imagepicker provides an enhanced image picker form element which adds an image cropper to the Moodle core file manager. Boost Union uses this element automatically for the mentioned field as soon as tool_imagepicker is installed. tool_imagepicker is only a soft dependency, if it is not installed, Boost Union simply falls back to the plain Moodle core file manager. tool_imagepicker is published on https://moodle.org/plugins/tool_imagepicker and https://github.com/moodle-an-hochschulen/moodle-tool_imagepicker.
+
+
 Expert settings for config.php
 ------------------------------
 

@@ -17,6 +17,8 @@ jobs:
     uses: moodle-an-hochschulen/moodle-workflows/.github/workflows/moodle-plugin-ci.yml@main
     with:
       moodle-core-branch: ${{ inputs.moodle-core-branch || github.event.client_payload.moodle-core-branch }}
+      plugin-dependencies: |
+        moodle-an-hochschulen/moodle-tool_imagepicker,main
       pr-check-diff-does-not-contain: "theme->settings->"
       behat-suite: "boost_union"
       behat-slices: 4

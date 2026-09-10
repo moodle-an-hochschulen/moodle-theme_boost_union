@@ -303,6 +303,71 @@ function theme_boost_union_is_active_childtheme(): bool {
 }
 
 /**
+ * Helper function to check if the companion plugin tool_imagepicker is available on this site.
+ *
+ * Boost Union uses the enhanced image picker form element provided by tool_imagepicker for its end user facing image upload
+ * fields (for now: the course header image in the course settings) if that plugin is installed. If it is not installed,
+ * Boost Union falls back to the plain core file manager element. This is therefore only a soft dependency.
+ *
+ * The plugin has to be properly installed (and not just be present on disk) as the image picker element relies on the web
+ * services and the file serving of tool_imagepicker which are only registered during the installation of the plugin.
+ *
+ * When automated tests are running, the result of this function can be overridden with the
+ * $CFG->theme_boost_union_toolimagepickernotinstalled switch. This allows the tests to cover the behaviour of Boost Union
+ * without tool_imagepicker regardless of the fact if tool_imagepicker is really installed in the test installation or not.
+ * Please note that this switch only controls what this function reports, it does not remove the companion plugin.
+ * There is deliberately no switch for the opposite case as the image picker element cannot be faked without the plugin.
+ *
+ * @return bool True if tool_imagepicker is available, false otherwise.
+ */
+function theme_boost_union_is_imagepicker_available(): bool {
+    global $CFG;
+
+    // If automated tests are running and the plugin is simulated to be not installed, report that.
+    // This switch is evaluated on every call (and not remembered) as a test run may set it at any time.
+    if ((defined('PHPUNIT_TEST') && PHPUNIT_TEST) || (defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING)) {
+        if (!empty($CFG->theme_boost_union_toolimagepickernotinstalled)) {
+            return false;
+        }
+    }
+
+    // Use a static variable to remember the result as this function may be called multiple times during a request.
+    static $available = null;
+
+    // If the check has not been done yet.
+    if ($available === null) {
+        // Ask the plugin manager about the plugin. It returns null if the plugin is not present on disk at all, and the
+        // versiondb property remains empty if the plugin is present on disk but has not been installed (yet).
+        $plugininfo = core_plugin_manager::instance()->get_plugin_info('tool_imagepicker');
+        $available = ($plugininfo !== null && !empty($plugininfo->versiondb));
+    }
+
+    return $available;
+}
+
+/**
+ * Helper function to get the form element type to use for image picker fields and to register the element if needed.
+ *
+ * If the tool_imagepicker plugin is available, its enhanced image picker element is registered with QuickForm and its
+ * element type is returned. Otherwise, the plain core file manager element type is returned as a fallback. This lets
+ * consuming code simply do
+ *     $mform->createElement(theme_boost_union_get_imagepicker_element_type(), ...);
+ * at multiple places without repeating the availability check and the registration.
+ *
+ * @return string The QuickForm element type to use ('toolimagepicker' or 'filemanager').
+ */
+function theme_boost_union_get_imagepicker_element_type(): string {
+    // If the tool_imagepicker plugin is available, register its element and use it.
+    if (theme_boost_union_is_imagepicker_available()) {
+        \tool_imagepicker\element::register();
+        return \tool_imagepicker\element::TYPE;
+    }
+
+    // Otherwise, fall back to the plain core file manager element.
+    return 'filemanager';
+}
+
+/**
  * Returns the main SCSS content.
  *
  * @param \core\output\theme_config $theme The theme config object.
