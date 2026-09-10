@@ -27,6 +27,7 @@ require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 use Behat\Mink\Exception\ExpectationException;
 use Behat\Mink\Exception\DriverException;
 use Behat\Mink\Exception\ElementNotFoundException;
+use Moodle\BehatExtension\Exception\SkippedException;
 
 /**
  * Class behat_theme_boost_union_base_general
@@ -36,6 +37,9 @@ use Behat\Mink\Exception\ElementNotFoundException;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_boost_union_base_general extends behat_base {
+    /** @var bool Whether the current scenario has simulated the companion plugin tool_imagepicker to be not installed. */
+    protected bool $toolimagepickersimulated = false;
+
     /**
      * Checks if the given DOM element has the given computed style.
      *
@@ -714,5 +718,70 @@ class behat_theme_boost_union_base_general extends behat_base {
                 $type2
             ));
         }
+    }
+
+    /**
+     * Simulate that the companion plugin tool_imagepicker is installed or not installed.
+     *
+     * Boost Union has only a soft dependency to tool_imagepicker and behaves differently depending on the fact if the
+     * companion plugin is there or not. As a Behat run cannot install or uninstall a plugin on the fly, this step overrides
+     * what theme_boost_union_is_imagepicker_available() reports. That way, a scenario can cover the behaviour without
+     * tool_imagepicker regardless of the fact if tool_imagepicker is really present in the Behat installation or not.
+     *
+     * The opposite is not possible: The image picker element cannot be faked without the plugin. The 'installed' state
+     * therefore just verifies that the plugin is really installed and skips the scenario otherwise.
+     *
+     * @Given /^tool_imagepicker is simulated to be "(?P<state_string>installed|not installed)"$/
+     * @param string $state Either 'installed' or 'not installed'.
+     */
+    public function tool_imagepicker_is_simulated_to_be(string $state): void {
+        global $CFG;
+
+        // Require the theme library (for the image picker helper function).
+        require_once($CFG->dirroot . '/theme/boost_union/lib.php');
+
+        switch ($state) {
+            case 'installed':
+                // Make sure that a previous step within the same scenario has not simulated the opposite.
+                unset_config('theme_boost_union_toolimagepickernotinstalled');
+                // The plugin has to be really there for this state.
+                if (!theme_boost_union_is_imagepicker_available()) {
+                    throw new SkippedException('The companion plugin tool_imagepicker is not installed, ' .
+                            'but this scenario requires it.');
+                }
+                break;
+            case 'not installed':
+                // Set the switch which Boost Union evaluates.
+                set_config('theme_boost_union_toolimagepickernotinstalled', 1);
+                // Remember that this scenario has to be cleaned up afterwards.
+                $this->toolimagepickersimulated = true;
+                break;
+            default:
+                throw new \coding_exception('The state "' . $state . '" is unknown, ' .
+                        'it has to be either "installed" or "not installed".');
+        }
+    }
+
+    /**
+     * Remove the tool_imagepicker simulation after a scenario which has used it.
+     *
+     * The simulation switch is stored in the site configuration, i.e. it outlives the scenario which has set it.
+     * Behat resets the database between the scenarios, but that reset writes to the database directly and does not
+     * invalidate the configuration cache, so the switch would keep its effect for the rest of the Behat run and would
+     * make all following scenarios (and even the following feature files) believe in the simulated state. Removing the
+     * switch with unset_config() drops it from the database and from the cache and thus really ends the simulation.
+     *
+     * @AfterScenario @theme_boost_union
+     */
+    public function remove_the_tool_imagepicker_simulation(): void {
+        // There is nothing to clean up if the scenario has not simulated anything.
+        if ($this->toolimagepickersimulated != true) {
+            return;
+        }
+
+        // Remove the simulation switch.
+        unset_config('theme_boost_union_toolimagepickernotinstalled');
+
+        $this->toolimagepickersimulated = false;
     }
 }

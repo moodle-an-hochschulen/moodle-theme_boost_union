@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-09-10 - Feature: Use the image picker element of the companion plugin tool_imagepicker (if it is installed) for the course header image in the course settings to allow teachers to crop the image, add a recommendation to install tool_imagepicker, resolves #1395
+
 ### v5.2-r10
 
 * 2026-09-29 - Upstream change: Adopt changes from Moodle core in MDL-88948 and re-align the activity icons in the course index drawer, resolves #1405

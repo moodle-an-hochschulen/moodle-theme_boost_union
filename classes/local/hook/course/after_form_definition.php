@@ -203,8 +203,11 @@ class after_form_definition {
             $courseheaderimageoptions = coursesettings::get_courseheaderimage_options();
 
             // Add course header image file manager.
+            // The helper function determines the element type and, if applicable, registers the tool_imagepicker element.
+            // It uses the enhanced image picker element if tool_imagepicker is available and falls back to the plain core
+            // file manager element otherwise, so tool_imagepicker is only a soft dependency.
             $courseheaderimagefilemanager = $mform->createElement(
-                'filemanager',
+                theme_boost_union_get_imagepicker_element_type(),
                 'theme_boost_union_courseheaderimage_filemanager',
                 get_string('courseheaderimage', 'theme_boost_union'),
                 null,
