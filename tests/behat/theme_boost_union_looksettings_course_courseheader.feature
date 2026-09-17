@@ -559,6 +559,36 @@ Feature: Configuring the theme_boost_union plugin for the "Course header" sectio
       | no            | should not  |
       | yes           | should      |
 
+  Scenario Outline: Setting: Course header - Do not render an empty icons bar if course contacts are enabled, but the course does not have any course contacts
+    Given the following config values are set as admin:
+      | config                   | value    | plugin            |
+      | courseheaderenabled      | yes      | theme_boost_union |
+      | courseheaderimagesource  | global   | theme_boost_union |
+      | courseheaderlayout       | <layout> | theme_boost_union |
+      | courseheadershowcontacts | yes      | theme_boost_union |
+    And the following "theme_boost_union > setting file" exists:
+      | filearea | courseheaderimageglobal                        |
+      | filepath | theme/boost_union/tests/fixtures/login_bg1.png |
+    And the following "courses" exist:
+      | fullname | shortname |
+      | Course 3 | C3        |
+    And the following "course enrolments" exist:
+      | user     | course | role    |
+      | student1 | C3     | student |
+    When I log in as "student1"
+    # Course 1 has a course contact, thus the icons bar is shown.
+    And I am on "Course 1" course homepage
+    Then ".courseheadericonsbar .coursecontacts" "css_element" should exist in the "#bucourseheader" "css_element"
+    # Course 3 does not have any course contact, thus the icons bar must not be rendered at all.
+    And I am on "Course 3" course homepage
+    And "#courseheaderimage" "css_element" should exist in the "#bucourseheader" "css_element"
+    And ".courseheadericonsbar" "css_element" should not exist in the "#bucourseheader" "css_element"
+
+    Examples:
+      | layout       |
+      | headingabove |
+      | stacked      |
+
   # We do not check the content of the course contacts section here as there, the same data as on the course category overview
   # page is used and that is already tested in theme_boost_union_looksettings_categoryindexsitehome.feature
   # Scenario Outline: Setting: Course header - Show course contacts in the course header: Check the content
