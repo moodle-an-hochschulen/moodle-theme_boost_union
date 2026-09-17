@@ -730,13 +730,6 @@ class core_renderer extends core_renderer_intermediate {
                         $header->showcourseediticon = false;
                     }
 
-                    // Enable iconsbar, if necessary.
-                    if ($header->showcoursepopup || $header->showcoursecontacts || $header->showcourseediticon) {
-                        $header->showiconsbar = true;
-                    } else {
-                        $header->showiconsbar = false;
-                    }
-
                     // Check if the user can view user details, if necessary.
                     if ($header->showcoursecontacts || $header->showcoursepopup) {
                         $header->canviewuserdetails =
@@ -747,6 +740,21 @@ class core_renderer extends core_renderer_intermediate {
                     if ($header->showcoursecontacts || $header->showcoursepopup) {
                         $header->contacts = $courseutil->get_course_contacts();
                         $header->hascontacts = (count($header->contacts) > 0);
+                    } else {
+                        $header->hascontacts = false;
+                    }
+
+                    // Enable iconsbar, if necessary.
+                    // The course contacts only count if the course really has contacts. Otherwise, the iconsbar would be
+                    // rendered empty and would just pull the course header image upwards.
+                    if (
+                        $header->showcoursepopup ||
+                            ($header->showcoursecontacts && $header->hascontacts) ||
+                            $header->showcourseediticon
+                    ) {
+                        $header->showiconsbar = true;
+                    } else {
+                        $header->showiconsbar = false;
                     }
 
                     // Amend course shortname, if enabled.
