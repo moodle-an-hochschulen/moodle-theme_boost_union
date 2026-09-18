@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.2-r9
 
 * 2026-09-17 - Bugfix: An empty icons bar was rendered in the course header and pulled the course header image into the course title if course contacts were enabled but the course did not have any course contacts, resolves #1398
 * 2026-08-31 - Bugfix: An advertisement tile or slide background image which was configured but whose file was not present resulted in a fatal error, for example while a pending plugin upgrade from Boost Union 4.5 had not been completed yet, resolves #1391
