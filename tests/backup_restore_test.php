@@ -36,11 +36,10 @@ require_once($CFG->dirroot . '/backup/util/includes/restore_includes.php');
  * @package             theme_boost_union
  * @category            test
  * @coversDefaultClass  \restore_theme_boost_union_plugin
- * @author              Mikhail Golenkov <mikhailgolenkov@catalyst-au.net>
+ * @copyright           Mikhail Golenkov <mikhailgolenkov@catalyst-au.net>
  * @license             http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 final class backup_restore_test extends advanced_testcase {
-
     /**
      * Test that course restore succeeds when theme_boost_union restore settings are not present in the plan.
      *
