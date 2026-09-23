@@ -68,9 +68,11 @@ class restore_theme_boost_union_plugin extends restore_theme_plugin {
         ) {
             // If the user does not want to restore this setting, return.
             $restorecontrolledby = $coursesettings[$data->name]['restorecontrolledby'] ?? null;
-            $restoreconfig = $this->task->get_setting_value($restorecontrolledby);
-            if ($restoreconfig != true) {
-                return;
+            if ($restorecontrolledby && $this->task->setting_exists($restorecontrolledby)) {
+                $restoreconfig = $this->task->get_setting_value($restorecontrolledby);
+                if ($restoreconfig != true) {
+                    return;
+                }
             }
         }
 
@@ -99,9 +101,11 @@ class restore_theme_boost_union_plugin extends restore_theme_plugin {
             if (array_key_exists('restorecontrolledby', $config)) {
                 // If the user does not want to restore this filearea, return.
                 $restorecontrolledby = $config['restorecontrolledby'] ?? null;
-                $restoreconfig = $this->task->get_setting_value($restorecontrolledby);
-                if ($restoreconfig != true) {
-                    return;
+                if ($restorecontrolledby && $this->task->setting_exists($restorecontrolledby)) {
+                    $restoreconfig = $this->task->get_setting_value($restorecontrolledby);
+                    if ($restoreconfig != true) {
+                        return;
+                    }
                 }
             }
 
