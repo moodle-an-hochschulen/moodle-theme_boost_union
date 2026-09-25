@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-09-25 - Bugfix: The course header image, the course overview fallback image and the advertisement tile and slider background images were not updated in the browser after they were replaced by a file with the same name (for example after the course header image was cropped with tool_imagepicker) as the browser kept showing the cached old image, resolves #1404
 * 2026-09-10 - Feature: Use the image picker element of the companion plugin tool_imagepicker (if it is installed) for the course header image in the course settings to allow teachers to crop the image, add a recommendation to install tool_imagepicker, resolves #1395
 
 ### v5.2-r9
