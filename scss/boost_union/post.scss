@@ -800,6 +800,24 @@ body.hascourseindexcmicons {
         .courseindex-cmicon-icon .completioninfo {
             display: none;
         }
+
+        /* Align the completion icons with each other.
+           Moodle core shrinks the icons in the course index with a font-relative rule
+           (.courseindex .icon {font-size: 10px}). The completion icons are all rendered as FontAwesome glyphs which are
+           sized in em (fa-fw is 1.25em, i.e. 12.5px), but Moodle core puts the 'complete' completion icon into a
+           wider box (.completion_complete .icon {width: 1rem}, i.e. 16px) in which the glyph is centered.
+           The completion icons therefore do not share the same box and the same center, and the activity type icon
+           and the completion icon appear to jump horizontally as soon as an activity is completed.
+           We therefore pin all completion icons to the same box and center their content within this box.
+           We deliberately do not rely on the .courseindex-cmicon-cpl-* classes here as Moodle core replaces the whole
+           completion element (and thus these classes) as soon as the completion state changes. */
+        .completioninfo .icon {
+            /* Resize the icons to a common size. */
+            width: $icon-width;
+            max-width: $icon-width;
+            /* Center the FontAwesome glyphs within the box. */
+            text-align: center;
+        }
     }
 
     /* If the admin configured the completion info to be shown as icon color. */
@@ -845,6 +863,15 @@ body.hascourseindexcmicons {
             /* And move the activity icon slightly closer to the completion icon. */
             .courseindex-item .completioninfo {
                 min-width: 20px;
+            }
+
+            /* And remove the right margin from the completion icons.
+               Moodle core adds a right margin to all icons (.icon {margin: 0 .5rem 0 0}) which is not reset within the
+               course index. This margin widens the box of the completion icons compared to the empty box of the
+               activities without completion tracking and would therefore shift the activity type icons of the tracked
+               activities to the right. */
+            .courseindex-item .completioninfo .icon {
+                margin-right: 0;
             }
         }
     }

@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-01 - Backport: The 'completed' and 'failed' completion icons in the course index were shifted to the right, resolves #1340
 * 2026-09-29 - Upstream change: Adopt changes from Moodle core in MDL-88948 and re-align the activity icons in the course index drawer, resolves #1405
 
 ### v4.5-r46
