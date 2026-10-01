@@ -863,6 +863,15 @@ body.hascourseindexcmicons {
             display: block;
         }
 
+        /* Hide the completion info within the activity type icon container.
+           This element just serves as data source for the observer JS if the completion info is shown as icon color
+           and would be shown by Moodle core JS. In all other cases, it is not used at all.
+           Either way, it must not be shown as it would take up space within the activity type icon
+           (Moodle core sets display: inline-flex and min-width: 24px on all .completioninfo elements). */
+        .courseindex-cmicon-icon .completioninfo {
+            display: none;
+        }
+
         /* Align the completion icons with each other.
            Moodle core shrinks the icons in the course index with a font-relative rule
            (.courseindex .icon {font-size: 10px}). This affects the 'complete' and 'fail' completion icons which are
@@ -893,12 +902,6 @@ body.hascourseindexcmicons {
         #courseindex {
             /* Hide the completion widget at the beginning of the line. */
             .courseindex-cmicon-cpl-sol {
-                display: none;
-            }
-
-            /* And hide the completion info within the activity type icon container.
-               (This element just serves as data source for the observer JS and would be shown by Moodle core JS). */
-            .courseindex-cmicon-icon .completioninfo {
                 display: none;
             }
 
@@ -934,9 +937,15 @@ body.hascourseindexcmicons {
                 display: none;
             }
 
-            /* And move the activity icon slightly closer to the completion icon. */
             .courseindex-item .completioninfo {
+                /* And move the activity icon slightly closer to the completion icon. */
                 min-width: 20px;
+                /* And move the completion icon (and thus the activity icon and title) slightly to the left to align the
+                   completion icon vertically with the section chevron and the activity icon with the section title.
+                   The completion icon is centered within a box of $icon-width (see above) while the section chevron
+                   is a FontAwesome glyph which is sized 1.25em at the course index icon font size of 10px and which is
+                   aligned to the left edge of its box. We thus pull the completion icon by half of the difference. */
+                margin-left: (1.25 * 10px - $icon-width) * .5;
             }
 
             /* And remove the right margin from the completion icons.

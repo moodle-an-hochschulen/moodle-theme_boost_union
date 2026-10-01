@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-09-29 - Upstream change: Adopt changes from Moodle core in MDL-88948 and re-align the activity icons in the course index drawer, resolves #1405
+
 ### v5.1-r22
 
 * 2026-09-17 - Bugfix: An empty icons bar was rendered in the course header and pulled the course header image into the course title if course contacts were enabled but the course did not have any course contacts, resolves #1398
