@@ -791,6 +791,15 @@ body.hascourseindexcmicons {
         span.courseindex-cmicon-container {
             display: block;
         }
+
+        /* Hide the completion info within the activity type icon container.
+           This element just serves as data source for the observer JS if the completion info is shown as icon color
+           and would be shown by Moodle core JS. In all other cases, it is not used at all.
+           Either way, it must not be shown as it would take up space within the activity type icon
+           (Moodle core sets display: inline-flex and min-width: 24px on all .completioninfo elements). */
+        .courseindex-cmicon-icon .completioninfo {
+            display: none;
+        }
     }
 
     /* If the admin configured the completion info to be shown as icon color. */
@@ -798,12 +807,6 @@ body.hascourseindexcmicons {
         #courseindex {
             /* Hide the completion widget at the beginning of the line. */
             .courseindex-cmicon-cpl-sol {
-                display: none;
-            }
-
-            /* And hide the completion info within the activity type icon container.
-               (This element just serves as data source for the observer JS and would be shown by Moodle core JS). */
-            .courseindex-cmicon-icon .completioninfo {
                 display: none;
             }
 

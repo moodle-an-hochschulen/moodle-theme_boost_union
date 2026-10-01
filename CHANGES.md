@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-09-29 - Upstream change: Adopt changes from Moodle core in MDL-88948 and re-align the activity icons in the course index drawer, resolves #1405
+
 ### v4.5-r46
 
 * 2026-07-19 - Bugfix: Prevent a redirect for flavour files when users have not accepted the policy yet, resolves #684
