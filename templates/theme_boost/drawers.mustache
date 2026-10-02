@@ -57,6 +57,7 @@
     * Include theme_boost_union/footer template instead of theme_boost/footer
     * Include theme_boost_union/navbar template instead of theme_boost/navbar
     * Added the possibility to show course related hints.
+    * Added the possibility to show an external course link.
     * Added the possibility to show info banners.
     * Include theme_boost_union/advertisementtiles template
     * Include theme_boost_union/slider template
@@ -209,6 +210,7 @@
             {{> theme_boost_union/javascriptdisabledhint }}
             {{> theme_boost_union/infobannersabove }}
             {{{ output.full_header }}}
+            {{{externalcourselink}}}
             {{> theme_boost_union/infobannersbelow }}
             {{#secondarymoremenu}}
                 <div class="secondary-navigation d-print-none">
