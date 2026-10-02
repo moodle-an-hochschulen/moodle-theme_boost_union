@@ -1,0 +1,25 @@
+# Mustache Lint baseline
+#
+# This file lists the Mustache Lint messages which are accepted for Boost Union's own templates.
+# It is processed by the Mustache Lint step of the moodle-an-hochschulen/moodle-workflows Moodle Plugin CI workflow.
+# Messages of templates which are copied from upstream are not listed here, they are accepted via the .upstream files instead.
+#
+# Format: One message per line as "<template path>: <message>", where the message is normalized
+# (without the line number and without the HTML extract in parentheses) as printed in the workflow log.
+# Lines starting with # and empty lines are ignored.
+
+# The course listing templates render single list items which are wrapped into a list by the calling template.
+templates/courselistingcard.mustache: WARNING: HTML Validation error: An element with “role=listitem” must be contained in, or owned by, an element with “role=list” or “role=group”.
+templates/courselistinglist.mustache: WARNING: HTML Validation error: An element with “role=listitem” must be contained in, or owned by, an element with “role=list” or “role=group”.
+
+# The login form method partials open and close a container which spans other partials in-between.
+templates/loginform-partial-method-end.mustache: WARNING: HTML Validation error: Stray end tag “div”.
+templates/loginform-partial-method-start.mustache: WARNING: HTML Validation error: End tag for  “body” seen, but there were unclosed elements.
+templates/loginform-partial-method-start.mustache: WARNING: HTML Validation error: The “aria-labelledby” attribute must point to an element in the same document.
+templates/loginform-partial-method-start.mustache: WARNING: HTML Validation error: Unclosed element “div”.
+
+# The smart menu children templates render single menu items which are wrapped into a menu by the calling template.
+templates/smartmenus-cardmenu-children.mustache: WARNING: HTML Validation error: An element with “role=menuitem” must be contained in, or owned by, an element with “role=menubar” or “role=menu”.
+templates/smartmenus-cardmenu-children.mustache: WARNING: HTML Validation error: Element “li” not allowed as child of element “body” in this context.
+templates/smartmenus-moremenu-children.mustache: WARNING: HTML Validation error: An element with “role=menuitem” must be contained in, or owned by, an element with “role=menubar” or “role=menu”.
+templates/smartmenus-moremenu-children.mustache: WARNING: HTML Validation error: Element “li” not allowed as child of element “body” in this context.
