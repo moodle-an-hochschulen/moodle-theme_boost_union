@@ -4656,7 +4656,17 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/additionalhtmlfooterfilters';
         $title = get_string('additionalhtmlfooterfilterssetting', 'theme_boost_union', null, true);
         $additionalhtmlurl = new \core\url('/admin/settings.php', ['section' => 'additionalhtml']);
-        $description = get_string('additionalhtmlfooterfilterssetting_desc', 'theme_boost_union', $additionalhtmlurl->out(), true);
+        $footerurl = new \core\url(
+            '/admin/settings.php',
+            ['section' => 'theme_boost_union_content'],
+            'theme_boost_union_content_footer'
+        );
+        $description = get_string(
+            'additionalhtmlfooterfilterssetting_desc',
+            'theme_boost_union',
+            ['additionalhtmlurl' => $additionalhtmlurl, 'footerurl' => $footerurl],
+            true
+        );
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
@@ -4980,6 +4990,42 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 );
             }
         }
+
+        // Setting: Additional content at the beginning of the footer popover.
+        $name = 'theme_boost_union/footerpopovercontentstart';
+        $title = get_string('footerpopovercontentstartsetting', 'theme_boost_union', null, true);
+        $description = get_string(
+            'footerpopovercontentsetting_desc',
+            'theme_boost_union',
+            get_string('footerpopovercontentsetting_above', 'theme_boost_union', null, true),
+            true
+        );
+        $setting = new admin_setting_confightmleditor($name, $title, $description, '');
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/footerpopovercontentstart',
+            'theme_boost_union/enablefooterbutton',
+            'eq',
+            THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE
+        );
+
+        // Setting: Additional content at the end of the footer popover.
+        $name = 'theme_boost_union/footerpopovercontentend';
+        $title = get_string('footerpopovercontentendsetting', 'theme_boost_union', null, true);
+        $description = get_string(
+            'footerpopovercontentsetting_desc',
+            'theme_boost_union',
+            get_string('footerpopovercontentsetting_below', 'theme_boost_union', null, true),
+            true
+        );
+        $setting = new admin_setting_confightmleditor($name, $title, $description, '');
+        $tab->add($setting);
+        $page->hide_if(
+            'theme_boost_union/footerpopovercontentend',
+            'theme_boost_union/enablefooterbutton',
+            'eq',
+            THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE
+        );
 
         // Add tab to settings page.
         $page->add($tab);
