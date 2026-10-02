@@ -1066,6 +1066,74 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I should see "My global footnote" in the "#footnote" "css_element"
 
   @javascript
+  Scenario: Flavours: Footer popover content - Set flavour-specific footer popover contents (with no global footer popover contents set)
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I set the field "Additional content at the beginning of the footer popover" to "My flavour popover start"
+    And I set the field "Additional content at the end of the footer popover" to "My flavour popover end"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then I should see "My flavour popover start" in the ".theme_boost_union_footer_popovercontentstart" "css_element"
+    And I should see "My flavour popover end" in the ".theme_boost_union_footer_popovercontentend" "css_element"
+
+  @javascript
+  Scenario: Flavours: Footer popover content - Set flavour-specific footer popover contents (with global footer popover contents being overridden)
+    Given the following config values are set as admin:
+      | config                    | value                          | plugin            |
+      | footerpopovercontentstart | <p>My global popover start</p> | theme_boost_union |
+      | footerpopovercontentend   | <p>My global popover end</p>   | theme_boost_union |
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I set the field "Additional content at the beginning of the footer popover" to "My flavour popover start"
+    And I set the field "Additional content at the end of the footer popover" to "My flavour popover end"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then I should see "My flavour popover start" in the ".theme_boost_union_footer_popovercontentstart" "css_element"
+    And I should not see "My global popover start" in the ".footer-content-popover" "css_element"
+    And I should see "My flavour popover end" in the ".theme_boost_union_footer_popovercontentend" "css_element"
+    And I should not see "My global popover end" in the ".footer-content-popover" "css_element"
+
+  @javascript
+  Scenario: Flavours: Footer popover content - Do not set flavour-specific footer popover contents (with global footer popover contents being served properly)
+    Given the following config values are set as admin:
+      | config                    | value                          | plugin            |
+      | footerpopovercontentstart | <p>My global popover start</p> | theme_boost_union |
+      | footerpopovercontentend   | <p>My global popover end</p>   | theme_boost_union |
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I select "Yes" from the "Apply to course categories" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocategories_ids" "css_element"
+    And I click on "Cat 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then I should see "My global popover start" in the ".theme_boost_union_footer_popovercontentstart" "css_element"
+    And I should see "My global popover end" in the ".theme_boost_union_footer_popovercontentend" "css_element"
+
+  @javascript
   Scenario Outline: Flavours: Flavour SCSS should be applied immediately in normal operation as well as if theme designer mode is on (with styles_debug.php).
     Given the following config values are set as admin:
       | config            | value    |

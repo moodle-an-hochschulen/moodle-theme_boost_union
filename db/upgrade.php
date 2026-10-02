@@ -911,6 +911,82 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2024100795, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2024100798) {
+        // Define table theme_boost_union_flavours to be altered.
+        $table = new xmldb_table('theme_boost_union_flavours');
+
+        // Define field content_footerpopoverstart to be added.
+        $field = new xmldb_field(
+            'content_footerpopoverstart',
+            XMLDB_TYPE_TEXT,
+            null,
+            null,
+            null,
+            null,
+            null,
+            'content_footnote_format'
+        );
+
+        // Conditionally launch add field content_footerpopoverstart.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field content_footerpopoverstart_format to be added.
+        $field = new xmldb_field(
+            'content_footerpopoverstart_format',
+            XMLDB_TYPE_INTEGER,
+            '2',
+            null,
+            null,
+            null,
+            null,
+            'content_footerpopoverstart'
+        );
+
+        // Conditionally launch add field content_footerpopoverstart_format.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field content_footerpopoverend to be added.
+        $field = new xmldb_field(
+            'content_footerpopoverend',
+            XMLDB_TYPE_TEXT,
+            null,
+            null,
+            null,
+            null,
+            null,
+            'content_footerpopoverstart_format'
+        );
+
+        // Conditionally launch add field content_footerpopoverend.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field content_footerpopoverend_format to be added.
+        $field = new xmldb_field(
+            'content_footerpopoverend_format',
+            XMLDB_TYPE_INTEGER,
+            '2',
+            null,
+            null,
+            null,
+            null,
+            'content_footerpopoverend'
+        );
+
+        // Conditionally launch add field content_footerpopoverend_format.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2024100798, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();

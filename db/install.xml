@@ -42,6 +42,10 @@
         <FIELD NAME="look_navbartint" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="content_footnote" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="content_footnote_format" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="content_footerpopoverstart" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="content_footerpopoverstart_format" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="content_footerpopoverend" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="content_footerpopoverend_format" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
