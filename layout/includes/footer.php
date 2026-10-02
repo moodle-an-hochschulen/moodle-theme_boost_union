@@ -24,6 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// Require flavours library.
+require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+
 $footersetting = get_config('theme_boost_union', 'enablefooterbutton');
 
 // If the footer button is enabled.
@@ -144,6 +147,30 @@ if ($footerquestionmark != THEME_BOOST_UNION_SETTING_ENABLEFOOTER_NONE) {
     } else {
         // Add marker to hide the icons.
         $templatecontext['suppressfooterlinkicons'] = true;
+    }
+
+    // Get the flavour which applies to this page (if any).
+    $flavour = theme_boost_union_get_flavour_which_applies();
+
+    // Iterate over the additional content settings for the beginning and the end of the footer popover.
+    foreach (['start', 'end'] as $position) {
+        // Get the setting.
+        $footerpopovercontentsetting = get_config('theme_boost_union', 'footerpopovercontent' . $position);
+        $format = FORMAT_HTML;
+
+        // If any flavour applies to this page and defines a non-empty content for this position.
+        if ($flavour !== null && !html_is_blank($flavour->{'content_footerpopover' . $position})) {
+            // Override the setting with the flavour specific content.
+            $footerpopovercontentsetting = $flavour->{'content_footerpopover' . $position};
+            $format = $flavour->{'content_footerpopover' . $position . '_format'};
+        }
+
+        // If the setting is set and does not only contain empty tags.
+        if (isset($footerpopovercontentsetting) && !html_is_blank($footerpopovercontentsetting)) {
+            // Add the content to templatecontext and use format_text function to enable multilanguage filtering.
+            $templatecontext['footerpopovercontent' . $position] =
+                    format_text($footerpopovercontentsetting, $format, ['noclean' => true]);
+        }
     }
 }
 

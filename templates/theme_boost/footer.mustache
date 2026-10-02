@@ -41,6 +41,8 @@
         "contactlink": "https://localhost/theme/boost_union/pages/contact.php",
         "contactpagetitle": "Contact",
         "footerbutton": true,
+        "footerpopovercontentstart": "<p>Additional content at the beginning of the footer popover</p>",
+        "footerpopovercontentend": "<p>Additional content at the end of the footer popover</p>",
         "footershowchat": true,
         "footershowcontact": true,
         "footershowhelp": true,
@@ -108,6 +110,7 @@
         code. If this JS code does not find the placeholder div, it will add the link at another location on the page.
         That's why we keep the placeholder here and hide it with CSS if the link should be suppressed.
     * Added the possibility to suppress the icons in front of the footer links.
+    * Added the possibility to add additional content at the beginning and at the end of the footer popover.
 }}
 
 <footer id="page-footer" class="footer-popover bg-white">
@@ -132,6 +135,11 @@
     </div>
     {{#footerbutton }}
         <div class="footer-content-popover container" data-region="footer-content-popover">
+            {{#footerpopovercontentstart}}
+                <div class="footer-section p-3 border-bottom theme_boost_union_footer_popovercontentstart">
+                    {{{ footerpopovercontentstart }}}
+                </div>
+            {{/footerpopovercontentstart}}
             {{#footershowchat}}
                 {{#output.has_communication_links}}
                     <div class="footer-section p-3 border-bottom footer-link-communication">
@@ -258,6 +266,11 @@
                     {{/output.moodle_release}}
                 </div>
             {{/footershowpowered}}
+            {{#footerpopovercontentend}}
+                <div class="footer-section p-3 border-bottom theme_boost_union_footer_popovercontentend">
+                    {{{ footerpopovercontentend }}}
+                </div>
+            {{/footerpopovercontentend}}
             {{# output.standard_end_of_body_html_additionalhtmlfooter }}
                 <div class="footer-section p-3 border-bottom">
                     {{{ output.standard_end_of_body_html_additionalhtmlfooter }}}
