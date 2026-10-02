@@ -723,6 +723,43 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     Then "#footnote" "css_element" should exist
     And I should see "My global footnote" in the "#footnote" "css_element"
 
+  Scenario: Flavours: Footer popover content - Set flavour-specific footer popover contents (with no global footer popover contents set)
+    Given the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | content_footerpopoverstart      | content_footerpopoverend      |
+      | My shiny new flavour | CAT1                  | <p>My flavour popover start</p> | <p>My flavour popover end</p> |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then I should see "My flavour popover start" in the ".theme_boost_union_footer_popovercontentstart" "css_element"
+    And I should see "My flavour popover end" in the ".theme_boost_union_footer_popovercontentend" "css_element"
+
+  Scenario: Flavours: Footer popover content - Set flavour-specific footer popover contents (with global footer popover contents being overridden)
+    Given the following config values are set as admin:
+      | config                    | value                          | plugin            |
+      | footerpopovercontentstart | <p>My global popover start</p> | theme_boost_union |
+      | footerpopovercontentend   | <p>My global popover end</p>   | theme_boost_union |
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids | content_footerpopoverstart      | content_footerpopoverend      |
+      | My shiny new flavour | CAT1                  | <p>My flavour popover start</p> | <p>My flavour popover end</p> |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then I should see "My flavour popover start" in the ".theme_boost_union_footer_popovercontentstart" "css_element"
+    And I should not see "My global popover start" in the ".footer-content-popover" "css_element"
+    And I should see "My flavour popover end" in the ".theme_boost_union_footer_popovercontentend" "css_element"
+    And I should not see "My global popover end" in the ".footer-content-popover" "css_element"
+
+  Scenario: Flavours: Footer popover content - Do not set flavour-specific footer popover contents (with global footer popover contents being served properly)
+    Given the following config values are set as admin:
+      | config                    | value                          | plugin            |
+      | footerpopovercontentstart | <p>My global popover start</p> | theme_boost_union |
+      | footerpopovercontentend   | <p>My global popover end</p>   | theme_boost_union |
+    And the following "theme_boost_union > flavours" exist:
+      | title                | applytocategories_ids |
+      | My shiny new flavour | CAT1                  |
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then I should see "My global popover start" in the ".theme_boost_union_footer_popovercontentstart" "css_element"
+    And I should see "My global popover end" in the ".theme_boost_union_footer_popovercontentend" "css_element"
+
   @javascript
   Scenario Outline: Flavours: Flavour SCSS should be applied immediately in normal operation as well as if theme designer mode is on (with styles_debug.php).
     Given the following config values are set as admin:

@@ -520,6 +520,33 @@ class flavour_edit_form extends \moodleform {
         $mform->setType('content_footnote', PARAM_CLEANHTML);
         $mform->addHelpButton('content_footnote', 'flavoursfootnote', 'theme_boost_union');
 
+        // Add footer heading.
+        $context = new \stdClass();
+        $context->title = get_string('footerheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+            'html',
+            '<div id="adminsettings">' . $OUTPUT->render_from_template('core_admin/setting_heading', $context) . '</div>'
+        );
+
+        // Add flavour additional content at the beginning and at the end of the footer popover as editor elements.
+        foreach (['start' => 'beginning', 'end' => 'end'] as $position => $positionstring) {
+            $positionlabel = get_string('flavoursfooterpopovercontent_' . $positionstring, 'theme_boost_union');
+            $mform->addElement(
+                'editor',
+                'content_footerpopover' . $position,
+                get_string('flavoursfooterpopovercontent', 'theme_boost_union', $positionlabel)
+            );
+            $mform->setType('content_footerpopover' . $position, PARAM_CLEANHTML);
+            $mform->addHelpButton(
+                'content_footerpopover' . $position,
+                'flavoursfooterpopovercontent',
+                'theme_boost_union',
+                '',
+                false,
+                $positionlabel
+            );
+        }
+
         // Add apply-to-cohort as header element.
         $mform->addElement('header', 'applytocohortheader', get_string('flavoursapplytocohorts', 'theme_boost_union'));
         // Set the header to expanded if apply-to-cohort is already enabled.

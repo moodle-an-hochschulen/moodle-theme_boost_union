@@ -486,7 +486,7 @@ With this setting, a hint will appear at the top of the Moodle page if JavaScrip
 
 ###### Process additional HTML footer with filters
 
-With this setting, you can enable that the content of the Moodle core setting 'Before BODY is closed' on the Additional HTML settings page is processed by the Moodle text filters before it is added to the page. This is useful if you use that setting to show visible content, like a short text or a list of links, at the end of the footer popover and want to use, for example, the multi-language content filter there. However, please note that Moodle core processed this content with the text filters temporarily in some Moodle versions, but removed this processing again due to problems: All enabled text filters will process the whole content and might break raw HTML and JavaScript code, like analytics or tracking code. Thus, please enable this setting only if you really need it and test your additional HTML footer content thoroughly afterwards.
+With this setting, you can enable that the content of the Moodle core setting 'Before BODY is closed' on the Additional HTML settings page is processed by the Moodle text filters before it is added to the page. This is useful if you use that setting to show visible content, like a short text or a list of links, at the end of the footer popover and want to use, for example, the multi-language content filter there. But before you enable this setting, please consider that there is a much better way to show visible content in the footer popover: The 'Additional content at the beginning of the footer popover' and 'Additional content at the end of the footer popover' settings in the Content -> Footer tab are made exactly for this purpose. Their content is shown in separate sections of the footer popover and is processed with the Moodle text filters anyway. If you still want to enable this setting, please note that Moodle core processed this content with the text filters temporarily in some Moodle versions, but removed this processing again due to problems: All enabled text filters will process the whole content and might break raw HTML and JavaScript code, like analytics or tracking code. Thus, please enable this setting only if you really need it and test your additional HTML footer content thoroughly afterwards.
 
 ### Settings page "Content"
 
@@ -517,6 +517,14 @@ With these settings, you can entirely suppress particular links in the footer.
 ###### Suppress footer output by plugin ...
 
 With this setting, you can entirely suppress the footer output by particular plugins.
+
+###### Additional content at the beginning of the footer popover
+
+Whatever you add to this textarea will be displayed in a separate section at the beginning of the footer popover, i.e. above all other links and information in the footer popover.
+
+###### Additional content at the end of the footer popover
+
+Whatever you add to this textarea will be displayed in a separate section at the end of the footer popover, i.e. below all other links and information in the footer popover.
 
 #### Tab "Static pages"
 

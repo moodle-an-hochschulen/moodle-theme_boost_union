@@ -451,6 +451,10 @@ class theme_boost_union_generator extends component_generator_base {
             'look_rawscsspre' => $data['look_rawscsspre'] ?? null,
             'content_footnote' => $data['content_footnote'] ?? null,
             'content_footnote_format' => FORMAT_HTML,
+            'content_footerpopoverstart' => $data['content_footerpopoverstart'] ?? null,
+            'content_footerpopoverstart_format' => FORMAT_HTML,
+            'content_footerpopoverend' => $data['content_footerpopoverend'] ?? null,
+            'content_footerpopoverend_format' => FORMAT_HTML,
         ];
 
         // Handle category IDs if provided.
