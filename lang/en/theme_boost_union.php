@@ -1149,6 +1149,11 @@ $string['javascriptheading'] = 'JavaScript';
 $string['javascriptdisabledhint'] = 'JavaScript disabled hint';
 $string['javascriptdisabledhint_desc'] = 'With this setting, a hint will appear at the top of the Moodle page if JavaScript is not enabled. This is particularly helpful as several Moodle features do not work without JavaScript.';
 $string['javascriptdisabledhinttext'] = 'JavaScript is disabled in your browser.<br />Many features of Moodle will be not usable or will appear to be broken.<br />Please enable JavaScript for the full Moodle experience.';
+// ... Section: Additional HTML.
+$string['additionalhtmlheading'] = 'Additional HTML';
+// ... ... Setting: Process additional HTML footer with filters.
+$string['additionalhtmlfooterfilterssetting'] = 'Process additional HTML footer with filters';
+$string['additionalhtmlfooterfilterssetting_desc'] = 'With this setting, you can enable that the content of the Moodle core setting \'Before BODY is closed\' on the <a href="{$a}">Additional HTML settings page</a> is processed by the Moodle text filters before it is added to the page.<br />Despite the name of this setting, the content is not just added invisibly to the end of the page, but it is shown at the end of the footer popover (which is opened with the questionmark icon) in Boost Union as well as in Boost Core. For this reason, you might use this setting to show some visible content, like a short text or a list of links, to your users there. If you enable this setting, you can, for example, use the multi-language content filter to show this content in the user\'s current language.<br />However, please note that Moodle core processed this content with the text filters temporarily in some Moodle versions, but removed this processing again due to problems. Thus, you should be aware of the consequences: All text filters which are enabled on your site will process the whole content, not only the multi-language content filter. As the \'Before BODY is closed\' setting is primarily intended for raw HTML and JavaScript code, like analytics or tracking code, the filters might modify this code unexpectedly and break it. Thus, please enable this setting only if you really need it and test your additional HTML footer content thoroughly afterwards.';
 
 // Settings: Content page.
 $string['configtitlecontent'] = 'Content';

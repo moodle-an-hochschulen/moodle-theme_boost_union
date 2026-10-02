@@ -462,6 +462,12 @@ In this tab there are the following settings:
 
 With this setting, a hint will appear at the top of the Moodle page if JavaScript is not enabled. This is particularly helpful as several Moodle features do not work without JavaScript.
 
+##### Additional HTML
+
+###### Process additional HTML footer with filters
+
+With this setting, you can enable that the content of the Moodle core setting 'Before BODY is closed' on the Additional HTML settings page is processed by the Moodle text filters before it is added to the page. This is useful if you use that setting to show visible content, like a short text or a list of links, at the end of the footer popover and want to use, for example, the multi-language content filter there. However, please note that Moodle core processed this content with the text filters temporarily in some Moodle versions, but removed this processing again due to problems: All enabled text filters will process the whole content and might break raw HTML and JavaScript code, like analytics or tracking code. Thus, please enable this setting only if you really need it and test your additional HTML footer content thoroughly afterwards.
+
 ### Settings page "Content"
 
 #### Tab "Footer"

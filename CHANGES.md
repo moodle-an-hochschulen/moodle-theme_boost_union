@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-02 - Upstream change: Adopt changes from Moodle core in MDL-89237 and roll back the filter support in the additional HTML footer, but add a setting to re-enable it if needed, resolves #1384
 * 2026-10-02 - Tests: Handle mustache shortcomings from Boost Core and allow Boost Union mustache shortcomings to let moodle-plugin-ci fail again, resolves #152
 
 ### v5.1-r23
