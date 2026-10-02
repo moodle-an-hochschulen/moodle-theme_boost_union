@@ -2191,6 +2191,11 @@ $string['recommendation_mwpextension_title'] = 'Boost Union MWP extension';
 $string['recommendation_mwpextension_summary'] = 'The Boost Union MWP extension should be installed when running on Moodle Workplace™.';
 $string['recommendation_mwpextension_description'] = 'Boost Union has detected that this Moodle instance is running on Moodle Workplace™ as the tool_tenant plugin is installed. However, the Boost Union MWP extension is not installed. Without this extension, Boost Union but will lack essential Moodle Workplace™ widgets and won\'t have any support for tenants.<br /><br />But don\'t worry, there is the Boost Union MWP edition which provides full Moodle Workplace™ support and which is maintained by Boost Union co-maintainer bdecent. If you want to use Boost Union on Moodle Workplace™, you can find all details on the <a href="https://bdecent.de/union" target="_blank">bdecent product presentation page</a>.';
 
+// Recommendation: Companion plugin tool_imagepicker.
+$string['recommendation_toolimagepicker_title'] = 'Companion plugin tool_imagepicker';
+$string['recommendation_toolimagepicker_summary'] = 'The companion plugin tool_imagepicker should be installed to allow users to crop the images which they upload for Boost Union features.';
+$string['recommendation_toolimagepicker_description'] = 'Boost Union can use the image picker form element of the companion plugin tool_imagepicker for the image upload fields which are facing end users, for now the course header image in the course settings. This element enhances the Moodle core file manager with an image cropper which allows the user to crop the uploaded image directly in Moodle before it is used.<br /><br />Boost Union has detected that tool_imagepicker is not installed on this site. Without this plugin, Boost Union falls back to the plain Moodle core file manager for these fields. This works fine, but the users will not be able to crop their images. If you want to offer image cropping to your users, please install tool_imagepicker.';
+
 // Privacy API.
 $string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
 

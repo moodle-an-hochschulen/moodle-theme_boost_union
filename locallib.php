@@ -813,14 +813,7 @@ function theme_boost_union_get_urloftilebackgroundimage($tileno) {
         // If a file was found.
         if ($file) {
             // Build and return the image URL.
-            return core\url::make_pluginfile_url(
-                $file->get_contextid(),
-                $file->get_component(),
-                $file->get_filearea(),
-                $file->get_itemid(),
-                $file->get_filepath(),
-                $file->get_filename()
-            );
+            return theme_boost_union_get_revisioned_pluginfile_url($file);
         }
     }
 
@@ -874,14 +867,7 @@ function theme_boost_union_get_urlofslidebackgroundimage($slideno) {
         // If a file was found.
         if ($file) {
             // Build and return the image URL.
-            return core\url::make_pluginfile_url(
-                $file->get_contextid(),
-                $file->get_component(),
-                $file->get_filearea(),
-                $file->get_itemid(),
-                $file->get_filepath(),
-                $file->get_filename()
-            );
+            return theme_boost_union_get_revisioned_pluginfile_url($file);
         }
     }
 
@@ -1320,57 +1306,57 @@ function theme_boost_union_get_course_header_image_url() {
     switch ($courseheaderimagesource) {
         case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_COURSEPLUSGLOBAL:
             // Try course overview files first, then global fallback.
-            $courseimage = \core_course\external\course_summary_exporter::get_course_image($PAGE->course);
+            $courseimage = theme_boost_union_get_revisioned_course_image_url($PAGE->course);
             if ($courseimage) {
                 return $courseimage;
             }
             // Fall through to global image.
-            return theme_boost_union_get_global_course_header_image_url();
+            return theme_boost_union_get_revisioned_global_course_header_image_url();
 
         case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_COURSENOGLOBAL:
             // Only course image, no fallback.
-            return \core_course\external\course_summary_exporter::get_course_image($PAGE->course);
+            return theme_boost_union_get_revisioned_course_image_url($PAGE->course);
 
         case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_DEDICATEDPLUSGLOBAL:
             // Try dedicated course images first, then global fallback.
-            $dedicatedimage = theme_boost_union_get_dedicated_course_header_image_url($PAGE->course->id);
+            $dedicatedimage = theme_boost_union_get_revisioned_dedicated_course_header_image_url($PAGE->course->id);
             if ($dedicatedimage) {
                 return $dedicatedimage;
             }
             // Fall through to global image.
-            return theme_boost_union_get_global_course_header_image_url();
+            return theme_boost_union_get_revisioned_global_course_header_image_url();
 
         case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_DEDICATEDNOGLOBAL:
             // Only dedicated course images, no fallback.
-            return theme_boost_union_get_dedicated_course_header_image_url($PAGE->course->id);
+            return theme_boost_union_get_revisioned_dedicated_course_header_image_url($PAGE->course->id);
 
         case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_DEDICATEDPLUSCOURSEPLUSGLOBAL:
             // Try dedicated course images first.
-            $dedicatedimage = theme_boost_union_get_dedicated_course_header_image_url($PAGE->course->id);
+            $dedicatedimage = theme_boost_union_get_revisioned_dedicated_course_header_image_url($PAGE->course->id);
             if ($dedicatedimage) {
                 return $dedicatedimage;
             }
             // Then try course overview files.
-            $courseimage = \core_course\external\course_summary_exporter::get_course_image($PAGE->course);
+            $courseimage = theme_boost_union_get_revisioned_course_image_url($PAGE->course);
             if ($courseimage) {
                 return $courseimage;
             }
             // Fall through to global image.
-            return theme_boost_union_get_global_course_header_image_url();
+            return theme_boost_union_get_revisioned_global_course_header_image_url();
 
         case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_DEDICATEDPLUSCOURSENOGLOBAL:
             // Try dedicated course images first.
-            $dedicatedimage = theme_boost_union_get_dedicated_course_header_image_url($PAGE->course->id);
+            $dedicatedimage = theme_boost_union_get_revisioned_dedicated_course_header_image_url($PAGE->course->id);
             if ($dedicatedimage) {
                 return $dedicatedimage;
             }
             // Then try course overview files, no fallback.
-            return \core_course\external\course_summary_exporter::get_course_image($PAGE->course);
+            return theme_boost_union_get_revisioned_course_image_url($PAGE->course);
 
         case THEME_BOOST_UNION_SETTING_COURSEHEADERIMAGESOURCE_GLOBAL:
         default:
             // Only global image.
-            return theme_boost_union_get_global_course_header_image_url();
+            return theme_boost_union_get_revisioned_global_course_header_image_url();
     }
 }
 
@@ -1379,7 +1365,7 @@ function theme_boost_union_get_course_header_image_url() {
  *
  * @return core\url|null The URL to the global course header image or null if none is configured.
  */
-function theme_boost_union_get_global_course_header_image_url() {
+function theme_boost_union_get_revisioned_global_course_header_image_url() {
     // If a global image is configured.
     if (get_config('theme_boost_union', 'courseheaderimageglobal')) {
         // Get the system context.
@@ -1403,14 +1389,7 @@ function theme_boost_union_get_global_course_header_image_url() {
 
         // If we have a file, build and return the image URL.
         if ($file) {
-            return core\url::make_pluginfile_url(
-                $file->get_contextid(),
-                $file->get_component(),
-                $file->get_filearea(),
-                $file->get_itemid(),
-                $file->get_filepath(),
-                $file->get_filename()
-            );
+            return theme_boost_union_get_revisioned_pluginfile_url($file);
         }
     }
 
@@ -1424,7 +1403,7 @@ function theme_boost_union_get_global_course_header_image_url() {
  * @param int $courseid The course ID.
  * @return core\url|null The URL to the dedicated course header image or null if none is configured.
  */
-function theme_boost_union_get_dedicated_course_header_image_url($courseid) {
+function theme_boost_union_get_revisioned_dedicated_course_header_image_url($courseid) {
     // Get the course context.
     $coursecontext = \context_course::instance($courseid);
 
@@ -1439,18 +1418,70 @@ function theme_boost_union_get_dedicated_course_header_image_url($courseid) {
 
     // If we have a file, build and return the image URL.
     if ($file) {
-        return core\url::make_pluginfile_url(
-            $file->get_contextid(),
-            $file->get_component(),
-            $file->get_filearea(),
-            $file->get_itemid(),
-            $file->get_filepath(),
-            $file->get_filename()
-        );
+        return theme_boost_union_get_revisioned_pluginfile_url($file);
     }
 
     // As no picture was found, return null.
     return null;
+}
+
+/**
+ * Helper function to get the course image URL (from the course overview files) for a specific course, including a
+ * revision parameter for cache busting.
+ *
+ * The URL is taken from \core_course\external\course_summary_exporter::get_course_image() which serves it from the
+ * course image cache. As the file itself is not fetched here (to avoid an additional database query), the revision
+ * parameter carries the time when the course was last modified instead of the time when the file was last modified.
+ * The course is modified whenever its settings are saved, which is also when the course image is replaced, so the URL
+ * changes whenever the course image changes (see theme_boost_union_get_revisioned_pluginfile_url() for the background).
+ *
+ * @param stdClass $course The course object.
+ * @return core\url|null The URL to the course image or null if none is configured.
+ */
+function theme_boost_union_get_revisioned_course_image_url($course) {
+    // Get the course image URL from core.
+    $courseimage = \core_course\external\course_summary_exporter::get_course_image($course);
+
+    // If there is no course image, return null.
+    if (!$courseimage) {
+        return null;
+    }
+
+    // Build the URL and add the revision parameter.
+    $url = new \core\url($courseimage);
+    $url->param('rev', $course->timemodified);
+
+    return $url;
+}
+
+/**
+ * Helper function to build the pluginfile URL of a stored file, including a revision parameter for cache busting.
+ *
+ * The plain pluginfile URL of a stored file is composed of its context, component, filearea, item id, path and name only.
+ * If a file is replaced by another file with the same name (which is what happens when an image is cropped with the
+ * tool_imagepicker element or when a file with the same name is uploaded again), the URL does not change and the browser
+ * keeps showing the cached old file until its cache lifetime has expired.
+ * The revision parameter which is added by this function carries the time when the file was last modified. It changes the
+ * URL whenever the file changes and makes the browser fetch the file again. It is ignored by pluginfile.php.
+ *
+ * @param stored_file $file The stored file.
+ * @return core\url The URL to the file.
+ */
+function theme_boost_union_get_revisioned_pluginfile_url(\stored_file $file) {
+    // Build the plain pluginfile URL.
+    $url = \core\url::make_pluginfile_url(
+        $file->get_contextid(),
+        $file->get_component(),
+        $file->get_filearea(),
+        $file->get_itemid(),
+        $file->get_filepath(),
+        $file->get_filename()
+    );
+
+    // Add the revision parameter.
+    $url->param('rev', $file->get_timemodified());
+
+    return $url;
 }
 
 /**
@@ -1483,14 +1514,7 @@ function theme_boost_union_get_course_overview_fallback_image_url() {
         // If a file was found.
         if ($file) {
             // Build and return the image URL.
-            return \core\url::make_pluginfile_url(
-                $file->get_contextid(),
-                $file->get_component(),
-                $file->get_filearea(),
-                $file->get_itemid(),
-                $file->get_filepath(),
-                $file->get_filename()
-            );
+            return theme_boost_union_get_revisioned_pluginfile_url($file);
         }
     }
 
