@@ -4499,6 +4499,20 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
         $tab->add($setting);
 
+        // Heading: Additional HTML.
+        $name = 'theme_boost_union/additionalhtmlheading';
+        $title = get_string('additionalhtmlheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Process additional HTML footer with filters.
+        $name = 'theme_boost_union/additionalhtmlfooterfilters';
+        $title = get_string('additionalhtmlfooterfilterssetting', 'theme_boost_union', null, true);
+        $additionalhtmlurl = new \core\url('/admin/settings.php', ['section' => 'additionalhtml']);
+        $description = get_string('additionalhtmlfooterfilterssetting_desc', 'theme_boost_union', $additionalhtmlurl->out(), true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
         // Add tab to settings page.
         $page->add($tab);
 
