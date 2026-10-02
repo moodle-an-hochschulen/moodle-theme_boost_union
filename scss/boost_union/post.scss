@@ -2196,6 +2196,15 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     border-bottom: var(--bs-border-width) solid var(--bs-border-color) !important; /* stylelint-disable-line declaration-no-important,max-line-length */
 }
 
+/* Remove the bottom margin from the last element (typically a paragraph) in the additional footer popover content sections
+   to keep the spacing to the section divider consistent with the other footer sections. */
+.theme_boost_union_footer_popovercontentstart,
+.theme_boost_union_footer_popovercontentend {
+    > :last-child {
+        margin-bottom: 0;
+    }
+}
+
 
 /*=======================================
  * Settings: Content -> Info banner.

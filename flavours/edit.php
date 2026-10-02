@@ -85,6 +85,10 @@ switch ($action) {
             $data->description = $data->description['text'];
             $data->content_footnote_format = $data->content_footnote['format'];
             $data->content_footnote = $data->content_footnote['text'];
+            $data->content_footerpopoverstart_format = $data->content_footerpopoverstart['format'];
+            $data->content_footerpopoverstart = $data->content_footerpopoverstart['text'];
+            $data->content_footerpopoverend_format = $data->content_footerpopoverend['format'];
+            $data->content_footerpopoverend = $data->content_footerpopoverend['text'];
             if (isset($data->applytocohorts_ids)) {
                 $data->applytocohorts_ids = json_encode($data->applytocohorts_ids);
             }
@@ -195,6 +199,10 @@ switch ($action) {
             $data->description = $data->description['text'];
             $data->content_footnote_format = $data->content_footnote['format'];
             $data->content_footnote = $data->content_footnote['text'];
+            $data->content_footerpopoverstart_format = $data->content_footerpopoverstart['format'];
+            $data->content_footerpopoverstart = $data->content_footerpopoverstart['text'];
+            $data->content_footerpopoverend_format = $data->content_footerpopoverend['format'];
+            $data->content_footerpopoverend = $data->content_footerpopoverend['text'];
             if (isset($data->applytocohorts_ids)) {
                 $data->applytocohorts_ids = json_encode($data->applytocohorts_ids);
             }
@@ -325,6 +333,14 @@ switch ($action) {
             $flavour->content_footnote = [
                     'text' => $flavour->content_footnote,
                     'format' => $flavour->content_footnote_format,
+            ];
+            $flavour->content_footerpopoverstart = [
+                    'text' => $flavour->content_footerpopoverstart,
+                    'format' => $flavour->content_footerpopoverstart_format,
+            ];
+            $flavour->content_footerpopoverend = [
+                    'text' => $flavour->content_footerpopoverend,
+                    'format' => $flavour->content_footerpopoverend_format,
             ];
             if (isset($flavour->applytocohorts_ids)) {
                 $flavour->applytocohorts_ids = json_decode($flavour->applytocohorts_ids, true);
