@@ -18,15 +18,29 @@ Feature: Serving the files of the theme_boost_union plugin
     And the following "cohort members" exist:
       | cohort  | user  |
       | COHORT1 | user1 |
-    And the following "theme_boost_union > flavours" exist:
-      | title                | applytocohorts_ids |
-      | My shiny new flavour | COHORT1            |
+    # Create a flavour which applies to the cohort.
+    And I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Flavours" in site administration
+    And I click on "Create flavour" "button"
+    And I should see "Create flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I set the field "Title" to "My shiny new flavour"
+    And I select "Yes" from the "Apply to cohorts" singleselect
+    And I click on ".form-autocomplete-downarrow" "css_element" in the "#fitem_id_applytocohorts_ids" "css_element"
+    And I click on "Cohort 1" item in the autocomplete list
+    And I press the escape key
+    And I click on "Save changes" "button"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
 
-  @javascript
+  @javascript @_file_upload
   Scenario: File serving: Flavour compact logo is served on the site policy page (with the site policy not being accepted yet)
-    Given the following "theme_boost_union > flavour files" exist:
-      | flavour              | filearea                  | filepath                                         |
-      | My shiny new flavour | flavours_look_logocompact | theme/boost_union/tests/fixtures/flavourlogo.png |
+    Given I click on ".action-edit" "css_element" in the "My shiny new flavour" "table_row"
+    And I should see "Edit flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I upload "theme/boost_union/tests/fixtures/flavourlogo.png" file to "Compact logo" filemanager
+    And I click on "Save changes" "button"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
+    And I log out
     And the following policies exist:
       | Name             | Revision | Content    | Summary     | Status |
       | This site policy |          | full text2 | short text2 | active |
@@ -36,11 +50,15 @@ Feature: Serving the files of the theme_boost_union plugin
     And "//nav//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/flavours_look_logocompact')][contains(@src, 'flavourlogo.png')]" "xpath_element" should exist
     And DOM element "nav img.logo" should be a successfully loaded image
 
-  @javascript
+  @javascript @_file_upload
   Scenario: File serving: User is redirected to the dashboard after accepting the site policy (and not to a flavour file)
-    Given the following "theme_boost_union > flavour files" exist:
-      | flavour              | filearea                  | filepath                                         |
-      | My shiny new flavour | flavours_look_logocompact | theme/boost_union/tests/fixtures/flavourlogo.png |
+    Given I click on ".action-edit" "css_element" in the "My shiny new flavour" "table_row"
+    And I should see "Edit flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I upload "theme/boost_union/tests/fixtures/flavourlogo.png" file to "Compact logo" filemanager
+    And I click on "Save changes" "button"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
+    And I log out
     And the following policies exist:
       | Name             | Revision | Content    | Summary     | Status |
       | This site policy |          | full text2 | short text2 | active |
@@ -53,11 +71,15 @@ Feature: Serving the files of the theme_boost_union plugin
     Then the url should match "/my/"
     And I should see "Dashboard"
 
-  @javascript
+  @javascript @_file_upload
   Scenario: File serving: Flavour background image is served on the site policy page (with the site policy not being accepted yet)
-    Given the following "theme_boost_union > flavour files" exist:
-      | flavour              | filearea                      | filepath                                       |
-      | My shiny new flavour | flavours_look_backgroundimage | theme/boost_union/tests/fixtures/login_bg2.png |
+    Given I click on ".action-edit" "css_element" in the "My shiny new flavour" "table_row"
+    And I should see "Edit flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I upload "theme/boost_union/tests/fixtures/login_bg2.png" file to "Background image" filemanager
+    And I click on "Save changes" "button"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
+    And I log out
     And the following policies exist:
       | Name             | Revision | Content    | Summary     | Status |
       | This site policy |          | full text2 | short text2 | active |
@@ -67,11 +89,15 @@ Feature: Serving the files of the theme_boost_union plugin
     And DOM element "body" should have background image with file name "login_bg2.png"
     And DOM element "body" should have a successfully loaded background image
 
-  @javascript
+  @javascript @_file_upload
   Scenario: File serving: Flavour compact logo is served on a regular page (with the forcelogin setting being enabled)
-    Given the following "theme_boost_union > flavour files" exist:
-      | flavour              | filearea                  | filepath                                         |
-      | My shiny new flavour | flavours_look_logocompact | theme/boost_union/tests/fixtures/flavourlogo.png |
+    Given I click on ".action-edit" "css_element" in the "My shiny new flavour" "table_row"
+    And I should see "Edit flavour" in the "#page-header h1" "css_element"
+    And I expand all fieldsets
+    And I upload "theme/boost_union/tests/fixtures/flavourlogo.png" file to "Compact logo" filemanager
+    And I click on "Save changes" "button"
+    And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
+    And I log out
     When I log in as "user1"
     Then I should see "Dashboard"
     And "//nav//img[contains(@class, 'logo')][contains(@src, 'pluginfile.php/1/theme_boost_union/flavours_look_logocompact')][contains(@src, 'flavourlogo.png')]" "xpath_element" should exist
