@@ -439,6 +439,37 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | no    | should      |
       | yes   | should not  |
 
+  Scenario: Setting: Footer - Additional content at the beginning and at the end of the footer popover - Add content
+    Given the following config values are set as admin:
+      | config                    | value                                                                                                      | plugin            |
+      | footerpopovercontentstart | <span lang="en" class="multilang">Start content</span><span lang="de" class="multilang">Startinhalt</span> | theme_boost_union |
+      | footerpopovercontentend   | <span lang="en" class="multilang">End content</span><span lang="de" class="multilang">Endinhalt</span>     | theme_boost_union |
+    And the following config values are set as admin:
+      | config               | value                                                    |
+      | additionalhtmlfooter | <div id="custom-footer-html">Custom Footer Content</div> |
+    And the "multilang" filter is "on"
+    And the "multilang" filter applies to "content and headings"
+    When I log in as "admin"
+    And I am on homepage
+    Then ".footer-section.theme_boost_union_footer_popovercontentstart" "css_element" should exist in the ".footer-content-popover" "css_element"
+    And I should see "Start content" in the ".theme_boost_union_footer_popovercontentstart" "css_element"
+    And I should not see "Startinhalt" in the ".theme_boost_union_footer_popovercontentstart" "css_element"
+    And ".theme_boost_union_footer_popovercontentstart" "css_element" should appear before ".logininfo" "css_element"
+    And ".footer-section.theme_boost_union_footer_popovercontentend" "css_element" should exist in the ".footer-content-popover" "css_element"
+    And I should see "End content" in the ".theme_boost_union_footer_popovercontentend" "css_element"
+    And I should not see "Endinhalt" in the ".theme_boost_union_footer_popovercontentend" "css_element"
+    And ".theme_boost_union_footer_popovercontentend" "css_element" should appear before "#custom-footer-html" "css_element"
+
+  Scenario: Setting: Footer - Additional content at the beginning and at the end of the footer popover - Do not add content
+    Given the following config values are set as admin:
+      | config                    | value | plugin            |
+      | footerpopovercontentstart |       | theme_boost_union |
+      | footerpopovercontentend   |       | theme_boost_union |
+    When I log in as "admin"
+    And I am on homepage
+    Then ".theme_boost_union_footer_popovercontentstart" "css_element" should not exist
+    And ".theme_boost_union_footer_popovercontentend" "css_element" should not exist
+
   @javascript
   Scenario: View a user tour under Boost Union
     Given I log in as "admin"
@@ -449,16 +480,3 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
     And I press "Save changes"
     When I am on the "C1" "Course" page logged in as "teacher1"
     Then I should see "Reset user tour on this page"
-
-  @javascript
-  Scenario: Support multilang additionalhtmlfooter content (backport of MDL-88210 / MDL-85498)
-    Given the following config values are set as admin:
-      | config               | value                                                                                                                                                                                |
-      | additionalhtmlfooter | <div id="custom-footer-html"><p><span lang="en" class="multilang">Custom Footer Content</span><span lang="de" class="multilang">Benutzerdefinierter Fußzeileninhalt</span></p></div> |
-    And the "multilang" filter is "on"
-    And the "multilang" filter applies to "content and headings"
-    And I log in as "admin"
-    When I am on homepage
-    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
-    Then I should see "Custom Footer Content" in the ".popover-body" "css_element"
-    But I should not see "Benutzerdefinierter Fußzeileninhalt" in the ".popover-body" "css_element"
