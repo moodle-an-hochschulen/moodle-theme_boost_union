@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-10-02 - Tests: Handle mustache shortcomings from Boost Core and allow Boost Union mustache shortcomings to let moodle-plugin-ci fail again, resolves #152
+
 ### v5.1-r23
 
 * 2026-09-29 - Upstream change: Adopt changes from Moodle core in MDL-88948 and re-align the activity icons in the course index drawer, resolves #1405
