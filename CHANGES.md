@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-10-02 - Tests: Handle mustache shortcomings from Boost Core and allow Boost Union mustache shortcomings to let moodle-plugin-ci fail again, resolves #152
+
 ### v5.0-r33
 
 * 2026-09-17 - Bugfix: An empty icons bar was rendered in the course header and pulled the course header image into the course title if course contacts were enabled but the course did not have any course contacts, resolves #1398
