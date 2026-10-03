@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-10-02 - Tests: Handle mustache shortcomings from Boost Core and allow Boost Union mustache shortcomings to let moodle-plugin-ci fail again, resolves #152
+
 ### v4.5-r47
 
 * 2026-10-01 - Backport: The 'completed' and 'failed' completion icons in the course index were shifted to the right, resolves #1340
