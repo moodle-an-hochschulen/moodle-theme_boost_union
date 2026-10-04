@@ -319,7 +319,13 @@ M.util.js_pending('theme_boost/loader');
 require(['theme_boost/loader', 'theme_boost/drawer'{{#regions.offcanvas.hasblocks}},'theme_boost_union/offcanvas'{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, 'theme_boost_union/smartmenu'{{/includesmartmenu}}], function(Loader, Drawer{{#regions.offcanvas.hasblocks}},OffCanvas{{/regions.offcanvas.hasblocks}}{{#includesmartmenu}}, SmartMenu{{/includesmartmenu}}) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
-{{#regions.offcanvas.hasblocks}}OffCanvas.init();{{/regions.offcanvas.hasblocks}}
-{{#includesmartmenu}}SmartMenu.init();{{/includesmartmenu}}
+    {{! All section tags are placed on lines of their own as such standalone lines are removed completely during rendering.
+        This avoids ESLint warnings about too many empty lines or trailing spaces, see Github issues #1107 and #1413. }}
+    {{#regions.offcanvas.hasblocks}}
+    OffCanvas.init();
+    {{/regions.offcanvas.hasblocks}}
+    {{#includesmartmenu}}
+    SmartMenu.init();
+    {{/includesmartmenu}}
 });
 {{/js}}

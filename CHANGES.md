@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-04 - Bugfix: ESLint error in drawers.mustache: Trailing spaces not allowed, resolves #1413
 * 2026-10-03 - Tests: Fix the pending steps in the file serving Behat tests by creating the flavour in the UI instead of using the Behat generator which does not exist in Boost Union 4.5, resolves #1412
 * 2026-10-02 - Improvement: Allow custom additions at the beginning and at the end of the footer popover (globally and within flavours), resolves #531
 * 2026-10-02 - Upstream change: Adopt changes from Moodle core in MDL-89237 and roll back the filter support in the additional HTML footer, but add a setting to re-enable it if needed, resolves #1384
