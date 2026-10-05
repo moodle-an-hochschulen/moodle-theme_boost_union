@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-05 - Tests: Stabilize the activity icon color Behat tests which failed sporadically as the CSS filter comparison was stricter than the rounding of the generated filter values, resolves #793
 * 2026-10-05 - Tests: Stabilize the smart menu dynamic courses test which failed sporadically on Github actions, resolves #949
 * 2026-10-04 - Tests: Stabilize the flavour SCSS test in theme designer mode which failed sporadically on Github actions, resolves #1415
 * 2026-10-04 - Bugfix: ESLint error in drawers.mustache: Trailing spaces not allowed, resolves #1413

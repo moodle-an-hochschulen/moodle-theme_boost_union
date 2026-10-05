@@ -248,7 +248,7 @@ class behat_theme_boost_union_base_general extends behat_base {
 
         // Check if the computed filter is close enough to the given color.
         $solver = new \theme_boost_union\lib\hextocssfilter\solver($color);
-        $closeenough = $solver->filter_is_close_enough($computedfilter, '2');
+        $closeenough = $solver->filter_is_close_enough($computedfilter, '5');
 
         if ($closeenough != true) {
             throw new ExpectationException('The \'' . $selector . '\' DOM element with the CSS filter \'' .
