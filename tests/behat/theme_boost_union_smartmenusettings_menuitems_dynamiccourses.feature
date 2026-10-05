@@ -12,7 +12,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | Category 03 | 0        | CAT3     |
     And the following "courses" exist:
       | fullname  | shortname | category | enablecompletion | startdate      | enddate         |
-      | Course 01 | C1        | CAT1     | 1                | ## now ##      | ## +5 days ##   |
+      | Course 01 | C1        | CAT1     | 1                | ##1 hour ago## | ## +5 days ##   |
       | Course 02 | C2        | CAT1     | 1                | ##1 year ago## | ##1 month ago## |
       | Course 03 | C3        | CAT1     | 1                | ## +5 days ##  | 0               |
       | Course 04 | C4        | CAT2     | 1                | 0              | 0               |
