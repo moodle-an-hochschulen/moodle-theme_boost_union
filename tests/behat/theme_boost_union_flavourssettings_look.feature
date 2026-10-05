@@ -1133,6 +1133,11 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     Then I should see "My global popover start" in the ".theme_boost_union_footer_popovercontentstart" "css_element"
     And I should see "My global popover end" in the ".theme_boost_union_footer_popovercontentend" "css_element"
 
+  # Please note: In theme designer mode, Moodle core sends the stylesheets with an Expires header of
+  # THEME_DESIGNER_CACHE_LIFETIME (10 seconds by default) and without a revision in the stylesheet URL. If this
+  # scenario runs faster than that, the browser serves the old stylesheet from its cache and the last step fails.
+  # Github actions therefore sets THEME_DESIGNER_CACHE_LIFETIME to 0 in config.php via the extra-config input
+  # of the moodle-plugin-ci workflow, see https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues/1415.
   @javascript
   Scenario Outline: Flavours: Flavour SCSS should be applied immediately in normal operation as well as if theme designer mode is on (with styles_debug.php).
     Given the following config values are set as admin:
