@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-05 - Upgrade: Adopt changes to navbar.mustache
 * 2026-10-05 - Prepare compatibility for Moodle 5.3.
 * 2026-10-15 - Tests: Use the plain textarea editor in the Behat scenario which verifies that flavour SCSS is applied immediately in theme designer mode, as the TinyMCE editor CSS compilation became very slow in Moodle 5.3 (MDL-68037) and made the scenario run into the pending JS timeout of Behat on Github actions, resolves #1443
 * 2026-10-15 - Bugfix: Show the expanded search form in the navbar in the configured navbar tint instead of the primary brand color, resolves #1441
