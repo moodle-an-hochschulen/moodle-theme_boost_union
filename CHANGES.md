@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-05 - Upgrade: Adopt changes to footer.mustache
 * 2026-10-05 - Upgrade: Adopt changes to navbar.mustache
 * 2026-10-05 - Prepare compatibility for Moodle 5.3.
 * 2026-10-22 - Bugfix: Let a subsection follow the section appearance setting of the section in which it is placed, as the subsections in section 0 lost their collapse toggle if the sections ≥ 1 were shown without collapsing and the subsections were not collapsed by default if their section was configured to be collapsed by default, resolves #1454
