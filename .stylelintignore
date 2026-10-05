@@ -1,0 +1,3 @@
+# This file is picked up by Moodle core's "grunt ignorefiles" task and merged into the global .stylelintignore file.
+# The external SCSS tests need an intentionally invalid SCSS fixture file which must not be linted.
+tests/fixtures/extscss-invalid.scss
