@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-05 - Upgrade: Adopt changes to drawers.mustache
 * 2026-10-05 - Upgrade: Adopt changes to footer.mustache
 * 2026-10-05 - Upgrade: Adopt changes to navbar.mustache
 * 2026-10-05 - Prepare compatibility for Moodle 5.3.
