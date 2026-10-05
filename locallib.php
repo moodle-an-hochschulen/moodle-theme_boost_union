@@ -751,12 +751,15 @@ function theme_boost_union_get_loginbackgroundimage_files() {
         $fs = get_file_storage();
 
         // Get all files from filearea.
+        // The files are sorted by itemid, filepath and filename. As all files in this filearea share the same itemid,
+        // sorting by itemid alone would result in an undefined order which could differ between database queries
+        // and which would break the mapping between the image classes, the image files and the image texts.
         $files = $fs->get_area_files(
             $systemcontext->id,
             'theme_boost_union',
             'loginbackgroundimage',
             false,
-            'itemid',
+            'itemid, filepath, filename',
             false
         );
     }
@@ -937,14 +940,14 @@ function theme_boost_union_get_loginbackgroundimage_text() {
         $systemcontext = \context_system::instance();
 
         // Fetch only the single file record at position $number using the same ordering as
-        // theme_boost_union_get_loginbackgroundimage_files() (i.e., sorted by itemid).
+        // theme_boost_union_get_loginbackgroundimage_files() (i.e., sorted by itemid, filepath and filename).
         $sql = "SELECT f.filename
                   FROM {files} f
                  WHERE f.contextid = :contextid
                        AND f.component = :component
                        AND f.filearea = :filearea
                        AND f.filename != :dot
-                 ORDER BY f.itemid";
+                 ORDER BY f.itemid, f.filepath, f.filename";
         $params = [
             'contextid' => $systemcontext->id,
             'component' => 'theme_boost_union',

@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-05 - Bugfix: The login background images were fetched in an undefined order which could result in a mismatch between the displayed image and its image text and in a sporadically failing Behat test, resolves #950
 * 2026-10-05 - Tests: Stabilize the activity icon color Behat tests which failed sporadically as the CSS filter comparison was stricter than the rounding of the generated filter values, resolves #793
 * 2026-10-05 - Tests: Stabilize the smart menu dynamic courses test which failed sporadically on Github actions, resolves #949
 * 2026-10-04 - Tests: Stabilize the flavour SCSS test in theme designer mode which failed sporadically on Github actions, resolves #1415
