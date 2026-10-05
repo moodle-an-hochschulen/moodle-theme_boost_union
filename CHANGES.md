@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-05 - Prepare compatibility for Moodle 5.3.
 * 2026-10-15 - Tests: Use the plain textarea editor in the Behat scenario which verifies that flavour SCSS is applied immediately in theme designer mode, as the TinyMCE editor CSS compilation became very slow in Moodle 5.3 (MDL-68037) and made the scenario run into the pending JS timeout of Behat on Github actions, resolves #1443
 * 2026-10-15 - Bugfix: Show the expanded search form in the navbar in the configured navbar tint instead of the primary brand color, resolves #1441
 * 2026-10-14 - Tests: Remove the cache purging workaround from the info banner Behat tests as the underlying problem was a Moodle core bug (MDL-83757) which has been fixed in the meantime and all Boost Union stable releases require those Moodle core versions, resolves #734
