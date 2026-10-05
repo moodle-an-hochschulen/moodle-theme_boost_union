@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-04 - Tests: Stabilize the flavour SCSS test in theme designer mode which failed sporadically on Github actions, resolves #1415
 * 2026-10-04 - Bugfix: ESLint error in drawers.mustache: Trailing spaces not allowed, resolves #1413
 * 2026-10-03 - Tests: Fix failing core unit test  (setting_by_name_not_found), resolves #1401
 * 2026-10-02 - Improvement: Allow custom additions at the beginning and at the end of the footer popover (globally and within flavours), resolves #531
