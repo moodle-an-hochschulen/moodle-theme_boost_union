@@ -66,6 +66,9 @@
     * Added menu bar section.
     * Added the possibility to use an alternative logo link URL.
     * Added the possibility to set a maximal width for the sitename in the navbar to prevent layout breaking on medium-width screens.
+    * Kept the core/moremenu template for the primary navigation instead of the React-based core/primarymoremenu template
+      (introduced in Moodle 5.3 with MDL-89294) as Boost Union's smart menus are rendered via core/moremenu and Boost Union's
+      primary navigation class does not provide the React props which core/primarymoremenu requires.
 }}
 
 {{#menubar}}
@@ -107,12 +110,15 @@
         <div id="usernavigation" class="navbar-nav ms-auto h-100">
             {{# output.search_box }}
                 {{{ output.search_box }}}
-                <div class="divider border-start h-75 align-self-center mx-1"></div>
             {{/output.search_box}}
             {{#langmenu}}
                 {{> theme_boost/language_menu }}
                 <div class="divider border-start h-75 align-self-center mx-1"></div>
             {{/langmenu}}
+            {{# output.colour_mode_menu }}
+                {{{ . }}}
+                <div class="divider border-start h-75 align-self-center mx-1"></div>
+            {{/ output.colour_mode_menu }}
             {{{ output.edit_switch }}}
             {{# output.navbar_plugin_output }}
             {{{ . }}}
