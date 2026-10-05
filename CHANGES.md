@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-05 - Upgrade: Adopt changes to footer.mustache
 * 2026-10-05 - Upgrade: Adopt changes to navbar.mustache
 * 2026-10-05 - Prepare compatibility for Moodle 5.3.
 * 2026-10-08 - Tests: Set the theme preset directly instead of saving it in the settings form in the preset inheritance Behat test as the form validation might race with the following steps
