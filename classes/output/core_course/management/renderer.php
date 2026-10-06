@@ -29,6 +29,7 @@ use core_course_list_element;
 use moodle_url;
 use pix_icon;
 use core\output\html_writer;
+use core_course\management\helper;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -109,6 +110,12 @@ class renderer extends course_management_renderer_intermediate {
             ['courseid' => $course->id, 'categoryid' => $course->category, 'sesskey' => sesskey()]
         );
         $actions = [];
+
+        // If the course is marked for deletion, no more actions should be possible.
+        if ($course->deletioninprogress == helper::COURSE_DELETION_IN_PROGRESS) {
+            return '';
+        }
+
         if ($course->can_access()) {
             // If the admin decided to add a 'view course' icon.
             if (get_config('theme_boost_union', 'showviewcourseiconincoursemgnt') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
