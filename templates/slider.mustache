@@ -158,9 +158,10 @@
 </div>
 
 {{#js}}
-require(['jquery', 'theme_boost/bootstrap/carousel'], function($) {
-  if (document.getElementById('themeboostunionslider')) {
-    $('#themeboostunionslider').carousel();
+require(['bootstrap'], function({Carousel}) {
+  const slider = document.getElementById('themeboostunionslider');
+  if (slider) {
+    Carousel.getOrCreateInstance(slider);
   }
 });
 {{/js}}
