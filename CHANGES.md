@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-10-06 - Tests: Stabilize the footer telemetry trace ID test which failed sporadically on Github actions, resolves #1423
+
 ### v5.2-r11
 
 * 2026-10-05 - Tests: Fix stylelint issue for theme/boost_union/tests/fixtures/extscss-invalid.scss, resolves #695
