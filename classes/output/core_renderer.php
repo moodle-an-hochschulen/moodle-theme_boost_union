@@ -901,23 +901,15 @@ class core_renderer extends core_renderer_intermediate {
 
         $context = $form->export_for_template($this);
 
-        $context->errorformatted = $this->error_text($context->error);
-        $url = $this->get_logo_url();
-        if ($url) {
-            $url = $url->out(false);
-        }
-        $context->logourl = $url;
-        $context->sitename = format_string(
-            $SITE->fullname,
-            true,
-            ['context' => context_course::instance(SITEID), "escape" => false]
-        );
+        // Please note: errorformatted, logourl, sitename and hasauthinstructions are not set here anymore.
+        // Since Moodle 5.3, these context variables are set by the export_for_template() function of the
+        // core_auth\output\login renderable (just like Moodle core's render_login() does not set them anymore).
+        // We just add the Boost-Union-specific context variables from here on.
         $context->siteshortname = format_string(
             $SITE->shortname,
             true,
             ['context' => context_course::instance(SITEID), 'escape' => false]
         );
-        $context->hasauthinstructions = !empty($CFG->auth_instructions);
 
         // Get the login page arrangement setting to differentiate based on this setting if needed.
         $loginpagearrangement = get_config('theme_boost_union', 'loginpagearrangement');
@@ -1942,21 +1934,21 @@ class core_renderer extends core_renderer_intermediate {
 
         // If the admin decided to suppress the login info in the footer,
         // the 'failed login attempts' counter in the navbar will not be reset as this is only done by the
-        // user_count_login_failures() function from the login_info() function which is not called anymore in this case.
+        // \core\user::count_login_failures() function from the login_info() function which is not called anymore in this case.
         //
-        // The header() function calls the user_count_login_failures() function as well, but does not set the parameter
+        // The header() function calls the \core\user::count_login_failures() function as well, but does not set the parameter
         // to reset the failed login attempts counter (see issue #658 for details).
-        // So we call the user_count_login_failures() function here with the reset parameter set to true here to ensure that the
-        // failed login attempts counter is reset anyway when the footer is suppressed.
+        // So we call the \core\user::count_login_failures() function here with the reset parameter set to true here to ensure
+        // that the failed login attempts counter is reset anyway when the footer is suppressed.
         //
         // As an alternative to this approach, we could have overwritten the header() function completely here, just changing
-        // the line calling the user_count_login_failures(). This would have resulted in a mainantenance overhead
-        // and would not have had any performance benefits as the original Moodle calls user_count_login_failures() twice as well.
+        // the line calling the \core\user::count_login_failures(). This would have resulted in a mainantenance overhead
+        // and would not have had any performance benefits as the original Moodle calls \core\user::count_login_failures()
+        // twice as well.
         $footersuppresslogininfosetting = get_config('theme_boost_union', 'footersuppresslogininfo');
         if (isset($footersuppresslogininfosetting) && $footersuppresslogininfosetting == THEME_BOOST_UNION_SETTING_SELECT_YES) {
             if (isset($SESSION->justloggedin) && !empty($CFG->displayloginfailures)) {
-                require_once($CFG->dirroot . '/user/lib.php');
-                user_count_login_failures($USER, true);
+                \core\user::count_login_failures($USER, true);
             }
         }
 
