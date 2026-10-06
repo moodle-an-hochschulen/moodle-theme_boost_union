@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-05 - Upgrade: Adopt changes to submenu.js
 * 2026-10-05 - Upgrade: Adopt changes to \core_course\management\renderer.php
 * 2026-10-05 - Upgrade: Adopt changes to core_renderer.php
 * 2026-10-05 - Upgrade: Adopt changes to user_menu.mustache
