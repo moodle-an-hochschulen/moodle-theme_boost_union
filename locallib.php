@@ -395,7 +395,7 @@ function theme_boost_union_get_course_related_hints() {
             && is_role_switched($COURSE->id)
     ) {
         // Get the role name switched to.
-        $opts = \user_get_user_navigation_info($USER, $PAGE);
+        $opts = \core\user::get_user_navigation_info($USER, $PAGE);
         $role = $opts->metadata['rolename'];
 
         // Get the URL to switch back (normal role).
