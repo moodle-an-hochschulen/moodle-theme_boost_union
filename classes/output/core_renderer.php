@@ -2151,10 +2151,14 @@ class core_renderer extends core_renderer_intermediate {
      * @return string|null
      */
     public function telemetry_traceid(): ?string {
-        /* If we are running Behat. */
+        // If we are running Behat.
         if (defined('BEHAT_SITE_RUNNING')) {
-            /* Fake a trace ID so that we can be sure that an ID exists. */
-            return random_bytes(16);
+            // Fake a trace ID so that we can be sure that an ID exists.
+            // The real OpenTelemetry trace ID is a 32 character hex string, so the fake ID is built in the same format.
+            // The raw bytes of random_bytes() must not be used directly as the trace ID is output unescaped in the
+            // footer template. A raw "<" byte followed by a letter would open a HTML tag which swallows the
+            // "Telemetry trace" link and makes the footer Behat tests fail sporadically.
+            return bin2hex(random_bytes(16));
         }
 
         // Otherwise, return the parent function.
