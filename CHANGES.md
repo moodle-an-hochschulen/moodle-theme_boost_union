@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.2-r11
 
 * 2026-10-05 - Tests: Fix stylelint issue for theme/boost_union/tests/fixtures/extscss-invalid.scss, resolves #695
 * 2026-10-05 - Bugfix: The login background images were fetched in an undefined order which could result in a mismatch between the displayed image and its image text and in a sporadically failing Behat test, resolves #950
