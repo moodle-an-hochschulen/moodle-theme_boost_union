@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-05 - Upgrade: Adopt changes to slider.mustache
 * 2026-10-05 - Upgrade: Adopt changes in flavour_edit_form.php and colorpicker_rule.php
 * 2026-10-05 - Upgrade: Adopt changes to submenu.js
 * 2026-10-05 - Upgrade: Adopt changes to \core_course\management\renderer.php
