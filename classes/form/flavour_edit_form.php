@@ -623,7 +623,8 @@ class flavour_edit_form extends \moodleform {
     /**
      * Theme Boost Union - Flavours edit form validation
      *
-     * The routine to check the SCSS code is copied and modified from admin_setting_scsscode in /lib/adminlib.php.
+     * The routine to check the SCSS code is copied and modified from admin_setting_scsscode in
+     * /admin/classes/setting/setting/scsscode.php.
      *
      * @param array $data array of ("fieldname"=>value) of submitted data
      * @param array $files array of uploaded files "element_name"=>tmp_file_path
