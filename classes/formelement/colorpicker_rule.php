@@ -29,7 +29,7 @@ use HTML_QuickForm_Rule;
 /**
  * Validation rule for color picker
  *
- * This class is copied and modified from admin_setting_configcolourpicker in /lib/adminlib.php.
+ * This class is copied and modified from admin_setting_configcolourpicker in /admin/classes/setting/setting/configcolourpicker.php.
  *
  * @package   theme_boost_union
  * @copyright 2023 Mario Wehr <m.wehr@fh-kaernten.at>
