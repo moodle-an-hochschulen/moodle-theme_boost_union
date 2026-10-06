@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-05 - Upgrade: Adopt changes to core_renderer.php
 * 2026-10-05 - Upgrade: Adopt changes to user_menu.mustache
 * 2026-10-05 - Upgrade: Adopt changes to columns2.mustache
 * 2026-10-05 - Upgrade: Adopt changes to drawers.mustache
