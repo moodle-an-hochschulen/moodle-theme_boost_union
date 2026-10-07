@@ -396,9 +396,13 @@ With this setting a back to top button will appear in the bottom right corner of
 
 With this setting, upon toggling edit mode on and off, the scroll position at where the user was when performing the toggle is preserved.
 
-###### Activity navigation elements
+###### Activity & section navigation elements
 
-With this setting the elements to jump to the previous and next activity/resource as well as the pull down menu to jump to a distinct activity/resource become displayed. UI elements like this existed already on Boost in Moodle Core until Moodle 3.11, but were removed in 4.0. With Boost Union, you can bring them back.
+With this setting, you can control the elements to jump to the previous and next activity/resource as well as the pull down menu to jump to a distinct activity/resource. UI elements like this existed already on Boost in Moodle Core until Moodle 3.11, but were removed in 4.0 in favour of the course index. With Boost Union, you can bring them back or hide them completely. The setting has three options:
+
+* No change: The elements are displayed as Moodle core decides. Moodle core does not display them in course formats which use the course index (like the 'Custom sections' and 'Weekly sections' formats), but it still displays them in course formats which do not use the course index (like the 'Social' format or third party course formats with a disabled course index) and on activity pages which are embedded in a frame.
+* Show: The elements are displayed in all courses. Furthermore, within courses using the 'one section per page' mode, similar elements for the previous and next section are displayed as well.
+* Hide: The elements are hidden in all courses, even in courses where Moodle core would display them. Course formats which render their own section navigation elements will still display them as these are not controlled by this setting.
 
 ###### Show navigation on policy overview page
 
@@ -786,7 +790,7 @@ As you have read in the introduction, the main design principle of Boost Union i
 * Clickable header and transition time in the user's menu third level:
   Due to the way how the smart menu was integrated into the user menu, as soon as at least one smart menu exists on the page, the header of the language menu in the user menu is now fully clickable - compared to Boost core where only the 'back' arrow in the language menu is clickable - and the transition time to open the language menu is shortened. This should be a neglectible difference to Boost core.
 * Activity and section navigation styling:
-  Boost Union restyles the core activity navigation (previous / next activity links) and section navigation (previous / next section links) to look like Bootstrap small secondary buttons and, along the way, fixes the position of the "next section" arrow which Moodle core renders in front of the section name instead of behind it. This restyling is always active as soon as the "Activity & section navigation elements" setting is enabled and there is intentionally no setting to switch back to the original Moodle core look. This is simply because the original look is rather oldfashioned and Moodle core does not really show these navigation elements anywhere else in its default course formats anymore.
+  Boost Union restyles the core activity navigation (previous / next activity links) and section navigation (previous / next section links) to look like Bootstrap small secondary buttons and, along the way, fixes the position of the "next section" arrow which Moodle core renders in front of the section name instead of behind it. This restyling is always active as soon as the "Activity & section navigation elements" setting is set to "Show" and there is intentionally no setting to switch back to the original Moodle core look. This is simply because the original look is rather oldfashioned and Moodle core does not really show these navigation elements anywhere else in its default course formats anymore.
 
 
 Companion plugin local_navbarplus
