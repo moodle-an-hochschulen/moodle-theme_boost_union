@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-07 - Improvement: Add a 'Hide' option to the activity & section navigation elements setting to hide the activity navigation also in course formats which do not use the course index, and clarify the setting description, resolves #1403
 * 2026-10-06 - Tests: Stabilize the footer telemetry trace ID test which failed sporadically on Github actions, resolves #1423
 
 ### v5.2-r11
