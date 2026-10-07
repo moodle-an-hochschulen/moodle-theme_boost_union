@@ -1587,8 +1587,10 @@ body.theme-boost-union-commincourse {
 /* On even larger screens. */
 @include media-breakpoint-up(lg) {
     body.limitedwidth {
-        /* If any block region is enabled, handle the block region placement. */
-        #page.drawers .main-inner-wrapper {
+        /* If any block region is enabled, handle the block region placement
+           (for the main content as well as for the header region wrapper). */
+        #page.drawers .main-inner-wrapper,
+        #page.drawers .theme-block-region-header-wrapper {
             &.main-inner-outside-left-right,
             &.main-inner-outside-left,
             &.main-inner-outside-right {
@@ -1618,13 +1620,16 @@ body.theme-boost-union-commincourse {
             }
         }
 
-        /* And set the width and margin of the outside-left and right regions. */
-        #theme-block-region-outside-left {
+        /* And set the width and margin of the outside-left and right regions
+           (as well as of their spacers next to the header region). */
+        #theme-block-region-outside-left,
+        .theme-block-region-outside-left-spacer {
             margin-right: 1rem;
             margin-top: 1.5rem;
             width: $bu-blockregionoutsideleftwidth;
         }
-        #theme-block-region-outside-right {
+        #theme-block-region-outside-right,
+        .theme-block-region-outside-right-spacer {
             margin-left: 1rem;
             margin-top: 1.5rem;
             width: $bu-blockregionoutsiderightwidth;
@@ -1648,7 +1653,9 @@ body.theme-boost-union-commincourse {
         #page .main-inner-outside-left-right {
             /* Limit the maximum width of the left and right region blocks, so that enough space remains for the main content. */
             #theme-block-region-outside-left,
-            #theme-block-region-outside-right {
+            #theme-block-region-outside-right,
+            .theme-block-region-outside-left-spacer,
+            .theme-block-region-outside-right-spacer {
                 max-width: 200px;
             }
         }
@@ -1832,12 +1839,24 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
 
 /* Block region: Header. */
 
-/* Removed the top and bottom padding and margin from the header region block. */
-#page.drawers .region-block-header .main-inner {
-    padding-top: 0;
-    padding-bottom: 0;
+/* The header region is wrapped into an element (next to spacers for the outside-left and outside-right regions)
+   which inherits all styles of Boost core's main-inner element to be aligned with the main content.
+   We deliberately do not re-use the main-inner class itself in the DOM to not confuse any code which selects this class. */
+.theme-boost-union-header-main-inner {
+    @extend .main-inner;
+}
+/* Remove the spacing which Boost core gives the main-inner element.
+   The second selector is just needed to be more specific than the outside region rules for the main-inner element above. */
+#page.drawers .theme-block-region-header-wrapper .theme-boost-union-header-main-inner,
+body.limitedwidth #page.drawers .theme-block-region-header-wrapper .theme-boost-union-header-main-inner {
+    padding: 0;
     margin-top: 0;
     margin-bottom: 0;
+    /* Boost core also gives the main-inner element a white background (and rounded corners) to let the main content
+       stand out from a page background image or color. The header region, however, has always been placed directly
+       on the page background (just like the outside regions). Thus, remove the background again to avoid that the
+       header region is shown in a white box as soon as a page background is configured. */
+    background-color: transparent;
 }
 #theme-block-region-header {
     /* On larger screens. */
@@ -1861,7 +1880,7 @@ body.limitedwidth .theme-block-region-footer-coursecontentwidth {
     margin-top: 1rem;
 }
 /* Remove margin-top again if this block region is already preceded by the outside-top region. */
-#theme-block-region-outside-top + #theme-block-region-header {
+#theme-block-region-outside-top + .theme-block-region-header-wrapper #theme-block-region-header {
     margin-top: 0;
 }
 

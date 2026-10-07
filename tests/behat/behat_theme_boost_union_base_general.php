@@ -730,29 +730,23 @@ class behat_theme_boost_union_base_general extends behat_base {
         $positions = ['top', 'right', 'bottom', 'left'];
 
         if (!in_array($position, $positions)) {
-            throw new ExpectationException('The position \''.$position.'\' is not valid.
-                Valid positions are: '.implode(', ', $positions), $this->getSession());
+            throw new ExpectationException('The position \'' . $position . '\' is not valid.
+                Valid positions are: ' . implode(', ', $positions), $this->getSession());
         }
 
-        $positionjs1 = "
-            return (
-                window.getComputedStyle(document.querySelector('$selector1')).$position
-            )
-        ";
-        $positionjs2 = "
-            return (
-                window.getComputedStyle(document.querySelector('$selector2')).$position
-            )
-        ";
+        $positionjs1 = "return document.querySelector('$selector1').getBoundingClientRect().$position";
+        $positionjs2 = "return document.querySelector('$selector2').getBoundingClientRect().$position";
 
         $positionvalue1 = $this->evaluate_script($positionjs1);
         $positionvalue2 = $this->evaluate_script($positionjs2);
 
         if ($positionvalue1 != $positionvalue2) {
-            throw new ExpectationException('The \''.$selector1.'\' and \''.$selector2.'\'
-                DOM elements does not have the same \''.$position.'\' position value.
-                \''.$selector1.'\' has \''.$positionvalue1.'\' and \''.$selector2.'\' has \''.$positionvalue2.'\'.',
-                $this->getSession());
+            throw new ExpectationException(
+                'The \'' . $selector1 . '\' and \'' . $selector2 . '\'
+                DOM elements does not have the same \'' . $position . '\' position value.
+                \'' . $selector1 . '\' has \'' . $positionvalue1 . '\' and \'' . $selector2 . '\' has \'' . $positionvalue2 . '\'.',
+                $this->getSession()
+            );
         }
     }
 }
