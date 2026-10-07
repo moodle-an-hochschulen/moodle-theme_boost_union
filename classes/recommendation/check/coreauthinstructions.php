@@ -137,6 +137,6 @@ class coreauthinstructions extends recommendation {
         set_config('auth_instructions', '');
 
         // Reset cached status so the next call to get_status() re-evaluates.
-        self::$status = null;
+        self::reset_cache();
     }
 }

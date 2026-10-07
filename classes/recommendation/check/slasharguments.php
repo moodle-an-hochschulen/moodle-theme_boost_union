@@ -137,6 +137,6 @@ class slasharguments extends recommendation {
         set_config('slasharguments', 1);
 
         // Reset cached status so the next call to get_status() re-evaluates.
-        self::$status = null;
+        self::reset_cache();
     }
 }
