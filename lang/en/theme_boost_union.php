@@ -41,6 +41,8 @@ $string['always'] = 'Always';
 $string['auto'] = 'Automatically';
 $string['bycapability'] = 'Controlled by capability';
 $string['nochange'] = 'No change';
+$string['show'] = 'Show';
+$string['hide'] = 'Hide';
 $string['forguestsonly'] = 'Only for guests and non-logged-in users';
 $string['showastext'] = 'Show as text';
 $string['showasbadge'] = 'Show as badge';
@@ -1012,7 +1014,11 @@ $string['scrollspysetting'] = 'Scroll-spy';
 $string['scrollspysetting_desc'] = 'With this setting, upon toggling edit mode on and off, the scroll position at where the user was when performing the toggle is preserved.';
 // ... ... Setting: Activity & section navigation
 $string['activitynavigationsetting'] = 'Activity & section navigation elements';
-$string['activitynavigationsetting_desc'] = 'With this setting, the elements to jump to the previous and next activity/resource as well as the pull down menu to jump to a distinct activity/resource become displayed. Furthermore, within courses using the \'one section per page\' mode, similar elements for the previous and next section are displayed as well. UI elements like this existed already on Boost in Moodle Core until Moodle 3.11, but were removed in 4.0. With Boost Union, you can bring them back.';
+$string['activitynavigationsetting_desc'] = 'With this setting, you can control the elements to jump to the previous and next activity/resource as well as the pull down menu to jump to a distinct activity/resource. UI elements like this existed already on Boost in Moodle Core until Moodle 3.11, but were removed in 4.0 in favour of the course index. With Boost Union, you can bring them back or hide them completely.<br />
+<br />
+\'No change\': The elements are displayed as Moodle core decides. Moodle core does not display them in course formats which use the course index (like the \'Custom sections\' and \'Weekly sections\' formats), but it still displays them in course formats which do not use the course index (like the \'Social\' format or third party course formats with a disabled course index) and on activity pages which are embedded in a frame.<br />
+\'Show\': The elements are displayed in all courses. Furthermore, within courses using the \'one section per page\' mode, similar elements for the previous and next section are displayed as well.<br />
+\'Hide\': The elements are hidden in all courses, even in courses where Moodle core would display them. Please note that course formats which render their own section navigation elements will still display them as these are not controlled by this setting.';
 
 // Settings: Blocks tab.
 $string['blockstab'] = 'Blocks';
