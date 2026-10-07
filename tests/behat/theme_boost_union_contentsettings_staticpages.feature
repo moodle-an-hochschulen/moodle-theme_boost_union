@@ -104,29 +104,27 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
       | config             | value              | plugin            |
       | enable<page>       | yes                | theme_boost_union |
       | <page>content      | <p>Lorem ipsum</p> | theme_boost_union |
-      | <page>pagetitle    | <pagetitle>        | theme_boost_union |
       | <page>linkposition | footnote           | theme_boost_union |
       | footnote           |                    | theme_boost_union |
     When I log in as "admin"
     Then "#footnote" "css_element" should exist
     And ".theme_boost_union_footnote_<page>link" "css_element" should exist in the "#footnote" "css_element"
     And I should see "<pagetitle>" in the ".theme_boost_union_footnote_<page>link" "css_element"
-    And I should not see "<pagetitleindesired>" in the ".theme_boost_union_footnote_<page>link" "css_element"
     And ".theme_boost_union_footer_<page>link" "css_element" should not exist in the ".footer-content-popover" "css_element"
 
     Examples:
-      | page                     | pagetitle                    | pagetitleindesired |
-      | aboutus                  | About us & < > '             | About us &amp;     |
-      | offers                   | Offers                       | About us &amp;     |
-      | imprint                  | Imprint                      | About us &amp;     |
-      | contact                  | Contact                      | About us &amp;     |
-      | help                     | Help                         | About us &amp;     |
-      | maintenance              | Maintenance                  | About us &amp;     |
-      | accessibilitydeclaration | Declaration of accessibility | About us &amp;     |
-      | accessibilitysupport     | Accessibility support        | About us &amp;     |
-      | page1                    | Generic page 1               | About us &amp;     |
-      | page2                    | Generic page 2               | About us &amp;     |
-      | page3                    | Generic page 3               | About us &amp;     |
+      | page                     | pagetitle                    |
+      | aboutus                  | About us                     |
+      | offers                   | Offers                       |
+      | imprint                  | Imprint                      |
+      | contact                  | Contact                      |
+      | help                     | Help                         |
+      | maintenance              | Maintenance                  |
+      | accessibilitydeclaration | Declaration of accessibility |
+      | accessibilitysupport     | Accessibility support        |
+      | page1                    | Generic page 1               |
+      | page2                    | Generic page 2               |
+      | page3                    | Generic page 3               |
 
   Scenario Outline: Setting: Static page link position - Add the static page link to the footnote automatically (if the footnote contains some content already)
     Given the following config values are set as admin:
@@ -287,3 +285,32 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
       | page1                    |
       | page2                    |
       | page3                    |
+
+  Scenario Outline: Setting: Static page page title - Set a custom static page page title with special characters
+    Given the following config values are set as admin:
+      | config          | value              | plugin            |
+      | enable<page>    | yes                | theme_boost_union |
+      | <page>content   | <p>Lorem ipsum</p> | theme_boost_union |
+      | <page>pagetitle | <pagetitle>        | theme_boost_union |
+    When I log in as "admin"
+    And I am on <page> page
+    Then I should see "<expected>" in the "div[role='main'] h2" "css_element"
+    And I should not see "<unexpected>" in the "div[role='main'] h2" "css_element"
+    And "//title[contains(text(),'<expected>')]" "xpath_element" should exist
+    And the following config values are set as admin:
+      | config             | value              | plugin            |
+      | <page>linkposition | footnote           | theme_boost_union |
+    And I reload the page
+    Then I should see "<expected>" in the "#footnote .theme_boost_union_footnote_<page>link" "css_element"
+    And I should not see "<unexpected>" in the "#footnote .theme_boost_union_footnote_<page>link" "css_element"
+    And the following config values are set as admin:
+      | config             | value              | plugin            |
+      | <page>linkposition | footer             | theme_boost_union |
+    And I reload the page
+    Then I should see "<expected>" in the ".footer-content-popover .theme_boost_union_footer_<page>link" "css_element"
+    And I should not see "<unexpected>" in the ".footer-content-popover .theme_boost_union_footer_<page>link" "css_element"
+
+    Examples:
+      | page    | pagetitle                 | expected           | unexpected             |
+      | aboutus | Terms & Conditions        | Terms & Conditions | Terms &amp; Conditions |
+      | aboutus | Terms <b>&</b> Conditions | Terms & Conditions | <b>                    |
