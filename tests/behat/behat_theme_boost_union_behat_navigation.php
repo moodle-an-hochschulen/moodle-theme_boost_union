@@ -41,4 +41,29 @@ use Behat\Mink\Exception\ExpectationException;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_boost_union_behat_navigation extends behat_theme_boost_behat_navigation {
+    /**
+     * Clicks link with specified id|title|alt|text in the primary navigation.
+     *
+     * This step overrides the core step as Boost Union renders the primary navigation with the React-based
+     * core/primarymoremenu template (introduced in Moodle 5.3 with MDL-89294) only as long as no smart menu is configured.
+     * As soon as a smart menu is configured, Boost Union renders the primary navigation with the core/moremenu template
+     * whose container does not carry the primarynav-navbar class which the core step looks for.
+     *
+     * @throws ElementNotFoundException Thrown by behat_base::find
+     * @param string $link
+     */
+    public function i_select_from_primary_navigation(string $link) {
+        // If the React-based primary navigation is rendered, use the core step.
+        $reactnav = $this->getSession()->getPage()->find('css', '.primary-navigation .navigation.primarynav-navbar');
+        if ($reactnav !== null) {
+            parent::i_select_from_primary_navigation($link);
+            return;
+        }
+
+        // Otherwise, click the link in the core/moremenu-based primary navigation.
+        $this->execute(
+            'behat_general::i_click_on_in_the',
+            [$link, 'link', '.primary-navigation .moremenu.navigation', 'css_element']
+        );
+    }
 }

@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-08 - Upgrade: Intermediate fix to use the React-based primary navigation from Moodle core as long as no smart menu is configured and fall back to the core/moremenu-based primary navigation as soon as a smart menu is configured
 * 2026-10-08 - Upgrade: Adopt the 'Collapse all / Expand all' control which Moodle core moved out of section 0 to above the section list in classes/util/section.php
 * 2026-10-08 - Upgrade: Adopt the import sequence of the Boost Core default preset in the preset.scss test fixture
 * 2026-10-08 - Upgrade: Adopt the new FontAwesome bundle location in locallib.php
