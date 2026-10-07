@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-10-07 - Improvement: Add a 'Hide' option to the activity & section navigation elements setting to hide the activity navigation also in course formats which do not use the course index, and clarify the setting description, resolves #1403
+
 ### v4.5-r48
 
 * 2026-10-05 - Tests: Fix stylelint issue for theme/boost_union/tests/fixtures/extscss-invalid.scss, resolves #695

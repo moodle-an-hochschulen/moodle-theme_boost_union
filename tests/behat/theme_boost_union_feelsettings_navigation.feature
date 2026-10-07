@@ -397,7 +397,7 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     Then "#back-to-top" "css_element" should be visible
 
   @javascript
-  Scenario: Setting: Activity navigation - Enable "Activity navigation"
+  Scenario: Setting: Activity navigation - Show "Activity navigation" (and verify the navigation links)
     Given the following config values are set as admin:
       | config             | value | plugin            |
       | activitynavigation | yes   | theme_boost_union |
@@ -413,17 +413,32 @@ Feature: Configuring the theme_boost_union plugin for the "Navigation" tab on th
     And I should see "Forum 3" in the "#next-activity-link" "css_element"
 
   @javascript
-  Scenario: Setting: Activity navigation - Disable "Activity navigation" (countercheck)
+  Scenario Outline: Setting: Activity navigation - Show, hide or do not change "Activity navigation" in course formats with and without course index
     Given the following config values are set as admin:
-      | config             | value | plugin            |
-      | activitynavigation | no    | theme_boost_union |
+      | config             | value     | plugin            |
+      | activitynavigation | <setting> | theme_boost_union |
+    And the following "courses" exist:
+      | fullname | shortname | format   |
+      | Course 2 | C2        | <format> |
+    And the following "course enrolments" exist:
+      | user     | course | role    |
+      | student1 | C2     | student |
     And the following "activities" exist:
-      | activity | name    | course | idnumber |
-      | forum    | Forum 1 | C1     | forum1   |
-      | forum    | Forum 2 | C1     | forum2   |
-      | forum    | Forum 3 | C1     | forum3   |
-    Given I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    When I follow "Forum 2"
-    Then "#prev-activity-link" "css_element" should not exist
-    And "#next-activity-link" "css_element" should not exist
+      | activity | name    | course | idnumber | section |
+      | page     | Page 1  | C2     | page1    | 0       |
+      | page     | Page 2  | C2     | page2    | 0       |
+      | page     | Page 3  | C2     | page3    | 0       |
+    When I am on the "Page 2" "page activity" page logged in as "student1"
+    Then "#prev-activity-link" "css_element" <shouldornot> exist
+    And "#next-activity-link" "css_element" <shouldornot> exist
+    And "#jump-to-activity" "css_element" <shouldornot> exist
+
+    # The 'Custom sections' (topics) format uses the course index, the 'Social' format does not.
+    Examples:
+      | format | setting | shouldornot |
+      | topics | no      | should not  |
+      | topics | yes     | should      |
+      | topics | hide    | should not  |
+      | social | no      | should      |
+      | social | yes     | should      |
+      | social | hide    | should not  |

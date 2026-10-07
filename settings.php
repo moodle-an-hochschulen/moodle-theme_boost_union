@@ -3541,7 +3541,21 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/activitynavigation';
         $title = get_string('activitynavigationsetting', 'theme_boost_union', null, true);
         $description = get_string('activitynavigationsetting_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $activitynavigationoptions = [
+                THEME_BOOST_UNION_SETTING_ACTIVITYNAVIGATION_NOCHANGE =>
+                        get_string('nochange', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_ACTIVITYNAVIGATION_SHOW =>
+                        get_string('show', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_ACTIVITYNAVIGATION_HIDE =>
+                        get_string('hide', 'theme_boost_union'),
+        ];
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_ACTIVITYNAVIGATION_NOCHANGE,
+            $activitynavigationoptions
+        );
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 

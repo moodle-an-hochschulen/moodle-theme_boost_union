@@ -1879,4 +1879,24 @@ class core_renderer extends core_renderer_intermediate {
 
         return html_writer::tag('a', $content, $attributes);
     }
+
+    /**
+     * Returns standard navigation between activities in a course.
+     *
+     * This renderer function is copied and modified from /lib/classes/output/core_renderer.php
+     *
+     * @return string the navigation HTML.
+     */
+    public function activity_navigation() {
+        // If the activity navigation should be hidden.
+        // Moodle core would show the navigation in course formats which do not use the course index
+        // or on pages with the 'frametop' layout, regardless of the theme.
+        $activitynavigation = get_config('theme_boost_union', 'activitynavigation');
+        if ($activitynavigation == THEME_BOOST_UNION_SETTING_ACTIVITYNAVIGATION_HIDE) {
+            return '';
+        }
+
+        // Otherwise, return the parent function.
+        return parent::activity_navigation();
+    }
 }
