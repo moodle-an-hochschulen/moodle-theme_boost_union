@@ -484,6 +484,14 @@ In this tab there are the following settings:
 
 Whatever you add to this textarea will be displayed at the end of a page, in the footer. Refer to the setting description on the settings page for further instructions.
 
+###### Page layouts for footnote
+
+With this setting, you can control on which page layouts the footnote is shown. If no layout is selected, the footnote will not be shown on any layout.
+
+###### Hide footnote when printing
+
+With this setting, you can hide the footnote when a page is printed. The footnote will still be shown on screen as usual.
+
 ##### Footer
 
 ###### Enable footer
