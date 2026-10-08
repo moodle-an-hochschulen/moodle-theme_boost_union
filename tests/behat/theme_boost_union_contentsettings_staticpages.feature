@@ -296,3 +296,34 @@ Feature: Configuring the theme_boost_union plugin for the "Static pages" tab on 
       | page1                    |
       | page2                    |
       | page3                    |
+
+  @javascript
+  Scenario Outline: Setting: Static page page title - Set a custom static page page title with special characters
+    Given the following config values are set as admin:
+      | config          | value              | plugin            |
+      | enable<page>    | yes                | theme_boost_union |
+      | <page>content   | <p>Lorem ipsum</p> | theme_boost_union |
+      | <page>pagetitle | <pagetitle>        | theme_boost_union |
+    When I log in as "admin"
+    And I am on <page> page
+    Then I should see "<expected>" in the "div[role='main'] h2" "css_element"
+    And I should not see "<unexpected>" in the "div[role='main'] h2" "css_element"
+    And "//title[contains(text(),'<expected>')]" "xpath_element" should exist
+    And the following config values are set as admin:
+      | config             | value              | plugin            |
+      | <page>linkposition | footnote           | theme_boost_union |
+    And I reload the page
+    Then I should see "<expected>" in the "#footnote .theme_boost_union_footnote_<page>link" "css_element"
+    And I should not see "<unexpected>" in the "#footnote .theme_boost_union_footnote_<page>link" "css_element"
+    And the following config values are set as admin:
+      | config             | value              | plugin            |
+      | <page>linkposition | footer             | theme_boost_union |
+    And I reload the page
+    And I click on ".btn-footer-popover" "css_element" in the "#page-footer" "css_element"
+    Then I should see "<expected>" in the ".footer .popover-body .theme_boost_union_footer_<page>link" "css_element"
+    And I should not see "<unexpected>" in the ".footer .popover-body .theme_boost_union_footer_<page>link" "css_element"
+
+    Examples:
+      | page    | pagetitle                 | expected           | unexpected             |
+      | aboutus | Terms & Conditions        | Terms & Conditions | Terms &amp; Conditions |
+      | aboutus | Terms <b>&</b> Conditions | Terms & Conditions | <b>                    |
