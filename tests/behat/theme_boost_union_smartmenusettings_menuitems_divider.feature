@@ -7,7 +7,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
   Background:
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Quick links                                      |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
     And the following "theme_boost_union > smart menu item" exists:
       | menu     | Quick links |
       | itemtype | Divider     |
@@ -18,7 +18,5 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     Then ".dropdown-divider" "css_element" should exist in the ".primary-navigation" "css_element"
     # Divider in user menu.
     And ".dropdown-divider" "css_element" should exist in the "#usermenu-carousel" "css_element"
-    # Divider in bottom menu.
-    And ".dropdown-divider" "css_element" should exist in the ".bottom-navigation" "css_element"
     # Divider in menubar.
     And ".dropdown-divider" "css_element" should exist in the "nav.menubar" "css_element"

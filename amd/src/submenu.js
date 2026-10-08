@@ -36,16 +36,10 @@ const Selectors = {
     smartMenuCarouselItem: '[data-bs-toggle="smartmenu-carousel"] .carousel-item',
     smartMenuCarouselItemActive: '[data-bs-toggle="smartmenu-carousel"] .carousel-item.active',
     smartMenuCarouselNavigationLink: '[data-bs-toggle="smartmenu-carousel"] .carousel-navigation-link',
-    smartMenuDropDownItems: 'ul.dropdown-menu li.nav-item',
-    dropDownMenu: '.dropdown-menu',
-    roleMenu: '[role="menu"]',
     attr: {
         smartMenuCarouselTargetAttr: 'data-carousel-target-id',
         smartMenuCarouselNavigationClass: 'carousel-navigation-link',
     },
-    region: {
-        dropDown: '[data-region="moredropdown"]'
-    }
 };
 
 /**
@@ -121,143 +115,6 @@ const registerEventListeners = (smartMenu) => {
 };
 
 /**
- * Sets up the visibility and positions of card menus inside the moremenu.
- */
-const moreMenuCardItem = () => {
-
-    window.onresize = () => initMoreMenuCardItem();
-
-    /**
-     * Fetches the primary and menubar navigations moremenu and registers the card menu update.
-     */
-    const initMoreMenuCardItem = () => {
-        // Get the primary navigation more menu and initialize card menu update.
-        var primaryNav = document.querySelector('.primary-navigation ul.more-nav .dropdownmoremenu');
-        if (primaryNav !== null) { // Confirm the primary navigation exists.
-            registerMoreMenuCardItem(primaryNav);
-        }
-
-        // Get the menubar more menu and initialize card menu update.
-        var menuBar = document.querySelector('nav.menubar ul.more-nav .dropdownmoremenu');
-        if (menuBar !== null) { // Confirm the menubar exists.
-            registerMoreMenuCardItem(menuBar);
-        }
-    };
-
-    /**
-     * Registers the click event on the moremenu to update the menus width and position
-     * and the visibility of card menus inside the more menu.
-     *
-     * @param {HTMLElement} moreMenu The more menu element.
-     * @returns {void}
-     */
-    const registerMoreMenuCardItem = (moreMenu) => {
-
-        // Fetch the list of moved menu items from ul.dropdown-menu li.nav-items.
-        var items = moreMenu.querySelectorAll(Selectors.smartMenuDropDownItems);
-
-        if (items.length <= 0) {
-            return;
-        }
-
-        // Close the dropdown menu of the more menu to prevent faulty clicks on elements moved outside
-        // of the more menu during resizing.
-        var subMenuDropDownMenu = moreMenu.querySelectorAll(Selectors.dropDownMenu + ' ' + Selectors.dropDownMenu);
-        if (subMenuDropDownMenu !== null) {
-            Array.from(subMenuDropDownMenu).forEach((e) => e.classList.remove('show'));
-        }
-
-        // Hide the opened card menus when the carousel item is clicked.
-        moreMenu.removeEventListener('click', hideCardMenus, true);
-        moreMenu.addEventListener('click', hideCardMenus, true);
-
-        // Remove the width of card menus moved to outside from more menu.
-        if (moreMenu.parentNode.querySelectorAll('.dropdown.card-dropdown')) {
-            moreMenu.parentNode.querySelectorAll('.dropdown.card-dropdown').forEach((e) => {
-                var cardDropDown = e.querySelector(Selectors.dropDownMenu);
-                if (cardDropDown !== null) {
-                    cardDropDown.style.removeProperty('width');
-                    cardDropDown.style.removeProperty('left');
-                    cardDropDown.style.removeProperty('right');
-                }
-            });
-        }
-        // Parent moremenu.
-        var parentMenu = moreMenu.parentNode;
-        // Hide all opened card menus on dropdown shown.
-        parentMenu.addEventListener('shown.bs.dropdown', hideOpenMenus);
-        parentMenu.addEventListener('hidden.bs.dropdown', hideOpenMenus);
-    };
-
-    /**
-     * Hide all the opened card menus on dropdown shown.
-     * @param { Event } e The click event.
-     */
-    const hideOpenMenus = (e) => {
-        if (e.target.matches('.dropdownmoremenu')) {
-            var subMenuDropDownMenu = e.currentTarget.querySelectorAll(Selectors.dropDownMenu + ' ' + Selectors.dropDownMenu);
-            if (subMenuDropDownMenu !== null) {
-                Array.from(subMenuDropDownMenu).forEach((e) => e.classList.remove('show'));
-            }
-        }
-    };
-
-    /**
-     * Hides the opened card menus when a carousel item is clicked. Update the current active card menus position and width.
-     *
-     * @param { Event } e The click event.
-     * @returns { void}
-     */
-    const hideCardMenus = e => {
-        var moreMenu = e.target.closest(Selectors.region.dropDown);
-        if (moreMenu && moreMenu.querySelectorAll(Selectors.dropDownMenu)) {
-            moreMenu.querySelectorAll(Selectors.dropDownMenu).forEach((dropdownmenu) => {
-
-                // Hide the nav items other than this target and the carousel navigation links.
-                if (!e.target.isEqualNode(dropdownmenu.previousElementSibling)
-                    && !e.target.matches(Selectors.smartMenuCarouselNavigationLink)
-                    && e.target.matches('.dropdown-toggle.dropdown-item')) {
-                    dropdownmenu.classList.remove('show');
-                }
-                // If the target is a card dropdown link, then update the width of this card dropdown.
-                if (e.target.isEqualNode(dropdownmenu.previousElementSibling)
-                    && e.target.parentNode.matches('.dropdown.card-dropdown')) {
-                    updatePosition(e);
-                }
-            });
-        }
-    };
-
-    /**
-     * Update the position and width of the card menus inside the moremenu.
-     *
-     * @param {event} e
-     */
-    const updatePosition = e => {
-
-        const innerMenu = e.target.parentNode.querySelector(Selectors.roleMenu);
-
-        if (innerMenu) {
-            // Calculate and adjust the position of the card menu based on the dropdown menu's position.
-            var dropDown = innerMenu.parentNode.closest(Selectors.dropDownMenu);
-            var rect = dropDown.getBoundingClientRect();
-            var right = document.scrollingElement.clientWidth - rect.right;
-
-            // Use the left section of the moremenu dropdown.
-            if (rect.left >= right) {
-                innerMenu.style.width = rect.left + 'px';
-                innerMenu.style.left = 0;
-            } else {
-                // Use the right side of the moremenu dropdown.
-                innerMenu.style.width = right + 'px';
-                innerMenu.style.left = 'inherit';
-                innerMenu.style.right = 0;
-            }
-        }
-    };
-};
-
-/**
  * Initialize the sub menus.
  */
 const init = () => {
@@ -268,9 +125,6 @@ const init = () => {
     if (smartMenus !== undefined && smartMenus.length !== null) {
         smartMenus.forEach((e) => registerEventListeners(e));
     }
-
-    // Calculate and setup the card menus width and positions inside the more menu.
-    moreMenuCardItem();
 };
 
 export default {

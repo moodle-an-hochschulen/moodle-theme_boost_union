@@ -7,7 +7,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
   Background:
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Quick links                                      |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
 
   Scenario: Smartmenus: Menu items: Management - When a smart menu is just created, no smart menu items exist
     When I log in as "admin"
@@ -35,7 +35,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
       | Info  |
     And I should see "Info" in the "smartmenus_items" "table"
     And ".smartmenu-items-actions" "css_element" should exist in the "smartmenus_items" "table"
-    And I should see smart menu "Quick links" item "Info" in location "Main, Menu, User, Bottom"
+    And I should see smart menu "Quick links" item "Info" in location "Main, Menu, User"
 
   Scenario: Smartmenus: Menu items: Management - Edit an existing smart menu item
     Given the following "theme_boost_union > smart menu item" exists:
@@ -99,8 +99,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I click on ".action-edit" "css_element" in the "table#smartmenus_items #smartmenu_items_r1" "css_element"
     And I set the field "Title" to "External Resources"
     And I click on "Save changes" "button"
-    Then I should see smart menu "Quick links" item "Info" in location "Main, Menu, User, Bottom"
-    And I should see smart menu "Quick links" item "External Resources" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Quick links" item "Info" in location "Main, Menu, User"
+    And I should see smart menu "Quick links" item "External Resources" in location "Main, Menu, User"
 
   Scenario: Smartmenus: Menu items: Management - Modify the visibility of an existing smart menu item
     Given the following "theme_boost_union > smart menu item" exists:
@@ -119,13 +119,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
       | Info  |
     And ".action-hide" "css_element" should exist in the "Info" "table_row"
     And ".action-show" "css_element" should not exist in the "Info" "table_row"
-    Then I should see smart menu "Quick links" item "Info" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Quick links" item "Info" in location "Main, Menu, User"
     And I click on ".action-hide" "css_element" in the "Info" "table_row"
-    Then I should not see smart menu "Quick links" item "Info" in location "Main, Menu, User, Bottom"
+    Then I should not see smart menu "Quick links" item "Info" in location "Main, Menu, User"
     And ".action-hide" "css_element" should not exist in the "Info" "table_row"
     And ".action-show" "css_element" should exist in the "Info" "table_row"
     And I click on ".action-show" "css_element" in the "Info" "table_row"
-    Then I should see smart menu "Quick links" item "Info" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Quick links" item "Info" in location "Main, Menu, User"
 
   Scenario: Smartmenus: Menu items: Management - Move an existing smart menu item up and down
     Given the following "theme_boost_union > smart menu item" exists:

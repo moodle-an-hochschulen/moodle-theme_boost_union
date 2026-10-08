@@ -129,9 +129,6 @@ class primary extends \core\navigation\output\primary {
         // (There is no need to concert the submenus in this case).
         $locationusermenus = smartmenu::get_menus_forlocation(smartmenu::LOCATION_USER, $smartmenus);
 
-        // Separate the menus for the bottom menu location.
-        $locationbottommenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_BOTTOM, $smartmenus);
-
         // Primary menu.
         // Merge the smart menu nodes which contain the main menu location with the primary and custom menu nodes.
         // Update the active and open states to the nodes based on the current page.
@@ -178,38 +175,9 @@ class primary extends \core\navigation\output\primary {
             $menubartemplatedata['classes'] = implode(' ', $menubarclasses);
         }
 
-        // Bottom bar.
-        // Include the menu navigation menus to the mobile menu when the bottom bar doesn't have any menus.
-        // Mobile navigation menu, uses the expand/collapse method for submenus, for the reason the unconverted menus are used.
-        $locationbottommenuscustommerged = array_merge($this->get_custom_menu($output), $locationbottommenu);
-        $mobileprimarynav = (!empty($locationbottommenu))
-            ? $this->merge_primary_and_custom(
-                $this->get_primary_nav(),
-                $locationbottommenuscustommerged,
-                true
-            )
-            : $this->merge_primary_and_custom(
-                $this->get_primary_nav(),
-                $locationmainmenucustommerged,
-                true
-            );
-
-        if (!empty($mobileprimarynav)) {
-            // Merge the bottom menu with main menu if there is any bottom menu available. otherwise use the main menu.
-            // And convert the children menu items into submenus.
-            $bottomprimarynav = (!empty($locationbottommenu))
-                ? $this->merge_primary_and_custom($this->get_primary_nav(), $locationbottommenuscustommerged, true)
-                : $this->merge_primary_and_custom($this->get_primary_nav(), $locationmainmenucustommerged, true);
-            $locationbottommenuconverted = $this->convert_submenus($bottomprimarynav);
-
-            $bottombar = new \core\navigation\output\more_menu(
-                (object) $locationbottommenuconverted,
-                'navbar-nav-bottom-bar',
-                false
-            );
-            $bottombardata = $bottombar->export_for_template($output);
-            $bottombardata['drawer'] = (!empty($locationbottommenu)) ? true : false;
-        }
+        // Mobile primary navigation.
+        // The mobile navigation menu uses the expand/collapse method for submenus, for this reason the unconverted menus are used.
+        $mobileprimarynav = $this->merge_primary_and_custom($this->get_primary_nav(), $locationmainmenucustommerged, true);
 
         // Usermenu.
         // Merge the smartmenu nodes which contains the location for user menu, with the default core user menu nodes.
@@ -220,8 +188,7 @@ class primary extends \core\navigation\output\primary {
         // Check if any of the smartmenus are going to be included on the page.
         // This is used as flag to include the smart menu's JS file in mustache templates later
         // as well as for controlling the smart menu SCSS.
-        $includesmartmenu = (!empty($locationmainmenu) || !empty($locationmenubarmenu) ||
-                !empty($locationusermenus) || !empty($locationbottommenu));
+        $includesmartmenu = (!empty($locationmainmenu) || !empty($locationmenubarmenu) || !empty($locationusermenus));
 
         // Check if any of the rendered smart menu items requires client-side starred-courses cache invalidation.
         $includestarredcacheinvalidation = $this->smartmenus_require_starred_cacheinvalidation($cache);
@@ -232,7 +199,6 @@ class primary extends \core\navigation\output\primary {
             'menubar' => $menubartemplatedata ?? false,
             'lang' => !isloggedin() || isguestuser() ? $languagemenu->export_for_template($output) : [],
             'user' => $usermenu ?? [],
-            'bottombar' => $bottombardata ?? false,
             'includesmartmenu' => $includesmartmenu ? true : false,
             'includestarredcacheinvalidation' => $includestarredcacheinvalidation ? true : false,
         ];
@@ -442,8 +408,8 @@ class primary extends \core\navigation\output\primary {
                 continue;
             }
 
-            // The given menu doesn't contain any children menus or is card menu.
-            if (!$parentmenu->haschildren || $parentmenu->card) {
+            // The given menu doesn't contain any children menus.
+            if (!$parentmenu->haschildren) {
                 // Continue to the next menu.
                 continue;
             }

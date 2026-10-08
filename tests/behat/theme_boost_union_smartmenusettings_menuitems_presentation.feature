@@ -27,7 +27,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | user1    |
     And the following "theme_boost_union > smart menu" exists:
       | title    | Quick links                                      |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
 
   Scenario Outline: Smartmenus: Menu items: Presentation - Open the smart menu items in different targets
     Given the following "theme_boost_union > smart menu item" exists:
@@ -41,7 +41,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then the "target" attribute of "Test course1" "theme_boost_union > Main menu smart menu item" <should>
     And the "target" attribute of "Test course1" "theme_boost_union > User menu smart menu item" <should>
     And the "target" attribute of "Test course1" "theme_boost_union > Menu bar smart menu item" <should>
-    And the "target" attribute of "Test course1" "theme_boost_union > Bottom bar smart menu item" <should>
 
     Examples:
       | setting     | should                  |
@@ -59,7 +58,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then the "class" attribute of "Resources" "theme_boost_union > Main menu smart menu item" should contain "static-item-resources"
     And the "class" attribute of "Resources" "theme_boost_union > User menu smart menu item" should contain "static-item-resources"
     And the "class" attribute of "Resources" "theme_boost_union > Menu bar smart menu item" should contain "static-item-resources"
-    And the "class" attribute of "Resources" "theme_boost_union > Bottom bar smart menu item" should contain "static-item-resources"
 
   Scenario Outline: Smartmenus: Menu items: Presentation - Display the different fields as smart menu item title
     Given the following "theme_boost_union > smart menu item" exists:
@@ -70,8 +68,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | displayfield            | <firstlinefield>  |
       | displayfieldcustomfield | <firstlinecustom> |
     When I log in as "admin"
-    Then I should see smart menu "Quick links" item "<showntitle>" in location "Main, Menu, User, Bottom"
-    And I should not see smart menu "Quick links" item "<notshowntitle>" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Quick links" item "<showntitle>" in location "Main, Menu, User"
+    And I should not see smart menu "Quick links" item "<notshowntitle>" in location "Main, Menu, User"
 
     Examples:
       | firstlinefield                          | firstlinecustom | showntitle             | notshowntitle |
@@ -95,7 +93,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | displayfieldsecond            | <secondlinefield>  |
       | displayfieldsecondcustomfield | <secondlinecustom> |
     When I log in as "admin"
-    Then I should see smart menu "Quick links" item "<showntitle>" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Quick links" item "<showntitle>" in location "Main, Menu, User"
 
     Examples:
       | firstlinefield      | firstlinecustom | secondlinefield     | secondlinecustom | showntitle   |
@@ -114,8 +112,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | displayfieldcustomfield | testcf               |
       | displayfieldsecond      | -- No second line -- |
     When I log in as "admin"
-    Then I should not see smart menu "Quick links" item "Test course1" in location "Main, Menu, User, Bottom"
-    And I should not see smart menu "Quick links" item "C1" in location "Main, Menu, User, Bottom"
+    Then I should not see smart menu "Quick links" item "Test course1" in location "Main, Menu, User"
+    And I should not see smart menu "Quick links" item "C1" in location "Main, Menu, User"
     And ".boost-union-smartmenu-secondline" "css_element" should not exist
 
   Scenario Outline: Smartmenus: Menu items: Presentation - Display the smart menu item course full name with a word count
@@ -131,8 +129,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | displayfieldsecondcustomfield | <secondlinecustom>       |
       | textcountsecond               | <secondlinewords>        |
     When I log in as "admin"
-    Then I should see smart menu "Quick links" item "<showntitle>" in location "Main, Menu, User, Bottom"
-    And I should not see smart menu "Quick links" item "<notshowntitle>" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Quick links" item "<showntitle>" in location "Main, Menu, User"
+    And I should not see smart menu "Quick links" item "<notshowntitle>" in location "Main, Menu, User"
 
     Examples:
       | firstlinefield                         | firstlinecustom | numberofwords | secondlinefield      | secondlinecustom | secondlinewords | showntitle                                           | notshowntitle          |
@@ -169,7 +167,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Static             |
       | url      | https://moodle.org |
     When I log in as "admin"
-    And I should see smart menu "Quick links" item "External links" in location "Main, Menu, User, Bottom"
+    And I should see smart menu "Quick links" item "External links" in location "Main, Menu, User"
     # Menu items in the main menu.
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
     Then I should see "External links" in the ".primary-navigation .menu-item-heading" "css_element"
@@ -189,13 +187,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I should see "Resources" in the "#usermenu-carousel .menu-item-static" "css_element"
     And the "href" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(@class, 'menu-item-heading')]" "xpath_element" should contain "#"
     And the "href" attribute of "//div[contains(@id, 'usermenu-carousel')]//div[contains(@class, 'carousel-item')]//a[contains(@class, 'menu-item-static')]" "xpath_element" should contain "https://moodle.org"
-    # Menu items in bottom menu.
-    And I change viewport size to "740x900"
-    And I click on "Quick links" "link" in the ".bottom-navigation" "css_element"
-    Then I should see "External links" in the ".bottom-navigation .menu-item-heading" "css_element"
-    And I should see "Resources" in the ".bottom-navigation .menu-item-static" "css_element"
-    And the "href" attribute of "//div[@class='bottom-navigation']//a[contains(@class, 'menu-item-heading')]" "xpath_element" should contain "#"
-    And the "href" attribute of "//div[@class='bottom-navigation']//a[contains(@class, 'menu-item-static')]" "xpath_element" should contain "https://moodle.org"
 
   Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different order
     Given the following "theme_boost_union > smart menu item" exists:
@@ -257,7 +248,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I change viewport size to "mobile"
     Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Menu bar smart menu" should not be visible
     And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
-    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Bottom bar smart menu" should not be visible
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different viewports - hide the menu items on tablet and mobile devices
@@ -279,7 +269,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I change viewport size to "mobile"
     Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Menu bar smart menu" should not be visible
     And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
-    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Bottom bar smart menu" should not be visible
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different viewports - hide the menu items on desktop devices
@@ -301,7 +290,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then I should see smart menu "Quick links" item "Resources" in location "Main"
     And I change viewport size to "mobile"
     Then I should see smart menu "Quick links" item "Resources" in location "Menu, User"
-    And I should see smart menu "Quick links" item "Resources" in location "Bottom"
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different viewports - hide the menu items on desktop and mobile devices
@@ -324,7 +312,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I change viewport size to "mobile"
     Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Menu bar smart menu" should not be visible
     And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
-    And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Bottom bar smart menu" should not be visible
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Select an existing icon from the icon autocomplete list
@@ -376,22 +363,15 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And ".<faicon>" "css_element" should exist in the ".boost-union-menubar .dropdown-item" "css_element"
     And ".<faicon>" "css_element" should exist in the "#usermenu-carousel .carousel-item.submenu .dropdown-item" "css_element"
     And I <desktoptextcheck> see "Resources" in the ".primary-navigation .dropdown-item.menu-item-heading" "css_element"
-    And I change viewport size to "mobile"
-    And I click on "More" "button" in the ".bottom-navigation" "css_element"
-    And I click on "Quick links" "link" in the "#theme_boost-drawers-primary" "css_element"
-    Then ".<faicon>" "css_element" should exist in the ".primary-navigation .dropdown-item.menu-item-heading" "css_element"
-    And ".<faicon>" "css_element" should exist in the ".boost-union-menubar .dropdown-item" "css_element"
-    And ".<faicon>" "css_element" should exist in the "#usermenu-carousel .carousel-item.submenu .dropdown-item" "css_element"
-    And I <mobiletextcheck> see "Resources" in the "#theme_boost-drawers-primary" "css_element"
 
     Examples:
-      | presentationtitle                                      | iconname          | iconvalue                        | iconbadge         | faicon         | desktoptextcheck | mobiletextcheck |
-      | Show text and icon as title                            | fa-circle-info    | theme_boost_union:fa-circle-info | FontAwesome Solid | fa-circle-info | should           | should          |
-      | Show text and icon as title                            | core:i/circleinfo | core:i/circleinfo                | Moodle core       | fa-circle-info | should           | should          |
-      | Hide title text and show only icon (on all devices)    | fa-circle-info    | theme_boost_union:fa-circle-info | FontAwesome Solid | fa-circle-info | should not       | should not      |
-      | Hide title text and show only icon (on all devices)    | core:i/circleinfo | core:i/circleinfo                | Moodle core       | fa-circle-info | should not       | should not      |
-      | Hide title text and show only icon (on mobile devices) | fa-circle-info    | theme_boost_union:fa-circle-info | FontAwesome Solid | fa-circle-info | should           | should not      |
-      | Hide title text and show only icon (on mobile devices) | core:i/circleinfo | core:i/circleinfo                | Moodle core       | fa-circle-info | should           | should not      |
+      | presentationtitle                                      | iconname          | iconvalue                        | iconbadge         | faicon         | desktoptextcheck |
+      | Show text and icon as title                            | fa-circle-info    | theme_boost_union:fa-circle-info | FontAwesome Solid | fa-circle-info | should           |
+      | Show text and icon as title                            | core:i/circleinfo | core:i/circleinfo                | Moodle core       | fa-circle-info | should           |
+      | Hide title text and show only icon (on all devices)    | fa-circle-info    | theme_boost_union:fa-circle-info | FontAwesome Solid | fa-circle-info | should not       |
+      | Hide title text and show only icon (on all devices)    | core:i/circleinfo | core:i/circleinfo                | Moodle core       | fa-circle-info | should not       |
+      | Hide title text and show only icon (on mobile devices) | fa-circle-info    | theme_boost_union:fa-circle-info | FontAwesome Solid | fa-circle-info | should           |
+      | Hide title text and show only icon (on mobile devices) | core:i/circleinfo | core:i/circleinfo                | Moodle core       | fa-circle-info | should           |
 
   @javascript
   Scenario Outline: Smartmenus: Menu items: Presentation - Display the tooltip on hover over the menu items
@@ -412,78 +392,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | External links | should      |
       |                | should not  |
 
-  @javascript
-  Scenario: Smartmenus: Menu items: Presentation - Display the card type menu items title with different position and color
-    When I log in as "admin"
-    And I navigate to smart menus
-    And I click on ".action-edit" "css_element" in the "Quick links" "table_row"
-    And I set the field "Presentation type" to "Card"
-    And I click on "Save and return" "button"
-    And the following "theme_boost_union > smart menu item" exists:
-      | menu         | Quick links          |
-      | title        | Resources below      |
-      | itemtype     | Static               |
-      | url          | https://moodle.org/1 |
-      | textposition | Below image          |
-      | textcolor    | #FFFEFF              |
-    And the following "theme_boost_union > smart menu item" exists:
-      | menu         | Quick links          |
-      | title        | Resources top        |
-      | itemtype     | Static               |
-      | url          | https://moodle.org/2 |
-      | textposition | Top overlay          |
-      | textcolor    | #230017              |
-    And the following "theme_boost_union > smart menu item" exists:
-      | menu         | Quick links          |
-      | title        | Resources bottom     |
-      | itemtype     | Static               |
-      | url          | https://moodle.org/3 |
-      | textposition | Bottom overlay       |
-    And all Boost Union MUC caches are purged
-    And I am on homepage
-    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
-    Then I should see "Resources below" in the ".primary-navigation .dropdown-menu.show" "css_element"
-    And "//div[contains(@class, 'card-text-below')]//a[contains(., 'Resources below')]" "xpath_element" should exist
-    And DOM element ".dropdown-menu.show .card-text-below .content-block a.dropdown-item" should have computed style "color" "rgb(255, 254, 255)"
-    And I should see "Resources top" in the ".primary-navigation .dropdown-menu.show" "css_element"
-    And "//div[contains(@class, 'card-text-overlay-top')]//a[contains(., 'Resources top')]" "xpath_element" should exist
-    And DOM element ".dropdown-menu.show .card-text-overlay-top .content-block a.dropdown-item" should have computed style "color" "rgb(35, 0, 23)"
-    And DOM element ".dropdown-menu.show .card-text-overlay-top .content-block" should have computed style "position" "absolute"
-    And I should see "Resources bottom" in the ".primary-navigation .dropdown-menu.show" "css_element"
-    And "//div[contains(@class, 'card-text-overlay-bottom')]//a[contains(., 'Resources bottom')]" "xpath_element" should exist
-    And DOM element ".dropdown-menu.show .card-text-overlay-bottom .content-block" should have computed style "position" "absolute"
-    And DOM element ".dropdown-menu.show .card-text-overlay-bottom .content-block" should have computed style "align-items" "flex-end"
-
-  @javascript @_file_upload
-  Scenario: Smartmenus: Menu items: Presentation - Display the card type menu item with background image and colors
-    When I log in as "admin"
-    And I navigate to smart menus
-    And I click on ".action-edit" "css_element" in the "Quick links" "table_row"
-    And I set the field "Presentation type" to "Card"
-    And I click on "Save and return" "button"
-    And the following "theme_boost_union > smart menu item" exists:
-      | menu            | Quick links         |
-      | title           | Resources           |
-      | itemtype        | Static              |
-      | url             | https://example.com |
-      | backgroundcolor | #031FC3             |
-    And all Boost Union MUC caches are purged
-    And I am on homepage
-    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
-    Then DOM element ".dropdown-menu .menu-item-static .content-block" should have computed style "background-color" "rgb(3, 31, 195)"
-    And I click on "Quick links" "link" in the ".boost-union-menubar" "css_element"
-    And DOM element ".boost-union-menubar .dropdown-menu.show .content-block" should have computed style "background-color" "rgb(3, 31, 195)"
-    And I click on "Quick links" "link" in the ".boost-union-menubar" "css_element"
-    And I navigate to smart menu "Quick links" items
-    And I click on ".action-edit" "css_element" in the "Resources" "table_row"
-    And I expand all fieldsets
-    And I upload "theme/boost_union/tests/fixtures/backimg.png" file to "Card image" filemanager
-    And I click on "Save changes" "button"
-    And all Boost Union MUC caches are purged
-    And I am on homepage
-    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
-    Then the image at "//div[contains(@class, 'primary-navigation')]//img[contains(@src, 'pluginfile.php') and contains(@src, '/theme_boost_union/smartmenus_itemimage/')]" "xpath_element" should be identical to "theme/boost_union/tests/fixtures/backimg.png"
-
   Scenario: Smartmenu: Menu items: Presentation - Add a smart menu item with multilang tags
     Given the following "language packs" exist:
       | language |
@@ -501,30 +409,28 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I set the field "Preferred language" to "English ‎(en)‎"
     And I press "Save changes"
     And I am on homepage
-    Then I should see smart menu "Quick links" item "Lorem ipsum" in location "Main, Menu, User, Bottom"
-    And I should not see smart menu "Quick links" item "Dolor sit amet" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Quick links" item "Lorem ipsum" in location "Main, Menu, User"
+    And I should not see smart menu "Quick links" item "Dolor sit amet" in location "Main, Menu, User"
     And I follow "Preferences" in the user menu
     And I click on "Preferred language" "link"
     And I set the field "Preferred language" to "Deutsch ‎(de)‎"
     And I press "Save changes"
     And I am on homepage
-    Then I should see smart menu "Quick links" item "Dolor sit amet" in location "Main, Menu, User, Bottom"
-    And I should not see smart menu "Quick links" item "Lorem ipsum" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Quick links" item "Dolor sit amet" in location "Main, Menu, User"
+    And I should not see smart menu "Quick links" item "Lorem ipsum" in location "Main, Menu, User"
 
   Scenario: Smartmenus: Menu items: Presentation - Hide empty menus (in submenu mode)
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Links                                            |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
       | mode     | Submenu                                          |
     When I log in as "admin"
     And "Links" "theme_boost_union > Main menu smart menu" should not exist
     And "Links" "theme_boost_union > Menu bar smart menu" should not exist
     And "Links" "theme_boost_union > User menu smart menu" should not exist
-    And "Links" "theme_boost_union > Bottom bar smart menu" should not exist
     And "Smartmenu Resource" "theme_boost_union > Main menu smart menu item" should not exist
     And "Smartmenu Resource" "theme_boost_union > Menu bar smart menu item" should not exist
     And "Smartmenu Resource" "theme_boost_union > User menu smart menu item" should not exist
-    And "Smartmenu Resource" "theme_boost_union > Bottom bar smart menu item" should not exist
     And the following "theme_boost_union > smart menu item" exists:
       | menu     | Links              |
       | title    | Smartmenu Resource |
@@ -535,22 +441,19 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then "Links" "theme_boost_union > Main menu smart menu" should exist
     And "Links" "theme_boost_union > Menu bar smart menu" should exist
     And "Links" "theme_boost_union > User menu smart menu" should exist
-    And "Links" "theme_boost_union > Bottom bar smart menu" should exist
 
   Scenario: Smartmenus: Menu items: Presentation - Hide empty menus (in inline mode)
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Links                                            |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
       | mode     | Inline                                           |
     When I log in as "admin"
     And "Links" "theme_boost_union > Main menu smart menu" should not exist
     And "Links" "theme_boost_union > Menu bar smart menu" should not exist
     And "Links" "theme_boost_union > User menu smart menu" should not exist
-    And "Links" "theme_boost_union > Bottom bar smart menu" should not exist
     And "Smartmenu Resource" "theme_boost_union > Main menu smart menu item" should not exist
     And "Smartmenu Resource" "theme_boost_union > Menu bar smart menu item" should not exist
     And "Smartmenu Resource" "theme_boost_union > User menu smart menu item" should not exist
-    And "Smartmenu Resource" "theme_boost_union > Bottom bar smart menu item" should not exist
     And the following "theme_boost_union > smart menu item" exists:
       | menu     | Links              |
       | title    | Smartmenu Resource |
@@ -561,57 +464,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then "Smartmenu Resource" "theme_boost_union > Main menu smart menu item" should exist
     And "Smartmenu Resource" "theme_boost_union > Menu bar smart menu item" should exist
     And "Smartmenu Resource" "theme_boost_union > User menu smart menu item" should exist
-    And "Smartmenu Resource" "theme_boost_union > Bottom bar smart menu item" should exist
-
-  Scenario Outline: Smartmenus: Menu items: Presentation - Image alt text for the dynamic menu items
-    Given the following "theme_boost_union > smart menu" exists:
-      | title    | Courses                                          |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
-      | type     | Card                                             |
-    And the following "theme_boost_union > smart menu item" exists:
-      | menu     | Courses           |
-      | title    | Available courses |
-      | itemtype | Dynamic courses   |
-      | category | 0                 |
-      | itemmode | Inline            |
-      | imagealt | <setting>         |
-    When I log in as "admin"
-    Then the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Test course1')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<testcourse1result>"
-    And the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Test course2')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<testcourse2result>"
-    And the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Test course word count')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<testcourse3result>"
-
-    Examples:
-      | setting                     | testcourse1result            | testcourse2result            | testcourse3result                      |
-      | Image of course             | Image of course              | Image of course              | Image of course                        |
-      | Image of course {menutitle} | Image of course Test course1 | Image of course Test course2 | Image of course Test course word count |
-      |                             | Test course1                 | Test course2                 | Test course word count                 |
-
-  Scenario Outline: Smartmenus: Menu items: Presentation - Image alt text for the static menu items
-    Given the following "theme_boost_union > smart menu" exists:
-      | title    | Links                                            |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
-      | type     | Card                                             |
-    And the following "theme_boost_union > smart menu item" exists:
-      | menu     | Links             |
-      | title    | Moodle org        |
-      | itemtype | Static            |
-      | url      | http://moodle.org |
-      | imagealt | <link1setting>    |
-    And the following "theme_boost_union > smart menu item" exists:
-      | menu     | Links                       |
-      | title    | Moodle Plugins              |
-      | itemtype | Static                      |
-      | url      | https://moodle.org/plugins/ |
-      | imagealt | <link2setting>              |
-    When I log in as "admin"
-    Then the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Moodle org')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<link1result>"
-    And the "alt" attribute of "//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]//a[contains(normalize-space(.), 'Moodle Plugins')]//ancestor-or-self::div[@class='content-block']/parent::div//div[@class='img-block']//img" "xpath_element" should contain "<link2result>"
-
-    Examples:
-      | link1setting                  | link2setting                      | link1result                   | link2result                       |
-      | Image of moodle official site | Image of moodle plugins directory | Image of moodle official site | Image of moodle plugins directory |
-      | Image of {menutitle}          | Image of {menutitle}              | Image of Moodle org           | Image of Moodle Plugins           |
-      |                               |                                   | Moodle org                    | Moodle Plugins                    |
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Make full submenu header clickable

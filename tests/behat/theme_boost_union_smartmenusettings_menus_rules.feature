@@ -42,7 +42,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I press "Save changes"
     And the following "theme_boost_union > smart menu" exists:
       | title       | Role links                                       |
-      | location    | Main navigation, Menu bar, User menu, Bottom bar |
+      | location    | Main navigation, Menu bar, User menu             |
       | roles       | <byrole>                                         |
       | rolecontext | <context>                                        |
     And the following "theme_boost_union > smart menu item" exists:
@@ -51,25 +51,25 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Static             |
       | url      | https://moodle.org |
     When I am on homepage
-    Then I <adminshouldorshouldnot> see smart menu "Role links" in location "Main, Menu, User, Bottom"
+    Then I <adminshouldorshouldnot> see smart menu "Role links" in location "Main, Menu, User"
     And I log out
     And I log in as "coursemanager"
-    Then I <managershouldorshouldnot> see smart menu "Role links" in location "Main, Menu, User, Bottom"
+    Then I <managershouldorshouldnot> see smart menu "Role links" in location "Main, Menu, User"
     And I log out
     And I log in as "student1"
-    Then I <student1shouldorshouldnot> see smart menu "Role links" in location "Main, Menu, User, Bottom"
+    Then I <student1shouldorshouldnot> see smart menu "Role links" in location "Main, Menu, User"
     And I log out
     And I log in as "teacher"
-    Then I <teachershouldorshouldnot> see smart menu "Role links" in location "Main, Menu, User, Bottom"
+    Then I <teachershouldorshouldnot> see smart menu "Role links" in location "Main, Menu, User"
     And I log out
     And I log in as "systemmanager"
-    Then I <systemshouldorshouldnot> see smart menu "Role links" in location "Main, Menu, User, Bottom"
+    Then I <systemshouldorshouldnot> see smart menu "Role links" in location "Main, Menu, User"
     And I log out
     And I log in as "guest"
-    Then I <guestshouldorshouldnot> see smart menu "Role links" in location "Main, Menu, Bottom"
+    Then I <guestshouldorshouldnot> see smart menu "Role links" in location "Main, Menu"
     And I log out
     And I am on site homepage
-    And I <visitorshouldorshouldnot> see smart menu "Role links" in location "Main, Menu, Bottom"
+    And I <visitorshouldorshouldnot> see smart menu "Role links" in location "Main, Menu"
 
     Examples:
       | byrole                           | context | student1shouldorshouldnot | teachershouldorshouldnot | managershouldorshouldnot | guestshouldorshouldnot | adminshouldorshouldnot | systemshouldorshouldnot | visitorshouldorshouldnot |
@@ -84,7 +84,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   Scenario Outline: Smartmenu: Menus: Rules - Show smart menu based on being site admin
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Admin links                                      |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
       | byadmin  | <byadmin>                                        |
     And the following "theme_boost_union > smart menu item" exists:
       | menu     | Admin links        |
@@ -92,10 +92,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Static             |
       | url      | https://moodle.org |
     When I log in as "admin"
-    Then I <adminshouldorshouldnot> see smart menu "Admin links" in location "Main, Menu, User, Bottom"
+    Then I <adminshouldorshouldnot> see smart menu "Admin links" in location "Main, Menu, User"
     And I log out
     And I log in as "student1"
-    Then I <student1shouldorshouldnot> see smart menu "Admin links" in location "Main, Menu, User, Bottom"
+    Then I <student1shouldorshouldnot> see smart menu "Admin links" in location "Main, Menu, User"
 
     Examples:
       | byadmin          | adminshouldorshouldnot | student1shouldorshouldnot |
@@ -116,7 +116,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | teacher  | CH2    |
     And the following "theme_boost_union > smart menu" exists:
       | title    | Cohort links                                     |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
       | cohorts  | <bycohort>                                       |
     And the following "theme_boost_union > smart menu item" exists:
       | menu     | Cohort links       |
@@ -124,13 +124,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Static             |
       | url      | https://moodle.org |
     When I log in as "student1"
-    Then I <student1shouldorshouldnot> see smart menu "Cohort links" in location "Main, Menu, User, Bottom"
+    Then I <student1shouldorshouldnot> see smart menu "Cohort links" in location "Main, Menu, User"
     And I log out
     And I log in as "student2"
-    Then I <student2shouldorshouldnot> see smart menu "Cohort links" in location "Main, Menu, User, Bottom"
+    Then I <student2shouldorshouldnot> see smart menu "Cohort links" in location "Main, Menu, User"
     And I log out
     And I log in as "teacher"
-    Then I <teachershouldorshouldnot> see smart menu "Cohort links" in location "Main, Menu, User, Bottom"
+    Then I <teachershouldorshouldnot> see smart menu "Cohort links" in location "Main, Menu, User"
 
     Examples:
       | bycohort | student1shouldorshouldnot | student2shouldorshouldnot | teachershouldorshouldnot |
@@ -150,7 +150,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | teacher  | CH2    |
     And the following "theme_boost_union > smart menu" exists:
       | title    | Multi cohort links                               |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
       | cohorts  | <bycohorts>                                      |
       | operator | <operator>                                       |
     And the following "theme_boost_union > smart menu item" exists:
@@ -159,13 +159,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Static             |
       | url      | https://moodle.org |
     When I log in as "student1"
-    Then I <student1shouldorshouldnot> see smart menu "Multi cohort links" in location "Main, Menu, User, Bottom"
+    Then I <student1shouldorshouldnot> see smart menu "Multi cohort links" in location "Main, Menu, User"
     And I log out
     And I log in as "student2"
-    Then I <student2shouldorshouldnot> see smart menu "Multi cohort links" in location "Main, Menu, User, Bottom"
+    Then I <student2shouldorshouldnot> see smart menu "Multi cohort links" in location "Main, Menu, User"
     And I log out
     And I log in as "teacher"
-    Then I <teachershouldorshouldnot> see smart menu "Multi cohort links" in location "Main, Menu, User, Bottom"
+    Then I <teachershouldorshouldnot> see smart menu "Multi cohort links" in location "Main, Menu, User"
 
     Examples:
       | bycohorts | operator | student1shouldorshouldnot | student2shouldorshouldnot | teachershouldorshouldnot |
@@ -179,7 +179,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | fr       |
     And the following "theme_boost_union > smart menu" exists:
       | title     | Language links                                   |
-      | location  | Main navigation, Menu bar, User menu, Bottom bar |
+      | location  | Main navigation, Menu bar, User menu             |
       | languages | <bylanguage>                                     |
     And the following "theme_boost_union > smart menu item" exists:
       | menu     | Language links     |
@@ -205,13 +205,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I press "Save changes"
     And I log out
     And I log in as "student1"
-    Then I <student1shouldorshouldnot> see smart menu "Language links" in location "Main, Menu, User, Bottom"
+    Then I <student1shouldorshouldnot> see smart menu "Language links" in location "Main, Menu, User"
     And I log out
     And I log in as "student2"
-    Then I <student2shouldorshouldnot> see smart menu "Language links" in location "Main, Menu, User, Bottom"
+    Then I <student2shouldorshouldnot> see smart menu "Language links" in location "Main, Menu, User"
     And I log out
     And I log in as "teacher"
-    Then I <teachershouldorshouldnot> see smart menu "Language links" in location "Main, Menu, User, Bottom"
+    Then I <teachershouldorshouldnot> see smart menu "Language links" in location "Main, Menu, User"
 
     Examples:
       | bylanguage | student1shouldorshouldnot | student2shouldorshouldnot | teachershouldorshouldnot |
@@ -305,7 +305,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   Scenario Outline: Smartmenu: Menus: Rules - Show the menus based on the custom date range
     Given the following "theme_boost_union > smart menu" exists:
       | title      | Date range links                                 |
-      | location   | Main navigation, Menu bar, User menu, Bottom bar |
+      | location   | Main navigation, Menu bar, User menu             |
       | start_date | <start_date>                                     |
       | end_date   | <end_date>                                       |
     And the following "theme_boost_union > smart menu item" exists:
@@ -314,13 +314,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Static             |
       | url      | https://moodle.org |
     When I log in as "admin"
-    Then I <menushouldorshouldnot> see smart menu "Date range links" in location "Main, Menu, User, Bottom"
+    Then I <menushouldorshouldnot> see smart menu "Date range links" in location "Main, Menu, User"
     And I log out
     And I log in as "student1"
-    Then I <menushouldorshouldnot> see smart menu "Date range links" in location "Main, Menu, User, Bottom"
+    Then I <menushouldorshouldnot> see smart menu "Date range links" in location "Main, Menu, User"
     And I log out
     And I log in as "teacher"
-    Then I <menushouldorshouldnot> see smart menu "Date range links" in location "Main, Menu, User, Bottom"
+    Then I <menushouldorshouldnot> see smart menu "Date range links" in location "Main, Menu, User"
 
     Examples:
       | start_date | end_date   | menushouldorshouldnot |
@@ -367,7 +367,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I log out
     And the following "theme_boost_union > smart menu" exists:
       | title     | Quick links                                      |
-      | location  | Main navigation, Menu bar, User menu, Bottom bar |
+      | location  | Main navigation, Menu bar, User menu             |
       | roles     | <roles>                                          |
       | cohorts   | <cohorts>                                        |
       | languages | <languages>                                      |
@@ -377,13 +377,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | itemtype | Static       |
       | url      | /foo         |
     When I log in as "student1"
-    Then I <student1shouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, User, Bottom"
+    Then I <student1shouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, User"
     And I log out
     And I log in as "student2"
-    Then I <student2shouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, User, Bottom"
+    Then I <student2shouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, User"
     And I log out
     And I log in as "teacher"
-    Then I <teachershouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, User, Bottom"
+    Then I <teachershouldorshouldnot> see smart menu "Quick links" in location "Main, Menu, User"
 
     Examples:
       | roles                            | cohorts  | languages | student1shouldorshouldnot | student2shouldorshouldnot | teachershouldorshouldnot |
@@ -482,7 +482,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And the following "theme_boost_union > smart menu" exists:
       | title    | My courses       |
       | location | Main navigation  |
-      | type     | Card             |
     And the following "theme_boost_union > smart menu item" exists:
       | menu     | My courses      |
       | title    | My courses      |

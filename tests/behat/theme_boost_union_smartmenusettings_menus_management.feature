@@ -105,7 +105,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
   Scenario: Smartmenus: Menus: Management - Modify the visibility of an existing smart menu
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Links                                            |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
     And the following "theme_boost_union > smart menu item" exists:
       | menu     | Links   |
       | title    | Info    |
@@ -115,14 +115,14 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, man
     And I should see "Links" in the "smartmenus" "table"
     And ".action-hide" "css_element" should exist in the "Links" "table_row"
     And ".action-show" "css_element" should not exist in the "Links" "table_row"
-    Then I should see smart menu "Links" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Links" in location "Main, Menu, User"
     And ".action-hide" "css_element" should exist in the "Links" "table_row"
     And I click on ".action-hide" "css_element" in the "Links" "table_row"
-    Then I should not see smart menu "Links" in location "Main, Menu, User, Bottom"
+    Then I should not see smart menu "Links" in location "Main, Menu, User"
     And ".action-show" "css_element" should exist in the "Links" "table_row"
     And ".action-hide" "css_element" should not exist in the "Links" "table_row"
     And I click on ".action-show" "css_element" in the "Links" "table_row"
-    Then I should see smart menu "Links" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Links" in location "Main, Menu, User"
 
   Scenario: Smartmenus: Menus: Management - Move an existing smart menu up and down
     Given the following "theme_boost_union > smart menu" exists:

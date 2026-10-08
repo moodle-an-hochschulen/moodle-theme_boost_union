@@ -19,7 +19,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | student1 | C1     | student        |
     And the following "theme_boost_union > smart menu" exists:
       | title    | Quick links                                      |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
     # Empty menus are hidden from view. To prevent that the whole menu is missing and the test fails,
     # a sample item is created.
     And the following "theme_boost_union > smart menu item" exists:
@@ -59,7 +59,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And "Resources" "theme_boost_union > Smart menu item" <adminshouldorshouldnot> exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     And "Resources" "theme_boost_union > Smart menu item" <adminshouldorshouldnot> exist in the "Quick links" "theme_boost_union > Menu bar smart menu"
     And "Resources" "theme_boost_union > Smart menu item" <adminshouldorshouldnot> exist in the "Quick links" "theme_boost_union > User menu smart menu"
-    And "Resources" "theme_boost_union > Smart menu item" <adminshouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
     When I am logged in as "coursemanager"
     Then "Resources" "theme_boost_union > Smart menu item" <managershouldorshouldnot> exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     When I am logged in as "student1"
@@ -95,9 +94,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And "Resources" "theme_boost_union > Smart menu item" <adminshouldorshouldnot> exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     And "Resources" "theme_boost_union > Smart menu item" <adminshouldorshouldnot> exist in the "Quick links" "theme_boost_union > Menu bar smart menu"
     And "Resources" "theme_boost_union > Smart menu item" <adminshouldorshouldnot> exist in the "Quick links" "theme_boost_union > User menu smart menu"
-    And "Resources" "theme_boost_union > Smart menu item" <adminshouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
-    When I am logged in as "student1"
-    And "Resources" "theme_boost_union > Smart menu item" <student1shouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
 
     Examples:
       | byadmin          | adminshouldorshouldnot | student1shouldorshouldnot |
@@ -126,13 +122,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And "Resources" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     And "Resources" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Menu bar smart menu"
     And "Resources" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > User menu smart menu"
-    And "Resources" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
-    When I am logged in as "student1"
-    Then "Resources" "theme_boost_union > Smart menu item" <student1shouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
-    When I am logged in as "student2"
-    Then "Resources" "theme_boost_union > Smart menu item" <student2shouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
-    When I am logged in as "teacher"
-    Then "Resources" "theme_boost_union > Smart menu item" <teachershouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
 
     Examples:
       | bycohort | student1shouldorshouldnot | student2shouldorshouldnot | teachershouldorshouldnot |
@@ -161,13 +150,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And "Resources" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     And "Resources" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Menu bar smart menu"
     And "Resources" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > User menu smart menu"
-    And "Resources" "theme_boost_union > Smart menu item" should not exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
-    When I am logged in as "student1"
-    Then "Resources" "theme_boost_union > Smart menu item" <student1shouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
-    When I am logged in as "student2"
-    Then "Resources" "theme_boost_union > Smart menu item" <student2shouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
-    When I am logged in as "teacher"
-    Then "Resources" "theme_boost_union > Smart menu item" <teachershouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
 
     Examples:
       | bycohorts | operator | student1shouldorshouldnot | student2shouldorshouldnot | teachershouldorshouldnot |
@@ -189,15 +171,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then "Resources" "theme_boost_union > Smart menu item" <student1shouldorshouldnot> exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     And "Resources" "theme_boost_union > Smart menu item" <student1shouldorshouldnot> exist in the "Quick links" "theme_boost_union > Menu bar smart menu"
     And "Resources" "theme_boost_union > Smart menu item" <student1shouldorshouldnot> exist in the "Quick links" "theme_boost_union > User menu smart menu"
-    And "Resources" "theme_boost_union > Smart menu item" <student1shouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
-    When I am logged in as "student2"
-    And I follow "Language" in the user menu
-    And I click on "Français" "link"
-    Then "Resources" "theme_boost_union > Smart menu item" <student2shouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
-    When I am logged in as "teacher"
-    And I follow "Language" in the user menu
-    And I click on "Deutsch" "link"
-    Then "Resources" "theme_boost_union > Smart menu item" <teachershouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
 
     Examples:
       | bylanguage | student1shouldorshouldnot | student2shouldorshouldnot | teachershouldorshouldnot |
@@ -310,7 +283,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then "Resources" "theme_boost_union > Smart menu item" <menushouldorshouldnot> exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     And "Resources" "theme_boost_union > Smart menu item" <menushouldorshouldnot> exist in the "Quick links" "theme_boost_union > Menu bar smart menu"
     And "Resources" "theme_boost_union > Smart menu item" <menushouldorshouldnot> exist in the "Quick links" "theme_boost_union > User menu smart menu"
-    And "Resources" "theme_boost_union > Smart menu item" <menushouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
     When I am logged in as "student1"
     Then "Resources" "theme_boost_union > Smart menu item" <menushouldorshouldnot> exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     When I am logged in as "teacher"
@@ -353,15 +325,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then "Resources" "theme_boost_union > Smart menu item" <student1shouldorshouldnot> exist in the "Quick links" "theme_boost_union > Main menu smart menu"
     And "Resources" "theme_boost_union > Smart menu item" <student1shouldorshouldnot> exist in the "Quick links" "theme_boost_union > Menu bar smart menu"
     And "Resources" "theme_boost_union > Smart menu item" <student1shouldorshouldnot> exist in the "Quick links" "theme_boost_union > User menu smart menu"
-    And "Resources" "theme_boost_union > Smart menu item" <student1shouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
-    When I am logged in as "student2"
-    And I follow "Language" in the user menu
-    And I click on "Français" "link"
-    Then "Resources" "theme_boost_union > Smart menu item" <student2shouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
-    When I am logged in as "teacher"
-    And I follow "Language" in the user menu
-    And I click on "Deutsch" "link"
-    Then "Resources" "theme_boost_union > Smart menu item" <teachershouldorshouldnot> exist in the "Quick links" "theme_boost_union > Bottom bar smart menu"
 
     Examples:
       | byrole                           | bycohort | bylanguage | student1shouldorshouldnot | student2shouldorshouldnot | teachershouldorshouldnot |

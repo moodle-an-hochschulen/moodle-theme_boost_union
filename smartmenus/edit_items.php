@@ -83,17 +83,6 @@ if ($menuid == null && $id !== null) {
     $PAGE->navbar->add(get_string('smartmenusmenuitemcreate', 'theme_boost_union'));
 }
 
-// Prepare draft item id for the form.
-$draftitemid = file_get_submitted_draft_itemid('image');
-file_prepare_draft_area(
-    $draftitemid,
-    $context->id,
-    'theme_boost_union',
-    'smartmenus_itemimage',
-    $id,
-    theme_boost_union\smartmenu_item::image_filepickeroptions()
-);
-
 // Prepare the next menu item id based on the last item ID (if no menu items exist yet, the last item is 0).
 $lastmenu = theme_boost_union\smartmenu_item::get_lastitem($menu->id);
 $nextorder = isset($lastmenu->sortorder) ? $lastmenu->sortorder + 1 : 1;
@@ -145,9 +134,6 @@ if ($data = $form->get_data()) {
 if ($id !== null && $id > 0) {
     // Fetch the data for the menu item.
     if ($record = theme_boost_union\smartmenu_item::instance($id)->get_item()) {
-        // Get an unused draft item id which will be used for this form.
-        $record->image = $draftitemid;
-
         // Set the menu data to the menu edit form.
         $form->set_data($record);
 

@@ -683,26 +683,6 @@ class smartmenu_helper {
     }
 
     /**
-     * Function returns the rgb format with the combination of passed color hex and opacity.
-     * Used in the item background color or card layout.
-     *
-     * @param string $hexa Color code #ffffff
-     * @param int $opacity Opacity need to add for color, if 5 then opacity is 0.5
-     * @return string
-     */
-    public static function color_get_rgba($hexa, $opacity) {
-        if (!empty($hexa)) {
-            [$r, $g, $b] = sscanf($hexa, "#%02x%02x%02x");
-            if ($opacity == '') {
-                $opacity = 0.0;
-            } else {
-                $opacity = $opacity / 10;
-            }
-            return "rgba($r, $g, $b, $opacity)";
-        }
-    }
-
-    /**
      * Returns the list of lanuages available in LMS.
      *
      * @return array
