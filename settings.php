@@ -4747,6 +4747,13 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         );
         $tab->add($setting);
 
+        // Setting: Hide footnote when printing.
+        $name = 'theme_boost_union/footnotehideonprint';
+        $title = get_string('footnotehideonprint', 'theme_boost_union', null, true);
+        $description = get_string('footnotehideonprint_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $tab->add($setting);
+
         // Heading: Footer.
         $name = 'theme_boost_union/footerheading';
         $title = get_string('footerheading', 'theme_boost_union', null, true);
