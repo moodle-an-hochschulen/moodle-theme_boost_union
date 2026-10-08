@@ -6,6 +6,8 @@ Changes
 
 ### Unreleased
 
+* 2026-10-07 - Improvement: Add "Course URL" and "Page URL" as placeholder for smart menu items, resolves #1346
+* 2026-10-07 - Improvement: Allow placeholders in mailto links within the smart menu items, resolves #1346
 * 2026-10-07 - Improvement: Add a setting to hide the footnote when a page is printed, resolves #1381
 * 2026-10-07 - Improvement: Report the Boost Union recommendations check only as info instead of warning on the Checks API status page if Boost Union is not the active theme, resolves #1387
 * 2026-10-07 - Improvement: Add a 'Hide' option to the activity & section navigation elements setting to hide the activity navigation also in course formats which do not use the course index, and clarify the setting description, resolves #1403

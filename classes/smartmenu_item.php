@@ -100,6 +100,15 @@ class smartmenu_item {
     const TYPEHEADINGWITHPLACEHOLDERS = 7;
 
     /**
+     * Represents the type of a mailto element with placeholders.
+     * Unlike the regular mailto type, items of this type are not cached because their content is variable (user/course/page
+     * context specific). Placeholders in the title, the email subject and the email body will be replaced with actual values
+     * at render time.
+     * @var int
+     */
+    const TYPEMAILTOWITHPLACEHOLDERS = 8;
+
+    /**
      * Represents the completion status of an item where the status is 'enrolled'.
      * @var int
      */
@@ -1015,6 +1024,35 @@ class smartmenu_item {
     }
 
     /**
+     * Generate a mailto item with placeholders replaced in title, email subject and email body.
+     *
+     * The placeholders are replaced before the mailto link is built so that the replaced values are properly
+     * percent-encoded within the mailto URL. The recipient addresses do not support placeholders as they are
+     * validated as email addresses when the item is saved.
+     *
+     * @return array The node data.
+     */
+    protected function generate_mailto_item_with_placeholders(): array {
+
+        // Build the mailto link from the item data with placeholders replaced in subject and body.
+        $mailto = self::build_mailto_href(
+            $this->item->email,
+            $this->item->email_cc ?? null,
+            $this->item->email_bcc ?? null,
+            isset($this->item->email_subject) ? $this->replace_placeholders($this->item->email_subject) : null,
+            isset($this->item->email_body) ? $this->replace_placeholders($this->item->email_body) : null
+        );
+
+        return $this->generate_node_data(
+            $this->replace_placeholders($this->item->title), // Title with placeholders replaced.
+            $mailto, // Mailto link with placeholders replaced.
+            null, // Default key.
+            $this->item->tooltip,
+            // Tooltip.
+        );
+    }
+
+    /**
      * Generate the dynamic courses based on the conditions of categories, enrollmentrole,
      * daterange (Past, Present, Future), and customfields.
      *
@@ -1226,37 +1264,43 @@ class smartmenu_item {
      * - {courseid}        : The current course's internal ID.
      * - {coursefullname}  : The current course's full name.
      * - {courseshortname} : The current course's shortname.
+     * - {courseurl}       : The current course's full URL.
      * - {editingtoggle}   : 'on' or 'off', the value needed to toggle editing mode.
      * - {userid}          : The logged-in user's internal ID.
      * - {userusername}    : The logged-in user's username.
      * - {userfullname}    : The logged-in user's full name.
      * - {pagecontextid}   : The current page's context ID.
      * - {pagepath}        : The current page's URL path.
+     * - {pageurl}         : The current page's full URL.
      * - {sesskey}         : The current session key (for use in secured URLs).
      *
      * @param string $text The text containing placeholders.
      * @return string The text with all placeholders replaced by their current context values.
      */
     protected function replace_placeholders(string $text): string {
-        global $USER, $COURSE, $PAGE;
+        global $CFG, $USER, $COURSE, $PAGE;
 
         // Define the supported placeholders and their corresponding replacement values.
         $placeholders = [
             'courseid'        => isset($COURSE->id) ? $COURSE->id : '',
             'coursefullname'  => isset($COURSE->fullname) ? format_string($COURSE->fullname) : '',
             'courseshortname' => isset($COURSE->shortname) ? $COURSE->shortname : '',
+            'courseurl'       => isset($COURSE->id) ?
+                    (new \core\url('/course/view.php', ['id' => $COURSE->id]))->out(false) : '',
             'editingtoggle'   => $PAGE->user_is_editing() ? 'off' : 'on',
             'userid'          => isset($USER->id) ? $USER->id : '',
             'userusername'    => isset($USER->username) ? $USER->username : '',
             'userfullname'    => isset($USER->id) ? fullname($USER) : '',
             'pagecontextid'   => is_object($PAGE->context) ? $PAGE->context->id : '',
             'pagepath'        => is_object($PAGE->url) ? $PAGE->url->out_as_local_url() : '',
+            'pageurl'         => is_object($PAGE->url) ? $PAGE->url->out(false) : '',
             'sesskey'         => sesskey(),
         ];
 
         // For Behat tests, use some fixed values to ensure deterministic test results.
         if (defined('BEHAT_SITE_RUNNING')) {
             $placeholders['courseid'] = '42';
+            $placeholders['courseurl'] = $CFG->wwwroot . '/course/view.php?id=42';
             $placeholders['userid'] = '3';
             $placeholders['pagecontextid'] = '99';
             $placeholders['sesskey'] = 'behat0000000000000000000000000000';
@@ -1640,6 +1684,7 @@ class smartmenu_item {
             self::TYPESTATICWITHPLACEHOLDERS => 'static',
             self::TYPEDYNAMIC => 'dynamic',
             self::TYPEMAILTO => 'mailto',
+            self::TYPEMAILTOWITHPLACEHOLDERS => 'mailto',
             self::TYPEHEADING => 'heading',
             self::TYPEHEADINGWITHPLACEHOLDERS => 'heading',
             self::TYPEDOCS => 'docs',
@@ -1675,6 +1720,13 @@ class smartmenu_item {
                 $mailto = $this->generate_mailto_item();
                 $result = [$mailto];
                 $cacheable = true;
+                break;
+
+            case self::TYPEMAILTOWITHPLACEHOLDERS:
+                $mailto = $this->generate_mailto_item_with_placeholders();
+                $result = [$mailto];
+                // Must not be cached because title, subject and body contain user/course/page context dependent values.
+                $cacheable = false;
                 break;
 
             case self::TYPEDOCS:
@@ -2037,6 +2089,8 @@ class smartmenu_item {
                 self::TYPESTATICWITHPLACEHOLDERS =>
                         get_string('smartmenusmenuitemtypestaticwithplaceholders', 'theme_boost_union'),
                 self::TYPEMAILTO => get_string('smartmenusmenuitemtypemailto', 'theme_boost_union'),
+                self::TYPEMAILTOWITHPLACEHOLDERS =>
+                        get_string('smartmenusmenuitemtypemailtowithplaceholders', 'theme_boost_union'),
                 self::TYPEHEADING => get_string('smartmenusmenuitemtypeheading', 'theme_boost_union'),
                 self::TYPEHEADINGWITHPLACEHOLDERS =>
                         get_string('smartmenusmenuitemtypeheadingwithplaceholders', 'theme_boost_union'),
@@ -2263,7 +2317,7 @@ class smartmenu_item {
         // Do not persist mailto-only fields for other menu item types.
         // While the values should be stored as null by default for other types as well,
         // this is a measure to ensure that no mailto values are stored for other types in any case..
-        if ($record->type != self::TYPEMAILTO) {
+        if ($record->type != self::TYPEMAILTO && $record->type != self::TYPEMAILTOWITHPLACEHOLDERS) {
             $record->email = null;
             $record->email_cc = null;
             $record->email_bcc = null;

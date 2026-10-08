@@ -164,9 +164,9 @@ class theme_boost_union_generator extends component_generator_base {
         }
 
         $email = null;
-        if ($type === smartmenu_item::TYPEMAILTO) {
+        if ($type === smartmenu_item::TYPEMAILTO || $type === smartmenu_item::TYPEMAILTOWITHPLACEHOLDERS) {
             if (empty($data['email'])) {
-                throw new Exception('Email is required when type is mailto.');
+                throw new Exception('Email is required when type is mailto or mailto with placeholders.');
             }
             $email = $data['email'];
         }
