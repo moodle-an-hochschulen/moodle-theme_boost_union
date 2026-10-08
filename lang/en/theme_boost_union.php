@@ -2067,6 +2067,7 @@ $string['task_purgecache'] = 'Purge theme cache';
 
 // Checks API: Recommendations.
 $string['checkrecommendations'] = 'Boost Union recommendations';
+$string['checkrecommendationsinfo'] = 'At least one Boost Union recommendation needs attention. However, as Boost Union is not the active theme on this site, this is just reported as information.';
 $string['checkrecommendationsok'] = 'No Boost Union recommendations currently need attention.';
 $string['checkrecommendationswarning'] = 'At least one Boost Union recommendation needs attention.';
 $string['checkrecommendationsdetails'] = 'Review recommendations on the <a href="{$a->url}">Recommendations</a> page.';
