@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-08 - Tests: Set the theme preset directly instead of saving it in the settings form in the preset inheritance Behat test as the form validation might race with the following steps
 * 2026-10-07 - Bugfix: Correctly escape special characters in static page titles, resolves #1382
 * 2026-10-07 - Improvement: Add a setting to hide the footnote when a page is printed, resolves #1381
 * 2026-10-07 - Improvement: Report the Boost Union recommendations check only as info instead of warning on the Checks API status page if Boost Union is not the active theme, resolves #1387
