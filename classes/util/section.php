@@ -66,12 +66,10 @@ class section {
             self::apply_collapse_state($section, $appearance, $expandsection);
         }
 
-        // Make sure that the 'Collapse all / Expand all' control sits on the first collapsible section.
-        // By default, Moodle core puts this control on section 0, but if section 0 is not collapsible (or
-        // hidden), the control would be orphaned on a section without a collapse toggle.
-        // This has to happen before section 0 might be removed below, as the control which is moved away is
-        // located on section 0 in the first place.
-        self::relocate_collapse_control($data, $sectionzeroappearance, $sectiononeplusappearance, $page);
+        // Remove the 'Collapse all / Expand all' control if no section is collapsible at all.
+        // This has to happen before section 0 might be removed below, as the collapsibility of section 0
+        // is evaluated as well.
+        self::hide_collapse_control($data, $sectionzeroappearance, $sectiononeplusappearance, $page);
 
         // Handle the section-0-only 'Hide section 0 entirely' appearance, but only if the user is not editing
         // the course. Otherwise the section's activities would be unreachable for teachers.
@@ -84,41 +82,31 @@ class section {
     }
 
     /**
-     * Make sure that the 'Collapse all / Expand all' control is shown on the first section which is actually
-     * collapsible.
+     * Remove the 'Collapse all / Expand all' control if no section is collapsible at all.
      *
-     * Moodle core adds this control to section 0 on the multi-section course main page. But as the section
-     * appearance settings can render section 0 (and/or the following sections) without a collapse toggle, the
-     * control is moved to the first collapsible section instead. If no section is collapsible at all, the
-     * control is dropped entirely as it would have no effect.
+     * Since Moodle 5.3 (MDL-88410), Moodle core renders this control above the section list on the multi-section
+     * course main page. But as the section appearance settings can render section 0 (and/or the following
+     * sections) without a collapse toggle, the control is dropped entirely if no section is collapsible at all
+     * as it would have no effect.
      *
      * @param \stdClass $data The exported template data of the content output class.
      * @param string|null $sectionzeroappearance The configured appearance of section 0.
      * @param string|null $sectiononeplusappearance The configured appearance of sections ≥ 1.
      * @param \moodle_page $page The current page.
      */
-    private static function relocate_collapse_control(
+    private static function hide_collapse_control(
         \stdClass $data,
         $sectionzeroappearance,
         $sectiononeplusappearance,
         \moodle_page $page
     ): void {
-        // Find out whether the 'Collapse all / Expand all' control is present at all and remove it from all
-        // sections, as it is re-assigned to the responsible carrier section below.
-        $hascontrol = false;
-        foreach ($data->sections as $section) {
-            if (!empty($section->collapsemenu)) {
-                $hascontrol = true;
-            }
-            $section->collapsemenu = false;
-        }
-
-        // If the control was not present in the first place (e.g. on a single section page), do nothing.
-        if (!$hascontrol) {
+        // If the control is not present in the first place (e.g. on a course format which shows one section
+        // per page), do nothing.
+        if (empty($data->collapsemenu)) {
             return;
         }
 
-        // Assign the control to the first section which is actually collapsible.
+        // Check if at least one section is actually collapsible.
         foreach ($data->sections as $section) {
             // Pick the appearance setting which is responsible for the section.
             $appearance = ((int) $section->num === 0) ? $sectionzeroappearance : $sectiononeplusappearance;
@@ -133,12 +121,14 @@ class section {
                 $appearance = THEME_BOOST_UNION_SETTING_SECTIONAPPEARANCE_COLLAPSIBLEEXPANDED;
             }
 
-            // If the section is collapsible, it carries the control and we are done.
+            // If the section is collapsible, the control is kept and we are done.
             if (self::is_collapsible($appearance)) {
-                $section->collapsemenu = true;
-                break;
+                return;
             }
         }
+
+        // No section is collapsible, so the control is dropped.
+        $data->collapsemenu = false;
     }
 
     /**
@@ -190,8 +180,8 @@ class section {
      */
     private static function hide_sectionzero(\stdClass $data): void {
         // Search section 0 within the exported sections and remove it.
-        // The 'Collapse all / Expand all' control which Moodle core puts on section 0 is taken care of
-        // afterwards by self::relocate_collapse_control().
+        // The 'Collapse all / Expand all' control is not affected by this as Moodle core renders it above the
+        // section list and not within section 0 (see self::hide_collapse_control()).
         foreach ($data->sections as $key => $section) {
             if ((int) $section->num !== 0) {
                 continue;
