@@ -35,6 +35,12 @@ abstract class recommendation {
     /** @var array Arguments parsed from a parameterised recommendation id (only relevant when supports_args() returns true). */
     protected array $args = [];
 
+    /**
+     * @var string|null Per-request cache for the status of the recommendation. A subclass which caches its status has to
+     *                  redeclare this property, as the subclasses would otherwise share one and the same cache.
+     */
+    protected static $status = null;
+
     /** @var string */
     public const OK = 'ok';
 
@@ -175,5 +181,17 @@ abstract class recommendation {
      */
     public function set_args(array $args): void {
         $this->args = $args;
+    }
+
+    /**
+     * Reset the cached status of this recommendation.
+     *
+     * This is called after an automatic fix has been applied and can be called from unit tests as well.
+     * It uses late static binding to reset the status property of the subclass on which it is called.
+     *
+     * @return void
+     */
+    public static function reset_cache(): void {
+        static::$status = null;
     }
 }
