@@ -159,6 +159,6 @@ class corecompactlogo extends recommendation {
         $fs->delete_area_files($systemcontext->id, 'core_admin', 'logocompact', 0);
 
         // Reset cached status so the next call to get_status() re-evaluates.
-        self::$status = null;
+        self::reset_cache();
     }
 }

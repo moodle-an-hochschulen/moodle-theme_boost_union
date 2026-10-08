@@ -285,6 +285,26 @@ function theme_boost_union_is_active_theme(): bool {
 }
 
 /**
+ * Helper function to check if Boost Union or a child theme of Boost Union is the site theme.
+ * In contrast to theme_boost_union_is_active_theme(), this does not rely on $PAGE, as it is also needed on the CLI
+ * (e.g. when the Checks API is used by monitoring systems) where $PAGE is not set up and child themes would not be recognized.
+ *
+ * @return bool
+ */
+function theme_boost_union_is_site_theme(): bool {
+    global $CFG;
+
+    // If Boost Union is the site theme, we are done.
+    if ($CFG->theme === 'boost_union') {
+        return true;
+    }
+
+    // Otherwise, check if the site theme is a child theme of Boost Union.
+    $themeconfig = \core\output\theme_config::load($CFG->theme);
+    return in_array('boost_union', $themeconfig->parents);
+}
+
+/**
  * Helper function to check if a child theme of Boost Union (and _not_ Boost Union itself) is active.
  * This is needed at multiple locations to improve child theme support in Boost Union already.
  *

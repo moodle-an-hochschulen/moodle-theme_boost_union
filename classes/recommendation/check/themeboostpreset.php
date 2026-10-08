@@ -136,7 +136,7 @@ class themeboostpreset extends recommendation {
         set_config('preset', 'default.scss', 'theme_boost');
 
         // Reset cached status so the next call to get_status() re-evaluates.
-        self::$status = null;
+        self::reset_cache();
 
         // Reset the theme caches to ensure the change takes effect immediately.
         theme_reset_all_caches();
