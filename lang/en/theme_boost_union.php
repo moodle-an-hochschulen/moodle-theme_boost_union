@@ -1174,6 +1174,9 @@ $string['footnotesetting_desc'] = 'Whatever you add to this textarea will be dis
 // ... ... Setting: Page layouts for footnote.
 $string['footnotelayouts'] = 'Page layouts for footnote';
 $string['footnotelayouts_desc'] = 'With this setting, you can control on which page layouts the footnote is shown. If no layout is selected, the footnote will not be shown on any layout.';
+// ... ... Setting: Hide footnote when printing.
+$string['footnotehideonprint'] = 'Hide footnote when printing';
+$string['footnotehideonprint_desc'] = 'With this setting, you can hide the footnote when a page is printed. This can be useful if the footnote is quite large or if it only contains links which are not helpful on paper. The footnote will still be shown on screen as usual.';
 // ... Section: Footer.
 $string['footerheading'] = 'Footer';
 // ... ... Setting: Enable footer.
