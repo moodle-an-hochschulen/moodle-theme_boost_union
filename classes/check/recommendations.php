@@ -53,11 +53,27 @@ class recommendations extends \core\check\check {
      * @return result
      */
     public function get_result(): result {
-        // If there are any recommendations that need attention.
-        if (\theme_boost_union\recommendation\manager::has_recommendations_needing_attention()) {
+        global $CFG;
+
+        // Require library.
+        require_once($CFG->dirroot . '/theme/boost_union/lib.php');
+
+        // Check if there are any recommendations that need attention.
+        $needsattention = \theme_boost_union\recommendation\manager::has_recommendations_needing_attention();
+
+        // If there are any recommendations that need attention and Boost Union is the active theme.
+        if ($needsattention && theme_boost_union_is_site_theme()) {
             // We show a warning.
             $status = result::WARNING;
             $summary = get_string('checkrecommendationswarning', 'theme_boost_union');
+
+            // Otherwise, if there are any recommendations that need attention, but Boost Union is not the active theme.
+            // This is a normal setup in shared codebases where Boost Union is installed, but not used on every site,
+            // and it should not raise a warning in monitoring systems.
+        } else if ($needsattention) {
+            // We just show an info.
+            $status = result::INFO;
+            $summary = get_string('checkrecommendationsinfo', 'theme_boost_union');
 
             // Otherwise.
         } else {
