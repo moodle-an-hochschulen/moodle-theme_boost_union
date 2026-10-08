@@ -42,55 +42,6 @@ define(["jquery", "core/moremenu", "theme_boost_union/submenu"], function($, Mor
     };
 
     /**
-     * Make the no wrapped card menus scroll using swipe or drag.
-     */
-    const cardScroll = () => {
-        var cards = document.querySelectorAll('.card-dropdown.card-overflow-no-wrap');
-        if (cards !== null) {
-            var scrollStart; // Verify the mouse is clicked and still in click not released.
-            var scrollMoved; // Prevent the click on scrolling.
-            let startPos, scrollPos;
-
-            cards.forEach((card) => {
-                var scrollElement = card.querySelector('.dropdown-menu');
-
-                scrollElement.addEventListener('mousedown', (e) => {
-                    scrollStart = true;
-                    var target = e.currentTarget.querySelector('.card-block-wrapper');
-                    startPos = e.pageX;
-                    scrollPos = target.scrollLeft;
-                });
-
-                scrollElement.addEventListener('mousemove', (e) => {
-                    e.preventDefault();
-                    if (!scrollStart) {
-                        return;
-                    }
-                    scrollMoved = true;
-                    var target = e.currentTarget.querySelector('.card-block-wrapper');
-                    const scroll = e.pageX - startPos;
-                    target.scrollLeft = scrollPos - scroll;
-                });
-
-                scrollElement.addEventListener('click', (e) => {
-                    if (scrollMoved) {
-                        e.preventDefault();
-                        scrollMoved = false;
-                    }
-                    e.stopPropagation();
-                });
-                scrollElement.addEventListener('mouseleave', () => {
-                    scrollStart = false;
-                    scrollMoved = false;
-                });
-                scrollElement.addEventListener('mouseup', () => {
-                    scrollStart = false;
-                });
-            });
-        }
-    };
-
-    /**
      * Move the menubar and primary navigation menu items from more menu.
      */
     const autoCollapse = () => {
@@ -222,7 +173,6 @@ define(["jquery", "core/moremenu", "theme_boost_union/submenu"], function($, Mor
         init: () => {
 
             SubMenu.init();
-            cardScroll();
             autoCollapse();
 
             // Prevent the closing of dropdown during the click on help icon.

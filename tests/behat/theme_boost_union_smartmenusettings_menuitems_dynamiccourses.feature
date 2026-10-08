@@ -33,7 +33,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | student1 | C4     | student        |
     And the following "theme_boost_union > smart menu" exists:
       | title    | List menu                                        |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
       | cssclass | dynamiccoursetest                                |
 
   @javascript
@@ -56,12 +56,12 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | title    | Dynamic courses |
       | itemtype | Dynamic courses |
     When I log in as "student1"
-    Then I should see smart menu "List menu" item "Course 01" in location "Main, Menu, User, Bottom"
-    And I should see smart menu "List menu" item "Course 02" in location "Main, Menu, User, Bottom"
-    And I should see smart menu "List menu" item "Course 03" in location "Main, Menu, User, Bottom"
-    And I should see smart menu "List menu" item "Course 04" in location "Main, Menu, User, Bottom"
-    And I should see smart menu "List menu" item "Course 05" in location "Main, Menu, User, Bottom"
-    And I should see smart menu "List menu" item "Course 06" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "List menu" item "Course 01" in location "Main, Menu, User"
+    And I should see smart menu "List menu" item "Course 02" in location "Main, Menu, User"
+    And I should see smart menu "List menu" item "Course 03" in location "Main, Menu, User"
+    And I should see smart menu "List menu" item "Course 04" in location "Main, Menu, User"
+    And I should see smart menu "List menu" item "Course 05" in location "Main, Menu, User"
+    And I should see smart menu "List menu" item "Course 06" in location "Main, Menu, User"
 
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Compose the dynamic course list based on a category condition
     Given the following "theme_boost_union > smart menu item" exists:
@@ -70,12 +70,12 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | itemtype   | Dynamic courses |
       | categories | <category>      |
     When I log in as "student1"
-    Then I <course1> see smart menu "List menu" item "Course 01" in location "Main, Menu, User, Bottom"
-    And I <course2> see smart menu "List menu" item "Course 02" in location "Main, Menu, User, Bottom"
-    And I <course3> see smart menu "List menu" item "Course 03" in location "Main, Menu, User, Bottom"
-    And I <course4> see smart menu "List menu" item "Course 04" in location "Main, Menu, User, Bottom"
-    And I <course5> see smart menu "List menu" item "Course 05" in location "Main, Menu, User, Bottom"
-    And I <course6> see smart menu "List menu" item "Course 06" in location "Main, Menu, User, Bottom"
+    Then I <course1> see smart menu "List menu" item "Course 01" in location "Main, Menu, User"
+    And I <course2> see smart menu "List menu" item "Course 02" in location "Main, Menu, User"
+    And I <course3> see smart menu "List menu" item "Course 03" in location "Main, Menu, User"
+    And I <course4> see smart menu "List menu" item "Course 04" in location "Main, Menu, User"
+    And I <course5> see smart menu "List menu" item "Course 05" in location "Main, Menu, User"
+    And I <course6> see smart menu "List menu" item "Course 06" in location "Main, Menu, User"
 
     Examples:
       | category | course1    | course2    | course3    | course4    | course5    | course6    |
@@ -105,11 +105,11 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | categories       | CAT1            |
       | category_subcats | <subcat>        |
     When I log in as "student1"
-    Then I should see smart menu "List menu" item "Course 01" in location "Main, Menu, User, Bottom"
-    And I <shouldornot> see smart menu "List menu" item "Course 01a" in location "Main, Menu, User, Bottom"
-    And I <shouldornot> see smart menu "List menu" item "Course 01b" in location "Main, Menu, User, Bottom"
-    And I <shouldornot> see smart menu "List menu" item "Course 01b" in location "Main, Menu, User, Bottom"
-    And I <shouldornot> see smart menu "List menu" item "Course 01aa" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "List menu" item "Course 01" in location "Main, Menu, User"
+    And I <shouldornot> see smart menu "List menu" item "Course 01a" in location "Main, Menu, User"
+    And I <shouldornot> see smart menu "List menu" item "Course 01b" in location "Main, Menu, User"
+    And I <shouldornot> see smart menu "List menu" item "Course 01b" in location "Main, Menu, User"
+    And I <shouldornot> see smart menu "List menu" item "Course 01aa" in location "Main, Menu, User"
 
     Examples:
       | subcat | shouldornot |
@@ -124,12 +124,12 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | List menu | Info            | Heading         |               |
       | List menu | Dynamic courses | Dynamic courses | <role>        |
     When I log in as "<user>"
-    Then I <course1> see smart menu "List menu" item "Course 01" in location "Main, Menu, User, Bottom"
-    And I <course2> see smart menu "List menu" item "Course 02" in location "Main, Menu, User, Bottom"
-    And I <course3> see smart menu "List menu" item "Course 03" in location "Main, Menu, User, Bottom"
-    And I <course4> see smart menu "List menu" item "Course 04" in location "Main, Menu, User, Bottom"
-    And I <course5> see smart menu "List menu" item "Course 05" in location "Main, Menu, User, Bottom"
-    And I <course6> see smart menu "List menu" item "Course 06" in location "Main, Menu, User, Bottom"
+    Then I <course1> see smart menu "List menu" item "Course 01" in location "Main, Menu, User"
+    And I <course2> see smart menu "List menu" item "Course 02" in location "Main, Menu, User"
+    And I <course3> see smart menu "List menu" item "Course 03" in location "Main, Menu, User"
+    And I <course4> see smart menu "List menu" item "Course 04" in location "Main, Menu, User"
+    And I <course5> see smart menu "List menu" item "Course 05" in location "Main, Menu, User"
+    And I <course6> see smart menu "List menu" item "Course 06" in location "Main, Menu, User"
 
     Examples:
       | role                    | user     | course1    | course2    | course3    | course4    | course5    | course6    |
@@ -147,11 +147,11 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | itemtype         | Dynamic courses    |
       | completionstatus | <completionstatus> |
     When I log in as "student1"
-    Then I <course1> see smart menu "List menu" item "Course 01" in location "Main, Menu, User, Bottom"
-    And I <course2> see smart menu "List menu" item "Course 02" in location "Main, Menu, User, Bottom"
-    And I <course3> see smart menu "List menu" item "Course 03" in location "Main, Menu, User, Bottom"
-    And I <course4> see smart menu "List menu" item "Course 04" in location "Main, Menu, User, Bottom"
-    And I <course5> see smart menu "List menu" item "Course 05" in location "Main, Menu, User, Bottom"
+    Then I <course1> see smart menu "List menu" item "Course 01" in location "Main, Menu, User"
+    And I <course2> see smart menu "List menu" item "Course 02" in location "Main, Menu, User"
+    And I <course3> see smart menu "List menu" item "Course 03" in location "Main, Menu, User"
+    And I <course4> see smart menu "List menu" item "Course 04" in location "Main, Menu, User"
+    And I <course5> see smart menu "List menu" item "Course 05" in location "Main, Menu, User"
 
     Examples:
       | completionstatus                 | course1    | course2    | course3    | course4    | course5    |
@@ -168,11 +168,11 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | itemtype         | Dynamic courses |
       | daterange        | <daterange>     |
     When I log in as "student1"
-    Then I <course1> see smart menu "List menu" item "Course 01" in location "Main, Menu, User, Bottom"
-    And I <course2> see smart menu "List menu" item "Course 02" in location "Main, Menu, User, Bottom"
-    And I <course3> see smart menu "List menu" item "Course 03" in location "Main, Menu, User, Bottom"
-    And I <course4> see smart menu "List menu" item "Course 04" in location "Main, Menu, User, Bottom"
-    And I <course5> see smart menu "List menu" item "Course 05" in location "Main, Menu, User, Bottom"
+    Then I <course1> see smart menu "List menu" item "Course 01" in location "Main, Menu, User"
+    And I <course2> see smart menu "List menu" item "Course 02" in location "Main, Menu, User"
+    And I <course3> see smart menu "List menu" item "Course 03" in location "Main, Menu, User"
+    And I <course4> see smart menu "List menu" item "Course 04" in location "Main, Menu, User"
+    And I <course5> see smart menu "List menu" item "Course 05" in location "Main, Menu, User"
 
     Examples:
       | daterange             | course1    | course2    | course3    | course4    | course5    |
@@ -201,18 +201,18 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     And I click on "Star this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 01')]" "xpath_element"
     And I wait until the page is ready
     And I reload the page
-    Then I <course01_afterstar> see smart menu "List menu" item "Course 01" in location "Main, Menu, User, Bottom"
-    And I <course02_afterstar> see smart menu "List menu" item "Course 02" in location "Main, Menu, User, Bottom"
-    And I <course03_afterstar> see smart menu "List menu" item "Course 03" in location "Main, Menu, User, Bottom"
-    And I <course04_afterstar> see smart menu "List menu" item "Course 04" in location "Main, Menu, User, Bottom"
+    Then I <course01_afterstar> see smart menu "List menu" item "Course 01" in location "Main, Menu, User"
+    And I <course02_afterstar> see smart menu "List menu" item "Course 02" in location "Main, Menu, User"
+    And I <course03_afterstar> see smart menu "List menu" item "Course 03" in location "Main, Menu, User"
+    And I <course04_afterstar> see smart menu "List menu" item "Course 04" in location "Main, Menu, User"
     And I click on ".coursemenubtn" "css_element" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 01')]" "xpath_element"
     And I click on "Unstar this course" "link" in the "//div[contains(@class, 'card course-card') and contains(.,'Course 01')]" "xpath_element"
     And I wait until the page is ready
     And I reload the page
-    Then I <course01_afterunstar> see smart menu "List menu" item "Course 01" in location "Main, Menu, User, Bottom"
-    And I <course02_afterunstar> see smart menu "List menu" item "Course 02" in location "Main, Menu, User, Bottom"
-    And I <course03_afterunstar> see smart menu "List menu" item "Course 03" in location "Main, Menu, User, Bottom"
-    And I <course04_afterunstar> see smart menu "List menu" item "Course 04" in location "Main, Menu, User, Bottom"
+    Then I <course01_afterunstar> see smart menu "List menu" item "Course 01" in location "Main, Menu, User"
+    And I <course02_afterunstar> see smart menu "List menu" item "Course 02" in location "Main, Menu, User"
+    And I <course03_afterunstar> see smart menu "List menu" item "Course 03" in location "Main, Menu, User"
+    And I <course04_afterunstar> see smart menu "List menu" item "Course 04" in location "Main, Menu, User"
 
     Examples:
       | starredcourses                                                                        | course01_afterstar | course02_afterstar | course03_afterstar | course04_afterstar | course01_afterunstar | course02_afterunstar | course03_afterunstar | course04_afterunstar |
@@ -238,10 +238,10 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | itemtype         | Dynamic courses     |
       | customfields     | Test field: <value> |
     When I log in as "student1"
-    Then I <course1> see smart menu "List menu" item "Course 07" in location "Main, Menu, User, Bottom"
-    And I <course2> see smart menu "List menu" item "Course 08" in location "Main, Menu, User, Bottom"
-    And I <course3> see smart menu "List menu" item "Course 09" in location "Main, Menu, User, Bottom"
-    And I <course4> see smart menu "List menu" item "Course 04" in location "Main, Menu, User, Bottom"
+    Then I <course1> see smart menu "List menu" item "Course 07" in location "Main, Menu, User"
+    And I <course2> see smart menu "List menu" item "Course 08" in location "Main, Menu, User"
+    And I <course3> see smart menu "List menu" item "Course 09" in location "Main, Menu, User"
+    And I <course4> see smart menu "List menu" item "Course 04" in location "Main, Menu, User"
 
     Examples:
       | value  | course1    | course2    | course3    | course4    |
@@ -277,7 +277,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
   Scenario Outline: Smartmenus: Menu items: Dynamic courses - Hide empty menus
     And the following "theme_boost_union > smart menu" exists:
       | title    | Mode menu                                        |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
       | mode     | <menumode>                                       |
     And the following "theme_boost_union > smart menu item" exists:
       | menu          | Mode menu       |
@@ -289,7 +289,6 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
     Then "<menutitle>" "theme_boost_union > Main menu <locator>" <shouldornot> exist
     And "<menutitle>" "theme_boost_union > Menu bar <locator>" <shouldornot> exist
     And "<menutitle>" "theme_boost_union > User menu <locator>" <shouldornot> exist
-    And "<menutitle>" "theme_boost_union > Bottom bar <locator>" <shouldornot> exist
 
     Examples:
       | role                    | user     | shouldornot | menutitle | menumode | locator         |
@@ -305,7 +304,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
   Scenario: Smartmenus: Menu items: Dynamic courses - User role assignments in future courses
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Future Courses Menu                              |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
     And the following "theme_boost_union > smart menu item" exists:
       | menu          | Future Courses Menu |
       | title         | Future Courses      |
@@ -352,8 +351,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | itemtype              | Dynamic courses |
       | displayhiddencourses  | <visiblecourse> |
     When I log in as "<user>"
-    Then I <visiblecourseshouldornot> see smart menu "List menu" item "Course 10" in location "Main, Menu, Bottom"
-    And I <hiddencourseshoouldornot> see smart menu "List menu" item "Course 11" in location "Main, Menu, Bottom"
+    Then I <visiblecourseshouldornot> see smart menu "List menu" item "Course 10" in location "Main, Menu"
+    And I <hiddencourseshoouldornot> see smart menu "List menu" item "Course 11" in location "Main, Menu"
 
     Examples:
       | user           | visiblecourse | visiblecourseshouldornot | hiddencourseshoouldornot |

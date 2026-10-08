@@ -49,13 +49,12 @@
     This template is a modified version of theme_boost/primary-drawer-mobile
 
     Modifications compared to the original template:
-    * Add bottom bar.
     * Extend the mobile primary navigation.
     * Move child node markup into its own template.
 }}
 {{< theme_boost/drawer }}
     {{$id}}theme_boost-drawers-primary{{/id}}
-    {{$drawerclasses}}drawer {{#bottombar.drawer}} drawer-bottom {{/bottombar.drawer}} {{^bottombar.drawer}} drawer-left {{/bottombar.drawer}} drawer-primary{{/drawerclasses}}
+    {{$drawerclasses}}drawer drawer-left drawer-primary{{/drawerclasses}}
     {{$drawercloseonresize}}1{{/drawercloseonresize}}
     {{$drawerheading}}
         <a
@@ -73,9 +72,6 @@
         </a>
     {{/drawerheading}}
     {{$drawercontent}}
-        {{#bottombar.drawer}}
-        <div class="menu-title">{{#str}} menu, core {{/str}}</div>
-        {{/bottombar.drawer}}
         <div class="list-group">
             {{#mobileprimarynav}}
                 {{#haschildren}}

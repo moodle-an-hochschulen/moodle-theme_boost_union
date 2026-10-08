@@ -95,13 +95,6 @@ class smartmenu {
     public const LOCATION_USER = 3;
 
     /**
-     * Display in the Bottom mobile bar.
-     *
-     * @var int
-     */
-    public const LOCATION_BOTTOM = 4;
-
-    /**
      * The description text is never displayed.
      * @var int
      */
@@ -134,12 +127,6 @@ class smartmenu {
     public const TYPE_LIST = 0;
 
     /**
-     * Displays menu items in a card format.
-     * @var int
-     */
-    public const TYPE_CARD = 1;
-
-    /**
      * Roles based on Any context
      * @var int
      */
@@ -168,54 +155,6 @@ class smartmenu {
      */
 
     /**
-     * Square (1/1) dimensions
-     * @var int
-     */
-    public const CARDFORM_SQUARE = 1;
-
-    /**
-     * Portrait (2/3) dimensions
-     * @var int
-     */
-    public const CARDFORM_PORTRAIT = 2;
-
-    /**
-     * Landscape (3/2) dimensions
-     * @var int
-     */
-    public const CARDFORM_LANDSCAPE = 3;
-
-    /**
-     * Full width dimensions
-     * @var int
-     */
-    public const CARDFORM_FULLWIDTH = 4;
-
-    /**
-     * Tiny size option.
-     * @var int
-     */
-    public const CARDSIZE_TINY = 1;
-
-    /**
-     * Small - Card size option .
-     * @var int
-     */
-    public const CARDSIZE_SMALL = 2;
-
-    /**
-     * Medium size option for card.
-     * @var int
-     */
-    public const CARDSIZE_MEDIUM = 3;
-
-    /**
-     * Large size option for card.
-     * @var int
-     */
-    public const CARDSIZE_LARGE = 4;
-
-    /**
      * Constants for controlling the display of the "More" menu.
      * Default position (below main menu)
      * @var int
@@ -233,18 +172,6 @@ class smartmenu {
      * @var int
      */
     public const MOREMENU_OUTSIDE = 2;
-
-    /**
-     * Flag to indicate the overflow behavior of card, should be wrapped.
-     * @var int
-     */
-    public const CARDOVERFLOWBEHAVIOUR_WRAP = 1;
-
-    /**
-     * Flag to indicate the overflow behavior of card, should not be wrapped.
-     * @var int
-     */
-    public const CARDOVERFLOWBEHAVIOUR_NOWRAP = 2;
 
     /**
      * Display the menuitems as menu.
@@ -490,57 +417,6 @@ class smartmenu {
     }
 
     /**
-     * Get the HTML class for the card form size.
-     *
-     * @return string HTML class for the card form size.
-     */
-    protected function get_cardform() {
-
-        $options = [
-                self::CARDFORM_SQUARE => 'square',
-                self::CARDFORM_PORTRAIT => 'portrait',
-                self::CARDFORM_LANDSCAPE => 'landscape',
-                self::CARDFORM_FULLWIDTH => 'fullwidth',
-        ];
-
-        return isset($options[$this->menu->cardform]) ? 'card-form-' . $options[$this->menu->cardform] : '';
-    }
-
-    /**
-     * Get the HTML class for the card size.
-     *
-     * @return string HTML class for the card size.
-     */
-    protected function get_cardsize() {
-
-        $options = [
-                self::CARDSIZE_TINY => 'tiny',
-                self::CARDSIZE_SMALL => 'small',
-                self::CARDSIZE_MEDIUM => 'medium',
-                self::CARDSIZE_LARGE => 'large',
-        ];
-
-        return isset($options[$this->menu->cardsize]) ? 'card-size-' . $options[$this->menu->cardsize] : '';
-    }
-
-    /**
-     * Get the HTML class for the card overflow behaviour.
-     *
-     * @return string HTML class for the card overflow behaviour.
-     */
-    public function get_cardwrap() {
-
-        $options = [
-                self::CARDOVERFLOWBEHAVIOUR_WRAP => 'wrap',
-                self::CARDOVERFLOWBEHAVIOUR_NOWRAP => 'no-wrap',
-        ];
-
-        return isset($options[$this->menu->cardoverflowbehavior]) ? 'card-overflow-' .
-                $options[$this->menu->cardoverflowbehavior] : '';
-    }
-
-
-    /**
      * Fetch the list of menuitems assosciated with current menu.
      *
      * @return array|false List of menu items or false if no items found.
@@ -569,7 +445,7 @@ class smartmenu {
      * Otherwise, it builds the menu and its items from scratch.
      *
      * The method build node from menu, These node array include the menu's classes, title, URL, text, and key.
-     * It also sets up some additional properties like itemtype, submenuid, card, forceintomoremenu,
+     * It also sets up some additional properties like itemtype, submenuid, forceintomoremenu,
      * and haschildren based on the menu's properties.
      *
      * Then fetches the menu items for the menu and builds them one by one.
@@ -615,18 +491,12 @@ class smartmenu {
             // Add custom CSS class.
             $this->menu->classes[] = $this->menu->cssclass;
 
-            // Add CSS classes for card menus.
-            $this->menu->classes[] = $this->get_cardform(); // Html class for the card form size, Potrait, Square, landscape.
-            $this->menu->classes[] = $this->get_cardsize(); // HTML class for the card Size, tiny, small, medium, large.
-            $this->menu->classes[] = $this->get_cardwrap(); // HtML class for the card overflow behaviour.
-
             // Add CSS classes for more behaviour.
             $this->menu->classes[] = ($this->menu->moremenubehavior == self::MOREMENU_OUTSIDE) ? "force-menu-out" : '';
 
-            // Card type menus doesn't supports inline menus.
             // Mode is submenu or not set anything then create the menuitems as submenu.
             // Otherwise add the menu items directoly as menu.
-            if ($this->menu->mode != self::MODE_INLINE || $this->menu->type == self::TYPE_CARD) {
+            if ($this->menu->mode != self::MODE_INLINE) {
                 $nodes = (object) [
                     'menudata' => $this->menu,
                     // Do not set the title attribute as this would show a standard tooltip based on the
@@ -638,7 +508,6 @@ class smartmenu {
                     'submenulink' => 1,
                     'itemtype' => 'submenu-link', // Used in user menus, to identify the menu type, "link" for submmenus.
                     'submenuid' => uniqid(), // Menu has user menu location, then the submenu id is manatory for submenus.
-                    'card' => ($this->menu->type == self::TYPE_CARD) ? true : false,
                     'forceintomoremenu' => ($this->menu->moremenubehavior == self::MOREMENU_INTO) ? true : false,
                     'haschildren' => 0,
                     'sort' => uniqid(), // Support third level menu.
@@ -874,7 +743,7 @@ class smartmenu {
 
     /**
      * Get all available smart menu locations.
-     * Menu will be displayed in Main menu, Menu bar (above the main menu), User menu, Bottom menu.
+     * Menu will be displayed in Main menu, Menu bar (above the main menu), User menu.
      *
      * @return array An array with all available locations.
      */
@@ -884,7 +753,6 @@ class smartmenu {
             self::LOCATION_MAIN => get_string('smartmenusmenulocationmain', 'theme_boost_union'),
             self::LOCATION_MENU => get_string('smartmenusmenulocationmenu', 'theme_boost_union'),
             self::LOCATION_USER => get_string('smartmenusmenulocationuser', 'theme_boost_union'),
-            self::LOCATION_BOTTOM => get_string('smartmenusmenulocationbottom', 'theme_boost_union'),
         ];
 
         return $locations;
@@ -902,14 +770,13 @@ class smartmenu {
     }
 
     /**
-     * Get all available smart menu types. Either card or list.
+     * Get all available smart menu types. Currently, only the list type exists.
      *
      * @return array An array with all available types, where key is the type id and value is the localized type name.
      */
     public static function get_types() {
         $types = [
             self::TYPE_LIST => get_string('smartmenusmenutypelist', 'theme_boost_union'),
-            self::TYPE_CARD => get_string('smartmenusmenutypecard', 'theme_boost_union'),
         ];
 
         return $types;
@@ -965,55 +832,6 @@ class smartmenu {
             self::MOREMENU_DONOTCHANGE => get_string('dontchange', 'theme_boost_union'),
             self::MOREMENU_INTO => get_string('smartmenusmenumoremenubehaviorforceinto', 'theme_boost_union'),
             self::MOREMENU_OUTSIDE => get_string('smartmenusmenumoremenubehaviorkeepoutside', 'theme_boost_union'),
-        ];
-    }
-
-    /**
-     * Return options for the cardsize setting.
-     *
-     * @return array
-     * @throws \coding_exception
-     */
-    public static function get_cardsize_options(): array {
-        return [
-            self::CARDSIZE_TINY => get_string('smartmenusmenucardsizetiny', 'theme_boost_union') . ' (50px)',
-            self::CARDSIZE_SMALL => get_string('smartmenusmenucardsizesmall', 'theme_boost_union') . ' (100px)',
-            self::CARDSIZE_MEDIUM => get_string('smartmenusmenucardsizemedium', 'theme_boost_union') . ' (150px)',
-            self::CARDSIZE_LARGE => get_string('smartmenusmenucardsizelarge', 'theme_boost_union') . ' (200px)',
-        ];
-    }
-
-    /**
-     * Return options for the cardform setting.
-     *
-     * @return array
-     * @throws \coding_exception
-     */
-    public static function get_cardform_options(): array {
-        return[
-            self::CARDFORM_SQUARE =>
-                get_string('smartmenusmenucardformsquare', 'theme_boost_union') . ' (1/1)',
-            self::CARDFORM_PORTRAIT =>
-                get_string('smartmenusmenucardformportrait', 'theme_boost_union') . ' (2/3)',
-            self::CARDFORM_LANDSCAPE =>
-                get_string('smartmenusmenucardformlandscape', 'theme_boost_union') . ' (3/2)',
-            self::CARDFORM_FULLWIDTH =>
-                get_string('smartmenusmenucardformfullwidth', 'theme_boost_union'),
-        ];
-    }
-
-    /**
-     * Return options for the cardoverflowbehaviour setting.
-     *
-     * @return array
-     * @throws \coding_exception
-     */
-    public static function get_cardoverflowbehaviour_options(): array {
-        return [
-            self::CARDOVERFLOWBEHAVIOUR_NOWRAP =>
-                get_string('smartmenusmenucardoverflowbehaviornowrap', 'theme_boost_union'),
-            self::CARDOVERFLOWBEHAVIOUR_WRAP =>
-                get_string('smartmenusmenucardoverflowbehaviorwrap', 'theme_boost_union'),
         ];
     }
 

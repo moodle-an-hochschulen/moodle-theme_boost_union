@@ -42,7 +42,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   Scenario: Smartmenu: Menus: Presentation - Include the custom css class to a smart menu
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Quick links                                      |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
       | cssclass | quick-links-menu                                 |
     And the following "theme_boost_union > smart menu item" exists:
       | menu     | Quick links       |
@@ -52,102 +52,12 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     When I log in as "admin"
     # Note: We use XPath selectors here instead of the named selectors because:
     # - The "Main menu smart menu" named selector points to the dropdown menu (div[@role='menu']), not the parent <li> element
-    # - The CSS class is applied to the <li> element for Main/Menu/Bottom bar locations
+    # - The CSS class is applied to the <li> element for Main/Menu bar locations
     # - The CSS class is applied to the <a> element for User menu location
     # - XPath allows us to precisely target the correct element in each location using parent::li or the link itself
     Then the "class" attribute of "//div[contains(@class, 'primary-navigation')]//a[contains(normalize-space(.), 'Quick links')]/parent::li" "xpath_element" should contain "quick-links-menu"
     And the "class" attribute of "//div[@id='usermenu-carousel']//div[contains(@class, 'carousel-item')]//a[contains(normalize-space(.), 'Quick links')]" "xpath_element" should contain "quick-links-menu"
     And the "class" attribute of "//nav[contains(@class, 'boost-union-menubar')]//a[contains(normalize-space(.), 'Quick links')]/parent::li" "xpath_element" should contain "quick-links-menu"
-    And the "class" attribute of "//nav[contains(@class, 'boost-union-bottom-menu')]//a[contains(normalize-space(.), 'Quick links')]/parent::li" "xpath_element" should contain "quick-links-menu"
-
-  @javascript
-  Scenario Outline: Smartmenu: Menus: Presentation - Use different styles for a smart menu
-    Given the following "theme_boost_union > smart menu" exists:
-      | title    | Quick links       |
-      | location | Main navigation   |
-      | type     | <presentation>    |
-    And the following "theme_boost_union > smart menu item" exists:
-      | menu     | Quick links        |
-      | title    | Smartmenu Resource |
-      | itemtype | Static             |
-      | url      | https://moodle.org |
-    When I log in as "admin"
-    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
-    Then ".dropdown.nav-item.card-dropdown" "css_element" <cardshould> exist in the ".primary-navigation" "css_element"
-    And ".card-dropdown .dropdown-menu.show" "css_element" <cardmenushould> exist in the ".primary-navigation" "css_element"
-
-    Examples:
-      | presentation | cardshould | cardmenushould | cardblockshould |
-      | Card         | should     | should         | should          |
-      | List         | should not | should not     | should not      |
-
-  @javascript
-  Scenario Outline: Smartmenu: Menus: Presentation - Display the smart menu and its menu items as cards with different sizes
-    Given the following "theme_boost_union > smart menu" exists:
-      | title    | Quick links     |
-      | location | Main navigation |
-      | type     | Card            |
-      | cardsize | <cardsize>      |
-    And the following "theme_boost_union > smart menu item" exists:
-      | menu     | Quick links        |
-      | title    | Smartmenu Resource |
-      | itemtype | Static             |
-      | url      | https://moodle.org |
-    When I log in as "admin"
-    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
-    Then DOM element ".card-dropdown .dropdown-menu.show img" should have computed style "height" "<height>"
-
-    Examples:
-      | cardsize       | height |
-      | Tiny (50px)    | 50px   |
-      | Small (100px)  | 100px  |
-      | Medium (150px) | 150px  |
-      | Large (200px)  | 200px  |
-
-  @javascript
-  Scenario Outline: Smartmenu: Menus: Presentation - Displays the card menu container in various overflow behaviors
-    Given the following "theme_boost_union > smart menu" exists:
-      | title                | Quick Links     |
-      | location             | Main navigation |
-      | type                 | Card            |
-      | cardoverflowbehavior | <overflow>      |
-    And the following "theme_boost_union > smart menu item" exists:
-      | menu     | Quick Links        |
-      | title    | Smartmenu Resource |
-      | itemtype | Static             |
-      | url      | https://moodle.org |
-    When I log in as "admin"
-    And I click on "Quick Links" "link" in the ".primary-navigation" "css_element"
-    Then ".card-dropdown.card-overflow-no-wrap .dropdown-menu.show" "css_element" <nowrapshouldornot> exist in the ".primary-navigation" "css_element"
-    And ".card-dropdown.card-overflow-wrap .dropdown-menu.show" "css_element" <wrapshouldornot> exist in the ".primary-navigation" "css_element"
-
-    Examples:
-      | overflow | nowrapshouldornot | wrapshouldornot |
-      | 2        | should            | should not      |
-      | 1        | should not        | should          |
-
-  @javascript
-  Scenario Outline: Smartmenu: Menus: Presentation - Display the smart menu and its menu items as card withs different aspect ratios
-    Given the following "theme_boost_union > smart menu" exists:
-      | title    | Quick links     |
-      | location | Main navigation |
-      | type     | Card            |
-      | cardform | <cardform>      |
-    And the following "theme_boost_union > smart menu item" exists:
-      | menu     | Quick links        |
-      | title    | Smartmenu Resource |
-      | itemtype | Static             |
-      | url      | https://moodle.org |
-    When I log in as "admin"
-    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
-    Then ".card-dropdown.card-form-<class> .dropdown-menu.show" "css_element" should exist in the ".primary-navigation" "css_element"
-
-    Examples:
-      | cardform        | class     |
-      | Portrait (2/3)  | portrait  |
-      | Square (1/1)    | square    |
-      | Landscape (3/2) | landscape |
-      | Full width      | fullwidth |
 
   Scenario: Smartmenu: Menus: Presentation - Add a smart menu with multilang tags
     Given the following "language packs" exist:
@@ -157,7 +67,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And the "multilang" filter applies to "content and headings"
     And the following "theme_boost_union > smart menu" exists:
       | title    | <span lang="en" class="multilang">Lorem ipsum</span><span lang="de" class="multilang">Dolor sit amet</span> |
-      | location | Main navigation, Menu bar, User menu, Bottom bar                                                            |
+      | location | Main navigation, Menu bar, User menu                                                                        |
     And the following "theme_boost_union > smart menu item" exists:
       | menu     | <span lang="en" class="multilang">Lorem ipsum</span><span lang="de" class="multilang">Dolor sit amet</span> |
       | title    | Multilang          |
@@ -169,15 +79,15 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I set the field "Preferred language" to "English ‎(en)‎"
     And I press "Save changes"
     And I am on homepage
-    Then I should see smart menu "Lorem ipsum" in location "Main, Menu, User, Bottom"
-    And I should not see smart menu "Dolor sit amet" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Lorem ipsum" in location "Main, Menu, User"
+    And I should not see smart menu "Dolor sit amet" in location "Main, Menu, User"
     And I follow "Preferences" in the user menu
     And I click on "Preferred language" "link"
     And I set the field "Preferred language" to "Deutsch ‎(de)‎"
     And I press "Save changes"
     And I am on homepage
-    Then I should see smart menu "Dolor sit amet" in location "Main, Menu, User, Bottom"
-    And I should not see smart menu "Lorem ipsum" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Dolor sit amet" in location "Main, Menu, User"
+    And I should not see smart menu "Lorem ipsum" in location "Main, Menu, User"
 
   @javascript
   Scenario Outline: Smartmenu: Menus: Presentation - Display the menus inside and outside more menu (Looking at the visible menus in the main menu)

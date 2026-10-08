@@ -19,7 +19,5 @@ templates/loginform-partial-method-start.mustache: WARNING: HTML Validation erro
 templates/loginform-partial-method-start.mustache: WARNING: HTML Validation error: Unclosed element “div”.
 
 # The smart menu children templates render single menu items which are wrapped into a menu by the calling template.
-templates/smartmenus-cardmenu-children.mustache: WARNING: HTML Validation error: An element with “role=menuitem” must be contained in, or owned by, an element with “role=menubar” or “role=menu”.
-templates/smartmenus-cardmenu-children.mustache: WARNING: HTML Validation error: Element “li” not allowed as child of element “body” in this context.
 templates/smartmenus-moremenu-children.mustache: WARNING: HTML Validation error: An element with “role=menuitem” must be contained in, or owned by, an element with “role=menubar” or “role=menu”.
 templates/smartmenus-moremenu-children.mustache: WARNING: HTML Validation error: Element “li” not allowed as child of element “body” in this context.

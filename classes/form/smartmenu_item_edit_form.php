@@ -605,65 +605,6 @@ class smartmenu_item_edit_form extends \moodleform {
         ]);
         $mform->addHelpButton('textcountsecond', 'smartmenusmenuitemtextcount', 'theme_boost_union');
 
-        // If the menu is configured to be presented as cards.
-        if (isset($this->_customdata['menutype']) && $this->_customdata['menutype'] == smartmenu::TYPE_CARD) {
-            // Add card appearance as header element.
-            $mform->addElement(
-                'header',
-                'cardpresentationheader',
-                get_string('smartmenusmenuitemcardappearanceheader', 'theme_boost_union')
-            );
-            $mform->setExpanded('cardpresentationheader');
-
-            // Add card image as filepicker element.
-            $filepickeroptions = smartmenu_item::image_filepickeroptions();
-            $mform->addElement(
-                'filemanager',
-                'image',
-                get_string('smartmenusmenuitemcardimage', 'theme_boost_union'),
-                null,
-                $filepickeroptions
-            );
-            $mform->addHelpButton('image', 'smartmenusmenuitemcardimage', 'theme_boost_union');
-
-            // Add alt text option for the card image.
-            $mform->addElement('text', 'imagealt', get_string('smartmenusmenuitemcardimagealt', 'theme_boost_union'));
-            $mform->setType('imagealt', PARAM_TEXT);
-            $mform->addHelpButton('imagealt', 'smartmenusmenuitemcardimagealt', 'theme_boost_union');
-
-            // Add card text position as select element.
-            $textpositionoptions = smartmenu_item::get_textposition_options();
-            $mform->addElement(
-                'select',
-                'textposition',
-                get_string('smartmenusmenuitemtextposition', 'theme_boost_union'),
-                $textpositionoptions
-            );
-            $mform->setDefault('textposition', smartmenu_item::POSITION_BELOW);
-            $mform->setType('textposition', PARAM_INT);
-            $mform->addHelpButton('textposition', 'smartmenusmenuitemtextposition', 'theme_boost_union');
-
-            // Add card text color as color picker element.
-            $mform->addElement(
-                'theme_boost_union_colorpicker',
-                'textcolor',
-                get_string('smartmenusmenuitemcardtextcolor', 'theme_boost_union')
-            );
-            $mform->setType('textcolor', PARAM_TEXT);
-            $mform->addRule('textcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
-            $mform->addHelpButton('textcolor', 'smartmenusmenuitemcardtextcolor', 'theme_boost_union');
-
-            // Add card background color as color picker element.
-            $mform->addElement(
-                'theme_boost_union_colorpicker',
-                'backgroundcolor',
-                get_string('smartmenusmenuitemcardbackgroundcolor', 'theme_boost_union')
-            );
-            $mform->setType('backgroundcolor', PARAM_TEXT);
-            $mform->addRule('backgroundcolor', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
-            $mform->addHelpButton('backgroundcolor', 'smartmenusmenuitemcardbackgroundcolor', 'theme_boost_union');
-        }
-
         // Add restrict visibility by roles as header element.
         $mform->addElement(
             'header',

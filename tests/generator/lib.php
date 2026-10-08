@@ -66,26 +66,6 @@ class theme_boost_union_generator extends component_generator_base {
             throw new Exception('Invalid moremenubehavior.');
         }
 
-        $cardsize = null;
-        $cardform = null;
-        $cardoverflowbehavior = null;
-        if ($type === smartmenu::TYPE_CARD) {
-            $validcardsizes = array_keys(smartmenu::get_cardsize_options());
-            $cardsize = $data['cardsize'] ?? smartmenu::CARDSIZE_SMALL;
-            if (!in_array($cardsize, $validcardsizes)) {
-                throw new Exception('Invalid cardsize.');
-            }
-            $validcardforms = array_keys(smartmenu::get_cardform_options());
-            $cardform = $data['cardform'] ?? smartmenu::CARDFORM_SQUARE;
-            if (!in_array($cardform, $validcardforms)) {
-                throw new Exception('Invalid cardform.');
-            }
-            $validbehaviors = array_keys(smartmenu::get_cardoverflowbehaviour_options());
-            $cardoverflowbehavior = $data['cardoverflowbehavior'] ?? smartmenu::CARDOVERFLOWBEHAVIOUR_NOWRAP;
-            if (!in_array($cardoverflowbehavior, $validbehaviors)) {
-                throw new Exception('Invalid cardoverflowbehavior.');
-            }
-        }
         [
             $roles,
             $rolecontext,
@@ -109,9 +89,6 @@ class theme_boost_union_generator extends component_generator_base {
             'mode' => $mode,
             'cssclass' => $data['cssclass'] ?? null,
             'moremenubehavior' => $moremenubehavior,
-            'cardsize' => $cardsize,
-            'cardform' => $cardform,
-            'cardoverflowbehavior' => $cardoverflowbehavior,
             'roles' => $roles,
             'rolecontext' => $rolecontext,
             'cohorts' => $cohorts,
@@ -279,12 +256,6 @@ class theme_boost_union_generator extends component_generator_base {
             throw new Exception('Invalid target.');
         }
 
-        $validtextpositions = array_keys(smartmenu_item::get_textposition_options());
-        $textposition = $data['textposition'] ?? smartmenu_item::POSITION_BELOW;
-        if (!in_array($textposition, $validtextpositions)) {
-            throw new Exception('Invalid text position.');
-        }
-
         [
             $roles,
             $rolecontext,
@@ -329,10 +300,6 @@ class theme_boost_union_generator extends component_generator_base {
             'tooltip' => $data['tooltip'] ?? null,
             'target' => $target,
             'cssclass' => $data['cssclass'] ?? null,
-            'imagealt' => $data['imagealt'] ?? null,
-            'textposition' => $textposition,
-            'textcolor' => $data['textcolor'] ?? null,
-            'backgroundcolor' => $data['backgroundcolor'] ?? null,
             'desktop' => $data['desktop'] ?? 0,
             'tablet' => $data['tablet'] ?? 0,
             'mobile' => $data['mobile'] ?? 0,
