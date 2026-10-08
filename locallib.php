@@ -3047,7 +3047,9 @@ function theme_boost_union_build_fa_icon_map() {
     }
 
     // Define the FontAwesome variables file path first.
-    $variablesfile = $CFG->dirroot . '/theme/boost/scss/fontawesome/_variables.scss';
+    // Since Moodle 5.3 (MDL-88766), FontAwesome is shipped as a bundle in the lib directory outside of the public
+    // directory, which is why the file is looked up relative to $CFG->root and not relative to $CFG->dirroot.
+    $variablesfile = $CFG->root . '/lib/bundles/fontawesome/scss/_variables.scss';
 
     // If the variables file exists.
     if (file_exists($variablesfile)) {
