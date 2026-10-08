@@ -110,7 +110,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "F
     And "//li[@id='section-<othernum>']//a[@data-for='sectiontoggler' and @aria-expanded='true']" "xpath_element" should exist
     And I should see "Assignment in section <othernum>" in the "li#section-<othernum>" "css_element"
     # Even the 'Collapse all' control does not collapse the configured section (but it collapses the other section).
-    When I click on "#collapsesections" "css_element"
+    When I click on "#region-main .section-collapsemenu" "css_element"
     Then I should see "Assignment in section <targetnum>" in the "li#section-<targetnum>" "css_element"
     And I should not see "Assignment in section <othernum>" in the "li#section-<othernum>" "css_element"
 
@@ -121,29 +121,29 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "F
       | Course 1       | sectiononeplusappearance | 1         | 0        |
       | Course 2       | sectiononeplusappearance | 1         | 0        |
 
-  Scenario Outline: Setting: Appearance of sections - The 'Collapse all / Expand all' control is placed on the first collapsible section
+  Scenario Outline: Setting: Appearance of sections - The 'Collapse all / Expand all' control is kept as long as at least one section is collapsible
     Given the following config values are set as admin:
       | config                   | value                      | plugin            |
       | sectionzeroappearance    | <sectionzeroappearance>    | theme_boost_union |
       | sectiononeplusappearance | <sectiononeplusappearance> | theme_boost_union |
     When I log in as "student1"
     And I am on "Course 1" course homepage
-    # The 'Collapse all / Expand all' control sits on the first section which is actually collapsible.
-    # As '#collapsesections' is a unique id, asserting its container section fully pins down its location.
-    Then "#collapsesections" "css_element" should exist in the "li#section-<carriernum>" "css_element"
+    # The 'Collapse all / Expand all' control is shown above the section list (where Moodle core places it).
+    Then ".section-collapsemenu" "css_element" should exist in the "#region-main" "css_element"
+    And ".section-list.has-collapsemenu" "css_element" should exist in the "#region-main" "css_element"
 
     Examples:
-      | sectionzeroappearance | sectiononeplusappearance | carriernum |
-      | collapsibleexpanded   | collapsibleexpanded      | 0          |
-      | collapsibleexpanded   | collapsiblecollapsed     | 0          |
-      | collapsibleexpanded   | notcollapsible           | 0          |
-      | collapsiblecollapsed  | collapsibleexpanded      | 0          |
-      | collapsiblecollapsed  | collapsiblecollapsed     | 0          |
-      | collapsiblecollapsed  | notcollapsible           | 0          |
-      | notcollapsible        | collapsibleexpanded      | 1          |
-      | notcollapsible        | collapsiblecollapsed     | 1          |
-      | hidden                | collapsibleexpanded      | 1          |
-      | hidden                | collapsiblecollapsed     | 1          |
+      | sectionzeroappearance | sectiononeplusappearance |
+      | collapsibleexpanded   | collapsibleexpanded      |
+      | collapsibleexpanded   | collapsiblecollapsed     |
+      | collapsibleexpanded   | notcollapsible           |
+      | collapsiblecollapsed  | collapsibleexpanded      |
+      | collapsiblecollapsed  | collapsiblecollapsed     |
+      | collapsiblecollapsed  | notcollapsible           |
+      | notcollapsible        | collapsibleexpanded      |
+      | notcollapsible        | collapsiblecollapsed     |
+      | hidden                | collapsibleexpanded      |
+      | hidden                | collapsiblecollapsed     |
 
   @javascript
   Scenario Outline: Setting: Appearance of sections - The 'Collapse all / Expand all' control is removed when no section is collapsible
@@ -156,7 +156,8 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "F
     # The sections 0 and 1 still exist on the page (unless section 0 is hidden) ...
     Then "li#section-1" "css_element" should be visible
     # ... but as no section is collapsible, the 'Collapse all / Expand all' control is not shown at all.
-    And "#collapsesections" "css_element" should not exist
+    And ".section-collapsemenu" "css_element" should not exist in the "#region-main" "css_element"
+    And ".section-list.has-collapsemenu" "css_element" should not exist in the "#region-main" "css_element"
 
     Examples:
       | sectionzeroappearance | sectiononeplusappearance |
@@ -177,8 +178,9 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "F
     And "li#section-1" "css_element" should be visible
     # Section 0 is hidden in the course index as well.
     And ".courseindex-section[data-number='0']" "css_element" should not be visible
-    # The 'Collapse all' control has been moved to section 1 (the new first section) and is still available there.
-    And "Collapse all" "link" should exist in the "li#section-1" "css_element"
+    # The 'Collapse all' control above the section list is still available (as section 1 is still collapsible).
+    And ".section-collapsemenu" "css_element" should exist in the "#region-main" "css_element"
+    And ".section-list.has-collapsemenu" "css_element" should exist in the "#region-main" "css_element"
     # The section 1 should remain untouched and behave as usual.
     And "//li[@id='section-1']//a[@data-for='sectiontoggler']" "xpath_element" should be visible
     And "//li[@id='section-1']//a[@data-for='sectiontoggler' and @aria-expanded='true']" "xpath_element" should exist
