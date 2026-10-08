@@ -21,11 +21,13 @@
 
     Context variables required for this template:
     * showfootnote - The fact if the footnote should be shown or not
+    * footnotehideonprint - The fact if the footnote should be hidden when the page is printed
     * anystaticpagelinkedfromfootnote - The fact if any static page should be linked from the footnote
 
     Example context (json):
     {
         "showfootnote": true,
+        "footnotehideonprint": true,
         "footnotesetting": "This is my nice footnote",
         "anystaticpagelinkedfromfootnote": true,
         "aboutuslinkpositionfootnote": true,
@@ -65,7 +67,7 @@
 }}
 
 {{# showfootnote }}
-    <div id="footnote" class="py-3">
+    <div id="footnote" class="py-3{{# footnotehideonprint }} d-print-none{{/ footnotehideonprint }}">
         <div class="container-fluid px-0">
             {{{ footnotesetting }}}
         </div>

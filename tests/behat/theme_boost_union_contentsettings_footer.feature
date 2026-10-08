@@ -67,6 +67,40 @@ Feature: Configuring the theme_boost_union plugin for the "Footer" tab on the "C
       | login                    | should not           | should not        | should           |
       | mydashboard,login,course | should               | should            | should           |
 
+  Scenario Outline: Setting: Footnote - Hide footnote when printing (Hide the footnote when the page is printed)
+    Given the following config values are set as admin:
+      | config              | value         | plugin            |
+      | footnote            | Footnote text | theme_boost_union |
+      | footnotehideonprint | <setting>     | theme_boost_union |
+    When I log in as "admin"
+    And I follow "Dashboard"
+    Then "#footnote" "css_element" should exist
+    And "#footnote.d-print-none" "css_element" <shouldornot> exist
+
+    Examples:
+      | setting | shouldornot |
+      | yes     | should      |
+      | no      | should not  |
+
+  Scenario Outline: Setting: Footnote - Hide footnote when printing (Hide the footnote when the page is printed even if the footnote only contains static page links)
+    Given the following config values are set as admin:
+      | config              | value     | plugin            |
+      | footnote            |           | theme_boost_union |
+      | footnotehideonprint | <setting> | theme_boost_union |
+      | enableimprint       | yes       | theme_boost_union |
+      | imprintcontent      | Imprint   | theme_boost_union |
+      | imprintlinkposition | footnote  | theme_boost_union |
+    When I log in as "admin"
+    And I follow "Dashboard"
+    Then "#footnote" "css_element" should exist
+    And ".theme_boost_union_footnote_imprintlink" "css_element" should exist in the "#footnote" "css_element"
+    And "#footnote.d-print-none" "css_element" <shouldornot> exist
+
+    Examples:
+      | setting | shouldornot |
+      | yes     | should      |
+      | no      | should not  |
+
   @javascript
   Scenario Outline: Setting: Footer - Enable and disable the footer button
     Given the following config values are set as admin:

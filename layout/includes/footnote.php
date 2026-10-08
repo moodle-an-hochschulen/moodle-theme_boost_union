@@ -28,6 +28,12 @@ defined('MOODLE_INTERNAL') || die();
 // Require flavours library.
 require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
 
+// Add marker to hide the footnote when printing to templatecontext.
+// This is done before any of the early returns below as the footnote container may also be shown by the
+// static pages and accessibility pages includes if they add links to the footnote, even if the footnote text is empty.
+$templatecontext['footnotehideonprint'] =
+        (get_config('theme_boost_union', 'footnotehideonprint') == THEME_BOOST_UNION_SETTING_SELECT_YES);
+
 // Check if the footnote should be shown on this page layout.
 // If no layout is selected, the footnote will not be shown on any layout.
 $footnotelayoutssetting = get_config('theme_boost_union', 'footnotelayouts');
