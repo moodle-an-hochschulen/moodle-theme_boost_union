@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-08 - Upgrade: Adopt the new FontAwesome bundle location in locallib.php
 * 2026-10-05 - Upgrade: Adopt changes in locallib.php
 * 2026-10-05 - Upgrade: Adopt changes to slider.mustache
 * 2026-10-05 - Upgrade: Adopt changes in flavour_edit_form.php and colorpicker_rule.php
