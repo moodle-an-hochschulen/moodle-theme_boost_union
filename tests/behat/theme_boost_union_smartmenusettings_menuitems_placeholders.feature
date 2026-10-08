@@ -241,6 +241,28 @@ Feature: Placeholder support in Boost Union smart menu items
     And I am on "Test course1" course homepage
     Then I should see smart menu "Placeholder Menu" item "Security: behat0000000000000000000000000000" in location "Main"
 
+  Scenario: Static item with {courseurl} placeholder
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu     | Placeholder Menu           |
+      | title    | Go to current course       |
+      | itemtype | Static (with placeholders) |
+      | url      | {courseurl}                |
+    When I log in as "user1"
+    And I am on "Test course1" course homepage
+    Then I should see smart menu "Placeholder Menu" item "Go to current course" in location "Main"
+    And the "href" attribute of "a.boost-union-smartmenuitem" "css_element" should contain "/course/view.php?id=42"
+
+  Scenario: Static item with {pageurl} placeholder
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu     | Placeholder Menu           |
+      | title    | Reload current page        |
+      | itemtype | Static (with placeholders) |
+      | url      | {pageurl}                  |
+    When I log in as "user1"
+    And I am on the "user1" "user > profile" page
+    Then I should see smart menu "Placeholder Menu" item "Reload current page" in location "Main"
+    And the "href" attribute of "a.boost-union-smartmenuitem" "css_element" should contain "/user/profile.php?id="
+
   Scenario: Multiple placeholders in item title
     Given the following "theme_boost_union > smart menu item" exists:
       | menu     | Placeholder Menu                                    |
@@ -275,3 +297,49 @@ Feature: Placeholder support in Boost Union smart menu items
     And I log in as "user2"
     And I am on "Test course1" course homepage
     Then I should see smart menu "Placeholder Menu" item "Welcome Another Student" in location "Main"
+
+  Scenario: Mailto item with placeholders in title, subject and body
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu          | Placeholder Menu                                 |
+      | title         | Contact about {coursefullname}                   |
+      | itemtype      | Mailto (with placeholders)                       |
+      | email         | support@test.com                                 |
+      | email_subject | Question about {courseshortname}                 |
+      | email_body    | Hello, I am {userfullname}.\nCourse: {courseurl} |
+    When I log in as "user1"
+    And I am on "Test course1" course homepage
+    Then I should see smart menu "Placeholder Menu" item "Contact about Test course1" in location "Main"
+    # Test each mailto parameter separately to make sure the placeholders are replaced and correctly URL-encoded in the href.
+    And the "href" attribute of "a.boost-union-smartmenuitem" "css_element" should contain "mailto:support@test.com"
+    And the "href" attribute of "a.boost-union-smartmenuitem" "css_element" should contain "subject=Question%20about%20C1"
+    And the "href" attribute of "a.boost-union-smartmenuitem" "css_element" should contain "body=Hello%2C%20I%20am%20Test%20User.%0ACourse%3A%20"
+    And the "href" attribute of "a.boost-union-smartmenuitem" "css_element" should contain "%2Fcourse%2Fview.php%3Fid%3D42"
+
+  Scenario: Mailto item with placeholders is not cached and different per user
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu          | Placeholder Menu            |
+      | title         | Mail as {userfullname}      |
+      | itemtype      | Mailto (with placeholders)  |
+      | email         | support@test.com            |
+      | email_subject | Message from {userusername} |
+    When I log in as "user1"
+    And I am on "Test course1" course homepage
+    Then I should see smart menu "Placeholder Menu" item "Mail as Test User" in location "Main"
+    And the "href" attribute of "a.boost-union-smartmenuitem" "css_element" should contain "subject=Message%20from%20user1"
+    And I log out
+    And I log in as "user2"
+    And I am on "Test course1" course homepage
+    Then I should see smart menu "Placeholder Menu" item "Mail as Another Student" in location "Main"
+    And the "href" attribute of "a.boost-union-smartmenuitem" "css_element" should contain "subject=Message%20from%20user2"
+
+  Scenario: Plain mailto item does not replace placeholders
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu          | Placeholder Menu          |
+      | title         | Contact {coursefullname}  |
+      | itemtype      | Mailto                    |
+      | email         | support@test.com          |
+      | email_subject | Course {courseid}         |
+    When I log in as "user1"
+    And I am on "Test course1" course homepage
+    Then I should see smart menu "Placeholder Menu" item "Contact {coursefullname}" in location "Main"
+    And the "href" attribute of "a.boost-union-smartmenuitem" "css_element" should contain "subject=Course%20%7Bcourseid%7D"
