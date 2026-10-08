@@ -1,8 +1,21 @@
+// Import Moodle Design System tokens.
+// Must be imported before Bootstrap so that the design system tokens can be used to override Bootstrap variables.
+@import "design-system";
+
+// Import font stack.
+@import "moodle/font-stack";
+
+// Import Noto Sans font face declarations.
+@import "moodle/fonts";
+
 // Import FontAwesome.
 @import "fontawesome";
 
 // Import All of Bootstrap
 @import "bootstrap";
+
+// Import language-specific font stacks. Must be imported after Bootstrap.
+@import "moodle/font-stack-lang";
 
 // Import Core moodle CSS
 @import "moodle";
