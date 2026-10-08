@@ -75,6 +75,7 @@ foreach ($staticpages as $staticpage) {
 
         // Add the page link and page title to the templatecontext.
         $templatecontext[$staticpage . 'link'] = theme_boost_union_get_staticpage_link($staticpage);
-        $templatecontext[$staticpage . 'pagetitle'] = theme_boost_union_get_staticpage_pagetitle($staticpage);
+        // The page title is fetched unescaped as the Mustache template escapes it itself.
+        $templatecontext[$staticpage . 'pagetitle'] = theme_boost_union_get_staticpage_pagetitle($staticpage, false);
     }
 }

@@ -92,6 +92,7 @@ foreach ($pages as $page) {
 
         // Add the page link and page title to the templatecontext.
         $templatecontext['accessibility' . $page . 'link'] = theme_boost_union_get_accessibility_link($page);
-        $templatecontext['accessibility' . $page . 'pagetitle'] = theme_boost_union_get_accessibility_pagetitle($page);
+        // The page title is fetched unescaped as the Mustache template escapes it itself.
+        $templatecontext['accessibility' . $page . 'pagetitle'] = theme_boost_union_get_accessibility_pagetitle($page, false);
     }
 }

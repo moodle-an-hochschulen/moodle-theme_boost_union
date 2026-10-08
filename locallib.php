@@ -435,17 +435,21 @@ function theme_boost_union_get_staticpage_link($page) {
 /**
  * Build the page title of a static page.
  *
+ * Please note: Boost Union's main branch wraps the format_string() result into clean_string() to avoid double escaping
+ * when the page title is rendered in a Mustache template. As clean_string() does not exist in Moodle 4.5, this function
+ * offers an $escape parameter instead. It should be set to false when the page title is passed to a Mustache template
+ * (which escapes the string itself) and left at true when the page title is output directly in PHP.
+ *
  * @param string $page The static page's identifier.
+ * @param bool $escape Whether format_string() should escape the page title or not.
  * @return string.
  */
-function theme_boost_union_get_staticpage_pagetitle($page) {
+function theme_boost_union_get_staticpage_pagetitle($page, $escape = true) {
     // Get the configured page title.
-    $pagetitleconfig = clean_string(
-        format_string(
-            get_config('theme_boost_union', $page . 'pagetitle'),
-            true,
-            ['context' => \context_system::instance()]
-        )
+    $pagetitleconfig = format_string(
+        get_config('theme_boost_union', $page . 'pagetitle'),
+        true,
+        ['context' => \context_system::instance(), 'escape' => $escape]
     );
 
     // If there is a string configured.
@@ -478,11 +482,12 @@ function theme_boost_union_get_accessibility_link($page) {
  * Build the page title of a accessibility page.
  *
  * @param string $page The accessibility page's identifier.
+ * @param bool $escape Whether format_string() should escape the page title or not.
  * @return string.
  */
-function theme_boost_union_get_accessibility_pagetitle($page) {
+function theme_boost_union_get_accessibility_pagetitle($page, $escape = true) {
     // Re-use the theme_boost_union_get_staticpage_pagetitle() as we are basically doing the same thing here.
-    return theme_boost_union_get_staticpage_pagetitle('accessibility' . $page);
+    return theme_boost_union_get_staticpage_pagetitle('accessibility' . $page, $escape);
 }
 
 /**
