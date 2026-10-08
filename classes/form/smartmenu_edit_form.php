@@ -139,40 +139,6 @@ class smartmenu_edit_form extends \moodleform {
         $mform->addHelpButton('cssclass', 'smartmenusmenucssclass', 'theme_boost_union');
         $mform->setType('cssclass', PARAM_TEXT);
 
-        // Add card size as select element.
-        $cardsizeoptions = smartmenu::get_cardsize_options();
-        $mform->addElement('select', 'cardsize', get_string('smartmenusmenucardsize', 'theme_boost_union'), $cardsizeoptions);
-        $mform->setDefault('cardsize', smartmenu::CARDSIZE_TINY);
-        $mform->setType('cardsize', PARAM_INT);
-        $mform->hideIf('cardsize', 'type', 'neq', smartmenu::TYPE_CARD);
-        $mform->addHelpButton('cardsize', 'smartmenusmenucardsize', 'theme_boost_union');
-
-        // Add card form as select element.
-        $cardformoptions = smartmenu::get_cardform_options();
-        $mform->addElement(
-            'select',
-            'cardform',
-            get_string('smartmenusmenucardform', 'theme_boost_union'),
-            $cardformoptions
-        );
-        $mform->setDefault('cardform', smartmenu::CARDFORM_SQUARE);
-        $mform->setType('cardform', PARAM_INT);
-        $mform->hideIf('cardform', 'type', 'neq', smartmenu::TYPE_CARD);
-        $mform->addHelpButton('cardform', 'smartmenusmenucardform', 'theme_boost_union');
-
-        // Add card overflow behaviour as select element.
-        $cardoverflowoptions = smartmenu::get_cardoverflowbehaviour_options();
-        $mform->addElement(
-            'select',
-            'cardoverflowbehavior',
-            get_string('smartmenusmenucardoverflowbehavior', 'theme_boost_union'),
-            $cardoverflowoptions
-        );
-        $mform->setDefault('cardoverflowbehaviour', smartmenu::CARDOVERFLOWBEHAVIOUR_NOWRAP);
-        $mform->setType('cardoverflowbehaviour', PARAM_INT);
-        $mform->hideIf('cardoverflowbehavior', 'type', 'neq', smartmenu::TYPE_CARD);
-        $mform->addHelpButton('cardoverflowbehavior', 'smartmenusmenucardoverflowbehavior', 'theme_boost_union');
-
         // Add restrict visibility by roles as header element.
         $mform->addElement(
             'header',
@@ -357,27 +323,6 @@ class smartmenu_edit_form extends \moodleform {
     public function validation($data, $files) {
         // Call parent form validation first.
         $errors = parent::validation($data, $files);
-
-        // If the menu type is card.
-        if ($data['type'] == smartmenu::TYPE_CARD) {
-            // Verify that the card size is not empty.
-            // (This should be already the case as this wiget is just a select element without neutral option).
-            if (empty($data['cardsize'])) {
-                $errors['cardsize'] = get_string('required');
-            }
-
-            // Verify that the card form is not empty.
-            // (This should be already the case as this wiget is just a select element without neutral option).
-            if (empty($data['cardform'])) {
-                $errors['cardform'] = get_string('required');
-            }
-
-            // Verify that the overflow behaviour is selected.
-            // (This should be already the case as this wiget is just a select element without neutral option).
-            if (empty($data['cardoverflowbehavior'])) {
-                $errors['cardoverflowbehavior'] = get_string('required');
-            }
-        }
 
         // Validate the smart menu location is filled.
         if (empty($data['location'])) {

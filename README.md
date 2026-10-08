@@ -636,7 +636,7 @@ Boost Union's CSS snippets offer a possibility to add small (or slightly larger)
 
 ### Settings page "Smart menus"
 
-Smart menus allow site administrators to create customizable menus that can be placed in different locations on the site, such as the site main menu, bottom mobile menu, and user menu. The menus can be configured to display different types of content, including links to other pages or resources, category links, or user profile links. On this page, you can create and manage smart menus.
+Smart menus allow site administrators to create customizable menus that can be placed in different locations on the site, such as the site main menu, the menu bar and the user menu. The menus can be configured to display different types of content, including links to other pages or resources, category links, or user profile links. On this page, you can create and manage smart menus.
 
 ### Settings page "Recommendations"
 
@@ -824,8 +824,6 @@ This theme ships with some additions for companion plugins:
 
 * block_dash / local_dash:
   * Style improvements for Dash dashboards in combination with Boost Union block regions
-* local_learningtools:
-  * Style improvements for the learning tools button in combination with the Boost Union bottom navigation
 * local_och5p / local_och5pcore:
   * Renderer additions to add necessary additional CSS and JS files.
 

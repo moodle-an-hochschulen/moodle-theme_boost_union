@@ -7,7 +7,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
   Background:
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Quick links                                      |
-      | location | Main navigation, Menu bar, User menu, Bottom bar |
+      | location | Main navigation, Menu bar, User menu             |
     And the following "theme_boost_union > smart menu item" exists:
       | menu     | Quick links   |
       | title    | Mail          |
@@ -16,7 +16,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
 
   Scenario: Smartmenus: Menu items: Mailto - Add a smart menu documentation link item in a smart menu
     When I log in as "admin"
-    Then I should see smart menu "Quick links" item "Mail" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Quick links" item "Mail" in location "Main, Menu, User"
     And the "href" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Mail')]" "xpath_element" should contain "mailto:test@test.com"
 
   Scenario: Smartmenus: Menu items: Mailto - Cc, Bcc, subject and body are URL-encoded in the href
@@ -30,7 +30,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, usi
       | email_subject | Hi there                   |
       | email_body    | First line\nSecond line    |
     When I log in as "admin"
-    Then I should see smart menu "Quick links" item "Rich mail" in location "Main, Menu, User, Bottom"
+    Then I should see smart menu "Quick links" item "Rich mail" in location "Main, Menu, User"
     # Test each mailto parameter separately to make sure they are all included and correctly URL-encoded in the href.
     And the "href" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Rich mail')]" "xpath_element" should contain "mailto:a@test.com,b@test.com"
     And the "href" attribute of "//div[@class='primary-navigation']//a[contains(normalize-space(.), 'Rich mail')]" "xpath_element" should contain "cc=cc1%40test.com%2Ccc2%40test.com"

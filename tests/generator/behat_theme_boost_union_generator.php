@@ -89,9 +89,6 @@ class behat_theme_boost_union_generator extends behat_generator_base {
                     'type' => 'type',
                     'mode' => 'mode',
                     'moremenubehavior' => 'moremenubehavior',
-                    'cardform' => 'cardform',
-                    'cardsize' => 'cardsize',
-                    'cardoverflowbehaviour' => 'cardoverflowbehaviour',
                     'roles' => 'roles',
                     'rolecontext' => 'rolecontext',
                     'cohorts' => 'cohorts',
@@ -120,7 +117,6 @@ class behat_theme_boost_union_generator extends behat_generator_base {
                     'itemmode' => 'mode',
                     'display' => 'display',
                     'target' => 'target',
-                    'textposition' => 'textposition',
                     'roles' => 'roles',
                     'rolecontext' => 'rolecontext',
                     'cohorts' => 'cohorts',
@@ -246,39 +242,6 @@ class behat_theme_boost_union_generator extends behat_generator_base {
      */
     protected function get_moremenubehavior_id(string $moremenu): int {
         return $this->option_id('moremenu', $moremenu, smartmenu::get_moremenu_options());
-    }
-
-    /**
-     * Return the ID for the given cardsize setting.
-     *
-     * @param string $cardsize
-     * @return int
-     * @throws Exception
-     */
-    protected function get_cardsize_id(string $cardsize): int {
-        return $this->option_id('cardsize', $cardsize, smartmenu::get_cardsize_options());
-    }
-
-    /**
-     * Return the ID for the given cardform setting.
-     *
-     * @param string $cardform
-     * @return int
-     * @throws Exception
-     */
-    protected function get_cardform_id(string $cardform): int {
-        return $this->option_id('cardform', $cardform, smartmenu::get_cardform_options());
-    }
-
-    /**
-     * Return the ID for the given cardoverflowbehaviour setting.
-     *
-     * @param string $cardoverflowbehaviour
-     * @return int
-     * @throws Exception
-     */
-    protected function get_cardoverflowbehaviour_id(string $cardoverflowbehaviour): int {
-        return $this->option_id('cardoverflowbehaviour', $cardoverflowbehaviour, smartmenu::get_cardoverflowbehaviour_options());
     }
 
     /**
@@ -562,17 +525,6 @@ class behat_theme_boost_union_generator extends behat_generator_base {
      */
     protected function get_target_id(string $target): int {
         return $this->option_id('target', $target, smartmenu_item::get_target_options());
-    }
-
-    /**
-     * Return the ID of the given textposition setting.
-     *
-     * @param string $textposition
-     * @return int
-     * @throws Exception
-     */
-    protected function get_textposition_id(string $textposition): int {
-        return $this->option_id('textposition', $textposition, smartmenu_item::get_textposition_options());
     }
 
     /**

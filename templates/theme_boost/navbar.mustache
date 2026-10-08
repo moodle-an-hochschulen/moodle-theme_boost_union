@@ -61,8 +61,6 @@
     Modifications compared to the original template:
     * Added the possibility to change navbar color.
     * Include button for off-canvas region.
-    * If a smart menu is configured as bottom bar, disable the hamburger menu on mobile viewport.
-    * If a smart menu is configured as bottom bar, display the logo on mobile viewport instead of the hamburger menu icon (removed d-none, changed d-md-flex to d-flex)
     * Added menu bar section.
     * Added the possibility to use an alternative logo link URL.
     * Added the possibility to set a maximal width for the sitename in the navbar to prevent layout breaking on medium-width screens.
@@ -73,20 +71,18 @@
 }}
 
 {{#menubar}}
-<nav class="menubar fixed-top boost-union-menubar navbar navbar-expand {{#bottombar.drawer}} smartmenu-bottom-navigation {{/bottombar.drawer}} {{{menubar.classes}}}">
+<nav class="menubar fixed-top boost-union-menubar navbar navbar-expand {{{menubar.classes}}}">
     {{> core/moremenu}}
 </nav>
 {{/menubar}}
-<nav class="navbar fixed-top {{navbarcolorclasses}} navbar-expand {{#bottombar.drawer}} smartmenu-bottom-navigation {{/bottombar.drawer}}" {{#databstheme}}data-bs-theme="{{databstheme}}"{{/databstheme}} aria-label="{{#str}}sitemenubar, admin{{/str}}">
+<nav class="navbar fixed-top {{navbarcolorclasses}} navbar-expand" {{#databstheme}}data-bs-theme="{{databstheme}}"{{/databstheme}} aria-label="{{#str}}sitemenubar, admin{{/str}}">
     <div class="container-fluid">
-        {{^bottombar.drawer}}
         <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
             <span class="navbar-toggler-icon"></span>
             <span class="visually-hidden">{{#str}}sidepanel, core{{/str}}</span>
         </button>
-        {{/bottombar.drawer}}
 
-        <a href="{{#alternativelogolinkurl}}{{{alternativelogolinkurl}}}{{/alternativelogolinkurl}}{{^alternativelogolinkurl}}{{{ config.homeurl }}}{{/alternativelogolinkurl}}" class="navbar-brand align-items-center m-0 me-4 p-0 aabtn {{#bottombar.drawer}} d-flex {{/bottombar.drawer}} {{^bottombar.drawer}} d-none d-md-flex {{/bottombar.drawer}} ">
+        <a href="{{#alternativelogolinkurl}}{{{alternativelogolinkurl}}}{{/alternativelogolinkurl}}{{^alternativelogolinkurl}}{{{ config.homeurl }}}{{/alternativelogolinkurl}}" class="navbar-brand d-none d-md-flex align-items-center m-0 me-4 p-0 aabtn">
 
             {{# output.should_display_navbar_logo }}
                 <img src="{{output.get_compact_logo_url}}" class="logo me-1" alt="{{sitename}}">

@@ -49,7 +49,7 @@
     This template is a modified version of core/moremenu
 
     Modifications compared to the original template:
-    * Use separate templates for children menu types (list style and card style menu).
+    * Use a separate template for the children menu items.
     * Set the submenus' data-bs-theme attribute to light even if the navbar is dark
 
 }}
@@ -61,41 +61,15 @@
             {{/children}}
         {{/nodecollection}}
         {{#nodearray}}
-            {{!-- Menu with card style --}}
-            {{#card}}
-                {{> theme_boost_union/smartmenus-cardmenu-children}}
-            {{/card}}
-            {{!-- Menu with list style --}}
-            {{^card}}
-                {{> theme_boost_union/smartmenus-moremenu-children}}
-            {{/card}}
+            {{> theme_boost_union/smartmenus-moremenu-children}}
         {{/nodearray}}
-        {{^drawer}}
-            <li role="none" class="nav-item dropdown dropdownmoremenu d-none" data-region="morebutton">
-                <a class="dropdown-toggle nav-link {{#isactive}}active{{/isactive}}" href="#" id="moremenu-dropdown-{{moremenuid}}" role="{{#istablist}}tab{{/istablist}}{{^istablist}}menuitem{{/istablist}}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" tabindex="-1">
-                    {{#str}}moremenu, core{{/str}}
-                </a>
-                <ul class="dropdown-menu dropdown-menu-start" data-region="moredropdown" aria-labelledby="moremenu-dropdown-{{moremenuid}}" role="menu">
-                </ul>
-            </li>
-        {{/drawer}}
-        {{!- Bottombar, change the more menu into drawer --}}
-        {{#drawer}}
-            <li role="none" class="nav-item dropdown dropdownmoremenu d-none" data-region="morebutton">
-                <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
-                    {{#pix}} i/menu, core {{/pix}}
-                    {{#str}}moremenu, core{{/str}}
-                    <span class="visually-hidden">{{#str}}sidepanel, core{{/str}}</span>
-                </button>
-                <div class="hidden">
-                    <a class="dropdown-toggle nav-link {{#isactive}}active{{/isactive}}" href="#" id="moremenu-dropdown-{{moremenuid}}" role="{{#istablist}}tab{{/istablist}}{{^istablist}}menuitem{{/istablist}}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" tabindex="-1">
-                        {{#str}}moremenu, core{{/str}}
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-left" data-region="moredropdown" aria-labelledby="moremenu-dropdown-{{moremenuid}}" role="menu">
-                    </ul>
-                </div>
-            </li>
-        {{/drawer}}
+        <li role="none" class="nav-item dropdown dropdownmoremenu d-none" data-region="morebutton">
+            <a class="dropdown-toggle nav-link {{#isactive}}active{{/isactive}}" href="#" id="moremenu-dropdown-{{moremenuid}}" role="{{#istablist}}tab{{/istablist}}{{^istablist}}menuitem{{/istablist}}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" tabindex="-1">
+                {{#str}}moremenu, core{{/str}}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-start" data-region="moredropdown" aria-labelledby="moremenu-dropdown-{{moremenuid}}" role="menu">
+            </ul>
+        </li>
     </ul>
 </nav>
 {{#js}}

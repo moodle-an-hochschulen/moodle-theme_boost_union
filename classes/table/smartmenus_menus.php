@@ -121,6 +121,11 @@ class smartmenus_menus extends \core_table\sql_table {
         // Decode all locations.
         $locations = json_decode($data->location);
 
+        // Ignore locations which do not exist (anymore), e.g. the bottom bar location of existing menus.
+        $locations = array_filter((array) $locations, function ($value) {
+            return \theme_boost_union\smartmenu::get_location($value) !== false;
+        });
+
         // Implode all given locations and show a badge for each of them.
         return (!empty($locations)) ? implode(' ', array_map(function ($value) {
             $location = \theme_boost_union\smartmenu::get_location($value);
@@ -136,7 +141,12 @@ class smartmenus_menus extends \core_table\sql_table {
      */
     public function col_type($data) {
         // Get the type.
+        // Types which do not exist (anymore), e.g. the card type of existing menus, are shown as list type as they are
+        // rendered as list menus.
         $type = \theme_boost_union\smartmenu::get_type($data->type);
+        if ($type === false) {
+            $type = \theme_boost_union\smartmenu::get_type(\theme_boost_union\smartmenu::TYPE_LIST);
+        }
 
         // Return the type as badge.
         return html_writer::tag('span', $type, ['class' => 'badge bg-primary text-light']);

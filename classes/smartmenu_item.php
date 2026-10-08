@@ -26,12 +26,10 @@ namespace theme_boost_union;
 
 defined('MOODLE_INTERNAL') || die();
 
-use context_system;
 use stdClass;
 use xmldb_table;
 use cache;
 use core\output\html_writer;
-use core_course\external\course_summary_exporter;
 use context_course;
 
 require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
@@ -193,24 +191,6 @@ class smartmenu_item {
     const TARGET_NEW = 1;
 
     /**
-     * Show the item title in below of the card image.
-     * @var int
-     */
-    const POSITION_BELOW = 0;
-
-    /**
-     * Show the item title in top of the card overlay.
-     * @var int
-     */
-    const POSITION_OVERLAYTOP = 1;
-
-    /**
-     * Show the item title in bottom of the card overlay.
-     * @var int
-     */
-    const POSITION_OVERLAYBOTTOM = 2;
-
-    /**
      * Display the dynamic items as second level submenu of the menu.
      * @var int
      */
@@ -221,12 +201,6 @@ class smartmenu_item {
      * @var int
      */
     const MODE_INLINE = 1;
-
-    /**
-     * Opacity for the Card background layout in overlay text positions.
-     * @var int
-     */
-    const BACKGROUND_OPACITY = 5;
 
     /**
      * Display the course fullname as title in menu for dynamic menu item.
@@ -682,37 +656,6 @@ class smartmenu_item {
     }
 
     /**
-     * Returns the URL of the image associated with the given item ID,
-     * or a placeholder image URL if no image is associated with the item.
-     *
-     * @param int $itemid The ID of the item.
-     * @return string The URL of the image associated with the item.
-     */
-    public function get_itemimage($itemid) {
-        global $OUTPUT, $SITE;
-
-        $fs = get_file_storage();
-        $contextid = \context_system::instance()->id;
-        $files = $fs->get_area_files($contextid, 'theme_boost_union', 'smartmenus_itemimage', $itemid, '', false);
-        if (!empty($files)) {
-            // Get the first file.
-            $file = reset($files);
-
-            $url = \core\url::make_pluginfile_url(
-                $file->get_contextid(),
-                $file->get_component(),
-                $file->get_filearea(),
-                $file->get_itemid(),
-                $file->get_filepath(),
-                $file->get_filename(),
-                false
-            );
-        }
-        $placeholderimage = $OUTPUT->get_generated_image_for_id($SITE->id);
-        return $url ?? $placeholderimage;
-    }
-
-    /**
      * Get the course display name based on the configured display field.
      *
      * @param \stdClass $record The course record.
@@ -801,24 +744,6 @@ class smartmenu_item {
             }
         }
         return '';
-    }
-
-    /**
-     * Returns the URL of the image associated with the given course ID,
-     * or a placeholder image URL if no image is associated with the course.
-     *
-     * @param stdclass $course The course record
-     * @return string The URL of the image associated with the item.
-     */
-    public function get_course_image($course) {
-
-        $courseimage = course_summary_exporter::get_course_image($course);
-        if (!$courseimage && $this->menu->type == smartmenu::TYPE_CARD) {
-            // Course image not available, then check current parent item image,
-            // If found then use the image otherwise generate the Custom image.
-            $courseimage = $this->get_itemimage($this->item->id);
-        }
-        return $courseimage;
     }
 
     /**
@@ -1063,11 +988,6 @@ class smartmenu_item {
     protected function generate_dynamic_item() {
         global $DB;
 
-        // Prevent the item if the item mode is submenu and the menu is card.
-        if ($this->item->mode == self::MODE_SUBMENU && $this->menu->type == smartmenu::TYPE_CARD) {
-            return [];
-        }
-
         $query = (object) [
             'select' => ['c.*'],
             'join' => [],
@@ -1128,8 +1048,6 @@ class smartmenu_item {
 
             $url = new \core\url('/course/view.php', ['id' => $record->id]);
             $rkey = 'item-' . $this->item->id . '-dynamic-' . $record->id;
-            // Get the course image from overview files.
-            $itemimage = $this->get_course_image($record);
             // Generate the navigation node for this course and add the node to items list.
             $coursename = $this->get_course_displayname($record);
             $coursenamesecond = $this->get_course_displaynamesecond($record);
@@ -1173,7 +1091,6 @@ class smartmenu_item {
                 'link',
                 false,
                 [],
-                $itemimage,
                 $sortdata,
                 $itemclasses,
                 $coursenamesecond
@@ -1638,7 +1555,6 @@ class smartmenu_item {
      * If not, it verifies if the user has access to the menu item and checks for any access restrictions.
      *
      * It then adds custom CSS classes and hides the menu item based on specific viewport sizes.
-     * It also adds classes for the item title placement on the card.
      *
      * Next, it checks the type of the menu item and generates the array markup based on the type:
      * If the type is static, it generates a static item using the generate_static_item method and returns it as an array.
@@ -1675,9 +1591,6 @@ class smartmenu_item {
         $class[] = $this->item->tablet ? 'd-md-none' : 'd-md-inline-flex';
         $class[] = $this->item->mobile ? 'd-none' : 'd-inline-flex';
 
-        // Add classes for item title placement on card.
-        $class[] = $this->get_textposition_class();
-
         // Add menu item class.
         $types = [
             self::TYPESTATIC => 'static',
@@ -1698,9 +1611,6 @@ class smartmenu_item {
 
         // Load the location of menu, used to collect menus for locations in menu inline mode.
         $this->item->location = $this->menu->location;
-
-        // Convert the item background color hexcode into rgba with opacity. Used in the overlay style.
-        $this->convert_background_code();
 
         switch ($this->item->type) :
             case self::TYPESTATIC:
@@ -1802,7 +1712,6 @@ class smartmenu_item {
      * @param string $itemtype The type of the item, defaults to 'link'.
      * @param int $haschildren Whether the item has children or not, defaults to 0.
      * @param array $children An array of child nodes, defaults to an empty array.
-     * @param string $itemimage Card image url for item.
      * @param array $sortdata The string to be used for sorting the items.
      * @param array $itemclasses List of additional css classes for the menu item node.
      * @param string|null $secondline The second line text for the item, used for dynamic course menu items.
@@ -1817,7 +1726,6 @@ class smartmenu_item {
         $itemtype = 'link',
         $haschildren = 0,
         $children = [],
-        $itemimage = '',
         $sortdata = [],
         $itemclasses = [],
         $secondline = null
@@ -1874,25 +1782,6 @@ class smartmenu_item {
             }
         }
 
-        // Update the card type menus before create node.
-        if ($this->menu->type == smartmenu::TYPE_CARD) {
-            // Generate dynamic image for empty image cards.
-            if (empty($itemimage)) {
-                $itemimage = $this->get_itemimage($this->item->id);
-            }
-
-            // Use the menu title as image alt if image alt text not given.
-            $imagealt = $this->item->imagealt ?: $title;
-            // Update the image alt text if it contains placeholders.
-            if (strpos($imagealt, '{') !== false) {
-                $placeholders = ['menutitle' => $title];
-                foreach ($placeholders as $placeholder => $value) {
-                    $imagealt = str_replace('{' . $placeholder . '}', $value, $imagealt);
-                }
-            }
-            $imagealt = format_string($imagealt);
-        }
-
         // Include the additional item classes.
         $itemdata = clone($this->item);
         $itemdata->classes = array_merge($this->item->classes, $itemclasses);
@@ -1908,12 +1797,10 @@ class smartmenu_item {
             'title' => '',
             'tooltip' => $tooltip ? format_string($tooltip) : '',
             'haschildren' => $haschildren,
-            'itemimage' => $itemimage,
             'itemtype' => 'link',
             'link' => 1,
             'sort' => uniqid(), // Support third level menu.
             'sortdata' => $sortdata,
-            'imagealt' => $imagealt ?? $title,
             'desktop' => $this->item->desktop,
             'tablet' => $this->item->tablet,
             'mobile' => $this->item->mobile,
@@ -1937,43 +1824,6 @@ class smartmenu_item {
             $data['divider'] = true;
         }
         return $data;
-    }
-
-    /**
-     * Get the class of item title text position for card layout.
-     *
-     * @return string|null An html class of the text position.
-     */
-    public function get_textposition_class() {
-        switch ($this->item->textposition) {
-            case self::POSITION_OVERLAYBOTTOM:
-                $class = 'card-text-overlay-bottom';
-                break;
-            case self::POSITION_OVERLAYTOP:
-                $class = 'card-text-overlay-top';
-                break;
-            default:
-                $class = 'card-text-below';
-                break;
-        }
-        return $class ?? '';
-    }
-
-    /**
-     * Convert the card item background color hexa code into rgba().
-     * It includes the opacity with color code and convert it into rgba.
-     *
-     * @return void
-     */
-    public function convert_background_code() {
-        // Verify the menu style is card, and is the text position is overly bottom or overlay top.
-        if ($this->menu->type != smartmenu::TYPE_CARD || $this->item->textposition == self::POSITION_BELOW) {
-            return false;
-        }
-
-        // Attach the opacity into bg color and convert the item bgcolor hexa code into rgba.
-        $background = smartmenu_helper::color_get_rgba($this->item->backgroundcolor, self::BACKGROUND_OPACITY);
-        $this->item->backgroundcolor = $background;
     }
 
     /**
@@ -2270,23 +2120,6 @@ class smartmenu_item {
     }
 
     /**
-     * Return the options for the testposition setting.
-     *
-     * @return array
-     * @throws \coding_exception
-     */
-    public static function get_textposition_options(): array {
-        return [
-            self::POSITION_BELOW =>
-                get_string('smartmenusmenuitemtextpositionbelowimage', 'theme_boost_union'),
-            self::POSITION_OVERLAYTOP =>
-                get_string('smartmenusmenuitemtextpositionoverlaytop', 'theme_boost_union'),
-            self::POSITION_OVERLAYBOTTOM =>
-                get_string('smartmenusmenuitemtextpositionoverlaybottom', 'theme_boost_union'),
-        ];
-    }
-
-    /**
      * Return the options for the hidden courses sorting setting.
      *
      * @return array
@@ -2413,36 +2246,9 @@ class smartmenu_item {
             smartmenu::invalidate_shared_cache($menucache);
         }
 
-        // Save the item image files to the file directory.
-        if (isset($record->image)) {
-            $draftitemid = file_get_submitted_draft_itemid('itemimage');
-            file_save_draft_area_files(
-                $record->image,
-                context_system::instance()->id,
-                'theme_boost_union',
-                'smartmenus_itemimage',
-                $itemid,
-                self::image_filepickeroptions()
-            );
-        }
-
         $transaction->allow_commit();
 
         return true;
-    }
-
-    /**
-     * Get file options for selecting a single web image file.
-     *
-     * @return array An array of file options.
-     */
-    public static function image_filepickeroptions() {
-
-        return [
-            'subdirs' => 0,
-            'maxfiles' => 1,
-            'accepted_types' => 'web_image',
-        ];
     }
 
     /**

@@ -66,7 +66,7 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
      *
      * @Given /^I should see smart menu "(?P<menu>(?:[^"]|\\")*)" in location "(?P<locations>(?:[^"]|\\")*)"$/
      * @param string $menu Menu title.
-     * @param string $locations Menu locations to verify (Main, Menu, User, Bottom)
+     * @param string $locations Menu locations to verify (Main, Menu, User)
      */
     public function i_should_see_smartmenu_in_location($menu, $locations) {
         $locations = array_map('trim', explode(',', $locations));
@@ -84,12 +84,6 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
                 [$menu, 'theme_boost_union > User menu smart menu']
             );
         }
-        if (in_array('Bottom', $locations)) {
-            $this->execute(
-                'behat_general::should_exist',
-                [$menu, 'theme_boost_union > Bottom bar smart menu']
-            );
-        }
         if (in_array('Menu', $locations)) {
             $this->execute(
                 'behat_general::should_exist',
@@ -103,7 +97,7 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
      *
      * @Given I should not see smart menu :menu in location :location
      * @param string $menu Menu title
-     * @param string $location Locations to verify (Main, Menu, Bottom, User)
+     * @param string $location Locations to verify (Main, Menu, User)
      */
     public function i_should_not_see_smartmenu_in_location($menu, $location) {
         $locations = array_map('trim', explode(',', $location));
@@ -121,12 +115,6 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
                 [$menu, 'theme_boost_union > User menu smart menu']
             );
         }
-        if (in_array('Bottom', $locations)) {
-            $this->execute(
-                'behat_general::should_not_exist',
-                [$menu, 'theme_boost_union > Bottom bar smart menu']
-            );
-        }
         if (in_array('Menu', $locations)) {
             $this->execute(
                 'behat_general::should_not_exist',
@@ -141,7 +129,7 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
      * @Given I should see smart menu :menu item :item in location :locations
      * @param string $menu Menu title
      * @param string $item Menu item title
-     * @param string $locations Locations to verify (Main, Menu, Bottom, User)
+     * @param string $locations Locations to verify (Main, Menu, User)
      */
     public function i_should_see_smartmenu_item_in_location($menu, $item, $locations) {
         $locations = array_map('trim', explode(',', $locations));
@@ -159,12 +147,6 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
                 [$item, 'theme_boost_union > Smart menu item', $menu, 'theme_boost_union > User menu smart menu']
             );
         }
-        if (in_array('Bottom', $locations)) {
-            $this->execute(
-                'behat_general::should_exist_in_the',
-                [$item, 'theme_boost_union > Smart menu item', $menu, 'theme_boost_union > Bottom bar smart menu']
-            );
-        }
         if (in_array('Menu', $locations)) {
             $this->execute(
                 'behat_general::should_exist_in_the',
@@ -179,7 +161,7 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
      * @Given I should not see smart menu :menu item :item in location :location
      * @param string $menu Menu title
      * @param string $item Menu item title
-     * @param string $location Locations to verify (Main, Menu, Bottom, User)
+     * @param string $location Locations to verify (Main, Menu, User)
      */
     public function i_should_not_see_smartmenu_item_in_location($menu, $item, $location) {
         $locations = array_map('trim', explode(',', $location));
@@ -197,12 +179,6 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
                 [$item, 'theme_boost_union > Smart menu item', $menu, 'theme_boost_union > User menu smart menu']
             );
         }
-        if (in_array('Bottom', $locations)) {
-            $this->execute(
-                'behat_general::should_not_exist_in_the',
-                [$item, 'theme_boost_union > Smart menu item', $menu, 'theme_boost_union > Bottom bar smart menu']
-            );
-        }
         if (in_array('Menu', $locations)) {
             $this->execute(
                 'behat_general::should_not_exist_in_the',
@@ -216,7 +192,7 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
      *
      * @Given I should see smart menu :menu outside more menu in location :location
      * @param string $menu Menu title
-     * @param string $location Location name (Main, Menu, Bottom)
+     * @param string $location Location name (Main, Menu)
      */
     public function i_should_see_smartmenu_outside_more_menu_in_location($menu, $location) {
         $locations = array_map('trim', explode(',', $location));
@@ -234,12 +210,6 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
                 [$menu, 'theme_boost_union > Menu bar smart menu outside more menu']
             );
         }
-        if (in_array('Bottom', $locations)) {
-            $this->execute(
-                'behat_general::should_exist',
-                [$menu, 'theme_boost_union > Bottom bar smart menu outside more menu']
-            );
-        }
     }
 
     /**
@@ -247,7 +217,7 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
      *
      * @Given I should not see smart menu :menu outside more menu in location :location
      * @param string $menu Menu title
-     * @param string $location Location name (Main, Menu, Bottom)
+     * @param string $location Location name (Main, Menu)
      */
     public function i_should_not_see_smartmenu_outside_more_menu_in_location($menu, $location) {
         $locations = array_map('trim', explode(',', $location));
@@ -265,12 +235,6 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
                 [$menu, 'theme_boost_union > Menu bar smart menu outside more menu']
             );
         }
-        if (in_array('Bottom', $locations)) {
-            $this->execute(
-                'behat_general::should_not_exist',
-                [$menu, 'theme_boost_union > Bottom bar smart menu outside more menu']
-            );
-        }
     }
 
     /**
@@ -278,7 +242,7 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
      *
      * @Given I should see smart menu :menu inside more menu in location :location
      * @param string $menu Menu title
-     * @param string $location Location name (Main, Menu, Bottom)
+     * @param string $location Location name (Main, Menu)
      */
     public function i_should_see_smartmenu_inside_more_menu_in_location($menu, $location) {
         $locations = array_map('trim', explode(',', $location));
@@ -296,12 +260,6 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
                 [$menu, 'theme_boost_union > Menu bar smart menu inside more menu']
             );
         }
-        if (in_array('Bottom', $locations)) {
-            $this->execute(
-                'behat_general::should_exist',
-                [$menu, 'theme_boost_union > Bottom bar smart menu inside more menu']
-            );
-        }
     }
 
     /**
@@ -309,7 +267,7 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
      *
      * @Given I should not see smart menu :menu inside more menu in location :location
      * @param string $menu Menu title
-     * @param string $location Location name (Main, Menu, Bottom)
+     * @param string $location Location name (Main, Menu)
      */
     public function i_should_not_see_smartmenu_inside_more_menu_in_location($menu, $location) {
         $locations = array_map('trim', explode(',', $location));
@@ -325,12 +283,6 @@ class behat_theme_boost_union_base_smartmenus extends behat_base {
             $this->execute(
                 'behat_general::should_not_exist',
                 [$menu, 'theme_boost_union > Menu bar smart menu inside more menu']
-            );
-        }
-        if (in_array('Bottom', $locations)) {
-            $this->execute(
-                'behat_general::should_not_exist',
-                [$menu, 'theme_boost_union > Bottom bar smart menu inside more menu']
             );
         }
     }
