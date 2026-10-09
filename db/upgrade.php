@@ -1246,6 +1246,19 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2026042015, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2026042017) {
+        // Change the default of the field type on table theme_boost_union_menus to 0 (list type).
+        // The field was defined with the default 1 (card type) which contradicted the code default (list type).
+        $table = new xmldb_table('theme_boost_union_menus');
+        $field = new xmldb_field('type', XMLDB_TYPE_INTEGER, '9', null, XMLDB_NOTNULL, null, '0', 'location');
+
+        // Launch change of default for field type.
+        $dbman->change_field_default($table, $field);
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2026042017, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
