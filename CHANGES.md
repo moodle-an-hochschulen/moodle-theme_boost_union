@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-08 - Bugfix: Fix the database default of the smart menu type field which was set to the card type instead of the list type, resolves #1431
 * 2026-10-08 - Tests: Set the theme preset directly instead of saving it in the settings form in the preset inheritance Behat test as the form validation might race with the following steps
 * 2026-10-07 - Bugfix: Correctly escape special characters in static page titles, resolves #1382.\
                Please note: This change raises the required Moodle core version to 5.1.1
