@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.0-r35
 
 * 2026-10-08 - Bugfix: Fix the database default of the smart menu type field which was set to the card type instead of the list type, resolves #1431
 * 2026-10-08 - Tests: Set the theme preset directly instead of saving it in the settings form in the preset inheritance Behat test as the form validation might race with the following steps
