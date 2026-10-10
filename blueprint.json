@@ -1,0 +1,126 @@
+{
+  "$schema": "https://raw.githubusercontent.com/ateeducacion/moodle-playground/refs/heads/main/assets/blueprints/blueprint-schema.json",
+  "preferredVersions": {
+    "php": "8.3",
+    "moodle": "5.2"
+  },
+  "landingPage": "/",
+  "constants": {
+    "ADMIN_USER": "admin",
+    "ADMIN_PASS": "test",
+    "ADMIN_EMAIL": "admin@example.com"
+  },
+  "steps": [
+    {
+      "step": "installMoodle",
+      "options": {
+        "adminUser": "{{ADMIN_USER}}",
+        "adminPass": "{{ADMIN_PASS}}",
+        "adminEmail": "{{ADMIN_EMAIL}}",
+        "siteName": "Boost Union Theme Demo",
+        "locale": "en",
+        "timezone": "Europe/Madrid"
+      }
+    },
+    {
+      "step": "login",
+      "username": "{{ADMIN_USER}}"
+    },
+    {
+      "step": "installTheme",
+      "pluginName": "boost_union",
+      "url": "https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/archive/refs/heads/main.zip"
+    },
+    {
+      "step": "setTheme",
+      "name": "boost_union"
+    },
+    {
+      "step": "createCategory",
+      "name": "Test Courses"
+    },
+    {
+      "step": "createCourse",
+      "fullname": "Boost Union Demo Course",
+      "shortname": "BUDEMO01",
+      "category": "Test Courses",
+      "summary": "Demo course used to showcase the Boost Union theme rendering on real Moodle content.",
+      "format": "topics",
+      "numsections": 3
+    },
+    {
+      "step": "createUser",
+      "username": "student",
+      "password": "test",
+      "email": "student@example.com",
+      "firstname": "Demo",
+      "lastname": "Student"
+    },
+    {
+      "step": "enrolUser",
+      "username": "{{ADMIN_USER}}",
+      "course": "BUDEMO01",
+      "role": "editingteacher"
+    },
+    {
+      "step": "enrolUser",
+      "username": "student",
+      "course": "BUDEMO01",
+      "role": "student"
+    },
+    {
+      "step": "addModule",
+      "module": "page",
+      "course": "BUDEMO01",
+      "section": 1,
+      "name": "About this demo",
+      "intro": "<p>This Moodle Playground site renders with the <strong>Boost Union</strong> theme so you can preview its look and feel against real Moodle content (course page, activities and a sample assignment).</p>",
+      "content": "<h2>Boost Union demo content</h2><p>This is a regular Moodle <em>Page</em> resource. Use it to inspect how Boost Union styles typography, links, headings, blockquotes and tables.</p><blockquote><p>Boost Union is an enhanced child theme of Boost that adds many configurable features.</p></blockquote><p>Open <strong>Site administration → Appearance → Themes → Boost Union</strong> to explore the theme settings.</p>",
+      "contentformat": 1,
+      "display": 5
+    },
+    {
+      "step": "addModule",
+      "module": "assign",
+      "course": "BUDEMO01",
+      "section": 1,
+      "name": "Sample assignment — try Boost Union",
+      "intro": "<p>Open this assignment to see how Boost Union styles activity pages, buttons and form controls. Students can submit a short text response below.</p>",
+      "alwaysshowdescription": 1,
+      "submissiondrafts": 0,
+      "sendnotifications": 0,
+      "sendlatenotifications": 0,
+      "duedate": 0,
+      "allowsubmissionsfromdate": 0,
+      "grade": 100,
+      "requiresubmissionstatement": 0,
+      "completionsubmit": 0,
+      "cutoffdate": 0,
+      "gradingduedate": 0,
+      "teamsubmission": 0,
+      "requireallteammemberssubmit": 0,
+      "blindmarking": 0,
+      "hidegrader": 0,
+      "revealidentities": 0,
+      "attemptreopenmethod": "none",
+      "maxattempts": -1,
+      "markingworkflow": 0,
+      "markingallocation": 0,
+      "preventsubmissionnotingroup": 0
+    },
+    {
+      "step": "setConfigs",
+      "configs": [
+        { "plugin": "theme_boost_union", "name": "infobanner1enabled", "value": "yes" },
+        { "plugin": "theme_boost_union", "name": "infobanner1content", "value": "<p><strong>Boost Union demo</strong> — this banner is rendered by the theme's <em>info banner</em> feature. Configure it in Site administration → Appearance → Themes → Boost Union → Info banners.</p>" },
+        { "plugin": "theme_boost_union", "name": "infobanner1pages", "value": "frontpage,mydashboard,mycourses,course,login" },
+        { "plugin": "theme_boost_union", "name": "infobanner1bsclass", "value": "primary" },
+        { "plugin": "theme_boost_union", "name": "infobanner1order", "value": "1" }
+      ]
+    },
+    {
+      "step": "setLandingPage",
+      "path": "/"
+    }
+  ]
+}
