@@ -403,6 +403,40 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | outside-right | blockregionoutsiderightwidth | 300px        |
       | outside-right | blockregionoutsiderightwidth | 400px        |
 
+  @javascript
+  Scenario Outline: Setting: Block region width for 'Outside (left/right)' regions - Valid width values are accepted by the settings form (tested on the 'Outside (left)' field as representative for all fields which use the regex)
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Feel" in site administration
+    And I click on "Blocks" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I set the field "Block region width for 'Outside (left)' region" to "<settingvalue>"
+    And I click on "Save changes" "button"
+    Then I should see "Changes saved"
+    And I should not see "Some settings were not changed due to an error."
+    And the field "Block region width for 'Outside (left)' region" matches value "<settingvalue>"
+
+    Examples:
+      | settingvalue |
+      | 400px        |
+      | 10%          |
+      | 10vw         |
+
+  @javascript
+  Scenario Outline: Setting: Block region width for 'Outside (left/right)' regions - Invalid width values which would break the SCSS compilation are rejected by the settings form (tested on the 'Outside (left)' field as representative for all fields which use the regex)
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Feel" in site administration
+    And I click on "Blocks" "link" in the "#adminsettings .nav-tabs" "css_element"
+    And I set the field "Block region width for 'Outside (left)' region" to "<settingvalue>"
+    And I click on "Save changes" "button"
+    Then I should see "Some settings were not changed due to an error."
+    And I should see "This value is not valid"
+    And I should not see "Changes saved"
+
+    Examples:
+      | settingvalue |
+      | 300px)       |
+      | 10%)         |
+      | abc          |
+
   Scenario Outline: Setting: Block region width for 'Outside (top/bottom)' regions
     Given the following config values are set as admin:
       | config                | value          | plugin            |

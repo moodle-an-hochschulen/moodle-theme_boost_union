@@ -180,11 +180,11 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Prepare regular expression for checking if the value is a percent number (from 0% to 100%) or a pixel number
         // (with 3 or 4 digits) or a viewport width number (from 0 to 100).
-        $widthregex = '/^((\d{1,2}|100)%)|((\d{1,2}|100)vw)|(\d{3,4}px)$/';
+        $widthregex = '/^((\d{1,2}|100)%|(\d{1,2}|100)vw|\d{3,4}px)$/';
 
         // Prepare regular expression for checking if the value is a percent number (from 0% to 100%) or a pixel number
         // (with 2 or 3 digits) or a viewport width number (from 0 to 100). Additionally the field can be left blank.
-        $smallwidthoremptyregex = '/^((\d{1,2}|100)%)|((\d{1,2}|100)vw)|(\d{2,3}px)|(^(?!.*\S))$/';
+        $smallwidthoremptyregex = '/^((\d{1,2}|100)%|(\d{1,2}|100)vw|\d{2,3}px|\s*)$/';
 
         // Prepare login instruction position options.
         $logininstructionpositionoptions = [
@@ -4293,7 +4293,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('blockregionoutsideleftwidth', 'theme_boost_union', null, true);
         $description = get_string('blockregionoutsideleftwidth_desc', 'theme_boost_union', null, true);
         $default = '300px';
-        $setting = new admin_setting_configtext($name, $title, $description, $default);
+        $setting = new admin_setting_configtext($name, $title, $description, $default, $widthregex, 6);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
@@ -4302,7 +4302,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $title = get_string('blockregionoutsiderightwidth', 'theme_boost_union', null, true);
         $description = get_string('blockregionoutsiderightwidth_desc', 'theme_boost_union', null, true);
         $default = '300px';
-        $setting = new admin_setting_configtext($name, $title, $description, $default);
+        $setting = new admin_setting_configtext($name, $title, $description, $default, $widthregex, 6);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
