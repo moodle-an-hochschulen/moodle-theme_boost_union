@@ -4,6 +4,11 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-10-10 - Bugfix: Validate the block region width settings for the 'Outside (left)' and 'Outside (right)' regions as invalid values would break the SCSS compilation, resolves #1433
+* 2026-10-10 - Bugfix: Anchor the regular expressions which validate the width settings properly as they accepted values like '10%)' which would break the SCSS compilation, resolves #1433
+
 ### v5.2-r12
 
 * 2026-10-08 - Bugfix: Fix the database default of the smart menu type field which was set to the card type instead of the list type, resolves #1431
