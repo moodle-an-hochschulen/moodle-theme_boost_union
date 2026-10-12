@@ -219,7 +219,6 @@ if (
 $THEME->enable_dock = false;
 $THEME->extrascsscallback = 'theme_boost_union_get_extra_scss';
 $THEME->prescsscallback = 'theme_boost_union_get_pre_scss';
-$THEME->precompiledcsscallback = 'theme_boost_union_get_precompiled_css';
 $THEME->yuicssmodules = [];
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 $THEME->requiredblocks = '';
