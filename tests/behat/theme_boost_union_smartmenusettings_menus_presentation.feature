@@ -92,33 +92,35 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   @javascript
   Scenario Outline: Smartmenu: Menus: Presentation - Display the menus inside and outside more menu (Looking at the visible menus in the main menu)
     Given the following "theme_boost_union > smart menu" exists:
-      | title            | Quick links 01  |
+      | title            | Quick links reeeeeally overlong title 01  |
       | location         | Main navigation |
       | mode             | Submenu         |
       | moremenubehavior | <menu1beh>      |
     And the following "theme_boost_union > smart menu item" exists:
-      | menu     | Quick links 01 |
+      | menu     | Quick links reeeeeally overlong title 01 |
       | title    | Info           |
       | itemtype | Heading        |
     And the following "theme_boost_union > smart menu" exists:
-      | title            | Quick links 02  |
+      | title            | Quick links reeeeeally overlong title 02  |
       | location         | Main navigation |
       | mode             | Submenu         |
       | moremenubehavior | <menu2beh>      |
     And the following "theme_boost_union > smart menu item" exists:
-      | menu     | Quick links 02 |
+      | menu     | Quick links reeeeeally overlong title 02 |
       | title    | Info           |
       | itemtype | Heading        |
     And the following "theme_boost_union > smart menu" exists:
-      | title            | Quick links 03  |
+      | title            | Quick links reeeeeally overlong title 03  |
       | location         | Main navigation |
       | mode             | Submenu         |
       | moremenubehavior | <menu3beh>      |
     And the following "theme_boost_union > smart menu item" exists:
-      | menu     | Quick links 03 |
+      | menu     | Quick links reeeeeally overlong title 03 |
       | title    | Info           |
       | itemtype | Heading        |
     When I log in as "admin"
+    # Make the screen really large so that the site administration node is not collapsed into the "More" menu by the overlong smart menus.
+    And I change viewport size to "large"
     # Set the frontpage title to better control the available space in the navbar
     And I navigate to "Site home > Site home settings" in site administration
     And I set the field "id_s__shortname" to "Boost Union Test"
@@ -130,38 +132,32 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I follow "Dashboard"
     # Make the screen really large to test the "More" behaviour without any screen real estate constraints
     And I change viewport size to "large"
-    Then I <menu1outsideshouldornotlarge> see smart menu "Quick links 01" outside more menu in location "Main"
-    And I <menu1insideshouldornotlarge> see smart menu "Quick links 01" inside more menu in location "Main"
-    And I <menu2outsideshouldornotlarge> see smart menu "Quick links 02" outside more menu in location "Main"
-    And I <menu2insideshouldornotlarge> see smart menu "Quick links 02" inside more menu in location "Main"
-    And I <menu3outsideshouldornotlarge> see smart menu "Quick links 03" outside more menu in location "Main"
-    And I <menu3insideshouldornotlarge> see smart menu "Quick links 03" inside more menu in location "Main"
+    Then I <menu1outsideshouldornotlarge> see smart menu "Quick links reeeeeally overlong title 01" outside more menu in location "Main"
+    And I <menu1insideshouldornotlarge> see smart menu "Quick links reeeeeally overlong title 01" inside more menu in location "Main"
+    And I <menu2outsideshouldornotlarge> see smart menu "Quick links reeeeeally overlong title 02" outside more menu in location "Main"
+    And I <menu2insideshouldornotlarge> see smart menu "Quick links reeeeeally overlong title 02" inside more menu in location "Main"
+    And I <menu3outsideshouldornotlarge> see smart menu "Quick links reeeeeally overlong title 03" outside more menu in location "Main"
+    And I <menu3insideshouldornotlarge> see smart menu "Quick links reeeeeally overlong title 03" inside more menu in location "Main"
     And ".primary-navigation .dropdownmoremenu" "css_element" <moreshouldornotlarge> be visible
     # Make the screen smaller and test the "More" behaviour in the navbar
-    # This screen size should be 'tablet', but due to MDL-81892, we have to test on a larger screen.
-    And I change viewport size to "840x1024"
-    Then I <menu1outsideshouldornottablet> see smart menu "Quick links 01" outside more menu in location "Main"
-    And I <menu1insideshouldornottablet> see smart menu "Quick links 01" inside more menu in location "Main"
-    And I <menu2outsideshouldornottablet> see smart menu "Quick links 02" outside more menu in location "Main"
-    And I <menu2insideshouldornottablet> see smart menu "Quick links 02" inside more menu in location "Main"
-    And I <menu3outsideshouldornottablet> see smart menu "Quick links 03" outside more menu in location "Main"
-    And I <menu3insideshouldornottablet> see smart menu "Quick links 03" inside more menu in location "Main"
+    # The screen size is chosen such that two (overlong) menus and the "More" menu fit into the navbar, but three menus don't.
+    And I change viewport size to "1440x1024"
+    Then I <menu1outsideshouldornottablet> see smart menu "Quick links reeeeeally overlong title 01" outside more menu in location "Main"
+    And I <menu1insideshouldornottablet> see smart menu "Quick links reeeeeally overlong title 01" inside more menu in location "Main"
+    And I <menu2outsideshouldornottablet> see smart menu "Quick links reeeeeally overlong title 02" outside more menu in location "Main"
+    And I <menu2insideshouldornottablet> see smart menu "Quick links reeeeeally overlong title 02" inside more menu in location "Main"
+    And I <menu3outsideshouldornottablet> see smart menu "Quick links reeeeeally overlong title 03" outside more menu in location "Main"
+    And I <menu3insideshouldornottablet> see smart menu "Quick links reeeeeally overlong title 03" inside more menu in location "Main"
     And ".primary-navigation .dropdownmoremenu" "css_element" <moreshouldornottablet> be visible
 
     Examples:
       | menu1beh               | menu1outsideshouldornotlarge | menu1insideshouldornotlarge | menu1outsideshouldornottablet | menu1insideshouldornottablet | menu2beh               | menu2outsideshouldornotlarge | menu2insideshouldornotlarge | menu2outsideshouldornottablet | menu2insideshouldornottablet | menu3beh                  | menu3outsideshouldornotlarge | menu3insideshouldornotlarge | menu3outsideshouldornottablet | menu3insideshouldornottablet | moreshouldornotlarge | moreshouldornottablet |
       # Example 1: On larger screens, all menus are shown. On smaller screens, the 01 and 02 menus are shown as they have enough space and the 03 menu is moved to the more menu due to lack of space.
-      # Against this background, this example should look like this:
-      # | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything    | should                       | should not                  | should not                    | should                       | should not           | should                |
-      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
-      | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything | should                       | should not                  | should not                    | should                       | Do not change anything    | should                       | should not                  | should not                    | should                       | should not           | should                |
+      | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything    | should                       | should not                  | should not                    | should                       | should not           | should                |
       # Example 2: On larger screens, the 01 menu is moved to the more menu due to its configuration and the 02 and 03 menus are shown. On smaller screens, the same is the case.
       | Force into more menu   | should not                   | should                      | should not                    | should                       | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything    | should                       | should not                  | should                        | should not                   | should               | should                |
       # Example 3: On larger screens, all menus are shown. On smaller screens, the 01 menu is shown as it has enough space, the 03 menu is shown as it should be kept out of the more menu due to its configuration and the 02 menu is moved to the more menu due to lack of space.
-      # Against this background, this example should look like this:
-      # | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything | should                       | should not                  | should not                    | should                       | Keep outside of more menu | should                       | should not                  | should                        | should not                   | should not           | should                |
-      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
-      | Do not change anything | should                       | should not                  | should not                    | should                       | Do not change anything | should                       | should not                  | should not                    | should                       | Keep outside of more menu | should                       | should not                  | should                        | should not                   | should not           | should                |
+      | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything | should                       | should not                  | should not                    | should                       | Keep outside of more menu | should                       | should not                  | should                        | should not                   | should not           | should                |
       # Example 4: On larger screens, the 01 and 03 menus are shown and the 02 menu is moved to the more menu due to its configuration. On smaller screens, the 02 menu is moved to the more menu due to its configuration, the 03 menu is shown as it should be kept out of the more menu due to its configuration and the 01 menu is moved to the more menu due to lack of space.
       | Do not change anything | should                       | should not                  | should                        | should not                   | Force into more menu   | should not                   | should                      | should not                    | should                       | Keep outside of more menu | should                       | should not                  | should                        | should not                   | should               | should                |
 
@@ -170,33 +166,35 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     # This scenario is split from the previous scenario outline as we can only go into a more menu if it exists.
     # It basically tests the same examples than the previous scenario and just verifies that the smart menus are there as soon as you click the "More" link.
     Given the following "theme_boost_union > smart menu" exists:
-      | title            | Quick links 01  |
+      | title            | Quick links reeeeeally overlong title 01  |
       | location         | Main navigation |
       | mode             | Submenu         |
       | moremenubehavior | <menu1beh>      |
     And the following "theme_boost_union > smart menu item" exists:
-      | menu     | Quick links 01 |
+      | menu     | Quick links reeeeeally overlong title 01 |
       | title    | Info           |
       | itemtype | Heading        |
     And the following "theme_boost_union > smart menu" exists:
-      | title            | Quick links 02  |
+      | title            | Quick links reeeeeally overlong title 02  |
       | location         | Main navigation |
       | mode             | Submenu         |
       | moremenubehavior | <menu2beh>      |
     And the following "theme_boost_union > smart menu item" exists:
-      | menu     | Quick links 02 |
+      | menu     | Quick links reeeeeally overlong title 02 |
       | title    | Info           |
       | itemtype | Heading        |
     And the following "theme_boost_union > smart menu" exists:
-      | title            | Quick links 03  |
+      | title            | Quick links reeeeeally overlong title 03  |
       | location         | Main navigation |
       | mode             | Submenu         |
       | moremenubehavior | <menu3beh>      |
     And the following "theme_boost_union > smart menu item" exists:
-      | menu     | Quick links 03 |
+      | menu     | Quick links reeeeeally overlong title 03 |
       | title    | Info           |
       | itemtype | Heading        |
     When I log in as "admin"
+    # Make the screen really large so that the site administration node is not collapsed into the "More" menu by the overlong smart menus.
+    And I change viewport size to "large"
     # Set the frontpage title to better control the available space in the navbar
     And I navigate to "Site home > Site home settings" in site administration
     And I set the field "id_s__shortname" to "Boost Union Test"
@@ -207,24 +205,18 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | hidenodesprimarynavigation | home,myhome,courses,siteadminnode | theme_boost_union |
     And I follow "Dashboard"
     # Make the screen smaller to test the "More" behaviour in the navbar
-    # This screen size should be 'tablet', but due to MDL-81892, we have to test on a larger screen.
-    And I change viewport size to "840x1024"
+    # The screen size is chosen such that two (overlong) menus and the "More" menu fit into the navbar, but three menus don't.
+    And I change viewport size to "1440x1024"
     # Verify the order of the menu items (as they may have been re-ordered due to their settings).
     And I click on "More" "link" in the ".primary-navigation" "css_element"
-    And "Quick links 01" "text" should appear <orderrelation1and2> "Quick links 02" "text"
-    And "Quick links 02" "text" should appear <orderrelation2and3> "Quick links 03" "text"
-    And "Quick links 01" "text" should appear <orderrelation1and3> "Quick links 03" "text"
+    And "Quick links reeeeeally overlong title 01" "text" should appear <orderrelation1and2> "Quick links reeeeeally overlong title 02" "text"
+    And "Quick links reeeeeally overlong title 02" "text" should appear <orderrelation2and3> "Quick links reeeeeally overlong title 03" "text"
+    And "Quick links reeeeeally overlong title 01" "text" should appear <orderrelation1and3> "Quick links reeeeeally overlong title 03" "text"
 
     Examples:
       | menu1beh             | menu2beh               | menu3beh                  | orderrelation1and2 | orderrelation2and3 | orderrelation1and3 |
       | Force into more menu | Do not change anything | Do not change anything    | after              | before             | after              |
-      # This example should look like this:
-      # | Do not change anything | Do not change anything | Keep outside of more menu | before             | after              | before             |
-      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
-      | Do not change anything | Do not change anything | Keep outside of more menu | before             | after              | after              |
-      # This example should look like this:
-      # | Do not change anything | Force into more menu   | Keep outside of more menu | before             | after              | before             |
-      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
+      | Do not change anything | Do not change anything | Keep outside of more menu | before             | after              | before             |
       | Do not change anything | Force into more menu   | Keep outside of more menu | before             | after              | before             |
 
   @javascript
@@ -288,17 +280,11 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Examples:
       | menu1beh               | menu1outsideshouldornotlarge | menu1insideshouldornotlarge | menu1outsideshouldornottablet | menu1insideshouldornottablet | menu2beh               | menu2outsideshouldornotlarge | menu2insideshouldornotlarge | menu2outsideshouldornottablet | menu2insideshouldornottablet | menu3beh                  | menu3outsideshouldornotlarge | menu3insideshouldornotlarge | menu3outsideshouldornottablet | menu3insideshouldornottablet | moreshouldornotlarge | moreshouldornottablet |
       # Example 1: On larger screens, all menus are shown. On smaller screens, the 01 and 02 menus are shown as they have enough space and the 03 menu is moved to the more menu due to lack of space.
-      # Against this background, this example should look like this:
-      # | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything    | should                       | should not                  | should not                    | should                       | should not           | should                |
-      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
-      | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything | should                       | should not                  | should not                    | should                       | Do not change anything    | should                       | should not                  | should not                    | should                       | should not           | should                |
+      | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything    | should                       | should not                  | should not                    | should                       | should not           | should                |
       # Example 2: On larger screens, the 01 menu is moved to the more menu due to its configuration and the 02 and 03 menus are shown. On smaller screens, the same is the case.
       | Force into more menu   | should not                   | should                      | should not                    | should                       | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything    | should                       | should not                  | should                        | should not                   | should               | should                |
       # Example 3: On larger screens, all menus are shown. On smaller screens, the 01 menu is shown as it has enough space, the 03 menu is shown as it should be kept out of the more menu due to its configuration and the 02 menu is moved to the more menu due to lack of space.
-      # Against this background, this example should look like this:
-      # | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything | should                       | should not                  | should not                    | should                       | Keep outside of more menu | should                       | should not                  | should                        | should not                   | should not           | should                |
-      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
-      | Do not change anything | should                       | should not                  | should not                    | should                       | Do not change anything | should                       | should not                  | should not                    | should                       | Keep outside of more menu | should                       | should not                  | should                        | should not                   | should not           | should                |
+      | Do not change anything | should                       | should not                  | should                        | should not                   | Do not change anything | should                       | should not                  | should not                    | should                       | Keep outside of more menu | should                       | should not                  | should                        | should not                   | should not           | should                |
       # Example 4: On larger screens, the 01 and 03 menus are shown and the 02 menu is moved to the more menu due to its configuration. On smaller screens, the 02 menu is moved to the more menu due to its configuration, the 03 menu is shown as it should be kept out of the more menu due to its configuration and the 01 menu is moved to the more menu due to lack of space.
       | Do not change anything | should                       | should not                  | should                        | should not                   | Force into more menu   | should not                   | should                      | should not                    | should                       | Keep outside of more menu | should                       | should not                  | should                        | should not                   | should               | should                |
 
@@ -354,10 +340,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Examples:
       | menu1beh             | menu2beh               | menu3beh                  | orderrelation1and2 | orderrelation2and3 | orderrelation1and3 |
       | Force into more menu | Do not change anything | Do not change anything    | after              | before             | after              |
-      # This example should look like this:
-      # | Do not change anything | Do not change anything | Keep outside of more menu | before             | after              | before             |
-      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
-      | Do not change anything | Do not change anything | Keep outside of more menu | before             | after              | after              |
+      | Do not change anything | Do not change anything | Keep outside of more menu | before             | after              | before             |
       | Do not change anything | Force into more menu   | Keep outside of more menu | before             | after              | before             |
 
   Scenario: Smartmenu: Menus: Presentation - Verify that the correct menu item is displayed as active when viewing the main menu item's page.
