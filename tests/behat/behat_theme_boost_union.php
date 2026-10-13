@@ -246,7 +246,7 @@ class behat_theme_boost_union extends behat_base {
             new behat_component_named_selector(
                 'Main menu smart menu',
                 [
-                    ".//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'boost-union-smartmenu')]" .
+                    ".//div[contains(@class, 'primary-navigation')]//*[contains(@class, 'boost-union-smartmenu')]" .
                         "/a[contains(text(), %locator%)]/../div[@role = 'menu']",
                 ],
             ),
@@ -260,7 +260,7 @@ class behat_theme_boost_union extends behat_base {
             new behat_component_named_selector(
                 'Menu bar smart menu',
                 [
-                    ".//nav[contains(@class, 'boost-union-menubar')]//li[contains(@class, 'boost-union-smartmenu')]" .
+                    ".//nav[contains(@class, 'boost-union-menubar')]//*[contains(@class, 'boost-union-smartmenu')]" .
                         "/a[contains(text(), %locator%)]/../div[@role = 'menu']",
                 ],
             ),
@@ -295,7 +295,7 @@ class behat_theme_boost_union extends behat_base {
                 'Main menu smart menu inside more menu',
                 [
                     ".//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'dropdownmoremenu')]" .
-                        "//ul[contains(@class, 'dropdown-menu')]//li[contains(@class, 'boost-union-smartmenu')]" .
+                        "//div[contains(@class, 'dropdown-menu')]//div[contains(@class, 'boost-union-smartmenu')]" .
                         "/a[contains(text(), %locator%)]",
                 ],
             ),
@@ -310,7 +310,7 @@ class behat_theme_boost_union extends behat_base {
                 'Menu bar smart menu inside more menu',
                 [
                     ".//nav[contains(@class, 'boost-union-menubar')]//li[contains(@class, 'dropdownmoremenu')]" .
-                        "//ul[contains(@class, 'dropdown-menu')]//li[contains(@class, 'boost-union-smartmenu')]" .
+                        "//div[contains(@class, 'dropdown-menu')]//div[contains(@class, 'boost-union-smartmenu')]" .
                         "/a[contains(text(), %locator%)]",
                 ],
             ),

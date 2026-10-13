@@ -812,6 +812,11 @@ class smartmenu_item_edit_form extends \moodleform {
             // Verify that the URL field is not empty.
             if (empty($data['url'])) {
                 $errors['url'] = get_string('required');
+            } else if (preg_match('/^\s*(javascript|vbscript|data)\s*:/i', $data['url'])) {
+                // Verify that the URL does not use a scheme which would run script code in the browser.
+                // Such URLs would not work anyway (Moodle core's URL class mangles them to e.g. 'javascript://...' and
+                // React blocks them), so they are rejected right away.
+                $errors['url'] = get_string('smartmenusmenuitemurl_invalidscheme', 'theme_boost_union');
             }
         }
 

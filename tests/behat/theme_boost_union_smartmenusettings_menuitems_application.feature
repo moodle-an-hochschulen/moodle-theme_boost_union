@@ -32,6 +32,25 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I log in as "user1"
     And I should see smart menu "Quick links" item "Badges" in location "Main, Menu, User"
 
+  Scenario Outline: Smartmenus: Menu items: Application - Reject a static smart menu item with a URL which would run script code
+    When I log in as "admin"
+    And I navigate to smart menu "Quick links" items
+    And I click on "Add menu item" "button"
+    And I set the following fields to these values:
+      | Title          | Script |
+      | Menu item type | Static |
+      | URL            | <url>  |
+    And I click on "Save changes" "button"
+    Then I should see "The URL must not start with javascript:, vbscript: or data:."
+    And I navigate to smart menu "Quick links" items
+    And I should see "There aren't any items added to this smart menu yet. Please add an item to this menu."
+
+    Examples:
+      | url                                      |
+      | javascript:alert(1)                      |
+      | JavaScript:alert(1)                      |
+      | data:text/html,<script>alert(1)</script> |
+
   Scenario: Smartmenus: Menu items: Application - Display the smart menu items in inline mode
     Given the following "theme_boost_union > smart menu item" exists:
       | menu     | Quick links       |

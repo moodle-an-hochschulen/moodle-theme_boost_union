@@ -519,9 +519,6 @@ class smartmenu {
                     $nodes->helptext = $description;
                     $nodes->abovehelptext = ($this->menu->showdesc == self::DESC_ABOVE) ? true : false;
                     $nodes->belowhelptext = ($this->menu->showdesc == self::DESC_BELOW) ? true : false;
-                    // Add selector class in dropdown element for style.
-                    $this->menu->classes[] = ($nodes->abovehelptext) ? 'dropdown-description-above' : '';
-                    $this->menu->classes[] = ($nodes->belowhelptext) ? 'dropdown-description-below' : '';
 
                     // Show the description as helpicon.
                     if ($this->menu->showdesc == self::DESC_HELP) {
