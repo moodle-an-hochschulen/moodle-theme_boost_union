@@ -133,7 +133,7 @@
             {{#backgroundimageurl}}<img class="d-block w-100" src="{{backgroundimageurl}}" alt="{{backgroundimagealt}}">{{/backgroundimageurl}}
           {{#linkimage}}{{#link}}</a>{{/link}}{{/linkimage}}
           {{#captionorcontent}}
-              <div class="carousel-caption {{contentstyleclass}}">
+              <div class="carousel-caption {{contentstyleclass}}{{#linkimage}}{{#link}} slide-imagelinked{{/link}}{{/linkimage}}">
                 {{#linktext}}{{#link}}<a href="{{link}}" {{#linktitle}}title="{{linktitle}}"{{/linktitle}} {{#linktargetnewtab}}target="_blank" rel="noopener noreferrer"{{/linktargetnewtab}}>{{/link}}{{/linktext}}
                   {{#caption}}<h5>{{caption}}</h5>{{/caption}}
                   {{{content}}}
