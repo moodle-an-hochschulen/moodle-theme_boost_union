@@ -19,20 +19,6 @@
 
     Template for user action menu items.
 
-    Context variables required for this template:
-    * items - The different items to be rendered
-        * link - If a link is provided render it.
-          * title - The text to be shown for the link.
-          * url - The href for the link.
-          * pixicon - (Optional) The Moodle icon to use
-          * imgsrc - (Optional) If provided, uses this as source for an image tag. Note: pixicon is preferred.
-        * submenulink - If a submenu link is provided render it.
-          * submenuid - The id of the targeted submenu.
-          * title - The text to be shown for the link.
-          * pixicon - (Optional) The Moodle icon to use.
-          * imgsrc - (Optional) If provided, uses this as source for an image tag. Note: pixicon is preferred.
-        * divider - Whether a divider is to be displayed or not
-
     Example context (json):
     {
         "items": [
@@ -40,7 +26,11 @@
                 "link": {
                     "title": "Github user",
                     "url": "https://raw.githubusercontent.com/",
-                    "pixicon": "t/dashboard",
+                    "pixicon": [{
+                        "key": "t/dashboard",
+                        "component": "moodle",
+                        "title": "The dashboard icon"
+                    }],
                     "imgsrc": "https://raw.githubusercontent.com/moodle/moodle/master/pix/t/check.png"
                 },
                 "divider": 1
@@ -58,27 +48,19 @@
     }
 }}
 {{!
-    This template is a modified version of core/user_menu
+    This template is a modified version of core/user_action_menu_items
 
     Modifications compared to the original template:
-    * Add menu classes to items.
-    * Add icon support to items.
-    * Add tooltip to items.
-    * Add additional attributes to items.
-    * Allow formatted text within the item.
+    * Add menu classes to submenu links.
+    * Add tooltip to submenu links.
+    * Add additional attributes to submenu links.
+    * Allow formatted text within the submenu link.
+    * Only treat an item as a text item if it is not a link, submenu link or divider item.
+      (Boost Union's smart menu items carry a 'text' context variable with the formatted item text,
+      which would otherwise be mistaken for Moodle core's text item type.)
+    * The modifications of the link items are located in core/user_action_menu_item_link.
 }}
 {{#items}}
-    {{#link}}
-        <a href="{{{url}}}" class="dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" role="menuitem" tabindex="-1" {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}} {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}>
-            {{#pixicon}}
-                {{#pix}}{{pixicon}}{{/pix}}
-            {{/pixicon}}
-            {{^pixicon}}
-                {{#imgsrc}}<img aria-hidden="true" src="{{imgsrc}}" alt="{{title}}"/>{{/imgsrc}}
-            {{/pixicon}}
-            {{#text}}{{{text}}}{{/text}}{{^text}}{{title}}{{/text}}
-        </a>
-    {{/link}}
     {{#submenulink}}
         <a href="#" class="carousel-navigation-link dropdown-item {{#menuclasses}} {{.}} {{/menuclasses}}" role="menuitem" tabindex="-1" data-carousel-target-id="carousel-item-{{submenuid}}" {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}}
         {{#attributes}}{{#name}}{{name}}="{{value}}"{{/name}}{{/attributes}}>
@@ -91,5 +73,22 @@
             {{#text}}{{{text}}}{{/text}}{{^text}}{{title}}{{/text}}
         </a>
     {{/submenulink}}
-    {{#divider}}<div class="dropdown-divider"></div>{{/divider}}
+    {{#header}}
+        {{> core/user_action_menu_item_header}}
+    {{/header}}
+    {{^link}}
+    {{^submenulink}}
+    {{^divider}}
+    {{#text}}
+        {{> core/user_action_menu_item_text}}
+    {{/text}}
+    {{/divider}}
+    {{/submenulink}}
+    {{/link}}
+    {{#link}}
+        {{> core/user_action_menu_item_link}}
+    {{/link}}
+    {{#divider}}
+        {{> core/user_action_menu_item_divider}}
+    {{/divider}}
 {{/items}}
