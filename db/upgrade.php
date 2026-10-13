@@ -1259,6 +1259,15 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2026042017, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2026100500) {
+        // Remove the activitynavigation setting from Boost Union.
+        // Moodle 5.3 ships a course linear navigation in its core course formats which covers the same use case.
+        unset_config('activitynavigation', 'theme_boost_union');
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2026100500, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
