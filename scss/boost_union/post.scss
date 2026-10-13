@@ -32,7 +32,8 @@
 
 /* Utility class to let an mform element span the full width of the form by removing its (empty) label column.
    This is useful for elements which are not associated to a particular form field, e.g. a standalone notification.
-   Add this class to the element in PHP with $element->updateAttributes(['parentclass' => 'theme-boost-union-fullwidth-formelement']). */
+   Add this class to the element in PHP with
+   $element->updateAttributes(['parentclass' => 'theme-boost-union-fullwidth-formelement']). */
 .fitem.theme-boost-union-fullwidth-formelement {
     > .col-md-3 {
         display: none;
@@ -103,6 +104,25 @@
     .nav-link:focus {
         color: $black !important; /* stylelint-disable-line declaration-no-important */
         background-color: $white;
+
+        .icon {
+            color: $black !important; /* stylelint-disable-line declaration-no-important */
+        }
+    }
+
+    /* Change the color of the primary navigation pills in the navbar to white
+       and to black on white when hovered, focused or selected.
+       This has to use !important as the design system uses more specific selectors for its hover states. */
+    .mds-nav-pill,
+    .mds-nav-pill:visited {
+        color: $white;
+    }
+    .mds-nav-pill:hover,
+    .mds-nav-pill:focus,
+    .mds-nav-pill--selected,
+    .mds-nav-pill--selected:visited {
+        color: $black !important; /* stylelint-disable-line declaration-no-important */
+        background-color: $white !important; /* stylelint-disable-line declaration-no-important */
 
         .icon {
             color: $black !important; /* stylelint-disable-line declaration-no-important */
@@ -280,6 +300,17 @@
     .nav-link:focus {
         color: $black !important; /* stylelint-disable-line declaration-no-important */
         background-color: $white;
+    }
+
+    /* Change the color of the primary navigation pills in the navbar
+       to black on white when hovered, focused or selected.
+       This has to use !important as the design system uses more specific selectors for its hover states. */
+    .mds-nav-pill:hover,
+    .mds-nav-pill:focus,
+    .mds-nav-pill--selected,
+    .mds-nav-pill--selected:visited {
+        color: $black !important; /* stylelint-disable-line declaration-no-important */
+        background-color: $white !important; /* stylelint-disable-line declaration-no-important */
     }
 
     /* Change the font color of the custom child menu and user menu navigation items in the navbar
@@ -2407,513 +2438,458 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
  * Settings: Smart menus.
  ======================================*/
 
+/* The primary navigation (main navigation location) and the smart menu menu bar (menu bar location) are rendered by
+   the theme_boost_union/nav/Nav React component (a modified copy of core/nav/Nav) which mounts into an element with the
+   primarynav-navbar class. For the primary navigation, Moodle core styles this mount point in
+   theme/boost/scss/moodle/primarynavigation.scss. For the menu bar, both the mount point and the menu bar itself are
+   styled here.
+   The smart menus in the user menu (user menu location) are rendered within Moodle core's user menu. */
+
 /*---------------------------------------
- * Header menu
+ * Common styles (for all locations)
  --------------------------------------*/
 
-/* Boost union header menu style when the smart menu is enabled */
+/* The header of the third level of a smart menu (in the main navigation, the menu bar and the user menu) is fully
+   clickable, the link wraps the arrow button and the title. As the button does not receive the hover itself, it gets
+   the round grey hover background which Moodle core gives to icon buttons as soon as the link is hovered or focused. */
+.theme-boost-union-smartmenu .submenu .header .carousel-navigation-link {
+    &:hover,
+    &:focus {
+        .btn-icon {
+            background-color: var(--#{$prefix}btn-hover-bg);
+        }
+    }
+}
+
+/* Moodle core limits the height of the dropdowns within the fixed navbar to the viewport height minus the navbar
+   height (see theme/boost/scss/moodle/undo.scss) which makes long dropdowns reach the bottom edge of the viewport.
+   Keep some space at the bottom instead and respect the menu bar which moves the navbar down (see the
+   --bu-smartmenu-menubar-height variable in the menu bar section). This rule is more specific than the core rule.
+   The smart menus which are nested within the "More" menu are excluded as they must expand in place (see the rule
+   for .dropdown-submenu below). */
+.theme-boost-union-smartmenu .navbar.fixed-top .dropdown:not(.dropdown-submenu) > .dropdown-menu {
+    max-height: calc(100vh - #{$navbar-height} - var(--bu-smartmenu-menubar-height) - #{$bu-smartmenu-dropdown-gap});
+}
+
+/* Moodle core adds the class 'iconsize-big' to all icons from its 'b/' icon set which can be picked as smart menu item
+   icons and renders them with 32px (see theme/boost/scss/moodle/icons.scss). Within the smart menu items, regardless
+   of their location (this includes the primary navigation drawer on small screens), these icons are shrunk to the
+   normal icon size. */
+.theme-boost-union-smartmenu .boost-union-smartmenuitem i.icon.iconsize-big {
+    width: auto;
+    height: auto;
+    font-size: $font-size-base;
+}
+
+/* The menu description, the menu help icon, the heading items and the carousels, regardless of the location of the
+   smart menu. */
 .theme-boost-union-smartmenu {
-    .navbar {
-        &.fixed-top {
-            /* Added height and background color for the top header,
-            z-index is added to show the top header dropdown menu above the header block */
-            &.boost-union-menubar { /* boost-union-menubar class is added for the top header */
-                height: calc(#{$bu-smartmenu-menubar-height} + 2px);
-                border-bottom: 0;
-                background-color: #f8f9fa;
-                z-index: 1031;
-                /* The position of the message drawer has been adjusted slightly top to accommodate the top header. */
-                ~ [data-region=right-hand-drawer].drawer {
-                    top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height});
-                }
-                /* The position of the side drawer has been adjusted slightly below to accommodate the top header. */
-                ~ .drawer.drawer-left {
-                    top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height} + 1px);
-                }
-                ~ .drawer.drawer-right {
-                    top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height} + 1px);
-                }
-                .moremenu {
-                    height: $bu-smartmenu-menubar-height;
+    /* The carousels which realize the third level of the smart menus in the main navigation and in the menu bar as
+       well as the user menu carousel slide faster than Bootstrap's default of 0.6 seconds. The transition mixin
+       disables the transition for users who prefer reduced motion. */
+    .theme-boost-union-smartmenu-carousel .carousel-item,
+    #usermenu-carousel .carousel-item {
+        @include transition(transform .3s ease-in-out);
+    }
 
-                    .more-nav {
-                        li {
-                            &.nav-item {
-                                &:first-child,
-                                &:nth-child(2) {
-                                    /* The position of the dropdown menu should not extend beyond the visible area of
-                                       the screen */
-                                    .dropdown-menu {
-                                        left: 0;
-                                        right: auto;
-                                    }
-                                }
-                            }
-                            a {
-                                &:not(.active) {
-                                    border-bottom: 0;
-                                }
-                                /* Background color added in the menubar menu link on hover */
-                                &.nav-link:hover {
-                                    background-color: #f4f4f4;
-                                }
-                            }
-                            /* The positions of the dropdown menu added */
-                            .dropdown-menu {
-                                float: none;
-                                left: auto;
-                                right: 0;
-                                li {
-                                    width: 100%;
-                                }
-                            }
-                        }
-                    }
-                }
-                + .navbar {
-                    /* Margin top has been added to the Header block to ensure that it does not conflict with the top
-                       header. */
-                    &.fixed-top {
-                        margin-top: $bu-smartmenu-menubar-height;
-                    }
-                }
-            }
-            /* The position of the main page has been adjusted slightly below to accommodate the top header. */
-            ~ #page.drawers {
-                margin-top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height});
-            }
-            /* The icon tag aligned top at the usermenu link */
-            .usermenu .dropdown-menu {
-                .submenu {
-                    /* Remove the padding on the User submenu header */
-                    .header {
-                        padding: 0;
-                        /* Centered align the User submenu header, added padding and removed the underline for the link */
-                        .carousel-navigation-link {
-                            text-decoration: none;
-                            padding: .1rem .75rem;
-                            display: flex;
-                            align-items: center;
-                        }
-                    }
-                    .items a.dropdown-item {
-                        align-items: baseline;
-                    }
-                }
-                /* Usermenu dropdown item position relative for it's submenu */
-                .dropdown-item {
-                    position: relative;
-                    /* Usermenu dropdown submenu arrow alignment */
-                    &.carousel-navigation-link:after {
-                        top: 8px;
-                    }
-                }
-            }
-            /* Dropdown more menu back button arrow margin */
-            .boost-union-moremenu.dropdown-menu .carousel-navigation-link > * {
-                pointer-events: none;
-                img {
-                    margin: 0;
-                }
-            }
+    /* Menu item type 'heading'. */
+    .boost-union-smartmenuitem.menu-item-heading {
+        /* Heading items are not links. They are presented like the menu description (grey background, no hand
+           cursor and no hover highlighting) but in bold. */
+        font-weight: bold;
+        background-color: #eee;
+        cursor: default;
+
+        /* Keep the text and background color on hover, focus and click as a heading is not interactive. */
+        &:hover,
+        &:focus,
+        &:active {
+            color: var(--#{$prefix}dropdown-link-color);
+            background-color: #eee;
         }
-        .moremenu {
-            .more-nav li.nav-item {
-                /* Menu link icon aligned center */
-                a {
-                    display: flex;
-                    align-items: center;
-                    &.dimmed {
-                        color: $text-muted;
-                        &.dropdown-item:hover {
-                            color: $white;
-                            opacity: .7;
-                        }
-                    }
-                    label {
-                        margin-bottom: 0;
-                    }
-                }
-                /* The style below added when the menu link is under the "More" option in the responsive alignment */
-                /* The full width style is added for the menu link inside the "More" menu */
-                &.dropdownmoremenu .dropdown-menu li.nav-item.dropdown {
-                    width: 100%;
-                    .dropdown-toggle {
-                        &:after {
-                            font-size: 10px;
-                            margin-top: 7px;
-                            position: absolute;
-                            right: 0.75rem;
-                        }
-                        /* Header dropdown toggle menu link color added */
-                        &:hover,
-                        &:focus,
-                        &:active {
-                            color: $white;
-                        }
-                    }
-                    /* Header dropdown menu border added and position added not to conflict
-                        with the screen in the responsive alignment */
-                    .dropdown-menu {
-                        max-height: none;
-                        border-radius: 0;
-                        overflow: visible;
-                    }
-                }
-            }
-            .dropdown {
-                /* Minimum width , max-height added to display the dropdown menu items, Top margin removed
-                and overlay y axis is auto to show the dropdowm menu with the scrollbar */
-                .dropdown-menu {
-                    min-width: 220px;
-                    max-width: 260px;
-                    max-height: calc(100vh - 200px);
-                    overflow: auto;
-                    margin-top: 0;
-                    /* The more menu item with inline to display in full width */
-                    .nav-item {
-                        min-width: 100%;
-                    }
-                    /* Menu description font size, padding, border-radius and background color added */
-                    .menu-description {
-                        font-size: 12px;
-                        padding: 0.25rem 1.5rem;
-                        border-radius: 5px;
-                        background-color: #eee;
-                        /* Removed the margin bottom for the content to avoid unwanted space below the description */
-                        p {
-                            margin-bottom: 0;
-                        }
-                    }
-                    /* Text aligned center and margin bottom added for the "help icon" in menu help icon */
-                    .menu-helpicon {
-                        text-align: center;
-                        margin-bottom: 10px;
-                        /* Margin removed in the menu description help icon in the menu */
-                        i {
-                            margin: 0;
-                            /* color white is added in the menu description help icon in the menu */
-                            &:before {
-                                color: var(--info);
-                            }
-                        }
-                    }
-                    /* The font size and opacity reduced when the Menu link is selected as "Heading" option in the
-                       settings */
-                    .dropdown-item {
-                        /* Dropdown menu link alignment at top, white-space is used to arrange the large text in the
-                        next line*/
-                        align-items: baseline;
-                        white-space: normal;
-                        /* The icon width, height and font size is changed to normal size when the
-                        large size icon (class="iconsize-big") is used in the "i" tag */
-                        i.icon {
-                            width: auto;
-                            height: auto;
-                            font-size: 16px;
-                        }
-                        /* The "Tick" icon removed when the menu link is clicked */
-                        &:before {
-                            display: none;
-                        }
-                        &.menu-item-heading {
-                            font-size: 14px;
-                            opacity: .6;
-                            /* Menu link icon font size when the menu link as "Heading" and "icon" option selected in
-                               the settings */
-                            i.icon {
-                                font-size: 14px;
-                            }
-                        }
-                    }
-                    /* The below styles are header dropdown submenu  */
-                    .dropdown-submenu {
-                        /* Position relative submenu link to control the arrow icon when it has submenus */
-                        > a.dropdown-item {
-                            position: relative;
-                            /* Header dropdown submenu */
-                            &:before {
-                                content: '';
-                            }
-                            /* The arrow icon and its postion at the right side is added when the header menu which has
-                               dropdown */
-                            &:after {
-                                content: '\f105';
-                                font-family: '#{$fa-style-family}';
-                                font-weight: 900;
-                                line-height: 10px;
-                                position: absolute;
-                                top: 40%;
-                                right: 10px;
-                            }
-                        }
-                        /* The submenu dropdown is hidden before the menu is clicked */
-                        ul {
-                            display: none;
-                        }
-                        /* The position relative is added for the dropdown menu */
-                        &.show {
-                            position: relative;
-                            /* The dropdown submenu style is added for the header menu */
-                            /* Height added to control the menu with scrollbard, border, border radius,
-                               background color, padding and its position styles are added and display block
-                               is added to show the submenu when the dropdown menu is clicked */
-                            ul {
-                                max-height: 250px;
-                                list-style: none;
-                                border: 1px solid $border-color;
-                                border-radius: 0.5rem;
-                                background-color: #fff;
-                                padding: .5rem 0;
-                                margin-left: 1px;
-                                overflow-y: auto;
-                                display: block;
-                                position: absolute;
-                                top: 0;
-                                left: 100%;
-                                /* The full width of the dropdown submenu link */
-                                li {
-                                    width: 100%;
-                                    /* The height and padding is added for the header dropdown submenu links */
-                                    a.nav-link {
-                                        width: 100%;
-                                        height: auto;
-                                        padding: 0.1rem 1.5rem;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                /* The top padding is removed in the dropdown menu when menu description is added in the top */
-                &.dropdown-description-above .dropdown-menu {
-                    padding-top: 0;
-                    /* When menu description is added in the top the menu description bottom border radius is removed */
-                    .menu-description {
-                        border-bottom-left-radius: 0;
-                        border-bottom-right-radius: 0;
-                    }
-                }
-                /* The bottom padding is removed in the dropdown menu when menu description is added in the below */
-                &.dropdown-description-below .dropdown-menu {
-                    padding-bottom: 0;
-                    /* When menu description is added in the bottom the menu description top border radius is removed */
-                    .menu-description {
-                        border-top-left-radius: 0;
-                        border-top-right-radius: 0;
-                    }
-                }
-            }
+
+        /* A heading which follows other elements is separated from them like a dropdown divider would do. */
+        &:not(:first-child) {
+            margin-top: var(--#{$prefix}dropdown-divider-margin-y);
+            border-top: 1px solid var(--#{$prefix}dropdown-divider-bg);
         }
-        .boost-union-moremenu.dropdown-menu {
-            /* Minimum width for the dropdown submenu */
-            .carousel .carousel-inner .carousel-item.submenu {
-                min-width: 235px;
-            }
-            /* Added the arrow icon styles for the dropdown menus */
-            .dropdown-item.carousel-navigation-link:after {
-                content: '\f0da';
-                font-family: '#{$fa-style-family}';
-                font-weight: 900;
-                font-size: 1rem;
-                position: absolute;
-                right: 0.7rem;
-            }
-            /* Added the arrow icon styles for the dropdown sub menu header */
-            .submenu .header {
-                font-size: .975rem;
-                display: flex;
-                align-items: center;
+    }
+
+    /* Exception for heading items:
+       If the heading follows the menu description or another heading which have the same grey background.
+       (This rule is not nested within the heading rule above as Sass would prepend the sibling to the whole
+       selector chain otherwise). */
+    .menu-description + .boost-union-smartmenuitem.menu-item-heading,
+    .menu-item-heading + .boost-union-smartmenuitem.menu-item-heading {
+        margin-top: 0;
+    }
+
+    /* The menu description (which can be shown at the top or the bottom of a menu). */
+    .menu-description {
+        /* Menu description font size, padding and background color added.
+           The horizontal padding matches the padding of the dropdown items to align the description with the items. */
+        font-size: $font-size-sm;
+        padding: 0.25rem var(--#{$prefix}dropdown-item-padding-x);
+        background-color: #eee;
+
+        /* Removed the margin bottom of the last paragraph to avoid unwanted space below the description. */
+        p:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    /* The menu helpicon (which is a different way of showing the menu description). */
+    .menu-helpicon {
+        /* The menu help icon is aligned to the right edge of the dropdown items.
+           The core/help_icon template gives the icon a right margin (me-2) which is subtracted from the padding. */
+        text-align: right;
+        padding-right: calc(var(--#{$prefix}dropdown-item-padding-x) - #{map-get($spacers, 2)});
+        margin-bottom: 10px;
+
+        /* The help icon is rendered by core/help_icon as a link button and would inherit the link color.
+           Within the dropdown, it would then look like just another menu link. The info color sets it apart
+           from the menu links and marks it as a help icon. */
+        i {
+            &:before {
+                color: var(--#{$prefix}info);
             }
         }
     }
-    /* Align the drawer content list group item in center*/
-    .drawer-primary .drawercontent .list-group .list-group-item {
-        align-items: center;
-        /* The icon width, height and font size is changed to normal size when
-        the large size icon (class="iconsize-big") is used in the "i" tag in the drawer */
-        i.icon {
-            width: auto;
-            height: auto;
-            font-size: 16px;
-        }
+}
+
+/* The smart menu items and dropdowns within the React-rendered navigations (main navigation and menu bar). */
+.theme-boost-union-smartmenu .primarynav-navbar {
+    /* Dimmed smart menu items (e.g. courses which are hidden from students).
+       Their muted text color comes from Moodle core's generic a.dimmed rule. On hover, Moodle core gives dropdown items
+       the primary background with white text which would make a dimmed item indistinguishable from a regular one.
+       The reduced opacity keeps the dimmed state visible during hover. */
+    .dropdown-item.dimmed:hover {
+        opacity: .7;
     }
-    /* Drop down more menu carousel item */
-    .theme-boost-union-smartmenu-carousel {
-        /* Drop down more menu carousel item header */
-        .moremenu-carousel-item-header {
-            display: none;
+
+    /* Smart menu dropdowns. */
+    .boost-union-moremenu {
+        /* Minimum and maximum width of the dropdown menus.
+           The vertical scrolling of the dropdown menus is handled by Moodle core's rule for dropdowns within the fixed
+           navbar (see theme/boost/scss/moodle/undo.scss), the maximum height is set below. */
+        min-width: 220px;
+        max-width: 300px;
+
+        /* Thin scrollbar like Moodle core uses it for the drawers (see theme/boost/scss/moodle/drawer.scss). */
+        @include thin-scrolls($dropdown-bg);
+
+        /* As soon as a dropdown item is active, Moodle core gives all dropdown items more left padding to make room
+           for the tick (see theme/boost/scss/moodle/moremenu.scss). The menu description is indented in the same way
+           to keep it aligned with the items. */
+        &:has(.dropdown-item.active) .menu-description {
+            padding-left: map-get($spacers, 4);
         }
-        .carousel-navigation-link > * {
-            pointer-events: none;
-            /* Drop down more menu carousel item header image */
-            img {
-                margin: 0;
-            }
+
+        /* The top padding of the dropdown menu is removed when the menu description or a heading item (which both have
+           a grey background) is the first element in the menu. This is limited to the active carousel slide as the
+           inactive slides remain in the DOM, so the third level would lose the padding as well otherwise. */
+        &:has(.carousel-item.active > .menu-description:first-child, .carousel-item.active > .menu-item-heading:first-child) {
+            padding-top: 0;
         }
-        /* Make the carousel navigation link to full width and cursor as pointor */
-        .carousel-navigation-link {
-            width: 100%;
-            cursor: pointer;
-            /* Removed the underline on hovering the link */
-            &:hover {
-                text-decoration: none;
-            }
+
+        /* The bottom padding of the dropdown menu is removed when the menu description is the last element in the menu. */
+        &:has(.carousel-item.active > .menu-description:last-child) {
+            padding-bottom: 0;
         }
-    }
-    /* Dropdown carousel more menu*/
-    .dropdownmoremenu {
-        /* Dropdown carousel more menu position */
-        .boost-union-moremenu-carousel {
-            position: absolute;
-            /* Dropdown carousel dropdown more menu position to static to
-            work on the carousel menu */
-            .dropdown-menu {
-                position: static;
-            }
+
+        /* A menu item. */
+        .dropdown-item {
+            /* Bootstrap prevents dropdown items from wrapping, but long smart menu item titles have to wrap. */
+            white-space: normal;
         }
-        .theme-boost-union-smartmenu-carousel {
-            /* Display dropdown carousel more menu header item*/
-            .moremenu-carousel-item-header {
-                display: block;
-                /* Dropdown carousel more menu header title and arrow style*/
-                .header {
-                    font-size: .975rem;
-                    padding: 0.25rem 0.75rem;
-                    display: flex;
-                    align-items: center;
+
+        /* The carousel which realizes the third level of the smart menu.
+           The following rules are copied from Moodle core's styling of the submenus in the user menu
+           (see theme/boost/scss/moodle/navbar.scss) to make the third level of the smart menus look like the
+           submenus (e.g. the language selector) in the user menu. */
+        .carousel-inner {
+            .carousel-navigation-link {
+                > * {
+                    pointer-events: none;
                 }
             }
-            .items {
-                /* Added the arrow icon styles for the carousel dropdown menus */
-                .dropdown-item.carousel-navigation-link:after {
-                    content: '\f0da';
-                    font-family: '#{$fa-style-family}';
-                    font-weight: 900;
-                    font-size: 1rem;
-                    position: absolute;
-                    right: 0.7rem;
+            .dropdown-item {
+                &.carousel-navigation-link {
+                    /* Boost Union addition: Reserve space for the caret (Moodle core gives this padding to all items in
+                       the user menu) as the smart menu items are allowed to wrap. */
+                    padding-right: 1.75rem;
+                    &::after {
+                        font: var(--fa-font-solid);
+                        content: fa-content($fa-var-caret-right);
+                        font-size: 1rem;
+                        padding-top: .2rem;
+                        right: .75rem;
+                        position: absolute;
+                    }
                 }
             }
-            /* Added the arrow icon styles for the dropdown sub menu header */
             .submenu {
-                padding-top: 10px;
                 .header {
+                    padding: .25rem .75rem;
                     font-size: .975rem;
-                    padding: 0 0.75rem;
-                    display: flex;
-                    align-items: center;
+                    .icon {
+                        font-size: 20px;
+                        height: 20px;
+                        width: 20px;
+                        margin: 0;
+                    }
                 }
             }
         }
     }
-    /* Hide the ul dropdown menu list */
-    .theme-boost-union-moremenu-carousel .dropdown-menu.hide-on-show {
-        display: none;
-    }
-    /* Changed the transition time to 0.3 seconds when smart menus are enabled */
-    .theme-boost-union-smartmenu-carousel,
-    #usermenu-carousel {
-        .carousel-inner .carousel-item {
-            transition: transform 0.3s ease-in-out;
+
+    /* The "More" menu. Smart menus which have been collapsed into the "More" menu are rendered as nested submenus
+       which expand in place within the "More" dropdown (see theme/boost/scss/moodle/moremenu.scss). */
+    .dropdownmoremenu {
+        /* The nested smart menu dropdown. */
+        .dropdown-submenu > .boost-union-moremenu {
+            /* The maximum width of the smart menu dropdowns must not apply here as the nested submenu should take the
+               full width of the "More" dropdown. */
+            max-width: none;
+            /* The nested submenu is not a floating dropdown, so it does not need rounded corners. */
+            border-radius: 0;
+        }
+
+        /* If smart menus have been collapsed into the "More" menu, the "More" menu is presented like a linear menu
+           with collapsed levels: The top-level entries (the collapsed smart menus as well as any other entries) are
+           separated from each other with a line and some space like a dropdown divider would do. Existing dividers
+           are left alone. */
+        > .dropdown-menu:has(> .dropdown-submenu.boost-union-smartmenu) {
+            > :not(.dropdown-divider) + :not(.dropdown-divider) {
+                margin-top: var(--#{$prefix}dropdown-divider-margin-y);
+                border-top: 1px solid var(--#{$prefix}dropdown-divider-bg);
+            }
         }
     }
 }
 
-@include media-breakpoint-up(lg) {
-    .theme-boost-union-smartmenu .navbar.fixed-top.boost-union-menubar.d-lg-none {
-        /* Margin top has been added to the Header block to ensure that it does not conflict with the top header. */
-        + .navbar.fixed-top {
-            margin-top: 0;
-        }
-        ~ #page.drawers {
-            /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
-            margin-top: $bu-smartmenu-menubar-height;
-        }
-    }
-}
+/*---------------------------------------
+ * Main navigation location
+ --------------------------------------*/
 
-@include media-breakpoint-only(md) {
-    .theme-boost-union-smartmenu .navbar.fixed-top.boost-union-menubar.d-md-none {
-        /* Margin top has been added to the Header block to ensure that it does not conflict with the top header. */
-        + .navbar.fixed-top {
-            margin-top: 0;
-        }
-        ~ #page.drawers {
-            /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
-            margin-top: $bu-smartmenu-menubar-height;
-        }
-    }
-}
-
-/* The nav drawer position to the top in the responsive alignment */
-@include media-breakpoint-down(lg) {
-    .navbar.fixed-top.boost-union-menubar ~ .drawer {
-        /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
-        top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height});
-        &.drawer-right {
-            top: 0;
-        }
-    }
-}
-
-/* The nav drawer position to the top in the responsive alignment */
-@include media-breakpoint-up(md) {
-    .navbar.fixed-top.boost-union-menubar ~ #page.drawers .drawer-toggles .drawer-toggler {
-        top: calc(#{$navbar-height} + #{$bu-smartmenu-menubar-height} + 10px);
-    }
-}
+/* The main navigation itself is styled by Moodle core, see theme/boost/scss/moodle/primarynavigation.scss.
+   On small screens, the main navigation (including the smart menus) is shown in the primary navigation drawer. */
 
 @include media-breakpoint-down(md) {
-    .navbar.fixed-top {
-        /* The Header menubar z-index is increased to show at top in responsive */
-        &.boost-union-menubar {
-            ~ .drawer.drawer-right {
-                z-index: 1052;
-            }
-        }
-        /* When the menu in the left adn right drawer toggle button is clicked, its navigation drawer
-            position appears below the header when the header menubar is disabled. */
-        ~ #theme_boost-drawers-primary,
-        ~ #theme_boost-drawers-courseindex,
-        ~ .drawer.drawer-left,
-        ~ .drawer.drawer-right {
-            max-width: 315px;
-            top: 0;
-        }
-    }
-    .theme-boost-union-smartmenu .navbar {
-        &.fixed-top.boost-union-menubar.d-none {
-            /* Margin top has been added to the Header block to ensure that it does not conflict with the top header. */
-            + .navbar.fixed-top {
-                margin-top: 0;
-            }
-            ~ #page.drawers {
-                /* The position has been adjusted to prevent the message drawer from being hidden behind the primary header. */
-                margin-top: $bu-smartmenu-menubar-height;
-            }
-        }
-    }
-}
-
-
-@include media-breakpoint-down(md) {
-    /* The nav drawer width is extend to full screen in the mobile view when the boost union smart menu is enabled */
-    body.theme-boost-union-smartmenu .drawer.show {
-        max-width: none;
-        width: 100%;
-    }
-    /* Drawer content list group when the boost union smart menu is enabled */
     body.theme-boost-union-smartmenu .drawer-primary .drawercontent .list-group .list-group-item {
-        /* The padding left is added to the nav drawer menu dropdown menu in the mobile view */
+        /* The items and submenu toggles of the second level are indented by one level compared to the first level
+           (whose padding is one spacer)... */
         .list-group-item-action {
-            padding-left: 32px;
-            align-items: baseline;
+            padding-left: $spacer * 2;
         }
-        /* The margin left is added to the dropdown submenu icon for the nav drawer menu in the mobile view */
-        .list-group-item .list-group-item-action i {
-            margin-left: 25px;
+        /* ... and the items of the third level by two levels. */
+        .list-group-item .list-group-item-action {
+            padding-left: $spacer * 3;
         }
+    }
+}
+
+/*---------------------------------------
+ * Menu bar location
+ --------------------------------------*/
+
+/* The React mount point of the menu bar.
+   This block is an exact copy of the '.primary-navigation .navigation.primarynav-navbar' block in
+   theme/boost/scss/moodle/primarynavigation.scss with just the selector adapted to the menu bar, as Moodle core scopes
+   these rules to the primary navigation. It has to be kept in sync with Moodle core, see UPGRADE.md. */
+.boost-union-menubar .navigation.primarynav-navbar {
+    .more-nav {
+        gap: var(--mds-spacing-xxs);
+    }
+
+    .nav-item {
+        height: $navbar-height;
+    }
+
+    // The "More" toggle keeps Bootstrap's .dropdown-toggle class (for the caret and dropdown JS),
+    // which makes it match core.scss's `a.dropdown-toggle:focus`. That rule's box-shadow would
+    // stack with the design system's own focus ring, and its outline: 0 outweighs
+    // `.mds-nav-pill:focus-visible` on specificity, leaving no focus indicator at all. Undo both.
+    .mds-nav-pill.dropdown-toggle:focus {
+        box-shadow: none;
+    }
+
+    .mds-nav-pill.dropdown-toggle:focus-visible {
+        outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
+        outline-offset: var(--mds-spacing-offset);
+    }
+
+    // Works around a cascade quirk in @moodlehq/design-system's nav-pill CSS: its
+    // `.mds-nav-pill:visited { background-color: transparent; }` outweighs
+    // `.mds-nav-pill--selected`, and the active pill links to the current page so is always
+    // visited, leaving its selected background transparent in some browsers.
+    .mds-nav-pill--selected:visited {
+        background-color: var(--mds-bg-nav-pill-selected);
+    }
+
+    // Hidden until core/nav/Nav adds .primarynav-measured (its `measuredclass` prop), so the first
+    // paint never shows items that are about to be collapsed into "More". Scoped to body.jsenabled
+    // because otherwise it also hides the NonJS fallback nested inside the mount point, which
+    // nothing would ever reveal: the navigation would stay invisible but clickable whenever React
+    // does not run.
+    .jsenabled &:not(.primarynav-measured) {
+        opacity: 0;
+    }
+}
+
+/* The menu bar itself. */
+.theme-boost-union-smartmenu .navbar.fixed-top.boost-union-menubar {
+    /* Height and background color for the top header. */
+    height: $bu-smartmenu-menubar-height;
+    border-bottom: 0;
+    background-color: #f8f9fa;
+
+    /* The menu bar is placed above the navbar (which has Bootstrap's z-index for fixed elements) so that its
+       dropdowns are shown above the navbar. */
+    z-index: $zindex-fixed + 1;
+
+    /* The exact copy of the core block above gives the list items the navbar height. Within the menu bar, they
+       must not be higher than the menu bar. */
+    .primarynav-navbar .more-nav li.nav-item {
+        height: $bu-smartmenu-menubar-height;
+    }
+}
+
+/*---------------------------------------
+ * Page layout with menu bar shown
+ --------------------------------------*/
+
+/* The effective height of the menu bar as a CSS variable. It is used to move the navbar, the page and the drawers
+   down as soon as the menu bar is shown. It is zero if there is no menu bar on the page or if the menu bar is hidden
+   on the current device (the menu bar carries the classes d-lg-none, d-md-none or d-none in this case). */
+/* The zero values need a unit as the variable is used within calc() expressions, hence the stylelint exceptions. */
+.theme-boost-union-smartmenu {
+    --bu-smartmenu-menubar-height: 0px; /* stylelint-disable-line length-zero-no-unit */
+
+    &:has(.navbar.boost-union-menubar) {
+        --bu-smartmenu-menubar-height: #{$bu-smartmenu-menubar-height};
+    }
+
+    /* The menu bar can be hidden on desktops, tablets and mobiles separately: It is hidden on a device if all of its
+       menu items are hidden on this device. classes/output/navigation/primary.php expresses this with one Bootstrap
+       display utility class per breakpoint (d-lg-none or d-lg-flex, d-md-none or d-md-flex, d-none or d-flex). As
+       these utility classes are mobile-first and override each other at their breakpoints, each breakpoint has to
+       be checked for its own class here. */
+    @include media-breakpoint-up(lg) {
+        &:has(.navbar.boost-union-menubar.d-lg-none) {
+            --bu-smartmenu-menubar-height: 0px; /* stylelint-disable-line length-zero-no-unit */
+        }
+    }
+    @include media-breakpoint-only(md) {
+        &:has(.navbar.boost-union-menubar.d-md-none) {
+            --bu-smartmenu-menubar-height: 0px; /* stylelint-disable-line length-zero-no-unit */
+        }
+    }
+    @include media-breakpoint-down(md) {
+        &:has(.navbar.boost-union-menubar.d-none) {
+            --bu-smartmenu-menubar-height: 0px; /* stylelint-disable-line length-zero-no-unit */
+        }
+    }
+
+    /* The navbar is moved down by the menu bar height. */
+    .navbar.fixed-top:not(.boost-union-menubar) {
+        margin-top: var(--bu-smartmenu-menubar-height);
+    }
+
+    /* The page is moved down by the navbar height (like Moodle core does it) and the menu bar height. */
+    #page.drawers {
+        margin-top: calc(#{$navbar-height} + var(--bu-smartmenu-menubar-height));
+    }
+
+    /* The message drawer is moved down by the menu bar height. */
+    [data-region=right-hand-drawer].drawer {
+        top: calc(#{$navbar-height} + var(--bu-smartmenu-menubar-height));
+    }
+
+    /* The drawer toggle buttons are moved down by the menu bar height (mirroring the toggler rules in
+       theme/boost/scss/moodle/layout.scss). On small screens, Moodle core places the toggle buttons at the bottom of
+       the viewport which is not affected by the menu bar. */
+    @include media-breakpoint-up(md) {
+        .drawer-toggles .drawer-toggler {
+            top: calc(#{$navbar-height} + var(--bu-smartmenu-menubar-height) + 1rem);
+        }
+    }
+
+    /* On small screens, Moodle core shows the left and right drawers below the navbar (see
+       theme/boost/scss/moodle/drawer.scss). They are moved down by the menu bar height as well and shortened
+       accordingly. */
+    @include media-breakpoint-down(lg) {
+        .drawer.drawer-left,
+        .drawer.drawer-right {
+            top: calc(#{$navbar-height} + var(--bu-smartmenu-menubar-height));
+            height: calc(100vh - #{$navbar-height} - var(--bu-smartmenu-menubar-height));
+        }
+    }
+
+    /* On large screens, Moodle core shows the left and right drawers below the navbar as well, but anchors them
+       below the page title in the standard page layout and in the limited width mode (see
+       theme/boost/scss/moodle/drawer.scss and layout.scss). Both variants are moved down by the menu bar height. */
+    @include media-breakpoint-up(lg) {
+        .drawer.drawer-left,
+        .drawer.drawer-right {
+            top: calc(#{$navbar-height} + var(--bu-smartmenu-menubar-height));
+        }
+        &.pagelayout-standard,
+        &.limitedwidth {
+            .drawer.drawer-left,
+            .drawer.drawer-right {
+                /* The two CSS variables are put into Sass variables only to keep the max-height line within the
+                   maximum line length. Splitting the calc() expression over multiple lines is not an option as Sass
+                   would simplify the 0px fallback to a unitless 0 then which makes the whole expression invalid. */
+                $menubar: "var(--bu-smartmenu-menubar-height)";
+                $footer: "var(--sticky-footer-total-height, 0px)";
+                top: calc(#{$drawer-anchored-top-offset} + #{$menubar});
+                max-height: calc(100vh - #{$drawer-anchored-vertical-offset} - #{$menubar} - #{$footer});
+            }
+            .drawer-toggles .drawer-toggler {
+                top: calc(#{$drawer-anchored-toggler-top} + var(--bu-smartmenu-menubar-height));
+            }
+        }
+    }
+}
+
+/*---------------------------------------
+ * User menu location
+ --------------------------------------*/
+
+/* Smart menus in the user menu are rendered with Moodle core's user menu templates and are styled by Moodle core's
+   user menu styling (see theme/boost/scss/moodle/navbar.scss). Only the items of the submenus need some care. */
+.theme-boost-union-smartmenu #usermenu-carousel .submenu {
+    /* Moodle core separates the submenu header from the items with a divider which has a bottom margin. If the menu
+       description or a heading item (which both have a grey background) is the first element below the divider, the
+       margin is removed so that the grey background starts directly below the divider (like it starts directly at the
+       top of the dropdowns in the main navigation). */
+    .dropdown-divider:has(+ .items > .menu-description:first-child, + .items > .menu-item-heading:first-child) {
+        margin-bottom: 0;
+    }
+}
+.theme-boost-union-smartmenu #usermenu-carousel .submenu .items {
+    /* Moodle core indents the items of the submenus always (with the 'ps-5' class in the template) to make room for
+       the tick of the active item. theme_boost_union's template override omits this class and the items (and the
+       menu description) are indented only if an item is active and marked with a tick, like in the main navigation.
+       The active item is detected with the 'dropdown-item-active' class which Moodle core's JavaScript adds to the
+       dropdown items with aria-current="true" (the attribute selector itself cannot be used within :has() as this
+       triggers PHP warnings in scssphp). */
+    &:has(.dropdown-item-active) {
+        .dropdown-item,
+        .menu-description {
+            padding-left: map-get($spacers, 5);
+        }
+    }
+
+    /* The menu description and the menu help icon get the horizontal padding which Moodle core gives the dropdown
+       items in the user menu explicitly (see theme/boost/scss/moodle/navbar.scss) to be aligned with the items. */
+    .menu-description {
+        padding-left: .75rem;
+        padding-right: 1.75rem;
+    }
+    .menu-helpicon {
+        padding-right: calc(1.75rem - #{map-get($spacers, 2)});
     }
 }
 
@@ -3027,6 +3003,11 @@ body.dir-rtl {
 /*=======================================
  * Supporting third-party plugins
  ======================================*/
+
+/*---------------------------------------
+ * Learning Tools
+ --------------------------------------*/
+
 
 /*---------------------------------------
  * Dash Pro

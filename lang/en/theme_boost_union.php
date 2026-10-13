@@ -2067,6 +2067,7 @@ $string['smartmenusmenuitemtypestaticwithplaceholders'] = 'Static (with placehol
 $string['smartmenusmenuitemtypeheadingwithplaceholders'] = 'Heading (with placeholders)';
 $string['smartmenusmenuitemurl'] = 'Menu item URL';
 $string['smartmenusmenuitemurl_help'] = 'The URL for the menu item. This is the link that will be followed when the menu item is clicked. For the <em>Static</em> type, enter a fixed URL. For the <em>Static (with placeholders)</em> type, you may include placeholders which will be replaced with context-specific values at render time.';
+$string['smartmenusmenuitemurl_invalidscheme'] = 'The URL must not start with javascript:, vbscript: or data:.';
 $string['smartmenusmenulocation'] = 'Menu location(s)';
 $string['smartmenusmenulocation_help'] = '<p>Select the location(s) where you want the menu to appear on the page:</p><ul><li>The main navigation is at the top of the page where Moodle core shows the Home, Dashboard, My courses and Site administration navigation items already.</li><li>The menu bar is located above the main navigation, at the top of the page.</li><li>The user menu can be accessed by clicking on the user avatar in the navigation bar.</li></ul>';
 $string['smartmenusmenulocationmain'] = 'Main navigation';

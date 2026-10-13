@@ -57,7 +57,6 @@
     * Include theme_boost_union/navbar template instead of theme_boost/navbar
     * Added the possibility to show course related hints.
     * Added the possibility to show info banners.
-    * Added smartmenu js to support third level submenus.
 }}
 {{> theme_boost/head }}
 
@@ -127,9 +126,9 @@
 </html>
 {{#js}}
 M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer'{{#includesmartmenu}}, 'theme_boost_union/smartmenu'{{/includesmartmenu}}{{#includestarredcacheinvalidation}}, 'theme_boost_union/smartmenu_starred_cacheinvalidation'{{/includestarredcacheinvalidation}}], function(Loader, Drawer{{#includesmartmenu}}, SmartMenu{{/includesmartmenu}}{{#includestarredcacheinvalidation}}, SmartMenuStarredCacheInvalidation{{/includestarredcacheinvalidation}}) {
+require(['theme_boost/loader', 'theme_boost/drawer'{{#includestarredcacheinvalidation}}, 'theme_boost_union/smartmenu_starred_cacheinvalidation'{{/includestarredcacheinvalidation}}], function(Loader, Drawer{{#includestarredcacheinvalidation}}, SmartMenuStarredCacheInvalidation{{/includestarredcacheinvalidation}}) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
-{{#includesmartmenu}}SmartMenu.init();{{/includesmartmenu}}{{#includestarredcacheinvalidation}}SmartMenuStarredCacheInvalidation.init();{{/includestarredcacheinvalidation}}
+{{#includestarredcacheinvalidation}}SmartMenuStarredCacheInvalidation.init();{{/includestarredcacheinvalidation}}
 });
 {{/js}}

@@ -87,7 +87,9 @@ class primary extends \core\navigation\output\primary {
      * * Build the smart menus and its items as navigation nodes.
      * * Generate the nodes for different locations based on the menus locations.
      * * Combine the smart menus nodes with core primary menus.
-     * * Convert the children menus into submenus like usermenus.
+     * * Export the React props for the main navigation and the menu bar
+     *   (both are rendered by the theme_boost_union/nav/Nav React component).
+     * * Attach the smart menus which are configured for the user menu location to the user menu.
      *
      * @param renderer_base|null $output
      * @return array
@@ -126,21 +128,21 @@ class primary extends \core\navigation\output\primary {
         $locationmenubarmenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_MENU, $smartmenus);
 
         // Separate the menus for the usermenu location.
-        // (There is no need to concert the submenus in this case).
         $locationusermenus = smartmenu::get_menus_forlocation(smartmenu::LOCATION_USER, $smartmenus);
 
         // Primary menu.
         // Merge the smart menu nodes which contain the main menu location with the primary and custom menu nodes.
         // Update the active and open states to the nodes based on the current page.
-        // And convert the children menu items into submenus.
         $locationmainmenucustommerged = array_merge($this->get_custom_menu($output), $locationmainmenu);
         $mainmenudata = $this->merge_primary_and_custom($this->get_primary_nav(), $locationmainmenucustommerged);
-        $locationmainmenuconverted = $this->convert_submenus($mainmenudata);
-        $moremenu = new \core\navigation\output\more_menu((object) $locationmainmenuconverted, 'navbar-nav', false);
+        $moremenu = new \core\navigation\output\more_menu((object) $mainmenudata, 'navbar-nav', false);
+        $moremenudata = $moremenu->export_for_template($output);
+        if (!empty($moremenudata)) {
+            $moremenudata['reactprops'] = $this->export_react_props($mainmenudata, $moremenudata);
+        }
 
         // Menubar.
         // Items of menus only added in the menubar.
-        // Convert the children menu items into submenus.
         // Removed the menu nodes from menubar, each item will be displayed as menu in menubar.
         if (!empty($locationmenubarmenu)) {
             // Set the visibility of the menu bar for mobile, tablet, and desktop based on its child items.
@@ -160,13 +162,29 @@ class primary extends \core\navigation\output\primary {
                 }
             }
 
-            $locationmenubarmenuconverted = $this->convert_submenus($locationmenubarmenu);
+            // Flag the active nodes of the menu bar menus based on the current page. This is done like
+            // merge_primary_and_custom() does it for the main navigation: Stop at the first active menu so that
+            // only one menu is active at a time.
+            foreach (array_keys($locationmenubarmenu) as $i) {
+                $menu = (object) $locationmenubarmenu[$i];
+                $active = $this->flag_active_nodes($menu);
+                if (is_array($locationmenubarmenu[$i])) {
+                    $locationmenubarmenu[$i] = (array) $menu;
+                }
+                if ($active) {
+                    break;
+                }
+            }
+
             $menubarmoremenu = new \core\navigation\output\more_menu(
-                (object) $locationmenubarmenuconverted,
+                (object) $locationmenubarmenu,
                 'navbar-nav-menu-bar',
                 false
             );
             $menubartemplatedata = $menubarmoremenu->export_for_template($output);
+            if (!empty($menubartemplatedata)) {
+                $menubartemplatedata['reactprops'] = $this->export_react_props($locationmenubarmenu, $menubartemplatedata);
+            }
 
             // Define the visibility classes for the menubar.
             $menubarclasses[] = $hidedesktop ? 'd-lg-none' : 'd-lg-flex';
@@ -176,18 +194,30 @@ class primary extends \core\navigation\output\primary {
         }
 
         // Mobile primary navigation.
-        // The mobile navigation menu uses the expand/collapse method for submenus, for this reason the unconverted menus are used.
+        // The mobile navigation menu uses the expand/collapse method for submenus, for this reason the expanded
+        // menu flags are used.
         $mobileprimarynav = $this->merge_primary_and_custom($this->get_primary_nav(), $locationmainmenucustommerged, true);
 
         // Usermenu.
         // Merge the smartmenu nodes which contains the location for user menu, with the default core user menu nodes.
         $languagemenu = new \core\output\language_menu($this->page);
         $usermenu = $this->get_user_menu($output);
+        // Flag the active nodes of the user menu smart menus based on the current page (in the same way as it is done
+        // for the menu bar above).
+        foreach (array_keys($locationusermenus) as $i) {
+            $menu = (object) $locationusermenus[$i];
+            $active = $this->flag_active_nodes($menu);
+            if (is_array($locationusermenus[$i])) {
+                $locationusermenus[$i] = (array) $menu;
+            }
+            if ($active) {
+                break;
+            }
+        }
         $this->build_usermenus($usermenu, $locationusermenus);
 
         // Check if any of the smartmenus are going to be included on the page.
-        // This is used as flag to include the smart menu's JS file in mustache templates later
-        // as well as for controlling the smart menu SCSS.
+        // This is used as flag for controlling the smart menu SCSS.
         $includesmartmenu = (!empty($locationmainmenu) || !empty($locationmenubarmenu) || !empty($locationusermenus));
 
         // Check if any of the rendered smart menu items requires client-side starred-courses cache invalidation.
@@ -195,13 +225,107 @@ class primary extends \core\navigation\output\primary {
 
         return [
             'mobileprimarynav' => $mobileprimarynav,
-            'moremenu' => $moremenu->export_for_template($output),
+            'moremenu' => $moremenudata,
             'menubar' => $menubartemplatedata ?? false,
             'lang' => !isloggedin() || isguestuser() ? $languagemenu->export_for_template($output) : [],
             'user' => $usermenu ?? [],
             'includesmartmenu' => $includesmartmenu ? true : false,
             'includestarredcacheinvalidation' => $includestarredcacheinvalidation ? true : false,
         ];
+    }
+
+    /**
+     * Build the JSON props consumed by the theme_boost_union/nav/Nav component.
+     *
+     * Modifications compared to the original function:
+     * * Add the label which the smart menu carousels need to the props which the parent function built.
+     *
+     * @param array $nodes Standardised primary/custom/smart menu nav items.
+     * @param array $moremenudata The more_menu export these props render alongside.
+     * @return string JSON-encoded props.
+     */
+    protected function export_react_props(array $nodes, array $moremenudata): string {
+        $props = json_decode(parent::export_react_props($nodes, $moremenudata), true);
+
+        // The label of the "Go back" links in the smart menu carousels.
+        $props['gobacklabel'] = get_string('usermenugoback', 'core');
+
+        return json_encode($props, JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * Flatten a standardised menu item into a JSON-safe structure for React.
+     *
+     * Modifications compared to the original function:
+     * * Add the Boost Union smart menu specific fields to smart menu nodes and smart menu item nodes.
+     *   Moodle core nodes and custom menu nodes are exported unchanged.
+     *
+     * @param array $node The node to flatten.
+     * @param int $index The node's position among its siblings.
+     * @return array
+     */
+    protected function export_node_for_react(array $node, int $index): array {
+        $item = parent::export_node_for_react($node, $index);
+
+        // Dividers do not need any further processing.
+        if (!empty($item['divider'])) {
+            return $item;
+        }
+
+        // Detect the Boost Union node types.
+        // Smart menu nodes (menus in submenu mode) carry their menu record in 'menudata',
+        // smart menu item nodes carry their item record in 'itemdata'.
+        $issmartmenu = array_key_exists('menudata', $node);
+        $issmartmenuitem = array_key_exists('itemdata', $node);
+        if (!$issmartmenu && !$issmartmenuitem) {
+            return $item;
+        }
+
+        // Smart menu nodes carry formatted HTML in their text (icons, multi-line labels).
+        // Core decodes the HTML entities of its escaped plain-text labels, this must not happen for this HTML.
+        $item['text'] = (string) ($node['text'] ?? '');
+
+        // Prefix the key to avoid collisions with the keys of the core and custom menu nodes
+        // (custom menu nodes use their numeric sort order as key).
+        $item['key'] = 'smartmenu-' . $item['key'];
+
+        // The core export never fills the attributes as core primary nav nodes are never action links.
+        // Smart menu items use them to open the link in a new tab.
+        $item['attributes'] = array_values($node['attributes'] ?? []);
+
+        // The tooltip of the node.
+        $item['tooltip'] = !empty($node['tooltip']) ? (string) $node['tooltip'] : null;
+
+        if ($issmartmenu) {
+            $menudata = $node['menudata'];
+
+            $item['smartmenu'] = true;
+            // The menu classes are applied to the list item (li) element of the menu.
+            $item['wrapperclasses'] = array_values(array_filter((array) ($node['menuclasses'] ?? [])));
+            $item['classes'] = [];
+            // The menu should be kept outside of the "More" menu.
+            $item['forceout'] = (isset($menudata->moremenubehavior) &&
+                    $menudata->moremenubehavior == smartmenu::MOREMENU_OUTSIDE);
+            // The menu description.
+            $item['helptext'] = !empty($node['helptext']) ? (string) $node['helptext'] : null;
+            $item['helptextposition'] = null;
+            if (!empty($node['abovehelptext'])) {
+                $item['helptextposition'] = 'above';
+            } else if (!empty($node['belowhelptext'])) {
+                $item['helptextposition'] = 'below';
+            }
+            $item['helpicon'] = !empty($node['helpicon']) ? (string) $node['helpicon'] : null;
+        } else {
+            $classes = array_values(array_filter((array) ($node['itemdata']->classes ?? [])));
+
+            $item['smartmenuitem'] = true;
+            // The item classes are applied to the list item (li) element as well as to the link (a) element.
+            $item['wrapperclasses'] = $classes;
+            $item['classes'] = $classes;
+            $item['forceout'] = false;
+        }
+
+        return $item;
     }
 
     /**
@@ -282,10 +406,9 @@ class primary extends \core\navigation\output\primary {
      *
      * @param array $usermenu
      * @param array $menus
-     * @param bool $forusermenu If false, the divider and logout nodes are unchanged.
      * @return void
      */
-    public function build_usermenus(&$usermenu, $menus, $forusermenu = true) {
+    public function build_usermenus(&$usermenu, $menus) {
 
         if (empty($menus)) {
             return [];
@@ -315,6 +438,11 @@ class primary extends \core\navigation\output\primary {
                 $submenu = [
                     'id' => $menu->submenuid,
                     'title' => $menu->title ?: $menu->text,
+                    // The menu description (shown above or below the items or as help icon).
+                    'helptext' => $menu->helptext ?? '',
+                    'abovehelptext' => !empty($menu->abovehelptext),
+                    'belowhelptext' => !empty($menu->belowhelptext),
+                    'helpicon' => $menu->helpicon ?? '',
                 ];
                 $usermenu['submenus'][] = (object) $submenu;
                 // The key of this submenu which helps later to include its children after including the necessary data.
@@ -357,81 +485,19 @@ class primary extends \core\navigation\output\primary {
             }
         }
 
-        // If the menu is to be used as user menu.
-        if ($forusermenu) {
-            // Include the divider after smart menus items to make difference from logout.
-            $divider = [
-                'title' => '', // Empty title.
-                'itemtype' => 'divider',
-                'divider' => 1,
-                'link' => '',
-            ];
-            array_push($usermenu['items'], $divider);
+        // Include the divider after smart menus items to make difference from logout.
+        $divider = [
+            'title' => '', // Empty title.
+            'itemtype' => 'divider',
+            'divider' => 1,
+            'link' => '',
+        ];
+        array_push($usermenu['items'], $divider);
 
-            // Update the logout menu at end of menus.
-            if (!empty($logout)) {
-                array_push($usermenu['items'], $logout);
-            }
+        // Update the logout menu at end of menus.
+        if (!empty($logout)) {
+            array_push($usermenu['items'], $logout);
         }
-    }
-
-    /**
-     * Converts the second-level children of moremenu into submenu format, similar to usermenu.
-     *
-     * Updates the ID of first-level submenus as the value of 'sort', where 'sort' contains unique IDs.
-     * Splits the children of first-level submenus into 'items' and 'submenus', where 'items' contain the first-level main menus
-     * and 'submenus' contain their children.
-     *
-     * @param array $menus The array of menus to build submenus for.
-     * @return array The updated array of menus with submenus built.
-     */
-    protected function convert_submenus($menus) {
-
-        // If the given menu is empty for whatever reason.
-        if (empty($menus)) {
-            // Return the menu directly.
-            return $menus;
-        }
-
-        // Create a deep clone of menus, direct use of menus mismatch with the usermenus format.
-        $primarymenu = array_map(function ($item) {
-            // Convert core primary menus array to object before cloning to maintain type formats.
-            return clone (object) $item;
-        }, $menus);
-
-        // Iterate over the primary menu items.
-        foreach ($primarymenu as $key => $parentmenu) {
-            // The given menu is not a smart menu (but most probably a Moodle core main navigation item or a custom menu).
-            if (!property_exists($parentmenu, 'menudata')) {
-                // We must not convert this menu unless we want to break Moodle completely.
-                // Continue to the next menu.
-                continue;
-            }
-
-            // The given menu doesn't contain any children menus.
-            if (!$parentmenu->haschildren) {
-                // Continue to the next menu.
-                continue;
-            }
-
-            $submenu = [];
-            // Children menus of this menu.
-            $children = $parentmenu->children;
-
-            // Updates the ID of first-level submenus as the value of 'sort', where 'sort' contains unique IDs.
-            array_walk($children, function (&$val) use ($parentmenu) {
-                $val['submenuid'] = $val['sort'];
-            });
-
-            // Update the format of children menus into submenus, similar to usermenu.
-            $this->build_usermenus($submenu, (object) $children, false);
-
-            // Splits the children of first-level submenus into 'items' and 'submenus'.
-            $primarymenu[$key]->children = ['items' => $submenu['items'] ?? []];
-            $primarymenu[$key]->submenus = $submenu['submenus'] ?? [];
-        }
-
-        return $primarymenu;
     }
 
     /**
@@ -460,6 +526,15 @@ class primary extends \core\navigation\output\primary {
 
             if ($this->flag_active_nodes($child, $expandedmenu)) {
                 $active = true;
+            }
+
+            // If the child node is an array, the cast to an object above has created a copy of it. Write the flags
+            // which have been set on the copy back to the child node.
+            if (is_array($node->children[$c])) {
+                $node->children[$c]['isactive'] = $child->isactive ?? false;
+                if (isset($child->isopen)) {
+                    $node->children[$c]['isopen'] = $child->isopen;
+                }
             }
         }
         // One of the children is active, so this node (the parent) is active as well.
