@@ -2236,6 +2236,21 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     .carousel-indicators {
         filter: drop-shadow(0 0 1px rgb(0, 0, 0));
     }
+
+    /* If the slide's background image is linked, let clicks on the caption box pass through to the linked image.
+       Otherwise, the caption box (including its paddings) would cover a part of the linked image and would
+       create an unclickable area there. Interactive elements within the caption remain clickable. */
+    .carousel-caption.slide-imagelinked {
+        pointer-events: none;
+
+        a,
+        button,
+        input,
+        select,
+        textarea {
+            pointer-events: auto;
+        }
+    }
 }
 
 /* Classes for the content style of slides. */
