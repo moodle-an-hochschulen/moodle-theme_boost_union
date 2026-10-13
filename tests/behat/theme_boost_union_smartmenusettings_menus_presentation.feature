@@ -416,6 +416,9 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       # Behaviour option IDs: 0 = Do not change anything, 1 = Force into more menu, 2 = Keep outside of more menu
       | menu1beh | menu2beh | menu3beh | menu1and2 | menu2and3 | menu1and3 |
       | 1        | 0        | 0        | after     | before    | after     |
+      # This example should look like this:
+      # | 0        | 0        | 2        | before    | after     | before    |
+      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
       | 0        | 0        | 2        | before    | after     | after     |
       | 0        | 1        | 2        | before    | after     | before    |
 
