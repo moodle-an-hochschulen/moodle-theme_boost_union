@@ -38,7 +38,11 @@
     * logourl - Flag, logo url,
     * sitename - Name of site.,
     * logintoken - Random token to protect login request.,
-    * maintenance - Maintenance message
+    * maintenance - Maintenance message,
+    * hasoauth2client - Flag, set when this login form is part of an OAuth2 authorization flow,
+    * client - The requesting OAuth2 client, if hasoauth2client is true
+      * name - The client's name,
+      * description - The client's description, as formatted HTML.
 
     Example context (json):
     {
@@ -63,7 +67,8 @@
         "maintenance": "For full access to this site, you need to login in as an admin.",
         "languagemenu": "Choose language",
         "togglepassword": true,
-        "smallscreensonly": true
+        "smallscreensonly": true,
+        "hasoauth2client": false
     }
 }}
 
@@ -75,6 +80,14 @@
     {{/logourl}}
     <h1 class="h2">{{#str}}loginwelcomeback{{/str}}</h1>
     <p class="text-muted mb-4">{{#str}} loginto, core, {{sitename}} {{/str}}</p>
+    {{#hasoauth2client}}
+        <h2 class="login-heading">{{#str}}oauth2:confirmscopes:clientaccesstitle, moodle, {
+            "clientname": {{#quote}}{{client.name}}{{/quote}},
+            "clientdescription": {{#quote}}{{client.description}}{{/quote}},
+            "sitename": {{#quote}}{{sitename}}{{/quote}}
+        }{{/str}}</h2>
+        {{> core/oauth2/client_description}}
+    {{/hasoauth2client}}
     {{#maintenance}}
         <div class="alert alert-danger login-maintenance">
             {{{maintenance}}}
@@ -103,19 +116,38 @@
                         {{#str}} usernameemail {{/str}}
                     {{/canloginbyemail}}
                 </label>
-                <input type="text" name="username" id="username" {{!
-                    !}}class="form-control" {{!
-                    !}}value="{{username}}" {{!
-                    !}}placeholder="{{^canloginbyemail}}{{#str}}enterusername{{/str}}{{/canloginbyemail}}{{!
-                    !}}{{#canloginbyemail}}{{#str}}loginenterusernameoremail{{/str}}{{/canloginbyemail}}" {{!
-                    !}}autocomplete="username">
+                <div class="login-input-wrapper">
+                    <span class="login-input-icon">
+                        {{#canloginbyemail}}{{#pix}}i/email, core{{/pix}}{{/canloginbyemail}}
+                        {{^canloginbyemail}}{{#pix}}i/user, core{{/pix}}{{/canloginbyemail}}
+                    </span>
+                    <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        class="form-control"
+                        value="{{username}}"
+                        placeholder="{{^canloginbyemail}}{{#str}}enterusername{{/str}}{{/canloginbyemail}}{{#canloginbyemail}}{{#str}}loginenterusernameoremail{{/str}}{{/canloginbyemail}}"
+                        autocomplete="username"
+                    >
+                </div>
             </div>
             <div class="login-form-password mb-3">
                 <label for="password" class="form-label">{{#str}} password {{/str}}</label>
-                <input type="password" name="password" id="password" value="" {{!
-                    !}}class="form-control" {{!
-                    !}}placeholder="{{#str}}loginenterpassword{{/str}}" {{!
-                    !}}autocomplete="current-password">
+                <div class="login-input-wrapper">
+                    <span class="login-input-icon">
+                        {{#pix}}i/lock, core{{/pix}}
+                    </span>
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        value=""
+                        class="form-control"
+                        placeholder="{{#str}}loginenterpassword{{/str}}"
+                        autocomplete="current-password"
+                    >
+                </div>
             </div>
             <div class="text-end mb-3">
                 <a href="{{forgotpasswordurl}}">{{#str}}loginforgotpassword{{/str}}</a>
