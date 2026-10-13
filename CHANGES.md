@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-13 - Upgrade: Adapt Behat scenarios to the new React main navigation
 * 2026-10-13 - Upgrade: Adopt changes to user_action_menu_items.mustache and add an override of user_action_menu_item_link.mustache
 * 2026-10-05 - Upgrade: Adopt changes to loginform.mustache
 * 2026-10-13 - Upgrade: Remove the activity & section navigation elements setting (setting, strings, layout code, renderer override, documentation and tests) as Moodle 5.3 ships a course linear navigation in its core course formats which covers the same use case. The legacy activity navigation is now shown or hidden as Moodle core decides. Existing values of the removed setting are unset during the upgrade.
