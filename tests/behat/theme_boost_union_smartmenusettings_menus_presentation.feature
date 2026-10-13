@@ -438,6 +438,9 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Examples:
       | menu1beh             | menu2beh               | menu3beh                  | orderrelation1and2 | orderrelation2and3 | orderrelation1and3 |
       | Force into more menu | Do not change anything | Do not change anything    | after              | before             | after              |
+      # This example should look like this:
+      # | Do not change anything | Do not change anything | Keep outside of more menu | before             | after              | before             |
+      # Unfortunately, due to MDL-81892, it looks like this and can't be corrected before MDL-81892 is fixed:
       | Do not change anything | Do not change anything | Keep outside of more menu | before             | after              | after              |
       | Do not change anything | Force into more menu   | Keep outside of more menu | before             | after              | before             |
 
