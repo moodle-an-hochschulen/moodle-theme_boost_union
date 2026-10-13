@@ -437,6 +437,99 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And "//a[@aria-current = 'true']" "xpath" should exist in the ".primary-navigation .nav-item:nth-child(5)" "css_element"
 
   @javascript
+  Scenario: Smartmenu: Menus: Presentation - Verify that the correct menu item is displayed as active when viewing the main menu item's page (with JavaScript)
+    Given the following "theme_boost_union > smart menu" exists:
+      | title    | Quick links               |
+      | location | Main navigation, Menu bar |
+      | mode     | Inline                    |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links                         |
+      | title    | Test node                           |
+      | itemtype | Static                              |
+      | url      | /admin/tool/dataprivacy/summary.php |
+    When I log in as "admin"
+    And I am on site homepage
+    Then "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Home']" "xpath_element" should exist in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Test node']" "xpath_element" should not exist in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Test node']" "xpath_element" should not exist in the ".boost-union-menubar" "css_element"
+    And I click on "Test node" "link" in the ".primary-navigation" "css_element"
+    Then "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Home']" "xpath_element" should not exist in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'mds-nav-pill--selected') and @aria-current = 'page' and normalize-space() = 'Test node']" "xpath_element" should exist in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'mds-nav-pill--selected') and @aria-current = 'page' and normalize-space() = 'Test node']" "xpath_element" should exist in the ".boost-union-menubar" "css_element"
+
+  @javascript
+  Scenario: Smartmenu: Menus: Presentation - Verify that the correct menu item is displayed as active when viewing the submenu item's page (with JavaScript)
+    Given the following "theme_boost_union > smart menu" exists:
+      | title    | Quick links                          |
+      | location | Main navigation, Menu bar, User menu |
+      | mode     | Submenu                              |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links                         |
+      | title    | Test node                           |
+      | itemtype | Static                              |
+      | url      | /admin/tool/dataprivacy/summary.php |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links       |
+      | title    | Other node        |
+      | itemtype | Static            |
+      | url      | /user/profile.php |
+    When I log in as "admin"
+    And I am on site homepage
+    # On the site homepage, the "Home" node is active and the smart menu is not.
+    Then "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Home']" "xpath_element" should exist in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Quick links']" "xpath_element" should not exist in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Quick links']" "xpath_element" should not exist in the ".boost-union-menubar" "css_element"
+    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'dropdown-item') and @aria-current = 'page' and normalize-space() = 'Test node']" "xpath_element" should not exist in the ".primary-navigation" "css_element"
+    # Open the smart menu item's page.
+    And I click on "Test node" "link" in the ".primary-navigation" "css_element"
+    # In the main navigation, the smart menu and the smart menu item are active now, but the "Home" node is not anymore.
+    Then "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Home']" "xpath_element" should not exist in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Quick links']" "xpath_element" should exist in the ".primary-navigation" "css_element"
+    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'dropdown-item') and contains(@class, 'active') and @aria-current = 'page' and normalize-space() = 'Test node']" "xpath_element" should exist in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'dropdown-item') and contains(@class, 'active') and @aria-current = 'page' and normalize-space() = 'Other node']" "xpath_element" should not exist in the ".primary-navigation" "css_element"
+    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
+    # In the menu bar, the smart menu and the smart menu item are active as well.
+    And "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Quick links']" "xpath_element" should exist in the ".boost-union-menubar" "css_element"
+    And I click on "Quick links" "link" in the ".boost-union-menubar" "css_element"
+    And "//a[contains(@class, 'dropdown-item') and contains(@class, 'active') and @aria-current = 'page' and normalize-space() = 'Test node']" "xpath_element" should exist in the ".boost-union-menubar" "css_element"
+    And "//a[contains(@class, 'dropdown-item') and contains(@class, 'active') and @aria-current = 'page' and normalize-space() = 'Other node']" "xpath_element" should not exist in the ".boost-union-menubar" "css_element"
+    And I click on "Quick links" "link" in the ".boost-union-menubar" "css_element"
+    # In the user menu, the smart menu item is active as well.
+    And I click on "#user-menu-toggle" "css_element"
+    And I click on "Quick links" "link" in the "#usermenu-carousel" "css_element"
+    And "//a[contains(@class, 'dropdown-item') and @aria-current = 'true' and normalize-space() = 'Test node']" "xpath_element" should exist in the "#usermenu-carousel" "css_element"
+    And "//a[contains(@class, 'dropdown-item') and @aria-current = 'true' and normalize-space() = 'Other node']" "xpath_element" should not exist in the "#usermenu-carousel" "css_element"
+
+  @javascript
+  Scenario: Smartmenu: Menus: Presentation - Verify that the correct _custom_ menu item is displayed as active when viewing the custom menu item's page (Moodle core behaviour which must not be broken by the smart menus) (with JavaScript)
+    Given the following "theme_boost_union > smart menu" exists:
+      | title    | Quick links               |
+      | location | Main navigation, Menu bar |
+      | mode     | Submenu                   |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links       |
+      | title    | Other node        |
+      | itemtype | Static            |
+      | url      | /user/profile.php |
+    And I log in as "admin"
+    And I navigate to "Appearance > Advanced theme settings" in site administration
+    And I set the field "Custom menu items" to multiline:
+    """
+    Test node|/admin/tool/dataprivacy/summary.php
+    """
+    And I click on "Save changes" "button"
+    When I am on site homepage
+    Then "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Home']" "xpath_element" should exist in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Test node']" "xpath_element" should not exist in the ".primary-navigation" "css_element"
+    And I click on "Test node" "link" in the ".primary-navigation" "css_element"
+    Then "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Home']" "xpath_element" should not exist in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'mds-nav-pill--selected') and @aria-current = 'page' and normalize-space() = 'Test node']" "xpath_element" should exist in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Quick links']" "xpath_element" should not exist in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'Quick links']" "xpath_element" should not exist in the ".boost-union-menubar" "css_element"
+
+  @javascript
   Scenario Outline: Smartmenu: Menus: Presentation - Ensure the menu bar is not displayed when no menus are present
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Menu bar links |

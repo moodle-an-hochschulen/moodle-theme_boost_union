@@ -65,7 +65,10 @@
     * Add user full name at the top of the user menu.
     * Support submenus with more than one level (for adding smart menus into the user menu).
     * Make submenu headers fully clickable as soon as at least one smart menu exists on the page.
+    * Add the smart menu description (above or below the items or as help icon) to the submenus.
     * Set the submenus' data-bs-theme attribute to light even if the navbar is dark
+    * Initialize the theme_boost_union/smartmenu_usermenu_tooltips module which keeps the tooltips of the smart menu
+      items alive (core/usermenu disposes them when it initializes its truncation tooltips).
 }}
 <div class="usermenu">
     {{#unauthenticateduser}}
@@ -109,7 +112,7 @@
                                     {{#includesmartmenu}}
                                     {{! Make submenu headers fully clickable. }}
                                     <div class="header">
-                                        <a href="#" class="carousel-navigation-link" data-carousel-target-id="carousel-item-{{#returnid}}{{returnid}}{{/returnid}}{{^returnid}}main{{/returnid}}"
+                                        <a href="#" class="carousel-navigation-link text-decoration-none text-body" data-carousel-target-id="carousel-item-{{#returnid}}{{returnid}}{{/returnid}}{{^returnid}}main{{/returnid}}"
                                             aria-label="{{#str}}usermenugoback{{/str}}">
                                             <button type="button" class="btn btn-icon text-decoration-none text-body">
                                                 <span class="dir-rtl-hide">{{#pix}}i/arrow-left{{/pix}}</span>
@@ -130,7 +133,10 @@
                                     {{/includesmartmenu}}
                                     <div class="dropdown-divider"></div>
                                     <div class="items h-100 overflow-auto" role="menu" aria-labelledby="carousel-item-title-{{id}}">
+                                        {{#helpicon}}<div class="menu-helpicon">{{{helpicon}}}</div>{{/helpicon}}
+                                        {{#abovehelptext}}{{#helptext}}<div class="menu-description">{{{helptext}}}</div>{{/helptext}}{{/abovehelptext}}
                                         {{> core/user_action_menu_submenu_items }}
+                                        {{#belowhelptext}}{{#helptext}}<div class="menu-description">{{{helptext}}}</div>{{/helptext}}{{/belowhelptext}}
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +148,9 @@
     {{/unauthenticateduser}}
 </div>
 {{#js}}
-    require(['core/usermenu'], function(UserMenu) {
+    require(['core/usermenu', 'theme_boost_union/smartmenu_usermenu_tooltips'], function(UserMenu, SmartMenuTooltips) {
         UserMenu.init();
+        // Must be initialized after core/usermenu, see the module for details.
+        SmartMenuTooltips.init();
     });
 {{/js}}

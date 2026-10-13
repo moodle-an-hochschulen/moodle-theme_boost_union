@@ -1079,7 +1079,6 @@ class smartmenu_item {
 
             if (!$record->visible) {
                 $itemclasses[] = 'dimmed';
-                $itemclasses[] = 'muted';
                 $tooltip = get_string('hiddenfromstudents');
             }
 
@@ -1790,7 +1789,10 @@ class smartmenu_item {
             'itemdata' => $itemdata,
             'menuclasses' => $itemdata->classes, // If menu is inline, need to add the item custom class in dropdown.
             'location' => $this->menu->location,
-            'url' => $url ?: 'javascript:void(0)',
+            // Nodes without a URL (a dynamic courses item in submenu mode which only holds its children) get a
+            // harmless '#' link like heading items. The templates and the React component render the actual
+            // controls (carousel link, collapse toggle) for such nodes themselves.
+            'url' => $url ?: '#',
             'key' => $key != null ? $key : 'item-' . $this->item->id,
             'text' => $title,
             // Do not set the title attribute as this would show a standard tooltip based on the Moodle core custom menu logic.

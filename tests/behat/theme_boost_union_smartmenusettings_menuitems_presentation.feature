@@ -374,23 +374,156 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       | Hide title text and show only icon (on mobile devices) | core:i/circleinfo | core:i/circleinfo                | Moodle core       | fa-circle-info | should           |
 
   @javascript
-  Scenario Outline: Smartmenus: Menu items: Presentation - Display the tooltip on hover over the menu items
+  Scenario Outline: Smartmenus: Menu items: Presentation - Display the tooltip on hover over the menu items of a menu in submenu mode
+    # The "Quick links" menu is in submenu mode: The static item is shown as dropdown item, the dynamic courses item
+    # (which is in submenu mode as well) as link to the third level of the menu.
     Given the following "theme_boost_union > smart menu item" exists:
       | menu     | Quick links        |
       | title    | Resources          |
       | itemtype | Static             |
       | url      | https://moodle.org |
       | tooltip  | <tooltip>          |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links      |
+      | title    | Course list      |
+      | itemtype | Dynamic courses  |
+      | itemmode | Submenu          |
+      | tooltip  | <coursestooltip> |
     When I log in as "admin"
-    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
-    And I hover over the "Resources" "text" in the ".primary-navigation" "css_element"
+    And I click on "Quick links" "link" in the "<container>" "css_element"
+    And I hover over the "Resources" "text" in the "<container>" "css_element"
     Then "body > .tooltip" "css_element" <shouldornot> exist
     And I <shouldornot> see "External links"
+    And I hover over the "Course list" "text" in the "<container>" "css_element"
+    Then "body > .tooltip" "css_element" <shouldornot> exist
+    And I <shouldornot> see "All courses"
 
     Examples:
-      | tooltip        | shouldornot |
-      | External links | should      |
-      |                | should not  |
+      | container            | tooltip        | coursestooltip | shouldornot |
+      | .primary-navigation  | External links | All courses    | should      |
+      | .primary-navigation  |                |                | should not  |
+      | .boost-union-menubar | External links | All courses    | should      |
+      | .boost-union-menubar |                |                | should not  |
+
+  @javascript
+  Scenario Outline: Smartmenus: Menu items: Presentation - Display the tooltip on hover over the menu items of a menu in inline mode
+    # The "Links" menu is in inline mode: The static item is shown as navigation pill, the dynamic courses item
+    # (which is in submenu mode) as dropdown toggle pill. The tooltip of the toggle is hidden as soon as its dropdown opens.
+    Given the following "theme_boost_union > smart menu" exists:
+      | title    | Links                     |
+      | location | Main navigation, Menu bar |
+      | mode     | Inline                    |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Links              |
+      | title    | Resources          |
+      | itemtype | Static             |
+      | url      | https://moodle.org |
+      | tooltip  | <tooltip>          |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Links            |
+      | title    | Course list      |
+      | itemtype | Dynamic courses  |
+      | itemmode | Submenu          |
+      | tooltip  | <coursestooltip> |
+    When I log in as "admin"
+    # Make the screen really large so that the inline items are not collapsed into the "More" menu.
+    And I change viewport size to "large"
+    And I hover over the "Resources" "text" in the "<container>" "css_element"
+    Then "body > .tooltip" "css_element" <shouldornot> exist
+    And I <shouldornot> see "External links"
+    And I hover over the "Course list" "text" in the "<container>" "css_element"
+    Then "body > .tooltip" "css_element" <shouldornot> exist
+    And I <shouldornot> see "All courses"
+    # Opening the dropdown of the toggle hides its tooltip (which would overlap the dropdown otherwise).
+    # The tooltip is faded out, so this has to wait until it is gone instead of just asserting that it is gone.
+    And I click on "Course list" "link" in the "<container>" "css_element"
+    And I wait until "body > .tooltip" "css_element" does not exist
+    And I should see "Test course1" in the "<container>" "css_element"
+
+    Examples:
+      | container            | tooltip        | coursestooltip | shouldornot |
+      | .primary-navigation  | External links | All courses    | should      |
+      | .primary-navigation  |                |                | should not  |
+      | .boost-union-menubar | External links | All courses    | should      |
+      | .boost-union-menubar |                |                | should not  |
+
+  @javascript
+  Scenario Outline: Smartmenus: Menu items: Presentation - Display the tooltip on hover over the menu items of a menu inside the more menu
+    # The "Links" menu is in submenu mode and forced into the "More" menu where it is shown as nested menu.
+    Given the following "theme_boost_union > smart menu" exists:
+      | title            | Links                     |
+      | location         | Main navigation, Menu bar |
+      | mode             | Submenu                   |
+      | moremenubehavior | Force into more menu      |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Links              |
+      | title    | Resources          |
+      | itemtype | Static             |
+      | url      | https://moodle.org |
+      | tooltip  | External links     |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Links           |
+      | title    | Course list     |
+      | itemtype | Dynamic courses |
+      | itemmode | Submenu         |
+      | tooltip  | All courses     |
+    When I log in as "admin"
+    And I click on "More" "link" in the "<container>" "css_element"
+    And I click on "Links" "link" in the "<container> [data-region='moredropdown']" "css_element"
+    And I hover over the "Resources" "text" in the "<container> [data-region='moredropdown']" "css_element"
+    Then "body > .tooltip" "css_element" should exist
+    And I should see "External links"
+    And I hover over the "Course list" "text" in the "<container> [data-region='moredropdown']" "css_element"
+    Then "body > .tooltip" "css_element" should exist
+    And I should see "All courses"
+
+    Examples:
+      | container            |
+      | .primary-navigation  |
+      | .boost-union-menubar |
+
+  @javascript
+  Scenario: Smartmenus: Menu items: Presentation - Display the tooltip on hover over the menu items in the user menu
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links        |
+      | title    | Resources          |
+      | itemtype | Static             |
+      | url      | https://moodle.org |
+      | tooltip  | External links     |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links     |
+      | title    | Course list     |
+      | itemtype | Dynamic courses |
+      | itemmode | Submenu         |
+      | tooltip  | All courses     |
+    When I log in as "admin"
+    And I click on "#user-menu-toggle" "css_element"
+    And I click on "Quick links" "link" in the "#usermenu-carousel" "css_element"
+    And I hover over the "Resources" "text" in the "#usermenu-carousel" "css_element"
+    Then "body > .tooltip" "css_element" should exist
+    And I should see "External links"
+    And I hover over the "Course list" "text" in the "#usermenu-carousel" "css_element"
+    Then "body > .tooltip" "css_element" should exist
+    And I should see "All courses"
+
+  @javascript
+  Scenario: Smartmenus: Menu items: Presentation - Display the "Hidden from students" tooltip on hover over a hidden course in a dynamic courses item
+    Given the following "courses" exist:
+      | fullname      | shortname | category | visible |
+      | Hidden course | CH        | 0        | 0       |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links     |
+      | title    | Course list     |
+      | itemtype | Dynamic courses |
+      | itemmode | Inline          |
+    When I log in as "admin"
+    And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
+    And I hover over the "Hidden course" "text" in the ".primary-navigation" "css_element"
+    Then "body > .tooltip" "css_element" should exist
+    And I should see "Hidden from students"
+    # A visible course does not get this tooltip.
+    And I hover over the "Test course1" "text" in the ".primary-navigation" "css_element"
+    Then I should not see "Hidden from students"
 
   Scenario: Smartmenu: Menu items: Presentation - Add a smart menu item with multilang tags
     Given the following "language packs" exist:
