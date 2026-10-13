@@ -237,7 +237,7 @@ class behat_theme_boost_union extends behat_base {
         return [
             new behat_component_named_selector(
                 'Smart menu',
-                [".//a[@role = 'menuitem'][contains(text(), %locator%)]"],
+                [".//a[@role = 'menuitem'][contains(normalize-space(.), %locator%)]"],
             ),
             new behat_component_named_selector(
                 'Smart menu item',
@@ -247,7 +247,7 @@ class behat_theme_boost_union extends behat_base {
                 'Main menu smart menu',
                 [
                     ".//div[contains(@class, 'primary-navigation')]//*[contains(@class, 'boost-union-smartmenu')]" .
-                        "/a[contains(text(), %locator%)]/../div[@role = 'menu']",
+                        "/a[contains(normalize-space(.), %locator%)]/../div[@role = 'menu']",
                 ],
             ),
             new behat_component_named_selector(
@@ -261,7 +261,7 @@ class behat_theme_boost_union extends behat_base {
                 'Menu bar smart menu',
                 [
                     ".//nav[contains(@class, 'boost-union-menubar')]//*[contains(@class, 'boost-union-smartmenu')]" .
-                        "/a[contains(text(), %locator%)]/../div[@role = 'menu']",
+                        "/a[contains(normalize-space(.), %locator%)]/../div[@role = 'menu']",
                 ],
             ),
             new behat_component_named_selector(
@@ -288,7 +288,7 @@ class behat_theme_boost_union extends behat_base {
                 'Main menu smart menu outside more menu',
                 [
                     ".//div[contains(@class, 'primary-navigation')]//ul[not(contains(@class, 'dropdown-menu'))]" .
-                        "/li[contains(@class, 'boost-union-smartmenu')]/a[contains(text(), %locator%)]",
+                        "/li[contains(@class, 'boost-union-smartmenu')]/a[contains(normalize-space(.), %locator%)]",
                 ],
             ),
             new behat_component_named_selector(
@@ -296,14 +296,14 @@ class behat_theme_boost_union extends behat_base {
                 [
                     ".//div[contains(@class, 'primary-navigation')]//li[contains(@class, 'dropdownmoremenu')]" .
                         "//div[contains(@class, 'dropdown-menu')]//div[contains(@class, 'boost-union-smartmenu')]" .
-                        "/a[contains(text(), %locator%)]",
+                        "/a[contains(normalize-space(.), %locator%)]",
                 ],
             ),
             new behat_component_named_selector(
                 'Menu bar smart menu outside more menu',
                 [
                     ".//nav[contains(@class, 'boost-union-menubar')]//ul[not(contains(@class, 'dropdown-menu'))]" .
-                        "/li[contains(@class, 'boost-union-smartmenu')]/a[contains(text(), %locator%)]",
+                        "/li[contains(@class, 'boost-union-smartmenu')]/a[contains(normalize-space(.), %locator%)]",
                 ],
             ),
             new behat_component_named_selector(
@@ -311,7 +311,7 @@ class behat_theme_boost_union extends behat_base {
                 [
                     ".//nav[contains(@class, 'boost-union-menubar')]//li[contains(@class, 'dropdownmoremenu')]" .
                         "//div[contains(@class, 'dropdown-menu')]//div[contains(@class, 'boost-union-smartmenu')]" .
-                        "/a[contains(text(), %locator%)]",
+                        "/a[contains(normalize-space(.), %locator%)]",
                 ],
             ),
         ];
