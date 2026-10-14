@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-14 - Tests: Remove the cache purging workaround from the info banner Behat tests as the underlying problem was a Moodle core bug (MDL-83757) which has been fixed in the meantime and all Boost Union stable releases require those Moodle core versions, resolves #734
 * 2026-10-14 - Improvement: Validate that the end time of a time-based info banner is not before its start time when the settings are saved, resolves #97
 * 2026-10-13 - Improvement: Rework the admin_setting_configdatetime class which is used for the info banner start and end time settings to use the mform date_time_selector widget from Moodle core instead of a custom implementation, resolves #97
 * 2026-10-13 - Bugfix: Let clicks on the slider's caption box pass through to the linked background image as the caption box's paddings created an unclickable area on the image, resolves #1196
