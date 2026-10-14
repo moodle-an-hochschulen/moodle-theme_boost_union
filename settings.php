@@ -4618,6 +4618,14 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $title = get_string('infobannerendsetting', 'theme_boost_union', ['no' => $i], true);
             $description = get_string('infobannerendsetting_desc', 'theme_boost_union', ['no' => $i], true);
             $setting = new admin_setting_configdatetime($name, $title, $description, '');
+            $setting->set_not_before(
+                'infobanner' . $i . 'start',
+                get_string('infobannerendsetting_beforestart', 'theme_boost_union', ['no' => $i], true),
+                [
+                    'infobanner' . $i . 'enabled' => THEME_BOOST_UNION_SETTING_SELECT_YES,
+                    'infobanner' . $i . 'mode' => THEME_BOOST_UNION_SETTING_INFOBANNERMODE_TIMEBASED,
+                ]
+            );
             $tab->add($setting);
             $page->hide_if(
                 'theme_boost_union/infobanner' . $i . 'end',

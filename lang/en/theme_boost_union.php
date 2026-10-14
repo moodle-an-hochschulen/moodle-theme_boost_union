@@ -1312,6 +1312,7 @@ $string['infobannerstartsetting'] = 'Info banner {$a->no} start time';
 $string['infobannerstartsetting_desc'] = 'With this setting, you can define from when on info banner {$a->no} should be displayed. The configured time is interpreted as server time, not as user time.';
 $string['infobannerendsetting'] = 'Info banner {$a->no} end time';
 $string['infobannerendsetting_desc'] = 'With this setting, you can define until when info banner {$a->no} should be displayed. The configured time is interpreted as server time, not as user time.';
+$string['infobannerendsetting_beforestart'] = 'The end time of info banner {$a->no} must not be before its start time. The end time has not been saved.';
 // Settings: Advertisement tiles tab.
 $string['tilestab'] = 'Advertisement tiles';
 // ... Section: Advertisement tiles general.
