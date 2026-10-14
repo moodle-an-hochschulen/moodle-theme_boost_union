@@ -66,6 +66,7 @@
         before the blocks in the contentupper region.
     * Added smartmenu js to support third level submenus.
     * Added blockregions JS to support vertical alignment of outside regions. Included alignmentspacers for the outside left and right regions.
+    * Wrapped the header region together with spacers for the outside-left and outside-right regions to align it with the main content.
 }}
 {{> theme_boost/head }}
 
@@ -145,10 +146,20 @@
         {{/regions.outsidetop.hasblocks}}
 
         {{#regions.header.hasblocks}}
-            <section id="theme-block-region-header" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
-                {{{ regions.header.addblockbutton }}}
-                {{{ regions.header.regionhtml }}}
-            </section>
+            <div class="theme-block-region-header-wrapper {{{maininnerwrapperclass}}} {{{outsideregionsplacement}}}">
+                {{#regions.outsideleft.hasblocks}}
+                    <div class="theme-block-region-outside-left-spacer"></div>
+                {{/regions.outsideleft.hasblocks}}
+                <div class="theme-boost-union-header-main-inner">
+                    <section id="theme-block-region-header" class="theme-block-region" aria-label="{{#str}}blocks{{/str}}">
+                        {{{ regions.header.addblockbutton }}}
+                        {{{ regions.header.regionhtml }}}
+                    </section>
+                </div>
+                {{#regions.outsideright.hasblocks}}
+                    <div class="theme-block-region-outside-right-spacer"></div>
+                {{/regions.outsideright.hasblocks}}
+            </div>
         {{/regions.header.hasblocks}}
 
         <div class="main-inner-wrapper {{{maininnerwrapperclass}}} {{{outsideregionsplacement}}}">
