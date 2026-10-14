@@ -642,6 +642,45 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | 1       | should contain     | before      |
       | 0       | should not contain | after       |
 
+  @javascript
+  Scenario Outline: Setting: Align header region with main content region width and position
+    Given the following config values are set as admin:
+      | config                       | value                          | plugin            |
+      | blockregionsforcourse        | <regions>                      | theme_boost_union |
+      | blockregionoutsideleftwidth  | <blockregionoutsideleftwidth>  | theme_boost_union |
+      | blockregionoutsiderightwidth | <blockregionoutsiderightwidth> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I am on the "Course 1" "Course" page logged in as "admin"
+    And I turn editing mode on
+    And I change window size to "large"
+    Then DOM element ".theme-block-region-outside-left-spacer" should have computed style "width" "<blockregionoutsideleftwidth>"
+    And DOM element ".theme-block-region-outside-right-spacer" should have computed style "width" "<blockregionoutsiderightwidth>"
+    And DOM elements "#theme-block-region-header" and "#topofscroll" should have the same "left" position value
+    And DOM elements "#theme-block-region-header" and "#topofscroll" should have the same "right" position value
+
+    Examples:
+      | regions                           | blockregionoutsideleftwidth | blockregionoutsiderightwidth |
+      | outside-left,outside-right,header | 300px                       | 300px                        |
+      | outside-left,outside-right,header | 200px                       | 400px                        |
+      | outside-left,outside-right,header | 400px                       | 200px                        |
+
+  Scenario Outline: Setting: Check existence of the outside region spacers next to the header region
+    Given the following config values are set as admin:
+      | config                | value     | plugin            |
+      | blockregionsforcourse | <regions> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I am on the "Course 1" "Course" page logged in as "admin"
+    And I turn editing mode on
+    Then ".theme-block-region-header-wrapper .theme-block-region-outside-left-spacer" "css_element" <outsideleftregionshouldornot> exist
+    And ".theme-block-region-header-wrapper .theme-block-region-outside-right-spacer" "css_element" <outsiderightregionshouldornot> exist
+
+    Examples:
+      | regions                           | outsideleftregionshouldornot | outsiderightregionshouldornot |
+      | outside-left,outside-right,header | should                       | should                        |
+      | outside-left,header               | should                       | should not                    |
+      | outside-right,header              | should not                   | should                        |
+      | outside-left,outside-right        | should not                   | should not                    |
+
   Scenario Outline: Setting: Harden block regions - Block edit controls are shown in allowed regions and hidden in restricted region regardless of hardening setting (Regression test).
     Given the following config values are set as admin:
       | config                | value                      | plugin            |
