@@ -233,7 +233,7 @@ $opacities: (0, 25, 50, 75, 100);
 
     /* Change the background color of the search panel in the navbar. */
     #searchform-navbar {
-        background-color: $primary;
+        background-color: var(--bu-navbar-bg, #{$primary});
     }
 
     /* Change the color of the active nav items's bottom border to white as this would be presented in the
@@ -283,9 +283,11 @@ $opacities: (0, 25, 50, 75, 100);
         background-color: #8f959e;
     }
 
-    /* Change the background color of the search panel in the navbar. */
+    /* Change the background color of the search panel in the navbar.
+       The --bu-navbar-bg custom property holds the navbar tint (see theme_boost_union_get_scss_navbar() in locallib.php),
+       the primary color is used as fallback if no tint is set. */
     #searchform-navbar {
-        background-color: $primary;
+        background-color: var(--bu-navbar-bg, #{$primary});
     }
 
     /* Change the color of the login link in the navbar to dark grey and to darker grey when hovered. */
