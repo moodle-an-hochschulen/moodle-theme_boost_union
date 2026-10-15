@@ -2162,9 +2162,12 @@ function theme_boost_union_get_scss_navbar($theme, $flavourid = null) {
             $navbartintsetting = get_config('theme_boost_union', 'brandcolor');
         }
         // If a color is now available (either tint or brand color), override the navbar background.
+        // The color is set into the --bu-navbar-bg custom property as well which the elements that have to match the
+        // navbar background (e.g. the expanded search form) consume in scss/boost_union/post.scss.
         if (!empty($navbartintsetting)) {
             $scss .= '.navbar.bg-primary {
-                background-color: ' . $navbartintsetting . ' !important;
+                --bu-navbar-bg: ' . $navbartintsetting . ';
+                background-color: var(--bu-navbar-bg) !important;
             }' . PHP_EOL;
         }
     }
