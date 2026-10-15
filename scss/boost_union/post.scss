@@ -81,299 +81,187 @@
  * Setting: Navbar color
  --------------------------------------*/
 
+/* The navbar color is realized with the Bootstrap navbar color schemes
+   (see https://getbootstrap.com/docs/5.3/components/navbar/#color-schemes):
+   The navbar gets a background utility class (.bg-body, .bg-dark or .bg-primary) and, for the variants with a light
+   font color, the .navbar-dark class which switches Bootstrap's --bs-navbar-* custom properties to the light font
+   color scheme. The navbar must not get a data-bs-theme attribute as this would switch the dropdowns within the navbar
+   to the dark color mode as well.
+
+   Moodle core does not route all elements in the navbar through Bootstrap's --bs-navbar-* custom properties
+   (the primary navigation pills, the user menu toggle, the icons, the edit switch, the login link and the divider
+   have their own colors). These elements are mapped onto Bootstrap's custom properties and onto a few Boost Union
+   custom properties below, so that each navbar color variant only has to set the custom properties.
+
+   In the dark color mode of Moodle core, the navbar is always dark, regardless of the configured navbar color:
+   The variant-specific rules are only applied in the light color mode (or if the color modes are disabled) and the
+   dark color mode resets the background and the custom properties to the values of the unchanged navbar
+   (see the end of this section). */
+
 /* Moodle core already presents the light navbar with dark font color (.bg-body) perfectly.
    There is nothing to change here. */
 
-/* Tweak the dark navbar with light font color
-   and the primary color navbar with light font color. */
-.navbar.bg-dark[data-bs-theme="dark"],
-.navbar.bg-primary[data-bs-theme="dark"] {
-    /* Remove the white border at the bottom of the navbar as it looks odd with a dark navbar. */
-    border-bottom: none;
+/* Remember the background color of the dark navbar and the colored navbar in a custom property.
+   The elements which have to match the navbar color (e.g. the hovered dropdown items) consume this property.
+   The values here are just the fallbacks which match the Bootstrap background utility classes of the navbar:
+   As soon as a navbar tint (or, as fallback, a brand color) is configured, theme_boost_union_get_scss_navbar() in
+   locallib.php emits a rule with the same selector which sets the property to the tint color and which is appended
+   after this file, so that it overrides the fallback. In the dark color mode, the property is reset to the body
+   background (see the end of this section). */
+.navbar.bg-dark {
+    --bu-navbar-bg: rgba(var(--#{$prefix}dark-rgb), 1);
+}
+.navbar.bg-primary {
+    --bu-navbar-bg: rgba(var(--#{$prefix}primary-rgb), 1);
+}
 
-    /* Change the color of the navigation items in the navbar to white
-       and to black on white when hovered (Bootstrap already makes the background white when hovered, but not when focused).
-       This has to use !important as Moodle core already uses !important for some of its hover states. */
-    .nav-link {
-        color: $white;
-    }
-    .nav-link.active {
-        border-bottom-color: $white;
-    }
-    .nav-link:hover,
-    .nav-link:focus {
-        color: $black !important; /* stylelint-disable-line declaration-no-important */
-        background-color: $white;
+/* Moodle core colors all icons within links in a .navbar-dark navbar with Bootstrap's semi-transparent white
+   (see theme/boost/scss/moodle/icons.scss). This would dim the icons of the navigation items and, even worse, make the
+   icons within the dropdowns of the navbar invisible on the light dropdown background. Let the icons inherit the color
+   of their link instead, in the navbar as well as in the dropdowns and in both color modes.
+   This has to use !important as Moodle core already uses !important for this icon color. */
+.navbar.navbar-dark a .icon {
+    color: inherit !important; /* stylelint-disable-line declaration-no-important */
+}
 
-        .icon {
-            color: $black !important; /* stylelint-disable-line declaration-no-important */
+/* Apply the variant-specific rules only in the light color mode or if the color modes are disabled. */
+:root:not([data-bs-theme="dark"]) {
+    /* Tweak the dark navbar with light font color
+       and the colored navbar with light font color. */
+    .navbar.navbar-dark {
+        /* Bootstrap's .navbar-dark scheme uses semi-transparent white for the navigation items.
+           Use solid white instead and black on white when hovered. */
+        --#{$prefix}navbar-color: #{$white};
+        --#{$prefix}navbar-hover-color: #{$black};
+        --bu-navbar-hover-bg: #{$white};
+        --bu-navbar-hover-color: #{$black};
+        --bu-navbar-divider-color: var(--#{$prefix}gray-300);
+        --bu-navbar-dropdown-hover-color: #{$white};
+
+        /* Hide the light border at the bottom of the navbar as it looks odd with a dark navbar.
+           The border is colored like the navbar instead of being removed to keep the navbar height unchanged. */
+        border-bottom-color: var(--bu-navbar-bg);
+
+        /* Change the color of the primary navigation pills in the navbar. */
+        .mds-nav-pill,
+        .mds-nav-pill:visited {
+            color: var(--#{$prefix}navbar-color);
+        }
+
+        /* Change the color of the user menu toggle (which is a button and not a navigation item). */
+        .usermenu .dropdown-toggle {
+            color: var(--#{$prefix}navbar-color);
         }
     }
 
-    /* Change the color of the primary navigation pills in the navbar to white
-       and to black on white when hovered, focused or selected.
-       This has to use !important as the design system uses more specific selectors for its hover states. */
-    .mds-nav-pill,
-    .mds-nav-pill:visited {
-        color: $white;
+    /* Tweak the colored navbar with light font color a little bit more. */
+    .navbar.navbar-dark.bg-primary {
+        /* Change the color of the divider to white as the grey divider would not be visible on the colored background. */
+        --bu-navbar-divider-color: #{$white};
     }
-    .mds-nav-pill:hover,
-    .mds-nav-pill:focus,
-    .mds-nav-pill--selected,
-    .mds-nav-pill--selected:visited {
-        color: $black !important; /* stylelint-disable-line declaration-no-important */
-        background-color: $white !important; /* stylelint-disable-line declaration-no-important */
 
-        .icon {
-            color: $black !important; /* stylelint-disable-line declaration-no-important */
+    /* Tweak the colored navbar with dark font color. */
+    .navbar.bg-primary:not(.navbar-dark) {
+        /* Use dark grey for the navigation items and black on white when hovered. */
+        --#{$prefix}navbar-color: #{rgba($black, .6)};
+        --#{$prefix}navbar-hover-color: #{rgba($black, .9)};
+        --bu-navbar-hover-bg: #{$white};
+        --bu-navbar-hover-color: #{$black};
+        --bu-navbar-divider-color: #{rgba($black, .6)};
+        /* The colored navbar with dark font color is expected to have a rather light color, so the hovered dropdown
+           items keep their dark text color on the navbar color. */
+        --bu-navbar-dropdown-hover-color: var(--#{$prefix}dropdown-link-color);
+    }
+
+    /* Rules which are shared by the dark navbar and both colored navbar variants. */
+    .navbar.navbar-dark,
+    .navbar.bg-primary {
+        /* Change the color of the primary navigation pills in the navbar to black on white when hovered,
+           focused or selected.
+           This has to use !important as the design system uses more specific selectors for its hover states. */
+        .mds-nav-pill:hover,
+        .mds-nav-pill:focus,
+        .mds-nav-pill--selected,
+        .mds-nav-pill--selected:visited {
+            color: var(--bu-navbar-hover-color) !important; /* stylelint-disable-line declaration-no-important */
+            background-color: var(--bu-navbar-hover-bg) !important; /* stylelint-disable-line declaration-no-important */
         }
-    }
 
-    /* Change the color of the icons in the navbar as well as the toggle icon in the usermenu
-       to white.
-       This has to use !important as Moodle core already uses !important for the icon colors. */
-    .nav-link .icon,
-    .nav-link a .icon,
-    .usermenu .dropdown-toggle {
-        color: $white !important; /* stylelint-disable-line declaration-no-important */
-    }
+        /* Change the color of the edit switch label in the navbar (the design system colors it with the default text
+           color otherwise). */
+        .editmode-switch-form .mds-switch-label {
+            color: var(--#{$prefix}navbar-color);
+        }
 
-    /* Change the color of the edit switch label in the navbar to white.
-       This has to use !important as Moodle core would change the color to text-primary as soon as editing is on. */
-    .editmode-switch-form,
-    .editmode-switch-form label {
-        color: $white !important; /* stylelint-disable-line declaration-no-important */
-    }
+        /* Draw a thin ring in the navbar text color around the edit switch track. The design system fills the track
+           of the enabled switch with the brand color which would make the switch nearly invisible if the navbar is
+           colored with the brand color (or a similar navbar tint). */
+        .editmode-switch-form .mds-switch-track {
+            box-shadow: 0 0 0 1px var(--#{$prefix}navbar-color);
+        }
 
-    /* Change the color of the offcanvas button to fit onto the dark background. */
-    #theme_boost_union-offcanvas-btn {
-        color: #fff;
-    }
+        /* Change the color of the login hint and the login link which are shown in the navbar for visitors
+           (unless the login link is shown as a button, see the loginlinkbuttonenabled setting). */
+        .login,
+        .login a:not(.btn) {
+            color: var(--#{$prefix}navbar-color);
+        }
+        .login a:not(.btn):hover {
+            color: var(--#{$prefix}navbar-hover-color);
+        }
 
-    /* Change the color of the login link in the navbar to white
-       (but not if the login link is shown as button, see the login button rules below). */
-    .login,
-    .login a:not(.btn) {
-        color: $white;
-    }
+        /* Change the color of the language menu toggle (which appears for visitors in the navbar), the color mode
+           menu toggle and the offcanvas button as these would be presented in the primary color otherwise. */
+        #lang-menu-toggle,
+        #colourmode-menu-toggle,
+        #theme_boost_union-offcanvas-btn {
+            color: var(--#{$prefix}navbar-color);
+        }
 
-    /* Change the color of the language selector link (which appears for visitors in the navbar) to white.
-       as this would be presented in the primary color otherwise. */
-    #lang-menu-toggle {
-        color: $white;
-    }
+        /* Change the color of the divider.
+           This has to use !important as Moodle core already uses !important for the border-left color. */
+        .divider {
+            background-color: var(--bu-navbar-divider-color);
+            border-left-color: var(--bu-navbar-divider-color) !important; /* stylelint-disable-line declaration-no-important */
+        }
 
-    /* Change the color of the notification action buttons to dark grey.
-       This has to use !important as Moodle core already uses !important for the icon colors. */
-    .popover-region-container a .icon {
-        color: #343a40 !important; /* stylelint-disable-line declaration-no-important */
-    }
-
-    /* Change the color of the footer in the notification popover to normal.
-       This cannot be done with data-bs-theme as we did not overwrite the corresponding mustache template. */
-    .popover-region-footer-container {
-        background-color: $white;
-    }
-
-    /* Change the link colors in the notification popover to a more solid color. */
-    .popover-region-container {
-        .see-all-link,
-        .view-more {
-            color: $primary;
+        /* Use the navbar background color (including the navbar tint) as hover and focus background color of the items
+           in the dropdowns within the navbar (primary navigation, smart menus, user menu, language menu and color mode
+           menu) so that the dropdowns match the navbar color. The hover text color depends on the navbar font color
+           variant. Both are set via Bootstrap's dropdown custom properties. */
+        .dropdown-menu {
+            --#{$prefix}dropdown-link-hover-bg: var(--bu-navbar-bg);
+            --#{$prefix}dropdown-link-hover-color: var(--bu-navbar-dropdown-hover-color);
         }
     }
 }
 
-/* Tweak the dark navbar with light font color a little bit more. */
-.navbar.bg-dark[data-bs-theme="dark"] {
-    /* If we are showing the search form, we need to show the border again as dark border
-       as otherwise the active node's bottom bar might peek through. */
-    &:has(#searchform-navbar.show) {
-        border-bottom: 1px solid #343a40;
+/* In the dark color mode, the navbar is always dark, regardless of the configured navbar color.
+   Reset the background to the body background (this selector is more specific than the navbar tint rule from
+   locallib.php) and reset Bootstrap's navbar custom properties to the light font color scheme which Moodle core
+   presents in the dark color mode. */
+:root[data-bs-theme="dark"] {
+    .navbar.bg-dark,
+    .navbar.bg-primary {
+        --bu-navbar-bg: var(--#{$prefix}body-bg);
+        background-color: var(--bu-navbar-bg) !important; /* stylelint-disable-line declaration-no-important */
     }
 
-    /* Change the background color of the custom child menu and user menu navigation items in the navbar
-       to dark grey when hovered and focused (especially during keyboard navigation) */
-    .nav-item .dropdown-menu.show,
-    #user-action-menu.show {
-        a.dropdown-item {
-            background-color: inherit;
-        }
-        a.dropdown-item:hover,
-        a.dropdown-item:focus {
-            background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity));
-            color: $white;
-        }
-    }
-
-    /* Adapt the color of the edit switch widget to fit onto the dark background. */
-    .editmode-switch-form input {
-        border-color: var(--bs-gray-500);
-    }
-    .editmode-switch-form input:not(:checked) {
-        background-image: #{escape-svg($form-switch-bg-image)};
-        background-color: white;
-    }
-
-    /* Change the background color of the search panel in the navbar. */
-    #searchform-navbar {
-        @extend .bg-dark;
-    }
-    /* Make sure that the search form's submit button is black as well. */
-    .simplesearchform .btn-submit {
-        background-color: var(--bs-body-bg);
-        color: #6a737b;
+    /* The .navbar-dark scheme of Bootstrap would use semi-transparent white for the navigation items which is slightly
+       dimmer than the colors of the unchanged navbar. The navbar toggler icon is left alone on purpose as the white
+       icon of the .navbar-dark scheme is the one which is visible on the dark navbar. */
+    .navbar.navbar-dark {
+        --#{$prefix}navbar-color: #{$navbar-light-color};
+        --#{$prefix}navbar-hover-color: #{$navbar-light-hover-color};
     }
 }
 
-/* Tweak the primary color navbar with light font color a little bit more. */
-.navbar.bg-primary[data-bs-theme="dark"] {
-    /* If we are showing the search form, we need to show the border again as dark border
-       as otherwise the active node's bottom bar might peek through. */
-    &:has(#searchform-navbar.show) {
-        border-bottom: 1px solid $primary;
-    }
-
-    /* Change the background color of the custom child menu and user menu navigation items in the navbar
-       to dark grey when hovered and focused (especially during keyboard navigation) */
-    .nav-item .dropdown-menu.show,
-    #user-action-menu.show {
-        a.dropdown-item {
-            background-color: inherit;
-        }
-        a.dropdown-item:hover,
-        a.dropdown-item:focus {
-            background-color: $primary;
-            color: $white;
-        }
-    }
-
-    /* Adapt the color of the edit switch widget to fit onto the primary color background. */
-    .editmode-switch-form input {
-        border-color: var(--bs-gray-500);
-    }
-    .editmode-switch-form input:not(:checked) {
-        background-image: #{escape-svg($form-switch-bg-image)};
-        background-color: white;
-    }
-
-    /* Change the background color of the search panel in the navbar.
-       The --bu-navbar-bg custom property holds the navbar tint (see theme_boost_union_get_scss_navbar() in locallib.php),
-       the primary color is used as fallback if no tint is set. */
-    #searchform-navbar {
-        background-color: var(--bu-navbar-bg, #{$primary});
-
-        /* Make sure that the search form input elements are colorized as well. */
-        input,
-        button {
-            background-color: var(--bu-navbar-bg, #{$primary});
-            border-color: $white;
-            color: $white;
-        }
-    }
-
-    /* Change the color of the divider to white.
-       This has to use !important as Moodle core already uses !important for the border-left color.*/
-    .divider {
-        background-color: $white;
-        border-left: none !important; /* stylelint-disable-line declaration-no-important */
-    }
-
-    /* Change the color of the active nav items's bottom border to white as this would be presented in the
-        primary color otherwise. */
-    .nav-link.active {
-        border-bottom-color: $white;
-    }
-}
-
-/* Tweak the primary color navbar with dark font color. */
-.navbar.bg-primary[data-bs-theme="light"] {
-    /* Change the color of the active nav items's bottom border to dark grey as this would be presented in the
-       primary color as well otherwise. */
-    .nav-link.active {
-        border-bottom-color: rgba($black, .6);
-    }
-
-    /* Change the color of the navigation items in the navbar
-       to black on white when hovered (Bootstrap already makes the background white when hovered, but not when focused).
-       This has to use !important as Moodle core already uses !important for some of its hover states. */
-    .nav-link:hover,
-    .nav-link:focus {
-        color: $black !important; /* stylelint-disable-line declaration-no-important */
-        background-color: $white;
-    }
-
-    /* Change the color of the primary navigation pills in the navbar
-       to black on white when hovered, focused or selected.
-       This has to use !important as the design system uses more specific selectors for its hover states. */
-    .mds-nav-pill:hover,
-    .mds-nav-pill:focus,
-    .mds-nav-pill--selected,
-    .mds-nav-pill--selected:visited {
-        color: $black !important; /* stylelint-disable-line declaration-no-important */
-        background-color: $white !important; /* stylelint-disable-line declaration-no-important */
-    }
-
-    /* Change the font color of the custom child menu and user menu navigation items in the navbar
-       to black when hovered and focused (especially during keyboard navigation).
-       This will then diverge from the way how Boost core shows these menu items in the unchanged navbar,
-       but we do have to expect in this particular case here that the primary color is rather light. */
-    .nav-item .dropdown-menu.show,
-    #user-action-menu.show {
-        a.dropdown-item:hover,
-        a.dropdown-item:focus {
-            color: var(--bs-dropdown-link-color);
-        }
-    }
-
-    /* Change the color of the edit switch label in the navbar to dark grey.
-       This has to use !important as Moodle core wants to use the color text-primary as soon as editing is on. */
-    .editmode-switch-form,
-    .editmode-switch-form label {
-        color: var(--bs-nav-link-color) !important; /* stylelint-disable-line declaration-no-important */
-    }
-    .editmode-switch-form label:hover {
-        color: var(--bs-nav-link-color) !important; /* stylelint-disable-line declaration-no-important */
-    }
-
-    /* Adapt the color of the edit switch widget to fit onto the primary color background. */
-    .editmode-switch-form input {
-        border-color: var(--bs-gray-500);
-    }
-
-    /* Change the background color of the search panel in the navbar.
-       The --bu-navbar-bg custom property holds the navbar tint (see theme_boost_union_get_scss_navbar() in locallib.php),
-       the primary color is used as fallback if no tint is set. */
-    #searchform-navbar {
-        background-color: var(--bu-navbar-bg, #{$primary});
-
-        /* Make sure that the search form input element have a real border, even if focused. */
-        input:focus {
-            border-color: var(--bs-gray-500);
-        }
-    }
-
-    /* Change the color of the login link in the navbar to dark grey and to darker grey when hovered
-       (but not if the login link is shown as button, see the login button rules below). */
-    .login,
-    .login a:not(.btn) {
-        color: rgba($black, .6);
-        &:hover {
-            color: rgba($black, .9);
-        }
-    }
-
-    /* Change the color of the divider to dark grey.
-       This has to use !important as Moodle core already uses !important for the border-left color.*/
-    .divider {
-        border-left: 1px solid rgba($black, .6) !important; /* stylelint-disable-line declaration-no-important */
-    }
-}
-
-/* Tweak the login button (if the login link is shown as button) in both primary color navbars.
+/* Tweak the login button (if the login link is shown as button) in both colored navbars.
    The login button is a primary button and would have the same background color as the navbar otherwise.
-   Show it as light button instead, like the navigation items in the navbar when they are hovered. */
-.navbar.bg-primary .login .btn-primary {
+   Show it as light button instead, like the navigation items in the navbar when they are hovered.
+   This is only needed in the light color mode (or if the color modes are disabled) as the navbar is always dark in the
+   dark color mode and the primary button is visible there. */
+:root:not([data-bs-theme="dark"]) .navbar.bg-primary .login .btn-primary {
     @extend .btn-light;
 }
 
@@ -2448,9 +2336,10 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     /* Menu item type 'heading'. */
     .boost-union-smartmenuitem.menu-item-heading {
         /* Heading items are not links. They are presented like the menu description (grey background, no hand
-           cursor and no hover highlighting) but in bold. */
+           cursor and no hover highlighting) but in bold.
+           The background color is taken from the custom property so that it follows the dark color mode. */
         font-weight: bold;
-        background-color: #eee;
+        background-color: var(--#{$prefix}gray-200);
         cursor: default;
 
         /* Keep the text and background color on hover, focus and click as a heading is not interactive. */
@@ -2458,7 +2347,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         &:focus,
         &:active {
             color: var(--#{$prefix}dropdown-link-color);
-            background-color: #eee;
+            background-color: var(--#{$prefix}gray-200);
         }
 
         /* A heading which follows other elements is separated from them like a dropdown divider would do. */
@@ -2480,10 +2369,11 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     /* The menu description (which can be shown at the top or the bottom of a menu). */
     .menu-description {
         /* Menu description font size, padding and background color added.
-           The horizontal padding matches the padding of the dropdown items to align the description with the items. */
+           The horizontal padding matches the padding of the dropdown items to align the description with the items.
+           The background color is taken from the custom property so that it follows the dark color mode. */
         font-size: $font-size-sm;
         padding: 0.25rem var(--#{$prefix}dropdown-item-padding-x);
-        background-color: #eee;
+        background-color: var(--#{$prefix}gray-200);
 
         /* Removed the margin bottom of the last paragraph to avoid unwanted space below the description. */
         p:last-child {
@@ -2692,10 +2582,12 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 
 /* The menu bar itself. */
 .theme-boost-union-smartmenu .navbar.fixed-top.boost-union-menubar {
-    /* Height and background color for the top header. */
+    /* Height and background color for the top header.
+       The background color follows the body background color which is the same light grey in the light color mode
+       and which becomes dark in the dark color mode. */
     height: $bu-smartmenu-menubar-height;
     border-bottom: 0;
-    background-color: #f8f9fa;
+    background-color: var(--#{$prefix}body-bg);
 
     /* The menu bar is placed above the navbar (which has Bootstrap's z-index for fixed elements) so that its
        dropdowns are shown above the navbar. */

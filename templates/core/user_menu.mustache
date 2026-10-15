@@ -66,7 +66,6 @@
     * Support submenus with more than one level (for adding smart menus into the user menu).
     * Make submenu headers fully clickable as soon as at least one smart menu exists on the page.
     * Add the smart menu description (above or below the items or as help icon) to the submenus.
-    * Set the submenus' data-bs-theme attribute to light even if the navbar is dark
     * Initialize the theme_boost_union/smartmenu_usermenu_tooltips module which keeps the tooltips of the smart menu
       items alive (core/usermenu disposes them when it initializes its truncation tooltips).
 }}
@@ -93,7 +92,7 @@
                 <span class="userfirstname d-none d-xl-block" dir="auto" aria-hidden="true">{{userfirstname}}</span>
                 {{/userfirstname}}
             </a>
-            <div id="user-action-menu" class="dropdown-menu dropdown-menu-end" data-bs-theme="light">
+            <div id="user-action-menu" class="dropdown-menu dropdown-menu-end">
                 <div id="usermenu-carousel" class="carousel slide" data-touch="false" data-interval="false" data-keyboard="false">
                     <div class="carousel-inner">
                         <div id="carousel-item-main" class="carousel-item active" role="menu" tabindex="-1" aria-label="{{#str}}user{{/str}}">

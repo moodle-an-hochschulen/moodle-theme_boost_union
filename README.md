@@ -961,6 +961,15 @@ This Moodle plugin is shipped with an english language pack only. All translatio
 As the plugin creator, we manage the translation into german for our own local needs on AMOS. Please contribute your translation into all other languages in AMOS where they will be reviewed by the official language pack maintainers for Moodle.
 
 
+Dark mode support
+-----------------
+
+This theme is primarily developed on Moodle Core's light mode.
+However, we do regular checks in dark mode as well and are constantly evolving the Boost Union UI with dark mode alternatives to make sure that the Boost Union user experience in dark mode is equal to the user experience in light mode.
+
+If spot any glitch in dark mode, please raise a ticket on Github with screenshots and steps to reproduce.
+
+
 Right-to-left support
 ---------------------
 

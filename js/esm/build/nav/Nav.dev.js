@@ -21,7 +21,6 @@ import { Fragment, jsxDEV } from "react/jsx-dev-runtime";
  *   overflow (replacing the legacy theme_boost_union/smartmenu AMD module).
  * * Add the classes, tooltips and attributes of the smart menu items to the dropdown items.
  * * Add the data-key attribute to the top-level list items (as the NonJS fallback markup has it).
- * * Set the dropdowns' data-bs-theme attribute to light even if the navbar is dark.
  * * Initialize the tooltips and the help icon popovers of the smart menus.
  * * Align the dropdowns of the top-level pills to the right edge of their pill if they would overflow
  *   the viewport otherwise (which can happen in the menu bar which spans the full page width).
@@ -145,23 +144,23 @@ function DropdownSubmenu({ node, istablist = false }) {
         false,
         {
           fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-          lineNumber: 352,
+          lineNumber: 351,
           columnNumber: 13
         },
         this
       ),
       /* @__PURE__ */ jsxDEV("div", { className: "dropdown-menu", id: menuId, role: istablist ? "none" : "menu", "aria-labelledby": toggleId, children: /* @__PURE__ */ jsxDEV(DropdownItems, { items: node.children, istablist }, void 0, false, {
         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-        lineNumber: 371,
+        lineNumber: 370,
         columnNumber: 17
       }, this) }, void 0, false, {
         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-        lineNumber: 370,
+        lineNumber: 369,
         columnNumber: 13
       }, this)
     ] }, void 0, true, {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 351,
+      lineNumber: 350,
       columnNumber: 9
     }, this)
   );
@@ -190,7 +189,7 @@ function SmartMenuHelpIcon({ html }) {
   }, [html]);
   return /* @__PURE__ */ jsxDEV("div", { ref: wrapperRef, className: "menu-helpicon", dangerouslySetInnerHTML: { __html: html } }, void 0, false, {
     fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-    lineNumber: 421,
+    lineNumber: 420,
     columnNumber: 12
   }, this);
 }
@@ -265,27 +264,27 @@ function SmartMenuDropdownContent({ node, istablist = false, gobacklabel = "" })
         /* @__PURE__ */ jsxDEV("div", { id: mainId, className: "carousel-item active", role: "menu", tabIndex: -1, children: [
           node.helpicon && /* @__PURE__ */ jsxDEV(SmartMenuHelpIcon, { html: node.helpicon }, void 0, false, {
             fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-            lineNumber: 528,
+            lineNumber: 527,
             columnNumber: 39
           }, this),
           node.helptext && node.helptextposition === "above" && /* @__PURE__ */ jsxDEV("div", { className: "menu-description", dangerouslySetInnerHTML: { __html: node.helptext } }, void 0, false, {
             fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-            lineNumber: 530,
+            lineNumber: 529,
             columnNumber: 25
           }, this),
           /* @__PURE__ */ jsxDEV(DropdownItems, { items: node.children, istablist, carouselidprefix: idprefix }, void 0, false, {
             fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-            lineNumber: 532,
+            lineNumber: 531,
             columnNumber: 21
           }, this),
           node.helptext && node.helptextposition === "below" && /* @__PURE__ */ jsxDEV("div", { className: "menu-description", dangerouslySetInnerHTML: { __html: node.helptext } }, void 0, false, {
             fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-            lineNumber: 534,
+            lineNumber: 533,
             columnNumber: 25
           }, this)
         ] }, void 0, true, {
           fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-          lineNumber: 527,
+          lineNumber: 526,
           columnNumber: 17
         }, this),
         submenus.map((submenu) => {
@@ -311,30 +310,30 @@ function SmartMenuDropdownContent({ node, istablist = false, gobacklabel = "" })
                       /* @__PURE__ */ jsxDEV("button", { type: "button", className: "btn btn-icon text-decoration-none text-body", tabIndex: -1, children: [
                         /* @__PURE__ */ jsxDEV("span", { className: "dir-rtl-hide", children: /* @__PURE__ */ jsxDEV("i", { className: "icon fa fa-arrow-left fa-fw", "aria-hidden": "true" }, void 0, false, {
                           fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-                          lineNumber: 559,
+                          lineNumber: 558,
                           columnNumber: 49
                         }, this) }, void 0, false, {
                           fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-                          lineNumber: 558,
+                          lineNumber: 557,
                           columnNumber: 45
                         }, this),
                         /* @__PURE__ */ jsxDEV("span", { className: "dir-ltr-hide", children: /* @__PURE__ */ jsxDEV("i", { className: "icon fa fa-arrow-right fa-fw", "aria-hidden": "true" }, void 0, false, {
                           fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-                          lineNumber: 562,
+                          lineNumber: 561,
                           columnNumber: 49
                         }, this) }, void 0, false, {
                           fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-                          lineNumber: 561,
+                          lineNumber: 560,
                           columnNumber: 45
                         }, this)
                       ] }, void 0, true, {
                         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-                        lineNumber: 557,
+                        lineNumber: 556,
                         columnNumber: 41
                       }, this),
                       /* @__PURE__ */ jsxDEV("span", { className: "ps-2", id: titleId, children: plainTextLabel(submenu.text) }, void 0, false, {
                         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-                        lineNumber: 566,
+                        lineNumber: 565,
                         columnNumber: 41
                       }, this)
                     ]
@@ -343,32 +342,32 @@ function SmartMenuDropdownContent({ node, istablist = false, gobacklabel = "" })
                   true,
                   {
                     fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-                    lineNumber: 551,
+                    lineNumber: 550,
                     columnNumber: 37
                   },
                   this
                 ) }, void 0, false, {
                   fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-                  lineNumber: 550,
+                  lineNumber: 549,
                   columnNumber: 33
                 }, this),
                 /* @__PURE__ */ jsxDEV("div", { className: "dropdown-divider", role: "separator" }, void 0, false, {
                   fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-                  lineNumber: 569,
+                  lineNumber: 568,
                   columnNumber: 33
                 }, this),
                 /* @__PURE__ */ jsxDEV("div", { className: "items h-100 overflow-auto", role: "menu", "aria-labelledby": titleId, children: /* @__PURE__ */ jsxDEV(DropdownItems, { items: submenu.children, istablist, itemclasses: "ps-5" }, void 0, false, {
                   fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-                  lineNumber: 571,
+                  lineNumber: 570,
                   columnNumber: 37
                 }, this) }, void 0, false, {
                   fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-                  lineNumber: 570,
+                  lineNumber: 569,
                   columnNumber: 33
                 }, this)
               ] }, void 0, true, {
                 fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-                lineNumber: 549,
+                lineNumber: 548,
                 columnNumber: 29
               }, this)
             },
@@ -376,7 +375,7 @@ function SmartMenuDropdownContent({ node, istablist = false, gobacklabel = "" })
             false,
             {
               fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-              lineNumber: 541,
+              lineNumber: 540,
               columnNumber: 25
             },
             this
@@ -384,7 +383,7 @@ function SmartMenuDropdownContent({ node, istablist = false, gobacklabel = "" })
         })
       ] }, void 0, true, {
         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-        lineNumber: 526,
+        lineNumber: 525,
         columnNumber: 13
       }, this)
     },
@@ -392,7 +391,7 @@ function SmartMenuDropdownContent({ node, istablist = false, gobacklabel = "" })
     false,
     {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 519,
+      lineNumber: 518,
       columnNumber: 9
     },
     this
@@ -441,7 +440,7 @@ function SmartMenuDropdownSubmenu({ node, istablist = false, gobacklabel = "" })
           false,
           {
             fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-            lineNumber: 621,
+            lineNumber: 620,
             columnNumber: 13
           },
           this
@@ -453,10 +452,9 @@ function SmartMenuDropdownSubmenu({ node, istablist = false, gobacklabel = "" })
             id: menuId,
             role: istablist ? "none" : "menu",
             "aria-labelledby": toggleId,
-            "data-bs-theme": "light",
             children: /* @__PURE__ */ jsxDEV(SmartMenuDropdownContent, { node, istablist, gobacklabel }, void 0, false, {
               fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-              lineNumber: 642,
+              lineNumber: 640,
               columnNumber: 17
             }, this)
           },
@@ -464,7 +462,7 @@ function SmartMenuDropdownSubmenu({ node, istablist = false, gobacklabel = "" })
           false,
           {
             fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-            lineNumber: 635,
+            lineNumber: 634,
             columnNumber: 13
           },
           this
@@ -475,7 +473,7 @@ function SmartMenuDropdownSubmenu({ node, istablist = false, gobacklabel = "" })
     true,
     {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 615,
+      lineNumber: 614,
       columnNumber: 9
     },
     this
@@ -488,7 +486,7 @@ function DropdownItems({ items, istablist = false, submenus = false, carouselidp
     if (item.divider) {
       return /* @__PURE__ */ jsxDEV("div", { className: "dropdown-divider", role: "separator" }, item.key, false, {
         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-        lineNumber: 688,
+        lineNumber: 686,
         columnNumber: 28
       }, this);
     }
@@ -505,7 +503,7 @@ function DropdownItems({ items, istablist = false, submenus = false, carouselidp
           false,
           {
             fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-            lineNumber: 695,
+            lineNumber: 693,
             columnNumber: 29
           },
           this
@@ -513,7 +511,7 @@ function DropdownItems({ items, istablist = false, submenus = false, carouselidp
       }
       return /* @__PURE__ */ jsxDEV(DropdownSubmenu, { node: item, istablist }, item.key, false, {
         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-        lineNumber: 703,
+        lineNumber: 701,
         columnNumber: 28
       }, this);
     }
@@ -533,7 +531,7 @@ function DropdownItems({ items, istablist = false, submenus = false, carouselidp
         false,
         {
           fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-          lineNumber: 710,
+          lineNumber: 708,
           columnNumber: 25
         },
         this
@@ -563,14 +561,14 @@ function DropdownItems({ items, istablist = false, submenus = false, carouselidp
       false,
       {
         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-        lineNumber: 729,
+        lineNumber: 727,
         columnNumber: 21
       },
       this
     );
   }) }, void 0, false, {
     fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-    lineNumber: 685,
+    lineNumber: 683,
     columnNumber: 9
   }, this);
 }
@@ -607,12 +605,12 @@ function PillDropdownToggle({ label, selected, title, istablist = false, classes
         children: [
           selected && /* @__PURE__ */ jsxDEV("span", { className: "mds-nav-pill__indicator", "aria-hidden": "true" }, void 0, false, {
             fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-            lineNumber: 845,
+            lineNumber: 843,
             columnNumber: 30
           }, this),
           /* @__PURE__ */ jsxDEV("span", { className: "mds-nav-pill__label", dangerouslySetInnerHTML: { __html: label } }, void 0, false, {
             fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-            lineNumber: 847,
+            lineNumber: 845,
             columnNumber: 17
           }, this)
         ]
@@ -621,7 +619,7 @@ function PillDropdownToggle({ label, selected, title, istablist = false, classes
       true,
       {
         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-        lineNumber: 828,
+        lineNumber: 826,
         columnNumber: 13
       },
       this
@@ -629,7 +627,7 @@ function PillDropdownToggle({ label, selected, title, istablist = false, classes
     menu
   ] }, void 0, true, {
     fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-    lineNumber: 827,
+    lineNumber: 825,
     columnNumber: 9
   }, this);
 }
@@ -650,7 +648,7 @@ function TabPill({ node }) {
       tabIndex: selected ? 0 : -1,
       children: /* @__PURE__ */ jsxDEV("span", { className: "mds-nav-pill__label", dangerouslySetInnerHTML: { __html: node.text } }, void 0, false, {
         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-        lineNumber: 877,
+        lineNumber: 875,
         columnNumber: 13
       }, this)
     },
@@ -658,7 +656,7 @@ function TabPill({ node }) {
     false,
     {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 865,
+      lineNumber: 863,
       columnNumber: 9
     },
     this
@@ -681,12 +679,12 @@ function SmartMenuPill({ node }) {
       children: [
         selected && /* @__PURE__ */ jsxDEV("span", { className: "mds-nav-pill__indicator", "aria-hidden": "true" }, void 0, false, {
           fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-          lineNumber: 907,
+          lineNumber: 905,
           columnNumber: 26
         }, this),
         /* @__PURE__ */ jsxDEV("span", { className: "mds-nav-pill__label", dangerouslySetInnerHTML: { __html: node.text } }, void 0, false, {
           fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-          lineNumber: 908,
+          lineNumber: 906,
           columnNumber: 13
         }, this)
       ]
@@ -695,7 +693,7 @@ function SmartMenuPill({ node }) {
     true,
     {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 897,
+      lineNumber: 895,
       columnNumber: 9
     },
     this
@@ -712,11 +710,11 @@ function SubmenuTrigger({ node, istablist = false }) {
       istablist,
       children: /* @__PURE__ */ jsxDEV("div", { className: "dropdown-menu", children: /* @__PURE__ */ jsxDEV(DropdownItems, { items: node.children, istablist }, void 0, false, {
         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-        lineNumber: 930,
+        lineNumber: 928,
         columnNumber: 17
       }, this) }, void 0, false, {
         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-        lineNumber: 929,
+        lineNumber: 927,
         columnNumber: 13
       }, this)
     },
@@ -724,7 +722,7 @@ function SubmenuTrigger({ node, istablist = false }) {
     false,
     {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 923,
+      lineNumber: 921,
       columnNumber: 9
     },
     this
@@ -740,13 +738,13 @@ function SmartMenuTrigger({ node, istablist = false, gobacklabel = "" }) {
       istablist,
       classes: node.classes,
       attributes: toTooltipRecord(node, true),
-      children: /* @__PURE__ */ jsxDEV("div", { className: "dropdown-menu boost-union-moremenu", "data-bs-theme": "light", children: /* @__PURE__ */ jsxDEV(SmartMenuDropdownContent, { node, istablist, gobacklabel }, void 0, false, {
+      children: /* @__PURE__ */ jsxDEV("div", { className: "dropdown-menu boost-union-moremenu", children: /* @__PURE__ */ jsxDEV(SmartMenuDropdownContent, { node, istablist, gobacklabel }, void 0, false, {
         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-        lineNumber: 959,
+        lineNumber: 957,
         columnNumber: 17
       }, this) }, void 0, false, {
         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-        lineNumber: 958,
+        lineNumber: 956,
         columnNumber: 13
       }, this)
     },
@@ -754,7 +752,7 @@ function SmartMenuTrigger({ node, istablist = false, gobacklabel = "" }) {
     false,
     {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 951,
+      lineNumber: 949,
       columnNumber: 9
     },
     this
@@ -769,27 +767,27 @@ const renderPill = /* @__PURE__ */ __name((item, istablist, gobacklabel) => {
     if (isSmartMenuNode(item)) {
       return /* @__PURE__ */ jsxDEV(SmartMenuTrigger, { node: item, istablist, gobacklabel }, void 0, false, {
         fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-        lineNumber: 997,
+        lineNumber: 995,
         columnNumber: 20
       });
     }
     return /* @__PURE__ */ jsxDEV(SubmenuTrigger, { node: item, istablist }, void 0, false, {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 999,
+      lineNumber: 997,
       columnNumber: 16
     });
   }
   if (isSmartMenuNode(item)) {
     return /* @__PURE__ */ jsxDEV(SmartMenuPill, { node: item }, void 0, false, {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 1002,
+      lineNumber: 1e3,
       columnNumber: 16
     });
   }
   if (istablist) {
     return /* @__PURE__ */ jsxDEV(TabPill, { node: item }, void 0, false, {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 1005,
+      lineNumber: 1003,
       columnNumber: 16
     });
   }
@@ -809,7 +807,7 @@ const renderPill = /* @__PURE__ */ __name((item, istablist, gobacklabel) => {
     false,
     {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 1009,
+      lineNumber: 1007,
       columnNumber: 9
     }
   );
@@ -1039,17 +1037,17 @@ function Nav({ items, morelabel, istablist, navbarstyle, measuredclass = MEASURE
     window.addEventListener("keydown", handleKeyDown, true);
     return () => window.removeEventListener("keydown", handleKeyDown, true);
   }, [istablist]);
-  const moreItem = /* @__PURE__ */ jsxDEV(PillDropdownToggle, { label: morelabel, selected: overflow.some(isNodeActive), istablist, children: /* @__PURE__ */ jsxDEV("div", { className: "dropdown-menu dropdown-menu-start", "data-region": "moredropdown", "data-bs-theme": "light", children: /* @__PURE__ */ jsxDEV(DropdownItems, { items: overflow, istablist, submenus: true, gobacklabel }, void 0, false, {
+  const moreItem = /* @__PURE__ */ jsxDEV(PillDropdownToggle, { label: morelabel, selected: overflow.some(isNodeActive), istablist, children: /* @__PURE__ */ jsxDEV("div", { className: "dropdown-menu dropdown-menu-start", "data-region": "moredropdown", children: /* @__PURE__ */ jsxDEV(DropdownItems, { items: overflow, istablist, submenus: true, gobacklabel }, void 0, false, {
     fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-    lineNumber: 1401,
+    lineNumber: 1399,
     columnNumber: 17
   }, this) }, void 0, false, {
     fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-    lineNumber: 1400,
+    lineNumber: 1398,
     columnNumber: 13
   }, this) }, void 0, false, {
     fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-    lineNumber: 1399,
+    lineNumber: 1397,
     columnNumber: 9
   }, this);
   const menu = /* @__PURE__ */ jsxDEV(
@@ -1077,7 +1075,7 @@ function Nav({ items, morelabel, istablist, navbarstyle, measuredclass = MEASURE
             false,
             {
               fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-              lineNumber: 1415,
+              lineNumber: 1413,
               columnNumber: 21
             },
             this
@@ -1094,7 +1092,7 @@ function Nav({ items, morelabel, istablist, navbarstyle, measuredclass = MEASURE
           false,
           {
             fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-            lineNumber: 1429,
+            lineNumber: 1427,
             columnNumber: 13
           },
           this
@@ -1105,7 +1103,7 @@ function Nav({ items, morelabel, istablist, navbarstyle, measuredclass = MEASURE
     true,
     {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 1407,
+      lineNumber: 1405,
       columnNumber: 9
     },
     this
@@ -1115,7 +1113,7 @@ function Nav({ items, morelabel, istablist, navbarstyle, measuredclass = MEASURE
   }
   return /* @__PURE__ */ jsxDEV("nav", { ref: landmarkRef, "aria-label": navlabel, children: menu }, void 0, false, {
     fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-    lineNumber: 1451,
+    lineNumber: 1449,
     columnNumber: 9
   }, this);
 }

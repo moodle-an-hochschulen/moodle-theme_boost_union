@@ -54,23 +54,24 @@ if (
 }
 
 // Compose the navbar color classes based on the navbarcolor setting.
+// The navbar is colored with the Bootstrap navbar color schemes: A background utility class sets the background color
+// and the .navbar-dark class switches Bootstrap's navbar custom properties to the light font color for the variants
+// with a dark or colored background and light font color. The navbar must not get a data-bs-theme attribute as this
+// would switch the dropdowns within the navbar to the dark color mode as well. The styling of the variants and their
+// behaviour in the dark color mode is realized in scss/boost_union/post.scss.
 switch ($navbarcolorsetting) {
     case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_DARK:
-        $templatecontext['navbarcolorclasses'] = 'bg-dark';
-        $templatecontext['databstheme'] = 'dark';
+        $templatecontext['navbarcolorclasses'] = 'navbar-dark bg-dark';
         break;
     case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDLIGHT:
         $templatecontext['navbarcolorclasses'] = 'bg-primary';
-        $templatecontext['databstheme'] = 'light';
         break;
     case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_COLOREDDARK:
-        $templatecontext['navbarcolorclasses'] = 'bg-primary';
-        $templatecontext['databstheme'] = 'dark';
+        $templatecontext['navbarcolorclasses'] = 'navbar-dark bg-primary';
         break;
     case THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT:
     default:
         $templatecontext['navbarcolorclasses'] = 'bg-body';
-        $templatecontext['databstheme'] = '';
         break;
 }
 

@@ -572,14 +572,13 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     When I log in as "admin"
     And I am on "Course 1" course homepage
     Then the "class" attribute of ".navbar" "css_element" should contain "<classes>"
-    And the "data-bs-theme" attribute of ".navbar" "css_element" should <databstheme>
 
     Examples:
-      | setting      | classes    | databstheme     |
-      | light        | bg-body    | not be set      |
-      | dark         | bg-dark    | contain "dark"  |
-      | coloredlight | bg-primary | contain "light" |
-      | coloreddark  | bg-primary | contain "dark"  |
+      | setting      | classes                |
+      | light        | bg-body                |
+      | dark         | navbar-dark bg-dark    |
+      | coloredlight | bg-primary             |
+      | coloreddark  | navbar-dark bg-primary |
 
   Scenario Outline: Setting: Navbar color - Set the navbar color (with the global setting being overridden)
     Given the following config values are set as admin:
@@ -592,12 +591,11 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I am on "Course 1" course homepage
     Then the "class" attribute of ".navbar" "css_element" should contain "<classes>"
     And the "class" attribute of ".navbar" "css_element" should not contain "<shouldnotclasses>"
-    And the "data-bs-theme" attribute of ".navbar" "css_element" should <databstheme>
 
     # We only test 1 out of 4 color types as we have tested the rest already in the previous scenario.
     Examples:
-      | globalsetting | setting | classes | databstheme | shouldnotclasses |
-      | dark          | light   | bg-body | not be set  | bg-dark          |
+      | globalsetting | setting | classes | shouldnotclasses    |
+      | dark          | light   | bg-body | navbar-dark bg-dark |
 
   Scenario Outline: Setting: Navbar color - Do not set the navbar color (with a global setting being served properly)
     Given the following config values are set as admin:
@@ -609,18 +607,21 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     When I log in as "admin"
     And I am on "Course 1" course homepage
     Then the "class" attribute of ".navbar" "css_element" should contain "<classes>"
-    And the "data-bs-theme" attribute of ".navbar" "css_element" should <databstheme>
 
     # We only test 1 out of 4 color types as we have tested the rest already in the previous scenario.
     Examples:
-      | setting | classes | databstheme    |
-      | dark    | bg-dark | contain "dark" |
+      | setting | classes             |
+      | dark    | navbar-dark bg-dark |
 
   @javascript
-  Scenario: Setting: Navbar tint - Set the navbar tint color in a flavour (with no global tint having been set before)
+  Scenario Outline: Setting: Navbar tint - Set the navbar tint color in a flavour (with no global tint having been set before)
     Given the following config values are set as admin:
-      | config      | value       | plugin            |
-      | navbarcolor | coloreddark | theme_boost_union |
+      | config            | value       | plugin            |
+      | navbarcolor       | coloreddark | theme_boost_union |
+      | enablecolourmodes | 1           | theme_boost       |
+    And the following "user preferences" exist:
+      | user  | preference             | value        |
+      | admin | theme_boost_colourmode | <colourmode> |
     And the following "theme_boost_union > flavours" exist:
       | title                | applytocategories_ids | look_navbartint |
       | My shiny new flavour | CAT1                  | #FF0000         |
@@ -629,7 +630,13 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And I am on "Course 1" course homepage
     # Reloading the page is necessary to ensure that the navbar color is applied, as sometimes it might not appear on the first load due to caching.
     And I reload the page
-    Then DOM element ".navbar" should have computed style "background-color" "rgb(255, 0, 0)"
+    Then DOM element ".navbar" should have computed style "background-color" "<expectedcolor>"
+
+    # In the dark color mode, the navbar tint is not applied as the navbar is always dark there.
+    Examples:
+      | colourmode | expectedcolor   |
+      | light      | rgb(255, 0, 0)  |
+      | dark       | rgb(29, 33, 37) |
 
   @javascript
   Scenario: Setting: Navbar tint - Set the navbar tint color (with the global setting being overridden)
