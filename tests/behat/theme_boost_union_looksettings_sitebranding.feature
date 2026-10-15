@@ -298,14 +298,19 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
   @javascript
   Scenario Outline: Setting: Navbar tint - Set the navbar tint color (for the colored navbar variants)
     Given the following config values are set as admin:
-      | config      | value             | plugin            |
-      | navbarcolor | <navbarcolor>     | theme_boost_union |
-      | navbartint  | <configuredcolor> | theme_boost_union |
+      | config             | value             | plugin            |
+      | navbarcolor        | <navbarcolor>     | theme_boost_union |
+      | navbartint         | <configuredcolor> | theme_boost_union |
+      | enableglobalsearch | 1                 |                   |
+      | searchengine       | simpledb          |                   |
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
     # Reloading the page is necessary to ensure that the navbar color is applied, as sometimes it might not appear on the first load due to caching.
     And I reload the page
     Then DOM element ".navbar.bg-primary" should have computed style "background-color" "<expectedcolor>"
+    # The expanded search form in the navbar has to be shown in the navbar tint as well.
+    And I click on "Toggle search input" "link"
+    And DOM element "#searchform-navbar" should have computed style "background-color" "<expectedcolor>"
 
     Examples:
       | navbarcolor  | configuredcolor | expectedcolor    |

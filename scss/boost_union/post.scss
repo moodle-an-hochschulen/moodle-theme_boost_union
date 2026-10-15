@@ -236,14 +236,16 @@
         background-color: white;
     }
 
-    /* Change the background color of the search panel in the navbar. */
+    /* Change the background color of the search panel in the navbar.
+       The --bu-navbar-bg custom property holds the navbar tint (see theme_boost_union_get_scss_navbar() in locallib.php),
+       the primary color is used as fallback if no tint is set. */
     #searchform-navbar {
-        background-color: $primary;
+        background-color: var(--bu-navbar-bg, #{$primary});
 
         /* Make sure that the search form input elements are colorized as well. */
         input,
         button {
-            background-color: $primary;
+            background-color: var(--bu-navbar-bg, #{$primary});
             border-color: $white;
             color: $white;
         }
@@ -307,9 +309,11 @@
         border-color: var(--bs-gray-500);
     }
 
-    /* Change the background color of the search panel in the navbar. */
+    /* Change the background color of the search panel in the navbar.
+       The --bu-navbar-bg custom property holds the navbar tint (see theme_boost_union_get_scss_navbar() in locallib.php),
+       the primary color is used as fallback if no tint is set. */
     #searchform-navbar {
-        background-color: $primary;
+        background-color: var(--bu-navbar-bg, #{$primary});
 
         /* Make sure that the search form input element have a real border, even if focused. */
         input:focus {
