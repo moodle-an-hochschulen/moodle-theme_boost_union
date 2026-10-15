@@ -774,6 +774,13 @@ Feature: Configuring the theme_boost_union plugin on the "Flavours" page, applyi
     And the following "theme_boost_union > flavours" exist:
       | title        | applytocategories_ids | look_rawscss                         |
       | Test Flavour | CAT1                  | .path-course-view #page-header h1 { display: none; } |
+    # Please note: The admin user gets the plain textarea editor here to avoid loading TinyMCE on the flavour edit form.
+    # In theme designer mode, each TinyMCE instance fetches the editor CSS from styles_debug.php which compiles
+    # the editor SCSS on every request. Since Moodle 5.3 (MDL-68037), this compilation is very slow and makes the
+    # TinyMCE autosave AJAX calls run into the pending JS timeout of Behat on Github actions.
+    And the following "user preferences" exist:
+      | user  | preference | value    |
+      | admin | htmleditor | textarea |
     When I log in as "admin"
     And I am on "Course 1" course homepage
     And I should not see "Course 1" in the "#page-header .page-header-headings" "css_element"
