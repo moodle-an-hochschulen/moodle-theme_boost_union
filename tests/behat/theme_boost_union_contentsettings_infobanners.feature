@@ -307,6 +307,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
       | infobanner1enabled | yes   | theme_boost_union |
       | infobanner1mode    | time  | theme_boost_union |
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Info banner" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Info banner 1 start time" to "##yesterday##"
@@ -315,6 +316,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And I click on "Info banner" "link" in the "#adminsettings .nav-tabs" "css_element"
     Then the field "Info banner 1 start time" matches value "##yesterday##"
     And the field "Info banner 1 end time" matches value "##tomorrow##"
+    And Behat debugging is enabled
 
   Scenario Outline: Setting: Information banners - Display info banner 1 on a time based setting which was set in the settings form
     Given the following config values are set as admin:
@@ -324,11 +326,13 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
       | infobanner1pages   | mydashboard              | theme_boost_union |
       | infobanner1mode    | time                     | theme_boost_union |
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Info banner" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Info banner 1 start time" to "<start>"
     And I set the field "Info banner 1 end time" to "<end>"
     And I press "Save changes"
+    And Behat debugging is enabled
     And I log out
     When I log in as "teacher1"
     And I follow "Dashboard"
@@ -346,6 +350,7 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
       | infobanner1enabled | yes   | theme_boost_union |
       | infobanner1mode    | time  | theme_boost_union |
     When I log in as "admin"
+    And Behat debugging is disabled
     And I navigate to "Appearance > Boost Union > Content" in site administration
     And I click on "Info banner" "link" in the "#adminsettings .nav-tabs" "css_element"
     And I set the field "Info banner 1 start time" to "##tomorrow##"
@@ -354,3 +359,4 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     Then I should see "Some settings were not changed due to an error."
     And I should see "The end time of info banner 1 must not be before its start time." in the "#admin-infobanner1end" "css_element"
     And the field "Info banner 1 start time" matches value "##tomorrow##"
+    And Behat debugging is enabled
