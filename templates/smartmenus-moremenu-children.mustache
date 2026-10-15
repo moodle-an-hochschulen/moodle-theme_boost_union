@@ -30,7 +30,6 @@
     * Add the smart menu description (above or below the items or as help icon) to the dropdown.
     * Render the children of the second level items (third level) as indented items as there is no JavaScript
       available to realize a carousel.
-    * Set the dropdowns' data-bs-theme attribute to light even if the navbar is dark.
 
     Example context (json):
     {
@@ -53,7 +52,7 @@
         >
             {{{text}}}
         </a>
-        <div class="dropdown-menu" role="menu" id="drop-down-menu-{{moremenuid}}-{{key}}" data-bs-theme="light" aria-labelledby="drop-down-{{moremenuid}}-{{key}}">
+        <div class="dropdown-menu" role="menu" id="drop-down-menu-{{moremenuid}}-{{key}}" aria-labelledby="drop-down-{{moremenuid}}-{{key}}">
             {{#helpicon}}<div class="menu-helpicon">{{{helpicon}}}</div>{{/helpicon}}
             {{#abovehelptext}}{{#helptext}}<div class="menu-description">{{{helptext}}}</div>{{/helptext}}{{/abovehelptext}}
             {{#children}}

@@ -33,7 +33,6 @@
  *   overflow (replacing the legacy theme_boost_union/smartmenu AMD module).
  * * Add the classes, tooltips and attributes of the smart menu items to the dropdown items.
  * * Add the data-key attribute to the top-level list items (as the NonJS fallback markup has it).
- * * Set the dropdowns' data-bs-theme attribute to light even if the navbar is dark.
  * * Initialize the tooltips and the help icon popovers of the smart menus.
  * * Align the dropdowns of the top-level pills to the right edge of their pill if they would overflow
  *   the viewport otherwise (which can happen in the menu bar which spans the full page width).
@@ -637,7 +636,6 @@ function SmartMenuDropdownSubmenu(
                 id={menuId}
                 role={istablist ? 'none' : 'menu'}
                 aria-labelledby={toggleId}
-                data-bs-theme="light"
             >
                 <SmartMenuDropdownContent node={node} istablist={istablist} gobacklabel={gobacklabel} />
             </div>
@@ -955,7 +953,7 @@ function SmartMenuTrigger(
             classes={node.classes}
             attributes={toTooltipRecord(node, true)}
         >
-            <div className="dropdown-menu boost-union-moremenu" data-bs-theme="light">
+            <div className="dropdown-menu boost-union-moremenu">
                 <SmartMenuDropdownContent node={node} istablist={istablist} gobacklabel={gobacklabel} />
             </div>
         </PillDropdownToggle>
@@ -1397,7 +1395,7 @@ export default function Nav(
 
     const moreItem = (
         <PillDropdownToggle label={morelabel} selected={overflow.some(isNodeActive)} istablist={istablist}>
-            <div className="dropdown-menu dropdown-menu-start" data-region="moredropdown" data-bs-theme="light">
+            <div className="dropdown-menu dropdown-menu-start" data-region="moredropdown">
                 <DropdownItems items={overflow} istablist={istablist} submenus gobacklabel={gobacklabel} />
             </div>
         </PillDropdownToggle>
