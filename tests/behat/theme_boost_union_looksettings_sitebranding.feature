@@ -280,42 +280,59 @@ Feature: Configuring the theme_boost_union plugin for the "Site branding" tab on
       | 200px   | 375x667  | should not       | should           | 200px |
       | 200px   | 1024x768 | should not       | should           | 200px |
 
+  @javascript
   Scenario Outline: Setting: Navbar color - Set the navbar color
     Given the following config values are set as admin:
-      | config      | value     | plugin            |
-      | navbarcolor | <setting> | theme_boost_union |
+      | config            | value     | plugin            |
+      | navbarcolor       | <setting> | theme_boost_union |
+      | enablecolourmodes | 1         | theme_boost       |
+    And the following "user preferences" exist:
+      | user  | preference             | value        |
+      | admin | theme_boost_colourmode | <colourmode> |
+    And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
+    # Reloading the page is necessary to ensure that the navbar color is applied, as sometimes it might not appear on the first load due to caching.
+    And I reload the page
     Then the "class" attribute of ".navbar" "css_element" should contain "<classes>"
-    And the "data-bs-theme" attribute of ".navbar" "css_element" should <databstheme>
+    # The navbar must not carry a data-bs-theme attribute as this would switch the dropdowns within the navbar to the dark color mode as well.
+    And the "data-bs-theme" attribute of ".navbar" "css_element" should not be set
+    # In the dark color mode, the navbar is always dark, regardless of the configured navbar color.
+    And DOM element ".navbar" should have computed style "background-color" "<bgcolor>"
 
     Examples:
-      | setting      | classes    | databstheme     |
-      | light        | bg-body    | not be set      |
-      | dark         | bg-dark    | contain "dark"  |
-      | coloredlight | bg-primary | contain "light" |
-      | coloreddark  | bg-primary | contain "dark"  |
+      | setting      | colourmode | classes                | bgcolor            |
+      | light        | light      | bg-body                | rgb(248, 249, 250) |
+      | dark         | light      | navbar-dark bg-dark    | rgb(29, 33, 37)    |
+      | coloredlight | light      | bg-primary             | rgb(15, 108, 191)  |
+      | coloreddark  | light      | navbar-dark bg-primary | rgb(15, 108, 191)  |
+      | light        | dark       | bg-body                | rgb(29, 33, 37)    |
+      | dark         | dark       | navbar-dark bg-dark    | rgb(29, 33, 37)    |
+      | coloredlight | dark       | bg-primary             | rgb(29, 33, 37)    |
+      | coloreddark  | dark       | navbar-dark bg-primary | rgb(29, 33, 37)    |
 
   @javascript
   Scenario Outline: Setting: Navbar tint - Set the navbar tint color (for the colored navbar variants)
     Given the following config values are set as admin:
-      | config             | value             | plugin            |
-      | navbarcolor        | <navbarcolor>     | theme_boost_union |
-      | navbartint         | <configuredcolor> | theme_boost_union |
-      | enableglobalsearch | 1                 |                   |
-      | searchengine       | simpledb          |                   |
+      | config            | value             | plugin            |
+      | navbarcolor       | <navbarcolor>     | theme_boost_union |
+      | navbartint        | <configuredcolor> | theme_boost_union |
+      | enablecolourmodes | 1                 | theme_boost       |
+    And the following "user preferences" exist:
+      | user  | preference             | value        |
+      | admin | theme_boost_colourmode | <colourmode> |
     And the theme cache is purged and the theme is reloaded
     When I log in as "admin"
     # Reloading the page is necessary to ensure that the navbar color is applied, as sometimes it might not appear on the first load due to caching.
     And I reload the page
     Then DOM element ".navbar.bg-primary" should have computed style "background-color" "<expectedcolor>"
-    # The expanded search form in the navbar has to be shown in the navbar tint as well.
-    And I click on "Toggle search input" "link"
-    And DOM element "#searchform-navbar" should have computed style "background-color" "<expectedcolor>"
 
+    # In the dark color mode, the navbar tint is not applied as the navbar is always dark there.
     Examples:
-      | navbarcolor  | configuredcolor | expectedcolor    |
-      | coloredlight | #FF0000         | rgb(255, 0, 0)   |
-      | coloreddark  | #FF00FF         | rgb(255, 0, 255) |
+      | navbarcolor  | configuredcolor | colourmode | expectedcolor    |
+      | coloredlight | #FF0000         | light      | rgb(255, 0, 0)   |
+      | coloreddark  | #FF00FF         | light      | rgb(255, 0, 255) |
+      | coloredlight | #FF0000         | dark       | rgb(29, 33, 37)  |
+      | coloreddark  | #FF00FF         | dark       | rgb(29, 33, 37)  |
 
   @javascript
   Scenario Outline: Setting: Navbar tint - Do not apply the tint (countercheck for non-colored navbar variants)

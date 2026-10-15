@@ -266,14 +266,14 @@ $string['maxsitenamewidth'] = 'Maximal width of sitename in navbar';
 $string['maxsitenamewidth_desc'] = 'If you have a very long sitename and want to prevent it from breaking the navbar layout (especially the edit button widget) on medium-width screens, you can set the maximal width of the sitename in the navbar here. If the sitename exceeds this width, it will be truncated with an ellipsis (...). You can enter pixel-based values like 200px, but you can also enter a percentage-based value like 20% or a viewport-width value like 15vw. If you do not enter any value, the sitename will be displayed with its full width.';
 // ... ... Setting: Navbar color.
 $string['navbarcolorsetting'] = 'Navbar color';
-$string['navbarcolorsetting_desc'] = 'With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one.';
+$string['navbarcolorsetting_desc'] = 'With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one. Please note: In the dark color mode of Moodle core, the navbar is always shown dark, regardless of this setting.';
 $string['navbarcolorsetting_light'] = 'Light navbar with dark font color (unchanged as presented by Moodle core)';
 $string['navbarcolorsetting_dark'] = 'Dark navbar with light font color';
 $string['navbarcolorsetting_coloreddark'] = 'Colored navbar with light font color';
 $string['navbarcolorsetting_coloredlight'] = 'Colored navbar with dark font color';
 // ... ... Setting: Navbar tint.
 $string['navbartintsetting'] = 'Navbar tint';
-$string['navbartintsetting_desc'] = 'With this setting, you can define the color of the colored navbar. This setting is only effective if the navbar color is set to one of the \'Colored navbar\' options above. If no color is defined here, the primary brand color will be used as a fallback.';
+$string['navbartintsetting_desc'] = 'With this setting, you can define the color of the colored navbar. This setting is only effective if the navbar color is set to one of the \'Colored navbar\' options above. If no color is defined here, the primary brand color will be used as a fallback. Please note: In the dark color mode of Moodle core, the navbar tint is not applied as the navbar is always shown dark there.';
 
 // Settings: Activity branding tab.
 $string['activitybrandingtab'] = 'Activity branding';

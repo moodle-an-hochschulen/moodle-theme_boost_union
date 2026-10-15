@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-14 - Upgrade: Support the dark color mode which Moodle 5.3 introduced in Boost core in the navbar: The navbar and the smart menu menu bar are always shown dark in the dark color mode, regardless of the configured navbar color and navbar tint, and the dropdowns in the navbar as well as the smart menu headings and descriptions follow the color mode of the page.
 * 2026-10-13 - Upgrade: Adapt Behat scenarios to the new React main navigation
 * 2026-10-13 - Upgrade: Adopt changes to user_action_menu_items.mustache and add an override of user_action_menu_item_link.mustache
 * 2026-10-05 - Upgrade: Adopt changes to loginform.mustache
