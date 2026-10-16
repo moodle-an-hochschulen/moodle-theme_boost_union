@@ -1971,8 +1971,13 @@ function theme_boost_union_get_scss_to_mark_broken_links($theme) {
     $markbrokenlinksconfig = get_config('theme_boost_union', 'markbrokenlinks');
     if (isset($markbrokenlinksconfig) && $markbrokenlinksconfig == THEME_BOOST_UNION_SETTING_SELECT_YES) {
         // Set font color to the 'danger' color.
+        // In the dark color mode, the 'danger' color is lightened (like Moodle core does it for the .text-danger utility)
+        // so that it remains readable on the dark background.
         $scss .= 'a[href*="/brokenfile.php"] {
             color: $danger;
+            @include dark-mode {
+                color: dark-readable($danger);
+            }
         }';
 
         // SCSS to add broken-chain icon in front of the link and respect LTR and RTL while doing this.

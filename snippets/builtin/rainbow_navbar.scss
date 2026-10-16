@@ -69,7 +69,7 @@
     color: $white !important; /* stylelint-disable-line declaration-no-important */
 }
 .popover-region-container a .icon {
-    color: #343a40 !important; /* stylelint-disable-line declaration-no-important */
+    color: var(--#{$prefix}gray-800) !important; /* stylelint-disable-line declaration-no-important */
 }
 
 
