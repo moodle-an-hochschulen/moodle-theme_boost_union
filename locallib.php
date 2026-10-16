@@ -3308,6 +3308,29 @@ function theme_boost_union_render_setting_override_notification(int $mwp = 0, bo
 }
 
 /**
+ * Helper function to build a notification about the dark mode support of a setting.
+ *
+ * @param string $message The message which explains how the setting behaves in dark mode.
+ *                        It is only shown if the colour modes are enabled in Moodle core.
+ * @return string The HTML for the notification.
+ */
+function theme_boost_union_render_setting_darkmode_notification(string $message): string {
+    global $OUTPUT;
+
+    // Render notification body with mustache template.
+    $content = $OUTPUT->render_from_template('theme_boost_union/settingdarkmodenotification', [
+        'darkmodeenabled' => \theme_boost\colour_mode::is_enabled(),
+        'message' => $message,
+    ]);
+
+    // Render as info notification, the same way as the setting override notification.
+    return $OUTPUT->render_from_template('core/notification_info', [
+        'message' => $content,
+        'closebutton' => false,
+    ]);
+}
+
+/**
  * Ensure the modal JS is added to the page, but only once per request.
  */
 function theme_boost_union_ensure_modal_js(): void {
