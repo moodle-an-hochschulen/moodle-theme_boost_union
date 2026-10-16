@@ -807,6 +807,10 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('navbarcolorsetting_desc', 'theme_boost_union', null, true);
         $description .=
                 theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $description .=
+                theme_boost_union_render_setting_darkmode_notification(
+                    get_string('navbarcolorsetting_darkmode', 'theme_boost_union', null, true)
+                );
         $navbarcoloroptions = [
                 THEME_BOOST_UNION_SETTING_NAVBARCOLOR_LIGHT =>
                         get_string('navbarcolorsetting_light', 'theme_boost_union'),
@@ -832,6 +836,10 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description = get_string('navbartintsetting_desc', 'theme_boost_union', null, true);
         $description .=
                 theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $description .=
+                theme_boost_union_render_setting_darkmode_notification(
+                    get_string('navbarcolorsetting_darkmode', 'theme_boost_union', null, true)
+                );
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
