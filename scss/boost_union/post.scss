@@ -2410,6 +2410,15 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         opacity: .7;
     }
 
+    /* As soon as a dropdown item is active, Moodle core gives all dropdown items within the same dropdown menu more
+       left padding to make room for the tick (see theme/boost/scss/moodle/moremenu.scss). The menu descriptions are
+       indented in the same way to keep them aligned with the items. This rule matches any dropdown menu and not only
+       the smart menu dropdowns as the "More" menu indents the items of all smart menus which are nested within it as
+       soon as any of its items (including the toggles of the nested smart menus) is active. */
+    .dropdown-menu:has(.dropdown-item.active) .menu-description {
+        padding-left: map-get($spacers, 4);
+    }
+
     /* Smart menu dropdowns. */
     .boost-union-moremenu {
         /* Minimum and maximum width of the dropdown menus.
@@ -2420,13 +2429,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 
         /* Thin scrollbar like Moodle core uses it for the drawers (see theme/boost/scss/moodle/drawer.scss). */
         @include thin-scrolls($dropdown-bg);
-
-        /* As soon as a dropdown item is active, Moodle core gives all dropdown items more left padding to make room
-           for the tick (see theme/boost/scss/moodle/moremenu.scss). The menu description is indented in the same way
-           to keep it aligned with the items. */
-        &:has(.dropdown-item.active) .menu-description {
-            padding-left: map-get($spacers, 4);
-        }
 
         /* The top padding of the dropdown menu is removed when the menu description or a heading item (which both have
            a grey background) is the first element in the menu. This is limited to the active carousel slide as the
