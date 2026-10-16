@@ -1,0 +1,57 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/settingdarkmodenotification
+
+    Template for rendering a dark mode support notification in settings descriptions.
+
+    Context variables required for this template:
+    * darkmodeenabled - Whether the colour modes are enabled in Moodle core
+    * message - The message which explains how the setting behaves in dark mode,
+                only shown if the colour modes are enabled
+
+    Example context (json):
+    {
+        "darkmodeenabled": true,
+        "message": "In the dark color mode of Moodle core, the navbar is always shown dark, regardless of this setting."
+    }
+}}
+<div class="theme-boost-union-settingdarkmodenotification">
+    <div class="row g-2 align-items-start">
+        {{#darkmodeenabled}}
+        <div class="col-12 col-md pe-3">
+            <strong>{{#str}}settingdarkmodenotificationtitle, theme_boost_union{{/str}}</strong><br />
+            {{message}}
+        </div>
+        {{/darkmodeenabled}}
+        {{^darkmodeenabled}}
+        <div class="col-12 col-md pe-3">
+            <strong>{{#str}}settingdarkmodenotificationtitlepossible, theme_boost_union{{/str}}</strong><br />
+            {{#str}}settingdarkmodenotificationdisabled, theme_boost_union{{/str}}
+        </div>
+        <div class="col-12 col-md-auto settingdarkmode-actions text-start text-md-end">
+            <span class="settings-actions">
+                <a href="{{config.wwwroot}}/admin/settings.php?section=themesettingboost#theme_boost_experimental"
+                   class="action-darkmode py-0 ms-0 me-0 pe-0"
+                   title="{{#str}}settingdarkmodenotificationactionsettings, theme_boost_union{{/str}}"
+                   aria-label="{{#str}}settingdarkmodenotificationactionsettings, theme_boost_union{{/str}}"
+                   role="button">{{#pix}}i/settings, core, {{#str}}settingdarkmodenotificationactionsettings, theme_boost_union{{/str}}{{/pix}}</a>
+            </span>
+        </div>
+        {{/darkmodeenabled}}
+    </div>
+</div>

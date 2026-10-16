@@ -155,3 +155,33 @@ Feature: Configuring the theme_boost_union plugin as admin
     When I click on ".action-flavours" "css_element" in the "#admin-logo .theme-boost-union-settingoverridenotification" "css_element"
     Then "body#page-admin-theme-boost_union-flavours-overview" "css_element" should exist
     And I should see "Flavours" in the ".admin_settingspage_tabs_with_tertiary .dropdown-toggle" "css_element"
+
+  @javascript
+  Scenario: Show and use the dark mode support notification if the colour modes are disabled
+    Given the following config values are set as admin:
+      | config            | value | plugin      |
+      | enablecolourmodes | 0     | theme_boost |
+    And I log in as "admin"
+    When I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    Then I should see "Possible Dark mode support" in the "#admin-navbarcolor .theme-boost-union-settingdarkmodenotification" "css_element"
+    And I should see "This setting adapts its behaviour as soon as the dark mode is enabled." in the "#admin-navbarcolor .theme-boost-union-settingdarkmodenotification" "css_element"
+    And I should not see "In the dark color mode of Moodle core, the navbar is always shown dark" in the "#admin-navbarcolor .theme-boost-union-settingdarkmodenotification" "css_element"
+    And ".action-darkmode" "css_element" should exist in the "#admin-navbarcolor .theme-boost-union-settingdarkmodenotification" "css_element"
+    When I click on ".action-darkmode" "css_element" in the "#admin-navbarcolor .theme-boost-union-settingdarkmodenotification" "css_element"
+    Then "body#page-admin-setting-themesettingboost" "css_element" should exist
+    And "#theme_boost_experimental.tab-pane.active" "css_element" should exist
+    And I should see "Enable colour modes" in the "#theme_boost_experimental" "css_element"
+
+  @javascript
+  Scenario: Show the dark mode support notification if the colour modes are enabled
+    Given the following config values are set as admin:
+      | config            | value | plugin      |
+      | enablecolourmodes | 1     | theme_boost |
+    And I log in as "admin"
+    When I navigate to "Appearance > Boost Union > Look" in site administration
+    And I click on "Site branding" "link" in the "#adminsettings .nav-tabs" "css_element"
+    Then I should see "Dark mode support" in the "#admin-navbarcolor .theme-boost-union-settingdarkmodenotification" "css_element"
+    And I should not see "Possible Dark mode support" in the "#admin-navbarcolor .theme-boost-union-settingdarkmodenotification" "css_element"
+    And I should see "In the dark color mode of Moodle core, the navbar is always shown dark, regardless of this setting." in the "#admin-navbarcolor .theme-boost-union-settingdarkmodenotification" "css_element"
+    And ".action-darkmode" "css_element" should not exist in the "#admin-navbarcolor .theme-boost-union-settingdarkmodenotification" "css_element"

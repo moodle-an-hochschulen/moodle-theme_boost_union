@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-16 - Upgrade: Add a dark mode support notification to settings
 * 2026-10-15 - Upgrade - further work on the smart menu React implementation: Fix the tooltips of the smart menu dropdown toggles in the React main navigation and menu bar: As Bootstrap allows only one component instance per element, the tooltip instance on a toggle prevented Bootstrap from closing its dropdown again when another dropdown was opened or when the user clicked outside. The tooltip is now attached to the label within the toggle.
 * 2026-10-15 - Upgrade - further work on the smart menu React implementation: Fix the vertical alignment of the dropdown caret of smart menu items with children which are nested within the "More" menu
 * 2026-10-15 - Upgrade - further work on the smart menu React implementation: Indent the smart menu descriptions within the "More" menu together with the menu items as soon as any item of the "More" menu is active

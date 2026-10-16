@@ -113,6 +113,10 @@ $string['settingoverridemwp'] = 'This setting can be overridden within the tenan
 $string['settingsupplementlms'] = 'This setting can be supplemented within Boost Union flavours.';
 $string['settingsupplementlmsmwp'] = 'This setting can be supplemented within the tenant brandings and Boost Union flavours.';
 $string['settingsupplementmwp'] = 'This setting can be supplemented within the tenant brandings.';
+$string['settingdarkmodenotificationtitle'] = 'Dark mode support';
+$string['settingdarkmodenotificationtitlepossible'] = 'Possible Dark mode support';
+$string['settingdarkmodenotificationdisabled'] = 'This setting adapts its behaviour as soon as the dark mode is enabled.';
+$string['settingdarkmodenotificationactionsettings'] = 'Manage dark mode settings';
 
 // Settings: Overview page.
 $string['settingsoverview'] = 'Settings overview';
@@ -266,7 +270,8 @@ $string['maxsitenamewidth'] = 'Maximal width of sitename in navbar';
 $string['maxsitenamewidth_desc'] = 'If you have a very long sitename and want to prevent it from breaking the navbar layout (especially the edit button widget) on medium-width screens, you can set the maximal width of the sitename in the navbar here. If the sitename exceeds this width, it will be truncated with an ellipsis (...). You can enter pixel-based values like 200px, but you can also enter a percentage-based value like 20% or a viewport-width value like 15vw. If you do not enter any value, the sitename will be displayed with its full width.';
 // ... ... Setting: Navbar color.
 $string['navbarcolorsetting'] = 'Navbar color';
-$string['navbarcolorsetting_desc'] = 'With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one. Please note: In the dark color mode of Moodle core, the navbar is always shown dark, regardless of this setting.';
+$string['navbarcolorsetting_desc'] = 'With this setting, you can change the navbar color from the default light navbar to a dark one or a colored one.';
+$string['navbarcolorsetting_darkmode'] = 'In the dark color mode of Moodle core, the navbar is always shown dark, regardless of this setting.';
 $string['navbarcolorsetting_light'] = 'Light navbar with dark font color (unchanged as presented by Moodle core)';
 $string['navbarcolorsetting_dark'] = 'Dark navbar with light font color';
 $string['navbarcolorsetting_coloreddark'] = 'Colored navbar with light font color';
