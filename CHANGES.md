@@ -6,6 +6,10 @@ Changes
 
 ### Unreleased
 
+* 2026-10-15 - Upgrade - further work on the smart menu React implementation: Fix the tooltips of the smart menu dropdown toggles in the React main navigation and menu bar: As Bootstrap allows only one component instance per element, the tooltip instance on a toggle prevented Bootstrap from closing its dropdown again when another dropdown was opened or when the user clicked outside. The tooltip is now attached to the label within the toggle.
+* 2026-10-15 - Upgrade - further work on the smart menu React implementation: Fix the vertical alignment of the dropdown caret of smart menu items with children which are nested within the "More" menu
+* 2026-10-15 - Upgrade - further work on the smart menu React implementation: Indent the smart menu descriptions within the "More" menu together with the menu items as soon as any item of the "More" menu is active
+* 2026-10-16 - Upgrade - further work on the smart menu React implementation: Widen the "More" menu by its horizontal overflow whenever its content changes, as Firefox does not account for the vertical scrollbar of a "More" menu which grows taller than the viewport when smart menus are expanded within it and shows a horizontal scrollbar otherwise
 * 2026-10-14 - Upgrade: Support the dark color mode which Moodle 5.3 introduced in Boost core in the navbar: The navbar and the smart menu menu bar are always shown dark in the dark color mode, regardless of the configured navbar color and navbar tint, and the dropdowns in the navbar as well as the smart menu headings and descriptions follow the color mode of the page.
 * 2026-10-13 - Upgrade: Adapt Behat scenarios to the new React main navigation
 * 2026-10-13 - Upgrade: Adopt changes to user_action_menu_items.mustache and add an override of user_action_menu_item_link.mustache
