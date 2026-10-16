@@ -36,6 +36,8 @@
  * * Initialize the tooltips and the help icon popovers of the smart menus.
  * * Align the dropdowns of the top-level pills to the right edge of their pill if they would overflow
  *   the viewport otherwise (which can happen in the menu bar which spans the full page width).
+ * * Widen the "More" dropdown by its horizontal overflow (if any) whenever its content changes, as browsers
+ *   which do not account for its vertical scrollbar would show a horizontal scrollbar otherwise.
  *
  * @module     theme_boost_union/nav/Nav
  * @copyright  2026 Alexander Bias <abias@ssystems.de>
@@ -160,6 +162,20 @@ const toBlockDisplayClasses = (classes: string[] = []): string[] =>
     classes.map((cls) => cls.replace(/^(d(?:-(?:sm|md|lg|xl|xxl))?)-inline-flex$/, '$1-block'));
 
 /**
+ * Boost Union modification: Convert the responsive display classes of a node (d-inline-flex, d-md-inline-flex, ...)
+ * to their flex counterparts.
+ *
+ * The toggle of a smart menu item which is nested in the "More" menu must be a (block level) flex container which
+ * centers its label and the dropdown caret vertically, just like Moodle core styles the active items in the "More"
+ * menu. As an inline flex container, the caret would be aligned to the top of the toggle.
+ *
+ * @param classes The classes of the node.
+ * @returns The classes with the display classes converted.
+ */
+const toFlexDisplayClasses = (classes: string[] = []): string[] =>
+    classes.map((cls) => cls.replace(/^(d(?:-(?:sm|md|lg|xl|xxl))?)-inline-flex$/, '$1-flex'));
+
+/**
  * Boost Union modification: Get the plain text of the given formatted label.
  *
  * The HTML tags are stripped from the label. If the label does not contain any text at all (an item which
@@ -226,9 +242,11 @@ const toAttributeRecord = (attributes: {name: string; value: unknown}[] = []): R
 /**
  * Boost Union modification: Convert a node's tooltip into the attributes of a Bootstrap tooltip.
  *
- * Dropdown toggles already need the data-bs-toggle attribute for their dropdown, so their tooltips are marked with
- * the data-bu-tooltip attribute instead. Both are picked up by the tooltip initialization in Nav (see
- * TOOLTIP_TRIGGER_SELECTOR).
+ * Dropdown toggles are owned by their Bootstrap Dropdown and Bootstrap allows only one component instance per element,
+ * so a Tooltip instance can not be attached to a toggle itself (the Dropdown instance would not be stored anymore and
+ * the dropdown could not be closed by Bootstrap). Their tooltip text is carried in the data-bu-tooltip attribute
+ * instead and the tooltip is attached to the label element within the toggle (see initTooltip). Both kinds of
+ * triggers are picked up by the tooltip initialization in Nav (see TOOLTIP_TRIGGER_SELECTOR).
  *
  * @param node The node.
  * @param ontoggle Whether the attributes are meant for a dropdown toggle.
@@ -237,7 +255,7 @@ const toAttributeRecord = (attributes: {name: string; value: unknown}[] = []): R
 const toTooltipRecord = (node: NavNode, ontoggle = false): Record<string, string> => {
     if (node.tooltip) {
         return ontoggle
-            ? {title: node.tooltip, 'data-bu-tooltip': 'true'}
+            ? {'data-bu-tooltip': node.tooltip}
             : {title: node.tooltip, 'data-bs-toggle': 'tooltip'};
     }
     if (node.title) {
@@ -250,6 +268,72 @@ const toTooltipRecord = (node: NavNode, ontoggle = false): Record<string, string
  * Boost Union modification: The elements which get a Bootstrap tooltip (see toTooltipRecord).
  */
 const TOOLTIP_TRIGGER_SELECTOR = '[data-bs-toggle="tooltip"], [data-bu-tooltip]';
+
+/**
+ * Boost Union modification: The label element within a dropdown toggle which hosts the tooltip of the toggle
+ * (see toTooltipRecord). The top-level pills carry NavPill's label span, the toggles of the smart menus which are
+ * nested within the "More" menu wrap their label in a span of their own (see SmartMenuDropdownSubmenu).
+ */
+const TOOLTIP_HOST_SELECTOR = ':scope > .mds-nav-pill__label, :scope > .boost-union-smartmenu-toggle-label';
+
+/**
+ * Boost Union modification: A function which disposes an initialized tooltip again (see initTooltip).
+ */
+type TooltipDisposer = () => void;
+
+/**
+ * Boost Union modification: Initialize the Bootstrap tooltip of a tooltip trigger (see toTooltipRecord).
+ *
+ * The tooltip of a dropdown toggle is attached to the label element within the toggle. The mouse and focus events
+ * of the toggle are forwarded to the label element so that Bootstrap's own 'hover focus' trigger handling runs for
+ * the whole toggle (Bootstrap listens to mouseover and mouseout rather than to mouseenter and mouseleave for its hover
+ * trigger). Bootstrap's manual show() and hide() calls are deliberately not used as they do not keep Bootstrap's
+ * hover state in sync when they are called while a show is still pending or a show transition is still running.
+ * The label element itself does not receive any pointer events, otherwise its own mouse events would hide the tooltip
+ * as soon as the mouse moves from the label to the padding of the toggle.
+ * The tooltip is hidden as soon as the dropdown of the toggle opens (it would overlap the dropdown otherwise) and it is
+ * not shown again while the dropdown is open.
+ *
+ * @param trigger The tooltip trigger.
+ * @returns A function which disposes the tooltip again.
+ */
+const initTooltip = (trigger: HTMLElement): TooltipDisposer => {
+    const toggletooltip = trigger.dataset.buTooltip;
+    if (toggletooltip === undefined) {
+        const tooltip = Tooltip.getOrCreateInstance(trigger);
+        return () => tooltip.dispose();
+    }
+
+    const host = trigger.querySelector<HTMLElement>(TOOLTIP_HOST_SELECTOR);
+    if (!host) {
+        return () => undefined;
+    }
+    host.style.pointerEvents = 'none';
+    const tooltip = Tooltip.getOrCreateInstance(host, {title: toggletooltip});
+    const forward = (type: string) => host.dispatchEvent(type.startsWith('mouse') ? new MouseEvent(type) : new Event(type));
+    const enter = (type: string) => () => {
+        if (trigger.getAttribute('aria-expanded') !== 'true') {
+            forward(type);
+        }
+    };
+    const leave = () => {
+        forward('mouseout');
+        forward('focusout');
+    };
+    const listeners: [string, () => void][] = [
+        ['mouseenter', enter('mouseover')],
+        ['mouseleave', () => forward('mouseout')],
+        ['focusin', enter('focusin')],
+        ['focusout', () => forward('focusout')],
+        ['show.bs.dropdown', leave],
+    ];
+    listeners.forEach(([type, listener]) => trigger.addEventListener(type, listener));
+    return () => {
+        listeners.forEach(([type, listener]) => trigger.removeEventListener(type, listener));
+        tooltip.dispose();
+        host.style.pointerEvents = '';
+    };
+};
 
 /**
  * Resolve a dotted global function reference (e.g. "openpopup", "M.util.someFunction") to the
@@ -619,7 +703,11 @@ function SmartMenuDropdownSubmenu(
         >
             <a
                 id={toggleId}
-                className={joinClasses('dropdown-item dropdown-toggle', selected && 'active', node.classes)}
+                className={joinClasses(
+                    'dropdown-item dropdown-toggle align-items-center',
+                    selected && 'active',
+                    toFlexDisplayClasses(node.classes),
+                )}
                 href="#"
                 role="menuitem"
                 data-bs-toggle="dropdown"
@@ -629,8 +717,10 @@ function SmartMenuDropdownSubmenu(
                 aria-controls={menuId}
                 aria-current={selected ? 'page' : undefined}
                 {...toTooltipRecord(node, true)}
-                dangerouslySetInnerHTML={{__html: node.text}}
-            />
+            >
+                {/* The label span hosts the tooltip of the toggle (see TOOLTIP_HOST_SELECTOR). */}
+                <span className="boost-union-smartmenu-toggle-label" dangerouslySetInnerHTML={{__html: node.text}} />
+            </a>
             <div
                 className="dropdown-menu boost-union-moremenu"
                 id={menuId}
@@ -1054,19 +1144,18 @@ export default function Nav(
     // position dropdowns within a navbar with Popper, so a dropdown of a pill near the end of the viewport would
     // overflow it (at the right edge in LTR mode, at the left edge in RTL mode). Align such a dropdown to the end
     // edge of its pill instead as soon as it is shown.
-    // Additionally, hide the tooltip of a dropdown toggle (see toTooltipRecord) as soon as its dropdown opens, as the
-    // tooltip would overlap the dropdown otherwise.
+    // Additionally, keep the "More" dropdown free of horizontal overflow. The smart menus which are nested within the
+    // "More" dropdown expand in place and can make it taller than the viewport, so that it gets a vertical scrollbar
+    // (Moodle core limits its height, see theme/boost/scss/moodle/undo.scss). Some browsers do not widen the dropdown
+    // (whose width is derived from its content) by the width of this scrollbar but squeeze the content instead, which
+    // then overflows horizontally and shows a horizontal scrollbar as well. Whenever the content of the "More" dropdown
+    // changes (a nested smart menu is opened or closed, a carousel inside it slides) or the viewport is resized, the
+    // dropdown is widened by the horizontal overflow, if there is any.
     useEffect(() => {
         const menu = menuRef.current;
         if (!menu) {
             return undefined;
         }
-
-        const handleShow = (event: Event) => {
-            if (event.target instanceof HTMLElement) {
-                Tooltip.getInstance(event.target)?.hide();
-            }
-        };
 
         const handleShown = (event: Event) => {
             const toggle = event.target;
@@ -1084,11 +1173,32 @@ export default function Nav(
             }
         };
 
-        menu.addEventListener('show.bs.dropdown', handleShow);
+        const fitMoreMenu = () => {
+            const dropdown = menu.querySelector<HTMLElement>(':scope > li.dropdownmoremenu > .dropdown-menu');
+            if (!dropdown) {
+                return;
+            }
+            dropdown.style.width = '';
+            if (!dropdown.classList.contains('show')) {
+                return;
+            }
+            const overflow = dropdown.scrollWidth - dropdown.clientWidth;
+            if (overflow > 0) {
+                dropdown.style.width = `${dropdown.offsetWidth + overflow}px`;
+            }
+        };
+
         menu.addEventListener('shown.bs.dropdown', handleShown);
+        menu.addEventListener('shown.bs.dropdown', fitMoreMenu);
+        menu.addEventListener('hidden.bs.dropdown', fitMoreMenu);
+        menu.addEventListener('slid.bs.carousel', fitMoreMenu);
+        window.addEventListener('resize', fitMoreMenu);
         return () => {
-            menu.removeEventListener('show.bs.dropdown', handleShow);
             menu.removeEventListener('shown.bs.dropdown', handleShown);
+            menu.removeEventListener('shown.bs.dropdown', fitMoreMenu);
+            menu.removeEventListener('hidden.bs.dropdown', fitMoreMenu);
+            menu.removeEventListener('slid.bs.carousel', fitMoreMenu);
+            window.removeEventListener('resize', fitMoreMenu);
         };
     }, []);
 
@@ -1193,27 +1303,28 @@ export default function Nav(
     // bar and the "More" dropdown. theme_boost/loader only initializes the tooltips which exist on page load.
     // The tooltips of the items which have been unmounted in the meantime are disposed (this also removes a tooltip
     // which is still shown for an item which has just been unmounted), as are all tooltips when the navigation itself
-    // is unmounted.
-    const tooltipTriggersRef = useRef(new Set<HTMLElement>());
+    // is unmounted. The map holds the function which disposes the tooltip of each initialized trigger (see initTooltip).
+    const tooltipsRef = useRef(new Map<HTMLElement, TooltipDisposer>());
     useEffect(() => {
-        const triggers = tooltipTriggersRef.current;
-        triggers.forEach((trigger) => {
+        const tooltips = tooltipsRef.current;
+        tooltips.forEach((dispose, trigger) => {
             if (!trigger.isConnected) {
-                Tooltip.getInstance(trigger)?.dispose();
-                triggers.delete(trigger);
+                dispose();
+                tooltips.delete(trigger);
             }
         });
         const root = landmarkRef.current ?? menuRef.current;
         root?.querySelectorAll<HTMLElement>(TOOLTIP_TRIGGER_SELECTOR).forEach((trigger) => {
-            Tooltip.getOrCreateInstance(trigger);
-            triggers.add(trigger);
+            if (!tooltips.has(trigger)) {
+                tooltips.set(trigger, initTooltip(trigger));
+            }
         });
     });
     useEffect(() => {
-        const triggers = tooltipTriggersRef.current;
+        const tooltips = tooltipsRef.current;
         return () => {
-            triggers.forEach((trigger) => Tooltip.getInstance(trigger)?.dispose());
-            triggers.clear();
+            tooltips.forEach((dispose) => dispose());
+            tooltips.clear();
         };
     }, []);
 
