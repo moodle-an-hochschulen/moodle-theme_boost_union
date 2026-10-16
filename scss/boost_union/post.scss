@@ -3,9 +3,15 @@
  ======================================*/
 
 /* Light brand color gradient background class.
-   This creates a subtle diagonal gradient from a light brand color to an even lighter version. */
+   This creates a subtle diagonal gradient from a light brand color to an even lighter version.
+   In the dark color mode, the brand color is mixed into the dark page surface instead of white so that the gradient
+   remains subtle and the text on top of it remains readable. */
 .bg-primary-gradient-light {
     background: linear-gradient(135deg, mix($primary, $white, 15%) 0%, mix($primary, $white, 5%) 100%);
+
+    @include dark-mode {
+        background: linear-gradient(135deg, mix($primary, $dark-surface-page, 30%) 0%, mix($primary, $dark-surface-page, 10%) 100%);
+    }
 }
 
 /* Full brand color gradient background class.
@@ -18,15 +24,15 @@
    for the btn-outline-lightmoodle variant: white background with a light gray border.
    Replicating the styles is necessary as we cannot re-use the existing class without side-effects here. */
 .btn-outline-lightmoodle {
-    background-color: $white;
-    border-color: $gray-400;
-    color: $gray-600;
+    background-color: var(--#{$prefix}white);
+    border-color: var(--#{$prefix}gray-400);
+    color: var(--#{$prefix}gray-600);
 
     &:hover,
     &:focus {
-        background-color: $gray-100;
-        border-color: $gray-500;
-        color: $gray-700;
+        background-color: var(--#{$prefix}gray-100);
+        border-color: var(--#{$prefix}gray-500);
+        color: var(--#{$prefix}gray-700);
     }
 }
 
@@ -313,8 +319,8 @@
 /* Replicate the most important login page styles from before Moodle 5.2. */
 body.theme_boost_union-loginarrangement-legacy {
     &.pagelayout-login #page {
-        background: $gray-100;
-        @include gradient-x($gray-100, $gray-300, 0%, 100%);
+        background: var(--#{$prefix}gray-100);
+        @include gradient-x(var(--#{$prefix}gray-100), var(--#{$prefix}gray-300), 0%, 100%);
         div[role="main"] {
             height: 100%;
         }
@@ -328,7 +334,7 @@ body.theme_boost_union-loginarrangement-legacy {
     }
 
     .login-container {
-        background-color: $white;
+        background-color: var(--#{$prefix}white);
         padding: 3rem;
         box-shadow: $box-shadow;
         margin-bottom: 2rem;
@@ -388,9 +394,14 @@ body.theme_boost_union-loginarrangement-legacy {
  * Setting: Login container transparency (for the legacy login page arrangement only)
  --------------------------------------*/
 
-/* Make background of login panel slightly transparent. */
+/* Make background of login panel slightly transparent.
+   In the dark color mode, the dark raised surface is made transparent instead of white. */
 body.theme_boost_union-loginarrangement-legacy .login-container.login-container-80t {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba($white, 0.8);
+
+    @include dark-mode {
+        background-color: rgba($dark-surface-raised, 0.8);
+    }
 }
 
 /*---------------------------------------
@@ -427,10 +438,15 @@ body.theme_boost_union-loginarrangement-legacy .login-container.login-container-
  * Setting: Login form layout: Accordion
  --------------------------------------*/
 
-/* Change the white background color to support semi-transparent login containers as well. */
+/* Change the white background color to support semi-transparent login containers as well.
+   In the dark color mode, the dark raised surface is made transparent instead of white. */
 .login-container.login-container-80t {
     .accordion-item {
-        background-color: rgba(255, 255, 255, 0.6);
+        background-color: rgba($white, 0.6);
+
+        @include dark-mode {
+            background-color: rgba($dark-surface-raised, 0.6);
+        }
     }
     .accordion-button {
         background-color: transparent;
@@ -506,7 +522,7 @@ body.theme_boost_union-loginarrangement-legacy .login-container.login-container-
         .enrolmenticons {
             .enrolmenticon {
                 /* Make the icon grey instead of black. */
-                color: $gray-600;
+                color: var(--#{$prefix}gray-600);
 
                 /* Add some padding to the container. */
                 margin-right: 0.5rem;
@@ -528,7 +544,7 @@ body.theme_boost_union-loginarrangement-legacy .login-container.login-container-
             height: 0.5rem;
         }
         .progress-text {
-            color: $gray-600;
+            color: var(--#{$prefix}gray-600);
         }
     }
 
@@ -743,8 +759,8 @@ body.theme_boost_union-loginarrangement-legacy .login-container.login-container-
         width: 35px;
         height: 35px;
 
-        /* Align the color with the grey background of the avatars.*/
-        background-color: rgb(230, 230, 230) !important; /* stylelint-disable-line declaration-no-important */
+        /* Align the color with the grey background of the avatars. */
+        background-color: var(--#{$prefix}gray-200) !important; /* stylelint-disable-line declaration-no-important */
     }
 
     /* The headingabove layout and the stacked layout only. */
@@ -1316,7 +1332,7 @@ body.theme-boost-union-commincourse {
 /* The Offcanvas drawer (which is only used in non-editing mode). */
 #theme_boost_union-drawers-offcanvas {
     /* Position and size (which takes effect as soon as the drawer is shown). */
-    background-color: $gray-100;
+    background-color: var(--#{$prefix}gray-100);
     box-shadow: 2px 2px 4px $drawer-shadow-color;
     height: calc(100vh - 3rem);
     min-height: 300px;
@@ -1340,8 +1356,8 @@ body.theme-boost-union-commincourse {
 
         /* Make the close icon more visible. */
         .icon {
-            background: $black;
-            color: $white;
+            background: var(--#{$prefix}black);
+            color: var(--#{$prefix}white);
             border-radius: 5px;
             padding: 4px;
         }
@@ -1362,7 +1378,7 @@ body.theme-boost-union-commincourse {
    Collapse. #theme-block-region-offcanvas-editing-inner is the inner element which we style here. */
 #theme-block-region-offcanvas-editing-inner {
     /* Position and size (which takes effect as soon as the region is shown). */
-    background-color: $gray-100;
+    background-color: var(--#{$prefix}gray-100);
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     box-shadow: 2px 2px 4px $drawer-shadow-color;
@@ -1374,16 +1390,18 @@ body.theme-boost-union-commincourse {
     transition: none;
 }
 
-/* Navbar icon for opening the offcanvas drawer. */
+/* Navbar icon for opening the offcanvas drawer.
+   The colors are taken from Bootstrap's navbar custom properties so that the icon follows the navbar color and the
+   dark color mode. */
 .navbar-nav {
     .drawer-offcanvas-toggle {
         display: flex;
         align-items: center;
         .btn {
-            color: rgba(0, 0, 0, .6);
+            color: var(--#{$prefix}navbar-color);
             height: 40px;
             &:hover {
-                color: rgba(0, 0, 0, .9);
+                color: var(--#{$prefix}navbar-hover-color);
             }
             i {
                 font-size: 20px;
@@ -1877,7 +1895,7 @@ body.theme-boost-union-sectiononeplusnotcollapsible li[id^="section-"]:not(#sect
         /* Add white background color, border radius and a small bottom margin
            to make the footnote work with background images. */
         @include border-radius();
-        background-color: $white;
+        background-color: var(--#{$prefix}white);
         margin-bottom: 1rem;
     }
 
@@ -1954,7 +1972,7 @@ body.theme-boost-union-sectiononeplusnotcollapsible li[id^="section-"]:not(#sect
            (which are only applied to pages > 768px.
            Note that there isn't a border-radius added as the login box doesn't have a border radius as well
            on this screen size. */
-        background-color: $white;
+        background-color: var(--#{$prefix}white);
         margin-bottom: 1rem;
     }
 }
@@ -1967,7 +1985,7 @@ body.theme-boost-union-sectiononeplusnotcollapsible li[id^="section-"]:not(#sect
             to make the footnote work with background images.
             This is necessary as this isn't covered by the normal background styles already
             (which are only applied to pages > 768px. */
-            background-color: $white;
+            background-color: var(--#{$prefix}white);
 
             /* Change horizontal margin and padding to
             make the footnote work with background images. */
@@ -2167,9 +2185,14 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     /* Do not repeat the background image in any case. */
     background-repeat: no-repeat;
 
-    /* Add a more solid background color so that the title remains readable. */
+    /* Add a more solid background color so that the title remains readable.
+       In the dark color mode, the dark raised surface is made transparent instead of white. */
     .card-header {
-        background-color: rgba(255, 255, 255, .8);
+        background-color: rgba($white, .8);
+
+        @include dark-mode {
+            background-color: rgba($dark-surface-raised, .8);
+        }
     }
     /* Remove the border-top from the footer. */
     .card-footer {

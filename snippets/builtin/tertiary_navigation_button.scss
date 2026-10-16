@@ -12,7 +12,7 @@
  */
 
 .tertiary-navigation-selector .dropdown-toggle::after {
-    background: #f1f1f1;
+    background: var(--#{$prefix}gray-200);
     border-radius: 100%;
     font-size: 16px;
     height: 30px;

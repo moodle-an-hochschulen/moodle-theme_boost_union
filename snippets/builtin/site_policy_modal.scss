@@ -14,7 +14,7 @@
 .eupopup-container.eupopup-container-bottom {
     flex-direction: column;
     justify-content: center;
-    background-color: #fff;
+    background-color: var(--#{$prefix}white);
     border-radius: 10px;
     box-shadow: 4px 4px 12px 2000px rgba(0, 0, 0, .56);
     position: absolute;
@@ -43,12 +43,12 @@
 }
 
 .eupopup-container.eupopup-container-bottom .eupopup-body {
-    color: #343a40;
+    color: var(--#{$prefix}gray-800);
     font-size: $font-size-base;
     line-height: initial;
 
     a {
-        color: $primary;
+        color: var(--#{$prefix}link-color);
         text-decoration: none;
         font-weight: 700;
         line-height: 2.5rem;
