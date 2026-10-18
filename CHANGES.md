@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r50
 
 * 2026-10-15 - Bugfix: Show the expanded search form in the navbar in the configured navbar tint instead of the primary brand color, resolves #1441
 * 2026-10-14 - Tests: Remove the cache purging workaround from the info banner Behat tests as the underlying problem was a Moodle core bug (MDL-83757) which has been fixed in the meantime and all Boost Union stable releases require those Moodle core versions, resolves #734
