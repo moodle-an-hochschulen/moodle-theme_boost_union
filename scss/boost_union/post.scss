@@ -2727,13 +2727,21 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 }
 .theme-boost-union-smartmenu #usermenu-carousel .submenu .items {
     /* Moodle core indents the items of the submenus always (with the 'ps-5' class in the template) to make room for
-       the tick of the active item. theme_boost_union's template override omits this class and the items (and the
-       menu description) are indented only if an item is active and marked with a tick, like in the main navigation.
+       the tick of the active item. Within the smart menus, the items are indented only if an item is active and
+       marked with a tick, like in the main navigation. Thus, the indentation is removed here if no item is active and
+       the menu description is indented if an item is active.
        The active item is detected with the 'dropdown-item-active' class which Moodle core's JavaScript adds to the
        dropdown items with aria-current="true" (the attribute selector itself cannot be used within :has() as this
-       triggers PHP warnings in scssphp). */
+       triggers PHP warnings in scssphp).
+       The template keeps the 'ps-5' class of Moodle core on purpose. This way, the submenus of the user menu which are
+       not smart menus (like the language menu) keep Moodle core's indentation, also if no smart menu is shown on the
+       page at all. As the 'ps-5' class uses !important, the reset has to use !important as well. */
+    &:not(:has(.dropdown-item-active)) {
+        .dropdown-item {
+            padding-left: .75rem !important; /* stylelint-disable-line declaration-no-important */
+        }
+    }
     &:has(.dropdown-item-active) {
-        .dropdown-item,
         .menu-description {
             padding-left: map-get($spacers, 5);
         }

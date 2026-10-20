@@ -48,12 +48,10 @@
     * Allow formatted text within the item.
     * Include thirdlevel submenu support. Haschildren based menu item added.
     * Add support for dividers in the submenu.
-    * Remove the fixed indentation (ps-5) of the items. The items are indented by theme_boost_union's SCSS only if
-      one of them is active and marked with a tick.
 }}
 {{#items}}
     {{#haschildren}}
-        <a href="#" class="carousel-navigation-link {{#itemdata.classes}} {{.}} {{/itemdata.classes}} dropdown-item" role="menuitem" {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}} tabindex="1" data-carousel-target-id="carousel-item-{{submenuid}}">
+        <a href="#" class="carousel-navigation-link {{#itemdata.classes}} {{.}} {{/itemdata.classes}} dropdown-item ps-5" role="menuitem" {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}} tabindex="1" data-carousel-target-id="carousel-item-{{submenuid}}">
             {{#pixicon}}
                 {{#pix}}{{pixicon}}{{/pix}}
             {{/pixicon}}
@@ -66,7 +64,7 @@
 
     {{^haschildren}}
         {{#link}}
-            <a href="{{{url}}}" class="dropdown-item {{#itemdata.classes}} {{.}} {{/itemdata.classes}}" role="menuitem" tabindex="-1" {{#isactive}}aria-current="true"{{/isactive}}
+            <a href="{{{url}}}" class="dropdown-item {{#itemdata.classes}} {{.}} {{/itemdata.classes}} ps-5" role="menuitem" tabindex="-1" {{#isactive}}aria-current="true"{{/isactive}}
                 {{#attributes}}{{#key}}{{key}}="{{value}}" {{/key}} {{#name}}{{name}}="{{value}}"{{/name}} {{/attributes}}
                 {{#tooltip}}title="{{.}}" data-bs-toggle="tooltip"{{/tooltip}}>
                 {{{text}}}
