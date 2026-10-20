@@ -681,6 +681,92 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
       | outside-right,header              | should not                   | should                        |
       | outside-left,outside-right        | should not                   | should not                    |
 
+  @javascript
+  Scenario Outline: Setting: Outside block regions - Show the opened drawers at the window edges without covering the outside block regions (on large screens)
+    Given the following config values are set as admin:
+      | config                | value     | plugin            |
+      | blockregionsforcourse | <regions> | theme_boost_union |
+    And the following "blocks" exist:
+      | blockname         | contextlevel | reference | pagetypepattern | defaultregion |
+      | calendar_month    | Course       | C1        | course-view-*   | side-pre      |
+      | online_users      | Course       | C1        | course-view-*   | <region1>     |
+      | calendar_upcoming | Course       | C1        | course-view-*   | <region2>     |
+    And the following "user preferences" exist:
+      | user  | preference        | value |
+      | admin | drawer-open-index | 1     |
+      | admin | drawer-open-block | 1     |
+    And the theme cache is purged and the theme is reloaded
+    And I change viewport size to "1400x900"
+    When I am on the "Course 1" "Course" page logged in as "admin"
+    Then DOM element "#theme_boost-drawers-courseindex" should be placed at the "left" edge of the viewport
+    And DOM element "#theme_boost-drawers-blocks" should be placed at the "right" edge of the viewport
+    And DOM element "#theme_boost-drawers-courseindex" should not overlap with any of the DOM elements "#theme-block-region-outside-top, #theme-block-region-outside-left, #theme-block-region-outside-right, #theme-block-region-header"
+    And DOM element "#theme_boost-drawers-blocks" should not overlap with any of the DOM elements "#theme-block-region-outside-top, #theme-block-region-outside-left, #theme-block-region-outside-right, #theme-block-region-header"
+
+    Examples:
+      | regions                    | region1      | region2       |
+      | outside-left,outside-right | outside-left | outside-right |
+      | outside-top,outside-left   | outside-top  | outside-left  |
+      | outside-top,outside-right  | outside-top  | outside-right |
+      | header,outside-left        | header       | outside-left  |
+
+  @javascript
+  Scenario Outline: Setting: Outside block regions - Show the toggles of the closed drawers without covering the outside block regions and aligned with their top (on large and medium screens)
+    Given the following config values are set as admin:
+      | config                | value     | plugin            |
+      | blockregionsforcourse | <regions> | theme_boost_union |
+    And the following "blocks" exist:
+      | blockname         | contextlevel | reference | pagetypepattern | defaultregion |
+      | calendar_month    | Course       | C1        | course-view-*   | side-pre      |
+      | online_users      | Course       | C1        | course-view-*   | <region1>     |
+      | calendar_upcoming | Course       | C1        | course-view-*   | <region2>     |
+    And the following "user preferences" exist:
+      | user  | preference        | value |
+      | admin | drawer-open-index | 0     |
+      | admin | drawer-open-block | 0     |
+    And the theme cache is purged and the theme is reloaded
+    And I change viewport size to "<viewport>"
+    When I am on the "Course 1" "Course" page logged in as "admin"
+    Then DOM element ".drawer-toggles .drawer-left-toggle .btn" should not overlap with any of the DOM elements "#theme-block-region-outside-top, #theme-block-region-outside-left, #theme-block-region-outside-right, #theme-block-region-header"
+    And DOM element ".drawer-toggles .drawer-right-toggle .btn" should not overlap with any of the DOM elements "#theme-block-region-outside-top, #theme-block-region-outside-left, #theme-block-region-outside-right, #theme-block-region-header"
+    And DOM elements ".drawer-toggles .drawer-left-toggle .btn" and "#theme-block-region-<region1>" should have the same "top" position value
+    And DOM elements ".drawer-toggles .drawer-right-toggle .btn" and "#theme-block-region-<region1>" should have the same "top" position value
+
+    Examples:
+      | viewport | regions                    | region1      | region2       |
+      | 1400x900 | outside-left,outside-right | outside-left | outside-right |
+      | 1400x900 | outside-top,outside-left   | outside-top  | outside-left  |
+      | 900x900  | outside-left,outside-right | outside-left | outside-right |
+      | 900x900  | outside-top,outside-left   | outside-top  | outside-left  |
+
+  @javascript
+  Scenario Outline: Setting: Outside block regions - Keep the drawers anchored next to the main content area as in Moodle core if no outside block regions are shown (on large screens)
+    Given the following config values are set as admin:
+      | config                | value     | plugin            |
+      | blockregionsforcourse | <regions> | theme_boost_union |
+    And the following "blocks" exist:
+      | blockname      | contextlevel | reference | pagetypepattern | defaultregion |
+      | calendar_month | Course       | C1        | course-view-*   | side-pre      |
+      | online_users   | Course       | C1        | course-view-*   | <region1>     |
+    And the following "user preferences" exist:
+      | user  | preference        | value |
+      | admin | drawer-open-index | 1     |
+      | admin | drawer-open-block | 1     |
+    And the theme cache is purged and the theme is reloaded
+    And I change viewport size to "1600x900"
+    When I am on the "Course 1" "Course" page logged in as "admin"
+    Then DOM element "#theme_boost-drawers-courseindex" should not be placed at the "left" edge of the viewport
+    And DOM element "#theme_boost-drawers-blocks" should not be placed at the "right" edge of the viewport
+    And DOM elements "#theme_boost-drawers-courseindex" and "#topofscroll" should have a horizontal gap of "28" pixels
+    And DOM elements "#topofscroll" and "#theme_boost-drawers-blocks" should have a horizontal gap of "28" pixels
+    And DOM elements "#theme_boost-drawers-courseindex" and "#topofscroll" should have the same "top" position value
+    And DOM elements "#theme_boost-drawers-blocks" and "#topofscroll" should have the same "top" position value
+
+    Examples:
+      | regions        | region1        |
+      | outside-bottom | outside-bottom |
+      | content-upper  | content-upper  |
+
   Scenario Outline: Setting: Harden block regions - Block edit controls are shown in allowed regions and hidden in restricted region regardless of hardening setting (Regression test).
     Given the following config values are set as admin:
       | config                | value                      | plugin            |

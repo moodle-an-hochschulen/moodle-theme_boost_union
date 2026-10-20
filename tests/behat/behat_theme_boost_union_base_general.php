@@ -749,4 +749,149 @@ class behat_theme_boost_union_base_general extends behat_base {
             );
         }
     }
+
+    /**
+     * Checks if the given DOM element is placed flush with the given edge of the viewport.
+     *
+     * @Then DOM element :arg1 should be placed at the :arg2 edge of the viewport
+     * @param string $selector
+     * @param string $edge
+     * @throws ExpectationException
+     */
+    public function dom_element_should_be_placed_at_viewport_edge($selector, $edge) {
+        $edges = ['left', 'right'];
+        if (!in_array($edge, $edges)) {
+            throw new ExpectationException('The edge \'' . $edge . '\' is not valid.
+                Valid edges are: ' . implode(', ', $edges), $this->getSession());
+        }
+
+        $script = "
+            return (function() {
+                const el = document.querySelector('$selector');
+                if (!el) {
+                    return null;
+                }
+                const rect = el.getBoundingClientRect();
+                return '$edge' === 'left' ? rect.left : document.documentElement.clientWidth - rect.right;
+            })();";
+        $distance = $this->evaluate_script($script);
+
+        if ($distance === null) {
+            throw new ExpectationException('The DOM element \'' . $selector . '\' was not found.', $this->getSession());
+        }
+        // Allow a deviation of 1px for rounding differences.
+        if (abs($distance) > 1) {
+            throw new ExpectationException(
+                'The DOM element \'' . $selector . '\' is not placed at the ' . $edge . ' edge of the viewport,
+                its distance to the edge is ' . $distance . 'px.',
+                $this->getSession()
+            );
+        }
+    }
+
+    /**
+     * Checks if the given DOM element does not overlap with any of the DOM elements matching the given selector list.
+     * The DOM element and at least one of the other DOM elements have to be visible, otherwise the check would pass
+     * without any meaning.
+     *
+     * @Then DOM element :arg1 should not overlap with any of the DOM elements :arg2
+     * @param string $selector
+     * @param string $otherselectors A CSS selector list, e.g. '#region-a, #region-b'.
+     * @throws ExpectationException
+     */
+    public function dom_element_should_not_overlap_with_dom_elements($selector, $otherselectors) {
+        $script = "
+            return (function() {
+                const isVisible = (el) => {
+                    const rect = el.getBoundingClientRect();
+                    const style = window.getComputedStyle(el);
+                    return rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.display !== 'none' &&
+                        rect.right > 0 && rect.left < document.documentElement.clientWidth;
+                };
+                const el = document.querySelector('$selector');
+                if (!el || !isVisible(el)) {
+                    return 'The DOM element \'$selector\' was not found or is not visible.';
+                }
+                const others = Array.from(document.querySelectorAll('$otherselectors')).filter(isVisible);
+                if (others.length === 0) {
+                    return 'None of the DOM elements \'$otherselectors\' was found or is visible.';
+                }
+                const rect = el.getBoundingClientRect();
+                const overlapping = others.filter((other) => {
+                    const otherrect = other.getBoundingClientRect();
+                    // Allow a deviation of 1px for rounding differences.
+                    return rect.left < otherrect.right - 1 && otherrect.left < rect.right - 1 &&
+                        rect.top < otherrect.bottom - 1 && otherrect.top < rect.bottom - 1;
+                });
+                if (overlapping.length > 0) {
+                    return 'The DOM element \'$selector\' overlaps with the DOM element(s) ' +
+                        overlapping.map((other) => '#' + other.id + '.' + other.className).join(', ') + '.';
+                }
+                return '';
+            })();";
+        $result = $this->evaluate_script($script);
+
+        if ($result !== '') {
+            throw new ExpectationException($result, $this->getSession());
+        }
+    }
+
+    /**
+     * Checks if the given DOM element is not placed flush with the given edge of the viewport.
+     *
+     * @Then DOM element :arg1 should not be placed at the :arg2 edge of the viewport
+     * @param string $selector
+     * @param string $edge
+     * @throws ExpectationException
+     */
+    public function dom_element_should_not_be_placed_at_viewport_edge($selector, $edge) {
+        try {
+            $this->dom_element_should_be_placed_at_viewport_edge($selector, $edge);
+        } catch (ExpectationException $e) {
+            // The element is not placed at the edge, this is what we expect.
+            return;
+        }
+        throw new ExpectationException(
+            'The DOM element \'' . $selector . '\' is placed at the ' . $edge . ' edge of the viewport.',
+            $this->getSession()
+        );
+    }
+
+    /**
+     * Checks if two DOM elements are placed next to each other with the given horizontal gap between them.
+     * The gap is measured from the right edge of the first DOM element to the left edge of the second DOM element.
+     *
+     * @Then DOM elements :arg1 and :arg2 should have a horizontal gap of :arg3 pixels
+     * @param string $selector1
+     * @param string $selector2
+     * @param string $gap
+     * @throws ExpectationException
+     */
+    public function dom_elements_should_have_horizontal_gap($selector1, $selector2, $gap) {
+        $script = "
+            return (function() {
+                const el1 = document.querySelector('$selector1');
+                const el2 = document.querySelector('$selector2');
+                if (!el1 || !el2) {
+                    return null;
+                }
+                return el2.getBoundingClientRect().left - el1.getBoundingClientRect().right;
+            })();";
+        $actualgap = $this->evaluate_script($script);
+
+        if ($actualgap === null) {
+            throw new ExpectationException(
+                'The DOM element \'' . $selector1 . '\' or \'' . $selector2 . '\' was not found.',
+                $this->getSession()
+            );
+        }
+        // Allow a deviation of 1px for rounding differences.
+        if (abs($actualgap - (float) $gap) > 1) {
+            throw new ExpectationException(
+                'The DOM elements \'' . $selector1 . '\' and \'' . $selector2 . '\' do not have a horizontal gap of ' .
+                    $gap . 'px, the gap is ' . $actualgap . 'px.',
+                $this->getSession()
+            );
+        }
+    }
 }
