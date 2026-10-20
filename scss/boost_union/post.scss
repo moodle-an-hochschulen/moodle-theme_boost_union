@@ -1657,6 +1657,129 @@ body.theme-boost-union-commincourse {
     }
 }
 
+/* Finally, we take care of the drawers if outside block regions are shown.
+   On large screens, Moodle core anchors the course index drawer and the block drawer next to the main content area and
+   below the page title on pages with limited width (see theme/boost/scss/moodle/drawer.scss and layout.scss).
+   This position is computed from the course content width only and does not know about the outside-left, outside-right,
+   outside-top and header block regions which are placed in exactly this space. The drawers would cover these block
+   regions then.
+   Thus, as soon as any of these block regions is shown on the page, the drawers are shown as in Moodle 5.2 and before:
+   Flush with the window edge and with full height. As Moodle core shifts the page content by the drawer width as soon as
+   a drawer is opened anyway, the outside block regions are never covered then, regardless of their placement, width
+   and height.
+   This has to use !important as Moodle core's selectors for the anchored drawers are highly specific. */
+/* stylelint-disable declaration-no-important */
+@include media-breakpoint-up(lg) {
+    body.limitedwidth:has(#theme-block-region-outside-left, #theme-block-region-outside-right,
+            #theme-block-region-outside-top, #theme-block-region-header) {
+        /* The two CSS variables are put into Sass variables to prevent Sass from simplifying the 0px fallbacks to
+           unitless zeros which would make the calc() expressions invalid. */
+        $menubar: "var(--bu-smartmenu-menubar-height, 0px)";
+        $footer: "var(--sticky-footer-total-height, 0px)";
+
+        /* Show the drawers below the navbar (and below the smart menu menu bar) with full height.
+           The navbar is 1px higher than $navbar-height due to its bottom border (see theme/boost/scss/moodle/navbar.scss).
+           The drawers start below this border as Moodle core raises the block drawer above the navbar as soon as it
+           contains the focus and the drawer would cover the border otherwise. */
+        .drawer.drawer-left,
+        .drawer.drawer-right {
+            top: calc(#{$navbar-height} + 1px + #{$menubar}) !important;
+            height: calc(100vh - #{$navbar-height} - 1px - #{$menubar} - #{$footer}) !important;
+            max-height: none !important;
+            padding-bottom: 0 !important;
+            clip-path: none !important;
+            border-radius: 0 !important;
+        }
+
+        /* Place the drawers flush with the window edges. */
+        .drawer.drawer-left {
+            right: auto !important;
+            left: calc(-#{$drawer-left-width} - 10px) !important;
+            width: $drawer-left-width !important;
+            &.show {
+                left: 0 !important;
+            }
+        }
+        .drawer.drawer-right {
+            left: auto !important;
+            right: calc(-#{$drawer-right-width} - 10px) !important;
+            &.show {
+                right: 0 !important;
+            }
+        }
+
+        /* Align the toggles in the headers of the opened drawers vertically with the top of the outside block regions
+           and thereby with the toggles of the closed drawers (see below).
+           The outside-left and outside-right regions start 1.5rem below the page top, the outside-top region 1rem.
+           The drawers themselves start 1px below the page top (see above). */
+        .drawer .drawerheader {
+            padding-top: calc(1.5rem - 1px) !important;
+        }
+        &:has(#theme-block-region-outside-top) .drawer .drawerheader {
+            padding-top: calc(1rem - 1px) !important;
+        }
+
+        /* Place the drawer toggles at the window edges as well. */
+        .drawer-toggles {
+            .drawer-left-toggle {
+                left: 0 !important;
+                right: auto !important;
+            }
+            .drawer-right-toggle {
+                right: 0 !important;
+                left: auto !important;
+            }
+        }
+    }
+}
+/* On medium screens and above, Moodle core shows the toggles of the closed drawers at the top of the page, next to the
+   window edges. Moodle core's page padding (on medium screens) or Boost Union's shrunk page padding (on large screens if
+   outside-left or outside-right block regions are present) is too narrow for these toggles, so that they would cover
+   the outside block regions which, in contrast to the main content area, have no horizontal padding of their own.
+   Thus, reserve the space for the toggle of a closed drawer in the page's horizontal padding. If the drawer is open,
+   its toggle is hidden by Moodle core. On small screens, Moodle core shows the toggles floating at the bottom of the
+   page above all page content anyway.
+   Additionally, align the toggles of the closed drawers vertically with the top of the outside block regions. */
+@include media-breakpoint-up(md) {
+    body.limitedwidth:has(#theme-block-region-outside-left, #theme-block-region-outside-right,
+            #theme-block-region-outside-top, #theme-block-region-header) {
+        /* See above. */
+        $menubar: "var(--bu-smartmenu-menubar-height, 0px)";
+
+        /* Align the toggles of the closed drawers vertically with the top of the outside block regions.
+           The outside-left and outside-right regions start 1.5rem below the page top, the outside-top region 1rem. */
+        .drawer-toggles .drawer-toggler {
+            top: calc(#{$navbar-height} + #{$menubar} + 1.5rem) !important;
+        }
+        &:has(#theme-block-region-outside-top) .drawer-toggles .drawer-toggler {
+            top: calc(#{$navbar-height} + #{$menubar} + 1rem) !important;
+        }
+
+        /* On medium screens, Moodle core shows the opened drawers as overlay above the page, so the reserved space must
+           be kept when a drawer is opened. Otherwise, the page content would jump as soon as a drawer is opened. */
+        @include media-breakpoint-only(md) {
+            #page.drawers:has(.drawer-left-toggle) {
+                padding-left: calc(#{$icon-medium-width} + 2 * 16px) !important;
+            }
+            #page.drawers:has(.drawer-right-toggle) {
+                padding-right: calc(#{$icon-medium-width} + 2 * 16px) !important;
+            }
+        }
+
+        /* On large screens, Moodle core shifts the page content by the drawer width as soon as a drawer is opened
+           (and hides its toggle), so the space is reserved only as long as the drawer is closed. */
+        @include media-breakpoint-up(lg) {
+            #page.drawers:not(.show-drawer-left):has(.drawer-left-toggle) {
+                padding-left: calc(#{$icon-medium-width} + 2 * 16px) !important;
+            }
+            #page.drawers:not(.show-drawer-right):has(.drawer-right-toggle) {
+                padding-right: calc(#{$icon-medium-width} + 2 * 16px) !important;
+            }
+        }
+    }
+}
+/* stylelint-enable declaration-no-important */
+
 
 /*---------------------------------------
  * Settings: Additional block regions - The outside-top, header and outside-bottom regions.

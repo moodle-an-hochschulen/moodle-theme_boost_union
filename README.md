@@ -405,6 +405,7 @@ Please note:
 * By default, all additional block regions are disabled. Please enable the particular block regions on the particular page layouts according to your needs. Try to be as focused as possible – too many block regions could overwhelm end users.
 * As soon as an additional block region is enabled, it is visible for all authenticated users as well as guest users and editable by teachers and managers (depending on the fact if the particular user is allowed to edit the particular Moodle page, of course). But there are also theme/boost_union:viewregion* and theme/boost_union:editregion* capabilities which allow you to fine-tune the usage of each block region according to your needs.
 * The Outside (left), Outside (right), Content (upper), Content (lower) and Header block regions are not available for all page layouts.
+* On larger screens, Moodle core shows the course index drawer and the block drawer as floating panels next to the main content area. As soon as the Outside (left), Outside (right), Outside (top) or Header block region is shown on a page, Boost Union shows these drawers flush with the window edges and with full height instead (like Moodle 5.2 and before did) to prevent that the drawers cover these block regions.
 
 ##### Outside regions
 
