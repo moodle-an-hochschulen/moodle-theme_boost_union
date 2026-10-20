@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-20 - Upgrade - further work on the smart menu React implementation: Fix the overlapping tick of the active item in the submenus of the user menu (like the language menu) on pages without smart menus by keeping Moodle core's fixed indentation in the user_action_menu_submenu_items.mustache override and removing it with SCSS only within the smart menus if no item is active.
 * 2026-10-16 - Upgrade: Support the dark color mode which Moodle 5.3 introduced in Boost core in the theme's SCSS, the SCSS which is composed in the theme's code and the built-in SCSS snippets: Hardcoded light colors were replaced with the custom properties which Boost core remaps in the dark color mode or got a dark color mode alternative.
 * 2026-10-16 - Upgrade: Add a dark mode support notification to settings
 * 2026-10-15 - Upgrade - further work on the smart menu React implementation: Fix the tooltips of the smart menu dropdown toggles in the React main navigation and menu bar: As Bootstrap allows only one component instance per element, the tooltip instance on a toggle prevented Bootstrap from closing its dropdown again when another dropdown was opened or when the user clicked outside. The tooltip is now attached to the label within the toggle.
