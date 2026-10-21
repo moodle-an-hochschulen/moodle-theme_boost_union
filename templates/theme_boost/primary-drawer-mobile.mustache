@@ -51,6 +51,7 @@
     Modifications compared to the original template:
     * Extend the mobile primary navigation.
     * Move child node markup into its own template.
+    * Added a dedicated dark mode compact logo which is swapped in (via CSS) when the dark color mode is active, without a page reload.
 }}
 {{< theme_boost/drawer }}
     {{$id}}theme_boost-drawers-primary{{/id}}
@@ -64,7 +65,10 @@
             class="aabtn text-reset d-flex align-items-center h-100"
         >
             {{# output.should_display_navbar_logo }}
-                <img src="{{output.get_compact_logo_url}}" class="logo" alt="{{sitename}}">
+                <img src="{{output.get_compact_logo_url}}" class="logo logo-lightmode" alt="{{sitename}}">
+                {{# output.get_compact_logo_url_darkmode }}
+                    <img src="{{output.get_compact_logo_url_darkmode}}" class="logo logo-darkmode" alt="{{sitename}}">
+                {{/ output.get_compact_logo_url_darkmode }}
             {{/ output.should_display_navbar_logo }}
             {{^ output.should_display_navbar_logo }}
                 <span class="sitename" title="{{{ sitename }}}">{{{ sitename }}}</span>

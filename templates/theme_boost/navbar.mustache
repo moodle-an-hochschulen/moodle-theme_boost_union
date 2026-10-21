@@ -63,6 +63,7 @@
     * Include button for off-canvas region.
     * Added menu bar section.
     * Added the possibility to use an alternative logo link URL.
+    * Added a dedicated dark mode compact logo which is swapped in (via CSS) when the dark color mode is active, without a page reload.
     * Added the possibility to set a maximal width for the sitename in the navbar to prevent layout breaking on medium-width screens.
 }}
 
@@ -81,7 +82,10 @@
         <a href="{{#alternativelogolinkurl}}{{{alternativelogolinkurl}}}{{/alternativelogolinkurl}}{{^alternativelogolinkurl}}{{{ config.homeurl }}}{{/alternativelogolinkurl}}" class="navbar-brand d-none d-md-flex align-items-center m-0 me-4 p-0 aabtn">
 
             {{# output.should_display_navbar_logo }}
-                <img src="{{output.get_compact_logo_url}}" class="logo me-1" alt="{{sitename}}">
+                <img src="{{output.get_compact_logo_url}}" class="logo logo-lightmode me-1" alt="{{sitename}}">
+                {{# output.get_compact_logo_url_darkmode }}
+                    <img src="{{output.get_compact_logo_url_darkmode}}" class="logo logo-darkmode me-1" alt="{{sitename}}">
+                {{/ output.get_compact_logo_url_darkmode }}
             {{/ output.should_display_navbar_logo }}
             {{^ output.should_display_navbar_logo }}
                 <span class="sitename">{{{ sitename }}}</span>

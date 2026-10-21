@@ -195,6 +195,7 @@
     * Added the possibility to change the login method order.
     * Added the possibility to show an embedded WAYF (based on configuration or based on custom JS code)
     * Added the possibility to align the login logo.
+    * Added a dedicated dark mode login logo which is swapped in (via CSS) when the dark color mode is active, without a page reload.
     * Added the possibility to control login page branding (logo, heading, tagline) via the loginpagebrand setting.
 
     This template supports three layout options (vertical, tabs, accordion) and renders multiple
@@ -210,7 +211,10 @@
     {{#loginbrandshowlogo}}
         {{#logourl}}
             <div id="loginlogo" class="d-flex mb-4 login-logo{{#loginlogoclasses}} {{loginlogoclasses}}{{/loginlogoclasses}}">
-                <img id="logoimage" src="{{logourl}}" class="img-fluid" alt="{{sitename}}"/>
+                <img id="logoimage" src="{{logourl}}" class="img-fluid logo-lightmode" alt="{{sitename}}"/>
+                {{# output.get_logo_url_darkmode }}
+                    <img id="logoimagedarkmode" src="{{output.get_logo_url_darkmode}}" class="img-fluid logo-darkmode" alt="{{sitename}}"/>
+                {{/ output.get_logo_url_darkmode }}
             </div>
         {{/logourl}}
     {{/loginbrandshowlogo}}

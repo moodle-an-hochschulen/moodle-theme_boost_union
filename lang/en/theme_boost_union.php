@@ -215,9 +215,15 @@ $string['logosheading'] = 'Logos';
 // ... ... Setting: Logo.
 $string['logosetting'] = 'Logo';
 $string['logosetting_desc'] = 'Here, you can upload a full logo to be used as decoration. This image is especially used on the login page. This image can be quite high resolution because it will be scaled down for use.';
+// ... ... Setting: Logo (dark mode).
+$string['logosettingdarkmode'] = 'Logo (dark mode)';
+$string['logosettingdarkmode_desc'] = 'Here, you can upload a version of the logo that is optimized for dark mode. This image is especially used on the login page when dark mode is enabled.';
 // ... ... Setting: Compact logo.
 $string['logocompactsetting'] = 'Compact logo';
 $string['logocompactsetting_desc'] = 'Here, you can upload a compact version of the same logo as above, such as an emblem, shield or icon. This image is especially used in the navigation bar at the top of each Moodle page. The image should be clear even at small sizes.';
+// ... ... Setting: Compact logo (dark mode).
+$string['logocompactsettingdarkmode'] = 'Compact logo (dark mode)';
+$string['logocompactsettingdarkmode_desc'] = 'Here, you can upload a compact version of the logo that is optimized for dark mode. This image is especially used in the navigation bar at the top of each Moodle page when dark mode is enabled.';
 // ... Section: Favicon.
 $string['faviconheading'] = 'Favicon';
 // ... ... Setting: Favicon
@@ -236,6 +242,9 @@ $string['brandcolorsheading'] = 'Brand colors';
 // ... ... Setting: Primary brand color.
 $string['brandcolor'] = 'Primary brand color';
 $string['brandcolor_desc'] = 'The primary brand color. It is used for accent and highlighting purposes across the site and is also used as basis for calculating gradated brand colors. Furthermore, it is used for links and buttons unless you set distinct colors for links and buttons in the settings below.';
+// ... ... Setting: Primary brand color (dark mode).
+$string['brandcolordarkmode'] = 'Primary brand color (dark mode)';
+$string['brandcolordarkmode_desc'] = 'The primary brand color for dark mode. It is used for accent and highlighting purposes across the site in dark mode and is also used as basis for calculating gradated brand colors. Furthermore, it is used for links and buttons unless you set distinct colors for links and buttons in the settings below.';
 // ... ... Setting: Use branded gray tones.
 $string['brandedgraytones'] = 'Use branded gray tones';
 $string['brandedgraytones_desc'] = 'With this setting, the Bootstrap gray tones used throughout the theme are derived from the primary brand color instead of neutral grays. This creates a subtle color harmony across all gray elements on the page. Please note: This setting only takes effect if a primary brand color is configured above.';
@@ -244,23 +253,37 @@ $string['linkcolorsheading'] = 'Link colors';
 // ... ... Setting: Link brand color.
 $string['linkcolorsetting'] = 'Link brand color';
 $string['linkcolorsetting_desc'] = 'With this setting, you can set a dedicated brand color for links. If this setting is empty, Boost Union\'s primary brand color is used.';
+// ... ... Setting: Link brand color (dark mode).
+$string['linkcolordarkmodesetting'] = 'Link brand color (dark mode)';
+$string['linkcolordarkmodesetting_desc'] = 'With this setting, you can set a dedicated brand color for links for dark mode. If this setting is empty, Boost Union\'s primary brand color is used.';
 // ... ... Setting: Button brand color.
 $string['buttonbrandcolorsetting'] = 'Button brand color';
 $string['buttonbrandcolorsetting_desc'] = 'With this setting, you can define a dedicated brand color for primary buttons. If this setting is empty, Boost Union\'s primary brand color is used.';
+// ... ... Setting: Button brand color (dark mode).
+$string['buttonbrandcolordarkmodesetting'] = 'Button brand color (dark mode)';
+$string['buttonbrandcolordarkmodesetting_desc'] = 'With this setting, you can define a dedicated brand color for primary buttons for dark mode. If this setting is empty, Boost Union\'s primary brand color is used.';
 // ... Section: Bootstrap colors.
 $string['bootstrapcolorsheading'] = 'Bootstrap colors';
 // ... ... Setting: Bootstrap color for 'Success'.
 $string['bootstrapcolorsuccesssetting'] = 'Bootstrap color for "Success"';
 $string['bootstrapcolorsuccesssetting_desc'] = 'The Bootstrap color for "Success"';
+$string['bootstrapcolorsuccessdarkmodesetting'] = 'Bootstrap color for "Success" (dark mode)';
+$string['bootstrapcolorsuccessdarkmodesetting_desc'] = 'The Bootstrap color for "Success" (dark mode)';
 // ... ... Setting: Bootstrap color for 'Info'.
 $string['bootstrapcolorinfosetting'] = 'Bootstrap color for "Info"';
 $string['bootstrapcolorinfosetting_desc'] = 'The Bootstrap color for "Info"';
+$string['bootstrapcolorinfodarkmodesetting'] = 'Bootstrap color for "Info" (dark mode)';
+$string['bootstrapcolorinfodarkmodesetting_desc'] = 'The Bootstrap color for "Info" (dark mode)';
 // ... ... Setting: Bootstrap color for 'Warning'.
 $string['bootstrapcolorwarningsetting'] = 'Bootstrap color for "Warning"';
 $string['bootstrapcolorwarningsetting_desc'] = 'The Bootstrap color for "Warning"';
+$string['bootstrapcolorwarningdarkmodesetting'] = 'Bootstrap color for "Warning" (dark mode)';
+$string['bootstrapcolorwarningdarkmodesetting_desc'] = 'The Bootstrap color for "Warning" (dark mode)';
 // ... ... Setting: Bootstrap color for 'Danger'.
 $string['bootstrapcolordangersetting'] = 'Bootstrap color for "Danger"';
 $string['bootstrapcolordangersetting_desc'] = 'The Bootstrap color for "Danger"';
+$string['bootstrapcolordangerdarkmodesetting'] = 'Bootstrap color for "Danger" (dark mode)';
+$string['bootstrapcolordangerdarkmodesetting_desc'] = 'The Bootstrap color for "Danger" (dark mode)';
 // ... Section: Navbar.
 $string['navbarheading'] = 'Navbar';
 // ... Section: Maximal width of logo in navbar.
@@ -287,24 +310,38 @@ $string['activityiconcolorsheading'] = 'Activity icon colors';
 // ... ... Setting: Activity icon color for 'Administration'.
 $string['activityiconcoloradministrationsetting'] = 'Activity icon color for "Administration"';
 $string['activityiconcoloradministrationsetting_desc'] = 'The activity icon color for "Administration"';
+$string['activityiconcoloradministrationdarkmodesetting'] = 'Activity icon color for "Administration" (dark mode)';
+$string['activityiconcoloradministrationdarkmodesetting_desc'] = 'The activity icon color for "Administration" (dark mode)';
 // ... ... Setting: Activity icon color for 'Assessment'.
 $string['activityiconcolorassessmentsetting'] = 'Activity icon color for "Assessment"';
 $string['activityiconcolorassessmentsetting_desc'] = 'The activity icon color for "Assessment"';
+$string['activityiconcolorassessmentdarkmodesetting'] = 'Activity icon color for "Assessment" (dark mode)';
+$string['activityiconcolorassessmentdarkmodesetting_desc'] = 'The activity icon color for "Assessment" (dark mode)';
 // ... ... Setting: Activity icon color for 'Collaboration'.
 $string['activityiconcolorcollaborationsetting'] = 'Activity icon color for "Collaboration"';
 $string['activityiconcolorcollaborationsetting_desc'] = 'The activity icon color for "Collaboration"';
+$string['activityiconcolorcollaborationdarkmodesetting'] = 'Activity icon color for "Collaboration" (dark mode)';
+$string['activityiconcolorcollaborationdarkmodesetting_desc'] = 'The activity icon color for "Collaboration" (dark mode)';
 // ... ... Setting: Activity icon color for 'Communication'.
 $string['activityiconcolorcommunicationsetting'] = 'Activity icon color for "Communication"';
 $string['activityiconcolorcommunicationsetting_desc'] = 'The activity icon color for "Communication"';
+$string['activityiconcolorcommunicationdarkmodesetting'] = 'Activity icon color for "Communication" (dark mode)';
+$string['activityiconcolorcommunicationdarkmodesetting_desc'] = 'The activity icon color for "Communication" (dark mode)';
 // ... ... Setting: Activity icon color for 'Content'.
 $string['activityiconcolorcontentsetting'] = 'Activity icon color for "Content"';
 $string['activityiconcolorcontentsetting_desc'] = 'The activity icon color for "Content"';
+$string['activityiconcolorcontentdarkmodesetting'] = 'Activity icon color for "Content" (dark mode)';
+$string['activityiconcolorcontentdarkmodesetting_desc'] = 'The activity icon color for "Content" (dark mode)';
 // ... ... Setting: Activity icon color for 'Interactive content'.
 $string['activityiconcolorinteractivecontentsetting'] = 'Activity icon color for "Interactive content"';
 $string['activityiconcolorinteractivecontentsetting_desc'] = 'The activity icon color for "Interactive content"';
+$string['activityiconcolorinteractivecontentdarkmodesetting'] = 'Activity icon color for "Interactive content" (dark mode)';
+$string['activityiconcolorinteractivecontentdarkmodesetting_desc'] = 'The activity icon color for "Interactive content" (dark mode)';
 // ... ... Setting: Activity icon color for 'Interface'.
 $string['activityiconcolorinterfacesetting'] = 'Activity icon color for "Interface"';
 $string['activityiconcolorinterfacesetting_desc'] = 'The activity icon color for "Interface"';
+$string['activityiconcolorinterfacedarkmodesetting'] = 'Activity icon color for "Interface" (dark mode)';
+$string['activityiconcolorinterfacedarkmodesetting_desc'] = 'The activity icon color for "Interface" (dark mode)';
 // ... Section: Activity icon purposes.
 $string['activitypurposeheading'] = 'Activity icon purposes';
 $string['activitypurposeheading_desc'] = 'With these settings, you can override the activity icon background color which is defined by the activity\'s purpose (and which is a hardcoded plugin feature in each activity).';
@@ -1758,18 +1795,32 @@ $string['accessibilitysupportrecaptcha_desc'] = 'With this setting, you control 
 $string['configtitleflavours'] = 'Flavours';
 $string['flavoursactivityiconcoloradministration'] = 'Activity icon color for "Administration"';
 $string['flavoursactivityiconcoloradministration_help'] = 'With this setting, the flavour will override the activity icon "Administration" color which is configured in Boost Union\'s look settings.';
+$string['flavoursactivityiconcoloradministrationdarkmode'] = 'Activity icon color for "Administration" (dark mode)';
+$string['flavoursactivityiconcoloradministrationdarkmode_help'] = 'With this setting, the flavour will override the activity icon "Administration" color which is configured in Boost Union\'s look settings for dark mode.';
 $string['flavoursactivityiconcolorassessment'] = 'Activity icon color for "Assessment"';
 $string['flavoursactivityiconcolorassessment_help'] = 'With this setting, the flavour will override the activity icon "Assessment" color which is configured in Boost Union\'s look settings.';
+$string['flavoursactivityiconcolorassessmentdarkmode'] = 'Activity icon color for "Assessment" (dark mode)';
+$string['flavoursactivityiconcolorassessmentdarkmode_help'] = 'With this setting, the flavour will override the activity icon "Assessment" color which is configured in Boost Union\'s look settings for dark mode.';
 $string['flavoursactivityiconcolorcollaboration'] = 'Activity icon color for "Collaboration"';
 $string['flavoursactivityiconcolorcollaboration_help'] = 'With this setting, the flavour will override the activity icon "Collaboration" color which is configured in Boost Union\'s look settings.';
+$string['flavoursactivityiconcolorcollaborationdarkmode'] = 'Activity icon color for "Collaboration" (dark mode)';
+$string['flavoursactivityiconcolorcollaborationdarkmode_help'] = 'With this setting, the flavour will override the activity icon "Collaboration" color which is configured in Boost Union\'s look settings for dark mode.';
 $string['flavoursactivityiconcolorcommunication'] = 'Activity icon color for "Communication"';
 $string['flavoursactivityiconcolorcommunication_help'] = 'With this setting, the flavour will override the activity icon "Communication" color which is configured in Boost Union\'s look settings.';
+$string['flavoursactivityiconcolorcommunicationdarkmode'] = 'Activity icon color for "Communication" (dark mode)';
+$string['flavoursactivityiconcolorcommunicationdarkmode_help'] = 'With this setting, the flavour will override the activity icon "Communication" color which is configured in Boost Union\'s look settings for dark mode.';
 $string['flavoursactivityiconcolorcontent'] = 'Activity icon color for "Content"';
 $string['flavoursactivityiconcolorcontent_help'] = 'With this setting, the flavour will override the activity icon "Content" color which is configured in Boost Union\'s look settings.';
+$string['flavoursactivityiconcolorcontentdarkmode'] = 'Activity icon color for "Content" (dark mode)';
+$string['flavoursactivityiconcolorcontentdarkmode_help'] = 'With this setting, the flavour will override the activity icon "Content" color which is configured in Boost Union\'s look settings for dark mode.';
 $string['flavoursactivityiconcolorinteractivecontent'] = 'Activity icon color for "Interactive content"';
 $string['flavoursactivityiconcolorinteractivecontent_help'] = 'With this setting, the flavour will override the activity icon "Interactive content" color which is configured in Boost Union\'s look settings.';
+$string['flavoursactivityiconcolorinteractivecontentdarkmode'] = 'Activity icon color for "Interactive content" (dark mode)';
+$string['flavoursactivityiconcolorinteractivecontentdarkmode_help'] = 'With this setting, the flavour will override the activity icon "Interactive content" color which is configured in Boost Union\'s look settings for dark mode.';
 $string['flavoursactivityiconcolorinterface'] = 'Activity icon color for "Interface"';
 $string['flavoursactivityiconcolorinterface_help'] = 'With this setting, the flavour will override the activity icon "Interface" color which is configured in Boost Union\'s look settings.';
+$string['flavoursactivityiconcolorinterfacedarkmode'] = 'Activity icon color for "Interface" (dark mode)';
+$string['flavoursactivityiconcolorinterfacedarkmode_help'] = 'With this setting, the flavour will override the activity icon "Interface" color which is configured in Boost Union\'s look settings for dark mode.';
 $string['flavoursappliesto'] = 'Applies to';
 $string['flavoursapplytocategories'] = 'Apply to course categories';
 $string['flavoursapplytocategories_help'] = 'Here, you define if this flavour should be applied to course categories.';
@@ -1786,18 +1837,32 @@ $string['flavoursbackgroundimageposition_help'] = 'With this setting, the flavou
 $string['flavoursbacktooverview'] = 'Back to flavour overview';
 $string['flavoursbootstrapcolordanger'] = 'Bootstrap color for "Danger"';
 $string['flavoursbootstrapcolordanger_help'] = 'With this setting, the flavour will override the Bootstrap "danger" color which is configured in Boost Union\'s look settings.';
+$string['flavoursbootstrapcolordangerdarkmode'] = 'Bootstrap color for "Danger" (dark mode)';
+$string['flavoursbootstrapcolordangerdarkmode_help'] = 'With this setting, the flavour will override the Bootstrap "danger" color for dark mode which is configured in Boost Union\'s look settings.';
 $string['flavoursbootstrapcolorinfo'] = 'Bootstrap color for "Info"';
 $string['flavoursbootstrapcolorinfo_help'] = 'With this setting, the flavour will override the Bootstrap info "color" which is configured in Boost Union\'s look settings.';
+$string['flavoursbootstrapcolorinfodarkmode'] = 'Bootstrap color for "Info" (dark mode)';
+$string['flavoursbootstrapcolorinfodarkmode_help'] = 'With this setting, the flavour will override the Bootstrap info "color" for dark mode which is configured in Boost Union\'s look settings.';
 $string['flavoursbootstrapcolorsuccess'] = 'Bootstrap color for "Success"';
 $string['flavoursbootstrapcolorsuccess_help'] = 'With this setting, the flavour will override the Bootstrap "success" color which is configured in Boost Union\'s look settings.';
+$string['flavoursbootstrapcolorsuccessdarkmode'] = 'Bootstrap color for "Success" (dark mode)';
+$string['flavoursbootstrapcolorsuccessdarkmode_help'] = 'With this setting, the flavour will override the Bootstrap "success" color for dark mode which is configured in Boost Union\'s look settings.';
 $string['flavoursbootstrapcolorwarning'] = 'Bootstrap color for "Warning"';
 $string['flavoursbootstrapcolorwarning_help'] = 'With this setting, the flavour will override the Bootstrap "warning" color which is configured in Boost Union\'s look settings.';
+$string['flavoursbootstrapcolorwarningdarkmode'] = 'Bootstrap color for "Warning" (dark mode)';
+$string['flavoursbootstrapcolorwarningdarkmode_help'] = 'With this setting, the flavour will override the Bootstrap "warning" color for dark mode which is configured in Boost Union\'s look settings.';
 $string['flavoursbrandcolor'] = 'Primary brand color';
 $string['flavoursbrandcolor_help'] = 'With this setting, the flavour will override the primary brand color which is configured in Boost Union\'s look settings.';
+$string['flavoursbrandcolordarkmode'] = 'Primary brand color (dark mode)';
+$string['flavoursbrandcolordarkmode_help'] = 'With this setting, the flavour will override the primary brand color for dark mode which is configured in Boost Union\'s look settings.';
 $string['flavourslinkcolor'] = 'Link brand color';
 $string['flavourslinkcolor_help'] = 'With this setting, the flavour will override the link color which is configured in Boost Union\'s look settings.';
+$string['flavourslinkcolordarkmode'] = 'Link brand color (dark mode)';
+$string['flavourslinkcolordarkmode_help'] = 'With this setting, the flavour will override the link color for dark mode which is configured in Boost Union\'s look settings.';
 $string['flavoursbuttonbrandcolor'] = 'Button brand color';
 $string['flavoursbuttonbrandcolor_help'] = 'With this setting, the flavour will override the button brand color which is configured in Boost Union\'s look settings.';
+$string['flavoursbuttonbrandcolordarkmode'] = 'Button brand color (dark mode)';
+$string['flavoursbuttonbrandcolordarkmode_help'] = 'With this setting, the flavour will override the button brand color for dark mode which is configured in Boost Union\'s look settings.';
 $string['flavoursbrandedgraytones'] = 'Use branded gray tones';
 $string['flavoursbrandedgraytones_help'] = 'With this setting, the flavour will override the branded gray tones setting which is configured in Boost Union\'s look settings.';
 $string['flavourscreateflavour'] = 'Create flavour';
@@ -1826,8 +1891,12 @@ $string['flavoursincludesubcategories'] = 'Include subcategories';
 $string['flavoursincludesubcategories_help'] = 'If checked, the flavour will also be applied to the subcategories of the chosen categories.';
 $string['flavourslogo'] = 'Logo';
 $string['flavourslogo_help'] = 'With this setting, the flavour will override the logo which is configured in Boost Union\'s look settings.';
+$string['flavourslogodarkmode'] = 'Logo (dark mode)';
+$string['flavourslogodarkmode_help'] = 'With this setting, the flavour will override the dark mode logo which is configured in Boost Union\'s look settings.';
 $string['flavourslogocompact'] = 'Compact logo';
 $string['flavourslogocompact_help'] = 'With this setting, the flavour will override the logo which is configured in Boost Union\'s look settings.';
+$string['flavourslogocompactdarkmode'] = 'Compact logo (dark mode)';
+$string['flavourslogocompactdarkmode_help'] = 'With this setting, the flavour will override the logo which is configured in Boost Union\'s look settings.';
 $string['flavoursnavbarcolor'] = 'Navbar color';
 $string['flavoursnavbarcolor_help'] = 'With this setting, the flavour will override the navbar color which is configured in Boost Union\'s look settings.';
 $string['flavoursnavbartint'] = 'Navbar tint';
