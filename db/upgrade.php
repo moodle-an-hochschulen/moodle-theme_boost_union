@@ -1268,6 +1268,39 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2026100500, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2026100501) {
+        // Add the dark mode color fields to the flavours table.
+        // These store the per-flavour overrides for the dark mode brand, link, button, Bootstrap and activity icon
+        // colors which were added to Boost Union's look settings.
+        $table = new xmldb_table('theme_boost_union_flavours');
+        $darkmodecolorfields = [
+            'look_brandcolordarkmode',
+            'look_linkcolordarkmode',
+            'look_buttonbrandcolordarkmode',
+            'look_bootstrapcolorsuccessdarkmode',
+            'look_bootstrapcolorinfodarkmode',
+            'look_bootstrapcolorwarningdarkmode',
+            'look_bootstrapcolordangerdarkmode',
+            'look_aicoladministrationdarkmode',
+            'look_aicolassessmentdarkmode',
+            'look_aicolcollaborationdarkmode',
+            'look_aicolcommunicationdarkmode',
+            'look_aicolcontentdarkmode',
+            'look_aicolinteractivecontentdarkmode',
+            'look_aicolinterfacedarkmode',
+        ];
+        foreach ($darkmodecolorfields as $fieldname) {
+            $field = new xmldb_field($fieldname, XMLDB_TYPE_CHAR, '32', null, null, null, null);
+            // Conditionally launch add field.
+            if (!$dbman->field_exists($table, $field)) {
+                $dbman->add_field($table, $field);
+            }
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2026100501, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();

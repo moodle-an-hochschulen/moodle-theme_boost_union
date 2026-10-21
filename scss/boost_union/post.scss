@@ -82,6 +82,150 @@
     }
 }
 
+/*---------------------------------------
+ * Settings: Dark mode brand, link, button and Bootstrap colors
+ --------------------------------------*/
+
+/* Deliver the dedicated dark mode colors which are configured in the site branding (and which the pre SCSS in
+   lib.php emits as $bu-*-darkmode variables, respecting the flavour overrides).
+
+   Boost core derives the whole dark color mode from the compile-time brand colors ($primary, $success, ...) in
+   scss/moodle/dark.scss: it re-points the custom properties which the components read, applying a readability
+   treatment (dark-readable() lifts a color until it is readable on a dark surface, shade-color() darkens the pale
+   tints). To honor a distinct dark mode color, we apply the same treatment to the configured color and re-point the
+   same custom properties again, after Boost core, so that our values win.
+
+   Each rule is guarded with variable-exists so that only the configured colors emit an override; everything else keeps
+   Boost core's dark mode derivation from the light brand colors. */
+
+/* Emits the treatment which Boost core's scss/moodle/dark.scss applies to every hued theme color, but sourced from
+   the given dark mode color instead of the compiled light one. */
+@mixin bu-darkmode-hued-color($name, $color) {
+    /* The fill follows the configured color (the -rgb custom property drives the .bg-* and .text-bg-* utilities).
+       Boost core keeps the compiled light fill here, we deliberately re-point it to the dark mode color. */
+    --#{$prefix}#{$name}: #{$color};
+    --#{$prefix}#{$name}-rgb: #{to-rgb($color)};
+    /* The emphasis text is lifted until it is readable on a dark surface. */
+    --#{$prefix}#{$name}-text-emphasis: #{dark-readable($color)};
+    /* The feedback surfaces (the pale tints behind colored text) are shaded dark enough to sit behind dark text. */
+    --mds-bg-feedback-#{$name}-light: #{shade-color($color, 75%)};
+    --mds-bg-feedback-#{$name}-subtle: #{shade-color($color, 60%)};
+    --mds-border-feedback-#{$name}: #{shade-color($color, 40%)};
+}
+
+/* Emits the state tints (alert backgrounds, active table rows) for a feedback color. */
+@mixin bu-darkmode-state-color($name, $color) {
+    --#{$prefix}state-#{$name}-bg: #{shade-color($color, 70%)};
+    --#{$prefix}state-#{$name}-border: #{shade-color($color, 40%)};
+}
+
+/* The custom property declarations. Kept free of nested rules so that the .text-* overrides (which have to be nested)
+   can follow in their own block below without triggering Sass' declaration-after-nested-rule deprecation. */
+@include color-mode(dark) {
+    @if variable-exists(bu-brandcolor-darkmode) {
+        @include bu-darkmode-hued-color("primary", $bu-brandcolor-darkmode);
+        /* The primary color also drives the links, the focus ring, the primary interactive borders and the design
+           system link and feedback tokens. */
+        --#{$prefix}link-color: #{dark-readable($bu-brandcolor-darkmode)};
+        --#{$prefix}link-color-rgb: #{to-rgb(dark-readable($bu-brandcolor-darkmode))};
+        --#{$prefix}link-hover-color: #{dark-readable($bu-brandcolor-darkmode, $min: 7)};
+        --#{$prefix}link-hover-color-rgb: #{to-rgb(dark-readable($bu-brandcolor-darkmode, $min: 7))};
+        --#{$prefix}link-focus-bg: #{shade-color($bu-brandcolor-darkmode, 50%)};
+        --#{$prefix}focus-ring-color: #{rgba(dark-readable($bu-brandcolor-darkmode, $min: 3), $focus-ring-opacity)};
+        --mds-border-interactive-primary-default: #{dark-readable($bu-brandcolor-darkmode, $min: 3)};
+        --mds-border-interactive-primary-hover: #{dark-readable($bu-brandcolor-darkmode, $min: 3)};
+        --mds-border-interactive-primary-active: #{dark-readable($bu-brandcolor-darkmode, $min: 4.5)};
+        --mds-border-interactive-primary-disabled: #{mix(dark-readable($bu-brandcolor-darkmode, $min: 3), $dark-surface-raised, 55%)};
+        --mds-text-link-primary-default: #{dark-readable($bu-brandcolor-darkmode)};
+        --mds-text-link-primary-hover: #{dark-readable($bu-brandcolor-darkmode, $min: 7)};
+        --mds-text-feedback-primary: #{dark-readable($bu-brandcolor-darkmode)};
+        --mds-bg-interactive-primary-default-light: #{shade-color($bu-brandcolor-darkmode, 75%)};
+    }
+
+    @if variable-exists(bu-linkcolor-darkmode) {
+        /* A dedicated dark mode link color overrides the link color which is derived from the brand color above. */
+        --#{$prefix}link-color: #{dark-readable($bu-linkcolor-darkmode)};
+        --#{$prefix}link-color-rgb: #{to-rgb(dark-readable($bu-linkcolor-darkmode))};
+        --#{$prefix}link-hover-color: #{dark-readable($bu-linkcolor-darkmode, $min: 7)};
+        --#{$prefix}link-hover-color-rgb: #{to-rgb(dark-readable($bu-linkcolor-darkmode, $min: 7))};
+        --mds-text-link-primary-default: #{dark-readable($bu-linkcolor-darkmode)};
+        --mds-text-link-primary-hover: #{dark-readable($bu-linkcolor-darkmode, $min: 7)};
+    }
+
+    @if variable-exists(bu-bootstrapcolor-success-darkmode) {
+        @include bu-darkmode-hued-color("success", $bu-bootstrapcolor-success-darkmode);
+        @include bu-darkmode-state-color("success", $bu-bootstrapcolor-success-darkmode);
+        --mds-text-feedback-success: #{dark-readable($bu-bootstrapcolor-success-darkmode)};
+    }
+
+    @if variable-exists(bu-bootstrapcolor-info-darkmode) {
+        @include bu-darkmode-hued-color("info", $bu-bootstrapcolor-info-darkmode);
+        @include bu-darkmode-state-color("info", $bu-bootstrapcolor-info-darkmode);
+        --mds-text-feedback-info: #{dark-readable($bu-bootstrapcolor-info-darkmode)};
+        /* The collapse list item hover tint is derived from the info color as well. */
+        --#{$prefix}collapse-list-item-hover-bg: #{shade-color($bu-bootstrapcolor-info-darkmode, 70%)};
+        --#{$prefix}collapse-list-item-hover-border: #{shade-color($bu-bootstrapcolor-info-darkmode, 40%)};
+    }
+
+    @if variable-exists(bu-bootstrapcolor-warning-darkmode) {
+        @include bu-darkmode-hued-color("warning", $bu-bootstrapcolor-warning-darkmode);
+        @include bu-darkmode-state-color("warning", $bu-bootstrapcolor-warning-darkmode);
+        --mds-text-feedback-warning: #{dark-readable($bu-bootstrapcolor-warning-darkmode)};
+    }
+
+    @if variable-exists(bu-bootstrapcolor-danger-darkmode) {
+        @include bu-darkmode-hued-color("danger", $bu-bootstrapcolor-danger-darkmode);
+        @include bu-darkmode-state-color("danger", $bu-bootstrapcolor-danger-darkmode);
+        /* The danger text tokens drive the invalid state of the design system form controls and the required marker. */
+        --mds-text-danger: #{dark-readable($bu-bootstrapcolor-danger-darkmode)};
+        --mds-text-danger-disabled: #{dark-readable($bu-bootstrapcolor-danger-darkmode, $min: 3)};
+        --mds-text-feedback-danger: #{dark-readable($bu-bootstrapcolor-danger-darkmode)};
+        --mds-bg-interactive-danger-default-light: #{shade-color($bu-bootstrapcolor-danger-darkmode, 75%)};
+    }
+}
+
+/* The .text-* utilities take the raw theme color (which is chosen for a white page), so re-point the -rgb custom
+   property inside the utility itself to the readable dark mode value, leaving the .bg-* utilities (which read the same
+   property outside the utility) on the configured fill color above. */
+@include color-mode(dark) {
+    @if variable-exists(bu-brandcolor-darkmode) {
+        .text-primary {
+            --#{$prefix}primary-rgb: #{to-rgb(dark-readable($bu-brandcolor-darkmode))};
+        }
+    }
+    @if variable-exists(bu-bootstrapcolor-success-darkmode) {
+        .text-success {
+            --#{$prefix}success-rgb: #{to-rgb(dark-readable($bu-bootstrapcolor-success-darkmode))};
+        }
+    }
+    @if variable-exists(bu-bootstrapcolor-info-darkmode) {
+        .text-info {
+            --#{$prefix}info-rgb: #{to-rgb(dark-readable($bu-bootstrapcolor-info-darkmode))};
+        }
+    }
+    @if variable-exists(bu-bootstrapcolor-warning-darkmode) {
+        .text-warning {
+            --#{$prefix}warning-rgb: #{to-rgb(dark-readable($bu-bootstrapcolor-warning-darkmode))};
+        }
+    }
+    @if variable-exists(bu-bootstrapcolor-danger-darkmode) {
+        .text-danger {
+            --#{$prefix}danger-rgb: #{to-rgb(dark-readable($bu-bootstrapcolor-danger-darkmode))};
+        }
+    }
+}
+
+/* Apply a dedicated dark mode color for primary buttons, if the variable is set.
+   Reuse Bootstrap's own variant mixin (just like the light mode button brand color above) so that the hover, active,
+   focus and disabled states are calculated exactly like core button variants, but scoped to the dark color mode. */
+@if variable-exists(bu-button-brand-color-darkmode) {
+    .btn-primary {
+        @include dark-mode {
+            @include button-variant($bu-button-brand-color-darkmode, $bu-button-brand-color-darkmode);
+        }
+    }
+}
+
 
 /*---------------------------------------
  * Setting: Navbar color
@@ -299,6 +443,65 @@
     filter: url($svg-url) !important; /* stylelint-disable-line declaration-no-important */
 }
 
+/*---------------------------------------
+ * Setting: Activity icon colors (dark mode)
+ --------------------------------------*/
+
+/* Deliver the dedicated dark mode activity icon colors which are configured in the activity branding (and which the
+   pre SCSS in lib.php emits as $bu-activity-icon-*-bg-darkmode variables, respecting the flavour overrides).
+
+   Boost core recolors the activity icons with an SVG filter and, in the dark color mode, reapplies that filter with a
+   lighter tint of the light color (see theme/boost/scss/moodle/icons.scss). To honor a distinct dark mode color, we
+   reapply the filter with the configured color instead, using the same selector as Boost core but with the
+   recolor-icon-important mixin so that our filter wins, and we re-point the --activity* custom property (which custom
+   modules consume) to the configured color as well. */
+@mixin bu-darkmode-activity-icon($type, $color) {
+    .activityiconcontainer.#{$type} {
+        &:not(.isbranded) {
+            .activityicon,
+            .icon {
+                &:not(.nofilter) {
+                    @include dark-mode {
+                        @include recolor-icon-important($color, 1);
+                    }
+                }
+            }
+        }
+    }
+
+    @include color-mode(dark) {
+        --activity#{$type}: #{$color};
+    }
+}
+
+@if variable-exists(bu-activity-icon-administration-bg-darkmode) {
+    @include bu-darkmode-activity-icon("administration", $bu-activity-icon-administration-bg-darkmode);
+}
+
+@if variable-exists(bu-activity-icon-assessment-bg-darkmode) {
+    @include bu-darkmode-activity-icon("assessment", $bu-activity-icon-assessment-bg-darkmode);
+}
+
+@if variable-exists(bu-activity-icon-collaboration-bg-darkmode) {
+    @include bu-darkmode-activity-icon("collaboration", $bu-activity-icon-collaboration-bg-darkmode);
+}
+
+@if variable-exists(bu-activity-icon-communication-bg-darkmode) {
+    @include bu-darkmode-activity-icon("communication", $bu-activity-icon-communication-bg-darkmode);
+}
+
+@if variable-exists(bu-activity-icon-content-bg-darkmode) {
+    @include bu-darkmode-activity-icon("content", $bu-activity-icon-content-bg-darkmode);
+}
+
+@if variable-exists(bu-activity-icon-interactivecontent-bg-darkmode) {
+    @include bu-darkmode-activity-icon("interactivecontent", $bu-activity-icon-interactivecontent-bg-darkmode);
+}
+
+@if variable-exists(bu-activity-icon-interface-bg-darkmode) {
+    @include bu-darkmode-activity-icon("interface", $bu-activity-icon-interface-bg-darkmode);
+}
+
 /*=======================================
  * Settings: Look -> Login page
  ======================================*/
@@ -311,6 +514,7 @@
 body.theme_boost_union-loginarrangement-legacy {
     &.pagelayout-login #page {
         background: var(--#{$prefix}gray-100);
+        /* stylelint-disable-next-line csstree/validator */
         @include gradient-x(var(--#{$prefix}gray-100), var(--#{$prefix}gray-300), 0%, 100%);
         div[role="main"] {
             height: 100%;
@@ -1671,7 +1875,7 @@ body.theme-boost-union-commincourse {
 /* stylelint-disable declaration-no-important */
 @include media-breakpoint-up(lg) {
     body.limitedwidth:has(#theme-block-region-outside-left, #theme-block-region-outside-right,
-            #theme-block-region-outside-top, #theme-block-region-header) {
+            #theme-block-region-outside-top, #theme-block-region-header) { /* stylelint-disable-line indentation */
         /* The two CSS variables are put into Sass variables to prevent Sass from simplifying the 0px fallbacks to
            unitless zeros which would make the calc() expressions invalid. */
         $menubar: "var(--bu-smartmenu-menubar-height, 0px)";
@@ -1742,7 +1946,7 @@ body.theme-boost-union-commincourse {
    Additionally, align the toggles of the closed drawers vertically with the top of the outside block regions. */
 @include media-breakpoint-up(md) {
     body.limitedwidth:has(#theme-block-region-outside-left, #theme-block-region-outside-right,
-            #theme-block-region-outside-top, #theme-block-region-header) {
+            #theme-block-region-outside-top, #theme-block-region-header) { /* stylelint-disable-line indentation */
         /* See above. */
         $menubar: "var(--bu-smartmenu-menubar-height, 0px)";
 

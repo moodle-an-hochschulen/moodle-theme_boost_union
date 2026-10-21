@@ -122,6 +122,21 @@ class flavour_edit_form extends \moodleform {
         );
         $mform->addHelpButton('flavours_look_logo', 'flavourslogo', 'theme_boost_union');
 
+        // Add dark mode logo as filemanager element.
+        $mform->addElement(
+            'filemanager',
+            'flavours_look_logodarkmode',
+            get_string('logosettingdarkmode', 'theme_boost_union'),
+            null,
+            [
+                'subdirs' => 0,
+                'maxfiles' => 1,
+                'accepted_types' => 'web_image',
+                'return_types' => FILE_INTERNAL,
+            ]
+        );
+        $mform->addHelpButton('flavours_look_logodarkmode', 'flavourslogodarkmode', 'theme_boost_union');
+
         // Add logocompact as filemanager element.
         $mform->addElement(
             'filemanager',
@@ -133,6 +148,21 @@ class flavour_edit_form extends \moodleform {
                         'maxfiles' => 1,
                         'accepted_types' => 'web_image',
                         'return_types' => FILE_INTERNAL,
+            ]
+        );
+        $mform->addHelpButton('flavours_look_logocompact', 'flavourslogocompact', 'theme_boost_union');
+
+        // Add dark mode logocompact as filemanager element.
+        $mform->addElement(
+            'filemanager',
+            'flavours_look_logocompactdarkmode',
+            get_string('logocompactsettingdarkmode', 'theme_boost_union'),
+            null,
+            [
+                'subdirs' => 0,
+                'maxfiles' => 1,
+                'accepted_types' => 'web_image',
+                'return_types' => FILE_INTERNAL,
             ]
         );
         $mform->addHelpButton('flavours_look_logocompact', 'flavourslogocompact', 'theme_boost_union');
@@ -247,6 +277,23 @@ class flavour_edit_form extends \moodleform {
             \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
         );
 
+        // Add dark mode brandcolor as colorpicker element.
+        $mform->addElement(
+            'theme_boost_union_colorpicker',
+            'look_brandcolordarkmode',
+            get_string('flavoursbrandcolordarkmode', 'theme_boost_union'),
+            ['id' => 'colourpicker_brandcolourdarkmode']
+        );
+        $mform->setType('look_brandcolordarkmode', PARAM_TEXT);
+        $mform->addRule('look_brandcolordarkmode', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
+        $mform->addHelpButton('look_brandcolordarkmode', 'flavoursbrandcolordarkmode', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_brandcolordarkmode_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
+
         // Add branded gray tones select element.
         $brandedgreyoption = [
             THEME_BOOST_UNION_SETTING_SELECT_NOCHANGE => get_string('nochange', 'theme_boost_union'),
@@ -293,6 +340,23 @@ class flavour_edit_form extends \moodleform {
             \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
         );
 
+        // Add dark mode link brand color as colorpicker element.
+        $mform->addElement(
+            'theme_boost_union_colorpicker',
+            'look_linkcolordarkmode',
+            get_string('flavourslinkcolordarkmode', 'theme_boost_union'),
+            ['id' => 'colourpicker_linkcolordarkmode']
+        );
+        $mform->setType('look_linkcolordarkmode', PARAM_TEXT);
+        $mform->addRule('look_linkcolordarkmode', get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
+        $mform->addHelpButton('look_linkcolordarkmode', 'flavourslinkcolordarkmode', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_linkcolordarkmode_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
+
         // Add button brand color as colorpicker element.
         $mform->addElement(
             'theme_boost_union_colorpicker',
@@ -306,6 +370,27 @@ class flavour_edit_form extends \moodleform {
         $mform->addElement(
             'static',
             'look_buttonbrandcolor_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
+
+        // Add dark mode button brand color as colorpicker element.
+        $mform->addElement(
+            'theme_boost_union_colorpicker',
+            'look_buttonbrandcolordarkmode',
+            get_string('flavoursbuttonbrandcolordarkmode', 'theme_boost_union'),
+            ['id' => 'colourpicker_buttonbrandcolordarkmode']
+        );
+        $mform->setType('look_buttonbrandcolordarkmode', PARAM_TEXT);
+        $mform->addRule(
+            'look_buttonbrandcolordarkmode',
+            get_string('validateerror', 'admin'),
+            'theme_boost_union_colorpicker_rule'
+        );
+        $mform->addHelpButton('look_buttonbrandcolordarkmode', 'flavoursbuttonbrandcolordarkmode', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_buttonbrandcolordarkmode_recommendation',
             null,
             \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
         );
@@ -335,6 +420,27 @@ class flavour_edit_form extends \moodleform {
             \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
         );
 
+        // Add Bootstrap dark mode color for 'success' as colorpicker element.
+        $mform->addElement(
+            'theme_boost_union_colorpicker',
+            'look_bootstrapcolorsuccessdarkmode',
+            get_string('flavoursbootstrapcolorsuccessdarkmode', 'theme_boost_union'),
+            ['id' => 'colourpicker_bootstrapcolorsuccessdarkmode']
+        );
+        $mform->setType('look_bootstrapcolorsuccessdarkmode', PARAM_TEXT);
+        $mform->addRule(
+            'look_bootstrapcolorsuccessdarkmode',
+            get_string('validateerror', 'admin'),
+            'theme_boost_union_colorpicker_rule'
+        );
+        $mform->addHelpButton('look_bootstrapcolorsuccessdarkmode', 'flavoursbootstrapcolorsuccessdarkmode', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_bootstrapcolorsuccessdarkmode_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
+
         // Add Bootstrap color for 'info' as colorpicker element.
         $mform->addElement(
             'theme_boost_union_colorpicker',
@@ -348,6 +454,27 @@ class flavour_edit_form extends \moodleform {
         $mform->addElement(
             'static',
             'look_bootstrapcolorinfo_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
+
+        // Add Bootstrap dark mode color for 'info' as colorpicker element.
+        $mform->addElement(
+            'theme_boost_union_colorpicker',
+            'look_bootstrapcolorinfodarkmode',
+            get_string('flavoursbootstrapcolorinfodarkmode', 'theme_boost_union'),
+            ['id' => 'colourpicker_bootstrapcolorinfodarkmode']
+        );
+        $mform->setType('look_bootstrapcolorinfodarkmode', PARAM_TEXT);
+        $mform->addRule(
+            'look_bootstrapcolorinfodarkmode',
+            get_string('validateerror', 'admin'),
+            'theme_boost_union_colorpicker_rule'
+        );
+        $mform->addHelpButton('look_bootstrapcolorinfodarkmode', 'flavoursbootstrapcolorinfodarkmode', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_bootstrapcolorinfodarkmode_recommendation',
             null,
             \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
         );
@@ -369,6 +496,27 @@ class flavour_edit_form extends \moodleform {
             \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
         );
 
+        // Add Bootstrap dark mode color for 'warning' as colorpicker element.
+        $mform->addElement(
+            'theme_boost_union_colorpicker',
+            'look_bootstrapcolorwarningdarkmode',
+            get_string('flavoursbootstrapcolorwarningdarkmode', 'theme_boost_union'),
+            ['id' => 'colourpicker-bootstrapcolordarkmodewarning']
+        );
+        $mform->setType('look_bootstrapcolorwarningdarkmode', PARAM_TEXT);
+        $mform->addRule(
+            'look_bootstrapcolorwarningdarkmode',
+            get_string('validateerror', 'admin'),
+            'theme_boost_union_colorpicker_rule'
+        );
+        $mform->addHelpButton('look_bootstrapcolorwarningdarkmode', 'flavoursbootstrapcolorwarningdarkmode', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_bootstrapcolorwarningdarkmode_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
+
         // Add Bootstrap color for 'danger' as colorpicker element.
         $mform->addElement(
             'theme_boost_union_colorpicker',
@@ -382,6 +530,27 @@ class flavour_edit_form extends \moodleform {
         $mform->addElement(
             'static',
             'look_bootstrapcolordanger_recommendation',
+            null,
+            \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+        );
+
+        // Add Bootstrap dark mode color for 'danger' as colorpicker element.
+        $mform->addElement(
+            'theme_boost_union_colorpicker',
+            'look_bootstrapcolordangerdarkmode',
+            get_string('flavoursbootstrapcolordangerdarkmode', 'theme_boost_union'),
+            ['id' => 'colourpicker-bootstrapcolordangerdarkmode']
+        );
+        $mform->setType('look_bootstrapcolordangerdarkmode', PARAM_TEXT);
+        $mform->addRule(
+            'look_bootstrapcolordangerdarkmode',
+            get_string('validateerror', 'admin'),
+            'theme_boost_union_colorpicker_rule'
+        );
+        $mform->addHelpButton('look_bootstrapcolordangerdarkmode', 'flavoursbootstrapcolordangerdarkmode', 'theme_boost_union');
+        $mform->addElement(
+            'static',
+            'look_bootstrapcolordangerdarkmode_recommendation',
             null,
             \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
         );
@@ -415,6 +584,28 @@ class flavour_edit_form extends \moodleform {
             $mform->addElement(
                 'static',
                 'look_aicol' . $purpose . '_recommendation',
+                null,
+                \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
+            );
+
+            // Setting: Activity dark mode icon color.
+            $mform->addElement(
+                'theme_boost_union_colorpicker',
+                'look_aicol' . $purpose . 'darkmode',
+                get_string('flavoursactivityiconcolor' . $purpose . 'darkmode', 'theme_boost_union'),
+                ['id' => 'colourpicker-activityiconcolor' . $purpose . 'darkmode']
+            );
+            $mform->setType('look_aicol' . $purpose . 'darkmode', PARAM_TEXT);
+            $mform->addRule(
+                'look_aicol' . $purpose . 'darkmode',
+                get_string('validateerror', 'admin'),
+                'theme_boost_union_colorpicker_rule'
+            );
+            $mform->addHelpButton('look_aicol' . $purpose . 'darkmode', 'flavoursactivityiconcolor' . $purpose .
+                'darkmode', 'theme_boost_union');
+            $mform->addElement(
+                'static',
+                'look_aicol' . $purpose . 'darkmode_recommendation',
                 null,
                 \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
             );

@@ -102,7 +102,9 @@ switch ($action) {
 
             // Add placeholders for filepaths (even if the DB would do this herself).
             $data->look_logo = null;
+            $data->look_logodarkmode = null;
             $data->look_logocompact = null;
+            $data->look_logocompactdarkmode = null;
             $data->look_favicon = null;
             $data->look_backgroundimage = null;
 
@@ -119,10 +121,26 @@ switch ($action) {
                 ['subdirs' => 0, 'maxfiles' => 1]
             );
             file_save_draft_area_files(
+                $data->flavours_look_logodarkmode,
+                $context->id,
+                'theme_boost_union',
+                'flavours_look_logodarkmode',
+                $id,
+                ['subdirs' => 0, 'maxfiles' => 1]
+            );
+            file_save_draft_area_files(
                 $data->flavours_look_logocompact,
                 $context->id,
                 'theme_boost_union',
                 'flavours_look_logocompact',
+                $id,
+                ['subdirs' => 0, 'maxfiles' => 1]
+            );
+            file_save_draft_area_files(
+                $data->flavours_look_logocompactdarkmode,
+                $context->id,
+                'theme_boost_union',
+                'flavours_look_logocompactdarkmode',
                 $id,
                 ['subdirs' => 0, 'maxfiles' => 1]
             );
@@ -145,14 +163,18 @@ switch ($action) {
 
             // Get the files again to remember the filenames (and ignore the dot folder in the filearea).
             $looklogofilename = theme_boost_union_flavours_get_filename('look_logo', $id);
+            $lookdarkmodelogofilename = theme_boost_union_flavours_get_filename('look_logodarkmode', $id);
             $looklogocompactfilename = theme_boost_union_flavours_get_filename('look_logocompact', $id);
+            $lookdarkmodelogocompactfilename = theme_boost_union_flavours_get_filename('look_logocompactdarkmode', $id);
             $faviconfilename = theme_boost_union_flavours_get_filename('look_favicon', $id);
             $backgroundimagefilename = theme_boost_union_flavours_get_filename('look_backgroundimage', $id);
 
             // Update the database record to include the file names.
             $updaterecord = $DB->get_record('theme_boost_union_flavours', ['id' => $id]);
             $updaterecord->look_logo = $looklogofilename;
+            $updaterecord->look_logodarkmode = $lookdarkmodelogofilename;
             $updaterecord->look_logocompact = $looklogocompactfilename;
+            $updaterecord->look_logodarkmodecompact = $lookdarkmodelogocompactfilename;
             $updaterecord->look_favicon = $faviconfilename;
             $updaterecord->look_backgroundimage = $backgroundimagefilename;
             $DB->update_record('theme_boost_union_flavours', $updaterecord);
@@ -223,10 +245,26 @@ switch ($action) {
                 ['subdirs' => 0, 'maxfiles' => 1]
             );
             file_save_draft_area_files(
+                $data->flavours_look_logodarkmode,
+                $context->id,
+                'theme_boost_union',
+                'flavours_look_logodarkmode',
+                $data->id,
+                ['subdirs' => 0, 'maxfiles' => 1]
+            );
+            file_save_draft_area_files(
                 $data->flavours_look_logocompact,
                 $context->id,
                 'theme_boost_union',
                 'flavours_look_logocompact',
+                $data->id,
+                ['subdirs' => 0, 'maxfiles' => 1]
+            );
+            file_save_draft_area_files(
+                $data->flavours_look_logocompactdarkmode,
+                $context->id,
+                'theme_boost_union',
+                'flavours_look_logocompactdarkmode',
                 $data->id,
                 ['subdirs' => 0, 'maxfiles' => 1]
             );
@@ -249,7 +287,9 @@ switch ($action) {
 
             // Get the files again to remember the filenames (and ignore the dot folder in the filearea).
             $looklogofilename = theme_boost_union_flavours_get_filename('look_logo', $id);
+            $lookdarkmodelogofilenamefilename = theme_boost_union_flavours_get_filename('look_logodarkmode', $id);
             $looklogocompactfilename = theme_boost_union_flavours_get_filename('look_logocompact', $id);
+            $lookdarkmodelogocompactfilename = theme_boost_union_flavours_get_filename('look_logodarkmodecompact', $id);
             $faviconfilename = theme_boost_union_flavours_get_filename('look_favicon', $id);
             $backgroundimagefilename = theme_boost_union_flavours_get_filename('look_backgroundimage', $id);
 
@@ -285,7 +325,9 @@ switch ($action) {
         } else {
             // Prepare the file areas.
             $looklogodraftitemid = file_get_submitted_draft_itemid('flavours_look_logo');
+            $looklogodarkmodedraftitemid = file_get_submitted_draft_itemid('flavours_look_logodarkmode');
             $looklogocompactdraftitemid = file_get_submitted_draft_itemid('flavours_look_logocompact');
+            $looklogocompactdarkmodedraftitemid = file_get_submitted_draft_itemid('flavours_look_logocompactdarkmode');
             $favicondraftitemid = file_get_submitted_draft_itemid('flavours_look_favicon');
             $backgroundimagedraftitemid = file_get_submitted_draft_itemid('flavours_look_backgroundimage');
             file_prepare_draft_area(
@@ -297,10 +339,34 @@ switch ($action) {
                 ['subdirs' => 0, 'maxfiles' => 1]
             );
             file_prepare_draft_area(
+                $looklogodarkmodedraftitemid,
+                $context->id,
+                'theme_boost_union',
+                'flavours_look_logodarkmode',
+                $id,
+                ['subdirs' => 0, 'maxfiles' => 1]
+            );
+            file_prepare_draft_area(
                 $looklogocompactdraftitemid,
                 $context->id,
                 'theme_boost_union',
                 'flavours_look_logocompact',
+                $id,
+                ['subdirs' => 0, 'maxfiles' => 1]
+            );
+            file_prepare_draft_area(
+                $looklogocompactdraftitemid,
+                $context->id,
+                'theme_boost_union',
+                'flavours_look_logocompact',
+                $id,
+                ['subdirs' => 0, 'maxfiles' => 1]
+            );
+            file_prepare_draft_area(
+                $looklogocompactdarkmodedraftitemid,
+                $context->id,
+                'theme_boost_union',
+                'flavours_look_logocompactdarkmode',
                 $id,
                 ['subdirs' => 0, 'maxfiles' => 1]
             );
@@ -321,7 +387,9 @@ switch ($action) {
                 ['subdirs' => 0, 'maxfiles' => 1]
             );
             $flavour->flavours_look_logo = $looklogodraftitemid;
+            $flavour->flavours_look_logodarkmode = $looklogodarkmodedraftitemid;
             $flavour->flavours_look_logocompact = $looklogocompactdraftitemid;
+            $flavour->flavours_look_logocompactdarkmode = $looklogocompactdarkmodedraftitemid;
             $flavour->flavours_look_favicon = $favicondraftitemid;
             $flavour->flavours_look_backgroundimage = $backgroundimagedraftitemid;
 
@@ -376,7 +444,9 @@ switch ($action) {
 
             // Delete the files from the filearea (including the dot folder).
             $fs->delete_area_files($context->id, 'theme_boost_union', 'flavours_look_logo', $data->id);
+            $fs->delete_area_files($context->id, 'theme_boost_union', 'flavours_look_logodarkmode', $data->id);
             $fs->delete_area_files($context->id, 'theme_boost_union', 'flavours_look_logocompact', $data->id);
+            $fs->delete_area_files($context->id, 'theme_boost_union', 'flavours_look_logocompactdarkmode', $data->id);
             $fs->delete_area_files($context->id, 'theme_boost_union', 'flavours_look_favicon', $data->id);
             $fs->delete_area_files($context->id, 'theme_boost_union', 'flavours_look_backgroundimage', $data->id);
 
