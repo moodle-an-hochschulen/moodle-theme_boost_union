@@ -536,6 +536,42 @@ function theme_boost_union_get_pre_scss($theme) {
         }, (array) $targets);
     }
 
+    // Set the dark mode brand, link, button and Bootstrap colors.
+    // In contrast to the light mode colors above, these must not overwrite Boost core's compile-time SCSS variables
+    // (like $primary) as these drive both color modes. Instead, they are emitted as custom Boost Union SCSS variables
+    // which scss/boost_union/post.scss consumes to re-point the dark color mode custom properties (which Boost core
+    // derives from the light brand colors in scss/moodle/dark.scss) to these dedicated dark mode colors.
+    // The key is the config key, the value is [SCSS variable name, flavour field name].
+    $darkmodeconfigurable = [
+        'brandcolordarkmode' => ['bu-brandcolor-darkmode', 'look_brandcolordarkmode'],
+        'linkcolordarkmode' => ['bu-linkcolor-darkmode', 'look_linkcolordarkmode'],
+        'buttonbrandcolordarkmode' => ['bu-button-brand-color-darkmode', 'look_buttonbrandcolordarkmode'],
+        'bootstrapcolorsuccessdarkmode' => ['bu-bootstrapcolor-success-darkmode', 'look_bootstrapcolorsuccessdarkmode'],
+        'bootstrapcolorinfodarkmode' => ['bu-bootstrapcolor-info-darkmode', 'look_bootstrapcolorinfodarkmode'],
+        'bootstrapcolorwarningdarkmode' => ['bu-bootstrapcolor-warning-darkmode', 'look_bootstrapcolorwarningdarkmode'],
+        'bootstrapcolordangerdarkmode' => ['bu-bootstrapcolor-danger-darkmode', 'look_bootstrapcolordangerdarkmode'],
+    ];
+    foreach ($darkmodeconfigurable as $configkey => [$targetvariable, $flavourfield]) {
+        // Get the global config value for the given config key.
+        $value = get_config('theme_boost_union', $configkey);
+
+        // If any flavour applies to this page.
+        if ($flavourid != null) {
+            // Get the flavour config value for the given flavour id.
+            $flavourvalue = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, $flavourfield);
+            // If a flavour value is set.
+            if (!empty($flavourvalue)) {
+                // Override the global config value with the flavour value.
+                $value = $flavourvalue;
+            }
+        }
+
+        // If a value is set, emit the SCSS variable.
+        if (!empty($value)) {
+            $scss .= '$' . $targetvariable . ': ' . $value . ";\n";
+        }
+    }
+
     // Overwrite Boost core SCSS variables which need units and thus couldn't be added to $configurable above.
     // Set variables which are influenced by the coursecontentmaxwidth setting.
     if (get_config('theme_boost_union', 'coursecontentmaxwidth')) {
@@ -581,6 +617,31 @@ function theme_boost_union_get_pre_scss($theme) {
         if (!empty($activityiconcolor)) {
             // Set the activity-icon-*-bg variable which will be replaced with the CSS filters by Moodle core.
             $scss .= '$activity-icon-' . $purpose . '-bg: ' . $activityiconcolor . ";\n";
+        }
+
+        // Get the dark mode color setting from global settings.
+        $activityiconcolordarkmode = get_config('theme_boost_union', 'activityiconcolor' . $purpose . 'darkmode');
+
+        // If any flavour applies to this page.
+        if ($flavourid != null) {
+            // Get the dark mode color setting from the flavour.
+            $activityiconcolordarkmodeflavour = theme_boost_union_get_flavour_config_item_for_flavourid(
+                $flavourid,
+                'look_aicol' . $purpose . 'darkmode'
+            );
+
+            // If a flavour dark mode color is set.
+            if (!empty($activityiconcolordarkmodeflavour)) {
+                // Override the global dark mode color setting with the flavour dark mode color setting.
+                $activityiconcolordarkmode = $activityiconcolordarkmodeflavour;
+            }
+        }
+
+        // If a dark mode color is set.
+        if (!empty($activityiconcolordarkmode)) {
+            // Set the custom Boost Union SCSS variable which scss/boost_union/post.scss consumes to recolor the
+            // activity icon in the dark color mode.
+            $scss .= '$bu-activity-icon-' . $purpose . '-bg-darkmode: ' . $activityiconcolordarkmode . ";\n";
         }
     }
 

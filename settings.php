@@ -584,6 +584,28 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Logo for dark mode.
+        $name = 'theme_boost_union/logodarkmode';
+        $title = get_string('logosettingdarkmode', 'theme_boost_union', null, true);
+        $description = get_string('logosettingdarkmode_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_darkmode_notification(
+                get_string('navbarcolorsetting_darkmode', 'theme_boost_union', null, true)
+            );
+        $description .=
+            theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $description .= recommendation_manager::render_recommendation_notification('corelogo');
+        $setting = new admin_setting_configstoredfile(
+            $name,
+            $title,
+            $description,
+            'logo',
+            0,
+            ['maxfiles' => 1, 'accepted_types' => 'web_image']
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Replicate the compact logo setting from core_admin.
         $name = 'theme_boost_union/logocompact';
         $title = get_string('logocompactsetting', 'theme_boost_union', null, true);
@@ -596,6 +618,28 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $title,
             $description,
             'logocompact',
+            0,
+            ['maxfiles' => 1, 'accepted_types' => 'web_image']
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Compact logo (dark mode).
+        $name = 'theme_boost_union/logocompactdarkmode';
+        $title = get_string('logocompactsettingdarkmode', 'theme_boost_union', null, true);
+        $description = get_string('logocompactsettingdarkmode_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_darkmode_notification(
+                get_string('navbarcolorsetting_darkmode', 'theme_boost_union', null, true)
+            );
+        $description .=
+                theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $description .= recommendation_manager::render_recommendation_notification('corecompactlogodarkmode');
+        $setting = new admin_setting_configstoredfile(
+            $name,
+            $title,
+            $description,
+            'logocompactdarkmode',
             0,
             ['maxfiles' => 1, 'accepted_types' => 'web_image']
         );
@@ -699,6 +743,20 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Primary brand color (dark mode).
+        $name = 'theme_boost_union/brandcolordarkmode';
+        $title = get_string('brandcolordarkmode', 'theme_boost_union', null, true);
+        $description = get_string('brandcolordarkmode_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_darkmode_notification(
+                get_string('navbarcolorsetting_darkmode', 'theme_boost_union', null, true)
+            );
+        $description .=
+                theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Setting: Use branded gray tones.
         $name = 'theme_boost_union/brandedgraytones';
         $title = get_string('brandedgraytones', 'theme_boost_union', null, true);
@@ -725,10 +783,38 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Setting: Link brand color (dark mode).
+        $name = 'theme_boost_union/linkcolordarkmode';
+        $title = get_string('linkcolordarkmodesetting', 'theme_boost_union', null, true);
+        $description = get_string('linkcolordarkmodesetting_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_darkmode_notification(
+                get_string('navbarcolorsetting_darkmode', 'theme_boost_union', null, true)
+            );
+        $description .=
+                theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Setting: Button brand color.
         $name = 'theme_boost_union/buttonbrandcolor';
         $title = get_string('buttonbrandcolorsetting', 'theme_boost_union', null, true);
         $description = get_string('buttonbrandcolorsetting_desc', 'theme_boost_union', null, true);
+        $description .=
+                theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Button brand color (dark mode).
+        $name = 'theme_boost_union/buttonbrandcolordarkmode';
+        $title = get_string('buttonbrandcolordarkmodesetting', 'theme_boost_union', null, true);
+        $description = get_string('buttonbrandcolordarkmodesetting_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_darkmode_notification(
+                get_string('navbarcolorsetting_darkmode', 'theme_boost_union', null, true)
+            );
         $description .=
                 theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
@@ -750,11 +836,31 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Setting: Bootstrap color for 'success' (dark mode).
+        $name = 'theme_boost_union/bootstrapcolorsuccessdarkmode';
+        $title = get_string('bootstrapcolorsuccessdarkmodesetting', 'theme_boost_union', null, true);
+        $description = get_string('bootstrapcolorsuccessdarkmodesetting_desc', 'theme_boost_union', null, true);
+        $description .=
+                theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Setting: Bootstrap color for 'info'.
         $name = 'theme_boost_union/bootstrapcolorinfo';
         $title = get_string('bootstrapcolorinfosetting', 'theme_boost_union', null, true);
         $description = get_string('bootstrapcolorinfosetting_desc', 'theme_boost_union', null, true);
         $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Bootstrap color for 'info' (dark mode).
+        $name = 'theme_boost_union/bootstrapcolorinfodarkmode';
+        $title = get_string('bootstrapcolorinfodarkmodesetting', 'theme_boost_union', null, true);
+        $description = get_string('bootstrapcolorinfodarkmodesetting_desc', 'theme_boost_union', null, true);
+        $description .=
+                theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -768,11 +874,31 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Setting: Bootstrap color for 'warning' (dark mode).
+        $name = 'theme_boost_union/bootstrapcolorwarningdarkmode';
+        $title = get_string('bootstrapcolorwarningdarkmodesetting', 'theme_boost_union', null, true);
+        $description = get_string('bootstrapcolorwarningdarkmodesetting_desc', 'theme_boost_union', null, true);
+        $description .=
+                theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Setting: Bootstrap color for 'danger'.
         $name = 'theme_boost_union/bootstrapcolordanger';
         $title = get_string('bootstrapcolordangersetting', 'theme_boost_union', null, true);
         $description = get_string('bootstrapcolordangersetting_desc', 'theme_boost_union', null, true);
         $description .= theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Bootstrap color for 'danger' (dark mode).
+        $name = 'theme_boost_union/bootstrapcolordangerdarkmode';
+        $title = get_string('bootstrapcolordangerdarkmodesetting', 'theme_boost_union', null, true);
+        $description = get_string('bootstrapcolordangerdarkmodesetting_desc', 'theme_boost_union', null, true);
+        $description .=
+                theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
         $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
@@ -875,6 +1001,16 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name = 'theme_boost_union/activityiconcolor' . $purpose;
             $title = get_string('activityiconcolor' . $purpose . 'setting', 'theme_boost_union', null, true);
             $description = get_string('activityiconcolor' . $purpose . 'setting_desc', 'theme_boost_union', null, true);
+            $description .=
+                    theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
+            $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+            $setting->set_updatedcallback('theme_reset_all_caches');
+            $tab->add($setting);
+
+            // Setting: Activity icon color (dark mode).
+            $name = 'theme_boost_union/activityiconcolor' . $purpose . 'darkmode';
+            $title = get_string('activityiconcolor' . $purpose . 'darkmodesetting', 'theme_boost_union', null, true);
+            $description = get_string('activityiconcolor' . $purpose . 'darkmodesetting_desc', 'theme_boost_union', null, true);
             $description .=
                     theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMS, false);
             $setting = new admin_setting_configcolourpicker($name, $title, $description, '');

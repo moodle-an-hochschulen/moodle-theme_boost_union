@@ -24,20 +24,34 @@
         <FIELD NAME="look_rawscss" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_rawscsspre" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_brandcolor" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_brandcolordarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_brandedgraytones" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_linkcolor" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_linkcolordarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_buttonbrandcolor" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_buttonbrandcolordarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_bootstrapcolorsuccess" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_bootstrapcolorsuccessdarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_bootstrapcolorinfo" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_bootstrapcolorinfodarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_bootstrapcolorwarning" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_bootstrapcolorwarningdarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_bootstrapcolordanger" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_bootstrapcolordangerdarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_aicoladministration" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_aicoladministrationdarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_aicolassessment" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_aicolassessmentdarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_aicolcollaboration" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_aicolcollaborationdarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_aicolcommunication" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_aicolcommunicationdarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_aicolcontent" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_aicolcontentdarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_aicolinteractivecontent" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_aicolinteractivecontentdarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_aicolinterface" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="look_aicolinterfacedarkmode" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_navbarcolor" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="look_navbartint" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="content_footnote" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
