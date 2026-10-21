@@ -1038,9 +1038,13 @@ body.hascourseindexcmicons {
         }
 
         /* Gain back the vertical space which was given to the icon by reducing the vertical padding of each courseindex
-           element by 0.1rem. */
+           element by 0.1rem.
+           The left padding is deliberately left untouched as Moodle core uses it to indent the activities below their
+           section and the subsections and their activities below their parent section. */
         .courseindex-item {
-            padding: .45rem 0 .45rem .5rem;
+            padding-top: .45rem;
+            padding-bottom: .45rem;
+            padding-right: 0;
         }
 
         /* Overwrite activity type icon style for dimmed activities. */
