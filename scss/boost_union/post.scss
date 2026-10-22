@@ -82,6 +82,28 @@
 }
 
 /*---------------------------------------
+ * Setting: Link color
+ --------------------------------------*/
+
+/* Apply the configured link color in the dark color mode as well.
+   Moodle core derives the link colors of the dark color mode from $primary instead of $link-color in
+   theme/boost/scss/moodle/dark.scss, so that the configured link color would be lost in the dark color mode.
+   If a link color is configured (i.e. $link-color differs from $primary), the link colors are derived from $link-color
+   here in exactly the same way as Moodle core derives them from $primary.
+   This is a workaround until Moodle core derives the link colors from $link-color itself which was reported in MDL-90119. */
+@if $link-color != $primary {
+    @include color-mode(dark) {
+        --#{$prefix}link-color: #{dark-readable($link-color)};
+        --#{$prefix}link-color-rgb: #{to-rgb(dark-readable($link-color))};
+        --#{$prefix}link-hover-color: #{dark-readable($link-color, $min: 7)};
+        --#{$prefix}link-hover-color-rgb: #{to-rgb(dark-readable($link-color, $min: 7))};
+        --mds-text-link-primary-default: #{dark-readable($link-color)};
+        --mds-text-link-primary-hover: #{dark-readable($link-color, $min: 7)};
+    }
+}
+
+
+/*---------------------------------------
  * Setting: Button brand color
  --------------------------------------*/
 
