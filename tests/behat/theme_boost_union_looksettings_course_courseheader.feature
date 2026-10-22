@@ -400,7 +400,7 @@ Feature: Configuring the theme_boost_union plugin for the "Course header" sectio
       | transparent             | bg-                        | should not  |
       | white                   | bg-white                   | should      |
       | lightgrey               | bg-light                   | should      |
-      | lightbrandcolor         | bg-primary-light           | should      |
+      | lightbrandcolor         | bg-primary-flat-light      | should      |
       | brandcolorgradientlight | bg-primary-gradient-light  | should      |
       | brandcolorgradientfull  | bg-primary-gradient-full   | should      |
 

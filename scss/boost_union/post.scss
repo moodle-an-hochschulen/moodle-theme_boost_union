@@ -14,6 +14,18 @@
     }
 }
 
+/* Light brand color background class.
+   This creates a flat light brand color background, using the same color as Moodle core's .bg-primary-light class.
+   In contrast to Moodle core's class, the brand color is mixed into the dark page surface in the dark color mode so
+   that the background does not become a glaring light area and the text on top of it remains readable. */
+.bg-primary-flat-light {
+    background-color: $primary-light-background;
+
+    @include dark-mode {
+        background-color: mix($primary, $dark-surface-page, 20%);
+    }
+}
+
 /* Full brand color gradient background class.
    This creates a subtle diagonal gradient from the full brand color to a slightly lighter version. */
 .bg-primary-gradient-full {
@@ -745,6 +757,15 @@ body.theme_boost_union-loginarrangement-legacy .login-container.login-container-
     /* The course header image. */
     #courseheaderimage {
         background-size: cover;
+
+        /* The 'light grey' canvas background.
+           Moodle core's .bg-light utility (which is used for this canvas background) has the same color as the page
+           background since Moodle 5.3. To keep the canvas visible, it is shown a little bit darker than the page
+           background (in the dark color mode, Moodle core remaps this color to the recessed surface color).
+           This has to use !important as Moodle core's .bg-light utility uses !important as well. */
+        &.bg-light {
+            background-color: var(--#{$prefix}gray-200) !important; /* stylelint-disable-line declaration-no-important */
+        }
     }
 
     /* The course title. */

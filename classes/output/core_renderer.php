@@ -599,7 +599,7 @@ class core_renderer extends core_renderer_intermediate {
                             $canvasclasses[] = 'bg-light';
                             break;
                         case THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_LIGHTBRANDCOLOR:
-                            $canvasclasses[] = 'bg-primary-light';
+                            $canvasclasses[] = 'bg-primary-flat-light';
                             break;
                         case THEME_BOOST_UNION_SETTING_COURSEHEADERCANVASBACKGROUND_BRANDCOLORGRADIENTLIGHT:
                             $canvasclasses[] = 'bg-primary-gradient-light';
