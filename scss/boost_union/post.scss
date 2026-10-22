@@ -959,12 +959,6 @@ body.hascourseindexcmicons {
             .courseindex-cmicon-cpl-sol {
                 display: none;
             }
-
-            /* And move the section title in the course index slightly to the right to align it vertically with the
-               activity title (which is now slightly more right as well) again. */
-            .courseindex-chevron {
-                padding-right: 12px;
-            }
         }
     }
 
@@ -974,12 +968,6 @@ body.hascourseindexcmicons {
             /* Hide the completion widget at the beginning of the line. */
             .courseindex-cmicon-cpl-sol {
                 display: none;
-            }
-
-            /* And move the section title in the course index slightly to the right to align it vertically with the
-               activity title (which is now slightly more right as well) again. */
-            .courseindex-chevron {
-                padding-right: 12px;
             }
         }
     }
@@ -996,7 +984,8 @@ body.hascourseindexcmicons {
                 /* And move the activity icon slightly closer to the completion icon. */
                 min-width: 20px;
                 /* And move the completion icon (and thus the activity icon and title) slightly to the left to align the
-                   completion icon vertically with the section chevron and the activity icon with the section title.
+                   completion icon vertically with the title of the parent section and the activity icon with the title
+                   of a subsection on the same level.
                    The completion icon is centered within a box of $icon-width (see above) while the section chevron
                    is a FontAwesome glyph which is sized 1.25em at the course index icon font size of 10px and which is
                    aligned to the left edge of its box. We thus pull the completion icon by half of the difference. */
@@ -1038,9 +1027,13 @@ body.hascourseindexcmicons {
         }
 
         /* Gain back the vertical space which was given to the icon by reducing the vertical padding of each courseindex
-           element by 0.1rem. */
+           element by 0.1rem.
+           The left padding is deliberately left untouched as Moodle core uses it to indent the activities below their
+           section and the subsections and their activities below their parent section. */
         .courseindex-item {
-            padding: .45rem 0 .45rem .5rem;
+            padding-top: .45rem;
+            padding-bottom: .45rem;
+            padding-right: 0;
         }
 
         /* Overwrite activity type icon style for dimmed activities. */
