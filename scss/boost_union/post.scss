@@ -320,6 +320,8 @@
 body.theme_boost_union-loginarrangement-legacy {
     &.pagelayout-login #page {
         background: var(--#{$prefix}gray-100);
+        /* The CSS tree validator does not support custom properties as mixin arguments. */
+        /* stylelint-disable-next-line csstree/validator */
         @include gradient-x(var(--#{$prefix}gray-100), var(--#{$prefix}gray-300), 0%, 100%);
         div[role="main"] {
             height: 100%;
@@ -1673,7 +1675,7 @@ body.theme-boost-union-commincourse {
 /* stylelint-disable declaration-no-important */
 @include media-breakpoint-up(lg) {
     body.limitedwidth:has(#theme-block-region-outside-left, #theme-block-region-outside-right,
-            #theme-block-region-outside-top, #theme-block-region-header) {
+            #theme-block-region-outside-top, #theme-block-region-header) { /* stylelint-disable-line indentation */
         /* The two CSS variables are put into Sass variables to prevent Sass from simplifying the 0px fallbacks to
            unitless zeros which would make the calc() expressions invalid. */
         $menubar: "var(--bu-smartmenu-menubar-height, 0px)";
@@ -1744,7 +1746,7 @@ body.theme-boost-union-commincourse {
    Additionally, align the toggles of the closed drawers vertically with the top of the outside block regions. */
 @include media-breakpoint-up(md) {
     body.limitedwidth:has(#theme-block-region-outside-left, #theme-block-region-outside-right,
-            #theme-block-region-outside-top, #theme-block-region-header) {
+            #theme-block-region-outside-top, #theme-block-region-header) { /* stylelint-disable-line indentation */
         /* See above. */
         $menubar: "var(--bu-smartmenu-menubar-height, 0px)";
 
