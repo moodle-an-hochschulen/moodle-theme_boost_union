@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-22 - Upgrade: Apply the configured link color in the dark color mode which Moodle 5.3 introduced as well, as Moodle core derives the link colors of the dark color mode from the brand color instead of the link color.
 * 2026-10-22 - Upgrade: Show the 'light brand color' canvas background of the course header with a dark brand color tint in the dark color mode which Moodle 5.3 introduced, as Moodle core's .bg-primary-light class stays light in the dark color mode and the canvas became a glaring light area.
 * 2026-10-22 - Upgrade: Show the 'light grey' canvas background of the course header slightly darker than the page background, as Moodle 5.3 uses the same color for its .bg-light utility and the page background and the canvas was not visible anymore.
 * 2026-10-20 - Upgrade: Show the course index drawer and the block drawer flush with the window edges and with full height (like in Moodle 5.2 and before) on pages where the outside-left, outside-right, outside-top or header block region is shown, as the drawers which Moodle 5.3 anchors next to the main content area would cover these block regions otherwise.
