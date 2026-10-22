@@ -4,6 +4,11 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-10-21 - Bugfix: Align the activity type icons in the course index vertically with the section titles if the completion info is shown at the end of the line or as icon color, as a leftover rule moved the section titles to the right which only fitted the former missing indentation of the activities, relates to #1449
+* 2026-10-21 - Bugfix: Keep the indentation of the activities and subsections in the course index if the activity type icons are shown in the course index as the hierarchy of sections, subsections and activities was not visible anymore, resolves #1449
+
 ### v5.2-r13
 
 * 2026-10-15 - Tests: Use the plain textarea editor in the Behat scenario which verifies that flavour SCSS is applied immediately in theme designer mode, as the TinyMCE editor CSS compilation became very slow in Moodle 5.3 (MDL-68037) and made the scenario run into the pending JS timeout of Behat on Github actions, resolves #1443
