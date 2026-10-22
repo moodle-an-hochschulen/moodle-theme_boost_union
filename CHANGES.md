@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-10-22 - Bugfix: Show the login link button as light button on the colored navbar variants as it had the same background color as the navbar and was not recognisable as a button, resolves #1452
+
 ### v5.0-r36
 
 * 2026-10-15 - Tests: Use the plain textarea editor in the Behat scenario which verifies that flavour SCSS is applied immediately in theme designer mode, as the TinyMCE editor CSS compilation became very slow in Moodle 5.3 (MDL-68037) and made the scenario run into the pending JS timeout of Behat on Github actions, resolves #1443

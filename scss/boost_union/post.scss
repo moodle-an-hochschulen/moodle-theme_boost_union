@@ -130,9 +130,10 @@
         color: #fff;
     }
 
-    /* Change the color of the login link in the navbar to white. */
+    /* Change the color of the login link in the navbar to white
+       (but not if the login link is shown as button, see the login button rules below). */
     .login,
-    .login a {
+    .login a:not(.btn) {
         color: $white;
     }
 
@@ -321,9 +322,10 @@
         }
     }
 
-    /* Change the color of the login link in the navbar to dark grey and to darker grey when hovered. */
+    /* Change the color of the login link in the navbar to dark grey and to darker grey when hovered
+       (but not if the login link is shown as button, see the login button rules below). */
     .login,
-    .login a {
+    .login a:not(.btn) {
         color: rgba($black, .6);
         &:hover {
             color: rgba($black, .9);
@@ -335,6 +337,13 @@
     .divider {
         border-left: 1px solid rgba($black, .6) !important; /* stylelint-disable-line declaration-no-important */
     }
+}
+
+/* Tweak the login button (if the login link is shown as button) in both primary color navbars.
+   The login button is a primary button and would have the same background color as the navbar otherwise.
+   Show it as light button instead, like the navigation items in the navbar when they are hovered. */
+.navbar.bg-primary .login .btn-primary {
+    @extend .btn-light;
 }
 
 /*=======================================
