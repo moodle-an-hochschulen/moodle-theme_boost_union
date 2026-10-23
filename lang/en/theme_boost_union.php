@@ -1104,7 +1104,7 @@ $string['sectionappearancenotcollapsible'] = 'Show {$a} without collapsing';
 $string['sectionappearancehidden'] = 'Hide {$a} entirely';
 // ... ... Setting: Appearance of section 0.
 $string['sectionzeroappearance'] = 'Appearance of section 0';
-$string['sectionzeroappearance_desc'] = 'With this setting, you control the appearance of section 0 (the general section) on the course main page. By default, Moodle shows section 0 as a collapsible section which is expanded initially. With this setting, you can decide to show section 0 collapsed by default, show it without any collapsing functionality or hide it entirely.';
+$string['sectionzeroappearance_desc'] = 'With this setting, you control the appearance of section 0 (the general section) on the course main page. By default, Moodle shows section 0 as a collapsible section which is expanded initially. With this setting, you can decide to show section 0 collapsed by default, show it without any collapsing functionality or hide it entirely. The subsections within section 0 follow this setting as well.';
 $string['sectionzeroappearance_help'] = 'The appearance of section 0 (the general section) on the course main page.';
 $string['sectionzerosubject'] = 'section 0';
 $string['sectionzeroappearance_deschiddennote'] = '<li>If section 0 is configured to be hidden entirely, the entire section is hidden with pure CSS as well and it will re-appear as soon as the teacher switches to edit mode (as otherwise its content would not be editable anymore).</li>';
@@ -1113,7 +1113,7 @@ $string['sectionzeroappearanceexclusionlist'] = 'Appearance of section 0 exclusi
 $string['sectionzeroappearanceexclusionlist_desc'] = 'With this setting, you can exclude particular section 0 appearances from being available for course-specific overrides. The selected appearances will not appear in the course settings for teachers to choose from, but the administrator can still use them globally. This allows you to restrict which appearances are available to course editors while maintaining administrative control over the global setting. Please note that the section 0 appearance which is selected by the admin above will never be excluded from the course settings, even if you tick it here.';
 // ... ... Setting: Appearance of sections ≥ 1.
 $string['sectiononeplusappearance'] = 'Appearance of sections ≥ 1';
-$string['sectiononeplusappearance_desc'] = 'With this setting, you control the appearance of all sections except section 0 (i.e. sections 1 and following) on the course main page. By default, Moodle shows these sections as collapsible sections which are expanded initially. With this setting, you can decide to show them collapsed by default or to show them without any collapsing functionality.';
+$string['sectiononeplusappearance_desc'] = 'With this setting, you control the appearance of all sections except section 0 (i.e. sections 1 and following) on the course main page. By default, Moodle shows these sections as collapsible sections which are expanded initially. With this setting, you can decide to show them collapsed by default or to show them without any collapsing functionality. The subsections within these sections follow this setting as well.';
 $string['sectiononeplusappearance_help'] = 'The appearance of sections ≥ 1 (all sections except the general section) on the course main page.';
 $string['sectiononeplussubject'] = 'sections ≥ 1';
 
