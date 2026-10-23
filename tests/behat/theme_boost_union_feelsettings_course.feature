@@ -121,6 +121,74 @@ Feature: Configuring the theme_boost_union plugin for the "Course" tab on the "F
       | Course 1       | sectiononeplusappearance | 1         | 0        |
       | Course 2       | sectiononeplusappearance | 1         | 0        |
 
+  @javascript
+  Scenario Outline: Setting: Appearance of sections - A subsection follows the setting of the section in which it is placed (collapsed by default)
+    # The delegated sections of the subsections are appended after the 3 regular sections (i.e. as sections 4 and 5).
+    Given the following "activities" exist:
+      | activity   | course            | section | name                       |
+      | subsection | <courseshortname> | 0       | Subsection in section 0    |
+      | subsection | <courseshortname> | 1       | Subsection in section 1    |
+      | assign     | <courseshortname> | 4       | Assignment in subsection 0 |
+      | assign     | <courseshortname> | 5       | Assignment in subsection 1 |
+    And the following config values are set as admin:
+      | config    | value                | plugin            |
+      | <setting> | collapsiblecollapsed | theme_boost_union |
+    When I log in as "student1"
+    And I am on "<coursefullname>" course homepage
+    # The subsection in the configured section is collapsed by default.
+    Then "//li[contains(@class, 'delegated-section') and @data-sectionname='Subsection in section <targetnum>']//a[@data-for='sectiontoggler' and @aria-expanded='false']" "xpath_element" should exist
+    # The subsection in the other section should remain untouched and behave as usual (expanded by default).
+    And "//li[contains(@class, 'delegated-section') and @data-sectionname='Subsection in section <othernum>']//a[@data-for='sectiontoggler' and @aria-expanded='true']" "xpath_element" should exist
+    And I should see "Assignment in subsection <othernum>" in the "li#section-<othernum>" "css_element"
+    # After expanding the configured section, the subsection is still collapsed, but it can be expanded with the chevron.
+    When I click on "//li[@id='section-<targetnum>']/div[contains(@class, 'section-item')]/div[contains(@class, 'course-section-header')]//a[@data-for='sectiontoggler']" "xpath_element"
+    Then I should see "Subsection in section <targetnum>" in the "li#section-<targetnum>" "css_element"
+    And I should not see "Assignment in subsection <targetnum>" in the "li#section-<targetnum>" "css_element"
+    And "//li[contains(@class, 'delegated-section') and @data-sectionname='Subsection in section <targetnum>']//a[@data-for='sectiontoggler']" "xpath_element" should be visible
+    When I click on "//li[contains(@class, 'delegated-section') and @data-sectionname='Subsection in section <targetnum>']//a[@data-for='sectiontoggler']" "xpath_element"
+    Then I should see "Assignment in subsection <targetnum>" in the "li#section-<targetnum>" "css_element"
+
+    Examples:
+      | coursefullname | courseshortname | setting                  | targetnum | othernum |
+      | Course 1       | C1              | sectionzeroappearance    | 0         | 1        |
+      | Course 2       | C2              | sectionzeroappearance    | 0         | 1        |
+      | Course 1       | C1              | sectiononeplusappearance | 1         | 0        |
+      | Course 2       | C2              | sectiononeplusappearance | 1         | 0        |
+
+  @javascript
+  Scenario Outline: Setting: Appearance of sections - A subsection follows the setting of the section in which it is placed (without collapsing)
+    # The delegated sections of the subsections are appended after the 3 regular sections (i.e. as sections 4 and 5).
+    Given the following "activities" exist:
+      | activity   | course            | section | name                       |
+      | subsection | <courseshortname> | 0       | Subsection in section 0    |
+      | subsection | <courseshortname> | 1       | Subsection in section 1    |
+      | assign     | <courseshortname> | 4       | Assignment in subsection 0 |
+      | assign     | <courseshortname> | 5       | Assignment in subsection 1 |
+    And the following config values are set as admin:
+      | config    | value          | plugin            |
+      | <setting> | notcollapsible | theme_boost_union |
+    When I log in as "student1"
+    And I am on "<coursefullname>" course homepage
+    # The collapse toggle of the subsection in the configured section is not displayed anymore (but kept in the DOM).
+    Then "//li[contains(@class, 'delegated-section') and @data-sectionname='Subsection in section <targetnum>']//a[@data-for='sectiontoggler']" "xpath_element" should exist
+    And "//li[contains(@class, 'delegated-section') and @data-sectionname='Subsection in section <targetnum>']//a[@data-for='sectiontoggler']" "xpath_element" should not be visible
+    And I should see "Assignment in subsection <targetnum>" in the "li#section-<targetnum>" "css_element"
+    # The subsection in the other section should remain untouched and behave as usual.
+    And "//li[contains(@class, 'delegated-section') and @data-sectionname='Subsection in section <othernum>']//a[@data-for='sectiontoggler']" "xpath_element" should be visible
+    And "//li[contains(@class, 'delegated-section') and @data-sectionname='Subsection in section <othernum>']//a[@data-for='sectiontoggler' and @aria-expanded='true']" "xpath_element" should exist
+    And I should see "Assignment in subsection <othernum>" in the "li#section-<othernum>" "css_element"
+    # The subsection in the other section can still be collapsed.
+    When I click on "//li[contains(@class, 'delegated-section') and @data-sectionname='Subsection in section <othernum>']//a[@data-for='sectiontoggler']" "xpath_element"
+    Then I should not see "Assignment in subsection <othernum>" in the "li#section-<othernum>" "css_element"
+    And I should see "Assignment in subsection <targetnum>" in the "li#section-<targetnum>" "css_element"
+
+    Examples:
+      | coursefullname | courseshortname | setting                  | targetnum | othernum |
+      | Course 1       | C1              | sectionzeroappearance    | 0         | 1        |
+      | Course 2       | C2              | sectionzeroappearance    | 0         | 1        |
+      | Course 1       | C1              | sectiononeplusappearance | 1         | 0        |
+      | Course 2       | C2              | sectiononeplusappearance | 1         | 0        |
+
   Scenario Outline: Setting: Appearance of sections - The 'Collapse all / Expand all' control is placed on the first collapsible section
     Given the following config values are set as admin:
       | config                   | value                      | plugin            |
