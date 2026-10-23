@@ -1997,17 +1997,30 @@ body.theme-boost-union-hidesectionzero {
    excluded from the sections ≥ 1 selector (as they would be matched by it even if they are placed in section 0). */
 body.theme-boost-union-sectionzeronotcollapsible li#section-0,
 body.theme-boost-union-sectiononeplusnotcollapsible li[id^="section-"]:not(#section-0):not(.delegated-section) {
-    /* Hide the collapse / expand toggle of the affected section.
-       (It is kept in the DOM on purpose so that the course format JS does not break, but visually hidden.) */
-    > .section-item > .course-section-header [data-for="sectiontoggler"] {
+    /* Hide the collapse / expand toggle of the affected section and of the subsections within the affected section.
+       (It is kept in the DOM on purpose so that the course format JS does not break, but visually hidden.)
+       As Moodle core presents a subsection as a card of its own, the subsection title moves to the left edge of the
+       card then, just like the title of the affected section moves to the left edge of the section card. */
+    > .section-item > .course-section-header [data-for="sectiontoggler"],
+    li.delegated-section > .section-item > .course-section-header [data-for="sectiontoggler"] {
         display: none;
     }
 
-    /* Hide the collapse / expand toggle of the subsections within the affected section as well.
-       But keep the space of the toggle as Moodle core aligns the subsection title with the activities within the
-       subsection and the subsection title would be moved to the left otherwise. */
-    li.delegated-section > .section-item > .course-section-header [data-for="sectiontoggler"] {
-        visibility: hidden;
+    /* Reduce the space below the title of the affected section and of the subsections within the affected section.
+       Moodle core adds a bottom padding to the section info container below the section header (in addition to the
+       header's own bottom padding). Without the collapse toggle (which makes the header taller), the space below the
+       title would look too large compared to the space above the title. */
+    > .section-item > .course-section-header,
+    li.delegated-section > .section-item > .course-section-header {
+        padding-bottom: map-get($spacers, 2);
+    }
+
+    /* Align the section info (e.g. the section summary) with the title again.
+       Moodle core indents the section info to the title position as soon as the collapse toggle exists in the
+       DOM, which does not fit anymore if the toggle is hidden and the title moves to the left edge of the card. */
+    > .section-item > .course-section-header ~ .course-content-item-content > [data-for="sectioninfo"],
+    li.delegated-section > .section-item > .course-section-header ~ .course-content-item-content > [data-for="sectioninfo"] {
+        padding-left: map-get($spacers, 3);
     }
 
     /* Keep the content of the affected section (and of its subsections) always expanded, even if the

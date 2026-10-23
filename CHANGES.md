@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-23 - Upgrade: Hide the collapse toggle of the subsections without keeping its space if a section is shown without collapsing, as Moodle 5.3 presents a subsection as a card of its own and the subsection title would be indented without reason otherwise, reduce the space below the section and subsection titles in this case and align the section summary with the title again, relates to #1454
 * 2026-10-22 - Upgrade: Apply the configured link color in the dark color mode which Moodle 5.3 introduced as well, as Moodle core derives the link colors of the dark color mode from the brand color instead of the link color.
 * 2026-10-22 - Upgrade: Show the 'light brand color' canvas background of the course header with a dark brand color tint in the dark color mode which Moodle 5.3 introduced, as Moodle core's .bg-primary-light class stays light in the dark color mode and the canvas became a glaring light area.
 * 2026-10-22 - Upgrade: Show the 'light grey' canvas background of the course header slightly darker than the page background, as Moodle 5.3 uses the same color for its .bg-light utility and the page background and the canvas was not visible anymore.
