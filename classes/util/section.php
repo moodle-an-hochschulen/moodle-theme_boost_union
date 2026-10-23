@@ -84,6 +84,60 @@ class section {
     }
 
     /**
+     * Apply the section appearance settings (with course override support) to the exported
+     * template data of a delegated section (i.e. a subsection) of the course format.
+     *
+     * Moodle core leaves out the delegated sections from the sections which are exported by the course format's
+     * content output class (and which are handled by self::apply_appearance()). Instead, a subsection is rendered
+     * by its subsection course module within its parent section. Thus, this is called separately from the theme's
+     * course format renderer overrides just before a subsection is rendered from the
+     * core_courseformat/local/content/delegatedsection template.
+     *
+     * A subsection follows the appearance setting of the section in which it is placed, i.e. a subsection in
+     * section 0 follows the appearance of section 0 and a subsection in the sections ≥ 1 follows the appearance
+     * of the sections ≥ 1.
+     *
+     * @param \stdClass $data The exported template data of the delegated section output class.
+     * @param \moodle_page $page The current page.
+     */
+    public static function apply_appearance_to_delegatedsection(\stdClass $data, \moodle_page $page): void {
+        // If a single section page (course/section.php) is shown, do not touch the data.
+        // The section appearance settings only control the course main page.
+        if (!empty(course_get_format($page->course)->get_sectionid())) {
+            return;
+        }
+
+        // Get the delegated section. If it is not found for whatever reason, do not touch the data.
+        $section = get_fast_modinfo($page->course)->get_section_info_by_id($data->id);
+        if ($section === null) {
+            return;
+        }
+
+        // Get the parent section of the subsection. If there is none for whatever reason, do not touch the data.
+        $delegate = $section->get_component_instance();
+        $parentsection = $delegate ? $delegate->get_parent_section() : null;
+        if ($parentsection === null) {
+            return;
+        }
+
+        // Pick the setting which is responsible for the subsection, based on the section in which it is placed
+        // (with course override support).
+        if ((int) $parentsection->section === 0) {
+            $appearance = coursesettings::get_config_with_course_override('sectionzeroappearance');
+        } else {
+            $appearance = coursesettings::get_config_with_course_override('sectiononeplusappearance');
+        }
+
+        // Get Moodle core's 'expandsection' URL parameter which is meant to force-expand the given section
+        // (see core_courseformat\output\local\content\section::is_section_collapsed()).
+        // The page URL might not be set if the subsection is rendered in a webservice request.
+        $expandsection = $page->has_set_url() ? $page->url->get_param('expandsection') : null;
+
+        // Apply the configured collapse state to the subsection.
+        self::apply_collapse_state($data, $appearance, $expandsection);
+    }
+
+    /**
      * Make sure that the 'Collapse all / Expand all' control is shown on the first section which is actually
      * collapsible.
      *

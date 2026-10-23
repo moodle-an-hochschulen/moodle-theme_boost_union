@@ -25,6 +25,7 @@
 namespace theme_boost_union\output;
 
 use core_courseformat\output\local\content;
+use core_courseformat\output\local\content\delegatedsection;
 use theme_boost_union\util\section;
 
 /**
@@ -48,6 +49,22 @@ class format_weeks_renderer extends \format_weeks\output\renderer {
     public function render_content(content $widget): string {
         $data = $widget->export_for_template($this);
         section::apply_appearance($data, $this->page);
+        return $this->render_from_template($widget->get_template_name($this), $data);
+    }
+
+    /**
+     * Render a delegated section (i.e. a subsection) of the course format.
+     *
+     * This method is detected and called by core_courseformat\output\section_renderer::render()
+     * and applies Boost Union's section appearance settings to the exported template data
+     * before the template is rendered.
+     *
+     * @param delegatedsection $widget The delegated section renderable.
+     * @return string The rendered HTML.
+     */
+    public function render_delegatedsection(delegatedsection $widget): string {
+        $data = $widget->export_for_template($this);
+        section::apply_appearance_to_delegatedsection($data, $this->page);
         return $this->render_from_template($widget->get_template_name($this), $data);
     }
 }
