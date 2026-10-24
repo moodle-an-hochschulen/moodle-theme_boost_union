@@ -343,3 +343,25 @@ Feature: Placeholder support in Boost Union smart menu items
     And I am on "Test course1" course homepage
     Then I should see smart menu "Placeholder Menu" item "Contact {coursefullname}" in location "Main"
     And the "href" attribute of "a.boost-union-smartmenuitem" "css_element" should contain "subject=Course%20%7Bcourseid%7D"
+
+  Scenario Outline: Placeholders are replaced in the icon title and label of an item with placeholders
+    Given the following "theme_boost_union > smart menu item" exists:
+      | menu     | Placeholder Menu      |
+      | title    | Hello {userfullname}! |
+      | itemtype | <itemtype>            |
+      | url      | /dashboard            |
+      | email    | support@test.com      |
+      | menuicon | core:i/circleinfo     |
+    When I log in as "user1"
+    And I am on "Test course1" course homepage
+    Then I should see smart menu "Placeholder Menu" item "Hello Test User!" in location "Main"
+    And the "title" attribute of ".primary-navigation .fa-circle-info" "css_element" should contain "Hello Test User!"
+    And the "aria-label" attribute of ".primary-navigation .fa-circle-info" "css_element" should contain "Hello Test User!"
+    And the "title" attribute of ".primary-navigation .fa-circle-info" "css_element" should not contain "{userfullname}"
+    And the "aria-label" attribute of ".primary-navigation .fa-circle-info" "css_element" should not contain "{userfullname}"
+
+    Examples:
+      | itemtype                    |
+      | Static (with placeholders)  |
+      | Heading (with placeholders) |
+      | Mailto (with placeholders)  |

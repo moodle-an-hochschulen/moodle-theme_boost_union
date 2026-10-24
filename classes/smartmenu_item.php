@@ -1855,8 +1855,18 @@ class smartmenu_item {
             $icon = explode(':', $this->item->menuicon);
             $iconstr = isset($icon[1]) ? $icon[1] : 'moodle';
             $component = isset($icon[0]) ? $icon[0] : '';
+            // Use the item title as icon title and label, with the placeholders replaced if the item type supports them.
+            $icontitle = $this->item->title;
+            $placeholdertypes = [
+                self::TYPESTATICWITHPLACEHOLDERS,
+                self::TYPEHEADINGWITHPLACEHOLDERS,
+                self::TYPEMAILTOWITHPLACEHOLDERS,
+            ];
+            if (in_array($this->item->type, $placeholdertypes)) {
+                $icontitle = $this->replace_placeholders($icontitle);
+            }
             // Render the pix icon.
-            $icon = $OUTPUT->pix_icon($iconstr, $this->item->title, $component);
+            $icon = $OUTPUT->pix_icon($iconstr, $icontitle, $component);
 
             switch ($this->item->display) {
                 case self::DISPLAY_SHOWTITLEICON:
