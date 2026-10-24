@@ -5247,7 +5247,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 $name,
                 $title,
                 $description,
-                [$infobannerpages[THEME_BOOST_UNION_SETTING_INFOBANNERPAGES_MY]],
+                [THEME_BOOST_UNION_SETTING_INFOBANNERPAGES_MY],
                 $infobannerpages
             );
             $tab->add($setting);

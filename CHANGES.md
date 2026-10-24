@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-24 - Improvement: Use the option key instead of the option label as default value of the info banner pages settings as the Dashboard was never preselected and stored as default, resolves #1457
 * 2026-10-22 - Bugfix: Let a subsection follow the section appearance setting of the section in which it is placed, as the subsections in section 0 lost their collapse toggle if the sections ≥ 1 were shown without collapsing and the subsections were not collapsed by default if their section was configured to be collapsed by default, resolves #1454
 * 2026-10-22 - Bugfix: Show the login link button as light button on the colored navbar variants as it had the same background color as the navbar and was not recognisable as a button, resolves #1452
 * 2026-10-21 - Bugfix: Align the activity type icons in the course index vertically with the section titles if the completion info is shown at the end of the line or as icon color, as a leftover rule moved the section titles to the right which only fitted the former missing indentation of the activities, relates to #1449
