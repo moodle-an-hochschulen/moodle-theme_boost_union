@@ -6,6 +6,9 @@ Changes
 
 ### Unreleased
 
+* 2026-10-26 - Status of the Boost Union 5.3 release:
+               Please note: The Boost Union 5.3 release is generally working and usable in a way that we did not want to hold the release back any longer. We are still working on improvements and tests on 5.3 and will publish new releases and improvements and fixed are realized. Against this background, test the 5.3 release on your particular instance as usual and if you encounter any issues with Boost Union on 5.3, please report them as usual on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues.
+               Please also be aware that we decided to remove the code for the card menu layout and bottom bar location from Boost Union smart menus for now. If you are using one of those features, please see https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues/1464 for details.
 * 2026-10-26 - Improvement: Remove the experimental hint from the smart menus settings page, as the smart menus are not considered experimental anymore, resolves #355.
 * 2026-10-26 - Upgrade - further work on the smart menu React implementation: Allow long smart menu item titles in the user menu to wrap, as they ran below the caret of the submenu links or were cut off otherwise, and keep a long submenu title next to the arrow of the submenu header when it wraps.
 * 2026-10-26 - Upgrade - further work on the smart menu React implementation: Keep the user menu open when the menu help icon of a smart menu in the user menu is clicked, as the user menu closed on the click and the help popover could not be read otherwise.
