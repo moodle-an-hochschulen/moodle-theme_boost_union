@@ -66,8 +66,9 @@
     * Support submenus with more than one level (for adding smart menus into the user menu).
     * Make submenu headers fully clickable as soon as at least one smart menu exists on the page.
     * Add the smart menu description (above or below the items or as help icon) to the submenus.
-    * Initialize the theme_boost_union/smartmenu_usermenu_tooltips module which keeps the tooltips of the smart menu
-      items alive (core/usermenu disposes them when it initializes its truncation tooltips).
+    * Initialize the theme_boost_union/smartmenu_usermenu module which keeps the tooltips of the smart menu items alive
+      (core/usermenu disposes them when it initializes its truncation tooltips) and which keeps the user menu open when
+      the help icon of a smart menu is clicked.
 }}
 <div class="usermenu">
     {{#unauthenticateduser}}
@@ -147,9 +148,9 @@
     {{/unauthenticateduser}}
 </div>
 {{#js}}
-    require(['core/usermenu', 'theme_boost_union/smartmenu_usermenu_tooltips'], function(UserMenu, SmartMenuTooltips) {
+    require(['core/usermenu', 'theme_boost_union/smartmenu_usermenu'], function(UserMenu, SmartMenuUserMenu) {
         UserMenu.init();
         // Must be initialized after core/usermenu, see the module for details.
-        SmartMenuTooltips.init();
+        SmartMenuUserMenu.init();
     });
 {{/js}}

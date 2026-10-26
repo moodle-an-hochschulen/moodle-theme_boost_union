@@ -39,6 +39,46 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
       # For this example, we duplicate a step into the specificcheck as we need to fill it but there isn't anything to check anymore
       | Never           | should not | should not | "i.fa-circle-question" "css_element" should not exist in the ".primary-navigation" "css_element" |
 
+  @javascript
+  Scenario Outline: Smartmenu: Menus: Presentation - Show the smart menu description as help icon and keep the menu open when the help icon is clicked (with JavaScript)
+    Given the following "theme_boost_union > smart menu" exists:
+      | title           | Useful Resources                  |
+      | location        | Main navigation, Menu bar         |
+      | description     | List of useful external resources |
+      | showdescription | Help                              |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Useful Resources |
+      | title    | Info             |
+      | itemtype | Heading          |
+    When I log in as "admin"
+    And I click on "Useful Resources" "link" in the "<container>" "css_element"
+    And I click on ".menu-helpicon .help-icon" "css_element" in the "<container>" "css_element"
+    Then I should see "List of useful external resources" in the "body > .popover" "css_element"
+    And I should see "Info" in the "<container>" "css_element"
+
+    Examples:
+      | container            |
+      | .primary-navigation  |
+      | .boost-union-menubar |
+
+  @javascript
+  Scenario: Smartmenu: Menus: Presentation - Show the smart menu description as help icon and keep the user menu open when the help icon is clicked (with JavaScript)
+    Given the following "theme_boost_union > smart menu" exists:
+      | title           | Useful Resources                  |
+      | location        | User menu                         |
+      | description     | List of useful external resources |
+      | showdescription | Help                              |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Useful Resources |
+      | title    | Info             |
+      | itemtype | Heading          |
+    When I log in as "admin"
+    And I click on "#user-menu-toggle" "css_element"
+    And I click on "Useful Resources" "link" in the "#usermenu-carousel" "css_element"
+    And I click on ".menu-helpicon .help-icon" "css_element" in the "#usermenu-carousel .carousel-item.active" "css_element"
+    Then I should see "List of useful external resources" in the "body > .popover" "css_element"
+    And I should see "Info" in the "#usermenu-carousel .carousel-item.active" "css_element"
+
   Scenario: Smartmenu: Menus: Presentation - Include the custom css class to a smart menu
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Quick links                                      |
