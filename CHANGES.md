@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.2-r14
 
 * 2026-10-22 - Bugfix: Let a subsection follow the section appearance setting of the section in which it is placed, as the subsections in section 0 lost their collapse toggle if the sections ≥ 1 were shown without collapsing and the subsections were not collapsed by default if their section was configured to be collapsed by default, resolves #1454
 * 2026-10-22 - Bugfix: Show the login link button as light button on the colored navbar variants as it had the same background color as the navbar and was not recognisable as a button, resolves #1452
