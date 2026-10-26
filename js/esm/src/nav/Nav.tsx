@@ -30,7 +30,7 @@
  * * Render top-level smart menu items with their formatted HTML label, their classes, their
  *   tooltip and their attributes (NavPill only accepts plain text labels).
  * * Keep smart menus which are configured to be kept outside of the "More" menu out of the
- *   overflow (replacing the legacy theme_boost_union/smartmenu AMD module).
+ *   overflow as long as possible (replacing the legacy theme_boost_union/smartmenu AMD module).
  * * Add the classes, tooltips and attributes of the smart menu items to the dropdown items.
  * * Add the data-key attribute to the top-level list items (as the NonJS fallback markup has it).
  * * Initialize the tooltips and the help icon popovers of the smart menus.
@@ -1242,8 +1242,13 @@ export default function Nav(
     const forced = toplevel.filter((item) => item.forceintomoremenu);
     const rest = toplevel.filter((item) => !item.forceintomoremenu);
     // Boost Union modification: Smart menus which are configured to be kept outside of the "More" menu
-    // never take part in the overflow split.
-    const collapsible = rest.filter((item) => !item.forceout);
+    // only take part in the overflow split as a last resort: As the items collapse from the end of this list, they
+    // are put in front of all other menus. This way, they collapse (from the end) only after all other menus have
+    // collapsed and the navigation still does not fit, as it would wrap into a second line otherwise.
+    // Please note: As the split only counts how many items have collapsed from the end of this list, the other menus
+    // do not come back out of the "More" menu if one of these menus has collapsed. If such a menu alone is too wide,
+    // only the "More" menu might be left in the navigation, even if a shorter menu (like "Dashboard") would still fit.
+    const collapsible = [...rest.filter((item) => item.forceout), ...rest.filter((item) => !item.forceout)];
 
     // The landmark, when one is rendered. The measurement below sizes the menu against the React
     // mount point, so it must resolve the container from whichever element is outermost here
@@ -1432,12 +1437,12 @@ export default function Nav(
     }, []);
 
     const visibleCount = Math.max(collapsible.length - autoOverflowCount, 0);
-    // Boost Union modification: The visible items keep their original order, the smart menus which are kept
-    // outside of the "More" menu are always visible.
+    // Boost Union modification: The visible and the auto-collapsed items keep their original order, regardless of
+    // the order in which they collapse.
     const visibleCollapsible = new Set(collapsible.slice(0, visibleCount));
-    const visible = rest.filter((item) => item.forceout || visibleCollapsible.has(item));
+    const visible = rest.filter((item) => visibleCollapsible.has(item));
     // Auto-collapsed items first, then always-forced ones, matching legacy moremenu.js ordering.
-    const overflow = [...collapsible.slice(visibleCount), ...forced];
+    const overflow = [...rest.filter((item) => !visibleCollapsible.has(item)), ...forced];
 
     // Matches secondarymoremenu.mustache's NonJS fallback: every <li> is role="none" regardless
     // of istablist, and the <ul> itself is "menubar" rather than roleless when not a tablist, so

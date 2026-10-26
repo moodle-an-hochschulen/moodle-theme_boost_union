@@ -18,7 +18,7 @@ import { Fragment, jsxDEV } from "react/jsx-dev-runtime";
  * * Render top-level smart menu items with their formatted HTML label, their classes, their
  *   tooltip and their attributes (NavPill only accepts plain text labels).
  * * Keep smart menus which are configured to be kept outside of the "More" menu out of the
- *   overflow (replacing the legacy theme_boost_union/smartmenu AMD module).
+ *   overflow as long as possible (replacing the legacy theme_boost_union/smartmenu AMD module).
  * * Add the classes, tooltips and attributes of the smart menu items to the dropdown items.
  * * Add the data-key attribute to the top-level list items (as the NonJS fallback markup has it).
  * * Initialize the tooltips and the help icon popovers of the smart menus.
@@ -935,7 +935,7 @@ function Nav({ items, morelabel, istablist, navbarstyle, measuredclass = MEASURE
   const toplevel = effectiveItems.filter((item) => !item.divider);
   const forced = toplevel.filter((item) => item.forceintomoremenu);
   const rest = toplevel.filter((item) => !item.forceintomoremenu);
-  const collapsible = rest.filter((item) => !item.forceout);
+  const collapsible = [...rest.filter((item) => item.forceout), ...rest.filter((item) => !item.forceout)];
   const landmarkRef = useRef(null);
   const [autoOverflowCount, setAutoOverflowCount] = useState(0);
   const [measured, setMeasured] = useState(false);
@@ -1057,8 +1057,8 @@ function Nav({ items, morelabel, istablist, navbarstyle, measuredclass = MEASURE
   }, []);
   const visibleCount = Math.max(collapsible.length - autoOverflowCount, 0);
   const visibleCollapsible = new Set(collapsible.slice(0, visibleCount));
-  const visible = rest.filter((item) => item.forceout || visibleCollapsible.has(item));
-  const overflow = [...collapsible.slice(visibleCount), ...forced];
+  const visible = rest.filter((item) => visibleCollapsible.has(item));
+  const overflow = [...rest.filter((item) => !visibleCollapsible.has(item)), ...forced];
   const itemRole = "none";
   useEffect(() => {
     if (!istablist) {
@@ -1100,15 +1100,15 @@ function Nav({ items, morelabel, istablist, navbarstyle, measuredclass = MEASURE
   }, [istablist]);
   const moreItem = /* @__PURE__ */ jsxDEV(PillDropdownToggle, { label: morelabel, selected: overflow.some(isNodeActive), istablist, children: /* @__PURE__ */ jsxDEV("div", { className: "dropdown-menu dropdown-menu-start", "data-region": "moredropdown", children: /* @__PURE__ */ jsxDEV(DropdownItems, { items: overflow, istablist, submenus: true, gobacklabel }, void 0, false, {
     fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-    lineNumber: 1510,
+    lineNumber: 1515,
     columnNumber: 17
   }, this) }, void 0, false, {
     fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-    lineNumber: 1509,
+    lineNumber: 1514,
     columnNumber: 13
   }, this) }, void 0, false, {
     fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-    lineNumber: 1508,
+    lineNumber: 1513,
     columnNumber: 9
   }, this);
   const menu = /* @__PURE__ */ jsxDEV(
@@ -1136,7 +1136,7 @@ function Nav({ items, morelabel, istablist, navbarstyle, measuredclass = MEASURE
             false,
             {
               fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-              lineNumber: 1524,
+              lineNumber: 1529,
               columnNumber: 21
             },
             this
@@ -1153,7 +1153,7 @@ function Nav({ items, morelabel, istablist, navbarstyle, measuredclass = MEASURE
           false,
           {
             fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-            lineNumber: 1538,
+            lineNumber: 1543,
             columnNumber: 13
           },
           this
@@ -1164,7 +1164,7 @@ function Nav({ items, morelabel, istablist, navbarstyle, measuredclass = MEASURE
     true,
     {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 1516,
+      lineNumber: 1521,
       columnNumber: 9
     },
     this
@@ -1174,7 +1174,7 @@ function Nav({ items, morelabel, istablist, navbarstyle, measuredclass = MEASURE
   }
   return /* @__PURE__ */ jsxDEV("nav", { ref: landmarkRef, "aria-label": navlabel, children: menu }, void 0, false, {
     fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-    lineNumber: 1560,
+    lineNumber: 1565,
     columnNumber: 9
   }, this);
 }
