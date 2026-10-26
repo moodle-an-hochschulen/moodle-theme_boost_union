@@ -2513,6 +2513,11 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
    clickable, the link wraps the arrow button and the title. As the button does not receive the hover itself, it gets
    the round grey hover background which Moodle core gives to icon buttons as soon as the link is hovered or focused. */
 .theme-boost-union-smartmenu .submenu .header .carousel-navigation-link {
+    /* The arrow button and the title are placed next to each other so that a long title which wraps stays next to the
+       arrow instead of continuing below it. */
+    display: flex;
+    align-items: center;
+
     &:hover,
     &:focus {
         .btn-icon {
@@ -2960,6 +2965,20 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
         margin-bottom: 0;
     }
 }
+
+/* Moodle core prevents the items in the user menu from wrapping and truncates them with an ellipsis instead (see
+   theme/boost/scss/moodle/navbar.scss). This does not work for the smart menu items as their title is wrapped in flex
+   containers (to place the icon next to the possibly multi-line title): The ellipsis is not shown, and the title runs
+   below the caret of the submenu links (as the items are clipped only at their padding edge) or is cut off.
+   Thus, long smart menu item titles are allowed to wrap, like in the main navigation and in the menu bar. The right
+   padding which Moodle core gives the items keeps the space for the caret free. */
+.theme-boost-union-smartmenu #usermenu-carousel .dropdown-item.boost-union-smartmenuitem {
+    white-space: normal;
+}
+
+/* The items container of a submenu in the user menu. For the smart menus, a submenu holds the second level (the items
+   of the smart menu) or the third level (the children of an item in submenu mode) of a smart menu. Besides the items,
+   the container holds the menu help icon and the menu description of the smart menu on the second level. */
 .theme-boost-union-smartmenu #usermenu-carousel .submenu .items {
     /* Moodle core indents the items of the submenus always (with the 'ps-5' class in the template) to make room for
        the tick of the active item. Within the smart menus, the items are indented only if an item is active and
