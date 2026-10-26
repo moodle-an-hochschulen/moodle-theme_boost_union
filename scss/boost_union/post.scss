@@ -1549,17 +1549,19 @@ body.theme-boost-union-commincourse {
         }
 
         /* And set the width and margin of the outside-left and right regions
-           (as well as of their spacers next to the header region). */
+           (as well as of their spacers next to the header region).
+           The top margin aligns the outside-left and right regions with the top of the main content area which
+           Moodle core moves down to line it up with the anchored drawers (see theme/boost/scss/moodle/layout.scss). */
         #theme-block-region-outside-left,
         .theme-block-region-outside-left-spacer {
             margin-right: 1rem;
-            margin-top: 1.5rem;
+            margin-top: calc(#{$drawer-anchored-top-offset} - #{$navbar-height});
             width: $bu-blockregionoutsideleftwidth;
         }
         #theme-block-region-outside-right,
         .theme-block-region-outside-right-spacer {
             margin-left: 1rem;
-            margin-top: 1.5rem;
+            margin-top: calc(#{$drawer-anchored-top-offset} - #{$navbar-height});
             width: $bu-blockregionoutsiderightwidth;
         }
 
@@ -1755,9 +1757,9 @@ body.theme-boost-union-commincourse {
             }
         }
 
-        /* Align the toggles in the headers of the opened drawers vertically with the top of the outside block regions
-           and thereby with the toggles of the closed drawers (see below).
-           The outside-left and outside-right regions start 1.5rem below the page top, the outside-top region 1rem.
+        /* Give the headers of the opened drawers a top padding of 1.5rem (or 1rem if the outside-top region is shown).
+           This is intentionally not aligned with the toggles of the closed drawers (see below) which start at the top
+           of the main content area, 2.5rem below the page top, as the drawer content would be pushed down otherwise.
            The drawers themselves start 1px below the page top (see above). */
         .drawer .drawerheader {
             padding-top: calc(1.5rem - 1px) !important;
@@ -1786,25 +1788,31 @@ body.theme-boost-union-commincourse {
    Thus, reserve the space for the toggle of a closed drawer in the page's horizontal padding. If the drawer is open,
    its toggle is hidden by Moodle core. On small screens, Moodle core shows the toggles floating at the bottom of the
    page above all page content anyway.
-   Additionally, align the toggles of the closed drawers vertically with the top of the outside block regions. */
+   Additionally, align the toggles of the closed drawers vertically with the top of the topmost block region or with
+   the top of the main content area. */
 @include media-breakpoint-up(md) {
     body.limitedwidth:has(#theme-block-region-outside-left, #theme-block-region-outside-right,
             #theme-block-region-outside-top, #theme-block-region-header) { /* stylelint-disable-line indentation */
         /* See above. */
         $menubar: "var(--bu-smartmenu-menubar-height, 0px)";
 
-        /* Align the toggles of the closed drawers vertically with the top of the outside block regions.
-           The outside-left and outside-right regions start 1.5rem below the page top, the outside-top region 1rem. */
-        .drawer-toggles .drawer-toggler {
-            top: calc(#{$navbar-height} + #{$menubar} + 1.5rem) !important;
-        }
-        &:has(#theme-block-region-outside-top) .drawer-toggles .drawer-toggler {
+        /* Align the toggles of the closed drawers vertically with the top of the outside-top or header region
+           which start 1rem below the page top. */
+        &:has(#theme-block-region-outside-top, #theme-block-region-header) .drawer-toggles .drawer-toggler {
             top: calc(#{$navbar-height} + #{$menubar} + 1rem) !important;
         }
 
-        /* On medium screens, Moodle core shows the opened drawers as overlay above the page, so the reserved space must
-           be kept when a drawer is opened. Otherwise, the page content would jump as soon as a drawer is opened. */
         @include media-breakpoint-only(md) {
+            /* On medium screens, align the toggles of the closed drawers vertically with the top of the outside-left
+               region (which is shown above the main content area on medium screens) or with the top of the main
+               content area which both start 1.5rem below the page top. */
+            &:not(:has(#theme-block-region-outside-top, #theme-block-region-header)) .drawer-toggles .drawer-toggler {
+                top: calc(#{$navbar-height} + #{$menubar} + 1.5rem) !important;
+            }
+
+            /* On medium screens, Moodle core shows the opened drawers as overlay above the page, so the reserved space
+               must be kept when a drawer is opened. Otherwise, the page content would jump as soon as a drawer is
+               opened. */
             #page.drawers:has(.drawer-left-toggle) {
                 padding-left: calc(#{$icon-medium-width} + 2 * 16px) !important;
             }
@@ -1813,9 +1821,16 @@ body.theme-boost-union-commincourse {
             }
         }
 
-        /* On large screens, Moodle core shifts the page content by the drawer width as soon as a drawer is opened
-           (and hides its toggle), so the space is reserved only as long as the drawer is closed. */
         @include media-breakpoint-up(lg) {
+            /* On large screens, align the toggles of the closed drawers vertically with the top of the outside-left
+               and outside-right regions and the main content area which Moodle core moves down to line it up with
+               the anchored drawers (see above), instead of placing them 0.5rem below this top like Moodle core does. */
+            &:not(:has(#theme-block-region-outside-top, #theme-block-region-header)) .drawer-toggles .drawer-toggler {
+                top: calc(#{$drawer-anchored-top-offset} + #{$menubar}) !important;
+            }
+
+            /* On large screens, Moodle core shifts the page content by the drawer width as soon as a drawer is opened
+               (and hides its toggle), so the space is reserved only as long as the drawer is closed. */
             #page.drawers:not(.show-drawer-left):has(.drawer-left-toggle) {
                 padding-left: calc(#{$icon-medium-width} + 2 * 16px) !important;
             }
