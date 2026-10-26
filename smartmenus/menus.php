@@ -117,17 +117,8 @@ $intro = new \core\output\notification(
     \core\output\notification::NOTIFY_INFO,
     false
 );
-$intro->set_extra_classes(['alert-light']);
+$intro->set_extra_classes(['alert-light', 'mb-5']);
 echo $OUTPUT->render($intro);
-
-// Add experimental warning.
-$experimentalnotification = new \core\output\notification(
-    get_string('smartmenusexperimental', 'theme_boost_union'),
-    \core\output\notification::NOTIFY_WARNING,
-    false
-);
-$experimentalnotification->set_extra_classes(['mb-5']);
-echo $OUTPUT->render($experimentalnotification);
 
 // Prepare 'Create menu' button.
 $createbutton = $OUTPUT->box_start();

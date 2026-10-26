@@ -1941,7 +1941,6 @@ $string['smartmenusdynamiccoursesstarredcourses_help'] = 'Choose whether the dyn
 $string['smartmenusdynamiccoursesstarredcoursesall'] = 'Show all courses';
 $string['smartmenusdynamiccoursesstarredcoursesonly'] = 'Show only starred courses (server-side course list refresh - safer but slower)';
 $string['smartmenusdynamiccoursesstarredcoursesonlyclient'] = 'Show only starred courses (client-side course list refresh - faster but more fragile)';
-$string['smartmenusexperimental'] = 'Please note: The smart menus functionality is fully usable in the current state of implementation, but has to be <em>considered as experimental</em> due to the large amount of setting combinations which still might trigger unexpected issues. Against this background, please test your smart menus with your individual menu settings thoroughly. If you encounter any issues with smart menus, please report them on <a href="https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues">Github</a> with clear steps to reproduce.';
 $string['smartmenusgeneralsectionheader'] = 'General settings';
 $string['smartmenusmenuaddnewitem'] = 'Add menu item';
 $string['smartmenusmenucreate'] = 'Create menu';

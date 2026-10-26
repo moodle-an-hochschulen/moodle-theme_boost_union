@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-26 - Improvement: Remove the experimental hint from the smart menus settings page, as the smart menus are not considered experimental anymore, resolves #355.
 * 2026-10-26 - Upgrade - further work on the smart menu React implementation: Allow long smart menu item titles in the user menu to wrap, as they ran below the caret of the submenu links or were cut off otherwise, and keep a long submenu title next to the arrow of the submenu header when it wraps.
 * 2026-10-26 - Upgrade - further work on the smart menu React implementation: Keep the user menu open when the menu help icon of a smart menu in the user menu is clicked, as the user menu closed on the click and the help popover could not be read otherwise.
 * 2026-10-26 - Upgrade - further work on the smart menu React implementation: Mark the active item on the third level of a smart menu (e.g. the current course within a dynamic courses item in submenu mode) as active, as its active flag got lost while flagging the active nodes, and do not mark the toggle of a smart menu which has been collapsed into the "More" menu as active (with a tick) anymore, as the tick is shown on the active item within the smart menu itself now, and indent the items of a dropdown menu or a smart menu level only if one of its own items is active and carries the tick.
