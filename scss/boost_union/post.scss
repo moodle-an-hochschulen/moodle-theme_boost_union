@@ -2933,6 +2933,13 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     .dropdown-divider:has(+ .items > .menu-description:first-child, + .items > .menu-item-heading:first-child) {
         margin-bottom: 0;
     }
+
+    /* If the menu help icon is the first element below the divider, the margin is removed as well and is given to
+       the help icon as padding instead (see the menu help icon rule below). The space above the help icon is the same
+       then, but it is within the items container now. */
+    .dropdown-divider:has(+ .items > .menu-helpicon:first-child) {
+        margin-bottom: 0;
+    }
 }
 .theme-boost-union-smartmenu #usermenu-carousel .submenu .items {
     /* Moodle core indents the items of the submenus always (with the 'ps-5' class in the template) to make room for
@@ -2964,6 +2971,13 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     }
     .menu-helpicon {
         padding-right: calc(1.75rem - #{map-get($spacers, 2)});
+    }
+
+    /* The items container clips its content as it is scrollable. If the menu help icon is the first element in the
+       container, the top of the focus outline of the help icon would be cut off. The help icon gets the margin of the
+       divider above (which is removed, see the divider rule above) as padding to keep the outline visible. */
+    .menu-helpicon:first-child {
+        padding-top: var(--#{$prefix}dropdown-divider-margin-y);
     }
 }
 

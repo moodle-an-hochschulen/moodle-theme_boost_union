@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-10-26 - Upgrade: Keep the focus outline of the menu help icon of the smart menus in the user menu fully visible, as the scrollable items container of the user menu submenus cut off its top otherwise.
 * 2026-10-26 - Upgrade: Align the outside-left and outside-right block regions on large screens with the top of the main content area, which Moodle 5.3 moves down to line it up with the anchored drawers, and align the toggles of the closed drawers with this top as well, as the block regions started above the main content area and the toggles below it otherwise.
 * 2026-10-23 - Upgrade: Hide the collapse toggle of the subsections without keeping its space if a section is shown without collapsing, as Moodle 5.3 presents a subsection as a card of its own and the subsection title would be indented without reason otherwise, reduce the space below the section and subsection titles in this case and align the section summary with the title again, relates to #1454
 * 2026-10-22 - Upgrade: Apply the configured link color in the dark color mode which Moodle 5.3 introduced as well, as Moodle core derives the link colors of the dark color mode from the brand color instead of the link color.
