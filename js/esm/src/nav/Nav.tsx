@@ -680,7 +680,6 @@ function SmartMenuDropdownSubmenu(
     const toggleId = `${id}-toggle`;
     const menuId = `${id}-menu`;
     const wrapperRef = useRef<HTMLDivElement>(null);
-    const selected = isNodeActive(node);
 
     // Keep the "More" dropdown open when the nested smart menu is clicked (see keepParentMenuOpen).
     // Unlike DropdownSubmenu, this is done with a native listener in the bubbling phase so that the
@@ -701,11 +700,13 @@ function SmartMenuDropdownSubmenu(
             role="none"
             data-key={node.key}
         >
+            {/* Unlike DropdownSubmenu, the toggle is not marked as active (and thus does not get the tick of the
+                active "More" menu items) if an item within the smart menu is active. The tick is shown on the active
+                item itself within the smart menu, and the "More" toggle already carries the indicator dot. */}
             <a
                 id={toggleId}
                 className={joinClasses(
                     'dropdown-item dropdown-toggle align-items-center',
-                    selected && 'active',
                     toFlexDisplayClasses(node.classes),
                 )}
                 href="#"
@@ -715,7 +716,6 @@ function SmartMenuDropdownSubmenu(
                 aria-haspopup="true"
                 aria-expanded="false"
                 aria-controls={menuId}
-                aria-current={selected ? 'page' : undefined}
                 {...toTooltipRecord(node, true)}
             >
                 {/* The label span hosts the tooltip of the toggle (see TOOLTIP_HOST_SELECTOR). */}

@@ -486,6 +486,56 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And "//a[contains(@class, 'dropdown-item') and @aria-current = 'true' and normalize-space() = 'Other node']" "xpath_element" should not exist in the "#usermenu-carousel" "css_element"
 
   @javascript
+  Scenario: Smartmenu: Menus: Presentation - Verify that the correct menu item is displayed as active when viewing the page of a submenu item on the third level of a menu inside the more menu (with JavaScript)
+    # The "Quick links" menu is in submenu mode and forced into the "More" menu where it is shown as nested menu.
+    # Forcing it into the "More" menu is not a requirement of the tested behaviour, it just makes sure that the menu is
+    # shown as nested menu in the "More" menu regardless of the browser window width.
+    # The courses of the "Course list" item are shown on the third level of the menu.
+    Given the following "courses" exist:
+      | fullname      | shortname |
+      | Test course 1 | C1        |
+      | Test course 2 | C2        |
+    And the following "theme_boost_union > smart menu" exists:
+      | title            | Quick links                          |
+      | location         | Main navigation, Menu bar, User menu |
+      | mode             | Submenu                              |
+      | moremenubehavior | Force into more menu                 |
+    And the following "theme_boost_union > smart menu item" exists:
+      | menu     | Quick links     |
+      | title    | Course list     |
+      | itemtype | Dynamic courses |
+      | itemmode | Submenu         |
+    When I log in as "admin"
+    And I am on "Test course 1" course homepage
+    # In the main navigation, the "More" menu is active, but the toggle of the nested menu is not marked as active.
+    Then "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'More']" "xpath_element" should exist in the ".primary-navigation" "css_element"
+    And I click on "More" "link" in the ".primary-navigation" "css_element"
+    And "//a[contains(@class, 'dropdown-toggle') and normalize-space() = 'Quick links']" "xpath_element" should exist in the ".primary-navigation [data-region='moredropdown']" "css_element"
+    And "//a[contains(@class, 'dropdown-toggle') and (contains(@class, 'active') or @aria-current) and normalize-space() = 'Quick links']" "xpath_element" should not exist in the ".primary-navigation [data-region='moredropdown']" "css_element"
+    # The course on the third level is marked as active instead.
+    And I click on "Quick links" "link" in the ".primary-navigation [data-region='moredropdown']" "css_element"
+    And I click on "Course list" "link" in the ".primary-navigation [data-region='moredropdown']" "css_element"
+    And "//a[contains(@class, 'dropdown-item') and contains(@class, 'active') and @aria-current = 'page' and normalize-space() = 'Test course 1']" "xpath_element" should exist in the ".primary-navigation [data-region='moredropdown']" "css_element"
+    And "//a[contains(@class, 'dropdown-item') and contains(@class, 'active') and @aria-current = 'page' and normalize-space() = 'Test course 2']" "xpath_element" should not exist in the ".primary-navigation [data-region='moredropdown']" "css_element"
+    And I click on "More" "link" in the ".primary-navigation" "css_element"
+    # In the menu bar, it is the same.
+    And "//a[contains(@class, 'mds-nav-pill--selected') and normalize-space() = 'More']" "xpath_element" should exist in the ".boost-union-menubar" "css_element"
+    And I click on "More" "link" in the ".boost-union-menubar" "css_element"
+    And "//a[contains(@class, 'dropdown-toggle') and normalize-space() = 'Quick links']" "xpath_element" should exist in the ".boost-union-menubar [data-region='moredropdown']" "css_element"
+    And "//a[contains(@class, 'dropdown-toggle') and (contains(@class, 'active') or @aria-current) and normalize-space() = 'Quick links']" "xpath_element" should not exist in the ".boost-union-menubar [data-region='moredropdown']" "css_element"
+    And I click on "Quick links" "link" in the ".boost-union-menubar [data-region='moredropdown']" "css_element"
+    And I click on "Course list" "link" in the ".boost-union-menubar [data-region='moredropdown']" "css_element"
+    And "//a[contains(@class, 'dropdown-item') and contains(@class, 'active') and @aria-current = 'page' and normalize-space() = 'Test course 1']" "xpath_element" should exist in the ".boost-union-menubar [data-region='moredropdown']" "css_element"
+    And "//a[contains(@class, 'dropdown-item') and contains(@class, 'active') and @aria-current = 'page' and normalize-space() = 'Test course 2']" "xpath_element" should not exist in the ".boost-union-menubar [data-region='moredropdown']" "css_element"
+    And I click on "More" "link" in the ".boost-union-menubar" "css_element"
+    # In the user menu, the course on the third level is marked as active as well.
+    And I click on "#user-menu-toggle" "css_element"
+    And I click on "Quick links" "link" in the "#usermenu-carousel" "css_element"
+    And I click on "Course list" "link" in the "#usermenu-carousel .carousel-item.active" "css_element"
+    And "//a[contains(@class, 'dropdown-item') and @aria-current = 'true' and normalize-space() = 'Test course 1']" "xpath_element" should exist in the "#usermenu-carousel .carousel-item.active" "css_element"
+    And "//a[contains(@class, 'dropdown-item') and @aria-current = 'true' and normalize-space() = 'Test course 2']" "xpath_element" should not exist in the "#usermenu-carousel .carousel-item.active" "css_element"
+
+  @javascript
   Scenario: Smartmenu: Menus: Presentation - Verify that the correct _custom_ menu item is displayed as active when viewing the custom menu item's page (Moodle core behaviour which must not be broken by the smart menus) (with JavaScript)
     Given the following "theme_boost_union > smart menu" exists:
       | title    | Quick links               |

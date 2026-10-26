@@ -443,7 +443,6 @@ function SmartMenuDropdownSubmenu({ node, istablist = false, gobacklabel = "" })
   const toggleId = `${id}-toggle`;
   const menuId = `${id}-menu`;
   const wrapperRef = useRef(null);
-  const selected = isNodeActive(node);
   useEffect(() => {
     const wrapper = wrapperRef.current;
     if (!wrapper) {
@@ -466,7 +465,6 @@ function SmartMenuDropdownSubmenu({ node, istablist = false, gobacklabel = "" })
             id: toggleId,
             className: joinClasses(
               "dropdown-item dropdown-toggle align-items-center",
-              selected && "active",
               toFlexDisplayClasses(node.classes)
             ),
             href: "#",
@@ -476,7 +474,6 @@ function SmartMenuDropdownSubmenu({ node, istablist = false, gobacklabel = "" })
             "aria-haspopup": "true",
             "aria-expanded": "false",
             "aria-controls": menuId,
-            "aria-current": selected ? "page" : void 0,
             ...toTooltipRecord(node, true),
             children: /* @__PURE__ */ jsxDEV("span", { className: "boost-union-smartmenu-toggle-label", dangerouslySetInnerHTML: { __html: node.text } }, void 0, false, {
               fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
@@ -488,7 +485,7 @@ function SmartMenuDropdownSubmenu({ node, istablist = false, gobacklabel = "" })
           false,
           {
             fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-            lineNumber: 704,
+            lineNumber: 706,
             columnNumber: 13
           },
           this
@@ -521,7 +518,7 @@ function SmartMenuDropdownSubmenu({ node, istablist = false, gobacklabel = "" })
     true,
     {
       fileName: "public/theme/boost_union/js/esm/src/nav/Nav.tsx",
-      lineNumber: 698,
+      lineNumber: 697,
       columnNumber: 9
     },
     this

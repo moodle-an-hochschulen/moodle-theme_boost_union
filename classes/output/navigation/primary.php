@@ -529,11 +529,16 @@ class primary extends \core\navigation\output\primary {
             }
 
             // If the child node is an array, the cast to an object above has created a copy of it. Write the flags
-            // which have been set on the copy back to the child node.
+            // which have been set on the copy back to the child node. This includes the children of the copy as the
+            // flags of the grandchildren (e.g. the courses of a dynamic courses item in submenu mode) have been set
+            // there by the recursive call.
             if (is_array($node->children[$c])) {
                 $node->children[$c]['isactive'] = $child->isactive ?? false;
                 if (isset($child->isopen)) {
                     $node->children[$c]['isopen'] = $child->isopen;
+                }
+                if (isset($child->children)) {
+                    $node->children[$c]['children'] = $child->children;
                 }
             }
         }
