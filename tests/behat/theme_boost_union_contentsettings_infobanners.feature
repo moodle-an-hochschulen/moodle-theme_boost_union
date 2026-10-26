@@ -62,6 +62,21 @@ Feature: Configuring the theme_boost_union plugin for the "Information banners" 
     And I am on login page
     Then I should not see "This is a test content"
 
+  Scenario: Setting: Information banners - Display info banner 1 on the Dashboard by default
+    Given the following config values are set as admin:
+      | config             | value                    | plugin            |
+      | infobanner1enabled | yes                      | theme_boost_union |
+      | infobanner1content | "This is a test content" | theme_boost_union |
+      | infobanner1mode    | perp                     | theme_boost_union |
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > Content" in site administration
+    And I click on "Info banner" "link" in the "#adminsettings .nav-tabs" "css_element"
+    Then the field "Page layouts to display info banner 1 on" matches value "Dashboard"
+    And I log out
+    When I log in as "teacher1"
+    And I follow "Dashboard"
+    Then I should see "This is a test content" in the "#themeboostunioninfobanner1" "css_element"
+
   Scenario: Setting: Information banners - Display info banner 1 with the different bootstrap color classes
     Given the following config values are set as admin:
       | config             | value                    | plugin            |
