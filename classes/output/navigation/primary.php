@@ -90,6 +90,8 @@ class primary extends \core\navigation\output\primary {
      *
      * To prevent this, every node is given both keys explicitly. The nodes are copied instead of being modified in
      * place as the very same node objects are also used to build the more menu and the bottom bar.
+     * Additionally, the nodes are re-indexed as Mustache does only treat arrays with sequential keys as lists
+     * and would otherwise render the children as a single context which results in the same recursion.
      *
      * @param array $nodes The menu nodes, given as arrays and/or objects.
      * @return array The normalized menu nodes.
@@ -97,7 +99,7 @@ class primary extends \core\navigation\output\primary {
     protected function normalize_menu_nodes(array $nodes): array {
         $normalized = [];
 
-        foreach ($nodes as $key => $node) {
+        foreach ($nodes as $node) {
             if (is_object($node)) {
                 $node = clone $node;
                 $node->children = $this->normalize_menu_nodes((array) ($node->children ?? []));
@@ -107,10 +109,27 @@ class primary extends \core\navigation\output\primary {
                 $node['haschildren'] = !empty($node['children']) ? 1 : 0;
             }
 
-            $normalized[$key] = $node;
+            $normalized[] = $node;
         }
 
         return $normalized;
+    }
+
+    /**
+     * Get the template data of the core primary navigation with the normalized mobile primary navigation nodes.
+     *
+     * This is used if no smart menus are built. In this case, the mobile primary navigation still contains the
+     * core primary navigation nodes which can contain divider nodes without 'haschildren' and 'children' keys,
+     * for example if a plugin adds a nested node with preceedwithhr set.
+     *
+     * @param renderer_base|null $output
+     * @return array
+     */
+    protected function export_core_for_template(?renderer_base $output = null): array {
+        $data = parent::export_for_template($output);
+        $data['mobileprimarynav'] = $this->normalize_menu_nodes($data['mobileprimarynav'] ?? []);
+
+        return $data;
     }
 
     /**
@@ -137,7 +156,7 @@ class primary extends \core\navigation\output\primary {
             // This will help to avoid hickups during a theme upgrade.
             $dbman = $DB->get_manager();
             if (!$dbman->table_exists('theme_boost_union_menus')) {
-                return parent::export_for_template($output);
+                return $this->export_core_for_template($output);
             }
         }
 
@@ -149,7 +168,7 @@ class primary extends \core\navigation\output\primary {
         $smartmenus = smartmenu::build_smartmenu();
         // Smartmenus not created, then fallback to core navigation.
         if (empty($smartmenus)) {
-            return parent::export_for_template($output);
+            return $this->export_core_for_template($output);
         }
 
         // Get the menus for the main menu loation.
