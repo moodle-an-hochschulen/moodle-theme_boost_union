@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r51
 
 * 2026-10-22 - Bugfix: Show the login link button as light button on the colored navbar variants as it had the same background color as the navbar and was not recognisable as a button, resolves #1452
 
