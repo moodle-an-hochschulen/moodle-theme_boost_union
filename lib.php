@@ -215,6 +215,10 @@ define('THEME_BOOST_UNION_SETTING_COURSEOVERVIEW_SHOWCOURSEIMAGES_SUMMARY', 'sum
 define('THEME_BOOST_UNION_SETTING_MARKLINKS_WHOLEPAGE', 'wholepage');
 define('THEME_BOOST_UNION_SETTING_MARKLINKS_COURSEMAIN', 'coursemain');
 
+define('THEME_BOOST_UNION_SETTING_LINKDECORATION_ONHOVER', 'onhover');
+define('THEME_BOOST_UNION_SETTING_LINKDECORATION_ALWAYS', 'always');
+define('THEME_BOOST_UNION_SETTING_LINKDECORATION_NEVER', 'never');
+
 define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_NONE', 0);
 define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_DOWNLOAD', 1);
 define('THEME_BOOST_UNION_SETTING_EXTSCSSSOURCE_GITHUB', 2);
@@ -991,6 +995,9 @@ function theme_boost_union_get_extra_scss($theme) {
 
     // Setting: Mark broken links.
     $content .= theme_boost_union_get_scss_to_mark_broken_links($theme);
+
+    // Setting: Link decoration.
+    $content .= theme_boost_union_get_scss_to_control_link_decoration($theme);
 
     // Setting: Course overview block.
     $content .= theme_boost_union_get_scss_courseoverview_block($theme);
