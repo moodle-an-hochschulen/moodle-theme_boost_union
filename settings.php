@@ -4640,6 +4640,30 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Setting: Link decoration.
+        $linkdecorationoptions = [
+                // Don't use string lazy loading (= false) because the string will be directly used and would produce a
+                // PHP warning otherwise.
+                THEME_BOOST_UNION_SETTING_LINKDECORATION_ONHOVER =>
+                        get_string('linkdecorationsetting_onhover', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_LINKDECORATION_ALWAYS =>
+                        get_string('linkdecorationsetting_always', 'theme_boost_union'),
+                THEME_BOOST_UNION_SETTING_LINKDECORATION_NEVER =>
+                        get_string('linkdecorationsetting_never', 'theme_boost_union'),
+        ];
+        $name = 'theme_boost_union/linkdecoration';
+        $title = get_string('linkdecorationsetting', 'theme_boost_union', null, true);
+        $description = get_string('linkdecorationsetting_desc', 'theme_boost_union', null, true);
+        $setting = new admin_setting_configselect(
+            $name,
+            $title,
+            $description,
+            THEME_BOOST_UNION_SETTING_LINKDECORATION_ONHOVER,
+            $linkdecorationoptions
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Add tab to settings page.
         $page->add($tab);
 
