@@ -683,6 +683,132 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $setting->set_updatedcallback('theme_reset_all_caches');
         $tab->add($setting);
 
+        // Heading: Background colors.
+        $name = 'theme_boost_union/backgroundcolorsheading';
+        $title = get_string('backgroundcolorsheading', 'theme_boost_union', null, true);
+        $setting = new admin_setting_heading($name, $title, null);
+        $tab->add($setting);
+
+        // Setting: Background color.
+        $name = 'theme_boost_union/backgroundcolor';
+        $title = get_string('backgroundcolor', 'theme_boost_union', null, true);
+        $description = get_string('backgroundcolor_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Background color (dark mode).
+        $name = 'theme_boost_union/backgroundcolordarkmode';
+        $title = get_string('backgroundcolordarkmode', 'theme_boost_union', null, true);
+        $description = get_string('backgroundcolordarkmode_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Section background color.
+        $name = 'theme_boost_union/sectionbackgroundcolor';
+        $title = get_string('sectionbackgroundcolor', 'theme_boost_union', null, true);
+        $description = get_string('sectionbackgroundcolor_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Section background color (dark mode).
+        $name = 'theme_boost_union/sectionbackgroundcolordarkmode';
+        $title = get_string('sectionbackgroundcolordarkmode', 'theme_boost_union', null, true);
+        $description = get_string('sectionbackgroundcolordarkmode_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Section border color.
+        $name = 'theme_boost_union/sectionbordercolor';
+        $title = get_string('sectionbordercolor', 'theme_boost_union', null, true);
+        $description = get_string('sectionbordercolor_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Section border color (dark mode).
+        $name = 'theme_boost_union/sectionbordercolordarkmode';
+        $title = get_string('sectionbordercolordarkmode', 'theme_boost_union', null, true);
+        $description = get_string('sectionbordercolordarkmode_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Activity item background color.
+        $name = 'theme_boost_union/activityitembackgroundcolor';
+        $title = get_string('activityitembackgroundcolor', 'theme_boost_union', null, true);
+        $description = get_string('activityitembackgroundcolor_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Activity item background color (dark mode).
+        $name = 'theme_boost_union/activityitembackgroundcolordarkmode';
+        $title = get_string('activityitembackgroundcolordarkmode', 'theme_boost_union', null, true);
+        $description = get_string('activityitembackgroundcolordarkmode_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Course index background color.
+        $name = 'theme_boost_union/courseindexbackgroundcolor';
+        $title = get_string('courseindexbackgroundcolor', 'theme_boost_union', null, true);
+        $description = get_string('courseindexbackgroundcolor_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Course index background color (dark mode).
+        $name = 'theme_boost_union/courseindexbackgroundcolordarkmode';
+        $title = get_string('courseindexbackgroundcolordarkmode', 'theme_boost_union', null, true);
+        $description = get_string('courseindexbackgroundcolordarkmode_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Block drawer background color.
+        $name = 'theme_boost_union/blockdrawerbackgroundcolor';
+        $title = get_string('blockdrawerbackgroundcolor', 'theme_boost_union', null, true);
+        $description = get_string('blockdrawerbackgroundcolor_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
+        // Setting: Block drawer background color (dark mode).
+        $name = 'theme_boost_union/blockdrawerbackgroundcolordarkmode';
+        $title = get_string('blockdrawerbackgroundcolordarkmode', 'theme_boost_union', null, true);
+        $description = get_string('blockdrawerbackgroundcolordarkmode_desc', 'theme_boost_union', null, true);
+        $description .=
+            theme_boost_union_render_setting_override_notification(THEME_BOOST_UNION_SETTING_TARGETPLATFORM_LMSMWP, false);
+        $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $tab->add($setting);
+
         // Heading: Brand colors.
         $name = 'theme_boost_union/brandcolorsheading';
         $title = get_string('brandcolorsheading', 'theme_boost_union', null, true);

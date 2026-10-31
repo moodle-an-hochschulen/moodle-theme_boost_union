@@ -1706,6 +1706,27 @@ body.theme-boost-union-commincourse {
     }
 }
 
+/* Moodle core gives the close buttons in the drawer headers (the .drawertoggle buttons, see the .drawerheader
+   .draweractions .btn rule in theme/boost/scss/moodle/drawer.scss) a persistent background color of --bs-gray-200 (and a
+   --bs-gray-400 background on hover). This matches the course index (left) drawer background (--bs-gray-200) so that its
+   close button blends into the drawer, but it does not match the block drawer (right) drawer background (--bs-gray-100)
+   so that its close button stands out there.
+   The course index close button already follows a configured course index background color (courseindexbackgroundcolor
+   setting and its flavour override) automatically, as that color overrides --bs-gray-200 within the left drawer scope,
+   which is exactly the variable Moodle core uses for the button background.
+   For the block drawer, we let the close button use the block drawer background (--bs-gray-100) instead, so that it
+   blends into the drawer just like the course index close button does. We use the gray-100 variable (rather than a fixed
+   color) so that the button follows a configured block drawer background color (blockdrawerbackgroundcolor setting and
+   its flavour override) as well, as that color overrides --bs-gray-100 within the right drawer scope. The hover
+   background is darkened by two gray steps (gray-100 -> gray-300), mirroring Moodle core's gray-200 -> gray-400 step. */
+.drawer.drawer-right .drawerheader .draweractions .btn {
+    background-color: var(--#{$prefix}gray-100);
+
+    &:hover {
+        background-color: var(--#{$prefix}gray-300);
+    }
+}
+
 /* Finally, we take care of the drawers if outside block regions are shown.
    On large screens, Moodle core anchors the course index drawer and the block drawer next to the main content area and
    below the page title on pages with limited width (see theme/boost/scss/moodle/drawer.scss and layout.scss).
