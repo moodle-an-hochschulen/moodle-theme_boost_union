@@ -1994,6 +1994,51 @@ function theme_boost_union_get_scss_to_mark_broken_links($theme) {
 }
 
 /**
+ * Returns the SCSS code to control the decoration of text links within the content area.
+ *
+ * @param \core\output\theme_config $theme The theme config object.
+ * @return string
+ */
+function theme_boost_union_get_scss_to_control_link_decoration($theme) {
+    // Initialize SCSS snippet.
+    $scss = '';
+
+    // Get the link decoration setting.
+    $linkdecorationconfig = get_config('theme_boost_union', 'linkdecoration');
+
+    // Depending on the configured link decoration.
+    switch ($linkdecorationconfig) {
+        case THEME_BOOST_UNION_SETTING_LINKDECORATION_ALWAYS:
+            // Always underline the text links within the content area.
+            // Please note: The $link-decoration SCSS variable from Bootstrap cannot be used here
+            // as Moodle core sets it to 'none' in its preset already and expects the underline on hover
+            // to be controlled by the $link-hover-decoration SCSS variable.
+            // Thus, the decoration has to be set directly here.
+            $scss .= '#region-main a {
+                text-decoration: underline;
+            }';
+            break;
+
+        case THEME_BOOST_UNION_SETTING_LINKDECORATION_NEVER:
+            // Never underline the text links within the content area, not even when they are hovered.
+            $scss .= '#region-main a,
+                    #region-main a:hover {
+                text-decoration: none;
+            }';
+            break;
+
+        case THEME_BOOST_UNION_SETTING_LINKDECORATION_ONHOVER:
+        default:
+            // Underline the text links within the content area when they are hovered.
+            // That's exactly how Moodle core presents the links (by using the $link-decoration and
+            // $link-hover-decoration SCSS variables), so there is nothing to add here.
+            break;
+    }
+
+    return $scss;
+}
+
+/**
  * Returns the SCSS to add an envelope symbol in front of mailto links to mark them visually.
  *
  * @param \core\output\theme_config $theme The theme config object.

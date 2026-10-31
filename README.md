@@ -456,6 +456,10 @@ With this setting, you control the scope where Boost Union should mark mailto li
 
 Adds a "broken chain" icon in front of broken links (which lead to uploaded draft files which have not been properly processed) and marks the link in the bootstrap color for "danger".
 
+###### Link decoration
+
+With this setting, you control if and how text links within the content area (i.e. not in the navigation areas) are decorated. By default, Moodle core underlines text links when they are hovered. However, you can also always underline them or never underline them.
+
 #### Tab "Miscellaneous"
 
 In this tab there are the following settings:
