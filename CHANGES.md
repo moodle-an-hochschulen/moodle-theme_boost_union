@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-11-20 - Improvement: Allow to define own background colors, resolves #1466.
 * 2026-11-20 - Cleanup: Remove the unused file serving of the 'snippets' file area from theme_boost_union_pluginfile(), as uploaded SCSS snippets are stored in and served from the 'uploadedsnippets' file area.
 * 2026-11-20 - Improvement: Unlock the session before serving the logo, favicon and other theme setting files as well as the flavour logo and favicon files, as parallel requests of the same user were blocked during the file serving otherwise.
 * 2026-11-20 - Cleanup: Remove the unused function coursesettings::get_course_filearea_names().
