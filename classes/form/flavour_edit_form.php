@@ -222,6 +222,41 @@ class flavour_edit_form extends \moodleform {
             \theme_boost_union\recommendation\manager::render_recommendation_notification('slasharguments')
         );
 
+        // Add background colors heading.
+        $context = new \stdClass();
+        $context->title = get_string('backgroundcolorsheading', 'theme_boost_union', null, true);
+        $mform->addElement(
+            'html',
+            '<div id="adminsettings">' . $OUTPUT->render_from_template('core_admin/setting_heading', $context) . '</div>'
+        );
+
+        // Add the background color colorpicker elements.
+        // The keys are the (abbreviated) flavour field names and the values are the string identifiers which are used for the
+        // field label and the help button.
+        $backgroundcolorfields = [
+            'look_bgcolor' => 'flavoursbackgroundcolor',
+            'look_bgcolordark' => 'flavoursbackgroundcolordarkmode',
+            'look_sectionbgcolor' => 'flavourssectionbackgroundcolor',
+            'look_sectionbgcolordark' => 'flavourssectionbackgroundcolordarkmode',
+            'look_sectionbordercolor' => 'flavourssectionbordercolor',
+            'look_sectionbordercolordark' => 'flavourssectionbordercolordarkmode',
+            'look_courseindexbgcolor' => 'flavourscourseindexbackgroundcolor',
+            'look_courseindexbgcolordark' => 'flavourscourseindexbackgroundcolordarkmode',
+            'look_blockdrawerbgcolor' => 'flavoursblockdrawerbackgroundcolor',
+            'look_blockdrawerbgcolordark' => 'flavoursblockdrawerbackgroundcolordarkmode',
+        ];
+        foreach ($backgroundcolorfields as $fieldname => $stringid) {
+            $mform->addElement(
+                'theme_boost_union_colorpicker',
+                $fieldname,
+                get_string($stringid, 'theme_boost_union'),
+                ['id' => 'colourpicker_' . $fieldname]
+            );
+            $mform->setType($fieldname, PARAM_TEXT);
+            $mform->addRule($fieldname, get_string('validateerror', 'admin'), 'theme_boost_union_colorpicker_rule');
+            $mform->addHelpButton($fieldname, $stringid, 'theme_boost_union');
+        }
+
         // Add brand colors heading.
         $context = new \stdClass();
         $context->title = get_string('brandcolorsheading', 'theme_boost_union', null, true);
