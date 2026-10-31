@@ -1268,6 +1268,91 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2026100500, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2026100501) {
+        // Define table theme_boost_union_flavours to be altered.
+        $table = new xmldb_table('theme_boost_union_flavours');
+
+        // Define the background color fields which allow flavours to override the respective Boost Union look settings.
+        // Note: The field names are abbreviated (bg = background, dark = dark mode) to stay within the 30 characters limit
+        // for database field names.
+        $fields = [
+            new xmldb_field('look_bgcolor', XMLDB_TYPE_CHAR, '32', null, null, null, null, 'look_navbartint'),
+            new xmldb_field('look_bgcolordark', XMLDB_TYPE_CHAR, '32', null, null, null, null, 'look_bgcolor'),
+            new xmldb_field('look_sectionbgcolor', XMLDB_TYPE_CHAR, '32', null, null, null, null, 'look_bgcolordark'),
+            new xmldb_field('look_sectionbgcolordark', XMLDB_TYPE_CHAR, '32', null, null, null, null, 'look_sectionbgcolor'),
+            new xmldb_field(
+                'look_sectionbordercolor',
+                XMLDB_TYPE_CHAR,
+                '32',
+                null,
+                null,
+                null,
+                null,
+                'look_sectionbgcolordark'
+            ),
+            new xmldb_field(
+                'look_sectionbordercolordark',
+                XMLDB_TYPE_CHAR,
+                '32',
+                null,
+                null,
+                null,
+                null,
+                'look_sectionbordercolor'
+            ),
+            new xmldb_field(
+                'look_courseindexbgcolor',
+                XMLDB_TYPE_CHAR,
+                '32',
+                null,
+                null,
+                null,
+                null,
+                'look_sectionbordercolordark'
+            ),
+            new xmldb_field(
+                'look_courseindexbgcolordark',
+                XMLDB_TYPE_CHAR,
+                '32',
+                null,
+                null,
+                null,
+                null,
+                'look_courseindexbgcolor'
+            ),
+            new xmldb_field(
+                'look_blockdrawerbgcolor',
+                XMLDB_TYPE_CHAR,
+                '32',
+                null,
+                null,
+                null,
+                null,
+                'look_courseindexbgcolordark'
+            ),
+            new xmldb_field(
+                'look_blockdrawerbgcolordark',
+                XMLDB_TYPE_CHAR,
+                '32',
+                null,
+                null,
+                null,
+                null,
+                'look_blockdrawerbgcolor'
+            ),
+        ];
+
+        // Conditionally launch add field for each of the new background color fields.
+        foreach ($fields as $field) {
+            if (!$dbman->field_exists($table, $field)) {
+                $dbman->add_field($table, $field);
+            }
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2026100501, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();

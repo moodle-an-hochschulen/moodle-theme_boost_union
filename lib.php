@@ -906,6 +906,142 @@ function theme_boost_union_get_extra_scss($theme) {
     $content .= "background-attachment: fixed;";
     $content .= '}';
 
+    // Helper to resolve the effective value of a background color setting. It returns the global Boost Union setting value
+    // unless a flavour applies to this page and overrides the setting with a non-empty value of its own.
+    // The $flavourfield parameter is the (abbreviated) field name of the setting in the mdl_theme_boost_union_flavours table.
+    $resolvebackgroundcolor = function (string $configkey, string $flavourfield) use ($flavourid) {
+        // Get the global config value for the given config key.
+        $value = get_config('theme_boost_union', $configkey);
+        // If any flavour applies to this page.
+        if ($flavourid != null) {
+            // Get the flavour config value for the given flavour id and override the global value if the flavour sets one.
+            $flavourvalue = theme_boost_union_get_flavour_config_item_for_flavourid($flavourid, $flavourfield);
+            if (!empty($flavourvalue)) {
+                $value = $flavourvalue;
+            }
+        }
+        return $value;
+    };
+
+    // Setting: Background color.
+    // Boost Union allows to override the page's background color, which is given out by Boost / Bootstrap via the
+    // --bs-body-bg CSS variable. We override this variable here instead of styling the body directly so that all places
+    // which rely on --bs-body-bg pick up the configured color as well.
+    // The color for the light color mode (and for the case that the color modes are disabled) and the color for the dark
+    // color mode are configured and applied separately.
+    $backgroundcolor = $resolvebackgroundcolor('backgroundcolor', 'look_bgcolor');
+    if (!empty($backgroundcolor)) {
+        // Set the background color for the light color mode (and for the case that the color modes are disabled).
+        // We set both the --bs-body-bg variable and its RGB triplet counterpart --bs-body-bg-rgb (which is used by
+        // Bootstrap utility classes like .bg-body) so that the configured color bleeds into these as well.
+        $content .= ':root:not([data-bs-theme="dark"]) { ';
+        $content .= '--#{$prefix}body-bg: ' . $backgroundcolor . ';';
+        $content .= '--#{$prefix}body-bg-rgb: #{to-rgb(' . $backgroundcolor . ')};';
+        $content .= '}';
+    }
+    $backgroundcolordarkmode = $resolvebackgroundcolor('backgroundcolordarkmode', 'look_bgcolordark');
+    if (!empty($backgroundcolordarkmode)) {
+        // Set the background color for the dark color mode.
+        $content .= ':root[data-bs-theme="dark"] { ';
+        $content .= '--#{$prefix}body-bg: ' . $backgroundcolordarkmode . ';';
+        $content .= '--#{$prefix}body-bg-rgb: #{to-rgb(' . $backgroundcolordarkmode . ')};';
+        $content .= '}';
+    }
+
+    // Setting: Section background color and section border color.
+    // Boost Union allows to override the background color and the border color of the course sections. Boost / Moodle core
+    // give these colors out via CSS variables: the section background color via --bs-white (on the .course-section
+    // .section-item element), via --bs-gray-100 (on the nested .section-content-inner element) and via --mds-bg-surface-subtle
+    // (on the .activity-item element), and the section border color via --bs-gray-200 (on the section elements) and via
+    // --mds-border-subtle (on the .activity-item element).
+    // We override these CSS variables themselves (instead of setting the background-color and the border-color declarations
+    // on the section and activity elements only) so that the configured colors bleed into all the other components which rely
+    // on the same variables as well.
+    // The colors for the light color mode (and for the case that the color modes are disabled) and the colors for the dark
+    // color mode are configured and applied separately.
+    $sectionbackgroundcolor = $resolvebackgroundcolor('sectionbackgroundcolor', 'look_sectionbgcolor');
+    if (!empty($sectionbackgroundcolor)) {
+        // Set the section background color for the light color mode (and for the case that the color modes are disabled).
+        $content .= ':root:not([data-bs-theme="dark"]) { ';
+        $content .= '--#{$prefix}white: ' . $sectionbackgroundcolor . ';';
+        $content .= '--#{$prefix}gray-100: ' . $sectionbackgroundcolor . ';';
+        $content .= '--mds-bg-surface-subtle: ' . $sectionbackgroundcolor . ';';
+        $content .= '}';
+    }
+    $sectionbackgroundcolordarkmode = $resolvebackgroundcolor('sectionbackgroundcolordarkmode', 'look_sectionbgcolordark');
+    if (!empty($sectionbackgroundcolordarkmode)) {
+        // Set the section background color for the dark color mode.
+        $content .= ':root[data-bs-theme="dark"] { ';
+        $content .= '--#{$prefix}white: ' . $sectionbackgroundcolordarkmode . ';';
+        $content .= '--#{$prefix}gray-100: ' . $sectionbackgroundcolordarkmode . ';';
+        $content .= '--mds-bg-surface-subtle: ' . $sectionbackgroundcolordarkmode . ';';
+        $content .= '}';
+    }
+    $sectionbordercolor = $resolvebackgroundcolor('sectionbordercolor', 'look_sectionbordercolor');
+    if (!empty($sectionbordercolor)) {
+        // Set the section border color for the light color mode (and for the case that the color modes are disabled).
+        $content .= ':root:not([data-bs-theme="dark"]) { ';
+        $content .= '--#{$prefix}gray-200: ' . $sectionbordercolor . ';';
+        $content .= '--mds-border-subtle: ' . $sectionbordercolor . ';';
+        $content .= '}';
+    }
+    $sectionbordercolordarkmode = $resolvebackgroundcolor('sectionbordercolordarkmode', 'look_sectionbordercolordark');
+    if (!empty($sectionbordercolordarkmode)) {
+        // Set the section border color for the dark color mode.
+        $content .= ':root[data-bs-theme="dark"] { ';
+        $content .= '--#{$prefix}gray-200: ' . $sectionbordercolordarkmode . ';';
+        $content .= '--mds-border-subtle: ' . $sectionbordercolordarkmode . ';';
+        $content .= '}';
+    }
+
+    // Setting: Course index background color.
+    // Boost Union allows to override the background color of the course index (i.e. the left drawer). Boost / Moodle core
+    // give this color out on the .drawer.drawer-left element via the --bs-gray-200 CSS variable. That variable is also used
+    // for the section border color (see above) and all over the place, so we must not override it globally here. Instead, we
+    // override the --bs-gray-200 variable scoped to the course index drawer so that the configured color bleeds into the
+    // drawer background as well as into all the gray-200-based borders inside the course index.
+    // The colors for the light color mode (and for the case that the color modes are disabled) and the colors for the dark
+    // color mode are configured and applied separately.
+    $courseindexbackgroundcolor = $resolvebackgroundcolor('courseindexbackgroundcolor', 'look_courseindexbgcolor');
+    if (!empty($courseindexbackgroundcolor)) {
+        // Set the course index background color for the light color mode (and for the case that the color modes are disabled).
+        $content .= ':root:not([data-bs-theme="dark"]) .drawer.drawer-left { ';
+        $content .= '--#{$prefix}gray-200: ' . $courseindexbackgroundcolor . ';';
+        $content .= '}';
+    }
+    $courseindexbackgroundcolordarkmode =
+            $resolvebackgroundcolor('courseindexbackgroundcolordarkmode', 'look_courseindexbgcolordark');
+    if (!empty($courseindexbackgroundcolordarkmode)) {
+        // Set the course index background color for the dark color mode.
+        $content .= ':root[data-bs-theme="dark"] .drawer.drawer-left { ';
+        $content .= '--#{$prefix}gray-200: ' . $courseindexbackgroundcolordarkmode . ';';
+        $content .= '}';
+    }
+
+    // Setting: Block drawer background color.
+    // Boost Union allows to override the background color of the block drawer (i.e. the right drawer). Boost / Moodle core
+    // give this color out on the .drawer.drawer-right element via the --bs-gray-100 CSS variable. That variable is also used
+    // for the section background color (see above) and all over the place, so we must not override it globally here. Instead,
+    // we override the --bs-gray-100 variable scoped to the block drawer so that the configured color bleeds into the drawer
+    // background as well as into all the gray-100-based elements inside the block drawer.
+    // The colors for the light color mode (and for the case that the color modes are disabled) and the colors for the dark
+    // color mode are configured and applied separately.
+    $blockdrawerbackgroundcolor = $resolvebackgroundcolor('blockdrawerbackgroundcolor', 'look_blockdrawerbgcolor');
+    if (!empty($blockdrawerbackgroundcolor)) {
+        // Set the block drawer background color for the light color mode (and for the case that the color modes are disabled).
+        $content .= ':root:not([data-bs-theme="dark"]) .drawer.drawer-right { ';
+        $content .= '--#{$prefix}gray-100: ' . $blockdrawerbackgroundcolor . ';';
+        $content .= '}';
+    }
+    $blockdrawerbackgroundcolordarkmode =
+            $resolvebackgroundcolor('blockdrawerbackgroundcolordarkmode', 'look_blockdrawerbgcolordark');
+    if (!empty($blockdrawerbackgroundcolordarkmode)) {
+        // Set the block drawer background color for the dark color mode.
+        $content .= ':root[data-bs-theme="dark"] .drawer.drawer-right { ';
+        $content .= '--#{$prefix}gray-100: ' . $blockdrawerbackgroundcolordarkmode . ';';
+        $content .= '}';
+    }
+
     // One more thing: Boost Union is also capable of overriding the background image and background image position in its flavours.
     // So, if any flavour applies to this page.
     if ($flavourid != null) {

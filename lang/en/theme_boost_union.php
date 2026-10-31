@@ -231,6 +231,44 @@ $string['backgroundimagesetting_desc'] = 'Here, you can upload a custom image to
 // ... ... Setting: Background image position
 $string['backgroundimagepositionsetting'] = 'Background image position';
 $string['backgroundimagepositionsetting_desc'] = 'With this setting, you control the positioning of the background image within the browser window. The first value is the horizontal position, the second value is the vertical position.';
+// ... Section: Background colors.
+$string['backgroundcolorsheading'] = 'Background colors';
+// ... ... Setting: Background color.
+$string['backgroundcolor'] = 'Background color';
+$string['backgroundcolor_desc'] = 'The background color for the site.';
+// ... ... Setting: Background color (dark mode).
+$string['backgroundcolordarkmode'] = 'Background color (dark mode)';
+$string['backgroundcolordarkmode_desc'] = 'The background color for the site for dark mode';
+// ... ... Setting: Section background color.
+$string['sectionbackgroundcolor'] = 'Section background color';
+$string['sectionbackgroundcolor_desc'] = 'The section background color for the site.';
+// ... ... Setting: Section background color (dark mode).
+$string['sectionbackgroundcolordarkmode'] = 'Section background color (dark mode)';
+$string['sectionbackgroundcolordarkmode_desc'] = 'The section background color for the site for dark mode';
+// ... ... Setting: Section border color.
+$string['sectionbordercolor'] = 'Section border color';
+$string['sectionbordercolor_desc'] = 'The section border color for the site.';
+// ... ... Setting: Section border color (dark mode).
+$string['sectionbordercolordarkmode'] = 'Section border color (dark mode)';
+$string['sectionbordercolordarkmode_desc'] = 'The section border color for the site for dark mode';
+// ... ... Setting: Activity item background color.
+$string['activityitembackgroundcolor'] = 'Activity item background color';
+$string['activityitembackgroundcolor_desc'] = 'The activity item background color for the site.';
+// ... ... Setting: Activity item background color (dark mode).
+$string['activityitembackgroundcolordarkmode'] = 'Activity item background color (dark mode)';
+$string['activityitembackgroundcolordarkmode_desc'] = 'The activity item background color for the site for dark mode';
+// ... ... Setting: Course index background color.
+$string['courseindexbackgroundcolor'] = 'Course index background color';
+$string['courseindexbackgroundcolor_desc'] = 'The course index background color for the site.';
+// ... ... Setting: Course index background color (dark mode).
+$string['courseindexbackgroundcolordarkmode'] = 'Course index background color (dark mode)';
+$string['courseindexbackgroundcolordarkmode_desc'] = 'The course index background color for the site for dark mode';
+// ... ... Setting: Block drawer background color.
+$string['blockdrawerbackgroundcolor'] = 'Block drawer background color';
+$string['blockdrawerbackgroundcolor_desc'] = 'The block drawer background color for the site.';
+// ... ... Setting: Block drawer background color (dark mode).
+$string['blockdrawerbackgroundcolordarkmode'] = 'Block drawer background color (dark mode)';
+$string['blockdrawerbackgroundcolordarkmode_desc'] = 'The block drawer background color for the site for dark mode';
 // ... Section: Brand colors.
 $string['brandcolorsheading'] = 'Brand colors';
 // ... ... Setting: Primary brand color.
@@ -1781,8 +1819,28 @@ $string['flavoursapplytocohorts_ids'] = 'Cohorts';
 $string['flavoursapplytocohorts_ids_help'] = 'Here, you define one or more particular cohorts which this flavour should be applied to. As soon as the user is a member of one of the configured cohorts, the flavour is applied.<br /><br />Please note that, if you define more than one cohorts, there is no need for the user to be a member of all of them at the same time.<br /><br />Please also note that at the current state of implementation category cohorts are treated just as if they were system cohorts.';
 $string['flavoursbackgroundimage'] = 'Background image';
 $string['flavoursbackgroundimage_help'] = 'With this setting, the flavour will override the background image which is configured in Boost Union\'s look settings.';
+$string['flavoursbackgroundcolor'] = 'Background color';
+$string['flavoursbackgroundcolor_help'] = 'With this setting, the flavour will override the background color which is configured in Boost Union\'s look settings.';
+$string['flavoursbackgroundcolordarkmode'] = 'Background color (dark mode)';
+$string['flavoursbackgroundcolordarkmode_help'] = 'With this setting, the flavour will override the background color for dark mode which is configured in Boost Union\'s look settings.';
 $string['flavoursbackgroundimageposition'] = 'Background image position';
 $string['flavoursbackgroundimageposition_help'] = 'With this setting, the flavour will override the background image position which is configured in Boost Union\'s look settings.';
+$string['flavoursblockdrawerbackgroundcolor'] = 'Block drawer background color';
+$string['flavoursblockdrawerbackgroundcolor_help'] = 'With this setting, the flavour will override the block drawer background color which is configured in Boost Union\'s look settings.';
+$string['flavoursblockdrawerbackgroundcolordarkmode'] = 'Block drawer background color (dark mode)';
+$string['flavoursblockdrawerbackgroundcolordarkmode_help'] = 'With this setting, the flavour will override the block drawer background color for dark mode which is configured in Boost Union\'s look settings.';
+$string['flavourscourseindexbackgroundcolor'] = 'Course index background color';
+$string['flavourscourseindexbackgroundcolor_help'] = 'With this setting, the flavour will override the course index background color which is configured in Boost Union\'s look settings.';
+$string['flavourscourseindexbackgroundcolordarkmode'] = 'Course index background color (dark mode)';
+$string['flavourscourseindexbackgroundcolordarkmode_help'] = 'With this setting, the flavour will override the course index background color for dark mode which is configured in Boost Union\'s look settings.';
+$string['flavourssectionbackgroundcolor'] = 'Section background color';
+$string['flavourssectionbackgroundcolor_help'] = 'With this setting, the flavour will override the section background color which is configured in Boost Union\'s look settings.';
+$string['flavourssectionbackgroundcolordarkmode'] = 'Section background color (dark mode)';
+$string['flavourssectionbackgroundcolordarkmode_help'] = 'With this setting, the flavour will override the section background color for dark mode which is configured in Boost Union\'s look settings.';
+$string['flavourssectionbordercolor'] = 'Section border color';
+$string['flavourssectionbordercolor_help'] = 'With this setting, the flavour will override the section border color which is configured in Boost Union\'s look settings.';
+$string['flavourssectionbordercolordarkmode'] = 'Section border color (dark mode)';
+$string['flavourssectionbordercolordarkmode_help'] = 'With this setting, the flavour will override the section border color for dark mode which is configured in Boost Union\'s look settings.';
 $string['flavoursbacktooverview'] = 'Back to flavour overview';
 $string['flavoursbootstrapcolordanger'] = 'Bootstrap color for "Danger"';
 $string['flavoursbootstrapcolordanger_help'] = 'With this setting, the flavour will override the Bootstrap "danger" color which is configured in Boost Union\'s look settings.';
