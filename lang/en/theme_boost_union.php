@@ -1175,6 +1175,12 @@ $string['markmailtolinksscopesetting_desc'] = 'With this setting, you control th
 // ... ... Setting: Mark broken links.
 $string['markbrokenlinkssetting'] = 'Mark broken links';
 $string['markbrokenlinkssetting_desc'] = 'Adds a "broken chain" icon in front of broken links (which lead to uploaded draft files which have not been properly processed) and marks the link in the bootstrap color for "danger". In contrast to the "Mark external links" and "Mark mailto links" settings, there is no possibility to limit the scope of this setting as marking broken links is an indicator that something is broken and has to be fixed manually.';
+// ... ... Setting: Link decoration.
+$string['linkdecorationsetting'] = 'Link decoration';
+$string['linkdecorationsetting_desc'] = 'With this setting, you control if and how text links within the content area (i.e. not in the navigation areas) are decorated. By default, Moodle core underlines text links when they are hovered. However, you can also always underline them or never underline them.';
+$string['linkdecorationsetting_onhover'] = 'Underline on hover';
+$string['linkdecorationsetting_always'] = 'Always underlined';
+$string['linkdecorationsetting_never'] = 'Never underlined';
 
 // Settings: Misc tab.
 $string['misctab'] = 'Miscellaneous';
