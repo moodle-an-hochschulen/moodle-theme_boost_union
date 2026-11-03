@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.3-r1
 
 * 2026-10-26 - Status of the Boost Union 5.3 release:
                Please note: The Boost Union 5.3 release is generally working and usable in a way that we did not want to hold the release back any longer. We are still working on improvements and tests on 5.3 and will publish new releases as improvements and fixed are realized. Against this background, test the 5.3 release on your particular instance as usual and if you encounter any issues with Boost Union on 5.3, please report them as usual on https://github.com/moodle-an-hochschulen/moodle-theme_boost_union/issues.
