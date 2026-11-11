@@ -4,6 +4,11 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-11-07 - Improvement: Remove the flag to purge the smart menus cache instead of resetting it to an empty value and only if it is set, as a preference row was left behind for every user who had ever seen a smart menu otherwise; Existing reset flags are removed during the upgrade, relates to #1472
+* 2026-11-07 - Bugfix: Reset the flag to purge the flavours cache after the flavours cache has been purged, as the flag which is set when a user is added to or removed from a cohort which is used by a flavour was never reset and the flavours cache was purged on every page load for this user afterwards, existing flags are removed during the upgrade, resolves #1472
+
 ### v5.1-r27
 
 * 2026-10-22 - Bugfix: Let a subsection follow the section appearance setting of the section in which it is placed, as the subsections in section 0 lost their collapse toggle if the sections ≥ 1 were shown without collapsing and the subsections were not collapsed by default if their section was configured to be collapsed by default, resolves #1454
