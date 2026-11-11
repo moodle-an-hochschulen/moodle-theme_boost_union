@@ -73,6 +73,10 @@ function theme_boost_union_get_flavour_which_applies() {
         if (get_user_preferences('theme_boost_union_flavours_purgesessioncache', false) == true) {
             // Purge the flavours cache for this user.
             \core_cache\helper::purge_by_definition('theme_boost_union', 'flavours');
+
+            // Remove the flag again as the flavours cache has to be purged only once after the user's cohort
+            // membership has changed. Otherwise, the flavours cache would be purged on every page load.
+            unset_user_preference('theme_boost_union_flavours_purgesessioncache');
         }
 
         // Create cache for flavours.

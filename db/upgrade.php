@@ -1268,6 +1268,28 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2026100500, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2026100501) {
+        // Remove all flags to purge the flavours cache from the user preferences.
+        // These flags were never reset after the flavours cache had been purged, so that the flavours cache was purged
+        // on every page load for all users who had been added to or removed from a cohort which is used by a flavour.
+        // Removing the flags is safe as the flavours cache is a session cache which is rebuilt after the next login anyway.
+        $DB->delete_records('user_preferences', ['name' => 'theme_boost_union_flavours_purgesessioncache']);
+
+        // Remove all reset flags to purge the smart menus cache from the user preferences.
+        // These flags were reset to false (which is stored as an empty string) instead of being removed, so that a preference
+        // row was left behind for every user who had ever seen a smart menu. Flags which are still set to 1 are kept as their
+        // purge is still pending.
+        // The value column is a text column which must be compared with sql_compare_text().
+        $DB->delete_records_select(
+            'user_preferences',
+            'name = :name AND ' . $DB->sql_compare_text('value') . ' <> :pending',
+            ['name' => 'theme_boost_union_menu_purgesessioncache', 'pending' => '1']
+        );
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2026100501, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
