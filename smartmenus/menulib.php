@@ -676,9 +676,10 @@ class smartmenu_helper {
             unset($SESSION->theme_boost_union_menu_purgesessioncache);
 
             // Otherwise.
-        } else {
-            // Remove the user preference to clear all the menu and item caches.
-            set_user_preference('theme_boost_union_menu_purgesessioncache', false, $USER);
+        } else if (get_user_preferences('theme_boost_union_menu_purgesessioncache') !== null) {
+            // Remove the user preference to clear all the menu and item caches, but only if it exists.
+            // This way, we neither write to the database on every page load nor leave a preference row behind.
+            unset_user_preference('theme_boost_union_menu_purgesessioncache', $USER);
         }
     }
 
