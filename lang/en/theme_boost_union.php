@@ -2218,7 +2218,12 @@ $string['recommendation_mwpextension_summary'] = 'The Boost Union MWP extension 
 $string['recommendation_mwpextension_description'] = 'Boost Union has detected that this Moodle instance is running on Moodle Workplace™ as the tool_tenant plugin is installed. However, the Boost Union MWP extension is not installed. Without this extension, Boost Union but will lack essential Moodle Workplace™ widgets and won\'t have any support for tenants.<br /><br />But don\'t worry, there is the Boost Union MWP edition which provides full Moodle Workplace™ support and which is maintained by Boost Union co-maintainer bdecent. If you want to use Boost Union on Moodle Workplace™, you can find all details on the <a href="https://bdecent.de/union" target="_blank">bdecent product presentation page</a>.';
 
 // Privacy API.
-$string['privacy:metadata'] = 'The Boost Union theme does not store any personal data about any user.';
+$string['privacy:flavourspurgesessioncache'] = 'The cached flavour which applies to the user will be determined again on the next page load, as the user has been added to or removed from a cohort which is used by a flavour.';
+$string['privacy:infobannerdismissed'] = 'The user has dismissed info banner {$a}.';
+$string['privacy:menupurgesessioncache'] = 'The cached smart menus of the user will be built again on the next page load, as the user\'s roles, course completions, profile or session language have changed.';
+$string['privacy:metadata:preference:flavourspurgesessioncache'] = 'A flag to purge the user\'s flavours cache on the next page load after the user has been added to or removed from a cohort which is used by a flavour.';
+$string['privacy:metadata:preference:infobannerdismissed'] = 'The user\'s preference for hiding a dismissible info banner after the user has dismissed it.';
+$string['privacy:metadata:preference:menupurgesessioncache'] = 'A flag to purge the user\'s smart menus cache on the next page load after the user\'s roles, course completions, profile or session language have changed.';
 
 // Capabilities.
 $string['boost_union:configure'] = 'To be able to configure the theme as non-admin';
