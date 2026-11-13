@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v5.3-r2
 
 * 2026-11-13 - Upstream change: Adopt changes from MDL-90110 to cache the editor content CSS in MUC when it is served by the flavours stylesheet script.\
                Please note: This change raises the required Moodle core version to 5.3.1
