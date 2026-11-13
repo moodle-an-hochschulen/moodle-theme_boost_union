@@ -4,7 +4,7 @@ moodle-theme_boost_union
 Changes
 -------
 
-### Unreleased
+### v4.5-r52
 
 * 2026-11-12 - Bugfix: Declare and export the user preferences which are stored by the theme (dismissed info banners and the flags to purge the flavours and smart menus caches) in the privacy provider, as the privacy provider was declared as null provider and these preferences were neither listed in the privacy registry nor contained in user data exports, resolves #1475
 * 2026-11-07 - Improvement: Remove the flag to purge the smart menus cache instead of resetting it to an empty value and only if it is set, as a preference row was left behind for every user who had ever seen a smart menu otherwise; Existing reset flags are removed during the upgrade, relates to #1472
