@@ -93,8 +93,21 @@ function theme_boost_union_get_flavour_which_applies() {
             $pagecategoryid = 0;
         }
 
-        // Get the cached flavour for the current user and the page category ID.
-        $cachedflavour = $cache->get($pagecategoryid);
+        // Allow child themes / plugins to extend the flavours session cache key
+        // (e.g. multi-tenancy) so stale entries are not reused across contexts.
+        $flavourcachekey = (string) $pagecategoryid;
+        $pluginsfunction = get_plugins_with_function('extend_flavour_cache_key', 'lib.php');
+        foreach ($pluginsfunction as $plugins) {
+            foreach ($plugins as $function) {
+                $extra = $function();
+                if ($extra !== null && $extra !== '' && $extra !== false) {
+                    $flavourcachekey .= '_' . (string) $extra;
+                }
+            }
+        }
+
+        // Get the cached flavour for the current user and the (possibly extended) cache key.
+        $cachedflavour = $cache->get($flavourcachekey);
 
         // If we got a cached flavour.
         if ($cachedflavour !== false) {
@@ -157,7 +170,7 @@ function theme_boost_union_get_flavour_which_applies() {
                             $appliedflavour = $f;
 
                             // Store the flavour into the cache.
-                            $cache->set($pagecategoryid, $f);
+                            $cache->set($flavourcachekey, $f);
 
                             // Remember the fact that the flavour has been checked for subsequent runs of this function.
                             $flavourchecked = true;
@@ -173,7 +186,7 @@ function theme_boost_union_get_flavour_which_applies() {
                             $appliedflavour = $f;
 
                             // Store the flavour into the cache.
-                            $cache->set($pagecategoryid, $f);
+                            $cache->set($flavourcachekey, $f);
 
                             // Remember the fact that the flavour has been checked for subsequent runs of this function.
                             $flavourchecked = true;
@@ -209,7 +222,7 @@ function theme_boost_union_get_flavour_which_applies() {
                             $appliedflavour = $f;
 
                             // Store the flavour into the cache.
-                            $cache->set($pagecategoryid, $f);
+                            $cache->set($flavourcachekey, $f);
 
                             // Remember the fact that the flavour has been checked for subsequent runs of this function.
                             $flavourchecked = true;
@@ -220,13 +233,27 @@ function theme_boost_union_get_flavour_which_applies() {
                     }
                 }
             }
+
+            // Allow child themes / plugins to declare that this flavour applies
+            // (checked after categories and cohorts; first match still wins).
+            $pluginsfunction = get_plugins_with_function('flavour_applies', 'lib.php');
+            foreach ($pluginsfunction as $plugins) {
+                foreach ($plugins as $function) {
+                    if ($function($f) === true) {
+                        $appliedflavour = $f;
+                        $cache->set($flavourcachekey, $f);
+                        $flavourchecked = true;
+                        return $appliedflavour;
+                    }
+                }
+            }
         }
 
         // If we haven't found any flavour which applies to the given page output, remember null as flavour object.
         $appliedflavour = null;
 
         // Store the flavour into the cache.
-        $cache->set($pagecategoryid, null);
+        $cache->set($flavourcachekey, null);
 
         // Remember the fact that the flavour has been checked for subsequent runs of this function.
         $flavourchecked = true;
