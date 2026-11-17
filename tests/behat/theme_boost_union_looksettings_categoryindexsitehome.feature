@@ -157,7 +157,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value          | plugin            |
       | courselistingpresentation | <coursevalue>  | theme_boost_union |
-      | courselistinghowimage     | <settingvalue> | theme_boost_union |
+      | courselistingshowimage     | <settingvalue> | theme_boost_union |
     When I log in as "student1"
     And I am on site homepage
     # Check the 'Combo list' view on site home as a whole
@@ -190,7 +190,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value           | plugin            |
       | courselistingpresentation | <coursevalue>   | theme_boost_union |
-      | courselistinghowimage     | <imagevalue>    | theme_boost_union |
+      | courselistingshowimage     | <imagevalue>    | theme_boost_union |
       | courselistingshowcontacts | <contactsvalue> | theme_boost_union |
     And the following "users" exist:
       | username | firstname | lastname |
@@ -237,7 +237,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value | plugin            |
       | courselistingpresentation | cards | theme_boost_union |
-      | courselistinghowimage     | yes   | theme_boost_union |
+      | courselistingshowimage     | yes   | theme_boost_union |
       | courselistingshowcontacts | yes   | theme_boost_union |
     And the following "users" exist:
       | username | firstname | lastname |
@@ -263,7 +263,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value          | plugin            |
       | courselistingpresentation | <coursevalue>  | theme_boost_union |
-      | courselistinghowshortname | <settingvalue> | theme_boost_union |
+      | courselistingshowshortname | <settingvalue> | theme_boost_union |
     When I log in as "student1"
     And I am on site homepage
     # Check the 'Combo list' view on site home as a whole
@@ -295,7 +295,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value         | plugin            |
       | courselistingpresentation | <coursevalue> | theme_boost_union |
-      | courselistinghowshortname | yes           | theme_boost_union |
+      | courselistingshowshortname | yes           | theme_boost_union |
     When I log in as "student1"
     And I am on the "CATA" category page
     Then "<selector>" "css_element" should exist in the ".course_category_tree" "css_element"
@@ -311,7 +311,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value          | plugin            |
       | courselistingpresentation | <coursevalue>  | theme_boost_union |
-      | courselistinghowcategory  | <settingvalue> | theme_boost_union |
+      | courselistingshowcategory  | <settingvalue> | theme_boost_union |
     When I log in as "student1"
     And I am on site homepage
     # Check the 'Combo list' view on site home as a whole
@@ -343,7 +343,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value         | plugin            |
       | courselistingpresentation | <coursevalue> | theme_boost_union |
-      | courselistinghowcategory  | yes           | theme_boost_union |
+      | courselistingshowcategory  | yes           | theme_boost_union |
     When I log in as "student1"
     And I am on the "CATA" category page
     Then "<selector>" "css_element" should exist in the ".course_category_tree" "css_element"
@@ -359,7 +359,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value          | plugin            |
       | courselistingpresentation | <coursevalue>  | theme_boost_union |
-      | courselistinghowprogress  | <settingvalue> | theme_boost_union |
+      | courselistingshowprogress  | <settingvalue> | theme_boost_union |
     And the following "activities" exist:
       | activity | name              | course | completion |
       | assign   | Activity sample 1 | C1     | 1          |
@@ -396,7 +396,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value         | plugin            |
       | courselistingpresentation | <coursevalue> | theme_boost_union |
-      | courselistinghowprogress  | yes           | theme_boost_union |
+      | courselistingshowprogress  | yes           | theme_boost_union |
     And the following "activities" exist:
       | activity | name              | course | completion |
       | assign   | Activity sample 1 | C1     | 1          |
@@ -416,7 +416,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                     | value         | plugin            |
       | courselistingpresentation  | <coursevalue> | theme_boost_union |
-      | courselistinghowprogress   | yes           | theme_boost_union |
+      | courselistingshowprogress   | yes           | theme_boost_union |
       | courselistingprogressstyle | <style>       | theme_boost_union |
     And the following "activities" exist:
       | activity | name              | course | completion |
@@ -440,7 +440,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                     | value          | plugin            |
       | courselistingpresentation  | <coursevalue>  | theme_boost_union |
-      | courselistinghowenrolicons | <settingvalue> | theme_boost_union |
+      | courselistingshowenrolicons | <settingvalue> | theme_boost_union |
     And the following config values are set as admin:
       | config           | value |
       | guestloginbutton | 1     |
@@ -492,7 +492,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                     | value         | plugin            |
       | courselistingpresentation  | <coursevalue> | theme_boost_union |
-      | courselistinghowenrolicons | yes           | theme_boost_union |
+      | courselistingshowenrolicons | yes           | theme_boost_union |
     And the following config values are set as admin:
       | config           | value |
       | guestloginbutton | 1     |
@@ -751,7 +751,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value          | plugin            |
       | courselistingpresentation | <coursevalue>  | theme_boost_union |
-      | courselistinghowgoto      | <settingvalue> | theme_boost_union |
+      | courselistingshowgoto      | <settingvalue> | theme_boost_union |
     When I log in as "student1"
     And I am on site homepage
     # Check the 'Combo list' view on site home as a whole
@@ -784,7 +784,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value         | plugin            |
       | courselistingpresentation | <coursevalue> | theme_boost_union |
-      | courselistinghowgoto      | yes           | theme_boost_union |
+      | courselistingshowgoto      | yes           | theme_boost_union |
     When I log in as "student1"
     And I am on the "CATA" category page
     Then "<selector>" "css_element" should exist in the ".course_category_tree" "css_element"
@@ -801,7 +801,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value          | plugin            |
       | courselistingpresentation | <coursevalue>  | theme_boost_union |
-      | courselistinghowpopup     | <settingvalue> | theme_boost_union |
+      | courselistingshowpopup     | <settingvalue> | theme_boost_union |
     When I log in as "student1"
     And I am on site homepage
     # Check the 'Combo list' view on site home as a whole
@@ -834,7 +834,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value          | plugin            |
       | courselistingpresentation | <coursevalue>  | theme_boost_union |
-      | courselistinghowpopup     | yes            | theme_boost_union |
+      | courselistingshowpopup     | yes            | theme_boost_union |
     When I log in as "student1"
     And I am on site homepage
     # Check the 'Combo list' view on site home as a whole
@@ -890,7 +890,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value | plugin            |
       | courselistingpresentation | cards | theme_boost_union |
-      | courselistinghowpopup     | yes   | theme_boost_union |
+      | courselistingshowpopup     | yes   | theme_boost_union |
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I navigate to "Settings" in current page administration
@@ -916,7 +916,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value | plugin            |
       | courselistingpresentation | cards | theme_boost_union |
-      | courselistinghowpopup     | yes   | theme_boost_union |
+      | courselistingshowpopup     | yes   | theme_boost_union |
     And the following "users" exist:
       | username | firstname | lastname |
       | teacher1 | John      | Doe      |
@@ -946,7 +946,7 @@ Feature: Configuring the theme_boost_union plugin for the "Category index / site
     Given the following config values are set as admin:
       | config                    | value | plugin            |
       | courselistingpresentation | cards | theme_boost_union |
-      | courselistinghowpopup     | yes   | theme_boost_union |
+      | courselistingshowpopup     | yes   | theme_boost_union |
       | courselistingshowfields   | yes   | theme_boost_union |
     And the following "custom field categories" exist:
       | name          | component   | area   | itemid |
