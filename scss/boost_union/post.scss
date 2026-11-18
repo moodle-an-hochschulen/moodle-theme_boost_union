@@ -2838,25 +2838,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     }
 }
 
-/* The menu bar itself. */
-.theme-boost-union-smartmenu .navbar.fixed-top.boost-union-menubar {
-    /* Height and background color for the top header.
-       The background color follows the body background color which is the same light grey in the light color mode
-       and which becomes dark in the dark color mode. */
-    height: $bu-smartmenu-menubar-height;
-    border-bottom: 0;
-    background-color: var(--#{$prefix}body-bg);
-
-    /* The menu bar is placed above the navbar (which has Bootstrap's z-index for fixed elements) so that its
-       dropdowns are shown above the navbar. */
-    z-index: $zindex-fixed + 1;
-
-    /* The exact copy of the core block above gives the list items the navbar height. Within the menu bar, they
-       must not be higher than the menu bar. */
-    .primarynav-navbar .more-nav li.nav-item {
-        height: $bu-smartmenu-menubar-height;
-    }
-}
+/* The menu bar itself is styled in scss/boost_union/smartmenus/location_menubar.scss which is added by the menu bar
+   smart menu location provider (see \theme_boost_union\smartmenu\location\menubar) after this file. */
 
 /*---------------------------------------
  * Page layout with menu bar shown
@@ -2960,77 +2943,8 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
  * User menu location
  --------------------------------------*/
 
-/* Smart menus in the user menu are rendered with Moodle core's user menu templates and are styled by Moodle core's
-   user menu styling (see theme/boost/scss/moodle/navbar.scss). Only the items of the submenus need some care. */
-.theme-boost-union-smartmenu #usermenu-carousel .submenu {
-    /* Moodle core separates the submenu header from the items with a divider which has a bottom margin. If the menu
-       description or a heading item (which both have a grey background) is the first element below the divider, the
-       margin is removed so that the grey background starts directly below the divider (like it starts directly at the
-       top of the dropdowns in the main navigation). */
-    .dropdown-divider:has(+ .items > .menu-description:first-child, + .items > .menu-item-heading:first-child) {
-        margin-bottom: 0;
-    }
-
-    /* If the menu help icon is the first element below the divider, the margin is removed as well and is given to
-       the help icon as padding instead (see the menu help icon rule below). The space above the help icon is the same
-       then, but it is within the items container now. */
-    .dropdown-divider:has(+ .items > .menu-helpicon:first-child) {
-        margin-bottom: 0;
-    }
-}
-
-/* Moodle core prevents the items in the user menu from wrapping and truncates them with an ellipsis instead (see
-   theme/boost/scss/moodle/navbar.scss). This does not work for the smart menu items as their title is wrapped in flex
-   containers (to place the icon next to the possibly multi-line title): The ellipsis is not shown, and the title runs
-   below the caret of the submenu links (as the items are clipped only at their padding edge) or is cut off.
-   Thus, long smart menu item titles are allowed to wrap, like in the main navigation and in the menu bar. The right
-   padding which Moodle core gives the items keeps the space for the caret free. */
-.theme-boost-union-smartmenu #usermenu-carousel .dropdown-item.boost-union-smartmenuitem {
-    white-space: normal;
-}
-
-/* The items container of a submenu in the user menu. For the smart menus, a submenu holds the second level (the items
-   of the smart menu) or the third level (the children of an item in submenu mode) of a smart menu. Besides the items,
-   the container holds the menu help icon and the menu description of the smart menu on the second level. */
-.theme-boost-union-smartmenu #usermenu-carousel .submenu .items {
-    /* Moodle core indents the items of the submenus always (with the 'ps-5' class in the template) to make room for
-       the tick of the active item. Within the smart menus, the items are indented only if an item is active and
-       marked with a tick, like in the main navigation. Thus, the indentation is removed here if no item is active and
-       the menu description is indented if an item is active.
-       The active item is detected with the 'dropdown-item-active' class which Moodle core's JavaScript adds to the
-       dropdown items with aria-current="true" (the attribute selector itself cannot be used within :has() as this
-       triggers PHP warnings in scssphp).
-       The template keeps the 'ps-5' class of Moodle core on purpose. This way, the submenus of the user menu which are
-       not smart menus (like the language menu) keep Moodle core's indentation, also if no smart menu is shown on the
-       page at all. As the 'ps-5' class uses !important, the reset has to use !important as well. */
-    &:not(:has(.dropdown-item-active)) {
-        .dropdown-item {
-            padding-left: .75rem !important; /* stylelint-disable-line declaration-no-important */
-        }
-    }
-    &:has(.dropdown-item-active) {
-        .menu-description {
-            padding-left: map-get($spacers, 5);
-        }
-    }
-
-    /* The menu description and the menu help icon get the horizontal padding which Moodle core gives the dropdown
-       items in the user menu explicitly (see theme/boost/scss/moodle/navbar.scss) to be aligned with the items. */
-    .menu-description {
-        padding-left: .75rem;
-        padding-right: 1.75rem;
-    }
-    .menu-helpicon {
-        padding-right: calc(1.75rem - #{map-get($spacers, 2)});
-    }
-
-    /* The items container clips its content as it is scrollable. If the menu help icon is the first element in the
-       container, the top of the focus outline of the help icon would be cut off. The help icon gets the margin of the
-       divider above (which is removed, see the divider rule above) as padding to keep the outline visible. */
-    .menu-helpicon:first-child {
-        padding-top: var(--#{$prefix}dropdown-divider-margin-y);
-    }
-}
+/* The smart menus in the user menu are styled in scss/boost_union/smartmenus/location_usermenu.scss which is added by
+   the user menu smart menu location provider (see \theme_boost_union\smartmenu\location\usermenu) after this file. */
 
 
 /*=======================================

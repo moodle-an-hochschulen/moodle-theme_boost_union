@@ -31,6 +31,7 @@ require_once($CFG->libdir . '/formslib.php');
 require_once($CFG->dirroot . '/cohort/lib.php');
 
 use theme_boost_union\smartmenu;
+use theme_boost_union\smartmenu\provider_registry;
 
 /**
  * Form for editing or adding a smart menu item.
@@ -77,7 +78,16 @@ class smartmenu_edit_form extends \moodleform {
         $mform->setExpanded('structureheader');
 
         // Add locations as autocompletefield.
-        $locationtypes = smartmenu::get_locations();
+        $locationtypes = provider_registry::get_location_options();
+        // If the menu is assigned to locations which do not exist (anymore), e.g. as the plugin which provides the location
+        // has been uninstalled, keep them as options. Otherwise, they would get lost silently as soon as the menu is saved.
+        if (isset($this->_customdata['menu'])) {
+            foreach ((array) (json_decode($this->_customdata['menu']->location ?? '') ?: []) as $locationkey) {
+                if (!isset($locationtypes[$locationkey])) {
+                    $locationtypes[$locationkey] = get_string('smartmenusproviderunknown', 'theme_boost_union', $locationkey);
+                }
+            }
+        }
         $location = $mform->addElement(
             'autocomplete',
             'location',
@@ -87,6 +97,12 @@ class smartmenu_edit_form extends \moodleform {
         $mform->addHelpButton('location', 'smartmenusmenulocation', 'theme_boost_union');
         $location->setMultiple(true);
         $mform->addRule('location', get_string('required'), 'required');
+
+        // Add the form elements of the location providers.
+        // The elements of a provider are hidden automatically as long as its location is not selected.
+        foreach (provider_registry::get_locations() as $provider) {
+            $provider->add_menu_form_elements($mform, $this->_customdata ?? []);
+        }
 
         // Add mode as select element.
         $modeoptions = smartmenu::get_mode_options();
@@ -103,12 +119,46 @@ class smartmenu_edit_form extends \moodleform {
         );
         $mform->setExpanded('presentationheader');
 
-        // Add type as select element.
-        $types = smartmenu::get_types();
-        $mform->addElement('select', 'type', get_string('smartmenusmenutype', 'theme_boost_union'), $types);
-        $mform->setDefault('type', smartmenu::TYPE_LIST);
-        $mform->setType('type', PARAM_INT);
-        $mform->addHelpButton('type', 'smartmenusmenutype', 'theme_boost_union');
+        // Add presentation as select element.
+        $presentations = provider_registry::get_presentation_options();
+        // If the menu uses a presentation which does not exist (anymore), e.g. as the plugin which provides the presentation
+        // has been uninstalled, keep it as option. Otherwise, it would get lost silently as soon as the menu is saved.
+        if (
+            isset($this->_customdata['menu']) &&
+                !empty($this->_customdata['menu']->presentation) &&
+                !isset($presentations[$this->_customdata['menu']->presentation])
+        ) {
+            $presentations[$this->_customdata['menu']->presentation] = get_string(
+                'smartmenusproviderunknown',
+                'theme_boost_union',
+                $this->_customdata['menu']->presentation
+            );
+        }
+        $mform->addElement(
+            'select',
+            'presentation',
+            get_string('smartmenusmenutype', 'theme_boost_union'),
+            $presentations
+        );
+        $mform->setDefault('presentation', smartmenu::PRESENTATION_LIST);
+        $mform->setType('presentation', PARAM_ALPHANUM);
+        $mform->addHelpButton('presentation', 'smartmenusmenutype', 'theme_boost_union');
+
+        // Hide the menu mode as soon as a presentation is selected which does not support the inline mode.
+        // Menus with such a presentation are always shown as submenu, so the menu mode would not have any effect.
+        // (As the menu mode is not submitted when it is hidden, the form falls back to the default menu mode then.
+        // So, a menu with such a presentation is stored with the submenu mode as soon as it is saved).
+        foreach (provider_registry::get_presentations() as $key => $provider) {
+            if (!$provider->menu_supports_inline_mode()) {
+                $mform->hideIf('mode', 'presentation', 'eq', $key);
+            }
+        }
+
+        // Add the form elements of the presentation providers.
+        // The elements of a provider are hidden automatically as long as its presentation is not selected.
+        foreach (provider_registry::get_presentations() as $provider) {
+            $provider->add_menu_form_elements($mform, $this->_customdata ?? []);
+        }
 
         // Add show description as select element.
         $showdescriptionoptions = smartmenu::get_showdescription_options();
@@ -133,6 +183,24 @@ class smartmenu_edit_form extends \moodleform {
         $mform->setDefault('moremenubehavior', smartmenu::MOREMENU_DONOTCHANGE);
         $mform->setType('moremenubehavior', PARAM_INT);
         $mform->addHelpButton('moremenubehavior', 'smartmenusmenumoremenubehavior', 'theme_boost_union');
+
+        // Hide the more menu behavior as long as no location is selected which supports it.
+        // The setting only has an effect at locations which collapse their menus into a "More" menu.
+        // The location element is a multi-select. For multi-selects, the 'in' condition is fulfilled if the selected
+        // values are a subset of the given values. So, the element is hidden as soon as only locations which do not
+        // support the setting (or no location at all, which is represented by an empty value) are selected.
+        // (As the more menu behavior is not submitted when it is hidden, the form falls back to the default more menu
+        // behavior then).
+        $nomoremenukeys = [''];
+        foreach (array_keys($locationtypes) as $locationkey) {
+            $provider = provider_registry::get_location($locationkey);
+            if ($provider === null || !$provider->menu_supports_moremenu_behavior()) {
+                $nomoremenukeys[] = $locationkey;
+            }
+        }
+        // Please note: The dependency has to be defined on the name of the HTML element, which is 'location[]' for the
+        // multi-select, as the form JavaScript matches the dependencies by the name attributes of the elements.
+        $mform->hideIf('moremenubehavior', 'location[]', 'in', $nomoremenukeys);
 
         // Add CSS class as input element.
         $mform->addElement('text', 'cssclass', get_string('smartmenusmenucssclass', 'theme_boost_union'));
@@ -327,6 +395,66 @@ class smartmenu_edit_form extends \moodleform {
         // Validate the smart menu location is filled.
         if (empty($data['location'])) {
             $errors['location'] = get_string('required');
+        }
+
+        // Get the presentation provider which is selected in the form.
+        // A presentation which does not exist (anymore) cannot be validated, the variable is null then.
+        $presentation = provider_registry::get_presentation((string) ($data['presentation'] ?? ''));
+
+        // Get the keys of the locations which are selected in the form as strings.
+        $selectedlocationkeys = [];
+        foreach ((array) ($data['location'] ?? []) as $selectedlocationkey) {
+            $selectedlocationkeys[] = (string) $selectedlocationkey;
+        }
+
+        // Get the location providers which are selected in the form, keyed by their keys.
+        // Locations which do not exist (anymore) cannot be validated and are skipped this way,
+        // as only the locations which are known to the registry are picked.
+        $locations = [];
+        foreach (provider_registry::get_locations() as $locationkey => $location) {
+            if (in_array((string) $locationkey, $selectedlocationkeys, true)) {
+                $locations[$locationkey] = $location;
+            }
+        }
+
+        // Validate that the selected presentation and the selected locations support each other.
+        if ($presentation !== null && !isset($errors['location'])) {
+            foreach ($locations as $location) {
+                if (!provider_registry::is_supported_combination($presentation, $location)) {
+                    $errors['location'] = get_string(
+                        'smartmenusprovidernotsupportedforlocation',
+                        'theme_boost_union',
+                        ['presentation' => $presentation->get_name(), 'location' => $location->get_name()]
+                    );
+                    break;
+                }
+            }
+        }
+
+        // Validate that the inline mode is supported by the selected locations.
+        // (Presentations which do not support the inline mode are not validated here. They are shown as submenu
+        // anyway and the menu mode is hidden in the form as soon as such a presentation is selected. The hidden
+        // menu mode is not submitted by the browser then, but the presentation is checked here nevertheless to
+        // be safe if the menu mode is submitted anyway. Otherwise, the error would be set on a hidden element).
+        if (
+            ($data['mode'] ?? null) == smartmenu::MODE_INLINE &&
+            ($presentation === null || $presentation->menu_supports_inline_mode())
+        ) {
+            foreach ($locations as $location) {
+                if (!$location->menu_supports_inline_mode()) {
+                    $errors['mode'] = get_string(
+                        'smartmenuslocationnoinline',
+                        'theme_boost_union',
+                        $location->get_name()
+                    );
+                    break;
+                }
+            }
+        }
+
+        // Let the selected providers validate their form elements.
+        foreach (array_merge($presentation !== null ? [$presentation] : [], array_values($locations)) as $provider) {
+            $errors = array_merge($errors, $provider->menu_form_validation($data, $files));
         }
 
         // Return errors.

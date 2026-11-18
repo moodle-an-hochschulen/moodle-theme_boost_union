@@ -31,8 +31,9 @@ use xmldb_table;
 use cache;
 use core\output\html_writer;
 use context_course;
+use theme_boost_union\smartmenu\provider_registry;
 
-require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
 
 /**
  * The item controller handles actions related to managing items.
@@ -452,6 +453,11 @@ class smartmenu_item {
      * @return stdclass Items data in updated format.
      */
     public function update_item_valuesformat($itemdata) {
+        // Decode the settings of the location and presentation providers.
+        foreach (smartmenu::PROVIDERDATA_FIELDS as $datafield) {
+            $itemdata->{$datafield} = smartmenu::decode_providerdata($itemdata->{$datafield} ?? null);
+        }
+
         // Verify the format is already updated.
         if (!is_scalar($itemdata->category)) {
             return $itemdata;
@@ -488,6 +494,12 @@ class smartmenu_item {
             $this->reorder_items();
             // Delete the cache.
             $this->delete_cache();
+
+            // Inform all providers (and not only the ones which are currently used by the menu, as the item may
+            // still hold data of providers which have been used before).
+            foreach (provider_registry::get_all_providers() as $provider) {
+                $provider->item_deleted((int) $this->id);
+            }
 
             return true;
         }
@@ -632,10 +644,17 @@ class smartmenu_item {
      * @return void
      */
     public function duplicate() {
+        $olditemid = $this->id;
         $record = $this->item;
         $record->id = 0;
         // Create instance.
-        if (self::manage_instance($record)) {
+        // The provider data of the item is copied as it is.
+        if ($newitemid = self::manage_instance($record)) {
+            // Inform the providers that the item has been duplicated.
+            foreach (provider_registry::get_all_providers() as $provider) {
+                $provider->item_duplicated((int) $olditemid, (int) $newitemid);
+            }
+
             \core\notification::success(get_string('smartmenusmenuitemduplicatesuccess', 'theme_boost_union'));
         }
     }
@@ -988,6 +1007,15 @@ class smartmenu_item {
     protected function generate_dynamic_item() {
         global $DB;
 
+        // If the item should be shown as submenu, but the presentation of the menu does not support items with
+        // submenus, the item is not shown at all.
+        if (
+            $this->item->mode == self::MODE_SUBMENU &&
+                !provider_registry::get_menu_presentation($this->menu)->item_supports_submenu_mode()
+        ) {
+            return [];
+        }
+
         $query = (object) [
             'select' => ['c.*'],
             'join' => [],
@@ -1092,7 +1120,8 @@ class smartmenu_item {
                 [],
                 $sortdata,
                 $itemclasses,
-                $coursenamesecond
+                $coursenamesecond,
+                $record
             );
         }
 
@@ -1714,6 +1743,7 @@ class smartmenu_item {
      * @param array $sortdata The string to be used for sorting the items.
      * @param array $itemclasses List of additional css classes for the menu item node.
      * @param string|null $secondline The second line text for the item, used for dynamic course menu items.
+     * @param \stdClass|null $course The course record if the node represents a course of a dynamic courses item.
      *
      * @return array An associative array of node data for the item.
      */
@@ -1727,7 +1757,8 @@ class smartmenu_item {
         $children = [],
         $sortdata = [],
         $itemclasses = [],
-        $secondline = null
+        $secondline = null,
+        $course = null
     ) {
 
         global $OUTPUT;
@@ -1825,6 +1856,18 @@ class smartmenu_item {
         if ($itemtype == 'divider' || preg_match("/^#+$/", format_string($title))) {
             $data['divider'] = true;
         }
+
+        // Let the presentation of the menu decorate the item node.
+        $presentation = provider_registry::get_menu_presentation($this->menu);
+        $presentation->decorate_item_node(
+            $data,
+            $this->item,
+            $this->menu,
+            $presentation->get_data($this->item),
+            $presentation->get_data($this->menu),
+            $course
+        );
+
         return $data;
     }
 
@@ -2142,12 +2185,35 @@ class smartmenu_item {
      *
      *
      * @param stdclass $formdata
-     * @return bool
+     * @param bool $processproviders Whether the data comes from the smart menu item edit form and the location and
+     *                               presentation providers of the menu have to process their form elements.
+     *                               Otherwise, the provider data is taken as it is from $formdata->locationdata and
+     *                               $formdata->presentationdata (if given).
+     * @return int The ID of the menu item.
      */
-    public static function manage_instance($formdata) {
+    public static function manage_instance($formdata, bool $processproviders = false) {
         global $DB;
 
         $record = $formdata;
+
+        foreach (smartmenu::PROVIDERDATA_FIELDS as $datafield) {
+            if (!property_exists($formdata, $datafield)) {
+                continue;
+            }
+
+            // If the data does not come from the smart menu item edit form (e.g. when an item is duplicated), the provider
+            // data is given directly as decoded array and is encoded here for storing it.
+            // If it is not given at all, the provider data which is stored for an existing item is not touched.
+            if (!$processproviders) {
+                $record->{$datafield} = json_encode((object) smartmenu::decode_providerdata($formdata->{$datafield}));
+
+                // Otherwise, the provider data is built from the form elements of the providers below.
+                // The form does not submit the provider data fields themselves, but remove them to be sure that
+                // they are never written unencoded.
+            } else {
+                unset($record->{$datafield});
+            }
+        }
 
         // Do not persist mailto-only fields for other menu item types.
         // While the values should be stored as null by default for other types as well,
@@ -2248,9 +2314,80 @@ class smartmenu_item {
             smartmenu::invalidate_shared_cache($menucache);
         }
 
+        // Let the providers which are used by the menu of the item process their form elements and store their settings.
+        // The settings of providers which are not used by the menu (anymore) are kept.
+        if ($processproviders) {
+            // Get the menu of the item to know which providers are used.
+            $menu = smartmenu::get_menu($formdata->menu);
+
+            // Get the provider data which is currently stored for the item.
+            $stored = $DB->get_record(
+                'theme_boost_union_menuitems',
+                ['id' => $itemid],
+                'id, ' . implode(', ', smartmenu::PROVIDERDATA_FIELDS),
+                MUST_EXIST
+            );
+
+            // Decode the stored provider data of both data fields.
+            $providerdata = [];
+            foreach (smartmenu::PROVIDERDATA_FIELDS as $datafield) {
+                $providerdata[$datafield] = smartmenu::decode_providerdata($stored->{$datafield});
+            }
+
+            // Let each provider process its form elements and replace its part of the provider data with the result.
+            foreach (provider_registry::get_menu_providers($menu) as $provider) {
+                $providerdata[$provider->get_data_field()][$provider->get_key()] =
+                    $provider->item_form_process_data($formdata, (int) $itemid, $menu);
+            }
+
+            // Encode the provider data of both data fields again.
+            foreach (smartmenu::PROVIDERDATA_FIELDS as $datafield) {
+                $stored->{$datafield} = json_encode((object) $providerdata[$datafield]);
+            }
+
+            // Store the provider data of the item.
+            $DB->update_record('theme_boost_union_menuitems', $stored);
+        }
+
         $transaction->allow_commit();
 
-        return true;
+        return $itemid;
+    }
+
+    /**
+     * Add the stored settings of the providers to a menu item record for editing it with the smart menu item edit form.
+     *
+     * The settings are stored per provider in the locationdata and presentationdata fields of the menu item
+     * (e.g. {"card": {"imagealt": "..."}}), whereas the form expects one value per form element
+     * (e.g. prescard_imagealt). This function converts the former to the latter.
+     * It is the counterpart of the processing of the provider form elements in manage_instance().
+     *
+     * In contrast to smartmenu::add_provider_form_data(), only the settings of the providers which are used by the menu
+     * of the item are added, as the presentation and the locations cannot be changed in the item form.
+     *
+     * @param \stdClass $menu The menu record of the item as returned by smartmenu::get_menu().
+     * @param \stdClass|null $record The menu item record as returned by get_item() or null if a new item is created.
+     * @return \stdClass The data for the form.
+     */
+    public static function add_provider_form_data(\stdClass $menu, ?\stdClass $record = null): \stdClass {
+        // If a new item is created, start with an empty item record.
+        // The providers are called nevertheless as they may have to prepare form elements of new items as well
+        // (e.g. the draft area of a file manager).
+        $record = $record ?? (object) ['id' => 0, 'menu' => $menu->id];
+
+        // Iterate over the presentation provider and the location providers of the menu.
+        foreach (provider_registry::get_menu_providers($menu) as $provider) {
+            // Let the provider prepare its stored settings for the form.
+            // It gets its own part of the provider data and returns the values keyed by its (prefixed) element names.
+            $providerformdata = $provider->item_form_prepare_data($record, $menu, $provider->get_data($record));
+
+            // Add the values to the record which is passed to the form.
+            foreach ($providerformdata as $name => $value) {
+                $record->{$name} = $value;
+            }
+        }
+
+        return $record;
     }
 
     /**

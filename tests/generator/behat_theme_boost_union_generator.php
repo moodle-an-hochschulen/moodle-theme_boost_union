@@ -32,6 +32,11 @@ class behat_theme_boost_union_generator extends behat_generator_base {
      * Currently supported entities:
      * - "smart menus" - Requires a location, supports all options.
      *   - Most properties can be specified as they appear on the editing form.
+     *   - "presentation" is the name of the presentation type as it appears on the editing form.
+     *   - "locationdata" holds the settings of the location providers as JSON string, keyed by the keys of the
+     *     location providers (for example, {"testlocation": {"label": "My label"}}).
+     *   - "presentationdata" holds the settings of the presentation providers as JSON string, keyed by the keys of
+     *     the presentation providers (for example, {"card": {"cardsize": 2}}).
      *   - "location", "roles", "cohorts" and "languages" support multiple values as a comma-separated list.
      *   - "roles" are specified by shortname, "cohorts" are specified by idnumber and "languages" are specified by
      *     short code (for example, en, de).
@@ -86,7 +91,7 @@ class behat_theme_boost_union_generator extends behat_generator_base {
                 'switchids' => [
                     'location' => 'location',
                     'showdescription' => 'showdescription',
-                    'type' => 'type',
+                    'presentation' => 'presentation',
                     'mode' => 'mode',
                     'moremenubehavior' => 'moremenubehavior',
                     'roles' => 'roles',
@@ -178,13 +183,14 @@ class behat_theme_boost_union_generator extends behat_generator_base {
     }
 
     /**
-     * Given a comma-separated list of location strings, return an array of location IDs.
+     * Given a comma-separated list of location strings, return an array of location keys.
      *
-     * @param string $locations A comma-separated list of locations, must be strings from the smartmenu::get_locations() array.
+     * @param string $locations A comma-separated list of locations, must be strings from the
+     *                          provider_registry::get_location_options() array.
      * @return array
      */
     protected function get_location_id(string $locations): array {
-        $locationoptions = smartmenu::get_locations();
+        $locationoptions = \theme_boost_union\smartmenu\provider_registry::get_location_options();
         $locationids = [];
         foreach (explode(',', $locations) as $location) {
             $location = trim($location);
@@ -212,14 +218,20 @@ class behat_theme_boost_union_generator extends behat_generator_base {
     }
 
     /**
-     * Return the ID for the given menu type.
+     * Return the key for the given menu presentation.
      *
-     * @param string $type
-     * @return int
+     * @param string $presentation
+     * @return string
      * @throws Exception
      */
-    protected function get_type_id(string $type): int {
-        return $this->option_id('type', $type, smartmenu::get_types());
+    protected function get_presentation_id(string $presentation): string {
+        $options = \theme_boost_union\smartmenu\provider_registry::get_presentation_options();
+        $key = array_search(trim($presentation), $options);
+        if ($key === false) {
+            throw new Exception("Invalid presentation: '{$presentation}'. Allowed values are '" .
+                implode("', '", $options) . "'");
+        }
+        return (string) $key;
     }
 
     /**

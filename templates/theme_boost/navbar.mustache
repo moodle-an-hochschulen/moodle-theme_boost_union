@@ -61,16 +61,12 @@
     Modifications compared to the original template:
     * Added the possibility to change navbar color.
     * Include button for off-canvas region.
-    * Added menu bar section.
+    * Added the smart menu slots above and below the navbar (the smart menu menu bar is rendered into the slot above the navbar).
     * Added the possibility to use an alternative logo link URL.
     * Added the possibility to set a maximal width for the sitename in the navbar to prevent layout breaking on medium-width screens.
 }}
 
-{{#menubar}}
-<nav class="menubar fixed-top boost-union-menubar navbar navbar-expand {{{menubar.classes}}}">
-    {{> core/primarymoremenu}}
-</nav>
-{{/menubar}}
+{{{smartmenuslots.navbar_above}}}
 <nav class="navbar fixed-top {{navbarcolorclasses}} navbar-expand" aria-label="{{#str}}sitemenubar, admin{{/str}}">
     <div class="container-fluid">
         <button class="navbar-toggler aabtn d-block d-lg-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
@@ -165,5 +161,6 @@
         </div>
     </div>
 </nav>
+{{{smartmenuslots.navbar_below}}}
 
 {{> theme_boost/primary-drawer-mobile }}

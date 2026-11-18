@@ -28,6 +28,9 @@ use renderable;
 use renderer_base;
 use custom_menu;
 use theme_boost_union\smartmenu;
+use theme_boost_union\smartmenu\location\base as location_base;
+use theme_boost_union\smartmenu\location\context as location_context;
+use theme_boost_union\smartmenu\provider_registry;
 
 /**
  * Primary navigation renderable.
@@ -137,11 +140,15 @@ class primary extends \core\navigation\output\primary {
      *
      * Modifications compared to the original function:
      * * Build the smart menus and its items as navigation nodes.
-     * * Generate the nodes for different locations based on the menus locations.
-     * * Combine the smart menus nodes with core primary menus.
-     * * Export the React props for the main navigation and the menu bar
-     *   (both are rendered by the theme_boost_union/nav/Nav React component).
-     * * Attach the smart menus which are configured for the user menu location to the user menu.
+     * * Group the nodes by the locations of the menus and let each smart menu location provider
+     *   (see \theme_boost_union\smartmenu\location\base) render its menus. The built-in locations use the helper
+     *   functions of this class to do that:
+     *   * The main navigation location combines the smart menu nodes with the core primary menus and exports the React
+     *     props for the main navigation.
+     *   * The menu bar location renders the menu bar (with the same theme_boost_union/nav/Nav React component as the
+     *     main navigation).
+     *   * The user menu location attaches the smart menus to the user menu.
+     * * Export the template slots, the body classes and the AMD modules of the smart menu location providers.
      *
      * @param renderer_base|null $output
      * @return array
@@ -173,121 +180,337 @@ class primary extends \core\navigation\output\primary {
             return $this->export_core_for_template($output);
         }
 
-        // Get the menus for the main menu loation.
-        $locationmainmenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_MAIN, $smartmenus);
+        // Group the smart menu nodes by the locations to which their menus are assigned.
+        // Menus which are assigned to locations which do not exist (anymore) are not shown there.
+        $grouped = smartmenu::group_nodes_by_location($smartmenus);
 
-        // Separate the menus for the menubar location.
-        $locationmenubarmenu = smartmenu::get_menus_forlocation(smartmenu::LOCATION_MENU, $smartmenus);
+        // Prepare the data which is exported to the layouts.
+        // The location providers integrate their smart menus into this data.
+        // Please note: The first four entries (moremenu, mobileprimarynav, lang and user) are the entries which the
+        // function of Moodle core exports as well. They are contained here as this function replaces the function of
+        // Moodle core and the layouts expect them. The remaining entries are added by Boost Union for the smart menus.
+        $languagemenu = new \core\output\language_menu($this->page);
+        $export = (object) [
+            // The main navigation and the mobile primary navigation (as exported by Moodle core as well).
+            // They are filled by the main navigation location which merges its smart menus into them.
+            'moremenu' => null,
+            'mobileprimarynav' => null,
+            // The language menu (as exported by Moodle core as well).
+            // It is exported in the same way as Moodle core does it and is not touched by the smart menus.
+            'lang' => !isloggedin() || isguestuser() ? $languagemenu->export_for_template($output) : [],
+            // The user menu (as exported by Moodle core as well).
+            // The user menu location attaches its smart menus to it.
+            'user' => $this->get_user_menu($output),
+            // The HTML of the template slots into which location providers can render their smart menus
+            // (added by Boost Union).
+            'slots' => array_fill_keys(location_base::SLOTS, ''),
+            // The CSS classes which the location providers add to the body element (added by Boost Union).
+            'bodyclasses' => [],
+            // The AMD modules which the location and presentation providers need on the page (added by Boost Union).
+            'amdmodules' => [],
+            // The flag if at least one smart menu is included on the page (added by Boost Union).
+            'includesmartmenu' => false,
+            // The flag if any of the rendered smart menu items requires client-side starred-courses cache invalidation
+            // (added by Boost Union).
+            'includestarredcacheinvalidation' => $this->smartmenus_require_starred_cacheinvalidation($cache),
+        ];
 
-        // Separate the menus for the usermenu location.
-        $locationusermenus = smartmenu::get_menus_forlocation(smartmenu::LOCATION_USER, $smartmenus);
+        // Let each location render its smart menus.
+        foreach (provider_registry::get_locations() as $key => $location) {
+            // Locations without any smart menus (which are visible for the current user) have nothing to do.
+            if (empty($grouped[$key])) {
+                continue;
+            }
 
+            // The location does not get access to the export data itself, it hands over its output with the functions
+            // of the context. This way, each location only works within its own scope.
+            // If the location fails, its smart menus are not shown and the page is rendered without them.
+            // A broken location provider of another plugin must not break the navigation of the whole site (which would
+            // also lock the admin out of the pages where the menu could be removed from the location again).
+            try {
+                $location->export(new location_context($grouped[$key], $this, $output, $this->page, $export, $key));
+
+                // Get the body classes and the AMD modules of the location.
+                $bodyclasses = $location->get_body_classes($grouped[$key]);
+                $amdmodules = $location->get_amd_modules($grouped[$key]);
+
+                // Add the AMD modules of the presentations of the menus at this location.
+                // Each presentation is only asked with the nodes of the menus which it presents at this location.
+                // A presentation which cannot be used at this location is not asked at all as its menus are shown
+                // as list there.
+                foreach ($this->group_nodes_by_presentation($grouped[$key], $key) as $presentationnodes) {
+                    $amdmodules = array_merge(
+                        $amdmodules,
+                        $presentationnodes->presentation->get_amd_modules($presentationnodes->nodes)
+                    );
+                }
+            } catch (\Throwable $e) {
+                debugging('Smart menu location ' . get_class($location) . ' failed to render its smart menus' .
+                        ' and is skipped: ' . $e->getMessage(), DEBUG_DEVELOPER);
+                continue;
+            }
+
+            // Collect the body classes and the AMD modules.
+            $export->bodyclasses = array_merge($export->bodyclasses, $bodyclasses);
+            $export->amdmodules = array_merge($export->amdmodules, $amdmodules);
+
+            // Remember that at least one smart menu is included on the page.
+            // This is used as flag for controlling the smart menu SCSS and for mounting the smart menu React component.
+            $export->includesmartmenu = true;
+        }
+
+        // If the main navigation location did not have any smart menus, the main navigation is built without smart menus.
+        // (It has to be built here in any case as this function replaces the function of Moodle core which builds it).
+        if ($export->moremenu === null) {
+            [$export->moremenu, $export->mobileprimarynav] = $this->build_primary_navigation([], $output);
+        }
+
+        // Finalize the collected body classes and AMD modules.
+        if ($export->includesmartmenu) {
+            array_unshift($export->bodyclasses, 'theme-boost-union-smartmenu');
+        }
+        $export->bodyclasses = array_values(array_unique(array_filter($export->bodyclasses)));
+        $export->amdmodules = array_values(array_unique(array_filter($export->amdmodules)));
+
+        return (array) $export;
+    }
+
+    /**
+     * Build the main navigation and the mobile primary navigation.
+     * The given smart menu nodes are merged with the primary navigation nodes and the custom menu nodes of Moodle core.
+     *
+     * This function is used by the main navigation smart menu location.
+     *
+     * Please note: The presentations of the menus only render their content for the main navigation in the navbar.
+     * In the mobile primary navigation (i.e. in the drawer on small screens), the menus are always shown as list,
+     * regardless of their presentation. This is done on purpose as the drawer is narrow and is built as a
+     * collapsible list.
+     *
+     * @param array $smartmenunodes The smart menu nodes to be added to the main navigation.
+     * @param renderer_base $output The renderer.
+     * @param string $locationkey The key of the location for which the navigation is built.
+     * @return array An array with the more menu data of the main navigation as first element and the mobile primary
+     *               navigation nodes as second element.
+     */
+    public function build_primary_navigation(
+        array $smartmenunodes,
+        renderer_base $output,
+        string $locationkey = smartmenu::LOCATION_MAIN
+    ): array {
         // Primary menu.
         // Merge the smart menu nodes which contain the main menu location with the primary and custom menu nodes.
         // Update the active and open states to the nodes based on the current page.
-        $locationmainmenucustommerged = array_merge($this->get_custom_menu($output), $locationmainmenu);
-        $mainmenudata = $this->merge_primary_and_custom($this->get_primary_nav(), $locationmainmenucustommerged);
+        $custommenu = $this->get_custom_menu($output);
+        $mainmenudata = $this->merge_primary_and_custom($this->get_primary_nav(), array_merge($custommenu, $smartmenunodes));
+
+        // Let the presentations of the menus render their content.
+        // This has to be done after the nodes have been merged as the merge flags the active nodes and as the
+        // presentations need these flags to highlight the active items in their content.
+        // (The nodes of Moodle core and of the custom menu are not smart menu nodes and are not touched here).
+        // This is done for the primary menu only, the nodes for the mobile primary navigation are kept as they are.
+        $mainmenudata = $this->apply_presentation_content($mainmenudata, $locationkey, $output);
+
         $moremenu = new \core\navigation\output\more_menu((object) $mainmenudata, 'navbar-nav', false);
         $moremenudata = $moremenu->export_for_template($output);
         if (!empty($moremenudata)) {
             $moremenudata['reactprops'] = $this->export_react_props($mainmenudata, $moremenudata);
         }
 
-        // Menubar.
-        // Items of menus only added in the menubar.
-        // Removed the menu nodes from menubar, each item will be displayed as menu in menubar.
-        if (!empty($locationmenubarmenu)) {
-            // Set the visibility of the menu bar for mobile, tablet, and desktop based on its child items.
-            $hidedesktop = $hidemobile = $hidetablet = 1;
-            foreach ($locationmenubarmenu as $key => $menu) {
-                // Check if the menu has any children to be displayed on desktop.
-                if (!isset($menu->desktop) || empty($menu->desktop)) {
-                    $hidedesktop = 0;
-                }
-                // Check if the menu has any children to be displayed on tablets.
-                if (!isset($menu->tablet) || empty($menu->tablet)) {
-                    $hidetablet = 0;
-                }
-                // Check if the menu has any children to be displayed on mobiles.
-                if (!isset($menu->mobile) || empty($menu->mobile)) {
-                    $hidemobile = 0;
-                }
-            }
-
-            // Flag the active nodes of the menu bar menus based on the current page. This is done like
-            // merge_primary_and_custom() does it for the main navigation: Stop at the first active menu so that
-            // only one menu is active at a time.
-            foreach (array_keys($locationmenubarmenu) as $i) {
-                $menu = (object) $locationmenubarmenu[$i];
-                $active = $this->flag_active_nodes($menu);
-                if (is_array($locationmenubarmenu[$i])) {
-                    $locationmenubarmenu[$i] = (array) $menu;
-                }
-                if ($active) {
-                    break;
-                }
-            }
-
-            $menubarmoremenu = new \core\navigation\output\more_menu(
-                (object) $locationmenubarmenu,
-                'navbar-nav-menu-bar',
-                false
-            );
-            $menubartemplatedata = $menubarmoremenu->export_for_template($output);
-            if (!empty($menubartemplatedata)) {
-                $menubartemplatedata['reactprops'] = $this->export_react_props($locationmenubarmenu, $menubartemplatedata);
-            }
-
-            // Define the visibility classes for the menubar.
-            $menubarclasses[] = $hidedesktop ? 'd-lg-none' : 'd-lg-flex';
-            $menubarclasses[] = $hidetablet ? 'd-md-none' : 'd-md-flex';
-            $menubarclasses[] = $hidemobile ? 'd-none' : 'd-flex';
-            $menubartemplatedata['classes'] = implode(' ', $menubarclasses);
-        }
-
         // Mobile primary navigation.
         // The mobile navigation menu uses the expand/collapse method for submenus, for this reason the expanded
         // menu flags are used.
-        $mobileprimarynav = $this->merge_primary_and_custom($this->get_primary_nav(), $locationmainmenucustommerged, true);
+        // The smart menu nodes are used without the content of their presentations here, so the smart menus are always
+        // shown as list in the mobile primary navigation.
+        $mobileprimarynav = $this->merge_primary_and_custom(
+            $this->get_primary_nav(),
+            array_merge($custommenu, $smartmenunodes),
+            true
+        );
 
         // Make sure that every node carries its own 'haschildren' and 'children' key.
         // This is required as the mobile drawer template renders itself recursively, see normalize_menu_nodes().
         $mobileprimarynav = $this->normalize_menu_nodes($mobileprimarynav);
 
-        // Usermenu.
-        // Merge the smartmenu nodes which contains the location for user menu, with the default core user menu nodes.
-        $languagemenu = new \core\output\language_menu($this->page);
-        $usermenu = $this->get_user_menu($output);
-        // Flag the active nodes of the user menu smart menus based on the current page (in the same way as it is done
-        // for the menu bar above).
-        foreach (array_keys($locationusermenus) as $i) {
-            $menu = (object) $locationusermenus[$i];
+        return [$moremenudata, $mobileprimarynav];
+    }
+
+    /**
+     * Build a more menu (i.e. a navigation bar whose items collapse into a "More" menu if the space does not suffice)
+     * from the given smart menu nodes. The more menu is rendered by the same React component as the main navigation,
+     * the returned data is the context for the core/primarymoremenu template.
+     *
+     * This function is used by the menu bar smart menu location and can be used by other locations as well.
+     *
+     * @param array $nodes The smart menu nodes (which have already been flagged as active, if needed).
+     * @param string $navbarstyle The CSS class of the navigation list (e.g. 'navbar-nav-menu-bar').
+     * @param renderer_base $output The renderer.
+     * @param string $locationkey The key of the location for which the more menu is built.
+     * @return array The more menu data.
+     */
+    public function build_moremenu_navigation(
+        array $nodes,
+        string $navbarstyle,
+        renderer_base $output,
+        string $locationkey
+    ): array {
+        // Let the presentations of the menus render their content.
+        $nodes = $this->apply_presentation_content($nodes, $locationkey, $output);
+
+        $moremenu = new \core\navigation\output\more_menu((object) $nodes, $navbarstyle, false);
+        $data = $moremenu->export_for_template($output);
+        if (!empty($data)) {
+            $data['reactprops'] = $this->export_react_props($nodes, $data);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Flag the active nodes of the given smart menu nodes based on the current page. This is done like
+     * merge_primary_and_custom() does it for the main navigation: Stop at the first active menu so that
+     * only one menu is active at a time.
+     *
+     * @param array $nodes The smart menu nodes.
+     * @return void
+     */
+    public function flag_active_nodes_first(array &$nodes): void {
+        foreach (array_keys($nodes) as $i) {
+            $menu = (object) $nodes[$i];
             $active = $this->flag_active_nodes($menu);
-            if (is_array($locationusermenus[$i])) {
-                $locationusermenus[$i] = (array) $menu;
+            if (is_array($nodes[$i])) {
+                $nodes[$i] = (array) $menu;
             }
             if ($active) {
                 break;
             }
         }
-        $this->build_usermenus($usermenu, $locationusermenus);
+    }
 
-        // Check if any of the smartmenus are going to be included on the page.
-        // This is used as flag for controlling the smart menu SCSS.
-        $includesmartmenu = (!empty($locationmainmenu) || !empty($locationmenubarmenu) || !empty($locationusermenus));
+    /**
+     * Let the presentations of the given smart menus render the content of the menus for a location.
+     *
+     * If the presentation of a menu renders content of its own, this content is added to the menu node as 'contenthtml'
+     * and is shown by the locations instead of the list of menu items. Menus with the list presentation are not changed.
+     * Menus whose presentation cannot be used at the location (as the presentation does not support the location or
+     * as the location does not support the presentation) are not changed as well and are shown as list there.
+     *
+     * @param array $nodes The smart menu nodes.
+     * @param string $locationkey The key of the location where the menus are rendered.
+     * @param renderer_base $output The renderer.
+     * @return array The smart menu nodes.
+     */
+    public function apply_presentation_content(array $nodes, string $locationkey, renderer_base $output): array {
+        foreach ($nodes as $i => $node) {
+            // Only menus in submenu mode have a content, the items of inline menus are shown directly at the location.
+            if (!is_object($node) || !isset($node->menudata)) {
+                continue;
+            }
 
-        // Check if any of the rendered smart menu items requires client-side starred-courses cache invalidation.
-        $includestarredcacheinvalidation = $this->smartmenus_require_starred_cacheinvalidation($cache);
+            // Skip the menu if its presentation cannot be used at the location. The menu is shown as list in this case.
+            // The edit form does not allow to save such a combination, but it can exist nevertheless, e.g. if a provider
+            // changed its supported providers after the menu has been saved.
+            // (If the location is not a registered location provider, only the presentation is asked).
+            $presentation = provider_registry::get_menu_presentation($node->menudata);
+            if (!$this->is_presentation_usable_at_location($presentation, $locationkey)) {
+                continue;
+            }
 
-        return [
-            'mobileprimarynav' => $mobileprimarynav,
-            'moremenu' => $moremenudata,
-            'menubar' => $menubartemplatedata ?? false,
-            'lang' => !isloggedin() || isguestuser() ? $languagemenu->export_for_template($output) : [],
-            'user' => $usermenu ?? [],
-            'includesmartmenu' => $includesmartmenu ? true : false,
-            'includestarredcacheinvalidation' => $includestarredcacheinvalidation ? true : false,
-        ];
+            // If the presentation fails to render the content, the menu is shown as list instead.
+            // A broken presentation provider of another plugin must not break the navigation of the whole site.
+            try {
+                $contenthtml = $presentation->render_menu_content($node, $locationkey, $output);
+            } catch (\Throwable $e) {
+                debugging('Smart menu presentation ' . get_class($presentation) . ' failed to render the content of a menu' .
+                        ' and the menu is shown as list instead: ' . $e->getMessage(), DEBUG_DEVELOPER);
+                continue;
+            }
+            if ($contenthtml === null) {
+                continue;
+            }
+
+            // The same node object may be used by several locations, so the content is added to a copy of the node.
+            $nodes[$i] = clone $node;
+            $nodes[$i]->contenthtml = $contenthtml;
+        }
+
+        return $nodes;
+    }
+
+    /**
+     * Check if a presentation can be used at a location.
+     * If the location is not a registered location provider, only the presentation is asked.
+     *
+     * @param \theme_boost_union\smartmenu\presentation\base $presentation The presentation provider.
+     * @param string $locationkey The key of the location.
+     * @return bool
+     */
+    protected function is_presentation_usable_at_location(
+        \theme_boost_union\smartmenu\presentation\base $presentation,
+        string $locationkey
+    ): bool {
+        $location = provider_registry::get_location($locationkey);
+        if ($location !== null) {
+            return provider_registry::is_supported_combination($presentation, $location);
+        }
+
+        $supportedlocations = $presentation->get_supported_locations();
+        return ($supportedlocations === null || in_array($locationkey, $supportedlocations));
+    }
+
+    /**
+     * Group the given smart menu nodes of a location by the presentations which present them there.
+     *
+     * A node is either the node of a menu in submenu mode (which carries the menu record in 'menudata') or the node of
+     * an item of a menu in inline mode (which carries the item record in 'itemdata'). In both cases, the node is assigned
+     * to the presentation of its menu. If this presentation cannot be used at the location, the menu is shown as list
+     * there and the node is assigned to the fallback presentation instead.
+     *
+     * @param array $nodes The smart menu nodes.
+     * @param string $locationkey The key of the location where the menus are rendered.
+     * @return \stdClass[] The groups, keyed by the keys of the presentations. Each group holds the presentation provider
+     *                     in 'presentation' and its nodes in 'nodes'.
+     */
+    protected function group_nodes_by_presentation(array $nodes, string $locationkey): array {
+        // The nodes of the items of inline menus do not carry the menu record, so the menu records are needed
+        // to look up the presentations of these menus. They are fetched only if there is such a node at all.
+        $menus = null;
+
+        $groups = [];
+        foreach ($nodes as $node) {
+            // Get the menu record of the node.
+            $nodeobject = (object) $node;
+            if (isset($nodeobject->menudata)) {
+                $menu = $nodeobject->menudata;
+            } else if (isset($nodeobject->itemdata->menu)) {
+                if ($menus === null) {
+                    $menus = \cache::make('theme_boost_union', 'smartmenus')->get(smartmenu::CACHE_MENUSLIST)
+                            ?: smartmenu::get_menus();
+                }
+                $menu = $menus[$nodeobject->itemdata->menu] ?? null;
+            } else {
+                $menu = null;
+            }
+
+            // Skip nodes which do not belong to a smart menu.
+            if (!($menu instanceof \stdClass)) {
+                continue;
+            }
+
+            // Get the presentation which presents the menu at the location.
+            $presentation = provider_registry::get_menu_presentation($menu);
+            if (!$this->is_presentation_usable_at_location($presentation, $locationkey)) {
+                $presentation = provider_registry::get_fallback_presentation();
+            }
+
+            // Add the node to the group of the presentation.
+            $key = $presentation->get_key();
+            if (!isset($groups[$key])) {
+                $groups[$key] = (object) ['presentation' => $presentation, 'nodes' => []];
+            }
+            $groups[$key]->nodes[] = $node;
+        }
+
+        return $groups;
     }
 
     /**
@@ -356,13 +579,16 @@ class primary extends \core\navigation\output\primary {
             $menudata = $node['menudata'];
 
             $item['smartmenu'] = true;
+
             // The menu classes are applied to the list item (li) element of the menu.
             $item['wrapperclasses'] = array_values(array_filter((array) ($node['menuclasses'] ?? [])));
             $item['classes'] = [];
+
             // The menu should be kept outside of the "More" menu.
             $item['forceout'] = (isset($menudata->moremenubehavior) &&
                     $menudata->moremenubehavior == smartmenu::MOREMENU_OUTSIDE);
-            // The menu description.
+
+            // The menu description and help.
             $item['helptext'] = !empty($node['helptext']) ? (string) $node['helptext'] : null;
             $item['helptextposition'] = null;
             if (!empty($node['abovehelptext'])) {
@@ -371,10 +597,15 @@ class primary extends \core\navigation\output\primary {
                 $item['helptextposition'] = 'below';
             }
             $item['helpicon'] = !empty($node['helpicon']) ? (string) $node['helpicon'] : null;
+
+            // The content of the menu if the presentation of the menu rendered content of its own.
+            // It is shown instead of the list of the menu items.
+            $item['contenthtml'] = isset($node['contenthtml']) ? (string) $node['contenthtml'] : null;
         } else {
             $classes = array_values(array_filter((array) ($node['itemdata']->classes ?? [])));
 
             $item['smartmenuitem'] = true;
+
             // The item classes are applied to the list item (li) element as well as to the link (a) element.
             $item['wrapperclasses'] = $classes;
             $item['classes'] = $classes;
@@ -460,14 +691,21 @@ class primary extends \core\navigation\output\primary {
      * once all items are added, divider included before logout
      * if any smart menus are included then added the logout menu to menu items.
      *
+     * This function is used by the user menu smart menu location only (by means of the attach_to_user_menu() function
+     * of the location context, which is reserved for this location).
+     *
+     * Please note: In the user menu, the smart menus are always shown as list, regardless of their presentation.
+     * The presentations of the menus are not asked to render their content here. This is done on purpose as the
+     * user menu is narrow and is built as a list with submenus by Moodle core.
+     *
      * @param array $usermenu
      * @param array $menus
      * @return void
      */
-    public function build_usermenus(&$usermenu, $menus) {
+    public function attach_to_user_menu(&$usermenu, $menus) {
 
         if (empty($menus)) {
-            return [];
+            return;
         }
 
         $logout = !empty($usermenu['items']) ? array_pop($usermenu['items']) : '';
@@ -500,6 +738,7 @@ class primary extends \core\navigation\output\primary {
                     'belowhelptext' => !empty($menu->belowhelptext),
                     'helpicon' => $menu->helpicon ?? '',
                 ];
+
                 $usermenu['submenus'][] = (object) $submenu;
                 // The key of this submenu which helps later to include its children after including the necessary data.
                 $lastkey = array_key_last($usermenu['submenus']);
@@ -554,6 +793,19 @@ class primary extends \core\navigation\output\primary {
         if (!empty($logout)) {
             array_push($usermenu['items'], $logout);
         }
+    }
+
+    /**
+     * Attach the smart menus to the user menu.
+     *
+     * @param array $usermenu
+     * @param array $menus
+     * @return void
+     * @deprecated since Boost Union 5.3. Use attach_to_user_menu() instead.
+     */
+    public function build_usermenus(&$usermenu, $menus) {
+        debugging('build_usermenus() is deprecated. Use attach_to_user_menu() instead.', DEBUG_DEVELOPER);
+        $this->attach_to_user_menu($usermenu, $menus);
     }
 
     /**

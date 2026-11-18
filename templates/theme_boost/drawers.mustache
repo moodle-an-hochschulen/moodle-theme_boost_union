@@ -55,6 +55,7 @@
     Modifications compared to the original template:
     * Include theme_boost_union/footnote template
     * Include theme_boost_union/footer template instead of theme_boost/footer
+    * Added the smart menu slots at the top of the page element and at the end of the page wrapper.
     * Include theme_boost_union/navbar template instead of theme_boost/navbar
     * Added the possibility to show course related hints.
     * Added the possibility to show info banners.
@@ -136,6 +137,7 @@
     {{/userisediting}}
 
     <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+        {{{smartmenuslots.page_top}}}
         {{#userisediting}}
             <div id="theme-block-region-offcanvas-editing" class="collapse">
                 <div id="theme-block-region-offcanvas-editing-inner">
@@ -332,6 +334,7 @@
         {{> theme_boost_union/footnote }}
     </div>
     {{{ output.standard_after_main_region_html }}}
+    {{{smartmenuslots.body_end}}}
 </div>
 
 </body>

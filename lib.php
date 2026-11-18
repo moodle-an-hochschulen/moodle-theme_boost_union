@@ -367,6 +367,11 @@ function theme_boost_union_get_main_scss_content($theme) {
         }
     }
 
+    // Get and include the post SCSS of the smart menu location and presentation providers.
+    foreach (\theme_boost_union\smartmenu\provider_registry::get_all_providers() as $smartmenuprovider) {
+        $scss .= "\n" . $smartmenuprovider->get_post_scss();
+    }
+
     // Get and include the external Post SCSS.
     // This should actually be in theme_boost_union_get_extra_scss().
     // But as the *_get_extra_scss() functions work in practice, this is not possible as the external Raw SCSS code
@@ -452,6 +457,11 @@ function theme_boost_union_get_pre_scss($theme) {
             // Get and include the pre SCSS from BU MWP.
             $scss .= \local_boost_union_mwp\local\branding::get_pre_scss();
         }
+    }
+
+    // Get and include the pre SCSS of the smart menu location and presentation providers.
+    foreach (\theme_boost_union\smartmenu\provider_registry::get_all_providers() as $smartmenuprovider) {
+        $scss .= "\n" . $smartmenuprovider->get_pre_scss();
     }
 
     // Add SCSS constants for evaluating select setting values in SCSS code.

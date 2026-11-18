@@ -24,14 +24,11 @@
 
 namespace theme_boost_union;
 
-defined('MOODLE_INTERNAL') || die();
-
 use context_system;
 use moodle_exception;
 use core\navigation\views\primary;
 use cache;
-
-require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
+use theme_boost_union\smartmenu\provider_registry;
 
 /**
  * The menu controller handles actions related to managing menus.
@@ -73,26 +70,28 @@ class smartmenu {
     public $cache;
 
     /**
-     * Constants that define different locations where the menu can appear.
+     * Constants that define the built-in locations where the menu can appear.
+     * The values are the keys of the location providers (see \theme_boost_union\smartmenu\location\base).
+     * Further locations can be added by other plugins, see \theme_boost_union\smartmenu\provider_registry.
      * Displayed in Main menu.
      *
-     * @var int
+     * @var string
      */
-    public const LOCATION_MAIN = 1;
+    public const LOCATION_MAIN = 'main';
 
     /**
      * Displayed in Menu bar. Top of the main menu.
      *
-     * @var int
+     * @var string
      */
-    public const LOCATION_MENU = 2;
+    public const LOCATION_MENU = 'menu';
 
     /**
      * Display in Usermenu.
      *
-     * @var int
+     * @var string
      */
-    public const LOCATION_USER = 3;
+    public const LOCATION_USER = 'user';
 
     /**
      * The description text is never displayed.
@@ -119,12 +118,14 @@ class smartmenu {
     public const DESC_HELP = 3;
 
     /**
-     * Constants for the type of smart menu display
+     * Constants for the built-in presentations of the smart menu.
+     * The values are the keys of the presentation providers (see \theme_boost_union\smartmenu\presentation\base).
+     * Further presentations can be added by other plugins, see \theme_boost_union\smartmenu\provider_registry.
      * Displays menu items in a list format.
      *
-     * @var int
+     * @var string
      */
-    public const TYPE_LIST = 0;
+    public const PRESENTATION_LIST = 'list';
 
     /**
      * Roles based on Any context
@@ -214,6 +215,34 @@ class smartmenu {
     public const CACHE_STARREDCACHEINVALIDATION = 'starredcacheinvalidation';
 
     /**
+     * Cache key for the fingerprint of the smart menu providers for which the caches have been built.
+     */
+    public const CACHE_PROVIDERFINGERPRINT = 'providerfingerprint';
+
+    /**
+     * Cache key for the record of the recent purges of the caches because of a changed fingerprint
+     * of the smart menu providers.
+     */
+    public const CACHE_PROVIDERFINGERPRINTPURGES = 'providerfingerprintpurges';
+
+    /**
+     * The interval (in seconds) within which the purges of the caches because of a changed fingerprint
+     * of the smart menu providers are limited.
+     */
+    public const PROVIDERFINGERPRINT_PURGEINTERVAL = 60;
+
+    /**
+     * The maximum number of purges of the caches because of a changed fingerprint of the smart menu providers
+     * within the interval.
+     */
+    public const PROVIDERFINGERPRINT_MAXPURGES = 5;
+
+    /**
+     * The fields of a menu and of a menu item which hold the settings of the location and presentation providers.
+     */
+    public const PROVIDERDATA_FIELDS = ['locationdata', 'presentationdata'];
+
+    /**
      * Invalidate shared smartmenus cache keys.
      *
      * @param \cache $cache
@@ -274,6 +303,10 @@ class smartmenu {
      */
     public function delete_menu() {
         global $DB;
+
+        // Remember the IDs of the items of this menu to be able to inform the providers afterwards.
+        $itemids = $DB->get_fieldset_select('theme_boost_union_menuitems', 'id', 'menu = :menu', ['menu' => $this->id]);
+
         if ($DB->delete_records('theme_boost_union_menus', ['id' => $this->id])) {
             // Delete all its items.
             $DB->delete_records('theme_boost_union_menuitems', ['menu' => $this->id]);
@@ -281,6 +314,15 @@ class smartmenu {
             $this->cache->delete_menu($this->id);
             // Delete shared smartmenus cache entries.
             self::invalidate_shared_cache($this->cache);
+
+            // Inform all providers (and not only the ones which are currently used by the menu, as the menu may
+            // still hold data of providers which have been used before).
+            foreach (provider_registry::get_all_providers() as $provider) {
+                foreach ($itemids as $itemid) {
+                    $provider->item_deleted((int) $itemid);
+                }
+                $provider->menu_deleted((int) $this->id);
+            }
 
             return true;
         }
@@ -360,17 +402,29 @@ class smartmenu {
         $record->id = 0;
 
         // Send the current menu without id to manage_instance will insert the menu as new menu.
+        // The provider data of the menu is copied as it is.
         $duplicateid = self::manage_instance($record);
+
+        // Inform the providers that the menu has been duplicated.
+        foreach (provider_registry::get_all_providers() as $provider) {
+            $provider->menu_duplicated((int) $this->id, (int) $duplicateid);
+        }
 
         if (!empty($items)) {
             // Duplicate the items related to menu.
             foreach ($items as $item) {
+                $olditemid = $item->id;
                 $item = \theme_boost_union\smartmenu_item::instance($item->id)->item;
                 $item->id = 0;
                 // New menu id as menu for duplicate item.
                 $item->menu = $duplicateid;
                 // Create the item.
-                \theme_boost_union\smartmenu_item::manage_instance($item);
+                $newitemid = \theme_boost_union\smartmenu_item::manage_instance($item);
+
+                // Inform the providers that the item has been duplicated.
+                foreach (provider_registry::get_all_providers() as $provider) {
+                    $provider->item_duplicated((int) $olditemid, (int) $newitemid);
+                }
             }
         }
         // Success message for duplicated menu.
@@ -494,9 +548,13 @@ class smartmenu {
             // Add CSS classes for more behaviour.
             $this->menu->classes[] = ($this->menu->moremenubehavior == self::MOREMENU_OUTSIDE) ? "force-menu-out" : '';
 
+            // Get the presentation of the menu.
+            $presentation = provider_registry::get_menu_presentation($this->menu);
+
             // Mode is submenu or not set anything then create the menuitems as submenu.
             // Otherwise add the menu items directoly as menu.
-            if ($this->menu->mode != self::MODE_INLINE) {
+            // Presentations which do not support the inline mode are always shown as submenu.
+            if ($this->menu->mode != self::MODE_INLINE || !$presentation->menu_supports_inline_mode()) {
                 $nodes = (object) [
                     'menudata' => $this->menu,
                     // Do not set the title attribute as this would show a standard tooltip based on the
@@ -534,6 +592,13 @@ class smartmenu {
                 }
                 // Menu is set to inline, items classes are loadded in this variable menuclasses in template.
                 $nodes->menuclasses = $this->menu->classes; // Menus classes.
+
+                // Let the presentation of the menu decorate the menu node.
+                $presentation->decorate_menu_node(
+                    $nodes,
+                    $this->menu,
+                    $presentation->get_data($this->menu)
+                );
             }
         }
         // Menus not exists in cache, then build the menu and menu items.
@@ -632,41 +697,198 @@ class smartmenu {
     /**
      * Retrieves the list of menus that are assigned to the specified location.
      *
-     * @param string $location The location to retrieve menus for.
-     * @param array $menus The list of all available menus.
-     * @return array An array of menus that are assigned to the specified location.
+     * The given list contains the built nodes of all smart menus which are visible to the current user, regardless of
+     * their locations. A node is either the node of a menu in submenu mode (an object which carries the menu record in
+     * 'menudata') or the node of a menu item of a menu in inline mode (an array which carries the item record in
+     * 'itemdata'). This function picks the nodes whose menu is assigned to the given location.
+     *
+     * @param string $location The key of the location to retrieve menus for.
+     * @param array $menus The list of all built smart menu nodes.
+     * @return array An array of nodes (as objects) whose menus are assigned to the specified location.
      */
     public static function get_menus_forlocation($location, $menus) {
 
+        // If there are not any nodes or if no location is given, there is nothing to pick.
         if (empty($menus) || $location == '') {
             return [];
         }
-        // Get the menu location from topmenus list.
-        // Locations from itemdata is not accurate, to fix this need to remove the all of items cache for the updated menu.
-        // Instead of delete item caches, get locations from cached menus list.
+
+        // Get the cached list of all menus to look up the locations of the menus in inline mode.
+        // The locations which are contained in the item nodes themselves are not reliable: The item nodes are cached
+        // and would have to be purged for all items of a menu as soon as the locations of the menu are changed.
+        // Instead of purging the item caches, the locations are taken from the cached menus list which is always up-to-date.
         $topmenus = smartmenu_helper::get_menu_cache()->get(self::CACHE_MENUSLIST);
 
-        $menulocation = [];
+        // Iterate over the nodes.
         foreach ($menus as $menu) {
+            // Start without any location for each node.
+            // This makes sure that a node whose locations cannot be determined never inherits the locations
+            // of the previous node.
+            $menulocation = [];
+
+            // Handle each node as object, regardless of whether it is a menu node (object) or a menu item node (array).
             $menu = (object) $menu;
 
+            // If the node is the node of a menu in submenu mode, get the locations from the menu record.
             if (isset($menu->menudata->location)) {
                 $menulocation = $menu->menudata->location;
-            } else if (isset($menu->itemdata->menu) && isset($topmenus[$menu->itemdata->menu])) { // Inline menus.
+
+                // Otherwise, if the node is the node of a menu item of a menu in inline mode,
+                // get the locations of its menu from the cached menus list.
+            } else if (isset($menu->itemdata->menu) && isset($topmenus[$menu->itemdata->menu])) {
                 $menulocation = json_decode($topmenus[$menu->itemdata->menu]->location);
             }
 
+            // If the locations are still given as JSON string (as they are stored in the database), decode them.
+            if (isset($menulocation) && is_scalar($menulocation)) {
+                $menulocation = json_decode($menulocation);
+            }
+
+            // If the menu is not assigned to any location, skip the node.
             if (!isset($menulocation) || empty($menulocation)) {
                 continue;
             }
-            // The menu contians the specified location. then store the menu for this location.
-            if (in_array($location, $menulocation)) {
+
+            // If the menu is assigned to the given location, pick the node for this location.
+            // The location keys are compared as strings to be safe against differently typed values.
+            if (in_array((string) $location, array_map('strval', (array) $menulocation), true)) {
                 $result[] = $menu;
-                $menulocation = []; // Reset the menu location for verify next menu.
             }
         }
 
+        // Return the picked nodes (or an empty array if no menu is assigned to the location).
         return $result ?? [];
+    }
+
+    /**
+     * Groups the given smart menu nodes by the locations to which their menus are assigned.
+     * Only the locations which are provided by a location provider are considered, locations which do not exist
+     * (anymore) are ignored.
+     *
+     * Menus in inline mode are not passed to locations which do not support the inline mode. The smart menu edit form
+     * prevents this combination already, but it can still exist (for example as a location provider changed its
+     * inline mode support after the menu has been saved or as the menu has been created with a generator).
+     * In this case, the menu is not shown at this location, but it is still shown at its other locations.
+     *
+     * @param array $menus The list of all built smart menu nodes.
+     * @return array The nodes, keyed by the location keys. Locations without nodes are not contained.
+     */
+    public static function group_nodes_by_location($menus): array {
+        $grouped = [];
+
+        // Iterate over the locations which are provided by a location provider.
+        // Nodes of menus which are assigned to a location which does not exist (anymore) are not picked up this way.
+        foreach (provider_registry::get_locations() as $key => $location) {
+            // Pick the nodes whose menus are assigned to this location.
+            $nodes = self::get_menus_forlocation($key, $menus);
+
+            // If the location does not support the inline mode, remove the nodes of the menus in inline mode.
+            if (!$location->menu_supports_inline_mode()) {
+                $supportednodes = [];
+                $skippedmenus = [];
+
+                // Iterate over the nodes of this location.
+                foreach ($nodes as $node) {
+                    // The node of a menu in submenu mode carries the menu record in 'menudata', it is kept.
+                    if (isset($node->menudata)) {
+                        $supportednodes[] = $node;
+
+                        // The nodes of a menu in inline mode are the nodes of its menu items, they do not have
+                        // 'menudata', but 'itemdata'. They are dropped and their menu is remembered to be able to
+                        // notify the developer once per menu (and not once per menu item).
+                    } else if (isset($node->itemdata->menu)) {
+                        $skippedmenus[$node->itemdata->menu] = true;
+                    }
+                }
+
+                // Notify the developer about each menu which is not shown at this location.
+                foreach (array_keys($skippedmenus) as $menuid) {
+                    debugging('The smart menu with the ID ' . $menuid . ' is in inline mode and is not shown at the ' .
+                            'location \'' . $key . '\' as this location does not support the inline mode.', DEBUG_DEVELOPER);
+                }
+
+                // Continue with the remaining nodes only.
+                $nodes = $supportednodes;
+            }
+
+            // Add the nodes to the result.
+            // Locations without nodes are left out so that the caller only gets the locations which have to be rendered.
+            if (!empty($nodes)) {
+                $grouped[$key] = $nodes;
+            }
+        }
+
+        return $grouped;
+    }
+
+    /**
+     * Decode the provider data (i.e. the content of the locationdata or presentationdata field) of a menu or a menu item.
+     *
+     * The provider data reaches this function in different shapes, depending on where the record comes from:
+     * As JSON string (directly from the database), as array (if it has been decoded before, e.g. by get_menu())
+     * or as object (e.g. if it comes from a generator or has been cast together with its record).
+     * This function always returns an array, regardless of the given shape, so that the callers do not have to care.
+     *
+     * @param mixed $providerdata The provider data as stored in the database (JSON) or already decoded.
+     * @return array The provider data, keyed by the keys of the providers
+     *               (e.g. ['card' => ['cardsize' => '...']]). An empty array if there is no (valid) provider data.
+     */
+    public static function decode_providerdata($providerdata): array {
+        // If the provider data is an array, it has been decoded already and is returned as it is.
+        if (is_array($providerdata)) {
+            return $providerdata;
+        }
+
+        // If the provider data is an object, convert it to an array recursively
+        // (the nested settings of the providers have to become arrays as well, a simple cast would not do that).
+        if (is_object($providerdata)) {
+            return json_decode(json_encode($providerdata), true) ?: [];
+        }
+
+        // If there is no provider data at all (null or an empty string), return an empty array.
+        if (empty($providerdata)) {
+            return [];
+        }
+
+        // Otherwise, the provider data is a JSON string which is decoded.
+        // If the string is not valid JSON or does not contain a structure, an empty array is returned as well.
+        $decoded = json_decode($providerdata, true);
+        return is_array($decoded) ? $decoded : [];
+    }
+
+    /**
+     * Add the stored settings of the providers to a menu record for editing it with the smart menu edit form.
+     *
+     * The settings are stored per provider in the locationdata and presentationdata fields of the menu
+     * (e.g. {"card": {"cardsize": "..."}}), whereas the form expects one value per form element
+     * (e.g. prescard_cardsize). This function converts the former to the latter.
+     * It is the counterpart of the processing of the provider form elements in manage_instance().
+     *
+     * The settings of all providers are added (and not only the ones which are currently used by the menu),
+     * as the admin may switch the presentation or the locations in the form.
+     *
+     * @param \stdClass|null $record The menu record as returned by get_menu() or null if a new menu is created.
+     * @return \stdClass The data for the form.
+     */
+    public static function add_provider_form_data(?\stdClass $record = null): \stdClass {
+        // If a new menu is created, start with an empty menu record.
+        // The providers are called nevertheless as they may have to prepare form elements of new menus as well
+        // (e.g. the draft area of a file manager).
+        $record = $record ?? (object) ['id' => 0];
+
+        // Iterate over all location providers and all presentation providers.
+        foreach (provider_registry::get_all_providers() as $provider) {
+            // Let the provider prepare its stored settings for the form.
+            // It gets its own part of the provider data and returns the values keyed by its (prefixed) element names.
+            $providerformdata = $provider->menu_form_prepare_data($record, $provider->get_data($record));
+
+            // Add the values to the record which is passed to the form.
+            foreach ($providerformdata as $name => $value) {
+                $record->{$name} = $value;
+            }
+        }
+
+        return $record;
     }
 
     /**
@@ -707,12 +929,18 @@ class smartmenu {
             'text'   => $menu->description,
             'format' => $menu->description_format,
         ];
+
         // Decode the multiple option select elements values to array.
         $menu->location = json_decode($menu->location);
         $menu->roles = json_decode($menu->roles);
         $menu->cohorts = json_decode($menu->cohorts);
         $menu->languages = json_decode($menu->languages);
         $menu->mode = $menu->mode ?? self::MODE_SUBMENU; // Submenu is default menu mode.
+
+        // Decode the settings of the location and presentation providers.
+        foreach (self::PROVIDERDATA_FIELDS as $datafield) {
+            $menu->{$datafield} = self::decode_providerdata($menu->{$datafield} ?? null);
+        }
 
         return $menu;
     }
@@ -736,58 +964,6 @@ class smartmenu {
         global $DB;
         $records = $DB->get_records_sql('SELECT * FROM {theme_boost_union_menus} ORDER BY sortorder DESC', [], 0, 1);
         return (object) (!empty($records) ? current($records) : []);
-    }
-
-    /**
-     * Get all available smart menu locations.
-     * Menu will be displayed in Main menu, Menu bar (above the main menu), User menu.
-     *
-     * @return array An array with all available locations.
-     */
-    public static function get_locations() {
-        // List of locations where same menu can be used in multiple places.
-        $locations = [
-            self::LOCATION_MAIN => get_string('smartmenusmenulocationmain', 'theme_boost_union'),
-            self::LOCATION_MENU => get_string('smartmenusmenulocationmenu', 'theme_boost_union'),
-            self::LOCATION_USER => get_string('smartmenusmenulocationuser', 'theme_boost_union'),
-        ];
-
-        return $locations;
-    }
-
-    /**
-     * Fetch the user readable name for a specific location of the current menu.
-     *
-     * @param int $location The type ID.
-     * @return string|false The localized name of the location, or false if the type is invalid.
-     */
-    public static function get_location($location) {
-        $locations = self::get_locations();
-        return $locations[$location] ?? false;
-    }
-
-    /**
-     * Get all available smart menu types. Currently, only the list type exists.
-     *
-     * @return array An array with all available types, where key is the type id and value is the localized type name.
-     */
-    public static function get_types() {
-        $types = [
-            self::TYPE_LIST => get_string('smartmenusmenutypelist', 'theme_boost_union'),
-        ];
-
-        return $types;
-    }
-
-    /**
-     * Get the localized name for a specific type.
-     *
-     * @param int $type The type ID.
-     * @return string|false The localized name of the type, or false if the type is invalid.
-     */
-    public static function get_type($type) {
-        $types = self::get_types();
-        return $types[$type] ?? false;
     }
 
     /**
@@ -878,18 +1054,44 @@ class smartmenu {
      * Delete the current menu cache after updated the menu.
      *
      * @param stdclass $formdata
+     * @param bool $processproviders Whether the data comes from the smart menu edit form and the location and
+     *                               presentation providers of the menu have to process their form elements.
+     *                               Otherwise, the provider data is taken as it is from $formdata->locationdata and
+     *                               $formdata->presentationdata (if given).
      * @return int The menu ID.
      */
-    public static function manage_instance($formdata) {
+    public static function manage_instance($formdata, bool $processproviders = false) {
         global $DB;
 
         $record = $formdata;
+
+        // The presentation falls back to the list presentation if it is not given.
+        $record->presentation = $formdata->presentation ?? self::PRESENTATION_LIST;
+
+        foreach (self::PROVIDERDATA_FIELDS as $datafield) {
+            if (!property_exists($formdata, $datafield)) {
+                continue;
+            }
+
+            // If the data does not come from the smart menu edit form (e.g. when a menu is duplicated), the provider data
+            // is given directly as decoded array and is encoded here for storing it.
+            // If it is not given at all, the provider data which is stored for an existing menu is not touched.
+            if (!$processproviders) {
+                $record->{$datafield} = json_encode((object) self::decode_providerdata($formdata->{$datafield}));
+
+                // Otherwise, the provider data is built from the form elements of the providers below.
+                // The form does not submit the provider data fields themselves, but remove them to be sure that
+                // they are never written unencoded.
+            } else {
+                unset($record->{$datafield});
+            }
+        }
 
         $record->description_format = $formdata->description['format'];
         $record->description = $formdata->description['text'];
 
         // Encode the multiple value elements into json to store.
-        $record->location = json_encode($formdata->location);
+        $record->location = json_encode(array_values(array_map('strval', (array) $formdata->location)));
         $record->roles = json_encode($formdata->roles);
         $record->cohorts = json_encode($formdata->cohorts);
         $record->languages = json_encode($formdata->languages);
@@ -902,11 +1104,23 @@ class smartmenu {
             $menuid = $formdata->id;
 
             $DB->update_record('theme_boost_union_menus', $record);
+
             // Clear the current menu caches. Update may cause changes in the menus list.
             // Delete the menu cache for all users.
             $cache->delete_menu($menuid);
+
+            // Delete the item caches of the items of this menu for all users as well.
+            // The item nodes are built depending on the settings of the menu (e.g. they are decorated by the
+            // presentation of the menu and depend on the mode of the menu), so they have to be rebuilt as well.
+            $itemcache = cache::make('theme_boost_union', 'smartmenu_items');
+            $itemids = $DB->get_fieldset_select('theme_boost_union_menuitems', 'id', 'menu = :menu', ['menu' => $menuid]);
+            foreach ($itemids as $itemid) {
+                $itemcache->delete_menu($itemid);
+            }
+
             // Menu updated, recreate shared smartmenus cache entries.
             self::invalidate_shared_cache($cache);
+
             // Show the edited success notification.
             \core\notification::success(get_string('smartmenusmenueditsuccess', 'theme_boost_union'));
         } else {
@@ -914,10 +1128,45 @@ class smartmenu {
             $lastmenu = self::get_lastmenu();
             $record->sortorder = isset($lastmenu->sortorder) ? $lastmenu->sortorder + 1 : 1;
             $menuid = $DB->insert_record('theme_boost_union_menus', $record);
+
             // New menu added, recreate shared smartmenus cache entries.
             self::invalidate_shared_cache($cache);
+
             // Show the menu inserted success notification.
             \core\notification::success(get_string('smartmenusmenucreatesuccess', 'theme_boost_union'));
+        }
+
+        // Let the providers which are used by the menu process their form elements and store their settings.
+        // The settings of providers which are not used by the menu (anymore) are kept, so that they are not lost if the
+        // admin switches back to them later.
+        if ($processproviders) {
+            // Get the provider data which is currently stored for the menu.
+            $stored = $DB->get_record(
+                'theme_boost_union_menus',
+                ['id' => $menuid],
+                'id, ' . implode(', ', self::PROVIDERDATA_FIELDS),
+                MUST_EXIST
+            );
+
+            // Decode the stored provider data of both data fields.
+            $providerdata = [];
+            foreach (self::PROVIDERDATA_FIELDS as $datafield) {
+                $providerdata[$datafield] = self::decode_providerdata($stored->{$datafield});
+            }
+
+            // Let each provider process its form elements and replace its part of the provider data with the result.
+            foreach (provider_registry::get_menu_providers($record) as $provider) {
+                $providerdata[$provider->get_data_field()][$provider->get_key()] =
+                    $provider->menu_form_process_data($formdata, (int) $menuid);
+            }
+
+            // Encode the provider data of both data fields again.
+            foreach (self::PROVIDERDATA_FIELDS as $datafield) {
+                $stored->{$datafield} = json_encode((object) $providerdata[$datafield]);
+            }
+
+            // Store the provider data of the menu.
+            $DB->update_record('theme_boost_union_menus', $stored);
         }
 
         // Allow to update the DB changes to Database.
@@ -952,6 +1201,32 @@ class smartmenu {
         self::detect_lang_session_change();
 
         $cache = cache::make('theme_boost_union', 'smartmenus');
+
+        // The built menus and menu items are decorated by the presentation providers. If the set of providers has
+        // changed (e.g. as a plugin which ships a provider has been installed or uninstalled), the caches are outdated.
+        // Please note: The number of purges for this reason is limited within a short interval. Otherwise, web servers
+        // which do not agree on the set of providers for a while (e.g. during a rolling deployment on a cluster) would
+        // purge the caches of the whole site alternately with nearly every request. As soon as the limit is reached,
+        // such a web server shows the menus as they have been built by the other web servers until the interval is over.
+        $fingerprint = provider_registry::get_fingerprint();
+        if ($cache->get(self::CACHE_PROVIDERFINGERPRINT) !== $fingerprint) {
+            // Get the record of the recent purges and start a new interval if the last one is over.
+            $now = time();
+            $purges = $cache->get(self::CACHE_PROVIDERFINGERPRINTPURGES);
+            if (!is_array($purges) || $now - $purges['start'] >= self::PROVIDERFINGERPRINT_PURGEINTERVAL) {
+                $purges = ['start' => $now, 'count' => 0];
+            }
+
+            // Purge the caches if the limit has not been reached yet.
+            if ($purges['count'] < self::PROVIDERFINGERPRINT_MAXPURGES) {
+                $cache->purge();
+                cache::make('theme_boost_union', 'smartmenu_items')->purge();
+                $cache->set(self::CACHE_PROVIDERFINGERPRINT, $fingerprint);
+                $purges['count']++;
+                $cache->set(self::CACHE_PROVIDERFINGERPRINTPURGES, $purges);
+            }
+        }
+
         // Fetch the list of menus from cache.
         $topmenus = $cache->get(self::CACHE_MENUSLIST);
         // Get top level menus, store the menus to cache.

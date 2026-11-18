@@ -29,8 +29,14 @@ class theme_boost_union_generator extends component_generator_base {
     /**
      * Generate a smart menu.
      *
-     * An array of one or more locations are required, which must match the smartmenu:LOCATION_* constants.
-     * All other properties are optional.
+     * An array of one or more locations are required, which must be keys of smart menu location providers
+     * (the built-in locations are available as smartmenu:LOCATION_* constants).
+     * All other properties are optional. The presentation must be the key of a smart menu presentation provider
+     * and is given as 'presentation'.
+     * The settings of the location providers can be given as 'locationdata' (as array or JSON string, keyed by the keys
+     * of the location providers).
+     * The settings of the presentation providers can be given as 'presentationdata' (as array or JSON string, keyed by
+     * the keys of the presentation providers).
      *
      * @param array $data
      * @return stdClass
@@ -41,7 +47,7 @@ class theme_boost_union_generator extends component_generator_base {
         if (empty($location)) {
             throw new Exception('A Smart menu location must be specified.');
         }
-        $validlocations = array_keys(smartmenu::get_locations());
+        $validlocations = array_keys(\theme_boost_union\smartmenu\provider_registry::get_location_options());
         if (!empty(array_diff($location, $validlocations))) {
             throw new Exception('Invalid Smart menu location.');
         }
@@ -50,11 +56,13 @@ class theme_boost_union_generator extends component_generator_base {
         if (!in_array($showdescription, $validdescriptions)) {
             throw new Exception('Invalid showdescription.');
         }
-        $validtypes = array_keys(smartmenu::get_types());
-        $type = $data['type'] ?? smartmenu::TYPE_LIST;
-        if (!in_array($type, $validtypes)) {
-            throw new Exception('Invalid showdescription.');
+        $validpresentations = array_keys(\theme_boost_union\smartmenu\provider_registry::get_presentation_options());
+        $presentation = $data['presentation'] ?? smartmenu::PRESENTATION_LIST;
+        if (!in_array($presentation, $validpresentations)) {
+            throw new Exception('Invalid presentation.');
         }
+        $locationdata = smartmenu::decode_providerdata($data['locationdata'] ?? null);
+        $presentationdata = smartmenu::decode_providerdata($data['presentationdata'] ?? null);
         $validmodes = array_keys(smartmenu::get_mode_options());
         $mode = $data['mode'] ?? smartmenu::MODE_SUBMENU;
         if (!in_array($mode, $validmodes)) {
@@ -84,8 +92,10 @@ class theme_boost_union_generator extends component_generator_base {
             'description_format' => $data['description_format'] ?? FORMAT_HTML,
             'showdesc' => $showdescription,
             'sortorder' => $sortorder,
-            'location' => json_encode($location),
-            'type' => $type,
+            'location' => json_encode(array_values($location)),
+            'locationdata' => !empty($locationdata) ? json_encode($locationdata) : null,
+            'presentation' => $presentation,
+            'presentationdata' => !empty($presentationdata) ? json_encode($presentationdata) : null,
             'mode' => $mode,
             'cssclass' => $data['cssclass'] ?? null,
             'moremenubehavior' => $moremenubehavior,
@@ -113,6 +123,8 @@ class theme_boost_union_generator extends component_generator_base {
      * Generate a Smart menu item.
      *
      * The ID of the parent menu must be specified. All other properties are optional.
+     * The settings of the location and presentation providers of the menu can be given as 'locationdata' and
+     * 'presentationdata' (as array or JSON string, keyed by the keys of the providers).
      *
      * @param array $data
      * @return stdClass
@@ -285,6 +297,12 @@ class theme_boost_union_generator extends component_generator_base {
             'daterange' => $daterange,
             'starredcourses' => $data['starredcourses'] ?? smartmenu_item::STARREDCOURSES_ALL,
             'customfields' => $customfields,
+            'locationdata' => !empty($data['locationdata'])
+                ? json_encode(smartmenu::decode_providerdata($data['locationdata']))
+                : null,
+            'presentationdata' => !empty($data['presentationdata'])
+                ? json_encode(smartmenu::decode_providerdata($data['presentationdata']))
+                : null,
             'listsort' => $listsort,
             'displayhiddencourses' => $data['displayhiddencourses'] ?? 0,
             'hiddencoursesort' => $data['hiddencoursesort'] ?? 0,

@@ -44,6 +44,8 @@
     </span>
 </a>
 <div class="collapse {{#isopen}}show {{/isopen}}list-group-item p-0 border-0" role="menu" id="drop-down-menu-{{sort}}" aria-labelledby="drop-down-{{sort}}">
+    {{! Please note: Smart menus are always shown as list here, regardless of their presentation. The content which
+        a smart menu presentation renders (contenthtml) is not used in the mobile primary navigation on purpose. }}
     {{#children}}
         <!-- Third level child support - Custom -->
         {{#haschildren}}

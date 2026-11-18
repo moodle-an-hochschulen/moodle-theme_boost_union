@@ -59,14 +59,13 @@
         <FIELD NAME="description_format" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="showdesc" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="sortorder" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="location" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="type" TYPE="int" LENGTH="9" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="location" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="JSON encoded list of the keys of the location providers"/>
+        <FIELD NAME="locationdata" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="JSON encoded settings of the location providers, keyed by the keys of the providers"/>
+        <FIELD NAME="presentation" TYPE="char" LENGTH="50" NOTNULL="true" DEFAULT="list" SEQUENCE="false" COMMENT="Key of the presentation provider"/>
+        <FIELD NAME="presentationdata" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="JSON encoded settings of the presentation providers, keyed by the keys of the providers"/>
         <FIELD NAME="mode" TYPE="int" LENGTH="9" NOTNULL="false" DEFAULT="1" SEQUENCE="false"/>
         <FIELD NAME="cssclass" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="moremenubehavior" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="cardsize" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="cardform" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="cardoverflowbehavior" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="roles" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="rolecontext" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="cohorts" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
@@ -116,10 +115,8 @@
         <FIELD NAME="tooltip" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="target" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="cssclass" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="imagealt" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="textposition" TYPE="int" LENGTH="9" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
-        <FIELD NAME="textcolor" TYPE="char" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="backgroundcolor" TYPE="char" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="locationdata" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="JSON encoded settings of the location providers, keyed by the keys of the providers"/>
+        <FIELD NAME="presentationdata" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="JSON encoded settings of the presentation providers, keyed by the keys of the providers"/>
         <FIELD NAME="desktop" TYPE="int" LENGTH="9" NOTNULL="false" DEFAULT="1" SEQUENCE="false"/>
         <FIELD NAME="tablet" TYPE="int" LENGTH="9" NOTNULL="false" DEFAULT="1" SEQUENCE="false"/>
         <FIELD NAME="mobile" TYPE="int" LENGTH="9" NOTNULL="false" DEFAULT="1" SEQUENCE="false"/>

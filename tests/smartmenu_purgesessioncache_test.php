@@ -56,8 +56,6 @@ final class smartmenu_purgesessioncache_test extends advanced_testcase {
     public function test_purgesessioncache_flag_is_reset(string $change): void {
         global $CFG, $DB, $PAGE;
 
-        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
-
         $this->resetAfterTest();
 
         // Create a user, a course and a smart menu.
