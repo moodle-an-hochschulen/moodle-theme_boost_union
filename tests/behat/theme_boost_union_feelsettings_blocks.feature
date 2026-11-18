@@ -700,6 +700,9 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     When I am on the "Course 1" "Course" page logged in as "admin"
     Then DOM element "#theme_boost-drawers-courseindex" should be placed at the "left" edge of the viewport
     And DOM element "#theme_boost-drawers-blocks" should be placed at the "right" edge of the viewport
+    # The page content is shifted by the drawer width only, without the gaps which Moodle core keeps around anchored drawers.
+    And DOM elements "#theme_boost-drawers-courseindex" and "#page" should have a horizontal gap of "0" pixels
+    And DOM elements "#page" and "#theme_boost-drawers-blocks" should have a horizontal gap of "0" pixels
     And DOM element "#theme_boost-drawers-courseindex" should not overlap with any of the DOM elements "#theme-block-region-outside-top, #theme-block-region-outside-left, #theme-block-region-outside-right, #theme-block-region-header"
     And DOM element "#theme_boost-drawers-blocks" should not overlap with any of the DOM elements "#theme-block-region-outside-top, #theme-block-region-outside-left, #theme-block-region-outside-right, #theme-block-region-header"
 
@@ -757,8 +760,10 @@ Feature: Configuring the theme_boost_union plugin for the "Blocks" tab on the "F
     When I am on the "Course 1" "Course" page logged in as "admin"
     Then DOM element "#theme_boost-drawers-courseindex" should not be placed at the "left" edge of the viewport
     And DOM element "#theme_boost-drawers-blocks" should not be placed at the "right" edge of the viewport
-    And DOM elements "#theme_boost-drawers-courseindex" and "#topofscroll" should have a horizontal gap of "28" pixels
-    And DOM elements "#topofscroll" and "#theme_boost-drawers-blocks" should have a horizontal gap of "28" pixels
+    # Moodle core keeps a gap of 20px between the drawers and the course content. As the course content is inset by 23px
+    # within the main content area, the drawers overlap the edge of the main content area by 3px.
+    And DOM elements "#theme_boost-drawers-courseindex" and "#topofscroll" should have a horizontal gap of "-3" pixels
+    And DOM elements "#topofscroll" and "#theme_boost-drawers-blocks" should have a horizontal gap of "-3" pixels
     And DOM elements "#theme_boost-drawers-courseindex" and "#topofscroll" should have the same "top" position value
     And DOM elements "#theme_boost-drawers-blocks" and "#topofscroll" should have the same "top" position value
 
