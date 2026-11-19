@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-11-19 - Improvement: Harden the evaluation of the cookie which preselects the organisation in the internal Shibboleth WAYF on the login page and add Behat tests for the organisation selector.
 * 2026-11-18 - Bugfix: Prevent that rendering the primary-drawer-mobile-child mustache template exceeds the allowed memory size, resolves #874
 
 ### v5.0-r38
