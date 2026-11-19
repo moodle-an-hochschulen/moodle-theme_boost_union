@@ -75,10 +75,10 @@ $primary = new theme_boost_union\output\navigation\primary($PAGE);
 $renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
 
-// Add a special class selector to improve the Smart menus SCSS selectors.
-if (isset($primarymenu['includesmartmenu']) && $primarymenu['includesmartmenu'] == true) {
-    $extraclasses[] = 'theme-boost-union-smartmenu';
-}
+// Add special class selectors to improve the Smart menus SCSS selectors.
+// The classes are collected by the primary navigation: As soon as at least one smart menu is included on the page, the
+// class theme-boost-union-smartmenu is added. Smart menu location providers may add further classes.
+$extraclasses = array_merge($extraclasses, $primarymenu['bodyclasses'] ?? []);
 
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions()  && !$PAGE->has_secondary_navigation();
 // If the settings menu will be included in the header then don't add it here.

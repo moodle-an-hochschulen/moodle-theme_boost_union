@@ -22,11 +22,13 @@
  *
  * Modifications compared to the original module:
  * * Add the Boost Union smart menu fields to the NavNode interface (smartmenu, smartmenuitem,
- *   classes, wrapperclasses, tooltip, forceout, helptext, helptextposition, helpicon).
+ *   classes, wrapperclasses, tooltip, forceout, helptext, helptextposition, helpicon, contenthtml).
  * * Add the gobacklabel prop which is used by the smart menu carousels.
  * * Render smart menus (and smart menu items with children) as dropdowns with a carousel which
  *   realizes the third level of the smart menu (replacing the legacy theme_boost_union/submenu
  *   AMD module), including the smart menu description and help icon.
+ * * Show the content which the presentation provider of a smart menu rendered on the server (contenthtml)
+ *   instead of the list of the menu items, if any.
  * * Render top-level smart menu items with their formatted HTML label, their classes, their
  *   tooltip and their attributes (NavPill only accepts plain text labels).
  * * Keep smart menus which are configured to be kept outside of the "More" menu out of the
@@ -95,6 +97,11 @@ export interface NavNode {
     helptextposition?: 'above' | 'below' | null;
     /** The rendered help icon (HTML) of a smart menu. */
     helpicon?: string | null;
+    /**
+     * The content (HTML) of a smart menu which has been rendered by the presentation provider of the menu
+     * on the server. If set, it is shown instead of the list of the menu items.
+     */
+    contenthtml?: string | null;
 }
 
 export interface NavProps {
@@ -525,7 +532,12 @@ function SmartMenuDropdownContent(
     const idprefix = useId();
     const carouselRef = useRef<HTMLDivElement>(null);
     const mainId = carouselItemId(idprefix, null);
-    const submenus = node.children.filter((child) => !child.divider && child.children.length > 0);
+    // If the presentation provider of the smart menu rendered the content of the menu on its own, there is no
+    // list of menu items and thus no third level.
+    const hascontenthtml = typeof node.contenthtml === 'string';
+    const submenus = hascontenthtml
+        ? []
+        : node.children.filter((child) => !child.divider && child.children.length > 0);
 
     useEffect(() => {
         const carousel = carouselRef.current;
@@ -612,7 +624,14 @@ function SmartMenuDropdownContent(
                     {node.helptext && node.helptextposition === 'above' && (
                         <div className="menu-description" dangerouslySetInnerHTML={{__html: node.helptext}} />
                     )}
-                    <DropdownItems items={node.children} istablist={istablist} carouselidprefix={idprefix} />
+                    {hascontenthtml ? (
+                        <div
+                            className="theme-boost-union-smartmenu-content"
+                            dangerouslySetInnerHTML={{__html: node.contenthtml ?? ''}}
+                        />
+                    ) : (
+                        <DropdownItems items={node.children} istablist={istablist} carouselidprefix={idprefix} />
+                    )}
                     {node.helptext && node.helptextposition === 'below' && (
                         <div className="menu-description" dangerouslySetInnerHTML={{__html: node.helptext}} />
                     )}

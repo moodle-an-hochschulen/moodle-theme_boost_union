@@ -63,6 +63,18 @@ final class primary_test extends advanced_testcase {
     }
 
     /**
+     * Get the React props of the menu bar from the HTML which the menu bar location rendered into its template slot.
+     *
+     * @param string $html The HTML of the slot above the navbar.
+     * @return array The decoded React props.
+     */
+    protected function get_menubar_props(string $html): array {
+        $this->assertMatchesRegularExpression('/data-react-props=(["\'])(.*?)\1/s', $html);
+        preg_match('/data-react-props=(["\'])(.*?)\1/s', $html, $matches);
+        return json_decode(html_entity_decode($matches[2], ENT_QUOTES | ENT_HTML5, 'UTF-8'), true);
+    }
+
+    /**
      * Test that the React props are exported like in core if no smart menus are configured.
      *
      * @covers ::export_for_template
@@ -203,13 +215,16 @@ final class primary_test extends advanced_testcase {
         $this->assertTrue($divideritem['divider']);
 
         // Menu bar.
-        $this->assertIsArray($data['menubar']);
-        $menubarprops = json_decode($data['menubar']['reactprops'], true);
+        // The menu bar is rendered by the menu bar location into the template slot above the navbar.
+        $this->assertArrayNotHasKey('menubar', $data);
+        $menubarhtml = $data['slots']['navbar_above'];
+        $this->assertStringContainsString('boost-union-menubar', $menubarhtml);
+        $menubarprops = $this->get_menubar_props($menubarhtml);
         $this->assertSame('navbar-nav-menu-bar', $menubarprops['navbarstyle']);
         $this->assertCount(1, $menubarprops['items']);
         $this->assertTrue($menubarprops['items'][0]['smartmenu']);
         $this->assertSame('smartmenu-' . $menu->id, $menubarprops['items'][0]['key']);
-        $this->assertStringContainsString('d-lg-flex', $data['menubar']['classes']);
+        $this->assertStringContainsString('d-lg-flex', $menubarhtml);
     }
 
     /**

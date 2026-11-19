@@ -1,0 +1,33 @@
+/**
+ * Theme Boost Union - Smart menus: Menu bar location
+ *
+ * This file is added to the SCSS of Boost Union by the smart menu location provider
+ * \theme_boost_union\smartmenu\location\menubar
+ * directly after scss/boost_union/post.scss. It can use all variables and mixins which are available there.
+ *
+ * @package    theme_boost_union
+ * @copyright  2023 bdecent GmbH <https://bdecent.de>
+ * @copyright  2026 Alexander Bias <abias@ssystems.de>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/* The menu bar itself. */
+.theme-boost-union-smartmenu .navbar.fixed-top.boost-union-menubar {
+    /* Height and background color for the top header.
+       The background color follows the body background color which is the same light grey in the light color mode
+       and which becomes dark in the dark color mode. */
+    height: $bu-smartmenu-menubar-height;
+    border-bottom: 0;
+    background-color: var(--#{$prefix}body-bg);
+
+    /* The menu bar is placed above the navbar (which has Bootstrap's z-index for fixed elements) so that its
+       dropdowns are shown above the navbar. */
+    z-index: $zindex-fixed + 1;
+
+    /* The exact copy of the core '.primary-navigation .navigation.primarynav-navbar' block in
+       scss/boost_union/post.scss gives the list items the navbar height. Within the menu bar, they
+       must not be higher than the menu bar. */
+    .primarynav-navbar .more-nav li.nav-item {
+        height: $bu-smartmenu-menubar-height;
+    }
+}

@@ -1,0 +1,51 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost_union/smartmenus-location-menubar
+
+    The smart menu menu bar.
+
+    This template is rendered by the menu bar smart menu location provider
+    (\theme_boost_union\smartmenu\location\menubar) into the smart menu slot above the navbar.
+    The menu bar is rendered by the same React component as the main navigation (see the theme_boost_union override
+    of the core/primarymoremenu template), the context is the more menu data of the menu bar.
+
+    Context variables required for this template:
+    * classes - The visibility classes of the menu bar.
+    * includesmartmenu - Flag to mount the smart menu aware React component.
+    * All context variables which are required by core/primarymoremenu.
+
+    Example context (json):
+    {
+        "classes": "d-lg-flex d-md-flex d-flex",
+        "includesmartmenu": true,
+        "moremenuid": "614c104dbacfa",
+        "navbarstyle": "navbar-nav-menu-bar",
+        "istablist": false,
+        "nodearray": [
+            {
+                "key": "item-1",
+                "text": "Moodle community",
+                "url": "https://moodle.org"
+            }
+        ],
+        "reactprops": "{\"items\":[{\"key\":\"smartmenu-item-1\",\"text\":\"Moodle community\",\"title\":null,\"href\":\"https://moodle.org\",\"active\":false,\"forceintomoremenu\":false,\"showchildreninsubmenu\":false,\"id\":null,\"attributes\":[],\"actions\":[],\"divider\":false,\"children\":[]}],\"morelabel\":\"More\",\"navbarstyle\":\"navbar-nav-menu-bar\",\"istablist\":false,\"measuredclass\":\"primarynav-measured\"}"
+    }
+}}
+<nav class="menubar fixed-top boost-union-menubar navbar navbar-expand {{{classes}}}">
+    {{> core/primarymoremenu}}
+</nav>

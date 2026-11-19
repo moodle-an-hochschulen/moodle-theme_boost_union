@@ -70,7 +70,7 @@ class smartmenus_menus extends \core_table\sql_table {
         $columns[] = 'title';
         $columns[] = 'description';
         $columns[] = 'location';
-        $columns[] = 'type';
+        $columns[] = 'presentation';
         $columns[] = 'updown';
         $columns[] = 'actions';
         $this->sortable(false); // Having a sortable table would be nice, but this would interfere with the up/down feature.
@@ -119,37 +119,50 @@ class smartmenus_menus extends \core_table\sql_table {
      */
     public function col_location($data) {
         // Decode all locations.
-        $locations = json_decode($data->location);
+        $locations = (array) (json_decode($data->location) ?: []);
 
-        // Ignore locations which do not exist (anymore), e.g. the bottom bar location of existing menus.
-        $locations = array_filter((array) $locations, function ($value) {
-            return \theme_boost_union\smartmenu::get_location($value) !== false;
-        });
-
-        // Implode all given locations and show a badge for each of them.
-        return (!empty($locations)) ? implode(' ', array_map(function ($value) {
-            $location = \theme_boost_union\smartmenu::get_location($value);
-            return html_writer::tag('span', $location, ['class' => 'badge bg-primary text-light']);
-        }, $locations)) : "";
+        // Show a badge for each location.
+        // Locations which do not exist (anymore), e.g. as the plugin which provides the location has been uninstalled
+        // or as the location has been removed from Boost Union like the bottom bar, are flagged with a warning badge
+        // as the menu is not shown there.
+        return implode(' ', array_map(function ($value) {
+            $location = \theme_boost_union\smartmenu\provider_registry::get_location((string) $value);
+            if ($location === null) {
+                return html_writer::tag(
+                    'span',
+                    get_string('smartmenusproviderunknown', 'theme_boost_union', s($value)),
+                    ['class' => 'badge bg-warning text-dark']
+                );
+            }
+            return html_writer::tag('span', $location->get_name(), ['class' => 'badge bg-primary text-light']);
+        }, $locations));
     }
 
     /**
-     * Type column.
+     * Presentation type column.
      *
      * @param \stdClass $data
      * @return mixed
      */
-    public function col_type($data) {
-        // Get the type.
-        // Types which do not exist (anymore), e.g. the card type of existing menus, are shown as list type as they are
-        // rendered as list menus.
-        $type = \theme_boost_union\smartmenu::get_type($data->type);
-        if ($type === false) {
-            $type = \theme_boost_union\smartmenu::get_type(\theme_boost_union\smartmenu::TYPE_LIST);
+    public function col_presentation($data) {
+        // Get the presentation.
+        $presentation = \theme_boost_union\smartmenu\provider_registry::get_presentation((string) $data->presentation);
+
+        // If the presentation exists, return it as badge.
+        if ($presentation !== null) {
+            return html_writer::tag('span', $presentation->get_name(), ['class' => 'badge bg-primary text-light']);
         }
 
-        // Return the type as badge.
-        return html_writer::tag('span', $type, ['class' => 'badge bg-primary text-light']);
+        // Presentations which do not exist (anymore), e.g. as the plugin which provides the presentation has been
+        // uninstalled or as the presentation has been removed from Boost Union like the card presentation, are flagged
+        // with a warning badge. The menu is rendered with the fallback presentation in this case which is shown as well.
+        $fallback = \theme_boost_union\smartmenu\provider_registry::get_fallback_presentation()->get_name();
+        return html_writer::tag('span', $fallback, ['class' => 'badge bg-primary text-light']) . ' ' .
+                html_writer::tag(
+                    'span',
+                    get_string('smartmenusproviderunknown', 'theme_boost_union', s($data->presentation)),
+                    ['class' => 'badge bg-warning text-dark']
+                );
     }
 
     /**

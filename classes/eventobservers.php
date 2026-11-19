@@ -51,9 +51,6 @@ class eventobservers {
             \core_cache\helper::purge_by_event('theme_boost_union_cohort_deleted');
         }
 
-        // Require smart menus library.
-        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
-
         // Deletion this cohort may result in a menu change for its users.
         // Verify if any of the menus used this cohort in restriction rules and, if yes, purge the menus cache.
         smartmenu_helper::purge_cache_deleted_cohort($event->objectid);
@@ -78,9 +75,6 @@ class eventobservers {
             // This way, we avoid that the flavours cache is purged unnecessarily for all users.
             set_user_preference('theme_boost_union_flavours_purgesessioncache', true, $event->relateduserid);
         }
-
-        // Require smart menus library.
-        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
         // Adding users to this cohort may result in a menu change for these users.
         // Verify if any of the menus used this cohort in restriction rules and, if yes, purge the menus cache for this user.
@@ -107,9 +101,6 @@ class eventobservers {
             set_user_preference('theme_boost_union_flavours_purgesessioncache', true, $event->relateduserid);
         }
 
-        // Require smart menus library.
-        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
-
         // Removing users from this cohort may result in a menu change for these users.
         // Verify if any of the menus used this cohort in restriction rules and, if yes, purge the menus cache for this user.
         smartmenu_helper::purge_cache_session_cohort($event->objectid, $event->relateduserid);
@@ -122,9 +113,6 @@ class eventobservers {
      */
     public static function role_assigned(\core\event\base $event) {
         global $CFG;
-
-        // Require smart menus library.
-        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
         // Purge the cached menus for the user with the assigned role.
         smartmenu_helper::purge_cache_session_roles($event->objectid, $event->relateduserid);
@@ -140,9 +128,6 @@ class eventobservers {
     public static function role_unassigned(\core\event\base $event) {
         global $CFG;
 
-        // Require smart menus library.
-        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
-
         // Purge the cached menus for the user with the unassigned role.
         smartmenu_helper::purge_cache_session_roles($event->objectid, $event->relateduserid);
         // Purge the related user cache.
@@ -156,9 +141,6 @@ class eventobservers {
      */
     public static function role_deleted(\core\event\base $event) {
         global $CFG;
-
-        // Require smart menus library.
-        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
         // Purge the cached menus for all users with the deleted role.
         smartmenu_helper::purge_cache_deleted_roles($event->objectid);
@@ -174,9 +156,6 @@ class eventobservers {
     public static function course_updated(\core\event\base $event) {
         global $CFG;
 
-        // Require smart menus library.
-        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
-
         // Purge all the dynamic course items cache.
         smartmenu_helper::purge_cache_dynamic_courseitems();
 
@@ -191,9 +170,6 @@ class eventobservers {
     public static function category_updated(\core\event\base $event) {
         global $CFG;
 
-        // Require smart menus library.
-        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
-
         // Clear the cache of menu when the course updated.
         smartmenu_helper::purge_cache_dynamic_courseitems();
     }
@@ -206,9 +182,6 @@ class eventobservers {
     public static function completion_updated(\core\event\base $event) {
         global $CFG;
 
-        // Require smart menus library.
-        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
-
         // Clear the cache of menu when the course/module completion updated for user.
         smartmenu_helper::set_user_purgecache($event->relateduserid);
     }
@@ -220,9 +193,6 @@ class eventobservers {
      */
     public static function user_updated(\core\event\base $event) {
         global $CFG;
-
-        // Require smart menus library.
-        require_once($CFG->dirroot . '/theme/boost_union/smartmenus/menulib.php');
 
         // Clear the cache of menu when the course/module completion updated for user.
         smartmenu_helper::set_user_purgecache($event->relateduserid);

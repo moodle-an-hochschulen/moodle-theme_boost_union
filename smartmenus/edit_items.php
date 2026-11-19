@@ -62,6 +62,9 @@ if ($menuid == null && $id !== null) {
     }
 }
 
+// Get the menu record in the format which the smart menu classes and the location and presentation providers use.
+$menurecord = theme_boost_union\smartmenu::get_menu($menu->id);
+
 // Prepare the page.
 $PAGE->set_context($context);
 $PAGE->set_url(new core\url('/theme/boost_union/smartmenus/edit_items.php', ['menu' => $menu->id, 'sesskey' => sesskey()]));
@@ -99,7 +102,7 @@ if ($id != null) {
     $form = new \theme_boost_union\form\smartmenu_item_edit_form($formurl->out(false), [
             'id' => $id,
             'menu' => $menu->id,
-            'menutype' => $menu->type,
+            'menurecord' => $menurecord,
             'nextorder' => $nextorder,
             'menuitem' => $menuitem,
     ]);
@@ -110,7 +113,7 @@ if ($id != null) {
     $form = new \theme_boost_union\form\smartmenu_item_edit_form($formurl->out(false), [
             'id' => $id,
             'menu' => $menu->id,
-            'menutype' => $menu->type,
+            'menurecord' => $menurecord,
             'nextorder' => $nextorder,
     ]);
 }
@@ -118,7 +121,8 @@ if ($id != null) {
 // If the form was submitted.
 if ($data = $form->get_data()) {
     // Handle form results.
-    $result = theme_boost_union\smartmenu_item::manage_instance($data);
+    // The location and presentation providers of the menu process their form elements while the menu item is saved.
+    $result = theme_boost_union\smartmenu_item::manage_instance($data, true);
     if ($result) {
         // Redirect to menu item list.
         redirect(new core\url('/theme/boost_union/smartmenus/items.php', ['menu' => $menu->id]));
@@ -134,6 +138,9 @@ if ($data = $form->get_data()) {
 if ($id !== null && $id > 0) {
     // Fetch the data for the menu item.
     if ($record = theme_boost_union\smartmenu_item::instance($id)->get_item()) {
+        // Add the settings of the location and presentation providers to the menu item data.
+        $record = theme_boost_union\smartmenu_item::add_provider_form_data($menurecord, $record);
+
         // Set the menu data to the menu edit form.
         $form->set_data($record);
 
@@ -145,6 +152,12 @@ if ($id !== null && $id > 0) {
         // Redirect to menu item list (where the notification is shown).
         redirect(new core\url('/theme/boost_union/smartmenus/items.php', ['menu' => $menu->id]));
     }
+}
+
+// Otherwise, if a new menu item is created.
+if ($id === null || $id <= 0) {
+    // Let the location and presentation providers prepare their form elements (e.g. their draft file areas).
+    $form->set_data(theme_boost_union\smartmenu_item::add_provider_form_data($menurecord));
 }
 
 // Start page output.

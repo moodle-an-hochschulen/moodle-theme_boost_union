@@ -131,9 +131,9 @@ $renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
 
 // Add special class selectors to improve the Smart menus SCSS selectors.
-if (isset($primarymenu['includesmartmenu']) && $primarymenu['includesmartmenu'] == true) {
-    $extraclasses[] = 'theme-boost-union-smartmenu';
-}
+// The classes are collected by the primary navigation: As soon as at least one smart menu is included on the page, the
+// class theme-boost-union-smartmenu is added. Smart menu location providers may add further classes.
+$extraclasses = array_merge($extraclasses, $primarymenu['bodyclasses'] ?? []);
 
 
 // Include the extra classes for the course index modification.

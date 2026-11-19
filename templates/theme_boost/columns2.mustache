@@ -54,6 +54,7 @@
     Modifications compared to the original template:
     * Include theme_boost_union/footnote template
     * Include theme_boost_union/footer template instead of theme_boost/footer
+    * Added the smart menu slots at the top of the page element and at the end of the page wrapper.
     * Include theme_boost_union/navbar template instead of theme_boost/navbar
     * Added the possibility to show course related hints.
     * Added the possibility to show info banners.
@@ -70,6 +71,7 @@
     {{> theme_boost/navbar }}
 
     <div id="page" class="container-fluid d-print-block">
+        {{{smartmenuslots.page_top}}}
         {{> theme_boost_union/javascriptdisabledhint }}
         {{> theme_boost_union/infobannersabove }}
         {{{ output.full_header }}}
@@ -120,6 +122,7 @@
     {{{ output.standard_after_main_region_html }}}
     {{> theme_boost/footer }}
     {{> theme_boost_union/footnote }}
+    {{{smartmenuslots.body_end}}}
 </div>
 
 </body>

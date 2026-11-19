@@ -30,6 +30,8 @@
     * Add the smart menu description (above or below the items or as help icon) to the dropdown.
     * Render the children of the second level items (third level) as indented items as there is no JavaScript
       available to realize a carousel.
+    * Show the content which the presentation of a smart menu rendered (contenthtml) instead of the list of the
+      menu items, if any.
 
     Example context (json):
     {
@@ -55,6 +57,8 @@
         <div class="dropdown-menu" role="menu" id="drop-down-menu-{{moremenuid}}-{{key}}" aria-labelledby="drop-down-{{moremenuid}}-{{key}}">
             {{#helpicon}}<div class="menu-helpicon">{{{helpicon}}}</div>{{/helpicon}}
             {{#abovehelptext}}{{#helptext}}<div class="menu-description">{{{helptext}}}</div>{{/helptext}}{{/abovehelptext}}
+            {{#contenthtml}}{{{contenthtml}}}{{/contenthtml}}
+            {{^contenthtml}}
             {{#children}}
                 {{^divider}}
                     {{#is_action_link}}
@@ -97,6 +101,7 @@
                     <div class="dropdown-divider" role="separator"></div>
                 {{/divider}}
             {{/children}}
+            {{/contenthtml}}
             {{#belowhelptext}}{{#helptext}}<div class="menu-description">{{{helptext}}}</div>{{/helptext}}{{/belowhelptext}}
         </div>
     </li>

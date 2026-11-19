@@ -1290,6 +1290,149 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2026100501, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2026100503) {
+        // The smart menu locations and the smart menu presentations have been turned into providers which are identified
+        // by string keys instead of integer IDs and which store their settings in generic JSON fields.
+        // This step migrates the existing menus and menu items to this data model.
+        // (The smart menu caches do not need to be purged here as Moodle purges all caches after an upgrade anyway).
+        require_once($CFG->dirroot . '/theme/boost_union/db/upgradelib.php');
+
+        $menustable = new xmldb_table('theme_boost_union_menus');
+        $itemstable = new xmldb_table('theme_boost_union_menuitems');
+
+        // Add the locationdata field to the menus table.
+        $field = new xmldb_field('locationdata', XMLDB_TYPE_TEXT, null, null, null, null, null, 'location');
+        if (!$dbman->field_exists($menustable, $field)) {
+            $dbman->add_field($menustable, $field);
+        }
+
+        // Add the presentation field to the menus table which replaces the type field.
+        $field = new xmldb_field('presentation', XMLDB_TYPE_CHAR, '50', null, XMLDB_NOTNULL, null, 'list', 'locationdata');
+        if (!$dbman->field_exists($menustable, $field)) {
+            $dbman->add_field($menustable, $field);
+        }
+
+        // Add the presentationdata field to the menus table.
+        $field = new xmldb_field('presentationdata', XMLDB_TYPE_TEXT, null, null, null, null, null, 'presentation');
+        if (!$dbman->field_exists($menustable, $field)) {
+            $dbman->add_field($menustable, $field);
+        }
+
+        // Add the locationdata field to the menu items table.
+        $field = new xmldb_field('locationdata', XMLDB_TYPE_TEXT, null, null, null, null, null, 'cssclass');
+        if (!$dbman->field_exists($itemstable, $field)) {
+            $dbman->add_field($itemstable, $field);
+        }
+
+        // Add the presentationdata field to the menu items table.
+        $field = new xmldb_field('presentationdata', XMLDB_TYPE_TEXT, null, null, null, null, null, 'locationdata');
+        if (!$dbman->field_exists($itemstable, $field)) {
+            $dbman->add_field($itemstable, $field);
+        }
+
+        // Migrate the menus (if this has not been done yet).
+        // Please note: The migration is done in stages which can be repeated safely if the upgrade is interrupted and
+        // started again. The type field is the marker that the menus have not been converted completely yet. It is
+        // dropped before the former location field is replaced, so that the menus are never converted again from a
+        // location field which does not hold the former location IDs anymore.
+        $typefield = new xmldb_field('type');
+        $locationkeysfield = new xmldb_field('locationkeys', XMLDB_TYPE_TEXT, null, null, null, null, null, 'location');
+        if ($dbman->field_exists($menustable, $typefield)) {
+            // Add a temporary field for the location keys. The location field cannot be converted in place as it has to
+            // become a text field and as its content has to be converted at the same time.
+            if (!$dbman->field_exists($menustable, $locationkeysfield)) {
+                $dbman->add_field($menustable, $locationkeysfield);
+            }
+
+            // Convert all menus.
+            // The conversion of a menu is done by a function in the upgrade library which is covered by unit tests.
+            $menus = $DB->get_recordset('theme_boost_union_menus');
+            foreach ($menus as $menu) {
+                $converted = theme_boost_union_upgrade_smartmenu_to_providers($menu);
+                $DB->update_record('theme_boost_union_menus', (object) [
+                    'id' => $menu->id,
+                    'locationkeys' => $converted->location,
+                    'presentation' => $converted->presentation,
+                    'presentationdata' => $converted->presentationdata,
+                ]);
+            }
+            $menus->close();
+
+            // All menus have been converted, drop the type field.
+            $dbman->drop_field($menustable, $typefield);
+        }
+
+        // Drop the card fields of the menus which are not needed anymore.
+        foreach (['cardsize', 'cardform', 'cardoverflowbehavior'] as $cardfield) {
+            $field = new xmldb_field($cardfield);
+            if ($dbman->field_exists($menustable, $field)) {
+                $dbman->drop_field($menustable, $field);
+            }
+        }
+
+        // Replace the location field by the temporary field (if this has not been done yet).
+        if ($dbman->field_exists($menustable, $locationkeysfield)) {
+            // If the temporary field and the location field exist both, the location field is still the former one.
+            $locationfield = new xmldb_field('location');
+            if ($dbman->field_exists($menustable, $locationfield)) {
+                $dbman->drop_field($menustable, $locationfield);
+            }
+            $dbman->rename_field($menustable, $locationkeysfield, 'location');
+        }
+
+        // Make sure that the location field must not be empty.
+        $locationfield = new xmldb_field('location', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null, 'sortorder');
+        $dbman->change_field_notnull($menustable, $locationfield);
+
+        // Migrate the menu items (if this has not been done yet).
+        // The card settings of the menu items are moved to the presentation data as well.
+        // The imagealt field is the marker that the menu items have not been converted completely yet.
+        // Please note: The card images of the menu items are kept untouched in the legacy file area
+        // theme_boost_union / smartmenus_itemimage so that a plugin which provides the card presentation again can
+        // move them into a file area of its own. This file area is not used by Boost Union anymore and is not meant
+        // to be used by presentation providers for new files.
+        $itemcardfields = ['imagealt', 'textposition', 'textcolor', 'backgroundcolor'];
+        if ($dbman->field_exists($itemstable, new xmldb_field('imagealt'))) {
+            // Get all menu items, regardless of the presentation of their menu.
+            // The card fields could also be filled for items of list menus (e.g. if a menu had been switched from card
+            // to list). These settings are kept so that they are available again if the menu is switched back to card.
+            $items = $DB->get_recordset(
+                'theme_boost_union_menuitems',
+                null,
+                '',
+                'id, presentationdata, ' . implode(', ', $itemcardfields)
+            );
+            foreach ($items as $item) {
+                // Convert the card settings of the item.
+                // This is done by a function in the upgrade library which is covered by unit tests.
+                $presentationdata = theme_boost_union_upgrade_smartmenu_item_to_providers($item);
+
+                // Skip the item if it does not have any card settings.
+                if ($presentationdata === null) {
+                    continue;
+                }
+
+                // Store the presentation data of the item.
+                $DB->set_field('theme_boost_union_menuitems', 'presentationdata', $presentationdata, ['id' => $item->id]);
+            }
+            $items->close();
+
+            // All menu items have been converted, drop the imagealt field.
+            $dbman->drop_field($itemstable, new xmldb_field('imagealt'));
+        }
+
+        // Drop the card fields of the menu items which are not needed anymore.
+        foreach ($itemcardfields as $itemcardfield) {
+            $field = new xmldb_field($itemcardfield);
+            if ($dbman->field_exists($itemstable, $field)) {
+                $dbman->drop_field($itemstable, $field);
+            }
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2026100503, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();

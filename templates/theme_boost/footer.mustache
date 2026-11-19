@@ -110,9 +110,11 @@
         code. If this JS code does not find the placeholder div, it will add the link at another location on the page.
         That's why we keep the placeholder here and hide it with CSS if the link should be suppressed.
     * Added the possibility to suppress the icons in front of the footer links.
+    * Added the smart menu slots above the footer and at the end of the footer.
     * Added the possibility to add additional content at the beginning and at the end of the footer popover.
 }}
 
+{{{smartmenuslots.footer_above}}}
 <footer id="page-footer" class="footer-popover bg-white">
     <div data-region="footer-container-popover">
         {{#output.has_communication_links}}
@@ -303,6 +305,7 @@
         </div>
     </div>
 
+    {{{smartmenuslots.footer_below}}}
 </footer>
 {{#js}}
   {{#footerbutton}}

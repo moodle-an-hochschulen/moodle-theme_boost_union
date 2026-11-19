@@ -631,6 +631,8 @@ Boost Union's CSS snippets offer a possibility to add small (or slightly larger)
 
 Smart menus allow site administrators to create customizable menus that can be placed in different locations on the site, such as the site main menu, the menu bar and the user menu. The menus can be configured to display different types of content, including links to other pages or resources, category links, or user profile links. On this page, you can create and manage smart menus.
 
+Boost Union itself ships the locations main navigation, menu bar and user menu and the presentation type list. Additional plugins can add further locations and presentation types to the smart menus, see the section "Companion plugins for smart menus" below.
+
 ### Settings page "Recommendations"
 
 Boost Union performs just as well as the entire Moodle instance is configured. On this page, you find recommendations and checks for the optimal Boost Union operation. If you think a particular recommendation does not apply to your instance, you can mute it.
@@ -783,6 +785,16 @@ Companion plugin local_navbarplus
 With the footersuppressusertour setting, you can disable the possibility to reset a user tour in the footer popover. If you have enabled this setting, you might want to have a look at our plugin local_navbarplus as a companion plugin which allows you, among other things, to add a "Reset user tour" link to the navigation bar instead. local_navbarplus is published on https://moodle.org/plugins/local_navbarplus and on https://github.com/moodle-an-hochschulen/moodle-local_navbarplus.
 
 
+Companion plugins for smart menus
+---------------------------------
+
+The locations where a smart menu can be shown and the presentation types of a smart menu are realized as providers. As Moodle themes cannot have subplugins, Boost Union offers a hook with which other plugins can add further locations and presentation types, including settings of their own which are shown in the smart menu and smart menu item settings. If you want to build such a plugin, please see docs/developer-guide-smartmenuproviders.md.
+
+If you want to present a smart menu as cards (as it was possible in Boost Union up to v5.2), you might want to have a look at our plugin <TODO> as a companion plugin which adds the card presentation type to the smart menus. <TODO> is published on <TODO>.
+
+If a smart menu uses a location or a presentation type of a plugin which is not installed (anymore), the menu is not shown at this location or is shown as list respectively, and it is flagged in the list of smart menus.
+
+
 Expert settings for config.php
 ------------------------------
 
@@ -861,6 +873,8 @@ Having said that, here's the order how all the SCSS code is added to the SCSS st
    * If we are on Moodle Workplace™:\
      * Adds the Boost Union MWP Pre SCSS from disk\
        (which is located on `/local/boost_union_mwp/scss/pre.scss`)
+   * Adds the Pre SCSS of the smart menu location and presentation providers\
+     (which is empty for the built-in providers, but which may be added by additional plugins)
    * Sets several SCSS variables based on Boost Union or Boost Union flavour settings
    * Adds the Boost Union external Pre SCSS\
      (which is set on `/admin/settings.php?section=theme_boost_union_look#theme_boost_union_look_scss`)
@@ -882,6 +896,8 @@ Having said that, here's the order how all the SCSS code is added to the SCSS st
    * If we are on Moodle Workplace™:\
      * Adds the Boost Union MWP Post SCSS from disk\
        (which is located on `/local/boost_union_mwp/scss/post.scss`)
+   * Adds the Post SCSS of the smart menu location and presentation providers\
+     (which is located on `/theme/boost_union/scss/boost_union/smartmenus/` for the built-in providers and which may be added by additional plugins)
    * Adds the Boost Union external SCSS\
      (which is set on `/admin/settings.php?section=theme_boost_union_look#theme_boost_union_look_scss`)
    * Adds the Boost Union SCSS snippets\

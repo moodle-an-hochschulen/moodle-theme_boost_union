@@ -77,7 +77,8 @@ if ($id != null) {
 // If the form was submitted.
 if ($data = $form->get_data()) {
     // Handle form results.
-    $menuid = theme_boost_union\smartmenu::manage_instance($data);
+    // The location and presentation providers of the menu process their form elements while the menu is saved.
+    $menuid = theme_boost_union\smartmenu::manage_instance($data, true);
 
     // After the menu data was saved, let's redirect to configure items for this menu.
     if (isset($data->saveanddisplay) && $data->saveanddisplay) {
@@ -99,6 +100,9 @@ if ($data = $form->get_data()) {
 if ($id !== null && $id > 0) {
     // Fetch the data for the menu.
     if ($record = theme_boost_union\smartmenu::get_menu($id)) {
+        // Add the settings of the location and presentation providers to the menu data.
+        $record = theme_boost_union\smartmenu::add_provider_form_data($record);
+
         // Set the menu data to the menu edit form.
         $form->set_data($record);
 
@@ -110,6 +114,12 @@ if ($id !== null && $id > 0) {
         // Redirect to menu list (where the notification is shown).
         redirect(new core\url('/theme/boost_union/smartmenus/menus.php'));
     }
+}
+
+// Otherwise, if a new menu is created.
+if ($id === null || $id <= 0) {
+    // Let the location and presentation providers prepare their form elements (e.g. their draft file areas).
+    $form->set_data(theme_boost_union\smartmenu::add_provider_form_data());
 }
 
 // Start page output.

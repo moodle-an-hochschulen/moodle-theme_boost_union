@@ -31,6 +31,7 @@ require_once($CFG->libdir . '/formslib.php');
 require_once($CFG->dirroot . '/cohort/lib.php');
 
 use theme_boost_union\smartmenu_item;
+use theme_boost_union\smartmenu\provider_registry;
 use theme_boost_union\smartmenu;
 
 /**
@@ -206,13 +207,29 @@ class smartmenu_item_edit_form extends \moodleform {
         $mform->hideIf('email_body', 'type', 'in', $nonmailtotypes);
         $mform->addHelpButton('email_body', 'smartmenusmenuitememail_body', 'theme_boost_union');
 
-        // Add mode as select element.
-        $modeoptions = smartmenu_item::get_mode_options();
-        $mform->addElement('select', 'mode', get_string('smartmenusmenuitemmode', 'theme_boost_union'), $modeoptions);
-        $mform->setDefault('mode', smartmenu_item::MODE_INLINE);
-        $mform->setType('mode', PARAM_INT);
-        $mform->hideIf('mode', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
-        $mform->addHelpButton('mode', 'smartmenusmenuitemmode', 'theme_boost_union');
+        // If the presentation of the menu supports the submenu mode of menu items (or if the menu is not known).
+        if (
+            empty($this->_customdata['menurecord']) ||
+                provider_registry::get_menu_presentation($this->_customdata['menurecord'])->item_supports_submenu_mode()
+        ) {
+            // Add mode as select element.
+            $modeoptions = smartmenu_item::get_mode_options();
+            $mform->addElement('select', 'mode', get_string('smartmenusmenuitemmode', 'theme_boost_union'), $modeoptions);
+            $mform->setDefault('mode', smartmenu_item::MODE_INLINE);
+            $mform->setType('mode', PARAM_INT);
+            $mform->hideIf('mode', 'type', 'neq', smartmenu_item::TYPEDYNAMIC);
+            $mform->addHelpButton('mode', 'smartmenusmenuitemmode', 'theme_boost_union');
+
+            // Otherwise.
+        } else {
+            // Do not offer the mode to the admin at all, as a menu item in submenu mode would not be shown in a menu
+            // with such a presentation. Add the mode as hidden element with the inline mode as constant value instead.
+            // (This way, an existing menu item which has been stored with the submenu mode is set to the inline mode
+            // as soon as it is saved and is shown in the menu again).
+            $mform->addElement('hidden', 'mode', smartmenu_item::MODE_INLINE);
+            $mform->setType('mode', PARAM_INT);
+            $mform->setConstant('mode', smartmenu_item::MODE_INLINE);
+        }
 
         // Add category (for the dynamic courses menu item type) as autocomplete element.
         $categoriesoptions = \core_course_category::make_categories_list();
@@ -605,6 +622,14 @@ class smartmenu_item_edit_form extends \moodleform {
         ]);
         $mform->addHelpButton('textcountsecond', 'smartmenusmenuitemtextcount', 'theme_boost_union');
 
+        // Add the form elements of the presentation provider and the location providers of the menu.
+        // The elements are added at the end of the presentation section, the providers may add headers of their own.
+        if (!empty($this->_customdata['menurecord'])) {
+            foreach (provider_registry::get_menu_providers($this->_customdata['menurecord']) as $provider) {
+                $provider->item_form_definition($mform, $this->_customdata['menurecord'], $this->_customdata);
+            }
+        }
+
         // Add restrict visibility by roles as header element.
         $mform->addElement(
             'header',
@@ -836,6 +861,16 @@ class smartmenu_item_edit_form extends \moodleform {
                 if (!empty($list) && !smartmenu_item::validate_mailto_address_list($list)) {
                     $errors[$field] = get_string('smartmenusmenuitememail_invalid', 'theme_boost_union');
                 }
+            }
+        }
+
+        // Let the presentation provider and the location providers of the menu validate their form elements.
+        if (!empty($this->_customdata['menurecord'])) {
+            foreach (provider_registry::get_menu_providers($this->_customdata['menurecord']) as $provider) {
+                $errors = array_merge(
+                    $errors,
+                    $provider->item_form_validation($data, $files, $this->_customdata['menurecord'])
+                );
             }
         }
 
