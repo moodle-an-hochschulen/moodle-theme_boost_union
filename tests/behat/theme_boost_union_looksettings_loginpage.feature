@@ -1043,6 +1043,137 @@ Feature: Configuring the theme_boost_union plugin for the "Login page" tab on th
     And I should see "Behat Shibboleth Organisation" in the ".login-identityproviders #login-shibboleth-wayf-0-idp" "css_element"
     And I should not see "Behat Shibboleth IdP" in the ".login-identityproviders" "css_element"
 
+  Scenario: Setting: Shibboleth internal WAYF on login page - Show all configured organisations in the organisation selector
+    Given the following config values are set as admin:
+      | config                      | value    | plugin            |
+      | loginshibbolethinternalwayf | config   | theme_boost_union |
+      | loginidploginenable         | yes      | theme_boost_union |
+      | loginlayout                 | vertical | theme_boost_union |
+    And the following config values are set as admin:
+      | config | value             |
+      | auth   | manual,shibboleth |
+    And the following config values are set as admin:
+      | user_attribute | REMOTE_USER          | auth_shibboleth |
+      | login_name     | Behat Shibboleth IdP | auth_shibboleth |
+    And the following Shibboleth organisations are configured:
+      | idp                       | name                 |
+      | https://idp-a.example.org | Behat Organisation A |
+      | https://idp-b.example.org | Behat Organisation B |
+      | https://idp-c.example.org | Behat Organisation C |
+    When I am on login page
+    Then I should see "Behat Organisation A" in the "#login-shibboleth-wayf-0-idp" "css_element"
+    And I should see "Behat Organisation B" in the "#login-shibboleth-wayf-0-idp" "css_element"
+    And I should see "Behat Organisation C" in the "#login-shibboleth-wayf-0-idp" "css_element"
+    # Without a cookie from a previous login, no organisation is preselected.
+    And the field "login-shibboleth-wayf-0-idp" matches value "I'm a member of ..."
+    And the "action" attribute of ".login-shibboleth-wayf-form" "css_element" should contain "/auth/shibboleth/login.php"
+    And I should see "please contact the Moodle Administrator" in the ".login-shibboleth-wayf-form" "css_element"
+    And the "href" attribute of ".login-shibboleth-wayf-form .form-text a" "css_element" should contain "mailto:moodle@example.com"
+
+  Scenario Outline: Setting: Shibboleth internal WAYF on login page - Preselect the organisation which the user has used most recently
+    Given the following config values are set as admin:
+      | config                      | value    | plugin            |
+      | loginshibbolethinternalwayf | config   | theme_boost_union |
+      | loginidploginenable         | yes      | theme_boost_union |
+      | loginlayout                 | vertical | theme_boost_union |
+    And the following config values are set as admin:
+      | config | value             |
+      | auth   | manual,shibboleth |
+    And the following config values are set as admin:
+      | user_attribute | REMOTE_USER          | auth_shibboleth |
+      | login_name     | Behat Shibboleth IdP | auth_shibboleth |
+    And the following Shibboleth organisations are configured:
+      | idp                       | name                 |
+      | https://idp-a.example.org | Behat Organisation A |
+      | https://idp-b.example.org | Behat Organisation B |
+      | https://idp-c.example.org | Behat Organisation C |
+    And I am on login page
+    And the Shibboleth IdP cookie remembers the IdPs "<rememberedidps>"
+    When I am on login page
+    Then the field "login-shibboleth-wayf-0-idp" matches value "<preselected>"
+
+    # The cookie remembers the IdPs in the order in which they have been used, the most recently used IdP comes last.
+    # https://idp-removed.example.org stands for an IdP which has been used before, but which is not configured anymore.
+    Examples:
+      | rememberedidps                                             | preselected          |
+      | https://idp-a.example.org                                  | Behat Organisation A |
+      | https://idp-a.example.org, https://idp-c.example.org       | Behat Organisation C |
+      | https://idp-c.example.org, https://idp-a.example.org       | Behat Organisation A |
+      | https://idp-b.example.org, https://idp-removed.example.org | Behat Organisation B |
+      | https://idp-removed.example.org                            | I'm a member of ...  |
+
+  Scenario Outline: Setting: Shibboleth internal WAYF on login page - Ignore a malformed cookie
+    Given the following config values are set as admin:
+      | config                      | value    | plugin            |
+      | loginshibbolethinternalwayf | config   | theme_boost_union |
+      | loginidploginenable         | yes      | theme_boost_union |
+      | loginlayout                 | vertical | theme_boost_union |
+    And the following config values are set as admin:
+      | config | value             |
+      | auth   | manual,shibboleth |
+    And the following config values are set as admin:
+      | user_attribute | REMOTE_USER          | auth_shibboleth |
+      | login_name     | Behat Shibboleth IdP | auth_shibboleth |
+    And the following Shibboleth organisations are configured:
+      | idp                       | name                 |
+      | https://idp-a.example.org | Behat Organisation A |
+      | https://idp-b.example.org | Behat Organisation B |
+      | https://idp-c.example.org | Behat Organisation C |
+    And I am on login page
+    And the browser cookie "<cookiename>" is set to "<cookievalue>"
+    When I am on login page
+    Then ".login-shibboleth-wayf-form" "css_element" should exist
+    And the field "login-shibboleth-wayf-0-idp" matches value "I'm a member of ..."
+
+    # The first example is a cookie with a value which does not contain any IdP.
+    # The second example is a cookie which PHP hands over as an array instead of a string.
+    Examples:
+      | cookiename  | cookievalue                   |
+      | _saml_idp   | this-is-not-a-remembered-idp  |
+      | _saml_idp[] | this-is-sent-as-array-element |
+
+  Scenario Outline: Setting: Shibboleth internal WAYF on login page - Show the standard button if no organisations are configured
+    Given the following config values are set as admin:
+      | config                      | value    | plugin            |
+      | loginshibbolethinternalwayf | config   | theme_boost_union |
+      | loginidploginenable         | yes      | theme_boost_union |
+      | loginlayout                 | vertical | theme_boost_union |
+    And the following config values are set as admin:
+      | config | value             |
+      | auth   | manual,shibboleth |
+    And the following config values are set as admin:
+      | user_attribute         | REMOTE_USER             | auth_shibboleth |
+      | organization_selection | <organizationselection> | auth_shibboleth |
+      | login_name             | Behat Shibboleth IdP    | auth_shibboleth |
+    When I am on login page
+    Then ".login-shibboleth-wayf-form" "css_element" should not exist
+    And "#login-shibboleth-wayf-0-idp" "css_element" should not exist
+    And I should see "Behat Shibboleth IdP" in the "#login-method-idp .btn" "css_element"
+
+    # The second example is an organisation line without the comma-separated organisation name which Shibboleth ignores.
+    Examples:
+      | organizationselection     |
+      |                           |
+      | https://idp-a.example.org |
+
+  Scenario: Setting: Shibboleth internal WAYF on login page - Do not show Shibboleth at all if the user attribute is not configured
+    Given the following config values are set as admin:
+      | config                      | value    | plugin            |
+      | loginshibbolethinternalwayf | config   | theme_boost_union |
+      | loginidploginenable         | yes      | theme_boost_union |
+      | loginlayout                 | vertical | theme_boost_union |
+    And the following config values are set as admin:
+      | config | value             |
+      | auth   | manual,shibboleth |
+    And the following config values are set as admin:
+      | user_attribute         |                                                 | auth_shibboleth |
+      | organization_selection | https://idp-a.example.org, Behat Organisation A | auth_shibboleth |
+      | login_name             | Behat Shibboleth IdP                            | auth_shibboleth |
+    When I am on login page
+    Then ".login-shibboleth-wayf-form" "css_element" should not exist
+    And I should not see "Behat Organisation A"
+    And I should not see "Behat Shibboleth IdP"
+
   Scenario: Setting: Shibboleth external WAYF on login page - Show organizsation selector (based on embedded JavaScript code) - Simple check with a placeholder text
     Given the following config values are set as admin:
       | config                      | value               | plugin            |

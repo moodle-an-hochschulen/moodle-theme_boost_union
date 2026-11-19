@@ -700,8 +700,10 @@ class core_renderer extends core_renderer_intermediate {
                     if (!empty($idplist)) {
                         // Compose the WAYF data.
                         // This logic is copied and modified from /auth/shibboleth/login.php.
+                        // In contrast to the original logic, the cookie is only evaluated if it is a string, as PHP hands over
+                        // an array if the cookie is sent with square brackets in its name.
                         $selectedidp = '-';
-                        if (isset($_COOKIE['_saml_idp'])) {
+                        if (isset($_COOKIE['_saml_idp']) && is_string($_COOKIE['_saml_idp'])) {
                             $idpcookie = generate_cookie_array($_COOKIE['_saml_idp']);
                             do {
                                 $selectedidp = array_pop($idpcookie);
