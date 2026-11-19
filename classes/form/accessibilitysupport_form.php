@@ -203,7 +203,10 @@ class accessibilitysupport_form extends \moodleform {
         global $SESSION;
 
         // Get referrer page (if it exists).
-        $referrer = $_SERVER['HTTP_REFERER'] ?? '';
+        // We must only accept referrers which are located on this Moodle site as the referrer is used as redirect target
+        // after the form was submitted or cancelled. Otherwise, the form could be abused as an open redirect.
+        // get_local_referer() returns an empty string for all referrers which are not located within $CFG->wwwroot.
+        $referrer = get_local_referer(false);
 
         // If we have a referrer page and if it is not the form itself, store it in the session.
         // This is necessary to carry the referrer over to the form submission.
