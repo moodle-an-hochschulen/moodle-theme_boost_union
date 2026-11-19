@@ -84,6 +84,9 @@ if (!$referrerpage) {
 
 // If the form was cancelled.
 if ($form->is_cancelled()) {
+    // Unset the referrer page session variable (to avoid harming future form submissions).
+    unset($SESSION->boost_union_accessibility_pagereferrer);
+
     // Redirect to the previous page when the form was cancelled.
     redirect($referrerpage);
 

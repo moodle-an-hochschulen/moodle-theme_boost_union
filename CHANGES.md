@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-11-19 - Security: Only accept referrers which are located on the Moodle site as redirect target of the accessibility support form, as the form redirected to external referrers after it was submitted or cancelled otherwise (open redirect).
 * 2026-11-19 - Improvement: Harden the evaluation of the cookie which preselects the organisation in the internal Shibboleth WAYF on the login page and add Behat tests for the organisation selector.
 * 2026-11-18 - Bugfix: Prevent that rendering the primary-drawer-mobile-child mustache template exceeds the allowed memory size, resolves #874
 * 2026-11-18 - Upstream change: Adopt changes from MDL-90101 and MDL-90206 to show the primary navigation in the drawer below 992px and to keep the page content next to the drawers which are shown at the window edges, resolves #1482.
