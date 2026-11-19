@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-11-19 - Security: Only accept referrers which are located on the Moodle site as redirect target of the accessibility support form, as the form redirected to external referrers after it was submitted or cancelled otherwise (open redirect).
 * 2026-11-19 - Improvement: Harden the evaluation of the cookie which preselects the organisation in the internal Shibboleth WAYF on the login page and add Behat tests for the organisation selector.
 * 2026-11-18 - Bugfix: Prevent that rendering the primary-drawer-mobile-child mustache template exceeds the allowed memory size, resolves #874
 
