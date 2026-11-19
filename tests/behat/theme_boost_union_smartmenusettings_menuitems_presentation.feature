@@ -228,6 +228,8 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
   # The following "Smartmenus: Menu items: Presentation - Display the menu items in different viewports" scenarios look like they
   # could be combined into a single scenario outline, but they are not because with the scenario outline approach, the test
   # would attempt to open menus that were hidden due to having no items.
+  # Please note: Below the lg breakpoint (i.e. on tablets and on mobile devices), Moodle core shows the main navigation
+  # in the primary navigation drawer. That's why the main navigation location is checked within this drawer there.
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different viewports - hide the menu items on mobile devices
@@ -243,11 +245,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     Then I should see smart menu "Quick links" item "Resources" in location "Menu, Main, User"
     And I change viewport size to "tablet"
     Then I should see smart menu "Quick links" item "Resources" in location "User, Menu"
-    And I click on "More" "link" in the ".primary-navigation" "css_element"
-    Then I should see smart menu "Quick links" item "Resources" in location "Main"
+    And I click on "Side panel" "button"
+    And I click on "Quick links" "link" in the "theme_boost-drawers-primary" "region"
+    Then "Resources" "theme_boost_union > Smart menu item" in the "theme_boost-drawers-primary" "region" should be visible
     And I change viewport size to "mobile"
     Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Menu bar smart menu" should not be visible
     And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "theme_boost-drawers-primary" "region" should not be visible
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different viewports - hide the menu items on tablet and mobile devices
@@ -264,11 +268,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I change viewport size to "tablet"
     Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Menu bar smart menu" should not be visible
     And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
-    And I click on "More" "link" in the ".primary-navigation" "css_element"
-    Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Main menu smart menu" should not be visible
+    And I click on "Side panel" "button"
+    And I click on "Quick links" "link" in the "theme_boost-drawers-primary" "region"
+    Then "Resources" "theme_boost_union > Smart menu item" in the "theme_boost-drawers-primary" "region" should not be visible
     And I change viewport size to "mobile"
     Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Menu bar smart menu" should not be visible
     And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "theme_boost-drawers-primary" "region" should not be visible
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different viewports - hide the menu items on desktop devices
@@ -286,10 +292,12 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
     And I change viewport size to "tablet"
     Then I should see smart menu "Quick links" item "Resources" in location "User, Menu"
-    And I click on "More" "link" in the ".primary-navigation" "css_element"
-    Then I should see smart menu "Quick links" item "Resources" in location "Main"
+    And I click on "Side panel" "button"
+    And I click on "Quick links" "link" in the "theme_boost-drawers-primary" "region"
+    Then "Resources" "theme_boost_union > Smart menu item" in the "theme_boost-drawers-primary" "region" should be visible
     And I change viewport size to "mobile"
     Then I should see smart menu "Quick links" item "Resources" in location "Menu, User"
+    And "Resources" "theme_boost_union > Smart menu item" in the "theme_boost-drawers-primary" "region" should be visible
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Display the menu items in different viewports - hide the menu items on desktop and mobile devices
@@ -307,11 +315,13 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
     And I change viewport size to "tablet"
     Then I should see smart menu "Quick links" item "Resources" in location "User, Menu"
-    And I click on "More" "link" in the ".primary-navigation" "css_element"
-    Then I should see smart menu "Quick links" item "Resources" in location "Main"
+    And I click on "Side panel" "button"
+    And I click on "Quick links" "link" in the "theme_boost-drawers-primary" "region"
+    Then "Resources" "theme_boost_union > Smart menu item" in the "theme_boost-drawers-primary" "region" should be visible
     And I change viewport size to "mobile"
     Then "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > Menu bar smart menu" should not be visible
     And "Resources" "theme_boost_union > Smart menu item" in the "Quick links" "theme_boost_union > User menu smart menu" should not be visible
+    And "Resources" "theme_boost_union > Smart menu item" in the "theme_boost-drawers-primary" "region" should not be visible
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Select an existing icon from the icon autocomplete list

@@ -1713,8 +1713,8 @@ body.theme-boost-union-commincourse {
    outside-top and header block regions which are placed in exactly this space. The drawers would cover these block
    regions then.
    Thus, as soon as any of these block regions is shown on the page, the drawers are shown as in Moodle 5.2 and before:
-   Flush with the window edge and with full height. As Moodle core shifts the page content by the drawer width as soon as
-   a drawer is opened anyway, the outside block regions are never covered then, regardless of their placement, width
+   Flush with the window edge and with full height. As the page content is shifted by the drawer width as soon as
+   a drawer is opened, the outside block regions are never covered then, regardless of their placement, width
    and height.
    This has to use !important as Moodle core's selectors for the anchored drawers are highly specific. */
 /* stylelint-disable declaration-no-important */
@@ -1755,6 +1755,18 @@ body.theme-boost-union-commincourse {
             &.show {
                 right: 0 !important;
             }
+        }
+
+        /* Shift the page content by the drawer width only as soon as a drawer is opened.
+           Moodle core reserves more room next to an opened drawer: The drawer width plus the gaps which it keeps
+           between the anchored drawer, the window edge and the main content area (see $drawer-left-reserve and
+           $drawer-right-reserve in theme/boost/scss/moodle/drawer.scss). As the drawers are flush with the window edges
+           here, these gaps would remain as empty space between the drawers and the page content. */
+        #page.drawers.show-drawer-left {
+            margin-left: $drawer-left-width !important;
+        }
+        #page.drawers.show-drawer-right {
+            margin-right: $drawer-right-width !important;
         }
 
         /* Give the headers of the opened drawers a top padding of 1.5rem (or 1rem if the outside-top region is shown).
@@ -2761,9 +2773,10 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
  --------------------------------------*/
 
 /* The main navigation itself is styled by Moodle core, see theme/boost/scss/moodle/primarynavigation.scss.
-   On small screens, the main navigation (including the smart menus) is shown in the primary navigation drawer. */
+   Below the lg breakpoint, the main navigation (including the smart menus) is shown in the primary navigation drawer
+   (see the '.primary-navigation' rule in theme/boost/scss/moodle/primarynavigation.scss). */
 
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(lg) {
     body.theme-boost-union-smartmenu .drawer-primary .drawercontent .list-group .list-group-item {
         /* The items and submenu toggles of the second level are indented by one level compared to the first level
            (whose padding is one spacer)... */
