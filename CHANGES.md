@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-11-19 - Improvement: Harden the evaluation of the cookie which preselects the organisation in the internal Shibboleth WAYF on the login page and add Behat tests for the organisation selector.
 * 2026-11-18 - Bugfix: Prevent that rendering the primary-drawer-mobile-child mustache template exceeds the allowed memory size, resolves #874
 * 2026-11-18 - Upstream change: Adopt changes from MDL-90101 and MDL-90206 to show the primary navigation in the drawer below 992px and to keep the page content next to the drawers which are shown at the window edges, resolves #1482.
                Please note: This change adopts a change from Moodle 5.3.1+ (weekly release) already before 5.3.2 is out as it broke Behat tests in Boost Union. As a result, if you run this Boost Union release on Moodle 5.3.1, on tablets, the normalen main navigation might be shown together with the hamburger menu presentation of the main navigation. We will raise the Moodle core requirement to 5.3.2 as soon as it is released.
