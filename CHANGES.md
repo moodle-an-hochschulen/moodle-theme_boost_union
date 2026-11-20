@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-11-20 - Cleanup: Remove the unused file serving of the 'snippets' file area from theme_boost_union_pluginfile(), as uploaded SCSS snippets are stored in and served from the 'uploadedsnippets' file area.
 * 2026-11-20 - Improvement: Unlock the session before serving the logo, favicon and other theme setting files as well as the flavour logo and favicon files, as parallel requests of the same user were blocked during the file serving otherwise.
 * 2026-11-19 - Security: Only accept referrers which are located on the Moodle site as redirect target of the accessibility support form, as the form redirected to external referrers after it was submitted or cancelled otherwise (open redirect).
 * 2026-11-19 - Improvement: Harden the evaluation of the cookie which preselects the organisation in the internal Shibboleth WAYF on the login page and add Behat tests for the organisation selector.
