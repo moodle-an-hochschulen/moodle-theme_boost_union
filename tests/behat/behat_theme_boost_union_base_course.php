@@ -125,6 +125,29 @@ class behat_theme_boost_union_base_course extends behat_base {
     }
 
     /**
+     * Request the dedicated course header image file of a course directly in the browser.
+     *
+     * @When I request the course header image :filename of course :coursename directly
+     * @param string $filename
+     * @param string $coursename
+     */
+    public function i_request_the_course_header_image_directly($filename, $coursename) {
+        global $DB;
+
+        // Get course ID.
+        $course = $DB->get_record('course', ['shortname' => $coursename], 'id', MUST_EXIST);
+
+        // Get course context.
+        $context = context_course::instance($course->id);
+
+        // Compose the file URL.
+        $url = moodle_url::make_pluginfile_url($context->id, 'theme_boost_union', 'courseheaderimage', 0, '/', $filename);
+
+        // Visit the file URL.
+        $this->execute('behat_general::i_visit', [$url->out_as_local_url(false)]);
+    }
+
+    /**
      * Unenrol a user from a course.
      *
      * @Given /^the user "(?P<username>(?:[^"]|\\")*)" is unenrolled from course "(?P<coursename>(?:[^"]|\\")*)"$/
