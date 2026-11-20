@@ -454,7 +454,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I should see smart menu "Quick links" item "Resources" in location "Main"
     Then ".dropdown-menu.show .card-block.card-text-overlay-bottom" "css_element" should exist in the ".primary-navigation" "css_element"
     And DOM element ".dropdown-menu.show .card-block .content-block" should have computed style "position" "absolute"
-    And DOM element ".dropdown-menu.show .card-block .content-block" should have computed style "align-items" "flex-end"
+    And DOM elements ".dropdown-menu.show .card-text-overlay-bottom .content-block h5" and ".dropdown-menu.show .card-text-overlay-bottom .content-block .btn-block" should have the same "bottom" position value
 
   @javascript @_file_upload
   Scenario: Smartmenus: Menu items: Presentation - Display the card type menu item with background image and colors
