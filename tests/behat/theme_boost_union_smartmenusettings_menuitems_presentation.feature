@@ -446,7 +446,7 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     And I should see "Resources bottom" in the ".primary-navigation .dropdown-menu.show" "css_element"
     And "//div[contains(@class, 'card-text-overlay-bottom')]//a[contains(., 'Resources bottom')]" "xpath_element" should exist
     And DOM element ".dropdown-menu.show .card-text-overlay-bottom .content-block" should have computed style "position" "absolute"
-    And DOM element ".dropdown-menu.show .card-text-overlay-bottom .content-block" should have computed style "align-items" "flex-end"
+    And DOM elements ".dropdown-menu.show .card-text-overlay-bottom .content-block h5" and ".dropdown-menu.show .card-text-overlay-bottom .content-block .card-btn-block" should have the same "bottom" position value
 
   @javascript @_file_upload
   Scenario: Smartmenus: Menu items: Presentation - Display the card type menu item with background image and colors
