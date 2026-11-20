@@ -106,6 +106,40 @@ Feature: Backup and restore course-specific Boost Union settings
       | using this options                              | 0       | No        | useglobal | useglobal | useglobal | useglobal    | should not      |
 
   @javascript @_file_upload
+  Scenario Outline: Course-specific settings are only restored if the restoring user is allowed to override them in the target course
+    Given the following "permission overrides" exist:
+      | capability                                     | permission          | role           | contextlevel | reference |
+      | theme/boost_union:overridecourseheaderincourse | <headerpermission>  | editingteacher | Course       | C2        |
+      | theme/boost_union:overridesectionincourse      | <sectionpermission> | editingteacher | Course       | C2        |
+    When I log in as "teacher1"
+    And I backup "Course 1" course using this options:
+      | Confirmation | Filename | test_backup.mbz |
+    And I am on the "Course 2" "restore" page
+    And I merge "test_backup.mbz" backup into the current course using this options:
+      | Settings | Include course header settings | 1   |
+      | Schema   | Overwrite course configuration | Yes |
+    And I log out
+    # The teacher might not be allowed to see the settings in the course settings form, so we check the result as admin.
+    And I log in as "admin"
+    # As the course configuration was overwritten, course 2 was renamed during the restore.
+    And I am on the "Course 1 copy 1" "course" page
+    And I navigate to "Settings" in current page administration
+    And I expand all fieldsets
+    Then the field "Enable enhanced course header" matches value "<enable>"
+    And the field "Course header layout" matches value "<layout>"
+    And the field "Course header height" matches value "<height>"
+    And the field "Course header image position" matches value "<position>"
+    And I <fileshouldornot> see "login_bg1.png" in the "#id_theme_boost_union_courseheaderimage_filemanager_fieldset" "css_element"
+    And the field "Appearance of section 0" matches value "<sectionzero>"
+    And the field "Appearance of sections ≥ 1" matches value "<sectiononeplus>"
+
+    Examples:
+      | headerpermission | sectionpermission | enable    | layout    | height    | position     | fileshouldornot | sectionzero    | sectiononeplus |
+      | Allow            | Allow             | yes       | stacked   | 250px     | right center | should          | notcollapsible | notcollapsible |
+      | Prevent          | Allow             | useglobal | useglobal | useglobal | useglobal    | should not      | notcollapsible | notcollapsible |
+      | Allow            | Prevent           | yes       | stacked   | 250px     | right center | should          | useglobal      | useglobal      |
+
+  @javascript @_file_upload
   Scenario Outline: Course-specific settings are preserved in backup and restore (when restoring into the same course) and an existing coure header image is cleared
     Given I log in as "teacher1"
     And I am on the "Course 2" "course" page
@@ -154,6 +188,52 @@ Feature: Backup and restore course-specific Boost Union settings
     And the field "Course header height" matches value "250px"
     And the field "Course header image position" matches value "right center"
     And I should see "login_bg1.png" in the "#id_theme_boost_union_courseheaderimage_filemanager_fieldset" "css_element"
+
+  @javascript @_file_upload
+  Scenario Outline: Course-specific settings are only preserved when copying a course if the copying user is allowed to override them
+    # Workaround for https://moodle.atlassian.net/browse/MDL-86764
+    Given the following config values are set as admin:
+      | config         | value      |
+      | backup_version | 2010072300 |
+    And the following "users" exist:
+      | username |
+      | manager1 |
+    And the following "role assigns" exist:
+      | user     | role    | contextlevel | reference |
+      | manager1 | manager | System       |           |
+    And the following "permission overrides" exist:
+      | capability                                     | permission          | role    | contextlevel | reference |
+      | theme/boost_union:overridecourseheaderincourse | <headerpermission>  | manager | System       |           |
+      | theme/boost_union:overridesectionincourse      | <sectionpermission> | manager | System       |           |
+    When I log in as "manager1"
+    And I am on the "Course 1" "course" page
+    And I navigate to "Course reuse" in current page administration
+    And I click on "Copy course" "link"
+    And I set the following fields to these values:
+      | Course full name  | Course 1 Copy |
+      | Course short name | C1COPY        |
+    And I press "Copy and view"
+    # The course copy is executed by an adhoc task, i.e. not within the session of the copying user.
+    And I run all adhoc tasks
+    And I log out
+    # The manager might not be allowed to see the settings in the course settings form, so we check the result as admin.
+    And I log in as "admin"
+    And I am on the "Course 1 Copy" "course" page
+    And I navigate to "Settings" in current page administration
+    And I expand all fieldsets
+    Then the field "Enable enhanced course header" matches value "<enable>"
+    And the field "Course header layout" matches value "<layout>"
+    And the field "Course header height" matches value "<height>"
+    And the field "Course header image position" matches value "<position>"
+    And I <fileshouldornot> see "login_bg1.png" in the "#id_theme_boost_union_courseheaderimage_filemanager_fieldset" "css_element"
+    And the field "Appearance of section 0" matches value "<sectionzero>"
+    And the field "Appearance of sections ≥ 1" matches value "<sectiononeplus>"
+
+    Examples:
+      | headerpermission | sectionpermission | enable    | layout    | height    | position     | fileshouldornot | sectionzero    | sectiononeplus |
+      | Allow            | Allow             | yes       | stacked   | 250px     | right center | should          | notcollapsible | notcollapsible |
+      | Prevent          | Allow             | useglobal | useglobal | useglobal | useglobal    | should not      | notcollapsible | notcollapsible |
+      | Allow            | Prevent           | yes       | stacked   | 250px     | right center | should          | useglobal      | useglobal      |
 
   @javascript @_file_upload
   Scenario Outline: Course-specific settings are transferred during course import (performed by the teacher)
