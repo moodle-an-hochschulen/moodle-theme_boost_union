@@ -76,8 +76,29 @@ class restore_theme_boost_union_plugin extends restore_theme_plugin {
             }
         }
 
+        // If the user who runs the restore is not allowed to override this setting in the target course, return.
+        // Otherwise, the restore would allow the user to set a setting which he is not allowed to set in the course settings form.
+        $overridecapa = $coursesettings[$data->name]['overridecapa'] ?? null;
+        if ($overridecapa && !$this->restoring_user_has_capability($overridecapa)) {
+            return;
+        }
+
         // Use the course transfer helper to transfer the setting.
         \theme_boost_union\util\course_settings_transfer::transfer_course_setting($data);
+    }
+
+    /**
+     * Check if the user who runs the restore has the given capability in the target course.
+     *
+     * The check is done for the user of the restore controller and not for the current user,
+     * as restores might be executed asynchronously by an adhoc task.
+     *
+     * @param string $capability The capability to check.
+     * @return bool True if the user has the capability, false otherwise.
+     */
+    private function restoring_user_has_capability($capability) {
+        $context = \context_course::instance($this->task->get_courseid());
+        return has_capability($capability, $context, $this->task->get_userid());
     }
 
     /**
@@ -107,6 +128,13 @@ class restore_theme_boost_union_plugin extends restore_theme_plugin {
                         return;
                     }
                 }
+            }
+
+            // If the user who runs the restore is not allowed to override the settings which this filearea belongs to
+            // in the target course, skip this filearea.
+            $overridecapa = $config['overridecapa'] ?? null;
+            if ($overridecapa && !$this->restoring_user_has_capability($overridecapa)) {
+                continue;
             }
 
             // Clear the file area before transferring files if configured to do so.

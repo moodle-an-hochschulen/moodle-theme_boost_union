@@ -694,11 +694,11 @@ These capabilities are used to control who is allowed to edit a particular block
 
 ### theme/boost_union:overridecourseheaderincourse
 
-This capability is used to control who is able to override the course header settings in a course (if this feature was enabled in the theme settings). By default, it is assigned to teachers and managers.
+This capability is used to control who is able to override the course header settings in a course (if this feature was enabled in the theme settings). It is also required in the target course to restore the course header settings and the course header image from a course backup. By default, it is assigned to teachers and managers.
 
 ### theme/boost_union:overridesectionincourse
 
-This capability is used to control who is able to override the section settings (appearance of section 0 and appearance of sections ≥ 1) in a course (if this feature was enabled in the theme settings). By default, it is assigned to teachers and managers.
+This capability is used to control who is able to override the section settings (appearance of section 0 and appearance of sections ≥ 1) in a course (if this feature was enabled in the theme settings). It is also required in the target course to restore the section settings from a course backup. By default, it is assigned to teachers and managers.
 
 ### theme/boost_union:transfercourseheaderduringimport
 

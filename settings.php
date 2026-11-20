@@ -174,9 +174,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         require_once($CFG->dirroot . '/course/lib.php');
 
         // Prepare options array for select settings.
-        // Due to MDL-58376, we will use binary select settings instead of checkbox settings throughout this theme.
-        $yesnooption = [THEME_BOOST_UNION_SETTING_SELECT_YES => get_string('yes'),
-                THEME_BOOST_UNION_SETTING_SELECT_NO => get_string('no'), ];
+        $yesnooption = theme_boost_union_get_yesno_options();
 
         // Prepare regular expression for checking if the value is a percent number (from 0% to 100%) or a pixel number
         // (with 3 or 4 digits) or a viewport width number (from 0 to 100).
