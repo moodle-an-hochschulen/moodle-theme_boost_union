@@ -477,15 +477,6 @@ class coursesettings {
     }
 
     /**
-     * Get a simple array of course filearea names for iteration.
-     *
-     * @return array Array of course filearea names.
-     */
-    public static function get_course_filearea_names() {
-        return array_keys(self::get_course_filearea_config());
-    }
-
-    /**
      * Get the options array for course header image position setting.
      *
      * @return array The options array for course header image position.
