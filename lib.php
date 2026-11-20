@@ -1044,6 +1044,9 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
             send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $options);
         }
 
+        // Unlock session during file serving (and before the image is possibly resized).
+        \core\session\manager::write_close();
+
         // Find the original file.
         $fs = get_file_storage();
         $filepath = "/{$context->id}/theme_boost_union/{$filearea}/0/{$filename}";
@@ -1082,6 +1085,9 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
                 preg_match('/^tile\d+backgroundimage$/', $filearea) ||
                 preg_match('/^slide\d+backgroundimage$/', $filearea))
     ) {
+        // Unlock session during file serving.
+        \core\session\manager::write_close();
+
         $theme = \core\output\theme_config::load('boost_union');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {
@@ -1091,6 +1097,17 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
 
         // Serve course header image files from course context.
     } else if ($context->contextlevel == CONTEXT_COURSE && $filearea === 'courseheaderimage') {
+        // Check if the user is allowed to access the course.
+        // The course header is only shown on course pages which require access to the course anyway,
+        // thus the course header image must not be served to anybody else (regardless of the forcelogin setting).
+        // Do not set the wantsurl session variable for this file request.
+        // Otherwise, if require_login() decided to redirect the user (to the login page, for example), the user would
+        // be redirected to this image file afterwards instead of the page which he wanted to visit initially.
+        require_login($course, setwantsurltome: false);
+
+        // Unlock session during file serving.
+        \core\session\manager::write_close();
+
         // Get file storage.
         $fs = get_file_storage();
 
@@ -1181,6 +1198,9 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
             send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $serveoptions);
         }
 
+        // Unlock session during file serving (and before the image is possibly resized).
+        \core\session\manager::write_close();
+
         // Find the original file.
         $fs = get_file_storage();
         $filepath = "/{$context->id}/theme_boost_union/{$filearea}/{$itemid}/{$filename}";
@@ -1207,20 +1227,6 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         // Save, serve and quit.
         file_safe_save_content($filedata, $candidate);
         send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $serveoptions);
-
-        // Serve the files from the snippets.
-    } else if ($filearea === 'snippets' && $context->contextlevel === CONTEXT_SYSTEM) {
-        // Get file storage.
-        $fs = get_file_storage();
-
-        // Get the file from the filestorage.
-        $file = $fs->get_file($context->id, 'theme_boost_union', $filearea, $args[0], '/', $args[1]);
-        if (!$file) {
-            send_file_not_found();
-        }
-
-        // Send stored file (and cache it for 90 days, similar to other static assets within Moodle).
-        send_stored_file($file, DAYSECS * 90, 0, $forcedownload, $options);
     } else {
         send_file_not_found();
     }

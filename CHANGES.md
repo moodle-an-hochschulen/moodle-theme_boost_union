@@ -6,6 +6,14 @@ Changes
 
 ### Unreleased
 
+* 2026-11-20 - Cleanup: Remove the unused file serving of the 'snippets' file area from theme_boost_union_pluginfile(), as uploaded SCSS snippets are stored in and served from the 'uploadedsnippets' file area.
+* 2026-11-20 - Improvement: Unlock the session before serving the logo, favicon and other theme setting files as well as the flavour logo and favicon files, as parallel requests of the same user were blocked during the file serving otherwise.
+* 2026-11-20 - Cleanup: Remove the unused function coursesettings::get_course_filearea_names().
+* 2026-11-20 - Security: Only serve dedicated course header images to users who are allowed to access the particular course, as the images were served to everybody including non-logged-in users otherwise (missing authorization).
+* 2026-11-20 - Security: Only restore course-specific settings and the course header image from a course backup if the user who runs the restore has the capability to override these settings in the target course, as a user could set course-specific settings by restoring a course backup which he was not allowed to set in the course settings form otherwise.
+* 2026-11-20 - Security: Only restore and apply course-specific setting values which are an existing option of the particular setting and escape the course header height and image position in the course header templates, as a crafted course backup file could inject arbitrary HTML attributes into the course header otherwise (stored XSS).
+* 2026-11-19 - Security: Only accept referrers which are located on the Moodle site as redirect target of the accessibility support form, as the form redirected to external referrers after it was submitted or cancelled otherwise (open redirect).
+* 2026-11-19 - Improvement: Harden the evaluation of the cookie which preselects the organisation in the internal Shibboleth WAYF on the login page and add Behat tests for the organisation selector.
 * 2026-11-18 - Bugfix: Prevent that rendering the primary-drawer-mobile-child mustache template exceeds the allowed memory size, resolves #874
 * 2026-11-18 - Upstream change: Adopt changes from MDL-90101 and MDL-90206 to show the primary navigation in the drawer below 992px and to keep the page content next to the drawers which are shown at the window edges, resolves #1482.
                Please note: This change adopts a change from Moodle 5.3.1+ (weekly release) already before 5.3.2 is out as it broke Behat tests in Boost Union. As a result, if you run this Boost Union release on Moodle 5.3.1, on tablets, the normalen main navigation might be shown together with the hamburger menu presentation of the main navigation. We will raise the Moodle core requirement to 5.3.2 as soon as it is released.

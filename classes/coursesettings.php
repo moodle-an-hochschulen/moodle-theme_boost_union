@@ -236,19 +236,18 @@ class coursesettings {
      * @return array The course settings configuration array.
      */
     public static function get_course_settings_config() {
-        // Prepare options array for Yes / No select settings.
-        // We will use binary select settings just as it's done in settings.php.
-        $yesnooption = [
-                THEME_BOOST_UNION_SETTING_SELECT_YES => get_string('yes'),
-                THEME_BOOST_UNION_SETTING_SELECT_NO => get_string('no'),
-            ];
-
         // Define the course override settings we handle with their configuration.
+        // The options of each setting are fetched from get_course_setting_options() which is the single place where the
+        // options of the course settings are mapped. They are fetched for course form usage, i.e. without excluded options.
         return [
             'courseheaderenabled' => [
-                'options' => self::get_options_with_global_default('courseheaderenabled', $yesnooption),
+                'options' => self::get_options_with_global_default(
+                    'courseheaderenabled',
+                    self::get_course_setting_options('courseheaderenabled', true)
+                ),
                 'helpbutton' => true,
                 'formsection' => 'courseheader',
+                'overridecapa' => 'theme/boost_union:overridecourseheaderincourse',
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
                 'restorecontrolledby' => 'theme_boost_union_restore_course_header_settings',
@@ -256,10 +255,11 @@ class coursesettings {
             'courseheaderlayout' => [
                 'options' => self::get_options_with_global_default(
                     'courseheaderlayout',
-                    self::get_courseheaderlayout_options(true)
+                    self::get_course_setting_options('courseheaderlayout', true)
                 ),
                 'helpbutton' => true,
                 'formsection' => 'courseheader',
+                'overridecapa' => 'theme/boost_union:overridecourseheaderincourse',
                 'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
@@ -268,10 +268,11 @@ class coursesettings {
             'courseheaderheight' => [
                 'options' => self::get_options_with_global_default(
                     'courseheaderheight',
-                    self::get_courseheaderheight_options()
+                    self::get_course_setting_options('courseheaderheight', true)
                 ),
                 'helpbutton' => true,
                 'formsection' => 'courseheader',
+                'overridecapa' => 'theme/boost_union:overridecourseheaderincourse',
                 'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
@@ -280,10 +281,11 @@ class coursesettings {
             'courseheadercanvasborder' => [
                 'options' => self::get_options_with_global_default(
                     'courseheadercanvasborder',
-                    self::get_courseheadercanvasborder_options()
+                    self::get_course_setting_options('courseheadercanvasborder', true)
                 ),
                 'helpbutton' => true,
                 'formsection' => 'courseheader',
+                'overridecapa' => 'theme/boost_union:overridecourseheaderincourse',
                 'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
@@ -292,10 +294,11 @@ class coursesettings {
             'courseheadercanvasbackground' => [
                 'options' => self::get_options_with_global_default(
                     'courseheadercanvasbackground',
-                    self::get_courseheadercanvasbackground_options()
+                    self::get_course_setting_options('courseheadercanvasbackground', true)
                 ),
                 'helpbutton' => true,
                 'formsection' => 'courseheader',
+                'overridecapa' => 'theme/boost_union:overridecourseheaderincourse',
                 'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
@@ -304,10 +307,11 @@ class coursesettings {
             'courseheadertextonimagestyle' => [
                 'options' => self::get_options_with_global_default(
                     'courseheadertextonimagestyle',
-                    self::get_courseheadertextonimagestyle_options()
+                    self::get_course_setting_options('courseheadertextonimagestyle', true)
                 ),
                 'helpbutton' => true,
                 'formsection' => 'courseheader',
+                'overridecapa' => 'theme/boost_union:overridecourseheaderincourse',
                 'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
@@ -316,10 +320,11 @@ class coursesettings {
             'courseheaderimageposition' => [
                 'options' => self::get_options_with_global_default(
                     'courseheaderimageposition',
-                    self::get_courseheaderimageposition_options()
+                    self::get_course_setting_options('courseheaderimageposition', true)
                 ),
                 'helpbutton' => true,
                 'formsection' => 'courseheader',
+                'overridecapa' => 'theme/boost_union:overridecourseheaderincourse',
                 'hide_if' => self::get_hide_if_with_global_default('courseheaderenabled'),
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
@@ -328,20 +333,86 @@ class coursesettings {
             'sectionzeroappearance' => [
                 'options' => self::get_options_with_global_default(
                     'sectionzeroappearance',
-                    self::get_sectionzeroappearance_options(true)
+                    self::get_course_setting_options('sectionzeroappearance', true)
                 ),
                 'helpbutton' => true,
                 'formsection' => 'sections',
+                'overridecapa' => 'theme/boost_union:overridesectionincourse',
             ],
             'sectiononeplusappearance' => [
                 'options' => self::get_options_with_global_default(
                     'sectiononeplusappearance',
-                    self::get_sectiononeplusappearance_options()
+                    self::get_course_setting_options('sectiononeplusappearance', true)
                 ),
                 'helpbutton' => true,
                 'formsection' => 'sections',
+                'overridecapa' => 'theme/boost_union:overridesectionincourse',
             ],
         ];
+    }
+
+    /**
+     * Get the options which exist for a course setting (without the "Use global default" option).
+     *
+     * @param string $name The name of the setting.
+     * @param bool $forcourseform Whether to filter the options for course form usage and do not return excluded options.
+     * @return array|null The options array (value => label), or null if the setting is not a known course setting.
+     */
+    public static function get_course_setting_options($name, $forcourseform = false) {
+        global $CFG;
+
+        // Require own libraries.
+        require_once($CFG->dirroot . '/theme/boost_union/lib.php');
+        require_once($CFG->dirroot . '/theme/boost_union/locallib.php');
+
+        switch ($name) {
+            case 'courseheaderenabled':
+                return theme_boost_union_get_yesno_options();
+            case 'courseheaderlayout':
+                return self::get_courseheaderlayout_options($forcourseform);
+            case 'courseheaderheight':
+                return self::get_courseheaderheight_options();
+            case 'courseheadercanvasborder':
+                return self::get_courseheadercanvasborder_options();
+            case 'courseheadercanvasbackground':
+                return self::get_courseheadercanvasbackground_options();
+            case 'courseheadertextonimagestyle':
+                return self::get_courseheadertextonimagestyle_options();
+            case 'courseheaderimageposition':
+                return self::get_courseheaderimageposition_options();
+            case 'sectionzeroappearance':
+                return self::get_sectionzeroappearance_options($forcourseform);
+            case 'sectiononeplusappearance':
+                return self::get_sectiononeplusappearance_options();
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Check if a value is one of the options which exist for a course setting.
+     *
+     * @param string $name The name of the setting.
+     * @param mixed $value The value to check.
+     * @param bool $forcourseform Whether to check against the options for course form usage, i.e. without excluded options.
+     * @return bool True if the value is a valid option of the setting, false otherwise.
+     */
+    public static function is_valid_course_setting_value($name, $value, $forcourseform = false) {
+        // Get the options of the setting.
+        $options = self::get_course_setting_options($name, $forcourseform);
+
+        // If the setting is unknown, no value is valid.
+        if ($options === null) {
+            return false;
+        }
+
+        // Only strings and numbers can be options.
+        if (!is_string($value) && !is_int($value)) {
+            return false;
+        }
+
+        // Check if the value is one of the options.
+        return array_key_exists($value, $options);
     }
 
     /**
@@ -396,21 +467,13 @@ class coursesettings {
     public static function get_course_filearea_config() {
         return [
             'courseheaderimage' => [
+                'overridecapa' => 'theme/boost_union:overridecourseheaderincourse',
                 'importtransfercontrolledby' => 'courseheaderimporttransfer',
                 'importtransfercontrolcapa' => 'theme/boost_union:transfercourseheaderduringimport',
                 'restorecontrolledby' => 'theme_boost_union_restore_course_header_settings',
                 'clearbeforewrite' => true,
             ],
         ];
-    }
-
-    /**
-     * Get a simple array of course filearea names for iteration.
-     *
-     * @return array Array of course filearea names.
-     */
-    public static function get_course_filearea_names() {
-        return array_keys(self::get_course_filearea_config());
     }
 
     /**
@@ -667,29 +730,15 @@ class coursesettings {
      * @return mixed The validated (and potentially corrected) value.
      */
     private static function validate_course_setting_value($name, $value) {
-        // Special handling for courseheaderlayout setting: Check if the layout was excluded in the meantime.
-        if ($name === 'courseheaderlayout') {
-            // Get the available layout options for course forms (which excludes layouts from the exclusion list).
-            $availablelayouts = self::get_courseheaderlayout_options(true);
-
-            // If the value is not in the available layouts, fall back to global setting.
-            if (!array_key_exists($value, $availablelayouts)) {
-                return get_config('theme_boost_union', $name);
-            }
+        // If the value is not one of the options which are available for the setting in a course, fall back to the global setting.
+        // This covers options which were excluded by the admin in the meantime (for the courseheaderlayout and
+        // sectionzeroappearance settings) as well as values which are not a known option at all. The latter must never reach
+        // the page output as they might have been written by a restore of a crafted backup file.
+        if (!self::is_valid_course_setting_value($name, $value, true)) {
+            return get_config('theme_boost_union', $name);
         }
 
-        // Special handling for sectionzeroappearance setting: Check if the appearance was excluded in the meantime.
-        if ($name === 'sectionzeroappearance') {
-            // Get the available appearance options for course forms (which excludes appearances from the exclusion list).
-            $availableappearances = self::get_sectionzeroappearance_options(true);
-
-            // If the value is not in the available appearances, fall back to global setting.
-            if (!array_key_exists($value, $availableappearances)) {
-                return get_config('theme_boost_union', $name);
-            }
-        }
-
-        // For all other settings or if validation passes, return the original value.
+        // If validation passes, return the original value.
         return $value;
     }
 

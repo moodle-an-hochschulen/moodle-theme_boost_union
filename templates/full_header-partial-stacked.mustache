@@ -42,8 +42,8 @@
     {{/showiconsbar}}
     <div id="courseheaderimage" class="d-flex flex-column p-3 {{#showiconsbar}}pt-5{{/showiconsbar}} rounded{{#showcourseprogress}}{{#hasprogress}}{{#progressstyleasbar}}-top border-bottom-0{{/progressstyleasbar}}{{/hasprogress}}{{/showcourseprogress}} {{{courseheadercanvasclasses}}} {{{courseheaderborderclasses}}}"
             style="{{#courseheaderimageurl}}background-image: url('{{{courseheaderimageurl}}}');{{/courseheaderimageurl}}
-                {{#courseheaderheight}}min-height: {{{.}}};{{/courseheaderheight}}
-                {{#courseheaderimageposition}}background-position: {{{.}}};{{/courseheaderimageposition}}">
+                {{#courseheaderheight}}min-height: {{.}};{{/courseheaderheight}}
+                {{#courseheaderimageposition}}background-position: {{.}};{{/courseheaderimageposition}}">
         <div class="bucoursetitle {{#courseheaderimageurl}}{{textonimagestyle}}{{/courseheaderimageurl}}">
             {{#showshortname}}
                 {{> theme_boost_union/full_header-chunk-shortname }}
