@@ -1096,6 +1096,17 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
 
         // Serve course header image files from course context.
     } else if ($context->contextlevel == CONTEXT_COURSE && $filearea === 'courseheaderimage') {
+        // Check if the user is allowed to access the course.
+        // The course header is only shown on course pages which require access to the course anyway,
+        // thus the course header image must not be served to anybody else (regardless of the forcelogin setting).
+        // Do not set the wantsurl session variable for this file request.
+        // Otherwise, if require_login() decided to redirect the user (to the login page, for example), the user would
+        // be redirected to this image file afterwards instead of the page which he wanted to visit initially.
+        require_login($course, setwantsurltome: false);
+
+        // Unlock session during file serving.
+        \core\session\manager::write_close();
+
         // Get file storage.
         $fs = get_file_storage();
 
