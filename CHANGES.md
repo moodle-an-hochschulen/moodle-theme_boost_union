@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-11-20 - Improvement: Unlock the session before serving the logo, favicon and other theme setting files as well as the flavour logo and favicon files, as parallel requests of the same user were blocked during the file serving otherwise.
 * 2026-11-20 - Cleanup: Remove the unused function coursesettings::get_course_filearea_names().
 * 2026-11-20 - Security: Only serve dedicated course header images to users who are allowed to access the particular course, as the images were served to everybody including non-logged-in users otherwise (missing authorization).
 * 2026-11-20 - Security: Only restore course-specific settings and the course header image from a course backup if the user who runs the restore has the capability to override these settings in the target course, as a user could set course-specific settings by restoring a course backup which he was not allowed to set in the course settings form otherwise.
