@@ -25,6 +25,19 @@
 use theme_boost_union\coursesettings;
 
 /**
+ * Get the options array for Yes / No select settings.
+ * Due to MDL-58376, we use binary select settings instead of checkbox settings throughout this theme.
+ *
+ * @return array The options array for Yes / No select settings.
+ */
+function theme_boost_union_get_yesno_options() {
+    return [
+        THEME_BOOST_UNION_SETTING_SELECT_YES => get_string('yes'),
+        THEME_BOOST_UNION_SETTING_SELECT_NO => get_string('no'),
+    ];
+}
+
+/**
  * Get all activity purposes which are supported by Boost Union.
  * This function is the single source of truth for the activity purposes which Boost Union offers in its settings and for which
  * it composes SCSS code.
