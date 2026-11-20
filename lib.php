@@ -1227,20 +1227,6 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         // Save, serve and quit.
         file_safe_save_content($filedata, $candidate);
         send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $serveoptions);
-
-        // Serve the files from the snippets.
-    } else if ($filearea === 'snippets' && $context->contextlevel === CONTEXT_SYSTEM) {
-        // Get file storage.
-        $fs = get_file_storage();
-
-        // Get the file from the filestorage.
-        $file = $fs->get_file($context->id, 'theme_boost_union', $filearea, $args[0], '/', $args[1]);
-        if (!$file) {
-            send_file_not_found();
-        }
-
-        // Send stored file (and cache it for 90 days, similar to other static assets within Moodle).
-        send_stored_file($file, DAYSECS * 90, 0, $forcedownload, $options);
     } else {
         send_file_not_found();
     }
