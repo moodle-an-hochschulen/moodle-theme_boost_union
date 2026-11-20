@@ -1044,6 +1044,9 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
             send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $options);
         }
 
+        // Unlock session during file serving (and before the image is possibly resized).
+        \core\session\manager::write_close();
+
         // Find the original file.
         $fs = get_file_storage();
         $filepath = "/{$context->id}/theme_boost_union/{$filearea}/0/{$filename}";
@@ -1082,6 +1085,9 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
                 preg_match('/^tile\d+backgroundimage$/', $filearea) ||
                 preg_match('/^slide\d+backgroundimage$/', $filearea))
     ) {
+        // Unlock session during file serving.
+        \core\session\manager::write_close();
+
         $theme = \core\output\theme_config::load('boost_union');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {
@@ -1191,6 +1197,9 @@ function theme_boost_union_pluginfile($course, $cm, $context, $filearea, $args, 
         if (file_exists($candidate) && $lifetime > 0) {
             send_file($candidate, $filename, $lifetime, 0, false, false, '', false, $serveoptions);
         }
+
+        // Unlock session during file serving (and before the image is possibly resized).
+        \core\session\manager::write_close();
 
         // Find the original file.
         $fs = get_file_storage();
