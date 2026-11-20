@@ -57,6 +57,14 @@ class course_settings_transfer {
             return;
         }
 
+        // If the given value is not one of the options of the setting, return.
+        // The value might come from a backup file and backup files can be crafted, so it must not be stored unchecked.
+        // We validate against all options here, including the ones which are currently excluded by the admin, as
+        // excluded options are handled when the setting is read.
+        if (!\theme_boost_union\coursesettings::is_valid_course_setting_value($data->name, $data->value)) {
+            return;
+        }
+
         // Check if this setting already exists for the course.
         $existingrecord = $DB->get_record('theme_boost_union_course', ['courseid' => $data->courseid, 'name' => $data->name]);
 
