@@ -408,6 +408,216 @@ class core_renderer extends core_renderer_intermediate {
     }
 
     /**
+     * Return the site's dark mode compact logo URL, if any.
+     *
+     * This is the dark color mode counterpart of get_compact_logo_url(). It is served as a separate image
+     * (and not derived from the light mode logo) so that the navbar brand can switch between the light and the
+     * dark compact logo when the color mode is toggled without a page reload.
+     *
+     * It checks if the dark mode compact logo is overridden in a flavour and, if yes, it serves this logo.
+     * If there isn't a dark mode compact logo in any flavour set, it serves the general dark mode compact logo.
+     *
+     * @param int $maxwidth The maximum width, or null when the maximum width does not matter.
+     * @param int $maxheight The maximum height, or null when the maximum height does not matter.
+     * @return moodle_url|false
+     */
+    public function get_compact_logo_url_darkmode($maxwidth = 300, $maxheight = 300) {
+        global $CFG;
+
+        // Initialize static variable for the overridden logo as this function might be called (for whatever reason)
+        // multiple times during a page output.
+        static $hasoverriddenlogo, $overriddenlogourl;
+
+        // If the overridden logo has already been checked.
+        if ($hasoverriddenlogo != null) {
+            // If there is an overridden logo.
+            if ($hasoverriddenlogo == true) {
+                // Directly return the overridden logo.
+                return $overriddenlogourl;
+            }
+            // Otherwise, if there isn't an overridden logo, this function will continue to run the logic later.
+
+            // Otherwise.
+        } else {
+            // Require flavours library.
+            require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+
+            // If any flavour applies to this page.
+            $flavour = theme_boost_union_get_flavour_which_applies();
+            if ($flavour != null) {
+                // If the flavour has a dark mode compact logo set.
+                if ($flavour->look_logocompactdarkmode != null) {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasoverriddenlogo = true;
+
+                    // If the flavour logo is a SVG image, do not add a size to the path.
+                    $flavourlogoextension = pathinfo($flavour->look_logocompactdarkmode, PATHINFO_EXTENSION);
+                    if (in_array($flavourlogoextension, ['svg', 'svgz'])) {
+                        // The theme_boost_union_pluginfile() function will look for a filepath and will extract the size from that.
+                        // If we add a path without an 'x' in it, it will then be interpreted by theme_boost_union_pluginfile()
+                        // as "no resize requested".
+                        // This mechanism is used for the normal compact logo as well.
+                        $flavourfilepath = '1/';
+
+                        // Otherwise, add a size to the path.
+                    } else {
+                        // Hide the requested size in the file path.
+                        $flavourfilepath = ((int)$maxwidth . 'x' . (int)$maxheight) . '/';
+                    }
+
+                    // Compose the URL to the flavour's dark mode compact logo.
+                    $overriddenlogourl = \core\url::make_pluginfile_url(
+                        context_system::instance()->id,
+                        'theme_boost_union',
+                        'flavours_look_logocompactdarkmode',
+                        $flavour->id . '/' . $flavourfilepath,
+                        theme_get_revision(),
+                        '/' . $flavour->look_logocompactdarkmode
+                    );
+
+                    // Return the URL.
+                    return $overriddenlogourl;
+
+                    // Otherwise.
+                } else {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasoverriddenlogo = false;
+                }
+            }
+        }
+
+        // Apparently, there isn't any overridden logo set. Let's continue to serve the general dark mode compact logo.
+        $logo = get_config('theme_boost_union', 'logocompactdarkmode');
+        if (empty($logo)) {
+            return false;
+        }
+
+        // If the logo is a SVG image, do not add a size to the path.
+        $logoextension = pathinfo($logo, PATHINFO_EXTENSION);
+        if (in_array($logoextension, ['svg', 'svgz'])) {
+            // The theme_boost_union_pluginfile() function will look for a filepath and will try to extract the size from that.
+            // Thus, we cannot drop the filepath from the URL completely.
+            // But we can add a path without an 'x' in it which will then be interpreted by theme_boost_union_pluginfile()
+            // as "no resize requested".
+            $filepath = '1/';
+
+            // Otherwise, add a size to the path.
+        } else {
+            // Hide the requested size in the file path.
+            $filepath = ((int)$maxwidth . 'x' . (int)$maxheight) . '/';
+        }
+
+        // Use $CFG->themerev to prevent browser caching when the file changes.
+        return moodle_url::make_pluginfile_url(
+            context_system::instance()->id,
+            'theme_boost_union',
+            'logocompactdarkmode',
+            $filepath,
+            theme_get_revision(),
+            $logo
+        );
+    }
+
+    /**
+     * Return the site's dark mode logo URL, if any.
+     *
+     * This is the dark color mode counterpart of get_logo_url(). It is served as a separate image (and not derived
+     * from the light mode logo) so that the (non-compact) logo can switch between the light and the dark logo when
+     * the color mode is toggled without a page reload.
+     *
+     * It checks if the dark mode logo is overridden in a flavour and, if yes, it serves this logo.
+     * If there isn't a dark mode logo in any flavour set, it serves the general dark mode logo.
+     *
+     * @param int $maxwidth The maximum width, or null when the maximum width does not matter.
+     * @param int $maxheight The maximum height, or null when the maximum height does not matter.
+     * @return moodle_url|false
+     */
+    public function get_logo_url_darkmode($maxwidth = null, $maxheight = 200) {
+        global $CFG;
+
+        // Initialize static variable for the overridden logo as this function might be called (for whatever reason)
+        // multiple times during a page output.
+        static $hasoverriddenlogo, $overriddenlogourl;
+
+        // If the overridden logo has already been checked.
+        if ($hasoverriddenlogo != null) {
+            // If there is an overridden logo.
+            if ($hasoverriddenlogo == true) {
+                // Directly return the overridden logo.
+                return $overriddenlogourl;
+            }
+            // Otherwise, if there isn't an overridden logo, this function will continue to run the logic later.
+
+            // Otherwise.
+        } else {
+            // Require flavours library.
+            require_once($CFG->dirroot . '/theme/boost_union/flavours/flavourslib.php');
+
+            // If any flavour applies to this page.
+            $flavour = theme_boost_union_get_flavour_which_applies();
+            if ($flavour != null) {
+                // If the flavour has a dark mode logo set.
+                if ($flavour->look_logodarkmode != null) {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasoverriddenlogo = true;
+
+                    // Compose the URL to the flavour's dark mode logo.
+                    $overriddenlogourl = \core\url::make_pluginfile_url(
+                        context_system::instance()->id,
+                        'theme_boost_union',
+                        'flavours_look_logodarkmode',
+                        $flavour->id,
+                        '/' . theme_get_revision(),
+                        '/' . $flavour->look_logodarkmode
+                    );
+
+                    // Return the URL.
+                    return $overriddenlogourl;
+
+                    // Otherwise.
+                } else {
+                    // Remember this fact for subsequent runs of this function.
+                    $hasoverriddenlogo = false;
+                }
+            }
+        }
+
+        // Apparently, there isn't any overridden logo set. Let's continue to serve the general dark mode logo.
+        $logo = get_config('theme_boost_union', 'logodarkmode');
+        if (empty($logo)) {
+            return false;
+        }
+
+        // If the logo is a SVG image, do not add a size to the path.
+        $logoextension = pathinfo($logo, PATHINFO_EXTENSION);
+        if (in_array($logoextension, ['svg', 'svgz'])) {
+            // The theme_boost_union_pluginfile() function will look for a filepath and will try to extract the size from that.
+            // Thus, we cannot drop the filepath from the URL completely.
+            // But we can add a path without an 'x' in it which will then be interpreted by theme_boost_union_pluginfile()
+            // as "no resize requested".
+            $filepath = '1/';
+
+            // Otherwise, add a size to the path.
+        } else {
+            // 200px high is the default image size which should be displayed at 100px in the page to account for retina displays.
+            // It's not worth the overhead of detecting and serving 2 different images based on the device.
+
+            // Hide the requested size in the file path.
+            $filepath = ((int) $maxwidth . 'x' . (int) $maxheight) . '/';
+        }
+
+        // Use $CFG->themerev to prevent browser caching when the file changes.
+        return moodle_url::make_pluginfile_url(
+            context_system::instance()->id,
+            'theme_boost_union',
+            'logodarkmode',
+            $filepath,
+            theme_get_revision(),
+            $logo
+        );
+    }
+
+    /**
      * Returns HTML attributes to use within the body tag. This includes an ID and classes.
      *
      * This renderer function is copied and modified from /lib/classes/output/core_renderer.php

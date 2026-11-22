@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-11-22 - Improvement: Adding dark mode config options, e.g dark mode logo.
+
 ### v5.3-r3
 
 * 2026-11-20 - Cleanup: Remove the unused file serving of the 'snippets' file area from theme_boost_union_pluginfile(), as uploaded SCSS snippets are stored in and served from the 'uploadedsnippets' file area.
