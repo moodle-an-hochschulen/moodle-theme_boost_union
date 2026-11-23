@@ -4,6 +4,10 @@ moodle-theme_boost_union
 Changes
 -------
 
+### Unreleased
+
+* 2026-11-22 - Bugfix: Escape the SCSS code in the snippet details modal, as the author's email address in the header comment was interpreted as HTML and not shown otherwise. As a precaution, the snippet metadata on the SCSS snippets overview page and in the modal is escaped as well. Resolves #1491
+
 ### v4.5-r53
 
 * 2026-11-20 - Tests: Verify the bottom alignment of the smart menu card title by comparing element positions instead of the computed style of the align-items property, as Chrome 158 reports this value as "flow-end" instead of "flex-end" and the Behat scenario failed on Github actions, resolves #1489.

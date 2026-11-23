@@ -34,7 +34,7 @@
     {{#description}}
         <div class="mb-4">
             <h6>{{#str}}snippetsdescription, theme_boost_union{{/str}}</h6>
-            <p>{{{description}}}</p>
+            <p>{{description}}</p>
         </div>
     {{/description}}
     {{#image}}
@@ -46,7 +46,7 @@
     {{#usagenote}}
         <div class="mb-4">
             <h6>{{#str}}snippetsusagenote, theme_boost_union{{/str}}</h6>
-            <p>{{{usagenote}}}</p>
+            <p>{{usagenote}}</p>
         </div>
     {{/usagenote}}
     <h6>{{#str}}snippetsdetails, theme_boost_union{{/str}}</h6>
@@ -55,7 +55,7 @@
             {{#creator}}
                 <tr>
                     <th scope="row">{{#str}}snippetscreator, theme_boost_union{{/str}}</th>
-                    <td>{{{creator}}}</td>
+                    <td>{{creator}}</td>
                 </tr>
             {{/creator}}
             {{#sourcebadge}}
@@ -79,13 +79,13 @@
             {{#trackerissue}}
                 <tr>
                     <th scope="row">{{#str}}snippetstrackerissue, theme_boost_union{{/str}}</th>
-                    <td><a href="https://moodle.atlassian.net/browse/{{{trackerissue}}}" target="_blank">{{{trackerissue}}}</a></td>
+                    <td><a href="https://moodle.atlassian.net/browse/{{trackerissue}}" target="_blank">{{trackerissue}}</a></td>
                 </tr>
             {{/trackerissue}}
             {{#testedon}}
                 <tr>
                     <th scope="row">{{#str}}snippetstestedon, theme_boost_union{{/str}}</th>
-                    <td>{{{testedon}}}</td>
+                    <td>{{testedon}}</td>
                 </tr>
             {{/testedon}}
         </tbody>
@@ -93,7 +93,7 @@
     {{#code}}
         <div class="mt-4">
             <a class="btn btn-secondary" data-toggle="collapse" href="#snippetcollapse{{id}}" role="button" aria-expanded="false" aria-controls="snippetcollapse{{id}}">{{#str}}snippetsshowthecode, theme_boost_union{{/str}}</a>
-            <div class="collapse mt-2 border rounded p-3" id="snippetcollapse{{id}}"><pre><code>{{{code}}}</code></pre></div>
+            <div class="collapse mt-2 border rounded p-3" id="snippetcollapse{{id}}"><pre><code>{{code}}</code></pre></div>
         </div>
     {{/code}}
 </div>

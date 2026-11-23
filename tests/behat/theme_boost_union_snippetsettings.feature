@@ -212,6 +212,27 @@ Feature: Configuring the theme_boost_union plugin on the "SCSS Snippets" page.
     And I should see "Usage note" in the ".modal-body" "css_element"
     And I should see "Lorem ipsum" in the ".modal-body" "css_element"
 
+  @javascript @_file_upload
+  Scenario: SCSS snippets: Settings - Markup in the snippet metadata is shown as text and is not interpreted as HTML.
+    Given the following config values are set as admin:
+      | config                 | value | plugin            |
+      | enableuploadedsnippets | yes   | theme_boost_union |
+    When I log in as "admin"
+    And I navigate to "Appearance > Boost Union > SCSS snippets" in site administration
+    And I click on "Settings" "link" in the "#region-main .nav-tabs" "css_element"
+    And I upload "theme/boost_union/tests/fixtures/snippets/snippet_markup.scss" file to "Upload snippets" filemanager
+    And I press "Save changes"
+    And I click on "Overview" "link" in the "#region-main .nav-tabs" "css_element"
+    Then I should see "Snippet with <b>markup</b> title" in the "#theme_boost_union_snippets" "css_element"
+    And I click on the "Show details" link in the table row containing "Snippet with <b>markup</b> title"
+    And ".modal-dialog" "css_element" should be visible
+    And I should see "Snippet with <b>markup</b> title" in the ".modal-title" "css_element"
+    And I should see "Description with <i>markup</i> and an ampersand & more." in the ".modal-body" "css_element"
+    And I should see "Usage note with <strong>markup</strong>." in the ".modal-body" "css_element"
+    And I should see "The <u>Boost Union</u> Team" in the "Creator" "table_row"
+    And I should see "MDL-<s>12345</s>" in the "Tracker issue" "table_row"
+    And I should see "Moodle <em>5.3</em>" in the "Tested on" "table_row"
+
   @javascript
   Scenario: SCSS snippets: Settings - The snippet preview image is shown in a modal.
     Given the following config values are set as admin:
@@ -242,3 +263,4 @@ Feature: Configuring the theme_boost_union plugin on the "SCSS Snippets" page.
     And I click on "Show the SCSS code" "link"
     And I should see ".primary-navigation .nav-item .nav-link"
     And I should see "@copyright"
+    And I should see "Nils Promer <nils.promer@haw-hamburg.de>"

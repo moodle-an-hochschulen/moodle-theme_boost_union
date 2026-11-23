@@ -175,6 +175,17 @@ class snippets_overview extends \table_sql {
     }
 
     /**
+     * Title column.
+     *
+     * @param \stdClass $data
+     * @return string
+     */
+    public function col_title($data) {
+        // Escape the title as it comes from the header of the snippet file.
+        return s($data->title);
+    }
+
+    /**
      * Source column.
      *
      * @param \stdClass $data
@@ -218,8 +229,10 @@ class snippets_overview extends \table_sql {
         $string = get_string($identifier, 'theme_boost_union');
 
         // Output Bootstrap label, if a string was found.
+        // The string is escaped as the identifier is built from the header of the snippet file and
+        // is returned as is by get_string() if the string does not exist.
         if (!empty($string)) {
-            return \html_writer::tag('span', $string, ['class' => 'badge bg-primary text-light']);
+            return \html_writer::tag('span', s($string), ['class' => 'badge bg-primary text-light']);
         } else {
             return '';
         }
@@ -266,7 +279,8 @@ class snippets_overview extends \table_sql {
             'icon' => new \pix_icon('info', get_string('snippetsshowdetails', 'theme_boost_union'), 'theme_boost_union'),
             'attributes' => ['class' => 'action-details py-0 pe-0 ml-0 mr-0',
                     'data-action' => 'details',
-                    'data-title' => $data->title,
+                    // The title is escaped here already as the modal title is set as HTML by the modal JS.
+                    'data-title' => s($data->title),
                     'data-source-badge' => $this->pick_and_build_badge('snippetssource' . $data->source),
                     'data-goal-badge' => $this->pick_and_build_badge('snippetsgoal' . $data->goal),
                     'data-scope-badge' => $this->pick_and_build_badge('snippetsscope' . $data->scope),
