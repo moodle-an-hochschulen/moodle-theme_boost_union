@@ -282,6 +282,27 @@ class smartmenu {
     public const CACHE_MENUSLIST = 'menuslist';
 
     /**
+     * The plugin version of the upgrade step in db/upgrade.php which created the smart menu tables
+     * (theme_boost_union_menus and theme_boost_union_menuitems).
+     * @var int
+     */
+    public const TABLES_SINCE_VERSION = 2023010517;
+
+    /**
+     * Check if the smart menu tables (theme_boost_union_menus and theme_boost_union_menuitems) exist in the database already.
+     *
+     * The tables do not exist as long as the upgrade step which creates them has not been run yet, i.e. during the time
+     * between the deployment of the plugin code and the end of the particular upgrade step.
+     * This is checked by looking at the installed plugin version instead of asking the database manager with table_exists()
+     * as this function is called during normal page requests and should not trigger any additional database query.
+     *
+     * @return bool
+     */
+    public static function tables_exist(): bool {
+        return (int) get_config('theme_boost_union', 'version') >= self::TABLES_SINCE_VERSION;
+    }
+
+    /**
      * Create an instance of the smartmenu class from the given menu ID or menu object/array.
      *
      * @param int|stdclass $menu

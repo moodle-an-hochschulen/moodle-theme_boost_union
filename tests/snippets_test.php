@@ -160,6 +160,32 @@ final class snippets_test extends advanced_testcase {
     }
 
     /**
+     * Test that the existence of the snippets table is derived from the installed plugin version.
+     *
+     * @covers ::table_exists
+     *
+     * @return void
+     */
+    public function test_table_exists(): void {
+        $this->resetAfterTest();
+
+        // With the currently installed plugin version, the table exists.
+        $this->assertTrue(snippets::table_exists());
+
+        // With the plugin version of the upgrade step which created the table, the table exists.
+        set_config('version', snippets::TABLE_SINCE_VERSION, 'theme_boost_union');
+        $this->assertTrue(snippets::table_exists());
+
+        // With a plugin version before the upgrade step which created the table, the table does not exist.
+        set_config('version', snippets::TABLE_SINCE_VERSION - 1, 'theme_boost_union');
+        $this->assertFalse(snippets::table_exists());
+
+        // Without any installed plugin version, the table does not exist.
+        unset_config('version', 'theme_boost_union');
+        $this->assertFalse(snippets::table_exists());
+    }
+
+    /**
      * Test looking for visual preview image file of snippet.
 
      * @covers ::get_snippet_preview_url

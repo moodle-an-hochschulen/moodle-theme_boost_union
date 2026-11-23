@@ -58,6 +58,27 @@ class snippets {
     const BUILTIN_SNIPPETS_BASE_PATH = '/theme/boost_union/snippets/builtin/';
 
     /**
+     * The plugin version of the upgrade step in db/upgrade.php which created the snippets table (theme_boost_union_snippets).
+     *
+     * @var int
+     */
+    const TABLE_SINCE_VERSION = 2024100744;
+
+    /**
+     * Check if the snippets table (theme_boost_union_snippets) exists in the database already.
+     *
+     * The table does not exist as long as the upgrade step which creates it has not been run yet, i.e. during the time
+     * between the deployment of the plugin code and the end of the particular upgrade step.
+     * This is checked by looking at the installed plugin version instead of asking the database manager with table_exists()
+     * as the database manager is meant to be used during installation and upgrade only.
+     *
+     * @return bool
+     */
+    public static function table_exists(): bool {
+        return (int) get_config('theme_boost_union', 'version') >= self::TABLE_SINCE_VERSION;
+    }
+
+    /**
      * Allowed file extensions for the visual preview of the SCSS snippet in the more detail modal.
      *
      * The order in this array also reflects their priority if multiple matches should exist.
