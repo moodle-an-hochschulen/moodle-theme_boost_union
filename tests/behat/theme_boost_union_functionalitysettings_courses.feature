@@ -521,6 +521,28 @@ Feature: Configuring the theme_boost_union plugin for the "Courses" tab on the "
     And the "href" attribute of ".course-external-link a" "css_element" should contain "courseNr=136039"
     And the "href" attribute of ".course-external-link a" "css_element" should contain "semester=2026S"
 
+  Scenario: Setting: External course link - Compose the link only from the capture groups if the pattern is not anchored
+    Given the following "courses" exist:
+      | fullname | shortname | idnumber           |
+      | Course 2 | C2        | abc136039xyz999999 |
+    And the following "course enrolments" exist:
+      | user     | course | role    |
+      | student1 | C2     | student |
+    And the following config values are set as admin:
+      | config                        | value                                                            | plugin            |
+      | enableexternalcourselink      | yes                                                              | theme_boost_union |
+      | externalcourselinkcoursefield | idnumber                                                         | theme_boost_union |
+      | externalcourselinkpattern     | ([0-9]{6})                                                       | theme_boost_union |
+      | externalcourselinkurl         | https://tiss.tuwien.ac.at/course/courseDetails.xhtml?courseNr=$1 | theme_boost_union |
+      | externalcourselinktext        | View this course in TISS                                         | theme_boost_union |
+    When I log in as "student1"
+    And I am on "Course 2" course homepage
+    Then I should see "View this course in TISS" in the ".course-external-link" "css_element"
+    And the "href" attribute of ".course-external-link a" "css_element" should contain "https://tiss.tuwien.ac.at/course/courseDetails.xhtml?courseNr=136039"
+    And the "href" attribute of ".course-external-link a" "css_element" should not contain "abc"
+    And the "href" attribute of ".course-external-link a" "css_element" should not contain "xyz"
+    And the "href" attribute of ".course-external-link a" "css_element" should not contain "999999"
+
   Scenario: Setting: External course link - Do not show the link if the course identifier does not match the pattern
     Given the following config values are set as admin:
       | config                        | value                                                                        | plugin            |

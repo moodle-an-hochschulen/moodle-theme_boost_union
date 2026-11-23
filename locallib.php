@@ -472,13 +472,18 @@ function theme_boost_union_get_external_course_link() {
     $regex = '/' . str_replace('/', '\/', $pattern) . '/';
 
     // Match the pattern, gracefully ignoring an invalid regular expression which the admin might have configured.
-    if (@preg_match($regex, $fieldvalue) !== 1) {
+    if (@preg_match($regex, $fieldvalue, $matches) !== 1) {
         return '';
     }
 
     // Compose the link URL by substituting the capture groups into the configured URL.
+    // Only the capture groups are used, any parts of the course field value which the pattern did not match are discarded.
+    // Placeholders of capture groups which do not exist or did not participate in the match are replaced by an empty string.
+    $linkurl = preg_replace_callback('/\$(\d{1,2})/', function ($placeholder) use ($matches) {
+        return $matches[(int) $placeholder[1]] ?? '';
+    }, $url);
     $templatecontext = [
-            'externalcourselinkurl' => preg_replace($regex, $url, $fieldvalue),
+            'externalcourselinkurl' => $linkurl,
             'externalcourselinktext' => format_text($text, FORMAT_HTML, ['context' => $PAGE->context]),
             'externalcourselinknewwindow' =>
                     get_config('theme_boost_union', 'externalcourselinknewwindow') == THEME_BOOST_UNION_SETTING_SELECT_YES,
