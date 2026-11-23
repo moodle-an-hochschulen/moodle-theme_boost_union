@@ -1,0 +1,18 @@
+/**
+ * Snippet Title: Snippet with <b>markup</b> title
+ * Scope:         global
+ * Goal:          eyecandy
+ * Description:   Description with <i>markup</i> and an ampersand & more.
+ * Creator:       The <u>Boost Union</u> Team
+ * Tracker issue: MDL-<s>12345</s>
+ * Tested on:     Moodle <em>5.3</em>
+ * Usage note:    Usage note with <strong>markup</strong>.
+ *
+ * @copyright  2026 The Boost Union Team
+ * @author     The Boost Union Team
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+#page-header h1 {
+    display: block;
+}
