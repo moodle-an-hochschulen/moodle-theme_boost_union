@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-11-24 - Upstream change: Adopt changes from Moodle core in MDL-90207 and remove the workaround which applied the configured link color in the dark color mode, as Moodle core derives the link colors of the dark color mode from the link color itself now, resolves #1451.
 * 2026-11-24 - Improvement: Use the same tertiary navigation style in settings as activities (forum, feedback, lesson, assign, question bank) do.
 * 2026-11-22 - Improvement: Check the installed plugin version instead of asking the database manager if the smart menu and SCSS snippets tables exist already, as this triggered an additional database query on every page request on sites without smart menus, resolves #1492.
 * 2026-11-22 - Bugfix: Escape the SCSS code in the snippet details modal, as the author's email address in the header comment was interpreted as HTML and not shown otherwise. As a precaution, the snippet metadata on the SCSS snippets overview page and in the modal is escaped as well. Resolves #1491
