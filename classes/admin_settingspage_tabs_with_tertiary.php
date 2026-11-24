@@ -290,12 +290,8 @@ class admin_settingspage_tabs_with_tertiary extends \theme_boost_admin_settingsp
     public static function get_tertiary_navigation_css_for_head() {
 
         /* The first CSS rule's purpose:
-           Enlarge the font size of the tertiary navigation to match the size of a h2 heading.
-           This has to use !important as there would be a more specific selector with a smaller font size.
-           The second CSS rule's purpose:
            Remove the original heading if there is a tertiary navigation. */
         $css = <<<CSS
-.admin_settingspage_tabs_with_tertiary .dropdown-toggle { font-size: 1.875rem !important; }
 h2:has(+ .admin_settingspage_tabs_with_tertiary) { display: none; }
 CSS;
         $csstag = \html_writer::tag('style', $css, ['type' => 'text/css']);
