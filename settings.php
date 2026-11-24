@@ -5179,7 +5179,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name = 'theme_boost_union/infobanner' . $i . 'start';
             $title = get_string('infobannerstartsetting', 'theme_boost_union', ['no' => $i], true);
             $description = get_string('infobannerstartsetting_desc', 'theme_boost_union', ['no' => $i], true);
-            $setting = new admin_setting_configdatetime($name, $title, $description, '');
+            $setting = new admin_setting_configdatetime($name, $title, $description, 0);
             $tab->add($setting);
             $page->hide_if(
                 'theme_boost_union/infobanner' . $i . 'start',
@@ -5198,7 +5198,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
             $name = 'theme_boost_union/infobanner' . $i . 'end';
             $title = get_string('infobannerendsetting', 'theme_boost_union', ['no' => $i], true);
             $description = get_string('infobannerendsetting_desc', 'theme_boost_union', ['no' => $i], true);
-            $setting = new admin_setting_configdatetime($name, $title, $description, '');
+            $setting = new admin_setting_configdatetime($name, $title, $description, 0);
             $setting->set_not_before(
                 'infobanner' . $i . 'start',
                 get_string('infobannerendsetting_beforestart', 'theme_boost_union', ['no' => $i], true),
