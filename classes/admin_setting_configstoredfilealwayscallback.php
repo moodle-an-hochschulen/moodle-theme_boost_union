@@ -36,7 +36,7 @@ namespace theme_boost_union;
 class admin_setting_configstoredfilealwayscallback extends \admin_setting_configstoredfile {
     // This class is basically a admin_setting_configstoredfile class but which circumvents MDL-59082
     // and triggers the updatecallback everytime the setting is saved regardless if any values have changed.
-    // As soon as MDL-59082 is fixed in Moodle core, this class could be removed again.
+    // MDL-59082 was closed in Moodle core without a fix, so this class has to stay.
     // (Note to myself: This comment should be the class description,
     // but local_moodlecheck only allows one-line class descriptions).
 
