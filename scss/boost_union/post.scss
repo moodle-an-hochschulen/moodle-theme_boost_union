@@ -2354,6 +2354,16 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 
 /* Boost union header menu style when the smart menu is enabled */
 .theme-boost-union-smartmenu {
+    /* Moodle core adds the class 'iconsize-big' to all icons from its 'b/' icon set which can be picked as smart menu
+       item icons and renders them with 64px (see theme/boost/scss/moodle/icons.scss). Within the smart menu items,
+       regardless of their location (this includes the primary navigation drawer on small screens), and within the
+       submenu headers, which repeat the icon of the smart menu item, these icons are shrunk to the normal icon size. */
+    .boost-union-smartmenuitem i.icon.iconsize-big,
+    .carousel-navigation-link i.icon.iconsize-big {
+        width: auto;
+        height: auto;
+        font-size: $font-size-base;
+    }
     .navbar {
         &.fixed-top {
             /* Added height and background color for the top header,
@@ -2699,13 +2709,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
                         next line*/
                         align-items: baseline;
                         white-space: normal;
-                        /* The icon width, height and font size is changed to normal size when the
-                        large size icon (class="iconsize-big") is used in the "i" tag */
-                        i.icon {
-                            width: auto;
-                            height: auto;
-                            font-size: 16px;
-                        }
                         /* The "Tick" icon removed when the menu link is clicked */
                         &:before {
                             display: none;
@@ -3104,13 +3107,6 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
     /* Align the drawer content list group item in center*/
     .drawer-primary .drawercontent .list-group .list-group-item {
         align-items: center;
-        /* The icon width, height and font size is changed to normal size when
-        the large size icon (class="iconsize-big") is used in the "i" tag in the bottom menu */
-        i.icon {
-            width: auto;
-            height: auto;
-            font-size: 16px;
-        }
     }
     /* Drop down more menu carousel item */
     .theme-boost-union-smartmenu-carousel {
