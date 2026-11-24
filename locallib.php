@@ -27,6 +27,7 @@ use theme_boost_union\coursesettings;
 /**
  * Get the options array for Yes / No select settings.
  * Due to MDL-58376, we use binary select settings instead of checkbox settings throughout this theme.
+ * MDL-58376 was closed in Moodle core without a fix, so this approach has to stay.
  *
  * @return array The options array for Yes / No select settings.
  */
