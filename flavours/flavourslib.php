@@ -351,6 +351,6 @@ function theme_boost_union_get_flavour_config_item_for_flavourid(string $flavour
         return $flavourrecord->{$configkey};
     }
 
-    // Fallback: Return null.
+    // Otherwise, return null as fallback.
     return null;
 }
