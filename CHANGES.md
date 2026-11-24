@@ -6,6 +6,10 @@ Changes
 
 ### Unreleased
 
+* 2026-11-24 - Bugfix: The breadcrumb on the section page of an empty general section ended with the name of the first section after the general section (or did not contain any section at all) and the breadcrumb on the section page of a subsection did not end with the subsection due to a navigation glitch in Moodle core (MDL-90146), Boost Union works around this glitch now, resolves #704
+* 2026-11-24 - Bugfix: Breadcrumb items without a link were not removed from the breadcrumb as it is done in Boost core, resulting in orphaned items like 'Course administration' or 'Grade administration' on course subpages, resolves #704
+* 2026-11-24 - Bugfix: The last breadcrumb item on course subpages remained a link if the category breadcrumbs were enabled, now it is only kept as a link if it is a category item (on the course main page), resolves #704
+* 2026-11-24 - Improvement: Reduce the deviations of the breadcrumb code from Boost core by creating the category breadcrumb items as real breadcrumb nodes and reusing the Boost core helper functions, relates to #704
 * 2026-11-24 - Bugfix: Store the default of the info banner start and end time settings, as these settings were considered as new settings and their defaults were applied again on each and every upgrade otherwise. Unset start and end times are consistently stored as 0 now, resolves #1481.
 * 2026-11-24 - Upstream change: Adopt changes from Moodle core in MDL-90207 and remove the workaround which applied the configured link color in the dark color mode, as Moodle core derives the link colors of the dark color mode from the link color itself now, resolves #1451.
 * 2026-11-24 - Improvement: Use the same tertiary navigation style in settings as activities (forum, feedback, lesson, assign, question bank) do.
