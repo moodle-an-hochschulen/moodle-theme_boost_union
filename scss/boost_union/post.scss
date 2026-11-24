@@ -2527,7 +2527,7 @@ body.theme_boost-union-footerbuttonnone.jsenabled {
 }
 
 /* Moodle core adds the class 'iconsize-big' to all icons from its 'b/' icon set which can be picked as smart menu item
-   icons and renders them with 32px (see theme/boost/scss/moodle/icons.scss). Within the smart menu items, regardless
+   icons and renders them with 64px (see theme/boost/scss/moodle/icons.scss). Within the smart menu items, regardless
    of their location (this includes the primary navigation drawer on small screens), these icons are shrunk to the
    normal icon size. */
 .theme-boost-union-smartmenu .boost-union-smartmenuitem i.icon.iconsize-big {
