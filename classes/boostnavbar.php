@@ -16,7 +16,6 @@
 
 namespace theme_boost_union;
 
-use core\navigation\views\view;
 use navigation_node;
 use moodle_url;
 
@@ -27,6 +26,7 @@ use moodle_url;
  *
  * @package    theme_boost_union
  * @copyright  2023 Luca Bösch <luca.boesch@bfh.ch>
+ * @copyright  2026 Alexander Bias <abias@ssystems.de>
  * @copyright  based on code from theme_boost by Adrian Greeve
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -34,8 +34,8 @@ class boostnavbar extends \theme_boost\boostnavbar {
     /**
      * Prepares the navigation nodes for use with boost.
      *
-     * This function is amended with the category composing code from
-     * get_course_categories() in lib/navigation.lib
+     * This function is copied and modified from prepare_nodes_for_boost() in /theme/boost/classes/boostnavbar.php.
+     * All modifications are marked with 'Boost Union:' comments.
      */
     protected function prepare_nodes_for_boost(): void {
         global $PAGE;
@@ -46,6 +46,10 @@ class boostnavbar extends \theme_boost\boostnavbar {
         // Defines whether section items with an action should be removed by default.
         $removesections = true;
 
+        // Boost Union: Check if the category breadcrumbs should be shown in the course context.
+        $showcategorybreadcrumbs = ($this->page->context->contextlevel == CONTEXT_COURSE &&
+                get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES);
+
         if ($this->page->context->contextlevel == CONTEXT_COURSECAT) {
             // Remove the 'Permissions' navbar node in the Check permissions page.
             if ($this->page->pagetype === 'admin-roles-check') {
@@ -53,64 +57,30 @@ class boostnavbar extends \theme_boost\boostnavbar {
             }
         }
         if ($this->page->context->contextlevel == CONTEXT_COURSE) {
-            if (get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES) {
-                // Create the categories breadcrumb navigation nodes.
-                $categorynodes = [];
-                foreach (array_reverse($this->get_categories()) as $category) {
-                    $context = \context_coursecat::instance($category->id);
-                    if (!\core_course_category::can_view_category($category)) {
-                        continue;
-                    }
-
-                    $displaycontext = \context_helper::get_navigation_filter_context($context);
-                    $url = new moodle_url('/course/index.php', ['categoryid' => $category->id]);
-                    $name = format_string($category->name, true, ['context' => $displaycontext]);
-                    $categorynode = \breadcrumb_navigation_node::create(
-                        $name,
-                        $url,
-                        \breadcrumb_navigation_node::TYPE_CATEGORY,
-                        null,
-                        $category->id
-                    );
-                    if (!$category->visible) {
-                        $categorynode->hidden = true;
-                    }
-                    $categorynodes[] = $categorynode;
-                }
-                $itemswithcategories = [];
-                if (!$this->items) {
-                    $itemswithcategories = $categorynodes;
-                } else {
-                    foreach ($this->items as $item) {
-                        if ($item->type == \breadcrumb_navigation_node::TYPE_COURSE) {
-                            $itemswithcategories = array_merge($itemswithcategories, $categorynodes);
-                        }
-                        $itemswithcategories[] = $item;
-                    }
-                }
-                $this->items = $itemswithcategories;
-            }
-
+            $removesections = course_get_format($this->page->course)->can_sections_be_removed_from_navigation();
             // Remove any duplicate navbar nodes.
             $this->remove_duplicate_items();
             // Remove 'My courses' and 'Courses' if we are in the course context.
             $this->remove('mycourses');
             $this->remove('courses');
-
-            switch (get_config('theme_boost_union', 'categorybreadcrumbs')) {
-                case THEME_BOOST_UNION_SETTING_SELECT_NO:
-                    // Remove the course category breadcrumb nodes.
-                    foreach ($this->items as $key => $item) {
-                        // Remove if it is a course category breadcrumb node.
-                        $this->remove($item->key, \breadcrumb_navigation_node::TYPE_CATEGORY);
-                    }
-                    break;
-                case THEME_BOOST_UNION_SETTING_SELECT_YES:
-                    break;
+            // Remove the course category breadcrumb nodes.
+            foreach ($this->items as $key => $item) {
+                // Remove if it is a course category breadcrumb node.
+                $this->remove($item->key, \breadcrumb_navigation_node::TYPE_CATEGORY);
+            }
+            // Boost Union: Add our own course category breadcrumb nodes if they are desired.
+            if ($showcategorybreadcrumbs) {
+                $this->add_category_items();
             }
             // Remove the course breadcrumb node.
             if (!str_starts_with($this->page->pagetype, 'course-view-section-')) {
                 $this->remove($this->page->course->id, \breadcrumb_navigation_node::TYPE_COURSE);
+            }
+            // Boost Union: Make sure that the breadcrumb ends with the section which is shown on the section page.
+            // This is a workaround for a glitch in Moodle core (MDL-90146). It is applied regardless of the
+            // categorybreadcrumbs setting as it fixes a wrong breadcrumb which is also wrong in Boost core.
+            if (str_starts_with($this->page->pagetype, 'course-view-section-')) {
+                $this->fix_section_page_item();
             }
             // Remove the navbar nodes that already exist in the secondary navigation menu.
             $this->remove_items_that_exist_in_navigation($PAGE->secondarynav);
@@ -181,101 +151,165 @@ class boostnavbar extends \theme_boost\boostnavbar {
         $this->remove_no_link_items($removesections);
 
         // Don't display the navbar if there is only one item. Apparently this is bad UX design.
-        // Except, leave it in when in course context and categorybreadcrumbs are desired.
-        if (
-            !(get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES &&
-                $this->page->context->contextlevel == CONTEXT_COURSE)
-        ) {
-            if ($this->item_count() <= 1) {
-                $this->clear_items();
-                return;
-            }
+        // Boost Union: Except, leave it in when in course context and categorybreadcrumbs are desired as the navbar might
+        // consist of a single category item there.
+        if ($this->item_count() <= 0 || ($this->item_count() <= 1 && !$showcategorybreadcrumbs)) {
+            $this->clear_items();
+            return;
         }
 
         // Make sure that the last item is not a link. Not sure if this is always a good idea.
-        // Except, leave it when categorybreadcrumbs are desired and if we are on a course page.
-        if (
-            !(get_config('theme_boost_union', 'categorybreadcrumbs') == THEME_BOOST_UNION_SETTING_SELECT_YES &&
-                $this->page->context->contextlevel == CONTEXT_COURSE)
-        ) {
+        // Boost Union: Except, leave it when categorybreadcrumbs are desired and the last item is a category item.
+        // This is the case on the course main page where the category breadcrumbs are the only items in the navbar
+        // and should remain clickable. On all other pages, the last item is the current page and should not be a link,
+        // just like in Boost core.
+        $lastitem = end($this->items);
+        reset($this->items);
+        if (!($showcategorybreadcrumbs && $lastitem->type === \breadcrumb_navigation_node::TYPE_CATEGORY)) {
             $this->remove_last_item_action();
         }
     }
 
     /**
-     * Get the course categories.
+     * Boost Union: Add the course category breadcrumb nodes to the navbar items.
      *
-     * @return boostnavbaritem[] Boost navbar items.
+     * The category nodes are inserted in front of the course node (if there is one) or prepended to the navbar items
+     * otherwise. This process is copied and modified from get_course_categories() in lib/navigationlib.php.
+     * The category nodes which might have been in the navbar already have been removed before by the Boost core code.
      */
-    public function get_categories(): array {
-        return $this->page->categories;
-    }
-
-    /**
-     * Remove a boostnavbaritem from the boost navbar.
-     *
-     * @param  string|int $itemkey An identifier for the boostnavbaritem
-     * @param  int|null $itemtype An additional type identifier for the boostnavbaritem (optional)
-     */
-    protected function remove($itemkey, ?int $itemtype = null): void {
-
-        $itemfound = false;
-        foreach ($this->items as $key => $item) {
-            if ($item->key === $itemkey) {
-                // If a type identifier is also specified, check whether the type of the breadcrumb item matches the
-                // specified type. Skip if types to not match.
-                if (!is_null($itemtype) && $item->type !== $itemtype) {
-                    continue;
-                }
-                unset($this->items[$key]);
-                $itemfound = true;
-                break;
+    protected function add_category_items(): void {
+        // Create the category breadcrumb navigation nodes.
+        $categorynodes = [];
+        foreach (array_reverse($this->page->categories) as $category) {
+            $context = \context_coursecat::instance($category->id);
+            if (!\core_course_category::can_view_category($category)) {
+                continue;
             }
-        }
-        if (!$itemfound) {
-            return;
+
+            $displaycontext = \context_helper::get_navigation_filter_context($context);
+            $url = new moodle_url('/course/index.php', ['categoryid' => $category->id]);
+            $name = format_string($category->name, true, ['context' => $displaycontext]);
+            $categorynode = new \breadcrumb_navigation_node(navigation_node::create(
+                $name,
+                $url,
+                \breadcrumb_navigation_node::TYPE_CATEGORY,
+                null,
+                $category->id
+            ));
+            if (!$category->visible) {
+                $categorynode->hidden = true;
+            }
+            $categorynodes[] = $categorynode;
         }
 
-        $itemcount = $this->item_count();
-        if ($itemcount <= 0) {
-            return;
+        // Insert the category nodes in front of the course node.
+        $itemswithcategories = [];
+        $inserted = false;
+        foreach ($this->items as $item) {
+            if (!$inserted && $item->type == \breadcrumb_navigation_node::TYPE_COURSE) {
+                $itemswithcategories = array_merge($itemswithcategories, $categorynodes);
+                $inserted = true;
+            }
+            $itemswithcategories[] = $item;
         }
-
-        $this->items = array_values($this->items);
-        // Set the last item to last item if it is not.
-        $lastitem = $this->items[$itemcount - 1];
-        if (is_a($lastitem, 'breadcrumb_navigation_node') && !$lastitem->is_last()) {
-            $lastitem->set_last(true);
+        // If there wasn't any course node, prepend the category nodes.
+        if (!$inserted) {
+            $itemswithcategories = array_merge($categorynodes, $itemswithcategories);
         }
+        $this->items = $itemswithcategories;
     }
 
     /**
-     * Removes the action from the last item of the boostnavbaritem.
+     * Boost Union: Make sure that the last section item in the breadcrumb on a section page is the section which is shown.
+     *
+     * Some course formats (for example the topics and weeks formats) remove the section node of the general section
+     * from the navigation if the general section is empty. If the section page of such an empty general section is opened,
+     * Moodle core does not find a navigation node for the current page and falls back to the first section node
+     * with a matching base URL. As a result, the breadcrumb ends with the name of the first section after the general
+     * section instead of the general section itself. If there is no other section node to fall back to (for example
+     * in a course which only consists of the general section), the breadcrumb ends with the course and does not contain
+     * any section at all.
+     * This glitch is reported in MDL-90146.
+     * The same wrong fallback happens on the section page of a delegated section (i.e. a subsection), where the breadcrumb
+     * does not end with the subsection.
+     * This function detects these situations and replaces the wrong section item with a section item for the current section
+     * or appends the section item for the current section to the course item. For a subsection, the parent section is
+     * placed in front of the subsection.
+     * It is called regardless of the categorybreadcrumbs setting. This is a deliberate deviation from the principle that
+     * Boost Union behaves like Boost core if a setting is disabled, as the breadcrumb is simply wrong in Boost core here.
+     * As soon as MDL-90146 is fixed in all Moodle core versions supported by Boost Union, this workaround can be removed.
      */
-    protected function remove_last_item_action(): void {
-        $item = end($this->items);
-        if (is_a($item, 'breadcrumb_navigation_node')) {
-            $item->action = null;
+    protected function fix_section_page_item(): void {
+        // Get the section which is shown on the section page.
+        $sectionid = $this->page->url->param('id');
+        if (empty($sectionid)) {
+            return;
         }
+
+        // Get the last navbar item and check if it is a section item for another section (which is the case if Moodle core
+        // fell back to another section node) or if it is the course item (which is the case if Moodle core did not find
+        // any other section node to fall back to, for example in a course which only consists of the general section).
+        $lastitem = end($this->items);
         reset($this->items);
+        if (!$lastitem) {
+            return;
+        }
+        $iswrongsection = ($lastitem->type === \breadcrumb_navigation_node::TYPE_SECTION &&
+                (int) $lastitem->key !== (int) $sectionid);
+        $iscourse = ($lastitem->type === \breadcrumb_navigation_node::TYPE_COURSE &&
+                (int) $lastitem->key === (int) $this->page->course->id);
+        if (!$iswrongsection && !$iscourse) {
+            return;
+        }
+
+        // Get the section info of the section which is shown on the section page.
+        $modinfo = get_fast_modinfo($this->page->course);
+        $section = $modinfo->get_section_info_by_id($sectionid, IGNORE_MISSING);
+        if (!$section) {
+            return;
+        }
+
+        // If the current section is a delegated section (i.e. a subsection), get its parent section as the parent section
+        // has to be shown in front of the current section.
+        $parentsection = $section->get_component_instance()?->get_parent_section();
+        $lastisparent = ($iswrongsection && $parentsection && (int) $lastitem->key === (int) $parentsection->id);
+
+        // Remove the wrong section item, unless it is the parent section of the current section.
+        if ($iswrongsection && !$lastisparent) {
+            array_pop($this->items);
+        }
+        // Append the section item for the parent section, unless it is already there.
+        if ($parentsection && !$lastisparent) {
+            $this->items[] = $this->create_section_item($parentsection);
+        }
+        // Append the section item for the current section and flag it as last item.
+        foreach ($this->items as $item) {
+            $item->set_last(false);
+        }
+        $sectionnode = $this->create_section_item($section);
+        $sectionnode->set_last(true);
+        $this->items[] = $sectionnode;
     }
 
     /**
-     * Remove items that have no actions associated with them and optionally remove items that are sections.
+     * Boost Union: Create a breadcrumb item for a given section.
      *
-     * The only exception is the last item in the list which may not have a link but needs to be displayed.
+     * The item is built in the same way as the section nodes are built in load_section_navigation() in
+     * lib/navigationlib.php.
      *
-     * @param bool $removesections Whether section items should be also removed (only applies when they have an action)
+     * @param \section_info $section The section.
+     * @return \breadcrumb_navigation_node The breadcrumb item.
      */
-    protected function remove_no_link_items(bool $removesections = true): void {
-        foreach ($this->items as $key => $value) {
-            if (
-                isset($lastitem) && is_a($lastitem, 'breadcrumb_navigation_node') && !$value->is_last() &&
-                    (!$value->has_action() || ($value->type == \navigation_node::TYPE_SECTION && $removesections))
-            ) {
-                unset($this->items[$key]);
-            }
-        }
-        $this->items = array_values($this->items);
+    protected function create_section_item(\section_info $section): \breadcrumb_navigation_node {
+        $format = course_get_format($this->page->course);
+        $sectionnode = new \breadcrumb_navigation_node(navigation_node::create(
+            $format->get_section_name($section),
+            $format->get_view_url($section, ['navigation' => true]),
+            \breadcrumb_navigation_node::TYPE_SECTION,
+            null,
+            $section->id
+        ));
+        $sectionnode->hidden = (!$section->visible || !$section->available);
+        return $sectionnode;
     }
 }
