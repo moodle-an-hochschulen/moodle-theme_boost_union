@@ -386,10 +386,11 @@ class behat_theme_boost_union_base_general extends behat_base {
             )
         ";
         $positionviewport = $this->evaluate_script($posviewportjs);
+        // Allow some deviation of 50px of the scrolling position.
         if (
             $positionelement > $positionviewport + 50 ||
                 $positionelement < $positionviewport - 50
-        ) { // Allow some deviation of 50px of the scrolling position.
+        ) {
             throw new ExpectationException(
                 'The DOM element \'' . $selector . '\' is not a the top of the page',
                 $this->getSession()

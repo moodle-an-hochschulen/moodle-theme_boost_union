@@ -788,7 +788,8 @@ class smartmenu {
 
             if (isset($menu->menudata->location)) {
                 $menulocation = $menu->menudata->location;
-            } else if (isset($menu->itemdata->menu) && isset($topmenus[$menu->itemdata->menu])) { // Inline menus.
+            } else if (isset($menu->itemdata->menu) && isset($topmenus[$menu->itemdata->menu])) {
+                // Inline menus.
                 $menulocation = json_decode($topmenus[$menu->itemdata->menu]->location);
             }
 

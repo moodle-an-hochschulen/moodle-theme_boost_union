@@ -606,7 +606,8 @@ class smartmenu_item_edit_form extends \moodleform {
         $rolelist = role_get_names(\context_system::instance());
         $roleoptions = [];
         foreach ($rolelist as $role) {
-            if ($role->archetype !== 'frontpage') { // Frontpage roles are not supported in the items restriction.
+            // Frontpage roles are not supported in the items restriction.
+            if ($role->archetype !== 'frontpage') {
                 $roleoptions[$role->id] = $role->localname;
             }
         }
