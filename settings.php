@@ -175,6 +175,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
 
         // Prepare options array for select settings.
         // Due to MDL-58376, we will use binary select settings instead of checkbox settings throughout this theme.
+        // MDL-58376 was closed in Moodle core without a fix, so this approach has to stay.
         $yesnooption = [THEME_BOOST_UNION_SETTING_SELECT_YES => get_string('yes'),
                 THEME_BOOST_UNION_SETTING_SELECT_NO => get_string('no'), ];
 
@@ -937,7 +938,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
                 get_string('modiconsfileshowto', 'theme_boost_union', null, true) . '<br /><br />' .
                 get_string('modiconsfilestech', 'theme_boost_union', null, true);
         // Use our enhanced implementation of admin_setting_configstoredfile to circumvent MDL-59082.
-        // This can be changed back to admin_setting_configstoredfile as soon as MDL-59082 is fixed.
+        // MDL-59082 was closed in Moodle core without a fix, so this implementation has to stay.
         $setting = new admin_setting_configstoredfilealwayscallback(
             $name,
             $title,
@@ -3316,7 +3317,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $description .= '<br />';
         $description .= get_string('touchiconfilesios_note', 'theme_boost_union', null, true);
         // Use our enhanced implementation of admin_setting_configstoredfile to circumvent MDL-59082.
-        // This can be changed back to admin_setting_configstoredfile as soon as MDL-59082 is fixed.
+        // MDL-59082 was closed in Moodle core without a fix, so this implementation has to stay.
         $setting = new admin_setting_configstoredfilealwayscallback(
             $name,
             $title,
