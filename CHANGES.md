@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-11-24 - Bugfix: Store the default of the info banner start and end time settings, as these settings were considered as new settings and their defaults were applied again on each and every upgrade otherwise. Unset start and end times are consistently stored as 0 now, resolves #1481.
 * 2026-11-22 - Improvement: Check the installed plugin version instead of asking the database manager if the smart menu and SCSS snippets tables exist already, as this triggered an additional database query on every page request on sites without smart menus, resolves #1492.
 * 2026-11-22 - Bugfix: Escape the SCSS code in the snippet details modal, as the author's email address in the header comment was interpreted as HTML and not shown otherwise. As a precaution, the snippet metadata on the SCSS snippets overview page and in the modal is escaped as well. Resolves #1491
 

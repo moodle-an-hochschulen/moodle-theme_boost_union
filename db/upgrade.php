@@ -1022,6 +1022,28 @@ function xmldb_theme_boost_union_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2024100804, 'theme', 'boost_union');
     }
 
+    if ($oldversion < 2024100807) {
+        // Require the theme library for the info banner count constant.
+        require_once($CFG->dirroot . '/theme/boost_union/lib.php');
+
+        // The info banner start and end times are stored as unix timestamps, with 0 meaning that no date and time is set.
+        // Earlier versions of the plugin might have stored an empty string instead, so we convert these values to 0.
+        // Settings which have not been stored at all yet are left alone as Moodle core applies their default
+        // right after this upgrade.
+        for ($i = 1; $i <= THEME_BOOST_UNION_SETTING_INFOBANNER_COUNT; $i++) {
+            foreach (['start', 'end'] as $suffix) {
+                $settingname = 'infobanner' . $i . $suffix;
+                $value = get_config('theme_boost_union', $settingname);
+                if ($value !== false && !is_numeric($value)) {
+                    set_config($settingname, 0, 'theme_boost_union');
+                }
+            }
+        }
+
+        // Boost Union savepoint reached.
+        upgrade_plugin_savepoint(true, 2024100807, 'theme', 'boost_union');
+    }
+
     // Load the builtin SCSS snippets into the database.
     // This is done with every plugin update, regardless of the plugin version.
     snippets::add_builtin_snippets();
