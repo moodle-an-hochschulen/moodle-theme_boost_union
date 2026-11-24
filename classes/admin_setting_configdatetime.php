@@ -88,50 +88,60 @@ class admin_setting_configdatetime extends \admin_setting {
             return null;
         }
 
-        // The setting is stored as a unix timestamp, but the stored value might also be an empty string
-        // (i.e. if the setting has never been set properly).
-        // Any non-numeric value is treated just like an unset setting.
-        return is_numeric($result) ? (int) $result : 0;
+        // The setting is stored as a unix timestamp, with 0 meaning that no date and time is set.
+        return (int) $result;
     }
 
     /**
      * Store the date and time as unix timestamp.
      *
-     * @param array $data The submitted date_time_selector data, i.e. an array with the keys
-     *                    'year', 'month', 'day', 'hour' and 'minute'.
+     * @param array|int|string $data The submitted date_time_selector data, i.e. an array with the keys
+     *                               'year', 'month', 'day', 'hour' and 'minute', or the default setting,
+     *                               i.e. a unix timestamp or 0 if no date and time is set.
      * @return string Empty string if everything is ok, string error message otherwise.
      */
     public function write_setting($data) {
-        // If the submitted data is not an array (which should not happen with a date_time_selector), do nothing.
+        // If the given data is not an array, it was not submitted with a date_time_selector.
+        // In this case, it is most probably the default setting which is applied by Moodle core during installations
+        // and upgrades. The default setting has to be stored as well. Otherwise, the setting would remain unset, Moodle core would
+        // consider it as new setting on each and every upgrade and would try to apply the default setting again and again.
         if (!is_array($data)) {
-            return '';
-        }
+            // A numeric default setting is stored as unix timestamp.
+            // Any other default setting is stored as 0 which means that no date and time is set.
+            $timestamp = is_numeric($data) ? (int) $data : 0;
 
-        // Make sure that all date and time parts have been submitted.
-        foreach (['year', 'month', 'day', 'hour', 'minute'] as $key) {
-            if (!isset($data[$key]) || !is_numeric($data[$key])) {
+            // Otherwise, the data was submitted with a date_time_selector.
+        } else {
+            // Make sure that all date and time parts have been submitted.
+            foreach (['year', 'month', 'day', 'hour', 'minute'] as $key) {
+                if (!isset($data[$key]) || !is_numeric($data[$key])) {
+                    return get_string('errorsetting', 'admin');
+                }
+            }
+
+            // Let the date_time_selector element convert the submitted data to a unix timestamp.
+            $element = $this->create_element();
+            $submitvalues = [$this->get_full_name() => $data];
+            $timestamp = $element->exportValue($submitvalues);
+            if (!is_numeric($timestamp)) {
                 return get_string('errorsetting', 'admin');
             }
-        }
-
-        // Let the date_time_selector element convert the submitted data to a unix timestamp.
-        $element = $this->create_element();
-        $submitvalues = [$this->get_full_name() => $data];
-        $timestamp = $element->exportValue($submitvalues);
-        if (!is_numeric($timestamp)) {
-            return get_string('errorsetting', 'admin');
+            $timestamp = (int) $timestamp;
         }
 
         // If this date and time must not be before the date and time of another setting, check this.
-        if ($this->notbeforesetting !== null && $this->not_before_conditions_met()) {
+        // This check is done regardless of the way the data was given, as a non-array value is not necessarily the default
+        // setting but might also have been submitted with a hand-crafted request to the admin settings form.
+        // It is only skipped if no date and time is set at all.
+        if ($timestamp !== 0 && $this->notbeforesetting !== null && $this->not_before_conditions_met()) {
             $other = $this->config_read($this->notbeforesetting);
-            if (is_numeric($other) && (int) $other > 0 && (int) $timestamp < (int) $other) {
+            if (is_numeric($other) && (int) $other > 0 && $timestamp < (int) $other) {
                 return (string) $this->notbeforeerror;
             }
         }
 
         // Store the unix timestamp.
-        $result = $this->config_write($this->name, (int) $timestamp);
+        $result = $this->config_write($this->name, $timestamp);
 
         return ($result ? '' : get_string('errorsetting', 'admin'));
     }

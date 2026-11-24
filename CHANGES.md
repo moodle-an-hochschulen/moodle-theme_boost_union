@@ -6,6 +6,7 @@ Changes
 
 ### Unreleased
 
+* 2026-11-24 - Bugfix: Store the default of the info banner start and end time settings, as these settings were considered as new settings and their defaults were applied again on each and every upgrade otherwise. Unset start and end times are consistently stored as 0 now, resolves #1481.
 * 2026-11-24 - Upstream change: Adopt changes from Moodle core in MDL-90207 and remove the workaround which applied the configured link color in the dark color mode, as Moodle core derives the link colors of the dark color mode from the link color itself now, resolves #1451.
 * 2026-11-24 - Improvement: Use the same tertiary navigation style in settings as activities (forum, feedback, lesson, assign, question bank) do.
 * 2026-11-22 - Improvement: Check the installed plugin version instead of asking the database manager if the smart menu and SCSS snippets tables exist already, as this triggered an additional database query on every page request on sites without smart menus, resolves #1492.
