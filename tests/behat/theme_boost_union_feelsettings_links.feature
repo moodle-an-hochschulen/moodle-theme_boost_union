@@ -75,3 +75,21 @@ Feature: Configuring the theme_boost_union plugin for the "Links" tab on the "Fe
       | value | content |
       | yes   | ""    |
       | no    | none   |
+
+  @javascript
+  Scenario Outline: Setting: Link decoration
+    Given the following config values are set as admin:
+      | config         | value   | plugin            |
+      | linkdecoration | <value> | theme_boost_union |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "admin"
+    And I follow "Dashboard"
+    Then DOM element "#footnote a[href='/my/']" should have computed style "text-decoration-line" "none"
+    And I am on "Course 1" course homepage
+    Then DOM element "#region-main a[href='/my/']" should have computed style "text-decoration-line" "<decoration>"
+
+    Examples:
+      | value   | decoration |
+      | onhover | none       |
+      | always  | underline  |
+      | never   | none       |
