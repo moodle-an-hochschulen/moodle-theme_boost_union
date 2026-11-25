@@ -407,22 +407,22 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     When I log in as "admin"
     # Main navigation: menu item icon.
     And I click on "Quick links" "link" in the ".primary-navigation" "css_element"
-    Then DOM element ".primary-navigation .bigiconstatic i.icon.iconsize-big" should have computed style "font-size" "16px"
+    Then DOM element ".primary-navigation .bigiconstatic i.icon.iconsize-big" should have computed style "font-size" "15px"
     # Main navigation: submenu header icon (the item title incl. its icon shown in the submenu header).
     And I click on "Submenu big icon" "link" in the ".primary-navigation" "css_element"
-    And DOM element ".primary-navigation .carousel-item.submenu .header .carousel-navigation-link i.icon.iconsize-big" should have computed style "font-size" "16px"
+    And DOM element ".primary-navigation .carousel-item.submenu .header .carousel-navigation-link i.icon.iconsize-big" should have computed style "font-size" "15px"
     # Menu bar: menu item icon.
     And I click on "Quick links" "link" in the ".boost-union-menubar" "css_element"
-    And DOM element ".boost-union-menubar .bigiconstatic i.icon.iconsize-big" should have computed style "font-size" "16px"
+    And DOM element ".boost-union-menubar .bigiconstatic i.icon.iconsize-big" should have computed style "font-size" "15px"
     # User menu: menu item icon (the submenu header in the user menu does not show the item icon).
     And I click on "#user-menu-toggle" "css_element"
     And I click on "Quick links" "link" in the "#usermenu-carousel" "css_element"
-    And DOM element "#usermenu-carousel .bigiconstatic i.icon.iconsize-big" should have computed style "font-size" "16px"
+    And DOM element "#usermenu-carousel .bigiconstatic i.icon.iconsize-big" should have computed style "font-size" "15px"
     # Bottom bar (mobile): menu item icon.
     And I change viewport size to "mobile"
     And I click on "More" "button" in the ".bottom-navigation" "css_element"
     And I click on "Quick links" "link" in the "#theme_boost-drawers-primary" "css_element"
-    And DOM element "#theme_boost-drawers-primary .bigiconstatic i.icon.iconsize-big" should have computed style "font-size" "16px"
+    And DOM element "#theme_boost-drawers-primary .bigiconstatic i.icon.iconsize-big" should have computed style "font-size" "15px"
 
   @javascript
   Scenario: Smartmenus: Menu items: Presentation - Normalize the size of oversized (big) icons for inline menus
@@ -444,9 +444,9 @@ Feature: Configuring the theme_boost_union plugin on the "Smart menus" page, app
     # Use a wide viewport so that the inline menu item is not moved into the "More" menu.
     And I change viewport size to "large"
     # Main navigation: inline menu item icon (rendered directly as a navigation link).
-    Then DOM element ".primary-navigation .bigiconinline i.icon.iconsize-big" should have computed style "font-size" "16px"
+    Then DOM element ".primary-navigation .bigiconinline i.icon.iconsize-big" should have computed style "font-size" "15px"
     # Menu bar: inline menu item icon.
-    And DOM element ".boost-union-menubar .bigiconinline i.icon.iconsize-big" should have computed style "font-size" "16px"
+    And DOM element ".boost-union-menubar .bigiconinline i.icon.iconsize-big" should have computed style "font-size" "15px"
 
   @javascript
   Scenario Outline: Smartmenus: Menu items: Presentation - Display the tooltip on hover over the menu items
