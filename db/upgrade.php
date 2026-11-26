@@ -31,7 +31,7 @@ use theme_boost_union\snippets;
  * @return bool result
  */
 function xmldb_theme_boost_union_upgrade($oldversion) {
-    global $DB, $OUTPUT;
+    global $CFG, $DB, $OUTPUT;
 
     $dbman = $DB->get_manager();
 
