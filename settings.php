@@ -3509,7 +3509,7 @@ if ($hassiteconfig || has_capability('theme/boost_union:configure', context_syst
         $name = 'theme_boost_union/courseindexmodiconenabled';
         $title = get_string('courseindexmodiconenabled', 'theme_boost_union', null, true);
         $description = get_string('courseindexmodiconenabled_desc', 'theme_boost_union', null, true);
-        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_NO, $yesnooption);
+        $setting = new admin_setting_configselect($name, $title, $description, THEME_BOOST_UNION_SETTING_SELECT_YES, $yesnooption);
         $tab->add($setting);
 
         // Setting:  Position of activity completion indication.
