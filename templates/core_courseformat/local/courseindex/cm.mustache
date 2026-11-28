@@ -38,6 +38,9 @@
 
     Modifications compared to the original template:
     * Based on the theme's settings, add activity type icon in front of module instance name.
+    * Added a cmicon-<module> class to the activity type icon so that the activity icon colors can be applied to it (as the
+      course index activity type icons are not wrapped in the .activityiconcontainer.<purpose> markup which Moodle core uses to
+      apply the activity icon colors otherwise).
     * Based on the theme's settings, move completioninfo to the right.
     * Added additional JS which controls which completion indicators are shown or not.
 }}
@@ -63,7 +66,7 @@
         <span class="completioninfo courseindex-cmicon-cpl-sol" data-for="cm_completion" data-value="NaN"></span>
         <span class="courseindex-cmicon-container">
             <span class="courseindex-cmicon">
-                <span class="courseindex-cmicon-icon" id="courseindex-cmicon-observ-{{id}}">
+                <span class="courseindex-cmicon-icon cmicon-{{module}}" id="courseindex-cmicon-observ-{{id}}">
                     {{#pix}} monologo, {{module}} {{/pix}}
                     <span class="completioninfo courseindex-cmicon-cpl-icon" data-for="_" data-value="NaN"></span>
                 </span>

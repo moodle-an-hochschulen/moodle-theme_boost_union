@@ -62,6 +62,43 @@ Feature: Configuring the theme_boost_union plugin for the "Activity branding" ta
       | content     | book    | #FFFF00  | #0099ad     |
 
   @javascript
+  Scenario: Setting: Activity icon colors - Applied to the course index activity type icons (default purpose)
+    Given the following config values are set as admin:
+      | config                    | value   | plugin            |
+      | courseindexmodiconenabled | yes     | theme_boost_union |
+      | activityiconcolorcontent  | #FFFF00 | theme_boost_union |
+    And the following "activities" exist:
+      | activity | name      | course | idnumber | section |
+      | book     | Test book | C1     | book1    | 0       |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    # The book activity uses the "content" purpose by default, so its course index icon must use the configured content color.
+    # First, we test that the default content color filter is _not_ set anymore.
+    Then DOM element "#courseindex .courseindex-cmicon-icon.cmicon-book img" should not have a CSS filter close to hex color "#0099ad"
+    # And then we test if the applied filter is close enough to the configured color.
+    And DOM element "#courseindex .courseindex-cmicon-icon.cmicon-book img" should have a CSS filter close enough to hex color "#FFFF00"
+
+  @javascript
+  Scenario: Setting: Activity icon colors - Applied to the course index activity type icons (overridden purpose)
+    Given the following config values are set as admin:
+      | config                         | value         | plugin            |
+      | courseindexmodiconenabled      | yes           | theme_boost_union |
+      | activitypurposeassign          | collaboration | theme_boost_union |
+      | activityiconcolorassessment    | #FF0000       | theme_boost_union |
+      | activityiconcolorcollaboration | #00FF00       | theme_boost_union |
+    And the following "activities" exist:
+      | activity | name            | course | idnumber | section |
+      | assign   | Test assignment | C1     | assign1  | 0       |
+    And the theme cache is purged and the theme is reloaded
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    # The assign activity uses the "assessment" purpose by default but is overridden to the "collaboration" purpose here.
+    # Thus, its course index icon must use the collaboration color and not the assessment color.
+    Then DOM element "#courseindex .courseindex-cmicon-icon.cmicon-assign img" should have a CSS filter close enough to hex color "#00FF00"
+    And DOM element "#courseindex .courseindex-cmicon-icon.cmicon-assign img" should not have a CSS filter close to hex color "#FF0000"
+
+  @javascript
   Scenario Outline: Setting: Activity icon purposes - Setting the purpose
     Given I log in as "admin"
     And I navigate to "Appearance > Boost Union > Look" in site administration

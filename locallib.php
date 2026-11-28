@@ -1883,6 +1883,75 @@ function theme_boost_union_get_scss_for_activity_icon_purpose($theme) {
 }
 
 /**
+ * Returns the SCSS code to apply the activity icon colors to the activity type icons within the course index.
+ *
+ * Boost Union adds activity type icons to the course index (based on the courseindexcmicons setting). These icons are plain
+ * monochrome 'monologo' icons which are not wrapped in the '.activityiconcontainer.<purpose>' markup which Moodle core uses to
+ * apply the activity icon purpose colors. Thus, the activity icon color settings do not reach these icons and they would remain
+ * black otherwise. This function composes the needed recolor rules per installed activity module, based on the module's effective
+ * purpose (which respects the activitypurpose<modname> setting) and the activity icon color which is configured for this purpose.
+ *
+ * @param \core\output\theme_config $theme The theme config object.
+ * @return string
+ */
+function theme_boost_union_get_scss_for_courseindex_activity_icon_colors($theme) {
+    // Initialize SCSS snippet.
+    $scss = '';
+
+    // Get installed activity modules.
+    $installedactivities = get_module_types_names();
+
+    // Get the activity purposes which are supported by Boost Union (including the 'other' purpose as an activity can be
+    // configured to be not branded at all).
+    $supportedpurposes = theme_boost_union_get_activity_purposes(true);
+
+    // Iterate over all existing activities.
+    foreach ($installedactivities as $modname => $modinfo) {
+        // Get default purpose of activity module.
+        $defaultpurpose = plugin_supports('mod', $modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
+
+        // If the plugin does not have any default purpose.
+        if (!$defaultpurpose) {
+            // Fallback to "other" purpose.
+            $defaultpurpose = MOD_PURPOSE_OTHER;
+        }
+
+        // Determine the effective purpose of the activity module.
+        // If the activity purpose setting is set and holds a purpose which is (still) supported by Boost Union, it overrides the
+        // activity's default purpose. Otherwise, the default purpose is used.
+        $activitypurpose = get_config('theme_boost_union', 'activitypurpose' . $modname);
+        if ($activitypurpose && in_array($activitypurpose, $supportedpurposes)) {
+            $effectivepurpose = $activitypurpose;
+        } else {
+            $effectivepurpose = $defaultpurpose;
+        }
+
+        // If the effective purpose is the 'other' purpose, the activity is intentionally not branded.
+        if ($effectivepurpose == MOD_PURPOSE_OTHER) {
+            // Thus, we must not compose any SCSS code for it and leave the icon in its default color.
+            continue;
+        }
+
+        // Compose the recolor rule for this module's course index activity type icon.
+        // We use the $activity-icon-colors SCSS map (just like the activity icon purpose SCSS does) as this map already holds the
+        // configured activity icon colors including any flavour overrides.
+        $scss .= '#courseindex .courseindex-cmicon-icon.cmicon-' . $modname . ' .activityicon:not(.nofilter),';
+        $scss .= '#courseindex .courseindex-cmicon-icon.cmicon-' . $modname . ' .icon:not(.nofilter)';
+        $scss .= '{';
+        $scss .= '@include recolor-icon-important(map-get($activity-icon-colors, "' . $effectivepurpose . '"), 1);';
+        // Just like Moodle core does for the activity icons, apply a lighter tint in the dark color mode to keep the icons
+        // readable against the dark background.
+        $scss .= '@include dark-mode {';
+        $scss .= '@include recolor-icon-important(tint-color(map-get($activity-icon-colors, "' .
+                $effectivepurpose . '"), 30%), 1);';
+        $scss .= '}';
+        $scss .= '}';
+    }
+
+    return $scss;
+}
+
+/**
  * Returns the SCSS code to add an external link icon after external links to mark them visually.
  *
  * @param \core\output\theme_config $theme The theme config object.

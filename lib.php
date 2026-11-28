@@ -972,6 +972,9 @@ function theme_boost_union_get_extra_scss($theme) {
     // Setting: Activity icon purpose.
     $content .= theme_boost_union_get_scss_for_activity_icon_purpose($theme);
 
+    // Setting: Activity icon colors (within the course index).
+    $content .= theme_boost_union_get_scss_for_courseindex_activity_icon_colors($theme);
+
     // Setting: Navbar styles.
     $content .= theme_boost_union_get_scss_navbar($theme, $flavourid);
 
